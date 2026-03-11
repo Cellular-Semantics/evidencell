@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+*.egg-info
+.venv
+
+# uv
+uv.lock
+
+# Editor
+.DS_Store
+*.swp
+
+# Generated / large local files
+conf/oak_dbs/
+
+# Traversal output (large, not committed — provenance is in references_cache/)
+kb/mappings/**/traversal_output/
