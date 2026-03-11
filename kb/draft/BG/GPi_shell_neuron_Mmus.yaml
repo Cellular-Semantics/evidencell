@@ -1,0 +1,300 @@
+##
+# GPi Shell Neuron (Mus musculus) — WMBv1 mapping
+#
+# Brain region: Internal globus pallidus (GPi; rodent homologue = entopeduncular nucleus, EP)
+# Target atlas: WMBv1 — Yao et al. (2023), Whole Mouse Brain
+# Species: Mus musculus (NCBITaxon:10090)
+# CL term: CL:4310096 (species-neutral; same term as primate instance)
+# Curation date: 2026-02-25
+# Curator: dosumis
+#
+# Evidence graph:
+#
+#   classical_gpi_shell_mmus ──[EQUIVALENT, atlas metadata + cross-species transfer]──► wmb_supt_0504  (terminal)
+#
+# Cross-species context:
+#   Primate HMBA BG GPi Shell group (CS20250428_GROUP_0016) was mapped to WMBv1
+#   Supertype:0504 via MapMyCells hierarchical annotation transfer, providing
+#   cross-species validation of the GPi shell neuron identity.
+#   Primate mapping: kb/mappings/BG/GPi_shell_neuron.yaml
+##
+
+name: "GPi Shell Neuron (Mus musculus) — WMBv1"
+description: >
+  Evidence graph for the GPi Shell neuron in Mus musculus, anchored to WMBv1
+  Supertype:0504 (GPi Tbr1 Cngb3 Gaba-Glut_1; CS20230722_SUPT_0504). Evidence from
+  WMBv1 atlas metadata (MERFISH location "GPi", Glut-GABA dual NT, Cngb3/Tbr1/Pax6
+  markers, Sst neuropeptide in 2/3 clusters) supported by MapMyCells hierarchical
+  annotation transfer from the primate HMBA BG GPi Shell group (CS20250428_GROUP_0016).
+
+brain_region:
+  id: MBA:1031
+  label: "Globus pallidus, internal segment"
+  name_in_source: "Internal segment of globus pallidus (entopeduncular nucleus in rodents)"
+  # MBA:1031 = Allen Mouse Brain Atlas CCF term (verify in OLS; rodent structure = EP/EPN).
+  # WMBv1 uses "GPi" as the atlas-internal label for this region.
+  # UBERON:0002474 provides cross-species identity.
+
+target_atlas: WMBv1
+
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus"
+
+creation_date: "2026-02-25"
+
+
+# ══════════════════════════════════════════════════════════════════
+# NODES
+# ══════════════════════════════════════════════════════════════════
+
+nodes:
+
+  - id: classical_gpi_shell_mmus
+    name: "GPi shell neuron (Mus musculus)"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1031
+        label: "Globus pallidus, internal segment"
+        name_in_source: "Internal segment of globus pallidus, shell region"
+        # In rodents the GPi homologue is the entopeduncular nucleus (EP/EPN).
+        # Shell vs core organisation in mouse EP established by IHC (SP/CB1R subregions)
+        # in Kita et al. 2022. WMBv1 atlas uses "GPi" as the atlas-internal label.
+    colocated_types:
+      - neighboring_type: "GPi core neuron (Pvalb+, GABA)"
+        spatial_relationship: ADJACENT
+        notes: >
+          Shell neurons are located at the border/periphery of the GPi and surround
+          the core; core neurons are Pvalb+ pure GABAergic and are concentrated in the
+          centre. Shell/core organisation within the rodent EPN documented by
+          Kita et al. 2022 (PMID:35927027); cross-species conservation shown in
+          Wallace et al. 2017 (PMID:28384468).
+    nt_type:
+      name_in_source: "GABA-Glut (dual)"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: "Glut"
+      sources:
+        - ref: "https://doi.org/10.1016/j.neuron.2017.03.017"
+          method: "FISH (Sst/Slc17a6/Slc32a1 triple labelling)"
+          scope: "adult mouse EP; cross-species conservation from human GPi"
+          snippet: >
+            "Similar to mouse EP, we found 1) SST+/SLC17A6+/SLC32A1+, 2)
+            PVALB+/SLC17A6−/SLC32A1+, and 3) SLC17A6+/SLC32A1− neurons in the human GPi"
+    neuropeptides:
+      - symbol: Sst
+        ncbi_gene_id: "NCBIGene:20604"
+    cl_mapping:
+      cl_term: {id: CL:4310096, label: internal globus pallidus shell projection neuron, name_in_source: internal globus pallidus shell projection neuron}
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:4310096 is defined at species-neutral level (Primates scope in the current
+        approved definition). This node represents the Mus musculus instance of that
+        type, supported by cross-species conservation (Wallace et al. 2017) and
+        MapMyCells transfer from the primate HMBA group.
+    defining_markers:
+      - {symbol: Tbr1, ncbi_gene_id: "NCBIGene:21375"}
+      - {symbol: Cngb3}  # NCBIGene ID for Mus musculus Cngb3 to be verified
+      - {symbol: Sst, ncbi_gene_id: "NCBIGene:20604"}
+    negative_markers:
+      - {symbol: Pvalb, modifier: ABSENT, ncbi_gene_id: "NCBIGene:19293"}
+    is_terminal: false
+    proposed_cl_term:
+      cl_id: CL:4310096
+      label: internal globus pallidus shell projection neuron
+      definition: >
+        A internal globus pallidus shell projection neuron of the Mus musculus brain.
+        These cells are located in the internal segment of globus pallidus
+        (entopeduncular nucleus in rodents). Reference transcriptomic data for this
+        type can be found in the dataset/taxonomy - Yao et al. (2023), Whole Mouse
+        Brain in cell set Supertype:0504 GPi Tbr1 Cngb3 Gaba-Glut_1.
+      comment: >
+        Mapping to the general type GPi shell neuron (internal globus pallidus shell
+        projection neuron) is based on soma location (to GPi, surrounding GPi core
+        neurons), neurotransmitter (dual GABA-Glut), somatostatin and Tbr1 expression
+        and MapMyCells hierarchical annotation transfer mapping to Primate GPi shell
+        (CS20250428_GROUP_0016) in the HMBA Basal Ganglia Consensus Taxonomy.
+        Location is inferred from registration of MerFish Data. Registration may be
+        inaccurate, giving misleading location to adjacent anatomical regions.
+      xrefs:
+        - CS20230722_SUPT_0504
+        - https://doi.org/10.1038/s41586-023-06812-z
+        - https://doi.org/10.1016/j.neuron.2017.03.017
+        - https://doi.org/10.1523/ENEURO.0208-22.2022
+      status: DRAFT
+
+  - id: wmb_supt_0504
+    name: "Supertype:0504 GPi Tbr1 Cngb3 Gaba-Glut_1 (WMBv1)"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN202307220
+    taxonomy_level: SUPERTYPE
+    cell_set_accession: CS20230722_SUPT_0504
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1031
+        label: "Globus pallidus, internal segment"
+        name_in_source: "GPi"
+        # WMBv1 atlas annotation: "GPi" (manually curated anatomical_annotation column).
+        # Rodent structure = entopeduncular nucleus (EP/EPN).
+    nt_type:
+      name_in_source: "Glut-GABA"
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: "Glut"
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+      # WMBv1 convention: dominant NT listed first (Glut-GABA = primarily glutamatergic).
+      # Cf. primate atlas "GABA-Glut" — same dual-transmitter biology, different ordering.
+    # nt.markers from atlas: Gad2:~9-10, Slc17a6:~9, Gad1:~9-10, Slc32a1:~7-9
+    atlas_markers:
+      # cluster.markers.combo: Cngb3 present in all 3 clusters — the defining supertype marker
+      - {symbol: Cngb3}   # NCBIGene ID for Mus musculus Cngb3 to be verified
+      # cluster.TF.markers.combo: Pax6, Tbr1 shared across all 3 clusters
+      - {symbol: Tbr1, ncbi_gene_id: "NCBIGene:21375"}
+      - {symbol: Pax6}
+    merfish_markers:
+      # merfish.markers.combo: Pax6 and Lhx9 shared across clusters 1995 and 1996
+      - {symbol: Pax6}
+      - {symbol: Lhx9}
+    atlas_neuropeptides:
+      # np.markers: Sst present in 2/3 clusters (1996: Sst:8.5; 1997: Sst:9.1), Pnoc in 1-2/3
+      - {symbol: Sst, ncbi_gene_id: "NCBIGene:20604"}
+    ccf_distribution: >
+      Cluster 1995: HY:0.39,PAL:0.39,NA:0.17 (broad); LHA:0.25,GPi:0.17,GPe:0.11,PAL:0.11,int:0.08.
+      Cluster 1996: PAL:0.52,NA:0.46 (broad); int:0.46,GPi:0.44.
+      Cluster 1997: PAL:0.57,NA:0.29 (broad); PAL:0.33,GPi:0.24,int:0.24.
+    n_cells: 460
+    # n_cells breakdown: v3=404 (138+162+104), v2=56 (45+1+10), multiome=0
+    parent_hierarchy:
+      - level: SUBCLASS
+        name: "112 GPi Tbr1 Cngb3 Gaba-Glut"
+        cell_set_accession: CS20230722_SUBC_112
+      - level: CLASS
+        name: "13 CNU-HYa Glut"
+        cell_set_accession: CS20230722_CLAS_13
+    is_terminal: true
+    notes: >
+      Supertype contains 3 clusters: 1995, 1996, 1997 (CCN accessions CS20230722_CLUS_1995,
+      _1996, _1997). Sst confirmed in neuropeptide markers for 2/3 clusters (Sst:8.5 and 9.1),
+      validating somatostatin expression in the classical shell description.
+      NT label "Glut-GABA" follows WMBv1 convention (dominant NT listed first; cf. primate
+      atlas "GABA-Glut" — same dual-transmitter biology, different ordering convention).
+      Class "CNU-HYa Glut" reflects the glutamatergic co-transmitter being dominant at
+      the class level; dual NT is captured in nt_type_combo_label "Glut-GABA".
+      Neighborhood: HY-EA-Glut-GABA (hypothalamus / extended amygdala).
+      NCBIGene ID for Cngb3 (Mus musculus) to be verified before publishing.
+
+
+# ══════════════════════════════════════════════════════════════════
+# EDGES
+# ══════════════════════════════════════════════════════════════════
+
+edges:
+
+  - id: edge_gpi_shell_mmus_to_wmb_0504
+    type_a: classical_gpi_shell_mmus
+    type_b: wmb_supt_0504
+    relationship: EQUIVALENT
+    confidence: MODERATE
+    evidence:
+
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          WMBv1 atlas metadata (Yao et al. 2023) provides: (1) anatomical annotation "GPi"
+          (manually curated); (2) NT type Glut-GABA (dual, confirmed by nt.markers:
+          Gad2, Slc17a6, Gad1, Slc32a1); (3) cluster marker Cngb3 (all 3 clusters);
+          (4) TF markers Pax6 and Tbr1 (all 3 clusters); (5) neuropeptide Sst in 2/3
+          clusters (Sst:8.5, 9.1), confirming somatostatin expression seen in the classical
+          shell description. All features are consistent with the GPi shell neuron profile.
+        atlas: WMBv1
+        cell_set_accession: CS20230722_SUPT_0504
+        anatomical_location:
+          - id: MBA:1031
+            label: "Globus pallidus, internal segment"
+            name_in_source: "GPi"
+        ccf_distribution: >
+          Cluster 1995: LHA:0.25,GPi:0.17,GPe:0.11,PAL:0.11,int:0.08 (broad: HY:0.39,PAL:0.39).
+          Cluster 1996: int:0.46,GPi:0.44 (broad: PAL:0.52,NA:0.46).
+          Cluster 1997: PAL:0.33,GPi:0.24,int:0.24 (broad: PAL:0.57,NA:0.29).
+        nt_type:
+          name_in_source: "Glut-GABA"
+          cl_terms:
+            - id: CL:0000679
+              label: glutamatergic neuron
+              name_in_source: "Glut"
+            - id: CL:0000617
+              label: GABAergic neuron
+              name_in_source: "GABA"
+        positive_markers:
+          - {symbol: Cngb3}
+          - {symbol: Tbr1, ncbi_gene_id: "NCBIGene:21375"}
+          - {symbol: Pax6}
+        merfish_markers:
+          - {symbol: Pax6}
+          - {symbol: Lhx9}
+        neuropeptides:
+          - {symbol: Sst, ncbi_gene_id: "NCBIGene:20604"}
+        metadata_url: "https://doi.org/10.1038/s41586-023-06812-z"
+
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: SUPPORT
+        explanation: >
+          MapMyCells hierarchical annotation transfer from the primate HMBA BG Consensus
+          Taxonomy (GPi Shell group, CS20250428_GROUP_0016) to WMBv1 identifies
+          Supertype:0504 as the best mouse equivalent. Cross-species convergence on
+          the same anatomical location (GPi border, surrounding core), molecular profile
+          (dual GABA-Glut, Tbr1+, Sst+, Pvalb-) and atlas label ("GPi shell") provides
+          independent support for the GPi shell neuron identity in mouse.
+        target_atlas: WMBv1
+        method: "MapMyCells (hierarchical)"
+        source_cell_set_accession: CS20250428_GROUP_0016
+        source_cluster_label: "Group:GPi Shell (HMBA BG Consensus)"
+        source_species: {id: NCBITaxon:9443, label: Primates, name_in_source: Primates}
+        target_species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+
+    caveats:
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          Anatomical location (GPi) is inferred from MERFISH CCF registration in WMBv1.
+          CCF distribution data shows significant registration scatter, particularly for
+          cluster 1995 where only 17% of cells register to GPi (with 25% to LHA, 11% GPe).
+          Clusters 1996 (GPi:44%) and 1997 (GPi:24%) show better GPi assignment but still
+          substantial spread to PAL/int. Cells in LHA, GPe, and pallidal subregions may
+          represent registration errors rather than true anatomical localisation.
+      - caveat_type: CROSS_SPECIES_EXTRAPOLATION
+        description: >
+          Cross-species annotation transfer (primate HMBA BG → mouse WMBv1) is used
+          as supporting evidence. The mouse EP/GPi is the functional homologue of the
+          primate GPi but shows evolutionary differences in cytoarchitecture and
+          projection targets. The shell/core organisation is conserved at the molecular
+          level (Tbr1+/Sst+ shell; Pvalb+ core) but the degree of correspondence at
+          the single-cluster level is not fully characterised.
+
+    unresolved_questions:
+      - >
+        Verify NCBIGene ID for Cngb3 (Mus musculus) — ID not populated; confirm from
+        NCBI Gene before publishing.
+      - >
+        Cluster 1995 shows only 17% GPi registration with 25% in LHA. Is this a
+        registration artefact, or does this cluster genuinely include neurons with
+        soma outside GPi proper (e.g. peri-GPi cells)? Compare spatial plots for
+        clusters 1995 vs 1996/1997.
+
+    proposed_experiments:
+      - >
+        MERFISH with probes for Tbr1, Cngb3, Sst, and Pvalb in mouse GPi/EP to
+        validate location and marker profile with higher spatial precision.
+      - >
+        Explore WMBv1 cluster-level data within Supertype:0504 to characterise
+        fine-grained heterogeneity; compare with the primate GPi Shell group at
+        equivalent resolution.

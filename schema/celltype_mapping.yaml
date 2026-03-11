@@ -1,0 +1,1387 @@
+##
+# CellTypeEvidence Schema v0.5
+#
+# Schema for accumulating evidence for transcriptomic cell type mappings.
+# Core design: an evidence graph (nodes + edges), inspired by dismech's causal chain model.
+#
+# Terminal nodes = community atlas cell sets (identified by CCN accession).
+# Non-terminal nodes = classical types, prior transcriptomic types, or intermediate types.
+# Edges = evidenced mapping assertions between nodes; can be chained transitively.
+#
+# Version: 0.3  (2026-02-25) — added CLMapping (EXACT/BROAD), Allen anatomy terms,
+#                               ProposedCLTerm.parent_cl_term,
+#                               AnnotationTransferEvidence.source_cell_set_accession (cross-Allen-taxonomy)
+# Version: 0.4  (2026-02-25) — location split: CellTypeColocation + AnatomicalLocation.colocated_types;
+#                               NCBI gene IDs: GeneDescriptor.ncbi_gene_id (replaces hgnc_id);
+#                               annotation transfer simplified: best_f1_score, metrics_by_level optional;
+#                               TaxonomyLevel enum removed → free string;
+#                               EvidenceItem.figure_urls for image/screenshot evidence
+# Version: 0.5  (2026-03-11) — property provenance: PropertySource + MarkerSource (mixin pattern);
+#                               HasMarkerType mixin + MarkerType enum (PROTEIN/TRANSCRIPT, extensible);
+#                               per-property sources on nodes: definition_references, nt_type_sources,
+#                               ephys_sources, morphology_sources, AnatomicalLocation.sources,
+#                               GeneDescriptor.sources (MarkerSource);
+#                               property comparison on edges: PropertyComparison + PropertyAlignment enum;
+#                               AnatomicalLocation.name → region_name (BREAKING);
+#                               AnnotationTransferEvidence: source_species, target_species added;
+#                               nt_consistent_with_classical deprecated (superseded by property_comparisons);
+#                               OntologyTerm: name_in_source added as required field (always record)
+# Version: 0.5.3 (2026-03-11) — atlas_markers → defining_markers, atlas_neuropeptides → neuropeptides (BREAKING);
+#                               AtlasMetadataEvidence.positive_markers → defining_markers (BREAKING);
+#                               marker fields now shared across all node types; cell_set_accession
+#                               pattern constraints removed (deferred to source-lookup validation)
+# Version: 0.5.2 (2026-03-11) — namespace pattern constraints on OntologyTerm.id, GeneDescriptor IDs,
+#                               reference fields; MBA prefix added
+# Version: 0.5.1 (2026-03-11) — NeurotransmitterType class: unifies nt_type + atlas_nt_type + nt_type_sources;
+#                               CL terms as official NT identifiers; atlas_nt_type removed (BREAKING);
+#                               neuropeptides field added to CellTypeNode (separate from markers);
+#                               AtlasMetadataEvidence.nt_type now range NeurotransmitterType
+##
+
+id: https://bican.org/schema/celltype-evidence/v0.5
+name: CellTypeEvidence
+description: >
+  Evidence graph schema for mapping cell types from the literature (classical and
+  transcriptomic) to community single-cell and spatial transcriptomic atlases.
+
+prefixes:
+  linkml:    https://w3id.org/linkml/
+  CL:        http://purl.obolibrary.org/obo/CL_
+  UBERON:    http://purl.obolibrary.org/obo/UBERON_
+  NCBITaxon: http://purl.obolibrary.org/obo/NCBITaxon_
+  NCBIGene:  https://www.ncbi.nlm.nih.gov/gene/
+  HGNC:      https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/
+  PMID:      https://pubmed.ncbi.nlm.nih.gov/
+  DOI:       https://doi.org/
+  GEO:       https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=
+  SCP:       https://singlecell.broadinstitute.org/single_cell/study/
+  # Allen Brain Atlas anatomy ontologies:
+  # MBA  = Allen Mouse Brain Atlas ontology (CCF structure terms, mouse)
+  # ABAO = Allen Brain Atlas Ontology (mouse CCF, older prefix — prefer MBA)
+  # DHBA = Developing Human Brain Atlas ontology (human/primate)
+  # HBA  = Human Brain Atlas ontology (human adult)
+  # These have UBERON cross-references and are available in OLS / via OAK.
+  # HOMBA (multi-species Allen neuro-anatomy ontology) not yet released —
+  # add prefix here when available and update anatomical_location terms.
+  MBA:       http://purl.obolibrary.org/obo/MBA_
+  ABAO:      http://purl.obolibrary.org/obo/ABAO_
+  HBA:       http://purl.obolibrary.org/obo/HBA_
+  DHBA:      http://purl.obolibrary.org/obo/DHBA_
+
+imports:
+  - linkml:types
+
+default_range: string
+
+# ══════════════════════════════════════════════════════════════════
+# NAMING AND PROVENANCE CONVENTIONS
+# ══════════════════════════════════════════════════════════════════
+#
+# NAMING CONVENTION:
+# Every named entity is recorded as a triple: name_in_source | id | label.
+# This principle applies to ALL entity types — ontology terms, genes, and
+# anatomical regions alike.
+#
+#   name_in_source  Text exactly as it appears in the source paper or atlas.
+#                   ALWAYS record — even when identical to the canonical label —
+#                   because source context matters for review and traceability.
+#                   Mappings from source names to official IDs can be wrong;
+#                   reviewers must always see what the original source said.
+#   id              Stable, official identifier (CURIE). Enables cross-graph
+#                   queries and validator hook correction loops.
+#   label           Canonical term label from the authoritative source (ontology,
+#                   gene nomenclature authority). Must match the id exactly.
+#
+# How each entity type implements the triple:
+#
+#   OntologyTerm:   id, label, name_in_source — all three fields required
+#                   (used for species, anatomy, CL terms, etc.)
+#
+#   GeneDescriptor: symbol = name_in_source AND label (gene symbols ARE their
+#                   own canonical labels in scientific usage; case reflects species
+#                   convention, e.g. Sst vs SST);
+#                   ncbi_gene_id = id (cross-species stable identifier;
+#                   strongly recommended — use NodeNormalization to look up)
+#
+#   Regions:        anatomical_location = OntologyTerm (id + label + name_in_source);
+#                   name_in_source = region name as in the source paper or atlas;
+#                   prefer Allen atlas terms (MBA mouse / DHBA human); UBERON as fallback
+#
+#   NT type:        CellTypeNode.nt_type = NeurotransmitterType (unified for both classical and atlas nodes);
+#                   nt_type.name_in_source = verbatim source label (e.g. "Glut-GABA", "dual GABA-Glut");
+#                   nt_type.cl_terms = list of OntologyTerm (CL:0000617 GABAergic, CL:0000679 glutamatergic, etc.)
+#
+#   Taxonomy:       cell_set_accession is the stable source id; name is human label
+#
+# FREE TEXT vs ID POLICY:
+# Official IDs are strongly recommended for shared entities (genes, regions,
+# species, ontology terms) — they enable cross-graph queries and validation.
+#
+# Free text is sufficient (and preferred over guessed IDs) when:
+#   - The concept is specific to a single source/atlas with no standard term
+#   - The mapping to an official term is genuinely uncertain (novel region,
+#     ambiguous cross-species homology)
+#   - The field captures source-verbatim text that may conflict with official labels
+#
+# Never invent an ID that has not been verified. An absent ncbi_gene_id is
+# better than a wrong one. Use the `notes` field to flag IDs pending verification.
+#
+# ATLAS NODE PROVENANCE:
+# ATLAS_TRANSCRIPTOMIC node properties (defining_markers, negative_markers,
+# neuropeptides, merfish_markers, nt_type, ccf_distribution) have implicit
+# provenance from the node's atlas + cell_set_accession + metadata_url on
+# the corresponding AtlasMetadataEvidence item. Leave all sources lists
+# empty on atlas terminal nodes.
+
+
+# ══════════════════════════════════════════════════════════════════
+# ENUMERATIONS
+# ══════════════════════════════════════════════════════════════════
+
+enums:
+
+  # ── Node definition basis ───────────────────────────────────────
+  DefinitionBasis:
+    description: >
+      What kind of evidence was used to define this cell type node.
+    permissible_values:
+      CLASSICAL_MORPHOLOGICAL:
+        description: Defined primarily by morphological criteria (soma shape, dendrite/axon pattern)
+      CLASSICAL_ELECTROPHYSIOLOGICAL:
+        description: Defined primarily by electrophysiological properties
+      CLASSICAL_NEUROCHEMICAL:
+        description: Defined by neurotransmitter, neuropeptide, or IHC marker expression
+      CLASSICAL_ANATOMICAL:
+        description: Defined primarily by anatomical location and projection targets
+      CLASSICAL_MULTIMODAL:
+        description: Classical type defined by combination of morphology, location, electrophysiology, neurochemistry
+      PRIOR_TRANSCRIPTOMIC:
+        description: >
+          Transcriptomic type from a prior publication or dataset (not the community target atlas).
+          Identified by a cluster label in a specific dataset (e.g. PLI3 in Osorno SCP795).
+      ATLAS_TRANSCRIPTOMIC:
+        description: >
+          Cell type from the community target atlas (or a named reference atlas).
+          Identified by a CCN cell_set_accession.
+      MULTIMODAL_EMERGING:
+        description: >
+          A type description being built up from multiple evidence types; may eventually
+          become a new or revised CL term. Not yet anchored to a single classical or T-type definition.
+
+  # ── Taxonomy levels ─────────────────────────────────────────────
+  # TaxonomyLevel enum removed in v0.4: level names are atlas-specific.
+  # taxonomy_level fields now use free strings. Common values:
+  #   WMBv1 (CCN202307220):  CLASS, SUBCLASS, SUPERTYPE, CLUSTER
+  #   HMBA BG Consensus:     CLASS, GROUP (GROUP is below CLASS)
+  #   Custom atlases:        as documented by that atlas
+
+  # ── Mapping relationship types ──────────────────────────────────
+  MappingRelationship:
+    description: >
+      The nature of the correspondence between type_a and type_b in this edge.
+      Relationships are directional: from type_a to type_b.
+    permissible_values:
+      EQUIVALENT:
+        description: >
+          type_a and type_b describe the same cell population.
+          Clean 1:1 correspondence. E.g. Lugaro → WMBv1 supertype 1145 (F1=0.96).
+      PARTIAL_OVERLAP:
+        description: >
+          Some cells from type_a map to type_b, but the mapping is incomplete in
+          precision, recall, or both. E.g. Globular (PLI2) → cluster 5177 (precision 83%,
+          recall 93%: high precision, limited recall — also distributed across other clusters).
+      CROSS_CUTTING:
+        description: >
+          type_b cross-cuts the boundary of type_a (and usually at least one other node).
+          The transcriptomic type captures cells that the classical taxonomy would assign
+          to multiple distinct types. E.g. MLI1 cuts across classical basket and stellate cells.
+      TYPE_A_SPLITS:
+        description: >
+          type_a (typically classical) corresponds to multiple type_b nodes.
+          Use one edge per split, all with TYPE_A_SPLITS relationship.
+          E.g. one classical interneuron type splits into MLI1 + MLI2 in transcriptomics.
+      TYPE_A_MERGES:
+        description: >
+          Multiple type_a nodes (typically classical) all map to the same type_b.
+          Use one edge per merge source, all with TYPE_A_MERGES relationship.
+      SUBSET:
+        description: >
+          type_a is a proper subset of type_b. All type_a cells are in type_b,
+          but type_b contains additional cells. E.g. a specific projection subtype
+          is a subset of a broader transcriptomic subclass.
+      SUPERSET:
+        description: >
+          type_a is a proper superset of type_b. type_b cells are all in type_a,
+          but type_a also contains additional cells.
+      NO_CORRESPONDENCE:
+        description: >
+          No corresponding type exists in type_b's taxonomy.
+          Use to explicitly document failures of correspondence.
+      UNCERTAIN:
+        description: >
+          Evidence is insufficient or contradictory to determine relationship type.
+
+  # ── Mapping confidence ──────────────────────────────────────────
+  MappingConfidence:
+    permissible_values:
+      HIGH:
+        description: Multiple independent convergent evidence types; at least one experimental
+      MODERATE:
+        description: Two or more independent evidence items with consistent support
+      LOW:
+        description: Single evidence item or consistent but weak/indirect evidence
+      UNCERTAIN:
+        description: Evidence is contradictory, ambiguous, or minimal
+      REFUTED:
+        description: Preponderance of evidence argues against this mapping
+
+  # ── Evidence support ────────────────────────────────────────────
+  EvidenceSupport:
+    permissible_values:
+      SUPPORT: {}
+      REFUTE: {}
+      PARTIAL:
+        description: Supports some aspects but not all
+      NO_EVIDENCE:
+        description: Assessed but no relevant evidence found
+
+  # ── Evidence types ──────────────────────────────────────────────
+  EvidenceType:
+    permissible_values:
+      LITERATURE:
+        description: Peer-reviewed paper (classical anatomy, electrophysiology, prior transcriptomics)
+      ATLAS_METADATA:
+        description: >
+          Data taken directly from an atlas cluster metadata spreadsheet / taxonomy:
+          markers, MERFISH location, NT type, CCF distribution.
+      ANNOTATION_TRANSFER:
+        description: Computational label transfer (MapMyCells, Seurat, scANVI, etc.)
+      SPATIAL_COLOCATION:
+        description: Spatial transcriptomics or FISH-based co-location analysis
+      PATCH_SEQ:
+        description: Patch-seq multi-modal data (electrophysiology + morphology + transcriptomics)
+      PROJECTION_SEQ:
+        description: Transcriptomics combined with retrograde tracing (proj-seq)
+      ELECTROPHYSIOLOGY:
+        description: Electrophysiology recordings without transcriptomics
+      MORPHOLOGY:
+        description: Morphological characterisation (light microscopy, EM)
+      MARKER_ANALYSIS:
+        description: Custom marker gene overlap analysis beyond atlas metadata
+
+  # ── Marker type ─────────────────────────────────────────────────
+  MarkerType:
+    description: >
+      The molecule type detected in a marker evidence source.
+      Currently covers the two most important categories (protein vs transcript);
+      could be extended in future to other molecule types where these are used
+      as cell type markers (e.g. glycoproteins, lipids, metabolites) if such
+      cases become relevant to atlas mappings.
+    permissible_values:
+      PROTEIN:
+        description: >
+          Protein-level detection: IHC, immunofluorescence, western blot,
+          proximity ligation assay, mass spectrometry.
+      TRANSCRIPT:
+        description: >
+          Transcript-level detection: bulk RNA-seq, scRNA-seq, snRNA-seq,
+          smFISH, RNAscope, MERFISH, Visium, or other spatial transcriptomics.
+
+  # ── Property alignment ──────────────────────────────────────────
+  PropertyAlignment:
+    description: >
+      How well a specific property aligns between type_a and type_b on a
+      mapping edge. Used in PropertyComparison to make the basis for
+      confidence judgments machine-readable.
+    permissible_values:
+      CONSISTENT:
+        description: >
+          Properties agree: same value or biologically equivalent,
+          modulo naming conventions. E.g. "GABA-Glut" vs "Glut-GABA"
+          (same dual-transmitter biology, different ordering).
+      APPROXIMATE:
+        description: >
+          Properties broadly agree but differ in resolution, specificity,
+          species convention, or one is a subset of the other.
+          E.g. "GPi shell region" (classical) vs atlas-annotated "GPi";
+          Sst in classical description vs Sst in 2/3 atlas clusters.
+      DISCORDANT:
+        description: >
+          Properties conflict — constitutes evidence against the mapping.
+          Document in PropertyComparison.notes and consider adding a Caveat.
+      NOT_ASSESSED:
+        description: >
+          Property not evaluated for this edge (data unavailable or
+          not relevant to this mapping).
+
+  # ── CL mapping type ─────────────────────────────────────────────
+  CLMappingType:
+    description: >
+      Whether the CL term on this node is an exact match or a broad ancestor.
+      Mirrors SKOS mapping predicates (skos:exactMatch, skos:broadMatch).
+    permissible_values:
+      EXACT:
+        description: >
+          This node IS this CL term, modulo species restriction.
+          The CL term may be defined at species-neutral level; the node represents
+          a species-specific instance. E.g. CL:0000617 GABAergic neuron — EXACT for
+          a node that is clearly and fully described by this term.
+      BROAD:
+        description: >
+          This node is a subtype of this CL term; the CL term is an ancestor.
+          The ProposedCLTerm on this node (if present) would be a new child
+          of the CL term, extending the ontology.
+          E.g. CL:0000679 (glutamatergic neuron) is a BROAD match for a Lugaro cell —
+          a new CL term for Lugaro cell would be placed under it.
+      RELATED:
+        description: >
+          The CL term is related but neither exact nor strictly an ancestor.
+          Use for partial overlaps or uncertain relationships with existing terms.
+
+  # ── Caveat types ─────────────────────────────────────────────────
+  CaveatType:
+    permissible_values:
+      MERFISH_REGISTRATION_UNCERTAINTY:
+        description: Anatomical location inferred from MERFISH CCF registration, which may be inaccurate
+      LOW_CELL_COUNT:
+        description: Fewer than ~50 cells used in this analysis; results may not be robust
+      DISTRIBUTED_ACROSS_CLUSTERS:
+        description: Source type cells are spread across multiple target clusters (low target_purity/recall)
+      TAXONOMY_LEVEL_MISMATCH:
+        description: Best mapping is at a coarser taxonomy level than desired (e.g. supertype not cluster)
+      MARKER_NOT_SPECIFIC:
+        description: Defining marker(s) are not unique to this cell type in the atlas
+      CROSS_SPECIES_EXTRAPOLATION:
+        description: Evidence is from a different species than the atlas being mapped to
+      SINGLE_DATASET:
+        description: Evidence comes from a single dataset; independent replication not yet available
+      NT_PREDICTION_UNCERTAIN:
+        description: NT type from atlas may be unreliable (e.g. nuclear RNA depletion in snRNA-seq)
+      PRIOR_MAPPING_ASSUMED:
+        description: This edge relies on a prior mapping step whose confidence is UNCERTAIN or LOW
+      OTHER: {}
+
+
+# ══════════════════════════════════════════════════════════════════
+# SHARED SUPPORTING CLASSES
+# ══════════════════════════════════════════════════════════════════
+
+classes:
+
+  OntologyTerm:
+    description: >
+      An ontology identifier + canonical label + source name triple.
+      All three fields are required. name_in_source is always recorded —
+      even when it matches the canonical label — because source context
+      is important for traceability and review.
+    attributes:
+      id:
+        required: true
+        pattern: "^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|ABAO):[0-9]+$"
+        description: >
+          Ontology CURIE from a recognised namespace. Pattern enforces a known
+          prefix — add new prefixes here when new ontologies are adopted (e.g.
+          HOMBA when released). Examples: CL:0000540, UBERON:0001950,
+          NCBITaxon:10090, MBA:1031, HBA:12898, DHBA:10344.
+      label:
+        required: true
+        description: >
+          Canonical label from the ontology (must match exactly).
+          Required for the validator hook correction loop — the hook
+          verifies id:label pairs against OAK local databases.
+      name_in_source:
+        required: true
+        description: >
+          Text as it appears in the source document or atlas. Always
+          record — even when identical to the canonical label — because
+          source context matters for review and traceability.
+          Examples:
+            - source "macaque" → label "Primates" (NCBITaxon:9443)
+            - source "GPi" → label "internal segment of globus pallidus" (UBERON:0002474)
+            - source "GPi shell neuron" → label "internal globus pallidus
+              shell projection neuron" (CL:4310096)
+            - source "internal segment of globus pallidus" → label same
+              (populate identically when no discrepancy)
+
+  CLMapping:
+    description: >
+      A Cell Ontology term binding for a node, with an explicit mapping type.
+      Every non-terminal node should have a cl_mapping.
+      Use EXACT when this node IS the CL term (modulo species).
+      Use BROAD when the CL term is an ancestor and a new child term is needed.
+      The presence of proposed_cl_term on the node indicates a new term is being drafted.
+    attributes:
+      cl_term:
+        required: true
+        range: OntologyTerm
+        description: The CL term (existing or most appropriate ancestor)
+      mapping_type:
+        required: true
+        range: CLMappingType
+      mapping_notes:
+        description: >
+          Free text explaining the basis for this mapping type, especially for BROAD/RELATED.
+
+  GeneDescriptor:
+    description: >
+      A gene identified by the universal naming triple (name_in_source | id | label).
+      For genes, symbol fills both the name_in_source and label roles: gene symbols
+      ARE their own canonical labels in scientific usage, and recording the symbol
+      as written in the source preserves species case convention (Sst vs SST) and
+      the exact source wording. ncbi_gene_id is the stable cross-species identifier
+      (the id role). Evidence sources for the marker assertion are recorded in
+      the sources list.
+    attributes:
+      symbol:
+        required: true
+        description: >
+          Gene symbol exactly as it appears in the source: e.g. Sst, Pvalb,
+          Slc17a6 (mouse convention) or SST, PVALB, SLC17A6 (human convention).
+          Serves as both name_in_source and label — gene symbols are their own
+          canonical identifiers in scientific usage. ncbi_gene_id gives the
+          stable cross-species identifier.
+      modifier:
+        description: "Expression context: HIGH, LOW, ABSENT, ENRICHED"
+      ncbi_gene_id:
+        pattern: "^NCBIGene:[0-9]+$"
+        description: >
+          NCBI Gene ID as CURIE, e.g. NCBIGene:20604 (Mus musculus Sst).
+          Species-specific; preferred for multi-species use.
+          Use Translator NodeNormalization for cross-species mapping:
+          https://github.com/NCATSTranslator/NodeNormalization
+      hgnc_id:
+        pattern: "^HGNC:[0-9]+$"
+        description: >
+          HGNC ID (human-only). Deprecated in favour of ncbi_gene_id;
+          retained for backward compatibility.
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: MarkerSource
+        description: >
+          Evidence sources for this marker assertion. Multiple sources allowed —
+          e.g. protein evidence from one paper and transcript evidence from another.
+          Populate for classical and prior-transcriptomic nodes. Leave empty for
+          atlas node markers (atlas_markers, merfish_markers) — provenance is
+          implicit from the parent node's atlas + cell_set_accession.
+
+  CellTypeColocation:
+    description: >
+      A cell type that co-localises with or is spatially associated with the type
+      being described. Used to record relative positional context separately from
+      the absolute anatomical location.
+    attributes:
+      neighboring_type:
+        required: true
+        description: >
+          Name or local node ID of the colocating cell type,
+          e.g. "GPi core neuron (PVALB+)", "Purkinje cell", "classical_basket"
+      spatial_relationship:
+        description: >
+          Spatial relationship descriptor. Suggested values: ADJACENT, PROXIMAL,
+          DISTAL, INTERSPERSED, SAME_LAYER, LAYER_BORDER. Free text also acceptable.
+      notes:
+        description: Free-text context or citation supporting this colocation claim
+
+  # ── Property provenance ─────────────────────────────────────────
+  #
+  # ANATOMICAL LOCATION ONTOLOGY PREFERENCE:
+  # Anatomical location is recorded as an OntologyTerm (id + label + name_in_source).
+  # Preferred ontologies, in order:
+  #   Mouse:           MBA (Allen Mouse Brain Atlas CCF structure ontology)
+  #   Human / Primate: DHBA (Allen Developing Human Brain Atlas) or HBA (Human Brain Atlas)
+  #   Cross-species:   UBERON — use as fallback when no Allen term is available or
+  #                    when species-neutral identity is the priority
+  #   Future:          HOMBA (Allen multi-species neuro-anatomy ontology) — not yet released;
+  #                    migrate to HOMBA terms when available
+  # Look up terms via OLS4 (OLS4 MCP tool available). Allen terms carry UBERON
+  # cross-references. Both MBA and DHBA terms are findable in OLS under their prefixes.
+  # name_in_source carries the region name as it appears in the source paper or atlas.
+
+  HasMarkerType:
+    mixin: true
+    description: >
+      Mixin that adds a controlled marker_type field (PROTEIN | TRANSCRIPT).
+      Applied to MarkerSource to give the most important methodological
+      distinction as controlled vocabulary, while keeping the base
+      PropertySource generic.
+    attributes:
+      marker_type:
+        required: true
+        range: MarkerType
+        description: >
+          The molecule type detected: PROTEIN or TRANSCRIPT.
+          The specific technique goes in PropertySource.method (free text).
+
+  PropertySource:
+    description: >
+      Evidence source for a single property assertion on a node.
+      Used for: NeurotransmitterType.sources, ephys_sources, morphology_sources,
+      AnatomicalLocation.sources. For marker assertions use MarkerSource,
+      which adds the controlled marker_type field.
+
+      Leave sources lists empty on ATLAS_TRANSCRIPTOMIC nodes — provenance
+      is implicit from atlas + cell_set_accession (see header convention).
+
+      Property-specific guidance for LLM population:
+
+      NeurotransmitterType.sources — method should describe how NT type was
+        established: "IHC (GABA/glutamate antibody)",
+        "scRNA-seq (Gad2/Slc17a6 co-expression)",
+        "electrophysiology (inhibitory PSPs recorded)". Scope is important —
+        NT type can differ across species or developmental stage.
+
+      ephys_sources — ref to the recording study. Scope should note age,
+        temperature, and preparation (acute slice, in vivo, etc.).
+
+      morphology_sources — method e.g. "Golgi stain", "biocytin fill + confocal",
+        "electron microscopy". Snippet from the cell description section.
+
+      AnatomicalLocation.sources — ref establishing the location claim.
+        Scope is critical where location is context-specific or contested.
+        For sub-regional claims (e.g. "shell region"), cite specifically.
+    attributes:
+      ref:
+        required: true
+        pattern: "^(PMID:[0-9]+|https://doi\\.org/.+)$"
+        description: "DOI (https://doi.org/...) or PMID (PMID:xxxxxxxx)"
+      method:
+        description: >
+          How this property was detected or established. Free text.
+          Examples: "IHC", "patch-clamp (acute slice)", "Golgi stain",
+          "scRNA-seq", "smFISH", "retrograde tracing + scRNA-seq".
+      scope:
+        description: >
+          Experimental context: species, age, brain region, preparation.
+          E.g. "adult mouse GPi", "human GPi post-mortem tissue",
+          "P21 mouse cerebellum". Populate where context affects
+          generalisability of the claim.
+      snippet:
+        description: >
+          Verbatim quote from the cited source supporting this assertion.
+          Strongly recommended — primary material for reviewers at the
+          evidence gate. Must be exact text from the source, no paraphrase.
+
+  MarkerSource:
+    is_a: PropertySource
+    mixins:
+      - HasMarkerType
+    description: >
+      Evidence source for a marker assertion. Extends PropertySource with
+      a controlled marker_type field (PROTEIN | TRANSCRIPT). Use in
+      GeneDescriptor.sources. marker_type should always be populated.
+
+      Examples:
+        - marker_type: PROTEIN
+          method: "IHC (SST antibody)"
+          scope: "adult human GPi"
+          snippet: "SST+/SLC17A6+/SLC32A1+ neurons are located on the borders of the GPi"
+          ref: "https://doi.org/10.1016/j.neuron.2017.03.017"
+
+        - marker_type: TRANSCRIPT
+          method: "snRNA-seq"
+          scope: "adult mouse, WMBv1"
+          snippet: "Sst neuropeptide marker present in clusters 1996 and 1997"
+          ref: "https://doi.org/10.1038/s41586-023-06812-z"
+
+  NeurotransmitterType:
+    description: >
+      The neurotransmitter identity of a cell type, recorded as the universal
+      naming triple: name_in_source (verbatim source label) + cl_terms (CL
+      ontology identifiers) + sources (evidence provenance).
+
+      Used for both classical and atlas nodes — replaces the previous split
+      between nt_type (free string) and atlas_nt_type (verbatim string).
+
+      For dual/co-transmitter types, list both CL terms in cl_terms. The
+      name_in_source captures the compound label as written in the source
+      (e.g. "Glut-GABA", "GABA-Glut (dual)") — ordering may differ between
+      atlases (WMBv1 lists dominant NT first; HMBA BG lists GABA first by
+      convention). Use name_in_source to preserve this exactly; the cl_terms
+      list is order-independent.
+
+      CL terms for common neurotransmitter types:
+        CL:0000617  GABAergic neuron
+        CL:0000679  glutamatergic neuron
+        CL:0000108  cholinergic neuron
+        CL:0000084  glycinergic neuron  (Note: verify in current CL release)
+        CL:0000700  dopaminergic neuron
+        CL:0000561  serotonergic neuron (Note: verify in current CL release)
+      For types not covered by a single CL term, record the closest available
+      and note the limitation in sources[].scope or a node-level notes field.
+
+      On ATLAS_TRANSCRIPTOMIC nodes: set name_in_source to the verbatim atlas
+      label; cl_terms recommended but optional (atlas naming is primary).
+      Leave sources empty — provenance is implicit from atlas + cell_set_accession.
+    attributes:
+      name_in_source:
+        required: true
+        description: >
+          NT label exactly as written in the source paper or atlas, e.g.
+          "GABA", "Glut-GABA", "GABA-Glut (dual)", "GABA/Glycine", "Glut".
+          Preserves source naming convention including ordering, which can
+          differ between atlases for the same biology.
+      cl_terms:
+        multivalued: true
+        inlined_as_list: true
+        range: OntologyTerm
+        description: >
+          CL ontology terms for this NT type. One entry per transmitter
+          (e.g. two entries for a dual-transmitter type). Each OntologyTerm
+          carries id, label, and name_in_source (the individual substance
+          name as it appears in the source, e.g. "GABA", "Glut").
+          Strongly recommended for classical nodes; optional for atlas
+          terminal nodes where atlas naming is primary.
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources establishing this NT type. One or more
+          PropertySource entries with ref, method, scope, snippet.
+          method should describe how NT type was established, e.g.
+          "IHC (GABA antibody)", "scRNA-seq (Gad2/Slc17a6 co-expression)",
+          "electrophysiology (inhibitory PSPs recorded)".
+          scope is important — NT type can differ across species or
+          developmental stage.
+          Leave empty on ATLAS_TRANSCRIPTOMIC nodes (provenance implicit).
+
+  PropertyComparison:
+    description: >
+      A structured comparison of one property between type_a and type_b on
+      a mapping edge. Complements evidence items: evidence items provide
+      detailed justification; property_comparisons give a machine-readable
+      property-level alignment summary that makes the basis for the
+      confidence judgment explicit and reportable.
+
+      Populate at minimum: nt_type, location, all defining markers.
+      Use NOT_ASSESSED when data for a property is unavailable.
+    attributes:
+      property:
+        required: true
+        description: >
+          Name of the property compared. Suggested values:
+          nt_type, location, marker_{gene_symbol}, morphology,
+          electrophysiology, projection_target, ccf_distribution.
+          Free text — be specific, e.g. "marker_Sst" not "marker".
+      node_a_value:
+        required: true
+        description: >
+          Value of this property as recorded on type_a.
+          Use the actual text from the node, not a paraphrase.
+      node_b_value:
+        required: true
+        description: >
+          Value of this property as recorded on type_b (verbatim from
+          node or its source metadata).
+      alignment:
+        required: true
+        range: PropertyAlignment
+      notes:
+        description: >
+          Brief explanation of the alignment call.
+          Required for APPROXIMATE and DISCORDANT.
+          E.g. "Same biology; WMBv1 orders dual NT with dominant first
+          (Glut-GABA vs GABA-Glut), convention difference only."
+
+  HierarchyNode:
+    description: One level of an atlas taxonomy hierarchy (used in AtlasCellSetRef)
+    attributes:
+      level:
+        required: true
+        description: >
+          Taxonomy level string, e.g. CLASS, SUBCLASS, SUPERTYPE, CLUSTER (WMBv1)
+          or GROUP (HMBA BG). See schema header comment for atlas-specific values.
+      name:
+        required: true
+      cell_set_accession:
+        description: CCN accession at this level, e.g. CS20230722_SUPT_1145
+
+  ProposedCLTerm:
+    description: >
+      Draft or approved Cell Ontology term entry for the classical/named type being described.
+      Generated from the evidence graph by traversing from this node to terminal atlas nodes.
+      A node with cl_mapping.mapping_type = BROAD should have a ProposedCLTerm whose
+      parent_cl_term = cl_mapping.cl_term, placing the new term as a child in the hierarchy.
+    attributes:
+      cl_id:
+        description: Existing CL ID (e.g. CL:4310096) or proposed new ID placeholder
+      label:
+        description: Term label
+      parent_cl_term:
+        range: OntologyTerm
+        description: >
+          The CL term this proposed term is a child of.
+          For nodes with cl_mapping.mapping_type = BROAD, this should match cl_mapping.cl_term.
+          For nodes with cl_mapping.mapping_type = EXACT, this field is typically not needed.
+          Drives placement in the CL hierarchy and should be confirmed with CL editors.
+      definition:
+        description: >
+          Proposed CL definition text.
+          Standard template: "A [parent_cl_term.label] that is [distinguishing_feature].
+          These cells are located in [location]. Reference transcriptomic data for this
+          type can be found in [atlas] in cell set [accession]."
+      comment:
+        description: >
+          Proposed CL comment: the mapping rationale derived from the evidence chain.
+          Template: "Mapping to [type] is based on [evidence summary]. [Caveats if any]."
+      xrefs:
+        multivalued: true
+        description: >
+          References — DOIs, PMIDs, atlas URLs, and CCN cell set accessions.
+          The CCN accession of the terminal node(s) should always be included here.
+      status:
+        description: "DRAFT | SUBMITTED | ACCEPTED"
+
+
+# ══════════════════════════════════════════════════════════════════
+# GRAPH NODES
+# ══════════════════════════════════════════════════════════════════
+
+  CellTypeNode:
+    description: >
+      A named cell type at any level of description: classical, prior transcriptomic,
+      atlas cluster, or emerging multimodal. Nodes are connected by MappingEdges
+      to form the evidence graph. Terminal nodes are atlas cell sets.
+    attributes:
+      id:
+        required: true
+        identifier: true
+        description: >
+          Locally unique ID within this graph.
+          Suggested format: lowercase_underscored, e.g. "lugaro", "pli3_osorno", "wmb_1145"
+      name:
+        required: true
+        description: Human-readable name, e.g. "Lugaro cell", "CB PLI Gly-Gaba_2 (supertype 1145)"
+      definition_basis:
+        required: true
+        range: DefinitionBasis
+      species:
+        range: OntologyTerm
+        description: NCBITaxon term
+      anatomical_location:
+        range: OntologyTerm
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Anatomical location(s) of this cell type as an ontology term.
+          Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate);
+          use UBERON as fallback. Look up via OLS4. name_in_source carries the
+          region name as written in the source (e.g. "GPi shell region", "GPi").
+          Multiple entries for types that span regions or are defined relative
+          to multiple structures.
+      colocated_types:
+        range: CellTypeColocation
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Other cell types that co-localise with or are spatially adjacent to
+          this type. Records relative positional context separately from the
+          anatomical location above (e.g. "adjacent to GPi core neurons").
+      location_sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for the anatomical location assertion. Populate for
+          classical and prior-transcriptomic nodes, especially for sub-regional
+          claims where location is specific or contested. Leave empty for atlas
+          terminal nodes (provenance implicit from atlas + cell_set_accession).
+      cl_mapping:
+        range: CLMapping
+        description: >
+          CL term binding with mapping type (EXACT or BROAD).
+          Every non-terminal node should have a cl_mapping.
+          EXACT: this node IS this CL term (modulo species).
+          BROAD: this node is a subtype; a ProposedCLTerm would be a new child of the cl_term.
+          Terminal nodes (atlas cell sets) may also have a cl_mapping once cognate CL terms exist.
+      proposed_cl_term:
+        range: ProposedCLTerm
+        description: >
+          Draft CL term for this node — populated when authoring a new or revised CL entry.
+          For BROAD cl_mapping nodes: proposed_cl_term.parent_cl_term = cl_mapping.cl_term.
+          For EXACT cl_mapping nodes: proposed_cl_term.cl_id = cl_mapping.cl_term.id (updating an existing term).
+      is_terminal:
+        range: boolean
+        description: >
+          True if this node is a cell set in the community target atlas (the mapping destination).
+          Terminal nodes should have cell_set_accession populated.
+
+      # ── Markers (all node types) ─────────────────────────────────
+      # Classical nodes: from original description / literature.
+      # Atlas nodes: from atlas metadata (cluster.markers.combo, np.markers);
+      #   sources left empty — provenance implicit from atlas + cell_set_accession.
+      defining_markers:
+        range: GeneDescriptor
+        multivalued: true
+        description: >
+          Markers used to define this type. For classical/literature nodes: markers
+          from the original type description. For atlas nodes: defining markers from
+          the atlas (cluster.markers.combo or equivalent).
+      negative_markers:
+        range: GeneDescriptor
+        multivalued: true
+        description: Markers explicitly shown to be absent (all node types).
+      neuropeptides:
+        range: GeneDescriptor
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Neuropeptide co-transmitters expressed by this cell type (all node types).
+          For classical nodes: from literature (populate sources on each GeneDescriptor).
+          For atlas nodes: from atlas np.markers column (sources left empty).
+          Separate from defining_markers because neuropeptide identity is a distinct
+          functional property — though a gene may appear in both lists (e.g. Sst as
+          a defining marker AND as a neuropeptide co-transmitter).
+          Examples: Sst, Vip, Cck, Npy, Pnoc.
+      nt_type:
+        range: NeurotransmitterType
+        inlined: true
+        description: >
+          Neurotransmitter type of this cell type. Applies to both classical
+          and atlas terminal nodes (unified field, replaces atlas_nt_type).
+          Carries the naming triple: name_in_source (verbatim source label),
+          cl_terms (CL identifiers), sources (evidence provenance).
+      electrophysiology_class:
+        description: E-type label if defined, e.g. "fast-spiking", "regular-spiking adapting"
+      morphology_notes:
+        description: Key morphological features, e.g. "large soma, radially-projecting dendrites into ML"
+
+      # ── For PRIOR_TRANSCRIPTOMIC nodes ───────────────────────────
+      prior_dataset_accession:
+        description: >
+          Dataset accession where this T-type was defined, e.g. SCP795, GEO:GSE173954.
+          Used when definition_basis = PRIOR_TRANSCRIPTOMIC.
+      prior_cluster_label:
+        description: >
+          Cluster label in the prior dataset, e.g. "PLI3", "MLI1".
+          Used when definition_basis = PRIOR_TRANSCRIPTOMIC.
+      prior_reference:
+        pattern: "^(PMID:[0-9]+|https://doi\\.org/.+)$"
+        description: DOI or PMID of the paper defining this cluster, e.g. "https://doi.org/10.1038/s41593-022-01057-x"
+
+      # ── For ATLAS_TRANSCRIPTOMIC nodes (terminal) ─────────────────
+      atlas:
+        description: Atlas identifier, e.g. "WMBv1", "HMBA_BG_Consensus", "BICAN_10x_Multiome_2024"
+      taxonomy_id:
+        description: Taxonomy version identifier, e.g. CCN202307220
+      cell_set_accession:
+        description: CCN cell set accession at this node's taxonomy level, e.g. CS20230722_SUPT_1145
+      taxonomy_level:
+        description: >
+          Taxonomy level string, e.g. CLASS, SUBCLASS, SUPERTYPE, CLUSTER (WMBv1)
+          or GROUP (HMBA BG). See schema header comment for atlas-specific values.
+      parent_hierarchy:
+        range: HierarchyNode
+        multivalued: true
+        description: All parent levels in the atlas taxonomy, from immediate parent to root
+      n_cells:
+        range: integer
+      merfish_markers:
+        range: GeneDescriptor
+        multivalued: true
+        description: MERFISH panel markers distinguishing this type (merfish.markers.combo)
+      ccf_distribution:
+        description: >
+          CCF region distribution from atlas, e.g. "CB:0.72,NA:0.25" (from CCF_broad.freq column)
+
+      # ── Property provenance (classical / prior-transcriptomic nodes) ─────
+      definition_references:
+        multivalued: true
+        description: >
+          Source citations for node properties not covered by per-property
+          source fields: morphology description, projection targets, etc.
+          DOI or PMID strings. NT type provenance is now in nt_type.sources.
+          For prior-transcriptomic nodes this replaces prior_reference
+          (prior_reference retained for backward compatibility).
+          Not needed for atlas terminal nodes — use metadata_url on
+          AtlasMetadataEvidence instead.
+      ephys_sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for electrophysiology_class assertion.
+          ref to the recording study; snippet from the e-type description.
+          scope should note age, temperature, and preparation type
+          (e.g. "P21 mouse, acute slice, 32°C").
+      morphology_sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for morphology_notes assertion.
+          method e.g. "Golgi stain", "biocytin fill + confocal",
+          "electron microscopy". Snippet from cell description section.
+
+      notes:
+        description: Any caveats or observations not captured by other fields
+
+
+# ══════════════════════════════════════════════════════════════════
+# EVIDENCE ITEMS
+# ══════════════════════════════════════════════════════════════════
+
+  EvidenceItem:
+    abstract: true
+    description: Base class for all evidence items supporting a mapping edge
+    attributes:
+      evidence_type:
+        required: true
+        range: EvidenceType
+      supports:
+        required: true
+        range: EvidenceSupport
+      explanation:
+        required: true
+        description: >
+          Why this evidence supports/refutes/partially supports the mapping.
+          Should be concise and citable — this text feeds the CL comment.
+      figure_urls:
+        multivalued: true
+        description: >
+          URLs to supporting figures or database screenshots. Use for visual
+          evidence that complements the text explanation, e.g.:
+            - Atlas browser views showing spatial distribution across species
+            - UMAP/t-SNE plots showing cluster location
+            - Dot plots showing marker expression profiles
+            - Supplementary data figures from papers
+            - OLS/ontology browser entry screenshots
+          Prefer stable, persistent URLs (DOI-resolved figures, database entry
+          pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and
+          Figshare/Zenodo figure links are all acceptable.
+
+  LiteratureEvidence:
+    is_a: EvidenceItem
+    description: >
+      Evidence from a peer-reviewed paper. Must include verbatim snippet from abstract
+      (or open-access full text). Used for: classical type definitions, prior T-type
+      characterisations, cross-modal bridging papers.
+    attributes:
+      reference:
+        required: true
+        pattern: "^(PMID:[0-9]+|https://doi\\.org/.+)$"
+        description: "PMID:xxxxxxxx or https://doi.org/xxxxx"
+      snippet:
+        required: true
+        description: >
+          Exact verbatim text from the cited paper's abstract (or full text if open access).
+          Must be a literal substring of the cached reference — no paraphrasing.
+      study_type:
+        description: >
+          Type of study: MORPHOLOGICAL, ELECTROPHYSIOLOGICAL, TRANSCRIPTOMIC,
+          MULTIMODAL, FUNCTIONAL, REVIEW
+
+  AtlasMetadataEvidence:
+    is_a: EvidenceItem
+    description: >
+      Evidence drawn directly from an atlas taxonomy metadata file (the cluster spreadsheet).
+      Captures: anatomical location (from MERFISH registration), NT type, defining markers,
+      CCF distribution. Primary evidence type for atlas-to-classical mappings based on
+      atlas-provided information. E.g. GPi shell neuron mapping based on HMBA metadata.
+    attributes:
+      atlas:
+        required: true
+        description: Atlas identifier, e.g. "HMBA_BG_Consensus", "WMBv1"
+      cell_set_accession:
+        description: CCN accession for the referenced cell set
+      anatomical_location:
+        range: OntologyTerm
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Anatomical location from atlas curation. OntologyTerm with name_in_source
+          set to the verbatim atlas annotation (e.g. "GPi", "GPi shell and surrounding
+          GPi core neurons"). id/label from Allen atlas (MBA/DHBA) or UBERON.
+      ccf_distribution:
+        description: CCF region frequency distribution from atlas, e.g. "GPi:0.78,GPe:0.12"
+      nt_type:
+        range: NeurotransmitterType
+        inlined: true
+        description: >
+          NT type as recorded in the atlas taxonomy. Use NeurotransmitterType:
+          set name_in_source to the verbatim atlas label (e.g. "Glut-GABA");
+          cl_terms recommended. Leave sources empty — provenance is implicit
+          from this evidence item's atlas + metadata_url.
+      nt_consistent_with_classical:
+        range: boolean
+        description: >
+          DEPRECATED in v0.5 — superseded by MappingEdge.property_comparisons,
+          which captures NT type alignment (and all other properties) in a
+          general, structured way. Retained for backward compatibility.
+          Use property_comparisons with property: "nt_type" instead.
+      defining_markers:
+        range: GeneDescriptor
+        multivalued: true
+        description: Defining markers from the atlas metadata (cluster.markers.combo or equivalent)
+      negative_markers:
+        range: GeneDescriptor
+        multivalued: true
+        description: Markers explicitly absent (e.g. Pvalb-negative in GPi shell)
+      neuropeptides:
+        range: GeneDescriptor
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Neuropeptide co-transmitters from the atlas (np.markers column or equivalent).
+          Mirrors atlas node neuropeptides — same data, snapshot on the evidence item.
+      merfish_markers:
+        range: GeneDescriptor
+        multivalued: true
+        description: MERFISH panel markers for this cell set (from merfish.markers.combo)
+      metadata_url:
+        description: URL or accession of the metadata file used
+
+  AnnotationTransferLevelResult:
+    description: Annotation transfer metrics at a single taxonomy level
+    attributes:
+      taxonomy_level:
+        required: true
+        description: Taxonomy level string (e.g. CLASS, SUBCLASS, SUPERTYPE, CLUSTER)
+      best_target_name:
+        required: true
+        description: Name of the best-matching target at this level
+      best_target_accession:
+        description: CCN accession of the best-matching target
+      group_purity:
+        range: float
+        description: >
+          Precision: fraction of source cells mapping to this target.
+          High group_purity = the source type is concentrated in this target.
+      target_purity:
+        range: float
+        description: >
+          Recall: fraction of all cells in the target that come from this source.
+          High target_purity = the target is specific to this source type.
+      f1_score:
+        range: float
+        description: Harmonic mean of group_purity and target_purity
+      n_cells_mapped:
+        range: integer
+        description: Number of source cells mapped to this target at this level (after bootstrap filter)
+      median_bootstrap:
+        range: float
+        description: Median bootstrap confidence score for cells mapped to this target
+
+  AnnotationTransferEvidence:
+    is_a: EvidenceItem
+    description: >
+      Evidence from computational label transfer between transcriptomic datasets.
+      Minimal required fields: target_atlas + method.
+      Report quality with best_f1_score (simple) or metrics_by_level (detailed).
+      Covers two scenarios:
+        (a) External dataset → community atlas: e.g. PLI3 cells (Osorno SCP795) → WMBv1.
+            Source cluster identified by dataset accession + cluster label.
+        (b) Allen taxonomy → Allen taxonomy: e.g. HMBA BG → WMBv1, or one atlas version
+            to another. Source cluster identified by CCN cell_set_accession on both sides.
+            Populate source_cell_set_accession when the source node has a CCN accession.
+    attributes:
+      # ── Required ──────────────────────────────────────────────────
+      target_atlas:
+        required: true
+        description: Atlas the cells were mapped to, e.g. "WMBv1"
+      method:
+        required: true
+        description: Transfer method, e.g. "MapMyCells (default parameters)", "Seurat v4 label transfer"
+      source_species:
+        range: OntologyTerm
+        description: >
+          NCBITaxon term for the species of the source dataset.
+          Required when source and target species differ (cross-species transfer).
+          E.g. {id: NCBITaxon:9443, label: Primates} for primate → mouse WMBv1.
+      target_species:
+        range: OntologyTerm
+        description: >
+          NCBITaxon term for the species of the target atlas.
+          E.g. {id: NCBITaxon:10090, label: Mus musculus} for WMBv1.
+
+      # ── Strongly recommended ───────────────────────────────────
+      source_dataset_accession:
+        description: >
+          Accession of the source dataset.
+          E.g. SCP:SCP795, GEO:GSE173954, NeMO:nemo_xxxxxxx
+          For cross-Allen-taxonomy transfers, this may be the taxonomy_id
+          (e.g. CCN202307220) or the atlas identifier (e.g. "HMBA_BG_Consensus").
+      source_cluster_label:
+        description: >
+          Cluster label in the source dataset (e.g. "PLI3", "MLI1", "5178 CB PLI Gly-Gaba_1").
+      best_f1_score:
+        range: float
+        description: >
+          F1 score at the best-mapping taxonomy level.
+          Minimum quality metric; use when full metrics_by_level is unavailable.
+          Derive from metrics_by_level[best_mapping_level].f1_score when present.
+      best_mapping_level:
+        description: >
+          Taxonomy level at which best_f1_score was achieved.
+          E.g. "SUPERTYPE" for PLI3→1145 (F1=0.96) vs "CLUSTER" for PLI1→5178 (F1=0.94).
+
+      # ── Optional detail ────────────────────────────────────────
+      source_cell_set_accession:
+        description: >
+          CCN cell set accession of the source cluster, if available.
+          Populate for cross-Allen-taxonomy transfers where the source node
+          is an atlas cell set with a stable CCN identifier.
+      n_cells_total:
+        range: integer
+        description: Total cells from this cluster before bootstrap filtering
+      n_cells_after_filter:
+        range: integer
+        description: Cells retained after bootstrap filtering
+      bootstrap_threshold:
+        range: float
+        description: Bootstrap score cutoff applied (e.g. 0.8 = cells with score <0.8 discarded)
+      metrics_by_level:
+        range: AnnotationTransferLevelResult
+        multivalued: true
+        description: >
+          Full per-level metrics (optional). Include when multi-level analysis is relevant;
+          omit when best_f1_score suffices. Record the best target at each level.
+      nt_consistent_with_classical:
+        range: boolean
+        description: >
+          DEPRECATED in v0.5 — superseded by MappingEdge.property_comparisons.
+          Retained for backward compatibility.
+      tool_version:
+        description: Version of tool used, e.g. "MapMyCells v1.2"
+      code_reference:
+        description: >
+          URL or accession of the notebook/script that produced these results.
+          E.g. https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+
+  SpatialColocationEvidence:
+    is_a: EvidenceItem
+    description: Evidence from spatial transcriptomics or FISH co-location analysis
+    attributes:
+      spatial_dataset:
+        description: Dataset accession or publication reference
+      spatial_technology:
+        description: "MERFISH, Visium, seqFISH+, smFISH, FISH, ExSEQ"
+      anatomical_region:
+        range: OntologyTerm
+      probes_used:
+        multivalued: true
+        description: Gene probes in the spatial assay
+      colocation_metric:
+        description: "Metric: Moran's I, nearest-neighbour distance, co-expression fraction"
+      colocation_value:
+        range: float
+      registration_method:
+        description: How cells/spots were registered to CCF, if applicable
+      registration_uncertainty:
+        range: boolean
+        description: Set true if registration accuracy is a known concern (adds MERFISH_REGISTRATION_UNCERTAINTY caveat)
+
+  PatchSeqEvidence:
+    is_a: EvidenceItem
+    description: >
+      Evidence from patch-seq (simultaneous electrophysiology + morphology + transcriptomics).
+      Can come from atlas-associated datasets or third-party studies.
+    attributes:
+      dataset_accession:
+        description: Dataset accession, e.g. Allen Cell Types DB, NeMO, DANDI
+      n_cells_matched:
+        range: integer
+        description: Number of patch-seq cells matching this type definition
+      transcriptomic_match_score:
+        range: float
+        description: Average transcriptomic correspondence score for matched cells
+      morphology_features:
+        multivalued: true
+        description: Morphological features consistent with the type, e.g. "axonal arborisation in Purkinje layer"
+      ephys_features:
+        multivalued: true
+        description: >-
+          Key E-type features, e.g. "fast-spiking", "Rin: 120-180 MOhm", "no adaptation"
+      matched_cluster_id:
+        description: Atlas cluster ID matched by these patch-seq cells
+
+  ProjectionSeqEvidence:
+    is_a: EvidenceItem
+    description: >
+      Evidence from projection-seq or retrograde tracing combined with transcriptomics.
+      Used to link projection target identity with transcriptomic type.
+    attributes:
+      dataset_accession:
+        description: Dataset accession
+      projection_target:
+        range: OntologyTerm
+        description: Brain region where axons project to
+      fraction_projecting:
+        range: float
+        description: Fraction of the cell set with projections to this target
+      method:
+        description: "retrograde tracing + scRNAseq, proj-seq, MERFISH + anterograde tracing"
+
+  ElectrophysiologyEvidence:
+    is_a: EvidenceItem
+    description: Electrophysiology evidence without transcriptomics
+    attributes:
+      dataset_accession:
+        description: Dataset or publication reference
+      etype_label:
+        description: E-type classification label
+      key_features:
+        multivalued: true
+        description: Quantitative features matching the classical type
+
+  MorphologyEvidence:
+    is_a: EvidenceItem
+    description: Morphological characterisation
+    attributes:
+      dataset_accession:
+        description: Dataset or publication reference
+      imaging_method:
+        description: "Golgi stain, biocytin fill, EM, expansion microscopy"
+      key_features:
+        multivalued: true
+        description: Morphological features, e.g. "ascending axon collateral", "beaded dendrites"
+
+  MarkerAnalysisEvidence:
+    is_a: EvidenceItem
+    description: >
+      Custom marker gene overlap analysis (beyond what atlas metadata provides).
+      E.g. intersecting DEG lists between a prior study and an atlas.
+    attributes:
+      dataset_accession:
+        description: Dataset used for analysis
+      markers_examined:
+        multivalued: true
+        description: Gene symbols examined
+      overlap_metric:
+        description: "Jaccard index (top-50 DEGs), Fisher exact p, AUC, hypergeometric"
+      overlap_value:
+        range: float
+      method:
+        description: Analysis method, e.g. "DEG intersection, Seurat FindMarkers"
+
+
+# ══════════════════════════════════════════════════════════════════
+# TYPED CAVEATS
+# ══════════════════════════════════════════════════════════════════
+
+  Caveat:
+    description: >
+      A typed caveat about the reliability or completeness of this mapping edge.
+      Caveats are distinct from EvidenceItems: they document limitations, not positive support.
+    attributes:
+      caveat_type:
+        required: true
+        range: CaveatType
+      description:
+        required: true
+        description: >
+          Specific explanation of this caveat in the context of this mapping.
+          Will appear in the CL comment and community report.
+
+
+# ══════════════════════════════════════════════════════════════════
+# GRAPH EDGES
+# ══════════════════════════════════════════════════════════════════
+
+  MappingEdge:
+    description: >
+      An evidenced mapping assertion between two CellTypeNodes.
+      Edges are directional (type_a → type_b) but the relationship field
+      describes the nature of the correspondence, not a hierarchy.
+
+      Transitivity: edges can be chained. E.g.:
+        classical_lugaro --[EQUIVALENT, Osorno 2022]--> pli3_osorno
+        pli3_osorno --[EQUIVALENT, MapMyCells]--> wmb_supertype_1145
+
+      Cross-cutting: use multiple edges, all pointing at the same type_b:
+        classical_basket --[CROSS_CUTTING, Kozareva 2021]--> mli1_kozareva
+        classical_stellate --[PARTIAL_OVERLAP, Kozareva 2021]--> mli1_kozareva
+    attributes:
+      id:
+        required: true
+        identifier: true
+        description: Unique edge ID, e.g. "edge_lugaro_to_pli3"
+      type_a:
+        required: true
+        description: ID of the source node (reference to CellTypeNode.id)
+      type_b:
+        required: true
+        description: ID of the target node (reference to CellTypeNode.id)
+      relationship:
+        required: true
+        range: MappingRelationship
+      confidence:
+        required: true
+        range: MappingConfidence
+      evidence:
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: EvidenceItem
+        description: All evidence items directly supporting this specific edge (min 1)
+      property_comparisons:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertyComparison
+        description: >
+          Structured property-by-property comparison between type_a and type_b.
+          Makes the basis for the confidence judgment machine-readable and
+          surfaceable in reports. Populate at minimum: nt_type, location,
+          and all defining markers. Use NOT_ASSESSED where data is unavailable.
+      caveats:
+        multivalued: true
+        inlined_as_list: true
+        range: Caveat
+      unresolved_questions:
+        multivalued: true
+        description: Specific outstanding questions about this edge
+      proposed_experiments:
+        multivalued: true
+        description: Experiments that would resolve or strengthen this edge
+      curator:
+        description: Name or ORCID of person who curated this edge
+      creation_date:
+        range: date
+      updated_date:
+        range: date
+
+
+# ══════════════════════════════════════════════════════════════════
+# TOP-LEVEL GRAPH CONTAINER
+# ══════════════════════════════════════════════════════════════════
+
+  CellTypeMappingGraph:
+    tree_root: true
+    description: >
+      A graph of cell type mapping evidence for a brain region or cell class.
+      Contains CellTypeNodes (classical types, prior T-types, atlas cell sets)
+      connected by MappingEdges (each with evidence and confidence).
+      Terminal nodes (is_terminal=true) are community atlas cell sets.
+    attributes:
+      name:
+        required: true
+        description: e.g. "Cerebellar cortex interneurons — WMBv1", "Basal ganglia GPi types — HMBA"
+      description: {}
+      brain_region:
+        range: OntologyTerm
+        description: >
+          Brain region covered by this evidence graph. OntologyTerm with
+          Allen atlas term preferred (MBA/DHBA); UBERON as fallback.
+      target_atlas:
+        required: true
+        description: The community atlas that terminal nodes belong to
+      species:
+        range: OntologyTerm
+        description: Primary species (NCBITaxon)
+      nodes:
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: CellTypeNode
+      edges:
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: MappingEdge
+      creation_date:
+        range: date
+      updated_date:
+        range: date
+      notes:
+        description: Free-text notes about scope, limitations, or outstanding issues

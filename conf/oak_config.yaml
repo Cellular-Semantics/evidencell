@@ -1,0 +1,28 @@
+# OAK Configuration for evidencell term validation
+# Maps ontology prefixes to OAK adapter strings.
+#
+# Adapter types:
+#   sqlite:obo:<name>  - Pre-built SQLite databases (fast, offline, recommended)
+#                        OAK caches these in ~/.data/oaklib/ on first use.
+#   ""                 - Skip validation for this prefix (no warning)
+#
+# Only prefixes listed here are validated.
+# Run `just fetch-oak-dbs` for a guided setup of the SQLite databases.
+
+ontology_adapters:
+  # Cell type ontology — primary controlled vocabulary for cell type nodes
+  CL: sqlite:obo:cl
+
+  # Anatomy — brain regions, CCF structures
+  UBERON: sqlite:obo:uberon
+
+  # Taxonomy — species identifiers on evidence scope fields
+  NCBITaxon: sqlite:obo:ncbitaxon
+
+  # Skip LinkML/RDF meta-prefixes
+  linkml: ""
+  schema: ""
+  xsd: ""
+  rdf: ""
+  rdfs: ""
+  owl: ""

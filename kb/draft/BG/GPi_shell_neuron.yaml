@@ -1,0 +1,258 @@
+##
+# GPi Shell Neuron (Primate) — HMBA Basal Ganglia Consensus Taxonomy mapping
+#
+# Brain region: Internal globus pallidus
+# Target atlas: HMBA Basal Ganglia Consensus Taxonomy
+# CL term: CL:4310096
+# Curation date: 2026-02-25
+# Curator: dosumis
+#
+# This is an atlas-metadata-first example: the primary evidence comes from
+# the HMBA taxonomy metadata (MERFISH location, NT type, marker expression),
+# supported by two literature references. Single-step graph.
+#
+# Evidence graph:
+#
+#   classical_gpi_shell ──[EQUIVALENT, atlas metadata + lit]──► hmba_gpi_shell_group  (terminal)
+##
+
+name: "GPi Shell Neuron — HMBA Basal Ganglia Consensus Taxonomy"
+description: >
+  Evidence graph for the GPi Shell neuron (internal globus pallidus shell projection
+  neuron), mapping the classical anatomically-defined type to the HMBA Basal Ganglia
+  Consensus Taxonomy. CL term CL:4310096 has been created for this type.
+
+brain_region:
+  id: HBA:12898
+  label: "globus pallidus, internal segment"
+  name_in_source: "Internal segment of globus pallidus"
+  # HBA:12898 = human adult Allen Brain Atlas term (preferred for primate data).
+  # DHBA:10344 = internal segment of globus pallidus (developing human) — use for fetal/developing data.
+  # UBERON:0002474 = cross-species fallback.
+
+target_atlas: HMBA_BG_Consensus
+
+species:
+  id: NCBITaxon:9443
+  label: Primates
+  name_in_source: Primates
+
+creation_date: "2026-02-25"
+
+
+# ══════════════════════════════════════════════════════════════════
+# NODES
+# ══════════════════════════════════════════════════════════════════
+
+nodes:
+
+  - id: classical_gpi_shell
+    name: "GPi shell neuron (internal globus pallidus shell projection neuron)"
+    definition_basis: CLASSICAL_ANATOMICAL
+    species: {id: NCBITaxon:9443, label: Primates, name_in_source: Primates}
+    anatomical_location:
+      - id: HBA:12898
+        label: "globus pallidus, internal segment"
+        name_in_source: "Internal segment of globus pallidus, shell region"
+        # Shell is a sub-regional descriptor; no separate Allen term for the shell zone.
+        # HBA:12898 is the enclosing structure. Shell localisation documented in
+        # Wallace et al. 2017 (PMID:28384468). For developing human brain use DHBA:10344.
+    colocated_types:
+      - neighboring_type: "GPi core neuron (PVALB+)"
+        spatial_relationship: ADJACENT
+        notes: >
+          Shell surrounds the core; PVALB+/SLC32A1+ pure GABAergic core neurons
+          are located in the center of GPi while SST+ dual-transmitter shell
+          neurons are at the borders (Wallace et al. 2017, PMID:28384468).
+    nt_type:
+      name_in_source: "GABA-Glut (dual)"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: "Glut"
+      sources:
+        - ref: "https://doi.org/10.1016/j.neuron.2017.03.017"
+          method: "FISH (SST/SLC17A6/SLC32A1 triple labelling)"
+          scope: "adult human GPi"
+          snippet: >
+            "the majority of dual transmitter (SST+/SLC17A6+/SLC32A1+) and pure
+            glutamatergic (SLC32A1−/SLC17A6+) neurons are located on the borders
+            of the GPi whereas the pure GABAergic (PVALB+/SLC32A1+) cells are
+            located in the center of the nucleus."
+    neuropeptides:
+      - symbol: SST
+        ncbi_gene_id: "NCBIGene:6750"
+    cl_mapping:
+      cl_term: {id: CL:4310096, label: internal globus pallidus shell projection neuron, name_in_source: internal globus pallidus shell projection neuron}
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:4310096 was created specifically for this type; this node IS that term.
+    defining_markers:
+      - {symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
+      - {symbol: TBR1, ncbi_gene_id: "NCBIGene:10716"}
+      - {symbol: SLC17A6, ncbi_gene_id: "NCBIGene:57084"}
+    negative_markers:
+      - {symbol: PVALB, modifier: ABSENT, ncbi_gene_id: "NCBIGene:5816"}
+    is_terminal: false
+    proposed_cl_term:
+      cl_id: CL:4310096
+      label: internal globus pallidus shell projection neuron
+      definition: >
+        A internal globus pallidus shell projection neuron of the Primates brain.
+        These cells are located in the striatum, external segment of globus pallidus,
+        internal segment of globus pallidus. Reference transcriptomic data for this
+        type can be found in the dataset/taxonomy - HMBA Basal Ganglia Consensus
+        Taxonomy in cell set Group:GPi Shell.
+      comment: >
+        Mapping to the general type GPi shell neuron (internal globus pallidus shell
+        projection neuron) is based on soma location (to GPi & surrounding GPi core
+        neurons), neurotransmitter (dual GABA-Glut), expression of Sst, Tbr1, Slc17a6
+        and absence of Pvalb expression. Location is inferred from registration of
+        MERFISH Data. Registration may be inaccurate, giving misleading location to
+        adjacent anatomical regions.
+      xrefs:
+        - https://alleninstitute.github.io/HMBA_BasalGanglia_Consensus_Taxonomy/
+        - https://doi.org/10.1016/j.neuron.2017.03.017
+        - https://doi.org/10.1523/ENEURO.0208-22.2022
+      status: ACCEPTED
+
+  - id: hmba_gpi_shell_group
+    name: "Group:GPi Shell (HMBA Basal Ganglia Consensus Taxonomy)"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: HMBA_BG_Consensus
+    taxonomy_level: GROUP
+    cell_set_accession: CS20250428_GROUP_0016
+    species: {id: NCBITaxon:9443, label: Primates, name_in_source: Primates}
+    anatomical_location:
+      - id: HBA:12898
+        label: "globus pallidus, internal segment"
+        name_in_source: "Internal segment of globus pallidus"
+    nt_type:
+      name_in_source: "GABA-Glut (dual)"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: "Glut"
+    atlas_markers:
+      - {symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
+      - {symbol: TBR1, ncbi_gene_id: "NCBIGene:10716"}
+      - {symbol: SLC17A6, ncbi_gene_id: "NCBIGene:57084"}
+    atlas_neuropeptides:
+      - {symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
+    is_terminal: true
+    notes: >
+      "Group" level is below Class in the HMBA BG taxonomy hierarchy (Class > Group).
+      CCN accession confirmed: CS20250428_GROUP_0016.
+
+
+# ══════════════════════════════════════════════════════════════════
+# EDGES
+# ══════════════════════════════════════════════════════════════════
+
+edges:
+
+  - id: edge_gpi_shell_to_hmba
+    type_a: classical_gpi_shell
+    type_b: hmba_gpi_shell_group
+    relationship: EQUIVALENT
+    confidence: MODERATE
+    evidence:
+
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          HMBA atlas metadata provides MERFISH-derived soma location (GPi and
+          surrounding GPi core region), neurotransmitter type (dual GABA-Glut),
+          and defining marker expression (Sst+, Tbr1+, Slc17a6+, Pvalb-).
+          All features are consistent with the classical GPi shell neuron description.
+        atlas: HMBA_BG_Consensus
+        anatomical_location:
+          - id: HBA:12898
+            label: "globus pallidus, internal segment"
+            name_in_source: "GPi shell and surrounding GPi core neurons"
+        nt_type:
+          name_in_source: "GABA-Glut (dual)"
+          cl_terms:
+            - id: CL:0000617
+              label: GABAergic neuron
+              name_in_source: "GABA"
+            - id: CL:0000679
+              label: glutamatergic neuron
+              name_in_source: "Glut"
+        positive_markers:
+          - {symbol: Sst}
+          - {symbol: Tbr1}
+          - {symbol: Slc17a6}
+        negative_markers:
+          - {symbol: Pvalb, modifier: ABSENT}
+        metadata_url: "https://alleninstitute.github.io/HMBA_BasalGanglia_Consensus_Taxonomy/"
+
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "https://doi.org/10.1016/j.neuron.2017.03.017"
+        snippet: >
+          "Similar to mouse EP, we found 1) SST+/SLC17A6+/SLC32A1+, 2)
+          PVALB+/SLC17A6−/SLC32A1+, and 3) SLC17A6+/SLC32A1− neurons in the
+          human GPi [...] the majority of dual transmitter
+          (SST+/SLC17A6+/SLC32A1+) and pure glutamatergic
+          (SLC32A1−/SLC17A6+) neurons are located on the borders of the GPi
+          whereas the pure GABAergic (PVALB+/SLC32A1+) cells are located in
+          the center of the nucleus."
+        explanation: >
+          Establishes three molecularly distinct neuron classes in human GPi by
+          triple FISH: SST+/SLC17A6+/SLC32A1+ dual-transmitter neurons at the
+          GPi border (shell), and PVALB+ pure GABAergic neurons in the center
+          (core). Directly supports dual GABA-Glut, SST+/Pvalb- marker profile
+          and shell vs core anatomical organisation in primates.
+        study_type: TRANSCRIPTOMIC
+
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "https://doi.org/10.1523/ENEURO.0208-22.2022"
+        snippet: >
+          "In contrast, SOM-containing neurons in the cEPN were distributed in
+          the area with hSP/lCB1R immunoreactivity [...] Among these subregions,
+          the core in the cEPN was characterized by the highest density of PV
+          neurons compared with the other three subregions."
+        explanation: >
+          Establishes shell/core anatomical subregion structure of the mouse EPN
+          (= rodent GPi equivalent) using SP and CB1R immunoreactivity: SOM
+          (somatostatin) neurons concentrate in the shell, PV neurons in the core.
+          Directly supports the anatomical shell/core distinction and differential
+          SOM vs Pvalb distribution. Note: mouse data; Tbr1 and Slc17a6 are not
+          described in this study — those markers come from the HMBA atlas
+          (ATLAS_METADATA evidence above).
+        study_type: HISTOCHEMICAL
+
+    caveats:
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          Anatomical location (GPi shell) is inferred from MERFISH CCF registration.
+          Registration may be inaccurate, potentially misassigning cells to
+          adjacent regions (GPe, striatum). This is explicitly noted in CL:4310096.
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: >
+          The target cell set is at "Group" level in the HMBA BG taxonomy
+          (hierarchy: Class > Group). Group is a substructure within Class and
+          sits above Subclass/Supertype/Cluster, so this is a moderately coarse
+          mapping. The Group may encompass multiple more finely-resolved clusters
+          that have not yet been individually characterised.
+
+    unresolved_questions:
+      - >
+        Are there finer-grained HMBA clusters within the GPi Shell group
+        (CS20250428_GROUP_0016) that correspond to distinct sub-populations
+        (e.g. by projection target or co-transmission ratio)?
+    proposed_experiments:
+      - >
+        Re-examine HMBA data at cluster level within Group:GPi Shell to determine
+        if additional transcriptomic heterogeneity is present within this group.
+      - >
+        MERFISH with probes for Sst, Tbr1, Slc17a6 and Pvalb in GPi to
+        validate location and marker profile with higher spatial precision.

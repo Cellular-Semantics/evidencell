@@ -1,0 +1,435 @@
+##
+# Cerebellar Molecular Layer Interneurons — WMBv1 mapping
+#
+# Brain region: Cerebellar cortex (molecular layer interneurons)
+# Target atlas: WMBv1 (Yao et al. 2023, Nature 624:317-332)
+# Curation date: 2026-02-25
+# Curator: dosumis
+# Source analysis: https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+#
+# KEY BIOLOGICAL FINDING: MLI1 and MLI2 CROSS-CUT the classical basket/stellate boundary.
+# This graph makes the cross-cutting explicit as a first-class feature.
+#
+# Evidence graph:
+#
+#   classical_basket   ──[CROSS_CUTTING, Kozareva 2021]─────┐
+#   classical_stellate ──[PARTIAL_OVERLAP, Kozareva 2021]───┼──► mli1_kozareva
+#                       ──[PARTIAL_OVERLAP, Kozareva 2021]───┘
+#   classical_stellate ─(also)──[PARTIAL_OVERLAP, Kozareva 2021]──► mli2_kozareva
+#
+#   mli1_kozareva ──[EQUIVALENT, F1≈0.999, MapMyCells]──► wmb_cluster_5188  (terminal)
+#   mli2_kozareva ──[EQUIVALENT, F1≈0.996, MapMyCells]──► wmb_cluster_5192  (terminal)
+#
+# Note: The transcriptomic types MLI1 and MLI2 are MORE FUNDAMENTAL than the
+# classical basket/stellate distinction. The schema records this correctly —
+# the classical types are not "wrong", but the T-type boundary is differently placed.
+##
+
+name: "Cerebellar Molecular Layer Interneurons — WMBv1"
+description: >
+  Evidence graph mapping classically defined molecular layer interneuron types
+  (cerebellar basket cells and stellate cells) to cell sets in the WMBv1 atlas.
+  Mapping reveals that MLI1 and MLI2 transcriptomic types cross-cut the classical
+  basket/stellate boundary (Kozareva et al. 2021), and both map cleanly to WMBv1
+  clusters via MapMyCells annotation transfer.
+
+brain_region:
+  id: MBA:1144
+  label: "Cerebellar cortex, molecular layer"
+  name_in_source: "Cerebellar cortex, molecular layer"
+
+target_atlas: WMBv1
+
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus"
+
+creation_date: "2026-02-25"
+
+
+# ══════════════════════════════════════════════════════════════════
+# NODES
+# ══════════════════════════════════════════════════════════════════
+
+nodes:
+
+  # ── Classical types ────────────────────────────────────────────
+
+  - id: classical_basket
+    name: "Cerebellar basket cell"
+    definition_basis: CLASSICAL_MORPHOLOGICAL
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1144
+        label: "Cerebellar cortex, molecular layer"
+        name_in_source: "Cerebellar cortex, molecular layer (inner third)"
+    colocated_types:
+      - neighboring_type: Purkinje cell
+        spatial_relationship: PROXIMAL
+        notes: >
+          Basket cells are located in the inner molecular layer proximal to the
+          Purkinje cell layer; their axonal arbours form basket-like structures
+          around Purkinje cell soma (Kozareva et al. 2021, PMID:34616064).
+    cl_mapping:
+      cl_term: {id: CL:2000027, label: cerebellar basket cell, name_in_source: "cerebellar basket cell"}
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:2000027 (cerebellar basket cell) is the exact CL term for this type.
+        The cross-cutting relationship with MLI1 means the classical definition
+        (morphology + location) and the transcriptomic definition (MLI1) do not
+        align — the CL term captures the classical morphological type.
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    morphology_notes: >
+      Located in the inner molecular layer close to the Purkinje cell layer.
+      Characterised by basket-like axonal arborisations enveloping Purkinje
+      cell soma. Classical definition based on morphology and location.
+    is_terminal: false
+    notes: >
+      MLI1 (Kozareva) CROSS-CUTS the basket/stellate boundary: basket morphology
+      is correlated with proximity to Purkinje layer in MLI1 cells, but MLI1
+      also includes distally-located cells with stellate morphology.
+      The CL term for basket cell will need updating to reflect this.
+
+  - id: classical_stellate
+    name: "Cerebellar stellate cell"
+    definition_basis: CLASSICAL_MORPHOLOGICAL
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1144
+        label: "Cerebellar cortex, molecular layer"
+        name_in_source: "Cerebellar cortex, molecular layer (outer third)"
+    colocated_types:
+      - neighboring_type: Purkinje cell
+        spatial_relationship: DISTAL
+        notes: >
+          Stellate cells are located in the outer molecular layer, distal from
+          the Purkinje cell layer.
+    cl_mapping:
+      cl_term: {id: CL:0010010, label: cerebellar stellate cell, name_in_source: "cerebellar stellate cell"}
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:0010010 (cerebellar stellate cell) is the exact CL term for this type.
+        Kozareva 2021 shows that distal MLI1 and distal MLI2 both have stellate
+        morphology, so both transcriptomic types partially correspond to the
+        classical stellate definition. The CL term captures the morphological type
+        without implying transcriptomic uniformity.
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    morphology_notes: >
+      Located in the outer molecular layer, distal from Purkinje cell layer.
+      Star-shaped morphology with local axonal arborisations. Classical definition
+      contrasts with basket cells by location and axon morphology.
+    is_terminal: false
+    notes: >
+      Stellate cells map partially to BOTH MLI1 (distally-located MLI1 cells have
+      stellate morphology) AND MLI2 (which are predominantly stellate-like distally).
+      This multi-edge mapping reflects the cross-cutting nature of the T-type boundary.
+
+  # ── Prior transcriptomic types (Kozareva 2021 / SCP795) ────────
+
+  - id: mli1_kozareva
+    name: "MLI1 (Kozareva 2021)"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    prior_dataset_accession: "SCP:SCP795"
+    prior_cluster_label: "MLI1"
+    prior_reference: "PMID:34616064"
+    cl_mapping:
+      cl_term: {id: CL:4042035, label: molecular layer interneuron, name_in_source: "molecular layer interneuron"}
+      mapping_type: BROAD
+      mapping_notes: >
+        MLI1 is a transcriptomic type that cross-cuts the basket/stellate boundary.
+        The closest existing CL term is CL:4042035 (molecular layer interneuron).
+        A new CL child term for MLI1 (or for the basket-morphology fraction) would
+        be needed to capture the transcriptomic identity precisely.
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    is_terminal: false
+    notes: >
+      MLI1 cells close to the Purkinje layer have basket morphology; cells located
+      more distally have stellate morphology. MLI1 is thus NOT equivalent to either
+      classical basket or stellate cells, but contains cells with both morphologies.
+      The transcriptomic boundary (MLI1 vs MLI2) does not correspond to the
+      spatial/morphological basket/stellate boundary.
+
+  - id: mli2_kozareva
+    name: "MLI2 (Kozareva 2021)"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    prior_dataset_accession: "SCP:SCP795"
+    prior_cluster_label: "MLI2"
+    prior_reference: "PMID:34616064"
+    cl_mapping:
+      cl_term: {id: CL:4042035, label: molecular layer interneuron, name_in_source: "molecular layer interneuron"}
+      mapping_type: BROAD
+      mapping_notes: >
+        MLI2 is molecularly distinct from MLI1 with different electrophysiological
+        properties (higher excitability, stronger Ih, no spikelets/gap junctions).
+        Distal MLI2 cells have stellate morphology; proximal MLI2 cells have a
+        distinct morphology not matching basket cells. No specific CL term exists;
+        CL:4042035 (molecular layer interneuron) is the appropriate broad ancestor.
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    is_terminal: false
+    notes: >
+      MLI2 cells are predominantly distally located with stellate morphology,
+      but those close to the Purkinje layer have a distinct morphology that does
+      not fit classical basket cell criteria.
+
+  # ── Terminal nodes: WMBv1 atlas cell sets ──────────────────────
+
+  - id: wmb_cluster_5188
+    name: "5188 CBX MLI Megf11 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN202307220
+    cell_set_accession: CS20230722_CLUS_5188  # NOTE: verify this accession
+    taxonomy_level: CLUSTER
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "1149 CBX MLI Megf11 Gaba_1"}
+      - {level: SUBCLASS, name: "311 CBX MLI Megf11 Gaba"}
+      - {level: CLASS, name: "28 CB GABA"}
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    is_terminal: true
+
+  - id: wmb_cluster_5192
+    name: "5192 CBX MLI Cdh22 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN202307220
+    cell_set_accession: CS20230722_CLUS_5192  # NOTE: verify this accession
+    taxonomy_level: CLUSTER
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "1151 CBX MLI Cdh22 Gaba_1"}
+      - {level: SUBCLASS, name: "312 CBX MLI Cdh22 Gaba"}
+      - {level: CLASS, name: "28 CB GABA"}
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    is_terminal: true
+
+
+# ══════════════════════════════════════════════════════════════════
+# EDGES
+# ══════════════════════════════════════════════════════════════════
+
+edges:
+
+  # ── Step 1: Classical → MLI1/MLI2 (Kozareva 2021) ──────────────
+  # These edges establish the CROSS-CUTTING relationship.
+
+  - id: edge_basket_to_mli1
+    type_a: classical_basket
+    type_b: mli1_kozareva
+    relationship: CROSS_CUTTING
+    confidence: HIGH
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:34616064"
+        snippet: >
+          "MLI1s and MLI2s were present throughout the entire molecular layer,
+          which indicates that the distinction between MLI1 and MLI2 does not
+          correspond to the canonical basket and stellate distinction"
+        explanation: >
+          Kozareva 2021 explicitly states that MLI1/MLI2 do not map to the
+          classical basket/stellate boundary. MLI1 cells near the PC layer have
+          basket morphology but MLI1 is not equivalent to basket cells — it
+          also contains distally-located cells with stellate morphology. CROSS_CUTTING
+          is the correct relationship: MLI1 draws from both classical types.
+        study_type: MULTIMODAL
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:34616064"
+        snippet: >
+          "MLI1s had a stellate morphology in the distal third of the molecular
+          layer, whereas MLI1s located near the PC layer had a basket morphology,
+          with contacts near PC initial segments"
+        explanation: >
+          Direct morphological characterisation of MLI1: proximal (inner ML) MLI1
+          cells have basket morphology, distal MLI1 cells have stellate morphology.
+          This confirms CROSS_CUTTING — the classical basket type is a positional
+          subset of MLI1, not a distinct transcriptomic entity.
+        study_type: MULTIMODAL
+
+  - id: edge_stellate_to_mli1
+    type_a: classical_stellate
+    type_b: mli1_kozareva
+    relationship: PARTIAL_OVERLAP
+    confidence: HIGH
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:34616064"
+        snippet: >
+          "MLI1s had a stellate morphology in the distal third of the molecular
+          layer, whereas MLI1s located near the PC layer had a basket morphology,
+          with contacts near PC initial segments"
+        explanation: >
+          Distal MLI1 cells have stellate morphology, meaning classical stellate
+          cells (defined by outer ML location + star-shaped morphology) partially
+          overlap with MLI1. However, distal MLI2 cells also have stellate morphology,
+          so stellate → PARTIAL_OVERLAP with both MLI1 and MLI2.
+        study_type: MULTIMODAL
+    caveats:
+      - caveat_type: OTHER
+        description: >
+          The fraction of classical stellate cells in MLI1 vs MLI2 is not precisely
+          quantified by Kozareva 2021 — the split is described qualitatively as
+          location-dependent. Quantitative spatial analysis needed.
+
+  - id: edge_stellate_to_mli2
+    type_a: classical_stellate
+    type_b: mli2_kozareva
+    relationship: PARTIAL_OVERLAP
+    confidence: HIGH
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:34616064"
+        snippet: >
+          "MLI2s in the distal third of the molecular layer also had stellate cell
+          morphology, whereas MLI2s near the PC layer had a distinct morphology and
+          appeared to form synapses preferentially near the PC layer"
+        explanation: >
+          Distal MLI2 cells have stellate morphology, confirming partial overlap
+          with the classical stellate type. MLI2 near the PC layer has a distinct
+          morphology (not basket). Together with edge_stellate_to_mli1, this means
+          the classical stellate type is distributed across both MLI1 and MLI2
+          transcriptomic types.
+        study_type: MULTIMODAL
+
+  # ── Step 2: MLI1/MLI2 → WMBv1 (MapMyCells annotation transfer) ─
+  # These edges are clean 1:1, showing T-type → atlas correspondence.
+
+  - id: edge_mli1_to_wmb5188
+    type_a: mli1_kozareva
+    type_b: wmb_cluster_5188
+    relationship: EQUIVALENT
+    confidence: HIGH
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: SUPPORT
+        explanation: >
+          MapMyCells annotation transfer of MLI1 cells (Kozareva SCP795) to WMBv1.
+          Near-perfect correspondence with cluster 5188 at cluster, subclass,
+          and supertype levels. NT prediction (GABA) is consistent with MLI1.
+        source_dataset_accession: "SCP:SCP795"
+        source_cluster_label: MLI1
+        n_cells_total: 32638
+        target_atlas: WMBv1
+        method: "MapMyCells (default parameters)"
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 32653  # NOTE: slightly exceeds n_cells_total; verify source data
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            best_target_name: "28 CB GABA"
+            group_purity: 1.000
+            target_purity: 0.715
+            f1_score: 0.833
+            n_cells_mapped: 32638
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            best_target_name: "311 CBX MLI Megf11 Gaba"
+            group_purity: 0.9999
+            target_purity: 0.998
+            f1_score: 0.999
+            n_cells_mapped: 32659
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            best_target_name: "1149 CBX MLI Megf11 Gaba_1"
+            group_purity: 0.999
+            target_purity: 0.997
+            f1_score: 0.998
+            n_cells_mapped: 32653
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            best_target_name: "5188 CBX MLI Megf11 Gaba_1"
+            group_purity: 0.999
+            target_purity: 0.999
+            f1_score: 0.999
+            n_cells_mapped: 32254
+            median_bootstrap: 1.0
+        best_f1_score: 0.999
+        best_mapping_level: CLUSTER
+        code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
+
+  - id: edge_mli2_to_wmb5192
+    type_a: mli2_kozareva
+    type_b: wmb_cluster_5192
+    relationship: EQUIVALENT
+    confidence: HIGH
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: SUPPORT
+        explanation: >
+          MapMyCells annotation transfer of MLI2 cells (Kozareva SCP795) to WMBv1.
+          Near-perfect correspondence with cluster 5192 at all levels.
+          NT prediction (GABA) is consistent.
+        source_dataset_accession: "SCP:SCP795"
+        source_cluster_label: MLI2
+        n_cells_total: 10602
+        target_atlas: WMBv1
+        method: "MapMyCells (default parameters)"
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 10327
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            best_target_name: "28 CB GABA"
+            group_purity: 1.000
+            target_purity: 0.232
+            f1_score: 0.376
+            n_cells_mapped: 10602
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            best_target_name: "312 CBX MLI Cdh22 Gaba"
+            group_purity: 0.988
+            target_purity: 1.000
+            f1_score: 0.994
+            n_cells_mapped: 9877
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            best_target_name: "1151 CBX MLI Cdh22 Gaba_1"
+            group_purity: 0.978
+            target_purity: 0.998
+            f1_score: 0.988
+            n_cells_mapped: 10327
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            best_target_name: "5192 CBX MLI Cdh22 Gaba_1"
+            group_purity: 0.992
+            target_purity: 1.000
+            f1_score: 0.996
+            n_cells_mapped: 9875
+            median_bootstrap: 1.0
+        best_f1_score: 0.996
+        best_mapping_level: CLUSTER
+        code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"

@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "evidencell"
+version = "0.1.0"
+description = "LinkML-based knowledge base for cell type mapping evidence."
+requires-python = ">=3.12,<4.0"
+
+dependencies = [
+  "linkml>=1.9.3",
+  "linkml-runtime>=1.9.4",
+  "oaklib>=0.6.0",
+  "linkml-term-validator>=0.2.1",
+  "pyyaml>=6.0",
+  "jinja2>=3.1",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.4",
+  "mypy>=1.10",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.12"
+strict = false
