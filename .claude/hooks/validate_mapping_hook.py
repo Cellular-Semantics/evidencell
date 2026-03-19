@@ -2,10 +2,10 @@
 """
 PreToolUse hook: validates kb/mappings/**/*.yaml BEFORE edits are applied.
 
-1. Intercepts Edit/Write/MultiEdit calls targeting kb/mappings/**/*.yaml
+1. Intercepts Edit/Write/MultiEdit calls targeting kb/**/*.yaml
 2. Simulates the resulting file content (no disk write until validated)
-3. Runs `just validate <temp_file>` on the simulated result
-4. Returns exit code 2 to BLOCK the edit if validation fails
+3. Runs linkml-validate via validate.py AND structural_checks
+4. Returns exit code 2 to BLOCK the edit if either check fails
 
 Exit code 2 blocks the operation in PreToolUse hooks.
 https://docs.claude.com/en/docs/claude-code/hooks#exit-code-2-behavior
@@ -13,47 +13,14 @@ https://docs.claude.com/en/docs/claude-code/hooks#exit-code-2-behavior
 
 import sys
 import json
-import subprocess
-import tempfile
 from pathlib import Path
 
+# Add project src/ to path so we can import evidencell.validate
+_project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(_project_root / "src"))
 
-def simulate_edit(file_path: Path, old_string: str, new_string: str) -> str:
-    if not file_path.exists():
-        sys.exit(0)  # Let Claude Code handle missing file
-    content = file_path.read_text()
-    if old_string not in content:
-        sys.exit(0)  # Let Claude Code handle this
-    return content.replace(old_string, new_string, 1)
-
-
-def simulate_write(content: str) -> str:
-    return content
-
-
-def simulate_multi_edit(file_path: Path, edits: list) -> str:
-    if not file_path.exists():
-        sys.exit(0)
-    content = file_path.read_text()
-    for edit in edits:
-        old_string = edit.get("old_string", "")
-        new_string = edit.get("new_string", "")
-        if old_string and old_string in content:
-            content = content.replace(old_string, new_string, 1)
-    return content
-
-
-def validate_content(content: str, original_path: Path, project_root: Path) -> tuple[bool, str]:
-    with tempfile.TemporaryDirectory() as tmpdir:
-        temp_path = Path(tmpdir) / original_path.name
-        temp_path.write_text(content)
-        result = subprocess.run(
-            ["just", "validate", str(temp_path)],
-            capture_output=True,
-            text=True,
-            cwd=project_root,
-        )
-        return result.returncode == 0, result.stdout + result.stderr
+import yaml  # noqa: E402
+from evidencell.validate import simulate_edit, structural_checks, linkml_validate  # noqa: E402
 
 
 def main():
@@ -70,30 +37,43 @@ def main():
 
     file_path = Path(file_path_str)
 
-    # Intercept all KB YAML files: kb/mappings/**/*.yaml and kb/draft/**/*.yaml
+    # Only intercept KB YAML files
     if "/kb/" not in str(file_path) or file_path.suffix != ".yaml":
         sys.exit(0)
 
-    project_root = Path(__file__).parent.parent.parent
+    schema_path = _project_root / "schema" / "celltype_mapping.yaml"
 
-    if tool_name == "Edit":
-        simulated = simulate_edit(file_path, tool_input.get("old_string", ""), tool_input.get("new_string", ""))
-    elif tool_name == "Write":
-        simulated = simulate_write(tool_input.get("content", ""))
-    elif tool_name == "MultiEdit":
-        simulated = simulate_multi_edit(file_path, tool_input.get("edits", []))
-    else:
-        sys.exit(0)
-
-    success, output = validate_content(simulated, file_path, project_root)
+    # Simulate the post-edit content using validate.py
+    simulated = simulate_edit(tool_name, tool_input, file_path)
 
     print("\n" + "=" * 60, file=sys.stderr)
     print(f"Pre-Edit Validation: {file_path.name}", file=sys.stderr)
     print("=" * 60, file=sys.stderr)
+
+    errors_found = False
+
+    # 1. Structural integrity checks (fast, no subprocess)
+    try:
+        doc = yaml.safe_load(simulated)
+        if isinstance(doc, dict):
+            struct_errors = structural_checks(doc)
+            if struct_errors:
+                print("Structural errors:", file=sys.stderr)
+                for e in struct_errors:
+                    print(f"  - {e}", file=sys.stderr)
+                errors_found = True
+    except yaml.YAMLError as exc:
+        print(f"YAML parse error: {exc}", file=sys.stderr)
+        errors_found = True
+
+    # 2. LinkML schema validation (subprocess)
+    ok, output = linkml_validate(simulated, schema_path, file_path.name)
     if output.strip():
         print(output.strip(), file=sys.stderr)
+    if not ok:
+        errors_found = True
 
-    if not success:
+    if errors_found:
         print("=" * 60, file=sys.stderr)
         print("BLOCKING EDIT: Validation failed", file=sys.stderr)
         print("Fix the issues above before proceeding.", file=sys.stderr)
