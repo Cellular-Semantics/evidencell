@@ -1,8 +1,16 @@
 """Unit tests for evidencell.validate structural checks and edit simulation."""
 
 from pathlib import Path
+from unittest.mock import MagicMock, patch
+
 import pytest
-from evidencell.validate import structural_checks, simulate_edit, PLACEHOLDER_SNIPPETS
+
+from evidencell.validate import (
+    PLACEHOLDER_SNIPPETS,
+    linkml_validate,
+    simulate_edit,
+    structural_checks,
+)
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
@@ -255,3 +263,61 @@ def test_simulate_write_on_nonexistent_file(tmp_path: Path):
     f = tmp_path / "new.yaml"
     result = simulate_edit("Write", {"file_path": str(f), "content": "id: x"}, f)
     assert result == "id: x"
+
+
+# ── Edge cases: node with no id, non-dict evidence ────────────────────────────
+
+def test_node_without_id_field_ignored():
+    """Nodes missing the 'id' key should be silently skipped (no crash, no error)."""
+    doc = {
+        "nodes": [{"name": "Unnamed node"}],  # no 'id' key
+        "edges": [],
+    }
+    assert structural_checks(doc) == []
+
+
+def test_non_dict_evidence_item_ignored():
+    """A non-dict evidence item (e.g. a bare string) must not crash structural_checks."""
+    doc = {
+        "nodes": [_node("A"), _node("B")],
+        "edges": [_edge("e1", "A", "B", evidence=["bare string evidence"])],
+    }
+    # Should pass — non-dict items are skipped, and the list is non-empty
+    assert structural_checks(doc) == []
+
+
+# ── linkml_validate ────────────────────────────────────────────────────────────
+
+
+def test_linkml_validate_skips_when_schema_missing(tmp_path: Path):
+    """When schema file does not exist, validation is skipped and passes."""
+    missing_schema = tmp_path / "nonexistent_schema.yaml"
+    ok, msg = linkml_validate("id: x", missing_schema)
+    assert ok is True
+    assert "schema not found" in msg.lower() or "skipped" in msg.lower()
+
+
+def test_linkml_validate_returns_true_on_success(tmp_path: Path):
+    schema = tmp_path / "schema.yaml"
+    schema.write_text("id: fake")  # exists but won't be called — we mock subprocess
+    mock_result = MagicMock()
+    mock_result.returncode = 0
+    mock_result.stdout = "Validation passed"
+    mock_result.stderr = ""
+    with patch("evidencell.validate.subprocess.run", return_value=mock_result):
+        ok, output = linkml_validate("nodes: []", schema)
+    assert ok is True
+    assert "Validation passed" in output
+
+
+def test_linkml_validate_returns_false_on_failure(tmp_path: Path):
+    schema = tmp_path / "schema.yaml"
+    schema.write_text("id: fake")
+    mock_result = MagicMock()
+    mock_result.returncode = 1
+    mock_result.stdout = ""
+    mock_result.stderr = "ERROR: missing required field 'id'"
+    with patch("evidencell.validate.subprocess.run", return_value=mock_result):
+        ok, output = linkml_validate("bad: yaml", schema)
+    assert ok is False
+    assert "missing required field" in output
