@@ -139,11 +139,11 @@ nodes:
         - id: CL:0000679
           label: glutamatergic neuron
           name_in_source: "Glut"
-    atlas_markers:
+    defining_markers:
       - {symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
       - {symbol: TBR1, ncbi_gene_id: "NCBIGene:10716"}
       - {symbol: SLC17A6, ncbi_gene_id: "NCBIGene:57084"}
-    atlas_neuropeptides:
+    neuropeptides:
       - {symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
     is_terminal: true
     notes: >
@@ -185,7 +185,7 @@ edges:
             - id: CL:0000679
               label: glutamatergic neuron
               name_in_source: "Glut"
-        positive_markers:
+        defining_markers:
           - {symbol: Sst}
           - {symbol: Tbr1}
           - {symbol: Slc17a6}

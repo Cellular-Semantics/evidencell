@@ -155,7 +155,7 @@ nodes:
       # WMBv1 convention: dominant NT listed first (Glut-GABA = primarily glutamatergic).
       # Cf. primate atlas "GABA-Glut" — same dual-transmitter biology, different ordering.
     # nt.markers from atlas: Gad2:~9-10, Slc17a6:~9, Gad1:~9-10, Slc32a1:~7-9
-    atlas_markers:
+    defining_markers:
       # cluster.markers.combo: Cngb3 present in all 3 clusters — the defining supertype marker
       - {symbol: Cngb3}   # NCBIGene ID for Mus musculus Cngb3 to be verified
       # cluster.TF.markers.combo: Pax6, Tbr1 shared across all 3 clusters
@@ -165,13 +165,10 @@ nodes:
       # merfish.markers.combo: Pax6 and Lhx9 shared across clusters 1995 and 1996
       - {symbol: Pax6}
       - {symbol: Lhx9}
-    atlas_neuropeptides:
+    neuropeptides:
       # np.markers: Sst present in 2/3 clusters (1996: Sst:8.5; 1997: Sst:9.1), Pnoc in 1-2/3
       - {symbol: Sst, ncbi_gene_id: "NCBIGene:20604"}
-    ccf_distribution: >
-      Cluster 1995: HY:0.39,PAL:0.39,NA:0.17 (broad); LHA:0.25,GPi:0.17,GPe:0.11,PAL:0.11,int:0.08.
-      Cluster 1996: PAL:0.52,NA:0.46 (broad); int:0.46,GPi:0.44.
-      Cluster 1997: PAL:0.57,NA:0.29 (broad); PAL:0.33,GPi:0.24,int:0.24.
+    # ccf_distribution removed (v0.5.4 schema — spatial data preserved in notes below)
     n_cells: 460
     # n_cells breakdown: v3=404 (138+162+104), v2=56 (45+1+10), multiome=0
     parent_hierarchy:
@@ -222,10 +219,7 @@ edges:
           - id: MBA:1031
             label: "Globus pallidus, internal segment"
             name_in_source: "GPi"
-        ccf_distribution: >
-          Cluster 1995: LHA:0.25,GPi:0.17,GPe:0.11,PAL:0.11,int:0.08 (broad: HY:0.39,PAL:0.39).
-          Cluster 1996: int:0.46,GPi:0.44 (broad: PAL:0.52,NA:0.46).
-          Cluster 1997: PAL:0.33,GPi:0.24,int:0.24 (broad: PAL:0.57,NA:0.29).
+        # ccf_distribution (removed from schema v0.5.4): Cluster 1995: LHA:0.25,GPi:0.17,GPe:0.11,PAL:0.11,int:0.08 (broad: HY:0.39,PAL:0.39). Cluster 1996: int:0.46,GPi:0.44 (broad: PAL:0.52,NA:0.46). Cluster 1997: PAL:0.33,GPi:0.24,int:0.24 (broad: PAL:0.57,NA:0.29).
         nt_type:
           name_in_source: "Glut-GABA"
           cl_terms:
@@ -235,7 +229,7 @@ edges:
             - id: CL:0000617
               label: GABAergic neuron
               name_in_source: "GABA"
-        positive_markers:
+        defining_markers:
           - {symbol: Cngb3}
           - {symbol: Tbr1, ncbi_gene_id: "NCBIGene:21375"}
           - {symbol: Pax6}

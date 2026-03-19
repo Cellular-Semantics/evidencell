@@ -10,37 +10,19 @@ evidencell addresses this by treating each mapping as an **evidence graph**: str
 
 ## How it works
 
-Curation in evidencell is a **guided agentic workflow**. You work with Claude Code as a co-curator: Claude handles literature search, evidence extraction, and schema-compliant YAML drafting; you provide the biological expertise and hold the review gates. Nothing commits to the canonical KB without passing validation and expert sign-off.
+Curation in evidencell is a **guided agentic workflow** using [Claude Code](https://claude.ai/claude-code). Claude handles literature search, evidence extraction, and schema-compliant YAML drafting; you provide the biological expertise and hold the review gates. Nothing commits to the canonical KB without passing validation and expert sign-off.
 
-The pipeline runs in phases, each driven by an orchestrator in `workflows/`:
+The pipeline runs in phases. Each phase is an orchestrator in `workflows/` that you hand to Claude Code — Claude runs it, you review the output at each gate, and proceed when ready:
 
-```
-1. Ingest taxonomy         Parse an atlas data release → CellTypeNode stubs
-                           just ingest-taxonomy {taxonomy_file}
+| Phase | Orchestrator | What it does |
+|---|---|---|
+| 1 | `workflows/ingest-taxonomy.md` | Parse atlas data → `CellTypeNode` stubs |
+| 2 | `workflows/lit-review.md` | Deepsearch → evidence corpus + report |
+| 3 | `workflows/evidence-extraction.md` | Corpus → proposed `LiteratureEvidence` items |
+| 4 | `workflows/map-cell-type.md` | Evidence + atlas metadata → `MappingEdge` hypotheses |
+| 5 | `workflows/annotation-transfer.md` | AT results → `AnnotationTransferEvidence` |
 
-2. Literature review       Run deepsearch on a cell type topic → evidence corpus
-                           workflows/lit-review.md
-
-3. [GATE] Catalogue review  You review the paper list, prune irrelevant papers
-
-4. Evidence extraction     Extract LiteratureEvidence items from the corpus
-                           workflows/evidence-extraction.md
-
-5. [GATE] Evidence review   You approve, edit, or reject proposed evidence items
-
-6. Mapping hypotheses      Propose MappingEdge + confidence from evidence + atlas metadata
-                           workflows/map-cell-type.md
-
-7. [GATE] Mapping review    You review proposed edges and confidence assessments
-
-8. Report generation       Human-readable report: evidence chain, caveats, proposed experiments
-                           just gen-report {graph_file}
-
-9. Annotation transfer     Import AT results (MapMyCells, Seurat) as structured evidence
-                           workflows/annotation-transfer.md
-```
-
-Gates are not optional. The human is the top-level coordinator throughout — each phase produces output for review before the next phase begins. Claude does not proceed past a gate autonomously.
+Gates between phases are not optional. Claude does not proceed past a gate autonomously.
 
 ---
 
@@ -68,21 +50,8 @@ Confidence levels (`HIGH`, `MODERATE`, `LOW`, `UNCERTAIN`, `REFUTED`) follow a d
 
 ## Getting started
 
-```bash
-# Install dependencies
-just install
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and the full curation walkthrough.
 
-# Prime OAK ontology databases (large one-time download)
-just fetch-oak-dbs
+See [WORKFLOW.md](WORKFLOW.md) for the orchestrator guide (which workflow to run, when, and with what inputs).
 
-# Validate the draft KB examples
-just qc-draft
-
-# See all available commands
-just --list
-```
-
-Draft examples (work-in-progress) are in `kb/draft/`. Canonical validated entries live in `kb/mappings/`. To graduate a draft entry: run `just qc-draft`, fix any issues, then move the file to `kb/mappings/`.
-
-See `WORKFLOW.md` for the full curation workflow guide.
-See `CLAUDE.md` for development and architecture guidelines.
+See [CLAUDE.md](CLAUDE.md) for development and architecture guidelines.
