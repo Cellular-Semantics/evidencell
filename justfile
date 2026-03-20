@@ -98,6 +98,31 @@ qc-draft: validate-draft validate-terms-draft
 test:
     uv run pytest
 
+# ── Workflows ──────────────────────────────────────────────────────────────────
+
+# Validate a node exists and show its context before running lit-review
+# Usage: just research-celltype <node_id> "<topic>"
+# Then tell Claude: "Run workflows/lit-review.md for node_id=<node_id> topic=<topic>"
+[group('workflows')]
+research-celltype node_id topic:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    kb_file=$(grep -rl "id: {{node_id}}" kb/ --include="*.yaml" 2>/dev/null | head -1 || true)
+    if [ -z "$kb_file" ]; then
+        echo "ERROR: node '{{node_id}}' not found in kb/"
+        echo "Available node IDs:"
+        grep -rh "^  - id:" kb/ --include="*.yaml" | sed 's/  - id: /    /' | sort
+        exit 1
+    fi
+    echo ""
+    echo "Node:   {{node_id}}  ($kb_file)"
+    echo "Topic:  {{topic}}"
+    echo ""
+    uv run python -m evidencell.show_node "$kb_file" "{{node_id}}"
+    echo ""
+    echo "To run: tell Claude to follow workflows/lit-review.md"
+    echo "  node_id = {{node_id}},  topic = \"{{topic}}\""
+
 # ── Utilities ──────────────────────────────────────────────────────────────────
 
 # Pretty-print a KB file (YAML round-trip sanity check)

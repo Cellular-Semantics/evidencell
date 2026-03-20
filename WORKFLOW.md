@@ -38,7 +38,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 
 | Orchestrator | Status |
 |---|---|
-| `lit-review` | Pending (M2) — porting from Asta_deepsearch/workflows/lit-review.md |
+| `lit-review` | **Ready (Phase 1)** — ASTA snippets + Europe PMC fallback + Opus ref selection |
 | `evidence-extraction` | Pending (M2) |
 | `map-cell-type` | Pending (M3) |
 | `annotation-transfer` | Pending (M5) |

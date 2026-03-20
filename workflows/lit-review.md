@@ -25,8 +25,10 @@ PARAMS:
   seed_max_queries: 3
   snippet_limit_per_depth: 20
   max_depth: 2
+  max_refs_per_depth: 7             # cap on refs selected for next depth (selection subagent)
   min_new_ids_to_continue: 3
-  model: "sonnet"
+  model: "sonnet"                   # mechanical subagents (fetch, extract)
+  thinking_model: "opus"            # judgement subagents (selection, synthesis)
 ```
 
 When the user provides overrides, merge with defaults. Resolved params are
@@ -38,8 +40,8 @@ written to `run_config.json` (Step 0) and injected into every subagent prompt.
 
 | Pattern | Trigger | Action |
 |---|---|---|
-| **Seed provided** | User gives a specific paper (DOI, PMCID, corpus ID, title) | Skip seed discovery. Go to Step 3. |
-| **Find seeds + traverse** | User asks to research a topic | Steps 0→1→2→3→4 |
+| **Seed provided** | User gives a specific paper (DOI, PMCID, PMID, corpus ID, title) | Skip seed discovery. Go to Step 3. |
+| **Find seeds + traverse** | User asks to research a topic | Steps 0→1→2→3→4→5 |
 | **Seeds only** | User asks to find reviews / papers on a topic | Steps 0→1→2 only |
 
 When ambiguous, present a brief plan and ask for confirmation before spawning subagents.
@@ -52,23 +54,22 @@ When ambiguous, present a brief plan and ask for confirmation before spawning su
 2. Parse any parameter overrides. Merge with defaults.
 3. Read the CellTypeNode for `{node_id}` from `kb/` (draft or mappings). Extract:
    - `name`
-   - `defining_markers` (gene symbols)
+   - `defining_markers` (gene symbols, if present)
    - `anatomical_location` (region names)
    - `nt_type.name_in_source`
    Build `NODE_CONTEXT` string:
    ```
    NODE: {node_id} — {name}
-   Markers: {comma-separated symbols}
+   Markers: {comma-separated symbols, or "not yet characterised"}
    Anatomy: {region names}
    NT type: {nt_type}
    ```
 4. Present the plan to the user for approval, including resolved params and
    NODE_CONTEXT. Example:
    > I'll search for reviews on {topic} via EuropePMC + keyword papers via ASTA,
-   > then trace citations {max_depth} levels deep.
+   > then trace citations {max_depth} levels deep (max {max_refs_per_depth} refs/depth).
    > Node context: {NODE_CONTEXT}
-   > Params: seed_europepmc_max_results={N}, seed_asta_max_results={N},
-   > snippet_limit={N}, max_depth={N}
+   > Models: fetch={model}, selection+synthesis={thinking_model}
    > Sound good?
 5. After approval, create output directory and write run config:
    ```bash
@@ -88,8 +89,10 @@ When ambiguous, present a brief plan and ask for confirmation before spawning su
        "seed_max_queries": 3,
        "snippet_limit_per_depth": 20,
        "max_depth": 2,
+       "max_refs_per_depth": 7,
        "min_new_ids_to_continue": 3,
-       "model": "sonnet"
+       "model": "sonnet",
+       "thinking_model": "opus"
      },
      "started_at": "..."
    }
@@ -99,8 +102,10 @@ When ambiguous, present a brief plan and ask for confirmation before spawning su
 
 ## Step 1: Seed discovery subagent
 
-Spawn a **single Task subagent** with this exact prompt (fill in `{topic}`,
+Spawn a **single subagent** with this exact prompt (fill in `{topic}`,
 `{output_dir}`, `{node_context}`, params from `run_config.json`):
+
+**Subagent config:** `subagent_type: "general-purpose"`, `model: {model}`
 
 ```
 You are a seed-discovery agent. You perform ONLY the steps listed below. Do NOT
@@ -189,8 +194,6 @@ DO NOT:
 - Run additional searches to "fill gaps" or "verify"
 ```
 
-**Subagent config:** `subagent_type: "general-purpose"`, `model: "sonnet"`
-
 ---
 
 ## Step 2: User approval gate
@@ -215,122 +218,232 @@ After the seed subagent returns:
 
 ---
 
-## Step 3: Citation traversal subagent
+## Step 3: Fetch subagent  *(repeat per depth)*
 
-After seed approval, spawn a **single Task subagent** with this exact prompt
-(fill in `{query}`, `{output_dir}`, `{node_context}`, `{seed_corpus_ids}` as
-comma-separated `CorpusId:X` strings, params from `run_config.json`):
+After seed approval (or when a seed is provided directly), for each depth level
+spawn a **single fetch subagent** with this exact prompt. Fill in `{query}`,
+`{output_dir}`, `{node_context}`, `{paper_ids}` (comma-separated `CorpusId:X`
+strings), `{depth}`, params from `run_config.json`:
+
+**Subagent config:** `subagent_type: "general-purpose"`, `model: {model}`
 
 ```
-You are a citation-traversal agent. You perform ONLY the steps listed below.
+You are a fetch-and-extract agent. You perform ONLY the steps listed below.
 Do NOT improvise additional steps.
 
 OUTPUT DIRECTORY: {output_dir}
 NODE CONTEXT: {node_context}
 QUERY: {query}
-SEED IDS: {seed_corpus_ids}
-PARAMS: snippet_limit={snippet_limit_per_depth}, max_depth={max_depth},
-        min_new_ids={min_new_ids_to_continue}
+PAPER IDS: {paper_ids}
+DEPTH: {depth}
+PARAMS: snippet_limit={snippet_limit_per_depth}
 
-TASK:
+## Part A: ASTA snippet search
 
-## Depth 0: Search within seed papers
-
-1. Call snippet_search scoped to seed papers:
+1. Call snippet_search scoped to PAPER IDS:
    mcp__Asta_semanticscholar__snippet_search(
        query="{query}",
-       paper_ids="{seed_corpus_ids}",
+       paper_ids="{paper_ids}",
        limit={snippet_limit_per_depth}
    )
-   If there are more than 50 seed IDs, split into exactly 2 parallel calls
-   (first half / second half of IDs).
+   If there are more than 50 IDs, split into exactly 2 parallel calls
+   (first half / second half).
 
-2. For EACH snippet, produce a structured summary. When evaluating relevance,
-   use NODE CONTEXT to judge whether the snippet concerns this specific cell type:
+2. Save the raw response to {output_dir}/depth_{depth}_snippets.json
+
+3. For EACH snippet returned, produce a structured summary:
    {
      "source_corpus_id": "...",
      "source_title": "...",
-     "section": "...",
+     "source_method": "asta_snippet",
+     "section": "unknown",
      "snippet_score": 0.57,
      "node_relevance": "HIGH" | "MODERATE" | "LOW",
-     "node_relevance_reason": "mentions Tbr1 marker and GPi location",
-     "summary": "1-3 sentence summary of content relevant to the query",
+     "node_relevance_reason": "mentions Pvalb marker and Purkinje layer location",
+     "summary": "1-3 sentence summary relevant to query and node context",
      "quotes": ["exact quote 1", "exact quote 2"],
-     "depth": 0
+     "depth": {depth}
    }
-   Quotes must be exact substrings of the snippet text. Keep 1-3 quotes per
-   snippet. Summarize only what is relevant to the query and node context.
+   - Quotes must be exact substrings of the snippet text. Keep 1-3 per snippet.
+   - node_relevance: judge against NODE CONTEXT above.
+   - section: always "unknown" for ASTA snippets (section metadata not available).
 
-3. Save raw response and extract refs:
-   echo '<raw_json_response>' | uv run python -m paperqa2_cyberian.extract_asta_refs \
-       --query "{query}" --pretty
+4. Run extract_asta_refs to get candidate IDs for traversal:
+   echo '<raw_json_from_step_1>' | uv run python -m evidencell.extract_asta_refs \
+       --query "{query}" \
+       --queried-ids "{paper_ids}" \
+       --pretty > {output_dir}/depth_{depth}_candidate_refs.json
 
-4. Write to disk:
-   - {output_dir}/depth_0_snippets.json
-   - {output_dir}/depth_0_summaries.json
-   - {output_dir}/depth_0_refs.json
+## Part B: Europe PMC fallback for gap papers
 
-## Depth 1+: Follow references (repeat up to max_depth={max_depth})
+5. Read {output_dir}/depth_{depth}_candidate_refs.json. Identify gap_papers
+   (IDs that were queried but returned 0 snippets).
 
-5. Read unique_corpus_ids from previous depth's refs file.
-6. Remove any IDs already visited.
-7. If fewer than {min_new_ids_to_continue} new IDs, skip to Final.
-8. Call snippet_search scoped to new IDs only. If >50 IDs, split into 2 calls.
-9. Process each snippet (same as step 2, depth = current depth). Extract refs.
-   Write:
-   - {output_dir}/depth_N_snippets.json
-   - {output_dir}/depth_N_summaries.json
-   - {output_dir}/depth_N_refs.json
-10. Repeat from step 5 for next depth.
+6. For each gap paper (process sequentially, not in parallel):
 
-## Final: Resolve metadata and merge
+   a. Look up its identifiers:
+      mcp__artl-mcp__get_all_identifiers_from_europepmc("{gap_corpus_id}")
+      If no PMC ID found, skip this paper. Record as skipped.
 
-11. Collect ALL unique corpus IDs across all depths. Batch resolve:
-    mcp__Asta_semanticscholar__get_paper_batch(
-        ids=["CorpusId:X", ...],
-        fields="title,authors,year,venue,publicationDate,url,isOpenAccess,externalIds"
-    )
-    If >500 IDs, split into batches of 500.
+   b. If a PMC ID is available, fetch full text:
+      mcp__artl-mcp__get_europepmc_full_text("{pmcid}")
 
-12. Write:
-    - {output_dir}/paper_catalogue.json
-    - {output_dir}/all_summaries.json (merged from all depths)
+   c. From the full text (structured Markdown), extract up to 3 passages most
+      relevant to the query AND node context. Prefer passages from Results or
+      Discussion sections over Methods or Introduction.
+      For each passage, produce a summary in the same format as step 3, but:
+        "source_method": "europepmc_fulltext",
+        "section": "<actual section header from the Markdown>",
+        "quotes": ["exact substring from the passage"]
 
-13. Append manifest entry to {output_dir}/run_manifest.json:
-    {
-      "step": "citation_traversal",
-      "params_used": { ... },
-      "per_depth": [
-        { "depth": 0, "snippet_search_calls": 1, "paper_ids_queried": N,
-          "snippets_returned": N, "summaries_produced": N,
-          "new_refs_extracted": N, "query_string": "..." }
-      ],
-      "totals": {
-        "depth_reached": N, "total_snippets": N, "total_summaries": N,
-        "unique_papers_discovered": N,
-        "stopped_reason": "max_depth" | "min_new_ids" | "no_new_ids"
-      }
-    }
+   d. Append these summaries to the summaries list.
+
+   Record fallback results: {gap_corpus_id: "success"|"no_pmc"|"fetch_failed"}
+
+## Write outputs
+
+7. Write {output_dir}/depth_{depth}_summaries.json — array of ALL summaries
+   (ASTA + PMC fallback), sorted by node_relevance (HIGH first).
+
+8. Append manifest entry to {output_dir}/run_manifest.json:
+   {
+     "step": "fetch_depth_{depth}",
+     "asta_snippets_returned": N,
+     "gap_papers_count": N,
+     "fallback_attempted": N,
+     "fallback_success": N,
+     "total_summaries": N,
+     "paper_ids_queried": N
+   }
 
 RETURN:
-"Traversal complete. Depth reached: N. Snippets: X. Papers: Y.
-Files: depth_0_*, ..., all_summaries.json, paper_catalogue.json"
+"Depth {depth} fetch complete. ASTA snippets: X. Gap papers: Y (Z via PMC fallback).
+Total summaries: N. Candidate refs written to depth_{depth}_candidate_refs.json."
 
 DO NOT:
-- Run unscoped searches (snippet_search without paper_ids)
-- Call get_europepmc_full_text or get_europepmc_pdf_as_markdown
-- Synthesize across snippets
-- Run additional searches to fill gaps
+- Run snippet_search without scoping to paper_ids
+- Fetch full text for papers that DID have ASTA snippets
+- Read more than 3 passages per fallback paper
+- Synthesize across papers
+- Run additional searches
 ```
-
-**Subagent config:** `subagent_type: "general-purpose"`, `model: "sonnet"`
 
 ---
 
-## Step 4: Synthesis subagent
+## Step 4: Selection subagent  *(repeat per depth)*
 
-After traversal, spawn a **single Task subagent** with this exact prompt
-(fill in `{query}`, `{output_dir}`, `{node_context}`):
+After each fetch subagent returns, spawn a **single selection subagent**:
+
+**Subagent config:** `subagent_type: "general-purpose"`, `model: {thinking_model}`
+
+```
+You are a reference-selection agent. You decide which candidate papers are worth
+traversing at the next depth. You perform ONLY the steps listed below.
+
+OUTPUT DIRECTORY: {output_dir}
+NODE CONTEXT: {node_context}
+QUERY: {query}
+DEPTH: {depth}
+PARAMS: max_refs_per_depth={max_refs_per_depth}
+
+TASK:
+
+1. Read:
+   - {output_dir}/depth_{depth}_candidate_refs.json
+   - {output_dir}/depth_{depth}_summaries.json
+
+2. For each corpus ID in candidate_refs, assess whether traversing it is likely
+   to yield evidence relevant to NODE CONTEXT and QUERY. Consider:
+   - Does the paper appear in summaries with HIGH or MODERATE node_relevance?
+   - Does its title (from candidate_refs) suggest direct relevance?
+   - Prefer papers that yielded specific quotes about the node's markers,
+     anatomy, NT type, or morphology.
+   - Deprioritise: general reviews already in seeds, papers about unrelated
+     cell types, methods-only papers.
+
+3. Select at most {max_refs_per_depth} corpus IDs to traverse next.
+
+4. Write {output_dir}/depth_{depth}_refs.json:
+   {
+     "depth": {depth},
+     "all_candidate_ids": [...],
+     "selected_corpus_ids": [...],
+     "selection_rationale": [
+       {
+         "corpus_id": "...",
+         "title": "...",
+         "selected": true,
+         "reason": "HIGH relevance summary citing Pvalb marker in Purkinje layer"
+       },
+       {
+         "corpus_id": "...",
+         "title": "...",
+         "selected": false,
+         "reason": "general cerebellar circuit review, not cell-type specific"
+       }
+     ],
+     "total_candidates": N,
+     "total_selected": M
+   }
+
+5. Append manifest entry to {output_dir}/run_manifest.json:
+   {
+     "step": "selection_depth_{depth}",
+     "candidates_evaluated": N,
+     "selected": M,
+     "deselected": N-M
+   }
+
+RETURN:
+"Selected {M}/{N} refs for depth {depth+1} traversal: {comma-separated selected IDs}.
+Rationale written to depth_{depth}_refs.json."
+
+DO NOT:
+- Call any search or fetch tools
+- Select more than {max_refs_per_depth} IDs
+- Select papers already visited at a previous depth
+```
+
+---
+
+## Depth loop (orchestrator logic)
+
+After depth 0 fetch + selection:
+
+1. Read `selected_corpus_ids` from `depth_0_refs.json`.
+2. If fewer than `min_new_ids_to_continue` selected, or `max_depth` reached → go to Step 5.
+3. Otherwise, run Step 3 (fetch) then Step 4 (selection) for depth 1, using
+   selected IDs as the new `paper_ids`.
+4. Repeat until `max_depth` reached or early stop.
+
+---
+
+## Step 5: Resolve metadata
+
+After all depths complete, collect ALL unique corpus IDs encountered
+(seeds + all `source_papers` from each depth's `candidate_refs.json`).
+
+Run exactly 1 batch resolve:
+```
+mcp__Asta_semanticscholar__get_paper_batch(
+    ids=["CorpusId:X", ...],
+    fields="title,authors,year,venue,publicationDate,url,isOpenAccess,externalIds"
+)
+```
+If >500 IDs, split into batches of 500.
+
+Write:
+- `{output_dir}/paper_catalogue.json` — batch resolve response
+- `{output_dir}/all_summaries.json` — merged array of ALL summaries from all
+  depths (preserve `depth`, `source_method`, `section` fields)
+
+---
+
+## Step 6: Synthesis subagent
+
+Spawn a **single synthesis subagent**:
+
+**Subagent config:** `subagent_type: "general-purpose"`, `model: {thinking_model}`
 
 ```
 You are a synthesis agent. You produce a literature review report from
@@ -354,7 +467,8 @@ TASK:
    - Map each corpus_id to its reference number
 
 3. Group summaries by theme. When grouping, prioritise themes relevant to the
-   node context (NODE CONTEXT above). Identify 3-6 major themes.
+   node context. Identify 3-6 major themes. Note whether key claims come from
+   Results sections (primary evidence) vs Introduction/Discussion (contextual).
 
 4. Write the report in this exact structure:
 
@@ -364,19 +478,26 @@ TASK:
    > **Node:** {node_context}
    > **Seeds:** N papers ({strategies})
    > **Evidence:** M snippets across D depths from P unique papers
+   > **Sources:** X ASTA snippets, Y Europe PMC full-text fallbacks
 
    ## {Theme 1}
 
-   {Narrative. Every factual claim backed by an inline quote and reference number.}
+   {Narrative. Every factual claim backed by an inline quote and reference.
+   Flag source_method and section where noteworthy, e.g. [Results, 2] or
+   [Methods, 3] or [PMC fulltext, 4].}
 
    > "exact quote from all_summaries.json" [N]
 
    ## {Theme 2}
    ...
 
-   ## Gaps and Limitations
-   {What the evidence didn't cover. Be honest about what is missing for this
-   specific cell type.}
+   ## Evidence gaps for {node_id}
+   List schema fields that remain unpopulated after this review:
+   - defining_markers: {found? yes/partial/no}
+   - experimental_system: {found? yes/partial/no}
+   - developmental_stage: {found? yes/partial/no}
+   - definition_references: {found? yes/partial/no}
+   Be specific about what evidence is missing and what kind of paper would fill it.
 
    ## References
    [1] Author et al. (2024). Title. *Venue*. [DOI](...). CorpusId:NNN
@@ -391,21 +512,21 @@ TASK:
      "papers_in_catalogue": N,
      "themes_identified": [...],
      "papers_cited_in_report": N,
-     "quotes_used_in_report": N
+     "quotes_used_in_report": N,
+     "schema_gaps": ["field1", "field2"]
    }
 
 RETURN:
-"Report written to {output_dir}/report.md. Themes: {list}. References: N cited."
+"Report written to {output_dir}/report.md. Themes: {list}. References: N cited.
+Schema gaps: {list of unfilled fields}."
 
 DO NOT:
 - Call any MCP tools
 - Read raw depth_N_snippets.json — use only all_summaries.json
-- Fabricate quotes — every quote must be an exact substring from all_summaries.json
+- Fabricate quotes — every quote must be exact substring from all_summaries.json
 - Fabricate references — only cite papers in paper_catalogue.json
 - Make claims without citations
 ```
-
-**Subagent config:** `subagent_type: "general-purpose"`, `model: "sonnet"`
 
 ---
 
@@ -421,9 +542,12 @@ DO NOT:
    Output: {output_dir}/
 
    Seed discovery:  {N} queries → {N} seeds
-   Traversal:       depth {N}, {N} snippets, {N} papers (stopped: {reason})
+   Traversal:       {D} depths, {N} summaries ({X} ASTA + {Y} PMC fallback)
+   Selection:       {selected}/{candidates} refs followed per depth (avg)
    Synthesis:       {N} themes, {N} papers cited, {N} quotes used
+   Schema gaps:     {list}
 
+   Models used: fetch={model}, selection+synthesis={thinking_model}
    Next step: review report.md, then run workflows/evidence-extraction.md
    ```
 4. Ask: "Would you like to explore any aspect deeper, or proceed to evidence
@@ -438,28 +562,37 @@ kb/{region}/traversal_output/{YYYYMMDD}_{query_slug}/
   run_config.json
   run_manifest.json
   seeds.json
-  depth_0_snippets.json
-  depth_0_summaries.json
-  depth_0_refs.json
-  depth_1_snippets.json       (if depth reached)
+  depth_0_snippets.json         — raw ASTA snippet_search response
+  depth_0_summaries.json        — per-snippet summaries (ASTA + PMC fallback)
+  depth_0_candidate_refs.json   — extract_asta_refs output
+  depth_0_refs.json             — selection subagent output (selected IDs)
+  depth_1_snippets.json         (if depth reached)
   depth_1_summaries.json
+  depth_1_candidate_refs.json
   depth_1_refs.json
-  all_summaries.json
-  paper_catalogue.json
-  report.md
+  all_summaries.json            — merged summaries from all depths
+  paper_catalogue.json          — resolved metadata for all papers
+  report.md                     — synthesized report with schema gap analysis
 ```
 
 ---
 
-## Token budget targets (at default params)
+## Token budget targets (at default params, depth=1)
 
-| Step | Target tokens | Target tool calls |
+| Step | Model | Target tokens |
 |---|---|---|
-| Seed discovery | ~15–20K | 3–4 |
-| Traversal (depth 0–2) | ~30–40K | 6–8 |
-| Synthesis | ~15–20K | 2–3 |
-| Orchestrator overhead | ~5–10K | 3–5 |
-| **Total** | **~65–90K** | **~15–20** |
+| Seed discovery | sonnet | ~15–20K |
+| Fetch depth 0 | sonnet | ~20–30K |
+| Selection depth 0 | opus | ~5–10K |
+| Fetch depth 1 | sonnet | ~20–30K |
+| Selection depth 1 | opus | ~5–10K |
+| Metadata resolve | sonnet | ~5K |
+| Synthesis | opus | ~15–20K |
+| Orchestrator overhead | — | ~5–10K |
+| **Total (depth=1)** | | **~90–135K** |
+
+For a single-seed experiment (skip seed discovery, depth=1):
+approx 60–80K total.
 
 ---
 
@@ -469,13 +602,17 @@ kb/{region}/traversal_output/{YYYYMMDD}_{query_slug}/
   variables filled in.
 - **Data flows through files, not context.** Subagents write to disk; the next
   reads from disk.
-- **Always present seeds for approval** before traversal.
-- **No full-text reads.** Never call `get_europepmc_full_text` or
-  `get_europepmc_pdf_as_markdown`. Snippet search is sufficient.
-- **NODE_CONTEXT is not a filter.** It guides relevance scoring but does not
-  exclude snippets — low-relevance snippets remain in all_summaries.json for
-  the human to assess.
-- **Stop early if diminishing returns.** Fewer than {min_new_ids} new IDs at
+- **Always present seeds for approval** before traversal (unless user says
+  to proceed autonomously).
+- **PMC full text is a fallback only.** Only fetch for papers that had 0 ASTA
+  snippets. Do not fetch for papers with snippets — snippets are sufficient.
+- **Ref selection caps traversal.** Never traverse more than max_refs_per_depth
+  new IDs per depth. The selection subagent is the gate.
+- **NODE_CONTEXT guides relevance scoring** but does not exclude snippets —
+  low-relevance summaries remain in all_summaries.json for the human to assess.
+- **Stop early if diminishing returns.** Fewer than min_new_ids selected at
   a depth → skip deeper traversal.
-- **Extract from summaries, not report.** The report is synthesised prose.
-  Evidence-extraction (M2) works from all_summaries.json, not report.md.
+- **Extract from summaries, not report.** evidence-extraction.md works from
+  all_summaries.json, not report.md.
+- **section: "unknown" is expected for ASTA snippets.** Prefer PMC fallback
+  summaries when section context matters for evidence quality assessment.
