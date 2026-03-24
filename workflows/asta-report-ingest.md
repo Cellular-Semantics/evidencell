@@ -5,7 +5,9 @@ ASTA AI2 deep research PDF, propose classical CellTypeNode stubs, and build an i
 KB file populated with verbatim-quote evidence items. You then hand off to
 `workflows/cite-traverse.md` for targeted primary literature retrieval.
 
-Entry point: `just ingest-report {region} {pdf_file}`
+Entry point: user asks Claude to run `just ingest-report {region} {pdf_file}`.
+Claude runs the recipe (validates inputs, shows existing nodes), then reads and
+follows this orchestrator.
 
 Classical cell type nodes **emerge from this workflow** — they are not required to
 exist beforehand. The PDF is the discovery mechanism for the classical side;

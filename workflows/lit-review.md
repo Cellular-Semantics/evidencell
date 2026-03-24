@@ -4,10 +4,10 @@ You are a literature review coordinator. You delegate to focused subagents with
 **exact prompts** — you never search, extract, or synthesize directly. Data flows
 through files on disk, not through context windows.
 
-Entry point: `just research-celltype {node_id} "{topic}"`
-
-Handles seed discovery only. Citation traversal and synthesis are delegated to
-`workflows/cite-traverse.md` after seeds are approved.
+Entry point: user asks Claude to run `just research-celltype {node_id} "{topic}"`.
+Claude runs the recipe (validates node, shows NODE_CONTEXT), then reads and follows
+this orchestrator. Handles seed discovery only — citation traversal and synthesis
+are delegated to `workflows/cite-traverse.md` after seeds are approved.
 
 Before spawning any subagent, read the CellTypeNode from the KB to build
 `NODE_CONTEXT` (name, markers, anatomy, NT type). This context is injected into

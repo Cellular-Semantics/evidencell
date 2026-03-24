@@ -120,13 +120,12 @@ research-celltype node_id topic:
     echo ""
     uv run python -m evidencell.show_node "$kb_file" "{{node_id}}"
     echo ""
-    echo "To run: tell Claude to follow workflows/lit-review.md"
-    echo "  node_id = {{node_id}},  topic = \"{{topic}}\""
+    echo "Inputs validated. Proceeding with workflows/lit-review.md"
 
-# Ingest an ASTA deep research PDF as the discovery phase for a region
+# Validate inputs and show context for asta-report-ingest.md
 # Usage: just ingest-report <region> <pdf_file>
-# pdf_file should be relative to repo root, e.g. inputs/deepsearch/OLM_Neurons_asta_report.pdf
-# Then tell Claude: "Run workflows/asta-report-ingest.md for region=<region> pdf_file=<pdf_file>"
+# pdf_file relative to repo root, e.g. inputs/deepsearch/OLM_Neurons_asta_report.pdf
+# Claude runs this recipe first, then follows workflows/asta-report-ingest.md
 [group('workflows')]
 ingest-report region pdf_file:
     #!/usr/bin/env bash
@@ -136,15 +135,14 @@ ingest-report region pdf_file:
         echo "Place ASTA deep research PDFs in inputs/deepsearch/"
         exit 1
     fi
-    echo ""
+    echo "=== ingest-report ==="
     echo "Region: {{region}}"
     echo "PDF:    {{pdf_file}}"
     echo ""
     echo "Existing KB nodes in region (if any):"
     grep -rh "^  - id:" kb/ --include="*.yaml" 2>/dev/null | grep -i "{{region}}" | sed 's/  - id: /    /' | sort || echo "    (none yet)"
     echo ""
-    echo "To run: tell Claude to follow workflows/asta-report-ingest.md"
-    echo "  region = {{region}},  pdf_file = \"{{pdf_file}}\""
+    echo "Inputs validated. Proceeding with workflows/asta-report-ingest.md"
 
 # ── Utilities ──────────────────────────────────────────────────────────────────
 
