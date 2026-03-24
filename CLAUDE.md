@@ -34,6 +34,8 @@ WORKFLOW.md              # guide: which orchestrator to run, when, and with what
 
 There is no meta-orchestrator driving the whole pipeline. The human is the top-level coordinator: they run each phase orchestrator when ready, review the output at each gate, and proceed at their own pace. `WORKFLOW.md` documents what to run when.
 
+**Keep `WORKFLOW.md` current.** Any time an orchestrator is added, removed, renamed, or its status changes, update `WORKFLOW.md` in the same commit. The overview table, inputs table, and typical workflow diagram must all reflect the current state. Never leave a stale status entry or a duplicate section.
+
 ## Code quality
 
 - Run `just qc` before committing. This covers schema validation, ontology term checking, and snippet provenance.
