@@ -24,7 +24,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 
 | Input type | Location | Used by |
 |---|---|---|
-| ASTA deep research PDFs | `inputs/deepsearch/` | `asta-report-ingest.md` (planned) |
+| ASTA deep research PDFs | `inputs/deepsearch/` | `asta-report-ingest.md` |
 | Taxonomy tables (CSV/TSV) | `inputs/taxonomies/` | `ingest-taxonomy.md` |
 
 Place input files in the appropriate subdirectory before running the relevant orchestrator.
@@ -73,13 +73,3 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 6.  workflows/annotation-transfer.md             # AT results → AnnotationTransferEvidence
 ```
 
----
-
-## Status
-
-| Orchestrator | Status |
-|---|---|
-| `lit-review` | **Ready (Phase 1)** — ASTA snippets + Europe PMC fallback + Opus ref selection |
-| `evidence-extraction` | Pending (M2) |
-| `map-cell-type` | Pending (M3) |
-| `annotation-transfer` | Pending (M5) |
