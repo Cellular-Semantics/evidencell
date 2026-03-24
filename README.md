@@ -16,8 +16,9 @@ The pipeline runs in phases. Each phase is an orchestrator in `workflows/` that 
 
 | Phase | Orchestrator | What it does |
 |---|---|---|
-| 1 | `workflows/ingest-taxonomy.md` | Parse atlas data → `CellTypeNode` stubs |
-| 2 | `workflows/lit-review.md` | Deepsearch → evidence corpus + report |
+| 1 | `workflows/ingest-taxonomy.md` | Parse atlas taxonomy table (`inputs/taxonomies/`) → `CellTypeNode` stubs |
+| 2a | `workflows/lit-review.md` | Automated deepsearch → evidence corpus + report |
+| 2b | `workflows/asta-report-ingest.md` | Ingest ASTA deep research PDF (`inputs/deepsearch/`) → evidence corpus |
 | 3 | `workflows/evidence-extraction.md` | Corpus → proposed `LiteratureEvidence` items |
 | 4 | `workflows/map-cell-type.md` | Evidence + atlas metadata → `MappingEdge` hypotheses |
 | 5 | `workflows/annotation-transfer.md` | AT results → `AnnotationTransferEvidence` |

@@ -123,6 +123,29 @@ research-celltype node_id topic:
     echo "To run: tell Claude to follow workflows/lit-review.md"
     echo "  node_id = {{node_id}},  topic = \"{{topic}}\""
 
+# Ingest an ASTA deep research PDF as the discovery phase for a region
+# Usage: just ingest-report <region> <pdf_file>
+# pdf_file should be relative to repo root, e.g. inputs/deepsearch/OLM_Neurons_asta_report.pdf
+# Then tell Claude: "Run workflows/asta-report-ingest.md for region=<region> pdf_file=<pdf_file>"
+[group('workflows')]
+ingest-report region pdf_file:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ ! -f "{{pdf_file}}" ]; then
+        echo "ERROR: PDF not found at '{{pdf_file}}'"
+        echo "Place ASTA deep research PDFs in inputs/deepsearch/"
+        exit 1
+    fi
+    echo ""
+    echo "Region: {{region}}"
+    echo "PDF:    {{pdf_file}}"
+    echo ""
+    echo "Existing KB nodes in region (if any):"
+    grep -rh "^  - id:" kb/ --include="*.yaml" 2>/dev/null | grep -i "{{region}}" | sed 's/  - id: /    /' | sort || echo "    (none yet)"
+    echo ""
+    echo "To run: tell Claude to follow workflows/asta-report-ingest.md"
+    echo "  region = {{region}},  pdf_file = \"{{pdf_file}}\""
+
 # ── Utilities ──────────────────────────────────────────────────────────────────
 
 # Pretty-print a KB file (YAML round-trip sanity check)

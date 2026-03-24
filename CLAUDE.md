@@ -12,6 +12,8 @@ evidencell is a LinkML-based knowledge base for cell type mapping evidence — l
 schema/                  # LinkML schema (source of truth for KB structure)
 kb/mappings/{region}/    # canonical, validated mapping graphs
 kb/draft/{region}/       # work-in-progress; graduate to kb/mappings/ after just qc
+inputs/deepsearch/       # ASTA deep research PDFs used as literature discovery input
+inputs/taxonomies/       # taxonomy table slices (CSV/TSV) used for ingest-taxonomy
 src/evidencell/          # all Python logic (validation, rendering, compliance, fetching)
 workflows/               # multi-step curation orchestrators (see below)
 .claude/hooks/           # pre-edit validation hook (runs before KB writes)
