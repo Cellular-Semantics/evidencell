@@ -4,26 +4,56 @@ A structured knowledge base for cell type mapping evidence, linking classical ce
 
 Cell type classification is undergoing a transition. Classical neuroscience built up rich descriptions of cell types over decades — defined by morphology, electrophysiology, connectivity, neurotransmitter phenotype, and marker expression. Modern single-cell transcriptomics has produced large-scale atlases (BICCN, HMBA) with thousands of molecularly defined clusters. These two vocabularies do not map cleanly onto each other, and the mappings that do exist are rarely documented with explicit, traceable evidence.
 
-evidencell addresses this by treating each mapping as an **evidence graph**: structured nodes for classical and atlas types, structured edges recording the relationship (equivalent, partial overlap, cross-cutting, etc.), and typed evidence items — literature, atlas metadata, annotation transfer results — each with a verbatim source quote and a confidence assessment. The result is a KB where every mapping claim has a documented evidence trail and a machine-readable confidence level, and where gaps and conflicts are first-class data.
+evidencell addresses this by treating each mapping as an **evidence graph**: 
+structured nodes for classical and atlas types, structured edges recording the relationship (equivalent, partial overlap, cross-cutting, etc.), and typed evidence items — literature, atlas metadata, annotation transfer results — each with a verbatim source quote and a confidence assessment. The result is a KB where every mapping claim has a documented evidence trail and a machine-readable confidence level, and where gaps and conflicts are first-class data.
 
 ---
 
 ## How it works
 
-Curation in evidencell is a **guided agentic workflow** using [Claude Code](https://claude.ai/claude-code). Claude handles literature search, evidence extraction, and schema-compliant YAML drafting; you provide the biological expertise and hold the review gates. Nothing commits to the canonical KB without passing validation and expert sign-off.
+Curation in evidencell is a **guided agentic workflow**. You work with Claude Code as a co-curator: Claude handles taxonomy loading, literature search, evidence extraction, ontology mapping and schema-compliant YAML drafting; you provide the biological expertise and review gates _human readable_ reports at key 'report gates'. Nothing commits to the canonical KB without passing validation and expert sign-off.
 
-The pipeline runs in phases. Each phase is an orchestrator in `workflows/` that you hand to Claude Code — Claude runs it, you review the output at each gate, and proceed when ready:
+Validation includes powerful anti-hallucination checks - no file is saved if:
+- it does not conform to schema
+- ID/name pairs for ontology terms, genes to not match
+- ID/metadata doesn't match for pubs
+- quotations from references have no match in source
 
-| Phase | Orchestrator | What it does |
-|---|---|---|
-| 1 | `workflows/ingest-taxonomy.md` | Parse atlas taxonomy table (`inputs/taxonomies/`) → `CellTypeNode` stubs |
-| 2a | `workflows/lit-review.md` | Automated deepsearch → evidence corpus + report |
-| 2b | `workflows/asta-report-ingest.md` | Ingest ASTA deep research PDF (`inputs/deepsearch/`) → evidence corpus |
-| 3 | `workflows/evidence-extraction.md` | Corpus → proposed `LiteratureEvidence` items |
-| 4 | `workflows/map-cell-type.md` | Evidence + atlas metadata → `MappingEdge` hypotheses |
-| 5 | `workflows/annotation-transfer.md` | AT results → `AnnotationTransferEvidence` |
+All failures are passed back to the agent to correct.
 
-Gates between phases are not optional. Claude does not proceed past a gate autonomously.
+Literature review uses ASTA-API/MCP under the hood.  All assertions extracted from the literature include evidence and supporting quotes.
+
+The pipeline runs in phases, each driven by an orchestrator in `workflows/`:
+
+
+1. Ingest taxonomy        Pass the agent your taxonomy in any format, it works with you to map all content to schema and ontologies. It does the first pass mapping.
+                          `workflows/taxonomy_ingest.md`
+
+2. [GATE] taxonomy        Agents asks how to map ambiguous columns and asks for approval of final mapping. 
+                             
+2. Literature review       Run deepsearch on a cell type topic → evidence corpus.  
+                           `workflows/lit-review.md`
+
+3. [GATE] Catalogue review  You review the paper list, prune irrelevant papers
+
+4. cell_type_extraction    Extract cell types from the corpus & make draft mappings to taxonomy types.  
+                           `workflows/evidence-extraction.md`
+
+5. [GATE] Evidence review   You approve, edit, or reject proposed evidence items
+
+6. Mapping hypotheses      Propose MappingEdge + confidence from evidence + atlas metadata
+                           `workflows/map-cell-type.md`
+
+7. [GATE] Mapping review    You review proposed edges and confidence assessments (human readable report).
+
+8. Report generation       Final human-readable, fully referenced report report: Types, mappings, evidence, caveats, proposed experiments.
+                           `just gen-report {graph_file}`
+
+9. Annotation transfer     Import AT results (MapMyCells, Seurat) as structured evidence
+                           `workflows/annotation-transfer.md`
+
+
+Gates are not optional. The human is the top-level coordinator throughout — each phase produces output for review before the next phase begins. Claude does not proceed past a gate autonomously.
 
 ---
 
@@ -31,7 +61,7 @@ Gates between phases are not optional. Claude does not proceed past a gate auton
 
 Each KB file is a mapping graph for a brain region. It contains:
 
-- **`CellTypeNode`** — one per type (classical or atlas cluster), with markers, anatomy, NT type, and definition references
+- **`CellTypeNode`** — one per type (classical or atlas cluster), with markers, anatomy, NT type, synonyms, references.
 - **`MappingEdge`** — one per proposed correspondence, with relationship type, confidence, caveats, and a structured property comparison
 - **Evidence items** (typed) — `LiteratureEvidence`, `AtlasMetadataEvidence`, `AnnotationTransferEvidence`, and others; each with a verbatim snippet and source ID
 
