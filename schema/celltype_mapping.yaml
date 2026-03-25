@@ -561,6 +561,15 @@ classes:
           Verbatim quote from the cited source supporting this assertion.
           Strongly recommended — primary material for reviewers at the
           evidence gate. Must be exact text from the source, no paraphrase.
+          If quote_key is set, snippet may be omitted (dereferenceable from
+          references.json). If both are present, snippet is the verified text.
+      quote_key:
+        description: >
+          Content-hashed key into the region's references.json quote store.
+          Format: {corpus_id}_{hash8} where hash8 is the first 8 hex chars
+          of SHA-256 of the normalised quote text. Allows quote lookup without
+          embedding full text in the KB YAML. Set by asta-report-ingest and
+          cite-traverse workflows. Reports dereference to include snippet text.
 
   MarkerSource:
     is_a: PropertySource

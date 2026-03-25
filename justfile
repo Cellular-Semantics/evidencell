@@ -67,17 +67,17 @@ validate-draft:
 # Requires OAK SQLite DBs (run just fetch-oak-dbs first)
 [group('validation')]
 validate-terms:
-    uv run linkml-term-validator --config conf/oak_config.yaml --schema {{schema}} {{kb_dir}}
+    uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{kb_dir}}
 
 # Validate ontology terms in draft KB files
 [group('validation')]
 validate-terms-draft:
-    uv run linkml-term-validator --config conf/oak_config.yaml --schema {{schema}} {{draft_dir}}
+    uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{draft_dir}}
 
 # Validate ontology terms in a single file
 [group('validation')]
 validate-terms-file FILE:
-    uv run linkml-term-validator --config conf/oak_config.yaml --schema {{schema}} {{FILE}}
+    uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{FILE}}
 
 # ── QC (full suite) ────────────────────────────────────────────────────────────
 
@@ -93,10 +93,21 @@ qc-draft: validate-draft validate-terms-draft
 
 # ── Tests ──────────────────────────────────────────────────────────────────────
 
-# Run pytest
+# Run pytest (full suite with coverage)
 [group('testing')]
 test:
     uv run pytest
+
+# Run only tool-interface smoke tests — fast, no KB data or OAK DBs required
+# Use this to verify CLI invocations haven't broken after dependency updates
+[group('testing')]
+smoke:
+    uv run pytest tests/test_tool_interfaces.py -v --no-cov
+
+# Run all tests except those marked integration (OAK DB / network)
+[group('testing')]
+test-fast:
+    uv run pytest -m "not integration" --no-cov
 
 # ── Workflows ──────────────────────────────────────────────────────────────────
 

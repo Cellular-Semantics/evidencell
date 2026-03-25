@@ -43,6 +43,32 @@ There is no meta-orchestrator driving the whole pipeline. The human is the top-l
 - `ruff` for linting, `mypy` for type checking. Both must pass cleanly.
 - `pytest` for unit tests. The ported KB examples are the test fixtures — if a schema or rendering change breaks them, CI catches it.
 
+## Testing
+
+Three test tiers keep runs cheap:
+
+| Tier | Command | When to run |
+|------|---------|-------------|
+| Smoke | `just smoke` | After any dependency update — verifies external CLI interfaces haven't changed |
+| Fast | `just test-fast` | Normal dev loop — all unit tests, no OAK DB or network |
+| Full | `just test` | Pre-commit and CI — includes integration tests |
+
+**What to write as you develop:**
+
+- **New `src/evidencell/` module** → unit tests in `tests/test_<module>.py`. Test pure logic with in-process data; mock `subprocess.run` for any CLI calls.
+- **New external CLI invocation** (new tool added to justfile or `validate.py`) → add a `--help` probe to `tests/test_tool_interfaces.py` asserting the subcommand and key flags exist. This is what catches "wrong subcommand" bugs like the `linkml-term-validator` regression.
+- **New hook behaviour** → add a case to `tests/test_hook_integration.py` (valid YAML → exits 0, bad YAML → exits 2).
+- **New KB schema class or required field** → graduated files in `kb/mappings/` are the strict schema fixtures; `test_kb_examples.py` validates them on every `just test` run. Draft files in `kb/draft/` are only checked for YAML parseability — schema conformance for drafts is the job of `just qc-draft` and the pre-edit hook.
+
+**What NOT to write tests for:**
+
+- OAK DB term lookups — too heavy; validate terms interactively with `runoak` before committing.
+- Workflow orchestrators (`workflows/*.md`) — these are prose + control flow, not Python code; test them by running them, not by unit-testing them.
+- Stub modules (`fetch.py`, `render.py`, `compliance.py`) — add tests when the implementation lands.
+- Just recipe shell glue — trivial file-existence / grep logic; not worth mocking.
+
+**Regression rule:** if a bug slips through `just qc` or `just test` once, add a targeted test before fixing it so it cannot regress silently.
+
 ## Working with YAML and LinkML
 
 - Always parse YAML with `yaml.safe_load()`. Never use shell `grep`, `sed`, or `awk` on YAML files.

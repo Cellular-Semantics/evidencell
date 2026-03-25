@@ -145,6 +145,10 @@ def test_whitespace_only_snippet_blocked():
     assert any("empty" in e and "snippet" in e for e in errors)
 
 
+# PLACEHOLDER_SNIPPETS currently blocks: TODO, ADD SNIPPET, PLACEHOLDER, TBD, ..., FIXME
+# Strings NOT yet blocked (known gaps — add to PLACEHOLDER_SNIPPETS if they appear in practice):
+#   "WIP", "STUB", "XXX", "CITATION_NEEDED", "N/A", "FILL IN"
+# Rationale: keep the set tight to avoid false positives; expand on regression.
 @pytest.mark.parametrize("placeholder", list(PLACEHOLDER_SNIPPETS))
 def test_placeholder_snippets_blocked(placeholder: str):
     doc = {

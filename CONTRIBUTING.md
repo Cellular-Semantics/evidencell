@@ -98,6 +98,25 @@ PR checklist (automated review checks these):
 
 ---
 
+## Working on the tooling
+
+For changes to `src/evidencell/`, `schema/`, or `.claude/hooks/`:
+
+```bash
+just test-fast    # unit tests — run during development
+just smoke        # CLI interface checks — run after any dep update (uv sync)
+just test         # full suite including integration tests — run before committing
+```
+
+Three rules:
+- New module in `src/evidencell/` → add `tests/test_<module>.py`
+- New external CLI call → add a `--help` probe to `tests/test_tool_interfaces.py`
+- New hook block condition → add a case to `tests/test_hook_integration.py`
+
+See the **Testing** section of `CLAUDE.md` for the full policy.
+
+---
+
 ## Schema questions and novel fields
 
 If you have data that doesn't fit the current schema — an extra column from your
