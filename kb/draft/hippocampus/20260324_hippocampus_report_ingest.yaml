@@ -1,0 +1,222 @@
+# Draft KB — hippocampus
+# Source: ASTA deep research report — inputs/deepsearch/OLM_Neurons_asta_report.pdf
+# Ingestion date: 2026-03-24
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in kb/draft/hippocampus/references.json
+# Classical nodes proposed by: asta-report-ingest
+
+name: "OLM Interneuron — Hippocampus CA1"
+description: >
+  Draft evidence graph for the Oriens-Lacunosum Moleculare (O-LM) interneuron
+  of hippocampal CA1. Classical type defined by morphology (soma/dendrites in
+  stratum oriens, axon projecting to stratum lacunosum-moleculare), SST expression,
+  and characteristic electrophysiological properties (sag response, theta-locked
+  firing). No matching CL term exists — candidate for CL contribution.
+
+brain_region:
+  id: UBERON:0003881
+  label: "CA1 field of hippocampus"
+  name_in_source: "hippocampal area CA1"
+
+target_atlas: null  # no atlas mapping yet — pending primary literature verification
+
+species: null  # described in both rat and mouse; to be confirmed from primary literature
+
+creation_date: "2026-03-24"
+
+
+# ══════════════════════════════════════════════════════════════════
+# NODES
+# ══════════════════════════════════════════════════════════════════
+
+nodes:
+
+  - id: olm_hippocampus
+    name: "Oriens-Lacunosum Moleculare (O-LM) interneuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null  # described in rat (Rattus norvegicus) and mouse (Mus musculus); species-specific nodes pending
+    anatomical_location:
+      - id: UBERON:0014548
+        label: "stratum oriens of hippocampus"
+        name_in_source: "CA1 stratum oriens"
+        # Soma and dendrites reside here
+      - id: UBERON:0007637
+        label: "stratum lacunosum-moleculare of hippocampus"
+        name_in_source: "stratum lacunosum-moleculare"
+        # Primary axonal target layer
+    location_sources:
+      - ref: "PMID:20421280"
+        method: "biocytin fill + light microscopy"
+        scope: "adult rat CA1"
+        quote_key: "3106274_e54f60e9"
+      - ref: "PMID:29487503"
+        method: "biocytin fill + DAB staining"
+        scope: "mouse dorsal CA1"
+        quote_key: "3591966_2414c9e9"
+      - ref: "PMID:33361464"
+        method: "computational axonal-dendritic overlap"
+        scope: "rodent CA1"
+        quote_key: "229694907_6865b9db"
+
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:26021702"
+          method: "electrophysiology (inhibitory interneuron identification)"
+          scope: "rat CA1"
+          quote_key: "15101210_5604b9a4"
+        - ref: "PMID:10777798"
+          method: "GAD-GFP transgenic line"
+          scope: "mouse hippocampus"
+          quote_key: "13398453_9154fc23"
+
+    defining_markers:
+      - symbol: Sst
+        ncbi_gene_id: null  # pending species-specific lookup
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:10804195"
+            method: "in situ hybridization"
+            scope: "mouse CA1 stratum oriens"
+            quote_key: "6652630_215c5f40"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31420995"
+            method: "single-cell RNA-seq"
+            scope: "mouse hippocampus"
+            quote_key: "201041756_69dc904d"
+      - symbol: Chrna2
+        ncbi_gene_id: null  # pending species-specific lookup
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29487503"
+            method: "Chrna2-Cre transgenic line"
+            scope: "mouse dorsal CA1"
+            quote_key: "3591966_644f1e68"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:23042082"
+            method: "Chrna2-Cre transgenic line + optogenetics"
+            scope: "mouse hippocampus"
+            quote_key: "7952877_ae03c6e0"
+      - symbol: mGluR1
+        ncbi_gene_id: null
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:10804195"
+            method: "electrophysiology + in situ hybridization"
+            scope: "mouse CA1"
+            quote_key: "6652630_17d10a9e"
+
+    negative_markers:
+      - symbol: PV
+        modifier: ABSENT
+        ncbi_gene_id: null
+      - symbol: CB
+        modifier: ABSENT
+        ncbi_gene_id: null
+      - symbol: CR
+        modifier: ABSENT
+        ncbi_gene_id: null
+      - symbol: NOS
+        modifier: ABSENT
+        ncbi_gene_id: null
+      - symbol: VIP
+        modifier: ABSENT
+        ncbi_gene_id: null
+        # All negative markers from Katona et al. 2017 (PMID:27997999), quote_key: 4934764_4f190450
+        # Note: PV overlap reported in a subpopulation (Zhang et al. 2025; Hernandez-Frausto 2023)
+
+    neuropeptides:
+      - symbol: Sst
+        ncbi_gene_id: null
+      - symbol: Npy
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31420995"
+            method: "single-cell RNA-seq"
+            scope: "mouse hippocampus"
+            quote_key: "201041756_8d16e821"
+      - symbol: Pnoc
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:40757734"
+            method: "single-cell transcriptomic cluster analysis"
+            scope: "mouse hippocampus"
+            quote_key: "280420054_8a6529c5"
+
+    morphology_notes: >
+      Large horizontally-oriented soma at oriens/alveus border. Horizontal dendrites
+      in stratum oriens, densely decorated with long spines. Axon projects vertically
+      through pyramidale and radiatum, ramifies extensively in stratum lacunosum-moleculare
+      with dense terminal arborizations and heavily packed varicosities. Some axon
+      collaterals with boutons in stratum oriens.
+    morphology_sources:
+      - ref: "PMID:20421280"
+        method: "biocytin fill + light microscopy"
+        scope: "adult rat CA1"
+        quote_key: "3106274_e54f60e9"
+      - ref: "PMID:33991454"
+        method: "biocytin fill + reconstruction"
+        scope: "mouse CA1"
+        quote_key: "234597703_fda66a57"
+      - ref: "PMID:10804195"
+        method: "intracellular fill + reconstruction"
+        scope: "mouse CA1 stratum oriens"
+        quote_key: "6652630_6ba030f8"
+
+    electrophysiology_class: >
+      Regular-to-fast spiking with tonic or mildly adapting firing. Pronounced sag
+      response to hyperpolarizing current (Ih via HCN2 h-channels). Theta spiking
+      resonance. High input resistance, slow membrane time constants. Anti-Hebbian LTP
+      dependent on Ca2+-permeable AMPA receptors. Phase-locked to theta rhythms (4-12 Hz).
+    ephys_sources:
+      - ref: "PMID:33093823"
+        method: "whole-cell patch-clamp"
+        scope: "SOM-YFP mouse, acute slice"
+        quote_key: "221742877_26f1e4cc"
+      - ref: "PMID:19176803"
+        method: "whole-cell patch-clamp"
+        scope: "rat CA1 O-LM cells"
+        quote_key: "1015389_e9028538"
+      - ref: "PMID:33991454"
+        method: "whole-cell patch-clamp"
+        scope: "mouse CA1"
+        quote_key: "234597703_fda66a57"
+
+    cl_mapping: null
+    # No CL term found. Candidate for CL contribution.
+    # Closest: CL:1001569 'hippocampal interneuron' (BROAD), CL:4023017 'sst GABAergic interneuron' (neocortex-defined)
+
+    is_terminal: false
+
+    definition_references:
+      - "PMID:20421280"    # Zemankovics et al., 2010 — morphology + ephys
+      - "PMID:29487503"    # Nichol et al., 2018 — Chrna2 marker, morphology
+      - "PMID:23042082"    # Leao et al., 2012 — Chrna2, optogenetics, function
+      - "PMID:39097181"    # Fernandez et al., 2024 — comprehensive OLM review
+      - "PMID:25324774"    # Muller & Remy, 2014 — OLM review: morphology, markers, function
+
+    notes: >
+      HETEROGENEITY: The OLM class contains molecularly heterogeneous subpopulations.
+      Zhang et al. (2025) report a PV-positive OLM subset that fires in the gamma range
+      (vs theta for SST-only OLM cells). Thulin et al. (2025) identify three Sst/Pnoc
+      subclusters with differential dorsal-ventral connectivity. These may warrant separate
+      nodes in future iterations. TRPV1 expression (Hurtado-Zavala et al., 2017) is
+      reported in a subpopulation but not confirmed by other sources. Lacaille 1987
+      described O/A interneurons with axons branching in stratum oriens and pyramidale
+      (not SLM) — these are likely a distinct population from canonical O-LM cells.
+      Species: most morphology data from rat; marker/transgenic data from mouse.
+      Cross-species validation pending.
+
+
+# ══════════════════════════════════════════════════════════════════
+# EDGES
+# ══════════════════════════════════════════════════════════════════
+
+edges: []
+# Mapping relationships require primary literature verification — not populated from ASTA report.

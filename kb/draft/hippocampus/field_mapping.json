@@ -1,0 +1,377 @@
+{
+  "source_file": "inputs/taxonomies/test_single_row.json",
+  "format": "JSON",
+  "structure": "Array of objects, each with 4 top-level keys: properties(supertype), supertype_locations, properties(cluster), cluster_locations. One object per supertype-cluster pair. Denormalised: each row carries both supertype and cluster level data.",
+  "target_level": "all",
+  "field_mappings": [
+    {
+      "source_field": "properties(supertype).short_form",
+      "target_field": "cell_set_accession (supertype)",
+      "confidence": "HIGH",
+      "notes": "CCN accession CS20230722_SUPT_0197. Stable ID for the supertype node."
+    },
+    {
+      "source_field": "properties(supertype).curie",
+      "target_field": "node_id (supertype)",
+      "confidence": "HIGH",
+      "notes": "WMB:CS20230722_SUPT_0197 \u2014 CURIE form of accession, use as node_id."
+    },
+    {
+      "source_field": "properties(supertype).label",
+      "target_field": "name (supertype)",
+      "confidence": "HIGH",
+      "notes": "Human-readable supertype name: \"0197 RHP-COA Ndnf Gaba_5\"."
+    },
+    {
+      "source_field": "properties(supertype).label_rdfs",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Same as label but in a list. Redundant with label; preserve as comment if different."
+    },
+    {
+      "source_field": "properties(supertype).prefLabel",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Label + accession combined string. Display convenience; redundant."
+    },
+    {
+      "source_field": "properties(supertype).iri",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Full IRI for the supertype. Derivable from curie; preserve as comment."
+    },
+    {
+      "source_field": "properties(supertype).sl",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Short label slug with underscores replacing spaces/hyphens. Internal display ID."
+    },
+    {
+      "source_field": "properties(supertype).qsl",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Quoted short label. Same as sl. Internal display."
+    },
+    {
+      "source_field": "properties(supertype).cluster_id",
+      "target_field": "cell_set_accession (supertype, alternate key)",
+      "confidence": "HIGH",
+      "notes": "Same value as short_form for supertypes. Accession in list form."
+    },
+    {
+      "source_field": "properties(supertype).see_also",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "URLs to atlas h5ad and brain-map viewer. Useful as metadata_url or see_also links."
+    },
+    {
+      "source_field": "properties(supertype).uniqueFacets",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Always \"Cell_cluster\". Internal VFB facet."
+    },
+    {
+      "source_field": "properties(supertype).supertype_markers_combo",
+      "target_field": "defining_markers (supertype)",
+      "confidence": "HIGH",
+      "notes": "Comma-separated marker genes for this supertype: \"Scrg1,Edaradd\". Global (unscoped) markers."
+    },
+    {
+      "source_field": "properties(supertype).supertype_markers_combo_4within_subclass4",
+      "target_field": "defining_markers (supertype, scoped)",
+      "confidence": "HIGH",
+      "notes": "Markers distinctive within the parent subclass: \"Scrg1,Ccbe1\". Scoped markers \u2014 high value for mapping."
+    },
+    {
+      "source_field": "supertype_locations",
+      "target_field": "anatomical_location (supertype)",
+      "confidence": "HIGH",
+      "notes": "Array of {cell_count, loc_id (MBA CURIE), loc_name}. Pre-resolved MBA terms. Map loc_id\u2192id, loc_name\u2192label+name_in_source."
+    },
+    {
+      "source_field": "properties(cluster).short_form",
+      "target_field": "cell_set_accession (cluster)",
+      "confidence": "HIGH",
+      "notes": "CCN accession CS20230722_CLUS_0703. Stable ID for the cluster node."
+    },
+    {
+      "source_field": "properties(cluster).curie",
+      "target_field": "node_id (cluster)",
+      "confidence": "HIGH",
+      "notes": "WMB:CS20230722_CLUS_0703 \u2014 CURIE form of accession, use as node_id."
+    },
+    {
+      "source_field": "properties(cluster).label",
+      "target_field": "name (cluster)",
+      "confidence": "HIGH",
+      "notes": "Human-readable cluster name: \"0703 RHP-COA Ndnf Gaba_5\"."
+    },
+    {
+      "source_field": "properties(cluster).label_rdfs",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Same as label but in a list. Redundant."
+    },
+    {
+      "source_field": "properties(cluster).prefLabel",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Label + accession combined. Display convenience."
+    },
+    {
+      "source_field": "properties(cluster).iri",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Full IRI. Derivable from curie; preserve as comment."
+    },
+    {
+      "source_field": "properties(cluster).sl",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Short label slug. Internal display."
+    },
+    {
+      "source_field": "properties(cluster).qsl",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Quoted short label. Internal display."
+    },
+    {
+      "source_field": "properties(cluster).cluster_id",
+      "target_field": "cell_set_accession (cluster, alternate key)",
+      "confidence": "HIGH",
+      "notes": "Same value as short_form for clusters."
+    },
+    {
+      "source_field": "properties(cluster).see_also",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "URLs to atlas viewer. Useful as metadata_url."
+    },
+    {
+      "source_field": "properties(cluster).uniqueFacets",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Always \"Cell_cluster\". Internal VFB facet."
+    },
+    {
+      "source_field": "properties(cluster).cluster_markers_combo",
+      "target_field": "defining_markers (cluster)",
+      "confidence": "HIGH",
+      "notes": "Comma-separated marker genes: \"Ibsp,Lama1,Vwc2l\". Global (unscoped) markers."
+    },
+    {
+      "source_field": "properties(cluster).cluster_markers_combo_4within_subclass4",
+      "target_field": "defining_markers (cluster, scoped)",
+      "confidence": "HIGH",
+      "notes": "Markers distinctive within the parent subclass: \"Gpc4,Zim1\". Scoped markers \u2014 highest value for mapping."
+    },
+    {
+      "source_field": "properties(cluster).cluster_TF_markers_combo",
+      "target_field": "defining_markers (cluster, TF subset)",
+      "confidence": "HIGH",
+      "notes": "Transcription factor markers: \"Sp8,Maf,Sox13,Bcl11b,Zim1,Sox5\". Subset of markers by gene class."
+    },
+    {
+      "source_field": "properties(cluster).merfish_markers_combo",
+      "target_field": "merfish_markers (cluster)",
+      "confidence": "HIGH",
+      "notes": "MERFISH panel markers: \"Htr3a,Edaradd,Ccbe1,Oprd1,Grik3\". Spatial validation markers."
+    },
+    {
+      "source_field": "properties(cluster).nt_type_label",
+      "target_field": "nt_type.name_in_source",
+      "confidence": "HIGH",
+      "notes": "Primary NT phenotype: \"GABA\". Map to NeurotransmitterType."
+    },
+    {
+      "source_field": "properties(cluster).nt_type_combo_label",
+      "target_field": "nt_type (confirmation)",
+      "confidence": "HIGH",
+      "notes": "Same as nt_type_label here (\"GABA\"). May differ for dual-NT types."
+    },
+    {
+      "source_field": "properties(cluster).neurotransmitter_accession",
+      "target_field": "nt_type.accession",
+      "confidence": "HIGH",
+      "notes": "CCN accession for the NT type: CS20230722_NEUR_GABA."
+    },
+    {
+      "source_field": "properties(cluster).neurotransmitter_marker_gene_evidence",
+      "target_field": "nt_type (supporting gene evidence)",
+      "confidence": "HIGH",
+      "notes": "Genes supporting NT call: [Slc32a1, Gad1, Gad2]. Evidence for the NT assignment."
+    },
+    {
+      "source_field": "properties(cluster).neurotransmitter_rationale",
+      "target_field": "nt_type (rationale)",
+      "confidence": "HIGH",
+      "notes": "Gene expression with scores: \"Gad2:10.85,Gad1:10.2,Slc32a1:7.99\". Quantitative NT evidence."
+    },
+    {
+      "source_field": "properties(cluster).nt_markers",
+      "target_field": "nt_type (marker expression)",
+      "confidence": "HIGH",
+      "notes": "Same as neurotransmitter_rationale. Redundant \u2014 use for cross-check."
+    },
+    {
+      "source_field": "properties(cluster).np_markers",
+      "target_field": "neuropeptides",
+      "confidence": "HIGH",
+      "notes": "Neuropeptide markers with expression scores: \"Cck:8.7,Pnoc:6.5,Npy:4.9\". Parse gene symbols for neuropeptides list."
+    },
+    {
+      "source_field": "properties(cluster).neighborhood",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Broad grouping: \"Subpallium-GABA\". Not a schema field but biologically informative."
+    },
+    {
+      "source_field": "cluster_locations",
+      "target_field": "anatomical_location (cluster)",
+      "confidence": "HIGH",
+      "notes": "Array of {cell_count, loc_id (MBA CURIE), loc_name}. Pre-resolved MBA terms. Authoritative location source."
+    },
+    {
+      "source_field": "properties(cluster).CCF_broad_freq",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "DEPRECATED old CCF mapping. Skip per instructions."
+    },
+    {
+      "source_field": "properties(cluster).CCF_acronym_freq",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "DEPRECATED old CCF mapping. Skip per instructions."
+    },
+    {
+      "source_field": "properties(cluster).CTX_cluster_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Cross-taxonomy ID in CTX taxonomy: 26.0. Cross-reference for isocortex taxonomy."
+    },
+    {
+      "source_field": "properties(cluster).CTX_cluster_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Cross-taxonomy label: \"26_Ndnf HPF_2\". Cross-reference label."
+    },
+    {
+      "source_field": "properties(cluster).CTX_supertype_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Cross-taxonomy supertype ID in CTX: 9.0."
+    },
+    {
+      "source_field": "properties(cluster).CTX_supertype_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Cross-taxonomy supertype label: \"Ndnf HPF\"."
+    },
+    {
+      "source_field": "properties(cluster).CTX_subclass_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Cross-taxonomy subclass ID in CTX: 4.0."
+    },
+    {
+      "source_field": "properties(cluster).CTX_subclass_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Cross-taxonomy subclass label: \"Sncg\"."
+    },
+    {
+      "source_field": "properties(cluster).CTX_neighborhood_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Cross-taxonomy neighborhood ID: 1.0."
+    },
+    {
+      "source_field": "properties(cluster).CTX_neighborhood_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Cross-taxonomy neighborhood label: \"CGE\"."
+    },
+    {
+      "source_field": "supertype_locations[].cell_count (sum)",
+      "target_field": "n_cells (supertype)",
+      "confidence": "HIGH",
+      "notes": "Sum of cell_count across supertype_locations entries. Spatially resolved; more accurate than dataset-version size fields."
+    },
+    {
+      "source_field": "cluster_locations[].cell_count (sum)",
+      "target_field": "n_cells (cluster)",
+      "confidence": "HIGH",
+      "notes": "Sum of cell_count across cluster_locations entries. Spatially resolved; more accurate than dataset-version size fields."
+    },
+    {
+      "source_field": "properties(cluster).CTX_size",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Cell count in CTX taxonomy. Superseded by location cell_count sums. Skip."
+    },
+    {
+      "source_field": "properties(cluster).v2_size",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Cell count in v2 dataset. Superseded by location cell_count sums. Skip."
+    },
+    {
+      "source_field": "properties(cluster).v3_size",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Cell count in v3 dataset. Superseded by location cell_count sums. Skip."
+    },
+    {
+      "source_field": "properties(cluster).Male",
+      "target_field": "SCHEMA_CANDIDATE",
+      "confidence": "MODERATE",
+      "notes": "Male fraction: 0.42. Sex composition."
+    },
+    {
+      "source_field": "properties(cluster).Female",
+      "target_field": "SCHEMA_CANDIDATE",
+      "confidence": "MODERATE",
+      "notes": "Female fraction: 0.58. Sex composition."
+    },
+    {
+      "source_field": "properties(cluster).Light",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "LOW",
+      "notes": "Light phase fraction: 0.88. Circadian sampling bias metric."
+    },
+    {
+      "source_field": "properties(cluster).Dark",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "LOW",
+      "notes": "Dark phase fraction: 0.12. Circadian sampling bias metric."
+    }
+  ],
+  "confirmed": true,
+  "schema_candidates": [
+    {
+      "source_field": "properties(cluster).Male / Female",
+      "candidate_field_name": "sex_composition",
+      "rationale": "Sex fractions indicate whether a cluster has strong sex bias, which is biologically meaningful for sex-specific cell types (e.g. hormone-responsive neurons).",
+      "example_values": [
+        "Male: 0.42",
+        "Female: 0.58"
+      ]
+    }
+  ],
+  "marker_aggregation": {
+    "primary_source": "cluster_markers_combo_4within_subclass4 (scoped, cluster level)",
+    "additional_sources": [
+      "cluster_markers_combo (global, cluster level)",
+      "cluster_TF_markers_combo (TF subset, cluster level)",
+      "supertype_markers_combo (global, supertype level)",
+      "merfish_markers_combo (MERFISH panel, cluster level)"
+    ],
+    "scoped_sources": [
+      "cluster_markers_combo_4within_subclass4 (cluster within subclass)",
+      "supertype_markers_combo_4within_subclass4 (supertype within subclass)"
+    ],
+    "strategy": "aggregate all; note source per gene as YAML comment. Scoped (within_subclass) markers are highest priority for mapping. TF markers get separate flag. MERFISH markers go to merfish_markers field."
+  },
+  "structure_notes": "Denormalised: each JSON object contains both supertype-level and cluster-level data for one cluster. The supertype is the parent of the cluster (many clusters share one supertype). Two taxonomy levels per row: SUPERTYPE and CLUSTER. Higher levels (SUBCLASS, CLASS) are not present in this file but are referenced indirectly via CTX_subclass_label and neighborhood. Location data is in separate top-level arrays (supertype_locations, cluster_locations) with pre-resolved MBA CURIEs \u2014 these are the authoritative location source."
+}

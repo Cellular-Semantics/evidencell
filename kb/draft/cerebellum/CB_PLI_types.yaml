@@ -78,10 +78,63 @@ nodes:
         - id: CL:0000617
           label: GABAergic neuron
           name_in_source: "GABA"
+    defining_markers:
+      # smFISH-validated on tissue-localised cells matching CC morphology and
+      # distribution (Osorno 2022, Fig 3). Bridge: Oxtr-Cre×Ai14 labels
+      # morphologically confirmed CCs; smFISH PLI1 profile co-localises with
+      # these cells in the PCL. These are therefore independently confirmed
+      # on the classical type, not just inferred from the snRNA-seq cluster.
+      - symbol: Nxph1
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "smFISH on cerebellar tissue (Fig 3A-E)"
+            scope: "adult mouse cerebellar cortex, PCL cells matching CC distribution"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); smFISH-identified PLI1s match distribution of morphologically confirmed tdTomato+ CCs in Oxtr-Cre×Ai14 mice"
+            ref: "PMID:35578131"
+      - symbol: Aldh1a3
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "smFISH on cerebellar tissue (Fig 3A-E)"
+            scope: "adult mouse cerebellar cortex, PCL cells matching CC distribution"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); smFISH-identified PLI1s match distribution of morphologically confirmed tdTomato+ CCs in Oxtr-Cre×Ai14 mice"
+            ref: "PMID:35578131"
+    negative_markers:
+      - symbol: Slc6a5
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "smFISH on cerebellar tissue (Fig 3A-E)"
+            scope: "adult mouse cerebellar cortex, PLI1 vs PLI2/PLI3"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); Slc6a5 distinguishes PLI1/CC from PLI2/Globular and PLI3/Lugaro"
+            ref: "PMID:35578131"
     morphology_notes: >
-      Ascending axon collateral that extends into the molecular layer, alongside
-      Purkinje cell dendrites. Soma in Purkinje layer. Defined morphologically by
-      Osorno et al. 2022 as a distinct PLI subtype.
+      Small soma (~10 μm diameter) in the Purkinje cell layer. 1–2 primary
+      dendrites ascend to the pia and branch in the upper molecular layer;
+      secondary dendrites extend to the upper granular layer. Dendrites
+      confined to a parasagittal plane. Beaded axon emanates near soma,
+      branches and extends in the molecular layer; 92% of synapses onto MLIs
+      (preferentially MLI1s; Lackey et al. 2024, Osorno et al. 2022).
+      Expresses high levels of Nrp1 (neuropilin-1), yet unlike basket cells
+      does not target PC axon initial segments — targets MLIs instead
+      (Schilling 2023, citing Telley et al. 2016 re Nrp1/Sema3a mechanism).
+      Most abundant PLI (approximately 80% as many as Golgi1 cells). Present
+      in all cerebellar lobules. Originally described by Lainé & Axelrad 1994
+      (PMID:8300903); comprehensively characterised by Osorno et al. 2022.
+    electrophysiology_class: >
+      Extremely high input resistance; mostly silent with occasional low-frequency
+      spontaneous firing. Highly sensitive to current injection relative to MLI
+      subtypes. Excited by mossy fibres (monosynaptic, ~1.45 ms latency) and
+      granule cell parallel fibres (facilitating). Strongly inhibited by Purkinje
+      cells (~42% of spontaneous IPSCs). Single CC firing at ~60 spikes/s reduces
+      IPSC charge in nearby PCs by ~24% (disinhibition via MLI1 inhibition).
+      PC collaterals preferentially target MLI2s; CCs preferentially inhibit
+      MLI1s — together with PC-PC synapses these form a negative feedback
+      loop (Lackey et al. 2024).
+    definition_references:
+      - "PMID:8300903"
+      - "PMID:35578131"
+      - "PMID:34616064"
+      - "PMID:37940705"  # Schilling 2023 — review confirming PLI classification
+      # Lackey et al. 2024 (CorpusId:280548075) — CC→MLI1 circuit refinement
     is_terminal: false
     proposed_cl_term:
       cl_id: CL:4042030
@@ -206,6 +259,36 @@ nodes:
         - id: CL:0000617
           label: GABAergic neuron
           name_in_source: "GABA"
+    defining_markers:
+      - symbol: Nxph1
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "snRNA-seq (snDrop-seq, SCP795)"
+            scope: "adult mouse cerebellar cortex, PLI1 cluster"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−)"
+            ref: "PMID:35578131"
+      - symbol: Aldh1a3
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "snRNA-seq (snDrop-seq, SCP795)"
+            scope: "adult mouse cerebellar cortex, PLI1 cluster"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−)"
+            ref: "PMID:35578131"
+      - symbol: Klhl1
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "snRNA-seq"
+            scope: "adult mouse cerebellar cortex, PLI class"
+            snippet: "canonical PLI marker Klhl1; MLIs branch from each other later than from PLIs"
+            ref: "PMID:34616064"
+    negative_markers:
+      - symbol: Slc6a5
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "snRNA-seq (snDrop-seq, SCP795)"
+            scope: "adult mouse cerebellar cortex, PLI1 vs PLI2/PLI3"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); Slc6a5 absent in CCs but present in PLI2s"
+            ref: "PMID:35578131"
     is_terminal: false
 
   - id: pli2_osorno
@@ -262,6 +345,10 @@ nodes:
       - id: MBA:1145
         label: "Cerebellar cortex, Purkinje layer"
         name_in_source: "CBX"
+        # WMBv1 annotation lacks laminar resolution — "CBX" = cerebellar cortex.
+        # Manual inspection of MERFISH spatial data on the Allen Brain Cell Atlas
+        # confirms cluster 5178 cells are located in close proximity to Purkinje
+        # cells, consistent with Purkinje layer placement (Yao et al. 2023).
     nt_type:
       name_in_source: "GABA"
       cl_terms:
@@ -368,13 +455,36 @@ edges:
         supports: SUPPORT
         reference: "PMID:35578131"
         snippet: >
-          "Globular cells and CCs also have very different morphologies. This
-          suggests that CCs might correspond to the cell type PLI1."
+          "The combination of the tdTomato+ labelling of PLIs in Oxtr-Cre × Ai14
+          mice, fluorescent labelling and 2P imaging of these cells, and in situ
+          labelling of 3 genes...establishes that tdTomato+ PLIs are CCs that
+          correspond to PLI1s."
         explanation: >
-          Osorno 2022 directly establishes PLI1 = Candelabrum cell through
-          morphological characterisation combined with single-cell transcriptomics.
-          The paper is the primary source for this classical-to-T-type correspondence.
+          Osorno 2022 establishes PLI1 = Candelabrum cell via three converging lines
+          of evidence: (1) Oxtr-Cre×Ai14 transgenic labels cells with confirmed CC
+          morphology (small soma ~10 μm in PCL, dendrites to pia, beaded axon in ML;
+          Fig 1, 2-photon fill with Alexa-594). (2) snRNA-seq identifies PLI1 as
+          Nxph1+/Aldh1a3+/Slc6a5−, distinct from PLI2 (Globular) and PLI3 (Lugaro)
+          which both express Slc6a5. (3) smFISH on tissue (Fig 3) confirms PLI1
+          molecular profile co-localises with tdTomato+ CC distribution in the PCL.
+          PLI2 and PLI3 are excluded by morphology (different soma shape/location)
+          and by Slc6a5 expression. Additional molecular validation: Grin1/Grin2b
+          expression in PLI1 confirmed by NMDA receptor currents in electrophysiology
+          on Oxtr-Cre-labelled CCs (Fig 4).
         study_type: MULTIMODAL
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:37940705"
+        snippet: >
+          "PLI1 cells correspond to candelabrum cells, PLI2 cells represent
+          globular cells, and PLI3 cells are Lugaro cells."
+        explanation: >
+          Schilling 2023 review independently confirms PLI1=CC correspondence,
+          citing both Kozareva 2021 and Osorno 2022. Also notes CCs are "purely
+          GABAergic (i.e., not using glycine as a (co-) transmitter)" (citing
+          Simat 2007), and raises Nrp1 expression as an open developmental
+          question distinguishing CC axon targeting from basket cell targeting.
+        study_type: REVIEW
 
   - id: edge_globular_to_pli2
     type_a: classical_globular

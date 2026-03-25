@@ -1,0 +1,410 @@
+{
+  "classical_node_id": "olm_hippocampus",
+  "classical_node_name": "Oriens-Lacunosum Moleculare (O-LM) interneuron",
+  "signature": {
+    "defining_markers": [
+      "Sst",
+      "Chrna2",
+      "mGluR1"
+    ],
+    "defining_markers_normalized": [
+      "Sst",
+      "Chrna2",
+      "Grm1"
+    ],
+    "negative_markers_raw": [
+      "PV",
+      "CB",
+      "CR",
+      "NOS",
+      "VIP"
+    ],
+    "negative_markers_gene_symbols": [
+      "Pvalb",
+      "Calb1",
+      "Calb2",
+      "Nos1",
+      "Vip"
+    ],
+    "neuropeptides": [
+      "Sst",
+      "Npy",
+      "Pnoc"
+    ],
+    "nt_type": "GABAergic",
+    "anatomical_location": [
+      {
+        "id": "UBERON:0014548",
+        "label": "stratum oriens of hippocampus"
+      },
+      {
+        "id": "UBERON:0007637",
+        "label": "stratum lacunosum-moleculare of hippocampus"
+      }
+    ],
+    "morphology_notes": "Large horizontally-oriented soma at oriens/alveus border. Horizontal dendrites in stratum oriens, densely decorated with long spines. Axon projects vertically through pyramidale and radiatum, ramifies extensively in stratum lacunosum-moleculare with dense terminal arborizations and heavily packed varicosities. Some axon collaterals with boutons in stratum oriens.",
+    "electrophysiology_class": "Regular-to-fast spiking with tonic or mildly adapting firing. Pronounced sag response to hyperpolarizing current (Ih via HCN2 h-channels). Theta spiking resonance. High input resistance, slow membrane time constants. Anti-Hebbian LTP dependent on Ca2+-permeable AMPA receptors. Phase-locked to theta rhythms (4-12 Hz)."
+  },
+  "candidates": [
+    {
+      "atlas_node_id": "wmb_clus_0727",
+      "atlas_node_name": "0727 Lamp5 Lhx6 Gaba_1",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0727",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Pnoc"
+        ],
+        "missed": [
+          "Npy"
+        ],
+        "score": 0.667
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA3, stratum oriens",
+          "Field CA3, stratum lacunosum-moleculare"
+        ],
+        "score": 1.0
+      },
+      "composite_score": 0.7,
+      "rationale": "Weak candidate: non-Sst subclass despite partial marker overlap. markers: Sst; neuropeptides: Sst/Pnoc; GABAergic consistent; location overlap (1.0)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0785",
+      "atlas_node_name": "0785 Sst Gaba_6",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0785",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Npy"
+        ],
+        "missed": [
+          "Pnoc"
+        ],
+        "score": 0.667
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA3, stratum oriens",
+          "Field CA3, stratum lacunosum-moleculare"
+        ],
+        "score": 1.0
+      },
+      "composite_score": 0.7,
+      "rationale": "Strong candidate: Sst subclass with stratum oriens + SLM/SLM-adjacent location, neuropeptide overlap. markers: Sst; neuropeptides: Sst/Npy; GABAergic consistent; location overlap (1.0)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0769",
+      "atlas_node_name": "0769 Sst Gaba_3",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0769",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Npy",
+          "Pnoc"
+        ],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA1, stratum oriens"
+        ],
+        "score": 0.5
+      },
+      "composite_score": 0.617,
+      "rationale": "Moderate candidate: Sst subclass with stratum oriens location. markers: Sst; neuropeptides: Sst/Npy/Pnoc; GABAergic consistent; location overlap (0.5)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0788",
+      "atlas_node_name": "0788 Sst Gaba_6",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0788",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Npy",
+          "Pnoc"
+        ],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA3, stratum oriens",
+          "Field CA1, stratum oriens"
+        ],
+        "score": 0.5
+      },
+      "composite_score": 0.617,
+      "rationale": "Moderate candidate: Sst subclass with stratum oriens location. markers: Sst; neuropeptides: Sst/Npy/Pnoc; GABAergic consistent; location overlap (0.5)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0789",
+      "atlas_node_name": "0789 Sst Gaba_6",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0789",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Npy",
+          "Pnoc"
+        ],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA3, stratum oriens"
+        ],
+        "score": 0.5
+      },
+      "composite_score": 0.617,
+      "rationale": "Moderate candidate: Sst subclass with stratum oriens location. markers: Sst; neuropeptides: Sst/Npy/Pnoc; GABAergic consistent; location overlap (0.5)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0790",
+      "atlas_node_name": "0790 Sst Gaba_6",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0790",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Npy",
+          "Pnoc"
+        ],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA3, stratum oriens"
+        ],
+        "score": 0.5
+      },
+      "composite_score": 0.617,
+      "rationale": "Moderate candidate: Sst subclass with stratum oriens location. markers: Sst; neuropeptides: Sst/Npy/Pnoc; GABAergic consistent; location overlap (0.5)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0791",
+      "atlas_node_name": "0791 Sst Gaba_6",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0791",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Npy",
+          "Pnoc"
+        ],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA3, stratum oriens",
+          "Field CA1, stratum oriens"
+        ],
+        "score": 0.5
+      },
+      "composite_score": 0.617,
+      "rationale": "Moderate candidate: Sst subclass with stratum oriens location. markers: Sst; neuropeptides: Sst/Npy/Pnoc; GABAergic consistent; location overlap (0.5)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0703",
+      "atlas_node_name": "0703 RHP-COA Ndnf Gaba_5",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0703",
+      "marker_overlap": {
+        "matched": [],
+        "missed": [
+          "Sst",
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.0
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Npy",
+          "Pnoc"
+        ],
+        "missed": [
+          "Sst"
+        ],
+        "score": 0.667
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA3, stratum oriens",
+          "Field CA3, stratum lacunosum-moleculare"
+        ],
+        "score": 1.0
+      },
+      "composite_score": 0.583,
+      "rationale": "neuropeptides: Npy/Pnoc; GABAergic consistent; location overlap (1.0)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0770",
+      "atlas_node_name": "0770 Sst Gaba_3",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0770",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Pnoc"
+        ],
+        "missed": [
+          "Npy"
+        ],
+        "score": 0.667
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA1, stratum oriens"
+        ],
+        "score": 0.5
+      },
+      "composite_score": 0.55,
+      "rationale": "Moderate candidate: Sst subclass with stratum oriens location. markers: Sst; neuropeptides: Sst/Pnoc; GABAergic consistent; location overlap (0.5)"
+    },
+    {
+      "atlas_node_id": "wmb_clus_0772",
+      "atlas_node_name": "0772 Sst Gaba_3",
+      "taxonomy_level": "CLUSTER",
+      "cell_set_accession": "CS20230722_CLUS_0772",
+      "marker_overlap": {
+        "matched": [
+          "Sst"
+        ],
+        "missed": [
+          "Chrna2",
+          "Grm1"
+        ],
+        "score": 0.333
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [
+          "Sst",
+          "Npy"
+        ],
+        "missed": [
+          "Pnoc"
+        ],
+        "score": 0.667
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "Field CA1, stratum oriens"
+        ],
+        "score": 0.5
+      },
+      "composite_score": 0.55,
+      "rationale": "Moderate candidate: Sst subclass with stratum oriens location. markers: Sst; neuropeptides: Sst/Npy; GABAergic consistent; location overlap (0.5)"
+    }
+  ],
+  "non_candidates_summary": "51 nodes scored below threshold (0.4). Common reasons: no_defining_marker_overlap (39), negative_marker_penalty (24), no_neuropeptide_overlap (20), no_location_overlap (5)"
+}
