@@ -19,7 +19,7 @@ CLI usage:
 import argparse
 import json
 import sys
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
@@ -662,9 +662,6 @@ def render_summary(
     )
     loc_refs = " ".join(cn["location_refs"])
     nt_refs = " ".join(cn["nt_refs"])
-    marker_refs = " ".join(
-        ref for m in cn["defining_markers"] for ref in m["refs"]
-    )
     # Deduplicate refs
     all_marker_refs = list(dict.fromkeys(
         ref for m in cn["defining_markers"] for ref in m["refs"]
@@ -912,7 +909,6 @@ def render_drilldown(
     All quotes come verbatim from references.json — raises KeyError if quote_key missing.
     """
     nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
-    node = nodes_by_id.get(node_id, {})
     node_edges = [e for e in graph.get("edges", []) if e.get("type_a") == node_id]
 
     # Resolve corpus entry
@@ -982,9 +978,6 @@ def render_drilldown(
     lines.append("")
 
     # 3. Per-property evidence sections from quotes
-    # Order: markers, NT, location, other
-    property_order = ["marker", "neuropeptide", "nt", "location", "morphology", "ephys", "lineage"]
-
     if quotes:
         lines.append("## Evidence from this paper")
         lines.append("")

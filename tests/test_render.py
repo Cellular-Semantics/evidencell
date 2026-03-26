@@ -4,14 +4,12 @@ Unit tests for src/evidencell/render.py
 Run with: just test-fast (no OAK DB, no network)
 """
 
-import json
 import tempfile
 from pathlib import Path
 
 import pytest
 
 from evidencell.render import (
-    RefEntry,
     _best_edge,
     _candidate_verdict,
     _collect_quotes,
