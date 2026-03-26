@@ -16,6 +16,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | `cite-traverse` | `workflows/cite-traverse.md` | M2 | **Ready** | Citation traversal + synthesis; called by lit-review and asta-report-ingest |
 | `evidence-extraction` | `workflows/evidence-extraction.md` | M2 | **Ready** | After cite-traverse — extracts verified evidence items into KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | M3 | **Ready** | Discovery mode: finds candidate atlas matches from property overlap; hypothesis mode: tests curator's proposed mapping. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
+| `gen-report` | `workflows/gen-report.md` | M4 | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote validation) |
 | `annotation-transfer` | `workflows/annotation-transfer.md` | M5 | Pending | After AT results available — imports F1 scores as evidence |
 
 ---
@@ -67,7 +68,8 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 
 ── Reports + community ────────────────────────────────────────────────────────
 
-5.  just gen-report {graph_file}                 # human-readable report (M4)
+5.  just gen-facts {graph_file} {node_id}        # extract structured facts (M4)
+    → workflows/gen-report.md                    # LLM synthesis + ID/quote validation
     [GATE] biologist reviews, executes proposed experiments
 
 6.  workflows/annotation-transfer.md             # AT results → AnnotationTransferEvidence

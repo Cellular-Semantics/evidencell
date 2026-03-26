@@ -155,6 +155,53 @@ ingest-report region pdf_file:
     echo ""
     echo "Inputs validated. Proceeding with workflows/asta-report-ingest.md"
 
+# ── Reports ────────────────────────────────────────────────────────────────────
+
+# Extract structured report facts JSON (input to synthesis subagent in gen-report workflow)
+[group('reports')]
+gen-facts GRAPH_FILE NODE_ID:
+    uv run python -m evidencell.render facts {{GRAPH_FILE}} --node {{NODE_ID}}
+
+# Generate summary report for all classical nodes in one graph file (programmatic mode)
+# For LLM-assisted synthesis with hallucination guard, use: workflows/gen-report.md
+[group('reports')]
+gen-report GRAPH_FILE:
+    uv run python -m evidencell.render summary {{GRAPH_FILE}}
+
+# Generate summary report for one classical node by id
+[group('reports')]
+gen-report-node GRAPH_FILE NODE_ID:
+    uv run python -m evidencell.render summary {{GRAPH_FILE}} --node {{NODE_ID}}
+
+# Generate all drill-downs for a classical node
+[group('reports')]
+gen-drilldowns GRAPH_FILE NODE_ID:
+    uv run python -m evidencell.render drilldowns {{GRAPH_FILE}} --node {{NODE_ID}}
+
+# Generate a single drill-down by PMID
+[group('reports')]
+gen-drilldown-pmid GRAPH_FILE NODE_ID PMID:
+    uv run python -m evidencell.render drilldowns {{GRAPH_FILE}} --node {{NODE_ID}} --pmid {{PMID}}
+
+# Generate region index listing all classical types with links to summary reports
+[group('reports')]
+gen-index REGION:
+    uv run python -m evidencell.render index {{REGION}}
+
+# Regenerate all reports + indices for canonical KB (programmatic mode, no LLM)
+[group('reports')]
+gen-report-all:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    files=$(find kb/mappings -name "*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No files in kb/mappings yet."; exit 0; fi
+    for f in $files; do
+        uv run python -m evidencell.render summary "$f"
+    done
+    for region in $(ls kb/mappings 2>/dev/null); do
+        uv run python -m evidencell.render index "$region"
+    done
+
 # ── Utilities ──────────────────────────────────────────────────────────────────
 
 # Pretty-print a KB file (YAML round-trip sanity check)

@@ -110,3 +110,29 @@ def test_runoak_help():
     assert r.returncode == 0, (
         f"runoak --help failed (rc={r.returncode}):\n{r.stderr}"
     )
+
+
+# ── evidencell.render ─────────────────────────────────────────────────────────
+
+
+def test_render_module_help():
+    """python -m evidencell.render --help must exit 0 with subcommands listed."""
+    r = subprocess.run(
+        ["uv", "run", "python", "-m", "evidencell.render", "--help"],
+        capture_output=True, text=True,
+    )
+    assert r.returncode == 0, f"render --help failed:\n{r.stderr}"
+    assert "facts" in r.stdout, "render must advertise 'facts' subcommand"
+    assert "summary" in r.stdout, "render must advertise 'summary' subcommand"
+    assert "drilldowns" in r.stdout, "render must advertise 'drilldowns' subcommand"
+    assert "index" in r.stdout, "render must advertise 'index' subcommand"
+
+
+def test_render_facts_subcommand_help():
+    """python -m evidencell.render facts --help must exit 0 and mention --node."""
+    r = subprocess.run(
+        ["uv", "run", "python", "-m", "evidencell.render", "facts", "--help"],
+        capture_output=True, text=True,
+    )
+    assert r.returncode == 0, f"render facts --help failed:\n{r.stderr}"
+    assert "--node" in r.stdout or "--node" in r.stderr, "render facts must have --node flag"
