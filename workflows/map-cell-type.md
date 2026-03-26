@@ -73,11 +73,28 @@ TASK:
 
    NT TYPE: Compare nt_type.name_in_source. CONSISTENT = same NT, DISCORDANT = different.
 
-   LOCATION: For each classical anatomical_location, check if the atlas node has
-   any location in the same structure or a child/parent structure. Use MBA ID
-   prefix matching for coarse comparison (e.g. MBA:399 "Field CA1, stratum oriens"
-   matches a classical node in "stratum oriens of hippocampus"). Also check
-   location name substring overlap.
+   LOCATION: Atlas location data derives from MERFISH spatial registration and
+   records soma position only. Axonal and dendritic projection targets are not
+   captured and must not be used in scoring — classical type descriptions often
+   include axon targets (e.g. OLM axon in SLM) which have no atlas counterpart.
+   Only compare soma-relevant locations from the classical node.
+
+   For each classical soma location, check if the atlas node has cells in the
+   same structure or a child/parent structure. Use MBA ID prefix matching for
+   coarse comparison (e.g. MBA:399 "Field CA1, stratum oriens" matches a
+   classical node in "stratum oriens of hippocampus"). Also check location name
+   substring overlap.
+
+   Weight off-target atlas locations by anatomical distance:
+   - ADJACENT regions (bordering subfields, e.g. prosubiculum next to CA1,
+     CA3 next to CA1): treat as weak counter-evidence. MERFISH registration
+     errors at cytoarchitectural boundaries are common; a small cell fraction
+     in an adjacent region is not strong evidence against the mapping.
+   - DISTANT regions (different structure entirely, e.g. amygdala cells in a
+     hippocampal cluster): treat as genuine counter-evidence. A classical type
+     may still be a subtype of the T-type, but the classical hippocampal
+     population specifically is unlikely to include amygdala cells. Flag with
+     a DISTRIBUTED_ACROSS_CLUSTERS caveat and note in rationale.
 
 4. Rank atlas nodes by composite score. Present the top candidates (all nodes
    scoring above a reasonable threshold, or top 10, whichever is smaller).
@@ -192,7 +209,8 @@ TASK:
 
 2. Build property_comparisons for at minimum:
    - nt_type
-   - location (one comparison per classical anatomical_location)
+   - location (one comparison per classical soma location — exclude axon/dendrite
+     projection targets, which are not captured in atlas MERFISH data)
    - Each classical defining_marker (property: "marker_{symbol}")
    - Each classical neuropeptide (property: "neuropeptide_{symbol}")
 
@@ -201,6 +219,17 @@ TASK:
    - node_b_value: verbatim from atlas node (or "not present" if absent)
    - alignment: CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED
    - notes: brief explanation (required for APPROXIMATE and DISCORDANT)
+
+   LOCATION alignment rules:
+   - CONSISTENT: atlas node has cells in the matching soma region
+   - APPROXIMATE: atlas node has cells in an adjacent subfield (possible
+     registration error — note the adjacent region and cell count; do not
+     treat as strong counter-evidence)
+   - DISCORDANT: atlas node has substantial cells in a distant, anatomically
+     unrelated region (e.g. amygdala cells in a hippocampal cluster). Note
+     that the classical type may still be a subtype of the T-type even when
+     distant cells are present — the mapping is weakened but not disproven.
+   - NOT_ASSESSED: classical location not representable from atlas metadata
 
 3. Determine confidence using the decision guide:
    - HIGH: ≥2 independent convergent evidence types, at least one experimental

@@ -1,5 +1,5 @@
 ##
-# CellTypeEvidence Schema v0.5
+# CellTypeEvidence Schema v0.5.4
 #
 # Schema for accumulating evidence for transcriptomic cell type mappings.
 # Core design: an evidence graph (nodes + edges), inspired by dismech's causal chain model.
@@ -26,6 +26,8 @@
 #                               AnnotationTransferEvidence: source_species, target_species added;
 #                               nt_consistent_with_classical deprecated (superseded by property_comparisons);
 #                               OntologyTerm: name_in_source added as required field (always record)
+# Version: 0.5.4 (2026-03-25) — ATLAS_QUERY EvidenceType + AtlasQueryEvidence class: atlas browser queries
+#                               with URL, filters, and curator observation as structured evidence
 # Version: 0.5.3 (2026-03-11) — atlas_markers → defining_markers, atlas_neuropeptides → neuropeptides (BREAKING);
 #                               AtlasMetadataEvidence.positive_markers → defining_markers (BREAKING);
 #                               marker fields now shared across all node types; cell_set_accession
@@ -268,6 +270,13 @@ enums:
         description: Morphological characterisation (light microscopy, EM)
       MARKER_ANALYSIS:
         description: Custom marker gene overlap analysis beyond atlas metadata
+      ATLAS_QUERY:
+        description: >
+          Curator-performed interactive query against a published atlas browser
+          (ABC Atlas, Allen Brain Map, BICCN viewer, etc.) with specified filters.
+          Result is observation-level evidence: reproducible given the same atlas
+          version and filter parameters. Stronger than an informal note but weaker
+          than a peer-reviewed publication. Record the query URL and atlas version.
 
   # ── Marker type ─────────────────────────────────────────────────
   MarkerType:
@@ -1040,6 +1049,35 @@ classes:
         description: MERFISH panel markers for this cell set (from merfish.markers.combo)
       metadata_url:
         description: URL or accession of the metadata file used
+
+  AtlasQueryEvidence:
+    is_a: EvidenceItem
+    description: >
+      Evidence from a curator-performed interactive query against a published
+      atlas browser (ABC Atlas, Allen Brain Map, BICCN viewer, etc.) with
+      specified filters. Documents what was observed when filtering the atlas
+      by anatomy, neurotransmitter type, gene expression, or other parameters.
+      Reproducible given the same atlas version and filter set.
+    attributes:
+      atlas:
+        required: true
+        description: >
+          Atlas name and version, e.g. "ABC Atlas v20231215", "Allen Brain Map WMBv1.0"
+      query_url:
+        required: true
+        description: >
+          URL capturing the exact query state (filters applied). Use the atlas
+          browser's share/permalink feature where available. Short URLs are acceptable
+          if the target is stable (e.g. tinyurl pointing to ABC Atlas with filters).
+      filters_applied:
+        description: >
+          Human-readable description of the filters used, e.g.
+          "anatomy=HPF; NT=GABA; expression=Chrna2". Redundant with query_url
+          but improves readability without loading the URL.
+      atlas_version:
+        description: >
+          Explicit data version string from the atlas if distinct from the atlas
+          name, e.g. "20231215" or "WMBv1.0.0".
 
   AnnotationTransferLevelResult:
     description: Annotation transfer metrics at a single taxonomy level
