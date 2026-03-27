@@ -936,7 +936,8 @@ def render_drilldown(
 
     lines: list[str] = []
     lines.append(f"# Evidence Drill-down: {first_author_last} et al. {year}")
-    # Find edges citing this paper
+
+    # Find edges citing this paper in edge evidence items
     citing_edges = []
     for edge in node_edges:
         for ev in edge.get("evidence", []):
@@ -945,6 +946,35 @@ def render_drilldown(
             if bare == pmid or bare == doi or bare == corpus_id:
                 citing_edges.append(edge)
                 break
+
+    # Also scan node marker sources — papers cited there provide classical-type
+    # evidence that informs all edges, even if not listed per-edge.
+    node = nodes_by_id.get(node_id, {})
+    node_marker_refs: list[dict] = []
+    for field in ("defining_markers", "negative_markers"):
+        for m in node.get(field, []):
+            for src in m.get("sources", []):
+                ref = src.get("ref", "")
+                _, bare = _ref_identifier(ref) if ref else ("", "")
+                if bare == pmid or bare == doi or bare == corpus_id:
+                    node_marker_refs.append(
+                        {"symbol": m.get("symbol", ""), "quote_key": src.get("quote_key", "")}
+                    )
+    for np in node.get("neuropeptides", []):
+        if isinstance(np, dict):
+            for src in np.get("sources", []):
+                ref = src.get("ref", "")
+                _, bare = _ref_identifier(ref) if ref else ("", "")
+                if bare == pmid or bare == doi or bare == corpus_id:
+                    node_marker_refs.append(
+                        {"symbol": np.get("symbol", ""), "quote_key": src.get("quote_key", "")}
+                    )
+
+    # If paper only cited in node markers, it applies to all edges for this node
+    paper_in_node_markers = bool(node_marker_refs)
+    if not citing_edges and paper_in_node_markers:
+        citing_edges = list(node_edges)
+
     edge_desc = "; ".join(
         f"{e.get('type_a', '')} → {nodes_by_id.get(e.get('type_b', ''), {}).get('name', e.get('type_b', ''))}"
         for e in citing_edges
@@ -994,22 +1024,43 @@ def render_drilldown(
                 lines.append("")
 
     # 4. Summary scorecard
+    # Build from node marker sources citing this paper (have quote_key + symbol);
+    # cross-reference alignment from edge property_comparisons where property contains symbol.
     lines.append("## Evidence summary")
     lines.append("")
-    lines.append("| Property | Paper finding | Alignment | Quote key |")
+    lines.append("| Property | Claims | Best alignment | Quote key |")
     lines.append("|---|---|---|---|")
-    for edge in citing_edges:
-        for pc in edge.get("property_comparisons", []):
-            for ev in edge.get("evidence", []):
-                ref = ev.get("reference", "")
-                ref_type, bare = _ref_identifier(ref) if ref else ("", "")
-                if bare == pmid or bare == doi or bare == corpus_id:
-                    qk = ev.get("quote_key", "")
-                    prop = pc.get("property", "")
-                    b_val = pc.get("node_b_value", "")
-                    aln = pc.get("alignment", "")
-                    lines.append(f"| {prop} | {b_val} | {aln} | {qk} |")
+    seen_qk: set[str] = set()
+    for mr in node_marker_refs:
+        symbol = mr["symbol"]
+        qk = mr.get("quote_key", "")
+        if qk in seen_qk:
+            continue
+        seen_qk.add(qk)
+        # Find best alignment from edge property_comparisons for this marker
+        best_aln = "—"
+        for edge in node_edges:
+            for pc in edge.get("property_comparisons", []):
+                prop = pc.get("property", "")
+                if symbol.lower() in prop.lower():
+                    best_aln = pc.get("alignment", "—")
                     break
+        qobj = quotes.get(qk, {})
+        claims = ", ".join(qobj.get("claims", [])) or "—"
+        lines.append(f"| {symbol} | {claims} | {best_aln} | {qk} |")
+    # Fallback: edge evidence items that directly cite this paper
+    if not node_marker_refs:
+        for edge in citing_edges:
+            for pc in edge.get("property_comparisons", []):
+                for ev in edge.get("evidence", []):
+                    ref = ev.get("reference", "")
+                    _, bare = _ref_identifier(ref) if ref else ("", "")
+                    if bare == pmid or bare == doi or bare == corpus_id:
+                        prop = pc.get("property", "")
+                        b_val = pc.get("node_b_value", "")
+                        aln = pc.get("alignment", "")
+                        lines.append(f"| {prop} | {b_val} | {aln} | — |")
+                        break
 
     lines.append("")
     lines.append("---")

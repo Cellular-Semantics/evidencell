@@ -1,11 +1,12 @@
 # validate.py — structural validation logic for KB YAML files
 #
 # Wraps linkml-validate and provides structural integrity checks.
-# Imported by .claude/hooks/check_mapping_edit.py and by pytest.
-# Will grow in M2+ to include snippet provenance checks.
+# Imported by .claude/hooks/validate_mapping_hook.py and by pytest.
 
 from __future__ import annotations
 
+import json
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -94,6 +95,129 @@ def structural_checks(doc: dict) -> list[str]:
                 f"Node '{node.get('id')}': is_terminal=true but "
                 "cell_set_accession is missing or empty"
             )
+
+    return errors
+
+
+# ── Quote key provenance check ─────────────────────────────────────────────────
+
+def _collect_quote_keys(obj: object, result: list[str] | None = None) -> list[str]:
+    """Recursively collect all 'quote_key' values from a nested dict/list."""
+    if result is None:
+        result = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == "quote_key" and isinstance(v, str) and v:
+                result.append(v)
+            else:
+                _collect_quote_keys(v, result)
+    elif isinstance(obj, list):
+        for item in obj:
+            _collect_quote_keys(item, result)
+    return result
+
+
+def check_quote_keys(doc: dict, refs_path: Path) -> list[str]:
+    """
+    Check that every quote_key value in the YAML exists in references.json.
+
+    Returns a list of error strings; empty = OK.
+    Skips silently if references.json does not exist (fresh graph with no refs yet).
+    """
+    if not refs_path.exists():
+        return []
+
+    try:
+        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return [f"Could not read {refs_path.name} — ensure it is valid JSON"]
+
+    # Build a flat set of all known quote keys across all corpus entries
+    known: set[str] = set()
+    for entry in refs.values():
+        if isinstance(entry, dict):
+            known.update(entry.get("quotes", {}).keys())
+
+    errors: list[str] = []
+    for qk in _collect_quote_keys(doc):
+        if qk not in known:
+            errors.append(
+                f"quote_key '{qk}' not found in {refs_path.name}. "
+                "Add the quote through the validated ingest path before referencing it."
+            )
+    return errors
+
+
+# ── Reference PMID/DOI check ───────────────────────────────────────────────────
+
+# Matches ref: values that carry a PMID or DOI identifier
+_PMID_RE = re.compile(r"^PMID:(\d+)$", re.IGNORECASE)
+_DOI_RE = re.compile(r"^DOI:(.+)$", re.IGNORECASE)
+
+
+def _collect_refs(obj: object, result: list[str] | None = None) -> list[str]:
+    """Recursively collect all 'ref' string values from a nested dict/list."""
+    if result is None:
+        result = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == "ref" and isinstance(v, str) and v:
+                result.append(v)
+            else:
+                _collect_refs(v, result)
+    elif isinstance(obj, list):
+        for item in obj:
+            _collect_refs(item, result)
+    return result
+
+
+def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
+    """
+    Check that every PMID: or DOI: ref cited in the YAML has an entry in references.json.
+
+    This prevents hallucinated PMIDs from being committed: if an agent invents a
+    citation, the PMID will not be present in the validated references store.
+
+    Skips silently if references.json does not exist.
+    """
+    if not refs_path.exists():
+        return []
+
+    try:
+        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return []  # Already flagged by check_quote_keys if called first
+
+    # Build lookup sets from references.json
+    known_pmids: set[str] = set()
+    known_dois: set[str] = set()
+    for entry in refs.values():
+        if not isinstance(entry, dict):
+            continue
+        if pmid := entry.get("pmid"):
+            known_pmids.add(str(pmid))
+        if doi := entry.get("doi"):
+            known_dois.add(doi.lower())
+
+    errors: list[str] = []
+    for ref in _collect_refs(doc):
+        m = _PMID_RE.match(ref.strip())
+        if m:
+            pmid = m.group(1)
+            if pmid not in known_pmids:
+                errors.append(
+                    f"ref 'PMID:{pmid}' not found in {refs_path.name}. "
+                    "Add the reference through the validated ingest path first."
+                )
+            continue
+        m = _DOI_RE.match(ref.strip())
+        if m:
+            doi = m.group(1).lower()
+            if doi not in known_dois:
+                errors.append(
+                    f"ref 'DOI:{m.group(1)}' not found in {refs_path.name}. "
+                    "Add the reference through the validated ingest path first."
+                )
 
     return errors
 

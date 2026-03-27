@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-PreToolUse hook: validates kb/mappings/**/*.yaml BEFORE edits are applied.
+PreToolUse hook: validates kb/**/*.yaml BEFORE edits are applied.
 
-1. Intercepts Edit/Write/MultiEdit calls targeting kb/**/*.yaml
-2. Simulates the resulting file content (no disk write until validated)
-3. Runs linkml-validate via validate.py AND structural_checks
-4. Returns exit code 2 to BLOCK the edit if either check fails
+Checks (in order):
+1. YAML parse validity
+2. Structural integrity (duplicate IDs, dangling edges, placeholder snippets, accessions)
+3. Quote key provenance: every quote_key must exist in references.json
+4. Reference PMID/DOI provenance: every PMID:/DOI: ref must exist in references.json
+5. LinkML schema conformance (subprocess; skipped if schema file absent)
 
-Exit code 2 blocks the operation in PreToolUse hooks.
-https://docs.claude.com/en/docs/claude-code/hooks#exit-code-2-behavior
+Returns exit code 2 to BLOCK the edit if any check fails.
+https://docs.anthropic.com/en/docs/claude-code/hooks#exit-code-2-behavior
 """
 
 import sys
@@ -20,7 +22,13 @@ _project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(_project_root / "src"))
 
 import yaml  # noqa: E402
-from evidencell.validate import simulate_edit, structural_checks, linkml_validate  # noqa: E402
+from evidencell.validate import (  # noqa: E402
+    simulate_edit,
+    structural_checks,
+    check_quote_keys,
+    check_ref_pmids,
+    linkml_validate,
+)
 
 
 def main():
@@ -52,7 +60,10 @@ def main():
 
     errors_found = False
 
-    # 1. Structural integrity checks (fast, no subprocess)
+    refs_path = file_path.parent / "references.json"
+    doc: dict | None = None
+
+    # 1. YAML parse + structural integrity (fast, no subprocess)
     try:
         doc = yaml.safe_load(simulated)
         if isinstance(doc, dict):
@@ -66,7 +77,25 @@ def main():
         print(f"YAML parse error: {exc}", file=sys.stderr)
         errors_found = True
 
-    # 2. LinkML schema validation (subprocess)
+    # 2. Quote key provenance (fast, local references.json lookup)
+    if isinstance(doc, dict):
+        qk_errors = check_quote_keys(doc, refs_path)
+        if qk_errors:
+            print("Quote key errors:", file=sys.stderr)
+            for e in qk_errors:
+                print(f"  - {e}", file=sys.stderr)
+            errors_found = True
+
+    # 3. Reference PMID/DOI provenance (fast, local references.json lookup)
+    if isinstance(doc, dict):
+        ref_errors = check_ref_pmids(doc, refs_path)
+        if ref_errors:
+            print("Reference provenance errors:", file=sys.stderr)
+            for e in ref_errors:
+                print(f"  - {e}", file=sys.stderr)
+            errors_found = True
+
+    # 4. LinkML schema validation (subprocess)
     ok, output = linkml_validate(simulated, schema_path, file_path.name)
     if output.strip():
         print(output.strip(), file=sys.stderr)

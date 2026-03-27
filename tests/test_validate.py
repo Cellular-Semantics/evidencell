@@ -1,5 +1,6 @@
 """Unit tests for evidencell.validate structural checks and edit simulation."""
 
+import json
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -7,6 +8,10 @@ import pytest
 
 from evidencell.validate import (
     PLACEHOLDER_SNIPPETS,
+    _collect_quote_keys,
+    _collect_refs,
+    check_quote_keys,
+    check_ref_pmids,
     linkml_validate,
     simulate_edit,
     structural_checks,
@@ -325,3 +330,142 @@ def test_linkml_validate_returns_false_on_failure(tmp_path: Path):
         ok, output = linkml_validate("bad: yaml", schema)
     assert ok is False
     assert "missing required field" in output
+
+
+# ── Provenance check fixtures ─────────────────────────────────────────────────
+
+
+@pytest.fixture()
+def refs_file(tmp_path: Path) -> Path:
+    refs = {
+        "201041756": {
+            "corpus_id": "201041756",
+            "pmid": "31420995",
+            "doi": "10.1111/ejn.14606",
+            "authors": ["Winterer J"],
+            "year": 2019,
+            "title": "OLM interneurons",
+            "journal": "Eur J Neurosci",
+            "quotes": {
+                "201041756_aabb1234": {
+                    "text": "OLM cells express Sst and Chrna2.",
+                    "section": "Results 3.3",
+                    "claims": ["sst_positive"],
+                },
+                "201041756_ccdd5678": {
+                    "text": "Npy is consistently expressed.",
+                    "section": "Results 3.5",
+                    "claims": ["npy_positive"],
+                },
+            },
+        },
+        "987654": {
+            "corpus_id": "987654",
+            "pmid": "12345678",
+            "doi": "10.1234/fake.2020.001",
+            "quotes": {},
+        },
+    }
+    p = tmp_path / "references.json"
+    p.write_text(json.dumps(refs))
+    return p
+
+
+# ── _collect_quote_keys ───────────────────────────────────────────────────────
+
+
+def test_collect_quote_keys_nested():
+    doc = {
+        "nodes": [
+            {"defining_markers": [{"sources": [{"quote_key": "abc_11223344"}]}]}
+        ],
+        "edges": [{"evidence": [{"quote_key": "def_aabbccdd"}, {"corpus_id": "xyz"}]}],
+    }
+    keys = _collect_quote_keys(doc)
+    assert keys == ["abc_11223344", "def_aabbccdd"]
+
+
+def test_collect_quote_keys_empty():
+    assert _collect_quote_keys({}) == []
+    assert _collect_quote_keys({"nodes": []}) == []
+
+
+# ── check_quote_keys ──────────────────────────────────────────────────────────
+
+
+def test_check_quote_keys_valid(refs_file: Path):
+    doc = {"nodes": [{"sources": [{"quote_key": "201041756_aabb1234"}]}]}
+    assert check_quote_keys(doc, refs_file) == []
+
+
+def test_check_quote_keys_missing(refs_file: Path):
+    doc = {"nodes": [{"sources": [{"quote_key": "INVENTED_KEY_deadbeef"}]}]}
+    errors = check_quote_keys(doc, refs_file)
+    assert len(errors) == 1
+    assert "INVENTED_KEY_deadbeef" in errors[0]
+
+
+def test_check_quote_keys_no_refs_file(tmp_path: Path):
+    """Silently skip if references.json is absent (fresh graph)."""
+    doc = {"nodes": [{"sources": [{"quote_key": "anything_aaaabbbb"}]}]}
+    assert check_quote_keys(doc, tmp_path / "references.json") == []
+
+
+def test_check_quote_keys_reports_all_missing(refs_file: Path):
+    doc = {"x": {"quote_key": "bad_00000001"}, "y": {"quote_key": "bad_00000002"}}
+    errors = check_quote_keys(doc, refs_file)
+    assert len(errors) == 2
+
+
+# ── _collect_refs ─────────────────────────────────────────────────────────────
+
+
+def test_collect_refs_basic():
+    doc = {
+        "defining_markers": [{"sources": [{"ref": "PMID:31420995"}]}],
+        "neuropeptides": [{"sources": [{"ref": "DOI:10.1234/x"}]}],
+    }
+    refs = _collect_refs(doc)
+    assert "PMID:31420995" in refs
+    assert "DOI:10.1234/x" in refs
+
+
+def test_collect_refs_ignores_non_ref_keys():
+    doc = {"reference": "not a ref field", "ref": "PMID:99999999"}
+    assert _collect_refs(doc) == ["PMID:99999999"]
+
+
+# ── check_ref_pmids ───────────────────────────────────────────────────────────
+
+
+def test_check_ref_pmids_valid_pmid(refs_file: Path):
+    doc = {"sources": [{"ref": "PMID:31420995"}]}
+    assert check_ref_pmids(doc, refs_file) == []
+
+
+def test_check_ref_pmids_valid_doi(refs_file: Path):
+    doc = {"sources": [{"ref": "DOI:10.1111/ejn.14606"}]}
+    assert check_ref_pmids(doc, refs_file) == []
+
+
+def test_check_ref_pmids_hallucinated_pmid(refs_file: Path):
+    doc = {"sources": [{"ref": "PMID:00000001"}]}
+    errors = check_ref_pmids(doc, refs_file)
+    assert len(errors) == 1
+    assert "PMID:00000001" in errors[0]
+
+
+def test_check_ref_pmids_hallucinated_doi(refs_file: Path):
+    doc = {"sources": [{"ref": "DOI:10.9999/invented.2099.0001"}]}
+    assert len(check_ref_pmids(doc, refs_file)) == 1
+
+
+def test_check_ref_pmids_non_pmid_ref_ignored(refs_file: Path):
+    """corpus_id-style refs (no PMID:/DOI: prefix) are not checked."""
+    doc = {"sources": [{"ref": "corpus:abc123"}]}
+    assert check_ref_pmids(doc, refs_file) == []
+
+
+def test_check_ref_pmids_no_refs_file(tmp_path: Path):
+    doc = {"sources": [{"ref": "PMID:99999999"}]}
+    assert check_ref_pmids(doc, tmp_path / "references.json") == []

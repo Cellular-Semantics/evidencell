@@ -154,6 +154,82 @@ def test_invalid_yaml_syntax_blocked():
     )
 
 
+# ── Quote key and PMID provenance checks ─────────────────────────────────────
+
+
+def _make_refs_and_yaml(tmp_path: Path, yaml_content: str) -> tuple[str, dict]:
+    """Create a kb/draft/ dir with references.json; return file_path string + payload."""
+    kb_dir = tmp_path / "kb" / "draft"
+    kb_dir.mkdir(parents=True)
+    refs = {
+        "201041756": {
+            "corpus_id": "201041756",
+            "pmid": "31420995",
+            "doi": "10.1111/ejn.14606",
+            "quotes": {
+                "201041756_aabb1234": {"text": "OLM cells express Sst.", "claims": ["sst_positive"]},
+            },
+        }
+    }
+    (kb_dir / "references.json").write_text(json.dumps(refs))
+    yaml_path = kb_dir / "test.yaml"
+    yaml_path.write_text(yaml_content)
+    return str(yaml_path), _write_payload(yaml_content, file_path=str(yaml_path))
+
+
+def test_missing_quote_key_blocked(tmp_path: Path):
+    """A quote_key not in references.json must block the write (exit 2)."""
+    yaml_content = """\
+nodes:
+  - id: type_a
+    name: Type A
+    defining_markers:
+      - symbol: Sst
+        sources:
+          - ref: "PMID:31420995"
+            quote_key: "INVENTED_KEY_deadbeef00"
+  - id: type_b
+    name: Type B
+edges:
+  - id: edge_1
+    type_a: type_a
+    type_b: type_b
+    evidence:
+      - corpus_id: "12345"
+        snippet: "Real text."
+"""
+    _, payload = _make_refs_and_yaml(tmp_path, yaml_content)
+    r = _run_hook(payload)
+    assert r.returncode == 2, f"Expected exit 2 for missing quote_key, got {r.returncode}\n{r.stderr}"
+
+
+def test_hallucinated_pmid_ref_blocked(tmp_path: Path):
+    """A PMID: ref not in references.json must block the write (exit 2)."""
+    yaml_content = """\
+nodes:
+  - id: type_a
+    name: Type A
+    defining_markers:
+      - symbol: FakeMarker
+        sources:
+          - ref: "PMID:00000001"
+  - id: type_b
+    name: Type B
+edges:
+  - id: edge_1
+    type_a: type_a
+    type_b: type_b
+    evidence:
+      - corpus_id: "12345"
+        snippet: "Real text."
+"""
+    _, payload = _make_refs_and_yaml(tmp_path, yaml_content)
+    r = _run_hook(payload)
+    assert r.returncode == 2, (
+        f"Expected exit 2 for hallucinated PMID, got {r.returncode}\n{r.stderr}"
+    )
+
+
 # ── Integration test (calls linkml-validate subprocess) ───────────────────────
 
 

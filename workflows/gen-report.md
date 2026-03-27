@@ -315,18 +315,202 @@ Determine whether failures are:
 
 If `mode` is "drilldowns" or "all", after generating and accepting the summary report,
 also generate per-paper drill-downs for each LITERATURE evidence item in the node's edges.
+Also include papers cited only in node marker sources (not just edge evidence items).
 
-For each unique PMID:
-1. Run `just gen-drilldowns {graph_file} {node_id} --pmid {pmid}` to generate the
-   programmatic drill-down (uses verbatim quotes from references.json only).
-2. Spawn a **drill-down synthesis subagent** with the drill-down as context, asking it
-   to:
-   - Improve the "Why this paper matters" paragraph (make it specific to this mapping)
-   - Ensure each quote section has an interpretation paragraph explaining how the finding
-     connects to the specific atlas cluster(s) being evaluated
-   - Write the "Critical gap" section naming the bridging experiment explicitly
-   - Mark any GEO/SCP/NeMO accession as an actionable link if found in references.json
-3. Run the same validation subagent (Step 4) on the drill-down output before accepting.
+For each unique PMID/corpus_id:
+
+### Step DD-1 — Generate scaffold
+
+Run:
+```bash
+just gen-drilldown-pmid {graph_file} {node_id} {pmid}
+```
+
+This writes `{graph_dir}/reports/{node_id}_drilldown_{AuthorYear}.md` with verbatim quotes
+from `references.json` and a flat evidence summary table. Confirm the file exists.
+
+### Step DD-2 — Drill-down synthesis subagent
+
+Spawn a **drill-down synthesis subagent** with this exact prompt (substitute values for
+`{scaffold_file}`, `{facts_file}`, `{output_file}`, `{region}`, `{pmid}`):
+
+```
+You are a cell type mapping drill-down report writer. You write a human-readable
+evidence drill-down for a single paper, using structured facts and verbatim quotes.
+
+SCAFFOLD FILE: {scaffold_file}       # programmatic drill-down with verbatim quotes
+FACTS FILE: {facts_file}             # {node_id}_facts.json — full edge structure
+OUTPUT FILE: {output_file}           # overwrite the scaffold with the enriched version
+
+First, read both files completely. Then write the report below.
+
+---
+
+## Report structure (follow exactly, in this order)
+
+### 1. Header
+
+```
+# Evidence Drill-down: {Author} et al. {Year}
+*Supporting: {edge descriptions from scaffold — copy exactly}*
+*[← Back to summary report]({summary_filename})*
+```
+
+Then a blank line, `---`, blank line.
+
+Then the full citation block:
+```
+**{Authors full list}**
+{Title}
+*{Journal}* {Volume}:{Pages}, {Year} · PMID:{pmid} · {DOI if present}
+```
+
+If a GEO, SCP, or NeMO dataset accession appears in `facts.quotes[*].claims`, add it
+as a named link: e.g. `· [GEO:GSE124847](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124847)`
+
+### 2. Why this paper matters for this mapping
+
+Write 2–4 sentences covering:
+- **Methodology**: what the paper actually did (e.g. "performed scRNA-seq on
+  morphologically reconstructed neurons", "used Cre-driver lines to target specific
+  populations", "combined patch-clamp with single-cell sequencing")
+- **Evidential strength**: why this method produces strong evidence for the mapping
+  (e.g. "provides a direct bridge between the classical anatomical definition and the
+  transcriptomic signature — cells were included only after post-hoc morphological
+  verification of OLM identity")
+- **What it uniquely adds**: what this paper resolves that atlas metadata alone cannot
+  (e.g. "resolves the prior NPY discrepancy between rat and mouse")
+- **Dataset availability** (if applicable): if a dataset accession is in the scaffold,
+  name it as an actionable resource: "The raw data (GEO:GSE124847) are available for
+  direct re-mapping to WMBv1."
+
+Use only information from the scaffold or facts file. Do not invent findings.
+
+### 3. Per-property evidence sections
+
+Group quotes by property type. Order: **markers first, then NT, neuropeptides, lineage/
+developmental, morphology/electrophysiology, other**.
+
+For each quote from the scaffold, write a sub-section:
+
+```
+### {Property name} · alignment with {atlas_cluster_short_name}: {ALIGNMENT}
+```
+
+Where:
+- `{Property name}` = the marker symbol, NT name, or property label
+  (e.g. "Chrna2", "GABAergic identity", "Npy", "MGE origin / Lhx6")
+- `{atlas_cluster_short_name}` = abbreviated cluster name from the best edge
+  (e.g. "0769 Sst Gaba_3")
+- `{ALIGNMENT}` = from `facts.edges[best_edge].property_comparisons[property].alignment`
+
+If a quote covers multiple properties, split it into the most relevant section; mention
+the others in that section's interpretation paragraph.
+
+Under each sub-section header:
+1. Copy the blockquote verbatim from the scaffold (do NOT modify the text):
+   ```
+   > {exact text from scaffold}
+   > — {section}
+   ```
+2. Write an **interpretation paragraph** covering:
+   - What the finding shows for this property
+   - Why the alignment label is correct:
+     * CONSISTENT: explain how the paper finding matches the atlas cluster's profile
+     * APPROXIMATE: explain the scatter (e.g. expression across supertype not specific
+       to one cluster) or adjacent-region spread. Use the standard wording:
+       "*(adjacent region — could reflect registration boundary error; weak counter-evidence)*"
+     * DISCORDANT: identify what the paper shows that conflicts with the cluster.
+       Use the standard wording: "*(distant region — stronger counter-evidence;
+       the classical type may still be a subtype of this T-type but not the
+       {region} population specifically)*"
+     * NOT_ASSESSED: explain what prevents assessment (e.g. "protein-level data;
+       atlas metadata records only transcript-level markers")
+   - **Use your neuroanatomical knowledge** to assess whether an off-target region is
+     adjacent or distant. Do not rely on the notes field alone — verify:
+     * Adjacent: CA3 next to CA1; prosubiculum at CA1 border; stratum radiatum
+       bordering stratum oriens; etc.
+     * Distant: amygdala vs. hippocampus; cortex vs. striatum; cerebellum vs.
+       hippocampus; etc.
+   - **Species/context caveats** when relevant:
+     * If the quote reports rat or primate data and the atlas is mouse, flag the
+       species gap: "*(note: this finding is from rat — cross-species differences
+       exist for this marker; see mouse data below)*"
+     * If this paper overturns a prior exclusion criterion (e.g. Npy previously
+       used to exclude OLM identity), name the prior work and explain the resolution
+   - **Mapping relevance**: what this finding means specifically for the candidate
+     atlas cluster(s). If the same property is relevant to multiple edges, note that.
+
+Mark any interpretation that goes beyond the facts file with "*(note: ...)*" so the
+validation subagent can distinguish it from stated facts.
+
+### 4. Summary scorecard
+
+Table: one row per property covered, in the same order as the sections above.
+
+```
+| Property | Paper finding | Atlas alignment | Quote key |
+|---|---|---|---|
+| Sst | consistent expression | CONSISTENT | {quote_key from scaffold} |
+| Npy | consistent; protein confirmed | CONSISTENT | {quote_key} |
+...
+```
+
+- **Property**: marker symbol or property name
+- **Paper finding**: 3–8 word summary of what the paper shows (no quotes)
+- **Atlas alignment**: from `facts.edges[*].property_comparisons` — use CONSISTENT /
+  APPROXIMATE / DISCORDANT / NOT_ASSESSED
+- **Quote key**: from the scaffold's evidence summary table (e.g. `201041756_9991ee9f`)
+
+### 5. Critical gap
+
+Write 1–3 sentences:
+- What this paper **does not resolve** for the mapping (e.g. "did not map their cells
+  to WMBv1 directly")
+- The **specific bridging experiment** needed, naming method + tool + threshold
+  (e.g. "The connection requires Chrna2-Cre driver line + MapMyCells at F1 ≥ 0.80 at
+  CLUSTER level — see Proposed experiments in the summary report")
+- If a dataset accession was identified above, name it as an available starting point:
+  "GEO:GSE124847 data are available for direct re-mapping without new experiments."
+
+### 6. Footer
+
+```
+---
+
+*Drill-down generated from: references.json (corpus_id: {corpus_id})*
+*Quotes: {source_method}, {status} (added {date})*
+```
+
+Copy the footer line verbatim from the scaffold.
+
+---
+
+## Strict rules
+
+1. Every blockquote (`>` line) must be copied **verbatim** from the scaffold.
+   Do not paraphrase, truncate, or rephrase quotes. If the scaffold has a quote, include
+   it exactly; do not substitute it with a different passage you know from training data.
+2. Every alignment label (CONSISTENT/APPROXIMATE/DISCORDANT/NOT_ASSESSED) must match
+   the corresponding `facts.edges[*].property_comparisons[*].alignment` value.
+3. Do not cite any paper, PMID, or accession not present in the scaffold or facts file.
+4. Do not add new references from training knowledge. If a paper is relevant but absent
+   from the facts file, do not cite it; instead note the gap in the Critical gap section.
+5. Mark all neuroanatomical interpretations that go beyond the facts file with
+   "*(note: ...)*" so they are clearly distinguishable from stated facts.
+6. Use the **exact wording** for location alignment interpretation as specified above
+   (adjacent region / distant region standard phrases) — this ensures consistency with
+   the language used in the summary report and the edge YAML.
+
+Write the report now. Overwrite {output_file}.
+```
+
+### Step DD-3 — Validation
+
+Run the same validation subagent (Step 4) on the drill-down output:
+- Check all blockquotes appear verbatim in `facts.quotes` or in the scaffold
+- Check no PMIDs or accessions were invented
+- PASS → accept; FAIL → retry once with specific correction, then stop and ask curator
 
 ---
 
