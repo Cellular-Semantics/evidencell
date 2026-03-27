@@ -282,3 +282,172 @@ def linkml_validate(content: str, schema_path: Path, original_name: str = "input
         )
         output = (result.stdout + result.stderr).strip()
         return result.returncode == 0, output
+
+
+# ── Markdown annotation parsing ────────────────────────────────────────────────
+
+# Blockquote attribution line: starts with `> —` (em-dash)
+_MD_ATTRIBUTION_RE = re.compile(r"^>\s*[—–-]")
+# Hidden quote key annotation: <!-- quote_key: X -->
+_MD_QUOTE_KEY_RE = re.compile(r"<!--\s*quote_key:\s*(\S+)\s*-->")
+# Ontology CURIEs: [PREFIX:digits]  e.g. [UBERON:0014548]
+_MD_CURIE_RE = re.compile(r"\[([A-Z]+:\d+)\]")
+# Atlas cluster accessions: [CS...] (upper-alpha-numeric + underscore)
+_MD_ACCESSION_RE = re.compile(r"\[(CS[A-Z0-9_]+)\]")
+# PMID from pubmed hyperlink in reference table: [digits](https://pubmed...)
+_MD_PMID_RE = re.compile(r"\[(\d{7,9})\]\(https://pubmed")
+
+
+def parse_md_annotations(text: str) -> dict:
+    """
+    Parse machine-readable annotations embedded in a Markdown report.
+
+    Returns a dict with:
+      quote_keys             — list of quote_key values from <!-- quote_key: X --> on > lines
+      unannotated_blockquotes— blockquote blocks with no <!-- quote_key --> annotation anywhere
+                               in the block (represented by first content line of each block)
+      curie_ids              — list of [PREFIX:digits] CURIEs found anywhere in text
+      accessions             — list of [CS...] atlas accessions found anywhere
+      pmids                  — list of PMIDs from PubMed hyperlinks in reference table
+    """
+    quote_keys: list[str] = []
+    unannotated_blockquotes: list[str] = []
+    curie_ids: list[str] = []
+    accessions: list[str] = []
+    pmids: list[str] = []
+
+    lines = text.splitlines()
+
+    # Pass 1: extract CURIEs, accessions, PMIDs from every line
+    for line in lines:
+        curie_ids.extend(_MD_CURIE_RE.findall(line))
+        accessions.extend(_MD_ACCESSION_RE.findall(line))
+        pmids.extend(_MD_PMID_RE.findall(line))
+
+    # Pass 2: blockquote blocks — check for quote_key annotation at block level
+    i = 0
+    while i < len(lines):
+        stripped = lines[i].strip()
+        if stripped.startswith(">"):
+            # Collect entire contiguous blockquote block
+            block_lines: list[str] = []
+            while i < len(lines) and lines[i].strip().startswith(">"):
+                block_lines.append(lines[i].strip())
+                i += 1
+
+            # Extract all quote keys from the block
+            block_has_key = False
+            for bl in block_lines:
+                qk_match = _MD_QUOTE_KEY_RE.search(bl)
+                if qk_match:
+                    quote_keys.append(qk_match.group(1))
+                    block_has_key = True
+
+            # Flag the whole block if it has no quote_key annotation
+            if not block_has_key:
+                # Use first non-attribution content line as the representative
+                representative = next(
+                    (bl for bl in block_lines if not _MD_ATTRIBUTION_RE.match(bl)),
+                    block_lines[0],
+                )
+                unannotated_blockquotes.append(representative)
+        else:
+            i += 1
+
+    return {
+        "quote_keys": quote_keys,
+        "unannotated_blockquotes": unannotated_blockquotes,
+        "curie_ids": curie_ids,
+        "accessions": accessions,
+        "pmids": pmids,
+    }
+
+
+def check_md_ids(
+    annotations: dict,
+    refs_path: Path,
+    kb_nodes: dict | None = None,
+) -> list[str]:
+    """
+    Validate machine-readable annotations extracted by parse_md_annotations().
+
+    Checks performed (silently skipped when the backing cache does not exist):
+      1. Unannotated blockquotes — always an error
+      2. quote_keys — existence in references.json
+      3. pmids — existence in references.json
+      4. curie_ids — if term_index.json exists beside refs_path
+      5. accessions — if kb_nodes dict provided
+      6. gene_symbols — (reserved; not yet implemented)
+
+    Returns list of error strings; empty = OK.
+    """
+    errors: list[str] = []
+
+    # 1. Unannotated blockquotes — unconditional
+    for line in annotations.get("unannotated_blockquotes", []):
+        errors.append(
+            f"Unannotated blockquote (missing '<!-- quote_key: X -->' annotation): {line[:80]}"
+        )
+
+    # Load references.json once if it exists
+    refs: dict | None = None
+    if refs_path.exists():
+        try:
+            refs = json.loads(refs_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            errors.append(f"Could not read {refs_path.name} — ensure it is valid JSON")
+
+    if refs is not None:
+        # Build lookup sets
+        known_quote_keys: set[str] = set()
+        known_pmids: set[str] = set()
+        known_dois: set[str] = set()
+        for entry in refs.values():
+            if not isinstance(entry, dict):
+                continue
+            known_quote_keys.update(entry.get("quotes", {}).keys())
+            if pmid := entry.get("pmid"):
+                known_pmids.add(str(pmid))
+            if doi := entry.get("doi"):
+                known_dois.add(doi.lower())
+
+        # 2. quote_keys
+        for qk in annotations.get("quote_keys", []):
+            if qk not in known_quote_keys:
+                errors.append(
+                    f"quote_key '{qk}' not found in {refs_path.name}. "
+                    "Add the quote through the validated ingest path before referencing it."
+                )
+
+        # 3. pmids
+        for pmid in annotations.get("pmids", []):
+            if pmid not in known_pmids:
+                errors.append(
+                    f"PMID '{pmid}' not found in {refs_path.name}. "
+                    "Add the reference through the validated ingest path first."
+                )
+
+    # 4. curie_ids — checked against term_index.json if present
+    term_index_path = refs_path.parent / "term_index.json"
+    if term_index_path.exists() and annotations.get("curie_ids"):
+        try:
+            term_index: dict = json.loads(term_index_path.read_text(encoding="utf-8"))
+            for curie in annotations["curie_ids"]:
+                if curie not in term_index:
+                    errors.append(
+                        f"Ontology term '{curie}' not found in term_index.json. "
+                        "Verify the term with runoak before using it."
+                    )
+        except (json.JSONDecodeError, OSError):
+            pass  # Corrupt index — skip silently; not a report author's fault
+
+    # 5. accessions — checked against kb_nodes if provided
+    if kb_nodes is not None:
+        for acc in annotations.get("accessions", []):
+            if acc not in kb_nodes:
+                errors.append(
+                    f"Atlas accession '{acc}' not found in KB nodes. "
+                    "Check the accession against the taxonomy."
+                )
+
+    return errors

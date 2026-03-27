@@ -656,10 +656,12 @@ def render_summary(
     )
     neg_str = ", ".join(f"{s}−" for s in cn["negative_markers"])
     np_str = ", ".join(m["symbol"] for m in cn["neuropeptides"])
-    loc_str = "; ".join(
-        loc.get("name_in_source") or loc.get("label") or loc.get("id", "")
-        for loc in cn["soma_locations"]
-    )
+    def _loc_label(loc: dict) -> str:
+        name = loc.get("name_in_source") or loc.get("label") or loc.get("id", "")
+        loc_id = loc.get("id", "")
+        return f"{name} [{loc_id}]" if loc_id else name
+
+    loc_str = "; ".join(_loc_label(loc) for loc in cn["soma_locations"])
     loc_refs = " ".join(cn["location_refs"])
     nt_refs = " ".join(cn["nt_refs"])
     # Deduplicate refs
@@ -699,10 +701,12 @@ def render_summary(
         else:
             rank_str = "—"
         name = edge["node_b_name"]
+        acc = edge.get("node_b_accession", "")
+        cluster_label = f"{name} [{acc}]" if acc else name
         n_cells = edge["n_cells"] if edge["n_cells"] is not None else "—"
         badge = _conf_badge(conf)
         verdict = edge["verdict"]
-        lines.append(f"| {rank_str} | {name} | {edge['supertype']} | {n_cells} | {badge} | {verdict} |")
+        lines.append(f"| {rank_str} | {cluster_label} | {edge['supertype']} | {n_cells} | {badge} | {verdict} |")
     lines.append("")
 
     if edges:
@@ -1011,6 +1015,7 @@ def render_drilldown(
     if quotes:
         lines.append("## Evidence from this paper")
         lines.append("")
+        first_author_str = authors[0].split()[-1] if authors else "Unknown"
         for qk, qobj in quotes.items():
             text = qobj["text"]
             section = qobj.get("section", "")
@@ -1018,6 +1023,11 @@ def render_drilldown(
             lines.append(f"### {section or qk}")
             lines.append("")
             lines.append(f"> {text}")
+            # Attribution line: visible miniref + hidden quote_key for hook validation
+            lines.append(
+                f"> — {first_author_str} et al. {year}, {section} "
+                f"<!-- quote_key: {qk} -->"
+            )
             lines.append("")
             if claims:
                 lines.append(f"*Claims: {', '.join(claims)}*")

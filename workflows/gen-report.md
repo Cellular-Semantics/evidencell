@@ -218,6 +218,16 @@ Do not invent PMIDs or query URLs.
    with "*(note: ...)*" so the validation subagent can distinguish them from claimed facts.
 5. Do not add references from your training knowledge. If a paper seems relevant but
    isn't in `reference_index`, do not cite it.
+6. Every blockquote must have an attribution line immediately after it:
+   `> — {First author} et al. {Year}, {Section} · [{n}] <!-- quote_key: {key} -->`
+   Copy the `quote_key` exactly from `facts.quotes` for that entry. Do not invent it.
+   Do not write a blockquote without this attribution line.
+7. Every anatomical location (soma location, layer, region) must be written as:
+   `Name [PREFIX:ID]`
+   using the `id` field from `facts.classical_nodes[].anatomical_location`. Do not invent IDs.
+8. Every atlas cluster accession must be written as:
+   `Cluster name [accession]`
+   using the `node_b_accession` field from `facts.edges`. Do not invent accessions.
 
 Write the report now.
 ```
@@ -501,6 +511,13 @@ Copy the footer line verbatim from the scaffold.
 6. Use the **exact wording** for location alignment interpretation as specified above
    (adjacent region / distant region standard phrases) — this ensures consistency with
    the language used in the summary report and the edge YAML.
+7. Every blockquote must have an attribution line immediately after it:
+   `> — {First author} et al. {Year}, {Section} <!-- quote_key: {key} -->`
+   Copy the `quote_key` exactly from the scaffold's `<!-- quote_key -->` comment.
+   Do not modify or invent quote keys. Do not write a blockquote without this line.
+8. Every anatomical location must be written as `Name [PREFIX:ID]` using the ID from
+   the scaffold or facts. Every atlas cluster accession must appear in brackets:
+   `Cluster name [accession]`. Do not invent IDs or accessions.
 
 Write the report now. Overwrite {output_file}.
 ```

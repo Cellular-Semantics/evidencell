@@ -230,6 +230,83 @@ edges:
     )
 
 
+# ── Markdown report hook tests ────────────────────────────────────────────────
+
+
+def _make_refs_and_md(tmp_path: Path, md_content: str) -> dict:
+    """Create kb/draft/reports/ dir with references.json; return payload."""
+    reports_dir = tmp_path / "kb" / "draft" / "reports"
+    reports_dir.mkdir(parents=True)
+    refs = {
+        "201041756": {
+            "corpus_id": "201041756",
+            "pmid": "31420995",
+            "doi": "10.1111/ejn.14606",
+            "quotes": {
+                "201041756_aabb1234": {"text": "OLM cells express Sst.", "claims": ["sst_positive"]},
+            },
+        }
+    }
+    (reports_dir.parent / "references.json").write_text(json.dumps(refs))
+    md_path = reports_dir / "test_report.md"
+    md_path.write_text(md_content)
+    return _write_payload(md_content, file_path=str(md_path))
+
+
+def test_md_non_report_path_passes(tmp_path: Path):
+    """A .md file NOT in a reports/ subdir must pass through (exit 0)."""
+    md_path = tmp_path / "kb" / "draft" / "notes.md"
+    md_path.parent.mkdir(parents=True)
+    md_path.write_text("# Just some notes\n")
+    payload = _write_payload("# Just some notes\n", file_path=str(md_path))
+    r = _run_hook(payload)
+    assert r.returncode == 0, f"Expected 0 for non-report md, got {r.returncode}\n{r.stderr}"
+
+
+def test_md_report_unannotated_blockquote_blocked(tmp_path: Path):
+    """A .md report with a bare blockquote (no quote_key comment) must be blocked (exit 2)."""
+    md_content = """\
+# Test Report
+
+> This blockquote has no annotation.
+"""
+    payload = _make_refs_and_md(tmp_path, md_content)
+    r = _run_hook(payload)
+    assert r.returncode == 2, (
+        f"Expected exit 2 for unannotated blockquote, got {r.returncode}\n{r.stderr}"
+    )
+
+
+def test_md_report_bad_quote_key_blocked(tmp_path: Path):
+    """A .md report with a quote_key not in references.json must be blocked (exit 2)."""
+    md_content = """\
+# Test Report
+
+> Some text.
+> — Author et al. 2020, §1 · [1] <!-- quote_key: INVENTED_KEY_deadbeef -->
+"""
+    payload = _make_refs_and_md(tmp_path, md_content)
+    r = _run_hook(payload)
+    assert r.returncode == 2, (
+        f"Expected exit 2 for bad quote_key in md, got {r.returncode}\n{r.stderr}"
+    )
+
+
+def test_md_report_valid_annotation_passes(tmp_path: Path):
+    """A .md report with all valid annotations must pass (exit 0)."""
+    md_content = """\
+# Test Report
+
+> OLM cells express Sst.
+> — Winterer et al. 2019, Results §3.3 · [1] <!-- quote_key: 201041756_aabb1234 -->
+"""
+    payload = _make_refs_and_md(tmp_path, md_content)
+    r = _run_hook(payload)
+    assert r.returncode == 0, (
+        f"Expected exit 0 for valid md report, got {r.returncode}\n{r.stderr}"
+    )
+
+
 # ── Integration test (calls linkml-validate subprocess) ───────────────────────
 
 

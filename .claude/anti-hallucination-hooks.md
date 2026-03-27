@@ -16,11 +16,19 @@ Agent attempts Edit/Write
         ▼
 .claude/hooks/validate_mapping_hook.py   ← PreToolUse hook
         │
-        ├─ KB YAML files → schema conformance (linkml-validate)
-        │                  + content checks (see below)
+        ├─ KB YAML files (kb/**/*.yaml)
+        │     → YAML parse validity
+        │     → structural integrity (duplicate IDs, dangling edges, placeholder snippets)
+        │     → quote_key existence in references.json
+        │     → PMID/DOI existence in references.json
+        │     → LinkML schema conformance (subprocess; skipped if schema absent)
         │
-        └─ Report files  → quote key existence check
-                           (quote_key must resolve in references.json)
+        └─ Report files (kb/**/reports/*.md)
+              → unannotated blockquote detection
+              → quote_key existence in references.json
+              → PMID existence in references.json
+              → ontology CURIE existence in term_index.json (if present)
+              → atlas accession existence in sibling KB nodes (if discoverable)
         │
         ▼
 Write proceeds if all checks pass; blocked with structured error if any fail.
@@ -138,6 +146,53 @@ is YAML → `references.json` → report with no LLM in the loop at render time.
 
 **Status:** Implemented. Hook checks key existence before write; `render.py` raises on
 missing key at render time.
+
+---
+
+## Markdown report annotation standard
+
+Reports in `kb/**/reports/*.md` embed machine-readable annotations so the hook can
+validate identifiers without parsing prose. The principle: IDs that are reader-relevant
+appear as visible bracket notation; content-addressed hashes that carry no meaning
+to a reader appear as hidden HTML comments.
+
+### Summary
+
+| Content | Visible in report | Hidden | Hook parses |
+|---|---|---|---|
+| Blockquote source | `> — Author et al. Year, §section · [n]` attribution line | `<!-- quote_key: X -->` | HTML comment regex |
+| Ontology terms | `Name [PREFIX:ID]` | — | `\[[A-Z]+:\d+\]` |
+| Atlas accessions | `Name [CS…ID]` | — | `\[CS[A-Z0-9_]+\]` |
+| PMIDs | reference table rows with PubMed links | — | pubmed URL regex |
+| Gene symbols | symbol in text/table | — | (future: gene_index.json lookup) |
+
+### Blockquote pattern
+
+Every blockquote block must contain an attribution line with a `quote_key` comment:
+
+```markdown
+> verbatim quote text
+> — Winterer et al. 2019, Results §3.3 <!-- quote_key: 201041756_aabb1234 -->
+```
+
+- The attribution line (`> — ...`) is for readers: miniref and numbered citation
+- `<!-- quote_key: X -->` is for the hook: `parse_md_annotations()` extracts it with
+  `<!--\s*quote_key:\s*(\S+)\s*-->`
+- A blockquote block (consecutive `>` lines) with no `quote_key` comment in any line
+  is flagged as unannotated and blocks the write
+
+`render.py` emits this pattern automatically for programmatic drill-down output.
+For synthesis-agent-authored summaries, rules 6–8 in `gen-report.md` enforce it.
+
+### Ontology and accession brackets
+
+`render.py` automatically appends brackets where IDs are available:
+- Anatomical location: `CA1 stratum oriens [UBERON:0014548]`
+- Atlas cluster: `0769 Sst Gaba_3 [CS20230722_CLUS_0769]`
+
+The hook extracts these with `parse_md_annotations()` and checks:
+- CURIEs against `term_index.json` (silently skipped if absent)
+- Accessions against sibling KB YAML nodes (silently skipped if not discoverable)
 
 ---
 
