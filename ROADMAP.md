@@ -15,6 +15,7 @@
 | **M3** Mapping Hypotheses | Propose mapping edges from evidence + taxonomy | ✅ Done | `map-cell-type.md` orchestrator, hippocampus + cerebellum draft mappings | M2 |
 | **M4** Report Generation | Human-readable reports from draft mappings — MVP for biologists | 🔶 In progress | Three-tier architecture designed; hand-crafted OLM mock-up reports; `render.py` implementation pending | M3 |
 | **M5** Cross-validation + Community | Annotation transfer feedback, compliance, GitHub review | 🔲 Pending | `AnnotationTransferEvidence` feedback loop, compliance scoring, PR review workflow | M4 |
+| **M6** Code/Content Separation | Decouple KB content from code so evidencell can be a clean starting point for new projects | 🔲 Pending | Content boundary defined; HMBA mouse KB on `content/hmba-mouse` branch; `CONTRIBUTING.md` content-branch workflow; `main` passes `just test` with fixtures only | M5 |
 
 M0 and M1 can proceed in parallel — the schema does not need to be finalised before the repo is bootstrapped; it can be iterated in place. M2 begins as soon as M1 has the repo structure.
 
@@ -385,6 +386,51 @@ Key question the loop must answer: "is this evidence measured on this entity, or
 ### M5 — annotation transfer skill
 
 Bounded skill for running MapMyCells annotation transfer between a source dataset and WMBv1, computing purity/F1 metrics, and writing structured `AnnotationTransferEvidence` to KB edges. Currently done manually in notebooks.
+
+---
+
+## M6 — Infrastructure: Code/Content Separation
+
+**Goal**: Decouple the HMBA mouse KB from code and infrastructure so evidencell can serve as a clean starting point for new KB projects (different species, brain region, or atlas).
+
+**Status**: 🔲 Pending (depends on M5 — schema must be stable before separating content)
+
+### Motivation
+
+Development through M5 is necessarily coupled: workflows, schema, and KB content co-evolve. Once M5 is complete, the schema and tooling patterns are mature enough that a second KB project could adopt evidencell without inheriting HMBA mouse content.
+
+### Content boundary
+
+**Stays on `main` permanently (code + infra + minimal test fixtures):**
+- `src/evidencell/`, `schema/`, `tests/`, `justfile`, `.claude/`, `workflows/`, `planning/`, `docs/`
+- `inputs/taxonomies/test_single_row.json` — toy taxonomy fixture
+- `kb/draft/BG/GPi_shell_neuron.yaml` + `GPi_shell_neuron_Mmus.yaml` — minimal complete KB examples; used as hook test fixtures in `test_hook_integration.py`
+
+**Moves to `content/hmba-mouse` branch:**
+- `kb/draft/hippocampus/` — all YAML, references.json, reports, traversal outputs
+- `kb/draft/cerebellum/CB_MLI_types.yaml`, `CB_PLI_types.yaml`
+- `inputs/taxonomies/hippocampus_GABA_stratum_oriens.json` (880 KB production taxonomy)
+
+### Branch model (Phase 1)
+
+Branch naming: `content/<project>` — e.g. `content/hmba-mouse`.
+
+The content branch **merges from `main`** to pick up schema and tooling updates. KB-specific curation commits stay on the content branch. This is reversible; the repo can be restructured later without losing history.
+
+`main` is verified clean: `just test` passes with BG fixtures only; `kb/mappings/` remains empty or minimal.
+
+### Phase 2 (post-M6, not yet scoped)
+
+Once evidencell's schema is stable and a second KB project starts:
+- Make evidencell pip-installable (`uv build`, schema as packaged data asset)
+- New KB projects become separate repos that `pip install evidencell` and supply their own `kb/`
+- evidencell becomes a reusable tool rather than a content monorepo
+
+### Deliverables
+1. Content boundary documented (this section)
+2. `content/hmba-mouse` branch created from current `main`; hippocampus + cerebellum content committed there
+3. `main` cleaned to fixture-only KB content; `just test` verified green
+4. `CONTRIBUTING.md` updated: content branch workflow (how to run orchestrators against content branch, how to merge `main` → content branch)
 
 ---
 
