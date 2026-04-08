@@ -12,7 +12,7 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 | M2 | Literature retrieval pipeline (ASTA ingest, cite-traverse, evidence extraction) | **Complete** |
 | M3 | Mapping (property comparison, edge YAML, confidence assessment) | **Complete** |
 | M4 | Report generation (summary + drill-down, LLM synthesis, anti-hallucination hooks) | **Complete** |
-| M5 | Annotation transfer evidence | Pending |
+| M5 | Annotation transfer evidence | **In progress** — pipeline implemented, orchestrator pending |
 
 ---
 
@@ -29,7 +29,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | `evidence-extraction` | `workflows/evidence-extraction.md` | M2 | **Ready** | After cite-traverse — extracts verified evidence items into KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | M3 | **Ready** | Discovery mode: finds candidate atlas matches from property overlap; hypothesis mode: tests curator's proposed mapping. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
 | `gen-report` | `workflows/gen-report.md` | M4 | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
-| `annotation-transfer` | `workflows/annotation-transfer.md` | M5 | Pending | After AT results available — imports F1 scores as evidence |
+| `annotation-transfer` | `workflows/annotation-transfer.md` | M5 | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix; orchestrator for KB import pending |
 
 ---
 

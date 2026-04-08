@@ -202,6 +202,28 @@ gen-report-all:
         uv run python -m evidencell.render index "$region"
     done
 
+# ── Annotation Transfer ───────────────────────────────────────────────────────
+
+# Run preflight resource check on a dataset file
+[group('annotation-transfer')]
+at-preflight FILE:
+    cd annotation_transfer && uv run annotation-transfer preflight {{FILE}}
+
+# Convert h5ad to MapMyCells-ready format
+[group('annotation-transfer')]
+at-convert INPUT OUTPUT *ARGS:
+    cd annotation_transfer && uv run annotation-transfer convert {{INPUT}} {{OUTPUT}} {{ARGS}}
+
+# Compute F1 matrix from MapMyCells output
+[group('annotation-transfer')]
+at-score MMC_CSV LABELS OUTPUT *ARGS:
+    cd annotation_transfer && uv run annotation-transfer score {{MMC_CSV}} {{LABELS}} {{OUTPUT}} {{ARGS}}
+
+# Run annotation transfer tests
+[group('annotation-transfer')]
+at-test:
+    cd annotation_transfer && uv run pytest -v
+
 # ── Utilities ──────────────────────────────────────────────────────────────────
 
 # Pretty-print a KB file (YAML round-trip sanity check)
