@@ -48,8 +48,11 @@ The pipeline runs in phases, each driven by an orchestrator in `workflows/`:
    `workflows/map-cell-type.md`
    *[GATE] expert reviews proposed edges*
 
-6. **Report generation** — LLM-synthesised summary + per-paper drill-down reports; all IDs and quotes validated by hook before write
-   `workflows/gen-report.md`
+6. **Report generation** — three-tier human-readable output from KB YAML:
+   - *Region index* — one row per classical type, best hit, confidence, candidate count
+   - *Per-type summary* — candidates table, referenced evidence paragraphs, consolidated proposed experiments
+   - *Per-paper drill-down* — verbatim quotes per property, alignment scorecard, critical gap + bridging experiment
+   `just gen-report {graph_file}` (implementation in progress; see `planning/M4_report_generation.md`)
    *[GATE] biologist reviews; executes proposed experiments*
 
 7. **Annotation transfer** — import AT results (MapMyCells, Seurat) as structured evidence
@@ -65,10 +68,17 @@ Gates are not optional. The human is the top-level coordinator throughout — ea
 Each KB file is a mapping graph for a brain region. It contains:
 
 - **`CellTypeNode`** — one per type (classical or atlas cluster), with markers, anatomy, NT type, synonyms, references.
-- **`MappingEdge`** — one per proposed correspondence, with relationship type, confidence, caveats, and a structured property comparison
-- **Evidence items** (typed) — `LiteratureEvidence`, `AtlasMetadataEvidence`, `AnnotationTransferEvidence`, and others; each with a verbatim snippet and source ID
+- **`MappingEdge`** — one per proposed correspondence, with relationship type, confidence, caveats, and a structured property comparison table.
+- **Evidence items** (typed):
+  - `LiteratureEvidence` — peer-reviewed paper with verbatim snippet, PMID/DOI, study type
+  - `AtlasMetadataEvidence` — atlas taxonomy metadata (markers, MERFISH location, NT type, CCF distribution)
+  - `AtlasQueryEvidence` — curator-performed interactive query against an atlas browser (ABC Atlas, Allen Brain Map) with filter parameters and `query_url`; reproducible given the same atlas version
+  - `AnnotationTransferEvidence` — computational label transfer results (MapMyCells, Seurat) with F1 per taxonomy level
+  - `PatchSeqEvidence`, `ElectrophysiologyEvidence`, `MorphologyEvidence` — experimental evidence types
 
-Confidence levels (`HIGH`, `MODERATE`, `LOW`, `UNCERTAIN`, `REFUTED`) follow a decision guide: HIGH requires ≥2 independent evidence types including ≥1 experimental. The schema enforces structure; the confidence rationale is human-reviewed.
+All location data from spatial transcriptomics (MERFISH) reflects **soma position only**. Axonal and dendritic projection targets are recorded separately in `morphology_notes` and are not used in atlas location comparisons.
+
+Confidence levels (`HIGH`, `MODERATE`, `LOW`, `UNCERTAIN`) follow a decision guide: HIGH requires ≥2 independent evidence types including ≥1 experimental (annotation transfer, electrophysiology, or morphological reconstruction) — not achievable from literature alone. The schema enforces structure; the confidence rationale is human-reviewed.
 
 ---
 
