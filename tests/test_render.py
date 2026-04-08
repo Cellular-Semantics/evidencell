@@ -4,7 +4,6 @@ Unit tests for src/evidencell/render.py
 Run with: just test-fast (no OAK DB, no network)
 """
 
-import sys
 import tempfile
 import yaml
 from pathlib import Path
