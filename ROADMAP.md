@@ -392,7 +392,7 @@ Bounded skill for running MapMyCells annotation transfer between a source datase
 
 - [planning/citation_traversal_design.md](citation_traversal_design.md) — design space for citation traversal: ASTA snippets (primary), JATS/HTML/PDF fallbacks, passage location strategies, portable pipeline proposal
 - [planning/asta_deepsearch_integration.md](asta_deepsearch_integration.md) — detailed integration plan for ASTA deepsearch component
-- [Asta_deepsearch/workflows/lit-review.md](../Asta_deepsearch/workflows/lit-review.md) — literature review orchestrator workflow
-- [dismech-exptl-fork/CellSem_investigates.md](../dismech-exptl-fork/CellSem_investigates.md) — dismech architecture reference
+- [paperqa2_cyberian/workflows/lit-review.md](https://github.com/Cellular-Semantics/paperqa2_cyberian/blob/Asta_experiments/workflows/lit-review.md) — literature review orchestrator workflow (Asta_deepsearch repo)
+- [dismech-exptl-fork/CellSem_investigates.md](https://github.com/Cellular-Semantics/dismech-exptl-fork/blob/cellsem_notes_DONOTMERGE/CellSem_investigates.md) — dismech architecture reference
 - [plan.md](../plan.md) — schema design, evidence taxonomy, worked examples
 - [examples/scratch_notes.md](../examples/scratch_notes.md) — outstanding schema issues (review before M0)
