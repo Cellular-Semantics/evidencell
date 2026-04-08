@@ -202,6 +202,24 @@ gen-report-all:
         uv run python -m evidencell.render index "$region"
     done
 
+# Regenerate all reports + indices for draft KB (programmatic mode, no LLM)
+# Use this during active curation before content graduates to kb/mappings/
+[group('reports')]
+gen-report-draft REGION:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    files=$(find kb/draft/{{REGION}} -maxdepth 1 -name "*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No YAML files in kb/draft/{{REGION}}."; exit 0; fi
+    for f in $files; do
+        uv run python -m evidencell.render summary "$f"
+    done
+    uv run python -m evidencell.render index {{REGION}}
+
+# Generate all drill-downs for a classical node in a draft graph
+[group('reports')]
+gen-drilldowns-draft GRAPH_FILE NODE_ID:
+    uv run python -m evidencell.render drilldowns {{GRAPH_FILE}} --node {{NODE_ID}}
+
 # ── Utilities ──────────────────────────────────────────────────────────────────
 
 # Pretty-print a KB file (YAML round-trip sanity check)

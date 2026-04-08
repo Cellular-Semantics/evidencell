@@ -1,7 +1,7 @@
 # evidencell Roadmap
 
 > **Date**: 2026-04-04 (last updated)
-> **Status**: M0–M3 implemented. M4 in progress. M5, M6, M2+ pending.
+> **Status**: M0–M4 implemented. M5, M6, M2+ pending.
 
 ---
 
@@ -13,7 +13,7 @@
 | **M1** Repo Bootstrap | Create evidencell repo structure | ✅ Done | Repo, justfile, CLAUDE.md, ≥3 ported examples | M0 |
 | **M2** Lit Review → KB | Deepsearch pipeline → evidence items + reference provenance | ✅ Done | ASTA ingest + cite-traverse + evidence-extraction workflows, references.json cache | M1 |
 | **M3** Mapping Hypotheses | Propose mapping edges from evidence + taxonomy | ✅ Done | `map-cell-type.md` orchestrator, hippocampus + cerebellum draft mappings | M2 |
-| **M4** Report Generation | Human-readable reports from draft mappings — MVP for biologists | 🔶 In progress | Three-tier architecture designed; hand-crafted OLM mock-up reports; `render.py` implementation pending | M3 |
+| **M4** Report Generation | Human-readable reports from draft mappings — MVP for biologists | ✅ Done | Three-tier reports (summary, drill-down, index); `render.py` + `gen-report.md` orchestrator; `gen-report-draft` recipe; tests at 91% render coverage | M3 |
 | **M5** Cross-validation + Community | Annotation transfer feedback, compliance, GitHub review | 🔲 Pending | `AnnotationTransferEvidence` feedback loop, compliance scoring, PR review workflow | M4 |
 | **M6** Code/Content Separation | Decouple KB content from code so evidencell can be a clean starting point for new projects | 🔲 Pending | Content boundary defined; HMBA mouse KB on `content/hmba-mouse` branch; `CONTRIBUTING.md` content-branch workflow; `main` passes `just test` with fixtures only | M5 |
 | **M2+** Lit Review Quality | Improve snippet context, paper quality signals, and domain relevance filtering in cite-traverse | 🔲 Pending | Contextual retrieval for priority papers; venue/citation/cross-citation quality signals; evidencell-specific relevance pre-filters | — (parallel, any time) |
@@ -276,7 +276,7 @@ The existing KB examples (GPi shell, CB MLI) serve as in-context patterns for th
 ## M4 — Report Generation (MVP for biologists)
 
 **Implementation plan**: [M4_report_generation.md](M4_report_generation.md)
-**Status**: 🔶 Architecture designed; hand-crafted mock-ups complete; `render.py` implementation pending (2026-03-31).
+**Status**: ✅ Done (2026-04-04). Three-tier reports implemented; `gen-report-draft` recipe added; test coverage at 91%.
 
 **Goal**: Auto-generate human-readable mapping reports from KB YAML. This is the MVP milestone — after M3, biologists can review draft mappings and proposed experiments without reading YAML.
 
@@ -295,9 +295,9 @@ The existing KB examples (GPi shell, CB MLI) serve as in-context patterns for th
 
 **Location reasoning** — soma-only interpretation rule codified in `workflows/map-cell-type.md`: MERFISH location = soma position only; adjacent region = possible registration error (weak counter-evidence); distant region = genuine counter-evidence (subtype caveat preserved)
 
-### What remains (to close M4)
+### What was delivered (M4 complete)
 
-1. **`src/evidencell/render.py`** — implement the functions specified in `M4_report_generation.md`: `build_reference_index`, `fmt_atlas_query`, `render_summary`, `render_drilldown`, `render_index`, `_location_note`, `_candidate_verdict`, `_group_experiments`
+1. **`src/evidencell/render.py`** — `build_reference_index`, `render_summary`, `render_drilldown`, `render_index`, and all helpers; 91% test coverage
 2. **Justfile recipes** — `gen-report`, `gen-report-node`, `gen-drilldowns`, `gen-index`, `gen-report-all`
 3. **End-to-end test** — run on OLM hippocampus case; verify output matches hand-crafted mock-ups; confirm no invented references or quotes
 

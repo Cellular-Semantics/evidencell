@@ -4,8 +4,11 @@ Unit tests for src/evidencell/render.py
 Run with: just test-fast (no OAK DB, no network)
 """
 
+import sys
 import tempfile
+import yaml
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
@@ -14,12 +17,15 @@ from evidencell.render import (
     _candidate_verdict,
     _collect_quotes,
     _conf_badge,
+    _gen_all_drilldowns,
+    _gen_single_drilldown,
     _group_experiments,
     _location_note,
     _ot,
     _ref_identifier,
     build_reference_index,
     extract_node_facts,
+    render_drilldown,
     render_index,
     render_summary,
 )
@@ -170,6 +176,51 @@ MINIMAL_REFS = {
             }
         },
     },
+    "222222": {
+        "corpus_id": "222222",
+        "author_keys": ["Jones et al., 2022"],
+        "title": "A second test paper",
+        "year": 2022,
+        "authors": ["Alice Jones"],
+        "pmid": "99999999",
+        "doi": "10.1234/test2",
+        "resolution_confidence": "HIGH",
+        "quotes": {
+            "222222_def67890": {
+                "text": "Another verbatim quote from a second paper.",
+                "section": "Discussion",
+                "claims": ["morphology"],
+                "source_method": "primary",
+                "status": "verified",
+            }
+        },
+    },
+}
+
+# Graph with a LITERATURE evidence edge (needed for _gen_all_drilldowns traversal)
+GRAPH_WITH_LITERATURE_EDGE = {
+    **MINIMAL_GRAPH,
+    "edges": MINIMAL_GRAPH["edges"] + [
+        {
+            "id": "edge_test_lit",
+            "type_a": "test_classical",
+            "type_b": "atlas_clus_001",
+            "relationship": "EQUIVALENT",
+            "confidence": "HIGH",
+            "evidence": [
+                {
+                    "evidence_type": "LITERATURE",
+                    "supports": "SUPPORT",
+                    "reference": "PMID:99999999",
+                    "explanation": "Jones 2022 reports marker co-expression.",
+                }
+            ],
+            "property_comparisons": [],
+            "caveats": [],
+            "unresolved_questions": [],
+            "proposed_experiments": [],
+        }
+    ],
 }
 
 
@@ -521,9 +572,8 @@ def test_render_index_creates_file():
         # Set up minimal KB structure
         region_dir = tmp_path / "draft" / "testregion"
         region_dir.mkdir(parents=True)
-        import yaml as _yaml
         (region_dir / "test_graph.yaml").write_text(
-            _yaml.dump(MINIMAL_GRAPH), encoding="utf-8"
+            yaml.dump(MINIMAL_GRAPH), encoding="utf-8"
         )
         out_path = tmp_path / "reports" / "index.md"
         render_index("testregion", tmp_path, out_path)
@@ -531,3 +581,219 @@ def test_render_index_creates_file():
         content = out_path.read_text()
         assert "Test cell type" in content
         assert "MODERATE" in content or "🟡" in content
+
+
+# ── Drilldown render tests ────────────────────────────────────────────────────
+
+def test_render_drilldown_creates_file():
+    """render_drilldown writes a file without exception."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = Path(tmpdir) / "test_classical_drilldown_Smith2020.md"
+        render_drilldown(
+            MINIMAL_GRAPH, MINIMAL_REFS, "test_classical",
+            "PMID:12345678", out_path, Path("kb/draft/test/test.yaml"),
+        )
+        assert out_path.exists()
+        content = out_path.read_text()
+        assert "Smith" in content
+        assert "2020" in content
+
+
+def test_render_drilldown_contains_quote():
+    """Drill-down includes verbatim quote text from references.json."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = Path(tmpdir) / "dd.md"
+        render_drilldown(
+            MINIMAL_GRAPH, MINIMAL_REFS, "test_classical",
+            "PMID:12345678", out_path, Path("test.yaml"),
+        )
+        content = out_path.read_text()
+        assert "Verbatim quote text from the paper." in content
+
+
+def test_render_drilldown_bare_pmid():
+    """render_drilldown accepts bare PMID (without PMID: prefix)."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = Path(tmpdir) / "dd.md"
+        render_drilldown(
+            MINIMAL_GRAPH, MINIMAL_REFS, "test_classical",
+            "12345678", out_path, Path("test.yaml"),
+        )
+        assert out_path.exists()
+
+
+def test_render_drilldown_unknown_pmid_raises():
+    """Unresolvable PMID raises ValueError."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = Path(tmpdir) / "dd.md"
+        with pytest.raises(ValueError, match="not found in references.json"):
+            render_drilldown(
+                MINIMAL_GRAPH, MINIMAL_REFS, "test_classical",
+                "PMID:00000000", out_path, Path("test.yaml"),
+            )
+
+
+def test_render_drilldown_with_summary_back_link():
+    """When summary_path provided, drill-down includes back-link."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = Path(tmpdir) / "dd.md"
+        summary_path = Path(tmpdir) / "test_classical_summary.md"
+        render_drilldown(
+            MINIMAL_GRAPH, MINIMAL_REFS, "test_classical",
+            "PMID:12345678", out_path, Path("test.yaml"),
+            summary_path=summary_path,
+        )
+        content = out_path.read_text()
+        assert "← Back to summary report" in content
+
+
+
+# ── _gen_single_drilldown / _gen_all_drilldowns tests ────────────────────────
+
+def test_gen_single_drilldown_creates_named_file():
+    """_gen_single_drilldown writes file named {node}_{author}{year}.md."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_dir = Path(tmpdir)
+        _gen_single_drilldown(
+            MINIMAL_GRAPH, MINIMAL_REFS, "test_classical",
+            "PMID:12345678", out_dir, Path("test.yaml"),
+        )
+        files = list(out_dir.glob("*drilldown*.md"))
+        assert len(files) == 1
+        assert "Smith" in files[0].name
+        assert "2020" in files[0].name
+
+
+def test_gen_single_drilldown_unknown_pmid_warns(capsys):
+    """Unknown PMID prints warning to stderr and does not raise."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        _gen_single_drilldown(
+            MINIMAL_GRAPH, MINIMAL_REFS, "test_classical",
+            "PMID:00000000", Path(tmpdir), Path("test.yaml"),
+        )
+        captured = capsys.readouterr()
+        assert "WARNING" in captured.err
+
+
+def test_gen_all_drilldowns_iterates_literature_evidence():
+    """_gen_all_drilldowns generates one file per unique LITERATURE PMID."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_dir = Path(tmpdir)
+        _gen_all_drilldowns(
+            GRAPH_WITH_LITERATURE_EDGE, MINIMAL_REFS,
+            "test_classical", out_dir, Path("test.yaml"),
+        )
+        files = list(out_dir.glob("*drilldown*.md"))
+        assert len(files) == 1
+        assert "Jones" in files[0].name
+
+
+def test_gen_all_drilldowns_deduplicates():
+    """Same PMID in multiple edges → only one drilldown file."""
+    graph = {
+        **MINIMAL_GRAPH,
+        "edges": [
+            {
+                "id": "e1", "type_a": "test_classical", "type_b": "atlas_clus_001",
+                "relationship": "EQUIVALENT", "confidence": "HIGH",
+                "evidence": [{"evidence_type": "LITERATURE", "reference": "PMID:99999999",
+                              "supports": "SUPPORT", "explanation": "x"}],
+                "property_comparisons": [], "caveats": [],
+                "unresolved_questions": [], "proposed_experiments": [],
+            },
+            {
+                "id": "e2", "type_a": "test_classical", "type_b": "atlas_clus_002",
+                "relationship": "EQUIVALENT", "confidence": "MODERATE",
+                "evidence": [{"evidence_type": "LITERATURE", "reference": "PMID:99999999",
+                              "supports": "SUPPORT", "explanation": "y"}],
+                "property_comparisons": [], "caveats": [],
+                "unresolved_questions": [], "proposed_experiments": [],
+            },
+        ],
+    }
+    with tempfile.TemporaryDirectory() as tmpdir:
+        _gen_all_drilldowns(graph, MINIMAL_REFS, "test_classical", Path(tmpdir), Path("test.yaml"))
+        files = list(Path(tmpdir).glob("*drilldown*.md"))
+        assert len(files) == 1
+
+
+# ── CLI main() tests ──────────────────────────────────────────────────────────
+
+def _write_kb_files(tmp_path: Path) -> tuple[Path, Path]:
+    """Write a minimal KB YAML + references.json for CLI tests."""
+    graph_file = tmp_path / "test.yaml"
+    refs_file = tmp_path / "references.json"
+    import json
+    graph_file.write_text(yaml.dump(MINIMAL_GRAPH), encoding="utf-8")
+    refs_file.write_text(json.dumps(MINIMAL_REFS), encoding="utf-8")
+    return graph_file, refs_file
+
+
+def test_cli_summary(tmp_path):
+    """CLI: `render summary graph.yaml` writes summary report."""
+    graph_file, _ = _write_kb_files(tmp_path)
+    with patch("sys.argv", ["render", "summary", str(graph_file)]):
+        from evidencell.render import main
+        main()
+    summaries = list(tmp_path.glob("reports/*_summary.md"))
+    assert len(summaries) == 1
+
+
+def test_cli_summary_single_node(tmp_path):
+    """CLI: `render summary graph.yaml --node X` writes one summary."""
+    graph_file, _ = _write_kb_files(tmp_path)
+    with patch("sys.argv", ["render", "summary", str(graph_file), "--node", "test_classical"]):
+        from evidencell.render import main
+        main()
+    summaries = list(tmp_path.glob("reports/*_summary.md"))
+    assert len(summaries) == 1
+
+
+def test_cli_drilldowns(tmp_path):
+    """CLI: `render drilldowns graph.yaml --node X` runs without error.
+
+    No LITERATURE evidence in MINIMAL_GRAPH, so no files written — but no crash either.
+    """
+    graph_file, _ = _write_kb_files(tmp_path)
+    with patch("sys.argv", ["render", "drilldowns", str(graph_file), "--node", "test_classical"]):
+        from evidencell.render import main
+        main()  # should not raise
+
+
+def test_cli_drilldown_single_pmid(tmp_path):
+    """CLI: `render drilldowns graph.yaml --node X --pmid P` writes one file."""
+    graph_file, _ = _write_kb_files(tmp_path)
+    with patch("sys.argv", [
+        "render", "drilldowns", str(graph_file),
+        "--node", "test_classical", "--pmid", "PMID:12345678",
+    ]):
+        from evidencell.render import main
+        main()
+    files = list(tmp_path.glob("reports/*drilldown*.md"))
+    assert len(files) == 1
+
+
+def test_cli_index(tmp_path):
+    """CLI: `render index region` writes index from KB on disk."""
+    # render_index resolves kb/ relative to cwd — set up the expected structure
+    kb_dir = tmp_path / "kb" / "draft" / "myregion"
+    kb_dir.mkdir(parents=True)
+    (kb_dir / "test.yaml").write_text(yaml.dump(MINIMAL_GRAPH), encoding="utf-8")
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    with patch("sys.argv", ["render", "index", "myregion", "--output-dir", str(out_dir)]):
+        from evidencell.render import main
+        # Patch cwd so render_index finds kb/ in tmp_path
+        with patch("evidencell.render.Path.cwd", return_value=tmp_path):
+            main()
+    assert (out_dir / "index.md").exists()
+
+
+def test_cli_facts(tmp_path):
+    """CLI: `render facts graph.yaml --node X` writes facts JSON."""
+    graph_file, _ = _write_kb_files(tmp_path)
+    with patch("sys.argv", ["render", "facts", str(graph_file), "--node", "test_classical"]):
+        from evidencell.render import main
+        main()
+    facts_files = list(tmp_path.glob("reports/*_facts.json"))
+    assert len(facts_files) == 1
