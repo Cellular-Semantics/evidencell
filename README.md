@@ -13,45 +13,51 @@ structured nodes for classical and atlas types, structured edges recording the r
 
 Curation in evidencell is a **guided agentic workflow**. You work with Claude Code as a co-curator: Claude handles taxonomy loading, literature search, evidence extraction, ontology mapping and schema-compliant YAML drafting; you provide the biological expertise and review gates _human readable_ reports at key 'report gates'. Nothing commits to the canonical KB without passing validation and expert sign-off.
 
-Validation includes powerful anti-hallucination checks - no file is saved if:
-- it does not conform to schema
-- ID/name pairs for ontology terms, genes to not match
-- ID/metadata doesn't match for pubs
-- quotations from references have no match in source
+**Anti-hallucination hooks** block writes before they reach disk. No KB YAML or Markdown report is saved if it fails any of:
 
-All failures are passed back to the agent to correct.
+- Schema non-conformance (LinkML validation)
+- Duplicate node IDs, dangling edge references, or placeholder snippets
+- `quote_key` values not present in `references.json`
+- `PMID:` / `DOI:` citations not present in `references.json`
+- Blockquotes in reports without a `<!-- quote_key: X -->` attribution annotation
+- PMIDs in reports not registered in `references.json`
 
-Literature review uses ASTA-API/MCP under the hood.  All assertions extracted from the literature include evidence and supporting quotes.
+All failures are returned as structured errors for the agent to correct. The hook runs synchronously on every `Write` / `Edit` to `kb/`. See [`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md) for the full specification.
+
+Literature review uses ASTA-API/MCP under the hood. All assertions extracted from the literature include evidence and supporting verbatim quotes (content-hash keyed in `references.json`).
 
 The pipeline runs in phases, each driven by an orchestrator in `workflows/`:
 
+1. **Ingest taxonomy** — load any taxonomy format, map to schema + ontologies, generate atlas cluster stubs
+   `workflows/ingest-taxonomy.md`
+   *[GATE] approve field mapping + generated stubs*
 
-1. Ingest taxonomy        Pass the agent your taxonomy in any format, it works with you to map all content to schema and ontologies. It does the first pass mapping.
-                          `workflows/taxonomy_ingest.md`
+2. **ASTA report ingest** — ASTA deep research PDF → classical `CellTypeNode` stubs + initial evidence
+   `workflows/asta-report-ingest.md`
+   *[GATE] approve proposed nodes + CL mappings*
 
-2. [GATE] taxonomy        Agents asks how to map ambiguous columns and asks for approval of final mapping. 
-                             
-2. Literature review       Run deepsearch on a cell type topic → evidence corpus.  
-                           `workflows/lit-review.md`
+3. **Literature retrieval** — targeted citation traversal per paper, verifies evidence, surfaces new types
+   `workflows/cite-traverse.md`
+   *[GATE] review traversal report — extend scope or proceed*
 
-3. [GATE] Catalogue review  You review the paper list, prune irrelevant papers
+4. **Evidence extraction** — summaries → proposed KB evidence items, snippets, support assessments
+   `workflows/evidence-extraction.md`
+   *[GATE] expert reviews and approves items*
 
-4. cell_type_extraction    Extract cell types from the corpus & make draft mappings to taxonomy types.  
-                           `workflows/evidence-extraction.md`
+5. **Mapping** — evidence + atlas metadata → `MappingEdge` YAML with property comparisons and confidence
+   `workflows/map-cell-type.md`
+   *[GATE] expert reviews proposed edges*
 
-5. [GATE] Evidence review   You approve, edit, or reject proposed evidence items
+6. **Report generation** — three-tier human-readable output from KB YAML:
+   - *Region index* — one row per classical type, best hit, confidence, candidate count
+   - *Per-type summary* — candidates table, referenced evidence paragraphs, consolidated proposed experiments
+   - *Per-paper drill-down* — verbatim quotes per property, alignment scorecard, critical gap + bridging experiment
+   `just gen-report {graph_file}` (implementation in progress; see `planning/M4_report_generation.md`)
+   *[GATE] biologist reviews; executes proposed experiments*
 
-6. Mapping hypotheses      Propose MappingEdge + confidence from evidence + atlas metadata
-                           `workflows/map-cell-type.md`
-
-7. [GATE] Mapping review    You review proposed edges and confidence assessments (human readable report).
-
-8. Report generation       Final human-readable, fully referenced report report: Types, mappings, evidence, caveats, proposed experiments.
-                           `just gen-report {graph_file}`
-
-9. Annotation transfer     Import AT results (MapMyCells, Seurat) as structured evidence
-                           `workflows/annotation-transfer.md`
-
+7. **Annotation transfer** — import AT results (MapMyCells, Seurat) as structured evidence
+   `workflows/annotation-transfer.md`
+   *(planned)*
 
 Gates are not optional. The human is the top-level coordinator throughout — each phase produces output for review before the next phase begins. Claude does not proceed past a gate autonomously.
 
@@ -62,10 +68,17 @@ Gates are not optional. The human is the top-level coordinator throughout — ea
 Each KB file is a mapping graph for a brain region. It contains:
 
 - **`CellTypeNode`** — one per type (classical or atlas cluster), with markers, anatomy, NT type, synonyms, references.
-- **`MappingEdge`** — one per proposed correspondence, with relationship type, confidence, caveats, and a structured property comparison
-- **Evidence items** (typed) — `LiteratureEvidence`, `AtlasMetadataEvidence`, `AnnotationTransferEvidence`, and others; each with a verbatim snippet and source ID
+- **`MappingEdge`** — one per proposed correspondence, with relationship type, confidence, caveats, and a structured property comparison table.
+- **Evidence items** (typed):
+  - `LiteratureEvidence` — peer-reviewed paper with verbatim snippet, PMID/DOI, study type
+  - `AtlasMetadataEvidence` — atlas taxonomy metadata (markers, MERFISH location, NT type, CCF distribution)
+  - `AtlasQueryEvidence` — curator-performed interactive query against an atlas browser (ABC Atlas, Allen Brain Map) with filter parameters and `query_url`; reproducible given the same atlas version
+  - `AnnotationTransferEvidence` — computational label transfer results (MapMyCells, Seurat) with F1 per taxonomy level
+  - `PatchSeqEvidence`, `ElectrophysiologyEvidence`, `MorphologyEvidence` — experimental evidence types
 
-Confidence levels (`HIGH`, `MODERATE`, `LOW`, `UNCERTAIN`, `REFUTED`) follow a decision guide: HIGH requires ≥2 independent evidence types including ≥1 experimental. The schema enforces structure; the confidence rationale is human-reviewed.
+All location data from spatial transcriptomics (MERFISH) reflects **soma position only**. Axonal and dendritic projection targets are recorded separately in `morphology_notes` and are not used in atlas location comparisons.
+
+Confidence levels (`HIGH`, `MODERATE`, `LOW`, `UNCERTAIN`) follow a decision guide: HIGH requires ≥2 independent evidence types including ≥1 experimental (annotation transfer, electrophysiology, or morphological reconstruction) — not achievable from literature alone. The schema enforces structure; the confidence rationale is human-reviewed.
 
 ---
 

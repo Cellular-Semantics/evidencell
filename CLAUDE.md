@@ -69,6 +69,30 @@ Three test tiers keep runs cheap:
 
 **Regression rule:** if a bug slips through `just qc` or `just test` once, add a targeted test before fixing it so it cannot regress silently.
 
+## Anti-hallucination mechanisms
+
+Anti-hallucination is a **central design principle** of all evidencell workflows. The system
+enforces correctness structurally rather than relying on self-correction.
+
+Two complementary mechanisms:
+
+1. **Pre-write hooks** (`.claude/hooks/`) — triggered automatically before any `Edit` or
+   `Write` to KB YAML or reports. If the hook rejects, fix the underlying content — do not
+   attempt to bypass the hook.
+
+2. **Validation subagents** (within orchestrators) — spawned after LLM synthesis steps to
+   cross-check generated content against a provenance-labelled facts file. See
+   `workflows/gen-report.md` Step 4 for the pattern.
+
+Each validated content type (ontology terms, gene IDs, publication IDs, verbatim quotes)
+has a defined storage syntax and a defined verification source. All checks rely on this
+consistency: a name:ID pair can be verified against an ontology endpoint; a quote can be
+verified as verbatim against its content-hashed entry in `references.json`.
+
+For current implementation details, validation sources, and the rules governing agentic
+writes to validated stores, read:
+**[`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md)** *(compulsory read before modifying hooks, validation logic, or `references.json` ingest)*
+
 ## Working with YAML and LinkML
 
 - Always parse YAML with `yaml.safe_load()`. Never use shell `grep`, `sed`, or `awk` on YAML files.

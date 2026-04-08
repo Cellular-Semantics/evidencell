@@ -4,20 +4,52 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 
 ---
 
+## Milestone status
+
+| Milestone | Description | Status |
+|---|---|---|
+| M1 | Taxonomy ingest → atlas cluster stubs | **Complete** |
+| M2 | Literature retrieval pipeline (ASTA ingest, cite-traverse, evidence extraction) | **Complete** |
+| M3 | Mapping (property comparison, edge YAML, confidence assessment) | **Complete** |
+| M4 | Report generation (summary + drill-down, LLM synthesis, anti-hallucination hooks) | **Complete** |
+| M5 | Annotation transfer evidence | Pending |
+
+---
+
 ## Overview
 
 The human is the top-level coordinator. Run each orchestrator when ready, review the output at each gate, and proceed at your own pace. There is no meta-orchestrator.
 
 | Orchestrator | Location | Milestone | Status | When to run |
 |---|---|---|---|---|
-| `asta-report-ingest` | `workflows/asta-report-ingest.md` | M2 | **Ready** | Start here when you have an ASTA deep research PDF — proposes classical nodes + initial evidence |
 | `ingest-taxonomy` | `workflows/ingest-taxonomy.md` | M1 | **Ready** | Ingest a taxonomy table → atlas cluster CellTypeNode stubs |
+| `asta-report-ingest` | `workflows/asta-report-ingest.md` | M2 | **Ready** | Start here when you have an ASTA deep research PDF — proposes classical nodes + initial evidence |
 | `lit-review` | `workflows/lit-review.md` | M2 | **Ready** | Seed discovery when starting without a report; hands off to cite-traverse |
 | `cite-traverse` | `workflows/cite-traverse.md` | M2 | **Ready** | Citation traversal + synthesis; called by lit-review and asta-report-ingest |
 | `evidence-extraction` | `workflows/evidence-extraction.md` | M2 | **Ready** | After cite-traverse — extracts verified evidence items into KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | M3 | **Ready** | Discovery mode: finds candidate atlas matches from property overlap; hypothesis mode: tests curator's proposed mapping. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
-| `gen-report` | `workflows/gen-report.md` | M4 | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote validation) |
+| `gen-report` | `workflows/gen-report.md` | M4 | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
 | `annotation-transfer` | `workflows/annotation-transfer.md` | M5 | Pending | After AT results available — imports F1 scores as evidence |
+
+---
+
+## Anti-hallucination infrastructure
+
+A pre-write hook (`.claude/hooks/validate_mapping_hook.py`) runs automatically before
+every `Write` or `Edit` to KB files. It is **not** an orchestrator step — it fires on all
+KB writes regardless of which workflow is running.
+
+**KB YAML** (`kb/**/*.yaml`) — blocks writes with: YAML parse errors, structural
+integrity failures (dangling edges, duplicate IDs, placeholder snippets), `quote_key`
+values absent from `references.json`, `PMID:`/`DOI:` citations absent from
+`references.json`, LinkML schema non-conformance.
+
+**Markdown reports** (`kb/**/reports/*.md`) — blocks writes with: blockquote blocks
+missing a `<!-- quote_key: X -->` attribution annotation, quote keys or PMIDs absent
+from `references.json`.
+
+See [`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md) for
+the full specification and correction loop protocol.
 
 ---
 
