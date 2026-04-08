@@ -53,6 +53,9 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 2.  workflows/cite-traverse.md                   # targeted retrieval per paper
     (handed off from asta-report-ingest, or      # fills gaps, verifies asta_report items,
      called directly after lit-review seeds)      # surfaces new types
+    max_depth: 1 when coming from asta-report-ingest (ASTA already provides broad
+    coverage; one level targets Round 2 ambiguities without duplicating discovery)
+    max_depth: 2 when starting from lit-review seeds (no prior broad coverage)
 
     [GATE] review report.md — new types? extend scope or proceed
 

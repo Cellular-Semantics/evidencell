@@ -69,12 +69,21 @@ INITIAL SUMMARIES FILE: {initial_summaries_file}   (empty string if not provided
 
 2. Save the raw response to {output_dir}/depth_{depth}_snippets.json
 
-3. For EACH snippet returned, produce a structured summary:
+2b. Filter the raw snippets BEFORE summarising. Exclude any snippet where:
+    - `snippet.snippetKind == "title"` — these are the paper title repeated, not content
+    - `snippet.snippetKind == "body"` AND `snippet.section` matches a peer review
+      pattern: section starts with "Referee", "Reviewer", "Author Rebuttals",
+      "General Critique", or "Response to" — these are editorial review text,
+      not paper body text.
+    Record filtered count in the manifest. Do NOT summarise filtered snippets.
+
+3. For EACH remaining snippet, produce a structured summary:
    {
      "source_corpus_id": "...",
      "source_title": "...",
      "source_method": "asta_snippet",
-     "section": "unknown",
+     "snippet_kind": "<snippet.snippetKind>",
+     "section": "<snippet.section or 'unknown'>",
      "snippet_score": 0.57,
      "node_relevance": "HIGH" | "MODERATE" | "LOW",
      "node_relevance_reason": "mentions SST marker and stratum oriens location",
@@ -84,7 +93,8 @@ INITIAL SUMMARIES FILE: {initial_summaries_file}   (empty string if not provided
    }
    - Quotes must be exact substrings of the snippet text. Keep 1-3 per snippet.
    - node_relevance: judge against NODE CONTEXT above.
-   - section: always "unknown" for ASTA snippets (section metadata not available).
+   - section: use the actual `snippet.section` string. Use "unknown" only if null.
+   - Prefer quotes from Results or Discussion sections over Methods or Introduction.
 
 4. Run extract_asta_refs to get candidate IDs for traversal:
    echo '<raw_json_from_step_1>' | uv run python -m evidencell.extract_asta_refs \
@@ -140,6 +150,9 @@ INITIAL SUMMARIES FILE: {initial_summaries_file}   (empty string if not provided
    {
      "step": "fetch_depth_{depth}",
      "asta_snippets_returned": N,
+     "asta_snippets_filtered_title": N,
+     "asta_snippets_filtered_peer_review": N,
+     "asta_snippets_used": N,
      "gap_papers_count": N,
      "fallback_attempted": N,
      "fallback_success": N,
@@ -154,6 +167,7 @@ Report summaries merged: W. Total summaries: N."
 
 DO NOT:
 - Run snippet_search without scoping to paper_ids
+- Summarise filtered snippets (title-kind or peer review sections)
 - Fetch full text for papers that DID have ASTA snippets
 - Re-fetch papers covered in INITIAL SUMMARIES FILE
 - Read more than 3 passages per fallback paper

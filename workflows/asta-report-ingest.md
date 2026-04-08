@@ -677,6 +677,10 @@ Option A — Targeted primary literature retrieval (recommended):
     references_file: kb/draft/{region}/references.json
     round2_targets: {output_dir}/validation_notes.json  ← prioritised issues
     output_dir: {output_dir}
+    max_depth: 1    ← recommended when coming from an ASTA report; the report
+                       already provides broad coverage — one level of traversal
+                       targets ambiguities and fills primary-source gaps without
+                       duplicating the ASTA discovery work
 
   cite-traverse will:
   1. Prioritise Round 2 targets (ambiguities, contradictions, gaps)
