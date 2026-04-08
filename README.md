@@ -52,7 +52,7 @@ The pipeline runs in phases, each driven by an orchestrator in `workflows/`:
    - *Region index* — one row per classical type, best hit, confidence, candidate count
    - *Per-type summary* — candidates table, referenced evidence paragraphs, consolidated proposed experiments
    - *Per-paper drill-down* — verbatim quotes per property, alignment scorecard, critical gap + bridging experiment
-   `just gen-report {graph_file}` (implementation in progress; see `planning/M4_report_generation.md`)
+   `just gen-report {graph_file}` or `just gen-report-draft {region}` for draft KB content
    *[GATE] biologist reviews; executes proposed experiments*
 
 7. **Annotation transfer** — import AT results (MapMyCells, Seurat) as structured evidence
