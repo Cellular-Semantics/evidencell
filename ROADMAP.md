@@ -1,7 +1,7 @@
 # evidencell Roadmap
 
-> **Date**: 2026-04-04 (last updated)
-> **Status**: M0–M4 implemented. M5, M6, M2+ pending.
+> **Date**: 2026-04-09 (last updated)
+> **Status**: M0–M3 implemented. M4 in progress. M5 partially implemented. M6, M2+ pending.
 
 ---
 
@@ -13,8 +13,8 @@
 | **M1** Repo Bootstrap | Create evidencell repo structure | ✅ Done | Repo, justfile, CLAUDE.md, ≥3 ported examples | M0 |
 | **M2** Lit Review → KB | Deepsearch pipeline → evidence items + reference provenance | ✅ Done | ASTA ingest + cite-traverse + evidence-extraction workflows, references.json cache | M1 |
 | **M3** Mapping Hypotheses | Propose mapping edges from evidence + taxonomy | ✅ Done | `map-cell-type.md` orchestrator, hippocampus + cerebellum draft mappings | M2 |
-| **M4** Report Generation | Human-readable reports from draft mappings — MVP for biologists | ✅ Done | Three-tier reports (summary, drill-down, index); `render.py` + `gen-report.md` orchestrator; `gen-report-draft` recipe; tests at 91% render coverage | M3 |
-| **M5** Cross-validation + Community | Annotation transfer feedback, compliance, GitHub review | 🔲 Pending | `AnnotationTransferEvidence` feedback loop, compliance scoring, PR review workflow | M4 |
+| **M4** Report Generation | Human-readable reports from draft mappings — MVP for biologists | 🔶 In progress | Three-tier architecture designed; hand-crafted OLM mock-up reports; `render.py` implementation pending | M3 |
+| **M5** Cross-validation + Community | Annotation transfer feedback, compliance, GitHub review | 🔶 In progress | AT pipeline implemented, OLM mapping done; schema + report improvements pending. See [M5 planning notes](#m5-planning-notes-2026-04-09) | M4 |
 | **M6** Code/Content Separation | Decouple KB content from code so evidencell can be a clean starting point for new projects | 🔲 Pending | Content boundary defined; HMBA mouse KB on `content/hmba-mouse` branch; `CONTRIBUTING.md` content-branch workflow; `main` passes `just test` with fixtures only | M5 |
 | **M2+** Lit Review Quality | Improve snippet context, paper quality signals, and domain relevance filtering in cite-traverse | 🔲 Pending | Contextual retrieval for priority papers; venue/citation/cross-citation quality signals; evidencell-specific relevance pre-filters | — (parallel, any time) |
 
@@ -479,6 +479,99 @@ Pre-filter seeds and candidate refs to down-rank papers unlikely to contain dire
 - Threshold for contextual expansion: all Round 2 targets, or only those with score > X? Cost vs coverage trade-off.
 - In-corpus cross-citation counting: requires building a citation graph from `candidate_refs.json` across depths — worth the overhead?
 - Whether to surface quality scores in `report.md` or only use them internally for selection.
+
+---
+
+## M5 Planning Notes (2026-04-09)
+
+Observations from the first end-to-end annotation transfer run (OLM hippocampus,
+GSE124847 → WMBv1). Implementation order: schema first, then semantic checks,
+then report/workflow improvements.
+
+### Schema improvements
+
+**S1. Taxonomy level encoding — rank, not name.**
+Taxonomy level names (CLASS, SUBCLASS, SUPERTYPE, CLUSTER) are arbitrary and
+taxonomy-specific. Replace hardcoded level name enums with:
+- `level_name: str` — free string, taxonomy-defined (e.g. "SUPERTYPE", "subclass")
+- `rank: int` — 0 = most specific (leaf), incrementing for each level above
+
+This affects `AnnotationTransferLevelResult.taxonomy_level`, `best_mapping_level`,
+and any code that assumes WMB-specific level names. Mapping edges should be
+expressible at any rank, not just cluster (rank 0).
+
+**S2. Formalise soma vs projection location.**
+Currently distinguished only by YAML comments on `AnatomicalLocation` entries.
+Add a `compartment` enum (`SOMA`, `AXON_TARGET`, `DENDRITE`) to
+`AnatomicalLocation` or a wrapper. Critical for types like OLM where soma (SO)
+and axon (SLM) are in different layers — MERFISH only captures soma, so the
+comparison logic depends on knowing which compartment is being compared.
+
+**S3. Marker type / assay consistency.**
+`marker_type` (PROTEIN/TRANSCRIPT) can conflict with `method` (e.g.
+`marker_type: PROTEIN` with `method: "in situ hybridization"`). Options:
+- Split into `detected_molecule` + `assay_method` with a consistency rule
+- Or keep `marker_type` but add a semantic check (see below)
+
+### Schema semantic checks
+
+**SC1. Marker type vs method consistency.**
+If `method` contains "RNA-seq", "in situ hybridization", "qPCR" → `marker_type`
+should be TRANSCRIPT. If "immunohistochemistry", "Western blot" → PROTEIN.
+Hook should flag inconsistencies but **not auto-fix** — confabulation could be
+on either side. The error should push back to the agent to review the original
+source and determine which field is wrong.
+
+**SC2. Node notes containing mapping information.**
+Notes on classical nodes should describe the type, not its mapping to atlas
+clusters. A lint rule could flag notes that reference cluster IDs, supertype
+names, or WMB-specific terms — these belong on edges, not nodes.
+
+**SC3. Information in YAML comments vs structured fields.**
+Data in `# comments` is invisible to validation and rendering. Negative marker
+sources (e.g. `# Katona et al. 2017 PMID:27997999`) and heterogeneity notes
+should be in `sources` or `notes` fields. Convention rule for CLAUDE.md:
+"never put data in YAML comments that could go in a structured field."
+
+### Report and workflow improvements
+
+**R1. Mapping above rank 0.**
+Current report structure assumes mapping at the most specific level (rank 0).
+When annotation transfer shows strongest signal at a higher rank, the report
+should:
+- Include an assessment at that rank, evaluating all rank-0 nodes within it
+  collectively (soma locations, negative markers, neuropeptides)
+- Frame the edge as "maps to rank N node X; rank 0 resolution pending"
+  rather than picking a specific rank-0 node as the target
+- Apply consistently regardless of taxonomy-specific level names
+
+**R2. Subtype node creation.**
+The schema already supports sub-nodes of classical types (e.g. Sst-OLM and
+Htr3a-OLM as children of `olm_hippocampus`). This is a workflow improvement:
+the agent should judge when to create sub-nodes based on source evidence
+(e.g. when a dataset clearly separates subtypes with distinct expression
+profiles or mapping targets). Per-subtype annotation transfer data (already
+available from the OLM run) would attach to the sub-node edges.
+
+**R3. F1 heatmap visualisation.**
+Add a source-label × target matrix heatmap at each taxonomy level to the
+annotation transfer output or report. The MLI-PLI notebooks in
+`cellular_semantics_notebooks/` have this pattern. Could be a step in the
+annotation-transfer workflow or a rendering option in gen-report.
+
+**R4. Annotation transfer → classical property bridge.**
+When source data comes from genetically or morphologically defined cells
+(e.g. Chrna2-Cre labelled, patch-clamped OLM), the annotation transfer
+inherits classical characterisation — it's not just a transcriptomic
+similarity. Reports should make this explicit: "cells were selected by
+[method], which confirms [markers/morphology/ephys], so the transfer
+carries classical-type provenance."
+
+**R5. Target-side expression from WMB h5ad files.**
+Allen Brain Cell Atlas provides h5ad expression matrices by taxonomy class
+and dissection region. These could resolve NOT_ASSESSED property comparisons
+(e.g. Grm1 in Sst Gaba_3 clusters) without new experiments. Documented in
+`workflows/annotation-transfer.md` Step 5c. High-value, low-cost improvement.
 
 ---
 
