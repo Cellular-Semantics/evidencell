@@ -117,6 +117,12 @@ Use `[n]` labels from `classical_nodes[0].location_refs`, `nt_refs`, marker `ref
 Include rows for: Soma location, NT, Markers, Negative markers, Neuropeptides.
 If CL term is present, include it. Omit empty rows.
 
+**Direct expression evidence:** If any marker or neuropeptide has a source whose `method`
+contains "re-analysis" or "raw counts", note the quantitative detection rate in the Value
+column (e.g. "Sst (100% of OLM cells), Chrna2 (35%), mGluR1/Grm1 (96%)"). These are
+directly assessed from the source dataset and provide stronger evidence than literature
+reports alone.
+
 ### 4. Mapping candidates table
 
 One row per edge in `edges[]`. Columns: Rank | WMBv1 cluster | Supertype | Cells |
@@ -145,6 +151,13 @@ Each section must have:
   - Be specific — don't just say "atlas metadata". Say what the metadata shows.
   - Cite using the `ref_label` from the evidence item (e.g. `[1]`, `[A]`).
   - For ATLAS_QUERY items: state what filter was applied and what survived/was eliminated.
+- For property comparisons where `node_a_value` or `notes` contain quantitative expression
+  data from direct re-analysis (detection rates, mean counts): mention these numbers in
+  the relevant supporting or concern bullet. Direct expression evidence strengthens or
+  weakens the property comparison beyond the original literature citation alone.
+- If a property is NOT_ASSESSED but source-side expression is now quantified, note the
+  gap explicitly: "Source-side confirmed at N%; target-side still unresolvable from atlas
+  metadata." This helps readers understand where remaining gaps lie.
 
 **Concerns** (bulleted):
 - From evidence items where `supports` = REFUTE.
@@ -174,7 +187,18 @@ Each section must have:
 
 ### 6. Proposed experiments
 
-Group by method across all edges. Do not repeat experiments that differ only in wording.
+**First, cross-check each proposed experiment against existing evidence items on the same
+edge.** If an evidence item already partially or fully addresses a proposed experiment
+(e.g. an ANNOTATION_TRANSFER item exists for a proposed "run MapMyCells" experiment),
+do NOT list the experiment as if it is still needed. Instead:
+- Note what was already done (dataset, method, result).
+- State what it resolved and what remains unresolved.
+- If a *refined* version of the experiment would still add value (e.g. different source
+  dataset, higher-resolution method, targeting a specific cell subset), propose that
+  refined version with clear justification for why the completed round was insufficient.
+
+Group remaining experiments by method across all edges. Do not repeat experiments that
+differ only in wording.
 
 For each group:
 - **What** (method)

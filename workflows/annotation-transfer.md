@@ -63,6 +63,28 @@ Step 4  [GATE] Human confirms
 Step 5  Append to KB
         AnnotationTransferEvidence appended to relevant MappingEdge.
 
+Step 5b Direct expression analysis
+        When raw count data is available (h5ad or TSV), assess expression of
+        key markers and neuropeptides from the source dataset. For each marker
+        in the classical node's defining_markers and neuropeptides:
+        - Compute detection rate (% cells > 0) and mean counts, split by
+          source label if multiple subtypes exist.
+        - Add a source entry (marker_type: TRANSCRIPT, method: "scRNA-seq raw
+          counts ({accession}, re-analysis)") to the relevant marker on the
+          classical node.
+        - Update `node_a_value` on all edge property_comparisons that reference
+          the marker, to include the quantitative detection rate.
+        Also check negative markers (Pvalb, Calb1, Vip, etc.) — sparse or
+        absent expression confirms the negative marker status.
+        [GATE] Human reviews expression summary before KB update.
+
+Step 5c Target-side expression analysis (OPTIONAL — future)
+        When WMB h5ad files (by taxonomy class or dissection region) are
+        available locally, assess target-side expression of the same markers
+        in the candidate atlas clusters. This would upgrade property comparisons
+        from NOT_ASSESSED to a concrete alignment (e.g., Grm1 present/absent
+        in cluster 0769). See note below on WMB expression files.
+
 Step 6  Confidence re-assessment
         Re-evaluate MappingConfidence per decision guide given new experimental
         evidence. Flag edges where confidence may upgrade.
@@ -88,3 +110,24 @@ Step 7  Report regeneration
 - **Preflight gate**: Large datasets (>available RAM) require explicit human
   confirmation before loading. The preflight module estimates memory from
   HDF5 metadata without loading the matrix.
+
+---
+
+## WMB expression files for target-side marker assessment (Step 5c)
+
+The Allen Brain Cell Atlas provides h5ad expression matrices partitioned by
+major taxonomy class and/or dissection region. These can be used to directly
+assess marker expression in candidate atlas clusters — resolving NOT_ASSESSED
+property comparisons (e.g. Grm1 in cluster 0769).
+
+**Potential approach:**
+- Download the relevant class-level h5ad (e.g. `WMB-10X/20230830/expression_matrices/
+  WMB-10Xv3-CTX-MGE-GABA/`) — much smaller than the full WMB matrix.
+- Subset to cells in the candidate clusters (0767–0774 for Sst Gaba_3).
+- Compute detection rate and mean expression for each marker of interest.
+- Update `node_b_value` on the relevant property comparisons with quantitative data.
+- This would turn mGluR1/Grm1 NOT_ASSESSED → CONSISTENT or DISCORDANT with real numbers.
+
+**Status:** Not yet implemented. Files are available on the Allen S3 bucket.
+This is a high-value addition because it removes the largest remaining gap in
+the property comparison matrix without requiring new experiments.

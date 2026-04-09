@@ -16,6 +16,16 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 
 ---
 
+## How to run a workflow
+
+When asked to run a workflow, open the referenced orchestrator in `workflows/` and execute
+its steps in order. The orchestrator is the authority — do not plan independently or
+research prerequisites that the orchestrator already addresses. Use the skills and tools
+it references. Stop at steps marked `[GATE]` and present results for human review before
+proceeding.
+
+---
+
 ## Overview
 
 The human is the top-level coordinator. Run each orchestrator when ready, review the output at each gate, and proceed at your own pace. There is no meta-orchestrator.
