@@ -276,7 +276,7 @@ The existing KB examples (GPi shell, CB MLI) serve as in-context patterns for th
 ## M4 — Report Generation (MVP for biologists)
 
 **Implementation plan**: [M4_report_generation.md](M4_report_generation.md)
-**Status**: 🔶 Architecture designed; hand-crafted mock-ups complete; `render.py` implementation pending (2026-03-31).
+**Status**: ✅ Done (2026-04-04). Three-tier reports implemented; `gen-report-draft` recipe added; test coverage at 91%.
 
 **Goal**: Auto-generate human-readable mapping reports from KB YAML. This is the MVP milestone — after M3, biologists can review draft mappings and proposed experiments without reading YAML.
 
@@ -295,9 +295,9 @@ The existing KB examples (GPi shell, CB MLI) serve as in-context patterns for th
 
 **Location reasoning** — soma-only interpretation rule codified in `workflows/map-cell-type.md`: MERFISH location = soma position only; adjacent region = possible registration error (weak counter-evidence); distant region = genuine counter-evidence (subtype caveat preserved)
 
-### What remains (to close M4)
+### What was delivered (M4 complete)
 
-1. **`src/evidencell/render.py`** — implement the functions specified in `M4_report_generation.md`: `build_reference_index`, `fmt_atlas_query`, `render_summary`, `render_drilldown`, `render_index`, `_location_note`, `_candidate_verdict`, `_group_experiments`
+1. **`src/evidencell/render.py`** — `build_reference_index`, `render_summary`, `render_drilldown`, `render_index`, and all helpers; 91% test coverage
 2. **Justfile recipes** — `gen-report`, `gen-report-node`, `gen-drilldowns`, `gen-index`, `gen-report-all`
 3. **End-to-end test** — run on OLM hippocampus case; verify output matches hand-crafted mock-ups; confirm no invented references or quotes
 
