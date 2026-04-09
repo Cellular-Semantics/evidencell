@@ -89,6 +89,11 @@ nodes:
             method: "single-cell RNA-seq"
             scope: "mouse hippocampus"
             quote_key: "201041756_69dc904d"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31420995"
+            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
+            scope: "mouse hippocampus OLM cells"
+            notes: "Detected in 46/46 cells (100%); mean counts 305273. Universally expressed in both Sst-OLM and Htr3a-OLM subtypes."
       - symbol: Chrna2
         ncbi_gene_id: null
         sources:
@@ -102,6 +107,11 @@ nodes:
             method: "Chrna2-Cre transgenic line + optogenetics"
             scope: "mouse hippocampus"
             quote_key: "7952877_ae03c6e0"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31420995"
+            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
+            scope: "mouse hippocampus OLM cells"
+            notes: "Detected in 16/46 cells (35%); sparse expression. Htr3a-OLM 43% vs Sst-OLM 26%. Consistent with scattered Chrna2 at Sst Gaba_3 supertype level in WMBv1."
       - symbol: mGluR1
         ncbi_gene_id: null
         sources:
@@ -110,6 +120,11 @@ nodes:
             method: "electrophysiology + in situ hybridization"
             scope: "mouse CA1"
             quote_key: "6652630_17d10a9e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31420995"
+            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
+            scope: "mouse hippocampus OLM cells"
+            notes: "Grm1 detected in 44/46 cells (96%); mean counts 3901. Near-universal expression confirms mGluR1 as a robust OLM transcript-level marker."
     negative_markers:
       - symbol: PV
         modifier: ABSENT
@@ -131,6 +146,12 @@ nodes:
     neuropeptides:
       - symbol: Sst
         ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31420995"
+            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
+            scope: "mouse hippocampus OLM cells"
+            notes: "Detected in 46/46 cells (100%); see defining_markers.Sst for full detail."
       - symbol: Npy
         ncbi_gene_id: null
         sources:
@@ -139,6 +160,11 @@ nodes:
             method: "single-cell RNA-seq"
             scope: "mouse hippocampus"
             quote_key: "201041756_8d16e821"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31420995"
+            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
+            scope: "mouse hippocampus OLM cells"
+            notes: "Detected in 37/46 cells (80%); mean counts 18709. Present in both subtypes (Sst-OLM 70%, Htr3a-OLM 91%)."
       - symbol: Pnoc
         ncbi_gene_id: null
         sources:
@@ -147,6 +173,11 @@ nodes:
             method: "single-cell transcriptomic cluster analysis"
             scope: "mouse hippocampus"
             quote_key: "280420054_8a6529c5"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31420995"
+            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
+            scope: "mouse hippocampus OLM cells"
+            notes: "Detected in 27/46 cells (59%); mean counts 1389. Moderate penetrance — consistent with Pnoc marking a subset of OLM cells (cf. Thulin et al. 2025 Sst/Pnoc subclusters)."
     morphology_notes: >
       Large horizontally-oriented soma at oriens/alveus border. Horizontal dendrites
       in stratum oriens, densely decorated with long spines. Axon projects vertically
@@ -3175,6 +3206,25 @@ edges:
           Partial property overlap. GABA consistent. CA3 SO + SLM match OLM anatomy.
           Sst and Pnoc neuropeptides present but Npy absent. Subclass is Lamp5 Lhx6,
           NOT Sst — discordant with canonical OLM identity. Chrna2/Grm1 not assessable.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: REFUTE
+        explanation: >
+          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
+          mapped 0/46 cells to Lamp5 Lhx6 subclass. All 45 successfully classified cells
+          mapped to Sst Gaba subclass (Sst Gaba_3 supertype). Zero support for this
+          Lamp5 Lhx6 cluster as an OLM target.
+        target_atlas: "WMBv1 (CCN20230722)"
+        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
+        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        source_dataset_accession: "GEO:GSE124847"
+        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        best_f1_score: 0.0
+        best_mapping_level: "SUBCLASS"
+        n_cells_total: 46
+        n_cells_after_filter: 0
+        bootstrap_threshold: 0.8
+        tool_version: "cell_type_mapper v1.7.1"
     property_comparisons:
       - property: nt_type
         node_a_value: "GABAergic"
@@ -3195,9 +3245,10 @@ edges:
         node_b_value: "not present"
         alignment: NOT_ASSESSED
       - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1)"
-        node_b_value: "not present"
+        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
+        node_b_value: "not resolvable from atlas metadata"
         alignment: NOT_ASSESSED
+        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
       - property: neuropeptide_Sst
         node_a_value: "Sst"
         node_b_value: "present"
@@ -3249,6 +3300,25 @@ edges:
           eliminates the Sst Gaba_6 supertype entirely. Chrna2 is a defining marker
           of OLM interneurons; its absence from this supertype argues against any
           cluster within it being OLM.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: REFUTE
+        explanation: >
+          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
+          mapped 0/46 cells to Sst Gaba_6 supertype. All 45 successfully classified cells
+          mapped to Sst Gaba_3 supertype instead. Zero support for this Sst Gaba_6 cluster
+          as an OLM target.
+        target_atlas: "WMBv1 (CCN20230722)"
+        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
+        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        source_dataset_accession: "GEO:GSE124847"
+        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        best_f1_score: 0.0
+        best_mapping_level: "SUPERTYPE"
+        n_cells_total: 46
+        n_cells_after_filter: 0
+        bootstrap_threshold: 0.8
+        tool_version: "cell_type_mapper v1.7.1"
     property_comparisons:
       - property: nt_type
         node_a_value: "GABAergic"
@@ -3271,9 +3341,10 @@ edges:
           ABC Atlas filter (HPF/GABA/Chrna2) eliminates Sst Gaba_6.
           https://tinyurl.com/a4f3kd4v
       - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1)"
-        node_b_value: "not present"
+        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
+        node_b_value: "not resolvable from atlas metadata"
         alignment: NOT_ASSESSED
+        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
       - property: neuropeptide_Sst
         node_a_value: "Sst"
         node_b_value: "present"
@@ -3311,6 +3382,61 @@ edges:
           Best CA1 signal. Sst subclass consistent. CA1 SO (87 cells) — primary OLM
           location. Full neuropeptide triad: Sst, Npy, Pnoc. No SLM. Significant
           prosubiculum (61) and posterior amygdala (95) distribution.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: PARTIAL
+        explanation: >
+          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
+          strongly supports the parent Sst Gaba_3 supertype (43/46 cells, F1=0.67) but
+          OLM cells scatter across sibling clusters 0767–0774 within it. Cluster 0769
+          specifically received 0/46 cells — OLM cells preferentially map to cluster 0768
+          (22/46, best cluster-level F1=0.53). This suggests OLM identity maps to the
+          supertype level rather than to cluster 0769 specifically. Both Sst-OLM and
+          Htr3a-OLM subtypes converge on the same Sst Gaba_3 supertype.
+        target_atlas: "WMBv1 (CCN20230722)"
+        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
+        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        source_dataset_accession: "GEO:GSE124847"
+        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        best_f1_score: 0.67
+        best_mapping_level: "SUPERTYPE"
+        n_cells_total: 46
+        n_cells_after_filter: 42
+        bootstrap_threshold: 0.8
+        tool_version: "cell_type_mapper v1.7.1"
+        metrics_by_level:
+          - taxonomy_level: "CLASS"
+            best_target_name: "07 CTX-MGE GABA"
+            best_target_accession: "CS20230722_CLAS_07"
+            group_purity: 1.0
+            target_purity: 0.51
+            f1_score: 0.68
+            n_cells_mapped: 45
+            median_bootstrap: 1.0
+          - taxonomy_level: "SUBCLASS"
+            best_target_name: "053 Sst Gaba"
+            best_target_accession: "CS20230722_SUBC_053"
+            group_purity: 1.0
+            target_purity: 0.51
+            f1_score: 0.68
+            n_cells_mapped: 45
+            median_bootstrap: 1.0
+          - taxonomy_level: "SUPERTYPE"
+            best_target_name: "0216 Sst Gaba_3"
+            best_target_accession: "CS20230722_SUPT_0216"
+            group_purity: 0.96
+            target_purity: 0.51
+            f1_score: 0.67
+            n_cells_mapped: 43
+            median_bootstrap: 1.0
+          - taxonomy_level: "CLUSTER"
+            best_target_name: "0768 Sst Gaba_3"
+            best_target_accession: "CS20230722_CLUS_0768"
+            group_purity: 0.47
+            target_purity: 0.47
+            f1_score: 0.47
+            n_cells_mapped: 15
+            median_bootstrap: 1.0
     property_comparisons:
       - property: nt_type
         node_a_value: "GABAergic"
@@ -3334,9 +3460,10 @@ edges:
           Expression scattered across clusters of this supertype — not a defining marker
           at cluster level, but present. https://tinyurl.com/a4f3kd4v
       - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1)"
-        node_b_value: "not present"
+        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
+        node_b_value: "not resolvable from atlas metadata"
         alignment: NOT_ASSESSED
+        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
       - property: neuropeptide_Sst
         node_a_value: "Sst"
         node_b_value: "present"
@@ -3357,8 +3484,14 @@ edges:
         description: >
           Prosubiculum (61 cells) and posterior amygdala (95 cells) — cluster
           may include non-OLM Sst interneurons from adjacent regions.
+      - caveat_type: OTHER
+        description: >
+          Annotation transfer maps OLM cells to Sst Gaba_3 supertype but to sibling
+          clusters (primarily 0768), not 0769. May indicate the mapping is more
+          appropriate at supertype than cluster level.
     unresolved_questions:
       - "Are the CA1 SO cells OLM-morphology? What are the amygdala cells?"
+      - "Why do OLM cells map to cluster 0768 rather than 0769? Do these clusters differ in hippocampal enrichment?"
     proposed_experiments:
       - "Chrna2-Cre + MapMyCells for CA1 stratum oriens neurons."
       - "Targeted scRNA-seq or MERFISH of Chrna2+ stratum oriens neurons."
@@ -3387,6 +3520,25 @@ edges:
           eliminates the Sst Gaba_6 supertype entirely. Chrna2 is a defining marker
           of OLM interneurons; its absence from this supertype argues against any
           cluster within it being OLM.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: REFUTE
+        explanation: >
+          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
+          mapped 0/46 cells to Sst Gaba_6 supertype. All 45 successfully classified cells
+          mapped to Sst Gaba_3 supertype instead. Zero support for this Sst Gaba_6 cluster
+          as an OLM target.
+        target_atlas: "WMBv1 (CCN20230722)"
+        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
+        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        source_dataset_accession: "GEO:GSE124847"
+        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        best_f1_score: 0.0
+        best_mapping_level: "SUPERTYPE"
+        n_cells_total: 46
+        n_cells_after_filter: 0
+        bootstrap_threshold: 0.8
+        tool_version: "cell_type_mapper v1.7.1"
     property_comparisons:
       - property: nt_type
         node_a_value: "GABAergic"
@@ -3409,9 +3561,10 @@ edges:
           ABC Atlas filtering on Chrna2 expression eliminates Sst Gaba_6 entirely.
           https://tinyurl.com/a4f3kd4v
       - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1)"
-        node_b_value: "not present"
+        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
+        node_b_value: "not resolvable from atlas metadata"
         alignment: NOT_ASSESSED
+        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
       - property: neuropeptide_Sst
         node_a_value: "Sst"
         node_b_value: "present"
@@ -3461,6 +3614,25 @@ edges:
           eliminates the Sst Gaba_6 supertype entirely. Chrna2 is a defining marker
           of OLM interneurons; its absence from this supertype argues against any
           cluster within it being OLM.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: REFUTE
+        explanation: >
+          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
+          mapped 0/46 cells to Sst Gaba_6 supertype. All 45 successfully classified cells
+          mapped to Sst Gaba_3 supertype instead. Zero support for this Sst Gaba_6 cluster
+          as an OLM target.
+        target_atlas: "WMBv1 (CCN20230722)"
+        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
+        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
+        source_dataset_accession: "GEO:GSE124847"
+        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        best_f1_score: 0.0
+        best_mapping_level: "SUPERTYPE"
+        n_cells_total: 46
+        n_cells_after_filter: 0
+        bootstrap_threshold: 0.8
+        tool_version: "cell_type_mapper v1.7.1"
     property_comparisons:
       - property: nt_type
         node_a_value: "GABAergic"
@@ -3483,9 +3655,10 @@ edges:
           ABC Atlas filtering on Chrna2 expression eliminates Sst Gaba_6 entirely.
           https://tinyurl.com/a4f3kd4v
       - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1)"
-        node_b_value: "not present"
+        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
+        node_b_value: "not resolvable from atlas metadata"
         alignment: NOT_ASSESSED
+        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
       - property: neuropeptide_Sst
         node_a_value: "Sst"
         node_b_value: "present"

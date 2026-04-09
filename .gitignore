@@ -19,8 +19,9 @@ conf/oak_dbs/
 # Traversal output (large, not committed — provenance is in references_cache/)
 kb/mappings/**/traversal_output/
 
-# Generated reports (regenerate from KB YAML; pin dated snapshots manually)
-kb/**/reports/
+# Generated report intermediates (facts JSON); final reports are committed
+kb/**/reports/*_facts.json
 
 #local
 .env
+scratch/
