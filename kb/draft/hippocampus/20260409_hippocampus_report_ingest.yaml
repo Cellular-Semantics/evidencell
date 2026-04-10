@@ -621,7 +621,7 @@ nodes:
         name_in_source: "CA1 stratum oriens"
         compartment: SOMA
     location_sources:
-      - ref: "PMID:10.1101/598599"
+      - ref: "https://doi.org/10.1101/598599"
         method: "immunohistochemistry"
         scope: "mouse hippocampus"
         quote_key: "132515344_fb36f967"
@@ -635,7 +635,7 @@ nodes:
       - symbol: "Sst"
         ncbi_gene_id: null
         sources:
-          - ref: "PMID:10.1101/598599"
+          - ref: "https://doi.org/10.1101/598599"
             marker_type: PROTEIN
             method: "immunohistochemistry"
             scope: "mouse hippocampus"
@@ -1012,5 +1012,264 @@ nodes:
       Three subtypes: IS-1 (CR+), IS-2 (VIP+), IS-3 (CR+/VIP+). Majority of
       VIP subclass are IS cells. Ephys not extensively characterized. CL mapping
       only covers VIP+ subtypes.
+
+  # ══════════════════════════════════════════════════════════════
+  # 10. ORIENS-ORIENS (O-O) CELL
+  # ══════════════════════════════════════════════════════════════
+  - id: oriens_oriens_cell_hippocampus
+    name: "Oriens-oriens (O-O) cell"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: "UBERON:0014548"
+        label: "stratum oriens of hippocampus"
+        name_in_source: "CA1 stratum oriens"
+        compartment: SOMA
+      - id: "UBERON:0014548"
+        label: "stratum oriens of hippocampus"
+        name_in_source: "stratum oriens"
+        compartment: AXON_TARGET
+    location_sources: []
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: "CL:0000617"
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources: []
+    defining_markers:
+      - symbol: "Sst"
+        ncbi_gene_id: null
+      - symbol: "Nos1"
+        ncbi_gene_id: null
+    negative_markers: []
+    neuropeptides: []
+    electrophysiology_class: null
+    ephys_sources: []
+    morphology_notes: >
+      Axon confined to stratum oriens, distinguishing it from OLM (axon to
+      str. lacunosum-moleculare) and bistratified (axon in radiatum + oriens).
+      Identified by Sst;;Nos1 intersectional strategy.
+    morphology_sources: []
+    cl_mapping: null
+    definition_references:
+      - "PMID:39401246"
+    is_terminal: false
+    notes: >
+      Stub from cite-traverse (2026-04-10). Identified by Chamberland et al.
+      (2024) using Sst;;Nos1 intersectional Cre/Flp. Almost exclusively
+      represented by Sst;;Nos1-INs (n = 12/15). Distinct from OLM by axon
+      confinement to stratum oriens. Evidence thin — single study.
+
+  # ══════════════════════════════════════════════════════════════
+  # 11. TRILAMINAR CELL
+  # ══════════════════════════════════════════════════════════════
+  - id: trilaminar_cell_hippocampus
+    name: "Trilaminar cell"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: "UBERON:0014548"
+        label: "stratum oriens of hippocampus"
+        name_in_source: "stratum oriens"
+        compartment: SOMA
+    location_sources: []
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: "CL:0000617"
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources: []
+    defining_markers:
+      - symbol: "Pvalb"
+        ncbi_gene_id: null
+      - symbol: "M2R"
+        ncbi_gene_id: null
+    negative_markers:
+      - symbol: "Sst"
+        ncbi_gene_id: null
+    neuropeptides: []
+    electrophysiology_class: >
+      Unique high-frequency burst firing pattern distinguishing it from
+      other long-range projecting GABAergic cells.
+    ephys_sources: []
+    morphology_notes: >
+      Long-range projecting GABAergic interneuron with axon spanning
+      str. oriens, pyramidale, and radiatum (trilaminar). Projects to
+      subiculum and medial septum. Distinguished from HS cell by
+      firing pattern and PV+/M2R+ marker profile.
+    morphology_sources: []
+    cl_mapping: null
+    definition_references:
+      - "PMID:28646648"
+    is_terminal: false
+    notes: >
+      Stub from cite-traverse (2026-04-10). Well-documented by Somogyi lab
+      (Katona et al. 2017). Long-range projection cell distinct from
+      hippocampo-septal cell. PV+/M2R+/SOM-.
+
+  # ══════════════════════════════════════════════════════════════
+  # 12. VIP BASKET CELL
+  # ══════════════════════════════════════════════════════════════
+  - id: vip_basket_cell_hippocampus
+    name: "VIP-positive basket cell"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: "UBERON:0005401"
+        label: "stratum pyramidale"
+        name_in_source: "stratum pyramidale"
+        compartment: SOMA
+    location_sources: []
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: "CL:0000617"
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources: []
+    defining_markers:
+      - symbol: "Vip"
+        ncbi_gene_id: null
+    negative_markers: []
+    neuropeptides: []
+    electrophysiology_class: null
+    ephys_sources: []
+    morphology_notes: >
+      Perisomatic-targeting VIP+ interneuron providing inhibition to
+      pyramidal cell somata. Asynchronous GABA release. Functionally
+      distinct from IS interneurons despite shared VIP expression.
+    morphology_sources: []
+    cl_mapping: null
+    definition_references:
+      - "PMID:24671999"
+    is_terminal: false
+    notes: >
+      Stub from cite-traverse (2026-04-10). Described by Tyan et al. (2014).
+      Unlike IS cells (which target other interneurons), VIP basket cells
+      provide perisomatic inhibition to pyramidal neurons. Evidence from
+      single primary characterisation.
+
+  # ══════════════════════════════════════════════════════════════
+  # 13. R-LM CELL (thin evidence)
+  # ══════════════════════════════════════════════════════════════
+  - id: r_lm_cell_hippocampus
+    name: "Radiatum-lacunosum moleculare (R-LM) cell"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: "UBERON:0014548"
+        label: "stratum oriens of hippocampus"
+        name_in_source: "stratum oriens"
+        compartment: SOMA
+    location_sources: []
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: "CL:0000617"
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources: []
+    defining_markers:
+      - symbol: "Sst"
+        ncbi_gene_id: null
+    negative_markers: []
+    neuropeptides: []
+    electrophysiology_class: null
+    ephys_sources: []
+    morphology_notes: >
+      SST+ interneuron with axon projecting through radiatum to
+      lacunosum-moleculare. Identified in GIN transgenic mice.
+    morphology_sources: []
+    cl_mapping: null
+    definition_references:
+      - "PMID:10818134"
+    is_terminal: false
+    notes: >
+      Stub from cite-traverse (2026-04-10). THIN EVIDENCE — described in
+      one study (Oliva et al. 2000) using GIN transgenic labelling. Unclear
+      how it maps to modern transcriptomic taxonomy. May need targeted
+      literature search to confirm as distinct type.
+
+  # ══════════════════════════════════════════════════════════════
+  # 14. P-LM CELL (thin evidence)
+  # ══════════════════════════════════════════════════════════════
+  - id: p_lm_cell_hippocampus
+    name: "Pyramidale-lacunosum moleculare (P-LM) cell"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: "UBERON:0005401"
+        label: "stratum pyramidale"
+        name_in_source: "stratum pyramidale"
+        compartment: SOMA
+    location_sources: []
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: "CL:0000617"
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources: []
+    defining_markers:
+      - symbol: "Sst"
+        ncbi_gene_id: null
+    negative_markers: []
+    neuropeptides: []
+    electrophysiology_class: null
+    ephys_sources: []
+    morphology_notes: >
+      SST+ interneuron with soma in stratum pyramidale and axon projecting
+      to lacunosum-moleculare. Identified in GIN transgenic mice.
+    morphology_sources: []
+    cl_mapping: null
+    definition_references:
+      - "PMID:10818134"
+    is_terminal: false
+    notes: >
+      Stub from cite-traverse (2026-04-10). THIN EVIDENCE — described in
+      one study (Oliva et al. 2000). Same caveat as R-LM cell.
+
+  # ══════════════════════════════════════════════════════════════
+  # 15. LTH CELL (thin evidence)
+  # ══════════════════════════════════════════════════════════════
+  - id: lth_cell_hippocampus
+    name: "Low-threshold high-Ih (LTH) cell"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: "UBERON:0014548"
+        label: "stratum oriens of hippocampus"
+        name_in_source: "CA1 stratum oriens"
+        compartment: SOMA
+    location_sources: []
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: "CL:0000617"
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources: []
+    defining_markers:
+      - symbol: "Sst"
+        ncbi_gene_id: null
+    negative_markers: []
+    neuropeptides: []
+    electrophysiology_class: >
+      Strong spike frequency adaptation, high Ih. Distinguished from OLM
+      cells by physiological clustering.
+    ephys_sources: []
+    morphology_notes: null
+    morphology_sources: []
+    cl_mapping: null
+    definition_references:
+      - "PMID:34250732"
+    is_terminal: false
+    notes: >
+      Stub from cite-traverse (2026-04-10). THIN EVIDENCE — single study
+      (Hewitt et al. 2021) using physiological clustering of SST-Cre Ai14
+      cells. May overlap with oriens-oriens or other SST+ subtypes. Needs
+      targeted lit search.
 
 edges: []
