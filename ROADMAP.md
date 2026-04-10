@@ -1,24 +1,44 @@
 # evidencell Roadmap
 
-> **Date**: 2026-04-09 (last updated)
-> **Status**: M0–M3 implemented. M4 in progress. M5 partially implemented. M6, M2+ pending.
+> **Date**: 2026-04-10 (last updated)
+> **Status**: M0–M4 complete. AT pipeline done. Active work: schema refinement, lit workflow robustness, workflow contracts.
+
+---
+
+## What's next (priority order)
+
+1. **S — Schema Refinement.** Taxonomy level encoding (S1), marker type/assay consistency (S3), semantic checks (SC1-SC3). Foundation — everything validates against schema.
+2. **M2L — Lit Search File Specs.** Pydantic models for cite-traverse intermediate files. Fragility in the current pipeline is the immediate operational risk.
+3. **WC — Workflow Contracts.** Audit all inter-workflow handover points. Formalise graduation from `kb/draft/` → `kb/mappings/`. Define user-facing terminology for gate decisions.
+4. **M2+ — Lit Review Quality.** Better snippets, paper quality signals, domain relevance filters. May be partially superseded by external tooling (Asta_deepsearch improvements).
+5. **CF — Community Feedback.** Enable biologists to review and comment on mapping reports. Compliance scoring for KB quality. Depends on reports + stable schema.
+6. **M6 — Code/Content Separation.** Decouple KB content from code. Depends on stable contracts.
 
 ---
 
 ## Summary
 
+### Completed
+
+| Milestone | Goal | Key deliverables |
+|---|---|---|
+| **M0** Schema Hardening | Fix schema issues; validator hook prototype | Schema v0.5.4, pre-edit hook, 1 validated example |
+| **M1** Repo Bootstrap | Create evidencell repo structure | Repo, justfile, CLAUDE.md, ≥3 ported examples |
+| **M2** Lit Review → KB | Deepsearch pipeline → evidence items + reference provenance | ASTA ingest + cite-traverse + evidence-extraction workflows, references.json cache |
+| **M3** Mapping Hypotheses | Propose mapping edges from evidence + taxonomy | `map-cell-type.md` orchestrator, hippocampus + cerebellum draft mappings |
+| **M4** Report Generation | Human-readable reports from draft mappings | Three-tier reports; `render.py` (91% coverage); `gen-report` recipes; `AtlasQueryEvidence` schema class |
+| **AT** Annotation Transfer | AT pipeline + first end-to-end run | OLM hippocampus GSE124847 → WMBv1; schema v0.6.0 (AnatomicalLocation + CellCompartment); orchestrator for KB import pending |
+
+### Active / Pending
+
 | Milestone | Goal | Status | Key deliverables | Depends on |
 |---|---|---|---|---|
-| **M0** Schema Hardening | Fix schema issues; validator hook prototype | ✅ Done | Schema v0.5.4, pre-edit hook, 1 validated example | — |
-| **M1** Repo Bootstrap | Create evidencell repo structure | ✅ Done | Repo, justfile, CLAUDE.md, ≥3 ported examples | M0 |
-| **M2** Lit Review → KB | Deepsearch pipeline → evidence items + reference provenance | ✅ Done | ASTA ingest + cite-traverse + evidence-extraction workflows, references.json cache | M1 |
-| **M3** Mapping Hypotheses | Propose mapping edges from evidence + taxonomy | ✅ Done | `map-cell-type.md` orchestrator, hippocampus + cerebellum draft mappings | M2 |
-| **M4** Report Generation | Human-readable reports from draft mappings — MVP for biologists | 🔶 In progress | Three-tier architecture designed; hand-crafted OLM mock-up reports; `render.py` implementation pending | M3 |
-| **M5** Cross-validation + Community | Annotation transfer feedback, compliance, GitHub review | 🔶 In progress | AT pipeline implemented, OLM mapping done; schema + report improvements pending. See [M5 planning notes](#m5-planning-notes-2026-04-09) | M4 |
-| **M6** Code/Content Separation | Decouple KB content from code so evidencell can be a clean starting point for new projects | 🔲 Pending | Content boundary defined; HMBA mouse KB on `content/hmba-mouse` branch; `CONTRIBUTING.md` content-branch workflow; `main` passes `just test` with fixtures only | M5 |
-| **M2+** Lit Review Quality | Improve snippet context, paper quality signals, and domain relevance filtering in cite-traverse | 🔲 Pending | Contextual retrieval for priority papers; venue/citation/cross-citation quality signals; evidencell-specific relevance pre-filters | — (parallel, any time) |
-
-M0 and M1 can proceed in parallel — the schema does not need to be finalised before the repo is bootstrapped; it can be iterated in place. M2 begins as soon as M1 has the repo structure.
+| **S** Schema Refinement | Taxonomy level encoding, marker/assay consistency, semantic checks | 🔲 Pending | S1 rank encoding, S3 marker type split, SC1-SC3 semantic lint rules | — |
+| **M2L** Lit Search File Specs | Formal schemas for cite-traverse intermediate files | 🔲 Pending | Pydantic models for summary/refs/manifest; output validation at step boundaries; canonical output_dir | — (parallel) |
+| **WC** Workflow Contracts | Audit and formalise data contracts across all workflows | 🔲 Pending | Contract inventory; schema coverage map; inter-workflow handover specs; graduation criteria; user-facing terminology | S, M2L (inform) |
+| **M2+** Lit Review Quality | Better snippet context, paper quality signals, domain relevance filtering | 🔲 Pending | Contextual retrieval; venue/citation quality signals; domain pre-filters | — (parallel) |
+| **CF** Community Feedback | Enable biologist review of mappings; KB quality scoring | 🔲 Pending | Report-based review workflow; compliance scoring; structured feedback mechanism | S, M4 |
+| **M6** Code/Content Separation | Decouple KB content from code | 🔲 Pending | Content boundary; `content/hmba-mouse` branch; `main` passes `just test` with fixtures only | WC, S |
 
 ---
 
@@ -39,6 +59,22 @@ dismech uses `just` as a thin task runner wrapping Python/uv scripts.
 **For more Python**: Agents and humans can read, debug, and modify Python more readily than justfile + shell; error handling and structured output are cleaner; complex logic (auto-flagging, extraction pipelines) is much easier in Python; testable with pytest.
 
 **Recommendation**: Use `just` as the *interface layer* — named recipes like `just qc`, `just research-celltype`, `just fetch-reference` — but implement non-trivial logic as Python scripts in `src/evidencell/` invoked by `just`. Pure shell in justfile only for truly simple operations. This gives the human-readable command surface of `just` while keeping complex logic debuggable.
+
+### 3. Workflow output file structure and `kb/draft/` → `kb/mappings/` graduation
+
+**Problem**: Workflow orchestrators produce many intermediate and final artifacts (snippets, summaries, candidate refs, reports, manifests) but there is no enforced convention for where they land. The `output_dir` parameter is set by the calling orchestrator — but when a workflow is run directly (no caller), the operator guesses. This led to cite-traverse outputs landing in `scratch/` (gitignored) when they are standard workflow artifacts that need to persist for the next pipeline step and for provenance.
+
+**Current state**:
+- `kb/mappings/{region}/` — validated, graduated KB files (source of truth)
+- `kb/draft/{region}/` — work-in-progress YAML, references, and now workflow run directories
+- `scratch/` — gitignored; intended for truly temporary intermediates
+- No enforcement: orchestrators don't validate `output_dir` placement; nothing prevents workflow artifacts from landing in `scratch/` or an ad hoc location
+
+**Needed**:
+1. **Canonical output layout** — define where each orchestrator writes its outputs relative to `kb/draft/{region}/`. Proposal: `kb/draft/{region}/{workflow_name}/` (e.g. `kb/draft/hippocampus/cite_traverse/`, `kb/draft/hippocampus/evidence_extraction/`).
+2. **Graduation criteria** — define what "graduating" from `kb/draft/` to `kb/mappings/` actually requires. Currently `CLAUDE.md` says "after just qc" but the boundary is fuzzy: does the report graduate? Do intermediate JSONs stay in draft? Is it per-file or per-graph?
+3. **Enforcement** — orchestrators should validate that `output_dir` is under `kb/draft/{region}/` (or explicitly `scratch/` for throw-away runs). The pre-edit hook already gates KB YAML writes; a similar check could gate workflow output placement.
+4. **User-facing terminology** — "add stubs" / "proceed to extraction" / "graduate" are internal jargon. Need clearer labels for curator-facing gates (e.g. "expand scope" vs "lock down evidence" vs "promote to validated").
 
 ---
 
@@ -107,11 +143,11 @@ evidencell/
     lit-review.md                    # ported from Asta_deepsearch
     evidence-extraction.md           # M2: filter→extract→provenance→review gate
     map-cell-type.md                 # M3: property searches→hypothesis→confidence check
-    annotation-transfer.md           # M5: import AT results→propose AnnotationTransferEvidence
+    annotation-transfer.md           # AT: import AT results→propose AnnotationTransferEvidence
   .claude/hooks/validate_mapping_hook.py
   .claude/skills/                    # bounded single-focus tasks, called interactively
     catalogue-weeding/               # present flagged catalogue; human pruning interaction
-    celltype-mapping-pr-review/      # M5: review KB PR against rubric
+    celltype-mapping-pr-review/      # CF: review KB PR against rubric
   .claude/agents/                    # (reserved: shared subagent personas, if needed)
 ```
 
@@ -305,88 +341,121 @@ The existing KB examples (GPi shell, CB MLI) serve as in-context patterns for th
 - HTML rendering (Jinja2 → HTML) — deferred pending community need
 - Report versioning via git log
 - `workflows/gen-report.md` LLM synthesis orchestrator — programmatic render.py may be sufficient; defer if quality adequate
-- Automated experiment structuring (schema extension to `proposed_experiments[]`) — M5
+- Automated experiment structuring (schema extension to `proposed_experiments[]`) — deferred
 
 ---
 
-## M5 — Cross-Validation, Annotation Transfer Feedback, and Community Workflow
+## S — Schema Refinement
 
-**Goal**: Close the experimental feedback loop — annotation transfer results proposed in M4 reports come back into the KB as `AnnotationTransferEvidence`, raising confidence where supported. Add compliance scoring and GitHub review workflow for community curation.
+**Goal**: Address known schema gaps and add semantic lint rules that catch common errors before they reach the KB.
 
-### Deliverables
-- `AnnotationTransferEvidence` population workflow: take raw MapMyCells/Seurat/scANVI output (CSV/JSON) → extract per-taxonomy-level F1, purity, n_cells → propose `AnnotationTransferEvidence` YAML block → human confirms → append to KB
-- Atlas paper citation traversal: extend M2 corpus to atlas papers not yet in `paper_catalogue.json` (for mapping-relevant atlas publications)
-- Confidence update pass: re-run `just gen-report` after annotation transfer evidence is added — confidence may upgrade from MODERATE to HIGH
-- Compliance scoring: per-mapping-graph field coverage, evidence completeness, CL term presence (`src/evidencell/compliance.py`)
-- GitHub PR workflow: `celltype-mapping-pr-review` skill; auto-review on PR open; weekly compliance scan
+**Status**: 🔲 Pending (priority 1)
 
-### Annotation transfer feedback loop
-The M4 report proposed experiments act as structured prompts for the biologist. When results come back:
-1. Raw annotation transfer output file provided to the population workflow
-2. Agent maps results to KB node IDs, extracts F1 per level
-3. Proposes `AnnotationTransferEvidence` YAML block for human review
-4. KB updated; report regenerated; confidence re-assessed
+S2 (AnatomicalLocation + CellCompartment) shipped in v0.6.0. Remaining items:
 
-Note: annotation transfer is cross-species by design (mapping primate types to mouse WMBv1). `source_species` and `target_species` fields needed on `AnnotationTransferEvidence` — add at this milestone.
+### Schema changes
 
-### Compliance dimensions
+**S1. Taxonomy level encoding — rank, not name.**
+Taxonomy level names (CLASS, SUBCLASS, SUPERTYPE, CLUSTER) are arbitrary and
+taxonomy-specific. Replace hardcoded level name enums with:
+- `level_name: str` — free string, taxonomy-defined (e.g. "SUPERTYPE", "subclass")
+- `rank: int` — 0 = most specific (leaf), incrementing for each level above
+
+This affects `AnnotationTransferLevelResult.taxonomy_level`, `best_mapping_level`,
+and any code that assumes WMB-specific level names. Mapping edges should be
+expressible at any rank, not just cluster (rank 0).
+
+**S3. Marker type / assay consistency.**
+`marker_type` (PROTEIN/TRANSCRIPT) can conflict with `method` (e.g.
+`marker_type: PROTEIN` with `method: "in situ hybridization"`). Options:
+- Split into `detected_molecule` + `assay_method` with a consistency rule
+- Or keep `marker_type` but add a semantic check (SC1 below)
+
+### Semantic checks (lint rules for the pre-edit hook)
+
+**SC1. Marker type vs method consistency.**
+If `method` contains "RNA-seq", "in situ hybridization", "qPCR" → `marker_type`
+should be TRANSCRIPT. If "immunohistochemistry", "Western blot" → PROTEIN.
+Hook should flag inconsistencies but **not auto-fix** — confabulation could be
+on either side.
+
+**SC2. Node notes containing mapping information.**
+Notes on classical nodes should describe the type, not its mapping to atlas
+clusters. Lint rule flags notes that reference cluster IDs, supertype names, or
+WMB-specific terms — these belong on edges, not nodes.
+
+**SC3. Information in YAML comments vs structured fields.**
+Data in `# comments` is invisible to validation and rendering. Negative marker
+sources and heterogeneity notes should be in `sources` or `notes` fields.
+Convention rule for CLAUDE.md: "never put data in YAML comments that could go
+in a structured field."
+
+### Open questions
+- Should `CROSS_SPECIES_EXTRAPOLATION` be a structured field on `MappingEdge` (more queryable) or remain a free-text caveat?
+
+---
+
+## CF — Community Feedback on Mappings
+
+**Goal**: Enable biologists to review, comment on, and improve mapping evidence — via reports, structured feedback, and KB quality scoring.
+
+**Status**: 🔲 Pending (priority 5 — needs stable schema and reports first)
+
+**Motivation**: The expert bottleneck is real — cell type mapping requires specialist knowledge (neuroscience, transcriptomics, atlas familiarity). The goal is not to eliminate the bottleneck but to make expert time efficient: surface the right questions, make evidence auditable, and capture feedback in structured form.
+
+### Compliance scoring
+
+Per-mapping-graph quality metrics in `src/evidencell/compliance.py`:
+
 | Dimension | Metric |
 |---|---|
 | Schema completeness | Required fields present on all nodes and edges |
 | Evidence coverage | ≥1 EvidenceItem per edge |
 | Evidence diversity | ≥2 independent types for HIGH-confidence edges |
 | CL term presence | Every node has at least a BROAD CL mapping |
-| Reference validation | All LiteratureEvidence snippets validated against ASTA cache |
+| Reference validation | All LiteratureEvidence snippets validated against references.json |
 | Scope metadata | `species` + `developmental_stage` populated on ≥80% of evidence items |
 
-### Tensions
-- **Annotation transfer vs literature discordance**: if MapMyCells reports LOW confidence but literature strongly supports a mapping, the confidence decision guide needs a tiebreaker rule. Proposed: experimental evidence takes precedence over literature when they conflict, but the conflict must be documented as a caveat.
-- **Expert bottleneck**: cell type mapping requires specialist knowledge (neuroscience, transcriptomics, atlas familiarity) that is harder to democratise than disease mechanism curation. The PR review workflow helps, but the bottleneck is real.
-- **CL term currency**: CL is actively evolving. Record CL version at entry creation; run periodic term validation.
+### Review workflow
+
+How biologists interact with mappings — not yet designed in detail:
+- Reports (from M4 gen-report) are the primary review surface
+- Feedback needs a structured path back into the KB (not just PR comments)
+- GitHub PR review (`celltype-mapping-pr-review` skill) is one option for curators comfortable with GitHub; may not suit all biologists
+- CL term currency: CL is actively evolving; record CL version at entry creation; periodic term validation
+
+### Runtime environments and user setup
+
+Making evidencell accessible to curators (biologists who are not full-stack developers) requires reducing setup friction. Current findings (2026-04-09):
+
+**Docker sandbox** (`docker sbx`): works well for running workflows with "allow everything" minus limited web search. Main blocker: environment variable setup (API keys for Semantic Scholar, EuropePMC, Anthropic) is painful — not yet fully working. Docker sbx is suitable for tech-savvy users (e.g. Nelson, Andrea) once env var injection is solved.
+
+**Claude Code sandbox**: similar env var issues. Workaround of adding keys to `.zshrc` works but isn't ideal. Still too much permission-prompt noise even with permissive settings.
+
+**GitHub Actions**: investigate for longer-term hosted execution — would eliminate local setup entirely. Potential pattern: curator opens a PR or issue; a GitHub Action runs the relevant orchestrator; results are committed back to the PR branch.
+
+**Deliverables**:
+1. `docs/SETUP.md` — step-by-step instructions for Docker sbx setup including env var injection
+2. Docker Compose file or `justfile` recipe (`just docker-setup`) automating the container build with required MCP servers and Python deps
+3. `.env.example` documenting required env vars without secrets
+4. Investigate GitHub Actions for orchestrator execution (feasibility spike)
+
+### Scale concern
+A full cerebellar atlas has ~60 cell types; full brain could exceed 3,000. At that scale the mapping hypothesis agent (M3) must be largely automated. Community curation alone will not be sufficient. evidencell should complement and link to Allen Brain Atlas annotations, CL, and BICAN cell type taxonomy.
 
 ### Open questions
-- Should `CROSS_SPECIES_EXTRAPOLATION` be a structured field on `MappingEdge` (more queryable) or remain a free-text caveat? A structured flag would allow systematic filtering.
-- Should the evidencell KB be public from launch? Recommend yes — openness is a feature; early community feedback is valuable.
-
-### GitHub workflow
-Pattern from dismech:
-- Curator opens PR with new/updated `kb/mappings/{region}/*.yaml`
-- `claude-code-review.yml` runs the `celltype-mapping-pr-review` skill → inline comments on missing evidence, schema issues, imprecise CL terms
-- Human expert does final approval
-- `weekly-compliance.yaml` cron: finds lowest-compliance KB files, runs Claude to propose improvements, opens PR
-
-### Open questions (additional)
-- **Scale**: a full cerebellar atlas has ~60 cell types; full brain could exceed 3,000. At that scale the mapping hypothesis agent (M3) must be largely automated. Community curation alone will not be sufficient.
-- **Relationship to existing resources**: evidencell should complement and link to Allen Brain Atlas annotations, CL, and BICAN cell type taxonomy — the evidence graph and explicit confidence levels are the contribution, not duplicating the atlases.
+- What is the right review surface for biologists who don't use GitHub?
+- Should the evidencell KB be public from launch?
+- How to handle annotation transfer vs literature discordance (proposed: experimental evidence takes precedence, but conflict documented as caveat)
 
 ---
 
 ## Lessons from candelabrum cell pilot (2026-03-20)
 
-Running lit-review.md end-to-end on a single seed (PMID:35578131, candelabrum cell) surfaced several issues and new capability needs. Items below are filed under the relevant milestone or as cross-cutting.
-
-### M2 — lit-review workflow improvements
-
-- **Full-text retrieval fallback chain**: artl-mcp `get_europepmc_full_text` silently returns empty on some confirmed-OA papers (e.g. PMC9548381). Need: Unpaywall OA pre-check (`api.unpaywall.org/v2/{doi}`) → artl-mcp full text → artl-mcp PDF-to-markdown → WebFetch PMC HTML (`pmc.ncbi.nlm.nih.gov/articles/{PMCID}/`) → WebFetch Unpaywall `best_oa_location.url`. Flag retrieval failures rather than silently falling back to abstract-only. JATS XML + local snippet generation being explored in parallel project (Asta_deepsearch).
-- **Single-seed fast path**: skip selection step when there is one seed and max_depth≤1. The depth loop machinery (fetch→select→fetch) is designed for multi-seed broad traversal and adds pure overhead for targeted single-paper exploration.
-- **ASTA snippet quality filtering**: ASTA `snippet_search` returns peer review comments alongside paper body text. Add filtering to exclude reviewer/response text (by snippetKind or section heuristic) before summarisation.
-- **KB-first output**: the lit-review workflow currently terminates at `report.md`. Evidence extraction should be the primary output, with the report generated downstream from structured KB data. The report-first pattern created a dead end — `evidence-extraction.md` doesn't exist yet.
-- **Citation traversal pipeline**: ASTA snippet_search (scoped to paper) is the primary mechanism when body text is indexed — provides pre-resolved citations with section labels. Fallback chain for papers without ASTA body text: JATS XML → PMC HTML DOM parsing → PDF+regex. All portable, pip-installable, no Grobid server. See [citation_traversal_design.md](citation_traversal_design.md) for full design.
-
-### M2 — semantic validation loop for evidence placement
-
-Iterative strategy that checks extracted evidence against the source paper for correct placement on KB nodes/edges. During the pilot, snRNA-seq cluster markers (Nxph1, Aldh1a3, Slc6a5) were initially placed on the `classical_candelabrum` node — but they were measured on the PLI1 transcriptomic cluster, not on morphologically confirmed candelabrum cells. The correction required recognising that smFISH on tissue with spatial co-registration to Oxtr-Cre-labelled CCs constitutes independent confirmation, while snRNA-seq cluster markers alone do not.
-
-Key question the loop must answer: "is this evidence measured on this entity, or inferred via a mapping edge?" If inferred → place on the source node, record inference on the edge. Present placement decisions for review before writing.
-
-### M3+ — spatial evidence from MERFISH data
-
-- **MERFISH co-location scoring**: agentic workflow to compute co-location scores between cell types using WMBv1 MERFISH spatial data. Example: confirm that cluster 5178 cells co-localise with Purkinje neurons, providing independent spatial evidence for Purkinje layer placement beyond the coarse "CBX" atlas annotation (WMBv1 lacks laminar resolution). Manual inspection on the Allen Brain Cell Atlas website currently confirms strong co-location — automation would make this evidence type reproducible and scalable.
-- **Allen Brain Cell Atlas link builder**: skill to generate deep links into the ABC website illustrating spatial placement of specific cell sets. Useful for manual QC and embedding visual evidence references in KB annotations.
-
-### M5 — annotation transfer skill
-
-Bounded skill for running MapMyCells annotation transfer between a source dataset and WMBv1, computing purity/F1 metrics, and writing structured `AnnotationTransferEvidence` to KB edges. Currently done manually in notebooks.
+Extracted to [planning/candelabrum_pilot_lessons.md](planning/candelabrum_pilot_lessons.md).
+Key items still relevant: full-text retrieval fallback robustness (→ M2L), semantic
+validation loop for evidence placement (→ WC), MERFISH co-location scoring (future).
+Items addressed: snippet quality filtering, KB-first output, citation traversal pipeline.
 
 ---
 
@@ -394,11 +463,11 @@ Bounded skill for running MapMyCells annotation transfer between a source datase
 
 **Goal**: Decouple the HMBA mouse KB from code and infrastructure so evidencell can serve as a clean starting point for new KB projects (different species, brain region, or atlas).
 
-**Status**: 🔲 Pending (depends on M5 — schema must be stable before separating content)
+**Status**: 🔲 Pending (depends on S + WC — schema and contracts must be stable before separating content)
 
 ### Motivation
 
-Development through M5 is necessarily coupled: workflows, schema, and KB content co-evolve. Once M5 is complete, the schema and tooling patterns are mature enough that a second KB project could adopt evidencell without inheriting HMBA mouse content.
+Development through S/WC is necessarily coupled: workflows, schema, and KB content co-evolve. Once schema and contracts are stable, a second KB project could adopt evidencell without inheriting HMBA mouse content.
 
 ### Content boundary
 
@@ -482,58 +551,70 @@ Pre-filter seeds and candidate refs to down-rank papers unlikely to contain dire
 
 ---
 
-## M5 Planning Notes (2026-04-09)
+## M2L — Lit Search File Specs and Validated Handovers
+
+**Goal**: Formalise the data structures flowing through cite-traverse (and its callers/consumers) so that each step boundary is validated, not just instructed.
+
+**Status**: 🔲 Pending (parallel — closely related to M2+ but independent)
+
+**Motivation**: Of the 9 file types produced by cite-traverse, only 1 (`candidate_refs.json`) has a formal schema — defined as a docstring in `extract_asta_refs.py`. The rest are defined by prose in the orchestrator prompt. This means:
+- A subagent that produces slightly wrong JSON (missing field, wrong enum value) is not caught until synthesis or extraction fails downstream.
+- The summary object — the primary data contract between fetch → selection → synthesis → evidence-extraction — has no validation at all.
+- `run_config.json` and `run_manifest.json` drift silently when orchestrator prompts are updated but the "schema" (prose) isn't updated consistently.
+
+### Deliverables
+
+1. **Pydantic models** in `src/evidencell/models/cite_traverse.py`:
+   - `SnippetSummary` — source_corpus_id, source_title, source_method (enum: asta_snippet | europepmc_fulltext | asta_report), snippet_kind, section, snippet_score, node_relevance (enum: HIGH | MODERATE | LOW), node_relevance_reason, summary, quotes (list[str]), depth
+   - `SelectionEntry` — corpus_id, title, selected, reason
+   - `DepthRefs` — depth, all_candidate_ids, selected_corpus_ids, selection_rationale (list[SelectionEntry]), total_candidates, total_selected
+   - `RunConfig` — all current params with types and defaults
+   - `ManifestEntry` — step (enum), counts, timestamps
+2. **Output validation** at each step boundary: fetch subagent writes summaries → validate against `SnippetSummary` before selection reads them. Selection writes refs → validate against `DepthRefs` before next fetch reads them. Validation can be a thin Python script (`uv run python -m evidencell.validate_cite_traverse {file} {schema}`) called by the orchestrator between steps.
+3. **Canonical `output_dir` convention**: orchestrators enforce `kb/draft/{region}/cite_traverse/` (or `scratch/` if explicitly throw-away). Document in `WORKFLOW.md`.
+4. **Schema-first orchestrator prompts**: the prose structure specs in `cite-traverse.md` reference the Pydantic models rather than inline JSON examples. Single source of truth.
+
+### Relationship to M2+
+
+M2+ improves what evidence cite-traverse finds (better snippets, smarter selection). M2L improves how reliably that evidence flows through the pipeline. They can run in parallel — M2L doesn't change retrieval logic, just wraps existing outputs in validation. If done together, new M2+ fields (venue_tier, quality_score) get added to the Pydantic models from the start.
+
+---
+
+## WC — Workflow Contracts: Cross-Workflow Handovers and Schemas
+
+**Goal**: Audit and formalise the data contracts at every handover point across all evidencell workflows — not just within cite-traverse, but between workflows.
+
+**Status**: 🔲 Pending
+
+**Motivation**: Each workflow orchestrator was designed independently. The handover points between them are documented only by convention:
+- `asta-report-ingest` → `cite-traverse`: passes `initial_summaries_file` and `report_context_file` — but there's no schema for the initial summaries format, and the report context is free-form Markdown.
+- `cite-traverse` → `evidence-extraction`: the extraction workflow reads `all_summaries.json` — but its expected structure is defined only in the extraction orchestrator's prose, not validated.
+- `evidence-extraction` → KB YAML: proposed evidence items must conform to the LinkML schema — this *is* validated (by the pre-edit hook), but the intermediate "proposed items" format before writing is not.
+- `map-cell-type` reads KB YAML + atlas metadata — the KB side is schema-validated, but the atlas metadata input format is ad hoc.
+- `gen-report` reads KB YAML — validated, but its own output (Markdown reports) has only a prose template spec.
+
+This creates fragility: a change to one orchestrator's output format silently breaks the downstream consumer. The pre-edit hook catches KB YAML errors, but everything upstream of the KB write is unvalidated.
+
+### Deliverables
+
+1. **Contract inventory**: a table in `WORKFLOW.md` documenting every inter-workflow handover — what file is passed, what workflow produces it, what workflow consumes it, and whether it has a formal schema.
+2. **Schema coverage map**: for each handover, classify as: (a) LinkML-validated, (b) Pydantic-validated (from M2L), (c) prose-only, (d) unspecified. Target: zero (d), minimal (c).
+3. **Inter-workflow handover specs**: Pydantic or LinkML models for the key handover objects that aren't already covered — especially `initial_summaries` format, proposed evidence items, and atlas metadata input.
+4. **Graduation criteria**: formalise what it means to move content from `kb/draft/` to `kb/mappings/`. Currently "after just qc" — define precisely which checks must pass, whether intermediate workflow artifacts (cite_traverse/, evidence_extraction/) are retained or archived, and what the human review gate looks like.
+5. **User-facing terminology**: replace internal jargon at workflow gates. "Add stubs and continue research" → "Expand scope: add newly discovered types". "Proceed to extraction" → "Lock down: extract evidence for current types". "Graduate" → "Promote to validated KB".
+
+### Relationship to other milestones
+
+- **M2L** feeds into WC: cite-traverse contracts are the first and most complex case. M2L solves it for lit search; WC generalises.
+- **M6** (code/content separation) depends on WC: you can't cleanly separate content from code if the handover formats aren't stable.
+- **Cross-cutting point #3** (file structure) in this roadmap is the seed discussion; WC is the actionable plan.
+
+---
+
+## AT/Report improvements (from OLM pilot, 2026-04-09)
 
 Observations from the first end-to-end annotation transfer run (OLM hippocampus,
-GSE124847 → WMBv1). Implementation order: schema first, then semantic checks,
-then report/workflow improvements.
-
-### Schema improvements
-
-**S1. Taxonomy level encoding — rank, not name.**
-Taxonomy level names (CLASS, SUBCLASS, SUPERTYPE, CLUSTER) are arbitrary and
-taxonomy-specific. Replace hardcoded level name enums with:
-- `level_name: str` — free string, taxonomy-defined (e.g. "SUPERTYPE", "subclass")
-- `rank: int` — 0 = most specific (leaf), incrementing for each level above
-
-This affects `AnnotationTransferLevelResult.taxonomy_level`, `best_mapping_level`,
-and any code that assumes WMB-specific level names. Mapping edges should be
-expressible at any rank, not just cluster (rank 0).
-
-**S2. Formalise soma vs projection location.**
-Currently distinguished only by YAML comments on `AnatomicalLocation` entries.
-Add a `compartment` enum (`SOMA`, `AXON_TARGET`, `DENDRITE`) to
-`AnatomicalLocation` or a wrapper. Critical for types like OLM where soma (SO)
-and axon (SLM) are in different layers — MERFISH only captures soma, so the
-comparison logic depends on knowing which compartment is being compared.
-
-**S3. Marker type / assay consistency.**
-`marker_type` (PROTEIN/TRANSCRIPT) can conflict with `method` (e.g.
-`marker_type: PROTEIN` with `method: "in situ hybridization"`). Options:
-- Split into `detected_molecule` + `assay_method` with a consistency rule
-- Or keep `marker_type` but add a semantic check (see below)
-
-### Schema semantic checks
-
-**SC1. Marker type vs method consistency.**
-If `method` contains "RNA-seq", "in situ hybridization", "qPCR" → `marker_type`
-should be TRANSCRIPT. If "immunohistochemistry", "Western blot" → PROTEIN.
-Hook should flag inconsistencies but **not auto-fix** — confabulation could be
-on either side. The error should push back to the agent to review the original
-source and determine which field is wrong.
-
-**SC2. Node notes containing mapping information.**
-Notes on classical nodes should describe the type, not its mapping to atlas
-clusters. A lint rule could flag notes that reference cluster IDs, supertype
-names, or WMB-specific terms — these belong on edges, not nodes.
-
-**SC3. Information in YAML comments vs structured fields.**
-Data in `# comments` is invisible to validation and rendering. Negative marker
-sources (e.g. `# Katona et al. 2017 PMID:27997999`) and heterogeneity notes
-should be in `sources` or `notes` fields. Convention rule for CLAUDE.md:
-"never put data in YAML comments that could go in a structured field."
-
-### Report and workflow improvements
+GSE124847 → WMBv1). Schema items (S1–S3, SC1–SC3) moved to milestone **S** above.
 
 **R1. Mapping above rank 0.**
 Current report structure assumes mapping at the most specific level (rank 0).
