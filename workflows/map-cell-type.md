@@ -77,7 +77,10 @@ TASK:
    records soma position only. Axonal and dendritic projection targets are not
    captured and must not be used in scoring — classical type descriptions often
    include axon targets (e.g. OLM axon in SLM) which have no atlas counterpart.
-   Only compare soma-relevant locations from the classical node.
+   Only compare against classical node locations with `compartment: SOMA` (or
+   no compartment, which implies whole-cell). Skip entries with
+   `compartment: AXON_TARGET` or `compartment: DENDRITE` — their absence from
+   atlas MERFISH data is expected, not diagnostic.
 
    For each classical soma location, check if the atlas node has cells in the
    same structure or a child/parent structure. Use MBA ID prefix matching for
@@ -209,8 +212,9 @@ TASK:
 
 2. Build property_comparisons for at minimum:
    - nt_type
-   - location (one comparison per classical soma location — exclude axon/dendrite
-     projection targets, which are not captured in atlas MERFISH data)
+   - location (one comparison per classical location with `compartment: SOMA`
+     or no compartment — skip `AXON_TARGET` / `DENDRITE` entries, which are
+     not captured in atlas MERFISH data)
    - Each classical defining_marker (property: "marker_{symbol}")
    - Each classical neuropeptide (property: "neuropeptide_{symbol}")
 

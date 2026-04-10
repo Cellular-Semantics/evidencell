@@ -1,8 +1,8 @@
 {
   "_meta": {
     "region": "hippocampus",
-    "last_updated": "2026-03-25T18:45:49.085456",
-    "last_updated_by": "20260325_winterer_identity_mge"
+    "last_updated": "2026-04-09T14:30:00.000000",
+    "last_updated_by": "20260409_hippocampus_report_ingest_step2"
   },
   "1015389": {
     "corpus_id": "1015389",
@@ -28,7 +28,9 @@
         "claims": [
           "anti_hebbian_ltp",
           "ca2_permeable_ampa",
+          "electrophysiology_class",
           "ephys_class",
+          "morphology_notes",
           "morphology_overview"
         ],
         "source_method": "asta_report",
@@ -57,9 +59,11 @@
         "text": "Based on responses to metabotropic glutamate receptor (mGluR) activation, we have characterized two distinct classes of interneuron in stratum (st.) oriens of the CA1 region of hippocampus. One type of interneuron was strongly excited by 1S,3R-aminocyclopentane dicarboxylic acid (ACPD), responding with a large inward current accompanied by increased baseline noise and prominent current oscillations. A second interneuron population responded with a modest inward current with no changes in baseline noise. These two classes of responses persisted in the presence of tetrodotoxin and antagonists of ionotropic glutamate and GABA receptors, suggesting that the inward currents result from mGluRs on the interneurons themselves. The two physiologically defined cell types correspond to two distinct morphological cell types in st. oriens/alveus, distinguished by very different patterns of local axonal connections. Large oscillatory inward current responses were recorded predominantly from an interneuron type whose axons heavily innervated st. lacunosum. The more modest inward current response was generally found in interneurons whose axons innervated the somata and proximal dendrites of CA1 pyramidal neurons. These differences in physiology and local circuitry imply that activation of mGluRs in st. oriens will cause very strong excitation of interneurons synapsing in st. lacunosum, and weaker excitation of interneurons innervating pyramidal cells at the soma and proximal dendrites. These data suggest that each interneuron population has a specific role in hippocampal function, and that mGluR activation will affect the local circuit differently for each interneuron type. Metabotropic GluR activation also markedly enhanced the amplitudes of the evoked and spontaneous EPSCs received by all interneurons in the region, independent of changes in the postsynaptic holding current and with no change in the kinetics of the EPSC. In contrast to the enhancement of evoked and spontaneous EPSCs, miniature EPSCs recorded in the presence of tetrodotoxin were not increased. These data suggest that ACPD acts at a presynaptic site to potentiate the EPSC. Taken together, these results highlight an important modulatory role for metabotropic receptors located at sites both pre- and postsynaptic to CA1 st. oriens interneurons.",
         "section": "Projection Patterns and Connectivity",
         "claims": [
+          "electrophysiology_class",
+          "ephys_mglur",
           "mglur_response",
           "morphology_axon_slm",
-          "ephys_mglur"
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -88,8 +92,10 @@
         "text": "Fast spiking interneurons in the CA1 area of the dorsal hippocampus were recorded from and filled with biocytin in anesthetized rats. The full extent of their dendrites and axonal arborizations as well as their calcium binding protein content were examined. Based on the spatial extent of axon collaterals, local circuit cells (basket and O- LM neurons) and long-range cells (bistratified, trilaminar, and backprojection neurons) could be distinguished. Basket cells were immunoreactive for parvalbumin and their axon collaterals were confined to the pyramidal layer. A single basket cell contacted more than 1500 pyramidal neurons and 60 other parvalbumin-positive interneurons. Commissural stimulation directly discharged basket cells, followed by an early and late IPSPs, indicating interneuronal inhibition of basket cells. The dendrites of another local circuit neuron (O-LM) were confined to stratum oriens and it had a small but high-density axonal terminal field in stratum lacunosum-moleculare. The fastest firing cell of all interneurons was a calbindin-immunoreactive bistratified neuron with axonal targets in stratum oriens and radiatum. Two neurons with their cell bodies in the alveus innervated the CA3 region (backprojection cells), in addition to rich axon collaterals in the CA1 region. The trilaminar interneuron had axon collaterals in strata radiatum, oriens and pyramidale with its dendrites confined to stratum oriens. Commissural stimulation evoked an early EPSP-IPSP-late depolarizing potential sequence in this cell. All interneurons formed symmetric synapses with their targets at the electron microscopic level. These findings indicate that interneurons with distinct axonal targets have differential functions in shaping the physiological patterns of the CA1 network.",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_so_dendrites",
+          "anatomical_location",
+          "morphology_notes",
           "morphology_slm_axon",
+          "morphology_so_dendrites",
           "soma_location_so"
         ],
         "source_method": "asta_report",
@@ -124,10 +130,13 @@
         "text": "Hippocampal CA1 stratum oriens interneuron subtypes include oriens lacunosum-moleculare (O-LM) interneurons, which can be identified by the expression of somatostatin and have regular-to-fast action potential spiking patterns (Oren et al., 2009)(Nicholson et al., 2014)(Huh et al., 2016). O-LM cell soma and dendrites reside in the stratum oriens and their axons project to the stratum lacunosum-moleculare layer",
         "section": "Electrophysiological Properties and Function",
         "claims": [
-          "sst_positive",
+          "anatomical_location",
+          "axon_slm",
+          "defining_markers",
+          "electrophysiology_class",
           "ephys_regular_fast_spiking",
           "soma_location_so",
-          "axon_slm"
+          "sst_positive"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -218,6 +227,8 @@
         "text": "SST+ cells were mainly found close to the alveus in the stratum-oriens of CA1 of both SAMR1 and SAMP8",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "anatomical_location",
+          "defining_markers",
           "sst_soma_location_so_alveus"
         ],
         "source_method": "asta_report",
@@ -228,6 +239,7 @@
         "text": "A high density of SST+ neuropil was observed in the stratum lacunosum-moleculare as well.",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "anatomical_location",
           "sst_neuropil_slm"
         ],
         "source_method": "asta_report",
@@ -258,8 +270,9 @@
         "text": "In stratum oriens of the hippocampus, EGFP-expressing interneurons were comprised almost exclusively of oriens/alveus interneurons with lacunosum-moleculare axon arborization (O-LM cells)",
         "section": "Electrophysiological Properties and Function",
         "claims": [
-          "soma_location_so",
-          "olm_identification"
+          "anatomical_location",
+          "olm_identification",
+          "soma_location_so"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -280,6 +293,7 @@
         "text": "These newly identified interneuronal subtypes appeared to be closely related to O-LM cell, as they selectively innervate stratum lacunosum-moleculare. Whole-cell patch-clamp recordings revealed that these cells were fast-spiking and showed virtually no spike frequency accommodation. The microanatomical features of these cells suggest that they function primarily as \"input-biasing\" neurons, in that synaptic volleys in stratum radiatum would lead to their activation, which in turn would result in selective suppression of excitatory input from the entorhinal cortex onto CA1 pyramidal cells.",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
           "ephys_fast_spiking",
           "input_biasing_function"
         ],
@@ -341,9 +355,10 @@
         "text": "Several types of hippocampal interneurons exhibit a form of long-term potentiation (LTP) that depends on Ca2+-permeable AMPA receptors and group I metabotropic glutamate receptors. Several sources of evidence point to a presynaptic locus of LTP maintenance. The retrograde factor that triggers the expression of LTP remains unidentified. Here, we show that trains of action potentials in putative oriens-lacunosum-moleculare interneurons of the mouse CA1 region can induce long-lasting potentiation of stimulus-evoked excitatory postsynaptic currents that mimics LTP elicited by high-frequency afferent stimulation. We further report that blockers of nitric oxide production or TRPV1 receptors failed to prevent LTP induction. The present results add to the evidence that retrograde signalling underlies N-methyl-d-aspartate (NMDA) receptor-independent LTP in oriens interneurons, mediated by an unidentified factor.",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
+          "ephys_ltp",
           "ltp_ca_permeable_ampa",
-          "ltp_mglur_dependent",
-          "ephys_ltp"
+          "ltp_mglur_dependent"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -372,9 +387,11 @@
         "text": "O-LM interneurons were identified by their location in stratum oriens, the characteristic elongated shape of their somata and the horizontally oriented dendrites as well as their electrophysiological properties: the typical firing pattern in response to depolarizing current pulses and the prominent sag potential in response to hyperpolarizing current pulses",
         "section": "Anatomical Location and Morphology",
         "claims": [
+          "electrophysiology_class",
+          "ephys_sag_potential",
           "morphology_elongated_soma",
           "morphology_horizontal_dendrites",
-          "ephys_sag_potential"
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -384,7 +401,8 @@
         "text": "A subset of the recorded cells, identified by the above described criteria, were further validated by biocytin stainings in which we could identify the vertically projecting axons with an extensive arborization in stratum lacunosum-moleculare",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_axon_slm_biocytin"
+          "morphology_axon_slm_biocytin",
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -395,7 +413,8 @@
         "section": "Anatomical Location and Morphology",
         "claims": [
           "connectivity_local_excitatory_input",
-          "function_gate_entorhinal"
+          "function_gate_entorhinal",
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -405,7 +424,9 @@
         "text": "GABAergic inhibitory oriens lacunosum-moleculare (O-LM) cells in the hippocampal area CA1 of the rat",
         "section": "Anatomical Location and Morphology",
         "claims": [
+          "anatomical_location",
           "gabaergic",
+          "nt_type",
           "soma_location_ca1"
         ],
         "source_method": "asta_report",
@@ -441,6 +462,7 @@
         "text": "The oriens/lacunosum-moleculare (OLM) interneuron has been implicated as a critical controller of hippocampal memory",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
           "function_memory_controller"
         ],
         "source_method": "asta_report",
@@ -451,6 +473,7 @@
         "text": "We performed a set of whole-cell recordings of OLM cells from mouse hippocampus",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
           "recording_mouse"
         ],
         "source_method": "asta_report",
@@ -461,6 +484,7 @@
         "text": "OLM cells exhibit theta spiking resonance frequencies that depend on their dendrites having hyperpolarization-activated cation channels (h-channels)",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
           "ephys_theta_resonance",
           "hcn_dendritic"
         ],
@@ -472,6 +496,7 @@
         "text": "Immunohistochemical localization of the HCN2 subunit confirmed dendritic expression.",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "defining_markers",
           "hcn2_dendritic_expression"
         ],
         "source_method": "asta_report",
@@ -516,8 +541,9 @@
         "section": "Molecular Markers and Gene Expression",
         "claims": [
           "morphology_axon_slm",
+          "morphology_dendrites_oriens",
           "morphology_horizontal_soma",
-          "morphology_dendrites_oriens"
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -527,6 +553,7 @@
         "text": "we found a surprisingly consistent expression of Npy in OLMs",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "neuropeptides",
           "npy_expression"
         ],
         "source_method": "asta_report",
@@ -557,12 +584,14 @@
         "text": "Independent of the Cre line used for cell collection, we found consistent expression of GABA release‐related Gad1, Gad2 and Slc6a1 in all OLM interneurons. By contrast, glutamate release‐related vesicular glutamate transporter Slc17a7 (detected in 2/46 cells) and Slc17a6 (detected in 1/46 cells) genes were virtually not expressed across the whole population.",
         "section": "Results 3.3",
         "claims": [
+          "defining_markers",
+          "gabaergic_identity",
           "gad1_positive",
           "gad2_positive",
-          "slc6a1_positive",
-          "slc17a7_absent",
+          "nt_type",
           "slc17a6_absent",
-          "gabaergic_identity"
+          "slc17a7_absent",
+          "slc6a1_positive"
         ],
         "source_method": "primary",
         "status": "verified",
@@ -586,7 +615,8 @@
         "text": "as well as expression of Chrna2, which has been used as a marker for hippocampal OLM interneurons",
         "section": "Results 3.3",
         "claims": [
-          "chrna2_positive"
+          "chrna2_positive",
+          "defining_markers"
         ],
         "source_method": "primary",
         "status": "verified",
@@ -596,9 +626,10 @@
         "text": "we found consistent expression of Sst and Reln, and sparse expression of Pvalb across both OLM neuron types",
         "section": "Results 3.3",
         "claims": [
-          "sst_positive",
+          "defining_markers",
+          "pvalb_sparse",
           "reln_positive",
-          "pvalb_sparse"
+          "sst_positive"
         ],
         "source_method": "primary",
         "status": "verified",
@@ -618,8 +649,9 @@
         "text": "we found consistent expression of Npy. This observation was striking, because an earlier study showed the lack of NPY in OLM cells (0/4) in the rat hippocampus (Katona et al., 2014), and expression of its gene was previously used to exclude OLM identity in single‐cell transcriptomic samples in mouse (Harris et al., 2018).",
         "section": "Results 3.3",
         "claims": [
-          "npy_positive",
+          "neuropeptides",
           "npy_novel_finding",
+          "npy_positive",
           "species_difference_rat_mouse"
         ],
         "source_method": "primary",
@@ -640,8 +672,9 @@
         "text": "all Htr3aCre‐OLM and SstCre‐OLM neurons consistently expressed MGE‐associated marker genes",
         "section": "Results 3.3",
         "claims": [
-          "mge_origin",
+          "defining_markers",
           "lhx6_positive",
+          "mge_origin",
           "satb1_positive",
           "sox6_positive"
         ],
@@ -729,10 +762,11 @@
         "text": "We observed these typical features of OLM interneurons in both Htr3aCre‐OLM and SstCre‐OLM cells (sag potential: 0.51 ± 0.02 vs. 0.47± 0.03 mV; frequency adaptation ratio: 0.52 ± 0.03 vs. 0.43 ± 0.04; maximum AP firing: 53.2 ± 4.0 Hz vs. 62.2 ± 3.5 Hz; and RMP: −62.4 ± 1.2 vs. −63.4 ± 1.7, respectively).",
         "section": "Results 3.2",
         "claims": [
-          "cell_identity_ephys_sag",
           "cell_identity_ephys_adaptation",
           "cell_identity_ephys_firing_rate",
-          "cell_identity_ephys_rmp"
+          "cell_identity_ephys_rmp",
+          "cell_identity_ephys_sag",
+          "electrophysiology_class"
         ],
         "source_method": "primary",
         "status": "verified",
@@ -804,10 +838,12 @@
         "text": "oriens-lacunosum moleculare (O-LM) interneurons, with their somata and dendrites located in stratum oriens and their axonal projections in stratum radiatum and lacunosum moleculare, display fast nicotinergic excitation in response to cholinergic input from the medial septum (Leão et al., 2012). The excitation of this interneuron sub-type is thought to result in a strong inhibition of distal pyramidal neuron dendritic tufts located in stratum lacunosum moleculare, which counteracts the excitation from the entorhinal cortex conveyed via the temporoammonic pathway (Fuhrmann et al., 2015)(Leão et al., 2012)",
         "section": "Projection Patterns and Connectivity",
         "claims": [
-          "soma_dendrites_so",
+          "anatomical_location",
           "axon_radiatum_slm",
+          "function_inhibit_ec_input",
+          "morphology_notes",
           "nicotinergic_excitation",
-          "function_inhibit_ec_input"
+          "soma_dendrites_so"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -818,8 +854,9 @@
         "section": "Projection Patterns and Connectivity",
         "claims": [
           "cholinergic_excitation",
-          "sst_putative_olm",
-          "fear_association"
+          "electrophysiology_class",
+          "fear_association",
+          "sst_putative_olm"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -846,10 +883,12 @@
         "text": "In CA1, OLM cells have somata and dendrites in the stratum oriens/alveus, and receive inputs from local pyramidal cells 32, bistratified cells 32, interneuron specific 3 cells 33, and long-range projecting GABAergic inputs from medial septum 33, among others. They have axons projecting to the stratum lacunosum moleculare where they synapse onto the distal dendrites of pyramidal cells, which allows them to gate the flow of sensory information from entorhinal cortex 32,34",
         "section": "Projection Patterns and Connectivity",
         "claims": [
-          "soma_location_so_alveus",
-          "connectivity_inputs",
+          "anatomical_location",
           "axon_slm",
-          "function_gate_entorhinal"
+          "connectivity_inputs",
+          "function_gate_entorhinal",
+          "morphology_notes",
+          "soma_location_so_alveus"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -880,6 +919,7 @@
         "text": "The oriens-lacunosum/moleculare (OLM) interneuron operates as a \"gate\" that controls incoming sensory and ongoing contextual information in the CA1 of the hippocampus",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
           "function_gate_ca1"
         ],
         "source_method": "asta_report",
@@ -890,6 +930,7 @@
         "text": "OLM cells fire phase-locked to the prominent hippocampal theta rhythms",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
           "ephys_theta_phase_locked"
         ],
         "source_method": "asta_report",
@@ -901,6 +942,7 @@
         "section": "Electrophysiological Properties and Function",
         "claims": [
           "morphology_horizontal_body_dendrites",
+          "morphology_notes",
           "morphology_perpendicular_axon_slm"
         ],
         "source_method": "asta_report",
@@ -932,8 +974,9 @@
         "text": "this population had considerable hyperpolarization-induced sag, which, when combined with their higher input resistance, is considered a hallmark feature of OLM cells (Maccaferri and Lacaille, 2003).",
         "section": "Electrophysiological Properties and Function",
         "claims": [
-          "ephys_sag_hallmark",
-          "ephys_high_input_resistance"
+          "electrophysiology_class",
+          "ephys_high_input_resistance",
+          "ephys_sag_hallmark"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -962,9 +1005,10 @@
         "text": "CA1 oriens-lacunosum moleculare (O-LM) interneurons innervate only the apical tuft of pyramidal cells (PCs) in stratum lacunosum-moleculare (SLM) and receive inputs only in stratum oriens (SO) (McBain et al., 1994)(Losonczy et al., 2002)(Zemankovics et al., 2010).",
         "section": "Projection Patterns and Connectivity",
         "claims": [
+          "anatomical_location",
           "axon_slm_only",
-          "dendrites_so_only",
-          "connectivity_target_pyramidal_apical_tuft"
+          "connectivity_target_pyramidal_apical_tuft",
+          "dendrites_so_only"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -993,6 +1037,7 @@
         "text": "The diversity reflected by >100 different neural cell types fundamentally contributes to brain function and a central idea is that neuronal identity can be inferred from genetic information. Recent large-scale transcriptomic assays seem to confirm this hypothesis, but a lack of morphological information has limited the identification of several known cell types. In this study, we used single-cell RNA-seq in morphologically identified parvalbumin interneurons (PV-INs), and studied their transcriptomic states in the morphological, physiological, and developmental domains. Overall, we find high transcriptomic similarity among PV-INs, with few genes showing divergent expression between morphologically different types. Furthermore, PV-INs show a uniform synaptic cell adhesion molecule (CAM) profile, suggesting that CAM expression in mature PV cells does not reflect wiring specificity after development. Together, our results suggest that while PV-INs differ in anatomy and in vivo activity, their continuous transcriptomic and homogenous biophysical landscapes are not predictive of these distinct identities. The relationship between gene expression and morphology to classify PV interneurons is unclear. Here, the authors show transcriptional continuity of morphologically distinct mouse hippocampal PV interneurons subtypes, combining single-cell RNA sequencing and electrophysiology.",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "defining_markers",
           "pv_transcriptomic_continuity"
         ],
         "source_method": "asta_report",
@@ -1021,15 +1066,33 @@
         "text": "OLM cells have a stereotyped morphology with dendrites extending perpendicular to pyramidal cell dendrites along the CA3-subicular axis and an axon that projects through the stratum pyramidale and radiatum until it profusely branches within stratum lacunosum moleculare (Lacaille et al., 1987)(Lacaille et al., 1990)(Maccaferri, 2005)(Maccaferri et al., 1996). Through this anatomical arrangement, OLM cells coordinate a canonical feedback inhibitory circuit where CA1 neurons activate OLM cells which in turn inhibit the distal dendrites of CA1 pyramidal cells to gate incoming information from the entorhinal cortex via the temporoammonic pathway (Blasco-Ibáñez et al., 1995)(Klausberger, 2009)(Leão et al., 2012)(Maccaferri et al., 1995)(Mülleet al., 2014). OLM cells exhibit tonic or mildly adapting firings characteristics and display sag and rebound responses during the onset and offset of hyperpolarization due to the expression of h-channels (Lupica et al., 2001)(Maccaferri et al., 1996).",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_stereotyped",
-          "ephys_tonic_adapting",
+          "electrophysiology_class",
           "ephys_sag_rebound",
+          "ephys_tonic_adapting",
+          "feedback_inhibition_circuit",
           "hcn_expression",
-          "feedback_inhibition_circuit"
+          "morphology_notes",
+          "morphology_stereotyped"
         ],
         "source_method": "asta_report",
         "status": "validated",
         "added_by": "20260324_hippocampus_report_ingest"
+      },
+      "234597703_00ffa136": {
+        "text": "The elusive classification of the vast number of GABAergic interneuron subtypes has captivated neuroscientists for decades",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "234597703_237003be": {
+        "text": "Confident classification of the subtype of GABAergic interneurons is necessary in order to understand the particular role an interneuron plays in the local circuitry. Dissection of the functional roles of different inhibitory neurons has been historically difficult. Many studies utilize a three-part approach that entail describing the morphological, biochemical, and physiological properties (Ascoli et al., 2008)(DeFelipe et al., 2013). Within the hippocampus, the CA1 region alone contains at least 28 previously described types of inhibitory interneurons located throughout all layers: stratum oriens, stratum pyramidale, stratum radiatum, and stratum lacunosummoleculare (Klausberger & Somogyi, 2008).",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
       }
     }
   },
@@ -1051,6 +1114,7 @@
         "text": "O-LM interneurons are of great interest since they evidently provide a theta-frequency patterned output to distal dendritic segments of pyramidal cells (Gloveli et al., 2005) that receive specific sensory information (reviewed in Vinogradova (Vinogradova, 1995)) essential for the activity of place cells (Losonczy et al., 2002)",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
           "ephys_theta_output",
           "function_place_cells"
         ],
@@ -1062,6 +1126,7 @@
         "text": "oriens-lacunosum moleculare (O-LM) interneurons because they are known to fire intermittently at the theta frequency (Buzsáki, 2002)(Klausberger et al., 2003)",
         "section": "Electrophysiological Properties and Function",
         "claims": [
+          "electrophysiology_class",
           "ephys_theta_firing"
         ],
         "source_method": "asta_report",
@@ -1103,10 +1168,12 @@
         "text": "OLM cells were first described by Santiago Ramon y Cajal in 1893 as large somata neurons located in the hippocampal stratum oriens and sending prominent axonal projections to stratum lacunosum moleculare, thus the name OLM.",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_large_somata",
-          "soma_location_so",
+          "anatomical_location",
           "axon_slm",
-          "historical_cajal"
+          "historical_cajal",
+          "morphology_large_somata",
+          "morphology_notes",
+          "soma_location_so"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1135,6 +1202,7 @@
         "text": "the expression of molecular markers PV, SST, or NPY can overlap in morphologically-defined oriens-lacunosum moleculare (OLM) interneurons",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "defining_markers",
           "marker_overlap_pv_sst_npy"
         ],
         "source_method": "asta_report",
@@ -1167,8 +1235,10 @@
         "text": "SST O-LM cells projecting to the distal apical dendrites in the stratum lacunosum-moleculare",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
-          "sst_positive",
-          "axon_slm"
+          "anatomical_location",
+          "axon_slm",
+          "defining_markers",
+          "sst_positive"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1178,6 +1248,7 @@
         "text": "We observed SST-positive axons crossing the stratum radiatum in a perpendicular orientation and ramifying at the level of the stratum lacunosum-moleculare, both in the 4.1B KO mice (Figure 2J) as in the wild-type (Figure 2I). These particular SST axons are likely O-LM axons.",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "morphology_notes",
           "sst_axon_perpendicular_slm"
         ],
         "source_method": "asta_report",
@@ -1218,9 +1289,11 @@
         "text": "These neurons have large somata with axons extending to the stratum lacunosum moleculare (Mülleet al., 2014)(Cajal, 0), and horizontal dendrites projecting through the stratum oriens as well as to further layers of the CA1 region (Freund et al., 1998). Indeed, we found that most TRPV1-expressing neurons in the stratum oriens also expressed somatostatin",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_large_somata",
           "axon_slm",
+          "defining_markers",
           "morphology_horizontal_dendrites",
+          "morphology_large_somata",
+          "morphology_notes",
           "trpv1_sst_coexpression"
         ],
         "source_method": "asta_report",
@@ -1231,6 +1304,7 @@
         "text": "TRPV1 is expressed in oriens-lacunosum-moleculare neurons",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "defining_markers",
           "trpv1_expression_olm"
         ],
         "source_method": "asta_report",
@@ -1241,6 +1315,7 @@
         "text": "these markers co-localized in a sub-population of presumptive OLM cells in the stratum oriens",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "defining_markers",
           "trpv1_sst_colocalization_subpopulation"
         ],
         "source_method": "asta_report",
@@ -1261,6 +1336,7 @@
         "text": "indicating that these neurons correspond to OLM neurons in the hippocampus. Most TRPV1-positive neurons were also positive for the inhibitory interneuron marker GAD65",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "defining_markers",
           "gad65_positive"
         ],
         "source_method": "asta_report",
@@ -1289,6 +1365,7 @@
         "text": "Understanding the intricate mechanisms underlying memory formation and retention relies on unraveling how the hippocampus, a structure fundamental for memory acquisition, is organized. Within the complex hippocampal network, interneurons play a crucial role in orchestrating memory processes. Among these interneurons, Oriens-Lacunosum Moleculare (OLM) cells emerge as key regulators, governing the flow of information to CA1 pyramidal cells. In this review, we explore OLM interneurons in detail, describing their mechanisms and effects on memory processing, particularly in spatial and contextual memory tasks. Our aim is to provide a detailed understanding of how OLM interneurons contribute to the dynamic landscape of memory formation and retrieval.",
         "section": "Transcriptomic Classification and Heterogeneity",
         "claims": [
+          "electrophysiology_class",
           "function_memory_review",
           "olm_key_regulators"
         ],
@@ -1319,7 +1396,8 @@
         "text": "Oriens lacunosum-moleculare (OLM) interneurons, identified by the Chrna2 gene",
         "section": "Projection Patterns and Connectivity",
         "claims": [
-          "chrna2_marker"
+          "chrna2_marker",
+          "defining_markers"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1330,8 +1408,10 @@
         "section": "Projection Patterns and Connectivity",
         "claims": [
           "chrna2_marker",
-          "sst_positive",
+          "defining_markers",
+          "neuropeptides",
           "pnoc_coexpression",
+          "sst_positive",
           "three_subclusters"
         ],
         "source_method": "asta_report",
@@ -1342,7 +1422,8 @@
         "text": "OLM α2cells receive differential innervation across the dorsal, intermediate, and ventral hippocampus",
         "section": "Projection Patterns and Connectivity",
         "claims": [
-          "dorsoventral_differential_innervation"
+          "dorsoventral_differential_innervation",
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1353,6 +1434,7 @@
         "section": "Projection Patterns and Connectivity",
         "claims": [
           "connectivity_dorsoventral_inputs",
+          "morphology_notes",
           "subiculum_raphe_input"
         ],
         "source_method": "asta_report",
@@ -1382,14 +1464,18 @@
         "text": "OLM cells have a distinct morphology and circuit position. Although canonically identified by the expression of somatostatin (SST), the OLM cell class is molecularly heterogeneous and contains a functionally distinct subpopulation that co-expresses PV (Fernández et al., 2024)(Que et al., 2021). This distinction is critical, as SST-positive OLM cells are primarily associated with theta rhythms, whereas the PV-positive subset can fire in the gamma range, suggesting a different role in network coordination. OLM cell bodies reside in the outermost layer of the hippocampus (stratum oriens), and they project a long axon up to the innermost layer (stratum lacunosum-moleculare, SLM), the most distal dendritic layer of pyramidal cells (Leão et al., 2012). This is precisely where the main excitatory input from the entorhinal cortex arrives via the perforant path. By selectively inhibiting these distal dendrites, OLM cells act as gatekeepers, controlling the flow of cortical information into the hippocampus and modulating dendritic integration and plasticity (Leão et al., 2012). They are critically involved in the generation of and phase-locking to network theta oscillations (4-12 Hz) (Amilhon et al., 2015).",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_circuit_position",
-          "sst_positive",
-          "pv_subpopulation",
-          "heterogeneity_sst_pv",
-          "ephys_theta_vs_gamma",
-          "soma_location_so",
+          "anatomical_location",
           "axon_slm",
-          "function_gate_entorhinal"
+          "defining_markers",
+          "electrophysiology_class",
+          "ephys_theta_vs_gamma",
+          "function_gate_entorhinal",
+          "heterogeneity_sst_pv",
+          "morphology_circuit_position",
+          "morphology_notes",
+          "pv_subpopulation",
+          "soma_location_so",
+          "sst_positive"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1419,10 +1505,11 @@
         "text": "oriens-lacunosum-moleculare (OLM) cells also had both the cell body and dendritic tree in the stratum oriens, but their horizontally running dendrites were often densely decorated with long spines. Their axon frequently originated from a proximal dendrite, and after ramification the main axon without boutons could be followed into the stratum lacunosum-moleculare. In this layer the axon ramified extensively bearing heavily packed varicosities. Some axon collaterals with boutons were also observed in the stratum oriens.",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_spiny_dendrites",
-          "morphology_horizontal_dendrites_oriens",
+          "axon_collaterals_oriens",
           "axon_slm_varicosities",
-          "axon_collaterals_oriens"
+          "morphology_horizontal_dendrites_oriens",
+          "morphology_notes",
+          "morphology_spiny_dendrites"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1452,7 +1539,8 @@
         "text": "The nicotinic acetylcholine receptor alpha2 subunit (Chrna2) is a specific marker for oriens lacunosum-moleculare (OLM) interneurons in the dorsal CA1 region of the hippocampus",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "chrna2_specific_marker_olm"
+          "chrna2_specific_marker_olm",
+          "defining_markers"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1462,10 +1550,12 @@
         "text": "These CA1 GABAergic, somatostatin (Som)-expressing interneurons are named for their distinctive morphology: their soma and dendritic trees are located in the stratum oriens and their axons extend directly out to arborize in the stratum lacunosum-moleculare (SLM; Cajal, 1911;(McBain et al., 1994)(Sik et al., 1995)(Maccaferri et al., 2000)(Losonczy et al., 2002)(Leão et al., 2012)",
         "section": "Anatomical Location and Morphology",
         "claims": [
+          "anatomical_location",
+          "axon_slm",
+          "defining_markers",
           "gabaergic",
-          "sst_positive",
           "soma_dendrites_so",
-          "axon_slm"
+          "sst_positive"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1485,9 +1575,11 @@
         "text": "We found that subiculum and CA1 dorsal Chrna2 cells similarly expressed the marker somatostatin and had comparable membrane and firing properties. The somas of Chrna2 cells in both regions were found in the deepest layer with axons projecting superficially. However, subiculum Chrna2 cells displayed more extensive projections with dendrites which occupied a significantly larger area than in CA1. The post-synaptic responses elicited by Chrna2 cells in pyramidal cells of both regions revealed comparable inhibitory responses elicited by GABAA receptors and, interestingly, GABAB receptor mediated components.",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "sst_positive",
+          "defining_markers",
+          "electrophysiology_class",
           "ephys_comparable_properties",
-          "gabaa_gabab_inhibition"
+          "gabaa_gabab_inhibition",
+          "sst_positive"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1515,9 +1607,11 @@
         "text": "oriens-lacunosum/moleculare (O-LM) cell located in the CA1 region plays an important role in information flow, neuronal rhythms, and synaptic plasticity (Bartos et al., 2011)(Leão et al., 2012)(Perez et al., 2001)(Matt et al., 2010). O-LM cells possess a distinct morphology. Their somata and dendrites are located in the stratum oriens layer. In contrast, their dense axonal arborizations project to the lacunosum/moleculare layer, synapsing onto distal dendrites of pyramidal cells, where they are thought to influence the efficacy of perforant path input (Sik et al., 1995)[18]. O-LM cells have a variety of voltage-gated ion channels across their somatodendritic and axonal compartments. In particular, one hallmark feature of O-LM cells is that they exhibit a \"sag\" response to hyperpolarizing current steps, which indicates the presence of hyperpolarization-activated cation currents or I h (Maccaferri et al., 1996). I h contributes to the spontaneous firing of O-LM cells allowing them to play a pacemaker role, and models have suggested how they could contribute to the generation of population theta activities",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_so_dendrites_slm_axon",
+          "electrophysiology_class",
           "ephys_sag_ih",
-          "function_theta_pacemaker"
+          "function_theta_pacemaker",
+          "morphology_notes",
+          "morphology_so_dendrites_slm_axon"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1547,9 +1641,11 @@
         "text": "oriens-lacunosum moleculare (O-LM) cells (these SOM+ cells project to the distal dendrites in the stratum lacunosum-moleculare though their somata are located in the stratum oriens)",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
-          "sst_positive",
+          "anatomical_location",
+          "axon_slm",
+          "defining_markers",
           "soma_location_so",
-          "axon_slm"
+          "sst_positive"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1583,8 +1679,9 @@
         "text": "According to soma location, dendritic distribution and molecular composition the CA1-DG back-projection neuron ZsB49b is similar to most long-range projecting GABAergic neuron types and O-LM cells. However, the dense axonal output of ZsB49b to strata oriens, lacunosum-moleculare and the DG molecular layer makes it different from any previously documented GABAergic cell",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
-          "morphology_similar_olm",
-          "backprojection_distinction"
+          "backprojection_distinction",
+          "morphology_notes",
+          "morphology_similar_olm"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1594,7 +1691,8 @@
         "text": "We found strata oriens, lacunosum moleculare and moleculare of DG to be most heavily innervated by the neuron when quantified as total axonal length and total number of varicosities per layer (Fig. 1D), in contrast to strata radiatum and pyramidale, which had very few boutons",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
-          "axon_distribution_oriens_slm_dg"
+          "axon_distribution_oriens_slm_dg",
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1615,6 +1713,7 @@
         "text": "the lack of a long-range projection axon and the dentate-innervating axonal collaterals clearly differentiate it from the former and latter cells, respectively.",
         "section": "Molecular Markers and Gene Expression",
         "claims": [
+          "morphology_notes",
           "olm_distinction_no_long_range"
         ],
         "source_method": "asta_report",
@@ -1734,6 +1833,7 @@
         "text": "Classical oriens lacunosum-moleculare (O-LM) cells (Lorente de Nó, 1934;(McBain et al., 1994)Sik et al., 1995) are likely to be the major source of the reorganized fibers, based on the exuberant ChR2-eYFP-labeled axonal plexus in s. lacunosum-moleculare in normal and control mice",
         "section": "Projection Patterns and Connectivity",
         "claims": [
+          "morphology_notes",
           "olm_major_source_slm_axons"
         ],
         "source_method": "asta_report",
@@ -1744,7 +1844,8 @@
         "text": "A remarkable feature of O-LM and other SOM-expressing neurons that project to s. lacunosum-moleculare of CA1 is the sharp restriction of their dense axonal plexus to this layer, without extension into the immediately adjacent dentate molecular layer (Klausberger, 2009)",
         "section": "Projection Patterns and Connectivity",
         "claims": [
-          "axon_restriction_slm_no_dg"
+          "axon_restriction_slm_no_dg",
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1754,7 +1855,8 @@
         "text": "the laminar-specific distribution of these axons, characteristic of many classes of GABAergic interneurons in the hippocampal formation (Halasy and (Houser et al., 1990)Klausberger and Somogyi, 2008)",
         "section": "Projection Patterns and Connectivity",
         "claims": [
-          "laminar_specific_distribution"
+          "laminar_specific_distribution",
+          "morphology_notes"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1783,8 +1885,11 @@
         "text": "Type I interneurons are located at the oriens-alveus border and have large, horizontally located cell bodies. Their dendritic trees run horizontally, and their axons run vertically toward stratum lacunosum-moleculare (Fig. 2 A). These interneurons contain somatostatin (Fig. 2 B). Therefore, these interneurons appear identical to the horizontal O-LM cells (Freund et al., 1998)(Katona et al., 1999)",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "morphology_horizontal_soma_oa_border",
+          "anatomical_location",
           "axon_slm",
+          "defining_markers",
+          "morphology_horizontal_soma_oa_border",
+          "morphology_notes",
           "sst_positive"
         ],
         "source_method": "asta_report",
@@ -1795,6 +1900,8 @@
         "text": "Type I interneurons had large horizontally oriented cell somata located at the border of stratum oriens and the alveus, indicating that these cells were most likely identical with the previously described somatostatin-positive oriens-lacunosum moleculare (O-LM) cells (Freund et al., 1998). Reconstruction of type I interneurons revealed their horizontally oriented dendritic tree in stratum oriens and their axonal arborizations in stratum lacunosum-moleculare (n = 5) (Fig. 2 A), and in situ hybridization for somatostatin showed that four of four cells were indeed positive for somatostatin (Fig. 2 B)",
         "section": "Anatomical Location and Morphology",
         "claims": [
+          "defining_markers",
+          "morphology_notes",
           "morphology_reconstruction",
           "sst_positive"
         ],
@@ -1806,8 +1913,10 @@
         "text": "Type I interneurons responded with a large inward current of ≈ 224pA, were positive for somatostatin, and the majority expressed both mGluR1 and mGluR5",
         "section": "Anatomical Location and Morphology",
         "claims": [
-          "sst_positive",
-          "mglur1_mglur5_expression"
+          "defining_markers",
+          "electrophysiology_class",
+          "mglur1_mglur5_expression",
+          "sst_positive"
         ],
         "source_method": "asta_report",
         "status": "validated",
@@ -1817,11 +1926,20 @@
         "text": "Activation of group I mGluRs under current-clamp conditions increased spike frequency and resulted in rhythmic firing activity in type I and II, but not in type III and IV, interneurons.",
         "section": "Anatomical Location and Morphology",
         "claims": [
+          "electrophysiology_class",
           "ephys_mglur_spike_frequency"
         ],
         "source_method": "asta_report",
         "status": "validated",
         "added_by": "20260324_hippocampus_report_ingest"
+      },
+      "6652630_f9bef6e8": {
+        "text": "Four major interneuron subtypes could be distinguished based on the mGluR-mediated inward current induced by the application of 100 μmtrans-(1S,3R)-1-aminocyclopentane-1,3-dicarboxylic acid (ACPD) under voltage-clamp conditions and the action potential firing pattern under current-clamp conditions. Type I interneurons responded with a large inward current of \u0000224 pA, were positive for somatostatin, and the majority expressed both mGluR1 and mGluR5. Type II interneurons responded with an inward current of \u000080 pA, contained calbindin, and expressed mainly mGluR1. Type III interneurons responded with an inward current of \u000060 pA. These interneurons were fast-spiking, contained parvalbumin, and expressed mainly mGluR5. Type IV interneurons did not respond with an inward current upon application of ACPD, yet they expressed group I mGluRs.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
       }
     }
   },
@@ -1853,10 +1971,12 @@
         "text": "The vast diversity of GABAergic interneurons is believed to endow hippocampal microcircuits with the required flexibility for memory encoding and retrieval. However, dissection of the functional roles of defined interneuron types has been hampered by the lack of cell-specific tools. We identified a precise molecular marker for a population of hippocampal GABAergic interneurons known as oriens lacunosum-moleculare (OLM) cells. By combining transgenic mice and optogenetic tools, we found that OLM cells are important for gating the information flow in CA1, facilitating the transmission of intrahippocampal information (from CA3) while reducing the influence of extrahippocampal inputs (from the entorhinal cortex). Furthermore, we found that OLM cells were interconnected by gap junctions, received direct cholinergic inputs from subcortical afferents and accounted for the effect of nicotine on synaptic plasticity of the Schaffer collateral pathway. Our results suggest that acetylcholine acting through OLM cells can control the mnemonic processes executed by the hippocampus.",
         "section": "Projection Patterns and Connectivity",
         "claims": [
+          "cholinergic_input",
           "chrna2_marker",
+          "defining_markers",
+          "electrophysiology_class",
           "function_gate_ca3_vs_ec",
           "gap_junctions",
-          "cholinergic_input",
           "nicotine_plasticity"
         ],
         "source_method": "asta_report",
@@ -1884,13 +2004,1851 @@
         "text": "In the CA1 region of the hippocampus pyramidal neurons and GABAergic interneurons form local microcircuits. CA1 interneurons are a diverse group consisting of many subtypes, some of which provide compartment-specific inhibition specifically onto pyramidal neuron dendrites. In fact, the majority of inhibitory synapses on pyramidal neurons is found on their dendrites. The specific role of a dendrite-innervating interneuron subtype is primarily determined by its innervation pattern on the distinct dendritic domains of pyramidal neurons. The efficacy of dendritic inhibition in reducing dendritic excitation depends on the relative timing and location of the activated excitatory and inhibitory synapses. In vivo, synaptic properties such as short-term plasticity and neuro-modulation by the basal forebrain, govern the degree of inhibition in distinct dendritic domains in a dynamic, behavior dependent manner, specifically during network oscillation such as the theta rhythm. In this review we focus on two subtypes of dendrite-innervating interneurons: the oriens-lacunosum moleculare (O-LM) interneuron and the bistratified interneuron. Their molecular marker profile, morphology, and function in vivo and in vitro are well studied. We strive to integrate this diverse information from the cellular to the network level, and to provide insight into how the different characteristics of O-LM and bistratified interneurons affect dendritic excitability, network activity, and behavior.",
         "section": "Projection Patterns and Connectivity",
         "claims": [
-          "review_olm_bistratified",
           "dendritic_inhibition",
-          "morphology_marker_function"
+          "morphology_marker_function",
+          "morphology_notes",
+          "review_olm_bistratified"
         ],
         "source_method": "asta_report",
         "status": "validated",
         "added_by": "20260324_hippocampus_report_ingest"
+      }
+    }
+  },
+  "195584607": {
+    "corpus_id": "195584607",
+    "author_keys": [
+      "Contreras et al., 2019"
+    ],
+    "title": "Molecular Specialization of GABAergic Synapses on the Soma and Axon in Cortical and Hippocampal Circuit Function and Dysfunction",
+    "year": 2019,
+    "authors": [
+      "April Contreras",
+      "Dustin J. Hines",
+      "R. Hines"
+    ],
+    "pmid": "31297048",
+    "doi": "10.3389/fnmol.2019.00154",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "195584607_e619562b": {
+        "text": "Interneurons can be classified by their morphology, connectivity, firing pattern, and gene expression pattern. Based on morphology, 16 or more types of interneuron have been distinguished in the hippocampus (Cajal, 1893;Lorente and De Nó, 1934;(Parra et al., 1998) while transcriptomic cell typing has identified 23 interneuron types in the cortex (Tasic et al., 2016)",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "195584607_52bbaa0f": {
+        "text": "the majority of interneurons in these regions express either the neuropeptide cholecystokinin or the calcium binding protein parvalbumin (CCK; PV; (Whissell et al., 2015).",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "210332751": {
+    "corpus_id": "210332751",
+    "author_keys": [
+      "Maynard et al., 2020"
+    ],
+    "title": "TrkB Signaling Influences Gene Expression in Cortistatin-Expressing Interneurons",
+    "year": 2020,
+    "authors": [
+      "K. Maynard",
+      "Alisha S. Kardian",
+      "Julia L. Hill",
+      "Yishan Mai",
+      "B. Barry",
+      "Henry L. Hallock",
+      "A. Jaffe",
+      "Keri Martinowich"
+    ],
+    "pmid": "31941661",
+    "doi": "10.1523/eneuro.0310-19.2019",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "210332751_baa80ff1": {
+        "text": "At least 26 different types of GABAergic interneurons have been identified in the hippocampus (Somogyi et al., 2004), and perhaps more in the cerebral cortex (Myers et al., 2007)(Habib et al., 2017). Differences in firing properties, connectivity patterns, and molecular expression profiles are hypothesized to contribute to nonoverlapping functions of the respective classes.",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "5995257": {
+    "corpus_id": "5995257",
+    "author_keys": [
+      "DeFelipe et al., 2013"
+    ],
+    "title": "New insights into the classification and nomenclature of cortical GABAergic interneurons",
+    "year": 2013,
+    "authors": [
+      "J. DeFelipe",
+      "Pedro L. López-Cruz",
+      "Ruth Benavides-Piccione",
+      "C. Bielza",
+      "P. Larrañaga",
+      "S. Anderson",
+      "A. Burkhalter",
+      "B. Cauli",
+      "A. Fairén",
+      "D. Feldmeyer",
+      "G. Fishell",
+      "D. Fitzpatrick",
+      "T. Freund",
+      "G. González-Burgos",
+      "S. Hestrin",
+      "Sean L. Hill",
+      "P. Hof",
+      "Josh Huang",
+      "E. Jones",
+      "Y. Kawaguchi",
+      "Z. Kisvárday",
+      "Y. Kubota",
+      "D. A. Lewis",
+      "O. Marín",
+      "H. Markram",
+      "C. McBain",
+      "H. S. Meyer",
+      "H. Monyer",
+      "S. Nelson",
+      "K. Rockland",
+      "J. Rossier",
+      "J. Rubenstein",
+      "B. Rudy",
+      "M. Scanziani",
+      "G. Shepherd",
+      "C. Sherwood",
+      "J. Staiger",
+      "G. Tamás",
+      "A. Thomson",
+      "Yun Wang",
+      "R. Yuste",
+      "G. Ascoli"
+    ],
+    "pmid": "23385869",
+    "doi": "10.1038/nrn3444",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "5995257_26becb54": {
+        "text": "A systematic classification and accepted nomenclature of neuron types is much needed but is currently lacking. This article describes a possible taxonomical solution for classifying GABAergic interneurons of the cerebral cortex based on a novel, web- based interactive system that allows experts to classify neurons with pre-determined criteria. Using Bayesian analysis and clustering algorithms on the resulting data, we investigated the suitability of several anatomical terms and neuron names for cortical GABAergic interneurons. Moreover, we show that supervised classification models could automatically categorize interneurons in agreement with experts' assignments. These results demonstrate a practical and objective approach to the naming, characterization and classification of neurons based on community consensus.",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "10835885": {
+    "corpus_id": "10835885",
+    "author_keys": [
+      "Huang et al., 2014"
+    ],
+    "title": "Cell type-specific expression of Eps8 in the mouse hippocampus",
+    "year": 2014,
+    "authors": [
+      "Chiung-Chun Huang",
+      "Yun-Shen Lin",
+      "Cheng-Che Lee",
+      "K. Hsu"
+    ],
+    "pmid": "24533597",
+    "doi": "10.1186/1471-2202-15-26",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "10835885_b151eecf": {
+        "text": "With respect to the calcium-binding proteins and peptides that characterize different subpopulations of GABAergic interneurons [13](Gulyás et al., 1992)(Freund et al., 1998), we found substantial co-expression of Eps8 and calbindin, but not parvalbumin or calretinin. We also found that Eps8 is present in a subset of cholecystokinin-expressing interneurons. Taken these findings into consideration, our results suggest that Eps8expressing cells in hippocampal area CA1 predominantly belong to the calbindin-and cholecystokinin-expressing subpopulations of GABAergic interneurons. In addition to using molecular expression profiles, GABAergic interneurons can be distinguished on the basis of their morphology, electrophysiological features, and innervations of distinct subcellular domains of pyramidal cells (DeFelipe, 1997)(Somogyi et al., 1998). So far, more than 20 different types of interneurons have been recognized in the hippocampus and neocortex (Bartolini et al., 2013). It has been reported previously that CA1 pyramidal cells are supported by at least 16 distinct types of GABAergic interneurons, each having highly stereotypic laminar arrangements and functions (Somogyi et al., 2005)(Klausberger et al., 2008).",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "16859318": {
+    "corpus_id": "16859318",
+    "author_keys": [
+      "Whissell et al., 2015"
+    ],
+    "title": "Comparative density of CCK- and PV-GABA cells within the cortex and hippocampus",
+    "year": 2015,
+    "authors": [
+      "P. Whissell",
+      "Janine D. Cajanding",
+      "N. Fogel",
+      "J. C. Kim"
+    ],
+    "pmid": "26441554",
+    "doi": "10.3389/fnana.2015.00124",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "16859318_009e9f36": {
+        "text": "Cholecystokinin (CCK)- and parvalbumin (PV)-expressing neurons constitute the two major populations of perisomatic GABAergic neurons in the cortex and the hippocampus. As CCK- and PV-GABA neurons differ in an array of morphological, biochemical and electrophysiological features, it has been proposed that they form distinct inhibitory ensembles which differentially contribute to network oscillations and behavior. However, the relationship and balance between CCK- and PV-GABA neurons in the inhibitory networks of the brain is currently unclear as the distribution of these cells has never been compared on a large scale. Here, we systemically investigated the distribution of CCK- and PV-GABA cells across a wide number of discrete forebrain regions using an intersectional genetic approach. Our analysis revealed several novel trends in the distribution of these cells. While PV-GABA cells were more abundant overall, CCK-GABA cells outnumbered PV-GABA cells in several subregions of the hippocampus, medial prefrontal cortex and ventrolateral temporal cortex. Interestingly, CCK-GABA cells were relatively more abundant in secondary/ association areas of the cortex (V2, S2, M2, and AudD/AudV) than they were in corresponding primary areas (V1, S1, M1, and Aud1). The reverse trend was observed for PV-GABA cells. Our findings suggest that the balance between CCK- and PV-GABA cells in a given cortical region is related to the type of processing that area performs; inhibitory networks in the secondary cortex tend to favor the inclusion of CCK-GABA cells more than networks in the primary cortex. The intersectional genetic labeling approach employed in the current study expands upon the ability to study molecularly defined subsets of GABAergic neurons. This technique can be applied to the investigation of neuropathologies which involve disruptions to the GABAergic system, including schizophrenia, stress, maternal immune activation and autism.",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [
+          "defining_markers",
+          "nt_type"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "221276443": {
+    "corpus_id": "221276443",
+    "author_keys": [
+      "Ekins et al., 2020"
+    ],
+    "title": "Emergence of non-canonical parvalbumin-containing interneurons in hippocampus of a murine model of type I lissencephaly",
+    "year": 2020,
+    "authors": [
+      "Tyler G. Ekins",
+      "Vivek Mahadevan",
+      "Yajun Zhang",
+      "James A. D'Amour",
+      "Timothy J. Petros",
+      "C. McBain"
+    ],
+    "pmid": "33150866",
+    "doi": "10.7554/eLife.62373",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "221276443_aa7b6eab": {
+        "text": "Inhibitory interneurons are classified based on a combination of their morphological, biochemical, intrinsic electrical, and connectivity properties (Lim et al., 2018). Advances in single-cell RNA sequencing have revealed enormous diversity in interneuron genomics, and current efforts attempt to correlate transcriptomic data sets with previously identified interneuron subtypes (Tasic et al., 2018)Muñoz-Manchado et al., 2018;(Gouwens et al., 2019)Que and Lukacsovich, 2020). In CA1 hippocampus alone, inhibitory synaptic transmission is mediated by at least 15 different subtypes of GABAergic inhibitory interneurons . Three canonical interneuron subtypes express the calcium-binding protein parvalbumin (PV): basket-cells, axo-axonic cells, and bistratified cells",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "221276443_e917908b": {
+        "text": "WT PV+INTs consist of two physiological subtypes (80% fast-spiking (FS), 20% non-fast-spiking (NFS)) and four morphological subtypes (basket, axo-axonic, bistratified, radiatum-targeting).",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [
+          "electrophysiology_class",
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "38778375": {
+    "corpus_id": "38778375",
+    "author_keys": [
+      "Dannenberg et al., 2017"
+    ],
+    "title": "Modulation of Hippocampal Circuits by Muscarinic and Nicotinic Receptors",
+    "year": 2017,
+    "authors": [
+      "Holger Dannenberg",
+      "K. Young",
+      "Michael Hasselmo"
+    ],
+    "pmid": "29321728",
+    "doi": "10.3389/fncir.2017.00102",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "38778375_ef09b1f2": {
+        "text": "Interneurons display an immense functional, morphological and genetic diversity, as described in previous reviews of the classification of interneuron subtypes (McBain et al., 2001)(Somogyi et al., 2005)(Rudy et al., 2011)(Kepecs et al., 2014)",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "38778375_3d114c68": {
+        "text": "Distinct expression profiles of neuropeptides that relate to points of synaptic contact, morphological structure and intrinsic excitability (Freund et al., 1998)(Kepecs et al., 2014) distinguish interneurons",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "38778375_462ec931": {
+        "text": "Interneurons expressing the calcium binding protein parvalbumin (PV) make up approximately 40% of all GABAergic interneurons. However, this is a heterogeneous group of functionally distinct interneuron subtypes. For example, in the hippocampus alone, there are at least three functionally and morphologically distinct populations of PV + expressing interneurons, namely basket, axo-axonic and bistratified cells. Fast spiking interneurons in the hippocampus and neocortex are often PV + positive and target the soma of pyramidal cells.",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [
+          "defining_markers",
+          "electrophysiology_class"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "53102255": {
+    "corpus_id": "53102255",
+    "author_keys": [
+      "Lim et al., 2018"
+    ],
+    "title": "Development and Functional Diversification of Cortical Interneurons.",
+    "year": 2018,
+    "authors": [
+      "L. Lim",
+      "Da Mi",
+      "Alfredo Llorca",
+      "O. Marín"
+    ],
+    "pmid": "30359598",
+    "doi": "10.1016/j.neuron.2018.10.009",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "53102255_88d7c143": {
+        "text": "In the cerebral cortex, GABAergic interneurons have evolved as a highly heterogeneous collection of cell types that are characterized by their unique spatial and temporal capabilities to influence neuronal circuits. Current estimates suggest that up to 50 different types of GABAergic neurons may populate the cerebral cortex, all derived from progenitor cells in the subpallium, the ventral aspect of the embryonic telencephalon. In this review, we provide an overview of the mechanisms underlying the generation of the distinct types of interneurons and their integration in cortical circuits. Interneuron diversity seems to emerge through the implementation of cell-intrinsic genetic programs in progenitor cells, which unfold over a protracted period of time until interneurons acquire mature characteristics. The developmental trajectory of interneurons is also modulated by activity-dependent, non-cell- autonomous mechanisms that influence their ability to integrate in nascent circuits and sculpt their final distribution in the adult cerebral cortex.",
+        "section": "Classification Schemes and Methodological Approaches",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "10261984": {
+    "corpus_id": "10261984",
+    "author_keys": [
+      "Molgaard et al., 2014"
+    ],
+    "title": "Immunofluorescent visualization of mouse interneuron subtypes",
+    "year": 2014,
+    "authors": [
+      "Simon Mølgaard",
+      "Maj Ulrichsen",
+      "S. Boggild",
+      "Marie-Louise Holm",
+      "C. Vaegter",
+      "J. Nyengaard",
+      "Simon Glerup"
+    ],
+    "pmid": "25469233",
+    "doi": "10.12688/f1000research.5349.2",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "10261984_9b37df23": {
+        "text": "In the mammalian hippocampus, these are divided into 21 different subtypes of GABAergic interneurons based on their expression of different markers, morphology and their electrophysiological properties.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "13529065": {
+    "corpus_id": "13529065",
+    "author_keys": [
+      "Fasano et al., 2017"
+    ],
+    "title": "Regulation of the Hippocampal Network by VGLUT3-Positive CCK- GABAergic Basket Cells",
+    "year": 2017,
+    "authors": [
+      "C. Fasano",
+      "J. Rocchetti",
+      "K. Pietrajtis",
+      "J. Zander",
+      "F. Manseau",
+      "D. Sakae",
+      "Maya Marcus-Sells",
+      "L. Ramet",
+      "Lydie J. Morel",
+      "D. Carrel",
+      "S. Dumas",
+      "S. Bolte",
+      "V. Bernard",
+      "Érika Vigneault",
+      "R. Goutagny",
+      "G. Ahnert-Hilger",
+      "B. Giros",
+      "S. Daumas",
+      "Sylvain Williams",
+      "S. El Mestikawy"
+    ],
+    "pmid": "28559797",
+    "doi": "10.3389/fncel.2017.00140",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "13529065_8d53bb0b": {
+        "text": "different classes of interneurons interact with specific cellular domains of pyramidal cells to modulate cell firing, plasticity and network activity. These interneurons form a complex group composed of up to 21 types of cells displaying a variety of molecular expression profiles and distinct morphological and physiological features (Somogyi et al., 2003)(Klausberger et al., 2008). Basket cells are interneurons that form a dense plexus of inhibitory terminals on the soma of pyramidal cells. Two types of basket cells have been identified: the classic parvalbumin-positive (PV) fast-firing interneurons and the regular-firing cholecystokininexpressing (CCK) interneurons.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "246866323": {
+    "corpus_id": "246866323",
+    "author_keys": [
+      "Degro et al., 2022"
+    ],
+    "title": "Interneuron diversity in the rat dentate gyrus: An unbiased in vitro classification",
+    "year": 2022,
+    "authors": [
+      "C. Degro",
+      "Felix Bolduan",
+      "I. Vida",
+      "Sam A. Booker"
+    ],
+    "pmid": "35171512",
+    "doi": "10.1002/hipo.23408",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "246866323_5a8b1212": {
+        "text": "Information processing in cortical circuits, including the hippocampus, relies on the dynamic control of neuronal activity by GABAergic interneurons (INs). INs form a heterogenous population with defined types displaying distinct morphological, molecular, and physiological characteristics. In the major input region of the hippocampus, the dentate gyrus (DG), a number of IN types have been described which provide synaptic inhibition to distinct compartments of excitatory principal cells (PrCs) and other INs",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "246866323_d99bf390": {
+        "text": "This analysis reveals that DG INs divide into at least 13 distinct morpho‐physiological types which reflect the complexity of the local IN network and serve as a basis for further network analyses.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "10540334": {
+    "corpus_id": "10540334",
+    "author_keys": [
+      "Rivera et al., 2014"
+    ],
+    "title": "Localization of the cannabinoid CB1 receptor and the 2-AG synthesizing (DAGLα) and degrading (MAGL, FAAH) enzymes in cells expressing the Ca2+-binding proteins calbindin, calretinin, and parvalbumin in the adult rat hippocampus",
+    "year": 2014,
+    "authors": [
+      "P. Rivera",
+      "Sergio Arrabal",
+      "M. Cifuentes",
+      "J. Grondona",
+      "M. Pérez-Martín",
+      "L. Rubio",
+      "Antonio Vargas",
+      "A. Serrano",
+      "F. Pavón",
+      "J. Suárez",
+      "F. Rodríguez de Fonseca"
+    ],
+    "pmid": "25018703",
+    "doi": "10.3389/fnana.2014.00056",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "10540334_bdfa426a": {
+        "text": "Parvalbumin + cells were specifically localized in the granular and polymorphic cell layers of the dentate gyrus and the strata oriens and pyramidale in CA1/3 fields of the rat hippocampus (Kosaka et al., 1987). They have been considered a subpopulation of GABAergic interneurons, including basket and axo-axonic cell types, which innervate the somata and proximal axons of pyramidal cells, respectively (Soriano et al., 1990)",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "anatomical_location",
+          "defining_markers"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "10540334_418c51dd": {
+        "text": "Most CB + 1 terminals surrounding the somata and proximal dendrites of pyramidal neurons were cholecystokinin + (CCK) GABAergic interneurons (basket cells) and, to a lower extent, calbindin D-28k + GABAergic interneurons (Katona et al., 1999) (Marsicano et al., 1999)(Tsou et al., 1999). However, parvalbumin + GABAergic interneuron terminals localized in pyramidal cell layers were negative for CB 1 (Katona et al., 1999)(Marsicano et al., 1999)",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "morphology_notes",
+          "negative_markers"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "10540334_b677036e": {
+        "text": "most fiber terminals containing CB 1 /CCK probably innervate both calbindin + pyramidal neurons (probably including calbindin + / FAAH + pyramidal neurons in CA1) and calretinin + and parvalbumin + interneurons localized in the principal layers of the hippocampus (Gulyás et al., 1991)(Marsicano et al., 1999). Moreover, parvalbumin + fiber terminals, which represent another GABAergic interneuron type, could specifically innervate FAAH + /calbindin − pyramidal neurons in CA3.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "19055431": {
+    "corpus_id": "19055431",
+    "author_keys": [
+      "Cserep et al., 2017"
+    ],
+    "title": "Mitochondrial Ultrastructure Is Coupled to Synaptic Performance at Axonal Release Sites",
+    "year": 2017,
+    "authors": [
+      "C. Csérép",
+      "Balázs Pósfai",
+      "A. D. Schwarcz",
+      "Á. Dénes"
+    ],
+    "pmid": "29383328",
+    "doi": "10.1523/ENEURO.0390-17.2018",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "19055431_b2536ef6": {
+        "text": "In the hippocampal CA1 area, the perisomatic GABAergic inputs of principal cells can be divided into two, morphologically and functionally well-characterized populations: the CB1R \u0000, regular-spiking interneurons show low level of synaptic activity, whereas the PV \u0000, fast-spiking interneurons are capable of performing exceptionally high synaptic activity. In fact, these GABAergic populations are the two well-known archetypes of the slow/modulatory, and the highly energized/fast \"clockwork\" type interneurons, respectively (Klausberger et al., 2005)Gulyás et al., 2006;(Klausberger et al., 2005). The average in vivo firing frequency of the CB1R \u0000 interneurons in the hippocampus is 2-10 Hz, whereas the PV \u0000 interneurons can fire bursts up to 150 Hz during ripples (Klausberger et al., 2005) (Lapray et al., 2012)",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "electrophysiology_class"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "19055431_5dd9a60d": {
+        "text": "54.5% of all GABAergic boutons on pyramidal cell somata were PV \u0000, 45% CB1R \u0000, and only 0.5% were double-negative (n \u0000 200 boutons in two mice)",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "857025": {
+    "corpus_id": "857025",
+    "author_keys": [
+      "Klausberger et al., 2005"
+    ],
+    "title": "Complementary Roles of Cholecystokinin- and Parvalbumin-Expressing GABAergic Neurons in Hippocampal Network Oscillations",
+    "year": 2005,
+    "authors": [
+      "T. Klausberger",
+      "L. Márton",
+      "Joseph O'Neill",
+      "J. Huck",
+      "Y. Dalezios",
+      "Pablo Fuentealba",
+      "Wai Yee Suen",
+      "E. Papp",
+      "T. Kaneko",
+      "Masahiko Watanabe",
+      "J. Csicsvari",
+      "P. Somogyi"
+    ],
+    "pmid": "16237182",
+    "doi": "10.1523/JNEUROSCI.3269-05.2005",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "857025_3ed72cbd": {
+        "text": "In the hippocampal CA1 area, a relatively homogenous population of pyramidal cells is accompanied by a diversity of GABAergic interneurons. Previously, we found that parvalbumin-expressing basket, axo-axonic, bistratified, and oriens-lacunosum moleculare cells, innervating different domains of pyramidal cells, have distinct firing patterns during network oscillations in vivo. A second family of interneurons, expressing cholecystokinin but not parvalbumin, is known to target the same domains of pyramidal cells as do the parvalbumin cells. To test the temporal activity of these independent and parallel GABAergic inputs, we recorded the precise spike timing of identified cholecystokinin interneurons during hippocampal network oscillations in anesthetized rats and determined their molecular expression profiles and synaptic targets. The cells were cannabinoid receptor type 1 immunopositive. Contrary to the stereotyped firing of parvalbumin interneurons, cholecystokinin-expressing basket and dendrite-innervating cells discharge, on average, with 1.7 ± 2.0 Hz during high-frequency ripple oscillations in an episode-dependent manner. During theta oscillations, cholecystokinin-expressing interneurons fire with 8.8 ± 3.3 Hz at a characteristic time on the ascending phase of theta waves (155 ± 81°), when place cells start firing in freely moving animals. The firing patterns of some interneurons recorded in drug-free behaving rats were similar to cholecystokinin cells in anesthetized animals. Our results demonstrate that cholecystokinin- and parvalbumin- expressing interneurons make different contributions to network oscillations and play distinct roles in different brain states. We suggest that the specific spike timing of cholecystokinin interneurons and their sensitivity to endocannabinoids might contribute to differentiate subgroups of pyramidal cells forming neuronal assemblies, whereas parvalbumin interneurons contribute to synchronizing the entire network.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "electrophysiology_class",
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "480205": {
+    "corpus_id": "480205",
+    "author_keys": [
+      "Katona et al., 1999"
+    ],
+    "title": "Presynaptically Located CB1 Cannabinoid Receptors Regulate GABA Release from Axon Terminals of Specific Hippocampal Interneurons",
+    "year": 1999,
+    "authors": [
+      "I. Katona",
+      "B. Sperlagh",
+      "A. Sik",
+      "Attila Kafalvi",
+      "E. Vizi",
+      "K. Mackie",
+      "T. F. Freund"
+    ],
+    "pmid": "10341254",
+    "doi": "10.1523/JNEUROSCI.19-11-04544.1999",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "480205_62cd73ae": {
+        "text": "To understand the functional significance and mechanisms of action in the CNS of endogenous and exogenous cannabinoids, it is crucial to identify the neural elements that serve as the structural substrate of these actions. We used a recently developed antibody against the CB1 cannabinoid receptor to study this question in hippocampal networks. Interneurons with features typical of basket cells showed a selective, intense staining for CB1 in all hippocampal subfields and layers. Most of them (85.6%) contained cholecystokinin (CCK), which corresponded to 96.9% of all CCK-positive interneurons, whereas only 4.6% of the parvalbumin (PV)- containing basket cells expressed CB1. Accordingly, electron microscopy revealed that CB1-immunoreactive axon terminals of CCK- containing basket cells surrounded the somata and proximal dendrites of pyramidal neurons, whereas PV-positive basket cell terminals in similar locations were negative for CB1. The synthetic cannabinoid agonist WIN 55,212-2 (0.01–3 μm) reduced dose- dependently the electrical field stimulation-induced [3H]GABA release from superfused hippocampal slices, with an EC50 value of 0.041 μm. Inhibition of GABA release by WIN 55,212-2 was not mediated by inhibition of glutamatergic transmission because the WIN 55,212-2 effect was not reduced by the glutamate blockers AP5 and CNQX. In contrast, the CB1 cannabinoid receptor antagonist SR 141716A (1 μm) prevented this effect, whereas by itself it did not change the outflow of [3H]GABA. These results suggest that cannabinoid-mediated modulation of hippocampal interneuron networks operate largely via presynaptic receptors on CCK-immunoreactive basket cell terminals. Reduction of GABA release from these terminals is the likely mechanism by which both endogenous and exogenous CB1 ligands interfere with hippocampal network oscillations and associated cognitive functions.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "defining_markers",
+          "morphology_notes",
+          "neuropeptides"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "8530661": {
+    "corpus_id": "8530661",
+    "author_keys": [
+      "Chamberland et al., 2012"
+    ],
+    "title": "Inhibitory control of hippocampal inhibitory neurons",
+    "year": 2012,
+    "authors": [
+      "S. Chamberland",
+      "L. Topolnik"
+    ],
+    "pmid": "23162426",
+    "doi": "10.3389/fnins.2012.00165",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "8530661_a5f1a4b9": {
+        "text": "The population of GABAergic interneurons is extremely heterogeneous and comprises, in many brain regions, cells with divergent morphological and physiological properties, distinct molecular expression profiles, and highly specialized functions",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "8530661_92702482": {
+        "text": "Different types of hippocampal inhibitory interneurons control spike initiation [e.g., axo-axonic and basket cells (BCs)] and synaptic integration (e.g., bistratified and oriens–lacunosum moleculare interneurons) within pyramidal neurons",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "electrophysiology_class",
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "15824759": {
+    "corpus_id": "15824759",
+    "author_keys": [
+      "Ferrante et al., 2015"
+    ],
+    "title": "Distinct and synergistic feedforward inhibition of pyramidal cells by basket and bistratified interneurons",
+    "year": 2015,
+    "authors": [
+      "M. Ferrante",
+      "G. Ascoli"
+    ],
+    "pmid": "26594151",
+    "doi": "10.3389/fncel.2015.00439",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "15824759_23eebcb8": {
+        "text": "FFI in CA1PCs is mediated by two physiologically and morphologically distinct GABAergic interneurons: fast-spiking, perisomatic- targeting basket cells and regular-spiking, dendritic-targeting bistratified cells.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "electrophysiology_class",
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "262127573": {
+    "corpus_id": "262127573",
+    "author_keys": [
+      "Bocchio et al., 2024"
+    ],
+    "title": "Functional networks of inhibitory neurons orchestrate synchrony in the hippocampus",
+    "year": 2024,
+    "authors": [
+      "Marco Bocchio",
+      "Artem Vorobyev",
+      "S. Sadeh",
+      "Sophie Brustlein",
+      "Robin F. Dard",
+      "S. Reichinnek",
+      "V. Emiliani",
+      "Claudia Clopath",
+      "R. Cossart"
+    ],
+    "pmid": "39401246",
+    "doi": "10.1101/2023.09.18.558335",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "262127573_d140faf4": {
+        "text": "This mouse line allows for a large sampling from diverse interneuron subtypes in the CA1 pyramidal layer, including the most representative ones (Bezaire et al., 2013), the PV-expressing basket and bistratified cells (Klausberger et al., 2008), the NOS- expressing ivy cells (14381729) and two types of interneuron-selective interneurons (ISI 1 and 3) that express calretinin (Klausberger et al., 2008)(Topolnik et al., 2022)",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "anatomical_location",
+          "defining_markers"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "14052756": {
+    "corpus_id": "14052756",
+    "author_keys": [
+      "Weng et al., 2010"
+    ],
+    "title": "Cell Type-Specific Expression of Acid-Sensing Ion Channels in Hippocampal Interneurons",
+    "year": 2010,
+    "authors": [
+      "J. Weng",
+      "Yen-Chu Lin",
+      "Cheng-Chang Lien"
+    ],
+    "pmid": "20463218",
+    "doi": "10.1523/JNEUROSCI.0582-10.2010",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "14052756_259bda40": {
+        "text": "At least two functionally distinct classes of GABAergic interneurons are known to exist in the hippocampus (McBain et al., 2001) (Jonas et al., 2004)(Freund et al., 2007). Soma-targeting inhibitory interneurons, such as fast-spiking basket cells (BCs), control the spike initiation of principal neurons via axonal innervations onto perisomatic areas of principal neurons (Cobb et al., 1995)(Miles et al., 1996)(Kraushaar et al., 2000), whereas dendrite-targeting inhibitory interneurons, such as oriens lacunosum-moleculare (O-LM) cells, regulate dendritic Na \u0000 or Ca 2 \u0000 spikes and synaptic plasticity by innervating dendritic domains of principal neurons (Miles et al., 1996). These two distinct GABAergic interneuron subtypes differ not only in their intrinsic properties, such as neurochemical contents, Ca 2 \u0000buffering proteins/homeostasis, ion channels, and transmitter receptors (Koh et al., 1995)Freund and Buzsa ´ki, 1996;(Martina et al., 1998)(Lien et al., 2002)(Pouille et al., 2004)(Aponte et al., 2008)(Liao et al., 2009), but also in their synaptic and network functions (Klausberger et al., 2003)(Pouille et al., 2004)Klausberger and Somogyi, 2008).",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "29480287": {
+    "corpus_id": "29480287",
+    "author_keys": [
+      "Kraushaar et al., 2000"
+    ],
+    "title": "Efficacy and Stability of Quantal GABA Release at a Hippocampal Interneuron–Principal Neuron Synapse",
+    "year": 2000,
+    "authors": [
+      "U. Kraushaar",
+      "P. Jonas"
+    ],
+    "pmid": "10908596",
+    "doi": "10.1523/JNEUROSCI.20-15-05594.2000",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "29480287_0142dcce": {
+        "text": "We have examined factors that determine the strength and dynamics of GABAergic synapses between interneurons [dentate gyrus basket cells (BCs)] and principal neurons [dentate gyrus granule cells (GCs)] using paired recordings in rat hippocampal slices at 34°C. Unitary IPSCs recorded from BC–GC pairs in high intracellular Cl− concentration showed a fast rise and a biexponential decay, with mean time constants of 2 and 9 msec. The mean quantal conductance change, determined directly at reduced extracellular Ca2+/Mg2+concentration ratios, was 1.7 nS. Quantal release at the BC–GC synapse occurred with short delay and was highly synchronized. Analysis of IPSC peak amplitudes and numbers of failures by multiple probability compound binomial analysis indicated that synaptic transmission at the BC–GC synapse involves three to seven release sites, each of which releases transmitter with high probability ( \u00000.5 in 2 mmCa2+/1 mm Mg2+). Unitary BC–GC IPSCs showed paired-pulse depression (PPD); maximal depression, measured for 10 msec intervals, was 37%, and recovery from depression occurred with a time constant of 2 sec. Paired- pulse depression was mainly presynaptic in origin but appeared to be independent of previous release. Synaptic transmission at the BC–GC synapse showed frequency-dependent depression, with half-maximal decrease at 5 Hz after a series of 1000 presynaptic action potentials. The relative stability of transmission at the BC–GC synapse is consistent with a model in which an activity- dependent gating mechanism reduces release probability and thereby prevents depletion of the releasable pool of synaptic vesicles. Thus several mechanisms converge on the generation of powerful and sustained transmission at interneuron–principal neuron synapses in hippocampal circuits.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "258744074": {
+    "corpus_id": "258744074",
+    "author_keys": [
+      "Takacs et al., 2024"
+    ],
+    "title": "Synaptic and dendritic architecture of different types of hippocampal somatostatin interneurons",
+    "year": 2024,
+    "authors": [
+      "Virág T. Takács",
+      "Zsuzsanna Bardóczi",
+      "Áron Orosz",
+      "Abel Major",
+      "Luca Tar",
+      "Péter Berki",
+      "P. Papp",
+      "Márton I Mayer",
+      "Hunor Sebok",
+      "Luca Zsolt",
+      "K. Sos",
+      "S. Káli",
+      "T. Freund",
+      "G. Nyiri"
+    ],
+    "pmid": "38470935",
+    "doi": "10.1101/2023.05.14.540675",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "258744074_f0adabcc": {
+        "text": "GABAergic inhibitory neurons fundamentally shape the activity and plasticity of cortical circuits. A major subset of these neurons contains somatostatin (SOM); these cells play crucial roles in neuroplasticity, learning and memory in many brain areas including the hippocampus, and are implicated in several neuropsychiatric diseases and neurodegenerative disorders. Two main types of SOM- containing cells in area CA1 of the hippocampus are oriens-lacunosum-moleculare (OLM) cells and hippocampo-septal (HS) cells.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "2405079": {
+    "corpus_id": "2405079",
+    "author_keys": [
+      "Tricoire et al., 2010"
+    ],
+    "title": "Common Origins of Hippocampal Ivy and Nitric Oxide Synthase Expressing Neurogliaform Cells",
+    "year": 2010,
+    "authors": [
+      "L. Tricoire",
+      "K. Pelkey",
+      "Michael I Daw",
+      "V. Sousa",
+      "G. Miyoshi",
+      "Brian W Jeffries",
+      "B. Cauli",
+      "G. Fishell",
+      "C. McBain"
+    ],
+    "pmid": "20147544",
+    "doi": "10.1523/jneurosci.5123-09.2010",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "2405079_b4f25be7": {
+        "text": "GABAergic interneurons critically regulate cortical computation through exquisite spatiotemporal control over excitatory networks. Precision of this inhibitory control requires a remarkable diversity within interneuron populations that is largely specified during embryogenesis. Although interneurons expressing the neuronal isoform of nitric oxide synthase (nNOS) constitute the largest hippocampal interneuron cohort their origin and specification remain unknown. Thus, as neurogliaform cells (NGC) and Ivy cells (IvC) represent the main nNOS+ interneurons, we investigated their developmental origins",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "2405079_042a449f": {
+        "text": "GABAergic neurons expressing nNOS are one of the largest interneuron populations in the hippocampus (Jinno et al., 2002)(B et al., 2005)(52852755)",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "anatomical_location"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "2405079_a85327b9": {
+        "text": "IvCs and nNOS \u0000 NGCs have completely overlapping developmental, electrophysiological, morphological, and neurochemical properties, suggesting that these cells constitute a single unique interneuron subtype despite differences in laminar organization. Surprisingly, classically defined NGCs can be subdivided into two groups based on nNOS expression and lineage with nNOS \u0000 NGCs being derived from the MGE and nNOS \u0000 NGCs arising from CGE progenitors",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "electrophysiology_class",
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "2405079_6850b924": {
+        "text": "IvCs and NGCs have been argued to represent distinct interneuron subtypes (52852755), despite the rich similarity between these cell types, including coexpression of NPY with nNOS, dense axonal arbors, and slow pyramidal cell inhibition. We found that both of these interneurons exhibit a LS phenotype and fail to express other classical interneuron markers such as PV, SOM, or CR.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "defining_markers",
+          "electrophysiology_class",
+          "morphology_notes",
+          "negative_markers",
+          "neuropeptides"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "23480858": {
+    "corpus_id": "23480858",
+    "author_keys": [
+      "Tyan et al., 2014"
+    ],
+    "title": "Dendritic Inhibition Provided by Interneuron-Specific Cells Controls the Firing Rate and Timing of the Hippocampal Feedback Inhibitory Circuitry",
+    "year": 2014,
+    "authors": [
+      "L. Tyan",
+      "S. Chamberland",
+      "E. Magnin",
+      "Olivier Camiré",
+      "R. Francavilla",
+      "L. David",
+      "K. Deisseroth",
+      "L. Topolnik"
+    ],
+    "pmid": "24671999",
+    "doi": "10.1523/JNEUROSCI.3813-13.2014",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "23480858_1f4801fb": {
+        "text": "The so-called interneuron-specific (IS) cells were identified based on direct ultrastructural evidence that some calretinin (CR)- expressing or vasoactive intestinal polypeptide (VIP)-expressing GABAergic cells in the CA1 area of the hippocampus contact interneurons selectively. IS cells were further subdivided into three subtypes with distinct anatomical and neurochemical features.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [
+          "anatomical_location",
+          "defining_markers",
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "393787": {
+    "corpus_id": "393787",
+    "author_keys": [
+      "Ceranik et al., 1997"
+    ],
+    "title": "A Novel Type of GABAergic Interneuron Connecting the Input and the Output Regions of the Hippocampus",
+    "year": 1997,
+    "authors": [
+      "Katja Ceranik",
+      "R. Bender",
+      "Jörg R. P. Geiger",
+      "H. Monyer",
+      "P. Jonas",
+      "M. Frotscher",
+      "Joachim H. R. Lübke"
+    ],
+    "pmid": "9204922",
+    "doi": "10.1523/JNEUROSCI.17-14-05380.1997",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "393787_b7095bb2": {
+        "text": "a novel type of GABAergic interneuron located in the outer molecular layer (OML) of the rat dentate gyrus",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "393787_bfef2ee8": {
+        "text": "OML interneurons were recorded in hippocampal slices by using the whole-cell patch-clamp configuration. During recording, cells were filled with biocytin for subsequent light and electron microscopic analysis. Neurons projecting to the subiculum were distributed throughout the entire OML. They had round or ovoid somata and a multipolar dendritic morphology. Two axonal domains could be distinguished: an extensive, tangential distribution within the OML and a long-range vertical and tangential projection to layer 1 and stratum pyramidale of the subiculum",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "393787_736e4a68": {
+        "text": "OML interneurons were characterized physiologically by short action potential duration and marked afterhyperpolarization that followed the spike. On sustained current injection, they generated high-frequency (up to 130 Hz, 34°C) trains of action potentials with only little adaptation. In situ hybridization and single-cell RT-PCR analysis for GAD67 mRNA confirmed the GABAergic nature of OML interneurons.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "14371295": {
+    "corpus_id": "14371295",
+    "author_keys": [
+      "Hosp et al., 2013"
+    ],
+    "title": "Morpho-physiological Criteria Divide Dentate Gyrus Interneurons into Classes",
+    "year": 2013,
+    "authors": [
+      "J. Hosp",
+      "Michael Strüber",
+      "Y. Yanagawa",
+      "K. Obata",
+      "I. Vida",
+      "P. Jonas",
+      "M. Bartos"
+    ],
+    "pmid": "24108530",
+    "doi": "10.1002/hipo.22214",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "14371295_7de25a1f": {
+        "text": "GABAergic inhibitory interneurons control fundamental aspects of neuronal network function",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "14371295_f5d269ca": {
+        "text": "We identified five interneuron classes, each of them characterized by a distinct set of anatomical and physiological parameters",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "14371295_8543c642": {
+        "text": "GABAergic cells fell into four morphological classes but diverged into three physiological classes with strong overlap among BC- and HIPP-like neurons in class P1 and between TML-, ML-, and HIPP-like cells in class P3",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "14371295_eba9a341": {
+        "text": "ML cells formed an exception; they could be classified on the basis of only their electrophysiological characteristics. TML cells could be largely but not entirely classified on the basis of electrophysiological parameters",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "14371295_49ee101e": {
+        "text": "a combination of morphological and physiological characteristics resulted in the emergence of five classes with strong correlations between morphologically defined interneuron types and physiological properties",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "37628482": {
+    "corpus_id": "37628482",
+    "author_keys": [
+      "Mott et al., 1997"
+    ],
+    "title": "Interneurons of the Dentate–Hilus Border of the Rat Dentate Gyrus: Morphological and Electrophysiological Heterogeneity",
+    "year": 1997,
+    "authors": [
+      "D. Mott",
+      "D. Turner",
+      "M. Okazaki",
+      "D. Lewis"
+    ],
+    "pmid": "9151716",
+    "doi": "10.1523/JNEUROSCI.17-11-03990.1997",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "37628482_9fa103be": {
+        "text": "Interneurons located near the border of the dentate granule cell layer and the hilus were studied in hippocampal slices using whole- cell current clamp and biocytin staining. Because these interneurons exhibit both morphological and electrophysiological diversity, we asked whether passive electrotonic parameters or repetitive firing behavior correlated with axonal distribution. Each interneuron was distinguished by a preferred axonal distribution in the molecular layer or granule cell layer, and four groups could be discerned, the axons of which arborized in (1) the granule cell layer, (2) the inner molecular layer, (3) the outer molecular layer, and (4) diffusely in the molecular layer. In our sample, interneurons with axons arborizing diffusely in the molecular layer were most frequent, and those with axons restricted to the granule cell layer were least frequent. Resting potential, input resistance, time constant, electrotonic length, and spike frequency adaptation (SFA) were not significantly different among the four groups, and the variability in SFA between cells with similar axonal distributions was striking. Clear differences in action potential morphology and afterhyperpolarizations, however, emerged when nonadapting interneurons were compared with those exhibiting SFA. Interneurons exhibiting SFA had characteristically broader spikes, progressive slowing of action potential repolarization during repetitive firing, and slow afterhyperpolarizations that distinguished them from nonadapting interneurons. We propose that the variability in repetitive firing behavior and morphology exhibited by each of these interneurons makes each interneuron unique and may provide a high level of fine tuning of inhibitory control critical to information processing in the dentate.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "250387238": {
+    "corpus_id": "250387238",
+    "author_keys": [
+      "Perrenoud et al., 2022"
+    ],
+    "title": "Molecular and electrophysiological features of GABAergic neurons in the dentate gyrus reveal limited homology with cortical interneurons",
+    "year": 2022,
+    "authors": [
+      "Quentin Perrenoud",
+      "Clémence Leclerc",
+      "H. Geoffroy",
+      "T. Vitalis",
+      "Kevin Richetin",
+      "C. Rampon",
+      "T. Gallopin"
+    ],
+    "pmid": "35802727",
+    "doi": "10.1371/journal.pone.0270981",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "250387238_1454e2c0": {
+        "text": "In the hilus of the dentate gyrus, different classification schemes of GABAergic interneurons have been proposed, based on morphological features, neuropeptides and calcium-binding proteins contents or electrophysiological behaviors (Houser, 2007) (Freund et al., 1998)(Lübke et al., 1998)(Mott et al., 1997)(Han et al., 1993)(Halasy et al., 1993)(Acsády et al., 2000)(Buckmaster et al., 1995)(Jinno et al., 2002)",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "250387238_9cab36d0": {
+        "text": "At the molecular level, these classes are well defined based on the expression of calcium binding proteins such as parvalbumin (PV) and calretinin (CR), and neuropeptides like somatostatin (SOM), Neuropeptide Y (NPY) and cholecystokinin (CCK), and enzymes such as the neuronal NO synthase (NOS1)",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "250387238_499cc4fb": {
+        "text": "Most GABAergic interneurons populating the neocortex, hippocampus and striatum share a common developmental origin (Pelkey et al., 2017)(Hu et al., 2017)(Lim et al., 2018)(Villar‐Cerviño et al., 2015). Accordingly, they tend to include the same 3 major families: (1) soma and axo-axonic neurons showing fast discharge and expressing PV, (2) dendrite targeting interneurons expressing SOM and (3) neurogliaform neurons expressing NPY/ Reelin (Kawaguchi et al., 1997)[27](Tremblay et al., 2016)(Tepper et al., 2010) (Tepper et al., 2018)(Klausberger et al., 2008). Regions of the cortex and hippocampus also include soma targeting interneurons expressing CCK and interneurons expressing VIP projecting to other types of inhibitory cells (Pelkey et al., 2017)(Tremblay et al., 2016).",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "2619992": {
+    "corpus_id": "2619992",
+    "author_keys": [
+      "Tepper et al., 2010"
+    ],
+    "title": "Heterogeneity and Diversity of Striatal GABAergic Interneurons",
+    "year": 2010,
+    "authors": [
+      "J. Tepper",
+      "F. Tecuapetla",
+      "T. Koos",
+      "O. Ibáñez-Sandoval"
+    ],
+    "pmid": "21228905",
+    "doi": "10.3389/fnana.2010.00150",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "2619992_fc0a4717": {
+        "text": "The canonical view of striatal GABAergic interneurons has evolved over several decades of neuroanatomical/neurochemical and electrophysiological studies. From the anatomical studies, three distinct GABAergic interneuronal subtypes are generally recognized. The best-studied subtype expresses the calcium-binding protein, parvalbumin. The second best known interneuron type expresses a number of neuropeptides and enzymes, including neuropeptide Y, somatostatin, and nitric oxide synthase. The last GABAergic interneuron subtype expresses the calcium binding protein, calretinin. There is no overlap or co-localization of these three different sets of markers. The parvalbumin-immunoreactive GABAergic interneurons have been recorded in vitro and shown to exhibit a fast- spiking phenotype characterized by short duration action potentials with large and rapid spike AHPs. They often fire in a stuttering pattern of high frequency firing interrupted by periods of silence. They are capable of sustained firing rates of over 200 Hz. The NPY/ SOM/NOS interneurons have been identified as PLTS cells, exhibiting very high input resistances, low threshold spike and prolonged plateau potentials in response to intracellular depolarization or excitatory synaptic stimulation. Thus far, no recordings from identified CR interneurons have been obtained. Recent advances in technological approaches, most notably the generation of several BAC transgenic mouse strains which express a fluorescent marker, enhanced green fluorescent protein, specifically and selectively only in neurons of a certain genetic makeup (e.g., parvalbumin-, neuropeptide Y-, or tyrosine hydroxylase-expressing neurons etc.) have led to the ability of electrophysiologists to visualize and patch specific neuron types in brain slices with epifluorescence illumination. This has led to a rapid expansion of the number of neurochemically and/or electrophysiologically identified interneuronal cell types in the striatum and elsewhere. This article will review the anatomy, neurochemistry, electrophysiology, synaptic connections, and function of the three \"classic\" striatal GABAergic interneurons as well as more recent data derived from in vitro recordings from BAC transgenic mice as well as recent in vivo data.",
+        "section": "Classical Functional and Morphological Interneuron Types",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "198237048": {
+    "corpus_id": "198237048",
+    "author_keys": [
+      "Olah et al., 2019"
+    ],
+    "title": "Functional specification of CCK+ interneurons by alternative isoforms of Kv4.3 auxiliary subunits",
+    "year": 2019,
+    "authors": [
+      "V. Oláh",
+      "David Lukacsovich",
+      "Jochen Winterer",
+      "A. Lorincz",
+      "Z. Nusser",
+      "Csaba Földy",
+      "J. Szabadics"
+    ],
+    "pmid": "32490811",
+    "doi": "10.7554/eLife.58515",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "198237048_1d4ba9f8": {
+        "text": "The biophysical and morphological properties of complementary GABAergic cell classes are specifically tuned for regulating the activity of the much more populous principal cells in broad temporal (from second to sub-millisecond; (Hu et al., 2014)(Overstreet- Wadiche et al., 2015) and spatial (from axons to distal dendrites Freund and Buzsáki, 1996) domains",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "198237048_9fd02332": {
+        "text": "Emerging evidence using single-cell transcriptomics suggests that the number of GABAergic types may be higher than previously recognized (Földy et al., 2016)(Fuzik et al., 2015)(2017)(Que et al., 2019)(Tasic, 2018)Zeisel et al., 2015). While these studies accelerated cell classification efforts by identifying a large number of genes that appear to define further subtypes in neuronal taxonomy, the functional relevance of most transcriptomic marker genes remain poorly understood",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "198237048_c08d5832": {
+        "text": "Several properties distinguish CCK+INs from other major GABAergic cell classes.",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [
+          "electrophysiology_class"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "7738817": {
+    "corpus_id": "7738817",
+    "author_keys": [
+      "Fuzik et al., 2015"
+    ],
+    "title": "Integration of electrophysiological recordings with single-cell RNA-seq data identifies novel neuronal subtypes",
+    "year": 2015,
+    "authors": [
+      "J. Fuzik",
+      "Amit Zeisel",
+      "Zoltán Máté",
+      "D. Calvigioni",
+      "Y. Yanagawa",
+      "G. Szabó",
+      "S. Linnarsson",
+      "T. Harkany"
+    ],
+    "pmid": "26689544",
+    "doi": "10.1038/nbt.3443",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "7738817_3804e585": {
+        "text": "Traditionally, neuroscientists have defined the identity of neurons by the cells' location, morphology, connectivity and excitability. However, the direct relationship between these parameters and the molecular phenotypes has remained largely unexplored. Here, we present a method for obtaining full transcriptome data from single neocortical pyramidal cells and interneurons after whole-cell patch-clamp recordings in mouse brain slices. In our approach, termed Patch-seq, a patch-clamp stimulus protocol is followed by the aspiration of the entire somatic compartment into the recording pipette, reverse transcription of RNA including addition of unique molecular identifiers, cDNA amplification, Illumina library preparation and sequencing. We show that Patch-seq reveals a close link between electrophysiological characteristics, responses to acute chemical challenges and RNA expression of neurotransmitter receptors and channels. Moreover, it distinguishes neuronal subpopulations that correspond to both well- established and, to our knowledge, hitherto undescribed neuronal subtypes. Our findings demonstrate the ability of Patch-seq to precisely map neuronal subtypes and predict their network contributions in the brain.",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "146120240": {
+    "corpus_id": "146120240",
+    "author_keys": [
+      "Que et al., 2019"
+    ],
+    "title": "Deep Survey of GABAergic Interneurons: Emerging Insights From Gene-Isoform Transcriptomics",
+    "year": 2019,
+    "authors": [
+      "Lin Que",
+      "Jochen Winterer",
+      "Csaba Földy"
+    ],
+    "pmid": "31133800",
+    "doi": "10.3389/fnmol.2019.00115",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "146120240_37e55a3d": {
+        "text": "GABAergic interneuron diversity is a key feature in the brain that helps to create different brain activity patterns and behavioral states. Cell type classification schemes—based on anatomical, physiological and molecular features—have provided us with a detailed understanding of the distinct types that constitute this diversity and their contribution to brain function. Over recent years, the utility of single-cell RNAseq has majorly complemented this existing framework, vastly expanding our knowledge base, particularly regarding molecular features. Single-cell gene-expression profiles of tens of thousands of GABAergic cells from many different types are now available. The analysis of these data has shed new lights onto previous classification principles and illuminates a path towards a deeper understanding of molecular hallmarks behind interneuron diversity. A large part of such molecular features is synapse-related. These include ion channels and receptors, as well as key synaptic organizers and trans- synaptic signaling molecules. Increasing evidence suggests that transcriptional and post-transcriptional modifications further diversify these molecules and generate cell type-specific features. Thus, unraveling the cell type-specific nature of gene-isoform expression will be a key in cell type classification. This review article discusses progress in the transcriptomic survey of interneurons and insights that have begun to manifest from isoform-level analyses.",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "13669186": {
+    "corpus_id": "13669186",
+    "author_keys": [
+      "Tasic, 2018"
+    ],
+    "title": "Single cell transcriptomics in neuroscience: cell classification and beyond.",
+    "year": 2018,
+    "authors": [
+      "Bosiljka Tasic"
+    ],
+    "pmid": "29738987",
+    "doi": "10.1016/j.conb.2018.04.021",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "13669186_e9463d6a": {
+        "text": "Biology has been facing a daunting problem since the cell was understood to be the building block of metazoans: how do we study multicellular systems, when a universal approach to characterize their building blocks and classify them does not exist? Metazoan diversity has not helped: there are many model and non-model organisms, developmental and adult stages, healthy and diseased states. Here, I review the application of single cell transcriptomics to cell classification in neuroscience and its corollaries: the differentially expressed genes discovered in this process are a treasure trove for understanding cell type function and enabling specific access to those types. The advancements and widespread adoption of single-cell transcriptomics are bound to transform our understanding of neural system development, function, pathology and evolution.",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "259953057": {
+    "corpus_id": "259953057",
+    "author_keys": [
+      "Tzilivaki et al., 2023"
+    ],
+    "title": "Hippocampal GABAergic interneurons and memory",
+    "year": 2023,
+    "authors": [
+      "Alexandra Tzilivaki",
+      "John J. Tukker",
+      "Nikolaus Maier",
+      "Panayiota Poirazi",
+      "Rosanna P Sammons",
+      "D. Schmitz"
+    ],
+    "pmid": "37467748",
+    "doi": "10.1016/j.neuron.2023.06.016",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "259953057_ae56c94c": {
+        "text": "\"Classic'' interneuron classifications",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "259953057_09a50fe2": {
+        "text": "CCK cells are a remarkably diverse group in the hippocampus (Cope et al., 2002)(Lasztóczi et al., 2011) (Figure 1) that extends beyond Sncg cells. (Dudok et al., 2021) The majority of cells in the VIP subclass are interneuron-specific (IS), specifically targeting other interneurons rather than PCs. Three types of IS interneurons have been described, mostly in the hippocampus (Figure 1), and they are likely to play important disinhibitory roles. (Guet-McCreight et al., 2020)",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [
+          "morphology_notes"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "259953057_10f139f9": {
+        "text": "Freund and colleagues first characterized IS interneurons and showed that these cells express calretinin (CR) (IS-1), VIP (IS-2), or both (IS-3)",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [
+          "defining_markers",
+          "neuropeptides"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "259953057_4792fca8": {
+        "text": "recent single-cell transcriptomic datasets have led to a more extensive taxonomy of hippocampal interneurons, (Dudok et al., 2021) (Yao et al., 2020)(2017)51 with up to 100 types having been described, the functional significance of these transcriptomic types remains mostly uninvestigated",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "259953057_d7fa907e": {
+        "text": "there is still much work to be done to determine how these transcriptomic cell types relate to the more traditional classifications such as morphological or molecular markers",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "259953057_f3aae69b": {
+        "text": "For the other broad subclasses of interneurons (SOM, Lamp5, Sncg, and VIP), less is known",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "259953057_74ac2a3e": {
+        "text": "Recent mouse transcriptomic studies indicate a huge diversity of interneurons beyond the level of the cell types discussed thus far. Focusing on the PV subclass as an example, CA1 appears to contain at least seven (2017) and as many as 14 PV-expressing transcriptomic subtypes. (Yao et al., 2020)",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "259953057_82888854": {
+        "text": "a recent study showed that in visual cortex, the morphological and electrical properties of these cells are linked to transcriptomic subtype identity. 176",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "214793639": {
+    "corpus_id": "214793639",
+    "author_keys": [
+      "Yao et al., 2020"
+    ],
+    "title": "A taxonomy of transcriptomic cell types across the isocortex and hippocampal formation",
+    "year": 2020,
+    "authors": [
+      "Zizhen Yao",
+      "T. Nguyen",
+      "Cindy T. J. van Velthoven"
+    ],
+    "pmid": null,
+    "doi": "10.1101/2020.03.30.015214",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "214793639_2829cdc9": {
+        "text": "The isocortex and hippocampal formation are two major structures in the mammalian brain that play critical roles in perception, cognition, emotion and learning. Both structures contain multiple regions, for many of which the cellular composition is still poorly understood. In this study, we used two complementary single-cell RNA-sequencing approaches, SMART-Seq and 10x, to profile \u00001.2 million cells covering all regions in the adult mouse isocortex and hippocampal formation, and derived a cell type taxonomy comprising 379 transcriptomic types. The completeness of coverage enabled us to define gene expression variations across the entire spatial landscape without significant gaps. We found that cell types are organized in a hierarchical manner and exhibit varying degrees of discrete or continuous relatedness with each other. Such molecular relationships correlate strongly with the spatial distribution patterns of the cell types, which can be region-specific, or shared across multiple regions, or part of one or more gradients along with other cell types. Glutamatergic neuron types have much greater diversity than GABAergic neuron types, both molecularly and spatially, and they define regional identities as well as inter-region relationships. For example, we found that glutamatergic cell types between the isocortex and hippocampal formation are highly distinct from each other yet possess shared molecular signatures and corresponding layer specificities, indicating their homologous relationships. Overall, our study establishes a molecular architecture of the mammalian isocortex and hippocampal formation for the first time, and begins to shed light on its underlying relationship with the development, evolution, connectivity and function of these two brain structures.",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "224817966": {
+    "corpus_id": "224817966",
+    "author_keys": [
+      "Perez et al., 2020"
+    ],
+    "title": "Subcellular sequencing of single neurons reveals the dendritic transcriptome of GABAergic interneurons",
+    "year": 2020,
+    "authors": [
+      "Julio D. Perez",
+      "S. tom Dieck",
+      "B. Alvarez-Castelao",
+      "I. C. Chan",
+      "E. Schuman"
+    ],
+    "pmid": "33404500",
+    "doi": "10.1101/2020.10.17.341651",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "224817966_aea6e129": {
+        "text": "To investigate the effect of cell type on the dendritic transcriptome, we first characterized the cell-types present in our dataset using our somatic samples. Dimensionality reduction among somata revealed five neuron-types: two glutamatergic and three GABAergic ( Figure 1D). Figure S2A shows the most differentially expressed genes between identified cell types (adjusted p < 0.05, logistic regression model). The major differences in expression occurred between glutamatergic and GABAergic somata, however, significant differences between subtypes were also observed. Although glutamatergic types 1 and 2 largely co-expressed a majority of transcripts, a handful of mRNAs like Nptx2 and Grm5 allowed their distinction ( Figure 1E). GABAergic 1 neurons, the most abundant cell type in our dataset, were distinguished by their expression of Sst and other neuropeptides. Despite their clear inhibitory identity, GABAergic 3 neurons exhibited a very different transcriptomic profile from GABAergic 1, mainly distinguished by the expression of Cck and Cnr1. Finally, GABAergic 2 neurons showed similarities in their expression patterns to both GABAergic 1 and 3; their identity was best described by the co-expression of some GABAergic 3 markers, like Id2, but not others, like Cck ( Figure 1E and S2A). To benchmark the breadth of cell-types detected we compared our cell-types to those previously described in single- cell studies of the hippocampus. For this we used Seurat.v3 integration algorithm (Butler et al., 2018), which identifies shared populations between different single cell datasets and projects them into a common space. We compared our somata dataset with two CA1-derived scRNA-seq datasets. These studies sampled CA1 cells and profiled the transcriptome of 1314 CA1 cells (Zeisel et al., 2015) or 3,663 CA1 GABAergic neurons",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "258397933": {
+    "corpus_id": "258397933",
+    "author_keys": [
+      "Chamberland et al., 2023"
+    ],
+    "title": "Functional specialization of hippocampal somatostatin-expressing interneurons",
+    "year": 2023,
+    "authors": [
+      "S. Chamberland",
+      "Gariel Grant",
+      "R. Machold",
+      "Erica R. Nebet",
+      "G. Tian",
+      "Monica Hanani",
+      "K. Kullander",
+      "R. Tsien"
+    ],
+    "pmid": "37162922",
+    "doi": "10.1101/2023.04.27.538511",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "258397933_35dd76d6": {
+        "text": "Recent single cell transcriptome analyses have provided a comprehensive Sst-IN subtype census, a plausible molecular ground truth of neuronal identity whose links to specific functionality remain incomplete",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "258397933_9fa65065": {
+        "text": "Four mouse models based on single or combinatorial Cre- and Flp- expression differentiated functionally distinct subpopulations of CA1 hippocampal Sst-INs that largely tiled the morpho-functional parameter space of the Sst-INs superfamily",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "258397933_8f00c570": {
+        "text": "our results provide a framework to translate neuronal transcriptomic identity into discrete functional subtypes that capture the diverse specializations of hippocampal Sst-INs",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "258397933_7541617e": {
+        "text": "Recent transcriptome analyses have provided a comprehensive classification of interneuron subtypes, but the connections between molecular identities and specific functions are not yet fully understood",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "258397933_1d7c0a45": {
+        "text": "Functional investigation in transgenic animals revealed that hippocampal somatostatin-expressing interneurons (Sst-INs) can be divided into at least four subfamilies, each with distinct functions",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "269246896": {
+    "corpus_id": "269246896",
+    "author_keys": [
+      "Chamberland et al., 2024"
+    ],
+    "title": "Functional specialization of hippocampal somatostatin-expressing interneurons",
+    "year": 2024,
+    "authors": [
+      "Simon Chamberland",
+      "Gariel Grant",
+      "Robert Machold",
+      "Erica R. Nebet",
+      "G. Tian",
+      "Joshua Stich",
+      "Monica Hanani",
+      "K. Kullander",
+      "Richard W. Tsien"
+    ],
+    "pmid": "38640347",
+    "doi": "10.1073/pnas.2306382121",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "269246896_b6961791": {
+        "text": "Recent transcriptome analyses have provided a comprehensive classification of interneurons, but the connections between molecular identities and specific functions are not yet fully understood",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "269246896_53fb33cc": {
+        "text": "hippocampal somatostatin-expressing interneurons (Sst-INs) can be divided into at least four subfamilies, each with distinct functions",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "269246896_c084d5c0": {
+        "text": "the Sst;;Tac1 intersection targeted a population of bistratified cells that overwhelmingly targeted fast-spiking interneurons. In contrast, the Ndnf;;Nkx2-1 intersection revealed a population of oriens lacunosum-moleculare interneurons that selectively targeted CA1 pyramidal cells",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [
+          "defining_markers"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "269246896_c87fdbd0": {
+        "text": "genetically distinct subfamilies of Sst-INs form specialized circuits in the hippocampus.",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "282312227": {
+    "corpus_id": "282312227",
+    "author_keys": [
+      "Kim et al., 2025"
+    ],
+    "title": "Discrete interneuron subsets participate in GluN1/GluN3A excitatory glycine receptor (eGlyR)-mediated regulation of hippocampal network activity throughout development and evolution",
+    "year": 2025,
+    "authors": [
+      "June Hoan Kim",
+      "A. Vlachos",
+      "Vivek Mahadevan"
+    ],
+    "pmid": "41473287",
+    "doi": "10.1101/2025.09.24.678342",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "282312227_b9052081": {
+        "text": "hippocampal somatostatin and neurogliaform interneurons (Sst-INs and NGFCs)",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "282312227_3bf45cd1": {
+        "text": "parvalbumin (PV) IN",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "282312227_2404c410": {
+        "text": "Grin3a is minimally expressed within transcripZonally defined rodent hippocampal and neocorZcal PV INs",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "282312227_b00a45d7": {
+        "text": "hippocampal MGE-and CGE-derived NGFC/IvyC cohorts",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [
+          "defining_markers"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "282312227_bb365351": {
+        "text": "TranscripZonal profiling indicates conserved strong Grin3a expression levels in neocorZcal NGFCs defined by Id2 and Lamp5 expression",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [
+          "defining_markers"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "282312227_3bbb3382": {
+        "text": "Sst-INs as major contributors to early postnatal hippocampal and neocorZcal network GABAergic tone",
+        "section": "Transcriptomic Interneuron Classifications",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "53230059": {
+    "corpus_id": "53230059",
+    "author_keys": [
+      "Tepper et al., 2018"
+    ],
+    "title": "Heterogeneity and Diversity of Striatal GABAergic Interneurons: Update 2018",
+    "year": 2018,
+    "authors": [
+      "J. Tepper",
+      "T. Koos",
+      "O. Ibáñez-Sandoval",
+      "F. Tecuapetla",
+      "Thomas W Faust",
+      "M. Assous"
+    ],
+    "pmid": "30467465",
+    "doi": "10.3389/fnana.2018.00091",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "53230059_0b6e5833": {
+        "text": "Our original review, \"Heterogeneity and Diversity of Striatal GABAergic Interneurons,\" to which this is an invited update, was published in December, 2010 in Frontiers is Neuroanatomy. In that article, we reviewed several decades’ worth of anatomical and electrophysiological data on striatal parvalbumin (PV)-, neuropeptide Y (NPY)- and calretinin(CR)-expressing GABAergic interneurons from many laboratories including our own. In addition, we reported on a recently discovered novel tyrosine hydroxylase (TH) expressing GABAergic interneuron class first revealed in transgenic TH EGFP reporter mouse line. In this review, we report on further advances in the understanding of the functional properties of previously reported striatal GABAergic interneurons and their synaptic connections. With the application of new transgenic fluorescent reporter and Cre-driver/reporter lines, plus optogenetic, chemogenetic and viral transduction methods, several additional subtypes of novel striatal GABAergic interneurons have been discovered, as well as the synaptic networks in which they are embedded. These findings make it clear that previous hypotheses in which striatal GABAergic interneurons modulate and/or control the firing of spiny neurons principally by simple feedforward and/or feedback inhibition are at best incomplete. A more accurate picture is one in which there are highly selective and specific afferent inputs, synaptic connections between different interneuron subtypes and spiny neurons and among different GABAergic interneurons that result in the formation of functional networks and ensembles of spiny neurons.",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "260033122": {
+    "corpus_id": "260033122",
+    "author_keys": [
+      "Huang et al., 2023"
+    ],
+    "title": "Differential expression of GABAA receptor subunits δ and α6 mediates tonic inhibition in parvalbumin and somatostatin interneurons in the mouse hippocampus",
+    "year": 2023,
+    "authors": [
+      "Tzu-Hsuan Huang",
+      "Yi-Sian Lin",
+      "Chiao-Wan Hsiao",
+      "Liang-Yun Wang",
+      "M. Ajibola",
+      "W. Abdulmajeed",
+      "Yu-Ling Lin",
+      "Yu-Jui Li",
+      "Cho-Yi Chen",
+      "Cheng-Chang Lien",
+      "Cheng-Di Chiu",
+      "I. Cheng"
+    ],
+    "pmid": "37545878",
+    "doi": "10.3389/fncel.2023.1146278",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "260033122_2db5482d": {
+        "text": "Parvalbumin (PV) and somatostatin (SST) interneurons, the two major types of GABAergic inhibitory interneurons in the hippocampus, exhibit distinct morpho-physiological properties and coordinate information processing and memory formation.",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "8617990": {
+    "corpus_id": "8617990",
+    "author_keys": [
+      "Wierenga et al., 2010"
+    ],
+    "title": "Molecular and Electrophysiological Characterization of GFP-Expressing CA1 Interneurons in GAD65-GFP Mice",
+    "year": 2010,
+    "authors": [
+      "C. Wierenga",
+      "Fiona E. Müllner",
+      "Ilka Rinke",
+      "T. Keck",
+      "V. Stein",
+      "T. Bonhoeffer"
+    ],
+    "pmid": "21209836",
+    "doi": "10.1371/journal.pone.0015915",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "8617990_9b71e545": {
+        "text": "GABAergic interneurons comprise ,10-20% of the total neuronal population and are essential for controlling and synchronizing the output of the principal cells (Danglot et al., 2006)[2](Klausberger et al., 2008). There are many different types of interneurons, executing diverse functions in shaping the activity of neuronal networks. It has proven difficult to formulate an unequivocal definition of the different interneuron types that exist in the brain (Ascoli et al., 2008)",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "8617990_576ecb59": {
+        "text": "The majority of GABAergic interneurons originate from the medial ganglionic eminence (MGE) or the caudal ganglionic eminence (CGE) (Miyoshi et al., 2010)(Nery et al., 2002)(Xu et al., 2004). In addition, a small fraction of interneurons are generated in the preoptic area (Gelman et al., 2010)(Gelman et al., 2009). Interneurons with different origin form separate interneuron classes and display distinct cellular properties. A full understanding of the developmental relationship between different types of interneurons will greatly contribute to define an unambiguous interneuron classification",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      },
+      "8617990_a6406495": {
+        "text": "The majority of them expresses either reelin (70±2%) or vasoactive intestinal peptide (VIP; 15±2%), while expression of parvalbumin and somatostatin is virtually absent. This strongly suggests they originate from the caudal, and not the medial, ganglionic eminence. GFP-labeled interneurons can be subdivided according to the (partially overlapping) expression of neuropeptide Y (42±3%), cholecystokinin (25±3%), calbindin (20±2%) or calretinin (20±2%).",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "10390826": {
+    "corpus_id": "10390826",
+    "author_keys": [
+      "Gelman et al., 2009"
+    ],
+    "title": "The Embryonic Preoptic Area Is a Novel Source of Cortical GABAergic Interneurons",
+    "year": 2009,
+    "authors": [
+      "D. Gelman",
+      "F. J. Martini",
+      "Sandrina Nóbrega-Pereira",
+      "A. Pierani",
+      "N. Kessaris",
+      "O. Marín"
+    ],
+    "pmid": "19625528",
+    "doi": "10.1523/JNEUROSCI.0604-09.2009",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "10390826_230d5e64": {
+        "text": "GABA-containing (GABAergic) interneurons play an important role in the function of the cerebral cortex. Through mostly inhibitory mechanisms, interneurons control hyperexcitability and synchronize and shape the spatiotemporal dynamics of cortical activity underlying various brain functions. Studies over the past 10 years have demonstrated that, in most mammals, interneurons originate during development from the subcortical telencephalon—the subpallium—and reach the cerebral cortex through tangential migration. Until now, interneurons have been demonstrated to derive exclusively from two subpallial regions, the medial ganglionic eminence and the caudal ganglionic eminence. Here, we show that another subpallial structure, the preoptic area, is a novel source of cortical GABAergic interneurons in the mouse. In utero labeling and genetic lineage-tracing experiments demonstrate that neurons born in this region migrate to the neocortex and hippocampus, where they differentiate into a distinct population of GABAergic interneurons with relatively uniform neurochemical, morphological, and electrophysiological properties.",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "5754289": {
+    "corpus_id": "5754289",
+    "author_keys": [
+      "Xu et al., 2004"
+    ],
+    "title": "Origins of Cortical Interneuron Subtypes",
+    "year": 2004,
+    "authors": [
+      "Qing Xu",
+      "I. Cobos",
+      "Estanislao Daniel De La Cruz",
+      "J. Rubenstein",
+      "S. Anderson"
+    ],
+    "pmid": "15028753",
+    "doi": "10.1523/JNEUROSCI.5667-03.2004",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "5754289_f2f0cf9c": {
+        "text": "Cerebral cortical functions are conducted by two general classes of neurons: glutamatergic projection neurons and GABAergic interneurons. Distinct interneuron subtypes serve distinct roles in modulating cortical activity and can be differentially affected in cortical diseases, but little is known about the mechanisms for generating their diversity. Recent evidence suggests that many cortical interneurons originate within the subcortical telencephalon and then migrate tangentially into the overlying cortex. To test the hypothesis that distinct interneuron subtypes are derived from distinct telencephalic subdivisions, we have used an in vitro assay to assess the developmental potential of subregions of the telencephalic proliferative zone (PZ) to give rise to neurochemically defined interneuron subgroups. PZ cells from GFP+ donor mouse embryos were transplanted onto neonatal cortical feeder cells and assessed for their ability to generate specific interneuron subtypes. Our results suggest that the parvalbumin- and the somatostatin-expressing interneuron subgroups originate primarily within the medial ganglionic eminence (MGE) of the subcortical telencephalon, whereas the calretinin-expressing interneurons appear to derive mainly from the caudal ganglionic eminence (CGE). These results are supported by findings from primary cultures of cortex from Nkx2.1 mutants, in which normal MGE fails to form but in which the CGE is less affected. In these cultures, parvalbumin- and somatostatin-expressing cells are absent, although calretinin-expressing interneurons are present. Interestingly, calretinin-expressing bipolar interneurons were nearly absent from cortical cultures of Dlx1/2 mutants. By establishing spatial differences in the origins of interneuron subtypes, these studies lay the groundwork for elucidating the molecular bases for their distinct differentiation pathways.",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "9452093": {
+    "corpus_id": "9452093",
+    "author_keys": [
+      "Miyoshi et al., 2010"
+    ],
+    "title": "Genetic Fate Mapping Reveals That the Caudal Ganglionic Eminence Produces a Large and Diverse Population of Superficial Cortical Interneurons",
+    "year": 2010,
+    "authors": [
+      "G. Miyoshi",
+      "J. Hjerling-Leffler",
+      "T. Karayannis",
+      "V. Sousa",
+      "S. Butt",
+      "J. Battiste",
+      "Jane E. Johnson",
+      "R. Machold",
+      "G. Fishell"
+    ],
+    "pmid": "20130169",
+    "doi": "10.1523/JNEUROSCI.4515-09.2010",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "9452093_e44ec544": {
+        "text": "By combining an inducible genetic fate mapping strategy with electrophysiological analysis, we have systematically characterized the populations of cortical GABAergic interneurons that originate from the caudal ganglionic eminence (CGE). Interestingly, compared with medial ganglionic eminence (MGE)-derived cortical interneuron populations, the initiation [embryonic day 12.5 (E12.5)] and peak production (E16.5) of interneurons from this embryonic structure occurs 3 d later in development. Moreover, unlike either pyramidal cells or MGE-derived cortical interneurons, CGE-derived interneurons do not integrate into the cortex in an inside-out manner but preferentially (75%) occupy superficial cortical layers independent of birthdate. In contrast to previous estimates, CGE-derived interneurons are both considerably greater in number ( \u000030% of all cortical interneurons) and diversity (comprised by at least nine distinct subtypes). Furthermore, we found that a large proportion of CGE-derived interneurons, including the neurogliaform subtype, express the glycoprotein Reelin. In fact, most CGE-derived cortical interneurons express either Reelin or vasoactive intestinal polypeptide. Thus, in conjunction with previous studies, we have now determined the spatial and temporal origins of the vast majority of cortical interneuron subtypes.",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "276330469": {
+    "corpus_id": "276330469",
+    "author_keys": [
+      "Futacsi et al., 2025"
+    ],
+    "title": "Quantification and correlation of amyloid-β plaque load, glial activation, GABAergic interneuron numbers, and cognitive decline in the young TgF344-AD rat model of Alzheimer's disease",
+    "year": 2025,
+    "authors": [
+      "Anett Futácsi",
+      "Kitti Rusznák",
+      "Gergely Szarka",
+      "B. Völgyi",
+      "Ove Wiborg",
+      "B. Czéh"
+    ],
+    "pmid": "40013092",
+    "doi": "10.3389/fnagi.2025.1542229",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "276330469_bb71984c": {
+        "text": "we have quantified the number of four types of GABAergic neurons: PV+, CR+, SST+, and CCK+ interneurons",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "38009538": {
+    "corpus_id": "38009538",
+    "author_keys": [
+      "Ishino et al., 2017"
+    ],
+    "title": "Regional Cellular Environment Shapes Phenotypic Variations of Hippocampal and Neocortical Chandelier Cells",
+    "year": 2017,
+    "authors": [
+      "Y. Ishino",
+      "Michael J. Yetman",
+      "Serena M. Sossi",
+      "André Steinecke",
+      "Yasufumi Hayano",
+      "H. Taniguchi"
+    ],
+    "pmid": "28912162",
+    "doi": "10.1523/JNEUROSCI.0047-17.2017",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "38009538_6bc2aeca": {
+        "text": "Cortical circuits include diverse types of GABAergic interneurons (INs) that shape activity of excitatory principal neurons (PNs). Canonical IN types conserved across distinct cortical regions have been defined by their morphological, electrophysiological, and neurochemical properties.",
+        "section": "Molecular Markers and Nomenclature Systems",
+        "claims": [],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
+      }
+    }
+  },
+  "231732903": {
+    "corpus_id": "231732903",
+    "author_keys": [
+      "Dudok et al., 2021"
+    ],
+    "title": "Alternating sources of perisomatic inhibition during behavior.",
+    "year": 2021,
+    "authors": [
+      "Barna Dudok",
+      "Peter M. Klein",
+      "Ernie Hwaun",
+      "Brian R. Lee",
+      "Zizhen Yao",
+      "Olivia Fong",
+      "John C. Bowler",
+      "Satoshi Terada",
+      "Fraser T. Sparks",
+      "Gergely G. Szabo",
+      "Jordan S. Farrell",
+      "J. Berg",
+      "T. Daigle",
+      "Bosiljka Tasic",
+      "J. Dimidschstein",
+      "G. Fishell",
+      "A. Losonczy",
+      "Hongkui Zeng",
+      "I. Soltesz"
+    ],
+    "pmid": "33529646",
+    "doi": "10.1016/j.neuron.2021.01.003",
+    "resolution_confidence": "HIGH",
+    "quotes": {
+      "231732903_b97d2b7d": {
+        "text": "Interneurons expressing cholecystokinin (CCK) and parvalbumin (PV) constitute two key GABAergic controllers of hippocampal pyramidal cell output. Although the temporally precise and millisecond-scale inhibitory regulation of neuronal ensembles delivered by PV interneurons is well established, the in vivo recruitment patterns of CCK-expressing basket cell (BC) populations has remained unknown. We show in the CA1 of the mouse hippocampus that the activity of CCK BCs inversely scales with both PV and pyramidal cell activity at the behaviorally relevant timescales of seconds. Intervention experiments indicated that the inverse coupling of CCK and PV GABAergic systems arises through a mechanism involving powerful inhibitory control of CCK BCs by PV cells. The tightly coupled complementarity of two key microcircuit regulatory modules demonstrates a novel form of brain-state-specific segregation of inhibition during spontaneous behavior.",
+        "section": "Mappings Between Transcriptomic and Classical Classifications",
+        "claims": [
+          "electrophysiology_class"
+        ],
+        "source_method": "asta_report",
+        "status": "pending",
+        "added_by": "20260409_hippocampus_report_ingest"
       }
     }
   }

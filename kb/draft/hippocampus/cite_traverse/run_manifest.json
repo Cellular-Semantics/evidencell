@@ -1,0 +1,70 @@
+[
+  {
+    "step": "fetch_depth_0",
+    "asta_snippets_returned": 0,
+    "asta_snippets_filtered_title": 0,
+    "asta_snippets_filtered_peer_review": 0,
+    "asta_snippets_used": 29,
+    "gap_papers_count": 82,
+    "fallback_attempted": 11,
+    "fallback_success": 11,
+    "report_summaries_merged": 0,
+    "total_summaries": 40,
+    "paper_ids_queried": 82
+  },
+  {
+    "step": "selection_depth_0",
+    "candidates_evaluated": 27,
+    "selected": 7,
+    "deselected": 20
+  },
+  {
+    "step": "fetch_depth_1",
+    "asta_snippets_returned": 20,
+    "asta_snippets_filtered_title": 0,
+    "asta_snippets_filtered_peer_review": 1,
+    "asta_snippets_used": 19,
+    "gap_papers_count": 0,
+    "fallback_attempted": 0,
+    "fallback_success": 0,
+    "report_summaries_merged": 0,
+    "total_summaries": 19,
+    "paper_ids_queried": 7,
+    "notes": "Snippet 1 (section='Comments:', corpusId=230508306) filtered as peer-review/editorial text despite not matching the named prefixes exactly; contains reviewer critique and author rebuttal prose. All 7 queried papers returned snippets, so 0 gap papers."
+  },
+  {
+    "step": "metadata_resolve",
+    "papers_resolved": 82,
+    "papers_null": 0,
+    "all_summaries_count": 59
+  },
+  {
+    "step": "synthesis",
+    "summaries_read": 59,
+    "papers_in_catalogue": 82,
+    "themes_identified": [
+      "Soma location and laminar identity across types",
+      "Molecular markers, neuropeptides, and marker conflicts (P4)",
+      "Electrophysiology",
+      "Transcriptomic bridging and multimodal datasets (P2)",
+      "Subtype splitting and boundary cases (P3)",
+      "Hippocampo-septal cell characterisation (P5)"
+    ],
+    "papers_cited_in_report": 38,
+    "quotes_used_in_report": 62,
+    "schema_gaps": [
+      "defining_markers (partial: axo-axonic, HS, IS subtypes weak)",
+      "anatomical_location (partial: IS-2 absent, ivy needs more sources)",
+      "electrophysiology_class (partial: IS subtypes, HS cell missing)",
+      "morphology_notes (partial: IS1, IS2, HS cell sparse)"
+    ],
+    "new_types_encountered": [
+      "oriens-oriens (O-O) cell",
+      "R-LM cell",
+      "P-LM cell",
+      "LTH cell",
+      "trilaminar cell",
+      "VIP basket cell"
+    ]
+  }
+]
