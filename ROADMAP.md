@@ -1,7 +1,7 @@
 # evidencell Roadmap
 
-> **Date**: 2026-04-09 (last updated)
-> **Status**: M0–M3 implemented. M4 in progress. M5 partially implemented. M6, M2+ pending.
+> **Date**: 2026-04-13 (last updated)
+> **Status**: M0–M3 implemented. M4 in progress. M5 partially implemented. M7 (KB cleanup), M8 (taxonomy refactor), M6, M2+ pending.
 
 ---
 
@@ -16,6 +16,8 @@
 | **M4** Report Generation | Human-readable reports from draft mappings — MVP for biologists | 🔶 In progress | Three-tier architecture designed; hand-crafted OLM mock-up reports; `render.py` implementation pending | M3 |
 | **M5** Cross-validation + Community | Annotation transfer feedback, compliance, GitHub review | 🔶 In progress | AT pipeline implemented, OLM mapping done; schema + report improvements pending. See [M5 planning notes](#m5-planning-notes-2026-04-09) | M4 |
 | **M6** Code/Content Separation | Decouple KB content from code so evidencell can be a clean starting point for new projects | 🔲 Pending | Content boundary defined; HMBA mouse KB on `content/hmba-mouse` branch; `CONTRIBUTING.md` content-branch workflow; `main` passes `just test` with fixtures only | M5 |
+| **M7** KB Structure Cleanup | Move workflow ephemera out of `kb/`; one graph per region×atlas; naming convention; graduation criteria | 🔲 Pending — HIGH PRIORITY | `kb/` contains only graph YAML; `references/`, `research/`, `reports/` at repo root; graph naming + graduation criteria in CONTRIBUTING.md | — (can start now) |
+| **M8** Taxonomy Reference DB | Full taxonomy ingest as local queryable DB; graph stubs pulled on demand from reference store | 🔲 Pending | Local taxonomy DB (SQLite or similar); query-based stub generation; `ingest-taxonomy` rewritten to populate DB; `map-cell-type` queries DB for candidates | M7 |
 | **M2+** Lit Review Quality | Improve snippet context, paper quality signals, and domain relevance filtering in cite-traverse | 🔲 Pending | Contextual retrieval for priority papers; venue/citation/cross-citation quality signals; evidencell-specific relevance pre-filters | — (parallel, any time) |
 
 M0 and M1 can proceed in parallel — the schema does not need to be finalised before the repo is bootstrapped; it can be iterated in place. M2 begins as soon as M1 has the repo structure.
@@ -588,6 +590,159 @@ Allen Brain Cell Atlas provides h5ad expression matrices by taxonomy class
 and dissection region. These could resolve NOT_ASSESSED property comparisons
 (e.g. Grm1 in Sst Gaba_3 clusters) without new experiments. Documented in
 `workflows/annotation-transfer.md` Step 5c. High-value, low-cost improvement.
+
+---
+
+## M7 — KB Structure Cleanup
+
+**Goal**: Make `kb/` contain only graph YAML. Establish naming conventions and graduation criteria. High priority — current structure is confusing and blocks clean onboarding.
+
+**Status**: 🔲 Pending — can start immediately, independent of other milestones.
+
+### Background: structural differences from dismech
+
+dismech has one disease per file, with graph connections only to existing ontology terms (MONDO, HP, GO, CL). evidencell faces three challenges that dismech does not:
+
+1. **Novel nodes**: atlas cluster stubs and literature-defined types are novel entities that exist nowhere else. The graph is a synthesis, not a connector between known entities.
+2. **Partial taxonomy ingestion**: we ingest fragments of large taxonomies (e.g. 61 stubs from a taxonomy of thousands). Atlas stubs are shared infrastructure within a region, not per-mapping-problem.
+3. **Gradual accretion**: a single region's graph grows over time as new classical types are researched and mapped. OLM today, bistratified cells next month, both mapping against the same atlas stubs.
+
+### Design decisions
+
+**One graph per region × atlas.** File = `{region}_{atlas}.yaml` (e.g. `hippocampus_WMBv1.yaml`). Multiple classical types coexist in one graph, sharing atlas stubs. This avoids stub duplication and matches the biology — a region's cell type landscape is interconnected. If a region exceeds ~500 nodes, split by subregion.
+
+**Cross-cutting themes** (e.g. immature neuron populations spanning regions) get their own graph file: `immature_neurons_WMBv1.yaml`. These reference atlas nodes that also appear in region graphs — the node IDs are the canonical link. Cross-region graphs are expected to be rare; when they arise, document the overlap in the graph header.
+
+**Gradual contribution.** ASTA report ingest adds a new classical node + edges to the existing region graph (read-merge-write). The human reviews the diff. This replaces the current pattern of creating standalone `proposed_kb_*.yaml` files.
+
+### Phase 1: Move ephemera out of `kb/` (directory restructure)
+
+```
+BEFORE                                    AFTER
+──────                                    ─────
+kb/draft/{region}/references.json     →   references/{region}/references.json
+kb/draft/{region}/field_mapping.json  →   research/{region}/
+kb/draft/{region}/discovery_*.json    →   research/{region}/
+kb/draft/{region}/reports/            →   reports/{region}/
+kb/draft/{region}/traversal_output/   →   research/{region}/{run_id}/
+kb/{region}/traversal_output/         →   research/{region}/{run_id}/
+```
+
+`references/` at repo root — the validation hook and report renderer need it; it's shared infrastructure, not ephemeral.
+
+Update paths in: `validate_mapping_hook.py`, `render.py`, `justfile`, all workflow orchestrators, `CLAUDE.md`.
+
+### Phase 2: Rename and consolidate graphs
+
+| Current file | New name | Action |
+|---|---|---|
+| `hippocampus_GABA_stratum_oriens_stubs.yaml` | `hippocampus_WMBv1.yaml` | Rename |
+| `CB_MLI_types.yaml` + `CB_PLI_types.yaml` | `cerebellum_WMBv1.yaml` | Merge (check for shared atlas nodes first) |
+| `GPi_shell_neuron.yaml` | `BG_HMBA.yaml` | Rename |
+| `GPi_shell_neuron_Mmus.yaml` | `BG_WMBv1.yaml` | Rename |
+
+### Phase 3: Graduation criteria + enforcement
+
+A graph graduates from `kb/draft/` to `kb/mappings/` when:
+1. `just qc {file}` passes (schema valid, structural integrity, no placeholder snippets)
+2. Every edge has ≥1 evidence item with a verified quote (not just `asta_report` status)
+3. Every classical node has `species` populated
+4. At least one edge has confidence ≥ MODERATE
+5. Human has reviewed and approved (explicit sign-off in commit message or PR)
+
+Deliverables:
+- Criteria documented in `CONTRIBUTING.md`
+- `just graduate {file}` recipe: runs checks, copies to `kb/mappings/`, reports pass/fail
+- `WORKFLOW.md` updated with graduation as a documented step
+
+### Phase 4: Update orchestrators
+
+- `asta-report-ingest.md`: write classical node + edges into existing region graph (read-merge-write) rather than creating standalone `proposed_kb_*.yaml`
+- `ingest-taxonomy.md`: write stubs into existing region graph or create new one
+- `cite-traverse.md` + `evidence-extraction.md`: write to `research/` not `kb/`
+- `gen-report.md`: read from `kb/`, write to `reports/`
+- All orchestrators: read `references.json` from `references/{region}/`
+
+### Deliverables summary
+
+1. `kb/` contains only graph YAML (draft/ and mappings/)
+2. `references/`, `research/`, `reports/` at repo root
+3. Graph naming: `{region}_{atlas}.yaml`
+4. Graduation criteria in `CONTRIBUTING.md` + `just graduate` recipe
+5. All orchestrators + hooks updated for new paths
+6. Existing content migrated; no data loss
+
+---
+
+## M8 — Taxonomy Reference DB
+
+**Goal**: Replace fragment-based taxonomy ingestion with a local queryable database. Graph stubs are pulled on demand from the reference store rather than ingested in bulk.
+
+**Status**: 🔲 Pending (depends on M7 — directory structure must be clean first)
+
+### Problem
+
+Current taxonomy ingest (`ingest-taxonomy.md`) takes a CSV/TSV slice and generates atlas stubs directly into the graph YAML. This creates two problems:
+
+1. **Fragment inconsistency**: ingesting overlapping fragments at different times produces non-deterministic results (LLM-generated descriptions, field mapping choices). Merging on ID is unambiguous but metadata may conflict.
+2. **Incomplete coverage**: each ASTA research run targets a narrow scope (e.g. GABAergic stratum oriens). Atlas types outside that scope are absent from the graph, even if relevant to mapping.
+
+### Design: reference taxonomy as local DB
+
+**Separate the taxonomy from the graph.** Ingest full taxonomies once into a local queryable store. When a mapping workflow needs candidate atlas types, query the store rather than scanning the graph.
+
+```
+inputs/taxonomies/
+  WMBv1_hippocampus.json            # raw taxonomy slice (current)
+  WMBv1_full.db                     # NEW: local SQLite (or similar) with full taxonomy
+
+kb/draft/hippocampus/
+  hippocampus_WMBv1.yaml            # graph: classical nodes + edges + only matched atlas stubs
+```
+
+### Workflow change
+
+**Before (fragment ingest):**
+1. Slice taxonomy CSV → `ingest-taxonomy.md` → atlas stubs written to graph YAML
+2. Map classical types against stubs already in graph
+
+**After (reference DB):**
+1. Ingest full taxonomy → local DB (once, deterministic, no LLM involvement)
+2. When mapping a classical type, query DB: "find WMBv1 clusters in region X with NT type Y and markers Z"
+3. Promote matched candidates into graph as stubs (minimal, only what's needed)
+4. Edges connect classical → promoted stubs as before
+
+### Phased implementation
+
+**Phase 1: DB format + ingest** (careful, foundational)
+- Choose format: SQLite is simple, portable, no server dependency. Alternatives: DuckDB (better for analytical queries), plain JSON with index, OAK-compatible format.
+- Write `src/evidencell/taxonomy_db.py`: ingest full taxonomy CSV/JSON → DB; query by region, NT type, markers, taxonomy level.
+- `just ingest-taxonomy-db {taxonomy_file}` recipe: creates/updates the DB.
+- Tests: round-trip ingest + query; verify determinism (same input → same DB).
+
+**Phase 2: Query-based stub generation**
+- Write `src/evidencell/stub_generator.py`: query taxonomy DB → generate atlas stub YAML nodes.
+- `map-cell-type.md` orchestrator: instead of scanning graph for candidates, query DB first, then promote matches to graph.
+- `asta-report-ingest.md`: after proposing classical node, query DB for candidate atlas types in the same region/NT.
+
+**Phase 3: Migrate existing content**
+- Rebuild `WMBv1_hippocampus.db` from current taxonomy JSON.
+- Verify that existing graph stubs match DB query results.
+- Remove stub-generation logic from `ingest-taxonomy.md`; redirect to DB path.
+- `ingest-taxonomy.md` becomes: "ingest a taxonomy table into the reference DB" (no longer writes to KB graph).
+
+**Phase 4: Formal KG sources (future, not yet scoped)**
+- Some taxonomies have formal KG representations (e.g. CAS JSON, OWL exports from taxonomy teams).
+- These could be ingested directly into the taxonomy DB alongside CSV sources.
+- Avoid baking in a live dependency on an external KG service — use local snapshots stored in `inputs/taxonomies/`, versioned and reproducible.
+
+### Open questions
+
+1. **SQLite vs alternatives**: SQLite is the safe default (zero-config, portable, pip-installable). DuckDB is better for complex analytical queries but adds a dependency. JSON+index avoids any DB but limits query expressiveness.
+2. **Schema for the taxonomy DB**: mirror the LinkML `CellTypeNode` fields (id, name, markers, region, NT type, taxonomy_level)? Or a flatter schema optimised for queries?
+3. **Determinism guarantee**: the DB must be fully deterministic (same input → bit-identical output). No LLM involvement in ingest. Field mapping (taxonomy column → DB column) must be declared, not inferred.
+4. **Multiple taxonomies**: the DB should support multiple atlases (WMBv1, HMBA, future). Partition by atlas name + version.
+5. **Interaction with M6 (code/content separation)**: the taxonomy DB is shared infrastructure, not per-project content. It should stay on `main`, not on a content branch.
 
 ---
 
