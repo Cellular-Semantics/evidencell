@@ -99,3 +99,25 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and the full curation walkthrou
 See [WORKFLOW.md](WORKFLOW.md) for the orchestrator guide (which workflow to run, when, and with what inputs).
 
 See [CLAUDE.md](CLAUDE.md) for development and architecture guidelines.
+
+### MCP / API keys
+
+The literature workflow uses two MCP servers that require credentials:
+
+**ASTA (Semantic Scholar)**
+
+The project `.mcp.json` reads the key from the environment variable `${ASTA_API_KEY}`. Claude Code expands this at startup, so the key must be available before Claude Code launches.
+
+The recommended approach is to add it to `.claude/settings.local.json` (gitignored) via the `env` field, which Claude Code injects before expanding variables in `.mcp.json`:
+
+```json
+{
+  "env": {
+    "ASTA_API_KEY": "<your-asta-api-key>"
+  }
+}
+```
+
+Request an ASTA API key from the Allen Institute. The `settings.local.json` file is gitignored and must be created locally by each contributor — it is never committed.
+
+> **Note (sandbox users):** If you are running inside a Claude Code sandbox (`sbx`), setting `ASTA_API_KEY` as a sandbox secret (`sbx secret set`) is the intended mechanism, but secret-to-environment injection is not yet supported (tracked in [docker/sbx-releases#7](https://github.com/docker/sbx-releases/issues/7)). Use `settings.local.json` as above until that is resolved.
