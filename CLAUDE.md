@@ -99,3 +99,7 @@ writes to validated stores, read:
 - The pre-edit hook validates KB YAML before it reaches disk. If it rejects, fix the underlying issue — do not attempt to bypass the hook.
 - When the hook reports an error, read the structured output, correct the YAML, and retry. The correction loop typically resolves in 1–2 iterations.
 - Ontology terms (CL, UBERON, NCBITaxon) must exist in the OAK local databases. Look up terms with `runoak` before using them — do not invent IDs.
+
+## Claude bug fix
+
+You *must* validate *all* image files before reading them.
