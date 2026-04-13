@@ -355,6 +355,22 @@ Pattern from dismech:
 - Human expert does final approval
 - `weekly-compliance.yaml` cron: finds lowest-compliance KB files, runs Claude to propose improvements, opens PR
 
+### Runtime environments and user setup
+
+Making evidencell accessible to curators (biologists who are not full-stack developers) requires reducing setup friction. Current findings (2026-04-09):
+
+**Docker sandbox** (`docker sbx`): works well for running workflows with "allow everything" minus limited web search. Main blocker: environment variable setup (API keys for Semantic Scholar, EuropePMC, Anthropic) is painful — not yet fully working. Docker sbx is suitable for tech-savvy users (e.g. Nelson, Andrea) once env var injection is solved.
+
+**Claude Code sandbox**: similar env var issues. Workaround of adding keys to `.zshrc` works but isn't ideal. Still too much permission-prompt noise even with permissive settings.
+
+**GitHub Actions**: investigate for longer-term hosted execution — would eliminate local setup entirely. Potential pattern: curator opens a PR or issue; a GitHub Action runs the relevant orchestrator; results are committed back to the PR branch.
+
+**Deliverables** (M5 scope):
+1. `docs/SETUP.md` — step-by-step instructions for Docker sbx setup including env var injection
+2. Docker Compose file or `justfile` recipe (`just docker-setup`) automating the container build with required MCP servers and Python deps
+3. `.env.example` documenting required env vars without secrets
+4. Investigate GitHub Actions for orchestrator execution (feasibility spike)
+
 ### Open questions (additional)
 - **Scale**: a full cerebellar atlas has ~60 cell types; full brain could exceed 3,000. At that scale the mapping hypothesis agent (M3) must be largely automated. Community curation alone will not be sufficient.
 - **Relationship to existing resources**: evidencell should complement and link to Allen Brain Atlas annotations, CL, and BICAN cell type taxonomy — the evidence graph and explicit confidence levels are the contribution, not duplicating the atlases.
