@@ -2,8 +2,12 @@
 
 Usage:
     annotation-transfer convert INPUT OUTPUT [--cluster-col COL --cluster-value VAL --label-col COL]
+    annotation-transfer map INPUT TAXONOMY OUTPUT_DIR [--backend web|local|auto --algorithm ALG]
+    annotation-transfer map-local INPUT STATS MARKERS OUTPUT_JSON [--csv PATH]
     annotation-transfer score MMC_CSV LABELS_JSON OUTPUT [--threshold 0.8]
-    annotation-transfer map INPUT STATS MARKERS OUTPUT_JSON [--csv PATH]
+    annotation-transfer subsample INPUT OUTPUT [--max-cells N --stratify-col COL]
+    annotation-transfer taxonomy-setup TAXONOMY_ID [--web/--no-web --download/--no-download]
+    annotation-transfer taxonomy-list
     annotation-transfer preflight FILE
 """
 
@@ -39,6 +43,56 @@ def cmd_convert(args: argparse.Namespace) -> None:
     print(f"MapMyCells-ready: {args.output}")
 
 
+def cmd_map(args: argparse.Namespace) -> None:
+    """New taxonomy-aware mapping command."""
+    from annotation_transfer.mapper import run_mapping, MappingBackend
+
+    backend = None
+    if args.backend:
+        backend = MappingBackend(args.backend)
+
+    def on_status(status: dict) -> None:
+        ws = status.get("workflowStatus", "")
+        als = status.get("algorithmStatus", "")
+        eta = status.get("ETA", "")
+        print(f"  Status: workflow={ws} algorithm={als} ETA={eta}")
+
+    result = run_mapping(
+        args.input,
+        args.taxonomy,
+        args.output_dir,
+        backend=backend,
+        algorithm=args.algorithm,
+        max_cells_web=args.max_cells,
+        subsample_col=args.subsample_col,
+        on_status=on_status,
+    )
+
+    print(f"Backend: {result.backend_used.value}")
+    print(f"Output CSV: {result.output_csv}")
+    if result.output_json:
+        print(f"Output JSON: {result.output_json}")
+    print(f"Cells mapped: {result.n_cells_mapped}")
+    if result.subsampled_from:
+        print(f"Subsampled from: {result.subsampled_from}")
+
+
+def cmd_map_local(args: argparse.Namespace) -> None:
+    """Backward-compatible local mapping (old interface)."""
+    from annotation_transfer.mapper_local import run_mapmycells
+
+    csv_path = args.csv if args.csv else args.output_json.with_suffix(".csv")
+    run_mapmycells(
+        args.input,
+        args.precomputed_stats,
+        args.marker_genes,
+        args.output_json,
+        output_csv=csv_path,
+    )
+    print(f"MapMyCells result: {args.output_json}")
+    print(f"MapMyCells CSV:    {csv_path}")
+
+
 def cmd_score(args: argparse.Namespace) -> None:
     from annotation_transfer.convert import load_source_labels
     from annotation_transfer.score import compute_f1_matrix, best_mappings
@@ -69,19 +123,70 @@ def cmd_score(args: argparse.Namespace) -> None:
         )
 
 
-def cmd_map(args: argparse.Namespace) -> None:
-    from annotation_transfer.mapper import run_mapmycells
+def cmd_subsample(args: argparse.Namespace) -> None:
+    from annotation_transfer.subsample import subsample_file
 
-    csv_path = args.csv if args.csv else args.output_json.with_suffix(".csv")
-    run_mapmycells(
+    n_kept = subsample_file(
         args.input,
-        args.precomputed_stats,
-        args.marker_genes,
-        args.output_json,
-        output_csv=csv_path,
+        args.output,
+        max_cells=args.max_cells,
+        stratify_col=args.stratify_col,
+        seed=args.seed,
     )
-    print(f"MapMyCells result: {args.output_json}")
-    print(f"MapMyCells CSV:    {csv_path}")
+    print(f"Subsampled: {args.input} → {args.output} ({n_kept} cells)")
+
+
+def cmd_taxonomy_setup(args: argparse.Namespace) -> None:
+    from annotation_transfer.taxonomies import (
+        get_taxonomy, save_taxonomy, resource_check_for_download, TaxonomyError,
+    )
+
+    try:
+        spec = get_taxonomy(args.taxonomy_id)
+    except TaxonomyError:
+        print(f"Unknown taxonomy: {args.taxonomy_id}")
+        sys.exit(1)
+
+    print(f"Taxonomy: {spec.name} ({spec.id})")
+    print(f"Species:  {spec.species}")
+    print(f"Web ID:   {spec.web_ref_id or '(none)'}")
+
+    # Set web availability
+    if args.web is not None:
+        spec.web_available = args.web
+
+    # Resource check
+    if args.download:
+        report = resource_check_for_download(spec)
+        print(f"\nResource check:")
+        print(f"  Available RAM:  {report['available_ram_gb']} GB")
+        print(f"  Available disk: {report['available_disk_gb']} GB")
+        print(f"  Recommendation: {report['recommendation']}")
+
+        if not report["can_download"]:
+            print("Insufficient disk space for download.")
+            spec.preferred_backend = "web"
+        else:
+            print("Download not yet implemented — set local paths manually.")
+            spec.preferred_backend = report["recommendation"]
+    elif args.web is False:
+        spec.preferred_backend = "local"
+    elif spec.web_ref_id:
+        spec.preferred_backend = "auto"
+
+    path = save_taxonomy(spec)
+    print(f"\nSaved: {path}")
+    print(f"Preferred backend: {spec.preferred_backend}")
+
+
+def cmd_taxonomy_list(args: argparse.Namespace) -> None:
+    from annotation_transfer.taxonomies import list_taxonomies
+
+    specs = list_taxonomies()
+    for s in specs:
+        web = f"web={s.web_ref_id}" if s.web_ref_id else "web=N/A"
+        local = "local=yes" if s.local_stats_path else "local=no"
+        print(f"  {s.id:20s}  {s.name:40s}  {web:30s}  {local}  pref={s.preferred_backend}")
 
 
 def cmd_preflight(args: argparse.Namespace) -> None:
@@ -108,6 +213,24 @@ def main(argv: list[str] | None = None) -> None:
     p_conv.add_argument("--label-col", help="obs column for source labels (default: cluster-col)")
     p_conv.add_argument("-y", "--yes", action="store_true", help="Skip preflight confirmation")
 
+    # map (new: taxonomy-aware)
+    p_map = sub.add_parser("map", help="Run MapMyCells (web API or local)")
+    p_map.add_argument("input", type=Path, help="MapMyCells-ready h5ad or CSV")
+    p_map.add_argument("taxonomy", help="Taxonomy ID (e.g. CCN20230722)")
+    p_map.add_argument("output_dir", type=Path, help="Output directory")
+    p_map.add_argument("--backend", choices=["web", "local", "auto"], help="Force backend")
+    p_map.add_argument("--algorithm", help="Mapping algorithm workflow name")
+    p_map.add_argument("--max-cells", type=int, default=150_000, help="Max cells for web API")
+    p_map.add_argument("--subsample-col", help="Column for stratified subsampling")
+
+    # map-local (backward-compatible)
+    p_mapl = sub.add_parser("map-local", help="Run MapMyCells locally (requires cell_type_mapper)")
+    p_mapl.add_argument("input", type=Path, help="MapMyCells-ready h5ad")
+    p_mapl.add_argument("precomputed_stats", type=Path, help="Taxonomy precomputed stats HDF5")
+    p_mapl.add_argument("marker_genes", type=Path, help="Marker genes JSON")
+    p_mapl.add_argument("output_json", type=Path, help="Output extended JSON")
+    p_mapl.add_argument("--csv", type=Path, help="Also write CSV output")
+
     # score
     p_score = sub.add_parser("score", help="Compute F1 matrix from MapMyCells output")
     p_score.add_argument("mmc_csv", type=Path, help="MapMyCells output CSV")
@@ -115,13 +238,27 @@ def main(argv: list[str] | None = None) -> None:
     p_score.add_argument("output", type=Path, help="Output F1 matrix CSV")
     p_score.add_argument("--threshold", type=float, default=0.8, help="Bootstrap threshold")
 
-    # map
-    p_map = sub.add_parser("map", help="Run MapMyCells (requires cell_type_mapper)")
-    p_map.add_argument("input", type=Path, help="MapMyCells-ready h5ad")
-    p_map.add_argument("precomputed_stats", type=Path, help="Taxonomy precomputed stats HDF5")
-    p_map.add_argument("marker_genes", type=Path, help="Marker genes JSON")
-    p_map.add_argument("output_json", type=Path, help="Output extended JSON")
-    p_map.add_argument("--csv", type=Path, help="Also write CSV output")
+    # subsample
+    p_sub = sub.add_parser("subsample", help="Subsample h5ad for web API limits")
+    p_sub.add_argument("input", type=Path, help="Input h5ad file")
+    p_sub.add_argument("output", type=Path, help="Output subsampled h5ad")
+    p_sub.add_argument("--max-cells", type=int, default=150_000, help="Maximum cells")
+    p_sub.add_argument("--stratify-col", help="Column for stratified sampling")
+    p_sub.add_argument("--seed", type=int, default=42, help="Random seed")
+
+    # taxonomy-setup
+    p_tax = sub.add_parser("taxonomy-setup", help="Configure a taxonomy for mapping")
+    p_tax.add_argument("taxonomy_id", help="Taxonomy ID (e.g. CCN20230722)")
+    p_tax.add_argument("--web", action="store_true", default=None, dest="web",
+                        help="This taxonomy is available on MapMyCells web")
+    p_tax.add_argument("--no-web", action="store_false", dest="web",
+                        help="This taxonomy is NOT on MapMyCells web")
+    p_tax.add_argument("--download", action="store_true", default=False,
+                        help="Download taxonomy files for local execution")
+    p_tax.add_argument("--no-download", action="store_false", dest="download")
+
+    # taxonomy-list
+    sub.add_parser("taxonomy-list", help="List known taxonomies")
 
     # preflight
     p_pre = sub.add_parser("preflight", help="Check if dataset fits in memory")
@@ -131,8 +268,12 @@ def main(argv: list[str] | None = None) -> None:
 
     handlers = {
         "convert": cmd_convert,
-        "score": cmd_score,
         "map": cmd_map,
+        "map-local": cmd_map_local,
+        "score": cmd_score,
+        "subsample": cmd_subsample,
+        "taxonomy-setup": cmd_taxonomy_setup,
+        "taxonomy-list": cmd_taxonomy_list,
         "preflight": cmd_preflight,
     }
     handlers[args.command](args)

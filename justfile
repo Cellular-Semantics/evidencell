@@ -232,10 +232,35 @@ at-preflight FILE:
 at-convert INPUT OUTPUT *ARGS:
     cd annotation_transfer && uv run annotation-transfer convert {{INPUT}} {{OUTPUT}} {{ARGS}}
 
+# Run MapMyCells via web API or local (taxonomy-aware)
+[group('annotation-transfer')]
+at-map INPUT TAXONOMY OUTPUT_DIR *ARGS:
+    cd annotation_transfer && uv run annotation-transfer map {{INPUT}} {{TAXONOMY}} {{OUTPUT_DIR}} {{ARGS}}
+
+# Run MapMyCells locally (backward-compatible, requires cell_type_mapper)
+[group('annotation-transfer')]
+at-map-local INPUT STATS MARKERS OUTPUT_JSON *ARGS:
+    cd annotation_transfer && uv run annotation-transfer map-local {{INPUT}} {{STATS}} {{MARKERS}} {{OUTPUT_JSON}} {{ARGS}}
+
 # Compute F1 matrix from MapMyCells output
 [group('annotation-transfer')]
 at-score MMC_CSV LABELS OUTPUT *ARGS:
     cd annotation_transfer && uv run annotation-transfer score {{MMC_CSV}} {{LABELS}} {{OUTPUT}} {{ARGS}}
+
+# Subsample h5ad for web API limits
+[group('annotation-transfer')]
+at-subsample INPUT OUTPUT *ARGS:
+    cd annotation_transfer && uv run annotation-transfer subsample {{INPUT}} {{OUTPUT}} {{ARGS}}
+
+# Configure a taxonomy for mapping
+[group('annotation-transfer')]
+at-taxonomy-setup TAXONOMY_ID *ARGS:
+    cd annotation_transfer && uv run annotation-transfer taxonomy-setup {{TAXONOMY_ID}} {{ARGS}}
+
+# List known taxonomies
+[group('annotation-transfer')]
+at-taxonomy-list:
+    cd annotation_transfer && uv run annotation-transfer taxonomy-list
 
 # Run annotation transfer tests
 [group('annotation-transfer')]
