@@ -24,14 +24,19 @@ The annotation transfer proto-repo provides three stages:
 |-------|------|-------------|
 | **Preflight** | `just at-preflight FILE` | Estimate memory, gate large datasets |
 | **Convert** | `just at-convert INPUT OUTPUT [--cluster-col COL]` | Sanitise h5ad for MapMyCells (raw counts, sparse CSR, minimal obs/var) |
+| **Map** | `just at-map INPUT TAXONOMY OUTPUT_DIR` | Run MapMyCells via web API or local (auto-resolved) |
+| **Map (local)** | `just at-map-local INPUT STATS MARKERS OUTPUT_JSON` | Run MapMyCells locally (requires `cell_type_mapper`) |
+| **Subsample** | `just at-subsample INPUT OUTPUT [--stratify-col COL]` | Stratified subsample for web API limits (150K cells / 2GB) |
 | **Score** | `just at-score MMC_CSV LABELS OUTPUT` | Compute F1 matrix from MapMyCells CSV + source labels |
+| **Taxonomy setup** | `just at-taxonomy-setup TAXONOMY_ID` | Configure backend preference for a taxonomy |
 
 For dataset retrieval from heterogeneous sources, use the **retrieve_dataset** skill
 (`.claude/skills/retrieve_dataset.md`), which handles format detection, R conversion,
 annotation inspection, and the preflight gate.
 
-MapMyCells itself is run via `annotation-transfer map` (requires `cell_type_mapper`
-optional dependency).
+MapMyCells mapping uses the BKP GraphQL API by default (no local install needed).
+For local execution, install `cell_type_mapper` and download taxonomy files via
+`annotation-transfer taxonomy-setup TAXONOMY_ID --download`.
 
 ---
 
@@ -43,9 +48,16 @@ Step 0  Dataset retrieval
         dataset to MapMyCells-ready h5ad + source labels JSON.
         [GATE] Human confirms annotation column and any cell subset filters.
 
+Step 0.5 Backend resolution + subsample
+        Load taxonomy spec; check preferred backend.
+        If web backend and dataset >150K cells:
+          annotation-transfer subsample <input.h5ad> <subsampled.h5ad> --stratify-col <label_col>
+        [GATE] Human confirms subsampling strategy or switches to local.
+
 Step 1  Run MapMyCells
-        annotation-transfer map <input.h5ad> <taxonomy_stats> <markers> <output.json>
-        Target taxonomy: WMB Yao 2023 (CCN20230722) for mouse.
+        annotation-transfer map <input.h5ad> CCN20230722 <output_dir/> --backend auto
+        Uses taxonomy's preferred backend. Override with --backend web|local.
+        For explicit local: annotation-transfer map-local <input.h5ad> <stats> <markers> <output.json>
 
 Step 2  Score
         annotation-transfer score <mmc_output.csv> <labels.json> <f1_matrix.csv>
