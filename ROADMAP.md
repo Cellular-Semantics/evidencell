@@ -664,11 +664,14 @@ similarity. Reports should make this explicit: "cells were selected by
 [method], which confirms [markers/morphology/ephys], so the transfer
 carries classical-type provenance."
 
-**R5. Target-side expression from WMB h5ad files.**
-Allen Brain Cell Atlas provides h5ad expression matrices by taxonomy class
-and dissection region. These could resolve NOT_ASSESSED property comparisons
-(e.g. Grm1 in Sst Gaba_3 clusters) without new experiments. Documented in
-`workflows/annotation-transfer.md` Step 5c. High-value, low-cost improvement.
+**R5. Target-side expression cross-check via precomputed stats.**
+The precomputed stats HDF5 downloaded during taxonomy setup (M8 Phase 1)
+provides full-transcriptome cluster means, enabling quantitative target-side
+marker assessment without downloading per-class expression matrices. This is
+now integrated into `map-cell-type.md` Step 3 (mapping edge subagent populates
+`node_b_value` from precomputed stats). For cases requiring per-cell
+distributions rather than cluster means, the class-level h5ad files from the
+Allen S3 bucket remain an option.
 
 ---
 
@@ -793,10 +796,12 @@ kb/draft/hippocampus/
 
 ### Phased implementation
 
-**Phase 1: DB format + ingest** (careful, foundational)
+**Phase 1: DB format + ingest + reference file download** (careful, foundational)
 - Choose format: SQLite is simple, portable, no server dependency. Alternatives: DuckDB (better for analytical queries), plain JSON with index, OAK-compatible format.
 - Write `src/evidencell/taxonomy_db.py`: ingest full taxonomy CSV/JSON → DB; query by region, NT type, markers, taxonomy level.
 - `just ingest-taxonomy-db {taxonomy_file}` recipe: creates/updates the DB.
+- **Download precomputed stats HDF5 + marker genes JSON** during taxonomy setup. These files serve double duty: (a) local MapMyCells execution and (b) quantitative target-side marker cross-checking in `map-cell-type.md`. S3 URLs are already defined in `annotation_transfer/src/annotation_transfer/taxonomies.py` for known taxonomies (CCN20230722, CCN202210140, etc.). The download path should be managed by the taxonomy DB — each taxonomy entry records where its reference files live on disk. The existing `taxonomy-setup --download` stub becomes the entry point.
+- The precomputed stats HDF5 contains full-transcriptome cluster-level mean expression (e.g. 32K genes × 5322 clusters for WMBv1). This enables querying arbitrary genes against atlas clusters without downloading per-class expression matrices.
 - Tests: round-trip ingest + query; verify determinism (same input → same DB).
 
 **Phase 2: Query-based stub generation**

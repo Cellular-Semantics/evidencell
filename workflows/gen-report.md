@@ -159,6 +159,37 @@ Each section must have:
   gap explicitly: "Source-side confirmed at N%; target-side still unresolvable from atlas
   metadata." This helps readers understand where remaining gaps lie.
 
+**Marker evidence provenance** (bulleted, one per defining_marker, negative_marker,
+and neuropeptide — omit if no provenance issues):
+
+For each marker/neuropeptide on the classical node, assess the evidence chain:
+- **Method type**: Is the evidence protein-level (IHC, immunofluorescence),
+  transcript-level (scRNA-seq, RT-PCR, ISH), or both? State which.
+- **Cell type specificity**: Did the study that established this marker actually
+  confirm the classical type's identity (e.g. morphological reconstruction,
+  Cre-driver targeting, patch-clamp followed by fill)? Or was it tested on a
+  broader population (e.g. "Sst+ interneurons in stratum oriens" without
+  confirming OLM morphology)? State the basis for believing the study was
+  looking at the right cells.
+- **Data source discrepancies**: If a marker or neuropeptide appears in one data
+  source but not another (e.g. listed in taxonomy metadata neuropeptides but
+  at zero in precomputed stats; or reported in literature but absent from atlas
+  metadata), note the discrepancy factually. Do not explain it away — present
+  both values and flag for investigation.
+- **Quantitative cross-check**: If precomputed stats values are available in
+  `property_comparisons[*].node_b_value`, note where they confirm or
+  challenge the expected marker profile. For negative markers, note any
+  clusters where expression is unexpectedly high.
+- **Weak or unsourced evidence**: If a marker is listed without a specific
+  citation on the classical node, or if all citations are reviews rather than
+  primary studies, flag this explicitly.
+
+For markers where the evidence provenance is weak or the cell-type specificity
+of the original study is unclear, add a recommendation for targeted literature
+search (e.g. "Calb1 as an OLM negative marker lacks a primary citation testing
+morphology-confirmed OLM cells — a targeted cite-traverse for 'calbindin
+OLM hippocampus' may resolve this").
+
 **Concerns** (bulleted):
 - From evidence items where `supports` = REFUTE.
 - From DISCORDANT or APPROXIMATE property_comparisons — interpret each:
@@ -176,6 +207,9 @@ Each section must have:
 - Derived from `unresolved_questions[]` and `proposed_experiments[]`.
 - Name the specific evidence type that would be added (AnnotationTransferEvidence,
   LiteratureEvidence, PATCH_SEQ, etc.) and any quantitative threshold (e.g. F1 ≥ 0.80).
+- Include any targeted literature searches recommended in the marker evidence
+  provenance section above — weak marker evidence is a gap that literature
+  review can address without new experiments.
 
 **UNCERTAIN edges:** Collapse all into one `## Eliminated candidates` section.
 

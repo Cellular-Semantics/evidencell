@@ -39,7 +39,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | `evidence-extraction` | `workflows/evidence-extraction.md` | M2 | **Ready** | After cite-traverse — extracts verified evidence items into KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | M3 | **Ready** | Discovery mode: finds candidate atlas matches from property overlap; hypothesis mode: tests curator's proposed mapping. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
 | `gen-report` | `workflows/gen-report.md` | M4 | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
-| `annotation-transfer` | `workflows/annotation-transfer.md` | M5 | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix; orchestrator for KB import pending |
+| `annotation-transfer` | `workflows/annotation-transfer.md` | M5 | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
 
 ---
 
@@ -69,6 +69,7 @@ the full specification and correction loop protocol.
 |---|---|---|
 | ASTA deep research PDFs | `inputs/deepsearch/` | `asta-report-ingest.md` |
 | Taxonomy tables (CSV/TSV) | `inputs/taxonomies/` | `ingest-taxonomy.md` |
+| Precomputed stats HDF5 | taxonomy local paths (see M8) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
 
 Place input files in the appropriate subdirectory before running the relevant orchestrator.
 
