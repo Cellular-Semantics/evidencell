@@ -737,6 +737,16 @@ Deliverables:
 - `gen-report.md`: read from `kb/`, write to `reports/`
 - All orchestrators: read `references.json` from `references/{region}/`
 
+### Phase 5: Self-contained KB graphs with inline references
+
+Migrate from `references.json` sidecar to inline snippets on evidence items +
+schema-specified `PublicationReference` metadata on the graph. `references.json`
+becomes a research artifact (ASTA quote mine) rather than required KB
+infrastructure. Adds ingest provenance tracking (per-quote `ingested_by`,
+`_meta.ingest_log`) to preserve the chain from ASTA PDF → quote store → KB.
+
+See [planning/schema_self_contained_references.md](planning/schema_self_contained_references.md) for full proposal.
+
 ### Deliverables summary
 
 1. `kb/` contains only graph YAML (draft/ and mappings/)
@@ -745,6 +755,7 @@ Deliverables:
 4. Graduation criteria in `CONTRIBUTING.md` + `just graduate` recipe
 5. All orchestrators + hooks updated for new paths
 6. Existing content migrated; no data loss
+7. Self-contained KB graphs: inline snippets, `PublicationReference` metadata, ingest provenance
 
 ---
 

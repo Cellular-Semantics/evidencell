@@ -59,7 +59,7 @@ All moves in one atomic commit. No content changes.
 | `kb/draft/hippocampus/cite_traverse/*` (11 files) | `research/hippocampus/cite_traverse/*` |
 | `kb/draft/hippocampus/evidence_extraction/*` (5 files) | `research/hippocampus/evidence_extraction/*` |
 | `kb/draft/hippocampus/reports/olm_hippocampus_summary.md` | `reports/hippocampus/olm_hippocampus_summary.md` |
-| `kb/draft/hippocampus/20260409_hippocampus_report_ingest.yaml` | `research/hippocampus/20260409_hippocampus_report_ingest.yaml` |
+| `kb/draft/hippocampus/20260409_hippocampus_report_ingest.yaml` | **STAYS** in `kb/draft/hippocampus/` (schema-compliant nodes, not a research artifact) |
 
 ### Hippocampus — from `kb/hippocampus/` (untracked traversal outputs)
 
