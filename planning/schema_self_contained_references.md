@@ -123,9 +123,60 @@ is preserved:
 The bulk store remains available for future mining passes — new evidence-extraction
 runs can pull additional quotes without re-running ASTA ingest.
 
+## Ingest provenance on the quote store
+
+Currently `references.json` merges quotes from multiple ASTA reports (e.g. OLM
+report + broader GABAergic report) into one file with only `_meta.last_updated_by`
+recording the most recent write. This loses the provenance chain — you can't tell
+which report contributed which quotes without forensics.
+
+### Fix: per-quote `ingested_by` + per-file `ingest_log`
+
+Each quote entry gains an `ingested_by` field recording which workflow run added it:
+
+```json
+{
+  "201041756": {
+    "corpus_id": "201041756",
+    "pmid": "31420995",
+    "quotes": {
+      "201041756_bd56f851": {
+        "text": "as well as expression of Chrna2...",
+        "section": "Results 3.3",
+        "claims": ["chrna2_positive"],
+        "ingested_by": "OLM_Neurons_asta_report/step2"
+      }
+    }
+  }
+}
+```
+
+The `_meta` block gains an `ingest_log` recording every write:
+
+```json
+{
+  "_meta": {
+    "region": "hippocampus",
+    "ingest_log": [
+      {"run": "OLM_Neurons_asta_report/step2", "date": "2026-04-08T...", "quotes_added": 120},
+      {"run": "hippocampus_GABAergic_neurons/step2", "date": "2026-04-09T...", "quotes_added": 80}
+    ]
+  }
+}
+```
+
+This is cheap to implement (one field per quote, one list in `_meta`) and makes
+the merge history transparent. The `asta-report-ingest.md` Step 2 merge protocol
+just needs to stamp `ingested_by` on new quotes and append to `ingest_log`.
+
+When quotes are later inlined into KB evidence items, `ingested_by` traces back
+to the source report — closing the provenance loop from ASTA PDF → quote store →
+KB evidence → rendered report.
+
 ## Relationship to dismech
 
 Converges with dismech pattern: inline snippets, top-level `references:` list,
-`references_cache/` for verification. Key difference: we retain the bulk quote
+`references_cache/` for verification. Key differences: we retain the bulk quote
 store as a research artifact because our ASTA ingest pipeline produces it and
-it has ongoing value.
+it has ongoing value; we add ingest provenance tracking that dismech doesn't need
+(dismech writes evidence items one-at-a-time, not via bulk ingest).
