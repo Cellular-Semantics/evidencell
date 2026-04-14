@@ -13,6 +13,7 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 | M3 | Mapping (property comparison, edge YAML, confidence assessment) | **Complete** |
 | M4 | Report generation (summary + drill-down, LLM synthesis, anti-hallucination hooks) | **Complete** |
 | M5 | Annotation transfer evidence | **In progress** — pipeline implemented, orchestrator pending |
+| M7 | KB structure cleanup (Phase 1: directory restructure) | **Complete** |
 
 ---
 
@@ -30,16 +31,16 @@ proceeding.
 
 The human is the top-level coordinator. Run each orchestrator when ready, review the output at each gate, and proceed at your own pace. There is no meta-orchestrator.
 
-| Orchestrator | Location | Milestone | Status | When to run |
+| Orchestrator | Location | Phase | Status | When to run |
 |---|---|---|---|---|
-| `ingest-taxonomy` | `workflows/ingest-taxonomy.md` | M1 | **Ready** | Ingest a taxonomy table → atlas cluster CellTypeNode stubs |
-| `asta-report-ingest` | `workflows/asta-report-ingest.md` | M2 | **Ready** | Start here when you have an ASTA deep research PDF — proposes classical nodes + initial evidence |
-| `lit-review` | `workflows/lit-review.md` | M2 | **Ready** | Seed discovery when starting without a report; hands off to cite-traverse |
-| `cite-traverse` | `workflows/cite-traverse.md` | M2 | **Ready** | Citation traversal + synthesis; called by lit-review and asta-report-ingest |
-| `evidence-extraction` | `workflows/evidence-extraction.md` | M2 | **Ready** | After cite-traverse — extracts verified evidence items into KB YAML |
-| `map-cell-type` | `workflows/map-cell-type.md` | M3 | **Ready** | Discovery mode: finds candidate atlas matches from property overlap; hypothesis mode: tests curator's proposed mapping. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
-| `gen-report` | `workflows/gen-report.md` | M4 | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
-| `annotation-transfer` | `workflows/annotation-transfer.md` | M5 | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix; orchestrator for KB import pending |
+| `ingest-taxonomy` | `workflows/ingest-taxonomy.md` | Discovery | **Ready** | Ingest a taxonomy table → atlas cluster CellTypeNode stubs |
+| `asta-report-ingest` | `workflows/asta-report-ingest.md` | Literature | **Ready** | Start here when you have an ASTA deep research PDF — proposes classical nodes + initial evidence |
+| `lit-review` | `workflows/lit-review.md` | Literature | **Ready** | Seed discovery when starting without a report; hands off to cite-traverse |
+| `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; called by lit-review and asta-report-ingest |
+| `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After cite-traverse — extracts verified evidence items into KB YAML |
+| `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: finds candidate atlas matches from property overlap; hypothesis mode: tests curator's proposed mapping. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
+| `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
+| `annotation-transfer` | `workflows/annotation-transfer.md` | Evidence transfer | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
 
 ---
 
@@ -54,9 +55,9 @@ integrity failures (dangling edges, duplicate IDs, placeholder snippets), `quote
 values absent from `references.json`, `PMID:`/`DOI:` citations absent from
 `references.json`, LinkML schema non-conformance.
 
-**Markdown reports** (`kb/**/reports/*.md`) — blocks writes with: blockquote blocks
+**Markdown reports** (`reports/{region}/*.md`) — blocks writes with: blockquote blocks
 missing a `<!-- quote_key: X -->` attribution annotation, quote keys or PMIDs absent
-from `references.json`.
+from `references/{region}/references.json`.
 
 See [`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md) for
 the full specification and correction loop protocol.
@@ -69,6 +70,7 @@ the full specification and correction loop protocol.
 |---|---|---|
 | ASTA deep research PDFs | `inputs/deepsearch/` | `asta-report-ingest.md` |
 | Taxonomy tables (CSV/TSV) | `inputs/taxonomies/` | `ingest-taxonomy.md` |
+| Precomputed stats HDF5 | taxonomy local paths (see ROADMAP.md § Taxonomy Reference DB) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
 
 Place input files in the appropriate subdirectory before running the relevant orchestrator.
 
@@ -113,7 +115,7 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 
 ── Reports + community ────────────────────────────────────────────────────────
 
-5.  just gen-facts {graph_file} {node_id}        # extract structured facts (M4)
+5.  just gen-facts {graph_file} {node_id}        # extract structured facts
     → workflows/gen-report.md                    # LLM synthesis + ID/quote validation
     [GATE] biologist reviews, executes proposed experiments
 

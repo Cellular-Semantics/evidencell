@@ -9,7 +9,7 @@ use the same pipeline — discovery simply means Step 0 generates the candidates
 rather than receiving them.
 
 **Prerequisites**:
-- `CellTypeNode` stubs for both classical and atlas types (from M1 ingestion or
+- `CellTypeNode` stubs for both classical and atlas types (from ingest-taxonomy or
   hand-curation)
 - At minimum: defining markers, NT type, and anatomical location populated on the
   classical node. Literature evidence items improve confidence but are not required
@@ -77,7 +77,10 @@ TASK:
    records soma position only. Axonal and dendritic projection targets are not
    captured and must not be used in scoring — classical type descriptions often
    include axon targets (e.g. OLM axon in SLM) which have no atlas counterpart.
-   Only compare soma-relevant locations from the classical node.
+   Only compare against classical node locations with `compartment: SOMA` (or
+   no compartment, which implies whole-cell). Skip entries with
+   `compartment: AXON_TARGET` or `compartment: DENDRITE` — their absence from
+   atlas MERFISH data is expected, not diagnostic.
 
    For each classical soma location, check if the atlas node has cells in the
    same structure or a child/parent structure. Use MBA ID prefix matching for
@@ -174,7 +177,7 @@ DISCORDANT signals (if any): ...
 For each confirmed candidate, identify evidence gaps — properties where alignment
 is NOT_ASSESSED or based solely on atlas metadata with no literature corroboration.
 
-If the curator has a paper catalogue from M2 (`paper_catalogue.json`), run targeted
+If the curator has a paper catalogue from cite-traverse (`paper_catalogue.json`), run targeted
 ASTA snippet searches scoped to that catalogue:
 - `"{classical_type} {marker} expression"`
 - `"{classical_type} {region} location"`
@@ -199,6 +202,7 @@ ATLAS STUBS FILE: {atlas_stubs_file}
 ATLAS NODE ID: {atlas_node_id}
 RELATIONSHIP: {relationship_type}
 DISCOVERY DATA: {path to discovery_candidates.json, if available}
+PRECOMPUTED_STATS: {path to precomputed_stats HDF5, or "none"}
 
 REFERENCE: Read kb/draft/cerebellum/CB_PLI_types.yaml for structural reference —
 specifically the edges section (starts after the nodes). Match that format exactly.
@@ -209,16 +213,49 @@ TASK:
 
 2. Build property_comparisons for at minimum:
    - nt_type
-   - location (one comparison per classical soma location — exclude axon/dendrite
-     projection targets, which are not captured in atlas MERFISH data)
+   - location (one comparison per classical location with `compartment: SOMA`
+     or no compartment — skip `AXON_TARGET` / `DENDRITE` entries, which are
+     not captured in atlas MERFISH data)
    - Each classical defining_marker (property: "marker_{symbol}")
+   - Each classical negative_marker (property: "negative_marker_{symbol}")
    - Each classical neuropeptide (property: "neuropeptide_{symbol}")
 
    For each comparison:
-   - node_a_value: verbatim from classical node
-   - node_b_value: verbatim from atlas node (or "not present" if absent)
+   - node_a_value: verbatim from classical node (include quantitative expression
+     data if available from source-side re-analysis, e.g. detection rate and
+     mean counts)
+   - node_b_value: verbatim from atlas node metadata (or "not present" if absent).
+     If PRECOMPUTED_STATS is available, also query the precomputed stats HDF5 for
+     the mean expression of that gene in the candidate atlas cluster(s). Report
+     the quantitative value alongside the metadata annotation. See "Precomputed
+     stats cross-check" below.
    - alignment: CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED
-   - notes: brief explanation (required for APPROXIMATE and DISCORDANT)
+   - notes: brief explanation (required for APPROXIMATE and DISCORDANT). If the
+     precomputed stats value disagrees with the taxonomy metadata annotation,
+     note the discrepancy factually (e.g. "Pnoc listed in taxonomy metadata
+     neuropeptides; precomputed stats show 0.0 in this cluster"). Do not
+     attempt to explain the discrepancy — flag it for investigation.
+
+   **Precomputed stats cross-check.** When a precomputed stats HDF5 is available
+   for the target taxonomy:
+
+   a. Load the file: `col_names` (gene Ensembl IDs), `sum` matrix (cluster ×
+      gene means), `cluster_to_row` mapping, `taxonomy_tree` + `name_mapper`.
+
+   b. For each classical defining_marker, negative_marker, and neuropeptide,
+      look up the gene's Ensembl ID and retrieve the mean expression value from
+      the candidate cluster row(s) in the `sum` matrix.
+
+   c. Populate `node_b_value` with the quantitative expression (e.g.
+      "Chrna2: 4.3 (precomputed stats mean); listed in supertype markers").
+      This upgrades NOT_ASSESSED comparisons where the gene is absent from
+      atlas metadata but present in the precomputed stats, and adds
+      quantitative grounding to metadata-only comparisons.
+
+   d. Where a gene shows zero expression across all relevant clusters in the
+      precomputed stats but is annotated in the taxonomy metadata, or vice
+      versa, note the discrepancy in the `notes` field. Do not adjudicate —
+      report both values for downstream interpretation in reports.
 
    LOCATION alignment rules:
    - CONSISTENT: atlas node has cells in the matching soma region

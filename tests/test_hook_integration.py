@@ -158,9 +158,12 @@ def test_invalid_yaml_syntax_blocked():
 
 
 def _make_refs_and_yaml(tmp_path: Path, yaml_content: str) -> tuple[str, dict]:
-    """Create a kb/draft/ dir with references.json; return file_path string + payload."""
-    kb_dir = tmp_path / "kb" / "draft"
+    """Create kb/draft/{region}/ with YAML + references/{region}/references.json."""
+    region = "test_region"
+    kb_dir = tmp_path / "kb" / "draft" / region
     kb_dir.mkdir(parents=True)
+    refs_dir = tmp_path / "references" / region
+    refs_dir.mkdir(parents=True)
     refs = {
         "201041756": {
             "corpus_id": "201041756",
@@ -171,7 +174,7 @@ def _make_refs_and_yaml(tmp_path: Path, yaml_content: str) -> tuple[str, dict]:
             },
         }
     }
-    (kb_dir / "references.json").write_text(json.dumps(refs))
+    (refs_dir / "references.json").write_text(json.dumps(refs))
     yaml_path = kb_dir / "test.yaml"
     yaml_path.write_text(yaml_content)
     return str(yaml_path), _write_payload(yaml_content, file_path=str(yaml_path))
@@ -234,9 +237,12 @@ edges:
 
 
 def _make_refs_and_md(tmp_path: Path, md_content: str) -> dict:
-    """Create kb/draft/reports/ dir with references.json; return payload."""
-    reports_dir = tmp_path / "kb" / "draft" / "reports"
+    """Create reports/{region}/ dir with references/{region}/references.json; return payload."""
+    region = "test_region"
+    reports_dir = tmp_path / "reports" / region
     reports_dir.mkdir(parents=True)
+    refs_dir = tmp_path / "references" / region
+    refs_dir.mkdir(parents=True)
     refs = {
         "201041756": {
             "corpus_id": "201041756",
@@ -247,7 +253,7 @@ def _make_refs_and_md(tmp_path: Path, md_content: str) -> dict:
             },
         }
     }
-    (reports_dir.parent / "references.json").write_text(json.dumps(refs))
+    (refs_dir / "references.json").write_text(json.dumps(refs))
     md_path = reports_dir / "test_report.md"
     md_path.write_text(md_content)
     return _write_payload(md_content, file_path=str(md_path))

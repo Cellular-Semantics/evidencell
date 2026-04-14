@@ -1,5 +1,5 @@
 ##
-# CellTypeEvidence Schema v0.5.4
+# CellTypeEvidence Schema v0.6.0
 #
 # Schema for accumulating evidence for transcriptomic cell type mappings.
 # Core design: an evidence graph (nodes + edges), inspired by dismech's causal chain model.
@@ -26,6 +26,9 @@
 #                               AnnotationTransferEvidence: source_species, target_species added;
 #                               nt_consistent_with_classical deprecated (superseded by property_comparisons);
 #                               OntologyTerm: name_in_source added as required field (always record)
+# Version: 0.6.0 (2026-04-09) — AnatomicalLocation class (OntologyTerm mixin) + CellCompartment enum (BREAKING);
+#                               anatomical_location range: OntologyTerm → AnatomicalLocation on CellTypeNode
+#                               and AtlasMetadataEvidence; formalises soma vs projection location (S2)
 # Version: 0.5.4 (2026-03-25) — ATLAS_QUERY EvidenceType + AtlasQueryEvidence class: atlas browser queries
 #                               with URL, filters, and curator observation as structured evidence
 # Version: 0.5.3 (2026-03-11) — atlas_markers → defining_markers, atlas_neuropeptides → neuropeptides (BREAKING);
@@ -296,6 +299,20 @@ enums:
           Transcript-level detection: bulk RNA-seq, scRNA-seq, snRNA-seq,
           smFISH, RNAscope, MERFISH, Visium, or other spatial transcriptomics.
 
+  # ── Cell compartment ─────────────────────────────────────────────
+  CellCompartment:
+    description: >
+      Which cellular compartment an anatomical location refers to.
+      Critical for interpreting spatial data: MERFISH records soma
+      position only; axonal/dendritic targets require other methods.
+    permissible_values:
+      SOMA:
+        description: Cell body location
+      AXON_TARGET:
+        description: Axonal projection target region
+      DENDRITE:
+        description: Dendritic arbor region
+
   # ── Property alignment ──────────────────────────────────────────
   PropertyAlignment:
     description: >
@@ -411,6 +428,25 @@ classes:
               shell projection neuron" (CL:4310096)
             - source "internal segment of globus pallidus" → label same
               (populate identically when no discrepancy)
+
+  AnatomicalLocation:
+    mixins:
+      - OntologyTerm
+    description: >
+      An anatomical region associated with a cell type, with optional
+      compartment annotation. Inherits id, label, name_in_source from
+      OntologyTerm. When compartment is omitted, the location applies
+      to the whole cell or compartment is unspecified.
+    attributes:
+      compartment:
+        range: CellCompartment
+        description: >
+          Which cellular compartment resides in this region.
+          Required when a cell type spans multiple regions with
+          different compartments (e.g. OLM: soma in SO, axon in SLM).
+          Leave absent for atlas terminal nodes (MERFISH captures soma
+          implicitly) and for types where location is not
+          compartment-specific.
 
   CLMapping:
     description: >
@@ -778,16 +814,20 @@ classes:
         range: OntologyTerm
         description: NCBITaxon term
       anatomical_location:
-        range: OntologyTerm
+        range: AnatomicalLocation
         multivalued: true
         inlined_as_list: true
         description: >
-          Anatomical location(s) of this cell type as an ontology term.
+          Anatomical location(s) of this cell type. Each entry is an
+          AnatomicalLocation (OntologyTerm + optional compartment).
           Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate);
           use UBERON as fallback. Look up via OLS4. name_in_source carries the
           region name as written in the source (e.g. "GPi shell region", "GPi").
           Multiple entries for types that span regions or are defined relative
-          to multiple structures.
+          to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE)
+          when a type has different compartments in different regions (e.g. OLM:
+          soma in SO, axon in SLM). Leave compartment absent when location is
+          not compartment-specific or compartment is unknown.
       colocated_types:
         range: CellTypeColocation
         multivalued: true
@@ -1004,13 +1044,15 @@ classes:
       cell_set_accession:
         description: CCN accession for the referenced cell set
       anatomical_location:
-        range: OntologyTerm
+        range: AnatomicalLocation
         multivalued: true
         inlined_as_list: true
         description: >
-          Anatomical location from atlas curation. OntologyTerm with name_in_source
-          set to the verbatim atlas annotation (e.g. "GPi", "GPi shell and surrounding
-          GPi core neurons"). id/label from Allen atlas (MBA/DHBA) or UBERON.
+          Anatomical location from atlas curation. AnatomicalLocation with
+          name_in_source set to the verbatim atlas annotation (e.g. "GPi",
+          "GPi shell and surrounding GPi core neurons"). id/label from Allen
+          atlas (MBA/DHBA) or UBERON. Compartment is typically absent for
+          atlas entries (MERFISH captures soma position implicitly).
       ccf_distribution:
         description: CCF region frequency distribution from atlas, e.g. "GPi:0.78,GPe:0.12"
       nt_type:

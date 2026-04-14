@@ -78,7 +78,7 @@ When ambiguous, present a brief plan and ask for confirmation before spawning su
    > Sound good?
 5. After approval, create output directory and write run config:
    ```bash
-   mkdir -p kb/{region}/traversal_output/{YYYYMMDD}_{query_slug}
+   mkdir -p research/{region}/cite_traverse/{YYYYMMDD}_{query_slug}
    ```
 6. Write `{output_dir}/run_config.json`:
    ```json

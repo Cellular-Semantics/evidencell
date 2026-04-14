@@ -42,11 +42,11 @@ nodes:
       - id: UBERON:0014548
         label: "stratum oriens of hippocampus"
         name_in_source: "CA1 stratum oriens"
-        # Soma and dendrites reside here
+        compartment: SOMA
       - id: UBERON:0007637
         label: "stratum lacunosum-moleculare of hippocampus"
         name_in_source: "stratum lacunosum-moleculare"
-        # Primary axonal target layer
+        compartment: AXON_TARGET
     location_sources:
       - ref: "PMID:20421280"
         method: "biocytin fill + light microscopy"

@@ -1,0 +1,72 @@
+{
+  "pv_basket_cell_hippocampus": {
+    "cl_term_id": "CL:0000118",
+    "label": "basket cell",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "HIGH",
+    "definition_references": [],
+    "note": "CL:0000118 'basket cell' covers perisomatic-targeting GABAergic interneurons forming axo-somatic synapses — the core morphological definition of PV basket cells. No hippocampus-specific PV basket cell term exists in CL. CL:4023018 'pvalb GABAergic interneuron' is a transcriptomic superclass (BROAD) also applicable. Potential CL contribution: hippocampal parvalbumin-positive basket cell."
+  },
+  "cck_basket_cell_hippocampus": {
+    "cl_term_id": "CL:0000118",
+    "label": "basket cell",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MEDIUM",
+    "definition_references": [],
+    "note": "CL:0000118 'basket cell' covers the perisomatic morphology but does not capture CCK/CB1R marker identity or the regular-spiking firing pattern distinguishing CCK basket cells from PV basket cells. No CCK-specific basket cell term in CL. Potential CL contribution: hippocampal cholecystokinin-positive basket cell."
+  },
+  "axo_axonic_cell_hippocampus": {
+    "cl_term_id": "CL:4023036",
+    "label": "pvalb chandelier GABAergic interneuron",
+    "mapping_type": "EXACT",
+    "mapping_confidence": "HIGH",
+    "definition_references": [],
+    "note": "CL:4023036 definition matches precisely: cartridge boutons targeting exclusively the axon initial segment (AIS) of pyramidal cells, fast-spiking PV+ interneuron in the pallium. 'Axo-axonic cell' and 'chandelier cell' are synonymous terms. CL:4072046 (Homo sapiens taxon-restricted version) also exists."
+  },
+  "bistratified_cell_hippocampus": {
+    "cl_term_id": "CL:0004247",
+    "label": "bistratified cell",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MEDIUM",
+    "definition_references": [],
+    "note": "CL:0004247 'bistratified cell' is defined as 'a neuron that stratifies dendrites at two and only two locations' — a retinal amacrine/RGC-focused term not specific to hippocampal interneurons. The hippocampal bistratified interneuron (Pvalb/Sst/Tac1+, axon in SO and SR) has no dedicated CL term. Potential CL contribution: hippocampal bistratified interneuron."
+  },
+  "olm_cell_ca1": {
+    "cl_term_id": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for the O-LM (oriens-lacunosum moleculare) cell. CL:4023017 'sst GABAergic interneuron' is the nearest superclass (BROAD) but defined for cerebral cortex and does not capture the O-LM morphology (soma in stratum oriens, axon projecting to stratum lacunosum-moleculare) or Sst/Ndnf/Nkx2-1 marker combination. Potential CL contribution: hippocampal oriens-lacunosum moleculare interneuron."
+  },
+  "hippocampo_septal_cell_ca1": {
+    "cl_term_id": "CL:4023121",
+    "label": "sst chodl GABAergic interneuron",
+    "mapping_type": "RELATED",
+    "mapping_confidence": "LOW",
+    "definition_references": [],
+    "note": "CL:4023121 describes the only known long-range projecting SST interneurons (Chodl+), which partially overlaps with the hippocampo-septal (HS) cell concept. However, HS cells are hippocampus-specific, project to the medial septum, and may not express Chodl. CL:4023025 'long-range projecting sst GABAergic cortical interneuron (Mmus)' is also RELATED but taxon-restricted to mouse cortex. Potential CL contribution: hippocampal somatostatin-positive long-range projecting interneuron."
+  },
+  "neurogliaform_cell_hippocampus": {
+    "cl_term_id": "CL:0000693",
+    "label": "neurogliaform cell",
+    "mapping_type": "EXACT",
+    "mapping_confidence": "HIGH",
+    "definition_references": [],
+    "note": "CL:0000693 definition matches well: small round soma, multiple short radiating dendrites, dense branched axonal mesh — consistent with spider-like morphology and volume GABA transmission described for hippocampal NGCs. The CL term is not region-restricted so applies to both hippocampal and cortical NGCs."
+  },
+  "ivy_cell_hippocampus": {
+    "cl_term_id": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No dedicated CL term for ivy cell. CL:4042013 'Lamp5 Lhx6 neuron' (MGE-derived, Lamp5+) is RELATED by marker overlap (Lamp5, Nos1, Npy) but is defined transcriptomically and not specific to ivy cell morphology or hippocampal location. CL:0000693 neurogliaform cell is RELATED by morphological similarity but ivy cells are distinguished by laminar position (SP vs SLM). Potential CL contribution: hippocampal ivy cell."
+  },
+  "is_interneuron_hippocampus": {
+    "cl_term_id": "CL:4023016",
+    "label": "VIP GABAergic interneuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MEDIUM",
+    "definition_references": [],
+    "note": "CL:4023016 'VIP GABAergic interneuron' captures the VIP+ subset of IS cells (IS-2 and IS-3 subtypes) but not IS-1 cells (CR+/VIP-). The defining functional feature — selective targeting of other interneurons for disinhibition — is not encoded in any CL term. CL:1001569 'hippocampal interneuron' is too broad. Potential CL contribution: interneuron-specific interneuron (IS interneuron) of hippocampus."
+  }
+}

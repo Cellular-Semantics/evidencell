@@ -21,7 +21,7 @@ PARAMS:
   graph_file: ""        # path to KB YAML containing the edges to report (required)
   node_id: null         # classical node id; null = all non-terminal nodes in graph
   mode: "summary"       # summary | drilldowns | all
-  output_dir: null      # default: {graph_dir}/reports/
+  output_dir: null      # default: reports/{region}/
   model: "sonnet"
 ```
 
@@ -31,7 +31,7 @@ PARAMS:
 
 Read `graph_file` using `yaml.safe_load()`. Confirm:
 - File exists and is valid YAML
-- `references.json` exists in the same directory (warn if absent — drill-downs require it)
+- `references/{region}/references.json` exists (warn if absent — drill-downs require it)
 - If `node_id` is specified: confirm it exists in `graph.nodes[]` as a non-terminal node
   (i.e. `is_terminal` is false or absent)
 
@@ -42,7 +42,7 @@ Atlas: {target_atlas}
 Region: {brain_region}
 Nodes: {N total} ({M classical}, {K atlas terminals})
 Edges: {E edges} ({counts by confidence tier})
-references.json: {found | MISSING}
+references/{region}/references.json: {found | MISSING}
 ```
 
 Fail with a clear error message if inputs are invalid. Do not proceed.
@@ -58,7 +58,7 @@ just gen-facts {graph_file} {node_id}
 ```
 
 This calls `python -m evidencell.render facts {graph_file} --node {node_id}` and writes:
-`{graph_dir}/reports/{node_id}_facts.json`
+`reports/{region}/{node_id}_facts.json`
 
 If the command exits non-zero, print the error and stop. Do not attempt to reconstruct
 facts manually from YAML — the Python extractor enforces provenance labelling.
@@ -159,6 +159,37 @@ Each section must have:
   gap explicitly: "Source-side confirmed at N%; target-side still unresolvable from atlas
   metadata." This helps readers understand where remaining gaps lie.
 
+**Marker evidence provenance** (bulleted, one per defining_marker, negative_marker,
+and neuropeptide — omit if no provenance issues):
+
+For each marker/neuropeptide on the classical node, assess the evidence chain:
+- **Method type**: Is the evidence protein-level (IHC, immunofluorescence),
+  transcript-level (scRNA-seq, RT-PCR, ISH), or both? State which.
+- **Cell type specificity**: Did the study that established this marker actually
+  confirm the classical type's identity (e.g. morphological reconstruction,
+  Cre-driver targeting, patch-clamp followed by fill)? Or was it tested on a
+  broader population (e.g. "Sst+ interneurons in stratum oriens" without
+  confirming OLM morphology)? State the basis for believing the study was
+  looking at the right cells.
+- **Data source discrepancies**: If a marker or neuropeptide appears in one data
+  source but not another (e.g. listed in taxonomy metadata neuropeptides but
+  at zero in precomputed stats; or reported in literature but absent from atlas
+  metadata), note the discrepancy factually. Do not explain it away — present
+  both values and flag for investigation.
+- **Quantitative cross-check**: If precomputed stats values are available in
+  `property_comparisons[*].node_b_value`, note where they confirm or
+  challenge the expected marker profile. For negative markers, note any
+  clusters where expression is unexpectedly high.
+- **Weak or unsourced evidence**: If a marker is listed without a specific
+  citation on the classical node, or if all citations are reviews rather than
+  primary studies, flag this explicitly.
+
+For markers where the evidence provenance is weak or the cell-type specificity
+of the original study is unclear, add a recommendation for targeted literature
+search (e.g. "Calb1 as an OLM negative marker lacks a primary citation testing
+morphology-confirmed OLM cells — a targeted cite-traverse for 'calbindin
+OLM hippocampus' may resolve this").
+
 **Concerns** (bulleted):
 - From evidence items where `supports` = REFUTE.
 - From DISCORDANT or APPROXIMATE property_comparisons — interpret each:
@@ -176,6 +207,9 @@ Each section must have:
 - Derived from `unresolved_questions[]` and `proposed_experiments[]`.
 - Name the specific evidence type that would be added (AnnotationTransferEvidence,
   LiteratureEvidence, PATCH_SEQ, etc.) and any quantitative threshold (e.g. F1 ≥ 0.80).
+- Include any targeted literature searches recommended in the marker evidence
+  provenance section above — weak marker evidence is a gap that literature
+  review can address without new experiments.
 
 **UNCERTAIN edges:** Collapse all into one `## Eliminated candidates` section.
 
@@ -339,7 +373,7 @@ Determine whether failures are:
 - **Fixable by re-running synthesis**: hallucinated reference, fabricated quote, missing
   interpretation marker → re-run Step 3 with an added instruction to the synthesis agent
   highlighting the specific failure. Limit to 1 retry.
-- **Fixable by updating YAML or references.json**: quote_key missing from references.json,
+- **Fixable by updating YAML or references.json**: quote_key missing from references/{region}/references.json,
   PMID mismatch in YAML → inform curator of the specific YAML field to fix, then stop.
 - **Systematic / unclear**: stop and ask the curator what to do.
 
@@ -360,8 +394,8 @@ Run:
 just gen-drilldown-pmid {graph_file} {node_id} {pmid}
 ```
 
-This writes `{graph_dir}/reports/{node_id}_drilldown_{AuthorYear}.md` with verbatim quotes
-from `references.json` and a flat evidence summary table. Confirm the file exists.
+This writes `reports/{region}/{node_id}_drilldown_{AuthorYear}.md` with verbatim quotes
+from `references/{region}/references.json` and a flat evidence summary table. Confirm the file exists.
 
 ### Step DD-2 — Drill-down synthesis subagent
 
@@ -568,6 +602,5 @@ Run the same validation subagent (Step 4) on the drill-down output:
   file but the curator believes it should be there, the fix is to add it to the YAML
   and re-run `just gen-facts` — not to ask the synthesis agent to include it anyway.
 
-- Reports are not committed to git by default (`kb/**/reports/` is gitignored).
-  Pin a dated snapshot at release time by manually moving it out of the reports/ dir
-  or removing it from .gitignore.
+- Reports are not committed to git by default (`reports/` is gitignored).
+  Pin a dated snapshot at release time by removing it from .gitignore.

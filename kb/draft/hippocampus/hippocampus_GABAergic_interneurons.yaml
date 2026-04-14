@@ -1,0 +1,1459 @@
+name: Hippocampal GABAergic interneurons — draft classical types
+description: |
+  Draft evidence graph for classical hippocampal GABAergic interneuron types extracted from ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+target_atlas: TBD
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+species: null
+creation_date: '2026-04-09'
+notes: |
+  All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evidence is from rat and mouse; species must be confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup.
+nodes:
+- id: pv_basket_cell_hippocampus
+  name: Parvalbumin-positive basket cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005401
+    label: stratum pyramidale
+    name_in_source: CA1 stratum pyramidale
+    compartment: SOMA
+  - id: UBERON:0005401
+    label: stratum pyramidale
+    name_in_source: CA3 stratum pyramidale
+    compartment: SOMA
+  - id: UBERON:0001885
+    label: dentate gyrus granule cell layer
+    name_in_source: dentate gyrus granule cell layer
+    compartment: SOMA
+  location_sources:
+  - ref: PMID:25018703
+    method: immunohistochemistry
+    scope: rat hippocampus
+    quote_key: 10540334_bdfa426a
+  - ref: PMID:7472426
+    method: biocytin fill in vivo
+    scope: rat CA1
+    quote_key: 10664418_9acd7ec1
+  - ref: PMID:25324774
+    snippet: basket cells extend their axonal arbor to the stratum pyramidale. In fact, pyramidal neuron somata are contacted
+      extensively by GABAergic synapses from these cells forming characteristic basket-like structures
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources:
+    - ref: PMID:26441554
+      method: intersectional genetics
+      scope: mouse forebrain
+      quote_key: 16859318_009e9f36
+  defining_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:25018703
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 10540334_bdfa426a
+    - ref: PMID:33398060
+      snippet: we find high transcriptomic similarity among PV-INs, with few genes showing divergent expression between morphologically
+        different types
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:35802727
+      snippet: 'they tend to include the same 3 major families: (1) soma and axo-axonic neurons showing fast discharge and
+        expressing PV, (2) dendrite targeting interneurons expressing SOM and (3) neurogliaform neurons expressing NPY/Reelin'
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  - symbol: Gad1
+    ncbi_gene_id: null
+  - symbol: Gad2
+    ncbi_gene_id: null
+  negative_markers:
+  - symbol: Cnr1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:25018703
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 10540334_418c51dd
+  neuropeptides: []
+  electrophysiology_class: |
+    Fast-spiking (80% of PV+ INs); sustained firing >200 Hz; bursts up to 150 Hz during ripples; short-duration APs with large rapid AHPs
+  ephys_sources:
+  - ref: PMID:33150866
+    method: patch clamp
+    scope: mouse hippocampus
+    quote_key: 221276443_e917908b
+  - ref: PMID:29383328
+    method: in vivo recording
+    scope: mouse CA1
+    quote_key: 19055431_b2536ef6
+  - ref: PMID:29321728
+    method: review
+    scope: hippocampus/neocortex
+    quote_key: 38778375_462ec931
+  - ref: PMID:26594151
+    snippet: 'FFI in CA1PCs is mediated by two physiologically and morphologically distinct GABAergic interneurons: fast-spiking,
+      perisomatic-targeting basket cells and regular-spiking, dendritic-targeting bistratified cells'
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:20463218
+    snippet: fast-spiking basket cells (BCs), control the spike initiation of principal neurons via axonal innervations onto
+      perisomatic areas
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  morphology_notes: |
+    Perisomatic-targeting interneuron forming dense plexus of inhibitory terminals on soma of pyramidal cells; axon collaterals confined to pyramidal layer; single basket cell contacts >1500 pyramidal neurons and 60 other PV+ interneurons
+  morphology_sources:
+  - ref: PMID:7472426
+    method: biocytin fill in vivo
+    scope: rat CA1
+    quote_key: 10664418_9acd7ec1
+  - ref: PMID:28559797
+    method: review
+    scope: hippocampus
+    quote_key: 13529065_8d53bb0b
+  - ref: PMID:29383328
+    method: electron microscopy
+    scope: mouse CA1
+    quote_key: 19055431_5dd9a60d
+  cl_mapping:
+    cl_term:
+      id: CL:0000118
+      label: basket cell
+      name_in_source: basket cell
+    mapping_type: BROAD
+    mapping_notes: |
+      CL:0000118 covers perisomatic-targeting GABAergic interneurons but does not capture PV-specific identity. No hippocampus-specific PV basket cell term exists in CL.
+  definition_references:
+  - PMID:7472426
+  - PMID:29383328
+  - PMID:33150866
+  - PMID:29321728
+  - PMID:26441554
+  is_terminal: false
+  notes: |
+    Four morphological subtypes within PV+ INs (basket, axo-axonic, bistratified, radiatum-targeting). 7-14 PV transcriptomic subtypes in CA1. Activity inversely coupled with CCK basket cell activity.
+    [cite_traverse_2026_04_10] PMID:39401246: the most representative ones, the PV-expressing basket and bistratified cells, the NOS-expressing ivy cells and 2 types of interneuron-selective interneurons (ISI 1 and 3) that express calretinin
+- id: cck_basket_cell_hippocampus
+  name: Cholecystokinin-positive basket cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005401
+    label: stratum pyramidale
+    name_in_source: CA1 stratum pyramidale
+    compartment: SOMA
+  location_sources:
+  - ref: PMID:25018703
+    method: immunohistochemistry
+    scope: rat hippocampus
+    quote_key: 10540334_418c51dd
+  - ref: PMID:28559797
+    snippet: VGLUT3-immunogold puncta were present over synaptic vesicle clusters in axon terminals forming axo-somatic symmetrical
+      synapses
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:26441554
+    snippet: PV-GABA cells were more abundant overall, CCK-GABA cells outnumbered PV-GABA cells in several subregions of the
+      hippocampus, medial prefrontal cortex and ventrolateral temporal cortex
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:31297048
+    snippet: CCK positive basket cells target the soma and proximal dendrites of cortical and hippocampal pyramidal cells,
+      and do not appear to innervate the AIS
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources:
+    - ref: PMID:26441554
+      method: intersectional genetics
+      scope: mouse forebrain
+      quote_key: 16859318_009e9f36
+  defining_markers:
+  - symbol: Cck
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:10341254
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 480205_62cd73ae
+    - ref: PMID:28559797
+      snippet: VGLUT3 is expressed by CCK-positive and more rarely by calbindin-positive interneurons
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:31297048
+      snippet: Proportions of CCK basket cells express the ionotropic serotonin receptor (5-HT3) and the metabotropic Cannabinoid
+        receptor type 1 (CB1), which modulate GABA release from the presynaptic terminal
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:24533597
+      snippet: all Eps8-expressing cells were positive for calbindin
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  - symbol: Cnr1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:10341254
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 480205_62cd73ae
+  - symbol: Vglut3
+    ncbi_gene_id: null
+  negative_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:25018703
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 10540334_418c51dd
+  neuropeptides:
+  - symbol: Cck
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:10341254
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 480205_62cd73ae
+  electrophysiology_class: |
+    Regular-spiking; low in vivo firing frequency (2-10 Hz); during theta oscillations fire at 8.8 +/- 3.3 Hz on ascending phase; 1.7 +/- 2.0 Hz during ripples; episode-dependent firing
+  ephys_sources:
+  - ref: PMID:16237182
+    method: in vivo recording + juxtacellular labeling
+    scope: rat hippocampus
+    quote_key: 857025_3ed72cbd
+  - ref: PMID:29383328
+    method: in vivo recording
+    scope: mouse CA1
+    quote_key: 19055431_b2536ef6
+  - ref: PMID:33529646
+    method: in vivo calcium imaging
+    scope: mouse CA1
+    quote_key: 231732903_b97d2b7d
+  - ref: PMID:32490811
+    snippet: Two firing phenotypes of CCK+INs in rat hippocampal CA3 area; either possessing a previously undetected membrane
+      potential-dependent firing or regular firing phenotype, due to different low-voltage-activated potassium currents
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:32490811
+    snippet: the firing phenotypes were correlated with the presence of distinct isoforms of Kv4 auxiliary subunits (KChIP1
+      vs. KChIP4e and DPP6S)
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  morphology_notes: |
+    Perisomatic-targeting interneuron; CB1R+ axon terminals surround somata and proximal dendrites of pyramidal neurons; 96.9% of CCK+ INs express CB1. Dense plexus of inhibitory terminals on soma and proximal dendrites.
+  morphology_sources:
+  - ref: PMID:10341254
+    method: immunohistochemistry + EM
+    scope: rat hippocampus
+    quote_key: 480205_62cd73ae
+  - ref: PMID:25018703
+    method: immunohistochemistry
+    scope: rat hippocampus
+    quote_key: 10540334_418c51dd
+  - ref: PMID:28559797
+    method: review
+    scope: hippocampus
+    quote_key: 13529065_8d53bb0b
+  cl_mapping:
+    cl_term:
+      id: CL:0000118
+      label: basket cell
+      name_in_source: basket cell
+    mapping_type: BROAD
+    mapping_notes: |
+      CL:0000118 covers perisomatic morphology but does not capture CCK/CB1R marker identity or regular-spiking firing pattern. No CCK-specific basket cell term in CL.
+  definition_references:
+  - PMID:10341254
+  - PMID:16237182
+  - PMID:29383328
+  - PMID:33529646
+  - PMID:26441554
+  is_terminal: false
+  notes: |
+    CCK cells are remarkably diverse, extending beyond Sncg transcriptomic class. Activity inversely scales with PV cell activity.
+    [cite_traverse_2026_04_10] PMID:26689544: CCK+ interneurons are the plastic and dynamic gate-keepers of neuronal circuits
+    [cite_traverse_2026_04_10] PMID:28009257: CCK+ basket cells have never been observed to receive direct monosynaptic excitement from local CA1 pyramidal cells
+- id: axo_axonic_cell_hippocampus
+  name: Axo-axonic (chandelier) cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005401
+    label: stratum pyramidale
+    name_in_source: CA1 stratum pyramidale
+    compartment: SOMA
+  location_sources:
+  - ref: PMID:25018703
+    method: immunohistochemistry
+    scope: rat hippocampus
+    quote_key: 10540334_bdfa426a
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources:
+    - ref: PMID:29321728
+      method: review
+      scope: hippocampus
+      quote_key: 38778375_462ec931
+  defining_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:25018703
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 10540334_bdfa426a
+    - ref: PMID:33398060
+      snippet: while PV-INs differ in anatomy and in vivo activity, their continuous transcriptomic and homogenous biophysical
+        landscapes are not predictive of these distinct identities
+      support: PARTIAL
+      source: cite_traverse_2026_04_10
+    - ref: PMID:33398060
+      snippet: we find high transcriptomic similarity among PV-INs, with few genes showing divergent expression between morphologically
+        different types
+      support: PARTIAL
+      source: cite_traverse_2026_04_10
+  negative_markers: []
+  neuropeptides: []
+  electrophysiology_class: Fast-spiking; controls spike initiation of principal neurons
+  ephys_sources:
+  - ref: PMID:33150866
+    method: patch clamp
+    scope: mouse hippocampus
+    quote_key: 221276443_e917908b
+  - ref: PMID:29321728
+    method: review
+    scope: hippocampus/neocortex
+    quote_key: 38778375_462ec931
+  - ref: PMID:37467748
+    snippet: Both display FS responses to depolarizing input and fire at high rates in vivo. In contrast, SOM cells typically
+      have lower firing rates despite their low firing threshold
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  morphology_notes: |
+    PV+ interneuron specifically targeting axon initial segment of pyramidal cells; cartridge-like axonal bouton arrays. Controls spike initiation.
+  morphology_sources:
+  - ref: PMID:23162426
+    method: review
+    scope: hippocampus
+    quote_key: '8530661_92702482'
+  - ref: PMID:7472426
+    method: biocytin fill
+    scope: rat CA1
+    quote_key: 10664418_9acd7ec1
+  cl_mapping:
+    cl_term:
+      id: CL:4023036
+      label: pvalb chandelier GABAergic interneuron
+      name_in_source: axo-axonic cell
+    mapping_type: EXACT
+    mapping_notes: |
+      CL:4023036 definition matches precisely: cartridge boutons targeting exclusively AIS of pyramidal cells, fast-spiking PV+ interneuron.
+  definition_references:
+  - PMID:23162426
+  - PMID:33150866
+  - PMID:7472426
+  is_terminal: false
+  notes: |
+    One of three canonical PV+ interneuron subtypes alongside basket and bistratified cells. Limited hippocampus-specific ephys data in this reference set.
+- id: bistratified_cell_hippocampus
+  name: Bistratified cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005401
+    label: stratum pyramidale
+    name_in_source: CA1 stratum pyramidale
+    compartment: SOMA
+  - id: UBERON:0005383
+    label: stratum oriens
+    name_in_source: CA1 stratum oriens
+    compartment: AXON_TARGET
+  - id: UBERON:0005402
+    label: stratum radiatum
+    name_in_source: CA1 stratum radiatum
+    compartment: AXON_TARGET
+  location_sources:
+  - ref: PMID:23162426
+    method: review
+    scope: hippocampus
+    quote_key: '8530661_92702482'
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources:
+    - ref: PMID:29321728
+      method: review
+      scope: hippocampus
+      quote_key: 38778375_462ec931
+  defining_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33150866
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 221276443_e917908b
+    - ref: PMID:37162922
+      snippet: the Sst;;Tac1 intersection revealed a population of bistratified INs that preferentially synapsed onto fast-spiking
+        interneurons (FS-INs) and were both necessary and sufficient to interrupt their firing
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:37467748
+      snippet: These two interneuron types have been reported to co-express SOM and PV
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:38640347
+      marker_type: TRANSCRIPT
+      method: intersectional genetics
+      scope: mouse hippocampus
+      quote_key: 269246896_c084d5c0
+  - symbol: Tac1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:38640347
+      marker_type: TRANSCRIPT
+      method: intersectional genetics
+      scope: mouse hippocampus
+      quote_key: 269246896_c084d5c0
+  negative_markers: []
+  neuropeptides:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:38640347
+      marker_type: TRANSCRIPT
+      method: intersectional genetics
+      scope: mouse hippocampus
+      quote_key: 269246896_c084d5c0
+  electrophysiology_class: |
+    Regular-spiking; mediates feedforward inhibition of CA1 pyramidal cells together with basket cells
+  ephys_sources:
+  - ref: PMID:26594151
+    method: in vitro recording
+    scope: mouse CA1
+    quote_key: 15824759_23eebcb8
+  - ref: PMID:33150866
+    method: patch clamp
+    scope: mouse hippocampus
+    quote_key: 221276443_e917908b
+  morphology_notes: |
+    Dendritic-targeting interneuron with axonal arbor in stratum oriens and stratum radiatum; innervates dendritic domains of pyramidal cells.
+  morphology_sources:
+  - ref: PMID:26594151
+    method: electrophysiology + morphology
+    scope: mouse CA1
+    quote_key: 15824759_23eebcb8
+  - ref: PMID:23162426
+    method: review
+    scope: hippocampus
+    quote_key: '8530661_92702482'
+  - ref: PMID:38640347
+    snippet: Sst;;Tac1-INs strongly targeted strata oriens and radiatum, a bilaminar morphology reminiscent of classically
+      defined bistratified INs
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  cl_mapping:
+    cl_term:
+      id: CL:0004247
+      label: bistratified cell
+      name_in_source: bistratified cell
+    mapping_type: BROAD
+    mapping_notes: |
+      CL:0004247 is retinal-focused. The hippocampal bistratified interneuron (Pvalb/Sst/Tac1+, axon in SO and SR) has no dedicated CL term.
+  definition_references:
+  - PMID:26594151
+  - PMID:38640347
+  - PMID:23162426
+  - PMID:33150866
+  is_terminal: false
+  notes: |
+    Sst::Tac1 intersectional genetics targets bistratified cells that overwhelmingly target fast-spiking interneurons (Chamberland et al., 2024).
+    [cite_traverse_2026_04_10] PMID:26594151: Separate FFI by basket and bistratified respectively modulated CA1PC threshold and gain
+    [cite_traverse_2026_04_10] PMID:33361464: This earlier study focused on seven dendritic-targeting neuron types: Pyramidal, Bistratified, Ivy, Neurogliaform, Perforant Path-Associated, Schaffer Collateral-Associated
+- id: olm_cell_ca1
+  name: Oriens-Lacunosum Moleculare (O-LM) cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005383
+    label: stratum oriens
+    name_in_source: CA1 stratum oriens
+    compartment: SOMA
+  - id: UBERON:0005403
+    label: stratum lacunosum moleculare
+    name_in_source: CA1 stratum lacunosum-moleculare
+    compartment: AXON_TARGET
+  location_sources:
+  - ref: PMID:30987110
+    method: electrophysiology + morphology
+    scope: rat CA1
+    quote_key: 116862536_5f5f2ae8
+  - ref: PMID:33361464
+    method: morphological reconstruction
+    scope: CA1
+    quote_key: 229694907_6865b9db
+  - ref: PMID:28009257
+    method: review
+    scope: hippocampus
+    quote_key: 4776309_dd48b1ec
+  - ref: PMID:31420995
+    snippet: All cells had a fusiform cell soma residing in stratum oriens of hippocampal CA1 with horizontally spanning dendritic
+      branches. Their axon frequently originated from a primary dendrite and projected towards the stratum lacunosum moleculare
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:23042082
+    snippet: Tomato+ cells in the hippocampus were almost exclusively located in the SO of CA1 and subiculum
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:29487503
+    snippet: 'these CA1 GABAergic, somatostatin (Som)-expressing interneurons are named for their distinctive morphology:
+      their soma and dendritic trees are located in the stratum oriens and their axons extend directly out to arborize in
+      the stratum lacunosum-moleculare'
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources:
+    - ref: PMID:31420995
+      method: single-cell RT-PCR (Gad1, Gad2, Slc6a1 expression)
+      scope: mouse OLM cells
+      quote_key: 201041756_1d024a35
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31420995
+      marker_type: TRANSCRIPT
+      method: single-cell RT-PCR
+      scope: mouse OLM
+      quote_key: 201041756_2d5a5fb3
+    - ref: PMID:37162922
+      snippet: the Ndnf;;Nkx2-1 intersection identified a population of oriens lacunosum-moleculare (OLM) INs that predominantly
+        targeted CA1 pyramidal neurons, avoiding FS-INs
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:31420995
+      snippet: we found a surprisingly consistent expression of Npy in OLMs, which was previously not associated with the
+        identity of this type
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:23042082
+      snippet: the vast majority (95.1%, 214/225 cells) of Tomato+ cells were also som+ and comprised a subpopulation (35.2%,
+        214/608) of CA1 som+ interneurons
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:29487503
+      snippet: the nicotinic acetylcholine receptor Chrna2 was identified as a specific genetic marker for CA1 OLM interneurons
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  - symbol: Chrna2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:29487503
+      marker_type: TRANSCRIPT
+      method: transgenic (Chrna2-Cre)
+      scope: mouse CA1
+      quote_key: 3591966_644f1e68
+    - ref: PMID:31420995
+      marker_type: TRANSCRIPT
+      method: single-cell RT-PCR
+      scope: mouse OLM
+      quote_key: 201041756_bd56f851
+  - symbol: Reln
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31420995
+      marker_type: TRANSCRIPT
+      method: single-cell RT-PCR
+      scope: mouse OLM
+      quote_key: 201041756_2d5a5fb3
+  negative_markers:
+  - symbol: Pvalb
+    modifier: LOW
+    ncbi_gene_id: null
+  neuropeptides:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31420995
+      marker_type: TRANSCRIPT
+      method: single-cell RT-PCR
+      scope: mouse OLM
+      quote_key: 201041756_2d5a5fb3
+  - symbol: Npy
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31420995
+      marker_type: TRANSCRIPT
+      method: single-cell RT-PCR
+      scope: mouse OLM
+      quote_key: 201041756_8d16e821
+  - symbol: Pnoc
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31420995
+      marker_type: TRANSCRIPT
+      method: single-cell RT-PCR
+      scope: mouse OLM
+      quote_key: 201041756_1d20426d
+  electrophysiology_class: |
+    Regular-to-fast spiking with adapting firing pattern; prominent hyperpolarization-induced sag (Ih hallmark); theta-frequency phase-locked firing; theta spiking resonance dependent on HCN channels
+  ephys_sources:
+  - ref: PMID:30987110
+    method: patch clamp
+    scope: rat CA1
+    quote_key: 116862536_5f5f2ae8
+  - ref: PMID:33093823
+    method: whole-cell recording
+    scope: mouse hippocampus
+    quote_key: 221742877_26f1e4cc
+  - ref: PMID:33991454
+    method: review
+    scope: hippocampus
+    quote_key: 234597703_fda66a57
+  morphology_notes: |
+    Soma and horizontal dendrites confined to stratum oriens, often with spines; axon projects perpendicularly through SR to stratum lacunosum-moleculare where it forms dense varicose terminal arbor; collateral axons also in stratum oriens. Large elongated soma at oriens-alveus border. Stereotyped morphology first described by Cajal (1893).
+  morphology_sources:
+  - ref: PMID:20421280
+    method: biocytin fill
+    scope: adult rat CA1
+    quote_key: 3106274_e54f60e9
+  - ref: PMID:31420995
+    method: DAB staining
+    scope: mouse hippocampus
+    quote_key: 201041756_c6648415
+  - ref: PMID:26021702
+    method: biocytin fill
+    scope: rat CA1
+    quote_key: 15101210_fb549732
+  - ref: PMID:38470935
+    snippet: we estimated that an OLM cell receives about 8400, whereas an HS cell about 15600 synaptic inputs, about 16%
+      of which are GABAergic
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:10777798
+    snippet: a noticeable feature of hippocampal EGFP-expressing interneurons in area CA1 of GIN mice was the localization
+      of their often oval-shaped somata to SO, with dendrites running parallel to the strata borders. Such morphology is characteristic
+      of O-LM cells
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:10804195
+    snippet: Type I interneurons had large horizontally oriented cell somata located at the border of stratum oriens and the
+      alveus, indicating that these cells were most likely identical with the previously described somatostatin-positive oriens-lacunosum
+      moleculare (O-LM) cells
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  cl_mapping: null
+  definition_references:
+  - PMID:20421280
+  - PMID:31420995
+  - PMID:33093823
+  - PMID:29487503
+  - PMID:37652281
+  is_terminal: false
+  notes: |
+    No CL term exists for OLM cell. CL:4023017 'sst GABAergic interneuron' is nearest superclass but does not capture OLM-specific morphology. Molecularly heterogeneous: contains a PV+ subpopulation with distinct theta vs gamma coupling. Npy expression is consistent in mouse but absent in rat (species difference). Ndnf::Nkx2-1 intersection selectively targets OLM cells. At least 3 Chrna2+ subclusters identified.
+    [cite_traverse_2026_04_10] PMID:19176803: horizontal interneurons in stratum oriens of the hippocampal CA1 area are often studied as a single group of interneurons, they include several cell types in addition to O-LM cells
+    [cite_traverse_2026_04_10] PMID:20463218: dendrite-targeting inhibitory interneurons, such as oriens lacunosum-moleculare (O-LM) cells, regulate dendritic Na+ or Ca2+ spikes and synaptic plasticity by innervating dendritic domains of principal neurons
+- id: hippocampo_septal_cell_ca1
+  name: Hippocampo-septal (HS) cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005383
+    label: stratum oriens
+    name_in_source: CA1 stratum oriens
+    compartment: SOMA
+  location_sources:
+  - ref: https://doi.org/10.1101/598599
+    method: immunohistochemistry
+    scope: mouse hippocampus
+    quote_key: 132515344_fb36f967
+  - ref: PMID:29250747
+    snippet: GABAergic neurons in the hippocampus, which project to the medial septum, are located in the stratum oriens of
+      the hippocampus
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:33404500
+    snippet: The hippocampal cells they most resemble, Basket-bistratified, HS and OLM interneurons, have their somata in
+      the stratum pyramidale (sp) of the hippocampus
+    support: PARTIAL
+    source: cite_traverse_2026_04_10
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: https://doi.org/10.1101/598599
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 132515344_fb36f967
+    - ref: PMID:38470935
+      snippet: Two main types of SOM-containing cells in area CA1 of the hippocampus are oriens-lacunosum-moleculare (OLM)
+        cells and hippocampo-septal (HS) cells
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:27997999
+      snippet: In the rat hippocampal CA1 area, at least five distinct types of SOM-expressing GABAergic neuron have been
+        defined
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  negative_markers: []
+  neuropeptides:
+  - symbol: Sst
+    ncbi_gene_id: null
+  electrophysiology_class: Not characterized in available reference set
+  ephys_sources: []
+  morphology_notes: |
+    Long-range projecting SOM+ interneuron with soma in stratum oriens; projects to medial septum. Distinguished from OLM cell by presence of long-range projection axon.
+  morphology_sources:
+  - ref: PMID:27997999
+    method: morphological reconstruction
+    scope: rat CA1
+    quote_key: 4934764_093c71c6
+  - ref: PMID:27997999
+    snippet: In addition to these exclusively locally terminating SOM-expressing interneurons, a diverse population of long-range
+      SOM-expressing GABAergic neurons send projections to the medial septum and/or retrohippocampal cortical areas
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:29250747
+    snippet: they form a reciprocal long-range GABAergic septo-hippocampal circuit. Many long-range GABAergic neurons simultaneously
+      form local synapses in CA1 and en passant synapses in several remote areas
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:38470935
+    snippet: Two main types of SOM-containing cells in area CA1 of the hippocampus are oriens-lacunosum-moleculare (OLM) cells
+      and hippocampo-septal (HS) cells. These cell types show many similarities in their soma-dendritic architecture, but
+      they have different axonal targets, display different activity patterns in vivo and are thought to have distinct network
+      functions.
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  cl_mapping:
+    cl_term:
+      id: CL:4023121
+      label: sst chodl GABAergic interneuron
+      name_in_source: hippocampo-septal cell
+    mapping_type: RELATED
+    mapping_notes: |
+      CL:4023121 partially overlaps (long-range projecting SST+ INs) but HS cells are hippocampus-specific and may not express Chodl.
+  definition_references:
+  - PMID:27997999
+  is_terminal: false
+  notes: |
+    Very limited reference coverage (1 quote). Ephys not characterized. Relationship to Chodl+ long-range projecting cortical INs unclear. One of two main SOM+ types in CA1 alongside OLM cells.
+- id: neurogliaform_cell_hippocampus
+  name: Neurogliaform cell (NGC)
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005403
+    label: stratum lacunosum moleculare
+    name_in_source: CA1 stratum lacunosum-moleculare
+    compartment: SOMA
+  location_sources:
+  - ref: PMID:20147544
+    method: immunohistochemistry
+    scope: hippocampus
+    quote_key: 2405079_042a449f
+  - ref: PMID:41473287
+    snippet: mClover-GluN3A labeled cells co-expressed Sst in stratum oriens and neuronal nitric oxide synthase (nNOS) in
+      putative NGFCs that comprise the dominant interneuron subtype in stratum lacunosum moleculare
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:33404500
+    snippet: their transcriptomes were closest to RLMb and Neuroglialform interneurons whose somata are located at the border
+      between the stratum radiatum (sr) and the slm and exhibit short dendrites
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  defining_markers:
+  - symbol: Nos1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+    - ref: PMID:20147544
+      snippet: classically defined NGCs can be subdivided into two groups based on nNOS expression and lineage with nNOS+
+        NGCs being derived from the MGE and nNOS- NGCs arising from CGE progenitors
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:20147544
+      snippet: a subset of NGCs lacking nNOS arises from caudal ganglionic eminence (CGE) progenitors. Thus, while nNOS+ NGCs
+        and IvCs arise from MGE progenitors, a CGE origin distinguishes a discrete population of nNOS− NGCs
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:20147544
+      snippet: we found that the nNOS ϩ subset, hence MGE derived, represents the majority of all hippocampal NGCs with a
+        minor contribution from CGE-derived NGCs. This contrasts with findings in the neocortex in which fate-mapping evidence
+        supports a dominant CGE origin for NGCs
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:41473287
+      snippet: The Neurogliaform interneurons that are Lhx6 + /Lamp5 + /Id2 + are annotated as MGE-derived (NGFC.M); and those
+        that are Lhx6 - /Lamp5 + /Id2 + /Ndnf + are annotated as CGE-derived (NGFC.C)
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  - symbol: Npy
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  - symbol: Lamp5
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:41473287
+      marker_type: TRANSCRIPT
+      method: transcriptomics
+      scope: neocortex/hippocampus
+      quote_key: 282312227_bb365351
+  - symbol: Id2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:41473287
+      marker_type: TRANSCRIPT
+      method: transcriptomics
+      scope: neocortex/hippocampus
+      quote_key: 282312227_bb365351
+  negative_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  - symbol: Calb2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  neuropeptides:
+  - symbol: Npy
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  electrophysiology_class: Late-spiking phenotype; provides slow, diffuse inhibition
+  ephys_sources:
+  - ref: PMID:20147544
+    method: patch clamp
+    scope: mouse hippocampus
+    quote_key: 2405079_6850b924
+  - ref: PMID:20147544
+    method: patch clamp
+    scope: mouse hippocampus
+    quote_key: 2405079_a85327b9
+  morphology_notes: |
+    Dense, compact axonal arbor providing volume transmission of GABA; small round soma; short radiating dendrites. Spider-like morphology.
+  morphology_sources:
+  - ref: PMID:20147544
+    method: intracellular labeling + immunochemistry
+    scope: mouse hippocampus
+    quote_key: 2405079_6850b924
+  - ref: PMID:20147544
+    method: intracellular labeling
+    scope: mouse hippocampus
+    quote_key: 2405079_a85327b9
+  cl_mapping:
+    cl_term:
+      id: CL:0000693
+      label: neurogliaform cell
+      name_in_source: neurogliaform cell
+    mapping_type: EXACT
+    mapping_notes: |
+      CL:0000693 definition matches well: small round soma, multiple short radiating dendrites, dense branched axonal mesh. Not region-restricted.
+  definition_references:
+  - PMID:20147544
+  - PMID:41473287
+  is_terminal: false
+  notes: |
+    nNOS+ NGCs derived from MGE share properties with Ivy cells; nNOS- NGCs arise from CGE. Two developmental lineages with overlapping morphology. Transcriptomic identity defined by Lamp5/Id2 expression.
+- id: ivy_cell_hippocampus
+  name: Ivy cell (IvC)
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005401
+    label: stratum pyramidale
+    name_in_source: CA1 stratum pyramidale
+    compartment: SOMA
+  location_sources:
+  - ref: PMID:39401246
+    method: transgenic mouse
+    scope: mouse CA1
+    quote_key: 262127573_d140faf4
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  defining_markers:
+  - symbol: Nos1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+    - ref: PMID:39401246
+      marker_type: PROTEIN
+      method: transgenic mouse
+      scope: mouse CA1
+      quote_key: 262127573_d140faf4
+    - ref: PMID:37467748
+      snippet: Lamp5 interneurons include ivy and neurogliaform cells (NGFCs). The ivy cell is the most common interneuron
+        type in CA1; it has a distinct morphology with a relatively extensive axonal cloud extending over several hippocampal
+        layers and co-expresses neuronal nitric oxide synthase (nNOS)
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:41473287
+      snippet: Amongst NGFCs Grin3a is expressed in both Lamp5+/Lhx6+ MGE-derived subsets, also known as Ivy cells (IvyCs),
+        and Lamp5+/Lhx6- caudal ganglionic eminence (CGE)-derived subsets
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:21209836
+      snippet: The labeled cell types correspond well to previously described NPY-positive multipolar cells, often referred
+        to as Ivy cells and neurogliaform cells
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:20147544
+      snippet: nNOS strongly colocalizes with neuropeptide Y in both Ivy cells (IvCs) and a subset of neurogliaform cells
+        (NGCs)
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  - symbol: Npy
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  - symbol: Lamp5
+    ncbi_gene_id: null
+  negative_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  - symbol: Calb2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  neuropeptides:
+  - symbol: Npy
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:20147544
+      marker_type: PROTEIN
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 2405079_6850b924
+  electrophysiology_class: Late-spiking phenotype; slow pyramidal cell inhibition
+  ephys_sources:
+  - ref: PMID:20147544
+    method: patch clamp
+    scope: mouse hippocampus
+    quote_key: 2405079_6850b924
+  - ref: PMID:20147544
+    method: patch clamp
+    scope: mouse hippocampus
+    quote_key: 2405079_a85327b9
+  morphology_notes: |
+    Dense local axonal arbor; soma typically in or near stratum pyramidale; NOS-expressing. Similar to NGC but different laminar position.
+  morphology_sources:
+  - ref: PMID:20147544
+    method: intracellular labeling
+    scope: mouse hippocampus
+    quote_key: 2405079_6850b924
+  - ref: PMID:20147544
+    method: intracellular labeling
+    scope: mouse hippocampus
+    quote_key: 2405079_a85327b9
+  - ref: PMID:28009257
+    snippet: As there were no data available for ivy and neurogliaform cells, we performed the necessary experiments in our
+      lab by filling ivy and neurogliaform cells in hippocampal CA1 slices from Wistar rats and then measuring their somatic
+      area and dendrites
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  cl_mapping: null
+  definition_references:
+  - PMID:20147544
+  - PMID:39401246
+  is_terminal: false
+  notes: |
+    No dedicated CL term. Ivy cells and nNOS+ NGCs may constitute a single subtype despite laminar differences. One of most representative CA1 interneuron types. Both MGE and CGE developmental origins reported.
+    [cite_traverse_2026_04_10] PMID:20147544: IvCs and nNOS+ NGCs have completely overlapping developmental, electrophysiological, morphological, and neurochemical properties, suggesting that these cells constitute a single unique interneuron subtype despite differences in laminar organization
+    [cite_traverse_2026_04_10] PMID:20147544: our findings reveal that IvCs and nNOS ϩ NGCs have completely overlapping developmental, electrophysiological, morphological, and neurochemical properties, suggesting that these cells constitute a single unique interneuron subtype despite differences in laminar organization
+- id: is_interneuron_hippocampus
+  name: Interneuron-specific (IS) interneuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005383
+    label: stratum oriens
+    name_in_source: CA1 stratum oriens
+    compartment: SOMA
+  - id: UBERON:0005402
+    label: stratum radiatum
+    name_in_source: CA1 stratum radiatum
+    compartment: SOMA
+  - id: UBERON:0005403
+    label: stratum lacunosum moleculare
+    name_in_source: CA1 stratum lacunosum-moleculare
+    compartment: SOMA
+  location_sources:
+  - ref: PMID:24671999
+    method: electron microscopy
+    scope: rat CA1
+    quote_key: 23480858_1f4801fb
+  - ref: PMID:24671999
+    snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These cells
+      innervated heavily the O/A border
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:24671999
+    snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their axons to
+      the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic glutamate receptor
+      1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+  defining_markers:
+  - symbol: Calb2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:37467748
+      marker_type: PROTEIN
+      method: review/primary
+      scope: hippocampus
+      quote_key: 259953057_10f139f9
+    - ref: PMID:24671999
+      snippet: although IS3 cells can be distinguished based on the coexpression of VIP and CR, VIP and CR alone are expressed
+        by several distinct types of hippocampal interneurons
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:23162426
+      snippet: a combination of immunohistochemistry and anatomical analysis identified three distinct subtypes of IS interneurons
+        in the rat hippocampus
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:37467748
+      snippet: The majority of cells in the VIP subclass are interneuron-specific (IS), specifically targeting other interneurons
+        rather than PCs. Three types of IS interneurons have been described, mostly in the hippocampus
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+    - ref: PMID:24671999
+      snippet: type 3 IS (IS3) cells that coexpress the vasoactive intestinal polypeptide (VIP) and calretinin contact several
+        distinct types of interneurons within the hippocampal CA1 stratum oriens/alveus (O/A), with preferential innervation
+        of oriens-lacunosum moleculare cells (OLMs) through dendritic synapses
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  - symbol: Vip
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:37467748
+      marker_type: PROTEIN
+      method: review/primary
+      scope: hippocampus
+      quote_key: 259953057_10f139f9
+    - ref: PMID:39401246
+      marker_type: PROTEIN
+      method: transgenic mouse
+      scope: mouse CA1
+      quote_key: 262127573_d140faf4
+  negative_markers: []
+  neuropeptides:
+  - symbol: Vip
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:37467748
+      marker_type: PROTEIN
+      method: review
+      scope: hippocampus
+      quote_key: 259953057_10f139f9
+  electrophysiology_class: Not extensively characterized in available reference set
+  ephys_sources:
+  - ref: PMID:24671999
+    snippet: This subtype of IS cells exhibited a remarkable anatomical diversity, with cell bodies that occupied different
+      layers and an axon that projected mostly within the RAD and PYR. Similar to IS3 cells, IS1 cells exhibited a high input
+      resistance but were more heterogeneous in terms of firing properties. Therefore, more than one subtype of putative IS1
+      cells is likely to be found within this group of CR-positive interneurons.
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  morphology_notes: |
+    Selectively contacts other interneurons rather than pyramidal cells; plays disinhibitory role in circuit. Identified by ultrastructural evidence of selective interneuron targeting.
+  morphology_sources:
+  - ref: PMID:24671999
+    method: electron microscopy
+    scope: rat CA1
+    quote_key: 23480858_1f4801fb
+  - ref: PMID:37467748
+    method: review
+    scope: hippocampus
+    quote_key: 259953057_09a50fe2
+  - ref: PMID:24671999
+    snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These cells
+      innervated heavily the O/A border, although occasional axonal branches were found in the RAD and PYR. Their dendritic
+      arbors were often unipolar (47% of cells), suggesting that these cells are preferentially recruited through the activation
+      of the Schaffer collaterals
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  - ref: PMID:24671999
+    snippet: In several cases (n ϭ 5 slices/2 animals), the dendrites of 2-3 CR-positive cells of this subtype were found
+      to form dendro-dendritically connected clusters (Fig. 6C1, top inset), which is a hallmark of the type I interneuron-specific
+      (IS1) interneuron described previously in the rat CA1 hippocampus
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  cl_mapping:
+    cl_term:
+      id: CL:4023016
+      label: VIP GABAergic interneuron
+      name_in_source: VIP interneuron
+    mapping_type: BROAD
+    mapping_notes: |
+      CL:4023016 captures VIP+ subset (IS-2 and IS-3) but not IS-1 (CR+/VIP-). The defining functional feature — selective interneuron targeting for disinhibition — is not encoded in any CL term.
+  definition_references:
+  - PMID:24671999
+  - PMID:37467748
+  - PMID:39401246
+  is_terminal: false
+  notes: |
+    Three subtypes: IS-1 (CR+), IS-2 (VIP+), IS-3 (CR+/VIP+). Majority of VIP subclass are IS cells. Ephys not extensively characterized. CL mapping only covers VIP+ subtypes.
+    [cite_traverse_2026_04_10] PMID:23162426: a subgroup of interneurons, the so-called interneuron-specific (IS) interneurons, specializes in innervating exclusively other GABAergic cells
+- id: oriens_oriens_cell_hippocampus
+  name: Oriens-oriens (O-O) cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0014548
+    label: stratum oriens of hippocampus
+    name_in_source: CA1 stratum oriens
+    compartment: SOMA
+  - id: UBERON:0014548
+    label: stratum oriens of hippocampus
+    name_in_source: stratum oriens
+    compartment: AXON_TARGET
+  location_sources: []
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources: []
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:38640347
+      snippet: the bistratified and oriens-oriens categories were disproportionately and almost exclusively represented by
+        Sst;;Tac1-INs (n = 13/25) and Sst;;Nos1-INs (n = 12/15), respectively
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  - symbol: Nos1
+    ncbi_gene_id: null
+  negative_markers: []
+  neuropeptides: []
+  electrophysiology_class: null
+  ephys_sources: []
+  morphology_notes: |
+    Axon confined to stratum oriens, distinguishing it from OLM (axon to str. lacunosum-moleculare) and bistratified (axon in radiatum + oriens). Identified by Sst;;Nos1 intersectional strategy.
+  morphology_sources: []
+  cl_mapping: null
+  definition_references:
+  - PMID:39401246
+  is_terminal: false
+  notes: |
+    Stub from cite-traverse (2026-04-10). Identified by Chamberland et al. (2024) using Sst;;Nos1 intersectional Cre/Flp. Almost exclusively represented by Sst;;Nos1-INs (n = 12/15). Distinct from OLM by axon confinement to stratum oriens. Evidence thin — single study.
+- id: trilaminar_cell_hippocampus
+  name: Trilaminar cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0014548
+    label: stratum oriens of hippocampus
+    name_in_source: stratum oriens
+    compartment: SOMA
+  location_sources:
+  - ref: PMID:27997999
+    snippet: The group of unlabeled interneurons recorded in stratum oriens may include O-LM cells, horizontal bistratified,
+      basket and axo-axonic cells and various long-range projecting GABAergic cell types
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources: []
+  defining_markers:
+  - symbol: Pvalb
+    ncbi_gene_id: null
+  - symbol: M2R
+    ncbi_gene_id: null
+  negative_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+  neuropeptides: []
+  electrophysiology_class: |
+    Unique high-frequency burst firing pattern distinguishing it from other long-range projecting GABAergic cells.
+  ephys_sources: []
+  morphology_notes: |
+    Long-range projecting GABAergic interneuron with axon spanning str. oriens, pyramidale, and radiatum (trilaminar). Projects to subiculum and medial septum. Distinguished from HS cell by firing pattern and PV+/M2R+ marker profile.
+  morphology_sources: []
+  cl_mapping: null
+  definition_references:
+  - PMID:28646648
+  is_terminal: false
+  notes: |
+    Stub from cite-traverse (2026-04-10). Well-documented by Somogyi lab (Katona et al. 2017). Long-range projection cell distinct from hippocampo-septal cell. PV+/M2R+/SOM-.
+- id: vip_basket_cell_hippocampus
+  name: VIP-positive basket cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005401
+    label: stratum pyramidale
+    name_in_source: stratum pyramidale
+    compartment: SOMA
+  location_sources: []
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources: []
+  defining_markers:
+  - symbol: Vip
+    ncbi_gene_id: null
+  negative_markers: []
+  neuropeptides: []
+  electrophysiology_class: null
+  ephys_sources: []
+  morphology_notes: |
+    Perisomatic-targeting VIP+ interneuron providing inhibition to pyramidal cell somata. Asynchronous GABA release. Functionally distinct from IS interneurons despite shared VIP expression.
+  morphology_sources: []
+  cl_mapping: null
+  definition_references:
+  - PMID:24671999
+  is_terminal: false
+  notes: |
+    Stub from cite-traverse (2026-04-10). Described by Tyan et al. (2014). Unlike IS cells (which target other interneurons), VIP basket cells provide perisomatic inhibition to pyramidal neurons. Evidence from single primary characterisation.
+    [cite_traverse_2026_04_10] PMID:24671999: VIP-positive basket cells provided perisomatic inhibition to CA1 pyramidal neurons with the asynchronous GABA release and were not connected with O/A interneurons
+- id: r_lm_cell_hippocampus
+  name: Radiatum-lacunosum moleculare (R-LM) cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0014548
+    label: stratum oriens of hippocampus
+    name_in_source: stratum oriens
+    compartment: SOMA
+  location_sources: []
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources: []
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:10777798
+      snippet: In area CA1, the vast majority of these interneurons were comprised of O-LM cells and two newly identified
+        interneuronal subtypes, R-LM and P-LM cells
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  negative_markers: []
+  neuropeptides: []
+  electrophysiology_class: null
+  ephys_sources: []
+  morphology_notes: |
+    SST+ interneuron with axon projecting through radiatum to lacunosum-moleculare. Identified in GIN transgenic mice.
+  morphology_sources: []
+  cl_mapping: null
+  definition_references:
+  - PMID:10818134
+  is_terminal: false
+  notes: |
+    Stub from cite-traverse (2026-04-10). THIN EVIDENCE — described in one study (Oliva et al. 2000) using GIN transgenic labelling. Unclear how it maps to modern transcriptomic taxonomy. May need targeted literature search to confirm as distinct type.
+- id: p_lm_cell_hippocampus
+  name: Pyramidale-lacunosum moleculare (P-LM) cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005401
+    label: stratum pyramidale
+    name_in_source: stratum pyramidale
+    compartment: SOMA
+  location_sources: []
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources: []
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:10777798
+      snippet: In area CA1, the vast majority of these interneurons were comprised of O-LM cells and two newly identified
+        interneuronal subtypes, R-LM and P-LM cells
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  negative_markers: []
+  neuropeptides: []
+  electrophysiology_class: null
+  ephys_sources: []
+  morphology_notes: |
+    SST+ interneuron with soma in stratum pyramidale and axon projecting to lacunosum-moleculare. Identified in GIN transgenic mice.
+  morphology_sources: []
+  cl_mapping: null
+  definition_references:
+  - PMID:10818134
+  is_terminal: false
+  notes: |
+    Stub from cite-traverse (2026-04-10). THIN EVIDENCE — described in one study (Oliva et al. 2000). Same caveat as R-LM cell.
+- id: lth_cell_hippocampus
+  name: Low-threshold high-Ih (LTH) cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0014548
+    label: stratum oriens of hippocampus
+    name_in_source: CA1 stratum oriens
+    compartment: SOMA
+  location_sources:
+  - ref: PMID:33991454
+    snippet: While the cell body and dendrites of LTH neurons reside within stratum oriens, their role in the hippocampal
+      circuit remains unknown
+    support: SUPPORT
+    source: cite_traverse_2026_04_10
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources: []
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33991454
+      snippet: Strong and weak SFA cells were labeled in hippocampal slices from SST:cre Ai14 mice suggesting both cells express
+        somatostatin
+      support: SUPPORT
+      source: cite_traverse_2026_04_10
+  negative_markers: []
+  neuropeptides: []
+  electrophysiology_class: |
+    Strong spike frequency adaptation, high Ih. Distinguished from OLM cells by physiological clustering.
+  ephys_sources: []
+  morphology_notes: null
+  morphology_sources: []
+  cl_mapping: null
+  definition_references:
+  - PMID:34250732
+  is_terminal: false
+  notes: |
+    Stub from cite-traverse (2026-04-10). THIN EVIDENCE — single study (Hewitt et al. 2021) using physiological clustering of SST-Cre Ai14 cells. May overlap with oriens-oriens or other SST+ subtypes. Needs targeted lit search.
+edges: []

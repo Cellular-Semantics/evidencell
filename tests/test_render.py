@@ -718,11 +718,15 @@ def test_gen_all_drilldowns_deduplicates():
 
 # ── CLI main() tests ──────────────────────────────────────────────────────────
 
-def _write_kb_files(tmp_path: Path) -> tuple[Path, Path]:
-    """Write a minimal KB YAML + references.json for CLI tests."""
-    graph_file = tmp_path / "test.yaml"
-    refs_file = tmp_path / "references.json"
+def _write_kb_files(tmp_path: Path, region: str = "testregion") -> tuple[Path, Path]:
+    """Write a minimal KB YAML + references.json with proper directory layout."""
     import json
+    kb_dir = tmp_path / "kb" / "draft" / region
+    kb_dir.mkdir(parents=True)
+    refs_dir = tmp_path / "references" / region
+    refs_dir.mkdir(parents=True)
+    graph_file = kb_dir / "test.yaml"
+    refs_file = refs_dir / "references.json"
     graph_file.write_text(yaml.dump(MINIMAL_GRAPH), encoding="utf-8")
     refs_file.write_text(json.dumps(MINIMAL_REFS), encoding="utf-8")
     return graph_file, refs_file
@@ -731,20 +735,22 @@ def _write_kb_files(tmp_path: Path) -> tuple[Path, Path]:
 def test_cli_summary(tmp_path):
     """CLI: `render summary graph.yaml` writes summary report."""
     graph_file, _ = _write_kb_files(tmp_path)
-    with patch("sys.argv", ["render", "summary", str(graph_file)]):
-        from evidencell.render import main
-        main()
-    summaries = list(tmp_path.glob("reports/*_summary.md"))
+    with patch("evidencell.paths.repo_root", return_value=tmp_path):
+        with patch("sys.argv", ["render", "summary", str(graph_file)]):
+            from evidencell.render import main
+            main()
+    summaries = list(tmp_path.glob("reports/**/*_summary.md"))
     assert len(summaries) == 1
 
 
 def test_cli_summary_single_node(tmp_path):
     """CLI: `render summary graph.yaml --node X` writes one summary."""
     graph_file, _ = _write_kb_files(tmp_path)
-    with patch("sys.argv", ["render", "summary", str(graph_file), "--node", "test_classical"]):
-        from evidencell.render import main
-        main()
-    summaries = list(tmp_path.glob("reports/*_summary.md"))
+    with patch("evidencell.paths.repo_root", return_value=tmp_path):
+        with patch("sys.argv", ["render", "summary", str(graph_file), "--node", "test_classical"]):
+            from evidencell.render import main
+            main()
+    summaries = list(tmp_path.glob("reports/**/*_summary.md"))
     assert len(summaries) == 1
 
 
@@ -754,21 +760,23 @@ def test_cli_drilldowns(tmp_path):
     No LITERATURE evidence in MINIMAL_GRAPH, so no files written — but no crash either.
     """
     graph_file, _ = _write_kb_files(tmp_path)
-    with patch("sys.argv", ["render", "drilldowns", str(graph_file), "--node", "test_classical"]):
-        from evidencell.render import main
-        main()  # should not raise
+    with patch("evidencell.paths.repo_root", return_value=tmp_path):
+        with patch("sys.argv", ["render", "drilldowns", str(graph_file), "--node", "test_classical"]):
+            from evidencell.render import main
+            main()  # should not raise
 
 
 def test_cli_drilldown_single_pmid(tmp_path):
     """CLI: `render drilldowns graph.yaml --node X --pmid P` writes one file."""
     graph_file, _ = _write_kb_files(tmp_path)
-    with patch("sys.argv", [
-        "render", "drilldowns", str(graph_file),
-        "--node", "test_classical", "--pmid", "PMID:12345678",
-    ]):
-        from evidencell.render import main
-        main()
-    files = list(tmp_path.glob("reports/*drilldown*.md"))
+    with patch("evidencell.paths.repo_root", return_value=tmp_path):
+        with patch("sys.argv", [
+            "render", "drilldowns", str(graph_file),
+            "--node", "test_classical", "--pmid", "PMID:12345678",
+        ]):
+            from evidencell.render import main
+            main()
+    files = list(tmp_path.glob("reports/**/*drilldown*.md"))
     assert len(files) == 1
 
 
@@ -780,19 +788,21 @@ def test_cli_index(tmp_path):
     (kb_dir / "test.yaml").write_text(yaml.dump(MINIMAL_GRAPH), encoding="utf-8")
     out_dir = tmp_path / "out"
     out_dir.mkdir()
-    with patch("sys.argv", ["render", "index", "myregion", "--output-dir", str(out_dir)]):
-        from evidencell.render import main
-        # Patch cwd so render_index finds kb/ in tmp_path
-        with patch("evidencell.render.Path.cwd", return_value=tmp_path):
-            main()
+    with patch("evidencell.paths.repo_root", return_value=tmp_path):
+        with patch("sys.argv", ["render", "index", "myregion", "--output-dir", str(out_dir)]):
+            from evidencell.render import main
+            # Patch cwd so render_index finds kb/ in tmp_path
+            with patch("evidencell.render.Path.cwd", return_value=tmp_path):
+                main()
     assert (out_dir / "index.md").exists()
 
 
 def test_cli_facts(tmp_path):
     """CLI: `render facts graph.yaml --node X` writes facts JSON."""
     graph_file, _ = _write_kb_files(tmp_path)
-    with patch("sys.argv", ["render", "facts", str(graph_file), "--node", "test_classical"]):
-        from evidencell.render import main
-        main()
-    facts_files = list(tmp_path.glob("reports/*_facts.json"))
+    with patch("evidencell.paths.repo_root", return_value=tmp_path):
+        with patch("sys.argv", ["render", "facts", str(graph_file), "--node", "test_classical"]):
+            from evidencell.render import main
+            main()
+    facts_files = list(tmp_path.glob("reports/**/*_facts.json"))
     assert len(facts_files) == 1

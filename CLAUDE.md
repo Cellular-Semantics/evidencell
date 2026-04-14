@@ -10,8 +10,11 @@ evidencell is a LinkML-based knowledge base for cell type mapping evidence — l
 
 ```
 schema/                  # LinkML schema (source of truth for KB structure)
-kb/mappings/{region}/    # canonical, validated mapping graphs
-kb/draft/{region}/       # work-in-progress; graduate to kb/mappings/ after just qc
+kb/mappings/{region}/    # canonical, validated mapping graphs (YAML only)
+kb/draft/{region}/       # work-in-progress graphs (YAML only); graduate via just qc
+references/{region}/     # references.json — shared quote store per region
+research/{region}/       # research artifacts: field_mapping, cite_traverse, evidence_extraction
+reports/{region}/        # human-readable summary + drill-down reports
 inputs/deepsearch/       # ASTA deep research PDFs used as literature discovery input
 inputs/taxonomies/       # taxonomy table slices (CSV/TSV) used for ingest-taxonomy
 src/evidencell/          # all Python logic (validation, rendering, compliance, fetching)
@@ -99,3 +102,7 @@ writes to validated stores, read:
 - The pre-edit hook validates KB YAML before it reaches disk. If it rejects, fix the underlying issue — do not attempt to bypass the hook.
 - When the hook reports an error, read the structured output, correct the YAML, and retry. The correction loop typically resolves in 1–2 iterations.
 - Ontology terms (CL, UBERON, NCBITaxon) must exist in the OAK local databases. Look up terms with `runoak` before using them — do not invent IDs.
+
+## Claude bug fix
+
+You *must* validate *all* image files before reading them.

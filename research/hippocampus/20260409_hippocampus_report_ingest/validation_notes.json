@@ -1,0 +1,718 @@
+{
+  "nodes": {
+    "pv_basket_cell_hippocampus": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["10664418_9acd7ec1", "13529065_8d53bb0b", "19055431_5dd9a60d"],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "SUPPORTED",
+          "quote_keys": ["221276443_e917908b", "19055431_b2536ef6", "38778375_462ec931"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["10540334_bdfa426a", "38778375_462ec931"],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["10540334_418c51dd"],
+          "issues": []
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptides identified for PV basket cells — consistent with literature (PV+ INs generally do not express neuropeptides)",
+              "quote_keys": []
+            }
+          ]
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["10540334_bdfa426a", "10664418_9acd7ec1"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["16859318_009e9f36"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes directly address spatial relationships with other cell types",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": ["colocated_types — no quotes address spatial relationships"],
+      "overall_confidence": "HIGH"
+    },
+    "cck_basket_cell_hippocampus": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["480205_62cd73ae", "10540334_418c51dd", "13529065_8d53bb0b"],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "SUPPORTED",
+          "quote_keys": ["857025_3ed72cbd", "19055431_b2536ef6", "231732903_b97d2b7d"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["480205_62cd73ae", "16859318_009e9f36"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Vglut3 mentioned as marker in proposed_types.json but no direct quote in references.json validates Vglut3 as a CCK basket cell marker specifically",
+              "quote_keys": []
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["10540334_418c51dd"],
+          "issues": []
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": ["480205_62cd73ae"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "PARTIAL",
+          "quote_keys": ["10540334_418c51dd"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Proposed 'all hippocampal subfields' location is not specifically validated by a single quote — only CA1 pyramidal layer is directly referenced",
+              "quote_keys": []
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["16859318_009e9f36"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes address spatial relationships",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "colocated_types — no quotes address spatial relationships",
+        "Vglut3 marker — no direct quote validates this specific marker for CCK basket cells"
+      ],
+      "overall_confidence": "HIGH"
+    },
+    "axo_axonic_cell_hippocampus": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["8530661_92702482", "10664418_9acd7ec1"],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "PARTIAL",
+          "quote_keys": ["221276443_e917908b", "38778375_462ec931"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No hippocampus-specific axo-axonic cell ephys recording data in reference set; fast-spiking classification derived from broader PV+ IN studies",
+              "quote_keys": []
+            }
+          ]
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["10540334_bdfa426a"],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No negative markers identified in reference set",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide data available",
+              "quote_keys": []
+            }
+          ]
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["10540334_bdfa426a"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["38778375_462ec931"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes address spatial relationships",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "colocated_types — no quotes address spatial relationships",
+        "negative_markers — none identified",
+        "neuropeptides — none identified",
+        "electrophysiology_class — no hippocampus-specific axo-axonic recording data"
+      ],
+      "overall_confidence": "MODERATE"
+    },
+    "bistratified_cell_hippocampus": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["15824759_23eebcb8", "8530661_92702482"],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "SUPPORTED",
+          "quote_keys": ["15824759_23eebcb8", "221276443_e917908b"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["269246896_c084d5c0", "221276443_e917908b"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Tac1 is from intersectional genetics (Sst::Tac1 Cre line); it is unclear whether Tac1 protein is reliably expressed in all bistratified cells or is a Cre-driver artifact",
+              "quote_keys": ["269246896_c084d5c0"]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No negative markers specifically identified for bistratified cells",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": ["269246896_c084d5c0"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["8530661_92702482"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["38778375_462ec931"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes address spatial relationships",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "colocated_types — no quotes address spatial relationships",
+        "negative_markers — none identified"
+      ],
+      "overall_confidence": "MODERATE"
+    },
+    "olm_cell_ca1": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["3106274_e54f60e9", "201041756_c6648415", "15101210_fb549732"],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "SUPPORTED",
+          "quote_keys": ["116862536_5f5f2ae8", "221742877_26f1e4cc", "234597703_fda66a57"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["201041756_2d5a5fb3", "3591966_644f1e68", "201041756_bd56f851"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Ndnf and Nkx2-1 listed as markers in proposed_types.json. These are intersectional Cre-driver genes (Ndnf::Nkx2-1 targets OLM) but may not be reliable protein markers. Ndnf expression not directly validated in single-cell data here.",
+              "quote_keys": ["269246896_c084d5c0"]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "PARTIAL",
+          "quote_keys": ["201041756_2d5a5fb3"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Pvalb is listed as negative but quote says 'sparse expression' — not completely absent. A PV+ subpopulation of OLM cells exists with distinct theta/gamma coupling properties.",
+              "quote_keys": ["282229961_2770b94f", "263277661_842b555f"]
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": ["201041756_8d16e821", "201041756_9991ee9f", "201041756_1d20426d"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Npy expression is consistent in mouse OLM cells but was reported absent in rat (0/4 cells, Katona et al., 2014). Species-dependent difference.",
+              "quote_keys": ["201041756_9991ee9f"]
+            }
+          ]
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["116862536_5f5f2ae8", "229694907_6865b9db", "4776309_dd48b1ec"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["201041756_1d024a35"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes directly address spatial co-location with other cell types",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": ["colocated_types — no quotes address spatial relationships"],
+      "overall_confidence": "HIGH"
+    },
+    "hippocampo_septal_cell_ca1": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "PARTIAL",
+          "quote_keys": ["4934764_093c71c6"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Only one quote available, and it describes the distinction from OLM rather than directly characterizing HS cell morphology",
+              "quote_keys": ["4934764_093c71c6"]
+            }
+          ]
+        },
+        "electrophysiology_class": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No electrophysiology data available for HS cells in this reference set",
+              "quote_keys": []
+            }
+          ]
+        },
+        "defining_markers": {
+          "status": "PARTIAL",
+          "quote_keys": ["132515344_fb36f967"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Only Sst is validated; no specific markers distinguishing HS from OLM cells",
+              "quote_keys": []
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No negative markers identified",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "PARTIAL",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Sst is the only neuropeptide; no quotes specifically validate neuropeptide profile of HS cells",
+              "quote_keys": []
+            }
+          ]
+        },
+        "anatomical_location": {
+          "status": "PARTIAL",
+          "quote_keys": ["132515344_fb36f967"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Projection to medial septum is core defining feature but has no direct quote support in references.json",
+              "quote_keys": []
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "GABAergic identity inferred from SOM+ IN class but not directly validated for HS cells",
+              "quote_keys": []
+            }
+          ]
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes address spatial relationships",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "electrophysiology_class — no data available",
+        "negative_markers — none identified",
+        "nt_type — not directly validated",
+        "anatomical_location — medial septum projection not quote-supported",
+        "colocated_types — no quotes address spatial relationships",
+        "defining_markers — only Sst validated, no HS-specific markers"
+      ],
+      "overall_confidence": "LOW"
+    },
+    "neurogliaform_cell_hippocampus": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924", "2405079_a85327b9"],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924", "2405079_a85327b9"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924", "282312227_bb365351"],
+          "issues": [
+            {
+              "type": "HETEROGENEITY",
+              "description": "nNOS+ NGCs (MGE-derived) and nNOS- NGCs (CGE-derived) have different developmental origins; Nos1 is not a universal NGC marker",
+              "quote_keys": ["2405079_a85327b9"]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924"],
+          "issues": []
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_042a449f"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes address spatial relationships",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": ["colocated_types — no quotes address spatial relationships"],
+      "overall_confidence": "HIGH"
+    },
+    "ivy_cell_hippocampus": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924", "2405079_a85327b9"],
+          "issues": [
+            {
+              "type": "HETEROGENEITY",
+              "description": "IvCs and nNOS+ NGCs may constitute a single subtype despite laminar differences — the boundary between these types is debated",
+              "quote_keys": ["2405079_a85327b9"]
+            }
+          ]
+        },
+        "electrophysiology_class": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924", "2405079_a85327b9"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924", "262127573_d140faf4"],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924"],
+          "issues": []
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["262127573_d140faf4"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["2405079_6850b924"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes address spatial relationships",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": ["colocated_types — no quotes address spatial relationships"],
+      "overall_confidence": "MODERATE"
+    },
+    "is_interneuron_hippocampus": {
+      "property_support": {
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["23480858_1f4801fb", "259953057_09a50fe2"],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No electrophysiology characterization data available in reference set for IS interneurons",
+              "quote_keys": []
+            }
+          ]
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["259953057_10f139f9", "262127573_d140faf4"],
+          "issues": [
+            {
+              "type": "HETEROGENEITY",
+              "description": "Three IS subtypes have different marker profiles: IS-1 (CR+/VIP-), IS-2 (VIP+/CR-), IS-3 (CR+/VIP+). No single marker defines all IS cells.",
+              "quote_keys": ["259953057_10f139f9"]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No negative markers identified for IS interneurons as a class",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": ["259953057_10f139f9"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["23480858_1f4801fb"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["23480858_1f4801fb"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes address spatial relationships",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "electrophysiology_class — not characterized in reference set",
+        "negative_markers — none identified",
+        "colocated_types — no quotes address spatial relationships"
+      ],
+      "overall_confidence": "MODERATE"
+    }
+  },
+  "round2_targets": [
+    {
+      "node_id": "olm_cell_ca1",
+      "property": "negative_markers",
+      "issue": "Pvalb expression ambiguity: sparse but not absent; PV+ OLM subpopulation exists",
+      "quote_keys": ["282229961_2770b94f", "263277661_842b555f", "201041756_2d5a5fb3"],
+      "action": "Read primary sources to determine if PV+ OLM cells are a distinct subtype requiring a separate node or a continuum within OLM population"
+    },
+    {
+      "node_id": "olm_cell_ca1",
+      "property": "neuropeptides",
+      "issue": "NPY expression species difference (present in mouse, absent in rat)",
+      "quote_keys": ["201041756_9991ee9f"],
+      "action": "Confirm NPY species difference and determine if rat OLM cells should be modeled separately"
+    },
+    {
+      "node_id": "olm_cell_ca1",
+      "property": "defining_markers",
+      "issue": "Ndnf as marker: used as Cre-driver gene (Ndnf::Nkx2-1) but protein expression not validated",
+      "quote_keys": ["269246896_c084d5c0"],
+      "action": "Look up Ndnf protein expression data in OLM cells from primary sources"
+    },
+    {
+      "node_id": "hippocampo_septal_cell_ca1",
+      "property": "morphology_notes",
+      "issue": "Extremely limited reference coverage (1 quote, indirectly characterizing morphology)",
+      "quote_keys": ["4934764_093c71c6"],
+      "action": "Search for primary HS cell characterization papers (Jinno et al., Takacs et al.) and add to references.json"
+    },
+    {
+      "node_id": "hippocampo_septal_cell_ca1",
+      "property": "electrophysiology_class",
+      "issue": "No electrophysiology data available",
+      "quote_keys": [],
+      "action": "Search literature for HS cell electrophysiology recordings"
+    },
+    {
+      "node_id": "cck_basket_cell_hippocampus",
+      "property": "defining_markers",
+      "issue": "Vglut3 marker lacks direct quote validation in references.json",
+      "quote_keys": [],
+      "action": "Search for Vglut3 expression in CCK basket cells and add supporting quote"
+    },
+    {
+      "node_id": "axo_axonic_cell_hippocampus",
+      "property": "electrophysiology_class",
+      "issue": "No hippocampus-specific axo-axonic recording data",
+      "quote_keys": [],
+      "action": "Search for hippocampal axo-axonic cell electrophysiology studies"
+    },
+    {
+      "node_id": "bistratified_cell_hippocampus",
+      "property": "defining_markers",
+      "issue": "Tac1 as marker: validated only via intersectional Cre line, protein expression uncertain",
+      "quote_keys": ["269246896_c084d5c0"],
+      "action": "Check whether Tac1 protein is reliably detected in hippocampal bistratified cells"
+    },
+    {
+      "node_id": "neurogliaform_cell_hippocampus",
+      "property": "defining_markers",
+      "issue": "Nos1 not universal — nNOS- NGCs (CGE-derived) exist",
+      "quote_keys": ["2405079_a85327b9"],
+      "action": "Determine whether nNOS+ and nNOS- NGCs should be separate nodes"
+    },
+    {
+      "node_id": "ivy_cell_hippocampus",
+      "property": "morphology_notes",
+      "issue": "IvC vs nNOS+ NGC boundary debated — may be single subtype",
+      "quote_keys": ["2405079_a85327b9"],
+      "action": "Review recent transcriptomic data to determine if IvC and nNOS+ NGC should be merged into one node"
+    },
+    {
+      "node_id": "is_interneuron_hippocampus",
+      "property": "electrophysiology_class",
+      "issue": "No electrophysiology characterization in reference set",
+      "quote_keys": [],
+      "action": "Search for IS cell electrophysiology studies (Tyan et al., 2014; Chamberland et al.)"
+    },
+    {
+      "node_id": "is_interneuron_hippocampus",
+      "property": "defining_markers",
+      "issue": "Three subtypes with different marker profiles — current node conflates them",
+      "quote_keys": ["259953057_10f139f9"],
+      "action": "Determine whether IS-1, IS-2, and IS-3 should be modeled as separate nodes"
+    }
+  ]
+}
