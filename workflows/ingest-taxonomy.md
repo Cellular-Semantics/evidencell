@@ -17,7 +17,7 @@ future `enrich-nodes` workflow.
 ```
 PARAMS:
   taxonomy_file: ""           # path to source file (required)
-  output_dir: ""              # kb/draft/{region}/ — inferred from taxonomy metadata
+  output_dir: ""              # research/{region}/ — inferred from taxonomy metadata
                               # or specified by user; confirm before writing
   target_level: "all"         # which taxonomy level(s) to ingest: "all", "cluster",
                               # "supertype", "subclass", etc. Default: all levels.

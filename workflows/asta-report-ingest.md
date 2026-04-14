@@ -27,7 +27,7 @@ PARAMS:
   thinking_model: "opus" # parsing + KB proposal subagent
 ```
 
-Output directory: `kb/{region}/traversal_output/{YYYYMMDD}_{region}_report_ingest/`
+Output directory: `research/{region}/{YYYYMMDD}_{region}_report_ingest/`
 
 ---
 
@@ -42,7 +42,7 @@ PDF
  ├─ Step 1b:  hyperlinks → pdf_corpus_ids.json (S2 corpus IDs from PDF links)
  │
  ├─ Step 2:   batch resolve + merge quotes
- │            → kb/draft/{region}/references.json  (shared, keyed by corpus_id)
+ │            → references/{region}/references.json  (shared, keyed by corpus_id)
  │               quotes stored with content-hashed keys: {corpus_id}_{hash8}
  │
  ├─ Step 3:   CL lookup → cl_mappings.json
@@ -63,7 +63,7 @@ quotes by key. Reports dereference keys to include snippets when needed.
 
 ## references.json — shared quote store
 
-`kb/draft/{region}/references.json` is the single source of truth for all
+`references/{region}/references.json` is the single source of truth for all
 references and their associated quotes in a region. Multiple workflows
 (asta-report-ingest, cite-traverse, evidence-extraction) read and append to it.
 
@@ -169,7 +169,7 @@ sentences. Inline quoted fragments in synthesis text are ASTA paraphrase, not ve
 1. Confirm `{pdf_file}` exists at the given path (relative to repo root).
 2. Create output directory:
    ```bash
-   mkdir -p kb/{region}/traversal_output/{YYYYMMDD}_{region}_report_ingest
+   mkdir -p research/{region}/{YYYYMMDD}_{region}_report_ingest
    ```
 3. Write `{output_dir}/run_config.json`:
    ```json
@@ -286,7 +286,7 @@ You perform ONLY the steps listed below.
 
 OUTPUT DIRECTORY: {output_dir}
 REGION: {region}
-REFERENCES FILE: kb/draft/{region}/references.json
+REFERENCES FILE: references/{region}/references.json
 
 TASK:
 
@@ -319,10 +319,10 @@ TASK:
    b. If still unresolved, mark resolution_confidence: UNRESOLVED.
       Do not guess.
 
-5. Merge into kb/draft/{region}/references.json:
+5. Merge into references/{region}/references.json:
 
    a. Read existing references.json (or start with {"_meta": {...}} if first
-      ingest for this region). Create kb/draft/{region}/ if needed.
+      ingest for this region). Create references/{region}/ if needed.
 
    b. For each resolved reference, generate content-hashed quote keys:
       ```python
@@ -351,7 +351,7 @@ TASK:
       (claims list is empty here — populated in Step 3b)
 
    e. Update _meta.last_updated and _meta.last_updated_by.
-      Write back to kb/draft/{region}/references.json.
+      Write back to references/{region}/references.json.
 
 6. Write {output_dir}/resolution_report.md — summary:
    - Total references, HIGH/MODERATE/UNRESOLVED counts
@@ -450,7 +450,7 @@ REGION: {region}
 
 INPUT FILES:
 - {output_dir}/proposed_types.json                (node summaries from Step 1)
-- kb/draft/{region}/references.json               (shared quote store)
+- references/{region}/references.json               (shared quote store)
 - {output_dir}/cl_mappings.json                   (CL term matches)
 
 PROPERTY CATEGORIES:
@@ -545,7 +545,7 @@ Quotes can validate these node property fields:
    # Source: ASTA deep research report — {pdf_file}
    # Ingestion date: {date}
    # Status: DRAFT — node metadata from ASTA report, pending primary verification
-   # Property assertions reference quotes in kb/draft/{region}/references.json
+   # Property assertions reference quotes in references/{region}/references.json
    # Classical nodes proposed by: asta-report-ingest
    ```
 
@@ -661,7 +661,7 @@ INGEST COMPLETE
 Region: {region}
 Draft KB: kb/draft/{region}/{kb_file}
 Nodes written: {N}
-References: kb/draft/{region}/references.json ({R} papers, {Q} quotes)
+References: references/{region}/references.json ({R} papers, {Q} quotes)
 Output dir: {output_dir}/
 
 Validation: {S} properties supported, {P} partial, {G} gaps
@@ -674,7 +674,7 @@ NEXT STEPS
 Option A — Targeted primary literature retrieval (recommended):
   Hand workflows/cite-traverse.md to Claude Code with:
     node_ids: {list of node IDs}
-    references_file: kb/draft/{region}/references.json
+    references_file: references/{region}/references.json
     round2_targets: {output_dir}/validation_notes.json  ← prioritised issues
     output_dir: {output_dir}
     max_depth: 1    ← recommended when coming from an ASTA report; the report

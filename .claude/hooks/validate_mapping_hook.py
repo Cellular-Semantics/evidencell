@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PreToolUse hook: validates kb/**/*.yaml and kb/**/reports/*.md BEFORE edits are applied.
+PreToolUse hook: validates kb/**/*.yaml and reports/**/*.md BEFORE edits are applied.
 
 YAML checks (in order):
 1. YAML parse validity
@@ -56,8 +56,7 @@ def main():
 
     is_yaml = "/kb/" in str(file_path) and file_path.suffix == ".yaml"
     is_report = (
-        "/kb/" in str(file_path)
-        and "/reports/" in str(file_path)
+        "/reports/" in str(file_path)
         and file_path.suffix == ".md"
     )
 
@@ -75,28 +74,49 @@ def main():
 
     errors_found = False
 
-    # Reports live in kb/draft/reports/; references.json is one level up in kb/draft/
-    refs_path = (file_path.parent.parent if is_report else file_path.parent) / "references.json"
+    # Derive refs_path from new directory layout.
+    # Infer the repo root from the file path (not __file__) so tests with
+    # tmp_path fixtures work correctly.
+    def _repo_root_from_path(fp: Path, marker: str) -> Path:
+        """Walk up from fp to find the parent directory of marker (e.g. 'kb')."""
+        parts = fp.resolve().parts
+        for i, part in enumerate(parts):
+            if part == marker:
+                return Path(*parts[:i]) if i > 0 else Path("/")
+        return _project_root  # fallback to hook-relative root
+
+    if is_report:
+        # reports/{region}/*.md → references/{region}/references.json
+        region = file_path.parent.name
+        inferred_root = _repo_root_from_path(file_path, "reports")
+        refs_path = inferred_root / "references" / region / "references.json"
+    else:
+        # kb/draft/{region}/*.yaml → references/{region}/references.json
+        region = file_path.parent.name
+        inferred_root = _repo_root_from_path(file_path, "kb")
+        refs_path = inferred_root / "references" / region / "references.json"
 
     if is_report:
         # ── Markdown report validation ─────────────────────────────────────
         annotations = parse_md_annotations(simulated)
 
-        # Collect known KB accessions from sibling YAML files
+        # Collect known KB accessions from kb/draft/{region}/ and kb/mappings/{region}/
         kb_nodes: dict | None = None
         try:
-            import glob as _glob
             kb_nodes = {}
-            for yf in file_path.parent.parent.glob("*.yaml"):
-                try:
-                    import yaml as _yaml
-                    y = _yaml.safe_load(yf.read_text(encoding="utf-8"))
-                    for node in (y or {}).get("nodes", []):
-                        acc = node.get("cell_set_accession")
-                        if acc:
-                            kb_nodes[acc] = node
-                except Exception:
-                    pass
+            for base in ("draft", "mappings"):
+                kb_region_dir = inferred_root / "kb" / base / region
+                if kb_region_dir.is_dir():
+                    for yf in kb_region_dir.glob("*.yaml"):
+                        try:
+                            import yaml as _yaml
+                            y = _yaml.safe_load(yf.read_text(encoding="utf-8"))
+                            for node in (y or {}).get("nodes", []):
+                                acc = node.get("cell_set_accession")
+                                if acc:
+                                    kb_nodes[acc] = node
+                        except Exception:
+                            pass
         except Exception:
             kb_nodes = None
 

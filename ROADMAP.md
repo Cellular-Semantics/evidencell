@@ -569,30 +569,22 @@ Pre-filter seeds and candidate refs to down-rank papers unlikely to contain dire
 
 ## M2L — Lit Search File Specs and Validated Handovers
 
-**Goal**: Formalise the data structures flowing through cite-traverse (and its callers/consumers) so that each step boundary is validated, not just instructed.
+**Goal**: Formalise the data structures flowing through the lit search pipeline so that step boundaries are validated, not just instructed by prose.
 
-**Status**: 🔲 Pending (parallel — closely related to M2+ but independent)
+**Status**: 🔲 Pending — to be planned as part of workflow simplification/refactor
 
-**Motivation**: Of the 9 file types produced by cite-traverse, only 1 (`candidate_refs.json`) has a formal schema — defined as a docstring in `extract_asta_refs.py`. The rest are defined by prose in the orchestrator prompt. This means:
-- A subagent that produces slightly wrong JSON (missing field, wrong enum value) is not caught until synthesis or extraction fails downstream.
-- The summary object — the primary data contract between fetch → selection → synthesis → evidence-extraction — has no validation at all.
-- `run_config.json` and `run_manifest.json` drift silently when orchestrator prompts are updated but the "schema" (prose) isn't updated consistently.
+**Motivation**: Of the 9 file types produced by cite-traverse, only 1 has a formal schema. The rest are defined by prose in orchestrator prompts. This means subagent output errors aren't caught until downstream steps fail, and the data contracts drift when prompts are updated.
 
-### Deliverables
+### Principles
 
-1. **Pydantic models** in `src/evidencell/models/cite_traverse.py`:
-   - `SnippetSummary` — source_corpus_id, source_title, source_method (enum: asta_snippet | europepmc_fulltext | asta_report), snippet_kind, section, snippet_score, node_relevance (enum: HIGH | MODERATE | LOW), node_relevance_reason, summary, quotes (list[str]), depth
-   - `SelectionEntry` — corpus_id, title, selected, reason
-   - `DepthRefs` — depth, all_candidate_ids, selected_corpus_ids, selection_rationale (list[SelectionEntry]), total_candidates, total_selected
-   - `RunConfig` — all current params with types and defaults
-   - `ManifestEntry` — step (enum), counts, timestamps
-2. **Output validation** at each step boundary: fetch subagent writes summaries → validate against `SnippetSummary` before selection reads them. Selection writes refs → validate against `DepthRefs` before next fetch reads them. Validation can be a thin Python script (`uv run python -m evidencell.validate_cite_traverse {file} {schema}`) called by the orchestrator between steps.
-3. **Canonical `output_dir` convention**: orchestrators enforce `kb/draft/{region}/cite_traverse/` (or `scratch/` if explicitly throw-away). Document in `WORKFLOW.md`.
-4. **Schema-first orchestrator prompts**: the prose structure specs in `cite-traverse.md` reference the Pydantic models rather than inline JSON examples. Single source of truth.
+1. **All workflow files should have formal schemas.** No file produced or consumed by a workflow should be validated only by prose instruction.
+2. **KB candidates get LinkML definitions.** Any file that is a provenance record or may become part of a future KB/database (summaries, selection rationale, run metadata, proposed evidence) should be defined as LinkML classes alongside existing KB classes like `CellTypeNode`. Use `gen-pydantic` to generate Python validators from the single schema.
+3. **Temporary intermediates get lightweight validation.** Raw API responses and transient files can use JSON Schema or simple Pydantic models — not necessarily LinkML.
+4. **Schema-first orchestrator prompts.** Structure specs in orchestrators reference generated models rather than inline JSON examples. Single source of truth.
 
-### Relationship to M2+
+### Scope note
 
-M2+ improves what evidence cite-traverse finds (better snippets, smarter selection). M2L improves how reliably that evidence flows through the pipeline. They can run in parallel — M2L doesn't change retrieval logic, just wraps existing outputs in validation. If done together, new M2+ fields (venue_tier, quality_score) get added to the Pydantic models from the start.
+The current cite-traverse pipeline may be simplified or refactored (fewer intermediates, different step boundaries). Precise decisions about which files survive and what their schemas look like will be made during that planning. This milestone defines the principle — formalise everything — not the specific models.
 
 ---
 
@@ -679,7 +671,7 @@ Allen S3 bucket remain an option.
 
 **Goal**: Make `kb/` contain only graph YAML. Establish naming conventions and graduation criteria. High priority — current structure is confusing and blocks clean onboarding.
 
-**Status**: 🔲 Pending — can start immediately, independent of other milestones.
+**Status**: 🟡 Phase 1 complete (directory restructure). Phases 2–4 pending.
 
 ### Background: structural differences from dismech
 

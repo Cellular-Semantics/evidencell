@@ -1197,10 +1197,12 @@ def render_index(region: str, kb_root: Path, out_path: Path) -> None:
 # ── CLI entry point ───────────────────────────────────────────────────────────
 
 def _load_graph_and_refs(graph_file: Path) -> tuple[dict, dict]:
+    from evidencell.paths import refs_path_for_graph
+
     graph = yaml.safe_load(graph_file.read_text(encoding="utf-8"))
     if not graph:
         raise ValueError(f"Empty or invalid YAML: {graph_file}")
-    refs_file = graph_file.parent / "references.json"
+    refs_file = refs_path_for_graph(graph_file)
     if refs_file.exists():
         refs = json.loads(refs_file.read_text(encoding="utf-8"))
     else:
@@ -1248,19 +1250,21 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.cmd == "facts":
+        from evidencell.paths import reports_dir_for_region, region_from_graph
         graph_file = args.graph_file.resolve()
         graph, refs = _load_graph_and_refs(graph_file)
         facts = extract_node_facts(graph, refs, args.node, graph_file)
-        out_dir = args.output_dir or (graph_file.parent / "reports")
+        out_dir = args.output_dir or reports_dir_for_region(region_from_graph(graph_file))
         out_dir.mkdir(parents=True, exist_ok=True)
         out_path = out_dir / f"{args.node}_facts.json"
         out_path.write_text(json.dumps(facts, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"Written: {out_path}")
 
     elif args.cmd == "summary":
+        from evidencell.paths import reports_dir_for_region, region_from_graph
         graph_file = args.graph_file.resolve()
         graph, refs = _load_graph_and_refs(graph_file)
-        out_dir = args.output_dir or (graph_file.parent / "reports")
+        out_dir = args.output_dir or reports_dir_for_region(region_from_graph(graph_file))
         nodes = _classical_nodes(graph)
         if args.node:
             node_ids = [args.node]
@@ -1271,14 +1275,16 @@ def main() -> None:
             render_summary(graph, refs, nid, out_path, graph_file)
             if args.drilldowns:
                 # Generate all drill-downs for this node
-                refs_file = graph_file.parent / "references.json"
+                from evidencell.paths import refs_path_for_graph as _rfg
+                refs_file = _rfg(graph_file)
                 if refs_file.exists():
                     _gen_all_drilldowns(graph, refs, nid, out_dir, graph_file)
 
     elif args.cmd == "drilldowns":
+        from evidencell.paths import reports_dir_for_region, region_from_graph
         graph_file = args.graph_file.resolve()
         graph, refs = _load_graph_and_refs(graph_file)
-        out_dir = args.output_dir or (graph_file.parent / "reports")
+        out_dir = args.output_dir or reports_dir_for_region(region_from_graph(graph_file))
         if args.pmid:
             _gen_single_drilldown(graph, refs, args.node, args.pmid, out_dir, graph_file)
         else:
@@ -1289,14 +1295,8 @@ def main() -> None:
         kb_root = Path.cwd() / "kb"
         out_dir = args.output_dir
         if out_dir is None:
-            # Default: draft reports dir if draft exists, else mappings
-            for base_name in ("draft", "mappings"):
-                rdir = kb_root / base_name / args.region
-                if rdir.is_dir():
-                    out_dir = rdir / "reports"
-                    break
-        if out_dir is None:
-            out_dir = kb_root / args.region / "reports"
+            from evidencell.paths import reports_dir_for_region
+            out_dir = reports_dir_for_region(args.region)
         out_path = out_dir / "index.md"
         render_index(args.region, kb_root, out_path)
 

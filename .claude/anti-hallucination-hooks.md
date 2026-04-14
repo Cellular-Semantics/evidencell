@@ -23,7 +23,7 @@ Agent attempts Edit/Write
         │     → PMID/DOI existence in references.json
         │     → LinkML schema conformance (subprocess; skipped if schema absent)
         │
-        └─ Report files (kb/**/reports/*.md)
+        └─ Report files (reports/{region}/*.md)
               → unannotated blockquote detection
               → quote_key existence in references.json
               → PMID existence in references.json
@@ -151,7 +151,7 @@ missing key at render time.
 
 ## Markdown report annotation standard
 
-Reports in `kb/**/reports/*.md` embed machine-readable annotations so the hook can
+Reports in `reports/{region}/*.md` embed machine-readable annotations so the hook can
 validate identifiers without parsing prose. The principle: IDs that are reader-relevant
 appear as visible bracket notation; content-addressed hashes that carry no meaning
 to a reader appear as hidden HTML comments.

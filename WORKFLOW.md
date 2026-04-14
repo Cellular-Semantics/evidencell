@@ -13,6 +13,7 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 | M3 | Mapping (property comparison, edge YAML, confidence assessment) | **Complete** |
 | M4 | Report generation (summary + drill-down, LLM synthesis, anti-hallucination hooks) | **Complete** |
 | M5 | Annotation transfer evidence | **In progress** — pipeline implemented, orchestrator pending |
+| M7 | KB structure cleanup (Phase 1: directory restructure) | **Complete** |
 
 ---
 
@@ -54,9 +55,9 @@ integrity failures (dangling edges, duplicate IDs, placeholder snippets), `quote
 values absent from `references.json`, `PMID:`/`DOI:` citations absent from
 `references.json`, LinkML schema non-conformance.
 
-**Markdown reports** (`kb/**/reports/*.md`) — blocks writes with: blockquote blocks
+**Markdown reports** (`reports/{region}/*.md`) — blocks writes with: blockquote blocks
 missing a `<!-- quote_key: X -->` attribution annotation, quote keys or PMIDs absent
-from `references.json`.
+from `references/{region}/references.json`.
 
 See [`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md) for
 the full specification and correction loop protocol.

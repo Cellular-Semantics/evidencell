@@ -10,8 +10,11 @@ evidencell is a LinkML-based knowledge base for cell type mapping evidence — l
 
 ```
 schema/                  # LinkML schema (source of truth for KB structure)
-kb/mappings/{region}/    # canonical, validated mapping graphs
-kb/draft/{region}/       # work-in-progress; graduate to kb/mappings/ after just qc
+kb/mappings/{region}/    # canonical, validated mapping graphs (YAML only)
+kb/draft/{region}/       # work-in-progress graphs (YAML only); graduate via just qc
+references/{region}/     # references.json — shared quote store per region
+research/{region}/       # research artifacts: field_mapping, cite_traverse, evidence_extraction
+reports/{region}/        # human-readable summary + drill-down reports
 inputs/deepsearch/       # ASTA deep research PDFs used as literature discovery input
 inputs/taxonomies/       # taxonomy table slices (CSV/TSV) used for ingest-taxonomy
 src/evidencell/          # all Python logic (validation, rendering, compliance, fetching)

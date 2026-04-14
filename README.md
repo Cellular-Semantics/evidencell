@@ -22,7 +22,7 @@ Curation in evidencell is a **guided agentic workflow**. You work with Claude Co
 - Blockquotes in reports without a `<!-- quote_key: X -->` attribution annotation
 - PMIDs in reports not registered in `references.json`
 
-All failures are returned as structured errors for the agent to correct. The hook runs synchronously on every `Write` / `Edit` to `kb/`. See [`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md) for the full specification.
+All failures are returned as structured errors for the agent to correct. The hook runs synchronously on every `Write` / `Edit` to `kb/` and `reports/`. See [`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md) for the full specification.
 
 Literature review uses ASTA-API/MCP under the hood. All assertions extracted from the literature include evidence and supporting verbatim quotes (content-hash keyed in `references.json`).
 
