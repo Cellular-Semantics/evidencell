@@ -1,7 +1,6 @@
 """Unit tests for src/evidencell/paths.py"""
 
 from pathlib import Path
-from unittest.mock import patch
 
 import pytest
 
