@@ -9,7 +9,7 @@ use the same pipeline — discovery simply means Step 0 generates the candidates
 rather than receiving them.
 
 **Prerequisites**:
-- `CellTypeNode` stubs for both classical and atlas types (from M1 ingestion or
+- `CellTypeNode` stubs for both classical and atlas types (from ingest-taxonomy or
   hand-curation)
 - At minimum: defining markers, NT type, and anatomical location populated on the
   classical node. Literature evidence items improve confidence but are not required
@@ -177,7 +177,7 @@ DISCORDANT signals (if any): ...
 For each confirmed candidate, identify evidence gaps — properties where alignment
 is NOT_ASSESSED or based solely on atlas metadata with no literature corroboration.
 
-If the curator has a paper catalogue from M2 (`paper_catalogue.json`), run targeted
+If the curator has a paper catalogue from cite-traverse (`paper_catalogue.json`), run targeted
 ASTA snippet searches scoped to that catalogue:
 - `"{classical_type} {marker} expression"`
 - `"{classical_type} {region} location"`

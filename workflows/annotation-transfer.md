@@ -10,7 +10,7 @@
 ## Purpose
 
 Closes the experimental feedback loop. Annotation transfer experiments proposed
-in M4 reports (MapMyCells, Seurat label transfer, scANVI) return results that
+in gen-report output (MapMyCells, Seurat label transfer, scANVI) return results that
 are imported as `AnnotationTransferEvidence` items, potentially upgrading mapping
 confidence from MODERATE to HIGH.
 
@@ -109,7 +109,7 @@ concerns**, not annotation transfer concerns. They are handled by
 `map-cell-type.md` Step 3, which populates `node_a_value` and `node_b_value`
 on property comparisons using available expression data.
 
-The precomputed stats HDF5 downloaded during taxonomy setup (see M8 in
-ROADMAP.md) provides full-transcriptome cluster means for quantitative
+The precomputed stats HDF5 downloaded during taxonomy setup (see
+ROADMAP.md § Taxonomy Reference DB) provides full-transcriptome cluster means for quantitative
 target-side marker assessment without downloading per-class expression
 matrices.

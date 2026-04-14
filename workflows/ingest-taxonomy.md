@@ -110,7 +110,7 @@ TASK:
    - Keys containing "marker" or "gene" (beyond marker_gene_evidence) → POTENTIAL_ENRICHMENT
      (additional marker evidence — aggregate with marker_gene_evidence, note source key)
    - Keys containing "transfer" or "label" or "MTG" → POTENTIAL_ENRICHMENT
-     (cross-taxonomy annotation transfer reference — potentially useful for M3)
+     (cross-taxonomy annotation transfer reference — potentially useful for map-cell-type)
    - QC/technical keys (UMI, fraction, doublet, spliced, mitochondrial, donor counts,
      cell counts, etc.) → POTENTIAL_ENRICHMENT (not biologically defining)
    - Keys with sex or F/M proportions that are extreme (e.g. >0.9 one sex) →
