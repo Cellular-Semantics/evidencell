@@ -1,0 +1,378 @@
+# Draft KB — dentate_gyrus
+# Source: ASTA deep research report — inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf
+# Ingestion date: 2026-04-14
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in kb/draft/dentate_gyrus/references.json
+# Classical nodes proposed by: asta-report-ingest
+
+name: "Dentate Gyrus Immature Neuron Lineage"
+description: >
+  Evidence graph for the adult neurogenesis lineage in the dentate gyrus,
+  from neuroblast (type-3 progenitor) through immature granule neuron to
+  terminally differentiated mature granule neuron. Classical cell types
+  defined by marker expression and maturational stage.
+
+brain_region:
+  id: UBERON:0001885
+  label: "dentate gyrus of hippocampal formation"
+  name_in_source: "dentate gyrus"
+
+target_atlas: null
+
+species: null  # Multiple species referenced (mouse, rat, human) — to be confirmed from primary literature
+
+creation_date: "2026-04-14"
+
+
+# ══════════════════════════════════════════════════════════════════
+# NODES
+# ══════════════════════════════════════════════════════════════════
+
+nodes:
+
+  # ── Neuroblast (Type-3 Progenitor) ────────────────────────────
+
+  - id: dg_neuroblast
+    name: "Dentate Gyrus Neuroblast (Type-3 Progenitor)"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species: null  # To be confirmed — studies cite mouse and rat
+    anatomical_location:
+      - id: UBERON:0004023
+        label: "ganglionic eminence"
+        name_in_source: "subgranular zone (SGZ)"
+        sources:
+          - ref: "PMID:28168008"
+            method: "review (neurogenesis)"
+            scope: "adult hippocampal SGZ"
+            quote_key: "13752593_f176b6ad"
+          - ref: "PMID:18385329"
+            method: "Tbr2-GFP transgene + IHC"
+            scope: "adult mouse hippocampus"
+            quote_key: "15727849_1c5c63e5"
+    nt_type:
+      name_in_source: "glutamatergic (committed but not yet functional)"
+      cl_terms: []
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus"
+            quote_key: "279046466_998847af"
+            marker_type: PROTEIN
+          - ref: "PMID:37082558"
+            method: "review (marker classification)"
+            scope: "adult hippocampal DG"
+            quote_key: "245432259_44d5c91b"
+            marker_type: PROTEIN
+      - symbol: Ki67
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:37082558"
+            method: "review (marker classification)"
+            scope: "adult hippocampal DG"
+            quote_key: "245432259_44d5c91b"
+            marker_type: PROTEIN
+      - symbol: PSA-NCAM
+        ncbi_gene_id: null
+        sources: []
+      - symbol: Nestin
+        modifier: "type-2b stage only"
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus"
+            quote_key: "279046466_998847af"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: NeuN
+        ncbi_gene_id: null
+      - symbol: Calbindin
+        ncbi_gene_id: null
+      - symbol: GFAP
+        ncbi_gene_id: null
+    neuropeptides: []
+    morphology_notes: >
+      Migratory precursor cells in the SGZ; migrate only a few micrometers
+      from SGZ toward the inner granule cell layer. At the type-2b stage they
+      co-express Nestin and DCX; at the type-3 stage they are DCX+ only.
+      They are proliferative (Ki67+) and represent the last mitotic stage
+      before postmitotic differentiation.
+    morphology_sources:
+      - ref: "PMID:28168008"
+        method: "review (neurogenesis)"
+        scope: "adult hippocampal SGZ"
+        quote_key: "13752593_f176b6ad"
+      - ref: "https://doi.org/10.5772/29754"
+        method: "review (neural stem cells)"
+        scope: "adult dentate gyrus"
+        quote_key: "10712122_246bd5c1"
+    electrophysiology_class: >
+      Not synaptically integrated; precursor electrophysiological properties
+      not characterized in detail in this report.
+    ephys_sources: []
+    cl_mapping:
+      cl_term:
+        id: CL:1000042
+        label: "forebrain neuroblast"
+        name_in_source: "neuroblast"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:1000042 (forebrain neuroblast) is the closest CL ancestor but too
+        broad — it encompasses all forebrain neuroblasts without distinguishing
+        the SGZ transit-amplifying progenitor stages (type-2a/b/3). No
+        dentate gyrus-specific neuroblast term exists in CL.
+    definition_references:
+      - "PMID:40519263"
+      - "PMID:37082558"
+      - "PMID:18385329"
+      - "PMID:19482889"
+      - "PMID:28168008"
+    is_terminal: false
+    notes: >
+      The developmental sequence distinguishes type-2a (Nestin+/Sox2+),
+      type-2b (Nestin+/DCX+), and type-3 (DCX+) stages. A transcription
+      factor cascade (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1) marks stage
+      transitions (Hodge et al. 2008). Potential HETEROGENEITY: the three
+      transit-amplifying stages may warrant separate nodes.
+
+  # ── Immature Granule Neuron ───────────────────────────────────
+
+  - id: dg_immature_granule_neuron
+    name: "Dentate Gyrus Immature Granule Neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species: null  # To be confirmed — studies cite mouse and rat
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "inner granule cell layer (GCL)"
+        sources:
+          - ref: "PMID:28168008"
+            method: "review (neurogenesis)"
+            scope: "adult hippocampal SGZ/GCL"
+            quote_key: "13752593_f176b6ad"
+          - ref: "PMID:26880934"
+            method: "review (neural stem cell niche)"
+            scope: "adult hippocampus"
+            quote_key: "14221248_1d8cf16a"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms: []
+      sources:
+        - ref: "PMID:26056581"
+          method: "review (adult neurogenesis)"
+          scope: "adult dentate gyrus"
+          quote_key: "8479504_1542ed61"
+        - ref: "PMID:25954142"
+          method: "review (neurogenesis)"
+          scope: "adult dentate gyrus"
+          quote_key: "625292_ff3f8b1d"
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus"
+            quote_key: "279046466_998847af"
+            marker_type: PROTEIN
+          - ref: "PMID:37082558"
+            method: "review (marker classification)"
+            scope: "adult hippocampal DG"
+            quote_key: "245432259_44d5c91b"
+            marker_type: PROTEIN
+      - symbol: NeuN
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus — stage 5"
+            quote_key: "279046466_998847af"
+            marker_type: PROTEIN
+          - ref: "PMID:37082558"
+            method: "review (marker classification)"
+            scope: "adult hippocampal DG"
+            quote_key: "245432259_44d5c91b"
+            marker_type: PROTEIN
+      - symbol: PSA-NCAM
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:37082558"
+            method: "review (marker classification)"
+            scope: "adult hippocampal DG"
+            quote_key: "245432259_44d5c91b"
+            marker_type: PROTEIN
+      - symbol: Tis21
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:19482889"
+            method: "Tis21 knock-in GFP mouse + IHC"
+            scope: "adult mouse hippocampus"
+            quote_key: "7393550_b2644450"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: Calbindin
+        ncbi_gene_id: null
+    neuropeptides: []
+    morphology_notes: >
+      Postmitotic neurons (stage 5) that have migrated from SGZ into the inner
+      granule cell layer. Axonal projections reach the CA3 area by 10-11 days,
+      with first spines forming at 15-16 days. Peak spine growth occurs during
+      the first 3-4 weeks, but further structural modifications continue for
+      months. They receive glutamatergic afferents from entorhinal cortex and
+      project axons to inhibitory interneurons and pyramidal cells of area CA3.
+    morphology_sources:
+      - ref: "PMID:16399667"
+        method: "retrovirus-mediated gene transduction + confocal"
+        scope: "adult mouse dentate gyrus"
+        quote_key: "18166210_b155d498"
+      - ref: "PMID:26056581"
+        method: "review (adult neurogenesis)"
+        scope: "adult dentate gyrus"
+        quote_key: "8479504_1542ed61"
+    electrophysiology_class: >
+      Synaptically integrating; receive glutamatergic input from entorhinal
+      cortex. Full synaptic integration extends over weeks to months.
+    ephys_sources: []
+    location_sources:
+      - ref: "PMID:28168008"
+        method: "review (neurogenesis)"
+        scope: "adult hippocampal SGZ/GCL"
+        quote_key: "13752593_f176b6ad"
+      - ref: "PMID:26880934"
+        method: "review (neural stem cell niche)"
+        scope: "adult hippocampus"
+        quote_key: "14221248_1d8cf16a"
+    cl_mapping: null
+    definition_references:
+      - "PMID:40519263"
+      - "PMID:37082558"
+      - "PMID:16399667"
+      - "PMID:19482889"
+      - "PMID:26056581"
+    is_terminal: false
+    notes: >
+      No CL term currently exists for a postmitotic, synaptically integrating
+      immature granule neuron of the dentate gyrus. CL:4042028 'immature neuron'
+      is definitionally incompatible — it explicitly excludes neurogenesis-derived
+      neurons. Potential CL contribution: 'immature dentate gyrus granule neuron'
+      as child of CL:2000089. Tis21 expression reappears during this maturation
+      phase (Attardo et al. 2009), potentially related to functional integration.
+
+  # ── Mature Granule Neuron ─────────────────────────────────────
+
+  - id: dg_mature_granule_neuron
+    name: "Dentate Gyrus Mature Granule Neuron"
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null  # To be confirmed — studies cite mouse and rat
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "granule cell layer (GCL)"
+        sources:
+          - ref: "PMID:31068541"
+            method: "review (hippocampal neurogenesis)"
+            scope: "adult rat dentate gyrus"
+            quote_key: "148569364_4e97a8b8"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms: []
+      sources:
+        - ref: "PMID:26056581"
+          method: "review (adult neurogenesis)"
+          scope: "adult dentate gyrus"
+          quote_key: "8479504_1542ed61"
+        - ref: "PMID:25954142"
+          method: "review (neurogenesis)"
+          scope: "adult dentate gyrus"
+          quote_key: "625292_ff3f8b1d"
+    defining_markers:
+      - symbol: Calbindin
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus — stage 6"
+            quote_key: "279046466_998847af"
+            marker_type: PROTEIN
+      - symbol: NeuN
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus — stage 6"
+            quote_key: "279046466_998847af"
+            marker_type: PROTEIN
+      - symbol: Tbr1
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:18385329"
+            method: "Tbr2-GFP transgene + IHC, TF cascade"
+            scope: "adult mouse hippocampus"
+            quote_key: "15727849_1c5c63e5"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: DCX
+        ncbi_gene_id: null
+      - symbol: Nestin
+        ncbi_gene_id: null
+      - symbol: PSA-NCAM
+        ncbi_gene_id: null
+    neuropeptides: []
+    morphology_notes: >
+      Terminally differentiated granule neurons (stage 6) populating the granule
+      cell layer. Fully elaborated dendritic arbor and complete axonal projections
+      to CA3. Receive primary glutamatergic afferents from entorhinal cortex and
+      project mossy fiber axons to inhibitory interneurons and pyramidal cells
+      of area CA3.
+    morphology_sources:
+      - ref: "PMID:26056581"
+        method: "review (adult neurogenesis)"
+        scope: "adult dentate gyrus"
+        quote_key: "8479504_1542ed61"
+      - ref: "PMID:16399667"
+        method: "retrovirus-mediated gene transduction + confocal"
+        scope: "adult mouse dentate gyrus"
+        quote_key: "18166210_b155d498"
+    electrophysiology_class: >
+      Fully synaptically integrated; functionally mature with established
+      input from entorhinal cortex and output to CA3.
+    ephys_sources: []
+    location_sources:
+      - ref: "PMID:31068541"
+        method: "review (hippocampal neurogenesis)"
+        scope: "adult rat dentate gyrus"
+        quote_key: "148569364_4e97a8b8"
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "dentate gyrus granule cell"
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:2000089 (dentate gyrus granule cell) is an exact match — defined as
+        a granule cell with soma in the dentate gyrus cell layer, with
+        characteristic cone-shaped tree of spiny apical dendrites projecting
+        to CA3. PMID:17765709 is cited in the CL definition.
+    definition_references:
+      - "PMID:40519263"
+      - "PMID:26056581"
+      - "PMID:16399667"
+      - "PMID:31068541"
+      - "PMID:19482889"
+    is_terminal: false
+    notes: >
+      Terminal differentiation endpoint of the adult neurogenesis lineage in
+      the dentate gyrus. Tis21 expression decreases in mature granule cells
+      compared to the maturing stage (Attardo et al. 2009). No subtypes
+      discussed in this report.
+
+
+# ══════════════════════════════════════════════════════════════════
+# EDGES
+# ══════════════════════════════════════════════════════════════════
+
+edges: []
+  # Mapping relationships require primary literature — left empty for draft.

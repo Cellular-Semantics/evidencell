@@ -1,0 +1,95 @@
+[
+  {
+    "step": "fetch_depth_0",
+    "asta_snippets_returned": 0,
+    "asta_snippets_filtered_title": 0,
+    "asta_snippets_filtered_peer_review": 0,
+    "asta_snippets_used": 0,
+    "gap_papers_count": 22,
+    "fallback_attempted": 22,
+    "fallback_success": 16,
+    "fallback_no_pmc": 4,
+    "fallback_fetch_failed": 2,
+    "report_summaries_merged": 0,
+    "total_summaries": 17,
+    "paper_ids_queried": 22,
+    "notes": {
+      "asta_failure": "ASTA snippet_search failed with ConnectionRefusedError \u2014 all 22 papers treated as gap_papers",
+      "no_pmc": [
+        "CorpusId:10712122 (Vik-Mo 2012, DOI:10.5772/29754, book chapter, no PubMed)",
+        "CorpusId:148569364 (Tanaka 2019, PubMed:31068541, no PMC)",
+        "CorpusId:25925289 (Gomez-Climent 2008, PubMed:18245040, no PMC)",
+        "CorpusId:54603778 (Delgado-Garcia 2016, DOI:10.23937/2469-570X/1410039, no PMC)"
+      ],
+      "fetch_failed": [
+        "CorpusId:18166210 (Zhao 2006, PMC:6674324 \u2014 EuropePMC fulltext 404, NCBI PMC 403)",
+        "CorpusId:2281064 (Doetsch 1997, PMC:6573289 \u2014 EuropePMC fulltext 404, NCBI PMC 403)"
+      ],
+      "successfully_fetched_pmc": [
+        "CorpusId:13752593 (Velusamy 2017, PMC:5266860)",
+        "CorpusId:13799502 (Rotheneichner 2018, PMC:5998952)",
+        "CorpusId:14221248 (Regalado-Santiago 2016, PMC:4736764)",
+        "CorpusId:14598082 (Merz 2013, PMC:3647037)",
+        "CorpusId:15727849 (Hodge 2008, PMC:6671086 via NCBI)",
+        "CorpusId:15994456 (Dayer 2005, PMC:2171716)",
+        "CorpusId:233432690 (Groen 2021, PMC:8116662)",
+        "CorpusId:235300723 (Coviello 2021, PMC:8198564)",
+        "CorpusId:245432259 (Stepien 2021, PMC:9881642)",
+        "CorpusId:252063749 (Bartkowska 2022, PMC:9455070)",
+        "CorpusId:258927570 (Hussain 2023, PMC:10479850)",
+        "CorpusId:279046466 (Micheli 2025, PMC:12162651)",
+        "CorpusId:625292 (Vangeneugden 2015, PMC:4404807)",
+        "CorpusId:7393550 (Attardo 2009, PMC:2803732)",
+        "CorpusId:7440369 (Yang 2015, PMC:4530311)",
+        "CorpusId:8479504 (Stoll 2014, PMC:4452056)"
+      ],
+      "tanaka_2019_note": "Tanaka 2019 included in summaries as 'no_pmc' entry (total summaries includes this entry with empty quotes)"
+    }
+  },
+  {
+    "step": "selection_depth_0",
+    "candidates_evaluated": 0,
+    "selected": 0,
+    "deselected": 0,
+    "notes": "candidate_refs was empty \u2014 ASTA citation graph endpoint was down (ConnectionRefusedError) and EuropePMC fulltext fallback did not harvest outbound citation CorpusIds. No new IDs available for depth-1 traversal. All 22 depth-0 papers are ineligible for re-selection (already queried). Priority targets (Esposito 2005, Ge 2006, Klempin 2011) were cited in fetched fulltexts but not captured as structured CorpusId candidate refs. Recommend: re-run fetch_depth_0 with ASTA available, or manually supply CorpusIds for named priority targets."
+  },
+  {
+    "step": "resolve_metadata",
+    "total_corpus_ids": 22,
+    "resolved": 22,
+    "source": "references_json_fallback",
+    "all_summaries_count": 17,
+    "notes": "ASTA batch resolve unavailable (MCP down); metadata built from kb/draft/dentate_gyrus/references.json. all_summaries.json = depth_0_summaries.json (single depth run, early stop due to 0 candidates)."
+  },
+  {
+    "step": "synthesis",
+    "summaries_read": 17,
+    "papers_in_catalogue": 22,
+    "themes_identified": [
+      "Sequential Marker Progression Through the DG Neurogenesis Lineage",
+      "Tbr2 and Tis21 as Stage-Specific Intermediate Markers",
+      "Glutamatergic Identity of Dentate Gyrus Granule Cells",
+      "Morphological Progression and Axonal Connectivity",
+      "Electrophysiology — Partial Characterisation and Critical Gaps",
+      "Species Considerations and Primate/Rodent Divergence"
+    ],
+    "papers_cited_in_report": 18,
+    "quotes_used_in_report": 27,
+    "schema_gaps": [
+      "electrophysiology_class (dg_neuroblast)",
+      "electrophysiology_class (dg_immature_granule_neuron)",
+      "electrophysiology_class (dg_mature_granule_neuron)",
+      "nt_type VGluT evidence (dg_neuroblast)",
+      "nt_type VGluT evidence (dg_immature_granule_neuron)",
+      "morphology_notes type-3 specific (dg_neuroblast)",
+      "morphology_notes spine density (dg_immature_granule_neuron)",
+      "defining_markers calretinin status (dg_neuroblast stage boundary)"
+    ],
+    "new_types_encountered": [
+      "type-2a neural progenitor cell (Nestin+/Sox2+, DCX-, SGZ) — add stub",
+      "type-2b neural progenitor cell (Nestin+/DCX+, Tbr2+, SGZ) — add stub",
+      "type-1 radial glia-like stem cell (GFAP+/Sox2+/Nestin+, quiescent) — defer",
+      "olfactory bulb granule cell (GABAergic, adult-born, OB) — defer"
+    ]
+  }
+]
