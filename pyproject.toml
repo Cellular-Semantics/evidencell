@@ -22,6 +22,11 @@ dependencies = [
   "ipython>=9.12.0",
 ]
 
+[project.optional-dependencies]
+# Neo4j driver for fetching taxonomies directly from brain_cell_KG
+# Install with: uv sync --group kg
+kg = ["neo4j>=5.0"]
+
 [dependency-groups]
 dev = [
   "pytest>=8.0",
@@ -35,6 +40,7 @@ testpaths = ["tests"]
 addopts = "--cov=evidencell --cov-report=term-missing --cov-fail-under=80"
 markers = [
   "integration: tests that hit external services or large local databases (OAK, network)",
+  "slow: tests that process full taxonomy files (run with just test, excluded from just test-fast)",
 ]
 
 [tool.ruff]
