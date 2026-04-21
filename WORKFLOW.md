@@ -35,9 +35,10 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 |---|---|---|---|---|
 | `ingest-taxonomy` | `workflows/ingest-taxonomy.md` | Discovery | **Ready** | Ingest a taxonomy table → atlas cluster CellTypeNode stubs |
 | `asta-report-ingest` | `workflows/asta-report-ingest.md` | Literature | **Ready** | Start here when you have an ASTA deep research PDF — proposes classical nodes + initial evidence |
-| `lit-review` | `workflows/lit-review.md` | Literature | **Ready** | Seed discovery when starting without a report; hands off to cite-traverse |
-| `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; called by lit-review and asta-report-ingest |
-| `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After cite-traverse — extracts verified evidence items into KB YAML |
+| `survey` | `workflows/survey.md` | Literature | **Ready** | Broad snippet scan of ASTA corpus for a region → all_summaries.json; no synthesis, no KB write |
+| `lit-review` | `workflows/lit-review.md` | Literature | **Experimental stub** | Seed discovery when starting without a report; may be revived; do not use in regular workflows |
+| `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; call as a skill for targeted follow-up, not primary discovery |
+| `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After survey or asta-report-ingest — writes PropertySource entries with quote_key to KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: finds candidate atlas matches from property overlap; hypothesis mode: tests curator's proposed mapping. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
 | `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
 | `annotation-transfer` | `workflows/annotation-transfer.md` | Evidence transfer | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
@@ -69,6 +70,7 @@ the full specification and correction loop protocol.
 | Input type | Location | Used by |
 |---|---|---|
 | ASTA deep research PDFs | `inputs/deepsearch/` | `asta-report-ingest.md` |
+| ASTA corpus IDs | `research/{region}/{run}/pdf_corpus_ids.json` (asta-report-ingest output) | `survey.md` |
 | Taxonomy tables (CSV/TSV) | `inputs/taxonomies/` | `ingest-taxonomy.md` |
 | Precomputed stats HDF5 | taxonomy local paths (see ROADMAP.md § Taxonomy Reference DB) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
 
@@ -94,19 +96,17 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 
 ── Primary literature retrieval ───────────────────────────────────────────────
 
-2.  workflows/cite-traverse.md                   # targeted retrieval per paper
-    (handed off from asta-report-ingest, or      # fills gaps, verifies asta_report items,
-     called directly after lit-review seeds)      # surfaces new types
-    max_depth: 1 when coming from asta-report-ingest (ASTA already provides broad
-    coverage; one level targets Round 2 ambiguities without duplicating discovery)
-    max_depth: 2 when starting from lit-review seeds (no prior broad coverage)
-
-    [GATE] review report.md — new types? extend scope or proceed
+2.  workflows/survey.md                          # ASTA corpus → all_summaries.json
+    region: {region}                             # one pass, all ASTA papers, all nodes
+    corpus_ids_file: research/{region}/.../pdf_corpus_ids.json
+    output_dir: research/{region}/survey_{date}/
 
 ── Evidence extraction ─────────────────────────────────────────────────────────
 
-3.  workflows/evidence-extraction.md             # summaries → proposed KB evidence items
-    [GATE] expert reviews + approves items        # validates snippets, adjusts support
+3.  workflows/evidence-extraction.md             # per-node: all_summaries.json → KB YAML
+    summaries_file: research/{region}/survey_{date}/all_summaries.json
+    # no paper selection gate for ASTA survey runs
+    # run once per node_id
 
 ── Mapping ────────────────────────────────────────────────────────────────────
 

@@ -2,13 +2,17 @@
 
 You are an evidence extraction coordinator. You take `all_summaries.json` produced
 by a survey or asta-report-ingest run and write `PropertySource` entries directly to
-KB nodes. One gate (paper selection), then the extraction subagent writes quotes to
-`references.json` and `PropertySource` entries (with `quote_key`) to KB YAML.
+KB nodes. The extraction subagent writes quotes to `references.json` and
+`PropertySource` entries (with `quote_key`) to KB YAML.
 
 The pre-edit hook is the structural validation gate — it verifies every `quote_key`
 exists in `references.json` before the KB write proceeds.
 
 Called after: `workflows/asta-report-ingest.md` or `workflows/survey.md`
+
+**Paper selection gate (Step 1):** Optional — only invoke for noisy corpora (cite-traverse,
+lit-review). Skip for ASTA survey runs: ASTA papers are pre-curated and the extraction
+subagent handles relevance filtering internally.
 
 ---
 
@@ -66,9 +70,16 @@ Existing refs:   {list of ref values already on this node, or "none"}
 
 ---
 
-## Step 1: [GATE] Paper selection
+## Step 1: [GATE] Paper selection — optional
 
-This is the only human checkpoint.
+**Skip this step for ASTA survey runs.** Proceed directly to Step 2 and pass
+`excluded_ids: "none"` to the extraction subagent.
+
+**Invoke this step for cite-traverse or lit-review runs** where corpus quality
+varies and papers from noisy citation graphs or disease/non-model-organism
+contexts may need human weeding.
+
+When invoked:
 
 1. Read `{summaries_file}`. For each entry, auto-detect these signals from the
    `summary` and `quotes` fields:

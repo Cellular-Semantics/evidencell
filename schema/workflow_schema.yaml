@@ -110,3 +110,32 @@ classes:
         description: >
           Citation graph depth at which this paper was retrieved.
           0 = seed papers (ASTA corpus), 1 = papers cited by seeds, etc.
+      synonyms_found:
+        range: SynonymCandidate
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Synonym candidates discovered in this paper during the fetch pass.
+          Each entry has the term + the verbatim quote that introduced it.
+          Collected by the survey orchestrator into synonyms_candidates.json
+          for query expansion and TypeSynonym KB writes.
+
+  SynonymCandidate:
+    description: >
+      A candidate synonym or alternate name for a cell type, discovered during
+      a survey fetch pass. Stores the term and the quote that introduced it,
+      enabling TypeSynonym.sources to be populated in evidence-extraction.
+    attributes:
+      term:
+        required: true
+        description: The alternate name or abbreviation as it appeared in the source
+      source_corpus_id:
+        required: true
+        description: Semantic Scholar corpus ID of the paper where this term was found
+      quote:
+        required: true
+        description: >
+          Verbatim substring from the source where this term is defined or used.
+          Used as the quote when writing TypeSynonym.sources in evidence-extraction.
+      section:
+        description: Paper section where the term was found
