@@ -149,6 +149,61 @@ def save_taxonomy(
     return path
 
 
+# Standard relative paths (from repo root) for downloaded taxonomy files.
+# Mirroring the conf/mba/ pattern: large, gitignored, re-fetchable.
+_MMC_BASE = Path("conf/mapmycells")
+
+
+def mapmycells_dir(taxonomy_id: str) -> Path:
+    """Return the standard directory for a taxonomy's MapMyCells files."""
+    return _MMC_BASE / taxonomy_id
+
+
+def download_taxonomy_files(
+    spec: TaxonomySpec,
+    dest_dir: Path | None = None,
+) -> tuple[Path, Path | None]:
+    """Download MapMyCells stats and (optionally) marker files for a taxonomy.
+
+    Files are placed in dest_dir (default: conf/mapmycells/{taxonomy_id}/) with
+    generic names: precomputed_stats.h5 and marker_genes.json.
+
+    Returns (stats_path, markers_path).  markers_path is None if the taxonomy
+    has no markers_s3_url (e.g. SEA-AD uses on-the-fly markers).
+    """
+    import urllib.request
+
+    if dest_dir is None:
+        dest_dir = mapmycells_dir(spec.id)
+    dest_dir.mkdir(parents=True, exist_ok=True)
+
+    stats_path: Path | None = None
+    if spec.stats_s3_url:
+        stats_path = dest_dir / "precomputed_stats.h5"
+        if stats_path.exists():
+            print(f"  Stats already present: {stats_path} — skipping.")
+        else:
+            print(f"  Downloading stats → {stats_path}")
+            print(f"    URL: {spec.stats_s3_url}")
+            urllib.request.urlretrieve(spec.stats_s3_url, stats_path)
+            print(f"    Done ({stats_path.stat().st_size // (1024**2):,} MB)")
+    else:
+        print(f"  No stats_s3_url for {spec.id} — skipping stats download.")
+
+    markers_path: Path | None = None
+    if spec.markers_s3_url:
+        markers_path = dest_dir / "marker_genes.json"
+        if markers_path.exists():
+            print(f"  Markers already present: {markers_path} — skipping.")
+        else:
+            print(f"  Downloading markers → {markers_path}")
+            print(f"    URL: {spec.markers_s3_url}")
+            urllib.request.urlretrieve(spec.markers_s3_url, markers_path)
+            print(f"    Done ({markers_path.stat().st_size // 1024:,} KB)")
+
+    return stats_path, markers_path  # type: ignore[return-value]
+
+
 def _load_spec_file(path: Path) -> TaxonomySpec:
     with open(path) as f:
         data: dict[str, Any] = yaml.safe_load(f)
