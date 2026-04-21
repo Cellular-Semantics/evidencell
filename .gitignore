@@ -27,3 +27,17 @@ annotation_transfer/data/
 .env
 scratch/
 .claude/settings.local.json
+
+# Downloaded ontology files (large, re-fetchable via just fetch-mba-ontology)
+conf/mba/
+
+# Downloaded MapMyCells taxonomy files (large, re-fetchable via just at-download-taxonomy)
+conf/mapmycells/
+
+# Taxonomy SQLite DBs (binary build artifacts; rebuild with: just build-taxonomy-db <id>)
+kb/taxonomy/**/*.db
+
+# Large KG-exported taxonomy source JSON (re-fetchable via just fetch-taxonomy-kg)
+inputs/taxonomies/*.json
+# Re-include small test fixtures that are part of the test suite
+!inputs/taxonomies/test_single_row.json
