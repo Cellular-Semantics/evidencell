@@ -28,8 +28,12 @@ Literature review uses ASTA-API/MCP under the hood. All assertions extracted fro
 
 The pipeline runs in phases, each driven by an orchestrator in `workflows/`:
 
-1. **Ingest taxonomy** — load any taxonomy format, map to schema + ontologies, generate atlas cluster stubs
-   `workflows/ingest-taxonomy.md`
+1. **Ingest taxonomy** — load a taxonomy from any source format into a queryable reference DB; generate atlas cluster stubs for use in mapping graphs
+   `workflows/ingest-taxonomy.md` — single entry point for all source types:
+   - **KG-backed** (neo4j bolt endpoint): run stored cypher via `just fetch-taxonomy-kg`, then `just ingest-taxonomy-db`
+   - **Ad hoc** (CSV / XLSX / non-KG JSON): `workflows/ingest-adhoc-taxonomy.md` — agent inspects source, confirms field mapping, writes per-level YAML directly
+   - Ingest reads `inputs/taxonomies/{id}_meta.yaml` to record taxonomy name, species, tissue, anatomy ontology, and MapMyCells file references
+   - Output: per-level YAML in `kb/taxonomy/{id}/` + SQLite query index (`just build-taxonomy-db {id}`) — DB is gitignored and re-built from YAML as needed
    *[GATE] approve field mapping + generated stubs*
 
 2. **ASTA report ingest** — ASTA deep research PDF → classical `CellTypeNode` stubs + initial evidence
@@ -55,9 +59,10 @@ The pipeline runs in phases, each driven by an orchestrator in `workflows/`:
    `just gen-report {graph_file}` or `just gen-report-draft {region}` for draft KB content
    *[GATE] biologist reviews; executes proposed experiments*
 
-7. **Annotation transfer** — import AT results (MapMyCells, Seurat) as structured evidence
+7. **Annotation transfer** — run MapMyCells (web API or local) against a reference taxonomy; score results as F1 matrices; import as `AnnotationTransferEvidence` items that can upgrade mapping confidence from MODERATE to HIGH
    `workflows/annotation-transfer.md`
-   *(planned)*
+   Pipeline stages: preflight → convert → map → score → *(KB import: pending automation)*
+   Local MapMyCells files: `just at-download-taxonomy {id}` — downloads to `conf/mapmycells/{id}/` (gitignored, re-fetchable) and records paths in `kb/taxonomy/{id}/taxonomy_meta.yaml`
 
 Gates are not optional. The human is the top-level coordinator throughout — each phase produces output for review before the next phase begins. Claude does not proceed past a gate autonomously.
 
@@ -75,6 +80,8 @@ Each KB file is a mapping graph for a brain region. It contains:
   - `AtlasQueryEvidence` — curator-performed interactive query against an atlas browser (ABC Atlas, Allen Brain Map) with filter parameters and `query_url`; reproducible given the same atlas version
   - `AnnotationTransferEvidence` — computational label transfer results (MapMyCells, Seurat) with F1 per taxonomy level
   - `PatchSeqEvidence`, `ElectrophysiologyEvidence`, `MorphologyEvidence` — experimental evidence types
+
+**Taxonomy reference DB** — each ingested atlas taxonomy lives in `kb/taxonomy/{id}/` as per-level YAML files (source of truth) plus a SQLite query index (gitignored build artifact). The DB exposes full-transcriptome cluster means, anatomical closure tables (built from the Mouse Brain Atlas Ontology), and CL mapping coverage. Mapping workflows query it for candidate atlas nodes and marker expression data without requiring the full h5ad expression matrices.
 
 All location data from spatial transcriptomics (MERFISH) reflects **soma position only**. Axonal and dendritic projection targets are recorded separately in `morphology_notes` and are not used in atlas location comparisons.
 
@@ -99,6 +106,39 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and the full curation walkthrou
 See [WORKFLOW.md](WORKFLOW.md) for the orchestrator guide (which workflow to run, when, and with what inputs).
 
 See [CLAUDE.md](CLAUDE.md) for development and architecture guidelines.
+
+### Taxonomy reference DB
+
+After cloning, rebuild the SQLite index for any ingested taxonomy:
+
+```
+just build-taxonomy-db CCN20230722
+```
+
+The YAML source files (`kb/taxonomy/{id}/*.yaml`) are committed; the `.db` is not.
+To also build the anatomical closure tables (for ancestor-aware location queries):
+
+```
+just fetch-mba-ontology          # one-time download to conf/mba/
+just build-anat-closure CCN20230722
+```
+
+To download local MapMyCells taxonomy files for offline mapping:
+
+```
+just at-download-taxonomy CCN20230722   # downloads to conf/mapmycells/CCN20230722/
+```
+
+For KG-backed taxonomy re-ingest (requires a local neo4j instance at `bolt://localhost:7687`):
+
+```
+just fetch-taxonomy-kg inputs/taxonomies/CCN20230722.cypher CCN20230722
+just ingest-taxonomy-db inputs/taxonomies/CCN20230722.json CCN20230722
+```
+
+Credentials are read from `NEO4J_BOLT_URL`, `NEO4J_USER`, `NEO4J_PASSWORD` environment variables (or CLI flags). Add them to `.claude/settings.local.json` alongside the ASTA key if needed.
+
+---
 
 ### MCP / API keys
 
