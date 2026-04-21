@@ -1,0 +1,112 @@
+## Schema for evidencell workflow intermediate files.
+##
+## This schema covers persisted intermediate formats produced and consumed by
+## workflow orchestrators. It is separate from celltype_mapping.yaml (the KB
+## schema) to keep workflow plumbing out of the KB type system.
+##
+## Version history:
+## Version: 0.1.0 (2026-04-21) — LiteratureSummary class (all_summaries.json format);
+##                               NodeRelevance + SourceMethod enums
+
+id: https://bican.org/schema/celltype-evidence/workflow/v0.1
+name: EvidencellWorkflow
+description: >
+  Schema for evidencell workflow intermediate files. Covers all_summaries.json
+  and related formats produced by survey and cite-traverse workflows.
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+
+default_range: string
+
+imports:
+  - linkml:types
+
+enums:
+
+  NodeRelevance:
+    description: >
+      Agent-assigned relevance of a literature summary to the target node/query.
+      HIGH: directly characterises the node (markers, location, morphology, NT type).
+      MODERATE: consistent with the node but indirect or from a related context.
+      LOW: tangentially relevant; may still yield useful evidence for specific fields.
+    permissible_values:
+      HIGH: {}
+      MODERATE: {}
+      LOW: {}
+
+  SourceMethod:
+    description: How the literature summary was retrieved.
+    permissible_values:
+      ASTA_SNIPPET:
+        description: Retrieved via Semantic Scholar snippet_search against ASTA corpus paper IDs
+      EUROPEPMC_FULLTEXT:
+        description: Retrieved via EuropePMC full-text fetch (fallback for gap papers)
+      ASTA_REPORT:
+        description: Derived from the ASTA deep research PDF report (asta-report-ingest)
+
+classes:
+
+  LiteratureSummary:
+    description: >
+      One entry in all_summaries.json. Represents a paper's relevance to a
+      node/query, with extracted verbatim quotes. Produced by the survey fetch
+      subagent (or cite-traverse fetch subagent). Consumed by evidence-extraction.
+
+      all_summaries.json is a denormalised intermediate — quotes here are NOT the
+      authoritative store. The authoritative store is references.json. When
+      evidence-extraction writes a PropertySource entry it first writes the quote
+      to references.json (computing a quote_key), then uses quote_key in the KB YAML.
+
+      LiteratureSummary entries are bounded by the ASTA seed paper set for a given
+      region. They are NOT directly written to the KB.
+    attributes:
+      source_corpus_id:
+        required: true
+        description: Semantic Scholar numerical corpus ID (string, not integer)
+      source_title:
+        required: true
+        description: Paper title as returned by Semantic Scholar
+      source_method:
+        required: true
+        range: SourceMethod
+        description: How this summary was retrieved
+      snippet_kind:
+        description: >
+          Semantic Scholar snippet kind field. Common values: "body", "abstract".
+          "title" snippets are filtered out before summarisation.
+      section:
+        description: >
+          Paper section where the snippet was found (from Semantic Scholar metadata
+          or EuropePMC section header). Use "unknown" only if null.
+      snippet_score:
+        range: float
+        description: >
+          Relevance score from Semantic Scholar snippet_search (0.0–1.0).
+          Null for EuropePMC fulltext entries (no score available).
+      node_relevance:
+        required: true
+        range: NodeRelevance
+        description: Agent relevance judgement for the target node/query
+      node_relevance_reason:
+        description: >
+          Brief explanation of the relevance judgement. Should reference specific
+          markers, anatomy, or properties mentioned in the snippet.
+      summary:
+        required: true
+        description: >
+          1–3 sentence summary of the paper's key findings relevant to the
+          query and node context. LLM-generated — not primary evidence.
+          Do not cite this directly; cite the verbatim quotes.
+      quotes:
+        multivalued: true
+        description: >
+          Verbatim substrings from the source text (1–3 per entry). Must be exact
+          substrings of the original snippet or full-text passage. These are the
+          source material for PropertySource.snippet in the KB — evidence-extraction
+          agents must use exact text from this field without paraphrase.
+      depth:
+        range: integer
+        description: >
+          Citation graph depth at which this paper was retrieved.
+          0 = seed papers (ASTA corpus), 1 = papers cited by seeds, etc.
