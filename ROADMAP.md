@@ -924,7 +924,7 @@ See [planning/schema_self_contained_references.md](planning/schema_self_containe
 
 **Goal**: Replace fragment-based taxonomy ingestion with a local queryable database. Graph stubs are pulled on demand from the reference store rather than ingested in bulk.
 
-**Status**: 🔲 Pending (depends on M7 — directory structure must be clean first)
+**Status**: 🔲 Pending — DO BEFORE M7
 
 ### Problem
 
@@ -946,6 +946,16 @@ kb/draft/hippocampus/
   hippocampus_WMBv1.yaml            # graph: classical nodes + edges + only matched atlas stubs
 ```
 
+### Field mapping: declared config + agentic inspection
+
+Ingest is deterministic once field mappings are confirmed — but confirming them requires an agentic step for new or unknown formats. The design separates these two concerns:
+
+- **Field mapping config** (`inputs/taxonomies/field_mappings/{taxonomy_id}.json`) — a declared JSON file mapping source fields (e.g. `properties(supertype).short_form`) to DB columns. Committed and version-controlled. Used directly for known formats without LLM involvement.
+- **Inspection agent** — for new taxonomy files (or new versions of known ones), an agent inspects the file schema, diffs it against the stored mapping config, proposes additions or changes, and presents them for human review before ingest runs. Once approved, the mapping config is updated and committed.
+- **Fast path for known formats** — WMB-format files reuse the existing mapping config. The inspection step still runs but only to confirm coverage and flag any new fields, not to invent mappings.
+
+This avoids non-determinism in ingest while remaining flexible for format evolution.
+
 ### Workflow change
 
 **Before (fragment ingest):**
@@ -953,17 +963,19 @@ kb/draft/hippocampus/
 2. Map classical types against stubs already in graph
 
 **After (reference DB):**
-1. Ingest full taxonomy → local DB (once, deterministic, no LLM involvement)
-2. When mapping a classical type, query DB: "find WMBv1 clusters in region X with NT type Y and markers Z"
-3. Promote matched candidates into graph as stubs (minimal, only what's needed)
-4. Edges connect classical → promoted stubs as before
+1. Inspect new taxonomy file → confirm/update field mapping config (agentic, human-reviewed)
+2. Ingest full taxonomy → local DB (deterministic, no LLM, using committed mapping config)
+3. When mapping a classical type, query DB: "find WMBv1 clusters in region X with NT type Y and markers Z"
+4. Promote matched candidates into graph as stubs (minimal, only what's needed)
+5. Edges connect classical → promoted stubs as before
 
 ### Phased implementation
 
 **Phase 1: DB format + ingest + reference file download** (careful, foundational)
 - Choose format: SQLite is simple, portable, no server dependency. Alternatives: DuckDB (better for analytical queries), plain JSON with index, OAK-compatible format.
-- Write `src/evidencell/taxonomy_db.py`: ingest full taxonomy CSV/JSON → DB; query by region, NT type, markers, taxonomy level.
-- `just ingest-taxonomy-db {taxonomy_file}` recipe: creates/updates the DB.
+- Write `src/evidencell/taxonomy_db.py`: ingest full taxonomy JSON → DB using declared field mapping config; query by region, NT type, markers, taxonomy level.
+- Write field mapping config for WMB format, derived from existing `hippocampus_GABA_stratum_oriens.json` (structure already known).
+- `just ingest-taxonomy-db {taxonomy_file}` recipe: runs inspection agent if no config exists for the format, then ingests to DB.
 - **Download precomputed stats HDF5 + marker genes JSON** during taxonomy setup. These files serve double duty: (a) local MapMyCells execution and (b) quantitative target-side marker cross-checking in `map-cell-type.md`. S3 URLs are already defined in `annotation_transfer/src/annotation_transfer/taxonomies.py` for known taxonomies (CCN20230722, CCN202210140, etc.). The download path should be managed by the taxonomy DB — each taxonomy entry records where its reference files live on disk. The existing `taxonomy-setup --download` stub becomes the entry point.
 - The precomputed stats HDF5 contains full-transcriptome cluster-level mean expression (e.g. 32K genes × 5322 clusters for WMBv1). This enables querying arbitrary genes against atlas clusters without downloading per-class expression matrices.
 - Tests: round-trip ingest + query; verify determinism (same input → same DB).
@@ -988,9 +1000,8 @@ kb/draft/hippocampus/
 
 1. **SQLite vs alternatives**: SQLite is the safe default (zero-config, portable, pip-installable). DuckDB is better for complex analytical queries but adds a dependency. JSON+index avoids any DB but limits query expressiveness.
 2. **Schema for the taxonomy DB**: mirror the LinkML `CellTypeNode` fields (id, name, markers, region, NT type, taxonomy_level)? Or a flatter schema optimised for queries?
-3. **Determinism guarantee**: the DB must be fully deterministic (same input → bit-identical output). No LLM involvement in ingest. Field mapping (taxonomy column → DB column) must be declared, not inferred.
-4. **Multiple taxonomies**: the DB should support multiple atlases (WMBv1, HMBA, future). Partition by atlas name + version.
-5. **Interaction with M6 (code/content separation)**: the taxonomy DB is shared infrastructure, not per-project content. It should stay on `main`, not on a content branch.
+3. **Multiple taxonomies**: the DB should support multiple atlases (WMBv1, HMBA, future). Partition by atlas name + version.
+4. **Interaction with M6 (code/content separation)**: the taxonomy DB is shared infrastructure, not per-project content. It should stay on `main`, not on a content branch.
 
 ---
 
