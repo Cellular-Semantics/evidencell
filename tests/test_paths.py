@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from evidencell.paths import (
+    find_node_file,
     region_from_graph,
     refs_path_for_graph,
     refs_path_for_region,
@@ -63,3 +64,20 @@ def test_reports_dir_for_region():
 def test_research_dir_for_region():
     root = repo_root()
     assert research_dir_for_region("cerebellum") == root / "research" / "cerebellum"
+
+
+def test_find_node_file_known_node():
+    """find_node_file returns a YAML path containing the requested node."""
+    path = find_node_file("olm_hippocampus")
+    assert path.exists()
+    assert path.suffix == ".yaml"
+    import yaml
+    data = yaml.safe_load(path.read_text())
+    node_ids = [n.get("id") for n in data.get("nodes", []) if isinstance(n, dict)]
+    assert "olm_hippocampus" in node_ids
+
+
+def test_find_node_file_missing_node():
+    """find_node_file raises FileNotFoundError for unknown node_id."""
+    with pytest.raises(FileNotFoundError, match="not found in any KB YAML"):
+        find_node_file("this_node_does_not_exist_xyz")

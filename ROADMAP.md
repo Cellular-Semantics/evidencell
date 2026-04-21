@@ -1,6 +1,6 @@
 # evidencell Roadmap
 
-**Date**: 2026-04-13 (last updated)
+**Date**: 2026-04-21 (last updated)
 **Status**: M0–M4 implemented. Active work: schema refinement, lit workflow robustness, workflow contracts.
 
 
@@ -28,8 +28,10 @@
 | **M2+** Lit Review Quality | Improve snippet context, paper quality signals, and domain relevance filtering in cite-traverse | 🔲 Pending | Contextual retrieval for priority papers; venue/citation/cross-citation quality signals; evidencell-specific relevance pre-filters | — (parallel, any time) |
 | **CF** Community Feedback | Enable biologist review of mappings; KB quality scoring | 🔲 Pending | Report-based review workflow; compliance scoring; structured feedback mechanism | S, M4 |
 | **M6** Code/Content Separation | Decouple KB content from code | 🔲 Pending | Content boundary; `content/hmba-mouse` branch; `main` passes `just test` with fixtures only | WC, S |
-| **M7** KB Structure Cleanup | Move workflow ephemera out of `kb/`; one graph per region×atlas; naming convention; graduation criteria | 🔲 Pending — HIGH PRIORITY | `kb/` contains only graph YAML; `references/`, `research/`, `reports/` at repo root; graph naming + graduation criteria in CONTRIBUTING.md | — (can start now) |
-| **M8** Taxonomy Reference DB | Full taxonomy ingest as local queryable DB; graph stubs pulled on demand from reference store | 🔲 Pending | Local taxonomy DB (SQLite or similar); query-based stub generation; `ingest-taxonomy` rewritten to populate DB; `map-cell-type` queries DB for candidates | M7 |
+| **M7** KB Structure Cleanup | Move workflow ephemera out of `kb/`; one file per classical type node; naming convention; graduation criteria | 🔲 Pending | `kb/nodes/{region}/{node_id}.yaml` per classical type; `kb/taxonomy/` for atlas terminal nodes; `references/`, `research/`, `reports/` at repo root; `find_node_file()` utility as stable interface; graduation criteria in CONTRIBUTING.md | M8 |
+| **M8** KB Index + Taxonomy DB | Taxonomy per-file ingest (SQL); KB node index for agent file-finding; both via SQLite | 🔲 Pending — DO BEFORE M7 | `kb/index.db`: node→file map, synonym index, gap flags; taxonomy DB: one file per taxonomy, SQL access; `find_node_file(node_id)` queries index; `map-cell-type` queries taxonomy DB | — (can start now) |
+| **ADAPT** Adaptive Mapping Loop | Reorder workflow so AT runs before edge framing; bridging dataset criteria; compute preflight gate; supertype-level edges | 🔲 Pending | Updated `map-cell-type.md`; dataset bridging criteria; AT preflight gate | S1, AT |
+| **ARCH** Workflow Architecture Refactor | Redesign lit-mining pipeline around Survey vs Targeted distinction; synonym capture; KB flags as workflow memory | 🔲 Can start now | `survey.md` orchestrator; `targeted-search.md` orchestrator; cite-traverse as skill; synonym extraction in asta-report-ingest; KB gap flags; `find_node_file()` utility as file-layout-independent KB interface | `find_node_file()` stub (pre-M8); upgrades to query index post-M8 |
 
 
 ## Cross-Cutting Discussion Points
@@ -664,6 +666,165 @@ now integrated into `map-cell-type.md` Step 3 (mapping edge subagent populates
 `node_b_value` from precomputed stats). For cases requiring per-cell
 distributions rather than cluster means, the class-level h5ad files from the
 Allen S3 bucket remain an option.
+
+---
+
+## ADAPT — Adaptive Mapping Loop
+
+**Design discussion**: [planning/adaptive_mapping_loop_design.md](planning/adaptive_mapping_loop_design.md)
+**Status**: 🔲 Pending (depends on S1 for supertype-level edge support)
+
+**Motivation**: The OLM pilot showed that building detailed per-cluster edges before
+running annotation transfer is the wrong order. MapMyCells resolved to the Sst Gaba_3
+supertype (F1=0.67, 43/46 cells) but placed 0/46 cells on the cluster the workflow
+had nominated as best candidate. The pipeline had no mechanism to revise the framing.
+
+### Proposed ordering
+
+1. **Triage** — taxonomy metadata + ASTA report. Identify candidate level(s) and any
+   high-priority bridging datasets. Do not commit to cluster-level edges yet.
+2. **AT preflight + run** (if bridging dataset available) — before building detailed
+   edges. Determines the resolution level the data supports and whether subpopulations
+   segregate. User approves compute before any downloads.
+3. **Reassess and set edges** — at the resolution the data supports (supertype, subclass,
+   or cluster). Consider sub-node creation for identified subpopulations.
+4. **Expression queries** — targeted marker tests across candidate cell sets.
+5. **Report** — synthesise, document gaps for next cycle.
+
+### Bridging dataset criteria
+
+Prioritise datasets that independently confirm classical type identity:
+- Morphological reconstruction + sequencing (patch-seq, post-hoc fill)
+- Transgenic Cre-driver targeting of the specific classical type + sequencing
+- Spatial transcriptomics with layer/region resolution matching the classical type
+
+Not qualifying: broad regional atlases where cells of the classical type cannot be
+identified independently of transcriptomics.
+
+### Dataset discovery
+
+Two layers: (1) ASTA report explicitly requests bridging datasets with accessions;
+(2) bounded triage follow-up searching from the atlas side (which datasets have
+mapped cells to the candidate supertypes/clusters?). Union of both → preflight
+assessment before any downloads.
+
+### Compute preflight gate (human checkpoint)
+
+Before any AT download/run, report: accession, why it qualifies, file size, RAM
+estimate, API vs local compute recommendation. User decides per dataset. This is
+the key human gate in an otherwise automated loop.
+
+### Deliverables
+
+1. `map-cell-type.md` updated: triage-first ordering; AT before edge framing; explicit
+   reassessment step; sub-node creation decision rule
+2. Bridging dataset criteria documented in `CONTRIBUTING.md` or workflow header
+3. AT preflight integrated as a required step in the workflow (not just a justfile recipe)
+4. ASTA report prompt updated to explicitly request bridging datasets with accessions
+5. Expression query step formalised: which markers to query, how results feed back
+   into edge confidence
+
+### Open questions
+
+- Sub-node splitting rule: when does evidence warrant creating sub-nodes vs. noting
+  heterogeneity in caveats? Needs a decision threshold (e.g. distinct expression
+  profiles + separate AT cluster signals).
+- Lit search cadence: not in the adaptive loop cycle. Gaps from step 5 feed a future
+  lit search cycle (M2). The boundary needs to be explicit in the workflow docs.
+- Graceful degradation: when no AT dataset exists, steps 2–3 collapse. The workflow
+  should degrade to triage → marker queries → report without requiring AT.
+
+---
+
+## ARCH — Workflow Architecture Refactor
+
+**Design discussion**: [planning/workflow_architecture_design.md](planning/workflow_architecture_design.md)
+**Status**: 🔲 Pending
+
+**Motivation**: The current lit-mining pipeline (lit-review → cite-traverse → evidence-extraction)
+conflates two fundamentally different modes of operation. Untangling them is the key to avoiding
+procedural complexity and enabling independent testability of each part.
+
+### The core distinction: Survey vs Targeted
+
+```
+[ASTA report (PDF)]
+        │
+        ▼
+asta-report-ingest ──────────────────────────────► KB (properties + stub edges)
+  [+ synonym extraction]                            │
+                                                    ▼
+                                            KB gap review
+                                         (reads KB flags;
+                                          runs as first step
+                                          of any research cycle)
+                                                    │
+                         ┌──────────────────────────┴───────────────────────┐
+                         ▼                                                  ▼
+                  SURVEY path                                      TARGETED path
+         (cell type poorly characterised;                     (specific KB field gap;
+          KB sparse after ASTA ingest)                         KB has partial content)
+                         │                                                  │
+              ASTA snippet_search across                       targeted snippet query
+              all corpus paper IDs (batch)                     + synonym expansion
+                         │                                                  │
+              PMC full text for gap papers               optionally: cite-traverse skill
+              (enrich where snippets thin)                (1–2 hops, bounded question)
+                         │                                                  │
+              all_summaries.json                           per-query synthesis agent
+              (per-snippet summaries,                      → KB write (PropertySource)
+               section, quotes, relevance)                 → pre-edit hook validates
+                         │
+              synthesis subagent
+              (cross-paper; themes;
+               gap + new types analysis)
+                         │
+                  KB + report.md
+```
+
+**Survey** is bounded by the ASTA paper set. It collects broadly; serendipity has value;
+synthesis must come after mining. **Targeted** answers a specific question; fanning out
+is a bug; synthesis can happen at mining time.
+
+### KB flags as workflow memory
+
+Rather than a separate tracking file, workflow state is encoded as flags on KB nodes.
+Flags are set at each cycle run and cleared when information is found. The gap reviewer
+reads flag state rather than re-deriving gaps from scratch. Gap flags carry priority
+scores (e.g. `AT_dataset_gap: HIGH`, `marker_gap: MODERATE`) to guide targeted runs.
+
+Two main triggers for targeted search:
+1. **Mapping evidence review** — what evidence would strengthen or refine an edge?
+2. **Gap review** — markers and AT transfer dataset accessions are top priority.
+
+### Synonym capture (critical early step)
+
+Synonym mapping is infrastructure for both paths. Without it, queries miss the cell type.
+Mechanism: look for synonyms on each paper as a first processing step; feed forward
+within the run; supplement with PMC full text where snippets are insufficient; leverage
+existing KB synonym content to seed queries.
+
+### cite-traverse as a skill
+
+Citation following is a technique, not a workflow phase. Refactor `cite-traverse.md`
+as a Claude skill invokable by the targeted research agent. The multi-paper ASTA batch
+capability and PMC fallback are preserved — the machinery moves to the skill.
+
+### Deliverables
+
+1. `survey.md` orchestrator — ASTA-bounded lit scan, produces all_summaries.json + report.md
+2. `targeted-search.md` orchestrator — KB-gap-driven, invokes cite-traverse skill
+3. `.claude/skills/cite-traverse.md` — cite-traverse refactored as bounded skill
+4. `asta-report-ingest.md` updated — synonym extraction step added
+5. KB schema updated — gap flags + priority scores on CellTypeNode
+6. `lit-review.md` retired (already marked EXPERIMENTAL)
+7. `evidence-extraction.md` simplified — paper selection gate → extraction → KB write
+
+### Open questions
+
+See [planning/workflow_architecture_design.md](planning/workflow_architecture_design.md)
+for detailed discussion of open questions including per-node summary cache,
+gap reviewer granularity, and synonym bootstrapping.
 
 ---
 
