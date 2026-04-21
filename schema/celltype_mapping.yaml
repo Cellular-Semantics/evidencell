@@ -26,6 +26,10 @@
 #                               AnnotationTransferEvidence: source_species, target_species added;
 #                               nt_consistent_with_classical deprecated (superseded by property_comparisons);
 #                               OntologyTerm: name_in_source added as required field (always record)
+# Version: 0.6.2 (2026-04-21) — MappingRelationship.CANDIDATE_SYNONYM: split-first extraction default;
+#                               provisional same-type edges resolvable by curation
+# Version: 0.6.1 (2026-04-21) — TypeSynonym class + SynonymType enum + CellTypeNode.synonyms field;
+#                               evidence-backed synonym capture for lit mining query expansion
 # Version: 0.6.0 (2026-04-09) — AnatomicalLocation class (OntologyTerm mixin) + CellCompartment enum (BREAKING);
 #                               anatomical_location range: OntologyTerm → AnatomicalLocation on CellTypeNode
 #                               and AtlasMetadataEvidence; formalises soma vs projection location (S2)
@@ -173,6 +177,23 @@ enums:
           A type description being built up from multiple evidence types; may eventually
           become a new or revised CL term. Not yet anchored to a single classical or T-type definition.
 
+  # ── Synonym type ────────────────────────────────────────────────
+  SynonymType:
+    description: Category of alternative name for a cell type.
+    permissible_values:
+      ABBREVIATION:
+        description: Short form or acronym, e.g. "OLM" for "oriens-lacunosum moleculare"
+      HISTORICAL:
+        description: Deprecated or superseded name still found in older literature
+      ATLAS_LABEL:
+        description: >
+          An atlas cluster or cell set label used as a cell type name in papers
+          (e.g. "Sst Gaba_3" used to refer to OLM cells in an atlas-integrated study)
+      CROSS_SPECIES:
+        description: Name used for the equivalent type in a different species
+      INFORMAL:
+        description: Community-specific colloquial term not formally defined in a publication
+
   # ── Taxonomy levels ─────────────────────────────────────────────
   # TaxonomyLevel enum removed in v0.4: level names are atlas-specific.
   # taxonomy_level fields now use free strings. Common values:
@@ -225,6 +246,23 @@ enums:
       UNCERTAIN:
         description: >
           Evidence is insufficient or contradictory to determine relationship type.
+      CANDIDATE_SYNONYM:
+        description: >
+          The two nodes may refer to the same cell type but this has not been
+          confirmed by a curator. Used by extraction agents when two names or
+          descriptions appear to overlap but the evidence is insufficient to merge.
+
+          This is a provisional relationship: extraction agents should prefer
+          creating two nodes + CANDIDATE_SYNONYM over collapsing to one node
+          (split-first principle — merging is easier than splitting).
+
+          Resolution: a curator either confirms (→ migrate evidence to one node,
+          mark the other deprecated, or record as EQUIVALENT) or rejects
+          (→ document the distinguishing feature in caveats; change to a more
+          specific relationship type such as PARTIAL_OVERLAP or UNCERTAIN).
+
+          Queryable: "show all unresolved CANDIDATE_SYNONYM edges" surfaces
+          pending curation decisions without blocking KB construction.
 
   # ── Mapping confidence ──────────────────────────────────────────
   MappingConfidence:
@@ -616,6 +654,39 @@ classes:
           embedding full text in the KB YAML. Set by asta-report-ingest and
           cite-traverse workflows. Reports dereference to include snippet text.
 
+  TypeSynonym:
+    description: >
+      An alternative name or abbreviation for a cell type, with evidence provenance.
+      Captures the name as used in specific sources — abbreviations, historical terms,
+      atlas labels, informal community terms. Sources cite the papers where this name
+      is used or defined, enabling synonym-expanded queries in lit mining.
+
+      Population guidance: extract synonyms as the first processing step for each paper.
+      Set snippet to the passage where the name is introduced or defined. Multiple
+      sources if the term appears across several papers.
+    attributes:
+      term:
+        required: true
+        description: >
+          The synonym string exactly as used in the source. Required.
+          Examples: "OLM", "O-LM interneuron", "oriens-lacunosum moleculare cell",
+          "Sst Gaba_3" (when used as a cell type name in a paper).
+      synonym_type:
+        range: SynonymType
+        description: >
+          Category of synonym — ABBREVIATION, HISTORICAL, ATLAS_LABEL,
+          CROSS_SPECIES, or INFORMAL. Omit if unclear.
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Papers where this synonym is used for this cell type. Each PropertySource:
+          ref = citing paper; snippet = passage where name is defined or first used
+          (quote_key also accepted); method = how the name is used in context
+          (e.g. "primary label throughout", "defined in introduction as abbreviation").
+          Multiple sources if the term appears across multiple papers.
+
   MarkerSource:
     is_a: PropertySource
     mixins:
@@ -807,6 +878,22 @@ classes:
       name:
         required: true
         description: Human-readable name, e.g. "Lugaro cell", "CB PLI Gly-Gaba_2 (supertype 1145)"
+      synonyms:
+        range: TypeSynonym
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Alternative names and abbreviations for this cell type, with evidence provenance.
+          Populated during literature mining — synonym extraction is the first processing
+          step for each paper (both survey and targeted paths). Used to expand queries
+          in subsequent searches.
+
+          Include all forms that appear in the literature or atlases: abbreviations
+          (OLM), long forms if non-obvious, historical names, atlas labels used as
+          cell type names. Do NOT include the canonical name field value itself.
+
+          For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms
+          only if that label is used as a cell type name in at least one non-atlas paper.
       definition_basis:
         required: true
         range: DefinitionBasis

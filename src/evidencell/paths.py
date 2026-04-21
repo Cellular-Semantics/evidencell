@@ -5,6 +5,7 @@ artefacts, and reports lives here.
 """
 
 from pathlib import Path
+import yaml
 
 
 def repo_root() -> Path:
@@ -15,6 +16,40 @@ def repo_root() -> Path:
             return p
         p = p.parent
     raise RuntimeError("Cannot locate repo root (no schema/ directory found)")
+
+
+def find_node_file(node_id: str) -> Path:
+    """Return the YAML file that contains the CellTypeNode with this node_id.
+
+    This is the stable interface between workflows and KB file layout.
+    Workflows should always call this rather than constructing paths directly —
+    the implementation will change as the KB is restructured:
+
+      Phase 0 (current): scan kb/draft/ and kb/mappings/ for a YAML containing
+        the node_id. Slow for large corpora but correct.
+      Phase 1 (post-M8): query kb/index.db (SQLite node→file map). Fast O(1).
+      Phase 2 (post-M7): direct path kb/nodes/{region}/{node_id}.yaml.
+
+    Raises FileNotFoundError if no YAML in the KB contains the node_id.
+    """
+    root = repo_root()
+    for kb_dir in (root / "kb" / "draft", root / "kb" / "mappings"):
+        if not kb_dir.exists():
+            continue
+        for yaml_file in sorted(kb_dir.rglob("*.yaml")):
+            try:
+                with yaml_file.open() as fh:
+                    data = yaml.safe_load(fh)
+            except Exception:
+                continue
+            nodes = data.get("nodes", []) if isinstance(data, dict) else []
+            for node in nodes:
+                if isinstance(node, dict) and node.get("id") == node_id:
+                    return yaml_file
+    raise FileNotFoundError(
+        f"Node '{node_id}' not found in any KB YAML under kb/draft/ or kb/mappings/. "
+        "Check node_id spelling or run 'just qc' to validate the KB."
+    )
 
 
 def region_from_graph(graph_file: Path) -> str:
