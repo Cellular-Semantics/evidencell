@@ -1,0 +1,1997 @@
+name: WMBv1 → CTX-HPF cross-taxonomy annotation transfer (hippocampus GABA)
+description: Cross-taxonomy annotation transfer edges linking WMBv1 (CCN20230722) clusters to CTX-HPF (CS202106160, Yao et
+  al. 2021) clusters. Derived from vendor-provided CTX_* fields in WMB metadata. These are 1:1 deterministic assignments (no
+  F1 scores). Scoped to hippocampus GABA stratum oriens clusters (49 edges). Name discrepancies between WMB-side labels and
+  authoritative CTX labels are preserved in name_in_source for audit.
+brain_region:
+  id: UBERON:0005370
+  label: stratum oriens of hippocampal formation
+  name_in_source: stratum oriens
+source_atlas: WMBv1 (CCN20230722)
+target_atlas: CTX-HPF (CS202106160)
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: Mus musculus
+creation_date: '2026-04-22'
+nodes:
+- id: ctx_cs202106160_102
+  name: 102_Sst HPF
+  cell_set_accession: CS202106160_102
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_103
+  name: 103_Sst HPF
+  cell_set_accession: CS202106160_103
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_104
+  name: 104_Sst HPF
+  cell_set_accession: CS202106160_104
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_105
+  name: 105_Sst HPF
+  cell_set_accession: CS202106160_105
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_110
+  name: 110_Pvalb
+  cell_set_accession: CS202106160_110
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Pvalb
+    cell_set_accession: CS202106160_463
+- id: ctx_cs202106160_114
+  name: 114_Pvalb
+  cell_set_accession: CS202106160_114
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Pvalb
+    cell_set_accession: CS202106160_463
+- id: ctx_cs202106160_21
+  name: 21_Sncg
+  cell_set_accession: CS202106160_21
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sncg
+    cell_set_accession: subclass_label:86d5f48b05
+- id: ctx_cs202106160_25
+  name: 25_Sncg
+  cell_set_accession: CS202106160_25
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sncg
+    cell_set_accession: subclass_label:86d5f48b05
+- id: ctx_cs202106160_26
+  name: 26_Ntng1 HPF
+  cell_set_accession: CS202106160_26
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sncg
+    cell_set_accession: subclass_label:86d5f48b05
+- id: ctx_cs202106160_29
+  name: 29_Ntng1 HPF
+  cell_set_accession: CS202106160_29
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sncg
+    cell_set_accession: subclass_label:86d5f48b05
+- id: ctx_cs202106160_30
+  name: 30_Ntng1 HPF
+  cell_set_accession: CS202106160_30
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sncg
+    cell_set_accession: subclass_label:86d5f48b05
+- id: ctx_cs202106160_34
+  name: 34_Sncg
+  cell_set_accession: CS202106160_34
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sncg
+    cell_set_accession: subclass_label:86d5f48b05
+- id: ctx_cs202106160_4
+  name: 4_Meis2 HPF
+  cell_set_accession: CS202106160_4
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sncg
+    cell_set_accession: subclass_label:86d5f48b05
+- id: ctx_cs202106160_49
+  name: 49_Vip
+  cell_set_accession: CS202106160_49
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Vip
+    cell_set_accession: subclass_label:a547e761cb
+- id: ctx_cs202106160_5
+  name: 5_Lamp5 Lhx6
+  cell_set_accession: CS202106160_5
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Lamp5
+    cell_set_accession: subclass_label:e40986e2c0
+- id: ctx_cs202106160_55
+  name: 55_Vip HPF
+  cell_set_accession: CS202106160_55
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Vip
+    cell_set_accession: subclass_label:a547e761cb
+- id: ctx_cs202106160_56
+  name: 56_Vip HPF
+  cell_set_accession: CS202106160_56
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Vip
+    cell_set_accession: subclass_label:a547e761cb
+- id: ctx_cs202106160_59
+  name: 59_Vip Igfbp6
+  cell_set_accession: CS202106160_59
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Vip
+    cell_set_accession: subclass_label:a547e761cb
+- id: ctx_cs202106160_6
+  name: 6_Lamp5 Lhx6
+  cell_set_accession: CS202106160_6
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Lamp5
+    cell_set_accession: subclass_label:e40986e2c0
+- id: ctx_cs202106160_60
+  name: 60_Vip Igfbp6
+  cell_set_accession: CS202106160_60
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Vip
+    cell_set_accession: subclass_label:a547e761cb
+- id: ctx_cs202106160_61
+  name: 61_Vip Igfbp6
+  cell_set_accession: CS202106160_61
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Vip
+    cell_set_accession: subclass_label:a547e761cb
+- id: ctx_cs202106160_7
+  name: 7_Lamp5 Lhx6
+  cell_set_accession: CS202106160_7
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Lamp5
+    cell_set_accession: subclass_label:e40986e2c0
+- id: ctx_cs202106160_77
+  name: 77_Sst HPF
+  cell_set_accession: CS202106160_77
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_78
+  name: 78_Sst HPF
+  cell_set_accession: CS202106160_78
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_79
+  name: 79_Sst
+  cell_set_accession: CS202106160_79
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_8
+  name: 8_Lamp5 Lhx6
+  cell_set_accession: CS202106160_8
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Lamp5
+    cell_set_accession: subclass_label:e40986e2c0
+- id: ctx_cs202106160_80
+  name: 80_Sst
+  cell_set_accession: CS202106160_80
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_87
+  name: 87_Sst
+  cell_set_accession: CS202106160_87
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Sst
+    cell_set_accession: CS202106160_444
+- id: ctx_cs202106160_9
+  name: 9_Lamp5 Lhx6
+  cell_set_accession: CS202106160_9
+  taxonomy_id: CS202106160
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+  parent_hierarchy:
+  - level: SUBCLASS
+    name: Lamp5
+    cell_set_accession: subclass_label:e40986e2c0
+- id: wmb_cs20230722_clus_0649
+  name: 0649 Vip Gaba_7
+  cell_set_accession: CS20230722_CLUS_0649
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0650
+  name: 0650 Vip Gaba_7
+  cell_set_accession: CS20230722_CLUS_0650
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0651
+  name: 0651 Vip Gaba_7
+  cell_set_accession: CS20230722_CLUS_0651
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0654
+  name: 0654 Vip Gaba_9
+  cell_set_accession: CS20230722_CLUS_0654
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0655
+  name: 0655 Vip Gaba_9
+  cell_set_accession: CS20230722_CLUS_0655
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0656
+  name: 0656 Vip Gaba_9
+  cell_set_accession: CS20230722_CLUS_0656
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0657
+  name: 0657 Vip Gaba_9
+  cell_set_accession: CS20230722_CLUS_0657
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0658
+  name: 0658 Vip Gaba_10
+  cell_set_accession: CS20230722_CLUS_0658
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0659
+  name: 0659 Vip Gaba_10
+  cell_set_accession: CS20230722_CLUS_0659
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0679
+  name: 0679 Sncg Gaba_5
+  cell_set_accession: CS20230722_CLUS_0679
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0680
+  name: 0680 Sncg Gaba_5
+  cell_set_accession: CS20230722_CLUS_0680
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0681
+  name: 0681 Sncg Gaba_5
+  cell_set_accession: CS20230722_CLUS_0681
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0697
+  name: 0697 RHP-COA Ndnf Gaba_4
+  cell_set_accession: CS20230722_CLUS_0697
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0698
+  name: 0698 RHP-COA Ndnf Gaba_4
+  cell_set_accession: CS20230722_CLUS_0698
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0699
+  name: 0699 RHP-COA Ndnf Gaba_5
+  cell_set_accession: CS20230722_CLUS_0699
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0700
+  name: 0700 RHP-COA Ndnf Gaba_5
+  cell_set_accession: CS20230722_CLUS_0700
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0701
+  name: 0701 RHP-COA Ndnf Gaba_5
+  cell_set_accession: CS20230722_CLUS_0701
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0702
+  name: 0702 RHP-COA Ndnf Gaba_5
+  cell_set_accession: CS20230722_CLUS_0702
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0703
+  name: 0703 RHP-COA Ndnf Gaba_5
+  cell_set_accession: CS20230722_CLUS_0703
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0704
+  name: 0704 RHP-COA Ndnf Gaba_6
+  cell_set_accession: CS20230722_CLUS_0704
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0705
+  name: 0705 RHP-COA Ndnf Gaba_6
+  cell_set_accession: CS20230722_CLUS_0705
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0724
+  name: 0724 Lamp5 Lhx6 Gaba_1
+  cell_set_accession: CS20230722_CLUS_0724
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0725
+  name: 0725 Lamp5 Lhx6 Gaba_1
+  cell_set_accession: CS20230722_CLUS_0725
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0726
+  name: 0726 Lamp5 Lhx6 Gaba_1
+  cell_set_accession: CS20230722_CLUS_0726
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0727
+  name: 0727 Lamp5 Lhx6 Gaba_1
+  cell_set_accession: CS20230722_CLUS_0727
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0728
+  name: 0728 Lamp5 Lhx6 Gaba_1
+  cell_set_accession: CS20230722_CLUS_0728
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0729
+  name: 0729 Lamp5 Lhx6 Gaba_1
+  cell_set_accession: CS20230722_CLUS_0729
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0730
+  name: 0730 Lamp5 Lhx6 Gaba_1
+  cell_set_accession: CS20230722_CLUS_0730
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0731
+  name: 0731 Lamp5 Lhx6 Gaba_1
+  cell_set_accession: CS20230722_CLUS_0731
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0737
+  name: 0737 Pvalb Gaba_2
+  cell_set_accession: CS20230722_CLUS_0737
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0738
+  name: 0738 Pvalb Gaba_2
+  cell_set_accession: CS20230722_CLUS_0738
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0739
+  name: 0739 Pvalb Gaba_2
+  cell_set_accession: CS20230722_CLUS_0739
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0755
+  name: 0755 Pvalb Gaba_9
+  cell_set_accession: CS20230722_CLUS_0755
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0767
+  name: 0767 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0767
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0768
+  name: 0768 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0768
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0769
+  name: 0769 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0769
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0770
+  name: 0770 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0770
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0771
+  name: 0771 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0771
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0772
+  name: 0772 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0772
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0773
+  name: 0773 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0773
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0774
+  name: 0774 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0774
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0775
+  name: 0775 Sst Gaba_3
+  cell_set_accession: CS20230722_CLUS_0775
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0785
+  name: 0785 Sst Gaba_6
+  cell_set_accession: CS20230722_CLUS_0785
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0786
+  name: 0786 Sst Gaba_6
+  cell_set_accession: CS20230722_CLUS_0786
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0787
+  name: 0787 Sst Gaba_6
+  cell_set_accession: CS20230722_CLUS_0787
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0788
+  name: 0788 Sst Gaba_6
+  cell_set_accession: CS20230722_CLUS_0788
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0789
+  name: 0789 Sst Gaba_6
+  cell_set_accession: CS20230722_CLUS_0789
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0790
+  name: 0790 Sst Gaba_6
+  cell_set_accession: CS20230722_CLUS_0790
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+- id: wmb_cs20230722_clus_0791
+  name: 0791 Sst Gaba_6
+  cell_set_accession: CS20230722_CLUS_0791
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLUSTER
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: true
+edges:
+- id: edge_wmb_cs20230722_clus_0649_to_ctx_cs202106160_49
+  type_a: wmb_cs20230722_clus_0649
+  type_b: ctx_cs202106160_49
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0649 Vip Gaba_7 (CS20230722_CLUS_0649) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 49_Vip (CS202106160_49). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0649 Vip Gaba_7
+    source_cell_set_accession: CS20230722_CLUS_0649
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 49_Vip
+      best_target_accession: CS202106160_49
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 49_Vip_4
+- id: edge_wmb_cs20230722_clus_0650_to_ctx_cs202106160_56
+  type_a: wmb_cs20230722_clus_0650
+  type_b: ctx_cs202106160_56
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0650 Vip Gaba_7 (CS20230722_CLUS_0650) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 56_Vip HPF (CS202106160_56). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0650 Vip Gaba_7
+    source_cell_set_accession: CS20230722_CLUS_0650
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 56_Vip HPF
+      best_target_accession: CS202106160_56
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 56_Vip_3
+- id: edge_wmb_cs20230722_clus_0651_to_ctx_cs202106160_55
+  type_a: wmb_cs20230722_clus_0651
+  type_b: ctx_cs202106160_55
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0651 Vip Gaba_7 (CS20230722_CLUS_0651) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 55_Vip HPF (CS202106160_55). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0651 Vip Gaba_7
+    source_cell_set_accession: CS20230722_CLUS_0651
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 55_Vip HPF
+      best_target_accession: CS202106160_55
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 55_Vip
+- id: edge_wmb_cs20230722_clus_0654_to_ctx_cs202106160_56
+  type_a: wmb_cs20230722_clus_0654
+  type_b: ctx_cs202106160_56
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0654 Vip Gaba_9 (CS20230722_CLUS_0654) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 56_Vip HPF (CS202106160_56). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0654 Vip Gaba_9
+    source_cell_set_accession: CS20230722_CLUS_0654
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 56_Vip HPF
+      best_target_accession: CS202106160_56
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 56_Vip_2
+- id: edge_wmb_cs20230722_clus_0655_to_ctx_cs202106160_56
+  type_a: wmb_cs20230722_clus_0655
+  type_b: ctx_cs202106160_56
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0655 Vip Gaba_9 (CS20230722_CLUS_0655) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 56_Vip HPF (CS202106160_56). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0655 Vip Gaba_9
+    source_cell_set_accession: CS20230722_CLUS_0655
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 56_Vip HPF
+      best_target_accession: CS202106160_56
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 56_Vip_4
+- id: edge_wmb_cs20230722_clus_0656_to_ctx_cs202106160_60
+  type_a: wmb_cs20230722_clus_0656
+  type_b: ctx_cs202106160_60
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0656 Vip Gaba_9 (CS20230722_CLUS_0656) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 60_Vip Igfbp6 (CS202106160_60). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0656 Vip Gaba_9
+    source_cell_set_accession: CS20230722_CLUS_0656
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 60_Vip Igfbp6
+      best_target_accession: CS202106160_60
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 60_Vip_3
+- id: edge_wmb_cs20230722_clus_0657_to_ctx_cs202106160_61
+  type_a: wmb_cs20230722_clus_0657
+  type_b: ctx_cs202106160_61
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0657 Vip Gaba_9 (CS20230722_CLUS_0657) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 61_Vip Igfbp6 (CS202106160_61). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0657 Vip Gaba_9
+    source_cell_set_accession: CS20230722_CLUS_0657
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 61_Vip Igfbp6
+      best_target_accession: CS202106160_61
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 61_Vip_2
+- id: edge_wmb_cs20230722_clus_0658_to_ctx_cs202106160_59
+  type_a: wmb_cs20230722_clus_0658
+  type_b: ctx_cs202106160_59
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0658 Vip Gaba_10 (CS20230722_CLUS_0658) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 59_Vip Igfbp6 (CS202106160_59). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0658 Vip Gaba_10
+    source_cell_set_accession: CS20230722_CLUS_0658
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 59_Vip Igfbp6
+      best_target_accession: CS202106160_59
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 59_Vip_3
+- id: edge_wmb_cs20230722_clus_0659_to_ctx_cs202106160_59
+  type_a: wmb_cs20230722_clus_0659
+  type_b: ctx_cs202106160_59
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0659 Vip Gaba_10 (CS20230722_CLUS_0659) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 59_Vip Igfbp6 (CS202106160_59). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0659 Vip Gaba_10
+    source_cell_set_accession: CS20230722_CLUS_0659
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 59_Vip Igfbp6
+      best_target_accession: CS202106160_59
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Vip
+      best_target_accession: subclass_label:a547e761cb
+    name_in_source: 59_Vip_4
+- id: edge_wmb_cs20230722_clus_0679_to_ctx_cs202106160_25
+  type_a: wmb_cs20230722_clus_0679
+  type_b: ctx_cs202106160_25
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0679 Sncg Gaba_5 (CS20230722_CLUS_0679) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 25_Sncg (CS202106160_25). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0679 Sncg Gaba_5
+    source_cell_set_accession: CS20230722_CLUS_0679
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 25_Sncg
+      best_target_accession: CS202106160_25
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 25_Sncg_1
+- id: edge_wmb_cs20230722_clus_0680_to_ctx_cs202106160_21
+  type_a: wmb_cs20230722_clus_0680
+  type_b: ctx_cs202106160_21
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0680 Sncg Gaba_5 (CS20230722_CLUS_0680) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 21_Sncg (CS202106160_21). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0680 Sncg Gaba_5
+    source_cell_set_accession: CS20230722_CLUS_0680
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 21_Sncg
+      best_target_accession: CS202106160_21
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+- id: edge_wmb_cs20230722_clus_0681_to_ctx_cs202106160_34
+  type_a: wmb_cs20230722_clus_0681
+  type_b: ctx_cs202106160_34
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0681 Sncg Gaba_5 (CS20230722_CLUS_0681) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 34_Sncg (CS202106160_34). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0681 Sncg Gaba_5
+    source_cell_set_accession: CS20230722_CLUS_0681
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 34_Sncg
+      best_target_accession: CS202106160_34
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+- id: edge_wmb_cs20230722_clus_0697_to_ctx_cs202106160_30
+  type_a: wmb_cs20230722_clus_0697
+  type_b: ctx_cs202106160_30
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0697 RHP-COA Ndnf Gaba_4 (CS20230722_CLUS_0697) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 30_Ntng1 HPF (CS202106160_30). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0697 RHP-COA Ndnf Gaba_4
+    source_cell_set_accession: CS20230722_CLUS_0697
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 30_Ntng1 HPF
+      best_target_accession: CS202106160_30
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 30_Ndnf HPF
+- id: edge_wmb_cs20230722_clus_0698_to_ctx_cs202106160_29
+  type_a: wmb_cs20230722_clus_0698
+  type_b: ctx_cs202106160_29
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0698 RHP-COA Ndnf Gaba_4 (CS20230722_CLUS_0698) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 29_Ntng1 HPF (CS202106160_29). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0698 RHP-COA Ndnf Gaba_4
+    source_cell_set_accession: CS20230722_CLUS_0698
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 29_Ntng1 HPF
+      best_target_accession: CS202106160_29
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 29_Ndnf HPF_2
+- id: edge_wmb_cs20230722_clus_0699_to_ctx_cs202106160_29
+  type_a: wmb_cs20230722_clus_0699
+  type_b: ctx_cs202106160_29
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0699 RHP-COA Ndnf Gaba_5 (CS20230722_CLUS_0699) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 29_Ntng1 HPF (CS202106160_29). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0699 RHP-COA Ndnf Gaba_5
+    source_cell_set_accession: CS20230722_CLUS_0699
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 29_Ntng1 HPF
+      best_target_accession: CS202106160_29
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 29_Ndnf HPF_4
+- id: edge_wmb_cs20230722_clus_0700_to_ctx_cs202106160_26
+  type_a: wmb_cs20230722_clus_0700
+  type_b: ctx_cs202106160_26
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0700 RHP-COA Ndnf Gaba_5 (CS20230722_CLUS_0700) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 26_Ntng1 HPF (CS202106160_26). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0700 RHP-COA Ndnf Gaba_5
+    source_cell_set_accession: CS20230722_CLUS_0700
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 26_Ntng1 HPF
+      best_target_accession: CS202106160_26
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 26_Ndnf HPF_3
+- id: edge_wmb_cs20230722_clus_0701_to_ctx_cs202106160_26
+  type_a: wmb_cs20230722_clus_0701
+  type_b: ctx_cs202106160_26
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0701 RHP-COA Ndnf Gaba_5 (CS20230722_CLUS_0701) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 26_Ntng1 HPF (CS202106160_26). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0701 RHP-COA Ndnf Gaba_5
+    source_cell_set_accession: CS20230722_CLUS_0701
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 26_Ntng1 HPF
+      best_target_accession: CS202106160_26
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 26_Ndnf HPF_1
+- id: edge_wmb_cs20230722_clus_0702_to_ctx_cs202106160_25
+  type_a: wmb_cs20230722_clus_0702
+  type_b: ctx_cs202106160_25
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0702 RHP-COA Ndnf Gaba_5 (CS20230722_CLUS_0702) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 25_Sncg (CS202106160_25). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0702 RHP-COA Ndnf Gaba_5
+    source_cell_set_accession: CS20230722_CLUS_0702
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 25_Sncg
+      best_target_accession: CS202106160_25
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 25_Sncg_2
+- id: edge_wmb_cs20230722_clus_0703_to_ctx_cs202106160_26
+  type_a: wmb_cs20230722_clus_0703
+  type_b: ctx_cs202106160_26
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0703 RHP-COA Ndnf Gaba_5 (CS20230722_CLUS_0703) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 26_Ntng1 HPF (CS202106160_26). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0703 RHP-COA Ndnf Gaba_5
+    source_cell_set_accession: CS20230722_CLUS_0703
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 26_Ntng1 HPF
+      best_target_accession: CS202106160_26
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 26_Ndnf HPF_2
+- id: edge_wmb_cs20230722_clus_0704_to_ctx_cs202106160_4
+  type_a: wmb_cs20230722_clus_0704
+  type_b: ctx_cs202106160_4
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0704 RHP-COA Ndnf Gaba_6 (CS20230722_CLUS_0704) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 4_Meis2 HPF (CS202106160_4). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0704 RHP-COA Ndnf Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0704
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 4_Meis2 HPF
+      best_target_accession: CS202106160_4
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 4_Meis2 HPF_1
+- id: edge_wmb_cs20230722_clus_0705_to_ctx_cs202106160_4
+  type_a: wmb_cs20230722_clus_0705
+  type_b: ctx_cs202106160_4
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0705 RHP-COA Ndnf Gaba_6 (CS20230722_CLUS_0705) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 4_Meis2 HPF (CS202106160_4). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0705 RHP-COA Ndnf Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0705
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 4_Meis2 HPF
+      best_target_accession: CS202106160_4
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sncg
+      best_target_accession: subclass_label:86d5f48b05
+    name_in_source: 4_Meis2 HPF_2
+- id: edge_wmb_cs20230722_clus_0724_to_ctx_cs202106160_6
+  type_a: wmb_cs20230722_clus_0724
+  type_b: ctx_cs202106160_6
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0724 Lamp5 Lhx6 Gaba_1 (CS20230722_CLUS_0724) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 6_Lamp5 Lhx6 (CS202106160_6). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0724 Lamp5 Lhx6 Gaba_1
+    source_cell_set_accession: CS20230722_CLUS_0724
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 6_Lamp5 Lhx6
+      best_target_accession: CS202106160_6
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Lamp5
+      best_target_accession: subclass_label:e40986e2c0
+- id: edge_wmb_cs20230722_clus_0725_to_ctx_cs202106160_7
+  type_a: wmb_cs20230722_clus_0725
+  type_b: ctx_cs202106160_7
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0725 Lamp5 Lhx6 Gaba_1 (CS20230722_CLUS_0725) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 7_Lamp5 Lhx6 (CS202106160_7). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0725 Lamp5 Lhx6 Gaba_1
+    source_cell_set_accession: CS20230722_CLUS_0725
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 7_Lamp5 Lhx6
+      best_target_accession: CS202106160_7
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Lamp5
+      best_target_accession: subclass_label:e40986e2c0
+    name_in_source: 7_Lamp5 Lhx6_1
+- id: edge_wmb_cs20230722_clus_0726_to_ctx_cs202106160_7
+  type_a: wmb_cs20230722_clus_0726
+  type_b: ctx_cs202106160_7
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0726 Lamp5 Lhx6 Gaba_1 (CS20230722_CLUS_0726) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 7_Lamp5 Lhx6 (CS202106160_7). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0726 Lamp5 Lhx6 Gaba_1
+    source_cell_set_accession: CS20230722_CLUS_0726
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 7_Lamp5 Lhx6
+      best_target_accession: CS202106160_7
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Lamp5
+      best_target_accession: subclass_label:e40986e2c0
+    name_in_source: 7_Lamp5 Lhx6_2
+- id: edge_wmb_cs20230722_clus_0727_to_ctx_cs202106160_8
+  type_a: wmb_cs20230722_clus_0727
+  type_b: ctx_cs202106160_8
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0727 Lamp5 Lhx6 Gaba_1 (CS20230722_CLUS_0727) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 8_Lamp5 Lhx6 (CS202106160_8). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0727 Lamp5 Lhx6 Gaba_1
+    source_cell_set_accession: CS20230722_CLUS_0727
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 8_Lamp5 Lhx6
+      best_target_accession: CS202106160_8
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Lamp5
+      best_target_accession: subclass_label:e40986e2c0
+    name_in_source: 8_Lamp5 Lhx6_2
+- id: edge_wmb_cs20230722_clus_0728_to_ctx_cs202106160_9
+  type_a: wmb_cs20230722_clus_0728
+  type_b: ctx_cs202106160_9
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0728 Lamp5 Lhx6 Gaba_1 (CS20230722_CLUS_0728) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 9_Lamp5 Lhx6 (CS202106160_9). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0728 Lamp5 Lhx6 Gaba_1
+    source_cell_set_accession: CS20230722_CLUS_0728
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 9_Lamp5 Lhx6
+      best_target_accession: CS202106160_9
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Lamp5
+      best_target_accession: subclass_label:e40986e2c0
+- id: edge_wmb_cs20230722_clus_0729_to_ctx_cs202106160_8
+  type_a: wmb_cs20230722_clus_0729
+  type_b: ctx_cs202106160_8
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0729 Lamp5 Lhx6 Gaba_1 (CS20230722_CLUS_0729) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 8_Lamp5 Lhx6 (CS202106160_8). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0729 Lamp5 Lhx6 Gaba_1
+    source_cell_set_accession: CS20230722_CLUS_0729
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 8_Lamp5 Lhx6
+      best_target_accession: CS202106160_8
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Lamp5
+      best_target_accession: subclass_label:e40986e2c0
+    name_in_source: 8_Lamp5 Lhx6_1
+- id: edge_wmb_cs20230722_clus_0730_to_ctx_cs202106160_5
+  type_a: wmb_cs20230722_clus_0730
+  type_b: ctx_cs202106160_5
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0730 Lamp5 Lhx6 Gaba_1 (CS20230722_CLUS_0730) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 5_Lamp5 Lhx6 (CS202106160_5). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0730 Lamp5 Lhx6 Gaba_1
+    source_cell_set_accession: CS20230722_CLUS_0730
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 5_Lamp5 Lhx6
+      best_target_accession: CS202106160_5
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Lamp5
+      best_target_accession: subclass_label:e40986e2c0
+    name_in_source: 5_Lamp5 Lhx6_1
+- id: edge_wmb_cs20230722_clus_0731_to_ctx_cs202106160_5
+  type_a: wmb_cs20230722_clus_0731
+  type_b: ctx_cs202106160_5
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0731 Lamp5 Lhx6 Gaba_1 (CS20230722_CLUS_0731) carries a 1:1 deterministic annotation transfer
+      to CTX-HPF cluster 5_Lamp5 Lhx6 (CS202106160_5). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0731 Lamp5 Lhx6 Gaba_1
+    source_cell_set_accession: CS20230722_CLUS_0731
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 5_Lamp5 Lhx6
+      best_target_accession: CS202106160_5
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Lamp5
+      best_target_accession: subclass_label:e40986e2c0
+    name_in_source: 5_Lamp5 Lhx6_2
+- id: edge_wmb_cs20230722_clus_0737_to_ctx_cs202106160_114
+  type_a: wmb_cs20230722_clus_0737
+  type_b: ctx_cs202106160_114
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0737 Pvalb Gaba_2 (CS20230722_CLUS_0737) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 114_Pvalb (CS202106160_114). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0737 Pvalb Gaba_2
+    source_cell_set_accession: CS20230722_CLUS_0737
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 114_Pvalb
+      best_target_accession: CS202106160_114
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Pvalb
+      best_target_accession: CS202106160_463
+    name_in_source: 114_Pvalb_7
+- id: edge_wmb_cs20230722_clus_0738_to_ctx_cs202106160_114
+  type_a: wmb_cs20230722_clus_0738
+  type_b: ctx_cs202106160_114
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0738 Pvalb Gaba_2 (CS20230722_CLUS_0738) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 114_Pvalb (CS202106160_114). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0738 Pvalb Gaba_2
+    source_cell_set_accession: CS20230722_CLUS_0738
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 114_Pvalb
+      best_target_accession: CS202106160_114
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Pvalb
+      best_target_accession: CS202106160_463
+    name_in_source: 114_Pvalb_8
+- id: edge_wmb_cs20230722_clus_0739_to_ctx_cs202106160_114
+  type_a: wmb_cs20230722_clus_0739
+  type_b: ctx_cs202106160_114
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0739 Pvalb Gaba_2 (CS20230722_CLUS_0739) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 114_Pvalb (CS202106160_114). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0739 Pvalb Gaba_2
+    source_cell_set_accession: CS20230722_CLUS_0739
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 114_Pvalb
+      best_target_accession: CS202106160_114
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Pvalb
+      best_target_accession: CS202106160_463
+    name_in_source: 114_Pvalb_9
+- id: edge_wmb_cs20230722_clus_0755_to_ctx_cs202106160_110
+  type_a: wmb_cs20230722_clus_0755
+  type_b: ctx_cs202106160_110
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0755 Pvalb Gaba_9 (CS20230722_CLUS_0755) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 110_Pvalb (CS202106160_110). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0755 Pvalb Gaba_9
+    source_cell_set_accession: CS20230722_CLUS_0755
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 110_Pvalb
+      best_target_accession: CS202106160_110
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Pvalb
+      best_target_accession: CS202106160_463
+- id: edge_wmb_cs20230722_clus_0767_to_ctx_cs202106160_78
+  type_a: wmb_cs20230722_clus_0767
+  type_b: ctx_cs202106160_78
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0767 Sst Gaba_3 (CS20230722_CLUS_0767) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 78_Sst HPF (CS202106160_78). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0767 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0767
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 78_Sst HPF
+      best_target_accession: CS202106160_78
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 78_Sst_1
+- id: edge_wmb_cs20230722_clus_0768_to_ctx_cs202106160_78
+  type_a: wmb_cs20230722_clus_0768
+  type_b: ctx_cs202106160_78
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0768 Sst Gaba_3 (CS20230722_CLUS_0768) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 78_Sst HPF (CS202106160_78). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0768 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0768
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 78_Sst HPF
+      best_target_accession: CS202106160_78
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 78_Sst_2
+- id: edge_wmb_cs20230722_clus_0769_to_ctx_cs202106160_80
+  type_a: wmb_cs20230722_clus_0769
+  type_b: ctx_cs202106160_80
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0769 Sst Gaba_3 (CS20230722_CLUS_0769) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 80_Sst (CS202106160_80). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0769 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0769
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 80_Sst
+      best_target_accession: CS202106160_80
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 80_Sst_1
+- id: edge_wmb_cs20230722_clus_0770_to_ctx_cs202106160_80
+  type_a: wmb_cs20230722_clus_0770
+  type_b: ctx_cs202106160_80
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0770 Sst Gaba_3 (CS20230722_CLUS_0770) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 80_Sst (CS202106160_80). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0770 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0770
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 80_Sst
+      best_target_accession: CS202106160_80
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 80_Sst_2
+- id: edge_wmb_cs20230722_clus_0771_to_ctx_cs202106160_79
+  type_a: wmb_cs20230722_clus_0771
+  type_b: ctx_cs202106160_79
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0771 Sst Gaba_3 (CS20230722_CLUS_0771) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 79_Sst (CS202106160_79). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0771 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0771
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 79_Sst
+      best_target_accession: CS202106160_79
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+- id: edge_wmb_cs20230722_clus_0772_to_ctx_cs202106160_78
+  type_a: wmb_cs20230722_clus_0772
+  type_b: ctx_cs202106160_78
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0772 Sst Gaba_3 (CS20230722_CLUS_0772) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 78_Sst HPF (CS202106160_78). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0772 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0772
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 78_Sst HPF
+      best_target_accession: CS202106160_78
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 78_Sst_3
+- id: edge_wmb_cs20230722_clus_0773_to_ctx_cs202106160_80
+  type_a: wmb_cs20230722_clus_0773
+  type_b: ctx_cs202106160_80
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0773 Sst Gaba_3 (CS20230722_CLUS_0773) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 80_Sst (CS202106160_80). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0773 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0773
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 80_Sst
+      best_target_accession: CS202106160_80
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 80_Sst_3
+- id: edge_wmb_cs20230722_clus_0774_to_ctx_cs202106160_87
+  type_a: wmb_cs20230722_clus_0774
+  type_b: ctx_cs202106160_87
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0774 Sst Gaba_3 (CS20230722_CLUS_0774) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 87_Sst (CS202106160_87). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0774 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0774
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 87_Sst
+      best_target_accession: CS202106160_87
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 87_Sst_5
+- id: edge_wmb_cs20230722_clus_0775_to_ctx_cs202106160_77
+  type_a: wmb_cs20230722_clus_0775
+  type_b: ctx_cs202106160_77
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0775 Sst Gaba_3 (CS20230722_CLUS_0775) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 77_Sst HPF (CS202106160_77). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0775 Sst Gaba_3
+    source_cell_set_accession: CS20230722_CLUS_0775
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 77_Sst HPF
+      best_target_accession: CS202106160_77
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 77_Sst
+- id: edge_wmb_cs20230722_clus_0785_to_ctx_cs202106160_104
+  type_a: wmb_cs20230722_clus_0785
+  type_b: ctx_cs202106160_104
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0785 Sst Gaba_6 (CS20230722_CLUS_0785) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 104_Sst HPF (CS202106160_104). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0785 Sst Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0785
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 104_Sst HPF
+      best_target_accession: CS202106160_104
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 104_Sst_2
+- id: edge_wmb_cs20230722_clus_0786_to_ctx_cs202106160_104
+  type_a: wmb_cs20230722_clus_0786
+  type_b: ctx_cs202106160_104
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0786 Sst Gaba_6 (CS20230722_CLUS_0786) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 104_Sst HPF (CS202106160_104). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0786 Sst Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0786
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 104_Sst HPF
+      best_target_accession: CS202106160_104
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 104_Sst_3
+- id: edge_wmb_cs20230722_clus_0787_to_ctx_cs202106160_102
+  type_a: wmb_cs20230722_clus_0787
+  type_b: ctx_cs202106160_102
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0787 Sst Gaba_6 (CS20230722_CLUS_0787) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 102_Sst HPF (CS202106160_102). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0787 Sst Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0787
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 102_Sst HPF
+      best_target_accession: CS202106160_102
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 102_Sst_1
+- id: edge_wmb_cs20230722_clus_0788_to_ctx_cs202106160_103
+  type_a: wmb_cs20230722_clus_0788
+  type_b: ctx_cs202106160_103
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0788 Sst Gaba_6 (CS20230722_CLUS_0788) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 103_Sst HPF (CS202106160_103). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0788 Sst Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0788
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 103_Sst HPF
+      best_target_accession: CS202106160_103
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 103_Sst_1
+- id: edge_wmb_cs20230722_clus_0789_to_ctx_cs202106160_105
+  type_a: wmb_cs20230722_clus_0789
+  type_b: ctx_cs202106160_105
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0789 Sst Gaba_6 (CS20230722_CLUS_0789) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 105_Sst HPF (CS202106160_105). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0789 Sst Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0789
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 105_Sst HPF
+      best_target_accession: CS202106160_105
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 105_Sst
+- id: edge_wmb_cs20230722_clus_0790_to_ctx_cs202106160_102
+  type_a: wmb_cs20230722_clus_0790
+  type_b: ctx_cs202106160_102
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0790 Sst Gaba_6 (CS20230722_CLUS_0790) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 102_Sst HPF (CS202106160_102). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0790 Sst Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0790
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 102_Sst HPF
+      best_target_accession: CS202106160_102
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 102_Sst_2
+- id: edge_wmb_cs20230722_clus_0791_to_ctx_cs202106160_103
+  type_a: wmb_cs20230722_clus_0791
+  type_b: ctx_cs202106160_103
+  relationship: OVERLAPS
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: WMB cluster 0791 Sst Gaba_6 (CS20230722_CLUS_0791) carries a 1:1 deterministic annotation transfer to CTX-HPF
+      cluster 103_Sst HPF (CS202106160_103). Cross-taxonomy assignment from WMB metadata (Yao et al. 2021).
+    target_atlas: CTX-HPF (CS202106160)
+    method: deterministic annotation transfer (1:1, vendor-provided)
+    source_dataset_accession: CCN20230722
+    source_cluster_label: 0791 Sst Gaba_6
+    source_cell_set_accession: CS20230722_CLUS_0791
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 103_Sst HPF
+      best_target_accession: CS202106160_103
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 1
+      best_target_name: Sst
+      best_target_accession: CS202106160_444
+    name_in_source: 103_Sst_2
