@@ -6,7 +6,6 @@ Full WMBv1 ingest test is marked @pytest.mark.slow (just test only).
 
 import json
 import sqlite3
-import tempfile
 from pathlib import Path
 
 import pytest
@@ -217,9 +216,6 @@ def test_taxonomy_db_find_candidates_scores(populated_db):
 
 def test_taxonomy_meta_round_trip(tmp_path):
     """TaxonomyMeta → dict → YAML → read_taxonomy_meta round-trip."""
-    import yaml as _yaml
-    from evidencell.taxonomy_db import _meta_to_dict, read_taxonomy_meta, TaxonomyMeta, MapMyCellsMeta
-
     meta = TaxonomyMeta(
         taxonomy_id="TEST123",
         taxonomy_name="Test Taxonomy",
@@ -241,7 +237,7 @@ def test_taxonomy_meta_round_trip(tmp_path):
     tax_dir.mkdir()
     meta_path = tax_dir / "taxonomy_meta.yaml"
     meta_path.write_text(
-        _yaml.dump(_meta_to_dict(meta), allow_unicode=True, sort_keys=False),
+        yaml.dump(_meta_to_dict(meta), allow_unicode=True, sort_keys=False),
         encoding="utf-8",
     )
 
@@ -271,14 +267,13 @@ def test_taxonomy_meta_round_trip(tmp_path):
 
 def test_ingest_to_yaml_writes_enriched_meta(tmp_path, monkeypatch):
     """ingest_to_yaml reads meta input and writes enriched taxonomy_meta.yaml."""
-    import yaml as _yaml
     import evidencell.paths as _paths
 
     # Create a fake meta input at the expected path
     meta_input_dir = tmp_path / "inputs" / "taxonomies"
     meta_input_dir.mkdir(parents=True)
     (meta_input_dir / "TEST_TAX_meta.yaml").write_text(
-        _yaml.dump({
+        yaml.dump({
             "taxonomy_name": "Test Tax",
             "species_id": "NCBITaxon:10090",
             "species_label": "Mus musculus",
@@ -294,7 +289,7 @@ def test_ingest_to_yaml_writes_enriched_meta(tmp_path, monkeypatch):
     )
 
     counts = ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
-    meta = _yaml.safe_load((tmp_path / "taxonomy_meta.yaml").read_text())
+    meta = yaml.safe_load((tmp_path / "taxonomy_meta.yaml").read_text())
     assert meta["taxonomy_name"] == "Test Tax"
     assert meta["species_id"] == "NCBITaxon:10090"
     assert meta["anatomy_ontology"] == "MBA"

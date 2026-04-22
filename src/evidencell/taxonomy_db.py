@@ -772,9 +772,6 @@ def _parse_mba_obograph(path: Path) -> tuple[list[tuple[str, str, str | None]], 
             continue
         terms.append((curie, label, None))  # uberon_id filled from edges below
 
-    # Build a set of all MBA CURIEs for fast lookup
-    mba_ids = {t[0] for t in terms}
-
     # uberon_id: first UBERON target of an is_a edge from each MBA term
     uberon_map: dict[str, str] = {}
     mba_edges: list[tuple[str, str]] = []

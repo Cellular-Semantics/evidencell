@@ -16,7 +16,6 @@ from __future__ import annotations
 import json
 import os
 import sys
-import tempfile
 from pathlib import Path
 
 # neo4j is an optional dep — import lazily so the rest of evidencell works without it
