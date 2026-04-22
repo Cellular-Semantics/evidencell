@@ -14,6 +14,16 @@ notes: 'All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evi
   confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup.
 
   '
+annotation_transfer_datasets:
+- accession: GEO:GSE142546
+  publication: PMID:33398060
+  description: Que et al. 2021 — patch-seq of 88 morphologically identified PV-INs (basket, axo-axonic, bistratified) in mouse
+    hippocampal CA1, P10–P77
+  cell_types:
+  - pv_basket_cell_hippocampus
+  - axo_axonic_cell_hippocampus
+  - bistratified_cell_hippocampus
+  status: pending_retrieval
 nodes:
 - id: pv_basket_cell_hippocampus
   name: Parvalbumin-positive basket cell
@@ -1651,46 +1661,1331 @@ nodes:
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_CLUS_0732
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: cluster
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 0.29
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 8.36
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 7.73
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 0.03
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 2.22
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 10.05
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 8.81
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 5.56
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 6.97
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 2.88
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 4.07
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 0.61
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 8.56
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 1.3
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.57
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 0.97
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 1.47
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 0.47
 - id: CS20230722_CLUS_0739
   name: 0739 Pvalb Gaba_2
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_CLUS_0739
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: cluster
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 0.39
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 7.56
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 6.96
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 0.43
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 1.68
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 10.52
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 8.43
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 3.43
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 6.29
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 2.08
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 1.33
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 0.32
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 10.63
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 0.8
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.0
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 1.51
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 3.69
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 0.33
 - id: CS20230722_SUPT_0179
   name: 0179 Vip Gaba_7
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_SUPT_0179
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: supertype
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 6.78
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 1.36
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 0.27
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 3.74
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 10.58
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 9.29
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 9.59
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 2.93
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 6.16
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 6.9
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 1.3
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 4.57
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 0.09
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 4.33
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.42
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 1.04
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 0.16
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 6.82
+    child_cluster_expression:
+    - cluster_accession: CS20230722_CLUS_0649
+      n_cells: 1
+      expression:
+        Calb2: 7.47
+        Cck: 0.92
+        Chrna2: 4.38
+        Cnr1: 10.5
+        Gad1: 9.43
+        Gad2: 9.55
+        Id2: 1.58
+        Lamp5: 6.73
+        Chrm2: 0.16
+        Nos1: 8.32
+        Npy: 1.35
+        Pnoc: 4.3
+        Pvalb: 0.12
+        Reln: 4.93
+        Sst: 1.16
+        Tac1: 0.16
+        Slc17a8: 0.05
+        Vip: 9.17
+    - cluster_accession: CS20230722_CLUS_0650
+      n_cells: 1
+      expression:
+        Calb2: 5.96
+        Cck: 1.57
+        Chrna2: 4.33
+        Cnr1: 10.11
+        Gad1: 9.0
+        Gad2: 9.3
+        Id2: 3.5
+        Lamp5: 3.89
+        Chrm2: 0.14
+        Nos1: 3.38
+        Npy: 1.04
+        Pnoc: 6.43
+        Pvalb: 0.1
+        Reln: 4.0
+        Sst: 1.26
+        Tac1: 0.16
+        Slc17a8: 0.08
+        Vip: 4.84
+    - cluster_accession: CS20230722_CLUS_0651
+      n_cells: 1
+      expression:
+        Calb2: 6.9
+        Cck: 1.59
+        Chrna2: 2.51
+        Cnr1: 11.12
+        Gad1: 9.44
+        Gad2: 9.93
+        Id2: 3.71
+        Lamp5: 7.87
+        Chrm2: 0.51
+        Nos1: 9.01
+        Npy: 1.52
+        Pnoc: 2.98
+        Pvalb: 0.05
+        Reln: 4.07
+        Sst: 0.7
+        Tac1: 0.15
+        Slc17a8: 1.13
+        Vip: 6.45
 - id: CS20230722_SUPT_0193
   name: 0193 RHP-COA Ndnf Gaba_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_SUPT_0193
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: supertype
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 0.31
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 6.33
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 0.29
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 0.48
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 11.43
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 9.43
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 10.21
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 4.88
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 3.65
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 2.26
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 2.61
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 6.25
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 0.27
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 8.13
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.61
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 1.51
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 0.1
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 0.93
+    child_cluster_expression:
+    - cluster_accession: CS20230722_CLUS_0686
+      n_cells: 1
+      expression:
+        Calb2: 0.34
+        Cck: 8.92
+        Chrna2: 0.73
+        Cnr1: 11.81
+        Gad1: 9.41
+        Gad2: 10.33
+        Id2: 5.88
+        Lamp5: 1.59
+        Chrm2: 0.44
+        Nos1: 3.13
+        Npy: 3.01
+        Pnoc: 6.99
+        Pvalb: 0.35
+        Reln: 8.41
+        Sst: 1.48
+        Tac1: 0.21
+        Slc17a8: 0.09
+        Vip: 0.92
+    - cluster_accession: CS20230722_CLUS_0687
+      n_cells: 1
+      expression:
+        Calb2: 0.05
+        Cck: 8.67
+        Chrna2: 0.21
+        Cnr1: 11.68
+        Gad1: 9.56
+        Gad2: 10.44
+        Id2: 5.44
+        Lamp5: 5.19
+        Chrm2: 0.36
+        Nos1: 3.42
+        Npy: 1.86
+        Pnoc: 6.74
+        Pvalb: 0.41
+        Reln: 6.78
+        Sst: 1.11
+        Tac1: 0.14
+        Slc17a8: 1.14
+        Vip: 0.88
+    - cluster_accession: CS20230722_CLUS_0688
+      n_cells: 1
+      expression:
+        Calb2: 0.23
+        Cck: 2.13
+        Chrna2: 0.26
+        Cnr1: 10.84
+        Gad1: 9.56
+        Gad2: 10.27
+        Id2: 3.93
+        Lamp5: 4.87
+        Chrm2: 0.25
+        Nos1: 2.02
+        Npy: 1.65
+        Pnoc: 6.43
+        Pvalb: 0.26
+        Reln: 7.57
+        Sst: 1.71
+        Tac1: 0.0
+        Slc17a8: 1.02
+        Vip: 0.88
+    - cluster_accession: CS20230722_CLUS_0689
+      n_cells: 1
+      expression:
+        Calb2: 0.61
+        Cck: 5.62
+        Chrna2: 0.74
+        Cnr1: 11.41
+        Gad1: 9.2
+        Gad2: 9.82
+        Id2: 4.29
+        Lamp5: 2.94
+        Chrm2: 0.12
+        Nos1: 0.47
+        Npy: 3.91
+        Pnoc: 4.84
+        Pvalb: 0.04
+        Reln: 9.76
+        Sst: 1.74
+        Tac1: 0.05
+        Slc17a8: 0.21
+        Vip: 1.03
 - id: CS20230722_SUPT_0203
   name: 0203 Lamp5 Lhx6 Gaba_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_SUPT_0203
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: supertype
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 0.37
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 6.59
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 1.52
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 0.46
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 3.71
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 10.89
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 10.34
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 9.35
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 4.4
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 7.79
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 4.62
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 6.37
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 0.43
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 6.89
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.06
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 1.52
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 2.64
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 0.67
+    child_cluster_expression:
+    - cluster_accession: CS20230722_CLUS_0724
+      n_cells: 1
+      expression:
+        Calb2: 0.28
+        Cck: 6.85
+        Chrna2: 0.88
+        Cnr1: 3.74
+        Gad1: 11.15
+        Gad2: 11.37
+        Id2: 9.87
+        Lamp5: 4.13
+        Chrm2: 0.47
+        Nos1: 9.14
+        Npy: 6.66
+        Pnoc: 7.88
+        Pvalb: 0.23
+        Reln: 5.42
+        Sst: 1.18
+        Tac1: 0.38
+        Slc17a8: 0.06
+        Vip: 0.38
+    - cluster_accession: CS20230722_CLUS_0725
+      n_cells: 1
+      expression:
+        Calb2: 0.43
+        Cck: 8.13
+        Chrna2: 0.25
+        Cnr1: 2.0
+        Gad1: 10.75
+        Gad2: 9.98
+        Id2: 8.81
+        Lamp5: 5.04
+        Chrm2: 2.3
+        Nos1: 8.18
+        Npy: 7.24
+        Pnoc: 6.69
+        Pvalb: 0.27
+        Reln: 8.07
+        Sst: 1.05
+        Tac1: 0.57
+        Slc17a8: 0.13
+        Vip: 0.5
+    - cluster_accession: CS20230722_CLUS_0726
+      n_cells: 1
+      expression:
+        Calb2: 0.25
+        Cck: 5.37
+        Chrna2: 0.1
+        Cnr1: 2.02
+        Gad1: 11.25
+        Gad2: 10.68
+        Id2: 10.62
+        Lamp5: 2.03
+        Chrm2: 0.15
+        Nos1: 8.77
+        Npy: 7.79
+        Pnoc: 7.92
+        Pvalb: 0.45
+        Reln: 9.02
+        Sst: 1.38
+        Tac1: 0.46
+        Slc17a8: 0.1
+        Vip: 0.92
+    - cluster_accession: CS20230722_CLUS_0727
+      n_cells: 1
+      expression:
+        Calb2: 0.62
+        Cck: 2.56
+        Chrna2: 0.0
+        Cnr1: 2.01
+        Gad1: 10.64
+        Gad2: 9.8
+        Id2: 6.75
+        Lamp5: 1.87
+        Chrm2: 0.27
+        Nos1: 6.01
+        Npy: 1.97
+        Pnoc: 6.42
+        Pvalb: 0.55
+        Reln: 7.03
+        Sst: 3.03
+        Tac1: 8.28
+        Slc17a8: 0.0
+        Vip: 0.31
+    - cluster_accession: CS20230722_CLUS_0728
+      n_cells: 1
+      expression:
+        Calb2: 0.8
+        Cck: 9.48
+        Chrna2: 0.43
+        Cnr1: 4.26
+        Gad1: 10.68
+        Gad2: 8.9
+        Id2: 9.45
+        Lamp5: 5.84
+        Chrm2: 4.65
+        Nos1: 5.62
+        Npy: 2.19
+        Pnoc: 3.56
+        Pvalb: 1.4
+        Reln: 6.42
+        Sst: 1.22
+        Tac1: 7.48
+        Slc17a8: 0.0
+        Vip: 1.15
+    - cluster_accession: CS20230722_CLUS_0729
+      n_cells: 1
+      expression:
+        Calb2: 0.29
+        Cck: 5.6
+        Chrna2: 0.17
+        Cnr1: 4.18
+        Gad1: 10.82
+        Gad2: 10.4
+        Id2: 9.97
+        Lamp5: 4.3
+        Chrm2: 0.36
+        Nos1: 7.57
+        Npy: 2.64
+        Pnoc: 6.6
+        Pvalb: 0.07
+        Reln: 8.8
+        Sst: 1.67
+        Tac1: 1.97
+        Slc17a8: 0.16
+        Vip: 1.05
+    - cluster_accession: CS20230722_CLUS_0730
+      n_cells: 1
+      expression:
+        Calb2: 0.0
+        Cck: 6.89
+        Chrna2: 0.0
+        Cnr1: 4.56
+        Gad1: 10.99
+        Gad2: 10.56
+        Id2: 10.44
+        Lamp5: 7.19
+        Chrm2: 3.24
+        Nos1: 8.44
+        Npy: 4.12
+        Pnoc: 5.2
+        Pvalb: 0.39
+        Reln: 7.24
+        Sst: 1.39
+        Tac1: 1.53
+        Slc17a8: 0.0
+        Vip: 0.66
+    - cluster_accession: CS20230722_CLUS_0731
+      n_cells: 1
+      expression:
+        Calb2: 0.31
+        Cck: 7.82
+        Chrna2: 1.89
+        Cnr1: 6.94
+        Gad1: 10.83
+        Gad2: 11.04
+        Id2: 8.92
+        Lamp5: 4.77
+        Chrm2: 0.75
+        Nos1: 8.55
+        Npy: 4.35
+        Pnoc: 6.71
+        Pvalb: 0.07
+        Reln: 3.14
+        Sst: 1.24
+        Tac1: 0.47
+        Slc17a8: 0.03
+        Vip: 0.41
 - id: CS20230722_SUPT_0204
   name: 0204 Pvalb chandelier Gaba_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_SUPT_0204
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: supertype
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 0.3
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 8.02
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 4.76
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 0.11
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 1.35
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 10.11
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 8.75
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 4.92
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 4.42
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 1.91
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 2.71
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 0.53
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 7.47
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 0.82
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.28
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 0.95
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 0.98
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 0.37
+    child_cluster_expression:
+    - cluster_accession: CS20230722_CLUS_0732
+      n_cells: 1
+      expression:
+        Calb2: 0.29
+        Cck: 8.36
+        Chrna2: 0.03
+        Cnr1: 2.22
+        Gad1: 10.05
+        Gad2: 8.81
+        Id2: 5.56
+        Lamp5: 6.97
+        Chrm2: 7.73
+        Nos1: 2.88
+        Npy: 4.07
+        Pnoc: 0.61
+        Pvalb: 8.56
+        Reln: 1.3
+        Sst: 0.97
+        Tac1: 1.47
+        Slc17a8: 0.57
+        Vip: 0.47
+    - cluster_accession: CS20230722_CLUS_0733
+      n_cells: 1
+      expression:
+        Calb2: 0.32
+        Cck: 7.68
+        Chrna2: 0.19
+        Cnr1: 0.47
+        Gad1: 10.16
+        Gad2: 8.68
+        Id2: 4.29
+        Lamp5: 1.86
+        Chrm2: 1.79
+        Nos1: 0.93
+        Npy: 1.35
+        Pnoc: 0.45
+        Pvalb: 6.38
+        Reln: 0.34
+        Sst: 0.94
+        Tac1: 0.5
+        Slc17a8: 0.0
+        Vip: 0.27
 - id: CS20230722_SUPT_0206
   name: 0206 Pvalb Gaba_2
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_SUPT_0206
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: supertype
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 0.7
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 5.4
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 4.52
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 0.47
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 1.93
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 10.34
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 9.28
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 3.11
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 3.18
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 3.64
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 2.87
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 0.63
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 8.74
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 1.18
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.09
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 2.72
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 5.36
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 0.43
+    child_cluster_expression:
+    - cluster_accession: CS20230722_CLUS_0737
+      n_cells: 1
+      expression:
+        Calb2: 0.83
+        Cck: 5.21
+        Chrna2: 0.2
+        Cnr1: 2.37
+        Gad1: 10.32
+        Gad2: 9.78
+        Id2: 1.62
+        Lamp5: 2.97
+        Chrm2: 5.9
+        Nos1: 2.08
+        Npy: 5.53
+        Pnoc: 0.95
+        Pvalb: 8.27
+        Reln: 2.3
+        Sst: 4.39
+        Tac1: 7.26
+        Slc17a8: 0.27
+        Vip: 0.52
+    - cluster_accession: CS20230722_CLUS_0738
+      n_cells: 1
+      expression:
+        Calb2: 0.89
+        Cck: 3.44
+        Chrna2: 0.79
+        Cnr1: 1.75
+        Gad1: 10.19
+        Gad2: 9.62
+        Id2: 4.28
+        Lamp5: 0.27
+        Chrm2: 0.7
+        Nos1: 6.75
+        Npy: 1.75
+        Pnoc: 0.63
+        Pvalb: 7.32
+        Reln: 0.45
+        Sst: 2.25
+        Tac1: 5.12
+        Slc17a8: 0.0
+        Vip: 0.45
+    - cluster_accession: CS20230722_CLUS_0739
+      n_cells: 1
+      expression:
+        Calb2: 0.39
+        Cck: 7.56
+        Chrna2: 0.43
+        Cnr1: 1.68
+        Gad1: 10.52
+        Gad2: 8.43
+        Id2: 3.43
+        Lamp5: 6.29
+        Chrm2: 6.96
+        Nos1: 2.08
+        Npy: 1.33
+        Pnoc: 0.32
+        Pvalb: 10.63
+        Reln: 0.8
+        Sst: 1.51
+        Tac1: 3.69
+        Slc17a8: 0.0
+        Vip: 0.33
 - id: CS20230722_SUPT_0216
   name: 0216 Sst Gaba_3
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_SUPT_0216
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: supertype
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 1.28
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 1.74
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 2.51
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 1.53
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 7.75
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 8.92
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 10.26
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 1.59
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 0.62
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 2.94
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 5.07
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 3.69
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 1.48
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 7.9
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.29
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 11.44
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 0.55
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 0.42
+    child_cluster_expression:
+    - cluster_accession: CS20230722_CLUS_0767
+      n_cells: 1
+      expression:
+        Calb2: 1.0
+        Cck: 0.86
+        Chrna2: 0.56
+        Cnr1: 6.14
+        Gad1: 8.95
+        Gad2: 9.5
+        Id2: 1.5
+        Lamp5: 0.41
+        Chrm2: 6.11
+        Nos1: 0.87
+        Npy: 4.2
+        Pnoc: 3.49
+        Pvalb: 4.38
+        Reln: 9.17
+        Sst: 10.78
+        Tac1: 0.8
+        Slc17a8: 1.94
+        Vip: 0.67
+    - cluster_accession: CS20230722_CLUS_0768
+      n_cells: 1
+      expression:
+        Calb2: 2.3
+        Cck: 1.42
+        Chrna2: 3.11
+        Cnr1: 6.91
+        Gad1: 9.11
+        Gad2: 10.74
+        Id2: 2.88
+        Lamp5: 0.41
+        Chrm2: 0.67
+        Nos1: 0.76
+        Npy: 7.58
+        Pnoc: 2.51
+        Pvalb: 3.12
+        Reln: 10.65
+        Sst: 12.7
+        Tac1: 0.15
+        Slc17a8: 0.0
+        Vip: 0.31
+    - cluster_accession: CS20230722_CLUS_0769
+      n_cells: 1
+      expression:
+        Calb2: 0.29
+        Cck: 2.11
+        Chrna2: 1.26
+        Cnr1: 8.16
+        Gad1: 9.32
+        Gad2: 10.4
+        Id2: 1.23
+        Lamp5: 1.12
+        Chrm2: 2.71
+        Nos1: 4.07
+        Npy: 7.91
+        Pnoc: 3.23
+        Pvalb: 0.17
+        Reln: 4.99
+        Sst: 10.97
+        Tac1: 0.85
+        Slc17a8: 0.08
+        Vip: 0.25
+    - cluster_accession: CS20230722_CLUS_0770
+      n_cells: 1
+      expression:
+        Calb2: 0.84
+        Cck: 1.48
+        Chrna2: 3.62
+        Cnr1: 9.22
+        Gad1: 8.29
+        Gad2: 10.42
+        Id2: 0.68
+        Lamp5: 0.46
+        Chrm2: 4.39
+        Nos1: 3.65
+        Npy: 1.04
+        Pnoc: 6.98
+        Pvalb: 0.0
+        Reln: 8.82
+        Sst: 10.54
+        Tac1: 0.05
+        Slc17a8: 0.05
+        Vip: 0.16
+    - cluster_accession: CS20230722_CLUS_0771
+      n_cells: 1
+      expression:
+        Calb2: 3.53
+        Cck: 1.97
+        Chrna2: 2.48
+        Cnr1: 8.73
+        Gad1: 8.69
+        Gad2: 10.24
+        Id2: 0.95
+        Lamp5: 0.15
+        Chrm2: 2.0
+        Nos1: 1.67
+        Npy: 2.02
+        Pnoc: 3.72
+        Pvalb: 1.16
+        Reln: 9.59
+        Sst: 11.62
+        Tac1: 0.08
+        Slc17a8: 0.08
+        Vip: 0.87
+    - cluster_accession: CS20230722_CLUS_0772
+      n_cells: 1
+      expression:
+        Calb2: 0.81
+        Cck: 1.96
+        Chrna2: 0.53
+        Cnr1: 7.21
+        Gad1: 9.27
+        Gad2: 10.26
+        Id2: 0.91
+        Lamp5: 0.81
+        Chrm2: 1.34
+        Nos1: 1.09
+        Npy: 8.22
+        Pnoc: 1.65
+        Pvalb: 0.34
+        Reln: 10.13
+        Sst: 11.92
+        Tac1: 0.14
+        Slc17a8: 0.37
+        Vip: 0.35
+    - cluster_accession: CS20230722_CLUS_0773
+      n_cells: 1
+      expression:
+        Calb2: 1.21
+        Cck: 1.59
+        Chrna2: 0.28
+        Cnr1: 8.36
+        Gad1: 8.56
+        Gad2: 10.42
+        Id2: 0.53
+        Lamp5: 0.95
+        Chrm2: 0.73
+        Nos1: 3.61
+        Npy: 1.61
+        Pnoc: 4.4
+        Pvalb: 0.36
+        Reln: 9.24
+        Sst: 11.43
+        Tac1: 0.0
+        Slc17a8: 0.0
+        Vip: 0.27
+    - cluster_accession: CS20230722_CLUS_0774
+      n_cells: 1
+      expression:
+        Calb2: 0.88
+        Cck: 2.57
+        Chrna2: 1.01
+        Cnr1: 6.94
+        Gad1: 9.78
+        Gad2: 10.38
+        Id2: 2.1
+        Lamp5: 0.86
+        Chrm2: 2.45
+        Nos1: 5.1
+        Npy: 10.88
+        Pnoc: 0.0
+        Pvalb: 1.39
+        Reln: 4.92
+        Sst: 12.11
+        Tac1: 2.65
+        Slc17a8: 0.11
+        Vip: 0.23
+    - cluster_accession: CS20230722_CLUS_0775
+      n_cells: 1
+      expression:
+        Calb2: 0.65
+        Cck: 1.7
+        Chrna2: 0.91
+        Cnr1: 8.04
+        Gad1: 8.34
+        Gad2: 10.0
+        Id2: 3.54
+        Lamp5: 0.45
+        Chrm2: 2.17
+        Nos1: 5.65
+        Npy: 2.18
+        Pnoc: 7.2
+        Pvalb: 2.39
+        Reln: 3.6
+        Sst: 10.86
+        Tac1: 0.25
+        Slc17a8: 0.0
+        Vip: 0.67
 - id: CS20230722_SUPT_0219
   name: 0219 Sst Gaba_6
   definition_basis: ATLAS_TRANSCRIPTOMIC
   taxonomy_id: CCN20230722
   cell_set_accession: CS20230722_SUPT_0219
+  precomputed_expression:
+    source: precomputed_stats_ABC_revision_230821.h5
+    level: supertype
+    genes:
+    - symbol: Calb2
+      ensembl_id: ENSMUSG00000003657
+      mean_expression: 0.23
+    - symbol: Cck
+      ensembl_id: ENSMUSG00000032532
+      mean_expression: 1.48
+    - symbol: Chrm2
+      ensembl_id: ENSMUSG00000045613
+      mean_expression: 3.08
+    - symbol: Chrna2
+      ensembl_id: ENSMUSG00000027577
+      mean_expression: 0.52
+    - symbol: Cnr1
+      ensembl_id: ENSMUSG00000044288
+      mean_expression: 3.04
+    - symbol: Gad1
+      ensembl_id: ENSMUSG00000070880
+      mean_expression: 9.73
+    - symbol: Gad2
+      ensembl_id: ENSMUSG00000026787
+      mean_expression: 9.96
+    - symbol: Id2
+      ensembl_id: ENSMUSG00000020644
+      mean_expression: 3.92
+    - symbol: Lamp5
+      ensembl_id: ENSMUSG00000025810
+      mean_expression: 2.04
+    - symbol: Nos1
+      ensembl_id: ENSMUSG00000029361
+      mean_expression: 1.81
+    - symbol: Npy
+      ensembl_id: ENSMUSG00000029819
+      mean_expression: 7.18
+    - symbol: Pnoc
+      ensembl_id: ENSMUSG00000045731
+      mean_expression: 4.18
+    - symbol: Pvalb
+      ensembl_id: ENSMUSG00000005716
+      mean_expression: 1.68
+    - symbol: Reln
+      ensembl_id: ENSMUSG00000042453
+      mean_expression: 6.46
+    - symbol: Slc17a8
+      ensembl_id: ENSMUSG00000019935
+      mean_expression: 0.78
+    - symbol: Sst
+      ensembl_id: ENSMUSG00000004366
+      mean_expression: 10.17
+    - symbol: Tac1
+      ensembl_id: ENSMUSG00000061762
+      mean_expression: 2.43
+    - symbol: Vip
+      ensembl_id: ENSMUSG00000019772
+      mean_expression: 0.44
+    child_cluster_expression:
+    - cluster_accession: CS20230722_CLUS_0785
+      n_cells: 1
+      expression:
+        Calb2: 0.13
+        Cck: 1.54
+        Chrna2: 0.17
+        Cnr1: 0.84
+        Gad1: 8.99
+        Gad2: 10.25
+        Id2: 3.5
+        Lamp5: 1.34
+        Chrm2: 0.0
+        Nos1: 2.6
+        Npy: 7.54
+        Pnoc: 0.3
+        Pvalb: 0.3
+        Reln: 10.47
+        Sst: 10.99
+        Tac1: 0.0
+        Slc17a8: 0.0
+        Vip: 0.28
+    - cluster_accession: CS20230722_CLUS_0786
+      n_cells: 1
+      expression:
+        Calb2: 0.16
+        Cck: 1.15
+        Chrna2: 0.52
+        Cnr1: 2.84
+        Gad1: 9.3
+        Gad2: 9.91
+        Id2: 2.53
+        Lamp5: 0.2
+        Chrm2: 0.72
+        Nos1: 1.29
+        Npy: 8.02
+        Pnoc: 2.19
+        Pvalb: 0.19
+        Reln: 7.85
+        Sst: 11.23
+        Tac1: 0.4
+        Slc17a8: 0.08
+        Vip: 0.44
+    - cluster_accession: CS20230722_CLUS_0787
+      n_cells: 1
+      expression:
+        Calb2: 0.0
+        Cck: 1.83
+        Chrna2: 0.11
+        Cnr1: 4.68
+        Gad1: 9.59
+        Gad2: 9.81
+        Id2: 5.87
+        Lamp5: 5.21
+        Chrm2: 4.21
+        Nos1: 3.13
+        Npy: 2.51
+        Pnoc: 5.31
+        Pvalb: 0.73
+        Reln: 7.46
+        Sst: 9.05
+        Tac1: 0.14
+        Slc17a8: 1.28
+        Vip: 0.5
+    - cluster_accession: CS20230722_CLUS_0788
+      n_cells: 1
+      expression:
+        Calb2: 0.83
+        Cck: 1.54
+        Chrna2: 0.8
+        Cnr1: 4.31
+        Gad1: 9.72
+        Gad2: 10.5
+        Id2: 3.99
+        Lamp5: 0.56
+        Chrm2: 3.08
+        Nos1: 1.1
+        Npy: 7.66
+        Pnoc: 6.16
+        Pvalb: 1.38
+        Reln: 8.94
+        Sst: 10.5
+        Tac1: 1.68
+        Slc17a8: 0.44
+        Vip: 0.47
+    - cluster_accession: CS20230722_CLUS_0789
+      n_cells: 1
+      expression:
+        Calb2: 0.28
+        Cck: 0.97
+        Chrna2: 0.25
+        Cnr1: 2.01
+        Gad1: 10.01
+        Gad2: 9.76
+        Id2: 3.02
+        Lamp5: 0.89
+        Chrm2: 3.55
+        Nos1: 0.93
+        Npy: 8.44
+        Pnoc: 3.5
+        Pvalb: 0.3
+        Reln: 4.14
+        Sst: 11.07
+        Tac1: 2.08
+        Slc17a8: 0.18
+        Vip: 0.46
+    - cluster_accession: CS20230722_CLUS_0790
+      n_cells: 1
+      expression:
+        Calb2: 0.0
+        Cck: 1.41
+        Chrna2: 0.32
+        Cnr1: 1.21
+        Gad1: 10.55
+        Gad2: 9.69
+        Id2: 4.75
+        Lamp5: 3.83
+        Chrm2: 5.23
+        Nos1: 2.56
+        Npy: 7.52
+        Pnoc: 6.03
+        Pvalb: 3.38
+        Reln: 1.44
+        Sst: 10.7
+        Tac1: 4.43
+        Slc17a8: 1.43
+        Vip: 0.36
+    - cluster_accession: CS20230722_CLUS_0791
+      n_cells: 1
+      expression:
+        Calb2: 0.18
+        Cck: 1.89
+        Chrna2: 1.49
+        Cnr1: 5.36
+        Gad1: 9.93
+        Gad2: 9.77
+        Id2: 3.75
+        Lamp5: 2.24
+        Chrm2: 4.79
+        Nos1: 1.06
+        Npy: 8.6
+        Pnoc: 5.77
+        Pvalb: 5.48
+        Reln: 4.93
+        Sst: 7.68
+        Tac1: 8.27
+        Slc17a8: 2.05
+        Vip: 0.6
 edges:
 - id: edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206
   type_a: pv_basket_cell_hippocampus
@@ -1724,20 +3019,21 @@ edges:
       '
   - property: marker_Pvalb
     node_a_value: Pvalb — defining marker (immunohistochemistry, rat and mouse)
-    node_b_value: Pvalb subclass; Pvalb in MERFISH marker set of child cluster 0739
+    node_b_value: 'Pvalb subclass; Pvalb in MERFISH marker set of child cluster 0739; precomputed stats mean: 8.74'
     alignment: CONSISTENT
   - property: marker_Gad1
     node_a_value: Gad1 — defining marker
-    node_b_value: not present in supertype defining_markers; GABA nt_type consistent
+    node_b_value: 'not present in supertype defining_markers; GABA nt_type consistent; precomputed stats mean: 10.34'
     alignment: APPROXIMATE
   - property: marker_Gad2
     node_a_value: Gad2 — defining marker
-    node_b_value: not present in supertype defining_markers; GABA nt_type consistent
+    node_b_value: 'not present in supertype defining_markers; GABA nt_type consistent; precomputed stats mean: 9.28'
     alignment: APPROXIMATE
   - property: negative_marker_Cnr1
     node_a_value: Cnr1 — negative marker (absent)
-    node_b_value: not present in supertype markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in supertype markers; precomputed stats mean: 1.93'
+    alignment: CONSISTENT
+    notes: Cnr1 low/absent (1.93) in atlas type.
   caveats:
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
     description: 'Supertype spans hippocampus (CA1 SO, CA3 SO) and piriform area; not hippocampus-specific. Multiple PV+ morphological
@@ -1777,23 +3073,24 @@ edges:
     notes: Small CA1 pyramidal layer count; main hippocampal signal in SO.
   - property: marker_Pvalb
     node_a_value: Pvalb — defining marker
-    node_b_value: Pvalb in MERFISH markers
+    node_b_value: 'Pvalb in MERFISH markers; precomputed stats mean: 10.63'
     alignment: CONSISTENT
   - property: marker_Gad1
     node_a_value: Gad1 — defining marker
-    node_b_value: not in cluster defining_markers; GABA NT consistent
+    node_b_value: 'not in cluster defining_markers; GABA NT consistent; precomputed stats mean: 10.52'
     alignment: APPROXIMATE
   - property: marker_Gad2
     node_a_value: Gad2 — defining marker
-    node_b_value: not in cluster defining_markers; GABA NT consistent
+    node_b_value: 'not in cluster defining_markers; GABA NT consistent; precomputed stats mean: 8.43'
     alignment: APPROXIMATE
   - property: negative_marker_Cnr1
     node_a_value: Cnr1 — negative marker (absent)
-    node_b_value: not present in cluster markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in cluster markers; precomputed stats mean: 1.68'
+    alignment: CONSISTENT
+    notes: Cnr1 low/absent (1.68) in atlas type.
   - property: neuropeptide_Cck
     node_a_value: Cck not expected (Cnr1-negative PV cells)
-    node_b_value: Cck present (expression score 7.6)
+    node_b_value: 'Cck present (expression score 7.6); precomputed stats mean: 7.56'
     alignment: DISCORDANT
     notes: 'High Cck neuropeptide score is unexpected for a PV basket cell, which should be Cnr1/CB1R-negative. Could indicate
       cluster contains CCK-co-expressing PV cells, or that cluster boundaries do not align cleanly to classical types.
@@ -1838,21 +3135,21 @@ edges:
     notes: Perisomatic locations present but sparse. Supertype has distributed hippocampal signal.
   - property: marker_Cck
     node_a_value: Cck — defining marker
-    node_b_value: not present in supertype defining_markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in supertype defining_markers; precomputed stats mean: 1.36'
+    alignment: APPROXIMATE
     notes: Cck not listed in supertype markers; cannot confirm from metadata alone.
   - property: marker_Cnr1
     node_a_value: Cnr1 — defining marker
-    node_b_value: not present in supertype defining_markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in supertype defining_markers; precomputed stats mean: 10.58'
+    alignment: CONSISTENT
     notes: Cnr1/CB1R not present in atlas supertype metadata; key CCK basket marker unverifiable.
   - property: marker_Vglut3
     node_a_value: Vglut3 — defining marker (CCK basket cells)
-    node_b_value: not present in supertype defining_markers
+    node_b_value: 'not present in supertype defining_markers; precomputed stats mean: 0.42'
     alignment: NOT_ASSESSED
   - property: negative_marker_Pvalb
     node_a_value: Pvalb — negative marker (absent)
-    node_b_value: not present in supertype markers; Vip subclass
+    node_b_value: 'not present in supertype markers; Vip subclass; precomputed stats mean: 0.09'
     alignment: CONSISTENT
     notes: Absence of Pvalb consistent with CCK basket cell identity; Vip subclass is non-PV.
   caveats:
@@ -1902,7 +3199,7 @@ edges:
       '
   - property: marker_Pvalb
     node_a_value: Pvalb — defining marker
-    node_b_value: Pvalb in DEFINING_SCOPED markers; Pvalb subclass
+    node_b_value: 'Pvalb in DEFINING_SCOPED markers; Pvalb subclass; precomputed stats mean: 7.47'
     alignment: CONSISTENT
   - property: type_identity
     node_a_value: axo-axonic (chandelier) morphology — exclusive AIS targeting
@@ -1950,7 +3247,7 @@ edges:
       '
   - property: marker_Pvalb
     node_a_value: Pvalb — defining marker
-    node_b_value: Pvalb in MERFISH markers; Pvalb chandelier subclass
+    node_b_value: 'Pvalb in MERFISH markers; Pvalb chandelier subclass; precomputed stats mean: 8.56'
     alignment: CONSISTENT
   - property: type_identity
     node_a_value: axo-axonic (chandelier) morphology — exclusive AIS targeting
@@ -1996,7 +3293,7 @@ edges:
     notes: Dominant hippocampal signal in CA1 SO, not pyramidale. Bistratified cell soma classically in/near stratum pyramidale.
   - property: marker_Pvalb
     node_a_value: Pvalb — defining marker (co-expressed with Sst)
-    node_b_value: Sst subclass, not Pvalb; Pvalb not in supertype markers
+    node_b_value: 'Sst subclass, not Pvalb; Pvalb not in supertype markers; precomputed stats mean: 1.48'
     alignment: DISCORDANT
     notes: 'Bistratified cells co-express Pvalb and Sst (PMID:37467748). The Sst subclass placement is consistent with the
       Sst component but the Pvalb component is not captured. High transcriptomic similarity within Sst subclass may place
@@ -2005,16 +3302,16 @@ edges:
       '
   - property: marker_Sst
     node_a_value: Sst — defining marker
-    node_b_value: Sst subclass
+    node_b_value: 'Sst subclass; precomputed stats mean: 11.44'
     alignment: CONSISTENT
   - property: marker_Tac1
     node_a_value: Tac1 — defining marker (Sst;;Tac1 intersection targets bistratified cells)
-    node_b_value: Tac1 in DEFINING_SCOPED markers
+    node_b_value: 'Tac1 in DEFINING_SCOPED markers; precomputed stats mean: 0.55'
     alignment: CONSISTENT
     notes: Tac1 DEFINING_SCOPED in this supertype is directly consistent with bistratified cell identity.
   - property: neuropeptide_Sst
     node_a_value: Sst — neuropeptide
-    node_b_value: Sst subclass defining
+    node_b_value: 'Sst subclass defining; precomputed stats mean: 11.44'
     alignment: CONSISTENT
   caveats:
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -2055,11 +3352,12 @@ edges:
     alignment: CONSISTENT
   - property: marker_Sst
     node_a_value: Sst — defining marker
-    node_b_value: Sst subclass
+    node_b_value: 'Sst subclass; precomputed stats mean: 11.44'
     alignment: CONSISTENT
   - property: marker_Chrna2
     node_a_value: Chrna2 — defining marker
-    node_b_value: not in supertype defining_markers; scattered expression in Sst Gaba_3 per ABC Atlas
+    node_b_value: 'not in supertype defining_markers; scattered expression in Sst Gaba_3 per ABC Atlas; precomputed stats
+      mean: 1.53'
     alignment: APPROXIMATE
     notes: 'ABC Atlas HPF/GABA/Chrna2 filter retains Sst Gaba_3 (unlike Sst Gaba_6). Chrna2 expression is present but scattered
       across clusters within this supertype — consistent with partial OLM cell representation.
@@ -2067,16 +3365,16 @@ edges:
       '
   - property: marker_Reln
     node_a_value: Reln — defining marker (RT-PCR in OLM cells, PMID:31420995)
-    node_b_value: Reln in DEFINING markers of supertype
+    node_b_value: 'Reln in DEFINING markers of supertype; precomputed stats mean: 7.9'
     alignment: CONSISTENT
     notes: Reln as a defining supertype marker is consistent with OLM Reln expression.
   - property: neuropeptide_Sst
     node_a_value: Sst — neuropeptide
-    node_b_value: Sst subclass defining
+    node_b_value: 'Sst subclass defining; precomputed stats mean: 11.44'
     alignment: CONSISTENT
   - property: negative_marker_Pvalb
     node_a_value: Pvalb — low/absent
-    node_b_value: Sst subclass (not Pvalb subclass)
+    node_b_value: 'Sst subclass (not Pvalb subclass); precomputed stats mean: 1.48'
     alignment: CONSISTENT
   caveats:
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -2118,15 +3416,15 @@ edges:
     alignment: CONSISTENT
   - property: marker_Sst
     node_a_value: Sst — defining marker (IHC, mouse hippocampus)
-    node_b_value: Sst Gaba subclass — Sst is subclass-level marker
+    node_b_value: 'Sst Gaba subclass — Sst is subclass-level marker; precomputed stats mean: 11.44'
     alignment: CONSISTENT
   - property: neuropeptide_Sst
     node_a_value: Sst neuropeptide present
-    node_b_value: not present in supertype neuropeptide list (not assessed at this level)
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in supertype neuropeptide list (not assessed at this level); precomputed stats mean: 11.44'
+    alignment: CONSISTENT
   - property: marker_Reln
     node_a_value: not listed — not a HS defining marker
-    node_b_value: Reln — DEFINING marker of SUPT_0216
+    node_b_value: 'Reln — DEFINING marker of SUPT_0216; precomputed stats mean: 7.9'
     alignment: DISCORDANT
     notes: 'Reln is a known OLM marker (Chrna2::Reln coexpression confirmed). Its presence as a defining marker of this supertype
       is consistent with OLM but not expected for HS cells. May indicate SUPT_0216 predominantly captures OLM-like cells.
@@ -2186,7 +3484,7 @@ edges:
       '
   - property: marker_Nos1
     node_a_value: Nos1 (nNOS) — defining marker (IHC, mouse hippocampus)
-    node_b_value: not present in SUPT_0193 markers
+    node_b_value: 'not present in SUPT_0193 markers; precomputed stats mean: 2.26'
     alignment: DISCORDANT
     notes: 'Classical NGC node uses Nos1 as a defining marker, but this reflects the MGE-derived nNOS+ NGC majority. CGE-derived
       NGCs (the lineage represented here) are nNOS-. The discordance is lineage-specific, not a global mismatch.
@@ -2194,7 +3492,7 @@ edges:
       '
   - property: marker_Lamp5
     node_a_value: Lamp5 — defining marker (transcript, hippocampus)
-    node_b_value: not listed in SUPT_0193 markers
+    node_b_value: 'not listed in SUPT_0193 markers; precomputed stats mean: 3.65'
     alignment: DISCORDANT
     notes: 'Lamp5 is listed as DEFINING_SCOPED in SUPT_0203 (MGE Lamp5 Lhx6), not in this Ndnf CGE supertype. However, NGFC.C
       annotation is Lhx6-/Lamp5+/Id2+/Ndnf+ — Lamp5 and Ndnf coexpression expected in this lineage.
@@ -2202,20 +3500,21 @@ edges:
       '
   - property: marker_Npy
     node_a_value: Npy — defining marker (IHC, mouse hippocampus)
-    node_b_value: not present in SUPT_0193 markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in SUPT_0193 markers; precomputed stats mean: 2.61'
+    alignment: CONSISTENT
   - property: negative_marker_Sst
     node_a_value: Sst — negative marker
-    node_b_value: Sst not in SUPT_0193 markers
+    node_b_value: 'Sst not in SUPT_0193 markers; precomputed stats mean: 1.51'
     alignment: CONSISTENT
   - property: negative_marker_Pvalb
     node_a_value: Pvalb — negative marker
-    node_b_value: Pvalb not in SUPT_0193 markers
+    node_b_value: 'Pvalb not in SUPT_0193 markers; precomputed stats mean: 0.27'
     alignment: CONSISTENT
   - property: negative_marker_Calb2
     node_a_value: Calb2 — negative marker
-    node_b_value: not assessed from metadata
-    alignment: NOT_ASSESSED
+    node_b_value: 'not assessed from metadata; precomputed stats mean: 0.31'
+    alignment: CONSISTENT
+    notes: Calb2 low/absent (0.31) in atlas type.
   caveats:
   - caveat_type: OTHER
     description: 'SUPT_0193 subclass is RHP-COA Ndnf Gaba, which spans retrohippocampal and cortical amygdala regions in addition
@@ -2259,31 +3558,31 @@ edges:
       '
   - property: marker_Lamp5
     node_a_value: Lamp5 — defining marker (transcript)
-    node_b_value: Lamp5 — DEFINING_SCOPED marker of SUPT_0203
+    node_b_value: 'Lamp5 — DEFINING_SCOPED marker of SUPT_0203; precomputed stats mean: 4.4'
     alignment: CONSISTENT
   - property: marker_Nos1
     node_a_value: Nos1 (nNOS) — defining marker (IHC)
-    node_b_value: not present in SUPT_0203 markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in SUPT_0203 markers; precomputed stats mean: 7.79'
+    alignment: CONSISTENT
     notes: 'MGE-derived nNOS+ NGCs (NGFC.M) should express Nos1. Its absence from the atlas supertype defining markers is
       unexpected and may indicate this supertype does not correspond to the nNOS+ NGC population.
 
       '
   - property: marker_Id2
     node_a_value: Id2 — defining marker (transcript)
-    node_b_value: not present in SUPT_0203 markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in SUPT_0203 markers; precomputed stats mean: 9.35'
+    alignment: CONSISTENT
   - property: marker_Npy
     node_a_value: Npy — defining marker (IHC)
-    node_b_value: not present in SUPT_0203 markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in SUPT_0203 markers; precomputed stats mean: 4.62'
+    alignment: CONSISTENT
   - property: negative_marker_Sst
     node_a_value: Sst — negative marker
-    node_b_value: Sst not listed in SUPT_0203 markers
+    node_b_value: 'Sst not listed in SUPT_0203 markers; precomputed stats mean: 1.52'
     alignment: CONSISTENT
   - property: negative_marker_Pvalb
     node_a_value: Pvalb — negative marker
-    node_b_value: Pvalb not listed in SUPT_0203 markers
+    node_b_value: 'Pvalb not listed in SUPT_0203 markers; precomputed stats mean: 0.43'
     alignment: CONSISTENT
   caveats:
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -2327,36 +3626,37 @@ edges:
       '
   - property: marker_Lamp5
     node_a_value: Lamp5 — defining marker (transcript)
-    node_b_value: Lamp5 — DEFINING_SCOPED marker of SUPT_0203
+    node_b_value: 'Lamp5 — DEFINING_SCOPED marker of SUPT_0203; precomputed stats mean: 4.4'
     alignment: CONSISTENT
   - property: marker_Nos1
     node_a_value: Nos1 (nNOS) — defining marker (IHC and transcript)
-    node_b_value: not present in SUPT_0203 markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in SUPT_0203 markers; precomputed stats mean: 7.79'
+    alignment: CONSISTENT
     notes: 'Nos1 expected for Ivy cells (Bhatt 2023: Grin3a expressed in both IvyC Lamp5+/Lhx6+ and NGC.M subsets). Absence
       from atlas markers does not rule out expression — may not be a defining marker at this resolution.
 
       '
   - property: marker_Npy
     node_a_value: Npy — defining marker (IHC)
-    node_b_value: not present in SUPT_0203 markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in SUPT_0203 markers; precomputed stats mean: 4.62'
+    alignment: CONSISTENT
   - property: neuropeptide_Npy
     node_a_value: Npy neuropeptide present
-    node_b_value: not present in supertype neuropeptide list
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in supertype neuropeptide list; precomputed stats mean: 4.62'
+    alignment: CONSISTENT
   - property: negative_marker_Sst
     node_a_value: Sst — negative marker
-    node_b_value: Sst not listed in SUPT_0203 markers
+    node_b_value: 'Sst not listed in SUPT_0203 markers; precomputed stats mean: 1.52'
     alignment: CONSISTENT
   - property: negative_marker_Pvalb
     node_a_value: Pvalb — negative marker
-    node_b_value: Pvalb not listed in SUPT_0203 markers
+    node_b_value: 'Pvalb not listed in SUPT_0203 markers; precomputed stats mean: 0.43'
     alignment: CONSISTENT
   - property: negative_marker_Calb2
     node_a_value: Calb2 — negative marker
-    node_b_value: not assessed from metadata
-    alignment: NOT_ASSESSED
+    node_b_value: 'not assessed from metadata; precomputed stats mean: 0.37'
+    alignment: CONSISTENT
+    notes: Calb2 low/absent (0.37) in atlas type.
   caveats:
   - caveat_type: OTHER
     description: 'Ivy cells and nNOS+ NGCs (NGFC.M) are reported to share completely overlapping developmental, electrophysiological,
@@ -2409,20 +3709,20 @@ edges:
     notes: SLM is listed in the classical node but not a top-count location in this supertype.
   - property: marker_Vip
     node_a_value: Vip — defining marker (IHC/transgenic, hippocampus)
-    node_b_value: Vip — DEFINING marker of SUPT_0179
+    node_b_value: 'Vip — DEFINING marker of SUPT_0179; precomputed stats mean: 6.82'
     alignment: CONSISTENT
   - property: marker_Calb2
     node_a_value: Calb2 (calretinin) — defining marker (IHC, hippocampus)
-    node_b_value: not present in SUPT_0179 markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in SUPT_0179 markers; precomputed stats mean: 6.78'
+    alignment: CONSISTENT
     notes: 'IS-1 and IS-3 subtypes express calretinin (Calb2). Absence from atlas defining markers does not rule out expression
       — may not be a defining marker at supertype resolution.
 
       '
   - property: neuropeptide_Vip
     node_a_value: Vip neuropeptide present
-    node_b_value: not assessed from supertype metadata
-    alignment: NOT_ASSESSED
+    node_b_value: 'not assessed from supertype metadata; precomputed stats mean: 6.82'
+    alignment: CONSISTENT
   caveats:
   - caveat_type: OTHER
     description: 'The classical IS interneuron node is heterogeneous (IS-1/2/3 subtypes). IS-1 cells are VIP-negative (CR+
@@ -2468,12 +3768,12 @@ edges:
       '
   - property: marker_Sst
     node_a_value: Sst — defining marker
-    node_b_value: Sst — DEFINING marker of SUPT_0219 (via Sst Gaba subclass)
+    node_b_value: 'Sst — DEFINING marker of SUPT_0219 (via Sst Gaba subclass); precomputed stats mean: 10.17'
     alignment: CONSISTENT
   - property: marker_Nos1
     node_a_value: Nos1 — defining marker (intersectional genetics, Sst;;Nos1 strategy)
-    node_b_value: not listed in SUPT_0219 markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not listed in SUPT_0219 markers; precomputed stats mean: 1.81'
+    alignment: APPROXIMATE
     notes: 'Nos1 is critical for the Sst;;Nos1 intersectional identification of O-O cells. Its absence from atlas defining
       markers does not confirm absence of expression — may reflect different marker selection criteria.
 
@@ -2529,16 +3829,16 @@ edges:
     alignment: CONSISTENT
   - property: marker_Pvalb
     node_a_value: Pvalb — defining marker
-    node_b_value: Pvalb Gaba subclass (Pvalb implicit)
+    node_b_value: 'Pvalb Gaba subclass (Pvalb implicit); precomputed stats mean: 8.74'
     alignment: CONSISTENT
   - property: marker_M2R
     node_a_value: M2R (Chrm2) — defining marker
-    node_b_value: not present in supertype defining markers
-    alignment: NOT_ASSESSED
+    node_b_value: 'not present in supertype defining markers; precomputed stats mean: 4.52'
+    alignment: CONSISTENT
     notes: Chrm2 not represented in SUPT_0206 marker list; cannot confirm or exclude.
   - property: negative_marker_Sst
     node_a_value: Sst — negative marker
-    node_b_value: Sst absent from Pvalb Gaba_2 defining markers
+    node_b_value: 'Sst absent from Pvalb Gaba_2 defining markers; precomputed stats mean: 2.72'
     alignment: CONSISTENT
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
@@ -2589,7 +3889,7 @@ edges:
       '
   - property: marker_Vip
     node_a_value: Vip — defining marker
-    node_b_value: Vip — DEFINING marker in SUPT_0179
+    node_b_value: 'Vip — DEFINING marker in SUPT_0179; precomputed stats mean: 6.82'
     alignment: CONSISTENT
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
@@ -2632,7 +3932,8 @@ edges:
     alignment: CONSISTENT
   - property: marker_Sst
     node_a_value: Sst — defining marker
-    node_b_value: Sst Gaba subclass (Sst implicit); Reln, Rbp4, Npffr1 are scoped defining markers
+    node_b_value: 'Sst Gaba subclass (Sst implicit); Reln, Rbp4, Npffr1 are scoped defining markers; precomputed stats mean:
+      11.44'
     alignment: CONSISTENT
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
@@ -2681,7 +3982,7 @@ edges:
       '
   - property: marker_Sst
     node_a_value: Sst — defining marker
-    node_b_value: Sst — DEFINING marker in SUPT_0219
+    node_b_value: 'Sst — DEFINING marker in SUPT_0219; precomputed stats mean: 10.17'
     alignment: CONSISTENT
   caveats:
   - caveat_type: DISCORDANT_ANATOMY
@@ -2731,7 +4032,7 @@ edges:
       '
   - property: marker_Sst
     node_a_value: Sst — defining marker (SST-Cre labelling)
-    node_b_value: Sst — DEFINING marker in SUPT_0219
+    node_b_value: 'Sst — DEFINING marker in SUPT_0219; precomputed stats mean: 10.17'
     alignment: CONSISTENT
   caveats:
   - caveat_type: ELECTROPHYSIOLOGY_ONLY_DEFINITION
