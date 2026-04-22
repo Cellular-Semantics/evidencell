@@ -230,7 +230,7 @@ def _run_local(
     precomputed_stats: Path | None,
     marker_genes: Path | None,
 ) -> MappingResult:
-    from annotation_transfer.mapper_local import run_mapmycells, extract_csv_from_json
+    from annotation_transfer.mapper_local import run_mapmycells
 
     stats = Path(precomputed_stats) if precomputed_stats else None
     markers = Path(marker_genes) if marker_genes else None

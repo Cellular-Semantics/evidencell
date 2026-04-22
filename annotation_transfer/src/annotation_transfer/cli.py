@@ -14,7 +14,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 
@@ -159,7 +158,7 @@ def cmd_taxonomy_setup(args: argparse.Namespace) -> None:
     if args.download:
         from annotation_transfer.taxonomies import download_taxonomy_files, resource_check_for_download
         report = resource_check_for_download(spec)
-        print(f"\nResource check:")
+        print("\nResource check:")
         print(f"  Available RAM:  {report['available_ram_gb']} GB")
         print(f"  Available disk: {report['available_disk_gb']} GB")
         print(f"  Recommendation: {report['recommendation']}")

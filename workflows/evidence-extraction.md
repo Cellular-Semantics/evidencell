@@ -1,14 +1,18 @@
 # Evidence Extraction Orchestrator
 
-You are an evidence extraction coordinator. You take the output of
-`workflows/cite-traverse.md` or `workflows/asta-report-ingest.md`
-(`all_summaries.json` + `paper_catalogue.json`) and extract schema-compliant
-evidence items for human review. You delegate to focused subagents with
-**exact prompts** — you never extract or judge evidence directly.
+You are an evidence extraction coordinator. You take `all_summaries.json` produced
+by a survey or asta-report-ingest run and write `PropertySource` entries directly to
+KB nodes. The extraction subagent writes quotes to `references.json` and
+`PropertySource` entries (with `quote_key`) to KB YAML.
 
-Entry point: run after reviewing `report.md` from cite-traverse, or after
-reviewing the draft KB from asta-report-ingest (for supplementing asta_report
-evidence with verified primary literature items).
+The pre-edit hook is the structural validation gate — it verifies every `quote_key`
+exists in `references.json` before the KB write proceeds.
+
+Called after: `workflows/asta-report-ingest.md` or `workflows/survey.md`
+
+**Paper selection gate (Step 1):** Optional — only invoke for noisy corpora (cite-traverse,
+lit-review). Skip for ASTA survey runs: ASTA papers are pre-curated and the extraction
+subagent handles relevance filtering internally.
 
 ---
 
@@ -16,259 +20,303 @@ evidence with verified primary literature items).
 
 ```
 PARAMS:
-  node_id: ""              # required — evidencell node ID to extract evidence for
-  region: ""               # required — brain region slug
-  summaries_file: ""       # required — path to all_summaries.json
-  catalogue_file: ""       # required — path to paper_catalogue.json
-  kb_file: ""              # required — path to target KB YAML in kb/draft/{region}/
-  model: "sonnet"          # auto-flagging subagent
-  thinking_model: "opus"   # extraction subagent
+  node_id:         ""   # required — evidencell node ID
+  summaries_file:  ""   # required — path to all_summaries.json
+  output_dir:      ""   # required — for manifest and exclusion log
+  model:           "opus"   # judgement-heavy; use thinking model
 ```
 
 ---
 
-## Step 0: Auto-flagging subagent
+## Step 0: Build node context
 
-Spawn a **single subagent** to scan summaries for species/context flags.
+1. Locate the KB file for this node:
+   ```
+   uv run python -c "from evidencell.paths import find_node_file; print(find_node_file('{node_id}'))"
+   ```
+   Store the result as `KB_FILE`.
+
+2. Read `KB_FILE`. Extract for `{node_id}`:
+   - `name`
+   - `definition_basis`
+   - `defining_markers` (gene symbols)
+   - `anatomical_location` (labels)
+   - `nt_type.name_in_source`
+   - All `ref` values already present in any `PropertySource` list on this node
+     (to avoid duplicating evidence already in the KB)
+
+3. Locate `paper_catalogue.json`: check the same directory as `{summaries_file}`.
+   If present, read it — it provides paper metadata (title, year, authors, PMID, DOI)
+   used when writing new entries to `references.json`.
+
+4. Locate `references.json` for this node's region:
+   ```
+   uv run python -c "
+   from evidencell.paths import find_node_file, refs_path_for_graph
+   print(refs_path_for_graph(find_node_file('{node_id}')))
+   "
+   ```
+   Store as `REFS_FILE`.
+
+Build `NODE_CONTEXT`:
+```
+Node:            {name} ({node_id})
+Definition:      {definition_basis}
+Markers:         {symbols or "none recorded"}
+Location:        {locations or "none recorded"}
+NT type:         {nt_type or "unknown"}
+Existing refs:   {list of ref values already on this node, or "none"}
+```
+
+---
+
+## Step 1: [GATE] Paper selection — optional
+
+**Skip this step for ASTA survey runs.** Proceed directly to Step 2 and pass
+`excluded_ids: "none"` to the extraction subagent.
+
+**Invoke this step for cite-traverse or lit-review runs** where corpus quality
+varies and papers from noisy citation graphs or disease/non-model-organism
+contexts may need human weeding.
+
+When invoked:
+
+1. Read `{summaries_file}`. For each entry, auto-detect these signals from the
+   `summary` and `quotes` fields:
+   - `NON_MODEL_SPECIES` — human, primate, or non-rodent species explicitly mentioned
+   - `EARLY_STAGE` — embryonic, prenatal, P0–P14, neonatal
+   - `DISEASE_MODEL` — epilepsy, seizure, knockout, transgenic disease model
+   - `IN_VITRO` — dissociated culture (not acute slice)
+   - `REVIEW_ONLY` — quote is clearly contextual/introductory, not a primary finding
+
+2. Present to user, grouped by `node_relevance`:
+
+   ```
+   PAPER SELECTION — {node_id}
+   ============================
+   Summaries file: {summaries_file}
+
+   HIGH relevance ({N}):
+     [CorpusId:X] Author et al. (Year) — "Title"
+       Signals: NON_MODEL_SPECIES — "mentions human tissue in methods"
+     [CorpusId:Y] Author et al. (Year) — "Title"
+       Signals: none
+
+   MODERATE relevance ({N}):
+     ...
+
+   LOW relevance ({N}):
+     ...
+
+   Refs already in KB (will be skipped): {existing refs list}
+   ```
+
+3. Ask: "Exclude any papers? Provide CorpusIds, or 'none' to include all."
+
+4. Write `{output_dir}/excluded_{node_id}.json`:
+   ```json
+   { "node_id": "{node_id}", "excluded_corpus_ids": [...] }
+   ```
+   Write an empty list if the user excludes nothing.
+
+LOW relevance summaries are included unless explicitly excluded — the extraction
+subagent makes the final relevance call per field.
+
+---
+
+## Step 2: Extraction subagent
+
+Spawn a **single extraction subagent** with this exact prompt. Fill in all
+variables before spawning.
 
 **Subagent config:** `subagent_type: "general-purpose"`, `model: {model}`
 
 ```
-You are an auto-flagging agent. Scan literature summaries for signals that may
-affect whether evidence is applicable to the target node. You perform ONLY the
-steps below.
+You are an evidence extraction agent. For each included literature summary you:
+(1) decide whether it contains evidence for the target node,
+(2) write the chosen quote to references.json,
+(3) write a PropertySource entry with quote_key to the KB YAML.
+You perform ONLY the steps below.
 
-SUMMARIES FILE: {summaries_file}
-CATALOGUE FILE: {catalogue_file}
-NODE ID: {node_id}
+NODE ID:              {node_id}
+NODE CONTEXT:         {node_context}
+KB FILE:              {kb_file}
+REFS FILE:            {refs_file}
+SUMMARIES FILE:       {summaries_file}
+EXCLUDED CORPUS IDS:  {excluded_ids}   (comma-separated, or "none")
+PAPER CATALOGUE:      {paper_catalogue_path}   (path, or "none" if absent)
+ADDED_BY:             evidence_extraction_{node_id}_{date}
 
-TASK:
+## KB fields that accept PropertySource lists
 
-1. Read {summaries_file}. For each entry, check for these signals in the
-   summary text and quotes:
-   - NON_MODEL_SPECIES: mentions human, primate, non-rodent species explicitly
-   - EMBRYONIC: embryonic, prenatal, E10-E20, fetal
-   - EARLY_POSTNATAL: P0-P14, neonatal, early postnatal
-   - DISEASE_MODEL: epilepsy, seizure, knockout, transgenic disease model
-   - IN_VITRO: cell culture, dissociated, slice culture (not acute slice)
-   - REVIEW_ONLY: the quote is clearly contextual/introductory, not a primary finding
+  location_sources       → anatomical_location claims
+  ephys_sources          → electrophysiology_class claims
+  morphology_sources     → morphology_notes claims
+  nt_type.sources        → neurotransmitter type claims
+  synonyms[N].sources    → synonym usage evidence (for a specific synonym entry)
 
-2. For each flagged entry, record:
-   {
-     "source_corpus_id": "...",
-     "flags": ["NON_MODEL_SPECIES", "REVIEW_ONLY"],
-     "flag_notes": "mentions human tissue; quote is from introduction"
-   }
+For marker claims, use MarkerSource (extends PropertySource):
+  GeneDescriptor.sources → add a MarkerSource entry on the specific gene
+  marker_type: PROTEIN   → IHC, immunofluorescence, Western blot
+  marker_type: TRANSCRIPT → scRNA-seq, smFISH, ISH, qPCR
 
-3. Annotate paper_catalogue.json entries with flags from their summaries.
-   Write {output_dir}/paper_catalogue_flagged.json — same as catalogue but
-   each entry has added "flags": [...] and "flag_notes": "..."
+PropertySource fields:
+  ref:       required — "PMID:xxxxxxxx" or "https://doi.org/..."
+             Resolve from paper_catalogue.json externalIds (PubMed → PMID,
+             DOI field). Fallback: "CorpusId:{source_corpus_id}".
+  method:    how the property was detected (free text)
+             e.g. "IHC (somatostatin antibody)", "patch-clamp (acute slice)",
+             "scRNA-seq (Gad2 expression)", "biocytin fill + confocal"
+  scope:     species, age, preparation
+             e.g. "adult mouse CA1", "P21 rat hippocampus, acute slice"
+  quote_key: content-hashed key into references.json (set in step 3 below)
 
-4. Write brief flag summary to stdout:
-   "Flagged: N entries. NON_MODEL_SPECIES: X, EMBRYONIC: Y, IN_VITRO: Z,
-    REVIEW_ONLY: W. Unflagged: M."
+## Task
 
-DO NOT:
-- Exclude any entries — only annotate
-- Flag entries for being LOW node_relevance (that's the extraction agent's job)
-```
+1. Read {summaries_file}.
 
----
+2. For each entry, skip if:
+   - source_corpus_id is in EXCLUDED CORPUS IDS
+   - ref (PMID/DOI resolved from source_corpus_id) already in NODE CONTEXT
+     "Existing refs" list
 
-## Step 1: [GATE] Catalogue weeding
-
-1. Read `paper_catalogue_flagged.json`. Present flagged papers grouped by flag type:
-
-   ```
-   CATALOGUE WEEDING — {node_id}
-   ==============================
-   Flagged entries: N
-
-   NON_MODEL_SPECIES (X):
-     - [2019] Author et al. — "Title" — mentions human tissue
-   REVIEW_ONLY (W):
-     - [2015] Author et al. — "Title" — introductory context only
-   ...
-
-   Unflagged: M papers
-   ```
-
-2. Ask: "Mark any papers to EXCLUDE from extraction (provide corpus IDs or numbers).
-   Everything else will be included. Or type 'all' to include everything."
-
-3. Record excluded corpus IDs. Write `{output_dir}/excluded_ids.json`.
-
----
-
-## Step 2: [OPTIONAL] Full-text species/stage confirmation
-
-If any papers are marked UNCERTAIN (not clearly excludable but flagged), offer:
-"Fetch PMC full text for UNCERTAIN papers to check Methods section?"
-
-If yes, for each UNCERTAIN corpus ID:
-```
-mcp__artl-mcp__get_all_identifiers_from_europepmc("{corpus_id}")
-→ if PMC ID found:
-mcp__artl-mcp__get_europepmc_full_text("{pmcid}")
-→ scan Methods section for species, age, experimental system
-→ update flag: EXCLUDE or INCLUDE based on findings
-```
-
----
-
-## Step 3: Extraction subagent
-
-Read the target node from the KB to build NODE_CONTEXT, then spawn a single
-extraction subagent.
-
-Read `{kb_file}`, extract for `{node_id}`:
-- name
-- defining_markers (symbols)
-- anatomical_location (labels)
-- nt_type.name_in_source
-Build `NODE_CONTEXT` string (same format as lit-review.md Step 0).
-
-**Subagent config:** `subagent_type: "general-purpose"`, `model: {thinking_model}`
-
-```
-You are an evidence extraction agent. Extract schema-compliant evidence items
-from pre-retrieved literature summaries. You perform ONLY the steps below.
-
-NODE ID: {node_id}
-NODE CONTEXT: {node_context}
-KB FILE: {kb_file}
-SUMMARIES FILE: {summaries_file}
-EXCLUDED CORPUS IDS: {excluded_ids}
-
-SCHEMA EVIDENCE TYPES — choose the most specific applicable:
-
-  LiteratureEvidence (most common — any paper-based claim):
-    Required: reference (PMID:xxx or DOI:xxx or CorpusId:xxx),
-              snippet (verbatim, exact substring of quotes field),
-              support (SUPPORT / PARTIAL / REFUTE)
-    Optional: study_type
-
-  ElectrophysiologyEvidence:
-    Use when: paper reports e-type classification or firing pattern data
-    Required fields also: dataset_accession (if available), etype_label, key_features
-
-  MorphologyEvidence:
-    Use when: paper reports imaging or morphological reconstruction
-    Required: dataset_accession, imaging_method, key_features
-
-  MarkerAnalysisEvidence:
-    Use when: paper reports quantitative overlap between marker sets
-    Required: dataset_accession, markers_examined, overlap_metric, overlap_value
-
-  SpatialColocationEvidence:
-    Use when: paper reports MERFISH or spatial transcriptomics colocation
-    Required: spatial_dataset, spatial_technology, anatomical_region
-
-TASK:
-
-1. Read {summaries_file}. Skip any entry where source_corpus_id is in
-   EXCLUDED CORPUS IDS.
-
-2. For each summary entry (process HIGH and MODERATE node_relevance first,
+3. For each remaining entry (process HIGH node_relevance first, then MODERATE,
    then LOW):
 
-   a. Select the single most informative verbatim quote from the entry's
-      "quotes" field. The snippet MUST be an exact substring of one of
-      those quote strings — do not paraphrase or truncate mid-sentence.
+   a. Decide if this summary contains evidence for {node_id} specifically.
+      Consider NODE CONTEXT markers, location, and NT type. If node_relevance
+      is LOW and neither the node's name, markers, nor location are mentioned
+      in the summary or quotes — skip. Record skipped entries in the manifest.
 
-   b. Decide which schema evidence type best fits.
+   b. Identify the single KB field this summary most directly supports.
+      Choose one: location_sources / ephys_sources / morphology_sources /
+      nt_type.sources / synonyms[N].sources / GeneDescriptor.sources.
+      If the summary supports multiple fields, choose the field where the
+      evidence is strongest. Do not split one quote across multiple fields.
 
-   c. Determine which node field this quote most directly supports:
-      defining_markers / negative_markers / anatomical_location / nt_type /
-      electrophysiology_class / morphology_notes / colocated_types / other
+   c. Select the single most informative verbatim quote from the entry's
+      `quotes` list. The quote MUST be an exact substring of one of those
+      strings — do not paraphrase, truncate mid-sentence, or merge quotes.
 
-   d. Assess support:
-      - SUPPORT: quote clearly supports the claim about this node
-      - PARTIAL: quote is consistent but indirect or from a different species/context
-      - REFUTE: quote contradicts current node characterisation
+   d. Write the quote to references.json:
+      ```
+      uv run python -c "
+      from evidencell.references import write_quote_to_refs
+      from pathlib import Path
+      import json
 
-   e. Note: entries with source_method="asta_report" are from the discovery
-      report and not yet verified by primary literature. Mark these clearly
-      with a # note comment in the YAML.
+      meta = {}
+      catalogue = '{paper_catalogue_path}'
+      if catalogue != 'none':
+          cat = json.load(open(catalogue))
+          papers = cat if isinstance(cat, list) else cat.get('result', [])
+          for p in papers:
+              ext = p.get('externalIds', {})
+              if str(ext.get('CorpusId', '')) == '{source_corpus_id}':
+                  meta = p
+                  break
 
-3. Write {output_dir}/proposed_evidence_{node_id}.yaml:
+      key = write_quote_to_refs(
+          refs_path=Path('{refs_file}'),
+          corpus_id='{source_corpus_id}',
+          quote_text='''{quote_text}''',
+          section='{section}',
+          source_method='{source_method}',
+          added_by='{added_by}',
+          paper_meta=meta,
+      )
+      print(key)
+      "
+      ```
+      Store the printed key as `QUOTE_KEY`.
 
-   Header:
-   ```yaml
-   # Proposed evidence items for {node_id}
-   # Source summaries: {summaries_file}
-   # Extraction date: {date}
-   # Items below are PROPOSED — require expert review before KB commit
+   e. Resolve `ref`:
+      - If paper_catalogue exists: find the entry for source_corpus_id,
+        use externalIds.PubMed → "PMID:{id}" or DOI → "https://doi.org/{doi}"
+      - Fallback: "CorpusId:{source_corpus_id}"
+
+   f. Build the PropertySource / MarkerSource entry:
+      ```yaml
+      ref: "PMID:xxxxxxxx"
+      method: "patch-clamp (acute slice)"
+      scope: "adult mouse CA1"
+      quote_key: "{QUOTE_KEY}"
+      ```
+
+   g. Edit {kb_file} to append this entry to the correct field list on node
+      {node_id}. Edit only the relevant list — do NOT rewrite the entire file.
+      The pre-edit validation hook fires automatically. If it rejects:
+      - Read the error carefully
+      - The most likely cause is quote_key not found in references.json —
+        verify the write_quote_to_refs call succeeded
+      - Fix the issue and retry the edit. Do not silently skip failed items.
+
+4. Write {output_dir}/extraction_manifest_{node_id}.json:
+   ```json
+   {
+     "node_id": "{node_id}",
+     "summaries_read": N,
+     "skipped_excluded": N,
+     "skipped_duplicate_ref": N,
+     "skipped_low_relevance": N,
+     "entries_written": N,
+     "fields_populated": ["location_sources", "morphology_sources"],
+     "fields_with_no_evidence": ["ephys_sources", "nt_type.sources"],
+     "synonyms_found": ["OLM", "O-LM interneuron"],
+     "refs_file": "{refs_file}"
+   }
    ```
-
-   For each proposed item:
-   ```yaml
-   # --- Evidence item {N} ---
-   # Target field: {field_name}
-   # Source: {source_method} | section: {section} | CorpusId:{source_corpus_id}
-   - evidence_type: LITERATURE
-     reference: "PMID:xxxxxxxx"
-     snippet: "exact verbatim quote text"
-     support: SUPPORT
-   ```
-
-4. Write {output_dir}/extraction_report.md:
-   - Summary table: N items proposed, breakdown by evidence type and support value
-   - Items skipped (LOW relevance, excluded): listed briefly with reason
-   - Node fields with no evidence found: listed explicitly
-   - asta_report items: listed separately as "pending primary verification"
 
 RETURN:
-"Proposed {N} evidence items for {node_id}. Written proposed_evidence_{node_id}.yaml.
-Fields covered: {list}. Gaps: {list}. asta_report items needing verification: {M}."
+"Extracted {N} PropertySource entries for {node_id}.
+Fields: {list}. Gaps: {list}. Synonyms found: {list or 'none'}."
 
 DO NOT:
-- Paraphrase or shorten quotes — use exact text only
-- Propose more than 1 evidence item per summary entry
-- Propose items without a verbatim snippet
-- Make claims about mappings — evidence items target nodes, not edges
+- Paraphrase or shorten quotes — exact substring of all_summaries.json quotes field
+- Write more than one PropertySource entry per summary entry
+- Write PropertySource without a quote_key (inline snippet is not acceptable)
+- Write EvidenceItem or LiteratureEvidence shapes to nodes — only PropertySource / MarkerSource
+- Rewrite the entire KB YAML — only append to specific field lists
+- Skip hook failures silently — fix and retry
 ```
 
 ---
 
-## Step 4: [GATE] Expert review
+## After extraction
 
-1. Read and present `proposed_evidence_{node_id}.yaml` to the user.
-2. Show `extraction_report.md` summary.
-3. Ask: "Review each proposed item. Approve (keep as-is), edit, or reject.
-   When done, confirm to write approved items to the KB."
-4. The user may edit `proposed_evidence_{node_id}.yaml` directly.
-5. After confirmation, write approved items file:
-   `{output_dir}/approved_evidence_{node_id}.yaml`
-
----
-
-## Step 5: Append to KB
-
-1. Read `approved_evidence_{node_id}.yaml`.
-2. Read `{kb_file}` (YAML). Find the `{node_id}` node.
-3. Append each approved evidence item to the node's `evidence:` list.
-4. Write back to `{kb_file}`. Pre-edit validation hook fires automatically.
-5. If validation fails, show the error and ask the user how to resolve it.
-   Do not silently skip failed items.
-6. Print:
+1. Read `{output_dir}/extraction_manifest_{node_id}.json`.
+2. Print summary:
    ```
    EXTRACTION COMPLETE
    ===================
-   Node: {node_id}
-   Items appended: N
-   KB file: {kb_file}
-   Next step: run workflows/map-cell-type.md when evidence base is sufficient
+   Node:     {node_id}
+   Written:  {N} PropertySource entries → {kb_file}
+   Refs:     {N} quotes added → {refs_file}
+   Fields:   {populated list}
+   Gaps:     {no-evidence list}
+   Synonyms: {synonyms_found or "none"}
+
+   Next: run evidence-extraction for other nodes, or
+         run just gen-report {region} to review KB state.
    ```
+3. If `synonyms_found` is non-empty, ask:
+   "Add these as TypeSynonym entries on {node_id}? (yes/no)"
+   If yes, spawn a subagent to write TypeSynonym entries to the node
+   (one per synonym, with a PropertySource using the quote_key that first
+   introduced the synonym).
 
 ---
 
 ## Rules
 
-- **1:1 snippets per item.** One verbatim quote per evidence item for full traceability.
-- **Exact substrings only.** Every snippet must be verifiable in all_summaries.json.
-- **Expert gate is non-negotiable.** Nothing writes to the KB without human review.
-- **asta_report items are provisional.** Flag them clearly; they need primary
-  literature verification via cite-traverse before confidence can be raised.
+- **quote_key always.** Write the quote to references.json first, get the key,
+  then write PropertySource.quote_key. Never use inline snippet.
+- **find_node_file() for all KB access.** Never hardcode KB file paths.
+- **No intermediate evidence files.** Evidence writes directly to KB YAML.
+- **One gate only.** Paper selection (Step 1) is the only human checkpoint.
+  The pre-edit hook is the structural validation gate.
+- **One PropertySource per summary.** Choose the strongest field — do not split.
+- **Exact verbatim quotes only.** Must be exact substrings of all_summaries.json
+  `quotes` field entries. No paraphrase, no truncation mid-sentence.
 - **Subagent prompts are contracts.** Pass verbatim with variables filled in.
 - **Data flows through files, not context.**

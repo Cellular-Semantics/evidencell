@@ -1,7 +1,6 @@
 """Tests for the taxonomy registry."""
 
 import pytest
-from pathlib import Path
 
 from annotation_transfer.taxonomies import (
     TaxonomySpec,

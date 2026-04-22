@@ -1,0 +1,22 @@
+{
+  "node_id": "r_lm_cell_hippocampus",
+  "node_name": "Radiatum-lacunosum moleculare (R-LM) cell",
+  "extraction_date": "2026-04-22",
+  "added_by": "evidence_extraction_r_lm_cell_hippocampus_2026-04-22",
+  "summaries_assessed": 48,
+  "excluded_corpus_ids": ["250387238", "14371295", "246866323", "221276443"],
+  "excluded_existing_refs": ["PMID:10777798"],
+  "entries": [
+    {
+      "source_corpus_id": "224817966",
+      "ref": "PMID:33404500",
+      "quote_key": "224817966_e829ad95",
+      "field": "location_sources",
+      "method": "subcellular RNA-seq",
+      "scope": "mouse hippocampus",
+      "rationale": "Explicitly names RLMb interneurons and describes their soma location at the border between stratum radiatum and stratum lacunosum-moleculare with short dendrites, providing transcriptomic evidence for R-LM cell location."
+    }
+  ],
+  "fields_covered": ["location_sources"],
+  "gaps": ["ephys_sources", "morphology_sources", "nt_type.sources", "defining_markers[Sst].sources (with quote_key)"]
+}
