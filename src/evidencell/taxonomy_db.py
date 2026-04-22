@@ -1407,6 +1407,77 @@ def _cmd_build_closure(taxonomy_id: str, mba_json: str) -> None:
     print(f"  anat_closure rows: {n_closure:,}")
 
 
+def _resolve_mba_by_name(con: "sqlite3.Connection", name: str) -> list[str]:
+    """Fallback: resolve an anatomical location name to MBA IDs by label matching.
+
+    Used when a UBERON ID has no xref in the MBA ontology.  Tries direct
+    substring match first, then applies Latin→English layer synonyms and
+    hippocampal field prefix normalisation (e.g. "CA1 stratum pyramidale"
+    → "Field CA1, pyramidal layer").
+    """
+    if not name:
+        return []
+
+    norm = name.lower().strip()
+
+    # Latin→English layer synonyms (hippocampal nomenclature)
+    _LAYER_SYNONYMS = {
+        "stratum pyramidale": "pyramidal layer",
+        "stratum moleculare": "molecular layer",
+    }
+
+    # 1. Direct substring match on MBA label (also try with commas/punctuation stripped)
+    rows = con.execute(
+        "SELECT anat_id FROM anat_terms WHERE LOWER(label) LIKE ?",
+        (f"%{norm}%",),
+    ).fetchall()
+    if rows:
+        return [r[0] for r in rows]
+
+    # 1b. Try keyword match — all significant words must appear in the label
+    words = [w for w in norm.split() if len(w) > 2]
+    if len(words) >= 2:
+        where = " AND ".join(["LOWER(label) LIKE ?"] * len(words))
+        params = [f"%{w}%" for w in words]
+        rows = con.execute(
+            f"SELECT anat_id FROM anat_terms WHERE {where}", params
+        ).fetchall()
+        if rows:
+            return [r[0] for r in rows]
+
+    # 2. Apply Latin→English synonyms and retry
+    norm_sub = norm
+    for latin, english in _LAYER_SYNONYMS.items():
+        if latin in norm:
+            norm_sub = norm.replace(latin, english)
+            break
+
+    # 3. Normalise hippocampal field prefixes: "CA1 ..." → "Field CA1, ..."
+    _FIELDS = {"ca1": "Field CA1", "ca2": "Field CA2", "ca3": "Field CA3"}
+    for abbrev, mba_prefix in _FIELDS.items():
+        if norm_sub.startswith(abbrev + " "):
+            layer_part = norm_sub[len(abbrev) + 1:]
+            pattern = f"{mba_prefix}%{layer_part}%"
+            rows = con.execute(
+                "SELECT anat_id FROM anat_terms WHERE LOWER(label) LIKE LOWER(?)",
+                (pattern,),
+            ).fetchall()
+            if rows:
+                return [r[0] for r in rows]
+            break  # only one field prefix possible
+
+    # 4. Try synonym-substituted name without field prefix
+    if norm_sub != norm:
+        rows = con.execute(
+            "SELECT anat_id FROM anat_terms WHERE LOWER(label) LIKE ?",
+            (f"%{norm_sub}%",),
+        ).fetchall()
+        if rows:
+            return [r[0] for r in rows]
+
+    return []
+
+
 def _cmd_find_candidates(
     graph_file: str,
     node_id: str,
@@ -1464,6 +1535,7 @@ def _cmd_find_candidates(
         nt_type = nt_obj
 
     # Extract soma locations only (skip AXON_TARGET, DENDRITE)
+    soma_locs: list[dict] = []
     anat_ids: list[str] = []
     for loc in classical.get("anatomical_location") or []:
         compartment = loc.get("compartment")
@@ -1471,30 +1543,66 @@ def _cmd_find_candidates(
             continue
         loc_id = loc.get("id")
         if loc_id:
+            soma_locs.append(loc)
             anat_ids.append(loc_id)
 
     db = TaxonomyDB(db_path)
 
-    # Resolve UBERON IDs to MBA IDs via anat_terms lookup
+    # Resolve UBERON IDs to MBA IDs via anat_terms lookup, with name fallback
     mba_ids: list[str] = []
-    uberon_ids: list[str] = []
-    for aid in anat_ids:
-        if aid.startswith("UBERON:"):
-            uberon_ids.append(aid)
-        else:
-            mba_ids.append(aid)
-
-    if uberon_ids:
-        with db._connect() as con:
-            for uid in uberon_ids:
-                rows = con.execute(
-                    "SELECT anat_id FROM anat_terms WHERE uberon_id = ?", (uid,)
-                ).fetchall()
-                resolved = [r[0] for r in rows]
-                if resolved:
-                    mba_ids.extend(resolved)
+    with db._connect() as con:
+        for loc in soma_locs:
+            aid = loc["id"]
+            if not aid.startswith("UBERON:"):
+                mba_ids.append(aid)
+                continue
+            rows = con.execute(
+                "SELECT anat_id, label FROM anat_terms WHERE uberon_id = ?", (aid,)
+            ).fetchall()
+            resolved = [r[0] for r in rows]
+            # Sanity check: if the xref-resolved MBA label shares no keywords
+            # with the source name, the xref is likely wrong (e.g. UBERON:0005383
+            # "stratum oriens" → MBA:672 "Caudoputamen").  Prefer name fallback.
+            name = loc.get("name_in_source") or loc.get("label") or ""
+            if resolved and name:
+                name_words = {w.lower() for w in name.split() if len(w) > 2}
+                xref_label = rows[0][1].lower()
+                xref_words = {w.strip(",") for w in xref_label.split() if len(w) > 2}
+                if not (name_words & xref_words):
+                    # No word overlap — likely wrong xref
+                    fallback = _resolve_mba_by_name(con, name)
+                    if fallback:
+                        print(
+                            f"  {aid} xref → {resolved} ({rows[0][1]}) — "
+                            f"name mismatch with {name!r}, using name fallback: "
+                            f"{fallback}",
+                            file=sys.stderr,
+                        )
+                        resolved = fallback
+                    else:
+                        print(
+                            f"  WARNING: {aid} xref → {resolved} ({rows[0][1]}) — "
+                            f"name mismatch with {name!r}, but no name fallback found",
+                            file=sys.stderr,
+                        )
+            if resolved:
+                mba_ids.extend(resolved)
+            else:
+                # Fallback: resolve by name_in_source or label
+                name = loc.get("name_in_source") or loc.get("label") or ""
+                fallback = _resolve_mba_by_name(con, name)
+                if fallback:
+                    mba_ids.extend(fallback)
+                    print(
+                        f"  {aid} has no MBA xref — resolved by name: "
+                        f"{name!r} → {fallback}",
+                        file=sys.stderr,
+                    )
                 else:
-                    print(f"  WARNING: {uid} has no MBA mapping — skipped", file=sys.stderr)
+                    print(
+                        f"  WARNING: {aid} ({name}) has no MBA mapping — skipped",
+                        file=sys.stderr,
+                    )
 
     print(f"Classical node: {node_id} ({classical.get('name', '?')})", file=sys.stderr)
     print(f"  NT type: {nt_type}", file=sys.stderr)

@@ -390,6 +390,42 @@ sources and heterogeneity notes should be in `sources` or `notes` fields.
 Convention rule for CLAUDE.md: "never put data in YAML comments that could go
 in a structured field."
 
+**S4. Dual MBA + UBERON anatomy annotation.** 🔲 Pending
+
+Classical nodes currently use UBERON IDs for soma locations, but UBERON→MBA xref
+coverage is poor (many hippocampal layer terms have no MBA xref, or map to wrong
+MBA regions — e.g. UBERON:0005383 "stratum oriens" → MBA:672 "Caudoputamen").
+The `find_candidates()` name-based fallback (`_resolve_mba_by_name`) mitigates
+this at query time, but the root cause is that lit-extracted annotations don't
+capture MBA IDs.
+
+**Goal**: Annotate classical node anatomy with **both** UBERON and MBA IDs at
+ingest time. MBA is the spatial reference for atlas matching; UBERON provides
+cross-species semantic grounding.
+
+**Implementation options**:
+- MBA lookup via OLS4 (`mcp__ols4__search` for MBA terms) during lit extraction
+- Local MBA label matching against the taxonomy DB `anat_terms` table
+- Shared skill (`.claude/skills/annotate-anatomy.md`) usable by both
+  `asta-report-ingest` and `survey` orchestrators
+
+**Touches**: `asta-report-ingest.md`, `survey.md` (when built), potentially a
+shared anatomy annotation skill. Also consider adding MBA→UBERON cross-references
+to `anat_terms` table for bidirectional lookup.
+
+**S5. Iterative mapping refinement infrastructure.** 🔲 Pending
+
+Current workflow gates (Step 1, Step 4) assume human review at each mapping.
+At scale (15+ types per region), this doesn't work. Need infrastructure for:
+- Liberal initial KB writes (LOW/UNCERTAIN confidence edges written without
+  per-edge curator approval)
+- Iterative confidence upgrade as evidence accumulates (lit review, AT, expression
+  cross-checks)
+- Pruning: strong counter-evidence triggers edge removal or downgrade, with
+  provenance trail
+- Batch review: curator reviews a region's mapping table periodically, not
+  per-edge as generated
+
 ### Open questions
 - Should `CROSS_SPECIES_EXTRAPOLATION` be a structured field on `MappingEdge` (more queryable) or remain a free-text caveat?
 
