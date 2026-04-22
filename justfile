@@ -217,6 +217,15 @@ fetch-mba-ontology:
 build-anat-closure taxonomy_id:
     uv run python -m evidencell.taxonomy_db build-closure {{taxonomy_id}} conf/mba/mbao-full.json
 
+# Find candidate atlas matches for a classical node by querying the taxonomy DB
+# Extracts the node's property signature (markers, NT, anatomy) and scores taxonomy entries
+# rank: 0 = leaf (cluster in WMBv1), 1 = supertype, 2 = subclass, 3 = class
+# Usage: just find-candidates kb/draft/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722
+#        just find-candidates kb/draft/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 30
+[group('workflows')]
+find-candidates graph_file node_id taxonomy_id rank="1" top_n="20":
+    uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_n}}
+
 # ── Reports ────────────────────────────────────────────────────────────────────
 
 # Extract structured report facts JSON (input to synthesis subagent in gen-report workflow)

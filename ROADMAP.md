@@ -21,15 +21,14 @@
 
 | Milestone | Goal | Status | Key deliverables | Depends on |
 |---|---|---|---|---|
-<<<<<<< HEAD
-| **S** Schema Refinement | Taxonomy level encoding, marker/assay consistency, semantic checks | 🔲 Pending | S1 rank encoding, S3 marker type split, SC1-SC3 semantic lint rules | — |
+| **S** Schema Refinement | Taxonomy level encoding, marker/assay consistency, semantic checks | 🟡 S1 in progress | S1 rank encoding (schema v0.7.1, DB, find-candidates, map-cell-type), S3 marker type split, SC1-SC3 semantic lint rules | — |
 | **M2L** Lit Search File Specs | Formal schemas for cite-traverse intermediate files | 🔲 Pending | Pydantic models for summary/refs/manifest; output validation at step boundaries; canonical output_dir | — (parallel) |
 | **WC** Workflow Contracts | Audit and formalise data contracts across all workflows | 🔲 Pending | Contract inventory; schema coverage map; inter-workflow handover specs; graduation criteria; user-facing terminology | S, M2L (inform) |
 | **M2+** Lit Review Quality | Improve snippet context, paper quality signals, and domain relevance filtering in cite-traverse | 🔲 Pending | Contextual retrieval for priority papers; venue/citation/cross-citation quality signals; evidencell-specific relevance pre-filters | — (parallel, any time) |
 | **CF** Community Feedback | Enable biologist review of mappings; KB quality scoring | 🔲 Pending | Report-based review workflow; compliance scoring; structured feedback mechanism | S, M4 |
 | **M6** Code/Content Separation | Decouple KB content from code | 🔲 Pending | Content boundary; `content/hmba-mouse` branch; `main` passes `just test` with fixtures only | WC, S |
 | **M7** KB Structure Cleanup | Move workflow ephemera out of `kb/`; one file per classical type node; naming convention; graduation criteria | 🔲 Pending | `kb/nodes/{region}/{node_id}.yaml` per classical type; `kb/taxonomy/` for atlas terminal nodes; `references/`, `research/`, `reports/` at repo root; `find_node_file()` utility as stable interface; graduation criteria in CONTRIBUTING.md | M8 |
-| **M8** KB Index + Taxonomy DB | Taxonomy per-file ingest (SQL); KB node index for agent file-finding; both via SQLite | 🔲 Pending — DO BEFORE M7 | `kb/index.db`: node→file map, synonym index, gap flags; taxonomy DB: one file per taxonomy, SQL access; `find_node_file(node_id)` queries index; `map-cell-type` queries taxonomy DB | — (can start now) |
+| **M8** KB Index + Taxonomy DB | Taxonomy per-file ingest (SQL); KB node index for agent file-finding; both via SQLite | 🟡 Phase 1 complete; Phase 2–3 in progress | Phase 1: YAML + SQLite ingest done (CCN20230722). Phase 2–3: KB graphs use minimal taxonomy ref stubs (id, name, definition_basis, taxonomy_id, cell_set_accession); full node data in `kb/taxonomy/`. Schema v0.7.1: `type_a`/`type_b` range: CellTypeNode. | — |
 | **ADAPT** Adaptive Mapping Loop | Reorder workflow so AT runs before edge framing; bridging dataset criteria; compute preflight gate; supertype-level edges | 🔲 Pending | Updated `map-cell-type.md`; dataset bridging criteria; AT preflight gate | S1, AT |
 | **ARCH** Workflow Architecture Refactor | Redesign lit-mining pipeline around Survey vs Targeted distinction; synonym capture; KB flags as workflow memory | 🔲 Can start now | `survey.md` orchestrator; `targeted-search.md` orchestrator; cite-traverse as skill; synonym extraction in asta-report-ingest; KB gap flags; `find_node_file()` utility as file-layout-independent KB interface | `find_node_file()` stub (pre-M8); upgrades to query index post-M8 |
 
@@ -347,15 +346,24 @@ S2 (AnatomicalLocation + CellCompartment) shipped in v0.6.0. Remaining items:
 
 ### Schema changes
 
-**S1. Taxonomy level encoding — rank, not name.**
-Taxonomy level names (CLASS, SUBCLASS, SUPERTYPE, CLUSTER) are arbitrary and
-taxonomy-specific. Replace hardcoded level name enums with:
-- `level_name: str` — free string, taxonomy-defined (e.g. "SUPERTYPE", "subclass")
-- `rank: int` — 0 = most specific (leaf), incrementing for each level above
+**S1. Taxonomy level encoding — rank, not name.** 🟡 In progress (schema v0.7.1)
 
-This affects `AnnotationTransferLevelResult.taxonomy_level`, `best_mapping_level`,
-and any code that assumes WMB-specific level names. Mapping edges should be
-expressible at any rank, not just cluster (rank 0).
+Taxonomy level names (CLASS, SUBCLASS, SUPERTYPE, CLUSTER) are arbitrary and
+taxonomy-specific. Added `taxonomy_rank: int` alongside existing `taxonomy_level: str`:
+- `taxonomy_level: str` — free string, taxonomy-defined (unchanged, backward compat)
+- `taxonomy_rank: int` — 0 = most specific (leaf), incrementing for each level above
+
+Schema fields added (v0.7.1): `CellTypeNode.taxonomy_rank`, `TaxonomyNodeList.taxonomy_rank`,
+`AnnotationTransferLevelResult.taxonomy_rank`, `AnnotationTransferEvidence.best_mapping_rank`.
+WMB taxonomy YAML files updated with ranks (CLUSTER=0, SUPERTYPE=1, SUBCLASS=2, CLASS=3;
+NEUROTRANSMITTER has no rank — orthogonal). `taxonomy_meta.yaml` has `level_hierarchy`
+with rank/count/is_terminal per level.
+
+`find_candidates()` and `_cmd_find_candidates` accept `rank: int` (preferred) or
+`level: str` (backward compat). `map-cell-type.md` uses ranks throughout.
+
+Remaining: update `query_by_region`, `query_by_nt`, `query_by_nt_propagated` to accept rank;
+update AT orchestrator to use `best_mapping_rank`.
 
 **S3. Marker type / assay consistency.**
 `marker_type` (PROTEIN/TRANSCRIPT) can conflict with `method` (e.g.
@@ -924,9 +932,9 @@ See [planning/schema_self_contained_references.md](planning/schema_self_containe
 
 **Goal**: Replace fragment-based taxonomy ingestion with a local queryable database. Graph stubs are pulled on demand from the reference store rather than ingested in bulk.
 
-**Status**: 🔲 Pending — DO BEFORE M7
+**Status**: 🟡 Phase 1 complete (YAML + SQLite ingest). Phase 2–3 in progress (KG refactor: minimal taxonomy ref stubs).
 
-### Problem
+### Problem (resolved by Phase 1)
 
 Current taxonomy ingest (`ingest-taxonomy.md`) takes a CSV/TSV slice and generates atlas stubs directly into the graph YAML. This creates two problems:
 

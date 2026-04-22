@@ -9,11 +9,13 @@ use the same pipeline — discovery simply means Step 0 generates the candidates
 rather than receiving them.
 
 **Prerequisites**:
-- `CellTypeNode` stubs for both classical and atlas types (from ingest-taxonomy or
-  hand-curation)
-- At minimum: defining markers, NT type, and anatomical location populated on the
-  classical node. Literature evidence items improve confidence but are not required
-  to begin — edges can start at LOW/UNCERTAIN and be upgraded after lit review.
+- Classical `CellTypeNode` in a KB YAML graph with at minimum: defining markers,
+  NT type, and anatomical location. Literature evidence items improve confidence
+  but are not required to begin — edges can start at LOW/UNCERTAIN and be upgraded
+  after lit review.
+- Taxonomy reference DB built for the target atlas:
+  `just build-taxonomy-db {taxonomy_id}` + `just build-anat-closure {taxonomy_id}`
+  (anatomy matching requires the MBA ontology: `just fetch-mba-ontology` first)
 
 ---
 
@@ -22,10 +24,12 @@ rather than receiving them.
 ```
 PARAMS:
   classical_node_file: ""       # path to KB YAML containing the classical node(s)
-  atlas_stubs_file: ""          # path to KB YAML containing atlas CellTypeNode stubs
   classical_node_id: ""         # id of the classical node to map (required)
-  curator_hypothesis: null      # optional: {atlas_node_id, relationship} or list thereof
-                                # if null → discovery mode (Step 0 searches for candidates)
+  taxonomy_id: "CCN20230722"    # taxonomy DB to query for atlas candidates
+  curator_hypothesis: null      # optional: {cell_set_accession, relationship} or list thereof
+                                # if null → discovery mode (Step 0 queries taxonomy DB)
+  ranks: [0, 1]                 # taxonomy ranks to query (0=leaf, 1=supertype, 2=subclass, …)
+                                # check taxonomy_meta.yaml level_hierarchy for available ranks
   model: "sonnet"
 ```
 
@@ -35,107 +39,89 @@ PARAMS:
 
 If `curator_hypothesis` is provided, skip to Step 1 using those candidates.
 
-Otherwise, spawn a **discovery subagent** with this exact prompt (fill in variables):
+Otherwise, query the taxonomy DB for candidates at each rank, then refine with a subagent.
+
+### Step 0a: DB query
+
+Run the taxonomy DB candidate search at each requested rank. Ranks are integers
+(0 = most granular/leaf, incrementing toward root). The mapping between rank and
+level name is taxonomy-specific — check `taxonomy_meta.yaml` `level_hierarchy`
+for the target taxonomy.
+
+```bash
+# For each rank in {ranks}, run:
+just find-candidates {classical_node_file} {classical_node_id} {taxonomy_id} {rank} {top_n} \
+  > {output_dir}/discovery_candidates_rank{rank}.json
+```
+
+Default: rank 1 (top_n=20) and rank 0 (top_n=30). Adjust ranks based on the
+taxonomy's level_hierarchy — some taxonomies have more or fewer levels.
+
+This extracts the classical node's property signature (NT type, markers, soma
+locations), resolves UBERON IDs to MBA IDs via anatomy closure tables, and scores
+all taxonomy nodes by region match (+2), NT match (+2), and per-marker match (+1).
+Results are sorted by descending score.
+
+### Step 0b: Refinement subagent
+
+Spawn a **refinement subagent** to review the DB-generated shortlist with this
+exact prompt (fill in variables):
 
 ```
-You are a cell type mapping discovery agent. You identify candidate atlas clusters
-that may correspond to a classical cell type based on property overlap.
+You are a cell type mapping refinement agent. You review a database-generated
+candidate list and add nuanced assessment that the scoring function cannot capture.
 
 CLASSICAL NODE FILE: {classical_node_file}
 CLASSICAL NODE ID: {classical_node_id}
-ATLAS STUBS FILE: {atlas_stubs_file}
+CANDIDATE FILES: {output_dir}/discovery_candidates_rank*.json
+  (one file per queried rank — read all)
 
 TASK:
 
-1. Read the classical node. Extract its property signature:
-   - defining_markers (gene symbols)
-   - negative_markers (gene symbols)
-   - neuropeptides (gene symbols)
-   - nt_type (NT label and CL terms)
-   - anatomical_location (region IDs and labels)
+1. Read the classical node. Note its full property signature including:
+   - defining_markers, negative_markers, neuropeptides
+   - nt_type, anatomical_location (soma locations only)
    - morphology_notes, electrophysiology_class (free text, if present)
 
-2. Read all atlas nodes from the stubs file.
+2. Read all candidate files (one per rank level).
 
-3. Score each atlas node against the classical signature. For each property
-   dimension, compute overlap:
+3. For each candidate, assess:
 
-   MARKERS: For each classical defining_marker, check if it appears in the atlas
-   node's defining_markers, merfish_markers, or neuropeptides. Score = fraction
-   of classical markers found in atlas node. Weight scoped markers (those with
-   "within_subclass" in their sources comment) 2x.
+   NEGATIVE MARKERS: Check if any classical negative_marker appears in the
+   candidate's defining_markers. Any hit is a strong penalty — flag it.
 
-   NEGATIVE MARKERS: For each classical negative_marker, check if it appears in
-   the atlas node's defining_markers. Any hit is a penalty (suggests mismatch).
+   NEUROPEPTIDE DETAIL: The DB scores neuropeptide overlap coarsely. Check
+   specific neuropeptide matches and mismatches.
 
-   NEUROPEPTIDES: For each classical neuropeptide, check atlas neuropeptides.
-   Score = fraction matched.
+   LOCATION QUALITY: Review the candidate's anatomical_location list:
+   - ADJACENT regions (bordering subfields, e.g. prosubiculum next to CA1):
+     weak counter-evidence (MERFISH registration errors common at boundaries)
+   - DISTANT regions (different structure, e.g. amygdala cells in hippocampal
+     cluster): genuine counter-evidence — flag with caveat
 
-   NT TYPE: Compare nt_type.name_in_source. CONSISTENT = same NT, DISCORDANT = different.
+   PARENT HIERARCHY: Note the parent lineage of each candidate. Candidates
+   from the same parent are related.
 
-   LOCATION: Atlas location data derives from MERFISH spatial registration and
-   records soma position only. Axonal and dendritic projection targets are not
-   captured and must not be used in scoring — classical type descriptions often
-   include axon targets (e.g. OLM axon in SLM) which have no atlas counterpart.
-   Only compare against classical node locations with `compartment: SOMA` (or
-   no compartment, which implies whole-cell). Skip entries with
-   `compartment: AXON_TARGET` or `compartment: DENDRITE` — their absence from
-   atlas MERFISH data is expected, not diagnostic.
+4. Produce a refined ranking for each rank level. For each candidate include:
+   cell_set_accession, name, taxonomy_rank, DB score, your assessment
+   (STRONG / PLAUSIBLE / WEAK / EXCLUDE), and brief rationale.
 
-   For each classical soma location, check if the atlas node has cells in the
-   same structure or a child/parent structure. Use MBA ID prefix matching for
-   coarse comparison (e.g. MBA:399 "Field CA1, stratum oriens" matches a
-   classical node in "stratum oriens of hippocampus"). Also check location name
-   substring overlap.
-
-   Weight off-target atlas locations by anatomical distance:
-   - ADJACENT regions (bordering subfields, e.g. prosubiculum next to CA1,
-     CA3 next to CA1): treat as weak counter-evidence. MERFISH registration
-     errors at cytoarchitectural boundaries are common; a small cell fraction
-     in an adjacent region is not strong evidence against the mapping.
-   - DISTANT regions (different structure entirely, e.g. amygdala cells in a
-     hippocampal cluster): treat as genuine counter-evidence. A classical type
-     may still be a subtype of the T-type, but the classical hippocampal
-     population specifically is unlikely to include amygdala cells. Flag with
-     a DISTRIBUTED_ACROSS_CLUSTERS caveat and note in rationale.
-
-4. Rank atlas nodes by composite score. Present the top candidates (all nodes
-   scoring above a reasonable threshold, or top 10, whichever is smaller).
-
-5. For each candidate, produce a summary:
-   - atlas node id, name, taxonomy_level, cell_set_accession
-   - marker overlap (which markers matched, which didn't)
-   - neuropeptide overlap
-   - NT alignment
-   - location alignment
-   - composite score and brief rationale
-
-6. Write the candidate list to {output_dir}/discovery_candidates.json:
+5. Write to {output_dir}/discovery_candidates.json combining all levels:
    {
      "classical_node_id": "...",
      "classical_node_name": "...",
-     "signature": { ... extracted signature ... },
-     "candidates": [
-       {
-         "atlas_node_id": "...",
-         "atlas_node_name": "...",
-         "taxonomy_level": "...",
-         "cell_set_accession": "...",
-         "marker_overlap": {"matched": [...], "missed": [...], "score": N},
-         "negative_marker_hits": [...],
-         "neuropeptide_overlap": {"matched": [...], "missed": [...], "score": N},
-         "nt_alignment": "CONSISTENT|DISCORDANT|NOT_ASSESSED",
-         "location_alignment": {"matched_regions": [...], "score": N},
-         "composite_score": N,
-         "rationale": "..."
-       }
-     ],
-     "non_candidates_summary": "N nodes scored below threshold. Common reasons: ..."
+     "taxonomy_id": "...",
+     "candidates_by_rank": {
+       "0": [ { "cell_set_accession": "...", "name": "...", "taxonomy_rank": 0,
+         "db_score": N, "assessment": "...", "rationale": "..." } ],
+       "1": [ ... same format ... ]
+     },
+     "non_candidates_summary": "..."
    }
 
 RETURN:
-"Discovery complete. {N} candidates from {M} atlas nodes. Top candidate:
-{id} ({name}) — score {S}. Candidate list written to discovery_candidates.json."
+"Discovery complete. Candidates reviewed across {N} ranks.
+Top rank-1: {accession} ({name}). Top rank-0: {accession} ({name})."
 
 DO NOT write any KB YAML. DO NOT propose edges.
 ```
@@ -151,10 +137,10 @@ After discovery (or after receiving `curator_hypothesis`):
 ```
 CANDIDATE ATLAS MATCHES for {classical_node_name}
 ===================================================
-Rank  Node ID              Name                           Level      Score  Key overlaps
-─────────────────────────────────────────────────────────────────────────────────────────
-1     wmb_clus_XXXX        ...                            CLUSTER    0.85   Sst+, Npy+, GABA, CA1so
-2     wmb_supt_YYYY        ...                            SUPERTYPE  0.72   Sst+, GABA, CA1so
+Rank  Accession                   Name                           Level      Score  Assessment
+─────────────────────────────────────────────────────────────────────────────────────────────────
+1     CS20230722_CLUS_0769        0769 Sst Gaba_3                 rank 0     5      STRONG
+2     CS20230722_SUPT_0216        0216 Sst Gaba_3                 rank 1     4      PLAUSIBLE
 ...
 
 Top candidate rationale: ...
@@ -198,8 +184,9 @@ property comparisons and evidence items.
 
 CLASSICAL NODE FILE: {classical_node_file}
 CLASSICAL NODE ID: {classical_node_id}
-ATLAS STUBS FILE: {atlas_stubs_file}
-ATLAS NODE ID: {atlas_node_id}
+ATLAS NODE ACCESSION: {cell_set_accession}
+TAXONOMY ID: {taxonomy_id}
+TAXONOMY DIR: kb/taxonomy/{taxonomy_id}/
 RELATIONSHIP: {relationship_type}
 DISCOVERY DATA: {path to discovery_candidates.json, if available}
 PRECOMPUTED_STATS: {path to precomputed_stats HDF5, or "none"}
@@ -209,7 +196,11 @@ specifically the edges section (starts after the nodes). Match that format exact
 
 TASK:
 
-1. Read both nodes. Read the CB_PLI_types.yaml edges for structural reference.
+1. Read the classical node from the graph file. Find the atlas node by searching
+   for `cell_set_accession: {cell_set_accession}` in the taxonomy YAML files
+   under TAXONOMY DIR (check the level file matching the accession pattern:
+   SUPT → supertype.yaml, CLUS → cluster.yaml, SUBC → subclass.yaml).
+   Read the CB_PLI_types.yaml edges for structural reference.
 
 2. Build property_comparisons for at minimum:
    - nt_type
@@ -338,11 +329,14 @@ Ask:
 
 For approved edges:
 
-1. The classical node and its candidate atlas nodes must be in the same graph file.
-   If they are currently in separate files, the orchestrator must merge them into
-   one graph file before writing edges. Ask the curator to confirm the target file.
+1. For each atlas node referenced by an edge, ensure a minimal taxonomy ref stub
+   exists in the graph's `nodes:` list. A stub needs only:
+   `id` (= cell_set_accession), `name`, `definition_basis: ATLAS_TRANSCRIPTOMIC`,
+   `taxonomy_id`, `cell_set_accession`. Full node data lives in the taxonomy
+   reference store at `kb/taxonomy/{taxonomy_id}/`.
 
-2. Append approved edges to the `edges:` section of the target file.
+2. Append approved edges to the `edges:` section of the target file. Edge `type_b`
+   should use the `cell_set_accession` (e.g. `CS20230722_CLUS_0769`).
 
 3. Update `target_atlas` on the graph if it was null (as for ASTA report ingests
    that started without an atlas target).
@@ -357,6 +351,9 @@ For deferred edges:
 
 - **Discovery is the default.** Curator hypotheses are welcome but not required.
   The orchestrator surfaces candidates from the data; the curator adjudicates.
+- **Ranks are taxonomy-agnostic.** Always use integer ranks (0=leaf, incrementing),
+  never hardcoded level names like "cluster" or "supertype". Check the target
+  taxonomy's `taxonomy_meta.yaml` `level_hierarchy` for available ranks.
 - **No HIGH confidence from literature alone.** The agent must check the decision
   guide. Annotation transfer or experimental data (ephys/morphology) required.
 - **No literature found → UNCERTAIN.** Document the evidence gap explicitly.

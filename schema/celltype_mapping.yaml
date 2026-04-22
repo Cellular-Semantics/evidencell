@@ -26,6 +26,14 @@
 #                               AnnotationTransferEvidence: source_species, target_species added;
 #                               nt_consistent_with_classical deprecated (superseded by property_comparisons);
 #                               OntologyTerm: name_in_source added as required field (always record)
+# Version: 0.7.1 (2026-04-22) — ADDITIVE: taxonomy_rank (integer) on CellTypeNode, TaxonomyNodeList,
+#                               AnnotationTransferLevelResult; rank-based taxonomy level encoding (S1);
+#                               0 = most specific (leaf), incrementing toward root.
+#                               MappingEdge.type_a/type_b: range CellTypeNode (documentation;
+#                               linkml-validate does not enforce cross-object refs currently).
+#                               Taxonomy nodes in KB graphs should be minimal stubs (id, name,
+#                               definition_basis, taxonomy_id, cell_set_accession); full data
+#                               lives in kb/taxonomy/{taxonomy_id}/*.yaml
 # Version: 0.7.0 (2026-04-22) — ADDITIVE: MarkerCategory enum; GeneDescriptor.category + expression_score;
 #                               AnatomicalLocation.cell_count; CellTypeNode.markers + neighborhood;
 #                               TaxonomyNodeList container; WMB: prefix for atlas node CURIEs
@@ -206,9 +214,17 @@ enums:
   # ── Taxonomy levels ─────────────────────────────────────────────
   # TaxonomyLevel enum removed in v0.4: level names are atlas-specific.
   # taxonomy_level fields now use free strings. Common values:
-  #   WMBv1 (CCN202307220):  CLASS, SUBCLASS, SUPERTYPE, CLUSTER
-  #   HMBA BG Consensus:     CLASS, GROUP (GROUP is below CLASS)
-  #   Custom atlases:        as documented by that atlas
+  #   WMBv1 (CCN20230722):  CLASS, SUBCLASS, SUPERTYPE, CLUSTER
+  #   HMBA BG Consensus:    CLASS, GROUP (GROUP is below CLASS)
+  #   Custom atlases:       as documented by that atlas
+  #
+  # taxonomy_rank (v0.7.1): integer rank for ordering levels across taxonomies.
+  #   0 = most specific (leaf/terminal), incrementing toward root.
+  #   WMBv1: CLUSTER=0, SUPERTYPE=1, SUBCLASS=2, CLASS=3
+  #   HMBA BG: GROUP=0, CLASS=1
+  #   Rank is optional on individual nodes (derivable from taxonomy_level +
+  #   taxonomy_meta.yaml level_hierarchy) but required on TaxonomyNodeList
+  #   container files and in taxonomy_meta.yaml level_hierarchy.
 
   # ── Mapping relationship types ──────────────────────────────────
   MappingRelationship:
@@ -1086,6 +1102,12 @@ classes:
         description: >
           Taxonomy level string, e.g. CLASS, SUBCLASS, SUPERTYPE, CLUSTER (WMBv1)
           or GROUP (HMBA BG). See schema header comment for atlas-specific values.
+      taxonomy_rank:
+        range: integer
+        description: >
+          Integer rank for cross-taxonomy level ordering. 0 = most specific
+          (leaf/terminal), incrementing toward root. Derivable from taxonomy_level
+          + taxonomy_meta.yaml level_hierarchy when not set explicitly.
       parent_hierarchy:
         range: HierarchyNode
         multivalued: true
@@ -1300,6 +1322,11 @@ classes:
       taxonomy_level:
         required: true
         description: Taxonomy level string (e.g. CLASS, SUBCLASS, SUPERTYPE, CLUSTER)
+      taxonomy_rank:
+        range: integer
+        description: >
+          Integer rank of this level. 0 = most specific (leaf), incrementing
+          toward root. Allows cross-taxonomy comparison of mapping granularity.
       best_target_name:
         required: true
         description: Name of the best-matching target at this level
@@ -1375,8 +1402,13 @@ classes:
           Derive from metrics_by_level[best_mapping_level].f1_score when present.
       best_mapping_level:
         description: >
-          Taxonomy level at which best_f1_score was achieved.
+          Taxonomy level name at which best_f1_score was achieved.
           E.g. "SUPERTYPE" for PLI3→1145 (F1=0.96) vs "CLUSTER" for PLI1→5178 (F1=0.94).
+      best_mapping_rank:
+        range: integer
+        description: >
+          Taxonomy rank at which best_f1_score was achieved (0 = leaf).
+          Cross-taxonomy-comparable alternative to best_mapping_level.
 
       # ── Optional detail ────────────────────────────────────────
       source_cell_set_accession:
@@ -1561,10 +1593,17 @@ classes:
         description: Unique edge ID, e.g. "edge_lugaro_to_pli3"
       type_a:
         required: true
+        range: CellTypeNode
         description: ID of the source node (reference to CellTypeNode.id)
       type_b:
         required: true
-        description: ID of the target node (reference to CellTypeNode.id)
+        range: CellTypeNode
+        description: >
+          ID of the target node (reference to CellTypeNode.id).
+          For atlas/taxonomy nodes, use the cell_set_accession as the id
+          (e.g. CS20230722_SUPT_0179). The node must be declared in the
+          graph's nodes list — a minimal stub (id, name, definition_basis,
+          taxonomy_id, cell_set_accession) suffices for taxonomy references.
       relationship:
         required: true
         range: MappingRelationship
@@ -1661,6 +1700,13 @@ classes:
       taxonomy_level:
         required: true
         description: Level string for all nodes in this file, e.g. cluster, supertype
+      taxonomy_rank:
+        range: integer
+        description: >
+          Integer rank for this level. 0 = most specific (leaf/terminal),
+          incrementing toward root. Required on hierarchical level files;
+          omit for orthogonal annotation levels (e.g. NEUROTRANSMITTER)
+          that sit outside the hierarchy.
       nodes:
         required: true
         multivalued: true

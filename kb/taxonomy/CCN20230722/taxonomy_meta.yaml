@@ -8,12 +8,22 @@ anatomy_ontology: MBA
 source_query: inputs/taxonomies/CCN20230722.cypher
 source_file: wmbv1_full.json
 ingest_date: '2026-04-22'
-level_counts:
-  class: 34
-  cluster: 5322
-  neurotransmitter: 10
-  subclass: 338
-  supertype: 1201
+level_hierarchy:
+  - level_name: CLUSTER
+    rank: 0
+    count: 5322
+    is_terminal: true
+  - level_name: SUPERTYPE
+    rank: 1
+    count: 1201
+  - level_name: SUBCLASS
+    rank: 2
+    count: 338
+  - level_name: CLASS
+    rank: 3
+    count: 34
+  # NEUROTRANSMITTER is not a hierarchical level (orthogonal annotation)
+  # and has no rank in the level hierarchy.
 mapmycells:
   at_taxonomy_id: CCN20230722
   stats_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/WMB-10X/20240831/precomputed_stats_ABC_revision_230821.h5
