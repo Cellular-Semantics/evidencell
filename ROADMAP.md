@@ -28,7 +28,7 @@
 | **CF** Community Feedback | Enable biologist review of mappings; KB quality scoring | 🔲 Pending | Report-based review workflow; compliance scoring; structured feedback mechanism | S, M4 |
 | **M6** Code/Content Separation | Decouple KB content from code | 🔲 Pending | Content boundary; `content/hmba-mouse` branch; `main` passes `just test` with fixtures only | WC, S |
 | **M7** KB Structure Cleanup | Move workflow ephemera out of `kb/`; one file per classical type node; naming convention; graduation criteria | 🔲 Pending | `kb/nodes/{region}/{node_id}.yaml` per classical type; `kb/taxonomy/` for atlas terminal nodes; `references/`, `research/`, `reports/` at repo root; `find_node_file()` utility as stable interface; graduation criteria in CONTRIBUTING.md | M8 |
-| **M8** KB Index + Taxonomy DB | Taxonomy per-file ingest (SQL); KB node index for agent file-finding; both via SQLite | 🟡 Phase 1 complete; Phase 2–3 in progress | Phase 1: YAML + SQLite ingest done (CCN20230722). Phase 2–3: KB graphs use minimal taxonomy ref stubs; full node data in `kb/taxonomy/`. | — |
+| **M8** KB Index + Taxonomy DB | Taxonomy per-file ingest (SQL); KB node index for agent file-finding; both via SQLite | 🟡 Phase 1 complete; Phase 2–3 in progress | Phase 1: YAML + SQLite ingest done (CCN20230722). Phase 2–3: KB graphs use minimal taxonomy ref stubs (id, name, definition_basis, taxonomy_id, cell_set_accession); full node data in `kb/taxonomy/`. Schema v0.7.1: `type_a`/`type_b` range: CellTypeNode. | — |
 | **ADAPT** Adaptive Mapping Loop | Reorder workflow so AT runs before edge framing; bridging dataset criteria; compute preflight gate; supertype-level edges | 🔲 Pending | Updated `map-cell-type.md`; dataset bridging criteria; AT preflight gate | S1, AT |
 | **ARCH** Workflow Architecture Refactor | Redesign lit-mining pipeline around Survey vs Targeted distinction; synonym capture; KB flags as workflow memory | 🔲 Can start now | `survey.md` orchestrator; `targeted-search.md` orchestrator; cite-traverse as skill; synonym extraction in asta-report-ingest; KB gap flags; `find_node_file()` utility as file-layout-independent KB interface | `find_node_file()` stub (pre-M8); upgrades to query index post-M8 |
 
@@ -932,9 +932,9 @@ See [planning/schema_self_contained_references.md](planning/schema_self_containe
 
 **Goal**: Replace fragment-based taxonomy ingestion with a local queryable database. Graph stubs are pulled on demand from the reference store rather than ingested in bulk.
 
-**Status**: 🔲 Pending — DO BEFORE M7
+**Status**: 🟡 Phase 1 complete (YAML + SQLite ingest). Phase 2–3 in progress (KG refactor: minimal taxonomy ref stubs).
 
-### Problem
+### Problem (resolved by Phase 1)
 
 Current taxonomy ingest (`ingest-taxonomy.md`) takes a CSV/TSV slice and generates atlas stubs directly into the graph YAML. This creates two problems:
 

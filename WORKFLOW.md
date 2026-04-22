@@ -14,7 +14,7 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 | M4 | Report generation (summary + drill-down, LLM synthesis, anti-hallucination hooks) | **Complete** |
 | M5 | Annotation transfer evidence | **In progress** — pipeline implemented, orchestrator pending |
 | M7 | KB structure cleanup (Phase 1: directory restructure) | **Complete** |
-| M8 | Taxonomy reference DB — compact YAML + SQLite query index | **In progress** — Phase 1 complete; Phase 2–3: minimal taxonomy ref stubs in KB graphs |
+| M8 | Taxonomy reference DB — compact YAML + SQLite query index | **In progress** — Phase 1 complete; Phase 2–3: KB graphs use minimal taxonomy ref stubs |
 | S1 | Taxonomy rank encoding — integer ranks replace hardcoded level names | **In progress** — schema, WMB taxonomy YAML, DB, find-candidates, map-cell-type updated |
 
 ---

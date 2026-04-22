@@ -28,7 +28,12 @@
 #                               OntologyTerm: name_in_source added as required field (always record)
 # Version: 0.7.1 (2026-04-22) — ADDITIVE: taxonomy_rank (integer) on CellTypeNode, TaxonomyNodeList,
 #                               AnnotationTransferLevelResult; rank-based taxonomy level encoding (S1);
-#                               0 = most specific (leaf), incrementing toward root
+#                               0 = most specific (leaf), incrementing toward root.
+#                               MappingEdge.type_a/type_b: range CellTypeNode (documentation;
+#                               linkml-validate does not enforce cross-object refs currently).
+#                               Taxonomy nodes in KB graphs should be minimal stubs (id, name,
+#                               definition_basis, taxonomy_id, cell_set_accession); full data
+#                               lives in kb/taxonomy/{taxonomy_id}/*.yaml
 # Version: 0.7.0 (2026-04-22) — ADDITIVE: MarkerCategory enum; GeneDescriptor.category + expression_score;
 #                               AnatomicalLocation.cell_count; CellTypeNode.markers + neighborhood;
 #                               TaxonomyNodeList container; WMB: prefix for atlas node CURIEs
@@ -1588,10 +1593,17 @@ classes:
         description: Unique edge ID, e.g. "edge_lugaro_to_pli3"
       type_a:
         required: true
+        range: CellTypeNode
         description: ID of the source node (reference to CellTypeNode.id)
       type_b:
         required: true
-        description: ID of the target node (reference to CellTypeNode.id)
+        range: CellTypeNode
+        description: >
+          ID of the target node (reference to CellTypeNode.id).
+          For atlas/taxonomy nodes, use the cell_set_accession as the id
+          (e.g. CS20230722_SUPT_0179). The node must be declared in the
+          graph's nodes list — a minimal stub (id, name, definition_basis,
+          taxonomy_id, cell_set_accession) suffices for taxonomy references.
       relationship:
         required: true
         range: MappingRelationship
