@@ -670,6 +670,212 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
     return counts
 
 
+# ── CAS (Cell Annotation Schema) ingest ──────────────────────────────────────
+
+
+def _is_cas_format(data: dict | list) -> bool:
+    """Return True if the JSON data looks like CAS v5+ format."""
+    return isinstance(data, dict) and "annotations" in data and "labelsets" in data
+
+
+def _cas_level_name(labelset_name: str) -> str:
+    """Normalise a CAS labelset name to a taxonomy level string.
+
+    CAS labelset names are arbitrary (e.g. "cluster_label", "subclass_label").
+    Strip common suffixes to produce a cleaner level name for YAML output.
+    """
+    # Strip _label suffix if present (common CAS convention)
+    name = labelset_name
+    if name.endswith("_label"):
+        name = name[: -len("_label")]
+    return name.upper()
+
+
+def ingest_cas_to_yaml(
+    source: Path, taxonomy_id: str, output_dir: Path
+) -> dict[str, int]:
+    """Generate per-level TaxonomyNodeList YAML files from CAS-format JSON.
+
+    CAS (Cell Annotation Schema) v5+ format stores annotations as a flat list
+    with ``labelset`` indicating the taxonomy level.  Labelset names are
+    arbitrary — the ``rank`` field on each labelset definition provides the
+    canonical ordering (0 = leaf / most specific).
+
+    Produces the same per-level YAML + taxonomy_meta.yaml output as
+    ``ingest_to_yaml()``.
+
+    Returns {level: node_count}.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    with source.open(encoding="utf-8") as fh:
+        data = json.load(fh)
+
+    if not _is_cas_format(data):
+        raise ValueError(
+            f"{source} is not CAS format (expected top-level 'annotations' + 'labelsets')"
+        )
+
+    # Build labelset → rank mapping
+    labelset_rank: dict[str, int] = {}
+    for ls in data["labelsets"]:
+        labelset_rank[ls["name"]] = ls.get("rank", 0)
+
+    # Read optional metadata input
+    meta_input = _read_meta_input(taxonomy_id)
+    if not meta_input:
+        print(
+            f"  [info] No metadata input found at inputs/taxonomies/{taxonomy_id}_meta.yaml. "
+            "Name, species, tissue fields will be null in taxonomy_meta.yaml.",
+            file=sys.stderr,
+        )
+
+    # Extract reference DOI from first annotation that has one
+    ref_doi = None
+    for ann in data["annotations"]:
+        dois = ann.get("rationale_dois", [])
+        if dois:
+            ref_doi = dois[0]
+            break
+
+    mmc_raw = meta_input.get("mapmycells") or {}
+    meta = TaxonomyMeta(
+        taxonomy_id=taxonomy_id,
+        taxonomy_name=meta_input.get("taxonomy_name") or data.get("title"),
+        species_id=meta_input.get("species_id"),
+        species_label=meta_input.get("species_label"),
+        tissue_id=meta_input.get("tissue_id"),
+        tissue_label=meta_input.get("tissue_label"),
+        anatomy_ontology=meta_input.get("anatomy_ontology"),
+        source_file=source.name,
+        ingest_date=str(date.today()),
+        level_counts={},
+        mapmycells=MapMyCellsMeta(
+            at_taxonomy_id=mmc_raw.get("at_taxonomy_id"),
+            stats_s3_url=mmc_raw.get("stats_s3_url"),
+            markers_s3_url=mmc_raw.get("markers_s3_url"),
+            local_stats_path=mmc_raw.get("local_stats_path"),
+            local_markers_path=mmc_raw.get("local_markers_path"),
+        ),
+    )
+
+    # Species dict from metadata
+    species: dict | None = None
+    if meta.species_id or meta.species_label:
+        species = {}
+        if meta.species_id:
+            species["id"] = meta.species_id
+        if meta.species_label:
+            species["label"] = meta.species_label
+            species["name_in_source"] = meta.species_label
+
+    # Build name lookup for parent_hierarchy resolution
+    name_lookup: dict[str, str] = {}
+    for ann in data["annotations"]:
+        acc = ann.get("cell_set_accession", "")
+        label = ann.get("cell_label", "")
+        if acc and label:
+            name_lookup[acc] = label
+
+    # Convert annotations to CellTypeNode dicts grouped by level
+    by_level: dict[str, list[dict]] = {}
+    for ann in data["annotations"]:
+        labelset = ann.get("labelset", "")
+        level = _cas_level_name(labelset)
+        rank = labelset_rank.get(labelset, 0)
+        acc = ann.get("cell_set_accession", "")
+        label = ann.get("cell_label", "")
+        parent_acc = ann.get("parent_cell_set_accession")
+
+        # Build node CURIE: taxonomy_id prefix + accession
+        # CAS accessions are already prefixed (e.g. CS202106160_79)
+        # but some use hash-based format (e.g. subclass_label:HASH)
+        node_id = f"CTX-HPF:{acc}" if acc else ""
+
+        # Determine if terminal (leaf level = rank 0)
+        is_terminal = rank == 0
+
+        # Parent hierarchy
+        parent_hierarchy: list[dict] = []
+        if parent_acc:
+            parent_name = name_lookup.get(parent_acc, parent_acc)
+            # Infer parent level from its labelset (look up in annotations)
+            parent_level = "UNKNOWN"
+            for other in data["annotations"]:
+                if other.get("cell_set_accession") == parent_acc:
+                    parent_level = _cas_level_name(other.get("labelset", ""))
+                    break
+            parent_hierarchy.append({
+                "level": parent_level,
+                "name": parent_name,
+                "cell_set_accession": parent_acc,
+            })
+
+        # Author annotation fields
+        aaf = ann.get("author_annotation_fields", {})
+
+        d: dict = {
+            "id": node_id,
+            "name": label,
+            "cell_set_accession": acc,
+            "taxonomy_id": taxonomy_id,
+            "taxonomy_level": level,
+            "taxonomy_rank": rank,
+            "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+            "is_terminal": is_terminal,
+        }
+        if parent_hierarchy:
+            d["parent_hierarchy"] = parent_hierarchy
+        if species:
+            d["species"] = species
+        # Preserve rationale DOIs as-is
+        dois = ann.get("rationale_dois", [])
+        if dois:
+            d["rationale_dois"] = dois
+        # Preserve designation from author_annotation_fields
+        designation = aaf.get("cell_set_designation")
+        if designation:
+            d["cell_set_designation"] = designation
+
+        by_level.setdefault(level, []).append(d)
+
+    # Write one TaxonomyNodeList YAML per level
+    counts: dict[str, int] = {}
+    for level, nodes in sorted(by_level.items()):
+        # Use rank from first node for filename (levels are arbitrary names)
+        safe_name = level.lower().replace("/", "_").replace(" ", "_")
+        out_file = output_dir / f"{safe_name}.yaml"
+        # Sort nodes by accession for stable output
+        nodes.sort(key=lambda n: n.get("cell_set_accession", ""))
+        with out_file.open("w", encoding="utf-8") as fh:
+            yaml.dump(
+                {
+                    "taxonomy_id": taxonomy_id,
+                    "taxonomy_level": level,
+                    "taxonomy_rank": labelset_rank.get(
+                        next(
+                            (ls for ls in labelset_rank if _cas_level_name(ls) == level),
+                            "",
+                        ),
+                        0,
+                    ),
+                    "nodes": nodes,
+                },
+                fh,
+                allow_unicode=True,
+                sort_keys=False,
+                default_flow_style=False,
+            )
+        counts[level] = len(nodes)
+
+    meta.level_counts = counts
+    meta_file = output_dir / "taxonomy_meta.yaml"
+    with meta_file.open("w", encoding="utf-8") as fh:
+        yaml.dump(_meta_to_dict(meta), fh, allow_unicode=True, sort_keys=False)
+
+    return counts
+
+
 # ── SQLite backend ─────────────────────────────────────────────────────────────
 
 _DDL = """\
@@ -1264,11 +1470,28 @@ class TaxonomyDB:
 
 # ── CLI entry point ────────────────────────────────────────────────────────────
 
+def _detect_cas_format(source: Path) -> bool:
+    """Peek at a JSON file to check if it's CAS format (has annotations + labelsets)."""
+    with source.open(encoding="utf-8") as fh:
+        # Read enough to find top-level keys without loading the whole file
+        try:
+            data = json.load(fh)
+        except json.JSONDecodeError:
+            return False
+    return _is_cas_format(data)
+
+
 def _cmd_ingest(source: str, taxonomy_id: str) -> None:
     from evidencell.paths import taxonomy_dir
     out = taxonomy_dir(taxonomy_id)
-    print(f"Ingesting {source} → {out}/")
-    counts = ingest_to_yaml(Path(source), taxonomy_id, out)
+    src = Path(source)
+    is_cas = _detect_cas_format(src)
+    fmt = "CAS" if is_cas else "VFB graph export"
+    print(f"Ingesting {source} ({fmt} format) → {out}/")
+    if is_cas:
+        counts = ingest_cas_to_yaml(src, taxonomy_id, out)
+    else:
+        counts = ingest_to_yaml(src, taxonomy_id, out)
     total = sum(counts.values())
     for lvl, n in sorted(counts.items()):
         print(f"  {lvl}: {n:,} nodes")

@@ -1,0 +1,60 @@
+{
+  "author_name": "Test Author",
+  "title": "Test CAS Taxonomy",
+  "description": "Minimal CAS v5.3.0 fixture for testing",
+  "cellannotation_schema_version": "5.3.0",
+  "labelsets": [
+    {"name": "class_label", "description": "Coarse level", "rank": 2},
+    {"name": "subclass_label", "description": "Fine level", "rank": 1},
+    {"name": "cluster_label", "description": "Finest level", "rank": 0}
+  ],
+  "annotations": [
+    {
+      "labelset": "class_label",
+      "cell_label": "GABAergic",
+      "cell_set_accession": "class_label:abc123",
+      "cell_fullname": "GABAergic",
+      "rationale_dois": [],
+      "parent_cell_set_accession": null,
+      "author_annotation_fields": {
+        "taxonomy_id": "TEST_CAS"
+      }
+    },
+    {
+      "labelset": "subclass_label",
+      "cell_label": "Sst",
+      "cell_set_accession": "TEST_CAS_444",
+      "cell_fullname": "Sst",
+      "rationale_dois": ["https://doi.org/10.1016/j.cell.2021.04.021"],
+      "parent_cell_set_accession": "class_label:abc123",
+      "author_annotation_fields": {
+        "cell_set_designation": "TEST 001-003",
+        "taxonomy_id": "TEST_CAS"
+      }
+    },
+    {
+      "labelset": "cluster_label",
+      "cell_label": "79_Sst",
+      "cell_set_accession": "TEST_CAS_79",
+      "cell_fullname": "79_Sst",
+      "rationale_dois": ["https://doi.org/10.1016/j.cell.2021.04.021"],
+      "parent_cell_set_accession": "TEST_CAS_444",
+      "author_annotation_fields": {
+        "cell_set_designation": "TEST 079",
+        "taxonomy_id": "TEST_CAS"
+      }
+    },
+    {
+      "labelset": "cluster_label",
+      "cell_label": "80_Sst",
+      "cell_set_accession": "TEST_CAS_80",
+      "cell_fullname": "80_Sst",
+      "rationale_dois": ["https://doi.org/10.1016/j.cell.2021.04.021"],
+      "parent_cell_set_accession": "TEST_CAS_444",
+      "author_annotation_fields": {
+        "cell_set_designation": "TEST 080",
+        "taxonomy_id": "TEST_CAS"
+      }
+    }
+  ]
+}
