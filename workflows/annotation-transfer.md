@@ -35,8 +35,15 @@ For dataset retrieval from heterogeneous sources, use the **retrieve_dataset** s
 annotation inspection, and the preflight gate.
 
 MapMyCells mapping uses the BKP GraphQL API by default (no local install needed).
-For local execution, install `cell_type_mapper` and download taxonomy files via
-`annotation-transfer taxonomy-setup TAXONOMY_ID --download`.
+For local execution, install `cell_type_mapper` and download taxonomy files:
+
+```
+just at-download-taxonomy CCN20230722
+```
+
+This downloads stats + marker files to `conf/mapmycells/{taxonomy_id}/` (gitignored,
+re-fetchable), updates the AT taxonomy spec with absolute local paths, and syncs
+relative paths into `kb/taxonomy/{taxonomy_id}/taxonomy_meta.yaml`.
 
 ---
 

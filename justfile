@@ -35,6 +35,26 @@ fetch-oak-dbs:
 validate FILE:
     uv run linkml-validate -s {{schema}} {{FILE}}
 
+# Validate a taxonomy YAML file (TaxonomyNodeList root class)
+[group('validation')]
+validate-taxonomy FILE:
+    uv run linkml-validate -s {{schema}} -C TaxonomyNodeList {{FILE}}
+
+# Validate all taxonomy YAML files for a taxonomy ID
+[group('validation')]
+validate-taxonomy-all TAXONOMY_ID:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    dir="kb/taxonomy/{{TAXONOMY_ID}}"
+    files=$(find "$dir" -maxdepth 1 -name "*.yaml" ! -name "taxonomy_meta.yaml" ! -name "field_mapping.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No taxonomy YAML files in $dir."; exit 0; fi
+    failed=0
+    for f in $files; do
+        echo "Validating $f..."
+        uv run linkml-validate -s {{schema}} -C TaxonomyNodeList "$f" || failed=1
+    done
+    [ $failed -eq 0 ] && echo "All taxonomy files valid." || { echo "Validation failed."; exit 1; }
+
 # Validate all canonical KB files (kb/mappings/)
 [group('validation')]
 validate-all:
@@ -155,6 +175,48 @@ ingest-report region pdf_file:
     echo ""
     echo "Inputs validated. Proceeding with workflows/asta-report-ingest.md"
 
+# ── Taxonomy reference DB (M8) ─────────────────────────────────────────────────
+
+# Fetch taxonomy JSON from local brain_cell_KG via Cypher query
+# Requires: [kg] optional deps — run once: uv sync --group kg
+# Requires: local neo4j KG running at bolt://localhost:7687
+# Usage: just fetch-taxonomy-kg inputs/taxonomies/CCN20230722.cypher CCN20230722
+[group('workflows')]
+fetch-taxonomy-kg cypher_file taxonomy_id *ARGS:
+    uv run python -m evidencell.kg_query fetch {{cypher_file}} {{taxonomy_id}} {{ARGS}}
+
+# Ingest taxonomy JSON → compact YAML reference files in kb/taxonomy/{taxonomy_id}/
+# Usage: just ingest-taxonomy-yaml inputs/taxonomies/CCN20230722.json CCN20230722
+[group('workflows')]
+ingest-taxonomy-yaml taxonomy_file taxonomy_id:
+    uv run python -m evidencell.taxonomy_db ingest {{taxonomy_file}} {{taxonomy_id}}
+
+# Build SQLite query index from YAML reference files (no source JSON required)
+# Usage: just build-taxonomy-db CCN20230722
+[group('workflows')]
+build-taxonomy-db taxonomy_id:
+    uv run python -m evidencell.taxonomy_db build-db {{taxonomy_id}}
+
+# Ingest taxonomy JSON and build SQLite index in one step
+# Usage: just ingest-taxonomy-db inputs/taxonomies/wmbv1_full.json CCN20230722
+[group('workflows')]
+ingest-taxonomy-db taxonomy_file taxonomy_id:
+    just ingest-taxonomy-yaml {{taxonomy_file}} {{taxonomy_id}}
+    just build-taxonomy-db {{taxonomy_id}}
+
+# Download the latest BICAN Mouse Brain Atlas Ontology (OBO JSON) to conf/mba/mbao-full.json
+# Run once; file is not committed to git (.gitignore)
+[group('workflows')]
+fetch-mba-ontology:
+    uv run python -m evidencell.taxonomy_db fetch-mba conf/mba/mbao-full.json
+
+# Build anat hierarchy + transitive closure tables from the downloaded MBA ontology
+# Requires: just build-taxonomy-db <taxonomy_id> and just fetch-mba-ontology
+# Usage: just build-anat-closure CCN20230722
+[group('workflows')]
+build-anat-closure taxonomy_id:
+    uv run python -m evidencell.taxonomy_db build-closure {{taxonomy_id}} conf/mba/mbao-full.json
+
 # ── Reports ────────────────────────────────────────────────────────────────────
 
 # Extract structured report facts JSON (input to synthesis subagent in gen-report workflow)
@@ -256,6 +318,14 @@ at-subsample INPUT OUTPUT *ARGS:
 [group('annotation-transfer')]
 at-taxonomy-setup TAXONOMY_ID *ARGS:
     cd annotation_transfer && uv run annotation-transfer taxonomy-setup {{TAXONOMY_ID}} {{ARGS}}
+
+# Download MapMyCells taxonomy files to conf/mapmycells/{taxonomy_id}/ and update
+# both the AT taxonomy spec and kb/taxonomy/{taxonomy_id}/taxonomy_meta.yaml
+# Usage: just at-download-taxonomy CCN20230722
+[group('annotation-transfer')]
+at-download-taxonomy TAXONOMY_ID:
+    cd annotation_transfer && uv run annotation-transfer taxonomy-setup {{TAXONOMY_ID}} --download
+    uv run python -m evidencell.taxonomy_db sync-mapmycells-paths {{TAXONOMY_ID}}
 
 # List known taxonomies
 [group('annotation-transfer')]

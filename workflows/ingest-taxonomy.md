@@ -29,6 +29,73 @@ metadata if possible (atlas name, region). If ambiguous, ask before proceeding.
 
 ---
 
+## Pre-Step 0a: Taxonomy metadata check
+
+Before inspecting the source file, check whether a metadata input file exists:
+
+```
+METADATA_INPUT = inputs/taxonomies/{taxonomy_id}_meta.yaml
+```
+
+**If the file exists:** read it and show a compact summary to the human:
+```
+TAXONOMY METADATA INPUT: {taxonomy_id}
+  Name:              {taxonomy_name}
+  Species:           {species_label} ({species_id})
+  Tissue:            {tissue_label} ({tissue_id})
+  Anatomy ontology:  {anatomy_ontology}
+  MapMyCells:        {at_taxonomy_id} (S3 URLs present: yes/no)
+  Source query:      {source_query}
+```
+Ask: "Metadata confirmed? (yes / edit first)"
+- Yes: proceed using this metadata during ingest.
+- Edit: pause, let the human edit the file, then re-read.
+
+**If the file does not exist:**
+Prompt the human for the following fields:
+- Taxonomy name (e.g. "WMBv1 (Whole Mouse Brain v1)")
+- Species (NCBITaxon CURIE + label, e.g. NCBITaxon:10090 / Mus musculus)
+- Tissue (UBERON CURIE + label, e.g. UBERON:0000955 / brain)
+- Anatomy ontology used for location data (e.g. MBA, DHBA — or "unknown")
+- MapMyCells at_taxonomy_id (if this taxonomy is supported by MapMyCells)
+- MapMyCells S3 URLs (stats + markers) if known — can be null
+- Source query file path (for KG-backed taxonomies)
+
+Write the metadata input file to `inputs/taxonomies/{taxonomy_id}_meta.yaml` before
+proceeding. This file persists and will be used automatically on future re-ingests.
+Show a template and ask the human to fill any blanks, or allow them to provide just
+the name and proceed with nulls for the rest.
+
+---
+
+## Pre-Step 0b: Fast-path check for known taxonomy
+
+Before running any inspection subagent, check whether a confirmed field mapping already
+exists for this taxonomy:
+
+```
+FAST_PATH_CONFIG = kb/taxonomy/{taxonomy_id}/field_mapping.json
+```
+
+**If the file exists and contains `"confirmed": true`:**
+
+1. Read the file and show the human a compact summary:
+   ```
+   KNOWN TAXONOMY: {taxonomy_id}
+   Source format: {source_format}
+   Levels: {taxonomy_level_extraction.levels}
+   Field mapping: confirmed on prior ingest
+   ```
+2. Ask: "Confirmed field mapping found for `{taxonomy_id}`. Proceed with existing
+   mapping, or re-inspect the file? (yes to proceed / re-inspect to run inspection)"
+3. If the human says yes (or similar): skip Step 0 entirely and jump to Step 2
+   (stub generation), passing the existing `field_mapping.json` as the confirmed mapping.
+4. If the human requests re-inspection: continue to Step 0 below.
+
+**If the file does not exist or is not confirmed:** continue to Step 0.
+
+---
+
 ## Step 0: Detect format and run inspection subagent
 
 1. Check the file extension and peek at the first ~100 bytes to determine format.
@@ -437,10 +504,117 @@ After generation:
    > "Stubs written to {output_dir}/. Please open and review before proceeding.
    > When ready, run `just validate-draft` to see what the schema validator reports
    > (failures are expected at this stage — accessions, CL terms, and anatomy
-   > are incomplete). When you are satisfied with the structure, proceed to
-   > literature review (`workflows/lit-review.md`) or manual curation."
+   > are incomplete). When you are satisfied with the structure, reply 'proceed'
+   > to build the taxonomy reference DB."
 
 3. Do not proceed autonomously. Wait for the human.
+
+---
+
+## Step 4: Build taxonomy reference DB
+
+After human approves stubs, determine the source format from `field_mapping.json`
+`"source_format"` value and route accordingly:
+
+---
+
+### Route A — KG export JSON (source_format starts with "JSON")
+
+The source file is a VFB graph export already on disk. Run directly:
+
+```
+just ingest-taxonomy-db {taxonomy_file} {taxonomy_id}
+```
+
+This runs two steps in sequence:
+1. `just ingest-taxonomy-yaml {taxonomy_file} {taxonomy_id}` — streams the source JSON
+   through `evidencell.taxonomy_db`, generates compact YAML reference files under
+   `kb/taxonomy/{taxonomy_id}/` (one file per level + enriched `taxonomy_meta.yaml`
+   read from `inputs/taxonomies/{taxonomy_id}_meta.yaml` if present)
+2. `just build-taxonomy-db {taxonomy_id}` — reads those YAML files and builds a SQLite
+   query index at `kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db`
+
+---
+
+### Route B — KG-backed with cypher file (source_format == "cypher")
+
+The source is a `.cypher` file; the JSON has not been fetched yet (or may be stale).
+
+Ask the human: "Fetch fresh from KG, or use cached JSON if present?"
+
+**Option A — Re-fetch:**
+```
+just fetch-taxonomy-kg {cypher_file} {taxonomy_id}
+```
+This queries `bolt://localhost:7687` and writes `inputs/taxonomies/{taxonomy_id}.json`.
+Then run:
+```
+just ingest-taxonomy-db inputs/taxonomies/{taxonomy_id}.json {taxonomy_id}
+```
+
+**Option B — Use cached JSON** (`inputs/taxonomies/{taxonomy_id}.json` exists):
+```
+just ingest-taxonomy-db inputs/taxonomies/{taxonomy_id}.json {taxonomy_id}
+```
+
+Note: `just fetch-taxonomy-kg` requires the [kg] optional dep group and a running
+local neo4j KG. If the KG is not available, use Option B with a previously exported JSON.
+
+---
+
+### Route C — Ad hoc (CSV, XLSX, non-VFB JSON)
+
+The source is not a KG export. Invoke the ad hoc YAML-writing steps from
+`workflows/ingest-adhoc-taxonomy.md` (Steps 2–4), passing the already-confirmed
+`field_mapping.json` from Step 1 of this orchestrator.
+
+Tell the agent: "Run workflows/ingest-adhoc-taxonomy.md with taxonomy_id={taxonomy_id},
+source_file={taxonomy_file}, field_mapping=already confirmed in Step 1."
+
+---
+
+### All routes: anatomy closure
+
+After the DB is built (any route), build the anatomical region closure tables if the
+taxonomy uses MBA regions (check `anatomy_ontology` in `taxonomy_meta.yaml`):
+
+```
+# Download MBA ontology if not already present
+just fetch-mba-ontology        # skip if conf/mba/mbao-full.json already exists
+
+# Build closure tables
+just build-anat-closure {taxonomy_id}
+```
+
+This parses `conf/mba/mbao-full.json` and adds three tables to the SQLite DB:
+- `anat_terms` — MBA region labels + UBERON cross-references
+- `anat_hierarchy` — direct parent→child edges (spatial `part_of` + ontological `is_a`)
+- `anat_closure` — transitive ancestor→descendant table enabling queries like
+  "all supertypes with cells anywhere under hippocampal region (MBA:1080)"
+
+For non-MBA anatomy ontologies, skip `build-anat-closure` and note the limitation
+in a comment in `taxonomy_meta.yaml`.
+
+After completion, confirm the DB is queryable:
+
+```
+just test-fast   # verifies taxonomy_db unit tests pass
+```
+
+Then say:
+> "Taxonomy reference DB built at `kb/taxonomy/{taxonomy_id}/` with anatomical
+> region closure. Stubs are in `{output_dir}/`. You can now run
+> `workflows/lit-review.md` or `workflows/map-cell-type.md` — the DB will be
+> queried automatically for candidate atlas matches using region hierarchy."
+
+**Notes:**
+- The YAML reference files are the canonical ground truth. The SQLite DB is derived
+  and can be rebuilt at any time with `just build-taxonomy-db {taxonomy_id}` — no
+  source JSON required after the YAML is generated.
+- `conf/mba/mbao-full.json` is gitignored (large download). It is shared across all
+  taxonomies — download once, reuse for any subsequent `just build-anat-closure` runs.
+- The MBA ontology URL always resolves to the latest release. Re-run
+  `just fetch-mba-ontology` to update.
 
 ---
 
