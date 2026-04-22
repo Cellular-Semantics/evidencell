@@ -14,6 +14,7 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 | M4 | Report generation (summary + drill-down, LLM synthesis, anti-hallucination hooks) | **Complete** |
 | M5 | Annotation transfer evidence | **In progress** — pipeline implemented, orchestrator pending |
 | M7 | KB structure cleanup (Phase 1: directory restructure) | **Complete** |
+| M8 | Taxonomy reference DB — compact YAML + SQLite query index | **In progress** — Phase 1 (YAML generation + SQLite backend) |
 
 ---
 
@@ -71,7 +72,11 @@ the full specification and correction loop protocol.
 |---|---|---|
 | ASTA deep research PDFs | `inputs/deepsearch/` | `asta-report-ingest.md` |
 | ASTA corpus IDs | `research/{region}/{run}/pdf_corpus_ids.json` (asta-report-ingest output) | `survey.md` |
-| Taxonomy tables (CSV/TSV) | `inputs/taxonomies/` | `ingest-taxonomy.md` |
+| Taxonomy tables (JSON/CSV/TSV) | `inputs/taxonomies/` | `ingest-taxonomy.md` |
+| Taxonomy reference YAML | `kb/taxonomy/{taxonomy_id}/` | `map-cell-type.md`, `ingest-taxonomy.md` (M8) |
+| Taxonomy SQLite index | `kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db` | `map-cell-type.md` (candidate queries) |
+| Taxonomy field mapping | `kb/taxonomy/{taxonomy_id}/field_mapping.json` | `ingest-taxonomy.md` (fast-path detection) |
+| MBA ontology JSON | `conf/mba/mbao-full.json` (gitignored; fetch with `just fetch-mba-ontology`) | `ingest-taxonomy.md` Step 4 (anat closure build); shared across all taxonomies |
 | Precomputed stats HDF5 | taxonomy local paths (see ROADMAP.md § Taxonomy Reference DB) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
 
 Place input files in the appropriate subdirectory before running the relevant orchestrator.
@@ -90,8 +95,8 @@ parallel where possible (taxonomy ingest + report ingest are independent).
     → workflows/asta-report-ingest.md            # stubs + initial asta_report evidence
     [GATE] approve proposed nodes + CL mappings
 
-1b. just ingest-taxonomy {taxonomy_file}         # taxonomy table → atlas cluster stubs
-    → workflows/ingest-taxonomy.md               # (run in parallel with 1a)
+1b. just ingest-taxonomy-db {taxonomy_file} {taxonomy_id}  # full taxonomy → YAML + SQLite
+    → workflows/ingest-taxonomy.md                         # (run in parallel with 1a)
     [GATE] approve field mapping + generated stubs
 
 ── Primary literature retrieval ───────────────────────────────────────────────

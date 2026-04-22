@@ -154,8 +154,9 @@ def cmd_taxonomy_setup(args: argparse.Namespace) -> None:
     if args.web is not None:
         spec.web_available = args.web
 
-    # Resource check
+    # Resource check + download
     if args.download:
+        from annotation_transfer.taxonomies import download_taxonomy_files, resource_check_for_download
         report = resource_check_for_download(spec)
         print("\nResource check:")
         print(f"  Available RAM:  {report['available_ram_gb']} GB")
@@ -166,7 +167,11 @@ def cmd_taxonomy_setup(args: argparse.Namespace) -> None:
             print("Insufficient disk space for download.")
             spec.preferred_backend = "web"
         else:
-            print("Download not yet implemented — set local paths manually.")
+            stats_path, markers_path = download_taxonomy_files(spec)
+            if stats_path:
+                spec.local_stats_path = str(stats_path)
+            if markers_path:
+                spec.local_markers_path = str(markers_path)
             spec.preferred_backend = report["recommendation"]
     elif args.web is False:
         spec.preferred_backend = "local"

@@ -26,6 +26,12 @@
 #                               AnnotationTransferEvidence: source_species, target_species added;
 #                               nt_consistent_with_classical deprecated (superseded by property_comparisons);
 #                               OntologyTerm: name_in_source added as required field (always record)
+# Version: 0.7.0 (2026-04-22) — ADDITIVE: MarkerCategory enum; GeneDescriptor.category + expression_score;
+#                               AnatomicalLocation.cell_count; CellTypeNode.markers + neighborhood;
+#                               TaxonomyNodeList container; WMB: prefix for atlas node CURIEs
+# Version: 0.6.4 (2026-04-21) — PropertySource.source + PropertySource.support: workflow provenance fields
+#                               added by cite-traverse and evidence-extraction workflows
+# Version: 0.6.3 (2026-04-21) — PropertySource.notes: curator analysis notes distinct from verbatim snippet
 # Version: 0.6.2 (2026-04-21) — MappingRelationship.CANDIDATE_SYNONYM: split-first extraction default;
 #                               provisional same-type edges resolvable by curation
 # Version: 0.6.1 (2026-04-21) — TypeSynonym class + SynonymType enum + CellTypeNode.synonyms field;
@@ -76,6 +82,9 @@ prefixes:
   ABAO:      http://purl.obolibrary.org/obo/ABAO_
   HBA:       http://purl.obolibrary.org/obo/HBA_
   DHBA:      http://purl.obolibrary.org/obo/DHBA_
+  # WMB = Whole Mouse Brain atlas (Allen Brain Cell Atlas CCN taxonomy)
+  # Placeholder URL pending official Allen CURIE registration.
+  WMB:       https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/metadata/WMB-taxonomy/20231215/cell_set_information.csv#
 
 imports:
   - linkml:types
@@ -351,6 +360,39 @@ enums:
       DENDRITE:
         description: Dendritic arbor region
 
+  # ── Marker category ─────────────────────────────────────────────
+  MarkerCategory:
+    description: >
+      Functional category of a marker gene in the context of a cell type description.
+      Used on GeneDescriptor.category to distinguish marker roles in the unified
+      markers list. Negative markers use modifier: ABSENT rather than a separate
+      category.
+    permissible_values:
+      DEFINING:
+        description: >
+          Global defining markers — discriminate this type across the full taxonomy
+          (e.g. cluster_markers_combo in WMBv1).
+      DEFINING_SCOPED:
+        description: >
+          Within-subclass or within-supertype scoped markers — most informative
+          within a narrower comparison context (e.g. cluster_markers_combo_within_subclass).
+      TF:
+        description: Transcription factor markers (e.g. cluster_TF_markers_combo in WMBv1).
+      NEUROPEPTIDE:
+        description: >
+          Neuropeptide co-transmitter markers. Pair with expression_score where
+          available (e.g. from np_markers precomputed stats: Vip:9.2).
+      NT_MARKER:
+        description: >
+          Genes providing evidence for the neurotransmitter type assertion:
+          Gad1/Gad2 (GABA), Slc17a6/Slc17a7 (glutamate), Th (dopamine),
+          Slc6a4 (serotonin), etc. Populate on classical nodes where NT type is
+          inferred from marker expression rather than direct physiology.
+      MERFISH:
+        description: >
+          MERFISH spatial transcriptomics panel markers — distinguish this type
+          in the spatial panel (e.g. merfish_markers_combo in WMBv1).
+
   # ── Property alignment ──────────────────────────────────────────
   PropertyAlignment:
     description: >
@@ -485,6 +527,13 @@ classes:
           Leave absent for atlas terminal nodes (MERFISH captures soma
           implicitly) and for types where location is not
           compartment-specific.
+      cell_count:
+        range: integer
+        description: >
+          Number of cells of this type registered to this anatomical region.
+          Populated from atlas MERFISH registration data (e.g. WMBv1 anat
+          cell counts per cluster per region). Enables ranking of anatomical
+          locations by cell abundance. Leave absent for non-atlas nodes.
 
   CLMapping:
     description: >
@@ -537,6 +586,20 @@ classes:
         description: >
           HGNC ID (human-only). Deprecated in favour of ncbi_gene_id;
           retained for backward compatibility.
+      category:
+        range: MarkerCategory
+        description: >
+          Functional category of this marker in the unified markers list.
+          Use when populating GeneDescriptor entries in CellTypeNode.markers.
+          Leave absent for entries in the legacy separate fields (defining_markers,
+          neuropeptides, merfish_markers) where the field name itself encodes the category.
+      expression_score:
+        range: float
+        description: >
+          Expression level score from precomputed atlas stats. Populated for
+          NEUROPEPTIDE markers from np_markers precomputed data (e.g. Vip:9.2
+          means Vip neuropeptide score = 9.2 in this cluster's stats).
+          Leave absent for markers without quantitative score data.
       sources:
         multivalued: true
         inlined_as_list: true
@@ -653,6 +716,13 @@ classes:
           of SHA-256 of the normalised quote text. Allows quote lookup without
           embedding full text in the KB YAML. Set by asta-report-ingest and
           cite-traverse workflows. Reports dereference to include snippet text.
+      notes:
+        description: >
+          Curator-derived analysis notes for this source: computed statistics,
+          re-analysis observations, cross-subtype comparisons. Distinct from
+          snippet (which must be a verbatim quote from the cited source).
+          Examples: "Detected in 46/46 cells (100%); mean counts 305273",
+          "Htr3a-OLM 43% vs Sst-OLM 26% — subtype-specific expression".
 
   TypeSynonym:
     description: >
@@ -1026,6 +1096,22 @@ classes:
         range: GeneDescriptor
         multivalued: true
         description: MERFISH panel markers distinguishing this type (merfish.markers.combo)
+      markers:
+        multivalued: true
+        inlined_as_list: true
+        range: GeneDescriptor
+        description: >
+          Unified marker list for atlas taxonomy nodes. Replaces the separate
+          defining_markers / neuropeptides / merfish_markers fields for atlas nodes;
+          use GeneDescriptor.category to distinguish marker roles (DEFINING,
+          DEFINING_SCOPED, TF, NEUROPEPTIDE, NT_MARKER, MERFISH). Negative markers
+          use modifier: ABSENT. The legacy separate fields are retained for backward
+          compatibility with existing draft KB YAML.
+      neighborhood:
+        description: >
+          Atlas-assigned neighborhood or supergroup label (e.g. "Subpallium-GABA").
+          Populated from atlas metadata; provides coarser grouping above taxonomy
+          class level. Leave absent for non-atlas nodes.
       ccf_distribution:
         description: >
           CCF region distribution from atlas, e.g. "CB:0.72,NA:0.25" (from CCF_broad.freq column)
@@ -1561,3 +1647,23 @@ classes:
         range: date
       notes:
         description: Free-text notes about scope, limitations, or outstanding issues
+
+  TaxonomyNodeList:
+    description: >
+      Container for per-level atlas taxonomy node files (e.g. cluster.yaml,
+      supertype.yaml). Each file holds all CellTypeNode objects at one taxonomy
+      level for one taxonomy. No edges or brain_region required — these are
+      reference nodes, not a mapping graph.
+    attributes:
+      taxonomy_id:
+        required: true
+        description: Taxonomy identifier, e.g. CCN20230722
+      taxonomy_level:
+        required: true
+        description: Level string for all nodes in this file, e.g. cluster, supertype
+      nodes:
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: CellTypeNode
+        description: All CellTypeNode objects at this taxonomy level

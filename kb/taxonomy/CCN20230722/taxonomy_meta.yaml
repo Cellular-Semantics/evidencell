@@ -1,0 +1,20 @@
+taxonomy_id: CCN20230722
+taxonomy_name: WMBv1 (Whole Mouse Brain v1)
+species_id: NCBITaxon:10090
+species_label: Mus musculus
+tissue_id: UBERON:0000955
+tissue_label: brain
+anatomy_ontology: MBA
+source_query: inputs/taxonomies/CCN20230722.cypher
+source_file: wmbv1_full.json
+ingest_date: '2026-04-22'
+level_counts:
+  class: 34
+  cluster: 5322
+  neurotransmitter: 10
+  subclass: 338
+  supertype: 1201
+mapmycells:
+  at_taxonomy_id: CCN20230722
+  stats_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/WMB-10X/20240831/precomputed_stats_ABC_revision_230821.h5
+  markers_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/WMB-10X/20240831/mouse_markers_230821.json

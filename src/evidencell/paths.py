@@ -85,3 +85,28 @@ def reports_dir_for_region(region: str) -> Path:
 def research_dir_for_region(region: str) -> Path:
     """Return the research directory for a named region."""
     return repo_root() / "research" / region
+
+
+def taxonomy_dir(taxonomy_id: str) -> Path:
+    """Return the directory for a taxonomy reference store."""
+    return repo_root() / "kb" / "taxonomy" / taxonomy_id
+
+
+def taxonomy_db_path(taxonomy_id: str) -> Path:
+    """Return the SQLite DB path for a taxonomy."""
+    return taxonomy_dir(taxonomy_id) / f"{taxonomy_id}.db"
+
+
+def taxonomy_yaml_path(taxonomy_id: str, level: str) -> Path:
+    """Return the YAML file path for a given taxonomy level."""
+    return taxonomy_dir(taxonomy_id) / f"{level}.yaml"
+
+
+def taxonomy_meta_path(taxonomy_id: str) -> Path:
+    """Return the taxonomy_meta.yaml path for a taxonomy (written by ingest)."""
+    return taxonomy_dir(taxonomy_id) / "taxonomy_meta.yaml"
+
+
+def taxonomy_meta_input_path(taxonomy_id: str) -> Path:
+    """Return the metadata input file path (provided by user before ingest)."""
+    return repo_root() / "inputs" / "taxonomies" / f"{taxonomy_id}_meta.yaml"

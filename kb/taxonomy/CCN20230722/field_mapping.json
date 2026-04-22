@@ -1,0 +1,105 @@
+{
+  "taxonomy_id": "CCN20230722",
+  "taxonomy_name": "WMBv1 (Whole Mouse Brain v1)",
+  "source_format": "JSON (VFB graph export)",
+  "format_version": "2026-04",
+  "confirmed": true,
+  "anatomy_ontology": "MBA",
+  "row_keys": {
+    "_note": "Maps canonical column names to actual keys in the exported JSON. The existing wmbv1_full.json uses 'wmb' and 'wmb_parent.curie'; new KG exports from CCN20230722.cypher use canonical 'node' and 'parent_curie'.",
+    "node": "wmb",
+    "parent_curie": "wmb_parent.curie",
+    "cl": "cl",
+    "anat": "anat"
+  },
+  "structure": "Array of objects, one per node at any taxonomy level. Graph-oriented: each row represents one node with its CL mapping, parent pointer, and anatomy. All levels (class, subclass, supertype, cluster, neurotransmitter) in one file.",
+  "top_level_keys": {
+    "cl": "Full CL node object {identity, labels, properties: {curie, label, definition}} or null. Present on ~120 nodes: mainly neurotransmitter (all 10), subclass (~67), class (~31), sparse on supertype (10) and cluster (8).",
+    "wmb": "The taxonomy node: {identity, labels (→ taxonomy level), properties (node data), elementId}",
+    "wmb_parent.curie": "Parent node CURIE as flat string e.g. WMB:CS20230722_SUBC_285. Null for class and neurotransmitter nodes.",
+    "anat": "Array of {anat_id (MBA CURIE), anat_label, cell_count, cell_ratio}. Authoritative location source."
+  },
+  "taxonomy_level_extraction": {
+    "source": "wmb.labels",
+    "pattern": "Label starting with 'CCN20230722_' — strip prefix to get level name",
+    "example": "['CCN20230722', 'CCN20230722_supertype', 'WMB'] → level = 'supertype'",
+    "levels": {
+      "class": 34,
+      "subclass": 338,
+      "supertype": 1201,
+      "cluster": 5322,
+      "neurotransmitter": 10
+    }
+  },
+  "field_mappings": {
+    "common_to_all_levels": [
+      {"source": "wmb.properties.curie",      "target": "node_id",      "confidence": "HIGH", "notes": "CURIE form e.g. WMB:CS20230722_SUPT_1145"},
+      {"source": "wmb.properties.short_form",  "target": "short_form",   "confidence": "HIGH", "notes": "CCN accession e.g. CS20230722_SUPT_1145"},
+      {"source": "wmb.properties.label",       "target": "label",        "confidence": "HIGH", "notes": "Human-readable name"},
+      {"source": "wmb_parent.curie",           "target": "parent_id",    "confidence": "HIGH", "notes": "Flat CURIE string; null for class and neurotransmitter nodes"},
+      {"source": "cl.properties.curie",        "target": "cl_id",        "confidence": "HIGH", "notes": "CL CURIE when cl node is present; null otherwise"},
+      {"source": "cl.properties.label",        "target": "cl_label",     "confidence": "HIGH", "notes": "CL term label when cl node is present"},
+      {"source": "wmb.properties.cell_ontology_term[0]", "target": "cell_ontology_term", "confidence": "HIGH", "notes": "CL label string present on class/subclass even when cl object is null. Value is list — take first element."},
+      {"source": "anat[].anat_id",             "target": "anat[].id",    "confidence": "HIGH", "notes": "MBA CURIE e.g. MBA:399 (renamed from loc_id in old format)"},
+      {"source": "anat[].anat_label",          "target": "anat[].label", "confidence": "HIGH", "notes": "Region name (renamed from loc_name in old format)"},
+      {"source": "anat[].cell_count",          "target": "anat[].cell_count", "confidence": "HIGH", "notes": "May be wrapped in a list in source — take [0]"},
+      {"source": "anat[].cell_ratio",          "target": "anat[].cell_ratio", "confidence": "MODERATE", "notes": "Fraction of type in this region; null in current file, may be populated later"}
+    ],
+    "cluster_and_supertype": [
+      {"source": "wmb.properties.nt_type_label",                      "target": "nt_type",                    "confidence": "HIGH"},
+      {"source": "wmb.properties.cluster_markers_combo_4within_subclass4", "target": "defining_markers_scoped", "confidence": "HIGH", "notes": "Highest mapping value — markers distinctive within parent subclass"},
+      {"source": "wmb.properties.supertype_markers_combo_4within_subclass4","target": "defining_markers_scoped","confidence": "HIGH", "notes": "Supertype-level scoped markers"},
+      {"source": "wmb.properties.cluster_markers_combo",              "target": "defining_markers",           "confidence": "HIGH", "notes": "Global cluster markers — retained as fallback"},
+      {"source": "wmb.properties.supertype_markers_combo",            "target": "defining_markers",           "confidence": "HIGH", "notes": "Global supertype markers"},
+      {"source": "wmb.properties.cluster_TF_markers_combo",           "target": "tf_markers",                 "confidence": "HIGH", "notes": "Transcription factor markers"},
+      {"source": "wmb.properties.merfish_markers_combo",              "target": "merfish_markers",            "confidence": "HIGH", "notes": "MERFISH spatial panel markers"},
+      {"source": "wmb.properties.np_markers",                         "target": "np_markers",                 "confidence": "HIGH", "notes": "Raw string e.g. 'Cck:8.7,Npy:4.9'"},
+      {"source": "wmb.properties.neighborhood",                       "target": "neighborhood",               "confidence": "MODERATE"},
+      {"source": "wmb.properties.Light",                              "target": "circadian_ratio",            "confidence": "MODERATE", "notes": "Light phase fraction; stored only when skewed (>0.7 or <0.3) — small number of types where useful for identification"},
+      {"source": "wmb.properties.CCN20230722_sex_bias",               "target": "sex_bias",                   "confidence": "MODERATE", "notes": "'sex-dominant' flag; raw Male/Female fractions dropped"},
+      {"source": "wmb.properties.rationale[0]",                       "target": "rationale",                  "confidence": "HIGH", "notes": "Prose CL mapping justification; list — take first element"},
+      {"source": "wmb.properties.rationale_dois",                     "target": "rationale_dois",             "confidence": "HIGH", "notes": "List of DOI URLs supporting rationale"},
+      {"source": "wmb.properties.marker_gene_evidence",               "target": "marker_gene_evidence",       "confidence": "HIGH", "notes": "Gene list supporting CL assignment; very sparse"}
+    ],
+    "subclass": [
+      {"source": "wmb.properties.subclass_markers_combo",    "target": "defining_markers",  "confidence": "HIGH"},
+      {"source": "wmb.properties.subclass_tf_markers_combo", "target": "tf_markers",        "confidence": "HIGH"},
+      {"source": "wmb.properties.nt_type_label",             "target": "nt_type",           "confidence": "HIGH"},
+      {"source": "wmb.properties.neighborhood",              "target": "neighborhood",      "confidence": "MODERATE"}
+    ],
+    "class": [
+      {"source": "wmb.properties.Neuronal", "target": "neuronal", "confidence": "HIGH", "notes": "Boolean flag"},
+      {"source": "wmb.properties.Glial",    "target": "glial",    "confidence": "HIGH", "notes": "Boolean flag"},
+      {"source": "wmb.properties.neighborhood", "target": "neighborhood", "confidence": "MODERATE"}
+    ]
+  },
+  "dropped_fields": [
+    "wmb.properties.see_also (long base64-encoded atlas viewer URLs)",
+    "wmb.properties.prefLabel (redundant with label)",
+    "wmb.properties.label_rdfs (redundant with label)",
+    "wmb.properties.sl, qsl (internal display slugs)",
+    "wmb.properties.iri (derivable from curie)",
+    "wmb.properties.uniqueFacets (always Cell_cluster)",
+    "wmb.elementId (graph DB internal integer ID)",
+    "wmb.properties.CCF_broad_freq, CCF_acronym_freq (deprecated CCF mapping)",
+    "wmb.properties.v2_size, v3_size, multiome_size, CTX_size (cell counts superseded by anat[])",
+    "wmb.properties.CTX_* (cross-taxonomy CTX references)",
+    "wmb.properties.Male, Female (raw sex fractions; CCN20230722_sex_bias flag preserved instead)",
+    "wmb.properties.Dark (complementary to Light; circadian_ratio captures the relevant signal)",
+    "wmb.properties.neurotransmitter_rationale (same content as nt_markers; redundant)",
+    "wmb.properties.nt_type_combo_label (same as nt_type_label in most cases)",
+    "wmb.properties.neurotransmitter_accession (CCN NT accession; derivable from nt_type)",
+    "wmb.properties.neurotransmitter_marker_gene_evidence (gene list for NT call; available on request)",
+    "cl.properties.definition (long JSON-encoded prose; available in source file)"
+  ],
+  "notes": {
+    "encoding_issues": [
+      "File has UTF-8 BOM — strip before parsing",
+      "Literal newlines (0x0A) inside JSON string values — replace with \\n before parsing",
+      "4 occurrences of double-escaped quotes (\\\\\") inside CL definition prose — replace with \\\" before parsing"
+    ],
+    "old_format_comparison": "Completely different from research/hippocampus/field_mapping.json (old format). Old format was denormalized (one row = supertype+cluster pair). New format is graph-oriented (one row per node at any level). Old field_mapping.json is obsolete for this source.",
+    "cl_coverage": "120 nodes have CL mappings. cell_ontology_term (label string) has broader coverage: class 31/34, subclass 67/338, supertype 10/1201, cluster 8/5322. When cl object present, cl_id and cl_label are authoritative.",
+    "neurotransmitter_nodes": "The 10 neurotransmitter-level nodes (GABA, Glut, etc.) carry minimal biological information beyond their CL mappings — all cluster-specific detail (markers, anatomy, NT evidence) lives on cluster/supertype nodes. These nodes are retained solely for their CL term associations; do not use them as mapping targets. For NT type queries, prefer cluster-level find_candidates() with nt_type filter."
+  }
+}
