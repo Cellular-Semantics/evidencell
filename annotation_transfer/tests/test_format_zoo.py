@@ -14,7 +14,7 @@ import numpy as np
 import scipy.sparse as sp
 import scipy.io as sio
 
-from annotation_transfer.convert import prepare_for_mapmycells, ConversionError
+from annotation_transfer.convert import prepare_for_mapmycells
 
 
 def _assert_valid_mmc_h5ad(path: Path, expected_n_cells: int | None = None):

@@ -1,7 +1,6 @@
 """Tests for the subsampling module."""
 
 import numpy as np
-import pandas as pd
 import pytest
 import anndata as ad
 import scipy.sparse as sp
@@ -11,7 +10,6 @@ from annotation_transfer.subsample import subsample_adata, SubsampleError
 
 def _make_adata(n_cells: int, n_genes: int = 50, labels: list[str] | None = None) -> ad.AnnData:
     """Create a test AnnData with optional cluster labels."""
-    rng = np.random.default_rng(42)
     X = sp.random(n_cells, n_genes, density=0.1, format="csr", random_state=42)
     X.data = np.round(X.data * 100).astype(np.float32)
     adata = ad.AnnData(X=X)

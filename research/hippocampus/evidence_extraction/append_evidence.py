@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Append proposed evidence items into the KB YAML for hippocampal GABAergic interneurons."""
 
-import sys
 import yaml
 from pathlib import Path
 

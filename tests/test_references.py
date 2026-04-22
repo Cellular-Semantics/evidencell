@@ -2,7 +2,6 @@
 
 import json
 import pytest
-from pathlib import Path
 
 from evidencell.references import compute_quote_key, write_quote_to_refs
 
