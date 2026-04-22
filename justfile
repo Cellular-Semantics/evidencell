@@ -35,6 +35,26 @@ fetch-oak-dbs:
 validate FILE:
     uv run linkml-validate -s {{schema}} {{FILE}}
 
+# Validate a taxonomy YAML file (TaxonomyNodeList root class)
+[group('validation')]
+validate-taxonomy FILE:
+    uv run linkml-validate -s {{schema}} -C TaxonomyNodeList {{FILE}}
+
+# Validate all taxonomy YAML files for a taxonomy ID
+[group('validation')]
+validate-taxonomy-all TAXONOMY_ID:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    dir="kb/taxonomy/{{TAXONOMY_ID}}"
+    files=$(find "$dir" -maxdepth 1 -name "*.yaml" ! -name "taxonomy_meta.yaml" ! -name "field_mapping.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No taxonomy YAML files in $dir."; exit 0; fi
+    failed=0
+    for f in $files; do
+        echo "Validating $f..."
+        uv run linkml-validate -s {{schema}} -C TaxonomyNodeList "$f" || failed=1
+    done
+    [ $failed -eq 0 ] && echo "All taxonomy files valid." || { echo "Validation failed."; exit 1; }
+
 # Validate all canonical KB files (kb/mappings/)
 [group('validation')]
 validate-all:

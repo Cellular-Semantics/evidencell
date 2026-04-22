@@ -1,809 +1,1247 @@
-- node_id: WMB:CS20230722_CLAS_08
-  short_form: CS20230722_CLAS_08
-  label: 08 CNU-MGE GABA
-  taxonomy_level: class
-  cl_id: CL:4023063
-  cl_label: medial ganglionic eminence derived interneuron
-  neighborhood: Subpallium-GABA
-  anat:
+taxonomy_id: CCN20230722
+taxonomy_level: CLASS
+nodes:
+- id: WMB:CS20230722_CLAS_08
+  name: 08 CNU-MGE GABA
+  cell_set_accession: CS20230722_CLAS_08
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:4023063
+      label: medial ganglionic eminence derived interneuron
+      name_in_source: medial ganglionic eminence derived interneuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:1022
     label: Globus pallidus, external segment
+    name_in_source: Globus pallidus, external segment
+    compartment: SOMA
     cell_count: 1493
-    cell_ratio: null
   - id: MBA:672
     label: Caudoputamen
+    name_in_source: Caudoputamen
+    compartment: SOMA
     cell_count: 5362
-    cell_ratio: null
   - id: MBA:596
     label: Diagonal band nucleus
+    name_in_source: Diagonal band nucleus
+    compartment: SOMA
     cell_count: 2199
-    cell_ratio: null
   - id: MBA:564
     label: Medial septal nucleus
+    name_in_source: Medial septal nucleus
+    compartment: SOMA
     cell_count: 1703
-    cell_ratio: null
   - id: MBA:342
     label: Substantia innominata
+    name_in_source: Substantia innominata
+    compartment: SOMA
     cell_count: 2911
-    cell_ratio: null
   - id: MBA:56
     label: Nucleus accumbens
+    name_in_source: Nucleus accumbens
+    compartment: SOMA
     cell_count: 1587
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_09
-  short_form: CS20230722_CLAS_09
-  label: 09 CNU-LGE GABA CS20230722_CLAS_09
-  taxonomy_level: class
-  cl_id: CL:4023035
-  cl_label: lateral ganglionic eminence derived neuron
   neighborhood: Subpallium-GABA
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_09
+  name: 09 CNU-LGE GABA
+  cell_set_accession: CS20230722_CLAS_09
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:4023035
+      label: lateral ganglionic eminence derived neuron
+      name_in_source: lateral ganglionic eminence derived neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:672
     label: Caudoputamen
+    name_in_source: Caudoputamen
+    compartment: SOMA
     cell_count: 164508
-    cell_ratio: null
   - id: MBA:754
     label: Olfactory tubercle
+    name_in_source: Olfactory tubercle
+    compartment: SOMA
     cell_count: 25142
-    cell_ratio: null
   - id: MBA:56
     label: Nucleus accumbens
+    name_in_source: Nucleus accumbens
+    compartment: SOMA
     cell_count: 34277
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_04
-  short_form: CS20230722_CLAS_04
-  label: 04 DG-IMN Glut
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: Pallium-Glut; NN-IMN-GC
-  anat:
+  neighborhood: Subpallium-GABA
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_04
+  name: 04 DG-IMN Glut
+  cell_set_accession: CS20230722_CLAS_04
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:10704
     label: Dentate gyrus, polymorph layer
+    name_in_source: Dentate gyrus, polymorph layer
+    compartment: SOMA
     cell_count: 6177
-    cell_ratio: null
   - id: MBA:10703
     label: Dentate gyrus, molecular layer
+    name_in_source: Dentate gyrus, molecular layer
+    compartment: SOMA
     cell_count: 8584
-    cell_ratio: null
   - id: MBA:632
     label: Dentate gyrus, granule cell layer
+    name_in_source: Dentate gyrus, granule cell layer
+    compartment: SOMA
     cell_count: 9738
-    cell_ratio: null
   - id: MBA:486
     label: Field CA3, stratum oriens
+    name_in_source: Field CA3, stratum oriens
+    compartment: SOMA
     cell_count: 2696
-    cell_ratio: null
   - id: MBA:495
     label: Field CA3, pyramidal layer
+    name_in_source: Field CA3, pyramidal layer
+    compartment: SOMA
     cell_count: 2416
-    cell_ratio: null
   - id: MBA:504
     label: Field CA3, stratum radiatum
+    name_in_source: Field CA3, stratum radiatum
+    compartment: SOMA
     cell_count: 2327
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_05
-  short_form: CS20230722_CLAS_05
-  label: 05 OB-IMN GABA
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: Subpallium-GABA; NN-IMN-GC
-  anat:
+  neighborhood: Pallium-Glut; NN-IMN-GC
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_05
+  name: 05 OB-IMN GABA
+  cell_set_accession: CS20230722_CLAS_05
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:507
     label: Main olfactory bulb
+    name_in_source: Main olfactory bulb
+    compartment: SOMA
     cell_count: 9996
-    cell_ratio: null
   - id: MBA:1016
     label: olfactory nerve layer of main olfactory bulb
+    name_in_source: olfactory nerve layer of main olfactory bulb
+    compartment: SOMA
     cell_count: 5933
-    cell_ratio: null
   - id: MBA:698
     label: Olfactory areas
+    name_in_source: Olfactory areas
+    compartment: SOMA
     cell_count: 8737
-    cell_ratio: null
   - id: MBA:244
     label: Main olfactory bulb, outer plexiform layer
+    name_in_source: Main olfactory bulb, outer plexiform layer
+    compartment: SOMA
     cell_count: 14313
-    cell_ratio: null
   - id: MBA:228
     label: Main olfactory bulb, inner plexiform layer
+    name_in_source: Main olfactory bulb, inner plexiform layer
+    compartment: SOMA
     cell_count: 4104
-    cell_ratio: null
   - id: MBA:220
     label: Main olfactory bulb, granule layer
+    name_in_source: Main olfactory bulb, granule layer
+    compartment: SOMA
     cell_count: 19328
-    cell_ratio: null
   - id: MBA:236
     label: Main olfactory bulb, mitral layer
+    name_in_source: Main olfactory bulb, mitral layer
+    compartment: SOMA
     cell_count: 4331
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_06
-  short_form: CS20230722_CLAS_06
-  label: 06 CTX-CGE GABA
-  taxonomy_level: class
-  cl_id: CL:4023064
-  cl_label: caudal ganglionic eminence derived interneuron
-  neighborhood: Subpallium-GABA
-  anat:
+  neighborhood: Subpallium-GABA; NN-IMN-GC
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_06
+  name: 06 CTX-CGE GABA
+  cell_set_accession: CS20230722_CLAS_06
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:4023064
+      label: caudal ganglionic eminence derived interneuron
+      name_in_source: caudal ganglionic eminence derived interneuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:993
     label: Secondary motor area
+    name_in_source: Secondary motor area
+    compartment: SOMA
     cell_count: 3175
-    cell_ratio: null
   - id: MBA:985
     label: Primary motor area
+    name_in_source: Primary motor area
+    compartment: SOMA
     cell_count: 2588
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_07
-  short_form: CS20230722_CLAS_07
-  label: 07 CTX-MGE GABA
-  taxonomy_level: class
-  cl_id: CL:4023069
-  cl_label: medial ganglionic eminence derived GABAergic interneuron
   neighborhood: Subpallium-GABA
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_07
+  name: 07 CTX-MGE GABA
+  cell_set_accession: CS20230722_CLAS_07
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:4023069
+      label: medial ganglionic eminence derived GABAergic interneuron
+      name_in_source: medial ganglionic eminence derived GABAergic interneuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:993
     label: Secondary motor area
+    name_in_source: Secondary motor area
+    compartment: SOMA
     cell_count: 5671
-    cell_ratio: null
   - id: MBA:985
     label: Primary motor area
+    name_in_source: Primary motor area
+    compartment: SOMA
     cell_count: 4996
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_01
-  short_form: CS20230722_CLAS_01
-  label: 01 IT-ET Glut CS20230722_CLAS_01
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: Pallium-Glut
-  anat:
+  neighborhood: Subpallium-GABA
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_01
+  name: 01 IT-ET Glut
+  cell_set_accession: CS20230722_CLAS_01
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:961
     label: Piriform area
+    name_in_source: Piriform area
+    compartment: SOMA
     cell_count: 39705
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_02
-  short_form: CS20230722_CLAS_02
-  label: 02 NP-CT-L6b Glut
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: Pallium-Glut
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_02
+  name: 02 NP-CT-L6b Glut
+  cell_set_accession: CS20230722_CLAS_02
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:1021
     label: Secondary motor area, layer 6a
+    name_in_source: Secondary motor area, layer 6a
+    compartment: SOMA
     cell_count: 9060
-    cell_ratio: null
   - id: MBA:844
     label: Primary motor area, Layer 6a
+    name_in_source: Primary motor area, Layer 6a
+    compartment: SOMA
     cell_count: 9901
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_03
-  short_form: CS20230722_CLAS_03
-  label: 03 OB-CR Glut CS20230722_CLAS_03
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: Pallium-Glut
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_03
+  name: 03 OB-CR Glut
+  cell_set_accession: CS20230722_CLAS_03
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:10703
     label: Dentate gyrus, molecular layer
+    name_in_source: Dentate gyrus, molecular layer
+    compartment: SOMA
     cell_count: 647
-    cell_ratio: null
   - id: MBA:698
     label: Olfactory areas
+    name_in_source: Olfactory areas
+    compartment: SOMA
     cell_count: 1018
-    cell_ratio: null
   - id: MBA:1016
     label: olfactory nerve layer of main olfactory bulb
+    name_in_source: olfactory nerve layer of main olfactory bulb
+    compartment: SOMA
     cell_count: 1259
-    cell_ratio: null
   - id: MBA:244
     label: Main olfactory bulb, outer plexiform layer
+    name_in_source: Main olfactory bulb, outer plexiform layer
+    compartment: SOMA
     cell_count: 1885
-    cell_ratio: null
   - id: MBA:507
     label: Main olfactory bulb
+    name_in_source: Main olfactory bulb
+    compartment: SOMA
     cell_count: 2436
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_19
-  short_form: CS20230722_CLAS_19
-  label: 19 MB Glut
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: MB-HB-Glut-Sero-Dopa
-  anat:
+  neighborhood: Pallium-Glut
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_19
+  name: 19 MB Glut
+  cell_set_accession: CS20230722_CLAS_19
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:828
     label: Inferior colliculus, external nucleus
+    name_in_source: Inferior colliculus, external nucleus
+    compartment: SOMA
     cell_count: 10770
-    cell_ratio: null
   - id: MBA:313
     label: Midbrain
+    name_in_source: Midbrain
+    compartment: SOMA
     cell_count: 9593
-    cell_ratio: null
   - id: MBA:811
     label: Inferior colliculus, central nucleus
+    name_in_source: Inferior colliculus, central nucleus
+    compartment: SOMA
     cell_count: 6023
-    cell_ratio: null
   - id: MBA:820
     label: Inferior colliculus, dorsal nucleus
+    name_in_source: Inferior colliculus, dorsal nucleus
+    compartment: SOMA
     cell_count: 8753
-    cell_ratio: null
   - id: MBA:795
     label: Periaqueductal gray
+    name_in_source: Periaqueductal gray
+    compartment: SOMA
     cell_count: 10008
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_10
-  short_form: CS20230722_CLAS_10
-  label: 10 LSX GABA CS20230722_CLAS_10
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: Subpallium-GABA
-  anat:
+  neighborhood: MB-HB-Glut-Sero-Dopa
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_10
+  name: 10 LSX GABA
+  cell_set_accession: CS20230722_CLAS_10
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:258
     label: Lateral septal nucleus, rostral (rostroventral) part
+    name_in_source: Lateral septal nucleus, rostral (rostroventral) part
+    compartment: SOMA
     cell_count: 10024
-    cell_ratio: null
   - id: MBA:266
     label: Lateral septal nucleus, ventral part
+    name_in_source: Lateral septal nucleus, ventral part
+    compartment: SOMA
     cell_count: 3138
-    cell_ratio: null
   - id: MBA:250
     label: Lateral septal nucleus, caudal (caudodorsal) part
+    name_in_source: Lateral septal nucleus, caudal (caudodorsal) part
+    compartment: SOMA
     cell_count: 1793
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_15
-  short_form: CS20230722_CLAS_15
-  label: 15 HY Gnrh1 Glut
-  taxonomy_level: class
-  cl_id: CL:0011111
-  cl_label: hypothalamic gonadotropin-releasing hormone neuron
-  neighborhood: HY-EA-Glut-GABA
-  anat:
+  neighborhood: Subpallium-GABA
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_15
+  name: 15 HY Gnrh1 Glut
+  cell_set_accession: CS20230722_CLAS_15
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0011111
+      label: hypothalamic gonadotropin-releasing hormone neuron
+      name_in_source: hypothalamic gonadotropin-releasing hormone neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:263
     label: Anteroventral preoptic nucleus
+    name_in_source: Anteroventral preoptic nucleus
+    compartment: SOMA
     cell_count: 3
-    cell_ratio: null
   - id: MBA:564
     label: Medial septal nucleus
+    name_in_source: Medial septal nucleus
+    compartment: SOMA
     cell_count: 21
-    cell_ratio: null
   - id: MBA:223
     label: Arcuate hypothalamic nucleus
+    name_in_source: Arcuate hypothalamic nucleus
+    compartment: SOMA
     cell_count: 5
-    cell_ratio: null
   - id: MBA:1097
     label: Hypothalamus
+    name_in_source: Hypothalamus
+    compartment: SOMA
     cell_count: 9
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_16
-  short_form: CS20230722_CLAS_16
-  label: 16 HY MM Glut CS20230722_CLAS_16
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: HY-EA-Glut-GABA
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_16
+  name: 16 HY MM Glut
+  cell_set_accession: CS20230722_CLAS_16
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:606826647
     label: Medial mammillary nucleus, lateral part
+    name_in_source: Medial mammillary nucleus, lateral part
+    compartment: SOMA
     cell_count: 791
-    cell_ratio: null
   - id: MBA:606826651
     label: Medial mammillary nucleus, medial part
+    name_in_source: Medial mammillary nucleus, medial part
+    compartment: SOMA
     cell_count: 988
-    cell_ratio: null
   - id: MBA:1004
     label: Ventral premammillary nucleus
+    name_in_source: Ventral premammillary nucleus
+    compartment: SOMA
     cell_count: 221
-    cell_ratio: null
   - id: MBA:980
     label: Dorsal premammillary nucleus
+    name_in_source: Dorsal premammillary nucleus
+    compartment: SOMA
     cell_count: 413
-    cell_ratio: null
   - id: MBA:732
     label: Medial mammillary nucleus, median part
+    name_in_source: Medial mammillary nucleus, median part
+    compartment: SOMA
     cell_count: 421
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_17
-  short_form: CS20230722_CLAS_17
-  label: 17 MH-LH Glut CS20230722_CLAS_17
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: TH-EPI-Glut
-  anat:
+  neighborhood: HY-EA-Glut-GABA
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_17
+  name: 17 MH-LH Glut
+  cell_set_accession: CS20230722_CLAS_17
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:483
     label: Medial habenula
+    name_in_source: Medial habenula
+    compartment: SOMA
     cell_count: 4463
-    cell_ratio: null
   - id: MBA:186
     label: Lateral habenula
+    name_in_source: Lateral habenula
+    compartment: SOMA
     cell_count: 863
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_18
-  short_form: CS20230722_CLAS_18
-  label: 18 TH Glut
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: TH-EPI-Glut
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_18
+  name: 18 TH Glut
+  cell_set_accession: CS20230722_CLAS_18
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:1020
     label: Posterior complex of the thalamus
+    name_in_source: Posterior complex of the thalamus
+    compartment: SOMA
     cell_count: 4545
-    cell_ratio: null
   - id: MBA:733
     label: Ventral posteromedial nucleus of the thalamus
+    name_in_source: Ventral posteromedial nucleus of the thalamus
+    compartment: SOMA
     cell_count: 5926
-    cell_ratio: null
   - id: MBA:155
     label: Lateral dorsal nucleus of thalamus
+    name_in_source: Lateral dorsal nucleus of thalamus
+    compartment: SOMA
     cell_count: 3131
-    cell_ratio: null
   - id: MBA:218
     label: Lateral posterior nucleus of the thalamus
+    name_in_source: Lateral posterior nucleus of the thalamus
+    compartment: SOMA
     cell_count: 4342
-    cell_ratio: null
   - id: MBA:149
     label: Paraventricular nucleus of the thalamus
+    name_in_source: Paraventricular nucleus of the thalamus
+    compartment: SOMA
     cell_count: 3304
-    cell_ratio: null
   - id: MBA:362
     label: Mediodorsal nucleus of thalamus
+    name_in_source: Mediodorsal nucleus of thalamus
+    compartment: SOMA
     cell_count: 5588
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_11
-  short_form: CS20230722_CLAS_11
-  label: 11 CNU-HYa GABA CS20230722_CLAS_11
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: Subpallium-GABA; HY-EA-Glut-GABA
-  anat:
+  neighborhood: TH-EPI-Glut
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_11
+  name: 11 CNU-HYa GABA
+  cell_set_accession: CS20230722_CLAS_11
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:1097
     label: Hypothalamus
+    name_in_source: Hypothalamus
+    compartment: SOMA
     cell_count: 2186
-    cell_ratio: null
   - id: MBA:403
     label: Medial amygdalar nucleus
+    name_in_source: Medial amygdalar nucleus
+    compartment: SOMA
     cell_count: 4274
-    cell_ratio: null
   - id: MBA:351
     label: Bed nuclei of the stria terminalis
+    name_in_source: Bed nuclei of the stria terminalis
+    compartment: SOMA
     cell_count: 5312
-    cell_ratio: null
   - id: MBA:559
     label: Central amygdalar nucleus, medial part
+    name_in_source: Central amygdalar nucleus, medial part
+    compartment: SOMA
     cell_count: 2163
-    cell_ratio: null
   - id: MBA:342
     label: Substantia innominata
+    name_in_source: Substantia innominata
+    compartment: SOMA
     cell_count: 2574
-    cell_ratio: null
   - id: MBA:477
     label: Striatum
+    name_in_source: Striatum
+    compartment: SOMA
     cell_count: 2472
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_12
-  short_form: CS20230722_CLAS_12
-  label: 12 HY GABA CS20230722_CLAS_12
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: HY-EA-Glut-GABA
-  anat:
+  neighborhood: Subpallium-GABA; HY-EA-Glut-GABA
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_12
+  name: 12 HY GABA
+  cell_set_accession: CS20230722_CLAS_12
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:1097
     label: Hypothalamus
+    name_in_source: Hypothalamus
+    compartment: SOMA
     cell_count: 5122
-    cell_ratio: null
   - id: MBA:262
     label: Reticular nucleus of the thalamus
+    name_in_source: Reticular nucleus of the thalamus
+    compartment: SOMA
     cell_count: 6923
-    cell_ratio: null
   - id: MBA:797
     label: Zona incerta
+    name_in_source: Zona incerta
+    compartment: SOMA
     cell_count: 4195
-    cell_ratio: null
   - id: MBA:830
     label: Dorsomedial nucleus of the hypothalamus
+    name_in_source: Dorsomedial nucleus of the hypothalamus
+    compartment: SOMA
     cell_count: 2087
-    cell_ratio: null
   - id: MBA:88
     label: Anterior hypothalamic nucleus
+    name_in_source: Anterior hypothalamic nucleus
+    compartment: SOMA
     cell_count: 2214
-    cell_ratio: null
   - id: MBA:223
     label: Arcuate hypothalamic nucleus
+    name_in_source: Arcuate hypothalamic nucleus
+    compartment: SOMA
     cell_count: 2375
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_13
-  short_form: CS20230722_CLAS_13
-  label: 13 CNU-HYa Glut
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: HY-EA-Glut-GABA
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_13
+  name: 13 CNU-HYa Glut
+  cell_set_accession: CS20230722_CLAS_13
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:403
     label: Medial amygdalar nucleus
+    name_in_source: Medial amygdalar nucleus
+    compartment: SOMA
     cell_count: 3597
-    cell_ratio: null
   - id: MBA:327
     label: Basomedial amygdalar nucleus, anterior part
+    name_in_source: Basomedial amygdalar nucleus, anterior part
+    compartment: SOMA
     cell_count: 2333
-    cell_ratio: null
   - id: MBA:129
     label: third ventricle
+    name_in_source: third ventricle
+    compartment: SOMA
     cell_count: 1263
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_14
-  short_form: CS20230722_CLAS_14
-  label: 14 HY Glut
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: HY-EA-Glut-GABA
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_14
+  name: 14 HY Glut
+  cell_set_accession: CS20230722_CLAS_14
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:1097
     label: Hypothalamus
+    name_in_source: Hypothalamus
+    compartment: SOMA
     cell_count: 4203
-    cell_ratio: null
   - id: MBA:194
     label: Lateral hypothalamic area
+    name_in_source: Lateral hypothalamic area
+    compartment: SOMA
     cell_count: 2752
-    cell_ratio: null
   - id: MBA:693
     label: Ventromedial hypothalamic nucleus
+    name_in_source: Ventromedial hypothalamic nucleus
+    compartment: SOMA
     cell_count: 3727
-    cell_ratio: null
   - id: MBA:830
     label: Dorsomedial nucleus of the hypothalamus
+    name_in_source: Dorsomedial nucleus of the hypothalamus
+    compartment: SOMA
     cell_count: 1479
-    cell_ratio: null
   - id: MBA:946
     label: Posterior hypothalamic nucleus
+    name_in_source: Posterior hypothalamic nucleus
+    compartment: SOMA
     cell_count: 2712
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_20
-  short_form: CS20230722_CLAS_20
-  label: 20 MB GABA
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: MB-HB-CB-GABA
-  anat:
+  neighborhood: HY-EA-Glut-GABA
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_20
+  name: 20 MB GABA
+  cell_set_accession: CS20230722_CLAS_20
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:313
     label: Midbrain
+    name_in_source: Midbrain
+    compartment: SOMA
     cell_count: 6329
-    cell_ratio: null
   - id: MBA:842
     label: Superior colliculus, superficial gray layer
+    name_in_source: Superior colliculus, superficial gray layer
+    compartment: SOMA
     cell_count: 6080
-    cell_ratio: null
   - id: MBA:128
     label: Midbrain reticular nucleus
+    name_in_source: Midbrain reticular nucleus
+    compartment: SOMA
     cell_count: 4171
-    cell_ratio: null
   - id: MBA:795
     label: Periaqueductal gray
+    name_in_source: Periaqueductal gray
+    compartment: SOMA
     cell_count: 4040
-    cell_ratio: null
   - id: MBA:10
     label: Superior colliculus, motor related, intermediate gray layer
+    name_in_source: Superior colliculus, motor related, intermediate gray layer
+    compartment: SOMA
     cell_count: 3666
-    cell_ratio: null
   - id: MBA:17
     label: Superior colliculus, motor related, intermediate white layer
+    name_in_source: Superior colliculus, motor related, intermediate white layer
+    compartment: SOMA
     cell_count: 3112
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_21
-  short_form: CS20230722_CLAS_21
-  label: 21 MB Dopa CS20230722_CLAS_21
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: MB-HB-Glut-Sero-Dopa
-  anat:
+  neighborhood: MB-HB-CB-GABA
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_21
+  name: 21 MB Dopa
+  cell_set_accession: CS20230722_CLAS_21
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:313
     label: Midbrain
+    name_in_source: Midbrain
+    compartment: SOMA
     cell_count: 1334
-    cell_ratio: null
   - id: MBA:749
     label: Ventral tegmental area
+    name_in_source: Ventral tegmental area
+    compartment: SOMA
     cell_count: 646
-    cell_ratio: null
   - id: MBA:381
     label: Substantia nigra, reticular part
+    name_in_source: Substantia nigra, reticular part
+    compartment: SOMA
     cell_count: 270
-    cell_ratio: null
   - id: MBA:374
     label: Substantia nigra, compact part
+    name_in_source: Substantia nigra, compact part
+    compartment: SOMA
     cell_count: 230
-    cell_ratio: null
   - id: MBA:12
     label: Interfascicular nucleus raphe
+    name_in_source: Interfascicular nucleus raphe
+    compartment: SOMA
     cell_count: 230
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_26
-  short_form: CS20230722_CLAS_26
-  label: 26 P GABA CS20230722_CLAS_26
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: MB-HB-CB-GABA
-  anat:
+  neighborhood: MB-HB-Glut-Sero-Dopa
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_26
+  name: 26 P GABA
+  cell_set_accession: CS20230722_CLAS_26
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:1093
     label: Pontine reticular nucleus, caudal part
+    name_in_source: Pontine reticular nucleus, caudal part
+    compartment: SOMA
     cell_count: 970
-    cell_ratio: null
   - id: MBA:146
     label: Pontine reticular nucleus
+    name_in_source: Pontine reticular nucleus
+    compartment: SOMA
     cell_count: 1931
-    cell_ratio: null
   - id: MBA:771
     label: Pons
+    name_in_source: Pons
+    compartment: SOMA
     cell_count: 1992
-    cell_ratio: null
   - id: MBA:898
     label: Pontine central gray
+    name_in_source: Pontine central gray
+    compartment: SOMA
     cell_count: 1606
-    cell_ratio: null
   - id: MBA:679
     label: Superior central nucleus raphe
+    name_in_source: Superior central nucleus raphe
+    compartment: SOMA
     cell_count: 1428
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_27
-  short_form: CS20230722_CLAS_27
-  label: 27 MY GABA CS20230722_CLAS_27
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: MB-HB-CB-GABA
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_27
+  name: 27 MY GABA
+  cell_set_accession: CS20230722_CLAS_27
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:437
     label: Spinal nucleus of the trigeminal, interpolar part
+    name_in_source: Spinal nucleus of the trigeminal, interpolar part
+    compartment: SOMA
     cell_count: 2362
-    cell_ratio: null
   - id: MBA:202
     label: Medial vestibular nucleus
+    name_in_source: Medial vestibular nucleus
+    compartment: SOMA
     cell_count: 2100
-    cell_ratio: null
   - id: MBA:852
     label: Parvicellular reticular nucleus
+    name_in_source: Parvicellular reticular nucleus
+    compartment: SOMA
     cell_count: 1587
-    cell_ratio: null
   - id: MBA:354
     label: Medulla
+    name_in_source: Medulla
+    compartment: SOMA
     cell_count: 1558
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_28
-  short_form: CS20230722_CLAS_28
-  label: 28 CB GABA CS20230722_CLAS_28
-  taxonomy_level: class
-  cl_id: CL:1001611
-  cl_label: cerebellar neuron
   neighborhood: MB-HB-CB-GABA
-  anat:
-  - id: null
-    label: null
-    cell_count: null
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_29
-  short_form: CS20230722_CLAS_29
-  label: 29 CB Glut CS20230722_CLAS_29
-  taxonomy_level: class
-  cl_id: CL:2000028
-  cl_label: cerebellum glutamatergic neuron
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_28
+  name: 28 CB GABA
+  cell_set_accession: CS20230722_CLAS_28
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:1001611
+      label: cerebellar neuron
+      name_in_source: cerebellar neuron
+    mapping_type: EXACT
+  neighborhood: MB-HB-CB-GABA
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_29
+  name: 29 CB Glut
+  cell_set_accession: CS20230722_CLAS_29
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:2000028
+      label: cerebellum glutamatergic neuron
+      name_in_source: cerebellum glutamatergic neuron
+    mapping_type: EXACT
   neighborhood: NN-IMN-GC
-  anat:
-  - id: null
-    label: null
-    cell_count: null
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_22
-  short_form: CS20230722_CLAS_22
-  label: 22 MB-HB Sero
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
-  neighborhood: MB-HB-Glut-Sero-Dopa
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_22
+  name: 22 MB-HB Sero
+  cell_set_accession: CS20230722_CLAS_22
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:354
     label: Medulla
+    name_in_source: Medulla
+    compartment: SOMA
     cell_count: 198
-    cell_ratio: null
   - id: MBA:795
     label: Periaqueductal gray
+    name_in_source: Periaqueductal gray
+    compartment: SOMA
     cell_count: 318
-    cell_ratio: null
   - id: MBA:313
     label: Midbrain
+    name_in_source: Midbrain
+    compartment: SOMA
     cell_count: 186
-    cell_ratio: null
   - id: MBA:771
     label: Pons
+    name_in_source: Pons
+    compartment: SOMA
     cell_count: 336
-    cell_ratio: null
   - id: MBA:872
     label: Dorsal nucleus raphe
+    name_in_source: Dorsal nucleus raphe
+    compartment: SOMA
     cell_count: 538
-    cell_ratio: null
   - id: MBA:679
     label: Superior central nucleus raphe
+    name_in_source: Superior central nucleus raphe
+    compartment: SOMA
     cell_count: 239
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_23
-  short_form: CS20230722_CLAS_23
-  label: 23 P Glut
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: MB-HB-Glut-Sero-Dopa
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_23
+  name: 23 P Glut
+  cell_set_accession: CS20230722_CLAS_23
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:867
     label: Parabrachial nucleus
+    name_in_source: Parabrachial nucleus
+    compartment: SOMA
     cell_count: 3329
-    cell_ratio: null
   - id: MBA:931
     label: Pontine gray
+    name_in_source: Pontine gray
+    compartment: SOMA
     cell_count: 3343
-    cell_ratio: null
   - id: MBA:771
     label: Pons
+    name_in_source: Pons
+    compartment: SOMA
     cell_count: 5180
-    cell_ratio: null
   - id: MBA:7
     label: Principal sensory nucleus of the trigeminal
+    name_in_source: Principal sensory nucleus of the trigeminal
+    compartment: SOMA
     cell_count: 3106
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_24
-  short_form: CS20230722_CLAS_24
-  label: 24 MY Glut
-  taxonomy_level: class
-  cl_id: CL:0000540
-  cl_label: neuron
   neighborhood: MB-HB-Glut-Sero-Dopa
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_24
+  name: 24 MY Glut
+  cell_set_accession: CS20230722_CLAS_24
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000540
+      label: neuron
+      name_in_source: neuron
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:202
     label: Medial vestibular nucleus
+    name_in_source: Medial vestibular nucleus
+    compartment: SOMA
     cell_count: 1921
-    cell_ratio: null
   - id: MBA:354
     label: Medulla
+    name_in_source: Medulla
+    compartment: SOMA
     cell_count: 1688
-    cell_ratio: null
   - id: MBA:437
     label: Spinal nucleus of the trigeminal, interpolar part
+    name_in_source: Spinal nucleus of the trigeminal, interpolar part
+    compartment: SOMA
     cell_count: 1558
-    cell_ratio: null
   - id: MBA:852
     label: Parvicellular reticular nucleus
+    name_in_source: Parvicellular reticular nucleus
+    compartment: SOMA
     cell_count: 1739
-    cell_ratio: null
-  neuronal: Y
-- node_id: WMB:CS20230722_CLAS_25
-  short_form: CS20230722_CLAS_25
-  label: 25 Pineal Glut CS20230722_CLAS_25
-  taxonomy_level: class
-  cl_id: CL:0000652
-  cl_label: pinealocyte
-  neighborhood: MB-HB-Glut-Sero-Dopa; NN-IMN-GC
-  anat:
+  neighborhood: MB-HB-Glut-Sero-Dopa
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_25
+  name: 25 Pineal Glut
+  cell_set_accession: CS20230722_CLAS_25
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000652
+      label: pinealocyte
+      name_in_source: pinealocyte
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:129
     label: third ventricle
+    name_in_source: third ventricle
+    compartment: SOMA
     cell_count: 8
-    cell_ratio: null
-- node_id: WMB:CS20230722_CLAS_30
-  short_form: CS20230722_CLAS_30
-  label: 30 Astro-Epen CS20230722_CLAS_30
-  taxonomy_level: class
-  neighborhood: NN-IMN-GC
-  anat:
+  neighborhood: MB-HB-Glut-Sero-Dopa; NN-IMN-GC
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_30
+  name: 30 Astro-Epen
+  cell_set_accession: CS20230722_CLAS_30
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  anatomical_location:
   - id: MBA:512
     label: Cerebellum
+    name_in_source: Cerebellum
+    compartment: SOMA
     cell_count: 48523
-    cell_ratio: null
   - id: MBA:315
     label: Isocortex
+    name_in_source: Isocortex
+    compartment: SOMA
     cell_count: 103636
-    cell_ratio: null
   - id: MBA:313
     label: Midbrain
+    name_in_source: Midbrain
+    compartment: SOMA
     cell_count: 47396
-    cell_ratio: null
   - id: MBA:698
     label: Olfactory areas
+    name_in_source: Olfactory areas
+    compartment: SOMA
     cell_count: 39709
-    cell_ratio: null
   - id: MBA:1089
     label: Hippocampal formation
+    name_in_source: Hippocampal formation
+    compartment: SOMA
     cell_count: 63049
-    cell_ratio: null
   - id: MBA:477
     label: Striatum
+    name_in_source: Striatum
+    compartment: SOMA
     cell_count: 41208
-    cell_ratio: null
-  glial: Y
-- node_id: WMB:CS20230722_CLAS_31
-  short_form: CS20230722_CLAS_31
-  label: 31 OPC-Oligo CS20230722_CLAS_31
-  taxonomy_level: class
   neighborhood: NN-IMN-GC
-  anat:
-  - id: null
-    label: null
-    cell_count: null
-    cell_ratio: null
-  glial: Y
-- node_id: WMB:CS20230722_CLAS_32
-  short_form: CS20230722_CLAS_32
-  label: 32 OEC CS20230722_CLAS_32
-  taxonomy_level: class
-  cl_id: CL:0011028
-  cl_label: olfactory ensheathing cell
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_31
+  name: 31 OPC-Oligo
+  cell_set_accession: CS20230722_CLAS_31
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
   neighborhood: NN-IMN-GC
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_32
+  name: 32 OEC
+  cell_set_accession: CS20230722_CLAS_32
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0011028
+      label: olfactory ensheathing cell
+      name_in_source: olfactory ensheathing cell
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:1016
     label: olfactory nerve layer of main olfactory bulb
+    name_in_source: olfactory nerve layer of main olfactory bulb
+    compartment: SOMA
     cell_count: 5103
-    cell_ratio: null
   - id: MBA:507
     label: Main olfactory bulb
+    name_in_source: Main olfactory bulb
+    compartment: SOMA
     cell_count: 1328
-    cell_ratio: null
   - id: MBA:698
     label: Olfactory areas
+    name_in_source: Olfactory areas
+    compartment: SOMA
     cell_count: 1687
-    cell_ratio: null
-  glial: Y
-- node_id: WMB:CS20230722_CLAS_33
-  short_form: CS20230722_CLAS_33
-  label: 33 Vascular CS20230722_CLAS_33
-  taxonomy_level: class
   neighborhood: NN-IMN-GC
-  anat:
-  - id: null
-    label: null
-    cell_count: null
-    cell_ratio: null
-- node_id: WMB:CS20230722_CLAS_34
-  short_form: CS20230722_CLAS_34
-  label: 34 Immune
-  taxonomy_level: class
-  cl_id: CL:0000738
-  cl_label: leukocyte
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_33
+  name: 33 Vascular
+  cell_set_accession: CS20230722_CLAS_33
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
   neighborhood: NN-IMN-GC
-  anat:
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus
+- id: WMB:CS20230722_CLAS_34
+  name: 34 Immune
+  cell_set_accession: CS20230722_CLAS_34
+  taxonomy_id: CCN20230722
+  taxonomy_level: CLASS
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  is_terminal: false
+  cl_mapping:
+    cl_term:
+      id: CL:0000738
+      label: leukocyte
+      name_in_source: leukocyte
+    mapping_type: EXACT
+  anatomical_location:
   - id: MBA:672
     label: Caudoputamen
+    name_in_source: Caudoputamen
+    compartment: SOMA
     cell_count: 3160
-    cell_ratio: null
+  neighborhood: NN-IMN-GC
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+    name_in_source: Mus musculus

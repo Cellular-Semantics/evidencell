@@ -81,7 +81,7 @@ Each KB file is a mapping graph for a brain region. It contains:
   - `AnnotationTransferEvidence` — computational label transfer results (MapMyCells, Seurat) with F1 per taxonomy level
   - `PatchSeqEvidence`, `ElectrophysiologyEvidence`, `MorphologyEvidence` — experimental evidence types
 
-**Taxonomy reference DB** — each ingested atlas taxonomy lives in `kb/taxonomy/{id}/` as per-level YAML files (source of truth) plus a SQLite query index (gitignored build artifact). The DB exposes full-transcriptome cluster means, anatomical closure tables (built from the Mouse Brain Atlas Ontology), and CL mapping coverage. Mapping workflows query it for candidate atlas nodes and marker expression data without requiring the full h5ad expression matrices.
+**Taxonomy reference DB** — each ingested atlas taxonomy lives in `kb/taxonomy/{id}/` as per-level YAML files (source of truth) plus a SQLite query index (gitignored build artifact). The YAML files are schema-compliant `CellTypeNode` objects (wrapped in `TaxonomyNodeList` containers) with a unified `markers` list that encodes marker role via `MarkerCategory` (DEFINING, DEFINING_SCOPED, TF, NEUROPEPTIDE, MERFISH). The SQLite index exposes anatomical closure tables (built from the Mouse Brain Atlas Ontology), CL mapping coverage, NT type — including propagation from cluster to supertype for atlases where NT type is only stored at cluster level — and category-scoped marker queries. Raw expression data (full-transcriptome cluster means) lives in the precomputed stats HDF5 downloaded separately via `just at-download-taxonomy`; the SQLite DB does not replicate it.
 
 All location data from spatial transcriptomics (MERFISH) reflects **soma position only**. Axonal and dendritic projection targets are recorded separately in `morphology_notes` and are not used in atlas location comparisons.
 
@@ -116,6 +116,12 @@ just build-taxonomy-db CCN20230722
 ```
 
 The YAML source files (`kb/taxonomy/{id}/*.yaml`) are committed; the `.db` is not.
+To validate the taxonomy YAML against the schema:
+
+```
+just validate-taxonomy-all CCN20230722
+```
+
 To also build the anatomical closure tables (for ancestor-aware location queries):
 
 ```

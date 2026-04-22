@@ -96,17 +96,61 @@ def test_ingest_to_yaml_meta(tmp_path):
 
 def test_ingest_to_yaml_node_fields(tmp_path):
     ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
-    # Find any non-meta yaml file
     for f in tmp_path.glob("*.yaml"):
         if f.name == "taxonomy_meta.yaml":
             continue
-        nodes = yaml.safe_load(f.read_text())
-        assert isinstance(nodes, list)
+        data = yaml.safe_load(f.read_text())
+        # New format: TaxonomyNodeList wrapper
+        assert isinstance(data, dict), "expected TaxonomyNodeList dict"
+        assert "nodes" in data
+        nodes = data["nodes"]
         assert len(nodes) > 0
         node = nodes[0]
-        assert "node_id" in node
-        assert "label" in node
+        assert "id" in node
+        assert "name" in node
         assert "taxonomy_level" in node
+        assert "definition_basis" in node
+        assert node["definition_basis"] == "ATLAS_TRANSCRIPTOMIC"
+        break
+
+
+def test_markers_by_category(tmp_path):
+    """Unified markers list has entries for each category present in fixture."""
+    ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
+    for f in tmp_path.glob("*.yaml"):
+        if f.name == "taxonomy_meta.yaml":
+            continue
+        data = yaml.safe_load(f.read_text())
+        node = data["nodes"][0]
+        markers = node.get("markers", [])
+        categories = {m["category"] for m in markers}
+        # Fixture has all five marker types
+        assert "DEFINING" in categories
+        assert "DEFINING_SCOPED" in categories
+        assert "TF" in categories
+        assert "MERFISH" in categories
+        assert "NEUROPEPTIDE" in categories
+        # NEUROPEPTIDE entries carry expression_score
+        np_entries = [m for m in markers if m["category"] == "NEUROPEPTIDE"]
+        assert all("expression_score" in m for m in np_entries)
+        assert any(m["symbol"] == "Grp" and abs(m["expression_score"] - 7.5) < 0.01 for m in np_entries)
+        break
+
+
+def test_anat_cell_count(tmp_path):
+    """anatomical_location entries carry cell_count and compartment: SOMA."""
+    ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
+    for f in tmp_path.glob("*.yaml"):
+        if f.name == "taxonomy_meta.yaml":
+            continue
+        data = yaml.safe_load(f.read_text())
+        node = data["nodes"][0]
+        anat = node.get("anatomical_location", [])
+        assert len(anat) >= 1
+        loc = anat[0]
+        assert loc["id"] == "MBA:512"
+        assert loc["cell_count"] == 142
+        assert loc["compartment"] == "SOMA"
         break
 
 
@@ -271,11 +315,17 @@ def test_full_wmbv1_ingest(tmp_path):
     assert counts.get("class", 0) == 34
     assert counts.get("neurotransmitter", 0) == 10
 
+    # Verify TaxonomyNodeList format
+    cluster_yaml = yaml.safe_load((tmp_path / "cluster.yaml").read_text())
+    assert isinstance(cluster_yaml, dict)
+    assert cluster_yaml["taxonomy_level"] == "CLUSTER"
+    assert len(cluster_yaml["nodes"]) == 5322
+
     db_path = tmp_path / "CCN20230722.db"
     db = TaxonomyDB(db_path)
     db.build_from_yaml(tmp_path)
 
-    # Lugaro cell should have CL mapping
+    # Lugaro cell should have CL mapping (node_id stored as bare accession)
     lugaro = db.query_by_cl("CL:0011006")
     assert len(lugaro) >= 1
     assert any("1145" in nd["label"] for nd in lugaro)

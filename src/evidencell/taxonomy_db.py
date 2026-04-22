@@ -419,44 +419,170 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
 
 # ── YAML generation ────────────────────────────────────────────────────────────
 
-def _node_to_dict(n: TaxonomyNode) -> dict:
+# WMBv1 accession type-code → taxonomy level string
+_ACCESSION_LEVEL_MAP: dict[str, str] = {
+    "CLUS": "CLUSTER",
+    "SUPT": "SUPERTYPE",
+    "SUBC": "SUBCLASS",
+    "CLAS": "CLASS",
+    "NETT": "NEUROTRANSMITTER",
+}
+
+
+def _strip_accession_from_label(label: str, short_form: str) -> str:
+    """Strip embedded accession suffix from atlas label.
+
+    e.g. '0649 Vip Gaba_7 CS20230722_CLUS_0649' → '0649 Vip Gaba_7'
+    """
+    if short_form and label.endswith(short_form):
+        return label[: -len(short_form)].strip()
+    return label
+
+
+def _infer_level_from_accession(accession: str) -> str:
+    """Infer taxonomy level string from a WMBv1 accession code.
+
+    e.g. 'CS20230722_SUPT_0179' → 'SUPERTYPE'. Returns 'UNKNOWN' if no
+    recognised type-code is found.
+    """
+    for part in accession.split("_"):
+        if part in _ACCESSION_LEVEL_MAP:
+            return _ACCESSION_LEVEL_MAP[part]
+    return "UNKNOWN"
+
+
+def _parse_np_markers(np_markers: str | None) -> list[dict]:
+    """Parse packed np_markers string ('Vip:9.2,Penk:6.8') into GeneDescriptor dicts."""
+    if not np_markers:
+        return []
+    entries: list[dict] = []
+    for part in np_markers.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        if ":" in part:
+            sym, score_str = part.rsplit(":", 1)
+            try:
+                entries.append({"symbol": sym.strip(), "category": "NEUROPEPTIDE",
+                                 "expression_score": float(score_str)})
+                continue
+            except ValueError:
+                pass
+        entries.append({"symbol": part, "category": "NEUROPEPTIDE"})
+    return entries
+
+
+def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, str]) -> dict:
+    """Convert a TaxonomyNode to a schema-compliant CellTypeNode dict.
+
+    meta  — used for species fields
+    name_lookup — accession/CURIE → clean name, for parent_hierarchy.name
+    """
+    name = _strip_accession_from_label(n.label, n.short_form)
+    tax_level = n.taxonomy_level.upper()
+
+    # Unified markers list
+    markers: list[dict] = []
+    for sym in n.defining_markers:
+        markers.append({"symbol": sym, "category": "DEFINING"})
+    for sym in n.defining_markers_scoped:
+        markers.append({"symbol": sym, "category": "DEFINING_SCOPED"})
+    for sym in n.tf_markers:
+        markers.append({"symbol": sym, "category": "TF"})
+    for sym in n.merfish_markers:
+        markers.append({"symbol": sym, "category": "MERFISH"})
+    markers.extend(_parse_np_markers(n.np_markers))
+
+    # NeurotransmitterType
+    nt_type_obj: dict | None = None
+    if n.nt_type:
+        nt_type_obj = {"name_in_source": n.nt_type}
+
+    # CL mapping (cell type, not NT type)
+    # OntologyTerm requires id + label + name_in_source (all three).
+    cl_mapping: dict | None = None
+    if n.cl_id and n.cl_label:
+        cl_term: dict = {
+            "id": n.cl_id,
+            "label": n.cl_label,
+            "name_in_source": n.cell_ontology_term or n.cl_label,
+        }
+        cl_mapping = {"cl_term": cl_term, "mapping_type": "EXACT"}
+
+    # Anatomical location (soma only)
+    anat_locs: list[dict] = []
+    for a in n.anat:
+        anat_id = a.get("id")
+        if not anat_id:
+            continue
+        loc: dict = {
+            "id": anat_id,
+            "label": a.get("label", ""),
+            "name_in_source": a.get("label", ""),
+            "compartment": "SOMA",
+        }
+        if a.get("cell_count") is not None:
+            loc["cell_count"] = a["cell_count"]
+        anat_locs.append(loc)
+
+    # Parent hierarchy (single immediate parent for atlas nodes)
+    parent_hierarchy: list[dict] = []
+    if n.parent_id:
+        parent_acc = n.parent_id.split(":", 1)[-1] if ":" in n.parent_id else n.parent_id
+        parent_name = name_lookup.get(parent_acc) or name_lookup.get(n.parent_id) or parent_acc
+        parent_hierarchy.append({
+            "level": _infer_level_from_accession(parent_acc),
+            "name": parent_name,
+            "cell_set_accession": parent_acc,
+        })
+
+    # Species from taxonomy metadata
+    species: dict | None = None
+    if meta.species_id or meta.species_label:
+        species = {}
+        if meta.species_id:
+            species["id"] = meta.species_id
+        if meta.species_label:
+            species["label"] = meta.species_label
+            species["name_in_source"] = meta.species_label
+
     d: dict = {
-        "node_id": n.node_id,
-        "short_form": n.short_form,
-        "label": n.label,
-        "taxonomy_level": n.taxonomy_level,
-        "parent_id": n.parent_id,
-        "cl_id": n.cl_id,
-        "cl_label": n.cl_label,
-        "cell_ontology_term": n.cell_ontology_term,
-        "nt_type": n.nt_type,
-        "defining_markers_scoped": n.defining_markers_scoped or None,
-        "defining_markers": n.defining_markers or None,
-        "tf_markers": n.tf_markers or None,
-        "merfish_markers": n.merfish_markers or None,
-        "np_markers": n.np_markers,
-        "neighborhood": n.neighborhood,
-        "circadian_ratio": n.circadian_ratio,
-        "anat": n.anat or None,
-        "rationale": n.rationale,
-        "rationale_dois": n.rationale_dois or None,
-        "sex_bias": n.sex_bias,
+        "id": n.node_id,
+        "name": name,
+        "cell_set_accession": n.short_form,
+        "taxonomy_id": n.taxonomy_id,
+        "taxonomy_level": tax_level,
+        "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+        "is_terminal": tax_level == "CLUSTER",
     }
-    # class-level extras
-    if n.neuronal is not None:
-        d["neuronal"] = n.neuronal
-    if n.glial is not None:
-        d["glial"] = n.glial
-    # drop all-null/empty fields for readability
-    return {k: v for k, v in d.items() if v is not None}
+    if parent_hierarchy:
+        d["parent_hierarchy"] = parent_hierarchy
+    if nt_type_obj:
+        d["nt_type"] = nt_type_obj
+    if markers:
+        d["markers"] = markers
+    if cl_mapping:
+        d["cl_mapping"] = cl_mapping
+    if anat_locs:
+        d["anatomical_location"] = anat_locs
+    if n.neighborhood:
+        d["neighborhood"] = n.neighborhood
+    if species:
+        d["species"] = species
+    return d
 
 
 def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str, int]:
-    """Generate per-level YAML files from source taxonomy JSON.
+    """Generate per-level TaxonomyNodeList YAML files from source taxonomy JSON.
+
+    Each output file contains a TaxonomyNodeList with schema-compliant CellTypeNode
+    objects, wrapped as:
+        taxonomy_id: <id>
+        taxonomy_level: <LEVEL>
+        nodes: [...]
 
     Also reads inputs/taxonomies/{taxonomy_id}_meta.yaml (if present) and writes
-    an enriched taxonomy_meta.yaml with name, species, tissue, anatomy_ontology,
-    and MapMyCells references.
+    an enriched taxonomy_meta.yaml.
 
     Returns {level: node_count}.
     """
@@ -465,20 +591,7 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
     cleaned = clean_taxonomy_json(source)
     fc = _load_field_config(taxonomy_id)
 
-    # Accumulate nodes by level
-    by_level: dict[str, list[dict]] = {}
-    for row in iter_taxonomy_rows(cleaned):
-        node = _extract_node(row, taxonomy_id, fc)
-        by_level.setdefault(node.taxonomy_level, []).append(_node_to_dict(node))
-
-    counts: dict[str, int] = {}
-    for level, nodes in sorted(by_level.items()):
-        out_file = output_dir / f"{level}.yaml"
-        with out_file.open("w", encoding="utf-8") as fh:
-            yaml.dump(nodes, fh, allow_unicode=True, sort_keys=False, default_flow_style=False)
-        counts[level] = len(nodes)
-
-    # Read optional metadata input and merge with computed fields
+    # Read metadata early so _node_to_dict can embed species
     meta_input = _read_meta_input(taxonomy_id)
     if not meta_input:
         import sys
@@ -499,7 +612,7 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
         source_query=meta_input.get("source_query"),
         source_file=source.name,
         ingest_date=str(date.today()),
-        level_counts=counts,
+        level_counts={},  # filled below
         mapmycells=MapMyCellsMeta(
             at_taxonomy_id=mmc_raw.get("at_taxonomy_id"),
             stats_s3_url=mmc_raw.get("stats_s3_url"),
@@ -508,6 +621,47 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
             local_markers_path=mmc_raw.get("local_markers_path"),
         ),
     )
+
+    # First pass: extract all TaxonomyNode objects and build name lookup
+    all_nodes: list[TaxonomyNode] = []
+    for row in iter_taxonomy_rows(cleaned):
+        all_nodes.append(_extract_node(row, taxonomy_id, fc))
+
+    # name_lookup: bare accession and CURIE → clean name (for parent_hierarchy)
+    name_lookup: dict[str, str] = {}
+    for n in all_nodes:
+        clean_name = _strip_accession_from_label(n.label, n.short_form)
+        if n.short_form:
+            name_lookup[n.short_form] = clean_name
+        if n.node_id:
+            name_lookup[n.node_id] = clean_name
+
+    # Second pass: convert to CellTypeNode dicts grouped by level
+    by_level: dict[str, list[dict]] = {}
+    for n in all_nodes:
+        by_level.setdefault(n.taxonomy_level, []).append(
+            _node_to_dict(n, meta, name_lookup)
+        )
+
+    # Write one TaxonomyNodeList YAML per level
+    counts: dict[str, int] = {}
+    for level, nodes in sorted(by_level.items()):
+        out_file = output_dir / f"{level}.yaml"
+        with out_file.open("w", encoding="utf-8") as fh:
+            yaml.dump(
+                {
+                    "taxonomy_id": taxonomy_id,
+                    "taxonomy_level": level.upper(),
+                    "nodes": nodes,
+                },
+                fh,
+                allow_unicode=True,
+                sort_keys=False,
+                default_flow_style=False,
+            )
+        counts[level] = len(nodes)
+
+    meta.level_counts = counts
     meta_file = output_dir / "taxonomy_meta.yaml"
     with meta_file.open("w", encoding="utf-8") as fh:
         yaml.dump(_meta_to_dict(meta), fh, allow_unicode=True, sort_keys=False)
@@ -695,7 +849,15 @@ class TaxonomyDB:
                 if yaml_file.name in ("taxonomy_meta.yaml", "field_mapping.yaml"):
                     continue
                 with yaml_file.open(encoding="utf-8") as fh:
-                    nodes = yaml.safe_load(fh)
+                    data = yaml.safe_load(fh)
+                if isinstance(data, dict) and "nodes" in data:
+                    # TaxonomyNodeList format (current)
+                    nodes = data["nodes"]
+                elif isinstance(data, list):
+                    # Legacy flat list (backward compat during migration)
+                    nodes = data
+                else:
+                    continue
                 if not isinstance(nodes, list):
                     continue
                 for nd in nodes:
@@ -705,6 +867,52 @@ class TaxonomyDB:
             con.close()
 
     def _insert_node(self, con: sqlite3.Connection, nd: dict) -> None:
+        """Insert a CellTypeNode dict into the SQLite nodes + anat tables."""
+        # node_id stored as bare accession (strip WMB: prefix for SQL join simplicity)
+        raw_id = nd.get("id", "")
+        node_id = raw_id.split(":", 1)[-1] if ":" in raw_id else raw_id
+        short_form = nd.get("cell_set_accession") or node_id
+        label = nd.get("name", "")
+        tax_id = nd.get("taxonomy_id", "")
+        tax_level = (nd.get("taxonomy_level") or "").lower()
+
+        # parent_id: bare accession from parent_hierarchy[0]
+        parent_hierarchy = nd.get("parent_hierarchy") or []
+        parent_id = parent_hierarchy[0].get("cell_set_accession") if parent_hierarchy else None
+
+        # CL mapping
+        cl_mapping = nd.get("cl_mapping") or {}
+        cl_term = cl_mapping.get("cl_term") or {}
+        cl_id = cl_term.get("id")
+        cl_label = cl_term.get("label")
+        cell_ontology_term = cl_term.get("name_in_source")
+
+        # NT type
+        nt_obj = nd.get("nt_type")
+        if isinstance(nt_obj, dict):
+            nt_type = nt_obj.get("name_in_source")
+        elif isinstance(nt_obj, str):
+            nt_type = nt_obj
+        else:
+            nt_type = None
+
+        # Markers by category
+        markers = nd.get("markers") or []
+        defining_markers = [m["symbol"] for m in markers if m.get("category") == "DEFINING"]
+        defining_markers_scoped = [m["symbol"] for m in markers if m.get("category") == "DEFINING_SCOPED"]
+        tf_markers = [m["symbol"] for m in markers if m.get("category") == "TF"]
+        merfish_markers = [m["symbol"] for m in markers if m.get("category") == "MERFISH"]
+        np_pairs = [
+            (m["symbol"], m.get("expression_score"))
+            for m in markers if m.get("category") == "NEUROPEPTIDE"
+        ]
+        np_markers: str | None = (
+            ",".join(
+                f"{sym}:{score}" if score is not None else sym
+                for sym, score in np_pairs
+            ) or None
+        )
+
         con.execute(
             """INSERT OR REPLACE INTO nodes VALUES (
                :node_id, :short_form, :label, :taxonomy_id, :taxonomy_level,
@@ -714,45 +922,42 @@ class TaxonomyDB:
                :rationale, :rationale_dois, :sex_bias
             )""",
             {
-                "node_id": nd.get("node_id", ""),
-                "short_form": nd.get("short_form", ""),
-                "label": nd.get("label", ""),
-                "taxonomy_id": nd.get("taxonomy_id", nd.get("taxonomy_level", "")),
-                "taxonomy_level": nd.get("taxonomy_level", ""),
-                "parent_id": nd.get("parent_id"),
-                "cl_id": nd.get("cl_id"),
-                "cl_label": nd.get("cl_label"),
-                "cell_ontology_term": nd.get("cell_ontology_term"),
-                "nt_type": nd.get("nt_type"),
-                "defining_markers_scoped": json.dumps(nd["defining_markers_scoped"])
-                    if nd.get("defining_markers_scoped") else None,
-                "defining_markers": json.dumps(nd["defining_markers"])
-                    if nd.get("defining_markers") else None,
-                "tf_markers": json.dumps(nd["tf_markers"])
-                    if nd.get("tf_markers") else None,
-                "merfish_markers": json.dumps(nd["merfish_markers"])
-                    if nd.get("merfish_markers") else None,
-                "np_markers": nd.get("np_markers"),
+                "node_id": node_id,
+                "short_form": short_form,
+                "label": label,
+                "taxonomy_id": tax_id,
+                "taxonomy_level": tax_level,
+                "parent_id": parent_id,
+                "cl_id": cl_id,
+                "cl_label": cl_label,
+                "cell_ontology_term": cell_ontology_term,
+                "nt_type": nt_type,
+                "defining_markers_scoped": json.dumps(defining_markers_scoped)
+                    if defining_markers_scoped else None,
+                "defining_markers": json.dumps(defining_markers)
+                    if defining_markers else None,
+                "tf_markers": json.dumps(tf_markers) if tf_markers else None,
+                "merfish_markers": json.dumps(merfish_markers) if merfish_markers else None,
+                "np_markers": np_markers,
                 "neighborhood": nd.get("neighborhood"),
-                "circadian_ratio": nd.get("circadian_ratio"),
-                "rationale": nd.get("rationale"),
-                "rationale_dois": json.dumps(nd["rationale_dois"])
-                    if nd.get("rationale_dois") else None,
-                "sex_bias": nd.get("sex_bias"),
+                "circadian_ratio": None,  # not in CellTypeNode schema
+                "rationale": None,        # not in CellTypeNode schema
+                "rationale_dois": None,   # not in CellTypeNode schema
+                "sex_bias": None,         # not in CellTypeNode schema
             },
         )
-        for a in nd.get("anat") or []:
+        for a in nd.get("anatomical_location") or []:
             anat_id = a.get("id")
             if not anat_id:
                 continue
             con.execute(
                 "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
                 (
-                    nd.get("node_id", ""),
+                    node_id,
                     anat_id,
-                    a.get("label", ""),
+                    a.get("label") or a.get("name_in_source", ""),
                     a.get("cell_count"),
-                    a.get("cell_ratio"),
+                    None,  # cell_ratio not in AnatomicalLocation schema
                 ),
             )
 
@@ -779,7 +984,11 @@ class TaxonomyDB:
         return [dict(r) for r in rows]
 
     def query_by_nt(self, nt_type: str, level: str = "supertype") -> list[dict]:
-        """Return nodes matching neurotransmitter type (case-insensitive prefix)."""
+        """Return nodes matching neurotransmitter type (case-insensitive prefix).
+
+        Note: in WMBv1, nt_type is only populated at cluster level. For supertype
+        and above use query_by_nt_propagated() instead.
+        """
         sql = """
             SELECT * FROM nodes
             WHERE nt_type LIKE ? AND taxonomy_level = ?
@@ -787,6 +996,61 @@ class TaxonomyDB:
         """
         with self._connect() as con:
             rows = con.execute(sql, [f"{nt_type}%", level]).fetchall()
+        return [dict(r) for r in rows]
+
+    def propagate_nt_types(
+        self,
+        child_level: str = "cluster",
+        parent_level: str = "supertype",
+    ) -> dict[str, str | None]:
+        """Build a {node_id → nt_type} map for parent_level nodes by aggregating child NT.
+
+        A parent is assigned an NT type only when ALL children at child_level share
+        exactly one NT type. Returns None for mixed-NT or zero-cluster parents.
+        Uses the parent_id foreign key stored in each child row.
+        """
+        sql = """
+            SELECT parent_id,
+                   COUNT(DISTINCT nt_type) AS n_types,
+                   MAX(nt_type)            AS single_type
+            FROM nodes
+            WHERE taxonomy_level = ?
+              AND parent_id      IS NOT NULL
+              AND nt_type        IS NOT NULL
+            GROUP BY parent_id
+        """
+        with self._connect() as con:
+            rows = con.execute(sql, [child_level]).fetchall()
+        return {
+            r["parent_id"]: (r["single_type"] if r["n_types"] == 1 else None)
+            for r in rows
+        }
+
+    def query_by_nt_propagated(
+        self,
+        nt_type: str,
+        level: str = "supertype",
+        child_level: str = "cluster",
+    ) -> list[dict]:
+        """Return nodes at level where all children share the given NT type.
+
+        Propagates nt_type upward one hop (child_level → level). Useful for
+        supertype-level NT queries in WMBv1 where nt_type is only stored on clusters.
+        """
+        nt_map = self.propagate_nt_types(child_level=child_level, parent_level=level)
+        matching = [
+            nid for nid, nt in nt_map.items()
+            if nt and nt.lower().startswith(nt_type.lower())
+        ]
+        if not matching:
+            return []
+        placeholders = ",".join("?" * len(matching))
+        with self._connect() as con:
+            rows = con.execute(
+                f"SELECT * FROM nodes WHERE node_id IN ({placeholders})"
+                f"  AND taxonomy_level = ? ORDER BY label",
+                [*matching, level],
+            ).fetchall()
         return [dict(r) for r in rows]
 
     def query_by_cl(self, cl_id: str) -> list[dict]:
@@ -847,6 +1111,10 @@ class TaxonomyDB:
                 )
         return [r[0] for r in rows]
 
+    _ALL_MARKER_COLS: tuple[str, ...] = (
+        "defining_markers_scoped", "defining_markers", "tf_markers", "merfish_markers"
+    )
+
     def find_candidates(
         self,
         anat_ids: list[str] | None = None,
@@ -854,23 +1122,37 @@ class TaxonomyDB:
         nt_type: str | None = None,
         markers: list[str] | None = None,
         level: str = "supertype",
+        marker_columns: list[str] | None = None,
+        propagate_nt: bool = True,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
-        anat_ids:      exact anat region IDs (leaf match)
-        anat_root_ids: region IDs resolved transitively via closure tables; all
-                       descendants are included automatically (requires build_anat_closure)
-        nt_type:       prefix match against cluster-propagated NT type
-        markers:       gene symbols; each match adds 1 pt
+        anat_ids:       exact anat region IDs (leaf match)
+        anat_root_ids:  region IDs resolved transitively via closure tables
+        nt_type:        prefix match; propagated from clusters when propagate_nt=True
+                        (required for supertype/subclass in WMBv1 where nt_type is null)
+        markers:        gene symbols; each match adds 1 pt
+        marker_columns: which SQLite marker columns to score against; defaults to all four
+                        (defining_markers_scoped, defining_markers, tf_markers, merfish_markers).
+                        Pass ["defining_markers_scoped"] for scoped-only marker matching.
+        propagate_nt:   when True (default), fall back to cluster-aggregated NT when the
+                        node's own nt_type is null
 
         Scoring: region match = 2 pts, NT match = 2 pts, each marker match = 1 pt.
         Results sorted descending by score.
         """
+        _marker_cols = tuple(marker_columns) if marker_columns else self._ALL_MARKER_COLS
+
         # Resolve anat_root_ids to full descendant sets via closure
         effective_anat: set[str] = set(anat_ids or [])
         if anat_root_ids:
             for root in anat_root_ids:
                 effective_anat.update(self.get_descendants(root, include_self=True))
+
+        # Pre-load propagated NT map for non-cluster levels when needed
+        _nt_map: dict[str, str | None] = {}
+        if nt_type and propagate_nt and level != "cluster":
+            _nt_map = self.propagate_nt_types(child_level="cluster", parent_level=level)
 
         with self._connect() as con:
             rows = con.execute(
@@ -887,15 +1169,15 @@ class TaxonomyDB:
                 if node_anat & effective_anat:
                     score += 2
 
-            if nt_type and nd.get("nt_type"):
-                if nd["nt_type"].lower().startswith(nt_type.lower()):
+            if nt_type:
+                node_nt = nd.get("nt_type") or _nt_map.get(nd["node_id"])
+                if node_nt and node_nt.lower().startswith(nt_type.lower()):
                     score += 2
 
             if markers:
                 node_markers: set[str] = set()
-                for field_name in ("defining_markers_scoped", "defining_markers",
-                                   "tf_markers", "merfish_markers"):
-                    raw = nd.get(field_name)
+                for col in _marker_cols:
+                    raw = nd.get(col)
                     if raw:
                         node_markers.update(json.loads(raw))
                 for m in markers:
