@@ -2991,7 +2991,7 @@ edges:
   type_a: pv_basket_cell_hippocampus
   type_b: CS20230722_SUPT_0206
   relationship: PARTIAL_OVERLAP
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -3004,6 +3004,10 @@ edges:
       bistratified) that share high transcriptomic similarity and may not be separable at supertype level.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'Precomputed stats cross-check: all 3 defining markers confirmed (Pvalb=8.74, Gad1=10.34, Gad2=9.28) and
+      negative marker Cnr1 absent (1.93). Strong quantitative support for PV basket identity in this supertype.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3049,7 +3053,7 @@ edges:
   type_a: pv_basket_cell_hippocampus
   type_b: CS20230722_CLUS_0739
   relationship: PARTIAL_OVERLAP
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -3061,6 +3065,10 @@ edges:
       as parent supertype.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'Precomputed stats cross-check: Pvalb=10.63, Gad1=10.52, Gad2=8.43, Cnr1=1.68 (absent). Strongest Pvalb expression
+      among SUPT_0206 child clusters.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3329,7 +3337,7 @@ edges:
   type_a: olm_cell_ca1
   type_b: CS20230722_SUPT_0216
   relationship: PARTIAL_OVERLAP
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -3341,6 +3349,10 @@ edges:
       here.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'Precomputed stats cross-check: Sst=11.44, Reln=7.90, Chrna2=1.53 (low but present), Pvalb=1.48 (absent).
+      All 3 neuropeptides confirmed (Sst=11.44, Npy=5.07, Pnoc=3.69). Multiple independent marker confirmations.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3453,7 +3465,7 @@ edges:
   type_a: neurogliaform_cell_hippocampus
   type_b: CS20230722_SUPT_0193
   relationship: PARTIAL_OVERLAP
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -3465,6 +3477,10 @@ edges:
       RHP-COA Ndnf not hippocampus-specific.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'Precomputed stats cross-check: all 4 defining markers confirmed (Nos1=2.26, Npy=2.61, Lamp5=3.65, Id2=4.88)
+      and all 3 negative markers absent (Pvalb=0.27, Sst=1.51, Calb2=0.31). Comprehensive marker match.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3531,8 +3547,8 @@ edges:
 - id: edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203
   type_a: neurogliaform_cell_hippocampus
   type_b: CS20230722_SUPT_0203
-  relationship: UNCERTAIN
-  confidence: UNCERTAIN
+  relationship: PARTIAL_OVERLAP
+  confidence: LOW
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -3543,6 +3559,11 @@ edges:
       doubt on this supertype as an NGC hippocampal candidate.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'Precomputed stats cross-check: all 4 defining markers confirmed at higher levels than SUPT_0193 (Nos1=7.79,
+      Npy=4.62, Lamp5=4.40, Id2=9.35), all 3 negative markers absent. Stronger Nos1 expression suggests MGE-derived nNOS+
+      NGC subtype identity. Upgraded from UNCERTAIN.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3600,7 +3621,7 @@ edges:
   type_a: ivy_cell_hippocampus
   type_b: CS20230722_SUPT_0203
   relationship: PARTIAL_OVERLAP
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -3611,6 +3632,11 @@ edges:
       pyramidale — Ivy cell preferred location in CA1 SP is absent.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'Precomputed stats cross-check: all 3 defining markers confirmed (Nos1=7.79, Npy=4.62, Lamp5=4.40) and all
+      3 negative markers absent (Pvalb=0.43, Sst=1.52, Calb2=0.37). Strong marker support for Ivy cell identity in Lamp5 Lhx6
+      supertype.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3677,7 +3703,7 @@ edges:
   type_a: is_interneuron_hippocampus
   type_b: CS20230722_SUPT_0179
   relationship: PARTIAL_OVERLAP
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -3689,6 +3715,10 @@ edges:
       IS literature.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'Precomputed stats cross-check: both defining markers strongly confirmed (Calb2=6.78, Vip=6.82). Vip neuropeptide
+      also confirmed (6.82).'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3753,6 +3783,10 @@ edges:
       making this a PLAUSIBLE but unconfirmed assignment.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: 'Precomputed stats cross-check: Sst=10.17 strongly confirmed, but Nos1=1.81 is low. O-O cells are defined
+      by Sst+Nos1 co-expression; weak Nos1 in SUPT_0219 suggests this may not be the primary O-O supertype.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3818,6 +3852,11 @@ edges:
       SUPT_0206 likely contains multiple PV+ interneuron types including PV basket cells, making overlap partial.
 
       '
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: 'Precomputed stats cross-check: defining markers confirmed (Pvalb=8.74, Chrm2/M2R=4.52), but negative marker
+      Sst expressed at 2.72. Low-level Sst in a Pvalb supertype is not unexpected (some Pvalb interneurons co-express Sst
+      at low levels) but weakens the negative marker constraint.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3858,6 +3897,10 @@ edges:
       been independently confirmed.
 
       '
+  - caveat_type: MARKER_NOT_SPECIFIC
+    description: Negative marker Sst shows low expression (2.72) in SUPT_0206. Classical trilaminar cells are defined as Sst-negative,
+      but low-level Sst co-expression in Pvalb types is known. Does not disqualify the mapping but reduces confidence in Sst
+      as a discriminating marker.
 - id: edge_vip_basket_cell_hippocampus_to_CS20230722_SUPT_0179
   type_a: vip_basket_cell_hippocampus
   type_b: CS20230722_SUPT_0179
