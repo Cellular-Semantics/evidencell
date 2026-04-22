@@ -14,7 +14,8 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 | M4 | Report generation (summary + drill-down, LLM synthesis, anti-hallucination hooks) | **Complete** |
 | M5 | Annotation transfer evidence | **In progress** — pipeline implemented, orchestrator pending |
 | M7 | KB structure cleanup (Phase 1: directory restructure) | **Complete** |
-| M8 | Taxonomy reference DB — compact YAML + SQLite query index | **In progress** — Phase 1 (YAML generation + SQLite backend) |
+| M8 | Taxonomy reference DB — compact YAML + SQLite query index | **In progress** — Phase 1 complete; Phase 2–3: minimal taxonomy ref stubs in KB graphs |
+| S1 | Taxonomy rank encoding — integer ranks replace hardcoded level names | **In progress** — schema, WMB taxonomy YAML, DB, find-candidates, map-cell-type updated |
 
 ---
 
@@ -40,7 +41,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | `lit-review` | `workflows/lit-review.md` | Literature | **Experimental stub** | Seed discovery when starting without a report; may be revived; do not use in regular workflows |
 | `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; call as a skill for targeted follow-up, not primary discovery |
 | `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After survey or asta-report-ingest — writes PropertySource entries with quote_key to KB YAML |
-| `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: finds candidate atlas matches from property overlap; hypothesis mode: tests curator's proposed mapping. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
+| `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: queries taxonomy DB at multiple ranks (0=leaf, 1, 2…) for candidate atlas matches; hypothesis mode: tests curator's proposed mapping. Uses `just find-candidates` with rank parameter. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
 | `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
 | `annotation-transfer` | `workflows/annotation-transfer.md` | Evidence transfer | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
 

@@ -200,16 +200,22 @@ def test_taxonomy_db_query_by_cl(populated_db):
 
 def test_taxonomy_db_find_candidates_empty(populated_db):
     db, _, _ = populated_db
-    results = db.find_candidates(anat_ids=["MBA:99999999"])
+    results = db.find_candidates(anat_ids=["MBA:99999999"], level="cluster")
     assert isinstance(results, list)
 
 
 def test_taxonomy_db_find_candidates_scores(populated_db):
     db, _, _ = populated_db
-    # Any matches should have _score > 0
-    all_nodes = db.find_candidates()
+    # Any matches should have _score > 0 (use level= for backward compat with test fixtures)
+    all_nodes = db.find_candidates(level="cluster")
     for nd in all_nodes:
         assert "_score" not in nd or nd["_score"] >= 0
+
+
+def test_taxonomy_db_find_candidates_requires_rank_or_level(populated_db):
+    db, _, _ = populated_db
+    with pytest.raises(ValueError, match="Either rank or level"):
+        db.find_candidates()
 
 
 # ── TaxonomyMeta ──────────────────────────────────────────────────────────────

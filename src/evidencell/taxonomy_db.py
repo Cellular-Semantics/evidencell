@@ -15,6 +15,7 @@ from __future__ import annotations
 import io
 import json
 import sqlite3
+import sys
 import urllib.request
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -678,6 +679,7 @@ CREATE TABLE IF NOT EXISTS nodes (
   label                  TEXT NOT NULL,
   taxonomy_id            TEXT NOT NULL,
   taxonomy_level         TEXT NOT NULL,
+  taxonomy_rank          INTEGER,
   parent_id              TEXT,
   cl_id                  TEXT,
   cl_label               TEXT,
@@ -704,6 +706,7 @@ CREATE TABLE IF NOT EXISTS anat (
 );
 
 CREATE INDEX IF NOT EXISTS idx_nodes_level  ON nodes(taxonomy_level);
+CREATE INDEX IF NOT EXISTS idx_nodes_rank   ON nodes(taxonomy_rank);
 CREATE INDEX IF NOT EXISTS idx_nodes_cl     ON nodes(cl_id);
 CREATE INDEX IF NOT EXISTS idx_nodes_nt     ON nodes(nt_type);
 CREATE INDEX IF NOT EXISTS idx_anat_node    ON anat(node_id);
@@ -847,9 +850,11 @@ class TaxonomyDB:
                     continue
                 with yaml_file.open(encoding="utf-8") as fh:
                     data = yaml.safe_load(fh)
+                file_rank: int | None = None
                 if isinstance(data, dict) and "nodes" in data:
                     # TaxonomyNodeList format (current)
                     nodes = data["nodes"]
+                    file_rank = data.get("taxonomy_rank")  # S1: rank from file header
                 elif isinstance(data, list):
                     # Legacy flat list (backward compat during migration)
                     nodes = data
@@ -858,12 +863,17 @@ class TaxonomyDB:
                 if not isinstance(nodes, list):
                     continue
                 for nd in nodes:
-                    self._insert_node(con, nd)
+                    self._insert_node(con, nd, file_rank=file_rank)
             con.commit()
         finally:
             con.close()
 
-    def _insert_node(self, con: sqlite3.Connection, nd: dict) -> None:
+    def _insert_node(
+        self,
+        con: sqlite3.Connection,
+        nd: dict,
+        file_rank: int | None = None,
+    ) -> None:
         """Insert a CellTypeNode dict into the SQLite nodes + anat tables."""
         # node_id stored as bare accession (strip WMB: prefix for SQL join simplicity)
         raw_id = nd.get("id", "")
@@ -872,6 +882,8 @@ class TaxonomyDB:
         label = nd.get("name", "")
         tax_id = nd.get("taxonomy_id", "")
         tax_level = (nd.get("taxonomy_level") or "").lower()
+        # S1: rank from node, falling back to file-level rank
+        tax_rank = nd.get("taxonomy_rank") if nd.get("taxonomy_rank") is not None else file_rank
 
         # parent_id: bare accession from parent_hierarchy[0]
         parent_hierarchy = nd.get("parent_hierarchy") or []
@@ -913,7 +925,8 @@ class TaxonomyDB:
         con.execute(
             """INSERT OR REPLACE INTO nodes VALUES (
                :node_id, :short_form, :label, :taxonomy_id, :taxonomy_level,
-               :parent_id, :cl_id, :cl_label, :cell_ontology_term, :nt_type,
+               :taxonomy_rank, :parent_id, :cl_id, :cl_label,
+               :cell_ontology_term, :nt_type,
                :defining_markers_scoped, :defining_markers, :tf_markers,
                :merfish_markers, :np_markers, :neighborhood, :circadian_ratio,
                :rationale, :rationale_dois, :sex_bias
@@ -924,6 +937,7 @@ class TaxonomyDB:
                 "label": label,
                 "taxonomy_id": tax_id,
                 "taxonomy_level": tax_level,
+                "taxonomy_rank": tax_rank,
                 "parent_id": parent_id,
                 "cl_id": cl_id,
                 "cl_label": cl_label,
@@ -1112,17 +1126,46 @@ class TaxonomyDB:
         "defining_markers_scoped", "defining_markers", "tf_markers", "merfish_markers"
     )
 
+    def _propagate_nt_by_rank(
+        self,
+        child_rank: int = 0,
+        parent_rank: int = 1,
+    ) -> dict[str, str | None]:
+        """Like propagate_nt_types but using rank instead of level names."""
+        sql = """
+            SELECT p.node_id AS parent_id,
+                   COUNT(DISTINCT c.nt_type) AS n_types,
+                   MAX(c.nt_type)            AS single_type
+            FROM nodes c
+            JOIN nodes p ON c.parent_id = p.node_id
+            WHERE c.taxonomy_rank = ?
+              AND p.taxonomy_rank = ?
+              AND c.nt_type IS NOT NULL
+            GROUP BY p.node_id
+        """
+        with self._connect() as con:
+            rows = con.execute(sql, [child_rank, parent_rank]).fetchall()
+        return {
+            r["parent_id"]: (r["single_type"] if r["n_types"] == 1 else None)
+            for r in rows
+        }
+
     def find_candidates(
         self,
         anat_ids: list[str] | None = None,
         anat_root_ids: list[str] | None = None,
         nt_type: str | None = None,
         markers: list[str] | None = None,
-        level: str = "supertype",
+        level: str | None = None,
+        rank: int | None = None,
         marker_columns: list[str] | None = None,
         propagate_nt: bool = True,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
+
+        Specify nodes to search via *either* ``rank`` (preferred, taxonomy-agnostic)
+        or ``level`` (legacy, taxonomy-specific name string).  ``rank`` takes precedence
+        when both are provided.
 
         anat_ids:       exact anat region IDs (leaf match)
         anat_root_ids:  region IDs resolved transitively via closure tables
@@ -1134,10 +1177,16 @@ class TaxonomyDB:
                         Pass ["defining_markers_scoped"] for scoped-only marker matching.
         propagate_nt:   when True (default), fall back to cluster-aggregated NT when the
                         node's own nt_type is null
+        rank:           integer rank (0 = leaf). Selects nodes by taxonomy_rank column.
+        level:          taxonomy level string (e.g. "cluster", "supertype"). Used when rank
+                        is not provided, for backward compatibility.
 
         Scoring: region match = 2 pts, NT match = 2 pts, each marker match = 1 pt.
         Results sorted descending by score.
         """
+        if rank is None and level is None:
+            raise ValueError("Either rank or level must be specified")
+
         _marker_cols = tuple(marker_columns) if marker_columns else self._ALL_MARKER_COLS
 
         # Resolve anat_root_ids to full descendant sets via closure
@@ -1146,15 +1195,30 @@ class TaxonomyDB:
             for root in anat_root_ids:
                 effective_anat.update(self.get_descendants(root, include_self=True))
 
-        # Pre-load propagated NT map for non-cluster levels when needed
-        _nt_map: dict[str, str | None] = {}
-        if nt_type and propagate_nt and level != "cluster":
-            _nt_map = self.propagate_nt_types(child_level="cluster", parent_level=level)
+        # Determine whether we're at leaf rank (rank 0) for NT propagation
+        is_leaf = rank == 0 if rank is not None else (level == "cluster")
 
+        # Pre-load propagated NT map for non-leaf levels when needed
+        _nt_map: dict[str, str | None] = {}
+        if nt_type and propagate_nt and not is_leaf:
+            if rank is not None:
+                # Propagate from rank 0 (leaf) to the target rank's level name
+                _nt_map = self._propagate_nt_by_rank(child_rank=0, parent_rank=rank)
+            else:
+                _nt_map = self.propagate_nt_types(
+                    child_level="cluster", parent_level=level,  # type: ignore[arg-type]
+                )
+
+        # Select nodes by rank (preferred) or level
         with self._connect() as con:
-            rows = con.execute(
-                "SELECT * FROM nodes WHERE taxonomy_level = ?", (level,)
-            ).fetchall()
+            if rank is not None:
+                rows = con.execute(
+                    "SELECT * FROM nodes WHERE taxonomy_rank = ?", (rank,)
+                ).fetchall()
+            else:
+                rows = con.execute(
+                    "SELECT * FROM nodes WHERE taxonomy_level = ?", (level,)
+                ).fetchall()
 
         results = []
         for row in rows:
@@ -1168,8 +1232,10 @@ class TaxonomyDB:
 
             if nt_type:
                 node_nt = nd.get("nt_type") or _nt_map.get(nd["node_id"])
-                if node_nt and node_nt.lower().startswith(nt_type.lower()):
-                    score += 2
+                if node_nt:
+                    nn, qt = node_nt.lower(), nt_type.lower()
+                    if nn.startswith(qt) or qt.startswith(nn):
+                        score += 2
 
             if markers:
                 node_markers: set[str] = set()
@@ -1341,9 +1407,157 @@ def _cmd_build_closure(taxonomy_id: str, mba_json: str) -> None:
     print(f"  anat_closure rows: {n_closure:,}")
 
 
-if __name__ == "__main__":
-    import sys
+def _cmd_find_candidates(
+    graph_file: str,
+    node_id: str,
+    taxonomy_id: str,
+    rank: int = 1,
+    top_n: int = 20,
+) -> None:
+    """Extract a classical node's property signature from a KB YAML file
+    and query the taxonomy DB for candidate atlas matches at a given rank.
 
+    Outputs a JSON candidate list to stdout.
+    """
+    from evidencell.paths import taxonomy_db_path
+
+    graph_path = Path(graph_file)
+    if not graph_path.exists():
+        print(f"ERROR: graph file not found: {graph_path}", file=sys.stderr)
+        sys.exit(1)
+
+    db_path = taxonomy_db_path(taxonomy_id)
+    if not db_path.exists():
+        print(
+            f"ERROR: DB not found at {db_path} — run: just build-taxonomy-db {taxonomy_id}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    with graph_path.open(encoding="utf-8") as fh:
+        doc = yaml.safe_load(fh)
+
+    # Find the classical node
+    nodes = doc.get("nodes") or []
+    classical = None
+    for nd in nodes:
+        if nd.get("id") == node_id:
+            classical = nd
+            break
+
+    if classical is None:
+        print(f"ERROR: node '{node_id}' not found in {graph_path}", file=sys.stderr)
+        sys.exit(1)
+
+    # Extract property signature
+    markers: list[str] = []
+    for m in classical.get("defining_markers") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym:
+            markers.append(sym)
+
+    nt_obj = classical.get("nt_type")
+    nt_type: str | None = None
+    if isinstance(nt_obj, dict):
+        nt_type = nt_obj.get("name_in_source")
+    elif isinstance(nt_obj, str):
+        nt_type = nt_obj
+
+    # Extract soma locations only (skip AXON_TARGET, DENDRITE)
+    anat_ids: list[str] = []
+    for loc in classical.get("anatomical_location") or []:
+        compartment = loc.get("compartment")
+        if compartment in ("AXON_TARGET", "DENDRITE"):
+            continue
+        loc_id = loc.get("id")
+        if loc_id:
+            anat_ids.append(loc_id)
+
+    db = TaxonomyDB(db_path)
+
+    # Resolve UBERON IDs to MBA IDs via anat_terms lookup
+    mba_ids: list[str] = []
+    uberon_ids: list[str] = []
+    for aid in anat_ids:
+        if aid.startswith("UBERON:"):
+            uberon_ids.append(aid)
+        else:
+            mba_ids.append(aid)
+
+    if uberon_ids:
+        with db._connect() as con:
+            for uid in uberon_ids:
+                rows = con.execute(
+                    "SELECT anat_id FROM anat_terms WHERE uberon_id = ?", (uid,)
+                ).fetchall()
+                resolved = [r[0] for r in rows]
+                if resolved:
+                    mba_ids.extend(resolved)
+                else:
+                    print(f"  WARNING: {uid} has no MBA mapping — skipped", file=sys.stderr)
+
+    print(f"Classical node: {node_id} ({classical.get('name', '?')})", file=sys.stderr)
+    print(f"  NT type: {nt_type}", file=sys.stderr)
+    print(f"  Markers: {markers}", file=sys.stderr)
+    print(f"  Soma locations: {anat_ids}", file=sys.stderr)
+    if mba_ids != anat_ids:
+        print(f"  Resolved MBA IDs: {mba_ids}", file=sys.stderr)
+    print(f"  Query rank: {rank}", file=sys.stderr)
+    print(f"  Taxonomy: {taxonomy_id}", file=sys.stderr)
+
+    # Try transitive anatomy matching (requires anat_closure table from MBA ontology).
+    # Fall back to no anatomy matching if closure not built.
+    query_anat = mba_ids if mba_ids else None
+    try:
+        candidates = db.find_candidates(
+            anat_root_ids=query_anat,
+            nt_type=nt_type,
+            markers=markers,
+            rank=rank,
+        )
+    except RuntimeError as exc:
+        if "anat_closure" in str(exc):
+            print(
+                "  WARNING: anat_closure table not built — anatomy matching disabled. "
+                "Run: just fetch-mba-ontology && just build-anat-closure "
+                f"{taxonomy_id}",
+                file=sys.stderr,
+            )
+            candidates = db.find_candidates(
+                nt_type=nt_type,
+                markers=markers,
+                rank=rank,
+            )
+        else:
+            raise
+
+    # Trim to top_n
+    candidates = candidates[:top_n]
+
+    # Output JSON
+    output = {
+        "classical_node_id": node_id,
+        "classical_node_name": classical.get("name", ""),
+        "taxonomy_id": taxonomy_id,
+        "rank": rank,
+        "n_candidates": len(candidates),
+        "candidates": [
+            {
+                "node_id": c["node_id"],
+                "label": c["label"],
+                "taxonomy_level": c["taxonomy_level"],
+                "taxonomy_rank": c.get("taxonomy_rank"),
+                "score": c["_score"],
+                "nt_type": c.get("nt_type"),
+                "parent_id": c.get("parent_id"),
+            }
+            for c in candidates
+        ],
+    }
+    print(json.dumps(output, indent=2))
+
+
+if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage:")
         print("  python -m evidencell.taxonomy_db ingest <source_json> <taxonomy_id>")
@@ -1352,6 +1566,7 @@ if __name__ == "__main__":
         print("  python -m evidencell.taxonomy_db sync-mapmycells-paths <taxonomy_id>")
         print("  python -m evidencell.taxonomy_db fetch-mba <dest_path>")
         print("  python -m evidencell.taxonomy_db build-closure <taxonomy_id> <mba_json>")
+        print("  python -m evidencell.taxonomy_db find-candidates <graph_file> <node_id> <taxonomy_id> [rank] [top_n]")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -1367,6 +1582,10 @@ if __name__ == "__main__":
         _cmd_fetch_mba(sys.argv[2])
     elif cmd == "build-closure" and len(sys.argv) == 4:
         _cmd_build_closure(sys.argv[2], sys.argv[3])
+    elif cmd == "find-candidates" and len(sys.argv) >= 5:
+        _rank = int(sys.argv[5]) if len(sys.argv) > 5 else 1
+        _top_n = int(sys.argv[6]) if len(sys.argv) > 6 else 20
+        _cmd_find_candidates(sys.argv[2], sys.argv[3], sys.argv[4], _rank, _top_n)
     else:
         print(f"Unknown command or wrong arguments: {sys.argv[1:]}")
         sys.exit(1)

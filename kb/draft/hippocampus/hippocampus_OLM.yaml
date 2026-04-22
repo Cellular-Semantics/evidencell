@@ -39,8 +39,8 @@ nodes:
     definition_basis: CLASSICAL_MULTIMODAL
     species: null  # described in rat (Rattus norvegicus) and mouse (Mus musculus); species-specific nodes pending
     anatomical_location:
-      - id: UBERON:0014548
-        label: "stratum oriens of hippocampus"
+      - id: UBERON:0005371
+        label: "hippocampus stratum oriens"
         name_in_source: "CA1 stratum oriens"
         compartment: SOMA
       - id: UBERON:0007637
@@ -3231,7 +3231,7 @@ edges:
         node_b_value: "GABA"
         alignment: CONSISTENT
       - property: location
-        node_a_value: "stratum oriens (UBERON:0014548); SLM (UBERON:0007637)"
+        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007637)"
         node_b_value: "CA3 SO (MBA:486); CA3 SLM (MBA:471)"
         alignment: APPROXIMATE
         notes: "SO and SLM present. CA3-enriched, not CA1."
@@ -3325,7 +3325,7 @@ edges:
         node_b_value: "GABA"
         alignment: CONSISTENT
       - property: location
-        node_a_value: "stratum oriens (UBERON:0014548); SLM (UBERON:0007637)"
+        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007637)"
         node_b_value: "CA3 SO (MBA:486, 39 cells); CA3 SLM (MBA:471, 11 cells)"
         alignment: APPROXIMATE
         notes: "SO and SLM present. CA3-enriched, not CA1."
@@ -3443,7 +3443,7 @@ edges:
         node_b_value: "GABA"
         alignment: CONSISTENT
       - property: location
-        node_a_value: "stratum oriens (UBERON:0014548); SLM (UBERON:0007637)"
+        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007637)"
         node_b_value: "CA1 SO (MBA:399, 87 cells); prosubiculum; posterior amygdala"
         alignment: APPROXIMATE
         notes: "CA1 SO matches — strongest CA1 signal. SLM absent. Extra-hippocampal spread."
@@ -3545,7 +3545,7 @@ edges:
         node_b_value: "GABA"
         alignment: CONSISTENT
       - property: location
-        node_a_value: "stratum oriens (UBERON:0014548); SLM (UBERON:0007637)"
+        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007637)"
         node_b_value: "CA3 SO (MBA:486, 13 cells); CA1 SO (MBA:399, 8 cells); no SLM"
         alignment: APPROXIMATE
         notes: "SO in CA1 and CA3. SLM absent. Small counts."
@@ -3639,7 +3639,7 @@ edges:
         node_b_value: "GABA"
         alignment: CONSISTENT
       - property: location
-        node_a_value: "stratum oriens (UBERON:0014548); SLM (UBERON:0007637)"
+        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007637)"
         node_b_value: "CA3 SO (MBA:486, 25 cells); medial amygdala (31); posterior amygdala (18)"
         alignment: APPROXIMATE
         notes: "CA3 SO present. No CA1 or SLM. Major amygdala component."
