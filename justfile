@@ -224,6 +224,41 @@ fetch-mba-ontology:
 build-anat-closure taxonomy_id:
     uv run python -m evidencell.taxonomy_db build-closure {{taxonomy_id}} conf/mba/mbao-full.json
 
+# ── Taxonomy update operations ────────────────────────────────────────────────
+
+# Add precomputed expression profiles to taxonomy nodes from HDF5 stats
+# Requires: gene mapping TSV (generate with just generate-gene-mapping)
+# Usage: just add-expression CCN20230722 path/to/stats.h5 path/to/gene_mapping.tsv Sst Pvalb Cck
+[group('workflows')]
+add-expression taxonomy_id stats_h5 gene_mapping +GENES:
+    uv run python -m evidencell.taxonomy_ops add-expression {{taxonomy_id}} {{stats_h5}} {{gene_mapping}} {{GENES}}
+
+# Add expression to both cluster and supertype levels
+# Usage: just add-expression-all CCN20230722 path/to/stats.h5 path/to/gene_mapping.tsv Sst Pvalb
+[group('workflows')]
+add-expression-all taxonomy_id stats_h5 gene_mapping +GENES:
+    uv run python -m evidencell.taxonomy_ops add-expression {{taxonomy_id}} {{stats_h5}} {{gene_mapping}} {{GENES}} --supertype
+
+# Re-ingest taxonomy from source JSON, preserving enrichment fields
+# Usage: just reingest CCN20230722 inputs/taxonomies/wmbv1_full_v2.json
+[group('workflows')]
+reingest taxonomy_id source_json *ARGS:
+    uv run python -m evidencell.taxonomy_ops reingest {{taxonomy_id}} {{source_json}} {{ARGS}}
+
+# Re-ingest (dry run) — report changes without writing
+# Usage: just reingest-dry CCN20230722 inputs/taxonomies/wmbv1_full_v2.json
+[group('workflows')]
+reingest-dry taxonomy_id source_json:
+    uv run python -m evidencell.taxonomy_ops reingest {{taxonomy_id}} {{source_json}} --dry-run
+
+# Generate gene mapping TSV from HDF5 stats via mygene API
+# Run once per stats file; output reusable across add-expression calls
+# Requires: uv add mygene
+# Usage: just generate-gene-mapping path/to/stats.h5 conf/gene_mapping_CCN20230722.tsv
+[group('workflows')]
+generate-gene-mapping stats_h5 output:
+    uv run python -m evidencell.taxonomy_ops generate-gene-mapping {{stats_h5}} {{output}}
+
 # Find candidate atlas matches for a classical node by querying the taxonomy DB
 # Extracts the node's property signature (markers, NT, anatomy) and scores taxonomy entries
 # rank: 0 = leaf (cluster in WMBv1), 1 = supertype, 2 = subclass, 3 = class
