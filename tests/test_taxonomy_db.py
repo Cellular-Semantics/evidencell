@@ -415,6 +415,15 @@ def test_full_wmbv1_ingest(tmp_path):
     assert any("1145" in nd["label"] for nd in lugaro)
 
     # Hippocampus GABA query
-    hipp_gaba = db.find_candidates(anat_ids=["MBA:399"], nt_type="GABA")
+    hipp_gaba = db.find_candidates(anat_ids=["MBA:399"], nt_type="GABA", level="cluster")
     assert len(hipp_gaba) > 0
     assert all(nd["_score"] > 0 for nd in hipp_gaba)
+
+    # male_female_ratio: most clusters should have values; check YAML + DB round-trip
+    nodes_with_ratio = [n for n in cluster_yaml["nodes"] if n.get("male_female_ratio") is not None]
+    assert len(nodes_with_ratio) > 5000  # 5317 expected
+    with db._connect() as con:
+        db_count = con.execute(
+            "SELECT COUNT(*) FROM nodes WHERE male_female_ratio IS NOT NULL"
+        ).fetchone()[0]
+    assert db_count > 5000

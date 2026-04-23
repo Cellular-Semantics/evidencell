@@ -102,6 +102,11 @@ TASK:
    PARENT HIERARCHY: Note the parent lineage of each candidate. Candidates
    from the same parent are related.
 
+   SEX RATIO: If male_female_ratio is present in the candidate data, note it.
+   Values >3 or <0.33 indicate strong sex bias — relevant for sexually dimorphic
+   nuclei (e.g. hypothalamic BNST, VMH, MPN clusters). Can help confirm or
+   exclude candidates when the classical type has known sex-specific expression.
+
 4. Produce a refined ranking for each rank level. For each candidate include:
    cell_set_accession, name, taxonomy_rank, DB score, your assessment
    (STRONG / PLAUSIBLE / WEAK / EXCLUDE), and brief rationale.

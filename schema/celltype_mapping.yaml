@@ -34,6 +34,7 @@
 #                               Taxonomy nodes in KB graphs should be minimal stubs (id, name,
 #                               definition_basis, taxonomy_id, cell_set_accession); full data
 #                               lives in kb/taxonomy/{taxonomy_id}/*.yaml
+# Version: 0.7.1 (2026-04-23) — ADDITIVE: CellTypeNode.male_female_ratio (M/F cell count ratio from taxonomy)
 # Version: 0.7.0 (2026-04-22) — ADDITIVE: MarkerCategory enum; GeneDescriptor.category + expression_score;
 #                               AnatomicalLocation.cell_count; CellTypeNode.markers + neighborhood;
 #                               TaxonomyNodeList container; WMB: prefix for atlas node CURIEs
@@ -1134,6 +1135,13 @@ classes:
           Atlas-assigned neighborhood or supergroup label (e.g. "Subpallium-GABA").
           Populated from atlas metadata; provides coarser grouping above taxonomy
           class level. Leave absent for non-atlas nodes.
+      male_female_ratio:
+        range: float
+        description: >
+          Male/Female cell count ratio from source taxonomy (>1 = male-biased,
+          <1 = female-biased). Stored to 2 dp. Null when balanced or data
+          unavailable. Computed from Male and Female fraction properties in
+          the source taxonomy metadata.
       ccf_distribution:
         description: >
           CCF region distribution from atlas, e.g. "CB:0.72,NA:0.25" (from CCF_broad.freq column)
