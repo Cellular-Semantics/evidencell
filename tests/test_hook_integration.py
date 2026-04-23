@@ -370,6 +370,24 @@ def test_curation_blocks_justfile_write_for_untrusted_user():
     )
 
 
+def test_curation_blocks_dot_claude_write_for_untrusted_user():
+    """Untrusted user writing under .claude/ must be blocked (exit 2).
+
+    Covers the self-modification bypass: editing the hook itself, settings,
+    or skills to disable or evade the curation-mode gate.
+    """
+    for path in (
+        "/project/.claude/hooks/validate_mapping_hook.py",
+        "/project/.claude/settings.json",
+        "/project/.claude/skills/some_skill.md",
+    ):
+        payload = _write_payload("x\n", file_path=path)
+        r = _run_hook(payload, user="")
+        assert r.returncode == 2, (
+            f"Expected exit 2 for {path}, got {r.returncode}\n{r.stderr}"
+        )
+
+
 def test_curation_allows_untrusted_non_blocked_write():
     """Untrusted user writing to a path outside the blocked zones passes through."""
     payload = _write_payload(

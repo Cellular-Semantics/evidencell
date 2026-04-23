@@ -48,7 +48,7 @@ from evidencell.validate import (  # noqa: E402
 # planning/dev_requests/.
 TRUSTED_USERS = {"dosumis@gmail.com"}
 
-_CURATION_BLOCKED_ZONES = ("src", "schema")
+_CURATION_BLOCKED_ZONES = ("src", "schema", ".claude")
 _CURATION_BLOCKED_FILES = ("justfile",)
 
 
@@ -109,8 +109,8 @@ def _emit_curation_rejection(file_path: Path, zone: str, user: str | None) -> No
     print(f"Zone:   {zone}/", file=sys.stderr)
     print(f"User:   {user or '(no git user.email set)'}", file=sys.stderr)
     print("", file=sys.stderr)
-    print("Writes to src/, schema/, and justfile are out of scope in curation", file=sys.stderr)
-    print("mode. Options:", file=sys.stderr)
+    print("Writes to src/, schema/, .claude/, and justfile are out of scope", file=sys.stderr)
+    print("in curation mode. Options:", file=sys.stderr)
     print("  - File a dev-request report at", file=sys.stderr)
     print("    planning/dev_requests/{YYYY-MM-DD}_{slug}.md and stop.", file=sys.stderr)
     print("  - If you are authorised for dev work, request dev setup", file=sys.stderr)

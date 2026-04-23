@@ -20,8 +20,8 @@ Writable zones in this session:
 - `research/**` — research artifacts (field mappings, summaries, traversals)
 - `planning/dev_requests/**` — dev-request reports (see "Hitting a wall" below)
 
-Out of scope: `src/`, `schema/`, and `justfile`. The pre-edit hook rejects
-writes to these paths in curation mode. This is a deliberate barrier against
+Out of scope: `src/`, `schema/`, `justfile`, and `.claude/`. The pre-edit hook
+rejects writes to these paths in curation mode. This is a deliberate barrier against
 accidental code/schema edits during curation sessions — schema fixes as a
 response to a validation error are a common and dangerous anti-pattern. Code
 and schema changes land through normal dev-mode sessions and PR review

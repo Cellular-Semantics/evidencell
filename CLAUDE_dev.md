@@ -2,7 +2,7 @@
 
 This is the **dev-mode** companion to `CLAUDE.md` (the default curation guide).
 Load this file explicitly when the session involves changes to `src/`,
-`schema/`, `.claude/hooks/`, or `justfile`. Write access to those paths is
+`schema/`, `.claude/`, or `justfile`. Write access to those paths is
 gated by the pre-edit hook; if you hit a block, contact the repo maintainer
 or file a dev-request report under `planning/dev_requests/`. Dev work lands
 through PR review against `main`.
