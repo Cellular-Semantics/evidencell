@@ -657,16 +657,15 @@ edges:
       sparse SGZ margin.
   - property: marker_DCX
     node_a_value: DCX; PROTEIN; positive (IHC, canonical neuroblast marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: 'Protein-transcriptome gap: Dcx mRNA may be broadly expressed across the DG-PIR Ex IMN subclass and not rank as
-      a cluster-distinguishing marker.'
+    node_b_value: not in atlas defining_markers; precomputed stats Dcx mean = 9.30 (high expression)
+    alignment: CONSISTENT
+    notes: 'Dcx mRNA highly expressed in precomputed stats despite absence from atlas metadata marker list; APPROXIMATE upgraded
+      to CONSISTENT'
   - property: marker_Ki67
     node_a_value: Ki67 (Mki67); PROTEIN; positive (IHC, proliferating cells)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Mki67 mean = 0.09
     alignment: APPROXIMATE
-    notes: snRNA-seq under-captures rapidly cycling cells; small cluster (n=92) is consistent with a rare proliferative 
-      population.
+    notes: Low but non-zero Mki67 mRNA; consistent with a small fraction of cycling progenitors in this cluster
   - property: marker_PSA-NCAM
     node_a_value: PSA-NCAM; PROTEIN; positive (post-translational polysialylation of NCAM1)
     node_b_value: not present in defining_markers
@@ -740,16 +739,15 @@ edges:
       this spatial context.
   - property: marker_DCX
     node_a_value: DCX; PROTEIN; positive (defining marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Protein-transcriptome gap; Dcx mRNA broadly expressed across DG-PIR Ex IMN subclass. Curator annotation 'late
-      neuroblast/immature granule cell' is compatible with DCX+ protein status.
+    node_b_value: not in atlas defining_markers; precomputed stats Dcx mean = 8.79 (high expression)
+    alignment: CONSISTENT
+    notes: Dcx mRNA highly expressed in precomputed stats despite absence from atlas metadata marker list; APPROXIMATE 
+      upgraded to CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (RBFOX3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.35
     alignment: APPROXIMATE
-    notes: Rbfox3 non-discriminating at cluster level in atlas. Tbr1 TF presence marks postmitotic transition, making 
-      NeuN+ status biologically expected.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_PSA-NCAM
     node_a_value: PSA-NCAM; PROTEIN; positive
     node_b_value: not present in defining_markers
@@ -757,10 +755,10 @@ edges:
     notes: Post-translational glycan epitope; intrinsically undetectable by RNA-seq.
   - property: marker_Tis21
     node_a_value: Tis21 (Btg2); PROTEIN; positive (postmitotic re-expression in adult DG)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Btg2 mean = 0.0193 (near-zero)
     alignment: APPROXIMATE
-    notes: Btg2 may be broadly expressed or below the cluster-level marker threshold. Postmitotic Tbr1+ identity is 
-      consistent with expected Tis21 re-expression.
+    notes: Btg2 (Tis21) mRNA near-zero in precomputed stats; IHC may detect transiently accumulated protein not captured
+      by scRNAseq; APPROXIMATE retained pending further resolution
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -837,16 +835,15 @@ edges:
       this spatial context.
   - property: marker_DCX
     node_a_value: DCX; PROTEIN; positive (defining marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Protein-transcriptome gap; Dcx mRNA broadly expressed across DG-PIR Ex IMN subclass. Curator annotation 'late
-      neuroblast/immature granule cell' is compatible with DCX+ protein status.
+    node_b_value: not in atlas defining_markers; precomputed stats Dcx mean = 8.78 (high expression)
+    alignment: CONSISTENT
+    notes: Dcx mRNA highly expressed in precomputed stats despite absence from atlas metadata marker list; APPROXIMATE 
+      upgraded to CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (RBFOX3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.30
     alignment: APPROXIMATE
-    notes: Rbfox3 non-discriminating at cluster level in atlas. Tbr1 TF presence marks postmitotic transition, making 
-      NeuN+ status biologically expected.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_PSA-NCAM
     node_a_value: PSA-NCAM; PROTEIN; positive
     node_b_value: not present in defining_markers
@@ -854,10 +851,10 @@ edges:
     notes: Post-translational glycan epitope; intrinsically undetectable by RNA-seq.
   - property: marker_Tis21
     node_a_value: Tis21 (Btg2); PROTEIN; positive (postmitotic re-expression in adult DG)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Btg2 mean = 0.0000 (near-zero)
     alignment: APPROXIMATE
-    notes: Btg2 may be broadly expressed or below the cluster-level marker threshold. Postmitotic Tbr1+ identity is 
-      consistent with expected Tis21 re-expression.
+    notes: Btg2 (Tis21) mRNA near-zero in precomputed stats; IHC may detect transiently accumulated protein not captured
+      by scRNAseq; APPROXIMATE retained pending further resolution
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -906,22 +903,19 @@ edges:
     notes: 'GCL subdivision: DG do (dorsal outer GCL). HIP:0.99 hippocampal allocation.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 3.62
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.25
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, Neurod2, Prox1, St18 serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 0.68
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -981,22 +975,19 @@ edges:
     notes: 'GCL subdivision: DG ve (ventral GCL). HIP:0.93 hippocampal allocation.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 7.62
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.84
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, Neurod2, Prox1, Hey2 serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 2.03
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1056,22 +1047,19 @@ edges:
     notes: 'GCL subdivision: DG do (dorsal outer GCL). HIP:0.98 hippocampal allocation.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 8.13
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.17
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, Neurod2, St18 serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 1.44
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1132,22 +1120,19 @@ edges:
       hippocampal registration ambiguity; anatomical_location field authoritatively specifies DG ve.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 4.82
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.91
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, Neurod2, Prox1, Rfx2, Lhx9 serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 2.04
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1211,22 +1196,19 @@ edges:
     notes: 'GCL subdivision: DG do (dorsal outer GCL). HIP:0.99 hippocampal allocation.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 5.54
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.16
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, Neurod2, St18 serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 1.39
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1286,22 +1268,19 @@ edges:
     notes: 'GCL subdivision: DG do (dorsal outer GCL). HIP:0.96 hippocampal allocation.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 7.70
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.76
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, Neurod2, Prox1, Egr2, Egr4 serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 2.18
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1362,22 +1341,19 @@ edges:
       registration ambiguity.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 4.34
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.39
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, Prox1, Nr4a3, Egr3, Rorb serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 1.38
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1441,22 +1417,19 @@ edges:
     notes: 'GCL subdivision: DG po (posterior GCL). HIP:0.99 hippocampal allocation.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 8.21
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.32
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, St18, Lhx9, Nr2f2 serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 1.25
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1516,22 +1489,19 @@ edges:
     notes: 'GCL subdivision: DG do (dorsal outer GCL). HIP:0.96 hippocampal allocation.'
   - property: marker_Calbindin
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
-      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    node_b_value: not in atlas defining_markers; precomputed stats Calb1 mean = 5.77
+    alignment: CONSISTENT
+    notes: Calb1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
-    node_b_value: not present in defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.30
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
-      expression framework.
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
-      Glis3, Neurod2, Atf3, Bhlhe41, Cebpb serve as the atlas correlates of mature granule identity for this cluster.
+    node_b_value: not in atlas defining_markers; precomputed stats Tbr1 mean = 1.23
+    alignment: CONSISTENT
+    notes: Tbr1 mRNA confirmed by precomputed stats (WMBv1); protein/mRNA gap resolved in favour of CONSISTENT
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1593,7 +1563,8 @@ edges:
       at the sparse SGZ margin; MERFISH label is the reliable anatomical assignment here.
   - property: marker_Eomes
     node_a_value: Eomes (=Tbr2); PROTEIN; positive (IHC, canonical type-2b TF; Hodge et al. 2008)
-    node_b_value: Eomes; present in defining_markers (atlas differential marker)
+    node_b_value: Eomes; present in defining_markers (atlas differential marker); precomputed stats Eomes mean = 6.90 
+      (high — confirms type-2b identity)
     alignment: CONSISTENT
     notes: Eomes/Tbr2 is the canonical type-2b intermediate progenitor transcription factor. Its presence in both the 
       classical protein IHC definition and the atlas cluster transcriptomic markers is the primary molecular anchor for 
@@ -1602,19 +1573,19 @@ edges:
     node_a_value: Nestin; PROTEIN; positive (IHC, co-expressed with DCX at type-2b stage)
     node_b_value: not present in defining_markers
     alignment: NOT_ASSESSED
-    notes: Nestin/Nes mRNA is broadly expressed across progenitor populations and likely filtered from cluster-level 
-      differential marker selection.
+    notes: Nes (Nestin mRNA) absent from WMBv1 precomputed stats gene panel; cannot resolve via quantitative cross-check
   - property: marker_DCX
     node_a_value: DCX; PROTEIN; positive at low levels (IHC; 64% of Tbr2+ cells co-label DCX at low expression; Hodge 
       2008)
-    node_b_value: not present in defining_markers
-    alignment: APPROXIMATE
-    notes: DCX protein is expressed at low levels in type-2b progenitors. Low-abundance transcripts are filtered from 
-      cluster differential markers; Dcx mRNA in cluster 0511 cells is likely below the selection threshold.
+    node_b_value: not in atlas defining_markers; precomputed stats Dcx mean = 9.30 (high expression)
+    alignment: CONSISTENT
+    notes: Dcx mRNA highly expressed in precomputed stats despite absence from atlas metadata marker list; APPROXIMATE 
+      upgraded to CONSISTENT
   - property: marker_NeuN
     node_a_value: NeuN; NEGATIVE (progenitor stage; not yet postmitotic)
-    node_b_value: absent from defining_markers
+    node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.48
     alignment: CONSISTENT
+    notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
   - property: marker_Calbindin
     node_a_value: Calbindin; NEGATIVE (stage-6 mature marker; absent in progenitors)
     node_b_value: absent from defining_markers
