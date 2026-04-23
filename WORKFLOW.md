@@ -48,20 +48,28 @@ stubs carry only: `id`, `name`, `definition_basis`, `taxonomy_id`,
 
 **Known violation:** `precomputed_expression` blocks currently live on atlas
 stubs in `kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`.
-These should migrate to the taxonomy reference store once the update
-architecture is implemented (see `planning/taxonomy_update_architecture.md`).
+These should migrate to the taxonomy reference store using
+`just add-expression` (see below).
 
-### Taxonomy re-ingest is currently flush-and-replace
+### Taxonomy update operations
 
-The ingest pipeline (`just ingest-taxonomy-db`) regenerates all taxonomy YAML
-from the source JSON. This is safe only when no post-ingest enrichments have
-been added to the taxonomy reference YAML. Before re-ingesting, check whether
-any properties have been added to `kb/taxonomy/{id}/*.yaml` since the last
-ingest — if so, those will be lost.
+Two managed operations update taxonomy YAML while preserving enrichments:
 
-A typed update architecture using schema-validated Python objects is planned
-to support selective field-level updates and enrichment-preserving re-ingest.
-See `planning/taxonomy_update_architecture.md` for the design.
+- **`just add-expression`** — write `PrecomputedExpression` blocks from HDF5
+  stats to taxonomy nodes. Requires a gene mapping TSV (generate once with
+  `just generate-gene-mapping`). Supports cluster and supertype levels.
+- **`just reingest`** — re-ingest from source JSON while preserving enrichment
+  fields (`precomputed_expression`, `electrophysiology`, `morphology`, etc.).
+  Nodes removed in the new source are flagged for review, not silently dropped.
+  Use `just reingest-dry` to preview changes.
+
+Field ownership is explicit: `INGEST_FIELDS` are replaced from the new source,
+`ENRICHMENT_FIELDS` are preserved from old data. Both sets are declared in
+`src/evidencell/taxonomy_ops.py`.
+
+The old flush-and-replace ingest (`just ingest-taxonomy-db`) still works but
+does NOT preserve enrichments. Use `just reingest` when taxonomy nodes have
+post-ingest enrichments.
 
 ### Provenance
 

@@ -1,6 +1,6 @@
 # Taxonomy Update Architecture — Design Spike
 
-**Status:** Draft
+**Status:** Implemented (add-expression + reingest); update-anatomy, update-names deferred
 **Date:** 2026-04-23
 **Context:** Phase 3 of the male_female_ratio plan. Addresses how taxonomy
 reference YAML is maintained after initial ingest, without data loss on
