@@ -58,10 +58,15 @@ def append_evidence(kb: dict, item: dict) -> str:
         return f"SKIP: node '{node_id}' not found"
 
     if target == "anatomical_location":
-        if "location_sources" not in node:
-            node["location_sources"] = []
-        node["location_sources"].append(source_entry)
-        return "OK: location_sources"
+        # Append source to all anatomical_location entries (v0.8.0: nested sources)
+        locs = node.get("anatomical_location", [])
+        if not locs:
+            return f"SKIP: node '{node_id}' has no anatomical_location entries"
+        for loc in locs:
+            if "sources" not in loc:
+                loc["sources"] = []
+            loc["sources"].append(source_entry)
+        return "OK: anatomical_location[].sources"
 
     elif target == "nt_type":
         nt = node.get("nt_type")
@@ -72,17 +77,23 @@ def append_evidence(kb: dict, item: dict) -> str:
         nt["sources"].append(source_entry)
         return "OK: nt_type.sources"
 
-    elif target == "electrophysiology_class":
-        if "ephys_sources" not in node:
-            node["ephys_sources"] = []
-        node["ephys_sources"].append(source_entry)
-        return "OK: ephys_sources"
+    elif target in ("electrophysiology_class", "electrophysiology"):
+        ephys = node.get("electrophysiology")
+        if not ephys or not isinstance(ephys, dict):
+            return f"SKIP: node '{node_id}' has no electrophysiology object"
+        if "sources" not in ephys:
+            ephys["sources"] = []
+        ephys["sources"].append(source_entry)
+        return "OK: electrophysiology.sources"
 
-    elif target == "morphology_notes":
-        if "morphology_sources" not in node:
-            node["morphology_sources"] = []
-        node["morphology_sources"].append(source_entry)
-        return "OK: morphology_sources"
+    elif target in ("morphology_notes", "morphology"):
+        morph = node.get("morphology")
+        if not morph or not isinstance(morph, dict):
+            return f"SKIP: node '{node_id}' has no morphology object"
+        if "sources" not in morph:
+            morph["sources"] = []
+        morph["sources"].append(source_entry)
+        return "OK: morphology.sources"
 
     elif target == "defining_markers":
         ok = append_to_marker_sources(node, "defining_markers", source_entry)

@@ -455,13 +455,13 @@ INPUT FILES:
 
 PROPERTY CATEGORIES:
 Quotes can validate these node property fields:
-- morphology_notes / morphology_sources
-- electrophysiology_class / ephys_sources
+- morphology (description + sources)
+- electrophysiology (description + sources)
 - defining_markers (positive markers)
 - negative_markers
 - neuropeptides
 - nt_type
-- anatomical_location / location_sources
+- anatomical_location (with nested sources per location entry)
 - colocated_types
 
 ## Part A: Match quotes to properties
@@ -513,23 +513,23 @@ Quotes can validate these node property fields:
      - nt_type.name_in_source
      - defining_markers: symbol only; ncbi_gene_id: null
      - negative_markers, neuropeptides: as identified
-     - morphology_notes: concise summary from synthesis context
-     - electrophysiology_class: concise summary from synthesis context
-     - morphology_sources: PropertySource entries with ref + quote_key
-     - ephys_sources: PropertySource entries with ref + quote_key
-     - location_sources: PropertySource entries with ref + quote_key
+     - morphology: {description: "...", sources: [...]}
+     - electrophysiology: {description: "...", sources: [...]}
+     - anatomical_location: [{..., sources: [...]}]  (sources nested per location)
      - cl_mapping: from cl_mappings.json (if matched)
      - definition_references: the top 3-5 most informative resolved refs overall
      - is_terminal: false
      - notes: any important caveats from validation
 
-   For *_sources entries, use this pattern:
+   For nested sources entries, use this pattern:
    ```yaml
-   morphology_sources:
-     - ref: "PMID:20421280"
-       method: "biocytin fill"
-       scope: "adult rat CA1"
-       quote_key: "12345678_a3f2c1d0"  # → lookup in references.json
+   morphology:
+     description: "Large soma with horizontal dendrites in stratum oriens..."
+     sources:
+       - ref: "PMID:20421280"
+         method: "biocytin fill"
+         scope: "adult rat CA1"
+         quote_key: "12345678_a3f2c1d0"  # → lookup in references.json
    ```
 
    The quote_key references a specific quote in references.json. Reports

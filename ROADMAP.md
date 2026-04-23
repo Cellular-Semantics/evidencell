@@ -1049,6 +1049,108 @@ This avoids non-determinism in ingest while remaining flexible for format evolut
 
 ---
 
+## Review: Schema additions from v0.8.0 pre-commit hook cleanup (2026-04-23)
+
+The v0.8.0 provenance refactor added a strict git pre-commit hook that validates
+all KB files against the schema. This surfaced many fields and enum values that
+existed in data but were never declared in the schema. The following were added
+reactively to make existing data pass. **All need review** — descriptions are
+best-guess at intent.
+
+### PropertySource workflow provenance fields
+
+Added `support` (range: EvidenceSupport), `source` (string), `added_by` (string).
+The v0.6.4 changelog said "added" but the fields were never declared. 71 cite-traverse
+entries in GABAergic file use `support` + `source`. One evidence-extraction entry uses
+`added_by`.
+
+**Review**: Are these the right names and types? `source` is confusingly overloaded
+(could mean reference source, data source, workflow source). Consider renaming to
+`workflow_tag` or `provenance_tag`.
+
+### EvidenceSupport.WEAK
+
+Two edges in GABAergic file use `supports: WEAK`. Added as a new enum value.
+
+**Review**: Is WEAK distinct from PARTIAL? PARTIAL = "supports some aspects but not
+all"; WEAK = "non-zero but weak evidence". Could collapse to PARTIAL if the distinction
+doesn't carry weight.
+
+### CaveatType additions (5 values)
+
+`AMBIGUOUS_MAPPING`, `SINGLE_STUDY`, `NO_DISCRIMINATING_MARKER`, `DISCORDANT_ANATOMY`,
+`ELECTROPHYSIOLOGY_ONLY_DEFINITION`. All used on hippocampal GABAergic edges.
+
+**Review**: `SINGLE_STUDY` overlaps with existing `SINGLE_DATASET`. Is the distinction
+(study vs dataset) meaningful? Could merge. The others seem well-motivated but
+descriptions are mine, not the original author's.
+
+### MappingRelationship.OVERLAPS
+
+All 49 edges in `wmb_to_ctx_annotation_transfer.yaml` use `OVERLAPS` for
+cross-taxonomy annotation transfer correspondence.
+
+**Review**: Is this distinct from PARTIAL_OVERLAP? PARTIAL_OVERLAP was defined for
+classical→atlas mappings. OVERLAPS was used for atlas→atlas cross-taxonomy edges.
+May want to unify or clarify when each applies.
+
+### CellTypeMappingGraph: source_atlas, annotation_transfer_datasets
+
+`source_atlas` (string): source taxonomy for AT graphs. `annotation_transfer_datasets`:
+list of `AnnotationTransferDataset` (accession, publication, description, cell_types,
+status). One entry tracking GSE142546.
+
+**Review**: `AnnotationTransferDataset` is minimal scaffolding. May want richer
+structure (links to AT evidence items, per-dataset metrics) or may want to track
+datasets differently (e.g. in `research/` rather than in the graph).
+
+### AnnotationTransferEvidence.name_in_source
+
+Target cluster label as written in source taxonomy. Used on all AT evidence items in
+the cross-taxonomy graph.
+
+**Review**: Probably fine — follows the naming triple convention. But verify it's not
+redundant with existing fields on the evidence item.
+
+### CellTypeNode.precomputed_expression + supporting classes
+
+`PrecomputedExpression` (source, level, genes, child_cluster_expression),
+`ChildClusterExpression` (cluster_accession, n_cells, expression),
+`GeneExpression` (symbol, ensembl_id, mean_expression).
+
+9 atlas nodes in GABAergic file have precomputed stats from the precomputed-stats
+workflow. `ChildClusterExpression.expression` stores gene→float dicts as JSON
+strings (LinkML workaround for arbitrary key-value maps).
+
+**Review**: Should precomputed expression live in the KB schema at all, or should
+it remain free-text / research artifact for agents to consume? Structured schema
+enforces consistency but the JSON-string workaround is ugly and the data is
+fundamentally ephemeral (recomputable from the source h5). Consider keeping as
+free-text annotation on nodes, or moving to `research/` artifacts that agents
+read at query time.
+
+### CellTypeNode: cell_set_designation, rationale_dois
+
+From CAS-format taxonomy ingest (CS202106160 CTX-HPF). `cell_set_designation`
+is the CAS designation string; `rationale_dois` are DOIs cited as rationale.
+Used on all nodes in the CS202106160 subclass and cluster files.
+
+**Review**: These are CAS-specific metadata. May belong on a CAS taxonomy
+extension rather than the core CellTypeNode. Consider whether they should be
+on TaxonomyNodeList-specific nodes only.
+
+### Data fixes (not schema, but worth noting)
+
+- 5 null descriptions set to "Not characterized in available reference set"
+- 31 MarkerSource entries: `marker_type` inferred as PROTEIN (default) or
+  TRANSCRIPT (if method/snippet mentions RNA/transcriptom/ISH). Inference
+  may be wrong for some entries — review against source papers.
+- `child_cluster_expression.expression` dicts serialized to JSON strings.
+- `CB_MLI_types.yaml`: 2 nodes migrated `morphology_notes` -> `morphology.description`
+  (missed in first migration pass).
+
+---
+
 ## Related documents
 
 - [planning/citation_traversal_design.md](citation_traversal_design.md) — design space for citation traversal: ASTA snippets (primary), JATS/HTML/PDF fallbacks, passage location strategies, portable pipeline proposal

@@ -16,6 +16,13 @@ _default:
 install:
     uv sync --all-groups
 
+# Install git hooks (pre-commit schema validation)
+[group('setup')]
+install-hooks:
+    cp hooks/pre-commit .git/hooks/pre-commit
+    chmod +x .git/hooks/pre-commit
+    @echo "Git hooks installed."
+
 # Download OAK SQLite databases for CL, UBERON, NCBITaxon
 # Run once after install; databases are large and not committed to git
 [group('setup')]

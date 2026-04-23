@@ -15,7 +15,7 @@ Guide to evidencell curation orchestrators: what to run, when, and with what inp
 | M5 | Annotation transfer evidence | **In progress** — pipeline implemented, orchestrator pending |
 | M7 | KB structure cleanup (Phase 1: directory restructure) | **Complete** |
 | M8 | Taxonomy reference DB — compact YAML + SQLite query index | **In progress** — Phase 1 complete; Phase 2–3: KB graphs use minimal taxonomy ref stubs |
-| S1 | Taxonomy rank encoding — integer ranks replace hardcoded level names | **In progress** — schema, WMB taxonomy YAML, DB, find-candidates, map-cell-type updated |
+| S1 | Taxonomy rank encoding — integer ranks replace hardcoded level names | **Complete** — schema, ingest, DB, find-candidates, map-cell-type all use integer ranks |
 
 ---
 
@@ -26,6 +26,80 @@ its steps in order. The orchestrator is the authority — do not plan independen
 research prerequisites that the orchestrator already addresses. Use the skills and tools
 it references. Stop at steps marked `[GATE]` and present results for human review before
 proceeding.
+
+---
+
+## KB data management principles
+
+### Properties live on nodes; edges compare
+
+All biological properties (markers, NT type, anatomy, sex ratio, expression
+profiles) are stored on `CellTypeNode` entries. Mapping edges document how
+properties on two nodes compare — they never introduce new property assertions.
+This means the mapper always sees a node's full property set regardless of which
+mapping graph references it.
+
+### Taxonomy reference YAML is canonical for atlas properties
+
+Atlas node properties belong in `kb/taxonomy/{id}/*.yaml`, not on stub nodes
+inside mapping graphs. Mapping graphs reference taxonomy nodes by accession;
+stubs carry only: `id`, `name`, `definition_basis`, `taxonomy_id`,
+`cell_set_accession`.
+
+**Known violation:** `precomputed_expression` blocks currently live on atlas
+stubs in `kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`.
+These should migrate to the taxonomy reference store once the update
+architecture is implemented (see `planning/taxonomy_update_architecture.md`).
+
+### Taxonomy re-ingest is currently flush-and-replace
+
+The ingest pipeline (`just ingest-taxonomy-db`) regenerates all taxonomy YAML
+from the source JSON. This is safe only when no post-ingest enrichments have
+been added to the taxonomy reference YAML. Before re-ingesting, check whether
+any properties have been added to `kb/taxonomy/{id}/*.yaml` since the last
+ingest — if so, those will be lost.
+
+A typed update architecture using schema-validated Python objects is planned
+to support selective field-level updates and enrichment-preserving re-ingest.
+See `planning/taxonomy_update_architecture.md` for the design.
+
+### Provenance
+
+The schema provides `PropertySource` as a general provenance record: `ref`
+(PMID or DOI), `method`, `scope`, `snippet`/`quote_key`, `notes`.
+
+As of v0.8.0, provenance is nested on property objects rather than in
+separate per-property source fields. Each property carries its own `sources`
+list:
+
+- `electrophysiology.sources` — on `ElectrophysiologyProfile`
+- `morphology.sources` — on `MorphologyProfile`
+- `anatomical_location[].sources` — on each `AnatomicalLocation` entry
+- `nt_type.sources` — on `NeurotransmitterType`
+- `GeneDescriptor.sources` — as `MarkerSource` (adds `marker_type`)
+
+This gives natural scoping (each source is attached to the assertion it
+supports), clean RDF mapping (blank nodes, no reification needed), and
+eliminates the former per-property field proliferation (`ephys_sources`,
+`morphology_sources`, `location_sources` — all removed in v0.8.0).
+
+`definition_references` (list of PMID/DOI strings) is retained as a
+flat field — these are general node-level citations, not property-scoped.
+
+Atlas node provenance follows a different convention: properties from
+taxonomy ingest have implicit provenance from `taxonomy_meta.yaml`
+(`source_file`, `ingest_date`). No per-field `PropertySource` entries are
+needed on `ATLAS_TRANSCRIPTOMIC` nodes — the atlas and `cell_set_accession`
+are the citation.
+
+### Use `notes` fields, not YAML comments
+
+YAML comments (`# ...`) are not preserved by programmatic round-trips
+(e.g. `yaml.safe_load()` → `yaml.dump()`). Any annotation that must
+survive automated processing — caveats, heterogeneity observations,
+cross-references to other nodes — belongs in a `notes` field on the
+relevant object, not in a YAML comment. Reserve comments for transient
+developer-facing hints that are acceptable to lose.
 
 ---
 
