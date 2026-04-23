@@ -34,6 +34,13 @@
 #                               Taxonomy nodes in KB graphs should be minimal stubs (id, name,
 #                               definition_basis, taxonomy_id, cell_set_accession); full data
 #                               lives in kb/taxonomy/{taxonomy_id}/*.yaml
+# Version: 0.8.0 (2026-04-23) — BREAKING: nested provenance on property objects.
+#                               ElectrophysiologyProfile + MorphologyProfile classes (description + sources);
+#                               electrophysiology_class → electrophysiology (ElectrophysiologyProfile);
+#                               morphology_notes → morphology (MorphologyProfile);
+#                               AnatomicalLocation.sources added (replaces CellTypeNode.location_sources);
+#                               ephys_sources, morphology_sources, location_sources removed from CellTypeNode.
+#                               definition_references retained (general citations, not property-scoped).
 # Version: 0.7.1 (2026-04-23) — ADDITIVE: CellTypeNode.male_female_ratio (M/F cell count ratio from taxonomy)
 # Version: 0.7.0 (2026-04-22) — ADDITIVE: MarkerCategory enum; GeneDescriptor.category + expression_score;
 #                               AnatomicalLocation.cell_count; CellTypeNode.markers + neighborhood;
@@ -551,6 +558,17 @@ classes:
           Populated from atlas MERFISH registration data (e.g. WMBv1 anat
           cell counts per cluster per region). Enables ranking of anatomical
           locations by cell abundance. Leave absent for non-atlas nodes.
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for this specific anatomical location assertion.
+          Populate for classical and prior-transcriptomic nodes, especially
+          for sub-regional claims where location is specific or contested.
+          scope is critical where location is context-dependent.
+          Leave empty for atlas terminal nodes (provenance implicit from
+          atlas + cell_set_accession).
 
   CLMapping:
     description: >
@@ -679,9 +697,11 @@ classes:
   PropertySource:
     description: >
       Evidence source for a single property assertion on a node.
-      Used for: NeurotransmitterType.sources, ephys_sources, morphology_sources,
-      AnatomicalLocation.sources. For marker assertions use MarkerSource,
-      which adds the controlled marker_type field.
+      Used as the nested sources list on property objects:
+      NeurotransmitterType.sources, ElectrophysiologyProfile.sources,
+      MorphologyProfile.sources, AnatomicalLocation.sources.
+      For marker assertions use MarkerSource (extends PropertySource with
+      the controlled marker_type field).
 
       Leave sources lists empty on ATLAS_TRANSCRIPTOMIC nodes — provenance
       is implicit from atlas + cell_set_accession (see header convention).
@@ -694,11 +714,11 @@ classes:
         "electrophysiology (inhibitory PSPs recorded)". Scope is important —
         NT type can differ across species or developmental stage.
 
-      ephys_sources — ref to the recording study. Scope should note age,
-        temperature, and preparation (acute slice, in vivo, etc.).
+      ElectrophysiologyProfile.sources — ref to the recording study. Scope
+        should note age, temperature, and preparation (acute slice, in vivo, etc.).
 
-      morphology_sources — method e.g. "Golgi stain", "biocytin fill + confocal",
-        "electron microscopy". Snippet from the cell description section.
+      MorphologyProfile.sources — method e.g. "Golgi stain", "biocytin fill +
+        confocal", "electron microscopy". Snippet from the cell description section.
 
       AnatomicalLocation.sources — ref establishing the location claim.
         Scope is critical where location is context-specific or contested.
@@ -795,6 +815,49 @@ classes:
           scope: "adult mouse, WMBv1"
           snippet: "Sst neuropeptide marker present in clusters 1996 and 1997"
           ref: "https://doi.org/10.1038/s41586-023-06812-z"
+
+  ElectrophysiologyProfile:
+    description: >
+      Electrophysiological characterisation of a cell type: e-type classification
+      and firing properties, with evidence provenance. Replaces the former
+      electrophysiology_class string + ephys_sources list pair.
+    attributes:
+      description:
+        required: true
+        description: >
+          E-type label and firing properties. Free text.
+          E.g. "fast-spiking", "regular-spiking adapting with pronounced sag (Ih)",
+          "theta spiking resonance, high input resistance".
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for this electrophysiology characterisation.
+          ref to the recording study; snippet from the e-type description.
+          scope should note age, temperature, and preparation type
+          (e.g. "P21 mouse, acute slice, 32°C").
+
+  MorphologyProfile:
+    description: >
+      Morphological characterisation of a cell type: key structural features
+      with evidence provenance. Replaces the former morphology_notes string +
+      morphology_sources list pair.
+    attributes:
+      description:
+        required: true
+        description: >
+          Key morphological features. Free text.
+          E.g. "large soma, radially-projecting dendrites into ML",
+          "horizontal dendrites in SO, axon ramifies in SLM".
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for this morphology characterisation.
+          method e.g. "Golgi stain", "biocytin fill + confocal",
+          "electron microscopy". Snippet from cell description section.
 
   NeurotransmitterType:
     description: >
@@ -1010,15 +1073,6 @@ classes:
           Other cell types that co-localise with or are spatially adjacent to
           this type. Records relative positional context separately from the
           anatomical location above (e.g. "adjacent to GPi core neurons").
-      location_sources:
-        multivalued: true
-        inlined_as_list: true
-        range: PropertySource
-        description: >
-          Evidence sources for the anatomical location assertion. Populate for
-          classical and prior-transcriptomic nodes, especially for sub-regional
-          claims where location is specific or contested. Leave empty for atlas
-          terminal nodes (provenance implicit from atlas + cell_set_accession).
       cl_mapping:
         range: CLMapping
         description: >
@@ -1074,10 +1128,18 @@ classes:
           and atlas terminal nodes (unified field, replaces atlas_nt_type).
           Carries the naming triple: name_in_source (verbatim source label),
           cl_terms (CL identifiers), sources (evidence provenance).
-      electrophysiology_class:
-        description: E-type label if defined, e.g. "fast-spiking", "regular-spiking adapting"
-      morphology_notes:
-        description: Key morphological features, e.g. "large soma, radially-projecting dendrites into ML"
+      electrophysiology:
+        range: ElectrophysiologyProfile
+        inlined: true
+        description: >
+          Electrophysiological characterisation with nested evidence sources.
+          Replaces former electrophysiology_class (string) + ephys_sources (list) pair.
+      morphology:
+        range: MorphologyProfile
+        inlined: true
+        description: >
+          Morphological characterisation with nested evidence sources.
+          Replaces former morphology_notes (string) + morphology_sources (list) pair.
 
       # ── For PRIOR_TRANSCRIPTOMIC nodes ───────────────────────────
       prior_dataset_accession:
@@ -1150,30 +1212,13 @@ classes:
       definition_references:
         multivalued: true
         description: >
-          Source citations for node properties not covered by per-property
-          source fields: morphology description, projection targets, etc.
-          DOI or PMID strings. NT type provenance is now in nt_type.sources.
-          For prior-transcriptomic nodes this replaces prior_reference
-          (prior_reference retained for backward compatibility).
+          General source citations for this node's defining properties — the
+          key papers that established or characterised this cell type.
+          DOI or PMID strings. Not property-scoped; for property-specific
+          provenance use the nested sources on electrophysiology, morphology,
+          anatomical_location, nt_type, and marker GeneDescriptors.
           Not needed for atlas terminal nodes — use metadata_url on
           AtlasMetadataEvidence instead.
-      ephys_sources:
-        multivalued: true
-        inlined_as_list: true
-        range: PropertySource
-        description: >
-          Evidence sources for electrophysiology_class assertion.
-          ref to the recording study; snippet from the e-type description.
-          scope should note age, temperature, and preparation type
-          (e.g. "P21 mouse, acute slice, 32°C").
-      morphology_sources:
-        multivalued: true
-        inlined_as_list: true
-        range: PropertySource
-        description: >
-          Evidence sources for morphology_notes assertion.
-          method e.g. "Golgi stain", "biocytin fill + confocal",
-          "electron microscopy". Snippet from cell description section.
 
       notes:
         description: Any caveats or observations not captured by other fields

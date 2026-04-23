@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# Git pre-commit hook: validate staged kb/**/*.yaml files against the LinkML schema.
+# Canonical files (kb/mappings/) block the commit on failure.
+# Draft files (kb/draft/) warn but do not block — they are work-in-progress.
+# Install with: just install-hooks
+set -euo pipefail
+
+SCHEMA="schema/celltype_mapping.yaml"
+
+# Collect staged kb YAML files
+kb_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^kb/.*\.yaml$' || true)
+
+# If the schema itself changed, also validate all canonical files
+schema_changed=$(git diff --cached --name-only --diff-filter=ACM | grep -qxF "$SCHEMA" && echo "yes" || true)
+
+if [ "$schema_changed" = "yes" ]; then
+    echo "Schema changed — also validating all canonical KB files..."
+    canonical=$(find kb/mappings -name "*.yaml" 2>/dev/null || true)
+    if [ -n "$canonical" ]; then
+        kb_files=$(printf '%s\n%s' "$kb_files" "$canonical" | sort -u)
+    fi
+fi
+
+if [ -z "$kb_files" ]; then
+    exit 0
+fi
+
+failed=0
+warned=0
+for f in $kb_files; do
+    [ -f "$f" ] || continue
+
+    # Skip non-graph files
+    case "$f" in
+        */taxonomy_meta.yaml|*/field_mapping.yaml) continue ;;
+    esac
+
+    # Determine target class
+    if echo "$f" | grep -q '^kb/taxonomy/'; then
+        target_class="TaxonomyNodeList"
+    else
+        target_class="CellTypeMappingGraph"
+    fi
+
+    # Draft files warn; canonical files block
+    if echo "$f" | grep -q '^kb/draft/'; then
+        echo "Validating (draft, warn-only) $f..."
+        if ! uv run linkml-validate -s "$SCHEMA" -C "$target_class" "$f" 2>&1; then
+            warned=1
+            echo "  ^ draft file — warnings above do not block commit"
+        fi
+    else
+        echo "Validating $f ($target_class)..."
+        if ! uv run linkml-validate -s "$SCHEMA" -C "$target_class" "$f"; then
+            failed=1
+        fi
+    fi
+done
+
+if [ $warned -ne 0 ]; then
+    echo ""
+    echo "Pre-commit: draft KB files have validation warnings (non-blocking)."
+    echo "Run 'just qc-draft' to review."
+fi
+
+if [ $failed -ne 0 ]; then
+    echo ""
+    echo "Pre-commit: canonical KB schema validation FAILED. Fix errors before committing."
+    echo "Run 'just validate <file>' to debug individual files."
+    exit 1
+fi

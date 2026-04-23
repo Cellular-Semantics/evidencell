@@ -149,11 +149,11 @@ ADDED_BY:             evidence_extraction_{node_id}_{date}
 
 ## KB fields that accept PropertySource lists
 
-  location_sources       → anatomical_location claims
-  ephys_sources          → electrophysiology_class claims
-  morphology_sources     → morphology_notes claims
-  nt_type.sources        → neurotransmitter type claims
-  synonyms[N].sources    → synonym usage evidence (for a specific synonym entry)
+  anatomical_location[].sources → per-location evidence (nested on each AnatomicalLocation entry)
+  electrophysiology.sources     → electrophysiology claims (nested on ElectrophysiologyProfile)
+  morphology.sources            → morphology claims (nested on MorphologyProfile)
+  nt_type.sources               → neurotransmitter type claims
+  synonyms[N].sources           → synonym usage evidence (for a specific synonym entry)
 
 For marker claims, use MarkerSource (extends PropertySource):
   GeneDescriptor.sources → add a MarkerSource entry on the specific gene
@@ -189,8 +189,9 @@ PropertySource fields:
       in the summary or quotes — skip. Record skipped entries in the manifest.
 
    b. Identify the single KB field this summary most directly supports.
-      Choose one: location_sources / ephys_sources / morphology_sources /
-      nt_type.sources / synonyms[N].sources / GeneDescriptor.sources.
+      Choose one: anatomical_location[].sources / electrophysiology.sources /
+      morphology.sources / nt_type.sources / synonyms[N].sources /
+      GeneDescriptor.sources.
       If the summary supports multiple fields, choose the field where the
       evidence is strongest. Do not split one quote across multiple fields.
 
@@ -260,8 +261,8 @@ PropertySource fields:
      "skipped_duplicate_ref": N,
      "skipped_low_relevance": N,
      "entries_written": N,
-     "fields_populated": ["location_sources", "morphology_sources"],
-     "fields_with_no_evidence": ["ephys_sources", "nt_type.sources"],
+     "fields_populated": ["anatomical_location.sources", "morphology.sources"],
+     "fields_with_no_evidence": ["electrophysiology.sources", "nt_type.sources"],
      "synonyms_found": ["OLM", "O-LM interneuron"],
      "refs_file": "{refs_file}"
    }
