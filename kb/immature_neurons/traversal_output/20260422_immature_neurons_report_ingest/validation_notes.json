@@ -1,0 +1,800 @@
+{
+  "_meta": {
+    "generated_date": "2026-04-22",
+    "region": "immature_neurons",
+    "source_report": "inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf",
+    "proposed_types_file": "kb/immature_neurons/traversal_output/20260422_immature_neurons_report_ingest/proposed_types.json",
+    "references_file": "kb/draft/immature_neurons/references.json",
+    "node_count": 7
+  },
+  "nodes": {
+    "dg_neuroblast": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "252063749_e1c84f70",
+            "279046466_b2e95c41",
+            "13799502_a8f3d219",
+            "15994456_c3a87b12"
+          ],
+          "issues": [
+            {
+              "type": "HETEROGENEITY",
+              "description": "Node primarily represents type-3 neuroblasts (DCX+ only) but quotes also describe type-2a (Nestin+/Sox2+) and type-2b (Nestin+/DCX+) upstream stages. Separate sub-nodes may be warranted.",
+              "quote_keys": ["279046466_b2e95c41"]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["279046466_b2e95c41", "252063749_e1c84f70"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "148569364_529ba03c"
+          ],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "No dedicated UBERON term for subgranular zone (SGZ); UBERON:0001885 (dentate gyrus) used as container.",
+              "quote_keys": ["148569364_529ba03c"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "PARTIAL",
+          "quote_keys": ["15994456_c3a87b12", "8479504_a44f9b22"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Glutamatergic identity is anticipatory for proliferating type-3 neuroblasts — they are committed to the lineage (via Pax6>Ngn2>Tbr2>NeuroD>Tbr1 cascade) but not yet functionally glutamatergic at this stage.",
+              "quote_keys": ["15994456_c3a87b12"]
+            }
+          ]
+        },
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_b2e95c41",
+            "233432690_f9d72c88"
+          ],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No direct ephys characterisation of the proliferating type-3 stage. Ephys quotes relate to downstream postmitotic stages.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide information for DG type-3 neuroblasts in the report.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "colocated_types": {
+          "status": "PARTIAL",
+          "quote_keys": ["279046466_b2e95c41"],
+          "issues": []
+        }
+      },
+      "gaps": [
+        "electrophysiology_class: proliferating stage not characterised",
+        "neuropeptides: not characterised in report",
+        "species: mouse, rat, human referenced but not confirmed",
+        "anatomical_location: SGZ lacks dedicated UBERON term"
+      ],
+      "overall_confidence": "MODERATE"
+    },
+    "dg_immature_granule_neuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_b2e95c41",
+            "252063749_e1c84f70",
+            "13799502_a8f3d219"
+          ],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "PARTIAL",
+          "quote_keys": ["279046466_b2e95c41"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Calbindin absence is inferred from the stage-6 marker profile contrast (Calbindin emerges later); no quote directly asserts Calbindin-negative for stage 5.",
+              "quote_keys": ["279046466_b2e95c41"]
+            }
+          ]
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "148569364_529ba03c",
+            "25925289_d7e23b55",
+            "245432259_7c3e9a44"
+          ],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Inner granule cell layer lacks a dedicated UBERON term; UBERON:0001885 (dentate gyrus) used as container.",
+              "quote_keys": ["148569364_529ba03c"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["245432259_7c3e9a44", "13752593_c44e8b77"],
+          "issues": []
+        },
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "7440369_a91d2c33",
+            "279046466_b2e95c41",
+            "25925289_d7e23b55"
+          ],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "245432259_7c3e9a44",
+            "7440369_a91d2c33"
+          ],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Circuitry/connectivity described (glutamatergic input from EC, mossy fiber output to CA3) but no direct intrinsic electrophysiological characterisation (patch-clamp) of the stage-5 immature neuron.",
+              "quote_keys": ["245432259_7c3e9a44"]
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide information in the report for DG stage-5 immature granule neurons.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": ["245432259_7c3e9a44"],
+          "issues": []
+        }
+      },
+      "gaps": [
+        "CL term: no existing CL match — proposed new term CL:9900002 (status DRAFT)",
+        "neuropeptides: not characterised in report",
+        "negative_markers: direct Calbindin-negative claim at stage 5 would strengthen provenance",
+        "species: mouse, rat, human referenced but not confirmed"
+      ],
+      "overall_confidence": "MODERATE"
+    },
+    "dg_mature_granule_neuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_b2e95c41",
+            "15994456_c3a87b12"
+          ],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "PARTIAL",
+          "quote_keys": ["279046466_b2e95c41"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "DCX/Nestin/PSA-NCAM downregulation at stage 6 is inferred from the developmental progression described by Micheli et al.; not explicitly stated as 'negative' in any quote.",
+              "quote_keys": ["279046466_b2e95c41"]
+            }
+          ]
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_b2e95c41",
+            "245432259_7c3e9a44"
+          ],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["245432259_7c3e9a44", "13752593_c44e8b77"],
+          "issues": []
+        },
+        "morphology_notes": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "279046466_b2e95c41",
+            "245432259_7c3e9a44"
+          ],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Dendritic arbor / mossy fiber morphology for the mature stage is not quantitatively described in the report's quotes; the description is largely terminal-point and connectivity-focused.",
+              "quote_keys": ["279046466_b2e95c41"]
+            }
+          ]
+        },
+        "electrophysiology_class": {
+          "status": "PARTIAL",
+          "quote_keys": ["245432259_7c3e9a44", "13799502_a8f3d219"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Connectivity (EC input, CA3 output) and Tis21 decrease are captured but no direct intrinsic/patch-clamp data for mature DG granule cells in these quotes.",
+              "quote_keys": ["245432259_7c3e9a44"]
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide information in the report for mature DG granule cells.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": ["245432259_7c3e9a44"],
+          "issues": []
+        }
+      },
+      "gaps": [
+        "neuropeptides: not characterised in report",
+        "electrophysiology_class: no direct intrinsic recordings captured",
+        "species: mouse, rat, human referenced but not confirmed",
+        "morphology_notes: dendritic/axonal quantitative detail absent"
+      ],
+      "overall_confidence": "HIGH"
+    },
+    "pir_immature_neuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "235300723_b4f82e17",
+            "235300723_e71a4b88",
+            "18166210_f74d2a66",
+            "258927570_c1d73e22",
+            "8479504_b31e7c55"
+          ],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["18166210_f74d2a66"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Receptor absence (NMDA-R, glucocorticoid-R) and activity marker absence (c-Fos, Arc) are strictly ephys/functional rather than lineage markers. Encoded here as negative_markers for schema fit but curator review recommended.",
+              "quote_keys": ["18166210_f74d2a66"]
+            }
+          ]
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "235300723_b4f82e17",
+            "235300723_d93c1a55",
+            "18166210_f74d2a66",
+            "15727849_e52b3f99"
+          ],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "PARTIAL",
+          "quote_keys": ["235300723_e71a4b88"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Glutamatergic identity applies only to the subpopulation that resumes maturation (TBR1+/CaMKII+). The bulk of layer II immature neurons remain non-integrated and lack a mature neurotransmitter phenotype.",
+              "quote_keys": ["235300723_e71a4b88"]
+            }
+          ]
+        },
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": ["18166210_f74d2a66", "15727849_e52b3f99", "258927570_a82f4c11"],
+          "issues": [
+            {
+              "type": "HETEROGENEITY",
+              "description": "Proposed type spans two main morphological subtypes (tangled cells, complex cells) plus transitional forms. May warrant separate sub-nodes.",
+              "quote_keys": ["15727849_e52b3f99", "18166210_f74d2a66"]
+            }
+          ]
+        },
+        "electrophysiology_class": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "18166210_f74d2a66",
+            "235300723_e71a4b88",
+            "8479504_b31e7c55"
+          ],
+          "issues": []
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptides characterised in the report for piriform cortex layer II immature neurons.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No explicit colocated types reported; astroglial lamellae ensheathment is mentioned but cells are generally non-integrated.",
+              "quote_keys": ["18166210_f74d2a66"]
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "neuropeptides: not characterised in report",
+        "colocated_types: not explicitly annotated",
+        "species: multiple species (mouse, rat, guinea pig) but not confirmed",
+        "cross-species validity: degu finding (Groen et al., 2021) shows sparse DCX+ cells in degu piriform cortex — species-specific caveat"
+      ],
+      "overall_confidence": "MODERATE"
+    },
+    "ob_neuroblast": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "625292_d93a2b77",
+            "252063749_e1c84f70"
+          ],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["625292_d93a2b77"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "625292_d93a2b77",
+            "25925289_3e8b7d21",
+            "10712122_b12c9e55"
+          ],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "The node spans three distinct anatomical compartments (SVZ origin, RMS migration path, OB destination). No dedicated UBERON term for RMS; SVZ (UBERON:0002264) used as closest container but understates the geographical span.",
+              "quote_keys": ["625292_d93a2b77", "25925289_3e8b7d21"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "10712122_b12c9e55",
+            "13752593_c44e8b77",
+            "8479504_a44f9b22"
+          ],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "GABAergic identity refers to the terminal interneuron fate after maturation; migrating type A neuroblasts are not yet functionally GABAergic.",
+              "quote_keys": ["10712122_b12c9e55", "13752593_c44e8b77"]
+            }
+          ]
+        },
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "625292_d93a2b77",
+            "25925289_3e8b7d21",
+            "10712122_b12c9e55",
+            "54603778_d82fa516"
+          ],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "PARTIAL",
+          "quote_keys": ["13752593_e66a0d99", "2281064_e87c4b99"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Timing of synaptic integration (21 days) is captured, but intrinsic electrophysiological properties of the immature neuroblast stage are not characterised in the report.",
+              "quote_keys": ["13752593_e66a0d99"]
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptides characterised in the report for OB neuroblasts / immature interneurons.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": ["625292_d93a2b77", "2281064_e87c4b99"],
+          "issues": []
+        }
+      },
+      "gaps": [
+        "neuropeptides: not characterised in report",
+        "electrophysiology_class: intrinsic properties of immature stage not directly recorded",
+        "species: mouse/rat referenced but not confirmed",
+        "anatomical_location: RMS has no dedicated UBERON term"
+      ],
+      "overall_confidence": "HIGH"
+    },
+    "str_immature_neuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "PARTIAL",
+          "quote_keys": ["14221248_f77b1e11"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Only DCX and BrdU (birth-dating label, not a molecular marker) are reported. No lineage-specific or fate-specifying markers are characterised.",
+              "quote_keys": ["14221248_f77b1e11"]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No negative markers reported for striatal immature neurons.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["14221248_f77b1e11"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "NT type assigned by analogy with SVZ-derived OB interneurons (GABAergic), but no quote directly characterises NT type of striatal immature neurons.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "morphology_notes": {
+          "status": "PARTIAL",
+          "quote_keys": ["14221248_f77b1e11"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Only migration-consistent observation; no detailed dendritic/axonal or developmental-stage morphology.",
+              "quote_keys": ["14221248_f77b1e11"]
+            }
+          ]
+        },
+        "electrophysiology_class": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No electrophysiological characterisation reported; adult striatal neurogenesis is quantitatively limited and controversial.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide information available.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No colocated types reported.",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "defining_markers: only DCX + BrdU (single study)",
+        "nt_type: not directly supported",
+        "negative_markers: absent",
+        "morphology_notes: minimal",
+        "electrophysiology_class: absent",
+        "neuropeptides: absent",
+        "colocated_types: absent",
+        "species: mouse reference; others not discussed"
+      ],
+      "overall_confidence": "LOW"
+    },
+    "cx_immature_neuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "14598082_caa4f166",
+            "7393550_c82d5b11"
+          ],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Only DCX reported as a defining marker; no lineage-defining or fate-specifying markers available.",
+              "quote_keys": ["14598082_caa4f166"]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["14598082_caa4f166"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["14598082_caa4f166", "7393550_c82d5b11"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "NT type unspecified; no quote addresses neurotransmitter identity of cortical layer II immature neurons.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "morphology_notes": {
+          "status": "PARTIAL",
+          "quote_keys": ["14598082_caa4f166"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Only anatomical distribution reported; no detailed morphological maturation stages.",
+              "quote_keys": ["14598082_caa4f166"]
+            }
+          ]
+        },
+        "electrophysiology_class": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No electrophysiological characterisation reported; functional significance of cortical immature neurons remains controversial and species-dependent.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide information available.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No colocated types reported.",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "defining_markers: only DCX",
+        "nt_type: unspecified",
+        "neuropeptides: absent",
+        "electrophysiology_class: absent",
+        "colocated_types: absent",
+        "species: cross-species contradictions (mouse/rat vs degu/guinea pig)"
+      ],
+      "overall_confidence": "LOW"
+    }
+  },
+  "global_issues": [
+    {
+      "type": "CONTRADICTION",
+      "description": "Dayer et al. (2005) (PMID:15684031) reported no DCX+ cells in the rodent neocortex — contradicting Groen et al. (2021) (PMID:33994960) who reported widespread DCX+ cells in the degu neocortex, and Yang et al. (2015) (PMID:26321922) in guinea pig. This is a species-dependent contradiction affecting cx_immature_neuron.",
+      "affected_nodes": ["cx_immature_neuron"],
+      "quote_keys": ["14221248_f77b1e11", "14598082_caa4f166", "7393550_c82d5b11"]
+    },
+    {
+      "type": "AMBIGUITY",
+      "description": "Distinction between 'neurogenesis-derived immature neuron' (SGZ/SVZ lineages: dg_neuroblast, dg_immature_granule_neuron, ob_neuroblast, str_immature_neuron) and 'prenatally-generated lifelong immature neuron' (pir_immature_neuron, cx_immature_neuron) spans very different biology. CL:4042028/4042029 cover only the latter; CL:0000031 is used for the former; dg_mature_granule_neuron has an EXACT CL:2000089 mapping; dg_immature_granule_neuron has no existing CL term and is proposed as new (CL:9900002).",
+      "affected_nodes": ["dg_neuroblast", "dg_immature_granule_neuron", "dg_mature_granule_neuron", "ob_neuroblast", "str_immature_neuron", "pir_immature_neuron", "cx_immature_neuron"],
+      "quote_keys": ["18166210_f74d2a66", "258927570_a82f4c11"]
+    },
+    {
+      "type": "HETEROGENEITY",
+      "description": "Multiple proposed nodes conflate developmental stages or morphological subtypes that may merit separate sub-nodes (dg_neuroblast: type-2a/2b/3; ob_neuroblast: SVZ type A → RMS → OB granule/periglomerular; pir_immature_neuron: tangled/complex cells). The DG lineage has already been split into three stage-specific nodes (dg_neuroblast, dg_immature_granule_neuron, dg_mature_granule_neuron).",
+      "affected_nodes": ["dg_neuroblast", "ob_neuroblast", "pir_immature_neuron"],
+      "quote_keys": ["279046466_b2e95c41", "625292_d93a2b77", "15727849_e52b3f99"]
+    },
+    {
+      "type": "GAP",
+      "description": "Neuropeptide information is absent across all 7 nodes in the report. This is a systematic gap of the ASTA deep research source rather than a per-node curation deficit.",
+      "affected_nodes": ["dg_neuroblast", "dg_immature_granule_neuron", "dg_mature_granule_neuron", "ob_neuroblast", "str_immature_neuron", "pir_immature_neuron", "cx_immature_neuron"],
+      "quote_keys": []
+    }
+  ],
+  "round2_targets": [
+    {
+      "node_id": "dg_neuroblast",
+      "property": "electrophysiology_class",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Search primary literature for intrinsic electrophysiological properties of proliferating type-3 progenitors (e.g., Espósito et al., 2005; Overstreet-Wadiche/Westbrook reviews)."
+    },
+    {
+      "node_id": "dg_neuroblast",
+      "property": "defining_markers",
+      "issue": "HETEROGENEITY",
+      "quote_keys": ["279046466_b2e95c41"],
+      "action": "Decide whether to split into separate type-2a and type-2b sub-nodes upstream of the current type-3-focused node."
+    },
+    {
+      "node_id": "dg_immature_granule_neuron",
+      "property": "cl_mapping",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Submit proposed CL term CL:9900002 (dentate gyrus immature granule neuron) to CL editors; fill the gap between CL:0000031 (neuroblast) and CL:2000089 (mature granule cell)."
+    },
+    {
+      "node_id": "dg_immature_granule_neuron",
+      "property": "electrophysiology_class",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Locate patch-clamp / intrinsic recordings of stage-5 immature granule neurons (DCX+/NeuN+) — Espósito et al. 2005 and subsequent work tracks input resistance, firing patterns across maturation timepoints."
+    },
+    {
+      "node_id": "dg_immature_granule_neuron",
+      "property": "negative_markers",
+      "issue": "GAP",
+      "quote_keys": ["279046466_b2e95c41"],
+      "action": "Source a direct-statement quote confirming Calbindin-negative status at stage 5 (currently inferred from downstream stage-6 marker emergence)."
+    },
+    {
+      "node_id": "dg_mature_granule_neuron",
+      "property": "negative_markers",
+      "issue": "GAP",
+      "quote_keys": ["279046466_b2e95c41"],
+      "action": "Source direct-statement quotes confirming DCX/Nestin/PSA-NCAM downregulation at stage 6 (currently inferred from lineage progression)."
+    },
+    {
+      "node_id": "dg_mature_granule_neuron",
+      "property": "electrophysiology_class",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Add direct intrinsic electrophysiology characterisation quotes for mature DG granule cells (e.g., from classical hippocampal ephys literature)."
+    },
+    {
+      "node_id": "pir_immature_neuron",
+      "property": "morphology_notes",
+      "issue": "HETEROGENEITY",
+      "quote_keys": ["15727849_e52b3f99"],
+      "action": "Decide whether to split into 'tangled cell' vs 'complex cell' sub-nodes; consult Gómez-Climent et al., 2008 and Rotheneichner et al., 2018."
+    },
+    {
+      "node_id": "pir_immature_neuron",
+      "property": "neuropeptides",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Search primary literature for neuropeptide expression in piriform cortex layer II immature neurons."
+    },
+    {
+      "node_id": "ob_neuroblast",
+      "property": "neuropeptides",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Search primary literature for neuropeptide expression in migrating Type A neuroblasts and immature OB interneurons."
+    },
+    {
+      "node_id": "ob_neuroblast",
+      "property": "defining_markers",
+      "issue": "HETEROGENEITY",
+      "quote_keys": ["625292_d93a2b77"],
+      "action": "Decide whether to split into SVZ Type A, RMS migrating, and OB immature interneuron (granule vs periglomerular) sub-nodes."
+    },
+    {
+      "node_id": "str_immature_neuron",
+      "property": "defining_markers",
+      "issue": "GAP",
+      "quote_keys": ["14221248_f77b1e11"],
+      "action": "Broader literature search needed — current support is a single study (Dayer et al., 2005). Check for more recent reports or dismissals of adult striatal neurogenesis."
+    },
+    {
+      "node_id": "str_immature_neuron",
+      "property": "nt_type",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Determine NT type empirically or decide node should be removed if unsupported by primary literature."
+    },
+    {
+      "node_id": "str_immature_neuron",
+      "property": "morphology_notes",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Locate any morphological characterisation; otherwise annotate node as minimally-characterised and flag for curator review."
+    },
+    {
+      "node_id": "cx_immature_neuron",
+      "property": "defining_markers",
+      "issue": "GAP",
+      "quote_keys": ["14598082_caa4f166"],
+      "action": "Search for additional lineage/fate markers beyond DCX (e.g. NeuroD, TBR1, layer-specific markers) in cortical layer II immature neurons."
+    },
+    {
+      "node_id": "cx_immature_neuron",
+      "property": "nt_type",
+      "issue": "GAP",
+      "quote_keys": [],
+      "action": "Determine NT type — pir_immature_neuron is glutamatergic upon maturation; check whether cortical cINs follow the same fate in mouse/degu/guinea pig."
+    },
+    {
+      "node_id": "cx_immature_neuron",
+      "property": "species",
+      "issue": "CONTRADICTION",
+      "quote_keys": ["14221248_f77b1e11", "14598082_caa4f166", "7393550_c82d5b11"],
+      "action": "Resolve cross-species discrepancy: Dayer et al. (2005) found no neocortical DCX+ in mouse; degu and guinea pig reports are positive. Species-specific sub-nodes may be required."
+    }
+  ]
+}

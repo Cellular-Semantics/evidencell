@@ -1,0 +1,128 @@
+{
+  "dg_neuroblast": {
+    "proposed_name": "Dentate Gyrus Neuroblast / Immature Granule Neuron",
+    "region": "dentate_gyrus",
+    "cl_term_id": "CL:0000031",
+    "cl_label": "neuroblast (sensu Vertebrata)",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "HIGH",
+    "mapping_rationale": "CL:0000031 is the canonical vertebrate neuroblast class ('a cell that will develop into a neuron often after a migration phase') and encompasses SVZ/SGZ-born migrating DCX+ neuroblasts. The proposed type is a region-specific instance. CL:1000042 (forebrain neuroblast) is a subclass and is also a BROAD match. No dentate-gyrus-specific neuroblast or immature granule neuron term exists in CL; CL:2000089 (dentate gyrus granule cell) covers only the mature, terminally differentiated stage and is not a match.",
+    "additional_broad_matches": [
+      {
+        "cl_term_id": "CL:1000042",
+        "cl_label": "forebrain neuroblast",
+        "mapping_type": "BROAD",
+        "note": "Subclass of CL:0000031 scoped to forebrain — closer anatomical match"
+      }
+    ],
+    "definition_references": [],
+    "related_mature_term": {
+      "cl_term_id": "CL:2000089",
+      "cl_label": "dentate gyrus granule cell",
+      "note": "Terminal mature stage; definition references PMID:17765709",
+      "definition_references": ["PMID:17765709"]
+    }
+  },
+  "pir_immature_neuron": {
+    "proposed_name": "Piriform Cortex Layer II Immature Neuron",
+    "region": "piriform_cortex",
+    "cl_term_id": "CL:4042028",
+    "cl_label": "immature neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "HIGH",
+    "mapping_rationale": "CL:4042028 ('a neuron in the central nervous system that is not committed to a differentiated fate, has not been newly derived from neurogenesis, and does not integrate into any circuit') matches the biological description of piriform cortex layer II immature neurons (DCX+/PSA-NCAM+, no c-Fos/Arc, no NMDA receptors, prolonged non-integrated state). This is a BROAD match because CL:4042028 is CNS-wide; no piriform-cortex-specific immature neuron term exists in CL. CL:4042029 (cortical immature neuron) does not apply as it is defined as a prenatally-derived, lifelong immature neuron of neocortex — the piriform cortex is allocortex/paleocortex and the biology differs.",
+    "definition_references": ["PMID:31096632", "PMID:32116519", "PMID:37833544"],
+    "note": "No piriform-cortex-specific immature neuron CL term found. Potential CL contribution: a 'piriform cortex layer II immature neuron' as a subclass of CL:4042028."
+  },
+  "ob_neuroblast": {
+    "proposed_name": "Olfactory Bulb Neuroblast / Immature Interneuron",
+    "region": "olfactory_bulb",
+    "cl_term_id": "CL:0000031",
+    "cl_label": "neuroblast (sensu Vertebrata)",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "HIGH",
+    "mapping_rationale": "CL:0000031 covers SVZ-born type A migrating neuroblasts (PSA-NCAM+/TuJ1+/DCX+, GFAP-) en route to the olfactory bulb via the rostral migratory stream. CL:1000042 (forebrain neuroblast) is a more specific BROAD match as OB is a forebrain structure. The terminal fate splits: CL:0000626 (olfactory granule cell, synonym: 'olfactory bulb granule cell') covers GABAergic granule neurons in GCL; CL:1001435 (periglomerular cell) covers GABAergic periglomerular neurons in glomerular layer. Neither terminal fate term is a match for the migrating neuroblast stage described in the proposed type.",
+    "additional_broad_matches": [
+      {
+        "cl_term_id": "CL:1000042",
+        "cl_label": "forebrain neuroblast",
+        "mapping_type": "BROAD",
+        "note": "Subclass of CL:0000031 scoped to forebrain"
+      }
+    ],
+    "definition_references": [],
+    "related_mature_terms": [
+      {
+        "cl_term_id": "CL:0000626",
+        "cl_label": "olfactory granule cell",
+        "synonyms": ["olfactory bulb granule cell"],
+        "note": "Terminal GABAergic fate in granule cell layer",
+        "definition_references": []
+      },
+      {
+        "cl_term_id": "CL:1001435",
+        "cl_label": "periglomerular cell",
+        "synonyms": ["olfactory bulb periglomerular cell"],
+        "note": "Terminal GABAergic fate in glomerular layer",
+        "definition_references": []
+      },
+      {
+        "cl_term_id": "CL:1001434",
+        "cl_label": "olfactory bulb interneuron",
+        "note": "Broad mature interneuron parent class; definition references PMID:18603310",
+        "definition_references": ["PMID:18603310"]
+      }
+    ]
+  },
+  "str_immature_neuron": {
+    "proposed_name": "Striatum Immature Neuron (SVZ-derived)",
+    "region": "striatum",
+    "cl_term_id": null,
+    "cl_label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "mapping_rationale": "No CL term for a striatum-specific immature/neuroblast cell was found. Searches for 'striatum interneuron', 'immature neuron striatum', 'SVZ neuroblast striatum' all returned only generic terms (CL:0002613 striatum neuron, CL:0000031 neuroblast). CL:0000031 could be used as a BROAD parent, but given the proposed type is characterised only by BrdU+/DCX+ with minimal description (1 quote, no confirmed subtypes), a direct BROAD assignment is not confident. Closest generic options: CL:0000031 (BROAD) or CL:0002613 (striatum neuron, post-integration, NOT a match).",
+    "broad_fallback": {
+      "cl_term_id": "CL:0000031",
+      "cl_label": "neuroblast (sensu Vertebrata)",
+      "mapping_type": "BROAD",
+      "note": "Usable as placeholder BROAD parent only; evidence for striatal neurogenesis is thin and controversial"
+    },
+    "definition_references": [],
+    "note": "No CL term found for striatum-specific immature neuron — potential CL contribution if striatal adult neurogenesis is confirmed."
+  },
+  "cx_immature_neuron": {
+    "proposed_name": "Cerebral Cortex Layer II Immature Neuron",
+    "region": "cerebral_cortex",
+    "cl_term_id": "CL:4042029",
+    "cl_label": "cortical immature neuron",
+    "mapping_type": "EXACT",
+    "mapping_confidence": "HIGH",
+    "mapping_rationale": "CL:4042029 is defined as 'An immature neuron of a cerebral cortex. This neuron develops prenatally and remains in an immature state throughout the lifespan of the organism.' This is an EXACT match: the proposed type (DCX+/NeuN-, layer II of neocortex, particularly limbic cortices, species-dependent) is precisely the non-neurogenic cortical immature neuron class that CL:4042029 was created to represent. Synonym 'cIN' is used in the field. CL:4042028 (immature neuron, CNS-wide) is a broader parent.",
+    "definition_references": ["PMID:37833544"],
+    "parent_term": {
+      "cl_term_id": "CL:4042028",
+      "cl_label": "immature neuron",
+      "definition_references": ["PMID:31096632", "PMID:32116519", "PMID:37833544"]
+    }
+  },
+  "_metadata": {
+    "generated_date": "2026-04-22",
+    "output_directory": "kb/immature_neurons/traversal_output/20260422_immature_neurons_report_ingest",
+    "lookup_sources": ["OLS v1 API (https://www.ebi.ac.uk/ols/api)", "CL ontology"],
+    "all_definition_references_collected": [
+      "PMID:17765709",
+      "PMID:18603310",
+      "PMID:31096632",
+      "PMID:32116519",
+      "PMID:37833544"
+    ],
+    "summary": {
+      "total_proposed_types": 5,
+      "matched_exact": 1,
+      "matched_broad": 3,
+      "unmatched_candidate": 1,
+      "definition_references_as_seed_papers": 5
+    }
+  }
+}
