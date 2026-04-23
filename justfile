@@ -226,6 +226,20 @@ build-anat-closure taxonomy_id:
 find-candidates graph_file node_id taxonomy_id rank="1" top_n="20":
     uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_n}}
 
+# Show taxonomy metadata (including mapmycells paths)
+# Usage: just show-meta CCN20230722
+[group('workflows')]
+show-meta taxonomy_id:
+    uv run python -m evidencell.taxonomy_db show-meta {{taxonomy_id}}
+
+# Query precomputed stats HDF5 for mean expression of genes in atlas clusters.
+# accessions and genes are comma-separated.
+# Requires: just at-download-taxonomy {taxonomy_id} (downloads precomputed_stats.h5)
+# Usage: just query-gene-expression CCN20230722 CS20230722_CLUS_0511,CS20230722_CLUS_0514 Dcx,Eomes,Nestin
+[group('workflows')]
+query-gene-expression taxonomy_id accessions genes:
+    uv run python -m evidencell.taxonomy_db query-gene-expression {{taxonomy_id}} "{{accessions}}" "{{genes}}"
+
 # ── Reports ────────────────────────────────────────────────────────────────────
 
 # Extract structured report facts JSON (input to synthesis subagent in gen-report workflow)

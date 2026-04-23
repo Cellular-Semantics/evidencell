@@ -1706,6 +1706,74 @@ def _cmd_sync_mapmycells_paths(taxonomy_id: str) -> None:
         print(f"    local_markers_path: {markers_rel}")
 
 
+def _cmd_query_gene_expression(
+    taxonomy_id: str,
+    accessions: list[str],
+    genes: list[str],
+) -> None:
+    """Query precomputed stats HDF5 for mean expression of genes in given clusters.
+
+    genes may be:
+      - Gene symbols (looked up case-insensitively against col_names)
+      - Ensembl IDs (ENSMUSG… / ENSG…)
+      - "Symbol=EnsemblID" pairs (e.g. "Rbfox3=ENSMUSG00000032060")
+
+    Output: JSON with keys = cell_set_accession, values = {label: mean_expr}.
+    Genes absent from the H5 col_names are reported as null.
+    """
+    import h5py
+
+    meta = read_taxonomy_meta(taxonomy_id)
+    stats_path = meta.mapmycells.local_stats_path
+    if not stats_path:
+        print(json.dumps({"error": f"No local_stats_path for {taxonomy_id}"}))
+        sys.exit(1)
+
+    from evidencell.paths import repo_root
+    h5_path = repo_root() / stats_path
+    if not h5_path.exists():
+        print(json.dumps({"error": f"Stats file not found: {h5_path}"}))
+        sys.exit(1)
+
+    with h5py.File(h5_path, "r") as f:
+        # Datasets are JSON-encoded scalar strings in this format
+        col_names: list[str] = json.loads(f["col_names"][()])
+        sum_matrix = f["sum"][:]  # shape: (n_clusters, n_genes)
+        cluster_to_row: dict[str, int] = json.loads(f["cluster_to_row"][()])
+
+    col_idx_map = {c: i for i, c in enumerate(col_names)}
+    col_lower = {c.lower(): i for i, c in enumerate(col_names)}
+
+    # Parse gene entries and build label → column index mapping
+    gene_indices: dict[str, int | None] = {}
+    for g in genes:
+        if "=" in g:
+            label, ens_id = g.split("=", 1)
+            gene_indices[label] = col_idx_map.get(ens_id)
+        elif g.startswith("ENSMUSG") or g.startswith("ENSG"):
+            gene_indices[g] = col_idx_map.get(g)
+        else:
+            gene_indices[g] = col_lower.get(g.lower())
+
+    result: dict[str, dict[str, float | None]] = {}
+    for acc in accessions:
+        row_idx = cluster_to_row.get(acc)
+        if row_idx is None:
+            result[acc] = {g: None for g in gene_indices}
+            continue
+        row = sum_matrix[row_idx]
+        expr: dict[str, float | None] = {}
+        for label, col_idx in gene_indices.items():
+            if col_idx is None:
+                expr[label] = None
+            else:
+                val = float(row[col_idx])
+                expr[label] = round(val, 4) if val != 0.0 else 0.0
+        result[acc] = expr
+
+    print(json.dumps(result, indent=2))
+
+
 def _cmd_show_meta(taxonomy_id: str) -> None:
     meta = read_taxonomy_meta(taxonomy_id)
     print(f"taxonomy_id:       {meta.taxonomy_id}")
@@ -2034,6 +2102,7 @@ if __name__ == "__main__":
         print("  python -m evidencell.taxonomy_db fetch-mba <dest_path>")
         print("  python -m evidencell.taxonomy_db build-closure <taxonomy_id> <mba_json>")
         print("  python -m evidencell.taxonomy_db find-candidates <graph_file> <node_id> <taxonomy_id> [rank] [top_n]")
+        print("  python -m evidencell.taxonomy_db query-gene-expression <taxonomy_id> <accessions_csv> <genes_csv>")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -2053,6 +2122,10 @@ if __name__ == "__main__":
         _rank = int(sys.argv[5]) if len(sys.argv) > 5 else 1
         _top_n = int(sys.argv[6]) if len(sys.argv) > 6 else 20
         _cmd_find_candidates(sys.argv[2], sys.argv[3], sys.argv[4], _rank, _top_n)
+    elif cmd == "query-gene-expression" and len(sys.argv) == 5:
+        _accessions = [a.strip() for a in sys.argv[3].split(",") if a.strip()]
+        _genes = [g.strip() for g in sys.argv[4].split(",") if g.strip()]
+        _cmd_query_gene_expression(sys.argv[2], _accessions, _genes)
     else:
         print(f"Unknown command or wrong arguments: {sys.argv[1:]}")
         sys.exit(1)

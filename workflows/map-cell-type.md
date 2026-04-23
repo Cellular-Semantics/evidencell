@@ -33,6 +33,16 @@ PARAMS:
   model: "sonnet"
 ```
 
+**Precomputed stats**: Before starting, check whether a precomputed stats HDF5 is available
+for the target taxonomy:
+
+```bash
+just show-meta {taxonomy_id}   # check mapmycells.local_stats_path
+```
+
+If `local_stats_path` is set, Step 2.5 will run the stats cross-check automatically.
+If not, download with `just at-download-taxonomy {taxonomy_id}` first.
+
 ---
 
 ## Step 0: Candidate discovery
@@ -179,6 +189,30 @@ with available evidence, skip to Step 3.
 
 ---
 
+## Step 2.5: Precomputed stats cross-check
+
+**Run this step if `local_stats_path` is set in `taxonomy_meta.yaml` for the target taxonomy.**
+Skip if stats file is absent.
+
+Collect all confirmed candidate accessions from Step 1. Collect all gene symbols from the
+classical node: `defining_markers`, `negative_markers`, and `neuropeptides`.
+
+```bash
+just query-gene-expression {taxonomy_id} \
+  "{accession1},{accession2},..." \
+  "{Gene1},{Gene2},..." \
+  > {output_dir}/stats_expression_{classical_node_id}.json
+```
+
+The output is a JSON object keyed by `cell_set_accession`, each value a dict of
+`{gene_symbol: mean_expression}`. A value of `null` means the gene was absent from the
+H5 col_names (Ensembl IDs don't match the symbol — flag as NOT_ASSESSED rather than zero).
+A value of `0.0` means the gene is present in the H5 but has zero mean expression in that cluster.
+
+Pass the resulting file path to the mapping subagent in Step 3 as `STATS_EXPRESSION_FILE`.
+
+---
+
 ## Step 3: Mapping edge subagent
 
 For each confirmed candidate, spawn a **mapping subagent** with this exact prompt:
@@ -194,7 +228,7 @@ TAXONOMY ID: {taxonomy_id}
 TAXONOMY DIR: kb/taxonomy/{taxonomy_id}/
 RELATIONSHIP: {relationship_type}
 DISCOVERY DATA: {path to discovery_candidates.json, if available}
-PRECOMPUTED_STATS: {path to precomputed_stats HDF5, or "none"}
+STATS_EXPRESSION_FILE: {path to stats_expression_{classical_node_id}.json, or "none"}
 
 REFERENCE: Read kb/draft/cerebellum/CB_PLI_types.yaml for structural reference —
 specifically the edges section (starts after the nodes). Match that format exactly.
@@ -232,26 +266,22 @@ TASK:
      neuropeptides; precomputed stats show 0.0 in this cluster"). Do not
      attempt to explain the discrepancy — flag it for investigation.
 
-   **Precomputed stats cross-check.** When a precomputed stats HDF5 is available
-   for the target taxonomy:
+   **Precomputed stats cross-check.** When STATS_EXPRESSION_FILE is provided (not "none"):
 
-   a. Load the file: `col_names` (gene Ensembl IDs), `sum` matrix (cluster ×
-      gene means), `cluster_to_row` mapping, `taxonomy_tree` + `name_mapper`.
+   a. Read the JSON file. It is keyed by `cell_set_accession` → `{gene_symbol: mean_expr}`.
+      `null` means the gene symbol was absent from the H5 (flag NOT_ASSESSED).
+      `0.0` means the gene is present but has zero mean expression in that cluster.
 
-   b. For each classical defining_marker, negative_marker, and neuropeptide,
-      look up the gene's Ensembl ID and retrieve the mean expression value from
-      the candidate cluster row(s) in the `sum` matrix.
+   b. For each property comparison, look up the gene in the stats file for the
+      candidate accession. Append the quantitative value to `node_b_value`, e.g.:
+      "Chrna2: listed in supertype markers; precomputed stats mean = 4.3".
 
-   c. Populate `node_b_value` with the quantitative expression (e.g.
-      "Chrna2: 4.3 (precomputed stats mean); listed in supertype markers").
-      This upgrades NOT_ASSESSED comparisons where the gene is absent from
-      atlas metadata but present in the precomputed stats, and adds
-      quantitative grounding to metadata-only comparisons.
+   c. For genes absent from atlas metadata markers but with non-zero stats
+      expression, upgrade the comparison from NOT_ASSESSED to APPROXIMATE and
+      note the stats value.
 
-   d. Where a gene shows zero expression across all relevant clusters in the
-      precomputed stats but is annotated in the taxonomy metadata, or vice
-      versa, note the discrepancy in the `notes` field. Do not adjudicate —
-      report both values for downstream interpretation in reports.
+   d. Where a gene is annotated in atlas metadata but shows 0.0 in the stats,
+      or vice versa, note the discrepancy in `notes`. Do not adjudicate.
 
    LOCATION alignment rules:
    - CONSISTENT: atlas node has cells in the matching soma region
