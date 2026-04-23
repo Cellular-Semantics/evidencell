@@ -31,10 +31,27 @@ nodes:
       name_in_source: "Glut"
       cl_terms: []
     neuropeptides: []
-    defining_markers: []
+    defining_markers:
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "DG-PIR Ex IMN"
+      mapping_type: BROAD
+      mapping_notes: >
+        Subclass spanning dentate gyrus immature neurons (supertypes 1, 2:
+        DG-origin, mapped to CL:9900001/9900002/9900004) and piriform cortex
+        immature neurons (supertype 3: PIR-origin, MERFISH-verified). No single
+        CL term covers the heterogeneous subclass; CL:4042028 (immature neuron)
+        as broadest common ancestor. Cluster-level mappings are more precise.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # subclass_id: 38
@@ -56,10 +73,41 @@ nodes:
       name_in_source: "Glut"
       cl_terms: []
     neuropeptides: []
-    defining_markers: []
+    defining_markers:
+      - symbol: Eomes
+        ncbi_gene_id: null
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
+      - symbol: Sox6
+        ncbi_gene_id: null
+      - symbol: Meis2
+        ncbi_gene_id: null
+      - symbol: Neurod1
+        ncbi_gene_id: null
+      - symbol: Meis1
+        ncbi_gene_id: null
+      - symbol: Tenm1
+        ncbi_gene_id: null
+      - symbol: Lmo1
+        ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0009952
+        label: "dentate gyrus subgranular zone"
+        name_in_source: "subgranular zone (SGZ)"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900001
+        label: "dentate gyrus neuroblast"
+        name_in_source: "DG-PIR Ex IMN_1"
+      mapping_type: BROAD
+      mapping_notes: >
+        Supertype grouping the single early neuroblast/type-2b cluster (0511)
+        defined by Eomes/Tbr2 and Sox6 expression in the dentate gyrus SGZ.
+        CL:9900001 (dentate gyrus neuroblast) is the broadest common ancestor
+        for this supertype; cluster 0511 may more precisely map to CL:9900004
+        (type-2b progenitor) given its Eomes+ signature.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # supertype_id: 140
@@ -106,10 +154,26 @@ nodes:
       - symbol: Gad2  # source: nt_marker  # score: 3.24
         ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0009952
+        label: "dentate gyrus subgranular zone"
+        name_in_source: "DG STR"
     # anatomy_source: "DG STR"
     # anatomy_source: "NA:0.75,CTXsp:0.12  # ccf_broad annotation"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900004
+        label: "dentate gyrus type-2b neural progenitor"
+        name_in_source: "early neuroblast"
+      mapping_type: BROAD
+      mapping_notes: >
+        Curator-annotated as "early neuroblast". Key markers: Eomes (=Tbr2,
+        type-2b intermediate progenitor TF), Sox6, Neurod1, Meis2; MERFISH
+        validates Eomes and Igfbpl1 in DG-STR boundary. Eomes/Tbr2 expression
+        confirms type-2b progenitor identity. CL:9900004 (dentate gyrus
+        type-2b neural progenitor) is BROAD — this cluster likely spans the
+        type-2b/type-3 transition.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # cluster_id: 511
@@ -138,10 +202,37 @@ nodes:
       name_in_source: "Glut"
       cl_terms: []
     neuropeptides: []
-    defining_markers: []
+    defining_markers:
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
+      - symbol: Eomes
+        ncbi_gene_id: null
+      - symbol: Emx2
+        ncbi_gene_id: null
+      - symbol: Prox1
+        ncbi_gene_id: null
+      - symbol: Tbr1
+        ncbi_gene_id: null
+      - symbol: Draxin
+        ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900001
+        label: "dentate gyrus neuroblast"
+        name_in_source: "DG-PIR Ex IMN_2"
+      mapping_type: BROAD
+      mapping_notes: >
+        Supertype grouping four clusters: type-2b progenitor (0513), late
+        neuroblast (0512), immature granule cell (0514, 0515). No single CL
+        term covers the full supertype; CL:9900001 (dentate gyrus neuroblast)
+        applied as broadest common ancestor at supertype level. Cluster-level
+        mappings are more precise.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # supertype_id: 141
@@ -182,10 +273,26 @@ nodes:
       - symbol: Bhlhe22  # source: tf_marker
         ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DGdo,me"
     # anatomy_source: "DGdo,me"
     # anatomy_source: "HIP:0.96  # ccf_broad annotation"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900001
+        label: "dentate gyrus neuroblast"
+        name_in_source: "late neuroblast"
+      mapping_type: BROAD
+      mapping_notes: >
+        Curator-annotated as "late neuroblast". Key markers: Eomes (=Tbr2)
+        still expressed, Prox1 (DG lineage TF), Calb2 (calretinin — transiently
+        expressed in immature granule neurons); MERFISH validates Eomes and
+        Calb2. Calretinin onset indicates transition toward immature granule
+        neuron stage. CL:9900001 (dentate gyrus neuroblast) — type-3/neuroblast
+        stage.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # cluster_id: 512
@@ -236,10 +343,26 @@ nodes:
       - symbol: Slc17a6  # source: nt_marker  # score: 4.52
         ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DGdo,me (CTX?)"
     # anatomy_source: "DGdo,me (CTX?)"
     # anatomy_source: "HIP:0.58,NA:0.37  # ccf_broad annotation"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900004
+        label: "dentate gyrus type-2b neural progenitor"
+        name_in_source: "early neuroblast"
+      mapping_type: BROAD
+      mapping_notes: >
+        Curator-annotated as "early neuroblast". Key markers: Vim (vimentin —
+        progenitor marker consistent with type-2b stage), Neurod4, Nhlh1;
+        MERFISH validates Eomes and Igfbpl1. Vimentin and Eomes co-expression
+        confirms type-2b progenitor identity. Anatomical location uncertain
+        (noted "CTX?" in taxonomy). CL:9900004 (dentate gyrus type-2b neural
+        progenitor) is BROAD.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # cluster_id: 513
@@ -293,10 +416,27 @@ nodes:
       - symbol: Slc17a7  # source: nt_marker  # score: 3.34
         ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DGdo,me"
     # anatomy_source: "DGdo,me"
     # anatomy_source: "HIP:0.98  # ccf_broad annotation"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900002
+        label: "immature dentate gyrus granule neuron"
+        name_in_source: "late neuroblast / immature granule cell"
+      mapping_type: EXACT
+      mapping_notes: >
+        Curator-annotated as "late neuroblast / immature granule cell". Key
+        markers: Tbr1 (postmitotic granule neuron TF), Prox1, Emx2, Rarb,
+        Igfbpl1; MERFISH validates Igfbpl1 and Emx2; anatomy DGdo,me HIP:0.98.
+        Tbr1 onset with retained Igfbpl1 defines the postmitotic transition
+        into the inner GCL. EXACT match to CL:9900002 (immature dentate gyrus
+        granule neuron, parent CL:4042028). Clusters 0514 and 0515 together
+        constitute the transcriptomic evidence for this CL term.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # cluster_id: 514
@@ -351,10 +491,26 @@ nodes:
       - symbol: Gad1  # source: nt_marker  # score: 3.67
         ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DGdo,me"
     # anatomy_source: "DGdo,me"
     # anatomy_source: "HIP:1  # ccf_broad annotation"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900002
+        label: "immature dentate gyrus granule neuron"
+        name_in_source: "late neuroblast"
+      mapping_type: EXACT
+      mapping_notes: >
+        Curator-annotated as "late neuroblast". Key markers: Tbr1, Prox1,
+        Emx2, Rarb, Igfbpl1, Bcl11b, Cd24a; MERFISH validates Igfbpl1, Emx2,
+        Fam163a, Bcl11b; anatomy DGdo,me HIP:1.0. Identical TF profile to
+        cluster 0514 (Tbr1+/Prox1+/Emx2+/Igfbpl1+); together these two
+        clusters define the transcriptomic signature for CL:9900002 (immature
+        dentate gyrus granule neuron, parent CL:4042028).
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # cluster_id: 515
@@ -384,10 +540,33 @@ nodes:
       name_in_source: "Glut"
       cl_terms: []
     neuropeptides: []
-    defining_markers: []
+    defining_markers:
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
+      - symbol: Tbr1
+        ncbi_gene_id: null
+      - symbol: Tfap2d
+        ncbi_gene_id: null
+      - symbol: Slc17a6
+        ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0002590
+        label: "piriform cortex"
+        name_in_source: "piriform cortex / endopiriform area"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "DG-PIR Ex IMN_3"
+      mapping_type: BROAD
+      mapping_notes: >
+        MERFISH confirms anatomy in piriform cortex / endopiriform area rather
+        than dentate gyrus (OLF/CTXsp). Clusters share an immature transcriptomic
+        signature (Igfbpl1+, Tbr1+, Tfap2d+) but cannot be traced to DG
+        neurogenesis stages. CL:4042028 (immature neuron) as broadest appropriate
+        ancestor; no DG-specific CL term applicable for PIR-resident cells.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # supertype_id: 142
@@ -436,10 +615,23 @@ nodes:
       - symbol: Slc17a6  # source: nt_marker  # score: 4.16
         ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0002590
+        label: "piriform cortex"
+        name_in_source: "PIR"
     # anatomy_source: "PIR"
     # anatomy_source: "OLF:0.5,CTXsp:0.39  # ccf_broad annotation"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "0516 DG-PIR Ex IMN_3"
+      mapping_type: BROAD
+      mapping_notes: >
+        MERFISH confirms PIR/EPd location (OLF:0.5, CTXsp:0.39). Immature
+        signature: Igfbpl1+, Tbr1+, Tfap2d+, Scml4+. Anatomy excludes DG
+        neurogenesis lineage; CL:4042028 (immature neuron) BROAD.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # cluster_id: 516
@@ -492,10 +684,23 @@ nodes:
       - symbol: Slc17a6  # source: nt_marker  # score: 9.15
         ncbi_gene_id: null
     negative_markers: []
-    anatomical_location: []
+    anatomical_location:
+      - id: UBERON:0002590
+        label: "piriform cortex"
+        name_in_source: "EPd (endopiriform area)"
     # anatomy_source: "EPd"
     # anatomy_source: "CTXsp:0.61,Isocortex:0.16,NA:0.13  # ccf_broad annotation"
     definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "0517 DG-PIR Ex IMN_3"
+      mapping_type: BROAD
+      mapping_notes: >
+        MERFISH confirms EPd/CTXsp location (CTXsp:0.61). Immature signature:
+        Igfbpl1+, Tbr1+, Tfap2d+, Casz1+. Anatomy excludes DG neurogenesis
+        lineage; CL:4042028 (immature neuron) BROAD.
     # --- source data preserved below ---
     # taxonomy_id: CCN202307220
     # cluster_id: 517
@@ -507,4 +712,3 @@ nodes:
     # cl: 1340  # UNCERTAIN — verify against CL ontology before use
     # notes: "in OLF PIR rather than DG, based on MERFISH; still look immature (Igbpl1, Mex3a, Draxin), but can't be traced to earlier or later stages."
     # neighborhood: Pallium-Glut;NN-IMN-GC
-
