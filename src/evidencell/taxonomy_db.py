@@ -59,6 +59,7 @@ class TaxonomyMeta:
     source_file: str | None = None       # JSON/CSV/XLSX path for ad hoc taxonomies
     ingest_date: str | None = None
     level_counts: dict[str, int] = field(default_factory=dict)
+    level_hierarchy: list[dict] = field(default_factory=list)  # [{level_name, rank, count, is_terminal}]
     mapmycells: MapMyCellsMeta = field(default_factory=MapMyCellsMeta)
 
 
@@ -104,6 +105,7 @@ def read_taxonomy_meta(taxonomy_id: str) -> TaxonomyMeta:
         source_file=d.get("source_file"),
         ingest_date=d.get("ingest_date"),
         level_counts=d.get("level_counts", {}),
+        level_hierarchy=d.get("level_hierarchy", []),
         mapmycells=MapMyCellsMeta(
             at_taxonomy_id=mmc_raw.get("at_taxonomy_id"),
             stats_s3_url=mmc_raw.get("stats_s3_url"),
@@ -130,6 +132,8 @@ def _meta_to_dict(meta: TaxonomyMeta) -> dict[str, Any]:
         v = getattr(meta, k)
         if v is not None:
             d[k] = v
+    if meta.level_hierarchy:
+        d["level_hierarchy"] = meta.level_hierarchy
     if meta.level_counts:
         d["level_counts"] = meta.level_counts
     if mmc_dict:
@@ -212,7 +216,7 @@ class TaxonomyNode:
     anat: list[dict] = field(default_factory=list)
     rationale: str | None = None
     rationale_dois: list[str] = field(default_factory=list)
-    sex_bias: str | None = None
+    male_female_ratio: float | None = None  # Male/Female cell count ratio, 2 dp
     # class-level extras
     neuronal: bool | None = None
     glial: bool | None = None
@@ -318,6 +322,25 @@ def _circadian(light: str | None) -> float | None:
     return val if (val > 0.7 or val < 0.3) else None
 
 
+def _male_female_ratio(props: dict, fc: dict[str, list[str]]) -> float | None:
+    """Compute Male/Female cell count ratio from source fractions.
+
+    Returns ratio rounded to 2 dp, or None when either fraction is 0 or absent.
+    """
+    male_raw = _scalar(_first_prop(props, fc.get("male_fraction", ["Male"])))
+    female_raw = _scalar(_first_prop(props, fc.get("female_fraction", ["Female"])))
+    if male_raw is None or female_raw is None:
+        return None
+    try:
+        male = float(male_raw)
+        female = float(female_raw)
+    except (ValueError, TypeError):
+        return None
+    if female == 0.0 or male == 0.0:
+        return None
+    return round(male / female, 2)
+
+
 def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> TaxonomyNode:
     """Extract a TaxonomyNode from a raw VFB graph export row.
 
@@ -409,13 +432,99 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
         anat=anat_entries,
         rationale=rationale,
         rationale_dois=rationale_dois,
-        sex_bias=_scalar(_first_prop(
-            props,
-            fc.get("sex_bias", ["sex_bias", "CCN20230722_sex_bias"]),
-        )),
+        male_female_ratio=_male_female_ratio(props, fc),
         neuronal=neuronal,
         glial=glial,
     )
+
+
+def _compute_level_hierarchy(
+    nodes: list[TaxonomyNode],
+) -> tuple[list[dict], dict[str, int]]:
+    """Derive rank assignments from parent relationships.
+
+    Returns (level_hierarchy, level_to_rank) where level_hierarchy is the
+    list for taxonomy_meta.yaml and level_to_rank maps level name → int rank.
+
+    Algorithm: build a directed graph of level→parent_level edges from the
+    nodes' parent relationships.  Leaf levels (no children) get rank 0,
+    then increment toward root.  Levels that appear only as parents of
+    themselves (e.g. NEUROTRANSMITTER with no parent) and have no children
+    from other levels are excluded (orthogonal annotations).
+    """
+    # Build {node_id: level} and {level: set(parent_levels)}
+    id_to_level: dict[str, str] = {}
+    levels: set[str] = set()
+    for n in nodes:
+        lev = n.taxonomy_level.upper()
+        id_to_level[n.node_id] = lev
+        levels.add(lev)
+
+    # child_level → set of parent_levels
+    parent_of: dict[str, set[str]] = {lev: set() for lev in levels}
+    for n in nodes:
+        if n.parent_id:
+            parent_lev = id_to_level.get(n.parent_id)
+            if parent_lev:
+                child_lev = n.taxonomy_level.upper()
+                if parent_lev != child_lev:
+                    parent_of[child_lev].add(parent_lev)
+
+    # Find hierarchical levels: those that appear as child or parent of another level
+    hierarchical: set[str] = set()
+    for child, parents in parent_of.items():
+        if parents:
+            hierarchical.add(child)
+            hierarchical.update(parents)
+
+    # Topological sort: leaf (no children pointing to it as parent) → root
+    # "children" of a level = levels whose parent_of set contains this level
+    children_of: dict[str, set[str]] = {lev: set() for lev in hierarchical}
+    for child in hierarchical:
+        for parent in parent_of.get(child, set()):
+            if parent in hierarchical:
+                children_of[parent].add(child)
+
+    # Assign ranks bottom-up: leaves first
+    level_to_rank: dict[str, int] = {}
+    assigned: set[str] = set()
+
+    def _assign(lev: str) -> int:
+        if lev in level_to_rank:
+            return level_to_rank[lev]
+        kids = children_of.get(lev, set())
+        if not kids:
+            level_to_rank[lev] = 0
+            assigned.add(lev)
+            return 0
+        max_child_rank = max(_assign(c) for c in kids)
+        rank = max_child_rank + 1
+        level_to_rank[lev] = rank
+        assigned.add(lev)
+        return rank
+
+    for lev in hierarchical:
+        _assign(lev)
+
+    # Count nodes per level
+    level_count: dict[str, int] = {}
+    for n in nodes:
+        lev = n.taxonomy_level.upper()
+        level_count[lev] = level_count.get(lev, 0) + 1
+
+    # Build hierarchy list sorted by rank
+    hierarchy: list[dict] = []
+    for lev, rank in sorted(level_to_rank.items(), key=lambda x: x[1]):
+        entry: dict = {
+            "level_name": lev,
+            "rank": rank,
+            "count": level_count.get(lev, 0),
+        }
+        if rank == 0:
+            entry["is_terminal"] = True
+        hierarchy.append(entry)
+
+    return hierarchy, level_to_rank
 
 
 # ── YAML generation ────────────────────────────────────────────────────────────
@@ -568,6 +677,8 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         d["anatomical_location"] = anat_locs
     if n.neighborhood:
         d["neighborhood"] = n.neighborhood
+    if n.male_female_ratio is not None:
+        d["male_female_ratio"] = n.male_female_ratio
     if species:
         d["species"] = species
     return d
@@ -637,22 +748,241 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
         if n.node_id:
             name_lookup[n.node_id] = clean_name
 
+    # Compute level hierarchy and assign ranks to nodes
+    level_hierarchy, level_to_rank = _compute_level_hierarchy(all_nodes)
+
     # Second pass: convert to CellTypeNode dicts grouped by level
     by_level: dict[str, list[dict]] = {}
     for n in all_nodes:
-        by_level.setdefault(n.taxonomy_level, []).append(
-            _node_to_dict(n, meta, name_lookup)
-        )
+        d = _node_to_dict(n, meta, name_lookup)
+        lev_upper = n.taxonomy_level.upper()
+        rank = level_to_rank.get(lev_upper)
+        if rank is not None:
+            d["taxonomy_rank"] = rank
+        by_level.setdefault(n.taxonomy_level, []).append(d)
 
     # Write one TaxonomyNodeList YAML per level
     counts: dict[str, int] = {}
     for level, nodes in sorted(by_level.items()):
+        lev_upper = level.upper()
+        header: dict[str, Any] = {
+            "taxonomy_id": taxonomy_id,
+            "taxonomy_level": lev_upper,
+        }
+        rank = level_to_rank.get(lev_upper)
+        if rank is not None:
+            header["taxonomy_rank"] = rank
+        header["nodes"] = nodes
         out_file = output_dir / f"{level}.yaml"
+        with out_file.open("w", encoding="utf-8") as fh:
+            yaml.dump(
+                header,
+                fh,
+                allow_unicode=True,
+                sort_keys=False,
+                default_flow_style=False,
+            )
+        counts[level] = len(nodes)
+
+    meta.level_counts = counts
+    meta.level_hierarchy = level_hierarchy
+    meta_file = output_dir / "taxonomy_meta.yaml"
+    with meta_file.open("w", encoding="utf-8") as fh:
+        yaml.dump(_meta_to_dict(meta), fh, allow_unicode=True, sort_keys=False)
+
+    return counts
+
+
+# ── CAS (Cell Annotation Schema) ingest ──────────────────────────────────────
+
+
+def _is_cas_format(data: dict | list) -> bool:
+    """Return True if the JSON data looks like CAS v5+ format."""
+    return isinstance(data, dict) and "annotations" in data and "labelsets" in data
+
+
+def _cas_level_name(labelset_name: str) -> str:
+    """Normalise a CAS labelset name to a taxonomy level string.
+
+    CAS labelset names are arbitrary (e.g. "cluster_label", "subclass_label").
+    Strip common suffixes to produce a cleaner level name for YAML output.
+    """
+    # Strip _label suffix if present (common CAS convention)
+    name = labelset_name
+    if name.endswith("_label"):
+        name = name[: -len("_label")]
+    return name.upper()
+
+
+def ingest_cas_to_yaml(
+    source: Path, taxonomy_id: str, output_dir: Path
+) -> dict[str, int]:
+    """Generate per-level TaxonomyNodeList YAML files from CAS-format JSON.
+
+    CAS (Cell Annotation Schema) v5+ format stores annotations as a flat list
+    with ``labelset`` indicating the taxonomy level.  Labelset names are
+    arbitrary — the ``rank`` field on each labelset definition provides the
+    canonical ordering (0 = leaf / most specific).
+
+    Produces the same per-level YAML + taxonomy_meta.yaml output as
+    ``ingest_to_yaml()``.
+
+    Returns {level: node_count}.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    with source.open(encoding="utf-8") as fh:
+        data = json.load(fh)
+
+    if not _is_cas_format(data):
+        raise ValueError(
+            f"{source} is not CAS format (expected top-level 'annotations' + 'labelsets')"
+        )
+
+    # Build labelset → rank mapping
+    labelset_rank: dict[str, int] = {}
+    for ls in data["labelsets"]:
+        labelset_rank[ls["name"]] = ls.get("rank", 0)
+
+    # Read optional metadata input
+    meta_input = _read_meta_input(taxonomy_id)
+    if not meta_input:
+        print(
+            f"  [info] No metadata input found at inputs/taxonomies/{taxonomy_id}_meta.yaml. "
+            "Name, species, tissue fields will be null in taxonomy_meta.yaml.",
+            file=sys.stderr,
+        )
+
+    # Extract reference DOI from first annotation that has one
+    # (currently unused — retained for future taxonomy-level citation)
+    _ref_doi = None  # noqa: F841
+    for ann in data["annotations"]:
+        dois = ann.get("rationale_dois", [])
+        if dois:
+            _ref_doi = dois[0]  # noqa: F841
+            break
+
+    mmc_raw = meta_input.get("mapmycells") or {}
+    meta = TaxonomyMeta(
+        taxonomy_id=taxonomy_id,
+        taxonomy_name=meta_input.get("taxonomy_name") or data.get("title"),
+        species_id=meta_input.get("species_id"),
+        species_label=meta_input.get("species_label"),
+        tissue_id=meta_input.get("tissue_id"),
+        tissue_label=meta_input.get("tissue_label"),
+        anatomy_ontology=meta_input.get("anatomy_ontology"),
+        source_file=source.name,
+        ingest_date=str(date.today()),
+        level_counts={},
+        mapmycells=MapMyCellsMeta(
+            at_taxonomy_id=mmc_raw.get("at_taxonomy_id"),
+            stats_s3_url=mmc_raw.get("stats_s3_url"),
+            markers_s3_url=mmc_raw.get("markers_s3_url"),
+            local_stats_path=mmc_raw.get("local_stats_path"),
+            local_markers_path=mmc_raw.get("local_markers_path"),
+        ),
+    )
+
+    # Species dict from metadata
+    species: dict | None = None
+    if meta.species_id or meta.species_label:
+        species = {}
+        if meta.species_id:
+            species["id"] = meta.species_id
+        if meta.species_label:
+            species["label"] = meta.species_label
+            species["name_in_source"] = meta.species_label
+
+    # Build name lookup for parent_hierarchy resolution
+    name_lookup: dict[str, str] = {}
+    for ann in data["annotations"]:
+        acc = ann.get("cell_set_accession", "")
+        label = ann.get("cell_label", "")
+        if acc and label:
+            name_lookup[acc] = label
+
+    # Convert annotations to CellTypeNode dicts grouped by level
+    by_level: dict[str, list[dict]] = {}
+    for ann in data["annotations"]:
+        labelset = ann.get("labelset", "")
+        level = _cas_level_name(labelset)
+        rank = labelset_rank.get(labelset, 0)
+        acc = ann.get("cell_set_accession", "")
+        label = ann.get("cell_label", "")
+        parent_acc = ann.get("parent_cell_set_accession")
+
+        # Build node CURIE: taxonomy_id prefix + accession
+        # CAS accessions are already prefixed (e.g. CS202106160_79)
+        # but some use hash-based format (e.g. subclass_label:HASH)
+        node_id = f"CTX-HPF:{acc}" if acc else ""
+
+        # Determine if terminal (leaf level = rank 0)
+        is_terminal = rank == 0
+
+        # Parent hierarchy
+        parent_hierarchy: list[dict] = []
+        if parent_acc:
+            parent_name = name_lookup.get(parent_acc, parent_acc)
+            # Infer parent level from its labelset (look up in annotations)
+            parent_level = "UNKNOWN"
+            for other in data["annotations"]:
+                if other.get("cell_set_accession") == parent_acc:
+                    parent_level = _cas_level_name(other.get("labelset", ""))
+                    break
+            parent_hierarchy.append({
+                "level": parent_level,
+                "name": parent_name,
+                "cell_set_accession": parent_acc,
+            })
+
+        # Author annotation fields
+        aaf = ann.get("author_annotation_fields", {})
+
+        d: dict = {
+            "id": node_id,
+            "name": label,
+            "cell_set_accession": acc,
+            "taxonomy_id": taxonomy_id,
+            "taxonomy_level": level,
+            "taxonomy_rank": rank,
+            "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+            "is_terminal": is_terminal,
+        }
+        if parent_hierarchy:
+            d["parent_hierarchy"] = parent_hierarchy
+        if species:
+            d["species"] = species
+        # Preserve rationale DOIs as-is
+        dois = ann.get("rationale_dois", [])
+        if dois:
+            d["rationale_dois"] = dois
+        # Preserve designation from author_annotation_fields
+        designation = aaf.get("cell_set_designation")
+        if designation:
+            d["cell_set_designation"] = designation
+
+        by_level.setdefault(level, []).append(d)
+
+    # Write one TaxonomyNodeList YAML per level
+    counts: dict[str, int] = {}
+    for level, nodes in sorted(by_level.items()):
+        # Use rank from first node for filename (levels are arbitrary names)
+        safe_name = level.lower().replace("/", "_").replace(" ", "_")
+        out_file = output_dir / f"{safe_name}.yaml"
+        # Sort nodes by accession for stable output
+        nodes.sort(key=lambda n: n.get("cell_set_accession", ""))
         with out_file.open("w", encoding="utf-8") as fh:
             yaml.dump(
                 {
                     "taxonomy_id": taxonomy_id,
-                    "taxonomy_level": level.upper(),
+                    "taxonomy_level": level,
+                    "taxonomy_rank": labelset_rank.get(
+                        next(
+                            (ls for ls in labelset_rank if _cas_level_name(ls) == level),
+                            "",
+                        ),
+                        0,
+                    ),
                     "nodes": nodes,
                 },
                 fh,
@@ -663,6 +993,16 @@ def ingest_to_yaml(source: Path, taxonomy_id: str, output_dir: Path) -> dict[str
         counts[level] = len(nodes)
 
     meta.level_counts = counts
+    # Build level_hierarchy from labelset_rank + counts
+    cas_hierarchy: list[dict] = []
+    for ls_name, ls_rank in sorted(labelset_rank.items(), key=lambda x: x[1]):
+        level = _cas_level_name(ls_name)
+        if level in counts:
+            entry: dict = {"level_name": level, "rank": ls_rank, "count": counts[level]}
+            if ls_rank == 0:
+                entry["is_terminal"] = True
+            cas_hierarchy.append(entry)
+    meta.level_hierarchy = cas_hierarchy
     meta_file = output_dir / "taxonomy_meta.yaml"
     with meta_file.open("w", encoding="utf-8") as fh:
         yaml.dump(_meta_to_dict(meta), fh, allow_unicode=True, sort_keys=False)
@@ -694,7 +1034,7 @@ CREATE TABLE IF NOT EXISTS nodes (
   circadian_ratio        REAL,
   rationale              TEXT,
   rationale_dois         TEXT,
-  sex_bias               TEXT
+  male_female_ratio      REAL
 );
 
 CREATE TABLE IF NOT EXISTS anat (
@@ -929,7 +1269,7 @@ class TaxonomyDB:
                :cell_ontology_term, :nt_type,
                :defining_markers_scoped, :defining_markers, :tf_markers,
                :merfish_markers, :np_markers, :neighborhood, :circadian_ratio,
-               :rationale, :rationale_dois, :sex_bias
+               :rationale, :rationale_dois, :male_female_ratio
             )""",
             {
                 "node_id": node_id,
@@ -954,7 +1294,7 @@ class TaxonomyDB:
                 "circadian_ratio": None,  # not in CellTypeNode schema
                 "rationale": None,        # not in CellTypeNode schema
                 "rationale_dois": None,   # not in CellTypeNode schema
-                "sex_bias": None,         # not in CellTypeNode schema
+                "male_female_ratio": nd.get("male_female_ratio"),
             },
         )
         for a in nd.get("anatomical_location") or []:
@@ -1264,11 +1604,28 @@ class TaxonomyDB:
 
 # ── CLI entry point ────────────────────────────────────────────────────────────
 
+def _detect_cas_format(source: Path) -> bool:
+    """Peek at a JSON file to check if it's CAS format (has annotations + labelsets)."""
+    with source.open(encoding="utf-8") as fh:
+        # Read enough to find top-level keys without loading the whole file
+        try:
+            data = json.load(fh)
+        except json.JSONDecodeError:
+            return False
+    return _is_cas_format(data)
+
+
 def _cmd_ingest(source: str, taxonomy_id: str) -> None:
     from evidencell.paths import taxonomy_dir
     out = taxonomy_dir(taxonomy_id)
-    print(f"Ingesting {source} → {out}/")
-    counts = ingest_to_yaml(Path(source), taxonomy_id, out)
+    src = Path(source)
+    is_cas = _detect_cas_format(src)
+    fmt = "CAS" if is_cas else "VFB graph export"
+    print(f"Ingesting {source} ({fmt} format) → {out}/")
+    if is_cas:
+        counts = ingest_cas_to_yaml(src, taxonomy_id, out)
+    else:
+        counts = ingest_to_yaml(src, taxonomy_id, out)
     total = sum(counts.values())
     for lvl, n in sorted(counts.items()):
         print(f"  {lvl}: {n:,} nodes")
@@ -1658,6 +2015,8 @@ def _cmd_find_candidates(
                 "score": c["_score"],
                 "nt_type": c.get("nt_type"),
                 "parent_id": c.get("parent_id"),
+                **({"male_female_ratio": c["male_female_ratio"]}
+                   if c.get("male_female_ratio") is not None else {}),
             }
             for c in candidates
         ],

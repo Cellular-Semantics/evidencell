@@ -16,14 +16,17 @@ from evidencell.taxonomy_db import (
     TaxonomyDB,
     TaxonomyMeta,
     clean_taxonomy_json,
+    ingest_cas_to_yaml,
     ingest_to_yaml,
     iter_taxonomy_rows,
     read_taxonomy_meta,
+    _is_cas_format,
     _meta_to_dict,
 )
 
 FIXTURE_DIR = Path(__file__).parent.parent / "inputs" / "taxonomies"
 SINGLE_ROW = FIXTURE_DIR / "test_single_row.json"
+CAS_FIXTURE = FIXTURE_DIR / "test_cas_fixture.json"
 
 
 # ── clean_taxonomy_json ────────────────────────────────────────────────────────
@@ -156,6 +159,86 @@ def test_anat_cell_count(tmp_path):
 def test_ingest_to_yaml_idempotent(tmp_path):
     counts1 = ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
     counts2 = ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
+    assert counts1 == counts2
+
+
+# ── CAS-format ingest ────────────────────────────────────────────────────────
+
+
+def test_is_cas_format_detection():
+    """_is_cas_format correctly identifies CAS vs VFB graph export."""
+    cas = {"annotations": [], "labelsets": []}
+    assert _is_cas_format(cas) is True
+    vfb = [{"wmb": {}, "cl": None}]
+    assert _is_cas_format(vfb) is False
+    assert _is_cas_format({"annotations": []}) is False  # missing labelsets
+
+
+def test_cas_ingest_creates_files(tmp_path):
+    counts = ingest_cas_to_yaml(CAS_FIXTURE, "TEST_CAS", tmp_path)
+    assert sum(counts.values()) == 4  # 1 class + 1 subclass + 2 clusters
+    assert (tmp_path / "taxonomy_meta.yaml").exists()
+    assert (tmp_path / "cluster.yaml").exists()
+    assert (tmp_path / "subclass.yaml").exists()
+    assert (tmp_path / "class.yaml").exists()
+
+
+def test_cas_ingest_meta(tmp_path):
+    ingest_cas_to_yaml(CAS_FIXTURE, "TEST_CAS", tmp_path)
+    meta = yaml.safe_load((tmp_path / "taxonomy_meta.yaml").read_text())
+    assert meta["taxonomy_id"] == "TEST_CAS"
+    assert meta["source_file"] == "test_cas_fixture.json"
+    assert meta["level_counts"]["CLUSTER"] == 2
+    assert meta["level_counts"]["SUBCLASS"] == 1
+    assert meta["level_counts"]["CLASS"] == 1
+    # CAS ingest picks up title as taxonomy_name when no meta input
+    assert meta["taxonomy_name"] == "Test CAS Taxonomy"
+
+
+def test_cas_ingest_node_fields(tmp_path):
+    ingest_cas_to_yaml(CAS_FIXTURE, "TEST_CAS", tmp_path)
+    data = yaml.safe_load((tmp_path / "cluster.yaml").read_text())
+    assert data["taxonomy_level"] == "CLUSTER"
+    assert data["taxonomy_rank"] == 0
+    nodes = data["nodes"]
+    assert len(nodes) == 2
+    node = nodes[0]  # sorted by accession
+    assert node["cell_set_accession"].startswith("TEST_CAS_")
+    assert node["taxonomy_level"] == "CLUSTER"
+    assert node["taxonomy_rank"] == 0
+    assert node["definition_basis"] == "ATLAS_TRANSCRIPTOMIC"
+    assert node["is_terminal"] is True
+
+
+def test_cas_ingest_parent_hierarchy(tmp_path):
+    ingest_cas_to_yaml(CAS_FIXTURE, "TEST_CAS", tmp_path)
+    data = yaml.safe_load((tmp_path / "cluster.yaml").read_text())
+    node = data["nodes"][0]
+    ph = node.get("parent_hierarchy", [])
+    assert len(ph) == 1
+    assert ph[0]["level"] == "SUBCLASS"
+    assert ph[0]["name"] == "Sst"
+    assert ph[0]["cell_set_accession"] == "TEST_CAS_444"
+
+
+def test_cas_ingest_rationale_dois(tmp_path):
+    ingest_cas_to_yaml(CAS_FIXTURE, "TEST_CAS", tmp_path)
+    data = yaml.safe_load((tmp_path / "cluster.yaml").read_text())
+    node = data["nodes"][0]
+    assert "rationale_dois" in node
+    assert "https://doi.org/10.1016/j.cell.2021.04.021" in node["rationale_dois"]
+
+
+def test_cas_ingest_designation(tmp_path):
+    ingest_cas_to_yaml(CAS_FIXTURE, "TEST_CAS", tmp_path)
+    data = yaml.safe_load((tmp_path / "cluster.yaml").read_text())
+    node = data["nodes"][0]
+    assert "cell_set_designation" in node
+
+
+def test_cas_ingest_idempotent(tmp_path):
+    counts1 = ingest_cas_to_yaml(CAS_FIXTURE, "TEST_CAS", tmp_path)
+    counts2 = ingest_cas_to_yaml(CAS_FIXTURE, "TEST_CAS", tmp_path)
     assert counts1 == counts2
 
 
@@ -332,6 +415,15 @@ def test_full_wmbv1_ingest(tmp_path):
     assert any("1145" in nd["label"] for nd in lugaro)
 
     # Hippocampus GABA query
-    hipp_gaba = db.find_candidates(anat_ids=["MBA:399"], nt_type="GABA")
+    hipp_gaba = db.find_candidates(anat_ids=["MBA:399"], nt_type="GABA", level="cluster")
     assert len(hipp_gaba) > 0
     assert all(nd["_score"] > 0 for nd in hipp_gaba)
+
+    # male_female_ratio: most clusters should have values; check YAML + DB round-trip
+    nodes_with_ratio = [n for n in cluster_yaml["nodes"] if n.get("male_female_ratio") is not None]
+    assert len(nodes_with_ratio) > 5000  # 5317 expected
+    with db._connect() as con:
+        db_count = con.execute(
+            "SELECT COUNT(*) FROM nodes WHERE male_female_ratio IS NOT NULL"
+        ).fetchone()[0]
+    assert db_count > 5000
