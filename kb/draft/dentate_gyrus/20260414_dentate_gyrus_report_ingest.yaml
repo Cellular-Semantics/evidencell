@@ -83,11 +83,21 @@ nodes:
     method: review (neural stem cells)
     scope: adult dentate gyrus
     quote_key: 10712122_246bd5c1
-  electrophysiology_class: 'Not synaptically integrated; precursor electrophysiological properties not characterized in detail
-    in this report.
+  electrophysiology_class: 'Type-2 progenitor cells (neuroblast equivalent) receive direct GABAergic but not glutamatergic synaptic
+    inputs; GABA is depolarising due to elevated [Cl-]i driven by high NKCC1 and low KCC2 (Tozuka et al. 2005; Ge et al. 2006).
+    Synaptically silent for glutamatergic output. High input resistance (~4.3 GOhm) and small capacitance (~6.4 pF) at 1-7 dpi
+    (Esposito et al. 2005). Tonic GABA activation from 3 dpi precedes phasic synaptic inputs (Ge et al. 2006). Mouse patch-clamp data.
 
     '
-  ephys_sources: []
+  ephys_sources:
+  - ref: PMID:16157276
+    method: patch-clamp (nestin-GFP targeted type-2 cells, acute hippocampal slice)
+    scope: adult mouse dentate gyrus
+    quote_key: 3154810_ea1038a9
+  - ref: PMID:16341203
+    method: patch-clamp (retroviral GFP, DCX+ newborn DGCs)
+    scope: adult mouse dentate gyrus
+    quote_key: 4378008_2ac95c2e
   location_sources:
   - ref: PMID:28168008
     method: review (neurogenesis)
@@ -114,6 +124,8 @@ nodes:
   - PMID:18385329
   - PMID:19482889
   - PMID:28168008
+  - PMID:16157276
+  - PMID:16341203
   is_terminal: false
   notes: 'The developmental sequence distinguishes type-2a (Nestin+/Sox2+), type-2b (Nestin+/DCX+), and type-3 (DCX+) stages.
     A transcription factor cascade (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1) marks stage transitions (Hodge et al. 2008). Potential
@@ -190,26 +202,46 @@ nodes:
   - symbol: Calbindin
     ncbi_gene_id: null
   neuropeptides: []
-  morphology_notes: 'Postmitotic neurons (stage 5) that have migrated from SGZ into the inner granule cell layer. Axonal projections
-    reach the CA3 area by 10-11 days, with first spines forming at 15-16 days. Peak spine growth occurs during the first 3-4
-    weeks, but further structural modifications continue for months. They receive glutamatergic afferents from entorhinal
-    cortex and project axons to inhibitory interneurons and pyramidal cells of area CA3.
+  morphology_notes: 'Postmitotic neurons (stage 5) migrated from SGZ into the inner granule cell layer. Axonal projections reach
+    CA3 at 10-11 dpi, 5-6 days before first spines form (Zhao 2006). Dendrites reach the inner molecular layer at 10 dpi, middle
+    molecular layer at ~14 dpi, and outer edge by 21 dpi. Spine density rises from 0.43 to 2.61 spines/um between 21-56 dpi.
+    Extends dendrites toward molecular layer and mossy fiber axons through hilus to CA3. Mouse retroviral GFP data.
 
     '
   morphology_sources:
   - ref: PMID:16399667
-    method: retrovirus-mediated gene transduction + confocal
+    method: retrovirus-mediated GFP labelling + confocal
     scope: adult mouse dentate gyrus
-    quote_key: 18166210_b155d498
-  - ref: PMID:26056581
-    method: review (adult neurogenesis)
-    scope: adult dentate gyrus
-    quote_key: 8479504_1542ed61
-  electrophysiology_class: 'Synaptically integrating; receive glutamatergic input from entorhinal cortex. Full synaptic integration
-    extends over weeks to months.
+    quote_key: 18166210_3e909cd4
+  - ref: PMID:16399667
+    method: retrovirus-mediated GFP labelling + confocal
+    scope: adult mouse dentate gyrus
+    quote_key: 18166210_aa19f3be
+  electrophysiology_class: 'Adult-born immature granule neurons follow a stereotyped synaptic maturation sequence: silent (1-7 dpi;
+    Vrest -50.6 mV, Rin 4.3 GOhm, Cm 6.4 pF) → slow GABAergic PSCs only (8-18 dpi; EGABA -26.9 to -44.5 mV, depolarising) →
+    glutamatergic PSCs acquired (>=14-18 dpi; Vrest -63.2 mV, Cm 24.6 pF) → fast perisomatic GABA last (~4 wk) (Esposito et al.
+    2005; Ge et al. 2006). T-type Ca2+ channels confer enhanced LTP inducibility vs. mature granule cells (Schmidt-Hieber et al.
+    2004). GABA depolarisation mechanistically required for dendritic arborisation (NKCC1-dependent; Ge et al. 2006). All primary
+    data from adult mouse (C57BL/6).
 
     '
-  ephys_sources: []
+  ephys_sources:
+  - ref: PMID:16267214
+    method: patch-clamp (retroviral GFP newborn DGCs)
+    scope: adult mouse dentate gyrus
+    quote_key: 38501311_d1c6a9f4
+  - ref: PMID:16341203
+    method: patch-clamp (retroviral GFP, DCX+ newborn DGCs)
+    scope: adult mouse dentate gyrus
+    quote_key: 4378008_7779b198
+  - ref: PMID:15107864
+    method: patch-clamp (adult-born vs mature granule cells)
+    scope: adult mouse dentate gyrus
+    quote_key: 4332735_15e36f48
+  - ref: PMID:11875571
+    method: patch-clamp (retroviral GFP newborn DGCs, 4-8 wk)
+    scope: adult mouse dentate gyrus
+    quote_key: 4403779_5755e11d
   location_sources:
   - ref: PMID:28168008
     method: review (neurogenesis)
@@ -236,6 +268,10 @@ nodes:
   - PMID:16399667
   - PMID:19482889
   - PMID:26056581
+  - PMID:16267214
+  - PMID:16341203
+  - PMID:15107864
+  - PMID:11875571
   is_terminal: false
   notes: 'CL:9900002 was proposed based on this node — the Tbr1+/Prox1+/Igfbpl1+ marker profile from clusters 0514/0515 and
     the classical DCX+/NeuN+ description from PMID:40519263/37082558 together define the term. Tis21 expression reappears
@@ -312,11 +348,22 @@ nodes:
     method: retrovirus-mediated gene transduction + confocal
     scope: adult mouse dentate gyrus
     quote_key: 18166210_b155d498
-  electrophysiology_class: 'Fully synaptically integrated; functionally mature with established input from entorhinal cortex
-    and output to CA3.
+  electrophysiology_class: 'Terminally differentiated granule neurons fire repetitive action potentials (plateau ~140 Hz; Vth
+    ~-39.6 to -45.8 mV). Membrane capacitance 99.2 pF, time constant 33.7 ms, resting potential -74.8 mV (van Praag et al. 2002;
+    adult mouse). Substantially larger Cm and longer tau_m than immature adult-born granule cells (Schmidt-Hieber et al. 2004).
+    Fully synaptically integrated by 4 weeks; receive perforant path afferents from entorhinal cortex and project mossy fibers to
+    CA3. Primary data from adult mouse (C57BL/6).
 
     '
-  ephys_sources: []
+  ephys_sources:
+  - ref: PMID:11875571
+    method: patch-clamp (retroviral GFP newborn DGCs vs mature granule cells)
+    scope: adult mouse dentate gyrus
+    quote_key: 4403779_5755e11d
+  - ref: PMID:15107864
+    method: patch-clamp (adult-born vs mature granule cells)
+    scope: adult mouse dentate gyrus
+    quote_key: 4332735_15e36f48
   location_sources:
   - ref: PMID:31068541
     method: review (hippocampal neurogenesis)
@@ -339,6 +386,8 @@ nodes:
   - PMID:16399667
   - PMID:31068541
   - PMID:19482889
+  - PMID:11875571
+  - PMID:15107864
   is_terminal: false
   notes: 'Terminal differentiation endpoint of the adult neurogenesis lineage in the dentate gyrus. Tis21 expression decreases
     in mature granule cells compared to the maturing stage (Attardo et al. 2009). No subtypes discussed in this report.
