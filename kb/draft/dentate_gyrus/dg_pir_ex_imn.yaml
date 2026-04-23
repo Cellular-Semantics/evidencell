@@ -1,0 +1,714 @@
+# Taxonomy: Allen Brain Cell Atlas — CCN202307220 (Dentate Gyrus)
+# Source: DG_taxonomy.xlsx
+# Ingested: 2026-04-16
+# Status: STUB — evidence lists empty; accession lookup, CL terms, and
+#         anatomical_location to be completed before graduation to kb/mappings/
+# SCHEMA_CANDIDATE fields preserved as comments — see field_mapping.json
+
+name: "Allen Brain Cell Atlas CCN202307220 — Dentate Gyrus (DG-PIR Ex IMN)"
+target_atlas: "Allen Brain Cell Atlas CCN202307220"
+creation_date: "2026-04-16"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: Mus musculus
+edges: []
+
+nodes:
+
+  # ── Subclass: DG-PIR Ex IMN ─────────────────────────────────────
+
+  - id: CS20230722_SUBC_038
+    name: "DG-PIR Ex IMN"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUBC_038
+    parent_hierarchy:
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "subclass"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "DG-PIR Ex IMN"
+      mapping_type: BROAD
+      mapping_notes: >
+        Subclass spanning dentate gyrus immature neurons (supertypes 1, 2:
+        DG-origin, mapped to CL:9900001/9900002/9900004) and piriform cortex
+        immature neurons (supertype 3: PIR-origin, MERFISH-verified). No single
+        CL term covers the heterogeneous subclass; CL:4042028 (immature neuron)
+        as broadest common ancestor. Cluster-level mappings are more precise.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # subclass_id: 38
+    # subclass_id_label: "038 DG-PIR Ex IMN"
+
+  # ── Supertype: DG-PIR Ex IMN_1 ─────────────────────────────────
+
+  - id: CS20230722_SUPT_0140
+    name: "DG-PIR Ex IMN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUPT_0140
+    parent_hierarchy:
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "supertype"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Eomes
+        ncbi_gene_id: null
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
+      - symbol: Sox6
+        ncbi_gene_id: null
+      - symbol: Meis2
+        ncbi_gene_id: null
+      - symbol: Neurod1
+        ncbi_gene_id: null
+      - symbol: Meis1
+        ncbi_gene_id: null
+      - symbol: Tenm1
+        ncbi_gene_id: null
+      - symbol: Lmo1
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0009952
+        label: "dentate gyrus subgranular zone"
+        name_in_source: "subgranular zone (SGZ)"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900001
+        label: "dentate gyrus neuroblast"
+        name_in_source: "DG-PIR Ex IMN_1"
+      mapping_type: BROAD
+      mapping_notes: >
+        Supertype grouping the single early neuroblast/type-2b cluster (0511)
+        defined by Eomes/Tbr2 and Sox6 expression in the dentate gyrus SGZ.
+        CL:9900001 (dentate gyrus neuroblast) is the broadest common ancestor
+        for this supertype; cluster 0511 may more precisely map to CL:9900004
+        (type-2b progenitor) given its Eomes+ signature.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # supertype_id: 140
+    # supertype_id_label: "0140 DG-PIR Ex IMN_1"
+
+  # ── Cluster: 0511 DG-PIR Ex IMN_1 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0511
+    name: "0511 DG-PIR Ex IMN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0511
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG-PIR Ex IMN_1", cell_set_accession: CS20230722_SUPT_0140}
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Meis1  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass
+        ncbi_gene_id: null
+      - symbol: Eomes  # source: cluster_marker | source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Celsr1  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Tenm1  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Meis2  # source: cluster_marker | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Igfbpl1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Lmo1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Slc17a6  # source: merfish_marker  # spatially validated | source: nt_marker  # score: 6.02
+        ncbi_gene_id: null
+      - symbol: Sox6  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Neurod1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Gad2  # source: nt_marker  # score: 3.24
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0009952
+        label: "dentate gyrus subgranular zone"
+        name_in_source: "DG STR"
+    # anatomy_source: "DG STR"
+    # anatomy_source: "NA:0.75,CTXsp:0.12  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900004
+        label: "dentate gyrus type-2b neural progenitor"
+        name_in_source: "early neuroblast"
+      mapping_type: BROAD
+      mapping_notes: >
+        Curator-annotated as "early neuroblast". Key markers: Eomes (=Tbr2,
+        type-2b intermediate progenitor TF), Sox6, Neurod1, Meis2; MERFISH
+        validates Eomes and Igfbpl1 in DG-STR boundary. Eomes/Tbr2 expression
+        confirms type-2b progenitor identity. CL:9900004 (dentate gyrus
+        type-2b neural progenitor) is BROAD — this cluster likely spans the
+        type-2b/type-3 transition.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 511
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "ccb:0.27,fp:0.16,fa:0.09,LA:0.07,cing:0.04,ec:0.04,OLF:0.03,alv:0.03,ccs:0.03,scwm:0.03"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 92  v2.size: 1  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.52  M: 0.48  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.56  Light: 0.44  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1363  # UNCERTAIN — verify against CL ontology before use
+    # notes: "early neuroblast; Insm1, Sox6, Eomes"
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Supertype: DG-PIR Ex IMN_2 ─────────────────────────────────
+
+  - id: CS20230722_SUPT_0141
+    name: "DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUPT_0141
+    parent_hierarchy:
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "supertype"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
+      - symbol: Eomes
+        ncbi_gene_id: null
+      - symbol: Emx2
+        ncbi_gene_id: null
+      - symbol: Prox1
+        ncbi_gene_id: null
+      - symbol: Tbr1
+        ncbi_gene_id: null
+      - symbol: Draxin
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900001
+        label: "dentate gyrus neuroblast"
+        name_in_source: "DG-PIR Ex IMN_2"
+      mapping_type: BROAD
+      mapping_notes: >
+        Supertype grouping four clusters: type-2b progenitor (0513), late
+        neuroblast (0512), immature granule cell (0514, 0515). No single CL
+        term covers the full supertype; CL:9900001 (dentate gyrus neuroblast)
+        applied as broadest common ancestor at supertype level. Cluster-level
+        mappings are more precise.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # supertype_id: 141
+    # supertype_id_label: "0141 DG-PIR Ex IMN_2"
+
+  # ── Cluster: 0512 DG-PIR Ex IMN_2 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0512
+    name: "0512 DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0512
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG-PIR Ex IMN_2", cell_set_accession: CS20230722_SUPT_0141}
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "NA"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Eomes  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker | source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Calb2  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Draxin  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Mndal  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Adamts18  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Igfbpl1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Prox1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Bhlhe22  # source: tf_marker
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DGdo,me"
+    # anatomy_source: "DGdo,me"
+    # anatomy_source: "HIP:0.96  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900001
+        label: "dentate gyrus neuroblast"
+        name_in_source: "late neuroblast"
+      mapping_type: BROAD
+      mapping_notes: >
+        Curator-annotated as "late neuroblast". Key markers: Eomes (=Tbr2)
+        still expressed, Prox1 (DG lineage TF), Calb2 (calretinin — transiently
+        expressed in immature granule neurons); MERFISH validates Eomes and
+        Calb2. Calretinin onset indicates transition toward immature granule
+        neuron stage. CL:9900001 (dentate gyrus neuroblast) — type-3/neuroblast
+        stage.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 512
+    # nt_type_combo_label: null
+    # CCF_acronym.freq: "DG-mo:0.29,DG-sg:0.25,DG-po:0.16,CA3so:0.12"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 150  v2.size: 24  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.62  M: 0.38  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.4  Light: 0.6  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1371  # UNCERTAIN — verify against CL ontology before use
+    # notes: "late neuroblast"
+    # CTX_cross_ref: cluster_id=1 cluster_label=1_CR_1 supertype_id=1 supertype_label=Trp73 subclass_id=1 subclass_label=CR neighborhood_id=8 neighborhood_label=Other
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0513 DG-PIR Ex IMN_2 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0513
+    name: "0513 DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0513
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG-PIR Ex IMN_2", cell_set_accession: CS20230722_SUPT_0141}
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Vim  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass
+        ncbi_gene_id: null
+      - symbol: Neurod4  # source: cluster_marker | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Mfap4  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Eomes  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Igfbpl1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Zic5  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Nrn1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Nhlh1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a6  # source: nt_marker  # score: 4.52
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DGdo,me (CTX?)"
+    # anatomy_source: "DGdo,me (CTX?)"
+    # anatomy_source: "HIP:0.58,NA:0.37  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900004
+        label: "dentate gyrus type-2b neural progenitor"
+        name_in_source: "early neuroblast"
+      mapping_type: BROAD
+      mapping_notes: >
+        Curator-annotated as "early neuroblast". Key markers: Vim (vimentin —
+        progenitor marker consistent with type-2b stage), Neurod4, Nhlh1;
+        MERFISH validates Eomes and Igfbpl1. Vimentin and Eomes co-expression
+        confirms type-2b progenitor identity. Anatomical location uncertain
+        (noted "CTX?" in taxonomy). CL:9900004 (dentate gyrus type-2b neural
+        progenitor) is BROAD.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 513
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "DG-sg:0.16,DG-mo:0.14,ccb:0.11,CA3so:0.1,fp:0.08,DG-po:0.07,ccs:0.05,CA3sp:0.04,alv:0.04,scwm:0.03"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 87  v2.size: 20  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.52  M: 0.48  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.38  Light: 0.62  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1372  # UNCERTAIN — verify against CL ontology before use
+    # notes: "early neuroblast"
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0514 DG-PIR Ex IMN_2 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0514
+    name: "0514 DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0514
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG-PIR Ex IMN_2", cell_set_accession: CS20230722_SUPT_0141}
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Ccbe1  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Draxin  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Fam163a  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Ntf3  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Igfbpl1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Emx2  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Prox1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Tbr1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Rarb  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Gad1  # source: nt_marker  # score: 5.56
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 3.34
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DGdo,me"
+    # anatomy_source: "DGdo,me"
+    # anatomy_source: "HIP:0.98  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900002
+        label: "immature dentate gyrus granule neuron"
+        name_in_source: "late neuroblast / immature granule cell"
+      mapping_type: EXACT
+      mapping_notes: >
+        Curator-annotated as "late neuroblast / immature granule cell". Key
+        markers: Tbr1 (postmitotic granule neuron TF), Prox1, Emx2, Rarb,
+        Igfbpl1; MERFISH validates Igfbpl1 and Emx2; anatomy DGdo,me HIP:0.98.
+        Tbr1 onset with retained Igfbpl1 defines the postmitotic transition
+        into the inner GCL. EXACT match to CL:9900002 (immature dentate gyrus
+        granule neuron, parent CL:4042028). Clusters 0514 and 0515 together
+        constitute the transcriptomic evidence for this CL term.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 514
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "DG-sg:0.28,DG-mo:0.27,DG-po:0.16,CA3so:0.08,CA3sp:0.06"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 364  v2.size: 44  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.55  M: 0.45  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.36  Light: 0.64  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1406  # UNCERTAIN — verify against CL ontology before use
+    # notes: "late neuroblast / immature granule cell"
+    # CTX_cross_ref: cluster_id=363 cluster_label=363_DG_5 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0515 DG-PIR Ex IMN_2 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0515
+    name: "0515 DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0515
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG-PIR Ex IMN_2", cell_set_accession: CS20230722_SUPT_0141}
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "NA"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Rarb  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Draxin  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Mndal  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Igfbpl1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Emx2  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Fam163a  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Bcl11b  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Cd24a  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Prox1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Tbr1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Gad1  # source: nt_marker  # score: 3.67
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DGdo,me"
+    # anatomy_source: "DGdo,me"
+    # anatomy_source: "HIP:1  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:9900002
+        label: "immature dentate gyrus granule neuron"
+        name_in_source: "late neuroblast"
+      mapping_type: EXACT
+      mapping_notes: >
+        Curator-annotated as "late neuroblast". Key markers: Tbr1, Prox1,
+        Emx2, Rarb, Igfbpl1, Bcl11b, Cd24a; MERFISH validates Igfbpl1, Emx2,
+        Fam163a, Bcl11b; anatomy DGdo,me HIP:1.0. Identical TF profile to
+        cluster 0514 (Tbr1+/Prox1+/Emx2+/Igfbpl1+); together these two
+        clusters define the transcriptomic signature for CL:9900002 (immature
+        dentate gyrus granule neuron, parent CL:4042028).
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 515
+    # nt_type_combo_label: null
+    # CCF_acronym.freq: "DG-sg:0.34,DG-mo:0.3,DG-po:0.16"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 456  v2.size: 55  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.58  M: 0.42  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.4  Light: 0.6  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1408  # UNCERTAIN — verify against CL ontology before use
+    # notes: "late neuroblast"
+    # CTX_cross_ref: cluster_id=1 cluster_label=1_CR_2 supertype_id=1 supertype_label=Trp73 subclass_id=1 subclass_label=CR neighborhood_id=8 neighborhood_label=Other
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Supertype: DG-PIR Ex IMN_3 ─────────────────────────────────
+
+  - id: CS20230722_SUPT_0142
+    name: "DG-PIR Ex IMN_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUPT_0142
+    parent_hierarchy:
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "supertype"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
+      - symbol: Tbr1
+        ncbi_gene_id: null
+      - symbol: Tfap2d
+        ncbi_gene_id: null
+      - symbol: Slc17a6
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0002590
+        label: "piriform cortex"
+        name_in_source: "piriform cortex / endopiriform area"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "DG-PIR Ex IMN_3"
+      mapping_type: BROAD
+      mapping_notes: >
+        MERFISH confirms anatomy in piriform cortex / endopiriform area rather
+        than dentate gyrus (OLF/CTXsp). Clusters share an immature transcriptomic
+        signature (Igfbpl1+, Tbr1+, Tfap2d+) but cannot be traced to DG
+        neurogenesis stages. CL:4042028 (immature neuron) as broadest appropriate
+        ancestor; no DG-specific CL term applicable for PIR-resident cells.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # supertype_id: 142
+    # supertype_id_label: "0142 DG-PIR Ex IMN_3"
+
+  # ── Cluster: 0516 DG-PIR Ex IMN_3 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0516
+    name: "0516 DG-PIR Ex IMN_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0516
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG-PIR Ex IMN_3", cell_set_accession: CS20230722_SUPT_0142}
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Scml4  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: 2610307P16Rik  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Tbr1  # source: cluster_marker | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Igfbpl1  # source: cluster_marker | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Tfap2d  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc1a3  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Tafa2  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Rorb  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Prdm16  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Meis2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Bcl11b  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a6  # source: nt_marker  # score: 4.16
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0002590
+        label: "piriform cortex"
+        name_in_source: "PIR"
+    # anatomy_source: "PIR"
+    # anatomy_source: "OLF:0.5,CTXsp:0.39  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "0516 DG-PIR Ex IMN_3"
+      mapping_type: BROAD
+      mapping_notes: >
+        MERFISH confirms PIR/EPd location (OLF:0.5, CTXsp:0.39). Immature
+        signature: Igfbpl1+, Tbr1+, Tfap2d+, Scml4+. Anatomy excludes DG
+        neurogenesis lineage; CL:4042028 (immature neuron) BROAD.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 516
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "PIR:0.48,EPd:0.3,EPv:0.05"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 646  v2.size: 28  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.46  M: 0.54  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.35  Light: 0.65  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1339  # UNCERTAIN — verify against CL ontology before use
+    # notes: "in OLF PIR rather than DG, based on MERFISH; still look immature (Igbpl1, Mex3a, Draxin), but can't be traced to earlier or later stages."
+    # CTX_cross_ref: cluster_id=160 cluster_label=160_L2/3 IT ENTl_2 supertype_id=32 supertype_label=Grik1 subclass_id=13 subclass_label=L2/3 IT ENTl neighborhood_id=3 neighborhood_label=L2_3_IT
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0517 DG-PIR Ex IMN_3 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0517
+    name: "0517 DG-PIR Ex IMN_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0517
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG-PIR Ex IMN_3", cell_set_accession: CS20230722_SUPT_0142}
+      - {level: SUBCLASS, name: "DG-PIR Ex IMN", cell_set_accession: CS20230722_SUBC_038}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Casz1  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass
+        ncbi_gene_id: null
+      - symbol: Antxr2  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Tfap2d  # source: cluster_marker | source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Igfbpl1  # source: cluster_marker | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Met  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Necab1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Tbr1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Carhsp1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Satb1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a6  # source: nt_marker  # score: 9.15
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0002590
+        label: "piriform cortex"
+        name_in_source: "EPd (endopiriform area)"
+    # anatomy_source: "EPd"
+    # anatomy_source: "CTXsp:0.61,Isocortex:0.16,NA:0.13  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "0517 DG-PIR Ex IMN_3"
+      mapping_type: BROAD
+      mapping_notes: >
+        MERFISH confirms EPd/CTXsp location (CTXsp:0.61). Immature signature:
+        Igfbpl1+, Tbr1+, Tfap2d+, Casz1+. Anatomy excludes DG neurogenesis
+        lineage; CL:4042028 (immature neuron) BROAD.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 517
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "EPd:0.48,AIv6a:0.06,EPv:0.06,PIR:0.06,SSs6b:0.06,aco:0.06"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 37  v2.size: 5  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.48  M: 0.52  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.19  Light: 0.81  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1340  # UNCERTAIN — verify against CL ontology before use
+    # notes: "in OLF PIR rather than DG, based on MERFISH; still look immature (Igbpl1, Mex3a, Draxin), but can't be traced to earlier or later stages."
+    # neighborhood: Pallium-Glut;NN-IMN-GC
