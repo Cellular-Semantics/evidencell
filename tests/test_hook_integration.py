@@ -388,6 +388,22 @@ def test_curation_blocks_dot_claude_write_for_untrusted_user():
         )
 
 
+def test_curation_blocks_workflows_write_for_untrusted_user():
+    """Untrusted user writing under workflows/ must be blocked (exit 2).
+
+    Workflows define the curation process (gates, sequencing, subagent
+    prompts); they are maintainer artifacts, not curator-editable.
+    """
+    payload = _write_payload(
+        "# edited orchestrator\n",
+        file_path="/project/workflows/evidence-extraction.md",
+    )
+    r = _run_hook(payload, user="")
+    assert r.returncode == 2, (
+        f"Expected exit 2 for workflows/ write, got {r.returncode}\n{r.stderr}"
+    )
+
+
 def test_curation_allows_untrusted_non_blocked_write():
     """Untrusted user writing to a path outside the blocked zones passes through."""
     payload = _write_payload(

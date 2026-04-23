@@ -107,7 +107,7 @@ See [CLAUDE.md](CLAUDE.md) for the default curation guide (which workflow to run
 
 See [CLAUDE_dev.md](CLAUDE_dev.md) for the dev-mode companion — development and architecture guidelines. Load this explicitly for sessions that touch `src/`, `schema/`, or the `justfile`.
 
-Dev access is gated: writes to `src/`, `schema/`, `justfile`, and `.claude/` are blocked by the pre-edit hook in curation sessions. If you need to work on code, schema, or tooling, request dev setup from the repo admin (@dosumis). Code and schema changes land through PR review against `main`.
+Dev access is gated: writes to `src/`, `schema/`, `justfile`, `.claude/`, and `workflows/` are blocked by the pre-edit hook in curation sessions. If you need to work on code, schema, or tooling, request dev setup from the repo admin (@dosumis). Code and schema changes land through PR review against `main`.
 
 ### Taxonomy reference DB
 
