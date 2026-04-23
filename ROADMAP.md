@@ -63,7 +63,7 @@ dismech uses `just` as a thin task runner wrapping Python/uv scripts.
 
 **Needed**:
 1. **Canonical output layout** — define where each orchestrator writes its outputs relative to `kb/draft/{region}/`. Proposal: `kb/draft/{region}/{workflow_name}/` (e.g. `kb/draft/hippocampus/cite_traverse/`, `kb/draft/hippocampus/evidence_extraction/`).
-2. **Graduation criteria** — define what "graduating" from `kb/draft/` to `kb/mappings/` actually requires. Currently `CLAUDE.md` says "after just qc" but the boundary is fuzzy: does the report graduate? Do intermediate JSONs stay in draft? Is it per-file or per-graph?
+2. **Graduation criteria** — define what "graduating" from `kb/draft/` to `kb/mappings/` actually requires. Currently `CLAUDE_dev.md` says "after just qc" but the boundary is fuzzy: does the report graduate? Do intermediate JSONs stay in draft? Is it per-file or per-graph?
 3. **Enforcement** — orchestrators should validate that `output_dir` is under `kb/draft/{region}/` (or explicitly `scratch/` for throw-away runs). The pre-edit hook already gates KB YAML writes; a similar check could gate workflow output placement.
 4. **User-facing terminology** — "add stubs" / "proceed to extraction" / "graduate" are internal jargon. Need clearer labels for curator-facing gates (e.g. "expand scope" vs "lock down evidence" vs "promote to validated").
 
@@ -128,8 +128,8 @@ evidencell/
   conf/oak_config.yaml               # OAK adapter config (CL, UBERON, NCBITaxon)
   src/evidencell/                    # all Python logic (validate, render, score, fetch)
   justfile                           # thin task-runner; logic lives in src/evidencell/
-  CLAUDE.md                          # development and architecture guidelines
-  WORKFLOW.md                        # guide: which orchestrator runs when, with what inputs
+  CLAUDE.md                          # default curation guide: which orchestrator runs when, with what inputs
+  CLAUDE_dev.md                      # dev-mode companion: development and architecture guidelines
   workflows/                         # multi-step orchestrators (subagent-spawning, file-state)
     lit-review.md                    # ported from Asta_deepsearch
     evidence-extraction.md           # M2: filter→extract→provenance→review gate
@@ -651,7 +651,7 @@ This creates fragility: a change to one orchestrator's output format silently br
 
 ### Deliverables
 
-1. **Contract inventory**: a table in `WORKFLOW.md` documenting every inter-workflow handover — what file is passed, what workflow produces it, what workflow consumes it, and whether it has a formal schema.
+1. **Contract inventory**: a table in `CLAUDE.md` (curation guide) documenting every inter-workflow handover — what file is passed, what workflow produces it, what workflow consumes it, and whether it has a formal schema.
 2. **Schema coverage map**: for each handover, classify as: (a) LinkML-validated, (b) Pydantic-validated (from M2L), (c) prose-only, (d) unspecified. Target: zero (d), minimal (c).
 3. **Inter-workflow handover specs**: Pydantic or LinkML models for the key handover objects that aren't already covered — especially `initial_summaries` format, proposed evidence items, and atlas metadata input.
 4. **Graduation criteria**: formalise what it means to move content from `kb/draft/` to `kb/mappings/`. Currently "after just qc" — define precisely which checks must pass, whether intermediate workflow artifacts (cite_traverse/, evidence_extraction/) are retained or archived, and what the human review gate looks like.
@@ -909,7 +909,7 @@ kb/{region}/traversal_output/         →   research/{region}/{run_id}/
 
 `references/` at repo root — the validation hook and report renderer need it; it's shared infrastructure, not ephemeral.
 
-Update paths in: `validate_mapping_hook.py`, `render.py`, `justfile`, all workflow orchestrators, `CLAUDE.md`.
+Update paths in: `validate_mapping_hook.py`, `render.py`, `justfile`, all workflow orchestrators, `CLAUDE_dev.md`.
 
 ### Phase 2: Rename and consolidate graphs
 
@@ -932,7 +932,7 @@ A graph graduates from `kb/draft/` to `kb/mappings/` when:
 Deliverables:
 - Criteria documented in `CONTRIBUTING.md`
 - `just graduate {file}` recipe: runs checks, copies to `kb/mappings/`, reports pass/fail
-- `WORKFLOW.md` updated with graduation as a documented step
+- `CLAUDE.md` (curation guide) updated with graduation as a documented step
 
 ### Phase 4: Update orchestrators
 

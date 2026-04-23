@@ -20,6 +20,8 @@ Returns exit code 2 to BLOCK the edit if any check fails.
 https://docs.anthropic.com/en/docs/claude-code/hooks#exit-code-2-behavior
 """
 
+import os
+import subprocess
 import sys
 import json
 from pathlib import Path
@@ -39,6 +41,88 @@ from evidencell.validate import (  # noqa: E402
     check_md_ids,
 )
 
+# ── Curation-mode gate ───────────────────────────────────────────────────────
+# Users whose writes bypass the curation-mode zone check. Non-trusted users
+# cannot write to src/, schema/, or justfile — dev work for those paths needs
+# a dev-mode session (see CLAUDE_dev.md) or a dev-request report under
+# planning/dev_requests/.
+TRUSTED_USERS = {"dosumis@gmail.com"}
+
+_CURATION_BLOCKED_ZONES = ("src", "schema")
+_CURATION_BLOCKED_FILES = ("justfile",)
+
+
+def _get_current_user_email() -> str | None:
+    """Return current git user.email, or None if unavailable.
+
+    Overridable via EVIDENCELL_HOOK_USER env var for tests:
+      - unset      → fall through to `git config user.email`
+      - empty str  → treat as untrusted (simulates no configured user)
+      - any value  → use as-is
+    """
+    override = os.environ.get("EVIDENCELL_HOOK_USER")
+    if override is not None:
+        return override or None
+    try:
+        result = subprocess.run(
+            ["git", "config", "user.email"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=False,
+        )
+        if result.returncode == 0:
+            email = result.stdout.strip()
+            return email or None
+    except (subprocess.SubprocessError, FileNotFoundError, OSError):
+        pass
+    return None
+
+
+def _curation_blocked_zone(file_path: Path) -> str | None:
+    """Return zone name ('src', 'schema', 'justfile') if path is curation-blocked.
+
+    Resolves relative to project root when possible; falls back to parts-based
+    matching for paths outside the project (tests, fake paths).
+    """
+    try:
+        rel = file_path.resolve().relative_to(_project_root.resolve())
+        parts = rel.parts
+    except (ValueError, OSError):
+        parts = file_path.parts
+
+    if not parts:
+        return None
+    for zone in _CURATION_BLOCKED_ZONES:
+        if zone in parts:
+            return zone
+    if file_path.name in _CURATION_BLOCKED_FILES:
+        return "justfile"
+    return None
+
+
+def _emit_curation_rejection(file_path: Path, zone: str, user: str | None) -> None:
+    print("\n" + "=" * 60, file=sys.stderr)
+    print("BLOCKING EDIT: curation mode — write out of scope", file=sys.stderr)
+    print("=" * 60, file=sys.stderr)
+    print(f"Target: {file_path}", file=sys.stderr)
+    print(f"Zone:   {zone}/", file=sys.stderr)
+    print(f"User:   {user or '(no git user.email set)'}", file=sys.stderr)
+    print("", file=sys.stderr)
+    print("Writes to src/, schema/, and justfile are out of scope in curation", file=sys.stderr)
+    print("mode. Options:", file=sys.stderr)
+    print("  - File a dev-request report at", file=sys.stderr)
+    print("    planning/dev_requests/{YYYY-MM-DD}_{slug}.md and stop.", file=sys.stderr)
+    print("  - If you are authorised for dev work, request dev setup", file=sys.stderr)
+    print("    from the repo admin (@dosumis).", file=sys.stderr)
+    if zone == "schema":
+        print("", file=sys.stderr)
+        print("SCHEMA NOTE: schema edits MUST be discussed and reviewed before", file=sys.stderr)
+        print("implementation. They are occasionally legitimate (new taxonomy", file=sys.stderr)
+        print("import, novel mapping scenario) but almost never the right", file=sys.stderr)
+        print("response to a validation error. Fix the data, not the schema.", file=sys.stderr)
+    print("=" * 60 + "\n", file=sys.stderr)
+
 
 def main():
     data = json.load(sys.stdin)
@@ -53,6 +137,15 @@ def main():
         sys.exit(0)
 
     file_path = Path(file_path_str)
+
+    # ── Curation-mode gate ────────────────────────────────────────────────
+    # Non-trusted users cannot write to src/, schema/, or justfile.
+    current_user = _get_current_user_email()
+    if current_user not in TRUSTED_USERS:
+        zone = _curation_blocked_zone(file_path)
+        if zone is not None:
+            _emit_curation_rejection(file_path, zone, current_user)
+            sys.exit(2)
 
     is_yaml = "/kb/" in str(file_path) and file_path.suffix == ".yaml"
     is_report = (

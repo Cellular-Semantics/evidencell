@@ -228,7 +228,7 @@ When adding a new validated content type:
 4. Add a test to `tests/test_hook_integration.py`:
    - valid input → hook exits 0
    - invalid input (bad ID, missing quote key, etc.) → hook exits 2 with structured error
-5. Add the content type to the table in CLAUDE.md § Anti-hallucination mechanisms
+5. Add the content type to the table in `CLAUDE_dev.md` § Anti-hallucination mechanisms
 6. Update the Status line in this document
 
 ---

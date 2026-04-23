@@ -9,6 +9,7 @@ Test 5 is marked @pytest.mark.integration (calls linkml-validate with the real s
 """
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -43,12 +44,26 @@ edges:
 """
 
 
-def _run_hook(payload: dict) -> subprocess.CompletedProcess:
+def _run_hook(
+    payload: dict, user: str | None = "dosumis@gmail.com"
+) -> subprocess.CompletedProcess:
+    """Run the hook subprocess.
+
+    `user` controls the curation-mode gate:
+      - default "dosumis@gmail.com" — trusted; curation gate bypassed (mirrors dev use)
+      - ""                          — untrusted with no git email; gate active
+      - "other@example.com"         — untrusted with a non-trusted email; gate active
+      - None                        — ambient: fall through to real `git config user.email`
+    """
+    env = os.environ.copy()
+    if user is not None:
+        env["EVIDENCELL_HOOK_USER"] = user
     return subprocess.run(
         [sys.executable, str(HOOK)],
         input=json.dumps(payload),
         capture_output=True,
         text=True,
+        env=env,
     )
 
 
@@ -310,6 +325,81 @@ def test_md_report_valid_annotation_passes(tmp_path: Path):
     r = _run_hook(payload)
     assert r.returncode == 0, (
         f"Expected exit 0 for valid md report, got {r.returncode}\n{r.stderr}"
+    )
+
+
+# ── Curation-mode gate tests ──────────────────────────────────────────────────
+
+
+def test_curation_blocks_src_write_for_untrusted_user():
+    """Untrusted user writing to src/ must be blocked (exit 2)."""
+    payload = _write_payload(
+        "print('hi')\n", file_path="/project/src/evidencell/foo.py"
+    )
+    r = _run_hook(payload, user="")
+    assert r.returncode == 2, (
+        f"Expected exit 2 for src/ write, got {r.returncode}\n{r.stderr}"
+    )
+    assert "curation mode" in r.stderr.lower()
+    assert "src/" in r.stderr
+
+
+def test_curation_blocks_schema_write_for_untrusted_user():
+    """Untrusted user writing to schema/ must be blocked (exit 2) with schema note."""
+    payload = _write_payload(
+        "id: https://w3id.org/example\n",
+        file_path="/project/schema/celltype_mapping.yaml",
+    )
+    r = _run_hook(payload, user="")
+    assert r.returncode == 2, (
+        f"Expected exit 2 for schema/ write, got {r.returncode}\n{r.stderr}"
+    )
+    assert "SCHEMA NOTE" in r.stderr, (
+        f"Expected schema-edit guidance in stderr, got:\n{r.stderr}"
+    )
+
+
+def test_curation_blocks_justfile_write_for_untrusted_user():
+    """Untrusted user writing to justfile must be blocked (exit 2)."""
+    payload = _write_payload(
+        "foo:\n\techo hi\n", file_path="/project/justfile"
+    )
+    r = _run_hook(payload, user="")
+    assert r.returncode == 2, (
+        f"Expected exit 2 for justfile write, got {r.returncode}\n{r.stderr}"
+    )
+
+
+def test_curation_allows_untrusted_non_blocked_write():
+    """Untrusted user writing to a path outside the blocked zones passes through."""
+    payload = _write_payload(
+        "# just notes\n", file_path="/project/docs/foo.md"
+    )
+    r = _run_hook(payload, user="")
+    assert r.returncode == 0, (
+        f"Expected exit 0 for non-blocked path, got {r.returncode}\n{r.stderr}"
+    )
+
+
+def test_curation_trusted_user_allowed_src_write():
+    """Trusted user writing to src/ must pass the curation gate (exit 0)."""
+    payload = _write_payload(
+        "print('hi')\n", file_path="/project/src/evidencell/foo.py"
+    )
+    r = _run_hook(payload, user="dosumis@gmail.com")
+    assert r.returncode == 0, (
+        f"Expected exit 0 for trusted src write, got {r.returncode}\n{r.stderr}"
+    )
+
+
+def test_curation_non_trusted_email_still_blocked():
+    """A non-trusted git email must still be treated as untrusted."""
+    payload = _write_payload(
+        "print('hi')\n", file_path="/project/src/evidencell/foo.py"
+    )
+    r = _run_hook(payload, user="stranger@example.com")
+    assert r.returncode == 2, (
+        f"Expected exit 2 for non-trusted email, got {r.returncode}\n{r.stderr}"
     )
 
 
