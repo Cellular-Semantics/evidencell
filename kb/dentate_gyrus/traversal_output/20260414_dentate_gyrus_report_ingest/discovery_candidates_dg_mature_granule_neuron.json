@@ -1,0 +1,386 @@
+{
+  "classical_node_id": "dg_mature_granule_neuron",
+  "classical_node_name": "Dentate Gyrus Mature Granule Neuron",
+  "signature": {
+    "defining_markers": [
+      "Calbindin",
+      "NeuN",
+      "Tbr1"
+    ],
+    "negative_markers": [
+      "DCX",
+      "Nestin",
+      "PSA-NCAM"
+    ],
+    "neuropeptides": [],
+    "nt_type": "glutamatergic",
+    "anatomical_location": {
+      "region_id": "UBERON:0001885",
+      "region_label": "dentate gyrus of hippocampal formation",
+      "soma_location": "granule cell layer (GCL)"
+    }
+  },
+  "candidates": [
+    {
+      "atlas_node_id": "CS20230722_CLUS_0506",
+      "atlas_node_name": "0506 DG Glut_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0506",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "Neurod2",
+          "Prox1",
+          "St18"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1"
+        ],
+        "scoped_markers_weighted": [
+          "Dsp",
+          "Adamts17"
+        ],
+        "score": 0.69
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG do (dorsal outer GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.69,
+      "rationale": "High TF and merfish marker concordance (Glis3, Neurod2, Prox1, St18). Scoped markers Dsp and Adamts17 distinctive within subclass. Glutamatergic, no negative markers expressed. Location precisely matches GCL soma. Critical gap: Calbindin, NeuN, Tbr1 absent from atlas defining_markers; these mature protein markers may be post-transcriptional or atlas data limitation."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0503",
+      "atlas_node_name": "0503 DG Glut_1",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0503",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "Neurod2",
+          "Prox1"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1"
+        ],
+        "scoped_markers_weighted": [
+          "Dio3",
+          "Ndst4"
+        ],
+        "score": 0.68
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG ve (ventral GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.68,
+      "rationale": "Good TF marker agreement (Glis3, Neurod2, Prox1). Scoped markers Dio3 and Ndst4 enhance within-subclass specificity. Glutamatergic with Cck/Grp neuropeptides. Location on ventral GCL matches mature granule distribution. Missing Calbindin, NeuN, Tbr1 from defining_markers; atlas may distinguish mature stages via neuropeptide/TF signatures rather than protein maturation markers."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0507",
+      "atlas_node_name": "0507 DG Glut_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0507",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "Neurod2",
+          "St18"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1",
+          "Prox1"
+        ],
+        "scoped_markers_weighted": [
+          "Rflnb",
+          "Rhbdl3"
+        ],
+        "score": 0.67
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG do (dorsal outer GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.67,
+      "rationale": "TF markers Glis3, Neurod2, St18 present; Prox1 notably absent vs. other mature clusters. Scoped markers Rflnb and Rhbdl3 . Cck and Pdyn neuropeptides suggest functional maturity. Glutamatergic. Located on dorsal GCL. Slightly lower TF diversity (no Prox1) may indicate transitional or specialized mature subtype."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0502",
+      "atlas_node_name": "0502 DG Glut_1",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0502",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "Neurod2",
+          "Prox1"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1"
+        ],
+        "scoped_markers_weighted": [
+          "Dio3",
+          "Tshz2"
+        ],
+        "score": 0.64
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG ve (ventral GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.64,
+      "rationale": "Core TF markers present (Glis3, Neurod2, Prox1). Scoped marker Tshz2 (TF) and Dio3 (merfish validated) add specificity. Grp and Cck neuropeptides. Glutamatergic, ventral location. Marker set matches DG Glut_1 subtype well; score slightly lower due to smaller weighted marker panel vs. 0506."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0504",
+      "atlas_node_name": "0504 DG Glut_1",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0504",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "Neurod2",
+          "Prox1"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1"
+        ],
+        "scoped_markers_weighted": [
+          "Gcnt1"
+        ],
+        "score": 0.62
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG ve (ventral GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.62,
+      "rationale": "Essential TF markers (Glis3, Neurod2, Prox1) with single scoped marker (Gcnt1). Cartpt (neuropeptide and merfish) indicates mature identity. Grp, Penk neuropeptides suggest functional specialization. Glutamatergic, ventral location. Smallest weighted marker set among top candidates."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0505",
+      "atlas_node_name": "0505 DG Glut_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0505",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "Neurod2",
+          "St18"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1",
+          "Prox1"
+        ],
+        "scoped_markers_weighted": [
+          "Serinc2",
+          "Plk5"
+        ],
+        "score": 0.63
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG do (dorsal outer GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.63,
+      "rationale": "TF markers Glis3, Neurod2, St18; Prox1 absent. Scoped markers Serinc2 and Plk5 distinctive. Large cluster (n=4162 in v3) with merfish-validated Grm3 (metabotropic glutamate receptor). Glutamatergic. Dorsal location. Absence of Prox1 and neuropeptides distinguishes from other mature clusters; may represent canonical mature core."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0508",
+      "atlas_node_name": "0508 DG Glut_3",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0508",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "Neurod2",
+          "Prox1"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1"
+        ],
+        "scoped_markers_weighted": [
+          "Cenpa",
+          "Egr4"
+        ],
+        "score": 0.63
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG do (dorsal outer GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.63,
+      "rationale": "Core TF markers (Glis3, Neurod2, Prox1). Scoped markers Cenpa (mitotic) and Egr4 (activity-regulated TF) suggest dynamic maturation phase. Cck and Pdyn neuropeptides. Glutamatergic, dorsal soma. Small cluster (n=165), may represent functionally active or cycling mature subset."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0510",
+      "atlas_node_name": "0510 DG Glut_4",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0510",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "St18"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1",
+          "Neurod2",
+          "Prox1"
+        ],
+        "scoped_markers_weighted": [
+          "Clec1a",
+          "Smoc2"
+        ],
+        "score": 0.62
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG po (posterior GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.62,
+      "rationale": "Minimal TF overlap (Glis3, St18 only); missing Neurod2, Prox1 vs. other mature clusters. Scoped markers Clec1a and Smoc2 (merfish). Grp, Cck, Pdyn neuropeptides. Glutamatergic, posterior soma location. May represent functional subtype with distinct maturity signature or posterior-enriched specialization; lowest core TF concordance."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0509",
+      "atlas_node_name": "0509 DG Glut_3",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0509",
+      "marker_overlap": {
+        "matched": [
+          "Glis3",
+          "Neurod2"
+        ],
+        "missed": [
+          "Calbindin",
+          "NeuN",
+          "Tbr1",
+          "Prox1"
+        ],
+        "scoped_markers_weighted": [
+          "Npy"
+        ],
+        "score": 0.59
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (dentate gyrus)"
+        ],
+        "soma_subdivision": "DG do (dorsal outer GCL)",
+        "score": 1.0
+      },
+      "composite_score": 0.59,
+      "rationale": "Minimal TF signature (Glis3, Neurod2); Prox1 absent. Scoped marker Npy distinctive and co-expressed as neuropeptide (Cck, Pdyn, Npy). Small cluster (n=799). Glutamatergic, dorsal location. Neuropeptide enrichment suggests a functionally specialized subset; lowest TF concordance suggests more immature or transiently differentiated state, approaching threshold."
+    }
+  ],
+  "non_candidates_summary": "5 nodes scored below cluster threshold (hierarchical non-leaf nodes). These include 1 subclass (CS20230722_SUBC_037), 4 supertypes (CS20230722_SUPT_0136-0139), and 1 class (CS20230722_CLAS_04). All had empty or minimal defining_markers, yielding composite scores of 0.08 (baseline location/NT only). These are aggregate nodes and not suitable for cell type matching; their children (clusters) carry the specific transcriptomic signatures.",
+  "analysis_notes": {
+    "critical_gap": "The classical node defines mature identity via protein markers (Calbindin, NeuN, Tbr1), which are absent from atlas defining_markers. These may be post-transcriptional/translational modifications not captured in the atlas RNA data, or the atlas may lack calbindin expression data despite the mapping notes asserting it. Recommend cross-validation with protein data (immunohistochemistry, MERFISH spatial maps) to confirm calbindin in atlas clusters.",
+    "surrogate_markers": "All 9 cluster nodes consistently express the atlas's Glis3, Neurod2, Slc17a7 (vGLUT1) which align with the CL:2000089 mapping and support mature glutamatergic granule identity.",
+    "neuropeptide_heterogeneity": "Classical node has no neuropeptides; atlas clusters express Cck, Grp, Pdyn, Npy, Cartpt, Penk with varying scores. This likely reflects functional diversification in the mature population and is consistent with adult neurogenesis producing heterogeneous mature cells.",
+    "location_note": "All atlas nodes assign soma to dentate gyrus subdivisions (DG ve, DG do, DG po = ventral, dorsal outer, posterior granule layers). These align with the classical node's GCL specification.",
+    "threshold_rationale": "Cluster nodes (n=9) scored 0.59-0.69; hierarchy nodes scored 0.08. Used 0.50 threshold to include all clusters; no nodes below."
+  }
+}

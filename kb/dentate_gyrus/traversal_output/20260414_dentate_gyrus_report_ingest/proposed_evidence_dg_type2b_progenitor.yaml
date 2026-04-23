@@ -1,0 +1,116 @@
+# Proposed evidence items for dg_type2b_progenitor
+# Source summaries: kb/dentate_gyrus/traversal_output/20260414_dentate_gyrus_report_ingest/all_summaries.json
+# Extraction date: 2026-04-22
+# Items below are PROPOSED — require expert review before KB commit
+# Excluded corpus IDs: 14221248, 252063749, 7440369, 13752593
+
+# --- Evidence item 1 ---
+# Target field: defining_markers
+# Source: europepmc_fulltext | CorpusId:15727849
+- evidence_type: LITERATURE
+  reference: "PMID:18385329"
+  snippet: "The majority of Tbr2+ cells colabeled with DCX (64.4 ± 4.7%). In general, these cells had low DCX expression, with either no processes or short, tangentially oriented processes, typical of type-2 cells."
+  support: SUPPORT
+  study_type: primary
+
+# --- Evidence item 2 ---
+# Target field: morphology_notes
+# Source: europepmc_fulltext | CorpusId:15727849
+# NOTE: Hodge 2008 is the primary Tbr2/type-2 source — a second quote is retained here
+# because it uniquely addresses morphology_notes (clustering in SGZ near type-1 radial
+# processes) that no other non-excluded summary covers. Reviewer may consolidate if needed.
+- evidence_type: LITERATURE
+  reference: "PMID:18385329"
+  snippet: "Tbr2+ cells coexpressing nestin-GFP were more typically found in clusters in the SGZ and were often noted to be in close association with a Tbr2-negative type-1 nestin-GFP+ cell. Of all the nestin-GFP+, Tbr2+ double-labeled cells examined, 96.76 ± 0.39% had morphology consistent with type-2 progenitors"
+  support: SUPPORT
+  study_type: primary
+
+# --- Evidence item 3 ---
+# Target field: defining_markers
+# Source: europepmc_fulltext | CorpusId:279046466
+- evidence_type: LITERATURE
+  reference: "PMID:40519263"
+  snippet: "Neural stem cells (NSCs) progressively develop into proliferating neural progenitor cells (NPCs), designated as type-2a (Nestin+/Sox2+), type-2b cells (expressing Nestin and doublecortin: Nestin+/DCX+) and neuroblasts (type-3, DCX+). Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN."
+  support: SUPPORT
+  study_type: review
+
+# --- Evidence item 4 ---
+# Target field: defining_markers
+# Source: europepmc_fulltext | CorpusId:245432259
+- evidence_type: LITERATURE
+  reference: "PMID:37082558"
+  snippet: "Three types of proliferatively active cells have been identified in the granular layer of the dentate gyrus (DG) of the hippocampus: type I cells – radial glial-like stem cells expressing glial fibrillary acidic protein (GFAP) and Sox2; type II cells – non-sessile cells expressing nestin, also referred to as transiently activated progenitor cells, neuroblasts expressing doublecortin (DCX); and Ki67 proteins and immature neurons expressing the DCX protein, PSA-NCAM, a marker of migrating neurons (polysialylated neuronal cell adhesion molecules) and neuron-specific protein (NeuN)."
+  support: SUPPORT
+  study_type: review
+
+# --- Evidence item 5 ---
+# Target field: defining_markers
+# Source: europepmc_fulltext | CorpusId:7393550
+- evidence_type: LITERATURE
+  reference: "PMID:19482889"
+  snippet: "In contrast to the fetal brain, where postmitotic neurons do not express Tis21...in the postnatal and adult DG, Tis21 (as revealed by Tis21-GFP) is also expressed in postmitotic neurons."
+  support: PARTIAL
+  study_type: primary
+
+# --- Evidence item 6 ---
+# Target field: defining_markers
+# Source: europepmc_fulltext | CorpusId:8479504
+- evidence_type: LITERATURE
+  reference: "PMID:26056581"
+  snippet: "These largely quiescent, GFAP + Nestin + Dcx- stem-like cells (called B-type) intercalate into the ependymal layer as they divide. These divisions produce a highly proliferative GFAP-Nestin + Dcx + progenitor cell (called C-type); this progenitor in turn yields two or more lineage-restricted, transit-amplifying, neuronal precursors (called A-type)."
+  support: PARTIAL
+  study_type: review
+
+# --- Evidence item 7 ---
+# Target field: nt_type
+# Source: europepmc_fulltext | CorpusId:258927570
+- evidence_type: LITERATURE
+  reference: "PMID:37488837"
+  snippet: "In DG, RGL cells produce IPCs that develop into neuroblasts and produce granule neurons. As granule neurons differentiate, integrate into hippocampal circuitry, and sustain hippocampus-dependent memory function, their migration is constrained."
+  support: PARTIAL
+  study_type: review
+
+# --- Evidence item 8 ---
+# Target field: negative_markers
+# Source: europepmc_fulltext | CorpusId:14598082
+- evidence_type: LITERATURE
+  reference: "PMID:23667508"
+  snippet: "DCX is almost exclusively expressed by immature newborn neurons in the DG and the SVZ/OB-system and is commonly used to distinguish immature neurons from non-neuronally committed precursors and mature neurons, and to estimate neurogenic activity."
+  support: PARTIAL
+  study_type: primary
+
+# --- Evidence item 9 ---
+# Target field: negative_markers
+# Source: europepmc_fulltext | CorpusId:233432690
+- evidence_type: LITERATURE
+  reference: "PMID:33994960"
+  snippet: "In the hippocampus, some of the cells that are labeled by DCX are also labeled by PCNA and Ki67, two cell cycle markers"
+  support: PARTIAL
+  study_type: primary
+
+# --- Evidence item 10 ---
+# Target field: defining_markers
+# Source: europepmc_fulltext | CorpusId:235300723
+- evidence_type: LITERATURE
+  reference: "PMID:34072166"
+  snippet: "The number of GFP+ cells coexpressing markers of immature neurons decreased dramatically when the animals were sacrificed 6 months after tamoxifen administration (3m-t→9) (PSA-NCAM+ 4.7 ± 1.7%, P < 0.0001***; DCX+ 6.0 ± 1.4%, P < 0.0001***; DCX+/PSA-NCAM+ 3.25 ± 1%, P < 0.0001***)"
+  support: PARTIAL
+  study_type: primary
+
+# --- Evidence item 11 ---
+# Target field: nt_type
+# Source: europepmc_fulltext | CorpusId:13799502
+- evidence_type: LITERATURE
+  reference: "PMID:29688272"
+  snippet: "The proportion of GFP⁺CaMKII⁺ coexpressing cells increased significantly between the 3m-t group (2.0 ± 2.3%) and 9m-t group (12 ± 2.3%), reaching 80.0 ± 7.7% in mature neurons."
+  support: PARTIAL
+  study_type: primary
+
+# --- Evidence item 12 ---
+# Target field: nt_type
+# Source: europepmc_fulltext | CorpusId:15994456
+- evidence_type: LITERATURE
+  reference: "PMID:15684031"
+  snippet: "Calbindin (CB) and calretinin (CR) immunoreactivity were each observed in 4–5-wk-old and 11–12-wk-old BrdU+ cells. In triple-labeled sections, no BrdU+/CR+ cells appeared to be CB+, suggesting that there are two distinct classes of newly generated cortical interneurons or, alternatively, that new interneurons make a developmental switch from CR to CB expression like the adult-born dentate gyrus granule neurons."
+  support: PARTIAL
+  study_type: primary

@@ -1,0 +1,126 @@
+{
+  "classical_node_id": "dg_neuroblast",
+  "classical_node_name": "Dentate Gyrus Neuroblast (Type-3 Progenitor)",
+  "signature": {
+    "defining_markers": [
+      "DCX",
+      "Ki67",
+      "PSA-NCAM",
+      "Nestin (type-2b stage only)"
+    ],
+    "negative_markers": [
+      "NeuN",
+      "Calbindin",
+      "GFAP"
+    ],
+    "neuropeptides": [],
+    "nt_type": "glutamatergic (committed but not yet functional)",
+    "anatomical_location": [
+      {
+        "id": "UBERON:0009952",
+        "label": "dentate gyrus subgranular zone"
+      }
+    ],
+    "morphology_notes": "Migratory precursor cells in SGZ; proliferative (Ki67+); DCX+ (type-3) or Nestin+/DCX+ (type-2b); last mitotic stage before postmitotic differentiation",
+    "electrophysiology_class": "Not synaptically integrated"
+  },
+  "candidates": [
+    {
+      "atlas_node_id": "CS20230722_CLUS_0511",
+      "atlas_node_name": "0511 DG-PIR Ex IMN_1",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0511",
+      "marker_overlap": {
+        "matched": [],
+        "missed": [
+          "DCX",
+          "Ki67",
+          "PSA-NCAM",
+          "Nestin"
+        ],
+        "score": 0.0,
+        "note": "No classical protein markers detected in atlas transcriptomic signature. Atlas markers: Eomes (=Tbr2, type-2b TF), Sox6, Neurod1, Meis1/2, Igfbpl1, Lmo1, Slc17a6, Celsr1, Tenm1."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0009952 (SGZ) — exact match"
+        ],
+        "score": 1.0
+      },
+      "composite_score": 0.50,
+      "rationale": "Strongest candidate: correct anatomical location (SGZ), correct NT type (Glut), curator-annotated as 'early neuroblast' with type-2b marker Eomes/Tbr2. Marker overlap zero but likely methodological difference (protein vs. transcriptome). Curator mapping notes suggest Eomes+ signature confirms type-2b progenitor identity, with MERFISH validation of Eomes/Igfbpl1 at DG-STR boundary."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0513",
+      "atlas_node_name": "0513 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0513",
+      "marker_overlap": {
+        "matched": [],
+        "missed": [
+          "DCX",
+          "Ki67",
+          "PSA-NCAM",
+          "Nestin"
+        ],
+        "score": 0.0,
+        "note": "No classical markers detected. Atlas markers: Vim (progenitor marker), Neurod4, Nhlh1, Eomes (=Tbr2), Nrn1, Zic5, Igfbpl1, Mfap4, Slc17a6."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (DG proper) — parent region, not SGZ; anatomical assignment uncertain (noted 'CTX?' in original data)"
+        ],
+        "score": 0.5
+      },
+      "composite_score": 0.38,
+      "rationale": "Secondary candidate: curator-annotated 'early neuroblast' with type-2b markers (Vim, Eomes), but location uncertain and not specifically SGZ. Vim (vimentin) is consistent with type-2b progenitor identity. MERFISH validates Eomes and Igfbpl1. Worth investigating despite anatomical ambiguity."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0512",
+      "atlas_node_name": "0512 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0512",
+      "marker_overlap": {
+        "matched": [],
+        "missed": [
+          "DCX",
+          "Ki67",
+          "PSA-NCAM",
+          "Nestin"
+        ],
+        "score": 0.0,
+        "note": "No classical markers. Atlas markers: Eomes, Calb2 (calretinin, distinct from Calbindin), Prox1, Bhlhe22, Draxin, Mndal, Adamts18, Igfbpl1."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "NOT_ASSESSED",
+      "location_alignment": {
+        "matched_regions": [
+          "UBERON:0001885 (DG proper, DGdo/me) — parent of SGZ; likely beyond neuroblast stage"
+        ],
+        "score": 0.3
+      },
+      "composite_score": 0.25,
+      "rationale": "Tertiary candidate: curator-annotated 'late neuroblast' with Eomes still expressed (type-3 stage marker) but also Calb2 and Prox1, indicating transition toward immature granule neuron. Location is mature GCL, not SGZ. More consistent with dg_immature_granule_neuron (next stage in lineage)."
+    }
+  ],
+  "non_candidates_summary": "4 atlas nodes scored below threshold (0.25): clusters 0514, 0515 (immature granule neurons, wrong developmental stage), 0516, 0517 (piriform cortex and endopiriform area, distant brain regions). These represent later developmental stages or off-target cell types. Key finding: systematic absence of classical DCX, Ki67, PSA-NCAM, Nestin protein markers in atlas transcriptomic data is likely a methodological difference (protein immunohistochemistry vs. single-cell RNA-seq). Atlas nodes compensate with TF markers (Eomes/Tbr2, Prox1, Neurod1) and location information. Candidate neuroblast clusters (0511, 0512, 0513) share Eomes/Tbr2 signature with curator-validated type-2b identity; this TF signature may be a more reliable molecular correlate than classical protein markers alone."
+}

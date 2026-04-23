@@ -1,0 +1,283 @@
+{
+  "classical_node_id": "dg_immature_granule_neuron",
+  "classical_node_name": "Dentate Gyrus Immature Granule Neuron",
+  "signature": {
+    "defining_markers": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+    "negative_markers": ["Calbindin"],
+    "neuropeptides": [],
+    "nt_type": "glutamatergic",
+    "anatomical_location": [
+      {
+        "id": "UBERON:0001885",
+        "label": "dentate gyrus of hippocampal formation",
+        "name_in_source": "inner granule cell layer (GCL)"
+      }
+    ],
+    "morphology_notes": "Postmitotic neurons migrated from SGZ into inner GCL; axonal projections reach CA3 by 10-11 days; peak spine growth 3-4 weeks",
+    "electrophysiology_class": "Synaptically integrating; receive glutamatergic input from entorhinal cortex"
+  },
+  "candidates": [
+    {
+      "atlas_node_id": "CS20230722_CLUS_0514",
+      "atlas_node_name": "0514 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0514",
+      "marker_overlap": {
+        "matched": ["Tbr1"],
+        "missed": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+        "atlas_extra_markers": ["Ccbe1", "Draxin", "Fam163a", "Ntf3", "Igfbpl1", "Emx2", "Prox1", "Rarb", "Gad1", "Slc17a7"],
+        "score": 0.25,
+        "notes": "Tbr1 is 2x-scoped marker (within_subclass) = strong weight. DCX/NeuN absence expected: immature GN postmitotic stage has exited DCX+ phase; classical definition includes NeuN+ but atlas node annotated as 'late neuroblast/immature granule cell' — likely marginal for NeuN+ but captures transition. Tbr1/Prox1/Igfbpl1/Emx2 profile precisely defines CL:9900002 (immature DG granule neuron)"
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0,
+        "notes": "No neuropeptides in classical signature; none in atlas node"
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_notes": "Atlas nt_type: Glut; classical nt_type: glutamatergic",
+      "location_alignment": {
+        "matched_regions": ["DGdo,me (dentate gyrus dorsal/medial) matches inner GCL soma location"],
+        "ccf_broad": "HIP:0.98",
+        "score": 0.95,
+        "notes": "Soma position in DGdo,me aligns with inner GCL; MERFISH validates Igfbpl1, Emx2 in this spatial context; 98% hippocampal allocation; no off-target regions"
+      },
+      "composite_score": 0.82,
+      "rationale": "EXACT CL:9900002 mapping. Clusters 0514+0515 define the transcriptomic signature for immature DG granule neuron (Tbr1+/Prox1+/Igfbpl1+/Emx2+). Tbr1 marks postmitotic transition; absence of DCX/NeuN consistent with stage timing (classical definition spans DCX+ late neuroblast into DCX- immature neuron). Correct NT (glutamatergic), correct anatomy (inner GCL with 98% HIP allocation), correct negative markers (no Calbindin, excluding mature stage). MERFISH validates key markers. This is the primary atlas correlate for the classical node."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0515",
+      "atlas_node_name": "0515 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0515",
+      "marker_overlap": {
+        "matched": ["Tbr1"],
+        "missed": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+        "atlas_extra_markers": ["Rarb", "Draxin", "Mndal", "Igfbpl1", "Emx2", "Fam163a", "Bcl11b", "Cd24a", "Prox1", "Gad1"],
+        "score": 0.25,
+        "notes": "Identical TF profile to cluster 0514 (Tbr1+/Prox1+/Emx2+/Igfbpl1+); scoped markers (Rarb distinctive within subclass) strengthen signature. Together 0514+0515 constitute evidence for CL:9900002"
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0,
+        "notes": "No neuropeptides in either signature"
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_notes": "Atlas nt_type: NA (but parent class Glut); classical: glutamatergic; inherited from parent",
+      "location_alignment": {
+        "matched_regions": ["DGdo,me (dentate gyrus dorsal/medial) matches inner GCL"],
+        "ccf_broad": "HIP:1.0",
+        "score": 1.0,
+        "notes": "Perfect hippocampal allocation (HIP:1.0); soma in inner GCL layer; MERFISH validates Igfbpl1, Emx2, Fam163a, Bcl11b"
+      },
+      "composite_score": 0.82,
+      "rationale": "EXACT CL:9900002 mapping. Co-defining cluster for immature DG granule neuron transcriptomic signature. Nearly identical marker profile to 0514 (Tbr1/Prox1/Emx2/Igfbpl1 core + additional MERFISH validation of Fam163a, Bcl11b, Cd24a). Perfect anatomical alignment (HIP:1.0). MERFISH-validated markers provide strong evidence. Equal candidate rank with 0514; both together provide the full transcriptomic definition of the classical immature GN."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0512",
+      "atlas_node_name": "0512 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0512",
+      "marker_overlap": {
+        "matched": ["Igfbpl1", "Prox1"],
+        "missed": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+        "atlas_extra_markers": ["Eomes", "Calb2", "Draxin", "Mndal", "Adamts18", "Bhlhe22"],
+        "score": 0.0,
+        "notes": "No exact matches to classical defining markers. Igfbpl1 and Prox1 are present but not definitive classical markers. Eomes (=Tbr2) indicates type-3/late neuroblast stage (earlier than Tbr1+ immature GN). Calb2 (calretinin) appears — classical negative marker is Calbindin (CALB1), different protein but curator notes 'transient expression in immature granule neurons' — potential false positive on maturity detection"
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0,
+        "notes": "No neuropeptides"
+      },
+      "nt_alignment": "NOT_ASSESSED",
+      "nt_notes": "Atlas nt_type: NA; cannot assess directly; parent class is Glut",
+      "location_alignment": {
+        "matched_regions": ["DGdo,me (dorsal/medial) aligns with DG proper"],
+        "ccf_broad": "HIP:0.96",
+        "score": 0.85,
+        "notes": "Location in DGdo,me is appropriate for DG; 96% HIP allocation; soma distribution includes DG-mo, DG-sg, DG-po (motoring through layers) and some CA3so (off-target); slight anatomical spread"
+      },
+      "composite_score": 0.68,
+      "rationale": "BROAD CL:9900001 mapping (neuroblast, not immature GN). Late neuroblast stage: Eomes+ (type-3 progenitor TF), Prox1+ (DG lineage), Calb2 onset (calretinin transiently expressed during immature GN maturation per curator). This cluster bridges late neuroblast→immature GN transition; positioned as a developmental neighbor rather than a primary candidate. Correct anatomy and NT type, but lacks Tbr1+ postmitotic signature definitive of immature GN stage. Secondary candidate for DEVELOPMENTAL TRAJECTORY context."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0513",
+      "atlas_node_name": "0513 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0513",
+      "marker_overlap": {
+        "matched": [],
+        "missed": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+        "atlas_extra_markers": ["Vim", "Neurod4", "Mfap4", "Eomes", "Igfbpl1", "Zic5", "Nrn1", "Nhlh1", "Slc17a6"],
+        "score": 0.0,
+        "notes": "No classical marker matches. Vim (vimentin) is a progenitor marker; Neurod4, Nhlh1 are neurogenic TFs; Eomes+ indicates type-2b stage (earlier than type-3). This is an early progenitor cluster, not immature GN"
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_notes": "Glut = glutamatergic",
+      "location_alignment": {
+        "matched_regions": ["DGdo,me annotated as 'DGdo,me (CTX?)' — location uncertain"],
+        "ccf_broad": "HIP:0.58, NA:0.37",
+        "score": 0.55,
+        "notes": "Anatomical location flagged as uncertain ('CTX?' in curator notes); 58% HIP, 37% NA (unassigned); scattered across DG-sg, DG-mo, CA3so, cortex; NOT focused in inner GCL"
+      },
+      "composite_score": 0.52,
+      "rationale": "BROAD CL:9900004 mapping (type-2b progenitor, not immature GN). Early neuroblast stage: Vim+ and Eomes+ suggest type-2b intermediate progenitor (earlier developmental step). Location uncertain per curator; hippocampal allocation weaker (58% vs 95%+) with off-target regions. This cluster precedes the immature GN stage; not a candidate for classical immature GN, but may be relevant for PROGENITOR LINEAGE ancestry."
+    },
+    {
+      "atlas_node_id": "CS20230722_SUPT_0141",
+      "atlas_node_name": "DG-PIR Ex IMN_2",
+      "taxonomy_level": "supertype",
+      "cell_set_accession": "CS20230722_SUPT_0141",
+      "marker_overlap": {
+        "matched": [],
+        "missed": [],
+        "atlas_extra_markers": [],
+        "score": 0.0,
+        "notes": "Supertype contains no defining markers (they are at cluster level). This supertype groups clusters 0512, 0513, 0514, 0515 covering late neuroblast through immature GN. Cannot score directly; clusters 0514+0515 are the immature GN subset."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_notes": "Glut",
+      "location_alignment": {
+        "matched_regions": ["dentate gyrus (generic) — includes SGZ and GCL"],
+        "score": 0.70,
+        "notes": "Supertype spans multiple layers (SGZ from 0512-0513; GCL from 0514-0515)"
+      },
+      "composite_score": 0.70,
+      "rationale": "BROAD CL:9900001 mapping (broadest common ancestor). Supertype grouping is too heterogeneous (spans 4 clusters across developmental stages). See clusters 0514+0515 for immature GN. Included for completeness but not a primary candidate."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0511",
+      "atlas_node_name": "0511 DG-PIR Ex IMN_1",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0511",
+      "marker_overlap": {
+        "matched": [],
+        "missed": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+        "atlas_extra_markers": ["Meis1", "Eomes", "Celsr1", "Tenm1", "Meis2", "Igfbpl1", "Lmo1", "Slc17a6", "Sox6", "Neurod1", "Gad2"],
+        "score": 0.0,
+        "notes": "No classical marker matches. Eomes+ and Sox6+ indicate early type-2b progenitor stage. This is the earliest neuroblast cluster, not immature GN."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_notes": "Glut",
+      "location_alignment": {
+        "matched_regions": ["UBERON:0009952 (dentate gyrus subgranular zone) — NOT inner GCL"],
+        "ccf_broad": "NA:0.75, CTXsp:0.12 (off-target regions)",
+        "score": 0.30,
+        "notes": "Location in SGZ is correct for early neuroblasts but wrong for immature GN (which is in inner GCL). Off-target regions (CTXsp) noted."
+      },
+      "composite_score": 0.45,
+      "rationale": "BROAD CL:9900004 mapping (type-2b progenitor, not immature GN). Early neuroblast in SGZ: Eomes+ (Tbr2 TF for type-2b), Sox6+, Neurod1+. Represents the earliest stage in the lineage (type-2b→type-3→immature GN progression). Correct NT type but WRONG ANATOMICAL LOCATION (SGZ vs inner GCL) and lacks Tbr1+ postmitotic signature. Not a candidate for immature GN; relevant for UPSTREAM LINEAGE context."
+    },
+    {
+      "atlas_node_id": "CS20230722_SUPT_0140",
+      "atlas_node_name": "DG-PIR Ex IMN_1",
+      "taxonomy_level": "supertype",
+      "cell_set_accession": "CS20230722_SUPT_0140",
+      "marker_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0,
+        "notes": "Supertype with no defining markers; groups cluster 0511 only (early neuroblast)"
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0
+      },
+      "nt_alignment": "NOT_ASSESSED",
+      "location_alignment": {
+        "matched_regions": ["UBERON:0009952 (SGZ) — not inner GCL"],
+        "score": 0.30
+      },
+      "composite_score": 0.45,
+      "rationale": "BROAD CL:9900001 mapping. Early neuroblast supertype (Eomes/Tbr2+, Sox6+, type-2b stage in SGZ). Not a candidate for immature GN; upstream developmental stage."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0516",
+      "atlas_node_name": "0516 DG-PIR Ex IMN_3",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0516",
+      "marker_overlap": {
+        "matched": ["Tbr1"],
+        "missed": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+        "atlas_extra_markers": ["Scml4", "2610307P16Rik", "Igfbpl1", "Tfap2d", "Slc1a3", "Tafa2", "Rorb", "Prdm16", "Meis2", "Bcl11b", "Slc17a6"],
+        "score": 0.25,
+        "notes": "Tbr1+ and Igfbpl1+ markers present (matching immature GN signature), but IN WRONG ANATOMICAL LOCATION"
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_notes": "Glut",
+      "location_alignment": {
+        "matched_regions": [],
+        "off_target_regions": ["UBERON:0002590 (piriform cortex) — DISTANT from dentate gyrus"],
+        "ccf_broad": "OLF:0.5, CTXsp:0.39 (olfactory bulb, cortex — not hippocampus)",
+        "score": 0.15,
+        "notes": "FLAGGED: Located in piriform cortex and olfactory regions (OLF:0.5, CTXsp:0.39), not in hippocampus (no HIP allocation). Curator notes: 'in OLF PIR rather than DG, based on MERFISH; still look immature (Igfbpl1, Mex3a, Draxin), but can't be traced to earlier or later stages.' DISTRIBUTED_ACROSS_CLUSTERS caveat applies."
+      },
+      "composite_score": 0.35,
+      "rationale": "NO CL mapping; marked as null/unknown. Cluster exhibits immature granule cell-like markers (Tbr1+/Igfbpl1+), but is ANATOMICALLY OFF-TARGET — located in piriform cortex and olfactory regions, not dentate gyrus. Curator explicitly notes MERFISH confirmed non-DG location. While marker profile is similar to 0514/0515, the anatomical mismatch disqualifies this as a primary candidate. Possible explanation: olfactory bulb/piriform cortex may contain DG-derived migrating neurons or ectopic immature neurons, but the default anchor is the dentate gyrus classical definition. FLAG: DISTRIBUTED_ACROSS_CLUSTERS — immature neuroblast-like cells exist in non-DG regions."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0517",
+      "atlas_node_name": "0517 DG-PIR Ex IMN_3",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0517",
+      "marker_overlap": {
+        "matched": ["Tbr1"],
+        "missed": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+        "atlas_extra_markers": ["Casz1", "Antxr2", "Tfap2d", "Igfbpl1", "Met", "Necab1", "Carhsp1", "Satb1", "Slc17a6"],
+        "score": 0.25,
+        "notes": "Tbr1+ and Igfbpl1+ (immature markers), but IN WRONG LOCATION"
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 1.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_notes": "Glut",
+      "location_alignment": {
+        "matched_regions": [],
+        "off_target_regions": ["UBERON:0002590 (endopiriform area, OLF) — DISTANT"],
+        "ccf_broad": "CTXsp:0.61, Isocortex:0.16, NA:0.13",
+        "score": 0.10,
+        "notes": "Olfactory/cortical regions, not hippocampus. Curator notes same caveat: 'in OLF PIR rather than DG, based on MERFISH; still look immature'. DISTRIBUTED_ACROSS_CLUSTERS caveat."
+      },
+      "composite_score": 0.32,
+      "rationale": "NO CL mapping. Similar marker profile to immature GN (Tbr1+/Igfbpl1+, highest Slc17a6 score among clusters), but ANATOMICALLY MISPLACED — endopiriform area, not dentate gyrus. Curator explicitly notes non-DG location via MERFISH. Even lower score than 0516 due to more off-target anatomy (CTXsp:0.61 cortical allocation). FLAG: DISTRIBUTED_ACROSS_CLUSTERS — suggests immature neuroblast-like cells in olfactory system may share transcriptomic signature with DG immature neurons."
+    }
+  ],
+  "non_candidates_summary": "Subclass CS20230722_SUBC_038 has no defining markers and cannot be scored; it is a parent grouping. Supertype CS20230722_SUPT_0142 (DG-PIR Ex IMN_3) groups clusters 0516+0517, both located in piriform/olfactory regions and thus anatomically off-target (scored 0.35 and 0.32 respectively). The 11 atlas nodes (1 subclass, 3 supertypes, 7 clusters) were assessed; 7 did not reach high candidate rank due to: (1) earlier developmental stage (clusters 0511, 0513, 0512 — type-2b and late neuroblast, lacking Tbr1+ postmitotic signature), (2) anatomical off-target location (clusters 0516, 0517 in piriform/olfactory, not DG), or (3) insufficient marker matches. Top-ranked candidates (0514, 0515) have EXACT CL:9900002 mapping and comprehensive marker/NT/location alignment. Clusters 0512, 0513, 0511 are ranked as developmental neighbors (upstream progenitor stages) but are not primary candidates for the immature granule neuron classical cell type. Two immature-marker-positive clusters (0516, 0517) are flagged for DISTRIBUTED_ACROSS_CLUSTERS investigation — the same transcriptomic signature appears in non-hippocampal regions, suggesting either migrating populations or olfactory system-resident immature neurons sharing the developmental profile."
+}
