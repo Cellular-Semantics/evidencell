@@ -30,6 +30,8 @@ PARAMS:
                                 # if null → discovery mode (Step 0 queries taxonomy DB)
   ranks: [0, 1]                 # taxonomy ranks to query (0=leaf, 1=supertype, 2=subclass, …)
                                 # check taxonomy_meta.yaml level_hierarchy for available ranks
+  stats_h5: ""                  # path to precomputed_stats HDF5 (or "" to skip expression enrichment)
+  gene_mapping_tsv: ""          # path to gene mapping TSV (generate with just generate-gene-mapping)
   model: "sonnet"
 ```
 
@@ -179,6 +181,42 @@ with available evidence, skip to Step 3.
 
 ---
 
+## Step 2b: Ensure expression data on candidate nodes
+
+Before spawning mapping subagents, ensure the candidate atlas nodes have
+`precomputed_expression` covering the classical node's genes.
+
+1. Collect all gene symbols from the classical node:
+   `defining_markers`, `negative_markers`, `neuropeptides` → flat list of symbols.
+
+2. For each confirmed candidate, check whether its taxonomy YAML node already has a
+   `precomputed_expression` block covering those genes. Read the relevant taxonomy
+   level file (`kb/taxonomy/{taxonomy_id}/{level}.yaml`) and find the candidate node
+   by `cell_set_accession`.
+
+3. If any candidate is missing expression data and a precomputed stats HDF5 + gene
+   mapping TSV are available:
+
+   ```bash
+   just add-expression {taxonomy_id} {stats_h5} {gene_mapping_tsv} {gene1} {gene2} ... \
+     --level {level} --accessions {acc1} {acc2} ...
+   ```
+
+   This writes `PrecomputedExpression` blocks to the taxonomy YAML for exactly
+   those genes on exactly those nodes. The data persists across sessions.
+
+   If `--supertype` is needed (candidate is a supertype), use `add-expression-all`
+   which computes weighted means across child clusters.
+
+4. If no HDF5 or gene mapping is available, proceed — the mapping subagent will
+   mark expression comparisons as NOT_ASSESSED.
+
+**Gene mapping TSV**: a two-column file (`ensembl_id`, `symbol`) resolving gene
+symbols to Ensembl IDs in the HDF5. Generate once per stats file:
+`just generate-gene-mapping {stats_h5} conf/gene_mapping_{taxonomy_id}.tsv`
+
+---
+
 ## Step 3: Mapping edge subagent
 
 For each confirmed candidate, spawn a **mapping subagent** with this exact prompt:
@@ -194,7 +232,6 @@ TAXONOMY ID: {taxonomy_id}
 TAXONOMY DIR: kb/taxonomy/{taxonomy_id}/
 RELATIONSHIP: {relationship_type}
 DISCOVERY DATA: {path to discovery_candidates.json, if available}
-PRECOMPUTED_STATS: {path to precomputed_stats HDF5, or "none"}
 
 REFERENCE: Read kb/draft/cerebellum/CB_PLI_types.yaml for structural reference —
 specifically the edges section (starts after the nodes). Match that format exactly.
@@ -221,37 +258,35 @@ TASK:
      data if available from source-side re-analysis, e.g. detection rate and
      mean counts)
    - node_b_value: verbatim from atlas node metadata (or "not present" if absent).
-     If PRECOMPUTED_STATS is available, also query the precomputed stats HDF5 for
-     the mean expression of that gene in the candidate atlas cluster(s). Report
-     the quantitative value alongside the metadata annotation. See "Precomputed
-     stats cross-check" below.
+     If the atlas node has a `precomputed_expression` block (populated by Step 2b),
+     include the quantitative mean expression for each gene alongside the metadata
+     annotation. See "Expression cross-check" below.
    - alignment: CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED
    - notes: brief explanation (required for APPROXIMATE and DISCORDANT). If the
-     precomputed stats value disagrees with the taxonomy metadata annotation,
+     precomputed expression value disagrees with the taxonomy metadata annotation,
      note the discrepancy factually (e.g. "Pnoc listed in taxonomy metadata
-     neuropeptides; precomputed stats show 0.0 in this cluster"). Do not
+     neuropeptides; precomputed_expression shows 0.0 in this cluster"). Do not
      attempt to explain the discrepancy — flag it for investigation.
 
-   **Precomputed stats cross-check.** When a precomputed stats HDF5 is available
-   for the target taxonomy:
+   **Expression cross-check.** The atlas node's `precomputed_expression.genes`
+   list (if present in the taxonomy YAML) contains per-gene mean expression
+   values pulled from the MapMyCells precomputed stats. For each classical
+   defining_marker, negative_marker, and neuropeptide:
 
-   a. Load the file: `col_names` (gene Ensembl IDs), `sum` matrix (cluster ×
-      gene means), `cluster_to_row` mapping, `taxonomy_tree` + `name_mapper`.
+   a. Look up the gene symbol in `precomputed_expression.genes`.
 
-   b. For each classical defining_marker, negative_marker, and neuropeptide,
-      look up the gene's Ensembl ID and retrieve the mean expression value from
-      the candidate cluster row(s) in the `sum` matrix.
-
-   c. Populate `node_b_value` with the quantitative expression (e.g.
-      "Chrna2: 4.3 (precomputed stats mean); listed in supertype markers").
+   b. Populate `node_b_value` with the quantitative expression (e.g.
+      "Chrna2: 4.3 (precomputed mean); listed in supertype markers").
       This upgrades NOT_ASSESSED comparisons where the gene is absent from
-      atlas metadata but present in the precomputed stats, and adds
+      atlas metadata but present in the expression data, and adds
       quantitative grounding to metadata-only comparisons.
 
-   d. Where a gene shows zero expression across all relevant clusters in the
-      precomputed stats but is annotated in the taxonomy metadata, or vice
-      versa, note the discrepancy in the `notes` field. Do not adjudicate —
-      report both values for downstream interpretation in reports.
+   c. Where a gene shows zero expression but is annotated in the taxonomy
+      metadata, or vice versa, note the discrepancy in the `notes` field.
+      Do not adjudicate — report both values for downstream interpretation.
+
+   d. If no `precomputed_expression` block is present, mark expression
+      comparisons as NOT_ASSESSED for genes absent from atlas metadata.
 
    LOCATION alignment rules:
    - CONSISTENT: atlas node has cells in the matching soma region
