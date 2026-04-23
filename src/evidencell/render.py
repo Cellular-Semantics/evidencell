@@ -138,7 +138,11 @@ def _find_corpus_by_doi(bare_doi: str, refs: dict) -> dict | None:
 
 def _format_citation_line(entry: dict) -> str:
     """Format a references.json entry as 'Author et al. YYYY · PMID:…'"""
-    authors = entry.get("authors", [])
+    raw_authors = entry.get("authors", [])
+    # authors may be strings or dicts with a 'name' key
+    authors = [
+        a["name"] if isinstance(a, dict) else a for a in raw_authors
+    ]
     year = entry.get("year", "")
     pmid = entry.get("pmid", "")
     doi = entry.get("doi", "")

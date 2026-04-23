@@ -1,0 +1,19 @@
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Error executing tool snippet_search: RetryError[<Future at 0x794311f79cd0 state=finished raised ConnectionRefusedError>]"
+      }
+    ],
+    "isError": true
+  },
+  "_meta": {
+    "note": "ASTA snippet_search failed with ConnectionRefusedError after multiple retries. All 22 queried papers treated as gap_papers. Proceeding with Europe PMC fulltext fallback.",
+    "query": "immature neurons dentate gyrus adult neurogenesis granule cell electrophysiology markers",
+    "paper_ids_queried": 22,
+    "data": []
+  }
+}

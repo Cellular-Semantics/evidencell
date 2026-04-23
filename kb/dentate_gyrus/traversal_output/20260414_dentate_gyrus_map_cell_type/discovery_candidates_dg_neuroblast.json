@@ -1,0 +1,256 @@
+{
+  "classical_node_id": "dg_neuroblast",
+  "classical_node_name": "Dentate Gyrus Neuroblast (Type-3 Progenitor)",
+  "signature": {
+    "defining_markers": ["DCX", "Ki67", "PSA-NCAM", "Nestin"],
+    "negative_markers": ["NeuN", "Calbindin", "GFAP"],
+    "neuropeptides": [],
+    "nt_type": {
+      "name_in_source": "glutamatergic (committed but not yet functional)",
+      "cl_terms": [{"id": "CL:0000679", "label": "glutamatergic neuron"}]
+    },
+    "anatomical_location": [
+      {"id": "UBERON:0009952", "label": "dentate gyrus subgranular zone", "name_in_source": "subgranular zone (SGZ)"}
+    ],
+    "morphology_notes": "Migratory precursor cells in the SGZ; migrate only a few micrometers from SGZ toward the inner granule cell layer. At the type-2b stage they co-express Nestin and DCX; at the type-3 stage they are DCX+ only. They are proliferative (Ki67+) and represent the last mitotic stage before postmitotic differentiation.",
+    "electrophysiology_class": "Type-2 progenitor cells (neuroblast equivalent) receive direct GABAergic but not glutamatergic synaptic inputs; GABA is depolarising due to elevated [Cl-]i driven by high NKCC1 and low KCC2. High input resistance (~4.3 GOhm) and small capacitance (~6.4 pF). Mouse patch-clamp data.",
+    "cl_term": {"id": "CL:9900001", "label": "dentate gyrus neuroblast", "mapping_type": "EXACT"}
+  },
+  "scoring_notes": {
+    "marker_gap_explanation": "Classical neuroblast markers (DCX, Ki67, PSA-NCAM, Nestin) are defined by protein IHC. Atlas defining_markers are derived from snRNA-seq differential expression. DCX and Ki67 are broadly expressed across the DG-PIR Ex IMN subclass and do not appear as cluster-distinguishing markers; PSA-NCAM is a post-translational glycan epitope intrinsically undetectable by RNA-seq; Nestin (Nes) is downregulated at type-3 stage. Consequently, marker_overlap scores are 0.0 across all atlas candidates due to this methodological gap, not biological discordance. Location and NT type carry most discriminatory weight.",
+    "weighting": {
+      "marker_score_weight": 0.3,
+      "nt_score_weight": 0.3,
+      "location_score_weight": 0.4
+    },
+    "nt_scoring": "CONSISTENT=1.0, NOT_ASSESSED=0.5, DISCORDANT=0.0",
+    "location_scoring": "SGZ exact (UBERON:0009952)=1.0; DG general=0.5; GCL (adjacent to SGZ, downstream stage)=0.3; non-DG or uncertain=0.0-0.4",
+    "negative_marker_scoring": "Any NeuN, Calbindin, or GFAP in atlas defining_markers subtracts 0.15 per hit from composite"
+  },
+  "candidates": [
+    {
+      "atlas_node_id": "CS20230722_CLUS_0511",
+      "atlas_node_name": "0511 DG-PIR Ex IMN_1",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0511",
+      "parent_supertype": "CS20230722_SUPT_0140 (DG-PIR Ex IMN_1)",
+      "parent_subclass": "CS20230722_SUBC_038 (DG-PIR Ex IMN)",
+      "atlas_curator_annotation": "early neuroblast",
+      "atlas_cl_mapping": {"id": "CL:9900004", "label": "dentate gyrus type-2b neural progenitor", "mapping_type": "BROAD"},
+      "marker_overlap": {
+        "matched": [],
+        "missed": ["DCX", "Ki67", "PSA-NCAM", "Nestin"],
+        "score": 0.0,
+        "note": "RNA-seq/IHC methodological gap. Cluster is enriched for type-2b progenitor stage where Nestin is expected but below differential expression threshold. DCX broadly expressed in DG-PIR Ex IMN subclass. Ki67 underrepresented in snRNA-seq from rare cycling cells. PSA-NCAM is post-translational."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_detail": "Atlas nt_type: Glut; MERFISH-validated Slc17a6 score 6.02. Classical: glutamatergic (committed but not yet functional). Full NT agreement.",
+      "location_alignment": {
+        "classical_location": "UBERON:0009952 (dentate gyrus subgranular zone / SGZ)",
+        "atlas_location": "DG STR (DG-STR boundary); MERFISH validates Eomes/Igfbpl1 at SGZ boundary; UBERON:0009952 annotated",
+        "matched_regions": ["UBERON:0009952 dentate gyrus subgranular zone"],
+        "score": 1.0,
+        "note": "Exact UBERON match to SGZ. MERFISH places cells at DG-STR boundary consistent with SGZ localization. CCF NA:0.75 is a known registration artefact at sparse SGZ margin."
+      },
+      "composite_score": 0.70,
+      "biological_support_score": 0.85,
+      "rationale": "Strongest candidate for the dg_neuroblast classical type. SGZ location is an exact anatomical match. NT is fully consistent (Glut). Atlas curator annotation 'early neuroblast' directly names the neuroblast stage. Eomes (=Tbr2) TF marks the type-2b progenitor stage, which overlaps with the dg_neuroblast node definition (type-2b co-expresses Nestin+DCX before losing Nestin at type-3). CL:9900004 (type-2b) is assigned BROAD, consistent with spanning the type-2b/type-3 transition. Zero negative marker hits. Low marker_overlap score reflects RNA-seq/IHC methodological gap, not biological mismatch. This cluster is the primary transcriptomic anchor for the early (type-2b-enriched) portion of the dg_neuroblast lineage stage."
+    },
+    {
+      "atlas_node_id": "CS20230722_SUPT_0140",
+      "atlas_node_name": "DG-PIR Ex IMN_1",
+      "taxonomy_level": "supertype",
+      "cell_set_accession": "CS20230722_SUPT_0140",
+      "parent_subclass": "CS20230722_SUBC_038 (DG-PIR Ex IMN)",
+      "atlas_curator_annotation": "DG-PIR Ex IMN_1 (grouping supertype for cluster 0511)",
+      "atlas_cl_mapping": {"id": "CL:9900001", "label": "dentate gyrus neuroblast", "mapping_type": "BROAD"},
+      "marker_overlap": {
+        "matched": [],
+        "missed": ["DCX", "Ki67", "PSA-NCAM", "Nestin"],
+        "score": 0.0,
+        "note": "Same RNA-seq/IHC gap as cluster 0511. Supertype markers: Eomes, Sox6, Meis1/2, Neurod1, Igfbpl1 — TF signature of early neuroblast/type-2b stage."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_detail": "Atlas nt_type: Glut. Classical: glutamatergic.",
+      "location_alignment": {
+        "classical_location": "UBERON:0009952 (SGZ)",
+        "atlas_location": "subgranular zone (SGZ); UBERON:0009952 annotated",
+        "matched_regions": ["UBERON:0009952 dentate gyrus subgranular zone"],
+        "score": 1.0,
+        "note": "Exact UBERON and name_in_source match to SGZ."
+      },
+      "composite_score": 0.70,
+      "biological_support_score": 0.80,
+      "rationale": "Supertype-level grouping of cluster 0511 only. Carries CL:9900001 (dentate gyrus neuroblast) BROAD — the direct CL term for the classical node. SGZ location exact match. Eomes+Sox6 supertype markers confirm early neuroblast identity. Scored jointly with cluster 0511; if cluster-level resolution is available, cluster 0511 is preferred as the more specific mapping unit. The supertype-level CL:9900001 BROAD mapping makes this a strong aggregate candidate."
+    },
+    {
+      "atlas_node_id": "CS20230722_SUPT_0141",
+      "atlas_node_name": "DG-PIR Ex IMN_2",
+      "taxonomy_level": "supertype",
+      "cell_set_accession": "CS20230722_SUPT_0141",
+      "parent_subclass": "CS20230722_SUBC_038 (DG-PIR Ex IMN)",
+      "atlas_curator_annotation": "DG-PIR Ex IMN_2 (grouping supertype for clusters 0512-0515)",
+      "atlas_cl_mapping": {"id": "CL:9900001", "label": "dentate gyrus neuroblast", "mapping_type": "BROAD"},
+      "marker_overlap": {
+        "matched": [],
+        "missed": ["DCX", "Ki67", "PSA-NCAM", "Nestin"],
+        "score": 0.0,
+        "note": "Same RNA-seq/IHC gap. Supertype markers: Eomes, Igfbpl1, Emx2, Prox1, Tbr1, Draxin — spans both neuroblast and immature GN stages."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_detail": "Atlas nt_type: Glut. Classical: glutamatergic.",
+      "location_alignment": {
+        "classical_location": "UBERON:0009952 (SGZ)",
+        "atlas_location": "dentate gyrus of hippocampal formation (UBERON:0001885); general DG — no SGZ specificity at supertype level",
+        "matched_regions": ["dentate gyrus (parent of SGZ)"],
+        "score": 0.5,
+        "note": "General DG location covers SGZ but is not specific. Clusters within this supertype span SGZ (0511, 0512) and GCL (0513-0515) locations."
+      },
+      "composite_score": 0.50,
+      "biological_support_score": 0.55,
+      "rationale": "Supertype carrying CL:9900001 BROAD but spanning four clusters including downstream immature GN stages (0514, 0515). Also contains clusters 0512 (late neuroblast) and 0513 (early neuroblast), making it partly relevant. Location score reduced because the supertype covers general DG rather than SGZ specifically. This is a broad aggregate grouping; individual cluster-level mappings within it are more informative for the dg_neuroblast classical node."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0513",
+      "atlas_node_name": "0513 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0513",
+      "parent_supertype": "CS20230722_SUPT_0141 (DG-PIR Ex IMN_2)",
+      "parent_subclass": "CS20230722_SUBC_038 (DG-PIR Ex IMN)",
+      "atlas_curator_annotation": "early neuroblast",
+      "atlas_cl_mapping": {"id": "CL:9900004", "label": "dentate gyrus type-2b neural progenitor", "mapping_type": "BROAD"},
+      "marker_overlap": {
+        "matched": [],
+        "missed": ["DCX", "Ki67", "PSA-NCAM", "Nestin"],
+        "score": 0.0,
+        "note": "Same RNA-seq/IHC gap. Cluster markers include Vim (vimentin — progenitor intermediate filament, biologically analogous to Nestin but not the same protein), Eomes, Igfbpl1, Neurod4, Nhlh1. Vim and Nestin are both type III IFs but distinct proteins."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_detail": "Atlas nt_type: Glut (Slc17a6 nt_marker score 4.52). Classical: glutamatergic.",
+      "location_alignment": {
+        "classical_location": "UBERON:0009952 (SGZ)",
+        "atlas_location": "DGdo,me (CTX?); HIP:0.58, NA:0.37 — anatomical identity uncertain",
+        "matched_regions": ["dentate gyrus (partial — uncertain)"],
+        "score": 0.4,
+        "note": "Anatomical location uncertain: noted 'CTX?' in taxonomy. HIP:0.58 indicates only 58% hippocampal allocation; NA:0.37 suggests substantial uncertainty. Partial DG location credit only."
+      },
+      "composite_score": 0.46,
+      "biological_support_score": 0.50,
+      "rationale": "Second 'early neuroblast' cluster with CL:9900004 BROAD. Eomes and Igfbpl1 MERFISH-validated, consistent with type-2b progenitor stage. NT is glutamatergic (Slc17a6 score 4.52). However, anatomical assignment is uncertain — 'CTX?' annotation and only 58% hippocampal CCF allocation reduce confidence. Vimentin (Vim) is a progenitor IF marker biologically analogous to Nestin; their co-expression patterns in SGZ progenitors warrant investigation. Candidate but with significant anatomical uncertainty caveat."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0514",
+      "atlas_node_name": "0514 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0514",
+      "parent_supertype": "CS20230722_SUPT_0141 (DG-PIR Ex IMN_2)",
+      "parent_subclass": "CS20230722_SUBC_038 (DG-PIR Ex IMN)",
+      "atlas_curator_annotation": "late neuroblast / immature granule cell",
+      "atlas_cl_mapping": {"id": "CL:9900002", "label": "immature dentate gyrus granule neuron", "mapping_type": "EXACT"},
+      "marker_overlap": {
+        "matched": [],
+        "missed": ["DCX", "Ki67", "PSA-NCAM", "Nestin"],
+        "score": 0.0,
+        "note": "Same RNA-seq/IHC gap. Tbr1 presence marks postmitotic transition out of neuroblast stage; biologically this cluster is downstream of dg_neuroblast."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0
+      },
+      "nt_alignment": "CONSISTENT",
+      "nt_detail": "Atlas nt_type: Glut (Slc17a7 score 3.34, Gad1 score 5.56 — note atypical GABAergic signal). Classical: glutamatergic.",
+      "location_alignment": {
+        "classical_location": "UBERON:0009952 (SGZ)",
+        "atlas_location": "DGdo,me (dentate gyrus dorsal/medial blade); UBERON:0001885; HIP:0.98",
+        "matched_regions": ["dentate gyrus (parent region of SGZ; GCL not SGZ)"],
+        "score": 0.3,
+        "note": "DGdo,me is within the dentate gyrus but is GCL (granule cell layer), not SGZ. Neuroblasts reside in SGZ before migrating into inner GCL. CL:9900002 (immature GN) maps to UBERON:0005381 (GCL), not UBERON:0009952 (SGZ). This cluster represents the postmitotic stage downstream of dg_neuroblast."
+      },
+      "composite_score": 0.42,
+      "biological_support_score": 0.35,
+      "rationale": "The curator annotation 'late neuroblast/immature granule cell' and CL:9900002 EXACT indicate this cluster represents the stage immediately downstream of dg_neuroblast (postmitotic, Tbr1+ onset, inner GCL location). It is the primary candidate for dg_immature_granule_neuron rather than dg_neuroblast. Scored here as a borderline candidate because the 'late neuroblast' designation suggests the trailing edge of the neuroblast window. Location mismatch (GCL not SGZ) and CL:9900002 assignment are key disqualifiers from the neuroblast mapping. Low biological support score for neuroblast identity."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0512",
+      "atlas_node_name": "0512 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "cell_set_accession": "CS20230722_CLUS_0512",
+      "parent_supertype": "CS20230722_SUPT_0141 (DG-PIR Ex IMN_2)",
+      "parent_subclass": "CS20230722_SUBC_038 (DG-PIR Ex IMN)",
+      "atlas_curator_annotation": "late neuroblast",
+      "atlas_cl_mapping": {"id": "CL:9900001", "label": "dentate gyrus neuroblast", "mapping_type": "BROAD"},
+      "marker_overlap": {
+        "matched": [],
+        "missed": ["DCX", "Ki67", "PSA-NCAM", "Nestin"],
+        "score": 0.0,
+        "note": "Same RNA-seq/IHC gap. Cluster markers: Eomes (retained, low-transitional), Calb2 (calretinin — transiently expressed in immature GN, distinct from Calbindin/Calb1), Prox1, Igfbpl1."
+      },
+      "negative_marker_hits": [],
+      "neuropeptide_overlap": {
+        "matched": [],
+        "missed": [],
+        "score": 0.0
+      },
+      "nt_alignment": "NOT_ASSESSED",
+      "nt_detail": "Atlas nt_type: NA (nt_type_combo_label null at cluster level). Glutamatergic by class/supertype inheritance. Classical: glutamatergic.",
+      "location_alignment": {
+        "classical_location": "UBERON:0009952 (SGZ)",
+        "atlas_location": "DGdo,me; CCF: DG-mo:0.29, DG-sg:0.25 (SGZ), DG-po:0.16 — mixed SGZ and GCL",
+        "matched_regions": ["DG-sg (dentate gyrus subgranular zone — partial)"],
+        "score": 0.6,
+        "note": "CCF distribution shows 25% DG-sg (subgranular zone) and 29% DG-mo (molecular layer) — suggesting transitional cells spanning the SGZ/inner-GCL boundary. Partial SGZ match. Calretinin (Calb2) onset is a marker of the SGZ-to-GCL transition in neuroblasts. Intermediate location credit."
+      },
+      "composite_score": 0.39,
+      "biological_support_score": 0.60,
+      "rationale": "Directly annotated as 'late neuroblast' by atlas curator with CL:9900001 (dentate gyrus neuroblast) BROAD — the exact CL term for dg_neuroblast. Eomes retained (transitional from type-2b) and Calb2 (calretinin) onset marks the type-2b/type-3 transition characteristic of this stage. CCF distribution includes DG-sg (SGZ) at 25%, consistent with cells at the SGZ-to-inner-GCL boundary. NT not directly assigned at cluster level but Glut by inheritance. NT_ASSESSED penalty reduces composite score. This cluster is the strongest candidate for the type-3 (DCX+ only, Eomes-low) sub-stage of dg_neuroblast, complementing cluster 0511 which covers the type-2b-enriched sub-stage."
+    }
+  ],
+  "non_candidates_summary": "14 additional atlas nodes scored below threshold (composite < 0.35). These included: (1) CS20230722_CLUS_0515 (composite 0.27) — GCL location, CL:9900002 immature GN EXACT, postmitotic Tbr1+ marker profile, clearly downstream of neuroblast stage; (2) CS20230722_CLUS_0502 through CS20230722_CLUS_0510 (DG Glut clusters, composite 0.12-0.25) — all carry CL:2000089 (mature granule cell) EXACT, express mature granule TFs (Glis3, Neurod2, Prox1, St18), and reside in the GCL; classical negative marker Calbindin is asserted as broadly expressed in all DG Glut clusters per mapping notes, constituting a negative marker hit; (3) CS20230722_SUBC_038 (DG-PIR Ex IMN subclass, composite 0.20) — too broad, covers both immature neuronal and piriform cortex subtypes; (4) CS20230722_SUBC_037 (DG Glut subclass, composite 0.15) — mature granule cell subclass, CL:2000089 EXACT; (5) CS20230722_CLAS_04 (DG-IMN Glut class, composite 0.15) — class-level node spanning all neuroblast through mature granule cell types, too broad. Common disqualifying reasons: wrong anatomical stage (GCL not SGZ), downstream CL term (CL:9900002 immature GN or CL:2000089 mature GN), or calbindin negative marker hit.",
+  "priority_ranking": [
+    {"rank": 1, "atlas_node_id": "CS20230722_CLUS_0511", "composite_score": 0.70, "rationale_summary": "Primary cluster candidate: SGZ exact, Glut NT, 'early neuroblast' annotation, Eomes+ type-2b progenitor signature, CL:9900004 BROAD (type-2b/type-3 transition)"},
+    {"rank": 2, "atlas_node_id": "CS20230722_SUPT_0140", "composite_score": 0.70, "rationale_summary": "Supertype grouping cluster 0511: SGZ exact, CL:9900001 BROAD — direct match to dg_neuroblast CL term; use when supertype-level resolution is appropriate"},
+    {"rank": 3, "atlas_node_id": "CS20230722_CLUS_0512", "composite_score": 0.39, "biological_support_score": 0.60, "rationale_summary": "Secondary cluster candidate for type-3 sub-stage: 'late neuroblast' annotation, CL:9900001 BROAD (direct match), Eomes transitional, Calb2 onset, DG-sg CCF partial; NT not directly assigned"},
+    {"rank": 4, "atlas_node_id": "CS20230722_SUPT_0141", "composite_score": 0.50, "rationale_summary": "Supertype grouping 0512-0515: CL:9900001 BROAD but spans downstream immature GN stages; use only for broad supertype-level aggregate evidence"},
+    {"rank": 5, "atlas_node_id": "CS20230722_CLUS_0513", "composite_score": 0.46, "rationale_summary": "Alternative early neuroblast cluster: Eomes+, Glut NT, 'early neuroblast' annotation, but anatomical location uncertain (CTX? note, HIP:0.58)"},
+    {"rank": 6, "atlas_node_id": "CS20230722_CLUS_0514", "composite_score": 0.42, "rationale_summary": "Borderline — downstream immature GN stage: CL:9900002, GCL not SGZ, Tbr1+ postmitotic; included only as trailing-edge neuroblast-to-immature-GN transition context"}
+  ],
+  "metadata": {
+    "generated_by": "discovery_agent",
+    "classical_node_file": "/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml",
+    "atlas_stubs_files": [
+      "/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml",
+      "/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/dg_pir_ex_imn.yaml",
+      "/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/dg_glut.yaml"
+    ],
+    "total_atlas_nodes_assessed": 20,
+    "candidates_above_threshold": 6,
+    "threshold": 0.35,
+    "date": "2026-04-23"
+  }
+}

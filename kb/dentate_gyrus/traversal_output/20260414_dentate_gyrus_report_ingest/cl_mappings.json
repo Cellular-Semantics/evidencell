@@ -1,0 +1,68 @@
+{
+  "dg_neuroblast": {
+    "cl_term_id": "CL:1000042",
+    "label": "forebrain neuroblast",
+    "iri": "http://purl.obolibrary.org/obo/CL_1000042",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MEDIUM",
+    "mapping_rationale": "dg_neuroblast is a DCX+/Ki67+ migratory progenitor in the SGZ of the dentate gyrus (forebrain). CL:1000042 'forebrain neuroblast' is defined as any neuroblast (sensu Vertebrata) that is part of some forebrain, which captures the correct region and cell class. Mapping is BROAD because no dentate gyrus-specific or hippocampal neuroblast term exists in CL; CL:1000042 encompasses all forebrain neuroblasts without distinguishing the SGZ transit-amplifying progenitor stages (type-2a/b/3) described here. The parent term CL:0000031 'neuroblast (sensu Vertebrata)' was also considered but is too general. CL:4047005 'cycling neuroblast (sensu Vertebrata)' captures the Ki67+ proliferative character (RELATED) but is not region-specific.",
+    "alternative_terms_considered": [
+      {
+        "cl_term_id": "CL:0000031",
+        "label": "neuroblast (sensu Vertebrata)",
+        "mapping_type": "BROAD",
+        "note": "Parent class; too general — no forebrain or SGZ specificity"
+      },
+      {
+        "cl_term_id": "CL:4047005",
+        "label": "cycling neuroblast (sensu Vertebrata)",
+        "mapping_type": "RELATED",
+        "note": "Captures Ki67+ proliferative aspect of type-3 progenitors but is not region-specific"
+      }
+    ],
+    "definition_references": ["PMID:34497389"],
+    "note": "No CL term exists for a dentate gyrus-specific or hippocampal neuroblast. The SGZ transit-amplifying progenitor stages (type-2a, type-2b, type-3 / DCX+ type-3 neuroblast) are not represented in CL at this resolution. Potential CL contribution opportunity for a 'dentate gyrus neuroblast' child of CL:1000042."
+  },
+  "dg_immature_granule_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "iri": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "mapping_rationale": "No CL term currently exists for a postmitotic, synaptically integrating immature granule neuron of the dentate gyrus. CL:4042028 'immature neuron' was considered but is definitionally incompatible: it is explicitly defined as a neuron that 'has not been newly derived from neurogenesis' and 'does not integrate into any circuit', which directly contradicts the properties of dg_immature_granule_neuron (an adult-neurogenesis-derived, synaptically integrating stage-5 cell). CL:2000089 'dentate gyrus granule cell' describes the mature endpoint and would be a BROAD match at most.",
+    "alternative_terms_considered": [
+      {
+        "cl_term_id": "CL:4042028",
+        "label": "immature neuron",
+        "mapping_type": "RELATED",
+        "note": "INCOMPATIBLE: CL definition explicitly excludes neurogenesis-derived neurons and circuit-integrating neurons; dg_immature_granule_neuron is both. Do not use."
+      },
+      {
+        "cl_term_id": "CL:2000089",
+        "label": "dentate gyrus granule cell",
+        "mapping_type": "BROAD",
+        "note": "The mature endpoint of this lineage; too broad to represent the immature (DCX+/NeuN+/Calbindin-) transitional stage"
+      }
+    ],
+    "definition_references": [],
+    "note": "No CL term found — potential CL contribution. Proposed new term: 'immature dentate gyrus granule neuron' — a postmitotic, adult-neurogenesis-derived neuron in the inner granule cell layer that expresses DCX and NeuN but not Calbindin, and is in the process of synaptic integration. Would be a child of CL:2000089 'dentate gyrus granule cell'."
+  },
+  "dg_mature_granule_neuron": {
+    "cl_term_id": "CL:2000089",
+    "label": "dentate gyrus granule cell",
+    "iri": "http://purl.obolibrary.org/obo/CL_2000089",
+    "mapping_type": "EXACT",
+    "mapping_confidence": "HIGH",
+    "mapping_rationale": "dg_mature_granule_neuron is a terminally differentiated (stage 6) granule neuron with soma in the GCL, expressing Calbindin, NeuN, and Tbr1, negative for DCX and PSA-NCAM, with fully elaborated dendritic arbor and mossy fiber projections to CA3. CL:2000089 is defined as 'a granule cell that has soma location in the dentate gyrus cell layer' with 'characteristic cone-shaped tree of spiny apical dendrites' projecting to CA3 — an exact structural and anatomical match. The synonym 'dentate gyrus of hippocampal formation granule cell' is also consistent. Parent term CL:0001033 'hippocampal granule cell' was also confirmed as the immediate parent.",
+    "alternative_terms_considered": [
+      {
+        "cl_term_id": "CL:0001033",
+        "label": "hippocampal granule cell",
+        "mapping_type": "BROAD",
+        "note": "Parent of CL:2000089; correctly excludes non-DG hippocampal granule cells — CL:2000089 is preferred as more specific"
+      }
+    ],
+    "definition_references": ["PMID:17765709"],
+    "note": "PMID:17765709 is cited in the CL:2000089 definition (both anatomical and connectivity clauses)."
+  }
+}

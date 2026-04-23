@@ -153,6 +153,28 @@ research-celltype node_id topic:
     echo ""
     echo "Inputs validated. Proceeding with workflows/lit-review.md"
 
+# Validate inputs and show context for ingest-taxonomy.md
+# Usage: just ingest-taxonomy <taxonomy_file>
+# taxonomy_file relative to repo root, e.g. inputs/taxonomies/DG_taxonomy.xlsx
+# Claude runs this recipe first, then follows workflows/ingest-taxonomy.md
+[group('workflows')]
+ingest-taxonomy taxonomy_file:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ ! -f "{{taxonomy_file}}" ]; then
+        echo "ERROR: Taxonomy file not found at '{{taxonomy_file}}'"
+        echo "Place taxonomy files in inputs/taxonomies/"
+        exit 1
+    fi
+    echo "=== ingest-taxonomy ==="
+    echo "File: {{taxonomy_file}}"
+    echo "Size: $(wc -c < '{{taxonomy_file}}') bytes"
+    echo ""
+    echo "Existing draft KB files:"
+    find kb/draft -name "*.yaml" 2>/dev/null | sort || echo "    (none yet)"
+    echo ""
+    echo "Input validated. Proceeding with workflows/ingest-taxonomy.md"
+
 # Validate inputs and show context for asta-report-ingest.md
 # Usage: just ingest-report <region> <pdf_file>
 # pdf_file relative to repo root, e.g. inputs/deepsearch/OLM_Neurons_asta_report.pdf

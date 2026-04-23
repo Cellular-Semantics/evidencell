@@ -1,0 +1,329 @@
+{
+  "nodes": {
+    "dg_neuroblast": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_998847af",
+            "245432259_44d5c91b",
+            "7393550_b2644450"
+          ],
+          "issues": [
+            {
+              "type": "HETEROGENEITY",
+              "description": "The neuroblast node conflates three developmental stages (type-2a: Nestin+/Sox2+, type-2b: Nestin+/DCX+, type-3: DCX+ only) that have distinct marker profiles. These may warrant separate nodes.",
+              "quote_keys": [
+                "279046466_998847af",
+                "14221248_8878e29a"
+              ]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_998847af"
+          ],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "13752593_f176b6ad",
+            "10712122_246bd5c1",
+            "15727849_1c5c63e5"
+          ],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Anatomical location is recorded as UBERON:0004023 (ganglionic eminence) as a placeholder for SGZ — the subgranular zone of the dentate gyrus does not have a dedicated UBERON or MBA term. The correct UBERON region for the broader structure is UBERON:0001885 (dentate gyrus). Needs ontology term verification.",
+              "quote_keys": [
+                "13752593_f176b6ad",
+                "10712122_246bd5c1"
+              ]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "625292_ff3f8b1d"
+          ],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "NT type is listed as 'glutamatergic (committed but not yet functional)'. The neuroblast is not yet synaptically integrated so calling it glutamatergic is anticipatory. No quote directly characterises the NT type of neuroblasts specifically; the glutamatergic assignment derives from the lineage endpoint.",
+              "quote_keys": [
+                "625292_ff3f8b1d"
+              ]
+            }
+          ]
+        },
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "13752593_f176b6ad",
+            "10712122_246bd5c1",
+            "148569364_4e97a8b8"
+          ],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No quotes characterise the electrophysiological properties of type-3 neuroblasts. The proposed_types.json summary acknowledges this gap. Primary literature search needed.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide information available from the report for neuroblasts.",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "electrophysiology_class: no characterisation available",
+        "neuropeptides: not characterised",
+        "species: multiple species referenced but not confirmed",
+        "anatomical_location: SGZ has no dedicated ontology term — needs verification"
+      ],
+      "overall_confidence": "MEDIUM"
+    },
+    "dg_immature_granule_neuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_998847af",
+            "245432259_44d5c91b",
+            "7393550_b2644450"
+          ],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_998847af"
+          ],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "13752593_f176b6ad",
+            "14221248_1d8cf16a",
+            "8479504_1542ed61"
+          ],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "8479504_1542ed61",
+            "625292_ff3f8b1d"
+          ],
+          "issues": []
+        },
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "18166210_b155d498",
+            "8479504_1542ed61"
+          ],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "8479504_1542ed61"
+          ],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Electrophysiology described only as 'synaptically integrating' with glutamatergic input from entorhinal cortex. No detailed characterisation of intrinsic electrophysiological properties (e.g., firing pattern, input resistance, resting potential) from the available quotes.",
+              "quote_keys": [
+                "8479504_1542ed61"
+              ]
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide information available from the report for immature granule neurons.",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "electrophysiology_class: only connectivity described, not intrinsic properties",
+        "neuropeptides: not characterised",
+        "species: multiple species referenced but not confirmed",
+        "cl_mapping: no CL term exists — potential CL contribution needed"
+      ],
+      "overall_confidence": "MEDIUM"
+    },
+    "dg_mature_granule_neuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_998847af",
+            "15727849_1c5c63e5",
+            "7393550_b2644450"
+          ],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279046466_998847af"
+          ],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "148569364_4e97a8b8",
+            "8479504_1542ed61"
+          ],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "8479504_1542ed61",
+            "625292_ff3f8b1d"
+          ],
+          "issues": []
+        },
+        "morphology_notes": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "8479504_1542ed61",
+            "18166210_b155d498"
+          ],
+          "issues": []
+        },
+        "electrophysiology_class": {
+          "status": "PARTIAL",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Electrophysiology described only as 'fully synaptically integrated'. No detailed characterisation of intrinsic electrophysiological properties from the available quotes. Well-characterised in primary literature but not captured in this report's quotes.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No neuropeptide information available from the report for mature granule neurons.",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": [
+        "electrophysiology_class: only connectivity described, not intrinsic properties",
+        "neuropeptides: not characterised",
+        "species: multiple species referenced but not confirmed"
+      ],
+      "overall_confidence": "HIGH"
+    }
+  },
+  "round2_targets": [
+    {
+      "node_id": "dg_neuroblast",
+      "property": "electrophysiology_class",
+      "issue": "GAP: no electrophysiological characterisation of type-3 neuroblasts in available quotes",
+      "quote_keys": [],
+      "action": "cite-traverse: search for patch-clamp studies of SGZ neuroblasts (e.g., Bhatt et al., Tozuka et al.)"
+    },
+    {
+      "node_id": "dg_neuroblast",
+      "property": "anatomical_location",
+      "issue": "AMBIGUITY: SGZ lacks a dedicated ontology term; UBERON:0004023 is a placeholder",
+      "quote_keys": [
+        "13752593_f176b6ad",
+        "10712122_246bd5c1"
+      ],
+      "action": "Verify correct UBERON/MBA term for subgranular zone via OLS/OAK lookup"
+    },
+    {
+      "node_id": "dg_neuroblast",
+      "property": "defining_markers",
+      "issue": "HETEROGENEITY: type-2a/2b/3 stages have distinct marker profiles conflated in one node",
+      "quote_keys": [
+        "279046466_998847af",
+        "14221248_8878e29a"
+      ],
+      "action": "Determine if type-2a, type-2b, and type-3 should be separate nodes based on primary literature"
+    },
+    {
+      "node_id": "dg_neuroblast",
+      "property": "nt_type",
+      "issue": "AMBIGUITY: glutamatergic identity anticipatory for pre-synaptic neuroblast",
+      "quote_keys": [
+        "625292_ff3f8b1d"
+      ],
+      "action": "cite-traverse: confirm whether type-3 neuroblasts express vesicular glutamate transporters"
+    },
+    {
+      "node_id": "dg_immature_granule_neuron",
+      "property": "electrophysiology_class",
+      "issue": "GAP: only connectivity described, not intrinsic electrophysiological properties",
+      "quote_keys": [
+        "8479504_1542ed61"
+      ],
+      "action": "cite-traverse: search for patch-clamp characterisation of immature granule neurons (e.g., Espósito et al. 2005, Ge et al. 2006)"
+    },
+    {
+      "node_id": "dg_mature_granule_neuron",
+      "property": "electrophysiology_class",
+      "issue": "GAP: only connectivity described, not intrinsic electrophysiological properties",
+      "quote_keys": [],
+      "action": "cite-traverse: search for canonical electrophysiological characterisation of mature dentate granule cells"
+    },
+    {
+      "node_id": "dg_immature_granule_neuron",
+      "property": "cl_mapping",
+      "issue": "GAP: no CL term exists — CL:4042028 (immature neuron) is definitionally incompatible",
+      "quote_keys": [],
+      "action": "Draft proposed CL term 'immature dentate gyrus granule neuron' as child of CL:2000089"
+    },
+    {
+      "node_id": "all",
+      "property": "species",
+      "issue": "AMBIGUITY: report cites mouse and rat studies without species-specific separation",
+      "quote_keys": [],
+      "action": "Confirm species for each property assertion from primary literature; may need species-specific node variants"
+    },
+    {
+      "node_id": "all",
+      "property": "neuropeptides",
+      "issue": "GAP: no neuropeptide information for any DG lineage cell type",
+      "quote_keys": [],
+      "action": "cite-traverse: search for neuropeptide expression in dentate gyrus neurogenesis lineage"
+    }
+  ]
+}

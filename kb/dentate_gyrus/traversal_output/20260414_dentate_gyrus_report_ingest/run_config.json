@@ -1,0 +1,48 @@
+{
+  "region": "dentate_gyrus",
+  "pdf_file": "inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf",
+  "model": "sonnet",
+  "thinking_model": "opus",
+  "started_at": "2026-04-14T00:00:00Z",
+  "cite_traverse": {
+    "node_ids": [
+      "dg_neuroblast",
+      "dg_immature_granule_neuron",
+      "dg_mature_granule_neuron"
+    ],
+    "node_context": "Three classical cell types in the adult dentate gyrus (DG) neurogenesis lineage:\n\n1. dg_neuroblast \u2014 Dentate Gyrus Neuroblast (Type-3 Progenitor)\n   Markers: DCX+, Ki67+, PSA-NCAM+ (type-2b: Nestin+/DCX+; type-3: DCX+ only)\n   Negative markers: NeuN\u2212, Calbindin\u2212, GFAP\u2212\n   Location: subgranular zone (SGZ) of the dentate gyrus\n   NT type: glutamatergic lineage (committed but not yet functional)\n   Morphology: migratory progenitor; proliferative; last mitotic stage before differentiation\n   Ephys: GAP \u2014 no characterisation available\n   CL: CL:1000042 (forebrain neuroblast) \u2014 BROAD mapping\n   Key gaps: electrophysiology, neuropeptides, species (mouse vs rat), subtype heterogeneity (type-2a/b/3)\n\n2. dg_immature_granule_neuron \u2014 Dentate Gyrus Immature Granule Neuron\n   Markers: DCX+, NeuN+, PSA-NCAM+, Tis21+\n   Negative markers: Calbindin\u2212\n   Location: inner granule cell layer (GCL)\n   NT type: glutamatergic\n   Morphology: postmitotic stage-5 neuron; axons reach CA3 by day 10-11; spine growth over weeks\n   Ephys: PARTIAL \u2014 synaptically integrating, entorhinal cortex glutamatergic input; intrinsic properties not characterised\n   CL: no term \u2014 CANDIDATE (potential child of CL:2000089)\n   Key gaps: intrinsic electrophysiology, neuropeptides, species confirmation\n\n3. dg_mature_granule_neuron \u2014 Dentate Gyrus Mature Granule Neuron\n   Markers: Calbindin+, NeuN+, Tbr1+\n   Negative markers: DCX\u2212, Nestin\u2212, PSA-NCAM\u2212\n   Location: granule cell layer (GCL)\n   NT type: glutamatergic\n   Morphology: terminally differentiated (stage 6); fully elaborated dendritic arbor; mossy fiber projections to CA3\n   Ephys: PARTIAL \u2014 fully synaptically integrated; intrinsic properties not characterised\n   CL: CL:2000089 (dentate gyrus granule cell) \u2014 EXACT mapping\n   Key gaps: intrinsic electrophysiology, neuropeptides\n\nPriority round-2 targets: dg_neuroblast ephys GAP (patch-clamp SGZ neuroblasts), dg_neuroblast nt_type ambiguity (VGluT expression), dg_neuroblast HETEROGENEITY (type-2a/b/3), dg_immature_granule_neuron ephys GAP (Esposito et al. 2005, Ge et al. 2006), dg_mature_granule_neuron ephys GAP, neuropeptides in DG neurogenesis lineage, species disambiguation.",
+    "references_file": "kb/draft/dentate_gyrus/references.json",
+    "round2_targets": "kb/dentate_gyrus/traversal_output/20260414_dentate_gyrus_report_ingest/validation_notes.json",
+    "cite_traverse_started_at": "2026-04-15T00:00:00Z",
+    "paper_ids": [
+      "10712122",
+      "13752593",
+      "13799502",
+      "14221248",
+      "14598082",
+      "148569364",
+      "15727849",
+      "15994456",
+      "18166210",
+      "2281064",
+      "233432690",
+      "235300723",
+      "245432259",
+      "252063749",
+      "258927570",
+      "25925289",
+      "279046466",
+      "54603778",
+      "625292",
+      "7393550",
+      "7440369",
+      "8479504"
+    ],
+    "query": "immature neurons dentate gyrus adult neurogenesis granule cell electrophysiology markers",
+    "max_depth": 1,
+    "max_refs_per_depth": 7,
+    "snippet_limit_per_depth": 20,
+    "min_new_ids_to_continue": 3,
+    "completed_at": "2026-04-15T00:00:00Z"
+  }
+}

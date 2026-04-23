@@ -1,0 +1,105 @@
+[
+  {
+    "step": "fetch_depth_0",
+    "asta_snippets_returned": 0,
+    "asta_snippets_filtered_title": 0,
+    "asta_snippets_filtered_peer_review": 0,
+    "asta_snippets_used": 0,
+    "gap_papers_count": 6,
+    "fallback_attempted": 1,
+    "fallback_success": 1,
+    "report_summaries_merged": 17,
+    "total_summaries": 20,
+    "paper_ids_queried": 6,
+    "_notes": {
+      "asta_tool_status": "mcp__Asta_semanticscholar__snippet_search unavailable \u2014 zero snippets returned for all 6 queried IDs; all treated as gap papers",
+      "gap_paper_detail": {
+        "CorpusId:18166210": "NOT in initial summaries \u2014 Europe PMC fallback attempted (PMC6674324); 3 passages extracted",
+        "CorpusId:279046466": "already in initial summaries (asta_report) \u2014 skipped PMC fallback",
+        "CorpusId:15727849": "already in initial summaries (asta_report) \u2014 skipped PMC fallback",
+        "CorpusId:8479504": "already in initial summaries (asta_report) \u2014 skipped PMC fallback",
+        "CorpusId:7393550": "already in initial summaries (asta_report) \u2014 skipped PMC fallback",
+        "CorpusId:625292": "already in initial summaries (asta_report) \u2014 skipped PMC fallback"
+      },
+      "fallback_pmcids": {
+        "CorpusId:18166210": "PMC6674324"
+      },
+      "summaries_by_relevance": {
+        "HIGH": 9,
+        "MODERATE": 7,
+        "LOW": 4
+      },
+      "summaries_by_method": {
+        "europepmc_fulltext": 3,
+        "asta_report": 17
+      }
+    }
+  },
+  {
+    "step": "fetch_depth_1_targeted",
+    "papers_targeted": 5,
+    "papers_fetched_pmc": 3,
+    "papers_abstract_only": 2,
+    "papers_failed": 0,
+    "new_summaries": 6,
+    "total_summaries_in_all_summaries": 26,
+    "_notes": {
+      "pmid_note": "Target PMIDs given in task (15103389, 16291932, 16648802, 16338500, 11807555) are incorrect for the named papers; correct PMIDs resolved by title search: Schmidt-Hieber 2004=15107864, Esposito 2005=16267214, Ge 2006=16341203, Tozuka 2005=16157276, van Praag 2002=11875571",
+      "pmc_fulltext": {
+        "16267214": "PMC6725804 \u2014 full text fetched via pmc.ncbi.nlm.nih.gov",
+        "16341203": "PMC1420640 \u2014 full text fetched via pmc.ncbi.nlm.nih.gov",
+        "11875571": "PMC9284568 \u2014 full text fetched via pmc.ncbi.nlm.nih.gov"
+      },
+      "abstract_only": {
+        "15107864": "No PMC deposit \u2014 abstract via PubMed; DOI 10.1038/nature02553",
+        "16157276": "No PMC deposit \u2014 abstract via PubMed; DOI 10.1016/J.NEURON.2005.08.023"
+      },
+      "neuropeptides": "No neuropeptide data found in any of the 5 targeted papers \u2014 gap confirmed open",
+      "summaries_by_relevance": {
+        "HIGH": 6,
+        "MODERATE": 0,
+        "LOW": 0
+      },
+      "summaries_by_method": {
+        "europepmc_fulltext": 4,
+        "abstract_only": 2
+      },
+      "key_findings": [
+        "Schmidt-Hieber 2004: immature granule cells have T-type Ca2+ channels; LTP threshold lower than mature cells",
+        "Esposito 2005: silent(1-7dpi) \u2192 slow GABA(8-18dpi) \u2192 glutamate(\u226518dpi) \u2192 fast GABA; EGABA=-26.9mV in immature neurons; mirrors embryonic sequence; mouse",
+        "Ge 2006: tonic GABA from 3dpi; GABAergic PSCs at 7dpi; glutamatergic PSCs at 14dpi; NKCC1-high/KCC2-low in DCX+ neurons; NKCC1 knockdown impairs dendritic arborisation; mouse",
+        "Tozuka 2005: type-2 progenitors receive direct GABAergic (not glutamatergic) input; GABA depolarises due to high [Cl-]i; drives Ca2+ and NeuroD; nestin-GFP mouse",
+        "van Praag 2002: first patch-clamp proof of functional integration; Vth=-43mV; plateau ~140Hz; Cm 42.3pF (vs 99.2 mature); integrated by 4 weeks; mouse"
+      ]
+    }
+  },
+  {
+    "step": "synthesis",
+    "summaries_read": 26,
+    "papers_in_catalogue": 5,
+    "themes_identified": [
+      "Electrophysiological maturation: silent -> GABA -> glutamate -> fast GABA sequence",
+      "GABA is depolarising and excitatory in neuroblasts and immature granule neurons",
+      "Enhanced excitability and lowered LTP threshold in immature granule neurons",
+      "Marker progression and stage identity across the neuroblast -> immature -> mature axis",
+      "Morphological and circuit integration timeline",
+      "Species specificity"
+    ],
+    "papers_cited_in_report": 5,
+    "quotes_used_in_report": 32,
+    "schema_gaps": [
+      "electrophysiology_class (firing pattern classification)",
+      "neuropeptides",
+      "anatomical_location (SGZ UBERON term)",
+      "morphology_notes (dendritic arbor shape)",
+      "species_specificity (rat ephys data absent)"
+    ],
+    "new_types_encountered": [
+      "dg_type2a_progenitor (Nestin+/Sox2+)",
+      "dg_type2b_progenitor (Nestin+/DCX+/Tbr2+)",
+      "dg_type1_radial_glia_like_stem_cell (defer)",
+      "ob_granule_cell (defer - out of region)",
+      "piriform_cortex_immature_neuron (defer - out of region)"
+    ]
+  }
+]

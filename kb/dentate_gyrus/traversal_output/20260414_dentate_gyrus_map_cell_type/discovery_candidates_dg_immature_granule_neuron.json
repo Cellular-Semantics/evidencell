@@ -1,0 +1,428 @@
+{
+  "classical_node_id": "dg_immature_granule_neuron",
+  "classical_node_name": "Dentate Gyrus Immature Granule Neuron",
+  "classical_signature": {
+    "defining_markers": ["DCX", "NeuN", "PSA-NCAM", "Tis21"],
+    "negative_markers": ["Calbindin"],
+    "neuropeptides": [],
+    "nt_type": "glutamatergic",
+    "anatomical_location": [
+      {
+        "id": "UBERON:0005381",
+        "label": "dentate gyrus granule cell layer",
+        "name_in_source": "inner granule cell layer (GCL)"
+      }
+    ],
+    "notes": "Postmitotic stage (stage 5); DCX+/NeuN+/Calbindin-. PSA-NCAM excluded from marker scoring (post-translational glycan epitope, intrinsically undetectable by RNA-seq)."
+  },
+  "scoring_notes": {
+    "assessable_defining_markers": ["DCX", "NeuN", "Tis21"],
+    "excluded_from_scoring": ["PSA-NCAM"],
+    "exclusion_reason": "PSA-NCAM is a post-translational polysialylation epitope on NCAM1; it cannot be detected at the transcript level and is therefore not expected to appear in any atlas cluster's defining_markers.",
+    "marker_method_gap": "Classical markers are protein IHC-defined (DCX, NeuN). Atlas defining_markers are derived from scRNA-seq differential expression. Broadly expressed stage markers (e.g., Rbfox3/NeuN, Dcx) are often filtered out in cluster-level marker selection because they are not cluster-discriminating. Zero raw marker overlap therefore does not imply biological mismatch; it reflects the protein-transcriptome methodological gap documented across all DG-PIR Ex IMN edges.",
+    "negative_marker_note": "Calbindin (Calb1) does not appear in the defining_markers of any scored cluster. Mature DG Glut clusters are expected to be Calbindin+ based on curator notes, but Calb1 is non-discriminating at cluster level — the mature state is instead distinguished by absence of Igfbpl1/Eomes and presence of Glis3/Neurod2/St18.",
+    "location_scoring": "Classical location is inner granule cell layer (UBERON:0005381), a sub-region of DG (UBERON:0001885). Atlas location 'DGdo,me' (dorsal/medial blade of DG GCL) is a child of the granule cell layer and scores CONSISTENT. SGZ locations score INCONSISTENT (upstream of GCL). Outer GCL subzones (DG do, DG ve, DG po) are scored APPROXIMATE (same general GCL but outer blade, not inner).",
+    "nt_scoring": "Glut = CONSISTENT. NT=NA at cluster level inherits from parent class (Glut) and scores CONSISTENT_BY_INHERITANCE."
+  },
+  "total_atlas_nodes_scored": 14,
+  "atlas_nodes_scored": [
+    "CS20230722_CLUS_0511",
+    "CS20230722_CLUS_0512",
+    "CS20230722_CLUS_0513",
+    "CS20230722_CLUS_0514",
+    "CS20230722_CLUS_0515",
+    "CS20230722_CLUS_0502",
+    "CS20230722_CLUS_0503",
+    "CS20230722_CLUS_0504",
+    "CS20230722_CLUS_0505",
+    "CS20230722_CLUS_0506",
+    "CS20230722_CLUS_0507",
+    "CS20230722_CLUS_0508",
+    "CS20230722_CLUS_0509",
+    "CS20230722_CLUS_0510"
+  ],
+  "candidates": [
+    {
+      "rank": 1,
+      "atlas_node_id": "CS20230722_CLUS_0514",
+      "atlas_node_name": "0514 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.82,
+      "scoring_dimensions": {
+        "marker_overlap": {
+          "classical_markers_assessed": ["DCX", "NeuN", "Tis21"],
+          "found_in_atlas": [],
+          "raw_fraction": 0.0,
+          "weighted_score": 0.0,
+          "note": "No direct marker overlap due to protein-transcriptome methodological gap. Tbr1 (postmitotic TF onset) is functionally consistent with NeuN+ postmitotic status but is not a direct hit. Scoped marker Ccbe1 not in classical signature."
+        },
+        "negative_marker_check": {
+          "classical_negative_markers": ["Calbindin"],
+          "found_in_atlas_defining_markers": [],
+          "penalty": 0,
+          "result": "NO_PENALTY"
+        },
+        "nt_alignment": {
+          "classical": "glutamatergic",
+          "atlas": "Glut",
+          "result": "CONSISTENT"
+        },
+        "location_alignment": {
+          "classical": "inner granule cell layer (GCL); UBERON:0005381",
+          "atlas": "DGdo,me (dentate gyrus dorsal/medial blade); HIP:0.98",
+          "result": "CONSISTENT",
+          "note": "DGdo,me is a sub-region of the GCL (dorsal medial blade); falls within the granule cell layer as specified by the classical node. MERFISH validates Tbr1, Prox1, Igfbpl1, Emx2 in this spatial context."
+        },
+        "cl_mapping_alignment": {
+          "atlas_cl_term": "CL:9900002",
+          "atlas_cl_label": "immature dentate gyrus granule neuron",
+          "atlas_mapping_type": "EXACT",
+          "classical_node_cl": "CL:9900002",
+          "result": "DIRECT_MATCH — atlas curator annotated this cluster with EXACT CL:9900002, the same term proposed for the classical node."
+        }
+      },
+      "functional_markers_supporting": ["Tbr1 (postmitotic TF onset, consistent with DCX+/NeuN+ stage)", "Prox1 (DG lineage TF)", "Emx2 (MERFISH-validated)", "Igfbpl1 (MERFISH-validated)", "Rarb (scoped within subclass)"],
+      "rationale": "Primary candidate. Atlas curator EXACT CL:9900002 (immature dentate gyrus granule neuron) maps this cluster directly to the classical immature GN definition. Tbr1 onset is the canonical marker of the postmitotic transition from neuroblast to immature granule neuron (Hodge et al. 2008, PMID:18385329). Location DGdo,me (HIP:0.98) is consistent with inner GCL. NT Glut consistent. Absence of Calbindin from defining_markers is consistent with the immature (pre-terminal) stage. No Calbindin penalty. Zero direct marker overlap reflects the protein-RNA methodological gap, not biological mismatch.",
+      "caveats": [
+        "Defining markers DCX and NeuN are protein markers not detected as cluster-discriminating markers in scRNA-seq due to broad expression across the DG-PIR Ex IMN subclass.",
+        "Gad1 nt_marker signal (score 5.56) may indicate transient GABAergic signalling in immature GNs, doublet artefact, or contamination.",
+        "dg_immature_granule_neuron classical node splits across two clusters (0514 and 0515); neither alone fully represents the classical type."
+      ]
+    },
+    {
+      "rank": 2,
+      "atlas_node_id": "CS20230722_CLUS_0515",
+      "atlas_node_name": "0515 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.82,
+      "scoring_dimensions": {
+        "marker_overlap": {
+          "classical_markers_assessed": ["DCX", "NeuN", "Tis21"],
+          "found_in_atlas": [],
+          "raw_fraction": 0.0,
+          "weighted_score": 0.0,
+          "note": "Same protein-transcriptome gap as 0514. Identical TF core (Tbr1, Prox1, Emx2, Igfbpl1). Additional MERFISH markers: Bcl11b, Cd24a, Fam163a."
+        },
+        "negative_marker_check": {
+          "classical_negative_markers": ["Calbindin"],
+          "found_in_atlas_defining_markers": [],
+          "penalty": 0,
+          "result": "NO_PENALTY"
+        },
+        "nt_alignment": {
+          "classical": "glutamatergic",
+          "atlas": "NA (Glut by parent class inheritance)",
+          "result": "CONSISTENT_BY_INHERITANCE",
+          "note": "NT not directly assigned at cluster level; inherited from class DG-IMN Glut."
+        },
+        "location_alignment": {
+          "classical": "inner granule cell layer (GCL); UBERON:0005381",
+          "atlas": "DGdo,me (dentate gyrus dorsal/medial blade); HIP:1.0",
+          "result": "CONSISTENT",
+          "note": "HIP:1.0 — perfect hippocampal allocation. DGdo,me is a GCL sub-region. MERFISH validates Tbr1, Prox1, Igfbpl1, Emx2, Bcl11b in this spatial context."
+        },
+        "cl_mapping_alignment": {
+          "atlas_cl_term": "CL:9900002",
+          "atlas_cl_label": "immature dentate gyrus granule neuron",
+          "atlas_mapping_type": "EXACT",
+          "classical_node_cl": "CL:9900002",
+          "result": "DIRECT_MATCH — atlas curator annotated this cluster with EXACT CL:9900002."
+        }
+      },
+      "functional_markers_supporting": ["Tbr1 (postmitotic TF)", "Prox1 (DG lineage TF)", "Emx2 (MERFISH-validated)", "Igfbpl1 (MERFISH-validated)", "Rarb (scoped, distinctive within subclass)", "Bcl11b (MERFISH-validated)", "Cd24a (MERFISH-validated)"],
+      "rationale": "Co-primary candidate with 0514. Same EXACT CL:9900002 mapping, identical core TF profile (Tbr1/Prox1/Emx2/Igfbpl1). Perfect HIP:1.0 allocation to hippocampus. Distinguished from 0514 by Rarb (scoped) and Bcl11b/Cd24a/Fam163a MERFISH markers. Rarb and Bcl11b may mark a later maturational sub-stage. NT uncertain at cluster level but Glut by inheritance. Classical node dg_immature_granule_neuron is best represented by 0514+0515 together.",
+      "caveats": [
+        "NT not directly assigned at cluster level — Glut by parent class inheritance only.",
+        "Gad1 nt_marker signal (score 3.67) same transient issue as 0514.",
+        "Biological basis for 0514 vs 0515 split unresolved: maturational sub-stage, sex composition (0514: F55%/M45%; 0515: sex data needed), or activity-dependent state."
+      ]
+    },
+    {
+      "rank": 3,
+      "atlas_node_id": "CS20230722_CLUS_0512",
+      "atlas_node_name": "0512 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.45,
+      "scoring_dimensions": {
+        "marker_overlap": {
+          "classical_markers_assessed": ["DCX", "NeuN", "Tis21"],
+          "found_in_atlas": [],
+          "raw_fraction": 0.0,
+          "weighted_score": 0.0,
+          "note": "No direct marker overlap. Calb2 (calretinin) transiently expressed in this cluster — calretinin is expressed in immature granule neurons before calbindin onset, and may represent a transitional marker consistent with post-neuroblast maturation. Eomes still present, indicating incomplete transition from neuroblast."
+        },
+        "negative_marker_check": {
+          "classical_negative_markers": ["Calbindin"],
+          "found_in_atlas_defining_markers": [],
+          "penalty": 0,
+          "result": "NO_PENALTY"
+        },
+        "nt_alignment": {
+          "classical": "glutamatergic",
+          "atlas": "NA (Glut by parent class inheritance)",
+          "result": "CONSISTENT_BY_INHERITANCE"
+        },
+        "location_alignment": {
+          "classical": "inner granule cell layer (GCL); UBERON:0005381",
+          "atlas": "DGdo,me; HIP:0.96",
+          "result": "CONSISTENT",
+          "note": "DGdo,me falls within the DG of hippocampal formation, consistent with GCL proximity. HIP:0.96."
+        },
+        "cl_mapping_alignment": {
+          "atlas_cl_term": "CL:9900001",
+          "atlas_cl_label": "dentate gyrus neuroblast",
+          "atlas_mapping_type": "BROAD",
+          "classical_node_cl": "CL:9900002",
+          "result": "UPSTREAM_STAGE — atlas maps to neuroblast (CL:9900001), one stage upstream of immature GN (CL:9900002). Calb2 onset and DGdo,me location suggest transitional status between neuroblast and immature GN."
+        }
+      },
+      "functional_markers_supporting": ["Prox1 (DG lineage TF)", "Igfbpl1 (MERFISH-validated)", "Calb2 (calretinin, transient marker at neuroblast-to-immature GN transition, MERFISH-validated)", "Eomes (still present — type-2b/late neuroblast marker)"],
+      "rationale": "Borderline candidate. Atlas curator annotates as 'late neuroblast' with BROAD CL:9900001 (dentate gyrus neuroblast), one step upstream of CL:9900002. Calb2 (calretinin) expression is notable: calretinin is transiently expressed in immature DG granule neurons before calbindin acquisition, suggesting this cluster spans the neuroblast-to-immature GN boundary. Eomes still expressed indicates incomplete postmitotic transition. Location DGdo,me (HIP:0.96) consistent with GCL entry zone. This cluster likely represents the transitional stage immediately preceding 0514.",
+      "caveats": [
+        "Eomes/Tbr2 still expressed — indicates cells have not fully exited the progenitor/neuroblast state.",
+        "CL:9900001 (neuroblast) mapping suggests this cluster is biologically earlier than dg_immature_granule_neuron.",
+        "Calb2 onset could indicate the leading edge of the immature GN transition."
+      ]
+    },
+    {
+      "rank": 4,
+      "atlas_node_id": "CS20230722_CLUS_0511",
+      "atlas_node_name": "0511 DG-PIR Ex IMN_1",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.25,
+      "scoring_dimensions": {
+        "marker_overlap": {
+          "classical_markers_assessed": ["DCX", "NeuN", "Tis21"],
+          "found_in_atlas": [],
+          "raw_fraction": 0.0,
+          "weighted_score": 0.0,
+          "note": "No marker overlap. Eomes/Tbr2 dominant — type-2b progenitor TF, not expected in postmitotic immature GN."
+        },
+        "negative_marker_check": {
+          "classical_negative_markers": ["Calbindin"],
+          "found_in_atlas_defining_markers": [],
+          "penalty": 0,
+          "result": "NO_PENALTY"
+        },
+        "nt_alignment": {
+          "classical": "glutamatergic",
+          "atlas": "Glut (Slc17a6 MERFISH score 6.02)",
+          "result": "CONSISTENT"
+        },
+        "location_alignment": {
+          "classical": "inner granule cell layer (GCL); UBERON:0005381",
+          "atlas": "DG STR (SGZ boundary); CCF NA:0.75",
+          "result": "INCONSISTENT",
+          "note": "SGZ is the subgranular zone, which is upstream of and distinct from the granule cell layer. Immature GN should be in GCL, not SGZ. CCF NA:0.75 is a known registration artefact."
+        },
+        "cl_mapping_alignment": {
+          "atlas_cl_term": "CL:9900004",
+          "atlas_cl_label": "dentate gyrus type-2b neural progenitor",
+          "atlas_mapping_type": "BROAD",
+          "classical_node_cl": "CL:9900002",
+          "result": "UPSTREAM_PROGENITOR — two stages upstream of immature GN."
+        }
+      },
+      "functional_markers_supporting": ["Neurod1 (TF expressed at neuroblast stage, precedes postmitotic markers)"],
+      "rationale": "Low-priority candidate. SGZ location is inconsistent with the inner GCL location of the immature GN. Eomes/Tbr2 dominant expression places this cluster at the type-2b progenitor stage, two stages upstream. NT is Glut consistent. Included for completeness as it is the earliest cluster in the DG-PIR Ex IMN subclass and part of the developmental lineage context.",
+      "caveats": [
+        "Wrong anatomical stage: SGZ (progenitor zone) vs inner GCL (immature GN location).",
+        "CL:9900004 (type-2b progenitor) is two stages upstream of CL:9900002 (immature GN).",
+        "Included for developmental lineage context only."
+      ]
+    },
+    {
+      "rank": 5,
+      "atlas_node_id": "CS20230722_CLUS_0513",
+      "atlas_node_name": "0513 DG-PIR Ex IMN_2",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.20,
+      "scoring_dimensions": {
+        "marker_overlap": {
+          "classical_markers_assessed": ["DCX", "NeuN", "Tis21"],
+          "found_in_atlas": [],
+          "raw_fraction": 0.0,
+          "weighted_score": 0.0,
+          "note": "No marker overlap. Vim (vimentin) and Eomes co-expression confirm type-2b progenitor state."
+        },
+        "negative_marker_check": {
+          "classical_negative_markers": ["Calbindin"],
+          "found_in_atlas_defining_markers": [],
+          "penalty": 0,
+          "result": "NO_PENALTY"
+        },
+        "nt_alignment": {
+          "classical": "glutamatergic",
+          "atlas": "Glut (Slc17a6 nt_marker score 4.52)",
+          "result": "CONSISTENT"
+        },
+        "location_alignment": {
+          "classical": "inner granule cell layer (GCL); UBERON:0005381",
+          "atlas": "DGdo,me (CTX?); HIP:0.58, NA:0.37",
+          "result": "UNCERTAIN",
+          "note": "HIP:0.58 — only 58% hippocampal allocation. NA:0.37 indicates significant CCF uncertainty. Anatomical assignment flagged as CTX? in taxonomy."
+        },
+        "cl_mapping_alignment": {
+          "atlas_cl_term": "CL:9900004",
+          "atlas_cl_label": "dentate gyrus type-2b neural progenitor",
+          "atlas_mapping_type": "BROAD",
+          "classical_node_cl": "CL:9900002",
+          "result": "UPSTREAM_PROGENITOR — same as 0511, type-2b progenitor stage."
+        }
+      },
+      "functional_markers_supporting": ["Igfbpl1 (MERFISH-validated, shared with immature GN clusters)", "Neurod4 (TF)"],
+      "rationale": "Low-priority candidate. Type-2b progenitor CL mapping and Vim/Eomes co-expression place this cluster at an upstream progenitor stage. Anatomical location uncertain (CTX? flag, HIP:0.58). Included for completeness; not a strong match to immature GN.",
+      "caveats": [
+        "Anatomical location uncertain: CTX? flag and HIP:0.58 hippocampal allocation.",
+        "CL:9900004 (type-2b progenitor) two stages upstream of immature GN.",
+        "Vimentin expression is a progenitor marker inconsistent with postmitotic immature GN identity."
+      ]
+    },
+    {
+      "rank": 6,
+      "atlas_node_id": "CS20230722_CLUS_0502",
+      "atlas_node_name": "0502 DG Glut_1",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.20,
+      "scoring_dimensions": {
+        "marker_overlap": {
+          "classical_markers_assessed": ["DCX", "NeuN", "Tis21"],
+          "found_in_atlas": [],
+          "raw_fraction": 0.0,
+          "weighted_score": 0.0
+        },
+        "negative_marker_check": {
+          "classical_negative_markers": ["Calbindin"],
+          "found_in_atlas_defining_markers": [],
+          "penalty": 0,
+          "result": "NO_PENALTY (Calbindin/Calb1 absent from defining_markers; expected positive in mature GN but non-discriminating at cluster level)"
+        },
+        "nt_alignment": {
+          "classical": "glutamatergic",
+          "atlas": "Glut",
+          "result": "CONSISTENT"
+        },
+        "location_alignment": {
+          "classical": "inner granule cell layer (GCL); UBERON:0005381",
+          "atlas": "DG ve (ventral GCL); sAMY:0.74",
+          "result": "INCONSISTENT",
+          "note": "DG ve is the ventral blade of the GCL. CCF shows sAMY:0.74 — predominantly amygdala allocation, not hippocampal DG. This cluster is likely a ventral/amygdalar DG variant, not inner GCL."
+        },
+        "cl_mapping_alignment": {
+          "atlas_cl_term": "CL:2000089",
+          "atlas_cl_label": "dentate gyrus granule cell",
+          "atlas_mapping_type": "EXACT",
+          "classical_node_cl": "CL:9900002",
+          "result": "DOWNSTREAM_STAGE — mature granule neuron, one stage after immature GN."
+        }
+      },
+      "functional_markers_supporting": [],
+      "rationale": "Low priority. Mature granule neuron (CL:2000089), downstream of the immature GN stage. Location predominantly amygdalar (sAMY:0.74), not inner dorsal GCL. NT consistent. No marker overlap.",
+      "caveats": [
+        "CL:2000089 (mature granule neuron) is the downstream terminal state.",
+        "sAMY:0.74 CCF allocation places this cluster predominantly outside the hippocampal DG.",
+        "Classical negative marker Calbindin expected positive in this mature cluster despite not appearing in defining_markers."
+      ]
+    },
+    {
+      "rank": 7,
+      "atlas_node_id": "CS20230722_CLUS_0503",
+      "atlas_node_name": "0503 DG Glut_1",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.20,
+      "scoring_dimensions": {
+        "marker_overlap": {"classical_markers_assessed": ["DCX", "NeuN", "Tis21"], "found_in_atlas": [], "raw_fraction": 0.0, "weighted_score": 0.0},
+        "negative_marker_check": {"classical_negative_markers": ["Calbindin"], "found_in_atlas_defining_markers": [], "penalty": 0, "result": "NO_PENALTY"},
+        "nt_alignment": {"classical": "glutamatergic", "atlas": "Glut", "result": "CONSISTENT"},
+        "location_alignment": {"classical": "inner GCL; UBERON:0005381", "atlas": "DG ve; HIP:0.93", "result": "APPROXIMATE", "note": "DG ve is ventral blade GCL; HIP:0.93 reasonable hippocampal allocation but ventral, not inner dorsal GCL."},
+        "cl_mapping_alignment": {"atlas_cl_term": "CL:2000089", "atlas_mapping_type": "EXACT", "result": "DOWNSTREAM_STAGE"}
+      },
+      "functional_markers_supporting": [],
+      "rationale": "Low priority. Mature granule neuron (CL:2000089), downstream stage. Ventral GCL location. NT consistent.",
+      "caveats": ["Downstream mature stage.", "Ventral GCL, not inner dorsal GCL."]
+    },
+    {
+      "rank": 8,
+      "atlas_node_id": "CS20230722_CLUS_0504",
+      "atlas_node_name": "0504 DG Glut_1",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.20,
+      "scoring_dimensions": {
+        "marker_overlap": {"classical_markers_assessed": ["DCX", "NeuN", "Tis21"], "found_in_atlas": [], "raw_fraction": 0.0, "weighted_score": 0.0},
+        "negative_marker_check": {"classical_negative_markers": ["Calbindin"], "found_in_atlas_defining_markers": [], "penalty": 0, "result": "NO_PENALTY"},
+        "nt_alignment": {"classical": "glutamatergic", "atlas": "Glut", "result": "CONSISTENT"},
+        "location_alignment": {"classical": "inner GCL; UBERON:0005381", "atlas": "DG ve", "result": "APPROXIMATE"},
+        "cl_mapping_alignment": {"atlas_cl_term": "CL:2000089", "atlas_mapping_type": "EXACT", "result": "DOWNSTREAM_STAGE"}
+      },
+      "functional_markers_supporting": [],
+      "rationale": "Low priority. Mature granule neuron (CL:2000089), downstream stage. Ventral GCL.",
+      "caveats": ["Downstream mature stage.", "Ventral GCL."]
+    },
+    {
+      "rank": 9,
+      "atlas_node_id": "CS20230722_CLUS_0505",
+      "atlas_node_name": "0505 DG Glut_2",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.20,
+      "scoring_dimensions": {
+        "marker_overlap": {"classical_markers_assessed": ["DCX", "NeuN", "Tis21"], "found_in_atlas": [], "raw_fraction": 0.0, "weighted_score": 0.0},
+        "negative_marker_check": {"classical_negative_markers": ["Calbindin"], "found_in_atlas_defining_markers": [], "penalty": 0, "result": "NO_PENALTY"},
+        "nt_alignment": {"classical": "glutamatergic", "atlas": "Glut", "result": "CONSISTENT"},
+        "location_alignment": {"classical": "inner GCL; UBERON:0005381", "atlas": "DG do (dorsal outer GCL)", "result": "APPROXIMATE"},
+        "cl_mapping_alignment": {"atlas_cl_term": "CL:2000089", "atlas_mapping_type": "EXACT", "result": "DOWNSTREAM_STAGE"}
+      },
+      "functional_markers_supporting": [],
+      "rationale": "Low priority. Mature granule neuron, dorsal outer GCL. Downstream stage.",
+      "caveats": ["Downstream mature stage.", "Outer (not inner) dorsal GCL."]
+    },
+    {
+      "rank": 10,
+      "atlas_node_id": "CS20230722_CLUS_0506",
+      "atlas_node_name": "0506 DG Glut_2",
+      "taxonomy_level": "cluster",
+      "composite_score": 0.20,
+      "scoring_dimensions": {
+        "marker_overlap": {"classical_markers_assessed": ["DCX", "NeuN", "Tis21"], "found_in_atlas": [], "raw_fraction": 0.0, "weighted_score": 0.0},
+        "negative_marker_check": {"classical_negative_markers": ["Calbindin"], "found_in_atlas_defining_markers": [], "penalty": 0, "result": "NO_PENALTY"},
+        "nt_alignment": {"classical": "glutamatergic", "atlas": "Glut", "result": "CONSISTENT"},
+        "location_alignment": {"classical": "inner GCL; UBERON:0005381", "atlas": "DG do (dorsal outer GCL); HIP:0.99", "result": "APPROXIMATE"},
+        "cl_mapping_alignment": {"atlas_cl_term": "CL:2000089", "atlas_mapping_type": "EXACT", "result": "DOWNSTREAM_STAGE"}
+      },
+      "functional_markers_supporting": [],
+      "rationale": "Low priority. Mature granule neuron (CL:2000089, HIP:0.99). Discovery composite score 0.69 in existing edge (for mature GN node, not immature GN). Downstream of the classical node of interest.",
+      "caveats": ["Downstream mature stage. Outer dorsal GCL."]
+    }
+  ],
+  "below_threshold_nodes": [
+    {
+      "atlas_node_id": "CS20230722_CLUS_0507",
+      "atlas_node_name": "0507 DG Glut_2",
+      "composite_score": 0.18,
+      "reason_excluded": "Mature granule neuron (CL:2000089, EXACT), downstream stage, dorsal outer GCL, no marker overlap."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0508",
+      "atlas_node_name": "0508 DG Glut_3",
+      "composite_score": 0.18,
+      "reason_excluded": "Mature granule neuron (CL:2000089, EXACT), downstream stage, dorsal outer GCL, no marker overlap."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0509",
+      "atlas_node_name": "0509 DG Glut_3",
+      "composite_score": 0.18,
+      "reason_excluded": "Mature granule neuron (CL:2000089, EXACT), downstream stage, dorsal outer GCL, no marker overlap."
+    },
+    {
+      "atlas_node_id": "CS20230722_CLUS_0510",
+      "atlas_node_name": "0510 DG Glut_4",
+      "composite_score": 0.18,
+      "reason_excluded": "Mature granule neuron (CL:2000089, EXACT), downstream stage, posterior GCL (DG po), no marker overlap."
+    }
+  ],
+  "summary": {
+    "top_candidates": ["CS20230722_CLUS_0514 (score 0.82)", "CS20230722_CLUS_0515 (score 0.82)"],
+    "conclusion": "Two clusters — 0514 and 0515 — are the primary candidates for dg_immature_granule_neuron, each with composite score 0.82. Both carry EXACT CL:9900002 (immature dentate gyrus granule neuron) from the atlas curator, matching the classical node's CL term. Both are located in DGdo,me (inner GCL sub-region, HIP:0.98-1.0), consistent with the classical anatomical location. Both are glutamatergic. The classical node spans both clusters; the biological basis for the two-cluster split is unresolved. Cluster 0512 is a borderline candidate (score 0.45) representing the late-neuroblast/immature-GN boundary state. Clusters 0511 and 0513 are low-priority progenitor-stage clusters. All DG Glut clusters (0502-0510) are the downstream mature granule neuron stage and are poor candidates for the immature GN classical node.",
+    "mapping_pattern": "TYPE_A_SPLITS — dg_immature_granule_neuron maps to two atlas clusters (0514 and 0515) simultaneously; neither alone fully represents the classical type.",
+    "generation_date": "2026-04-23"
+  }
+}
