@@ -56,7 +56,7 @@
       {"source": "wmb.properties.np_markers",                         "target": "np_markers",                 "confidence": "HIGH", "notes": "Raw string e.g. 'Cck:8.7,Npy:4.9'"},
       {"source": "wmb.properties.neighborhood",                       "target": "neighborhood",               "confidence": "MODERATE"},
       {"source": "wmb.properties.Light",                              "target": "circadian_ratio",            "confidence": "MODERATE", "notes": "Light phase fraction; stored only when skewed (>0.7 or <0.3) — small number of types where useful for identification"},
-      {"source": "wmb.properties.CCN20230722_sex_bias",               "target": "sex_bias",                   "confidence": "MODERATE", "notes": "'sex-dominant' flag; raw Male/Female fractions dropped"},
+      {"source": "wmb.properties.Male / wmb.properties.Female",       "target": "male_female_ratio",          "confidence": "HIGH", "notes": "Computed: round(Male/Female, 2). Null when either fraction is 0 or absent. >1 = male-biased, <1 = female-biased."},
       {"source": "wmb.properties.rationale[0]",                       "target": "rationale",                  "confidence": "HIGH", "notes": "Prose CL mapping justification; list — take first element"},
       {"source": "wmb.properties.rationale_dois",                     "target": "rationale_dois",             "confidence": "HIGH", "notes": "List of DOI URLs supporting rationale"},
       {"source": "wmb.properties.marker_gene_evidence",               "target": "marker_gene_evidence",       "confidence": "HIGH", "notes": "Gene list supporting CL assignment; very sparse"}
@@ -84,7 +84,7 @@
     "wmb.properties.CCF_broad_freq, CCF_acronym_freq (deprecated CCF mapping)",
     "wmb.properties.v2_size, v3_size, multiome_size, CTX_size (cell counts superseded by anat[])",
     "wmb.properties.CTX_* (cross-taxonomy CTX references)",
-    "wmb.properties.Male, Female (raw sex fractions; CCN20230722_sex_bias flag preserved instead)",
+    "wmb.properties.CCN20230722_sex_bias (categorical 'sex-dominant' flag; superseded by male_female_ratio computed from Male/Female fractions)",
     "wmb.properties.Dark (complementary to Light; circadian_ratio captures the relevant signal)",
     "wmb.properties.neurotransmitter_rationale (same content as nt_markers; redundant)",
     "wmb.properties.nt_type_combo_label (same as nt_type_label in most cases)",
