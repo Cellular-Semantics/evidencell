@@ -10,13 +10,13 @@ brain_region:
   label: dentate gyrus of hippocampal formation
   name_in_source: dentate gyrus
 target_atlas: Allen Brain Cell Atlas CCN202307220
-species: null
+species:
 creation_date: '2026-04-14'
 nodes:
 - id: dg_neuroblast
   name: Dentate Gyrus Neuroblast (Type-3 Progenitor)
   definition_basis: CLASSICAL_NEUROCHEMICAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0009952
     label: dentate gyrus subgranular zone
@@ -29,7 +29,7 @@ nodes:
       name_in_source: glutamatergic
   defining_markers:
   - symbol: DCX
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -42,7 +42,7 @@ nodes:
       quote_key: 245432259_44d5c91b
       marker_type: PROTEIN
   - symbol: Ki67
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:37082558
       method: review (marker classification)
@@ -50,11 +50,11 @@ nodes:
       quote_key: 245432259_44d5c91b
       marker_type: PROTEIN
   - symbol: PSA-NCAM
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources: []
   - symbol: Nestin
     modifier: type-2b stage only
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -63,11 +63,11 @@ nodes:
       marker_type: PROTEIN
   negative_markers:
   - symbol: NeuN
-    ncbi_gene_id: null
+    ncbi_gene_id:
   - symbol: Calbindin
-    ncbi_gene_id: null
+    ncbi_gene_id:
   - symbol: GFAP
-    ncbi_gene_id: null
+    ncbi_gene_id:
   neuropeptides: []
   morphology_notes: 'Migratory precursor cells in the SGZ; migrate only a few micrometers from SGZ toward the inner granule
     cell layer. At the type-2b stage they co-express Nestin and DCX; at the type-3 stage they are DCX+ only. They are proliferative
@@ -83,10 +83,11 @@ nodes:
     method: review (neural stem cells)
     scope: adult dentate gyrus
     quote_key: 10712122_246bd5c1
-  electrophysiology_class: 'Type-2 progenitor cells (neuroblast equivalent) receive direct GABAergic but not glutamatergic synaptic
-    inputs; GABA is depolarising due to elevated [Cl-]i driven by high NKCC1 and low KCC2 (Tozuka et al. 2005; Ge et al. 2006).
-    Synaptically silent for glutamatergic output. High input resistance (~4.3 GOhm) and small capacitance (~6.4 pF) at 1-7 dpi
-    (Esposito et al. 2005). Tonic GABA activation from 3 dpi precedes phasic synaptic inputs (Ge et al. 2006). Mouse patch-clamp data.
+  electrophysiology_class: 'Type-2 progenitor cells (neuroblast equivalent) receive direct GABAergic but not glutamatergic
+    synaptic inputs; GABA is depolarising due to elevated [Cl-]i driven by high NKCC1 and low KCC2 (Tozuka et al. 2005; Ge
+    et al. 2006). Synaptically silent for glutamatergic output. High input resistance (~4.3 GOhm) and small capacitance (~6.4
+    pF) at 1-7 dpi (Esposito et al. 2005). Tonic GABA activation from 3 dpi precedes phasic synaptic inputs (Ge et al. 2006).
+    Mouse patch-clamp data.
 
     '
   ephys_sources:
@@ -135,7 +136,7 @@ nodes:
 - id: dg_immature_granule_neuron
   name: Dentate Gyrus Immature Granule Neuron
   definition_basis: CLASSICAL_NEUROCHEMICAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0005381
     label: dentate gyrus granule cell layer
@@ -157,7 +158,7 @@ nodes:
       quote_key: 625292_ff3f8b1d
   defining_markers:
   - symbol: DCX
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -170,7 +171,7 @@ nodes:
       quote_key: 245432259_44d5c91b
       marker_type: PROTEIN
   - symbol: NeuN
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -183,7 +184,7 @@ nodes:
       quote_key: 245432259_44d5c91b
       marker_type: PROTEIN
   - symbol: PSA-NCAM
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:37082558
       method: review (marker classification)
@@ -191,7 +192,7 @@ nodes:
       quote_key: 245432259_44d5c91b
       marker_type: PROTEIN
   - symbol: Tis21
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:19482889
       method: Tis21 knock-in GFP mouse + IHC
@@ -200,12 +201,12 @@ nodes:
       marker_type: PROTEIN
   negative_markers:
   - symbol: Calbindin
-    ncbi_gene_id: null
+    ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: 'Postmitotic neurons (stage 5) migrated from SGZ into the inner granule cell layer. Axonal projections reach
-    CA3 at 10-11 dpi, 5-6 days before first spines form (Zhao 2006). Dendrites reach the inner molecular layer at 10 dpi, middle
-    molecular layer at ~14 dpi, and outer edge by 21 dpi. Spine density rises from 0.43 to 2.61 spines/um between 21-56 dpi.
-    Extends dendrites toward molecular layer and mossy fiber axons through hilus to CA3. Mouse retroviral GFP data.
+  morphology_notes: 'Postmitotic neurons (stage 5) migrated from SGZ into the inner granule cell layer. Axonal projections
+    reach CA3 at 10-11 dpi, 5-6 days before first spines form (Zhao 2006). Dendrites reach the inner molecular layer at 10
+    dpi, middle molecular layer at ~14 dpi, and outer edge by 21 dpi. Spine density rises from 0.43 to 2.61 spines/um between
+    21-56 dpi. Extends dendrites toward molecular layer and mossy fiber axons through hilus to CA3. Mouse retroviral GFP data.
 
     '
   morphology_sources:
@@ -217,12 +218,12 @@ nodes:
     method: retrovirus-mediated GFP labelling + confocal
     scope: adult mouse dentate gyrus
     quote_key: 18166210_aa19f3be
-  electrophysiology_class: 'Adult-born immature granule neurons follow a stereotyped synaptic maturation sequence: silent (1-7 dpi;
-    Vrest -50.6 mV, Rin 4.3 GOhm, Cm 6.4 pF) → slow GABAergic PSCs only (8-18 dpi; EGABA -26.9 to -44.5 mV, depolarising) →
-    glutamatergic PSCs acquired (>=14-18 dpi; Vrest -63.2 mV, Cm 24.6 pF) → fast perisomatic GABA last (~4 wk) (Esposito et al.
-    2005; Ge et al. 2006). T-type Ca2+ channels confer enhanced LTP inducibility vs. mature granule cells (Schmidt-Hieber et al.
-    2004). GABA depolarisation mechanistically required for dendritic arborisation (NKCC1-dependent; Ge et al. 2006). All primary
-    data from adult mouse (C57BL/6).
+  electrophysiology_class: 'Adult-born immature granule neurons follow a stereotyped synaptic maturation sequence: silent
+    (1-7 dpi; Vrest -50.6 mV, Rin 4.3 GOhm, Cm 6.4 pF) → slow GABAergic PSCs only (8-18 dpi; EGABA -26.9 to -44.5 mV, depolarising)
+    → glutamatergic PSCs acquired (>=14-18 dpi; Vrest -63.2 mV, Cm 24.6 pF) → fast perisomatic GABA last (~4 wk) (Esposito
+    et al. 2005; Ge et al. 2006). T-type Ca2+ channels confer enhanced LTP inducibility vs. mature granule cells (Schmidt-Hieber
+    et al. 2004). GABA depolarisation mechanistically required for dendritic arborisation (NKCC1-dependent; Ge et al. 2006).
+    All primary data from adult mouse (C57BL/6).
 
     '
   ephys_sources:
@@ -281,7 +282,7 @@ nodes:
 - id: dg_mature_granule_neuron
   name: Dentate Gyrus Mature Granule Neuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0001885
     label: dentate gyrus of hippocampal formation
@@ -303,7 +304,7 @@ nodes:
       quote_key: 625292_ff3f8b1d
   defining_markers:
   - symbol: Calbindin
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -311,7 +312,7 @@ nodes:
       quote_key: 279046466_998847af
       marker_type: PROTEIN
   - symbol: NeuN
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -319,7 +320,7 @@ nodes:
       quote_key: 279046466_998847af
       marker_type: PROTEIN
   - symbol: Tbr1
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:18385329
       method: Tbr2-GFP transgene + IHC, TF cascade
@@ -328,11 +329,11 @@ nodes:
       marker_type: PROTEIN
   negative_markers:
   - symbol: DCX
-    ncbi_gene_id: null
+    ncbi_gene_id:
   - symbol: Nestin
-    ncbi_gene_id: null
+    ncbi_gene_id:
   - symbol: PSA-NCAM
-    ncbi_gene_id: null
+    ncbi_gene_id:
   neuropeptides: []
   morphology_notes: 'Terminally differentiated granule neurons (stage 6) populating the granule cell layer. Fully elaborated
     dendritic arbor and complete axonal projections to CA3. Receive primary glutamatergic afferents from entorhinal cortex
@@ -348,11 +349,11 @@ nodes:
     method: retrovirus-mediated gene transduction + confocal
     scope: adult mouse dentate gyrus
     quote_key: 18166210_b155d498
-  electrophysiology_class: 'Terminally differentiated granule neurons fire repetitive action potentials (plateau ~140 Hz; Vth
-    ~-39.6 to -45.8 mV). Membrane capacitance 99.2 pF, time constant 33.7 ms, resting potential -74.8 mV (van Praag et al. 2002;
-    adult mouse). Substantially larger Cm and longer tau_m than immature adult-born granule cells (Schmidt-Hieber et al. 2004).
-    Fully synaptically integrated by 4 weeks; receive perforant path afferents from entorhinal cortex and project mossy fibers to
-    CA3. Primary data from adult mouse (C57BL/6).
+  electrophysiology_class: 'Terminally differentiated granule neurons fire repetitive action potentials (plateau ~140 Hz;
+    Vth ~-39.6 to -45.8 mV). Membrane capacitance 99.2 pF, time constant 33.7 ms, resting potential -74.8 mV (van Praag et
+    al. 2002; adult mouse). Substantially larger Cm and longer tau_m than immature adult-born granule cells (Schmidt-Hieber
+    et al. 2004). Fully synaptically integrated by 4 weeks; receive perforant path afferents from entorhinal cortex and project
+    mossy fibers to CA3. Primary data from adult mouse (C57BL/6).
 
     '
   ephys_sources:
@@ -396,7 +397,7 @@ nodes:
 - id: dg_type2a_progenitor
   name: Dentate Gyrus Type-2a Neural Progenitor
   definition_basis: CLASSICAL_NEUROCHEMICAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0009952
     label: dentate gyrus subgranular zone
@@ -409,7 +410,7 @@ nodes:
       name_in_source: glutamatergic
   defining_markers:
   - symbol: Nestin
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -417,7 +418,7 @@ nodes:
       quote_key: 279046466_998847af
       marker_type: PROTEIN
   - symbol: Sox2
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -426,9 +427,9 @@ nodes:
       marker_type: PROTEIN
   negative_markers:
   - symbol: DCX
-    ncbi_gene_id: null
+    ncbi_gene_id:
   - symbol: GFAP
-    ncbi_gene_id: null
+    ncbi_gene_id:
   neuropeptides: []
   morphology_notes: 'Non-radial, horizontally oriented intermediate progenitor in the SGZ. Morphologically distinct from the
     type-1 radial glia-like stem cell; lacks the long radial process. Actively proliferating (Ki67+). Does not yet express
@@ -466,17 +467,17 @@ nodes:
   - PMID:18385329
   - PMID:37082558
   is_terminal: false
-  notes: 'Type-2a is the first transit-amplifying stage, distinct from the quiescent type-1 radial glia-like stem cell
-    (GFAP+/Sox2+/Nestin+). The type-2a stage is not resolved as a distinct cluster in the Allen Brain Cell Atlas DG taxonomy
-    — the earliest atlas cluster (0511, DG-PIR Ex IMN_1) already expresses Eomes/Tbr2, a type-2b marker. Atlas coverage
-    for type-2a is a known gap: no mapping edge is written for this node. See edge_dg_type2b_progenitor_to_CS20230722_CLUS_0511
-    for the earliest atlas-resolvable stage in this lineage.
+  notes: 'Type-2a is the first transit-amplifying stage, distinct from the quiescent type-1 radial glia-like stem cell (GFAP+/Sox2+/Nestin+).
+    The type-2a stage is not resolved as a distinct cluster in the Allen Brain Cell Atlas DG taxonomy — the earliest atlas
+    cluster (0511, DG-PIR Ex IMN_1) already expresses Eomes/Tbr2, a type-2b marker. Atlas coverage for type-2a is a known
+    gap: no mapping edge is written for this node. See edge_dg_type2b_progenitor_to_CS20230722_CLUS_0511 for the earliest
+    atlas-resolvable stage in this lineage.
 
     '
 - id: dg_type2b_progenitor
   name: Dentate Gyrus Type-2b Neural Progenitor
   definition_basis: CLASSICAL_NEUROCHEMICAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0009952
     label: dentate gyrus subgranular zone
@@ -489,7 +490,7 @@ nodes:
       name_in_source: glutamatergic
   defining_markers:
   - symbol: Nestin
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -502,7 +503,7 @@ nodes:
       quote_key: 15727849_21c476fd
       marker_type: PROTEIN
   - symbol: DCX
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:40519263
       method: review (marker classification)
@@ -515,7 +516,7 @@ nodes:
       quote_key: 15727849_237d8f24
       marker_type: PROTEIN
   - symbol: Eomes
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:18385329
       method: Tbr2-GFP transgene + IHC
@@ -524,9 +525,9 @@ nodes:
       marker_type: PROTEIN
   negative_markers:
   - symbol: NeuN
-    ncbi_gene_id: null
+    ncbi_gene_id:
   - symbol: Calbindin
-    ncbi_gene_id: null
+    ncbi_gene_id:
   neuropeptides: []
   morphology_notes: 'Transitional progenitor co-expressing Nestin and DCX at low levels. Tbr2/Eomes+ cells cluster in the
     SGZ and are often found in close proximity to radial processes of type-1 cells. Short tangential processes typical of
@@ -580,811 +581,63 @@ nodes:
 - id: CS20230722_CLUS_0511
   name: 0511 DG-PIR Ex IMN_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0511
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG-PIR Ex IMN_1
-    cell_set_accession: CS20230722_SUPT_0140
-  - level: SUBCLASS
-    name: DG-PIR Ex IMN
-    cell_set_accession: CS20230722_SUBC_038
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides: []
-  defining_markers:
-  - symbol: Meis1
-    ncbi_gene_id: null
-  - symbol: Eomes
-    ncbi_gene_id: null
-  - symbol: Celsr1
-    ncbi_gene_id: null
-  - symbol: Tenm1
-    ncbi_gene_id: null
-  - symbol: Meis2
-    ncbi_gene_id: null
-  - symbol: Igfbpl1
-    ncbi_gene_id: null
-  - symbol: Lmo1
-    ncbi_gene_id: null
-  - symbol: Slc17a6
-    ncbi_gene_id: null
-  - symbol: Sox6
-    ncbi_gene_id: null
-  - symbol: Neurod1
-    ncbi_gene_id: null
-  - symbol: Gad2
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0009952
-    label: dentate gyrus subgranular zone
-    name_in_source: DG STR
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:9900004
-      label: dentate gyrus type-2b neural progenitor
-      name_in_source: early neuroblast
-    mapping_type: BROAD
-    mapping_notes: 'Curator-annotated as "early neuroblast". Key markers: Eomes (=Tbr2, type-2b intermediate progenitor TF),
-      Sox6, Neurod1, Meis2; MERFISH validates Eomes and Igfbpl1 in DG-STR boundary. Eomes/Tbr2 expression confirms type-2b
-      progenitor identity. CL:9900004 (dentate gyrus type-2b neural progenitor) is BROAD — this cluster likely spans the type-2b/type-3
-      transition.
-
-      '
 - id: CS20230722_CLUS_0514
   name: 0514 DG-PIR Ex IMN_2
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0514
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG-PIR Ex IMN_2
-    cell_set_accession: CS20230722_SUPT_0141
-  - level: SUBCLASS
-    name: DG-PIR Ex IMN
-    cell_set_accession: CS20230722_SUBC_038
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides: []
-  defining_markers:
-  - symbol: Ccbe1
-    ncbi_gene_id: null
-  - symbol: Draxin
-    ncbi_gene_id: null
-  - symbol: Fam163a
-    ncbi_gene_id: null
-  - symbol: Ntf3
-    ncbi_gene_id: null
-  - symbol: Igfbpl1
-    ncbi_gene_id: null
-  - symbol: Emx2
-    ncbi_gene_id: null
-  - symbol: Prox1
-    ncbi_gene_id: null
-  - symbol: Tbr1
-    ncbi_gene_id: null
-  - symbol: Rarb
-    ncbi_gene_id: null
-  - symbol: Gad1
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DGdo,me
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:9900002
-      label: immature dentate gyrus granule neuron
-      name_in_source: late neuroblast / immature granule cell
-    mapping_type: EXACT
-    mapping_notes: 'Curator-annotated as "late neuroblast / immature granule cell". Key markers: Tbr1 (postmitotic granule
-      neuron TF), Prox1, Emx2, Rarb, Igfbpl1; MERFISH validates Igfbpl1 and Emx2; anatomy DGdo,me HIP:0.98. Tbr1 onset with
-      retained Igfbpl1 defines the postmitotic transition into the inner GCL. EXACT match to CL:9900002 (immature dentate
-      gyrus granule neuron, parent CL:4042028). Clusters 0514 and 0515 together constitute the transcriptomic evidence for
-      this CL term.
-
-      '
 - id: CS20230722_CLUS_0515
   name: 0515 DG-PIR Ex IMN_2
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0515
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG-PIR Ex IMN_2
-    cell_set_accession: CS20230722_SUPT_0141
-  - level: SUBCLASS
-    name: DG-PIR Ex IMN
-    cell_set_accession: CS20230722_SUBC_038
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: NA
-    cl_terms: []
-  neuropeptides: []
-  defining_markers:
-  - symbol: Rarb
-    ncbi_gene_id: null
-  - symbol: Draxin
-    ncbi_gene_id: null
-  - symbol: Mndal
-    ncbi_gene_id: null
-  - symbol: Igfbpl1
-    ncbi_gene_id: null
-  - symbol: Emx2
-    ncbi_gene_id: null
-  - symbol: Fam163a
-    ncbi_gene_id: null
-  - symbol: Bcl11b
-    ncbi_gene_id: null
-  - symbol: Cd24a
-    ncbi_gene_id: null
-  - symbol: Prox1
-    ncbi_gene_id: null
-  - symbol: Tbr1
-    ncbi_gene_id: null
-  - symbol: Gad1
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DGdo,me
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:9900002
-      label: immature dentate gyrus granule neuron
-      name_in_source: late neuroblast
-    mapping_type: EXACT
-    mapping_notes: 'Curator-annotated as "late neuroblast". Key markers: Tbr1, Prox1, Emx2, Rarb, Igfbpl1, Bcl11b, Cd24a;
-      MERFISH validates Igfbpl1, Emx2, Fam163a, Bcl11b; anatomy DGdo,me HIP:1.0. Identical TF profile to cluster 0514 (Tbr1+/Prox1+/Emx2+/Igfbpl1+);
-      together these two clusters define the transcriptomic signature for CL:9900002 (immature dentate gyrus granule neuron,
-      parent CL:4042028).
-
-      '
 - id: CS20230722_CLUS_0502
   name: 0502 DG Glut_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0502
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_1
-    cell_set_accession: CS20230722_SUPT_0136
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides:
-  - symbol: Grp
-  - symbol: Cck
-  defining_markers:
-  - symbol: Dio3
-    ncbi_gene_id: null
-  - symbol: Tshz2
-    ncbi_gene_id: null
-  - symbol: Il33
-    ncbi_gene_id: null
-  - symbol: Thsd7b
-    ncbi_gene_id: null
-  - symbol: Ecm2
-    ncbi_gene_id: null
-  - symbol: Nell1
-    ncbi_gene_id: null
-  - symbol: Scn7a
-    ncbi_gene_id: null
-  - symbol: Glis3
-    ncbi_gene_id: null
-  - symbol: Kcnip1
-    ncbi_gene_id: null
-  - symbol: Zfpm2
-    ncbi_gene_id: null
-  - symbol: Prox1
-    ncbi_gene_id: null
-  - symbol: Neurod2
-    ncbi_gene_id: null
-  - symbol: Rfx2
-    ncbi_gene_id: null
-  - symbol: Lhx9
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG ve
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 - id: CS20230722_CLUS_0503
   name: 0503 DG Glut_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0503
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_1
-    cell_set_accession: CS20230722_SUPT_0136
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides:
-  - symbol: Cck
-  - symbol: Grp
-  defining_markers:
-  - symbol: Dio3
-    ncbi_gene_id: null
-  - symbol: Ndst4
-    ncbi_gene_id: null
-  - symbol: Ntn5
-    ncbi_gene_id: null
-  - symbol: Prox1
-    ncbi_gene_id: null
-  - symbol: St18
-    ncbi_gene_id: null
-  - symbol: Glis3
-    ncbi_gene_id: null
-  - symbol: Neurod2
-    ncbi_gene_id: null
-  - symbol: Hey2
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG ve
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 - id: CS20230722_CLUS_0504
   name: 0504 DG Glut_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0504
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_1
-    cell_set_accession: CS20230722_SUPT_0136
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides:
-  - symbol: Grp
-  - symbol: Penk
-  - symbol: Cck
-  - symbol: Cartpt
-  defining_markers:
-  - symbol: Gcnt1
-    ncbi_gene_id: null
-  - symbol: Dcn
-    ncbi_gene_id: null
-  - symbol: Prox1
-    ncbi_gene_id: null
-  - symbol: Adamts19
-    ncbi_gene_id: null
-  - symbol: Cartpt
-    ncbi_gene_id: null
-  - symbol: Glis3
-    ncbi_gene_id: null
-  - symbol: Nr4a3
-    ncbi_gene_id: null
-  - symbol: Egr3
-    ncbi_gene_id: null
-  - symbol: Rorb
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG ve
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 - id: CS20230722_CLUS_0505
   name: 0505 DG Glut_2
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0505
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_2
-    cell_set_accession: CS20230722_SUPT_0137
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides: []
-  defining_markers:
-  - symbol: Serinc2
-    ncbi_gene_id: null
-  - symbol: Plk5
-    ncbi_gene_id: null
-  - symbol: Lct
-    ncbi_gene_id: null
-  - symbol: Cdh9
-    ncbi_gene_id: null
-  - symbol: Fbxo32
-    ncbi_gene_id: null
-  - symbol: Stxbp6
-    ncbi_gene_id: null
-  - symbol: Glis3
-    ncbi_gene_id: null
-  - symbol: St18
-    ncbi_gene_id: null
-  - symbol: Smoc2
-    ncbi_gene_id: null
-  - symbol: Npnt
-    ncbi_gene_id: null
-  - symbol: Grm3
-    ncbi_gene_id: null
-  - symbol: Rasgrp1
-    ncbi_gene_id: null
-  - symbol: Sorcs3
-    ncbi_gene_id: null
-  - symbol: Neurod2
-    ncbi_gene_id: null
-  - symbol: Prdm5
-    ncbi_gene_id: null
-  - symbol: Zkscan16
-    ncbi_gene_id: null
-  - symbol: Mkx
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  - symbol: Gad1
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG do
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 - id: CS20230722_CLUS_0506
   name: 0506 DG Glut_2
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0506
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_2
-    cell_set_accession: CS20230722_SUPT_0137
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides:
-  - symbol: Cck
-  defining_markers:
-  - symbol: Dsp
-    ncbi_gene_id: null
-  - symbol: Adamts17
-    ncbi_gene_id: null
-  - symbol: C1ql2
-    ncbi_gene_id: null
-  - symbol: Smoc2
-    ncbi_gene_id: null
-  - symbol: St18
-    ncbi_gene_id: null
-  - symbol: Glis3
-    ncbi_gene_id: null
-  - symbol: Prkd1
-    ncbi_gene_id: null
-  - symbol: Mkx
-    ncbi_gene_id: null
-  - symbol: Chst9
-    ncbi_gene_id: null
-  - symbol: Npnt
-    ncbi_gene_id: null
-  - symbol: Neurod2
-    ncbi_gene_id: null
-  - symbol: Prox1
-    ncbi_gene_id: null
-  - symbol: Zeb2
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG do
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 - id: CS20230722_CLUS_0507
   name: 0507 DG Glut_2
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0507
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_2
-    cell_set_accession: CS20230722_SUPT_0137
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides:
-  - symbol: Cck
-  - symbol: Pdyn
-  defining_markers:
-  - symbol: Rflnb
-    ncbi_gene_id: null
-  - symbol: Rhbdl3
-    ncbi_gene_id: null
-  - symbol: Dsp
-    ncbi_gene_id: null
-  - symbol: Gm20754
-    ncbi_gene_id: null
-  - symbol: Glis3
-    ncbi_gene_id: null
-  - symbol: St18
-    ncbi_gene_id: null
-  - symbol: Npnt
-    ncbi_gene_id: null
-  - symbol: Npy2r
-    ncbi_gene_id: null
-  - symbol: Syndig1
-    ncbi_gene_id: null
-  - symbol: Ror1
-    ncbi_gene_id: null
-  - symbol: St3gal1
-    ncbi_gene_id: null
-  - symbol: Neurod2
-    ncbi_gene_id: null
-  - symbol: Prdm5
-    ncbi_gene_id: null
-  - symbol: Foxo1
-    ncbi_gene_id: null
-  - symbol: Mkx
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  - symbol: Gad1
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG do
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 - id: CS20230722_CLUS_0508
   name: 0508 DG Glut_3
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0508
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_3
-    cell_set_accession: CS20230722_SUPT_0138
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides:
-  - symbol: Cck
-  - symbol: Pdyn
-  defining_markers:
-  - symbol: Cenpa
-    ncbi_gene_id: null
-  - symbol: Egr4
-    ncbi_gene_id: null
-  - symbol: Dsp
-    ncbi_gene_id: null
-  - symbol: Egr2
-    ncbi_gene_id: null
-  - symbol: St18
-    ncbi_gene_id: null
-  - symbol: Npnt
-    ncbi_gene_id: null
-  - symbol: Prox1
-    ncbi_gene_id: null
-  - symbol: Neurod2
-    ncbi_gene_id: null
-  - symbol: Mkx
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  - symbol: Gad1
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG do
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 - id: CS20230722_CLUS_0509
   name: 0509 DG Glut_3
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0509
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_3
-    cell_set_accession: CS20230722_SUPT_0138
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides:
-  - symbol: Cck
-  - symbol: Pdyn
-  - symbol: Npy
-  defining_markers:
-  - symbol: Npy
-    ncbi_gene_id: null
-  - symbol: Lct
-    ncbi_gene_id: null
-  - symbol: Glis3
-    ncbi_gene_id: null
-  - symbol: St18
-    ncbi_gene_id: null
-  - symbol: Drd5
-    ncbi_gene_id: null
-  - symbol: Nptx2
-    ncbi_gene_id: null
-  - symbol: Atf3
-    ncbi_gene_id: null
-  - symbol: Neurod2
-    ncbi_gene_id: null
-  - symbol: Bhlhe41
-    ncbi_gene_id: null
-  - symbol: Cebpb
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  - symbol: Gad1
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG do
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 - id: CS20230722_CLUS_0510
   name: 0510 DG Glut_4
   definition_basis: ATLAS_TRANSCRIPTOMIC
-  atlas: Allen Brain Cell Atlas
   taxonomy_id: CCN202307220
   cell_set_accession: CS20230722_CLUS_0510
-  parent_hierarchy:
-  - level: SUPERTYPE
-    name: DG Glut_4
-    cell_set_accession: CS20230722_SUPT_0139
-  - level: SUBCLASS
-    name: DG Glut
-    cell_set_accession: CS20230722_SUBC_037
-  - level: CLASS
-    name: DG-IMN Glut
-    cell_set_accession: CS20230722_CLAS_04
-  taxonomy_level: cluster
-  nt_type:
-    name_in_source: Glut
-    cl_terms: []
-  neuropeptides:
-  - symbol: Cck
-  - symbol: Grp
-  - symbol: Pdyn
-  defining_markers:
-  - symbol: Clec1a
-    ncbi_gene_id: null
-  - symbol: Smoc2
-    ncbi_gene_id: null
-  - symbol: C1ql2
-    ncbi_gene_id: null
-  - symbol: Dsp
-    ncbi_gene_id: null
-  - symbol: Scn9a
-    ncbi_gene_id: null
-  - symbol: Glis3
-    ncbi_gene_id: null
-  - symbol: St18
-    ncbi_gene_id: null
-  - symbol: Grp
-    ncbi_gene_id: null
-  - symbol: Pde1a
-    ncbi_gene_id: null
-  - symbol: Lhx9
-    ncbi_gene_id: null
-  - symbol: Nr2f2
-    ncbi_gene_id: null
-  - symbol: Mkx
-    ncbi_gene_id: null
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-  - symbol: Gad1
-    ncbi_gene_id: null
-  negative_markers: []
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: DG po
-  definition_references: []
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: DG Glut
-    mapping_type: EXACT
-    mapping_notes: 'Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer;
-      expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate
-      gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical
-      match for all DG Glut clusters.
-
-      '
 edges:
 - id: edge_dg_neuroblast_to_CS20230722_CLUS_0511
   type_a: dg_neuroblast
@@ -1400,8 +653,8 @@ edges:
     node_a_value: UBERON:0009952 dentate gyrus subgranular zone (SGZ)
     node_b_value: DG STR (DG-STR boundary, MERFISH); CCF NA:0.75, CTXsp:0.12
     alignment: APPROXIMATE
-    notes: MERFISH validates Eomes/Igfbpl1 at DG-STR (SGZ) boundary. CCF NA:0.75 is a known registration artefact at the sparse
-      SGZ margin.
+    notes: MERFISH validates Eomes/Igfbpl1 at DG-STR (SGZ) boundary. CCF NA:0.75 is a known registration artefact at the
+      sparse SGZ margin.
   - property: marker_DCX
     node_a_value: DCX; PROTEIN; positive (IHC, canonical neuroblast marker)
     node_b_value: not present in defining_markers
@@ -1412,19 +665,20 @@ edges:
     node_a_value: Ki67 (Mki67); PROTEIN; positive (IHC, proliferating cells)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: snRNA-seq under-captures rapidly cycling cells; small cluster (n=92) is consistent with a rare proliferative population.
+    notes: snRNA-seq under-captures rapidly cycling cells; small cluster (n=92) is consistent with a rare proliferative 
+      population.
   - property: marker_PSA-NCAM
     node_a_value: PSA-NCAM; PROTEIN; positive (post-translational polysialylation of NCAM1)
     node_b_value: not present in defining_markers
     alignment: NOT_ASSESSED
-    notes: PSA-NCAM is a post-translational glycan epitope; intrinsically undetectable by RNA-seq. No transcript-level correlate
-      is available.
+    notes: PSA-NCAM is a post-translational glycan epitope; intrinsically undetectable by RNA-seq. No transcript-level 
+      correlate is available.
   - property: marker_Nestin
     node_a_value: Nestin; PROTEIN; positive at type-2b stage only (IHC)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Nestin/Nes is downregulated at the type-3 stage; absence is partly consistent with type-2b enrichment in this cluster
-      (Eomes/Tbr2+ TF present).
+    notes: Nestin/Nes is downregulated at the type-3 stage; absence is partly consistent with type-2b enrichment in this
+      cluster (Eomes/Tbr2+ TF present).
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1435,9 +689,9 @@ edges:
     cell_set_accession: CS20230722_CLUS_0511
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
-    explanation: Cluster is the sole member of supertype CS20230722_SUPT_0140 (DG-PIR Ex IMN_1), which carries CL:9900001
-      (dentate gyrus neuroblast) BROAD mapping. The Eomes/Tbr2 TF signature is the canonical marker for the type-2b intermediate
-      progenitor stage.
+    explanation: Cluster is the sole member of supertype CS20230722_SUPT_0140 (DG-PIR Ex IMN_1), which carries 
+      CL:9900001 (dentate gyrus neuroblast) BROAD mapping. The Eomes/Tbr2 TF signature is the canonical marker for the 
+      type-2b intermediate progenitor stage.
     atlas: Allen Brain Cell Atlas CCN202307220
     cell_set_accession: CS20230722_CLUS_0511
   caveats:
@@ -1449,25 +703,25 @@ edges:
       epitope undetectable by transcriptomics; (3) broadly expressed stage markers are filtered out in cluster-level marker
       selection. APPROXIMATE alignments reflect this methodological gap, not biological discordance.'
   - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
-    description: CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label 'DG STR' places cells at the DG-STR boundary
-      (SGZ), but CCF-level soma location cannot be fully verified. The high NA fraction is a known artefact of sparse CCF
-      coverage at the SGZ margin.
+    description: CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label 'DG STR' places cells at the DG-STR 
+      boundary (SGZ), but CCF-level soma location cannot be fully verified. The high NA fraction is a known artefact of 
+      sparse CCF coverage at the SGZ margin.
   - caveat_type: OTHER
-    description: The classical dg_neuroblast node spans type-2b (Nestin+/DCX+/Eomes+) and type-3 (DCX+/Eomes-low) sub-stages.
-      Cluster 0511 is enriched for type-2b (Eomes+ dominant). Full correspondence with the type-3 sub-stage is unconfirmed;
-      cluster 0512 is a secondary candidate for the type-3 transition.
+    description: The classical dg_neuroblast node spans type-2b (Nestin+/DCX+/Eomes+) and type-3 (DCX+/Eomes-low) 
+      sub-stages. Cluster 0511 is enriched for type-2b (Eomes+ dominant). Full correspondence with the type-3 sub-stage 
+      is unconfirmed; cluster 0512 is a secondary candidate for the type-3 transition.
   unresolved_questions:
-  - Does Dcx transcript appear in cluster 0511 cells at a level below the differential expression threshold for defining_marker
-    selection? A targeted Dcx expression query on the full atlas feature matrix would resolve this.
-  - Is the Gad2 nt_marker signal (score 3.24) in cluster 0511 ambient RNA, a minor contaminating GABAergic population, or
-    evidence of transient GABAergic signalling in type-2b progenitors?
-  - Should the dg_neuroblast classical node be split into separate type-2b and type-3 nodes to match atlas resolution (cluster
-    0511 for type-2b; cluster 0512 for type-3)?
+  - Does Dcx transcript appear in cluster 0511 cells at a level below the differential expression threshold for 
+    defining_marker selection? A targeted Dcx expression query on the full atlas feature matrix would resolve this.
+  - Is the Gad2 nt_marker signal (score 3.24) in cluster 0511 ambient RNA, a minor contaminating GABAergic population, 
+    or evidence of transient GABAergic signalling in type-2b progenitors?
+  - Should the dg_neuroblast classical node be split into separate type-2b and type-3 nodes to match atlas resolution 
+    (cluster 0511 for type-2b; cluster 0512 for type-3)?
   proposed_experiments:
-  - Triple-label smFISH combining Dcx, Eomes, and Sox6 transcripts with Ki67 IHC in adult mouse DG to directly test co-localisation
-    of atlas cluster 0511 signature with classical DCX+/Ki67+ neuroblasts in the SGZ.
-  - DCX-GFP sorted cells from adult DG followed by snRNA-seq and MapMyCells projection onto CCN202307220 to assign protein-defined
-    neuroblasts to specific atlas clusters.
+  - Triple-label smFISH combining Dcx, Eomes, and Sox6 transcripts with Ki67 IHC in adult mouse DG to directly test 
+    co-localisation of atlas cluster 0511 signature with classical DCX+/Ki67+ neuroblasts in the SGZ.
+  - DCX-GFP sorted cells from adult DG followed by snRNA-seq and MapMyCells projection onto CCN202307220 to assign 
+    protein-defined neuroblasts to specific atlas clusters.
 - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0514
   type_a: dg_immature_granule_neuron
   type_b: CS20230722_CLUS_0514
@@ -1482,20 +736,20 @@ edges:
     node_a_value: inner granule cell layer (GCL); UBERON:0005381
     node_b_value: DGdo,me (dentate gyrus dorsal/medial blade); HIP:0.98
     alignment: CONSISTENT
-    notes: DGdo,me is a sub-region of the classical GCL specification. MERFISH validates Tbr1, Prox1, Igfbpl1, Emx2 in this
-      spatial context.
+    notes: DGdo,me is a sub-region of the classical GCL specification. MERFISH validates Tbr1, Prox1, Igfbpl1, Emx2 in 
+      this spatial context.
   - property: marker_DCX
     node_a_value: DCX; PROTEIN; positive (defining marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Protein-transcriptome gap; Dcx mRNA broadly expressed across DG-PIR Ex IMN subclass. Curator annotation 'late neuroblast/immature
-      granule cell' is compatible with DCX+ protein status.
+    notes: Protein-transcriptome gap; Dcx mRNA broadly expressed across DG-PIR Ex IMN subclass. Curator annotation 'late
+      neuroblast/immature granule cell' is compatible with DCX+ protein status.
   - property: marker_NeuN
     node_a_value: NeuN (RBFOX3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 non-discriminating at cluster level in atlas. Tbr1 TF presence marks postmitotic transition, making NeuN+
-      status biologically expected.
+    notes: Rbfox3 non-discriminating at cluster level in atlas. Tbr1 TF presence marks postmitotic transition, making 
+      NeuN+ status biologically expected.
   - property: marker_PSA-NCAM
     node_a_value: PSA-NCAM; PROTEIN; positive
     node_b_value: not present in defining_markers
@@ -1505,8 +759,8 @@ edges:
     node_a_value: Tis21 (Btg2); PROTEIN; positive (postmitotic re-expression in adult DG)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Btg2 may be broadly expressed or below the cluster-level marker threshold. Postmitotic Tbr1+ identity is consistent
-      with expected Tis21 re-expression.
+    notes: Btg2 may be broadly expressed or below the cluster-level marker threshold. Postmitotic Tbr1+ identity is 
+      consistent with expected Tis21 re-expression.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1519,29 +773,29 @@ edges:
   - &id002
     evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-5 definition (DCX+/NeuN+/Calbindin−). Absence of Calbindin from cluster defining_markers
-      is consistent with pre-terminal immature identity.
+    explanation: Establishes stage-5 definition (DCX+/NeuN+/Calbindin−). Absence of Calbindin from cluster 
+      defining_markers is consistent with pre-terminal immature identity.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - &id003
     evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Tbr1 onset marks postmitotic transition from neuroblast to immature granule neuron. Tbr1 present as TF marker;
-      bridges atlas TF evidence to classical postmitotic immature granule neuron stage.
+    explanation: Tbr1 onset marks postmitotic transition from neuroblast to immature granule neuron. Tbr1 present as TF 
+      marker; bridges atlas TF evidence to classical postmitotic immature granule neuron stage.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   - &id004
     evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tis21 re-expression in postmitotic adult DG neurons. Consistent with postmitotic Tbr1+ identity
-      of this cluster.
+    explanation: Confirms Tis21 re-expression in postmitotic adult DG neurons. Consistent with postmitotic Tbr1+ 
+      identity of this cluster.
     reference: PMID:19482889
-    snippet: Concomitant with this, an increasing proportion of the BrdU/Tis21-GFP-double-positive cells expressed markers
-      of postmitotic neurons, that is, NeuN and CB
+    snippet: Concomitant with this, an increasing proportion of the BrdU/Tis21-GFP-double-positive cells expressed 
+      markers of postmitotic neurons, that is, NeuN and CB
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -1550,20 +804,21 @@ edges:
       CS20230722_CLUS_0515. Both carry EXACT CL:9900002 and share the Tbr1+/Prox1+/Emx2+/Igfbpl1+ core TF profile. Neither
       cluster alone fully represents the classical type.'
   - caveat_type: OTHER
-    description: 12 proposed literature evidence items (proposed_evidence_dg_immature_granule_neuron.yaml) are pending review
-      and attachment to this edge and its companion to CS20230722_CLUS_0515. Items above are the most load-bearing.
+    description: 12 proposed literature evidence items (proposed_evidence_dg_immature_granule_neuron.yaml) are pending 
+      review and attachment to this edge and its companion to CS20230722_CLUS_0515. Items above are the most 
+      load-bearing.
   unresolved_questions:
   - 'What is the biological basis for the two-cluster split (0514 vs 0515) at the immature GN stage? Possibilities: maturational
     sub-stage, sex composition, or circadian/activity-dependent transcriptional state.'
-  - Does Dcx mRNA appear in clusters 0514/0515 below the atlas marker ranking threshold? A targeted query on the full atlas
-    feature matrix would resolve the DCX alignment.
-  - Why does cluster 0514 show a Gad1 nt_marker signal (score 5.56)? Transient GABAergic signalling in immature granule neurons,
-    doublet artefact, or contamination?
+  - Does Dcx mRNA appear in clusters 0514/0515 below the atlas marker ranking threshold? A targeted query on the full 
+    atlas feature matrix would resolve the DCX alignment.
+  - Why does cluster 0514 show a Gad1 nt_marker signal (score 5.56)? Transient GABAergic signalling in immature granule 
+    neurons, doublet artefact, or contamination?
   proposed_experiments:
-  - Anti-DCX and anti-Tbr1 co-stain on adult mouse DG to confirm Tbr1+ inner-GCL cells are also DCX+/NeuN+ at protein level,
-    bridging atlas TF and classical profiles.
-  - Query full Allen Brain Cell Atlas CCN202307220 feature matrix for Dcx, Rbfox3, Btg2 in clusters 0514/0515 to check expression
-    below the marker ranking threshold.
+  - Anti-DCX and anti-Tbr1 co-stain on adult mouse DG to confirm Tbr1+ inner-GCL cells are also DCX+/NeuN+ at protein 
+    level, bridging atlas TF and classical profiles.
+  - Query full Allen Brain Cell Atlas CCN202307220 feature matrix for Dcx, Rbfox3, Btg2 in clusters 0514/0515 to check 
+    expression below the marker ranking threshold.
 - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0515
   type_a: dg_immature_granule_neuron
   type_b: CS20230722_CLUS_0515
@@ -1578,20 +833,20 @@ edges:
     node_a_value: inner granule cell layer (GCL); UBERON:0005381
     node_b_value: DGdo,me (dentate gyrus dorsal/medial blade); HIP:1.0
     alignment: CONSISTENT
-    notes: DGdo,me is a sub-region of the classical GCL specification. MERFISH validates Tbr1, Prox1, Igfbpl1, Emx2 in this
-      spatial context.
+    notes: DGdo,me is a sub-region of the classical GCL specification. MERFISH validates Tbr1, Prox1, Igfbpl1, Emx2 in 
+      this spatial context.
   - property: marker_DCX
     node_a_value: DCX; PROTEIN; positive (defining marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Protein-transcriptome gap; Dcx mRNA broadly expressed across DG-PIR Ex IMN subclass. Curator annotation 'late neuroblast/immature
-      granule cell' is compatible with DCX+ protein status.
+    notes: Protein-transcriptome gap; Dcx mRNA broadly expressed across DG-PIR Ex IMN subclass. Curator annotation 'late
+      neuroblast/immature granule cell' is compatible with DCX+ protein status.
   - property: marker_NeuN
     node_a_value: NeuN (RBFOX3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 non-discriminating at cluster level in atlas. Tbr1 TF presence marks postmitotic transition, making NeuN+
-      status biologically expected.
+    notes: Rbfox3 non-discriminating at cluster level in atlas. Tbr1 TF presence marks postmitotic transition, making 
+      NeuN+ status biologically expected.
   - property: marker_PSA-NCAM
     node_a_value: PSA-NCAM; PROTEIN; positive
     node_b_value: not present in defining_markers
@@ -1601,8 +856,8 @@ edges:
     node_a_value: Tis21 (Btg2); PROTEIN; positive (postmitotic re-expression in adult DG)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Btg2 may be broadly expressed or below the cluster-level marker threshold. Postmitotic Tbr1+ identity is consistent
-      with expected Tis21 re-expression.
+    notes: Btg2 may be broadly expressed or below the cluster-level marker threshold. Postmitotic Tbr1+ identity is 
+      consistent with expected Tis21 re-expression.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1618,22 +873,22 @@ edges:
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
-    description: TYPE_A_SPLITS companion to edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0514. Both clusters carry EXACT
-      CL:9900002 and share the same core TF profile. The biological basis for the intra-stage split is unresolved; Rarb and
-      Bcl11b/Cd24a distinguish 0515 from 0514.
+    description: TYPE_A_SPLITS companion to edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0514. Both clusters carry
+      EXACT CL:9900002 and share the same core TF profile. The biological basis for the intra-stage split is unresolved;
+      Rarb and Bcl11b/Cd24a distinguish 0515 from 0514.
   - caveat_type: NT_PREDICTION_UNCERTAIN
     description: 'NT type not directly assigned at cluster level (nt_type_combo_label: null); glutamatergic by parent class
       inheritance. Direct cluster-level assignment would strengthen the NT evidence.'
   unresolved_questions:
-  - What distinguishes cluster 0515 from 0514 biologically? Rarb (retinoic acid receptor beta, scoped in 0515) and Bcl11b/Cd24a/Fam163a
-    MERFISH markers may mark a later maturational sub-stage or sex-biased transcriptional state.
-  - Is the Gad1 nt_marker signal (score 3.67) the same transient GABAergic signal as in 0514 (score 5.56), potentially indicating
-    0515 is at an earlier maturational state?
+  - What distinguishes cluster 0515 from 0514 biologically? Rarb (retinoic acid receptor beta, scoped in 0515) and 
+    Bcl11b/Cd24a/Fam163a MERFISH markers may mark a later maturational sub-stage or sex-biased transcriptional state.
+  - Is the Gad1 nt_marker signal (score 3.67) the same transient GABAergic signal as in 0514 (score 5.56), potentially 
+    indicating 0515 is at an earlier maturational state?
   proposed_experiments:
-  - RNA velocity or pseudotime analysis on the DG-PIR Ex IMN_2 supertype (clusters 0512–0515) to determine cluster ordering
-    along the neuroblast-to-immature-GN axis.
-  - Targeted smFISH for Tbr1, Rarb, Bcl11b, and Dcx in adult DG to characterise whether Rarb+/Bcl11b+ cells form a distinct
-    subpopulation within the inner GCL.
+  - RNA velocity or pseudotime analysis on the DG-PIR Ex IMN_2 supertype (clusters 0512–0515) to determine cluster 
+    ordering along the neuroblast-to-immature-GN axis.
+  - Targeted smFISH for Tbr1, Rarb, Bcl11b, and Dcx in adult DG to characterise whether Rarb+/Bcl11b+ cells form a 
+    distinct subpopulation within the inner GCL.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0506
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0506
@@ -1653,20 +908,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      Neurod2, Prox1, St18 serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, Neurod2, Prox1, St18 serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1678,20 +933,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0506
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -1700,15 +955,15 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0506
       covers the DG do (dorsal outer GCL) subpopulation. All nine clusters together constitute the full classical type.'
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0506, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (Cck) in cluster CS20230722_CLUS_0506 reflect stable functional subtypes of mature
-    granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0506, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (Cck) in cluster CS20230722_CLUS_0506 reflect stable functional subtypes of 
+    mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0506.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm
-    spatial overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0506.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to 
+    confirm spatial overlap.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0503
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0503
@@ -1728,20 +983,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      Neurod2, Prox1, Hey2 serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, Neurod2, Prox1, Hey2 serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1753,20 +1008,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0503
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -1775,15 +1030,15 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0503
       covers the DG ve (ventral GCL) subpopulation. All nine clusters together constitute the full classical type.'
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0503, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (Cck, Grp) in cluster CS20230722_CLUS_0503 reflect stable functional subtypes of
-    mature granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0503, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (Cck, Grp) in cluster CS20230722_CLUS_0503 reflect stable functional subtypes 
+    of mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0503.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm spatial
-    overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0503.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm 
+    spatial overlap.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0507
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0507
@@ -1803,20 +1058,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      Neurod2, St18 serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, Neurod2, St18 serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1828,20 +1083,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0507
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -1850,15 +1105,15 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0507
       covers the DG do (dorsal outer GCL) subpopulation. All nine clusters together constitute the full classical type.'
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0507, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (Cck, Pdyn) in cluster CS20230722_CLUS_0507 reflect stable functional subtypes of
-    mature granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0507, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (Cck, Pdyn) in cluster CS20230722_CLUS_0507 reflect stable functional subtypes
+    of mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0507.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm
-    spatial overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0507.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to 
+    confirm spatial overlap.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0502
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0502
@@ -1879,20 +1134,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      Neurod2, Prox1, Rfx2, Lhx9 serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, Neurod2, Prox1, Rfx2, Lhx9 serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1904,20 +1159,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0502
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -1926,19 +1181,19 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0502
       covers the DG ve (ventral GCL) subpopulation. All nine clusters together constitute the full classical type.'
   - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
-    description: CCF broad includes MEA and sAMY; ventral hippocampal registration ambiguity; anatomical_location field authoritatively
-      specifies DG ve. The authoritative anatomical_location field specifies the correct DG assignment; CCF broad annotation
-      ambiguity does not alter the soma location claim.
+    description: CCF broad includes MEA and sAMY; ventral hippocampal registration ambiguity; anatomical_location field 
+      authoritatively specifies DG ve. The authoritative anatomical_location field specifies the correct DG assignment; 
+      CCF broad annotation ambiguity does not alter the soma location claim.
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0502, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (Grp, Cck) in cluster CS20230722_CLUS_0502 reflect stable functional subtypes of
-    mature granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0502, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (Grp, Cck) in cluster CS20230722_CLUS_0502 reflect stable functional subtypes 
+    of mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0502.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm spatial
-    overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0502.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm 
+    spatial overlap.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0505
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0505
@@ -1958,20 +1213,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      Neurod2, St18 serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, Neurod2, St18 serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -1983,20 +1238,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0505
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -2005,15 +1260,15 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0505
       covers the DG do (dorsal outer GCL) subpopulation. All nine clusters together constitute the full classical type.'
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0505, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (none) in cluster CS20230722_CLUS_0505 reflect stable functional subtypes of mature
-    granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0505, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (none) in cluster CS20230722_CLUS_0505 reflect stable functional subtypes of 
+    mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0505.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm
-    spatial overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0505.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to 
+    confirm spatial overlap.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0508
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0508
@@ -2033,20 +1288,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      Neurod2, Prox1, Egr2, Egr4 serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, Neurod2, Prox1, Egr2, Egr4 serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -2058,20 +1313,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0508
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -2080,15 +1335,15 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0508
       covers the DG do (dorsal outer GCL) subpopulation. All nine clusters together constitute the full classical type.'
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0508, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (Cck, Pdyn) in cluster CS20230722_CLUS_0508 reflect stable functional subtypes of
-    mature granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0508, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (Cck, Pdyn) in cluster CS20230722_CLUS_0508 reflect stable functional subtypes
+    of mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0508.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm
-    spatial overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0508.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to 
+    confirm spatial overlap.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0504
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0504
@@ -2109,20 +1364,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      Prox1, Nr4a3, Egr3, Rorb serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, Prox1, Nr4a3, Egr3, Rorb serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -2134,20 +1389,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0504
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -2156,18 +1411,19 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0504
       covers the DG ve (ventral GCL) subpopulation. All nine clusters together constitute the full classical type.'
   - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
-    description: CCF broad includes sAMY:0.2; ventral hippocampal registration ambiguity. The authoritative anatomical_location
-      field specifies the correct DG assignment; CCF broad annotation ambiguity does not alter the soma location claim.
+    description: CCF broad includes sAMY:0.2; ventral hippocampal registration ambiguity. The authoritative 
+      anatomical_location field specifies the correct DG assignment; CCF broad annotation ambiguity does not alter the 
+      soma location claim.
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0504, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (Grp, Penk, Cck, Cartpt) in cluster CS20230722_CLUS_0504 reflect stable functional
-    subtypes of mature granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0504, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (Grp, Penk, Cck, Cartpt) in cluster CS20230722_CLUS_0504 reflect stable 
+    functional subtypes of mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0504.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm spatial
-    overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0504.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm 
+    spatial overlap.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0510
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0510
@@ -2187,20 +1443,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      St18, Lhx9, Nr2f2 serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, St18, Lhx9, Nr2f2 serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -2212,20 +1468,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0510
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -2234,15 +1490,15 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0510
       covers the DG po (posterior GCL) subpopulation. All nine clusters together constitute the full classical type.'
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0510, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (Cck, Grp, Pdyn) in cluster CS20230722_CLUS_0510 reflect stable functional subtypes
-    of mature granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0510, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (Cck, Grp, Pdyn) in cluster CS20230722_CLUS_0510 reflect stable functional 
+    subtypes of mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0510.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG po (posterior GCL) region to confirm spatial
-    overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0510.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG po (posterior GCL) region to confirm
+    spatial overlap.
 - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0509
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0509
@@ -2262,20 +1518,20 @@ edges:
     node_a_value: Calbindin (Calb1); PROTEIN; positive (cardinal mature marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally differentiated
-      cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
+    notes: Calb1 mRNA may be present below atlas detection threshold or accumulate post-transcriptionally in terminally 
+      differentiated cells. Atlas subclass mapping notes assert calbindin expression for DG Glut broadly.
   - property: marker_NeuN
     node_a_value: NeuN (Rbfox3); PROTEIN; positive (postmitotic marker)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential expression
-      framework.
+    notes: Rbfox3 broadly expressed across mature neurons; non-discriminating at cluster level in the atlas differential
+      expression framework.
   - property: marker_Tbr1
     node_a_value: Tbr1; PROTEIN; positive (postmitotic granule neuron TF; Hodge et al. 2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers Glis3,
-      Neurod2, Atf3, Bhlhe41, Cebpb serve as the atlas correlates of mature granule identity for this cluster.
+    notes: Tbr1 marks postmitotic granule cells broadly and is non-discriminating at cluster level. Surrogate TF markers
+      Glis3, Neurod2, Atf3, Bhlhe41, Cebpb serve as the atlas correlates of mature granule identity for this cluster.
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -2287,20 +1543,20 @@ edges:
     cell_set_accession: CS20230722_CLUS_0509
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this
-      terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream
-      neuroblast and immature GN clusters.
+    explanation: Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent 
+      this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from 
+      upstream neuroblast and immature GN clusters.
     reference: PMID:40519263
-    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually
-      become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+    snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and 
+      eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
     study_type: REVIEW
   - evidence_type: LITERATURE
     supports: SUPPORT
-    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+
-      mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
+    explanation: Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the
+      Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker.
     reference: PMID:18385329
-    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because
-      Tbr1 never colocalized with nestin-GFP.
+    snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
+      because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
   caveats:
   - *id001
@@ -2309,15 +1565,15 @@ edges:
       topographic variants (dorsal/ventral/posterior GCL) and neuropeptide/functional variants. Cluster CS20230722_CLUS_0509
       covers the DG do (dorsal outer GCL) subpopulation. All nine clusters together constitute the full classical type.'
   unresolved_questions:
-  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0509, or does calbindin protein arise via
-    post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
-  - Do the distinct neuropeptide profiles (Cck, Pdyn, Npy) in cluster CS20230722_CLUS_0509 reflect stable functional subtypes
-    of mature granule neurons or transient activity-dependent states?
+  - Is Calb1 mRNA expressed but below atlas detection threshold in CS20230722_CLUS_0509, or does calbindin protein arise
+    via post-transcriptional regulation? MERFISH or smFISH with Calb1 probe would resolve this.
+  - Do the distinct neuropeptide profiles (Cck, Pdyn, Npy) in cluster CS20230722_CLUS_0509 reflect stable functional 
+    subtypes of mature granule neurons or transient activity-dependent states?
   proposed_experiments:
-  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells
-    mapping to CS20230722_CLUS_0509.
-  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm
-    spatial overlap.
+  - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within 
+    cells mapping to CS20230722_CLUS_0509.
+  - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to 
+    confirm spatial overlap.
 - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0511
   type_a: dg_type2b_progenitor
   type_b: CS20230722_CLUS_0511
@@ -2328,38 +1584,33 @@ edges:
     node_a_value: glutamatergic (lineage committed, not yet functional)
     node_b_value: Glut (Slc17a6 MERFISH score 6.02)
     alignment: CONSISTENT
-    notes: Both glutamatergic; Slc17a6 (vGLUT2) present in cluster defining_markers
-      confirms lineage commitment.
+    notes: Both glutamatergic; Slc17a6 (vGLUT2) present in cluster defining_markers confirms lineage commitment.
   - property: location_soma
     node_a_value: UBERON:0009952 dentate gyrus subgranular zone (SGZ)
     node_b_value: DG STR (DG-STR boundary, MERFISH); CCF NA:0.75, CTXsp:0.12
     alignment: CONSISTENT
-    notes: MERFISH validates Eomes and Igfbpl1 at DG-STR boundary (= SGZ). CCF NA:0.75
-      is a known registration artefact at the sparse SGZ margin; MERFISH label is the
-      reliable anatomical assignment here.
+    notes: MERFISH validates Eomes and Igfbpl1 at DG-STR boundary (= SGZ). CCF NA:0.75 is a known registration artefact 
+      at the sparse SGZ margin; MERFISH label is the reliable anatomical assignment here.
   - property: marker_Eomes
-    node_a_value: Eomes (=Tbr2); PROTEIN; positive (IHC, canonical type-2b TF; Hodge
-      et al. 2008)
+    node_a_value: Eomes (=Tbr2); PROTEIN; positive (IHC, canonical type-2b TF; Hodge et al. 2008)
     node_b_value: Eomes; present in defining_markers (atlas differential marker)
     alignment: CONSISTENT
-    notes: Eomes/Tbr2 is the canonical type-2b intermediate progenitor transcription
-      factor. Its presence in both the classical protein IHC definition and the atlas
-      cluster transcriptomic markers is the primary molecular anchor for this edge.
+    notes: Eomes/Tbr2 is the canonical type-2b intermediate progenitor transcription factor. Its presence in both the 
+      classical protein IHC definition and the atlas cluster transcriptomic markers is the primary molecular anchor for 
+      this edge.
   - property: marker_Nestin
-    node_a_value: Nestin; PROTEIN; positive (IHC, co-expressed with DCX at type-2b
-      stage)
+    node_a_value: Nestin; PROTEIN; positive (IHC, co-expressed with DCX at type-2b stage)
     node_b_value: not present in defining_markers
     alignment: NOT_ASSESSED
-    notes: Nestin/Nes mRNA is broadly expressed across progenitor populations and likely
-      filtered from cluster-level differential marker selection.
+    notes: Nestin/Nes mRNA is broadly expressed across progenitor populations and likely filtered from cluster-level 
+      differential marker selection.
   - property: marker_DCX
-    node_a_value: DCX; PROTEIN; positive at low levels (IHC; 64% of Tbr2+ cells co-label
-      DCX at low expression; Hodge 2008)
+    node_a_value: DCX; PROTEIN; positive at low levels (IHC; 64% of Tbr2+ cells co-label DCX at low expression; Hodge 
+      2008)
     node_b_value: not present in defining_markers
     alignment: APPROXIMATE
-    notes: DCX protein is expressed at low levels in type-2b progenitors. Low-abundance
-      transcripts are filtered from cluster differential markers; Dcx mRNA in cluster
-      0511 cells is likely below the selection threshold.
+    notes: DCX protein is expressed at low levels in type-2b progenitors. Low-abundance transcripts are filtered from 
+      cluster differential markers; Dcx mRNA in cluster 0511 cells is likely below the selection threshold.
   - property: marker_NeuN
     node_a_value: NeuN; NEGATIVE (progenitor stage; not yet postmitotic)
     node_b_value: absent from defining_markers
@@ -2371,56 +1622,47 @@ edges:
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
-    explanation: 'Atlas curator cl_mapping on CS20230722_CLUS_0511: BROAD CL:9900004
-      (dentate gyrus type-2b neural progenitor), annotated as "early neuroblast". Eomes
-      (=Tbr2) is a defining_marker, directly matching the canonical type-2b molecular
-      identity. Additional TF markers Sox6, Neurod1, Meis1/2, Igfbpl1 corroborate the
-      early neurogenesis stage. MERFISH validates Eomes and Igfbpl1 at DG-STR (SGZ).
-      NT: Slc17a6 (Glut).'
+    explanation: 'Atlas curator cl_mapping on CS20230722_CLUS_0511: BROAD CL:9900004 (dentate gyrus type-2b neural progenitor),
+      annotated as "early neuroblast". Eomes (=Tbr2) is a defining_marker, directly matching the canonical type-2b molecular
+      identity. Additional TF markers Sox6, Neurod1, Meis1/2, Igfbpl1 corroborate the early neurogenesis stage. MERFISH validates
+      Eomes and Igfbpl1 at DG-STR (SGZ). NT: Slc17a6 (Glut).'
     atlas: Allen Brain Cell Atlas CCN202307220
     cell_set_accession: CS20230722_CLUS_0511
   - evidence_type: LITERATURE
     supports: SUPPORT
     reference: PMID:18385329
-    snippet: The majority of Tbr2+ cells colabeled with DCX (64.4 ± 4.7%). In general,
-      these cells had low DCX expression, with either no processes or short, tangentially
-      oriented processes, typical of type-2 cells.
-    explanation: Hodge et al. 2008 established Tbr2/Eomes as the canonical type-2b
-      marker. The Eomes+ defining_marker in cluster 0511 is the direct transcriptomic
-      correlate of the IHC-defined Tbr2+ type-2b population.
+    snippet: The majority of Tbr2+ cells colabeled with DCX (64.4 ± 4.7%). In general, these cells had low DCX 
+      expression, with either no processes or short, tangentially oriented processes, typical of type-2 cells.
+    explanation: Hodge et al. 2008 established Tbr2/Eomes as the canonical type-2b marker. The Eomes+ defining_marker in
+      cluster 0511 is the direct transcriptomic correlate of the IHC-defined Tbr2+ type-2b population.
     study_type: EXPERIMENTAL
   - evidence_type: LITERATURE
     supports: SUPPORT
     reference: PMID:40519263
-    snippet: 'Neural stem cells (NSCs) progressively develop into proliferating neural
-      progenitor cells (NPCs), designated as type-2a (Nestin+/Sox2+), type-2b cells
-      (expressing Nestin and doublecortin: Nestin+/DCX+) and neuroblasts (type-3, DCX+).'
-    explanation: Confirms the classical type-2b signature (Nestin+/DCX+/Eomes+) that
-      cluster 0511 anchors transcriptomically via Eomes.
+    snippet: 'Neural stem cells (NSCs) progressively develop into proliferating neural progenitor cells (NPCs), designated
+      as type-2a (Nestin+/Sox2+), type-2b cells (expressing Nestin and doublecortin: Nestin+/DCX+) and neuroblasts (type-3,
+      DCX+).'
+    explanation: Confirms the classical type-2b signature (Nestin+/DCX+/Eomes+) that cluster 0511 anchors 
+      transcriptomically via Eomes.
     study_type: REVIEW
   caveats:
   - *id001
   - caveat_type: OTHER
-    description: Cluster 0511 spans the type-2b/type-3 boundary. The curator annotation
-      "early neuroblast" and the presence of Neurod1 (expressed from the neuroblast
-      stage onward) indicate that some cells in this cluster may have already progressed
-      past the type-2b stage. PARTIAL_OVERLAP reflects that type-2b progenitors are
-      the dominant population but the cluster is not exclusive to this stage.
+    description: Cluster 0511 spans the type-2b/type-3 boundary. The curator annotation "early neuroblast" and the 
+      presence of Neurod1 (expressed from the neuroblast stage onward) indicate that some cells in this cluster may have
+      already progressed past the type-2b stage. PARTIAL_OVERLAP reflects that type-2b progenitors are the dominant 
+      population but the cluster is not exclusive to this stage.
   - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
-    description: CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label
-      'DG STR' places cells at the DG-STR boundary (SGZ), but CCF soma location cannot
-      be fully verified. The high NA fraction is a known artefact of sparse CCF coverage
-      at the SGZ margin.
+    description: CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label 'DG STR' places cells at the DG-STR 
+      boundary (SGZ), but CCF soma location cannot be fully verified. The high NA fraction is a known artefact of sparse
+      CCF coverage at the SGZ margin.
   unresolved_questions:
-  - Do clusters 0512 and 0513 (in dg_pir_ex_imn.yaml) together with 0511 represent
-    a progressive type-2b to type-3 transition series, and if so should the type-2b
-    node have secondary PARTIAL_OVERLAP edges to 0512/0513?
-  - Is the Gad2 signal (score 3.24) in cluster 0511 ambient RNA, a minor GABAergic
-    contaminant, or evidence of transient GABAergic signalling in type-2b progenitors?
+  - Do clusters 0512 and 0513 (in dg_pir_ex_imn.yaml) together with 0511 represent a progressive type-2b to type-3 
+    transition series, and if so should the type-2b node have secondary PARTIAL_OVERLAP edges to 0512/0513?
+  - Is the Gad2 signal (score 3.24) in cluster 0511 ambient RNA, a minor GABAergic contaminant, or evidence of transient
+    GABAergic signalling in type-2b progenitors?
   proposed_experiments:
-  - Triple-label smFISH combining Eomes, Sox6, and Nes transcripts with Tbr2 IHC to
-    confirm co-localisation of cluster 0511 signature with classical Tbr2+/Nestin+
-    type-2b cells in adult mouse SGZ.
-  - Tbr2-CreERT2 fate-mapping with snRNA-seq from sorted Tbr2+ cells followed by MapMyCells
-    projection onto CCN202307220 to assign IHC-defined type-2b cells to specific atlas
-    clusters.
+  - Triple-label smFISH combining Eomes, Sox6, and Nes transcripts with Tbr2 IHC to confirm co-localisation of cluster 
+    0511 signature with classical Tbr2+/Nestin+ type-2b cells in adult mouse SGZ.
+  - Tbr2-CreERT2 fate-mapping with snRNA-seq from sorted Tbr2+ cells followed by MapMyCells projection onto CCN202307220
+    to assign IHC-defined type-2b cells to specific atlas clusters.
