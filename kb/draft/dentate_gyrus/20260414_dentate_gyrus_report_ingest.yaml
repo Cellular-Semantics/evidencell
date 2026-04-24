@@ -128,7 +128,7 @@ nodes:
   - PMID:16157276
   - PMID:16341203
   - PMID:29412992
-  - GEO:GSE104323
+  - GEO:GSE95315
   is_terminal: false
   notes: 'The developmental sequence distinguishes type-2a (Nestin+/Sox2+), type-2b (Nestin+/DCX+), and type-3 (DCX+) stages.
     A transcription factor cascade (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1) marks stage transitions (Hodge et al. 2008). Potential
@@ -276,7 +276,7 @@ nodes:
   - PMID:15107864
   - PMID:11875571
   - PMID:29412992
-  - GEO:GSE104323
+  - GEO:GSE95315
   is_terminal: false
   notes: 'CL:9900002 was proposed based on this node — the Tbr1+/Prox1+/Igfbpl1+ marker profile from clusters 0514/0515 and
     the classical DCX+/NeuN+ description from PMID:40519263/37082558 together define the term. Tis21 expression reappears
@@ -394,7 +394,7 @@ nodes:
   - PMID:11875571
   - PMID:15107864
   - PMID:29412992
-  - GEO:GSE104323
+  - GEO:GSE95315
   is_terminal: false
   notes: 'Terminal differentiation endpoint of the adult neurogenesis lineage in the dentate gyrus. Tis21 expression decreases
     in mature granule cells compared to the maturing stage (Attardo et al. 2009). No subtypes discussed in this report.
@@ -473,7 +473,7 @@ nodes:
   - PMID:18385329
   - PMID:37082558
   - PMID:29412992
-  - GEO:GSE104323
+  - GEO:GSE95315
   is_terminal: false
   notes: 'Type-2a is the first transit-amplifying stage, distinct from the quiescent type-1 radial glia-like stem cell (GFAP+/Sox2+/Nestin+).
     The type-2a stage is not resolved as a distinct cluster in the Allen Brain Cell Atlas DG taxonomy — the earliest atlas
@@ -581,7 +581,7 @@ nodes:
   - PMID:40519263
   - PMID:37082558
   - PMID:29412992
-  - GEO:GSE104323
+  - GEO:GSE95315
   is_terminal: false
   notes: 'The Tbr2/Eomes TF is the canonical type-2b marker; Hodge et al. 2008 (PMID:18385329) established that 64% of Tbr2+
     SGZ cells co-label with DCX. Sox6 co-expression (atlas cluster 0511) provides the transcriptomic anchor. Progression from
@@ -703,6 +703,103 @@ edges:
       type-2b intermediate progenitor stage.
     atlas: Allen Brain Cell Atlas CCN202307220
     cell_set_accession: CS20230722_CLUS_0511
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_2 cells (n=777; GSE95315) to WMBv1. Subclass 038 
+      DG-PIR Ex IMN (F1=0.798) and supertype 0141 DG-PIR Ex IMN_2 (F1=0.805) are strongly supported, confirming the 
+      DG-PIR Ex IMN lineage. At cluster level the best match is 0512 DG-PIR Ex IMN_2 (F1=0.609); cluster 0511 received 
+      no cells. Neuroblast_2 may represent a slightly later transitional stage (0512/0515) rather than the 0511 
+      sub-stage. PARTIAL support for the lineage; cluster assignment uncertain.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Neuroblast_2
+    n_cells_total: 777
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 717
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.996
+      target_purity: 0.359
+      f1_score: 0.528
+      n_cells_mapped: 445
+      median_bootstrap: 0.94
+    - taxonomy_level: SUBCLASS
+      best_target_name: 038 DG-PIR Ex IMN
+      best_target_accession: CS20230722_SUBC_038
+      group_purity: 0.883
+      target_purity: 0.728
+      f1_score: 0.798
+      n_cells_mapped: 664
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0141 DG-PIR Ex IMN_2
+      best_target_accession: CS20230722_SUPT_0141
+      group_purity: 0.934
+      target_purity: 0.707
+      f1_score: 0.805
+      n_cells_mapped: 670
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      best_target_name: 0512 DG-PIR Ex IMN_2
+      best_target_accession: CS20230722_CLUS_0512
+      group_purity: 0.468
+      target_purity: 0.873
+      f1_score: 0.609
+      n_cells_mapped: 103
+      median_bootstrap: 0.96
+    best_f1_score: 0.805
+    best_mapping_level: SUPERTYPE
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_1 cells (n=97; GSE95315) to WMBv1. Best cluster is 
+      0513 DG-PIR Ex IMN_2 (F1=0.788, group_purity=0.75, target_purity=0.83). Cluster 0511 received no cells. Combined 
+      with Neuroblast_2 mapping to 0512, the transfer resolves Hochgerner neuroblasts primarily to clusters 0512 and 
+      0513. PARTIAL support at the DG-PIR Ex IMN lineage level.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Neuroblast_1
+    n_cells_total: 97
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 93
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 1.0
+      target_purity: 0.053
+      f1_score: 0.101
+      n_cells_mapped: 66
+      median_bootstrap: 0.92
+    - taxonomy_level: SUBCLASS
+      best_target_name: 038 DG-PIR Ex IMN
+      best_target_accession: CS20230722_SUBC_038
+      group_purity: 0.959
+      target_purity: 0.102
+      f1_score: 0.184
+      n_cells_mapped: 93
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0141 DG-PIR Ex IMN_2
+      best_target_accession: CS20230722_SUPT_0141
+      group_purity: 1.0
+      target_purity: 0.098
+      f1_score: 0.179
+      n_cells_mapped: 93
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      best_target_name: 0513 DG-PIR Ex IMN_2
+      best_target_accession: CS20230722_CLUS_0513
+      group_purity: 0.75
+      target_purity: 0.83
+      f1_score: 0.788
+      n_cells_mapped: 39
+      median_bootstrap: 1.0
+    best_f1_score: 0.788
+    best_mapping_level: CLUSTER
   caveats:
   - &id001
     caveat_type: MARKER_NOT_SPECIFIC
@@ -805,6 +902,55 @@ edges:
     snippet: Concomitant with this, an increasing proportion of the BrdU/Tis21-GFP-double-positive cells expressed 
       markers of postmitotic neurons, that is, NeuN and CB
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-immature cells (n=1333; GSE95315) to WMBv1. The majority
+      map to 037 DG Glut (F1=0.566 subclass) and best cluster 0507 DG Glut_2 (F1=0.510), consistent with an immature 
+      granule neuron identity. A minority (27 cells, 2%) map to cluster 0514 DG-PIR Ex IMN_2 (F1=0.211), suggesting 
+      overlap with a transitional neuroblast-like population. Weak PARTIAL support for 0514; the dominant atlas 
+      representation is the DG Glut lineage (0506/0507).
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-immature
+    n_cells_total: 1333
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 1051
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.983
+      target_purity: 0.332
+      f1_score: 0.496
+      n_cells_mapped: 411
+      median_bootstrap: 0.89
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.846
+      target_purity: 0.426
+      f1_score: 0.566
+      n_cells_mapped: 889
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.469
+      f1_score: 0.573
+      n_cells_mapped: 728
+      median_bootstrap: 0.98
+    - taxonomy_level: CLUSTER
+      best_target_name: 0507 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0507
+      group_purity: 0.357
+      target_purity: 0.892
+      f1_score: 0.51
+      n_cells_mapped: 66
+      median_bootstrap: 0.915
+    best_f1_score: 0.566
+    best_mapping_level: SUBCLASS
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -877,6 +1023,22 @@ edges:
   - *id002
   - *id003
   - *id004
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: NO_EVIDENCE
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-immature cells (n=1333; GSE95315) to WMBv1. Cluster 0515
+      DG-PIR Ex IMN_2 receives no Granule-immature cells (F1=0.0). Instead, 0515 is preferentially occupied by 
+      Hochgerner Neuroblast_2 (F1=0.483, target_purity=1.0 — all 0515-mapped cells derive from Neuroblast_2), suggesting
+      0515 represents a later neuroblast stage rather than immature granule neurons. Transfer does not support 
+      Granule-immature as the source for this cluster.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-immature
+    n_cells_total: 1333
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 1051
+    best_f1_score: 0.0
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -900,7 +1062,7 @@ edges:
   type_a: dg_mature_granule_neuron
   type_b: CS20230722_CLUS_0506
   relationship: TYPE_A_SPLITS
-  confidence: LOW
+  confidence: MODERATE
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -952,6 +1114,54 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0506 
+      DG Glut_2 is the best cluster match (F1=0.665, group_purity=0.833, target_purity=0.553). Subclass 037 DG Glut 
+      achieves F1=0.711 (group_purity=0.980). High group purity (83% of confident cluster-level cells map to 0506) 
+      confirms this as the primary atlas correlate of mature granule neurons in Hochgerner 2018.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 1190
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1024,6 +1234,20 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: NO_EVIDENCE
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0503 
+      receives no Granule-mature cells above bootstrap threshold (F1=0.0). Primary mapping is to 0506 DG Glut_2 
+      (F1=0.665) and subclass 037 DG Glut (F1=0.711). Annotation transfer does not independently confirm this edge.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 132
+    best_f1_score: 0.0
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1096,6 +1320,20 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0507 
+      DG Glut_2 receives 7 cells from Granule-mature (F1=0.068, group_purity=0.053). Very weak PARTIAL support; dominant
+      mapping is to 0506 (F1=0.665).
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 132
+    best_f1_score: 0.068
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1169,6 +1407,20 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: NO_EVIDENCE
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0502 
+      receives no Granule-mature cells above bootstrap threshold (F1=0.0). Primary mapping is to 0506 DG Glut_2 
+      (F1=0.665) and subclass 037 DG Glut (F1=0.711). Annotation transfer does not independently confirm this edge.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 132
+    best_f1_score: 0.0
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1245,6 +1497,20 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: NO_EVIDENCE
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0505 
+      receives no Granule-mature cells above bootstrap threshold (F1=0.0). Primary mapping is to 0506 DG Glut_2 
+      (F1=0.665) and subclass 037 DG Glut (F1=0.711). Annotation transfer does not independently confirm this edge.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 132
+    best_f1_score: 0.0
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1317,6 +1583,20 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: NO_EVIDENCE
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0508 
+      receives no Granule-mature cells above bootstrap threshold (F1=0.0). Primary mapping is to 0506 DG Glut_2 
+      (F1=0.665) and subclass 037 DG Glut (F1=0.711). Annotation transfer does not independently confirm this edge.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 132
+    best_f1_score: 0.0
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1390,6 +1670,20 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: NO_EVIDENCE
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0504 
+      receives no Granule-mature cells above bootstrap threshold (F1=0.0). Primary mapping is to 0506 DG Glut_2 
+      (F1=0.665) and subclass 037 DG Glut (F1=0.711). Annotation transfer does not independently confirm this edge.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 132
+    best_f1_score: 0.0
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1466,6 +1760,20 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: NO_EVIDENCE
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0510 
+      receives no Granule-mature cells above bootstrap threshold (F1=0.0). Primary mapping is to 0506 DG Glut_2 
+      (F1=0.665) and subclass 037 DG Glut (F1=0.711). Annotation transfer does not independently confirm this edge.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 132
+    best_f1_score: 0.0
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1538,6 +1846,20 @@ edges:
     snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, 
       because Tbr1 never colocalized with nestin-GFP.
     study_type: EXPERIMENTAL
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0509 
+      DG Glut_3 receives 12 cells from Granule-mature (F1=0.167, group_purity=0.091, target_purity=1.0). Low group 
+      purity; 0509 is not a dominant target. Weak PARTIAL support.
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Granule-mature
+    n_cells_total: 1712
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 132
+    best_f1_score: 0.167
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1626,6 +1948,54 @@ edges:
     explanation: Confirms the classical type-2b signature (Nestin+/DCX+/Eomes+) that cluster 0511 anchors 
       transcriptomically via Eomes.
     study_type: REVIEW
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    explanation: 'MapMyCells transfer of Hochgerner 2018 nIPC cells (n=88; GSE95315) to WMBv1. Cluster 0511 receives no nIPC
+      cells. Closest DG-PIR Ex IMN match: cluster 0513 (F1=0.225, 8 cells). Strongest supertype hit is 0166 OB-STR-CTX Inh
+      IMN_1 (F1=0.508), reflecting heterogeneity in the Hochgerner nIPC label (likely mixed type-2a/2b progenitors). Transfer
+      neither confirms nor strongly refutes the type2b → 0511 mapping.'
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: nIPC
+    n_cells_total: 88
+    target_atlas: WMBv1
+    method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+    bootstrap_threshold: 0.8
+    n_cells_after_filter: 83
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 05 OB-IMN GABA
+      best_target_accession: CS20230722_CLAS_05
+      group_purity: 0.345
+      target_purity: 0.833
+      f1_score: 0.488
+      n_cells_mapped: 10
+      median_bootstrap: 0.9
+    - taxonomy_level: SUBCLASS
+      best_target_name: 045 OB-STR-CTX Inh IMN
+      best_target_accession: CS20230722_SUBC_045
+      group_purity: 0.349
+      target_purity: 0.229
+      f1_score: 0.276
+      n_cells_mapped: 30
+      median_bootstrap: 1.0
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0166 OB-STR-CTX Inh IMN_1
+      best_target_accession: CS20230722_SUPT_0166
+      group_purity: 0.361
+      target_purity: 0.857
+      f1_score: 0.508
+      n_cells_mapped: 30
+      median_bootstrap: 1.0
+    - taxonomy_level: CLUSTER
+      best_target_name: 0513 DG-PIR Ex IMN_2
+      best_target_accession: CS20230722_CLUS_0513
+      group_purity: 0.333
+      target_purity: 0.17
+      f1_score: 0.225
+      n_cells_mapped: 8
+      median_bootstrap: 1.0
+    best_f1_score: 0.225
+    best_mapping_level: CLUSTER
   caveats:
   - *id001
   - caveat_type: OTHER
