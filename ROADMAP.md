@@ -120,6 +120,19 @@ exists on every node row, so queries within a single atlas work unchanged.
 
 - [ ] **`map-cell-type.md` progressive rewrite** — direct KB writes; biologist report review is the main gate; remove per-edge curator gates except reference weeding `#map-cell-type`
 - [ ] Curation mode vs dev mode — review workflow mode split (WORKFLOW.md / CLAUDE.md routing)
+### Deliverables
+
+1. **Contract inventory**: a table in `CLAUDE.md` (curation guide) documenting every inter-workflow handover — what file is passed, what workflow produces it, what workflow consumes it, and whether it has a formal schema.
+2. **Schema coverage map**: for each handover, classify as: (a) LinkML-validated, (b) Pydantic-validated (from M2L), (c) prose-only, (d) unspecified. Target: zero (d), minimal (c).
+3. **Inter-workflow handover specs**: Pydantic or LinkML models for the key handover objects that aren't already covered — especially `initial_summaries` format, proposed evidence items, and atlas metadata input.
+4. **Graduation criteria**: formalise what it means to move content from `kb/draft/` to `kb/mappings/`. Currently "after just qc" — define precisely which checks must pass, whether intermediate workflow artifacts (cite_traverse/, evidence_extraction/) are retained or archived, and what the human review gate looks like.
+5. **User-facing terminology**: replace internal jargon at workflow gates. "Add stubs and continue research" → "Expand scope: add newly discovered types". "Proceed to extraction" → "Lock down: extract evidence for current types". "Graduate" → "Promote to validated KB".
+
+### Relationship to other milestones
+
+- **M2L** feeds into WC: cite-traverse contracts are the first and most complex case. M2L solves it for lit search; WC generalises.
+- **M6** (code/content separation) depends on WC: you can't cleanly separate content from code if the handover formats aren't stable.
+- **Cross-cutting point #3** (file structure) in this roadmap is the seed discussion; WC is the actionable plan.
 
 ---
 

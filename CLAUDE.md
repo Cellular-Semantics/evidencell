@@ -1,41 +1,116 @@
-# CLAUDE.md
+# CLAUDE.md — evidencell curation guide
 
-This file provides guidance to Claude Code when working in the **evidencell** repository.
+This is the **default** guidance loaded by Claude Code in this repository. It
+describes the curation workflow: which orchestrator to run, when, and with what
+inputs. Curation work — KB YAML, references, reports, research artifacts, and
+dev-request reports — is in scope here.
 
-## Project
+Dev work on `src/`, `schema/`, or the `justfile` is out of scope by default; see
+**Curation mode** below and `CLAUDE_dev.md` for the dev-mode companion.
 
-evidencell is a LinkML-based knowledge base for cell type mapping evidence — linking classical cell types to modern transcriptomic atlas clusters. It combines a structured schema, a curated KB of mapping YAML files, Python tooling, and an ASTA-powered literature review workflow.
+---
 
-## Repo structure
+## Curation mode
 
-```
-schema/                  # LinkML schema (source of truth for KB structure)
-kb/mappings/{region}/    # canonical, validated mapping graphs (YAML only)
-kb/draft/{region}/       # work-in-progress graphs (YAML only); graduate via just qc
-references/{region}/     # references.json — shared quote store per region
-research/{region}/       # research artifacts: field_mapping, cite_traverse, evidence_extraction
-reports/{region}/        # human-readable summary + drill-down reports
-inputs/deepsearch/       # ASTA deep research PDFs used as literature discovery input
-inputs/taxonomies/       # taxonomy table slices (CSV/TSV) used for ingest-taxonomy
-src/evidencell/          # all Python logic (validation, rendering, compliance, fetching)
-workflows/               # multi-step curation orchestrators (see below)
-.claude/hooks/           # pre-edit validation hook (runs before KB writes)
-.claude/skills/          # bounded single-focus tasks, called interactively
-.claude/agents/          # shared subagent personas (reserved; populate if needed)
-references_cache/        # cached ASTA reference text for snippet provenance
-justfile                 # thin task runner — all logic lives in src/evidencell/
-WORKFLOW.md              # guide: which orchestrator to run, when, and with what inputs
-```
+Writable zones in this session:
 
-## Orchestrators vs skills
+- `kb/draft/**`, `kb/taxonomy/**` — KB YAML under pre-edit validation
+- `references/**` — reference stores under ingest-path governance
+- `reports/**` — generated reports under pre-edit validation
+- `research/**` — research artifacts (field mappings, summaries, traversals)
+- `planning/dev_requests/**` — dev-request reports (see "Hitting a wall" below)
 
-**Multi-step curation workflows live in `workflows/` as orchestrators.** An orchestrator holds the control flow explicitly, spawns subagents with verbatim prompts, and stores state in files on disk. This is the pattern from `lit-review.md` — reliable because the orchestrator enforces sequencing and gates; subagents cannot skip steps they don't know exist.
+Out of scope: `src/`, `schema/`, `justfile`, `.claude/`, and `workflows/`.
+The pre-edit hook rejects writes to these paths in curation mode. This is a deliberate barrier against
+accidental code/schema edits during curation sessions — schema fixes as a
+response to a validation error are a common and dangerous anti-pattern. Code
+and schema changes land through normal dev-mode sessions and PR review
+against `main`, not through curation workflows.
 
-**Single-focus bounded tasks live in `.claude/skills/`.** A skill is a prompt library for a constrained, well-defined action (review a PR, present a catalogue for weeding). Skills give Claude discretion over execution and are appropriate when the task is simple enough that that discretion does not matter.
+### Hitting a wall
 
-**Do not implement a multi-step workflow as a skill.** Skills give Claude room to approximate the workflow, taking shortcuts and collapsing validation gates. For anything with sequential steps, conditional logic, or human review gates, write an orchestrator in `workflows/`.
+When a workflow step needs functionality that doesn't yet exist in `src/`, or
+when a validation error reveals a real schema gap, do **not** attempt to fix
+code or schema directly. Instead:
 
-There is no meta-orchestrator driving the whole pipeline. The human is the top-level coordinator: they run each phase orchestrator when ready, review the output at each gate, and proceed at their own pace. `WORKFLOW.md` documents what to run when.
+1. **File a dev-request report** at
+   `planning/dev_requests/{YYYY-MM-DD}_{short-slug}.md` describing: what
+   orchestrator step is blocked, what's missing, a proposed surface (what
+   would need to be added or changed and where), and what was tried.
+2. **Or load `CLAUDE_dev.md`** explicitly when you're authorised to do dev
+   work this session. Schema changes in particular MUST be discussed and
+   reviewed before implementation — they are occasionally legitimate (new
+   taxonomy import, a novel mapping scenario) but almost never the right
+   response to a validation error.
+
+---
+
+## Milestone status
+
+| Milestone | Description | Status |
+|---|---|---|
+| M1 | Taxonomy ingest → atlas cluster stubs | **Complete** |
+| M2 | Literature retrieval pipeline (ASTA ingest, cite-traverse, evidence extraction) | **Complete** |
+| M3 | Mapping (property comparison, edge YAML, confidence assessment) | **Complete** |
+| M4 | Report generation (summary + drill-down, LLM synthesis, anti-hallucination hooks) | **Complete** |
+| M5 | Annotation transfer evidence | **In progress** — pipeline implemented, orchestrator pending |
+| M7 | KB structure cleanup (Phase 1: directory restructure) | **Complete** |
+| M8 | Taxonomy reference DB — compact YAML + SQLite query index | **In progress** — Phase 1 complete; Phase 2–3: KB graphs use minimal taxonomy ref stubs |
+| S1 | Taxonomy rank encoding — integer ranks replace hardcoded level names | **Complete** — schema, ingest, DB, find-candidates, map-cell-type all use integer ranks |
+
+---
+
+## How to run a workflow
+
+When asked to run a workflow, open the referenced orchestrator in `workflows/` and execute
+its steps in order. The orchestrator is the authority — do not plan independently or
+research prerequisites that the orchestrator already addresses. Use the skills and tools
+it references. Stop at steps marked `[GATE]` and present results for human review before
+proceeding.
+
+---
+
+## KB data management principles
+
+### Properties live on nodes; edges compare
+
+All biological properties (markers, NT type, anatomy, sex ratio, expression
+profiles) are stored on `CellTypeNode` entries. Mapping edges document how
+properties on two nodes compare — they never introduce new property assertions.
+This means the mapper always sees a node's full property set regardless of which
+mapping graph references it.
+
+### Taxonomy reference YAML is canonical for atlas properties
+
+Atlas node properties belong in `kb/taxonomy/{id}/*.yaml`, not on stub nodes
+inside mapping graphs. Mapping graphs reference taxonomy nodes by accession;
+stubs carry only: `id`, `name`, `definition_basis`, `taxonomy_id`,
+`cell_set_accession`.
+
+**Known violation:** `precomputed_expression` blocks currently live on atlas
+stubs in `kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`.
+These should migrate to the taxonomy reference store using
+`just add-expression` (see below).
+
+### Taxonomy update operations
+
+Two managed operations update taxonomy YAML while preserving enrichments:
+
+- **`just add-expression`** — write `PrecomputedExpression` blocks from HDF5
+  stats to taxonomy nodes. Requires a gene mapping TSV (generate once with
+  `just generate-gene-mapping`). Supports cluster and supertype levels.
+- **`just reingest`** — re-ingest from source JSON while preserving enrichment
+  fields (`precomputed_expression`, `electrophysiology`, `morphology`, etc.).
+  Nodes removed in the new source are flagged for review, not silently dropped.
+  Use `just reingest-dry` to preview changes.
+
+Field ownership is explicit: `INGEST_FIELDS` are replaced from the new source,
+`ENRICHMENT_FIELDS` are preserved from old data. Both sets are declared in
+`src/evidencell/taxonomy_ops.py`.
+
+The old flush-and-replace ingest (`just ingest-taxonomy-db`) still works but
+does NOT preserve enrichments. Use `just reingest` when taxonomy nodes have
+post-ingest enrichments.
 
 **Keep `WORKFLOW.md` current.**
 
@@ -45,71 +120,142 @@ There is no meta-orchestrator driving the whole pipeline. The human is the top-l
 |---|---|
 | `query-taxonomy-db` | Any taxonomy candidate search, field coverage check, or DB exploration. **Do not read taxonomy YAML files directly for query purposes** — the DB is the query interface; YAML is the edit interface. |
 | `retrieve-dataset` | Downloading and inspecting an expression dataset (h5ad, RDS, loom, mtx). | Any time an orchestrator is added, removed, renamed, or its status changes, update `WORKFLOW.md` in the same commit. The overview table, inputs table, and typical workflow diagram must all reflect the current state. Never leave a stale status entry or a duplicate section.
+### Provenance
 
-## Code quality
+The schema provides `PropertySource` as a general provenance record: `ref`
+(PMID or DOI), `method`, `scope`, `snippet`/`quote_key`, `notes`.
 
-- Run `just qc` before committing. This covers schema validation, ontology term checking, and snippet provenance.
-- All Python logic longer than ~10 lines belongs in `src/evidencell/`, not in justfile shell blocks. `justfile` recipes are thin dispatchers.
-- `ruff` for linting, `mypy` for type checking. Both must pass cleanly.
-- `pytest` for unit tests. The ported KB examples are the test fixtures — if a schema or rendering change breaks them, CI catches it.
+As of v0.8.0, provenance is nested on property objects rather than in
+separate per-property source fields. Each property carries its own `sources`
+list:
 
-## Testing
+- `electrophysiology.sources` — on `ElectrophysiologyProfile`
+- `morphology.sources` — on `MorphologyProfile`
+- `anatomical_location[].sources` — on each `AnatomicalLocation` entry
+- `nt_type.sources` — on `NeurotransmitterType`
+- `GeneDescriptor.sources` — as `MarkerSource` (adds `marker_type`)
 
-Three test tiers keep runs cheap:
+This gives natural scoping (each source is attached to the assertion it
+supports), clean RDF mapping (blank nodes, no reification needed), and
+eliminates the former per-property field proliferation (`ephys_sources`,
+`morphology_sources`, `location_sources` — all removed in v0.8.0).
 
-| Tier | Command | When to run |
-|------|---------|-------------|
-| Smoke | `just smoke` | After any dependency update — verifies external CLI interfaces haven't changed |
-| Fast | `just test-fast` | Normal dev loop — all unit tests, no OAK DB or network |
-| Full | `just test` | Pre-commit and CI — includes integration tests |
+`definition_references` (list of PMID/DOI strings) is retained as a
+flat field — these are general node-level citations, not property-scoped.
 
-**What to write as you develop:**
+Atlas node provenance follows a different convention: properties from
+taxonomy ingest have implicit provenance from `taxonomy_meta.yaml`
+(`source_file`, `ingest_date`). No per-field `PropertySource` entries are
+needed on `ATLAS_TRANSCRIPTOMIC` nodes — the atlas and `cell_set_accession`
+are the citation.
 
-- **New `src/evidencell/` module** → unit tests in `tests/test_<module>.py`. Test pure logic with in-process data; mock `subprocess.run` for any CLI calls.
-- **New external CLI invocation** (new tool added to justfile or `validate.py`) → add a `--help` probe to `tests/test_tool_interfaces.py` asserting the subcommand and key flags exist. This is what catches "wrong subcommand" bugs like the `linkml-term-validator` regression.
-- **New hook behaviour** → add a case to `tests/test_hook_integration.py` (valid YAML → exits 0, bad YAML → exits 2).
-- **New KB schema class or required field** → graduated files in `kb/mappings/` are the strict schema fixtures; `test_kb_examples.py` validates them on every `just test` run. Draft files in `kb/draft/` are only checked for YAML parseability — schema conformance for drafts is the job of `just qc-draft` and the pre-edit hook.
+### Use `notes` fields, not YAML comments
 
-**What NOT to write tests for:**
+YAML comments (`# ...`) are not preserved by programmatic round-trips
+(e.g. `yaml.safe_load()` → `yaml.dump()`). Any annotation that must
+survive automated processing — caveats, heterogeneity observations,
+cross-references to other nodes — belongs in a `notes` field on the
+relevant object, not in a YAML comment. Reserve comments for transient
+developer-facing hints that are acceptable to lose.
 
-- OAK DB term lookups — too heavy; validate terms interactively with `runoak` before committing.
-- Workflow orchestrators (`workflows/*.md`) — these are prose + control flow, not Python code; test them by running them, not by unit-testing them.
-- Stub modules (`fetch.py`, `render.py`, `compliance.py`) — add tests when the implementation lands.
-- Just recipe shell glue — trivial file-existence / grep logic; not worth mocking.
+---
 
-**Regression rule:** if a bug slips through `just qc` or `just test` once, add a targeted test before fixing it so it cannot regress silently.
+## Overview
 
-## Anti-hallucination mechanisms
+The human is the top-level coordinator. Run each orchestrator when ready, review the output at each gate, and proceed at your own pace. There is no meta-orchestrator.
 
-Anti-hallucination is a **central design principle** of all evidencell workflows. The system
-enforces correctness structurally rather than relying on self-correction.
+| Orchestrator | Location | Phase | Status | When to run |
+|---|---|---|---|---|
+| `ingest-taxonomy` | `workflows/ingest-taxonomy.md` | Discovery | **Ready** | Ingest a taxonomy table → atlas cluster CellTypeNode stubs |
+| `asta-report-ingest` | `workflows/asta-report-ingest.md` | Literature | **Ready** | Start here when you have an ASTA deep research PDF — proposes classical nodes + initial evidence |
+| `survey` | `workflows/survey.md` | Literature | **Ready** | Broad snippet scan of ASTA corpus for a region → all_summaries.json; no synthesis, no KB write |
+| `lit-review` | `workflows/lit-review.md` | Literature | **Experimental stub** | Seed discovery when starting without a report; may be revived; do not use in regular workflows |
+| `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; call as a skill for targeted follow-up, not primary discovery |
+| `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After survey or asta-report-ingest — writes PropertySource entries with quote_key to KB YAML |
+| `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: queries taxonomy DB at multiple ranks (0=leaf, 1, 2…) for candidate atlas matches; hypothesis mode: tests curator's proposed mapping. Uses `just find-candidates` with rank parameter. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
+| `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
+| `annotation-transfer` | `workflows/annotation-transfer.md` | Evidence transfer | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
 
-Two complementary mechanisms:
+---
 
-1. **Pre-write hooks** (`.claude/hooks/`) — triggered automatically before any `Edit` or
-   `Write` to KB YAML or reports. If the hook rejects, fix the underlying content — do not
-   attempt to bypass the hook.
+## Anti-hallucination infrastructure
 
-2. **Validation subagents** (within orchestrators) — spawned after LLM synthesis steps to
-   cross-check generated content against a provenance-labelled facts file. See
-   `workflows/gen-report.md` Step 4 for the pattern.
+A pre-write hook (`.claude/hooks/validate_mapping_hook.py`) runs automatically before
+every `Write` or `Edit` to KB files. It is **not** an orchestrator step — it fires on all
+KB writes regardless of which workflow is running.
 
-Each validated content type (ontology terms, gene IDs, publication IDs, verbatim quotes)
-has a defined storage syntax and a defined verification source. All checks rely on this
-consistency: a name:ID pair can be verified against an ontology endpoint; a quote can be
-verified as verbatim against its content-hashed entry in `references.json`.
+**KB YAML** (`kb/**/*.yaml`) — blocks writes with: YAML parse errors, structural
+integrity failures (dangling edges, duplicate IDs, placeholder snippets), `quote_key`
+values absent from `references.json`, `PMID:`/`DOI:` citations absent from
+`references.json`, LinkML schema non-conformance.
 
-For current implementation details, validation sources, and the rules governing agentic
-writes to validated stores, read:
-**[`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md)** *(compulsory read before modifying hooks, validation logic, or `references.json` ingest)*
+**Markdown reports** (`reports/{region}/*.md`) — blocks writes with: blockquote blocks
+missing a `<!-- quote_key: X -->` attribution annotation, quote keys or PMIDs absent
+from `references/{region}/references.json`.
 
-## Working with YAML and LinkML
+See [`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md) for
+the full specification and correction loop protocol.
 
-- Always parse YAML with `yaml.safe_load()`. Never use shell `grep`, `sed`, or `awk` on YAML files.
-- The pre-edit hook validates KB YAML before it reaches disk. If it rejects, fix the underlying issue — do not attempt to bypass the hook.
-- When the hook reports an error, read the structured output, correct the YAML, and retry. The correction loop typically resolves in 1–2 iterations.
-- Ontology terms (CL, UBERON, NCBITaxon) must exist in the OAK local databases. Look up terms with `runoak` before using them — do not invent IDs.
+---
 
-## Claude bug fix
+## Inputs
 
-You *must* validate *all* image files before reading them.
+| Input type | Location | Used by |
+|---|---|---|
+| ASTA deep research PDFs | `inputs/deepsearch/` | `asta-report-ingest.md` |
+| ASTA corpus IDs | `research/{region}/{run}/pdf_corpus_ids.json` (asta-report-ingest output) | `survey.md` |
+| Taxonomy tables (JSON/CSV/TSV) | `inputs/taxonomies/` | `ingest-taxonomy.md` |
+| Taxonomy reference YAML | `kb/taxonomy/{taxonomy_id}/` | `map-cell-type.md`, `ingest-taxonomy.md` (M8) |
+| Taxonomy SQLite index | `kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db` | `map-cell-type.md` (candidate queries) |
+| Taxonomy field mapping | `kb/taxonomy/{taxonomy_id}/field_mapping.json` | `ingest-taxonomy.md` (fast-path detection) |
+| MBA ontology JSON | `conf/mba/mbao-full.json` (gitignored; fetch with `just fetch-mba-ontology`) | `ingest-taxonomy.md` Step 4 (anat closure build); shared across all taxonomies |
+| Precomputed stats HDF5 | taxonomy local paths (see ROADMAP.md § Taxonomy Reference DB) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
+
+Place input files in the appropriate subdirectory before running the relevant orchestrator.
+
+---
+
+## Typical workflow for a new mapping
+
+Classical nodes emerge from research — they are not pre-created. Run these in
+parallel where possible (taxonomy ingest + report ingest are independent).
+
+```
+── Discovery ──────────────────────────────────────────────────────────────────
+
+1a. just ingest-report {region} {pdf_file}      # ASTA report → classical CellTypeNode
+    → workflows/asta-report-ingest.md            # stubs + initial asta_report evidence
+    [GATE] approve proposed nodes + CL mappings
+
+1b. just ingest-taxonomy-db {taxonomy_file} {taxonomy_id}  # full taxonomy → YAML + SQLite
+    → workflows/ingest-taxonomy.md                         # (run in parallel with 1a)
+    [GATE] approve field mapping + generated stubs
+
+── Primary literature retrieval ───────────────────────────────────────────────
+
+2.  workflows/survey.md                          # ASTA corpus → all_summaries.json
+    region: {region}                             # one pass, all ASTA papers, all nodes
+    corpus_ids_file: research/{region}/.../pdf_corpus_ids.json
+    output_dir: research/{region}/survey_{date}/
+
+── Evidence extraction ─────────────────────────────────────────────────────────
+
+3.  workflows/evidence-extraction.md             # per-node: all_summaries.json → KB YAML
+    summaries_file: research/{region}/survey_{date}/all_summaries.json
+    # no paper selection gate for ASTA survey runs
+    # run once per node_id
+
+── Mapping ────────────────────────────────────────────────────────────────────
+
+4.  workflows/map-cell-type.md                   # evidence + atlas metadata → MappingEdge
+    [GATE] expert reviews proposed edges
+
+── Reports + community ────────────────────────────────────────────────────────
+
+5.  just gen-facts {graph_file} {node_id}        # extract structured facts
+    → workflows/gen-report.md                    # LLM synthesis + ID/quote validation
+    [GATE] biologist reviews, executes proposed experiments
+
+6.  workflows/annotation-transfer.md             # AT results → AnnotationTransferEvidence
+```
+

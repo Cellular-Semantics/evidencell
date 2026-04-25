@@ -42,7 +42,7 @@ automatically for any edits to `kb/`.
 
 ## Adding a new mapping entry
 
-See `WORKFLOW.md` for the complete pipeline. Each step is an orchestrator you
+See `CLAUDE.md` (the default curation guide) for the complete pipeline. Each step is an orchestrator you
 run in Claude Code — tell Claude which workflow to follow, provide the inputs,
 and review the output at each gate before proceeding.
 
@@ -113,7 +113,7 @@ Three rules:
 - New external CLI call → add a `--help` probe to `tests/test_tool_interfaces.py`
 - New hook block condition → add a case to `tests/test_hook_integration.py`
 
-See the **Testing** section of `CLAUDE.md` for the full policy.
+See the **Testing** section of `CLAUDE_dev.md` for the full policy.
 
 ---
 
