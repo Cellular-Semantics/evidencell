@@ -13,9 +13,11 @@ rather than receiving them.
   NT type, and anatomical location. Literature evidence items improve confidence
   but are not required to begin — edges can start at LOW/UNCERTAIN and be upgraded
   after lit review.
-- Taxonomy reference DB built for the target atlas:
-  `just build-taxonomy-db {taxonomy_id}` + `just build-anat-closure {taxonomy_id}`
-  (anatomy matching requires the MBA ontology: `just fetch-mba-ontology` first)
+- Taxonomy reference DB ready for the target atlas. The `query-taxonomy-db` skill
+  (Step 0) checks freshness automatically and rebuilds if needed. Anatomy closure
+  must be built once per taxonomy: `just fetch-mba-ontology` then
+  `just build-anat-closure {taxonomy_id}`. The skill will warn if a newer MBA
+  ontology release is available.
 
 ---
 

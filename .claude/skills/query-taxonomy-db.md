@@ -2,12 +2,17 @@
 
 ## When to use
 
-Use this skill when you need to find candidate atlas nodes for a classical cell type
-mapping, explore what a taxonomy contains, or check what metadata fields are populated
-before running targeted queries.
+Use this skill whenever you need to query what a taxonomy contains or find candidate
+atlas nodes — **do not read taxonomy YAML files directly for query purposes**. YAML is
+the edit interface; the SQLite DB is the query interface. Direct YAML reads miss the
+scoring, anatomy closure, and NT propagation logic that make candidates meaningful.
 
 Taxonomies vary significantly in metadata richness. **Always run discovery first** —
 it tells you which fields are populated and which queries are worth running.
+
+The skill opens with an automatic DB freshness check (Step 0). It rebuilds the SQLite
+index if any level YAML is newer than the last build, and reports whether the anatomy
+closure is current with the latest MBA ontology release.
 
 ---
 
@@ -24,6 +29,80 @@ The user provides:
 ---
 
 ## Steps
+
+### Step 0: Freshness check — ensure DB is current
+
+**Part A — taxonomy DB**
+
+```python
+import sqlite3
+from datetime import datetime
+from evidencell.paths import taxonomy_db_path, taxonomy_dir
+
+tid = "{taxonomy_id}"
+db_path = taxonomy_db_path(tid)
+td = taxonomy_dir(tid)
+
+rebuild_db = False
+if not db_path.exists():
+    print("DB missing — will build.")
+    rebuild_db = True
+else:
+    con = sqlite3.connect(db_path)
+    row = con.execute(
+        "SELECT value FROM _meta WHERE key='taxonomy_built_at'"
+    ).fetchone()
+    con.close()
+    if row is None:
+        print("No build timestamp found — rebuilding to add one.")
+        rebuild_db = True
+    else:
+        built_ts = datetime.fromisoformat(row[0]).timestamp()
+        level_yamls = [f for f in td.glob("*.yaml") if f.name != "taxonomy_meta.yaml"]
+        stale = [f.name for f in level_yamls if f.stat().st_mtime > built_ts]
+        if stale:
+            print(f"YAML newer than DB: {stale} — rebuilding.")
+            rebuild_db = True
+        else:
+            print("Taxonomy DB is current.")
+
+if rebuild_db:
+    import subprocess
+    subprocess.run(["just", "build-taxonomy-db", tid], check=True)
+```
+
+**Part B — anatomy closure** (run only when `region` is specified)
+
+```python
+import subprocess, urllib.request, json as _json
+
+con = sqlite3.connect(db_path)
+row = con.execute("SELECT value FROM _meta WHERE key='anatomy_closure_release'").fetchone()
+con.close()
+cached = row[0] if row else None
+
+try:
+    with urllib.request.urlopen(
+        "https://api.github.com/repos/brain-bican/mouse_brain_atlas_ontology/releases/latest",
+        timeout=5,
+    ) as r:
+        latest = _json.loads(r.read())["tag_name"]
+    if cached in (None, "unknown") or latest != cached:
+        print(f"MBA ontology update available ({cached!r} → {latest!r}). Downloading and rebuilding closure...")
+        subprocess.run(["just", "fetch-mba-ontology"], check=True)
+        subprocess.run(["just", "build-anat-closure", tid], check=True)
+        print("Anatomy closure rebuilt.")
+    else:
+        print(f"Anatomy closure current ({latest}).")
+except subprocess.CalledProcessError as exc:
+    print(f"Warning: MBA ontology download/rebuild failed ({exc}). Continuing with cached closure.")
+except Exception as exc:
+    print(f"Warning: could not check MBA ontology version ({exc}). Using cached closure.")
+```
+
+If region matching is not needed, skip Part B.
+
+---
 
 ### Step 1: Discovery — what does this taxonomy contain?
 
@@ -208,6 +287,15 @@ predominantly or incidentally of the requested NT type.
 
 ## Important notes
 
+- **DB freshness check uses file mtimes.** The Step 0 check compares YAML level file
+  modification times against the DB's internal build timestamp. After `git checkout`,
+  `git pull`, or `git merge`, YAML mtimes are reset to the operation time — which may be
+  newer than the stored build timestamp, triggering a spurious rebuild. Spurious rebuilds
+  are fast and idempotent; the only cost is a few seconds.
+- **Anatomy closure auto-updates.** Step 0 Part B checks the GitHub releases API and
+  automatically re-downloads and rebuilds if a newer MBA ontology release is available.
+  If the network is unavailable or the download fails, it warns and continues with the
+  cached closure. Unauthenticated API rate limit is 60 req/hr.
 - **Scoped markers** (`defining_markers_scoped`) are distinctive within the parent
   subclass, not globally — they are the highest-value markers for mapping.
   Prefer these over global `defining_markers` when both are present.
