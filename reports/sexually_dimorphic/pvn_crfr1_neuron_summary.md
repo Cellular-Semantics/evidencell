@@ -18,20 +18,38 @@
 
 **Notes.** The defining feature of this cell type is expression of corticotropin-releasing factor receptor 1 (*Crhr1*), not CRH secretion. CL:4072021 (corticotropin-releasing neuron) is therefore only a related term; no exact CL term currently exists — this node is a candidate for a new term request. The population shows male-biased sexual dimorphism (males > females), which emerges during puberty or early adulthood and persists into old age. Co-expression of estrogen receptor alpha (*Esr1*, moderate) and androgen receptor (*Ar*, high) implicates gonadal hormone-dependent regulation of CRFR1 expression. The full characterisation rests on a single primary source (Rosinger 2019) [1].
 
----
 
-## Source evidence
+<details>
+<summary>Literature support — expand for verbatim quotes</summary>
+
+**[1] Z et al. 2019 · PMID:31055007 — Introduction**
 
 > "Sex differences in neural structures are generally believed to underlie sex differences reported in anxiety, depression, and the hypothalamic-pituitary-adrenal axis, although the specific circuitry involved is largely unclear. Using a corticotropin-releasing factor receptor 1 (CRFR1) reporter mouse line, we report a sexually dimorphic distribution of CRFR1 expressing cells within the paraventricular hypothalamus (PVN; males > females). Relative to adult levels, PVN CRFR1-expressing cells are sparse and not sexually dimorphic at postnatal days 0, 4, or 21. This suggests that PVN cells might recruit CRFR1 during puberty or early adulthood in a sex-specific manner. The adult sex difference in PVN CRFR1 persists in old mice (20–24 months). Adult gonadectomy (6 weeks) resulted in a significant decrease in CRFR1-immunoreactive cells in the male but not female PVN. CRFR1 cells show moderate co-expression with estrogen receptor alpha (ERα) and high co-expression with androgen receptor, indicating potential mechanisms through which circulating gonadal hormones might regulate CRFR1 expression and function. Finally, we demonstrate that a psychological stressor, restraint stress, induces a sexually dimorphic pattern of neural activation in PVN CRFR1 cells (males > females) as assessed by co-localization with the transcription/neural activation marker phosphorylated CREB. Given the known role of CRFR1 in regulating stress-associated behaviors and hormonal responses, this CRFR1 PVN sex difference might contribute to sex differences in these functions."
 > — Z et al. 2019, Introduction · [1] <!-- quote_key: 143424909_2b990710 -->
+
+</details>
 
 ---
 
 ## Mapping candidates
 
-| Rank | WMBv1 supertype | Supertype name | Cells | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 supertype | Supertype name | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | CS20230722_SUPT_0585 | 0585 PVH-SO-PVa Otp Glut_1 | — | 🟡 MODERATE | Location MBA:38 ✓; Glutamatergic ✓; *Esr1*=3.65 ✓; *Ar*=4.95 ✓; *Crhr1*=0.84 (low — subset only) | Best candidate |
+| 1 | CS20230722_SUPT_0585 | 0585 PVH-SO-PVa Otp Glut_1 | n=98 at MBA:38 (PVN) | 🟡 MODERATE | Location MBA:38 ✓; Glutamatergic ✓; *Esr1*=3.65 ✓; *Ar*=4.95 ✓; *Crhr1*=0.84 (low — subset only) | Best candidate |
+
+### 4b. Property alignment table
+
+| Property | Classical | SUPT_0585 (supertype) | Alignment |
+|---|---|---|---|
+| Soma location | Paraventricular hypothalamic nucleus [MBA:38] | MBA:38 (PVN) n=98 MERFISH (primary location) | CONSISTENT |
+| NT type | not stated; PVN principal neurons predominantly glutamatergic | Glutamatergic (PVH-SO-PVa Otp Glut) | CONSISTENT |
+| *Crhr1* expression | POSITIVE (transcript, primary defining marker) | mean_expression=0.84 (low — CRFR1+ neurons a subset) | APPROXIMATE |
+| *Esr1* expression | POSITIVE (transcript, defining marker) | mean_expression=3.65 (DEFINING_SCOPED atlas marker) | APPROXIMATE |
+| *Ar* expression | POSITIVE (transcript, defining marker) | mean_expression=4.95 | APPROXIMATE |
+| Sex ratio | male-biased (males > females, puberty-emergent) | CLUS_2382 (parent SUPT_0589) male_female_ratio=2.7 | CONSISTENT (child-cluster level) |
+| Annotation transfer | — | NOT_ASSESSED | — |
+
+*(CLUS_2382 [parent SUPT_0589, MFR=2.7] shows male-biased sex ratio consistent with pvn_crfr1_neuron; per-cluster Crhr1 expression within SUPT_0585 not yet assessed — see proposed experiments.)*
 
 ---
 
@@ -49,7 +67,9 @@ Sexual dimorphism biology is further supported by a rank-0 leaf cluster, CLUS_23
 
 ### Marker evidence provenance
 
-All marker values are from WMBv1 precomputed expression statistics (atlas metadata); no independent literature confirmation of these expression levels is available for this specific supertype. The single primary source for pvn_crfr1_neuron (Rosinger 2019) [1] characterises CRFR1 cells by immunohistochemistry and reporter imaging, not by transcriptomic profiling.
+All marker values are from WMBv1 precomputed expression statistics (atlas metadata); no independent literature confirmation of these expression levels is available for this specific supertype.
+
+Atlas annotation/expression discrepancy check: Esr1 is a DEFINING_SCOPED atlas marker for SUPT_0585 with mean_expression=3.65 (above 0.5 — no discrepancy flagged). Crhr1=0.84 and Ar=4.95 are not atlas-assigned DEFINING markers; all values exceed 0.5 — no near-zero expression concern. The single primary source for pvn_crfr1_neuron (Rosinger 2019) [1] characterises CRFR1 cells by immunohistochemistry and reporter imaging, not by transcriptomic profiling.
 
 ### Concerns
 

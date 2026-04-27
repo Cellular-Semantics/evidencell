@@ -21,11 +21,23 @@ No CL term exists for this cell type; it is a candidate for a new CL entry.
 
 The nucleus is delineated either by conventional Nissl staining or by calbindin-D28K immunoreactivity:
 
+<details>
+<summary>Literature support — expand for verbatim quotes</summary>
+
+**[1] P et al. 2015 · PMID:26672480 — Sexually Dimorphic Brain Regions and Structures**
+
+> "The 2 best known dimorphic brain structures are the sexual dimorphic nucleus of the medial preoptic hypothalamic area (SDN-POA) in rodents, which correspond to the interstitial nucleus of the anterior hypothalamus (INAH) in humans, and the anteroventral periventricular (AVPV) nucleus. The first one controls male sex behavior and is larger in males than in females; the second one is critical for the cyclic control of ovulation and is larger in females than in males."
+> — P et al. 2015, Sexually Dimorphic Brain Regions and Structures · [1] <!-- quote_key: 14863067_fa51fcf7 -->
+
+**[2] Z et al. 2013 · PMID:25206587 — Sexually Dimorphic Brain Regions and Structures**
+
 > "One of the well-defined sexually dimorphic structures in the brain is the sexually dimorphic nucleus, a cluster of cells located in the preoptic area of the hypothalamus. The rodent sexually dimorphic nucleus of the preoptic area can be delineated histologically using conventional Nissl staining or immunohistochemically using calbindin D28K immunoreactivity"
 > — Z et al. 2013, Sexually Dimorphic Brain Regions and Structures · [2] <!-- quote_key: 3481177_d6c3a647 -->
 
 > "The sexually dimorphic nucleus of the preoptic area is highlighted by calbindin-D28K immunoreactivity: no TH-positive cells were found, but fine axon-like projections/synaptic structures were seen"
 > — Z et al. 2013, Sexually Dimorphic Brain Regions and Structures · [2] <!-- quote_key: 3481177_17d4bd9d -->
+
+</details>
 
 ---
 
@@ -33,7 +45,7 @@ The nucleus is delineated either by conventional Nissl staining or by calbindin-
 
 ### 4a. Candidate overview
 
-| Rank | WMBv1 candidate | Level | Cells (MPN) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 candidate | Level | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
 | 1 | 0423 BST-MPN Six3 Nrgn Gaba_4 [CS20230722_SUPT_0423] | SUPERTYPE | n=47 at MBA:515 | 🔴 LOW | Calb1 CONSISTENT; Th DISCORDANT | Speculative |
 | 2 | 1550 BST-MPN Six3 Nrgn Gaba_4 [CS20230722_CLUS_1550] | CLUSTER | n=22 at MBA:515 | 🔴 LOW | Calb1 CONSISTENT; Th DISCORDANT; MFR CONSISTENT | Speculative |
@@ -49,6 +61,8 @@ Both edges are PARTIAL_OVERLAP / Speculative. 2 edges total; no MODERATE or HIGH
 | Th expression | ABSENT (negative marker; no TH cell bodies in SDN-POA) | mean_expression=0.99 | mean_expression=2.75 | DISCORDANT |
 | Sex ratio | Male-biased (SDN-POA larger in males) | not available | MFR=3.35 [CS20230722_CLUS_1550] (male-biased) | CONSISTENT |
 | Annotation transfer | — | NOT_ASSESSED | NOT_ASSESSED | — |
+
+*(1 of the child clusters of SUPT_0423 — CLUS_1550 (MBA:515 primary soma, n=22) — shows the male-biased sex ratio (MFR=3.35) concordant with sdn_poa_calbindin_neuron; Th=2.75 discordance persists at cluster level and may originate from non-MPN components of the multi-region cluster — see proposed experiments.)*
 
 ---
 

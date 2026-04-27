@@ -9,12 +9,6 @@
 
 The **PMv oxytocin receptor (OTR) neuron** is a sexually dimorphic hypothalamic neuron defined by expression of the oxytocin receptor (*Oxtr*) in the ventral premammillary nucleus (PMv) [MBA:1004]. OTR expression in this region is markedly male-biased across postnatal development (P14–P56) [2]. The same nucleus houses at least two additional molecularly distinct subpopulations — PMv-DAT neurons (*Slc6a3*+, dopaminergic-lineage) [1] and PMv-PACAP neurons (*Adcyap1*+) [1] — that are co-listed as defining markers because the three populations may partially overlap or have been studied together. This heterogeneity means the current node may need to be split into separate sub-nodes before a fully resolved mapping can be achieved.
 
-> "The ventral premammillary nucleus (PMv) showed significantly higher OTR expression in males compared to females between P14 and P56 (Fig. 7a-d)."
-> — K et al. 2019, Neuronal Markers and Molecular Characteristics · [2] <!-- quote_key: 201207691_ff444c30 -->
-
-> "Previous studies identified sexually dimorphic neuron populations within the PMv (e.g., PMv-DAT 42 , PMv- PACAP 43 ), complementing our systematic identification of subclass-level abundance changes."
-> — Z et al. 2024, Sexually Dimorphic Brain Regions and Structures · [1] <!-- quote_key: 273240437_af6642f9 -->
-
 ### Classical type properties
 
 | Property | Value | References |
@@ -26,8 +20,23 @@ The **PMv oxytocin receptor (OTR) neuron** is a sexually dimorphic hypothalamic 
 | Neuropeptides | None documented | — |
 | Sex bias | Male-biased (males > females, PMv OTR expression P14–P56) | [2] |
 
+<details>
+<summary>Literature support — expand for verbatim quotes</summary>
+
+**[2] K et al. 2019 · PMID:32313029 — Neuronal Markers and Molecular Characteristics**
+
+> "The ventral premammillary nucleus (PMv) showed significantly higher OTR expression in males compared to females between P14 and P56 (Fig. 7a-d)."
+> — K et al. 2019, Neuronal Markers and Molecular Characteristics · [2] <!-- quote_key: 201207691_ff444c30 -->
+
+**[1] Z et al. 2024 · PMID:39416191 — Sexually Dimorphic Brain Regions and Structures**
+
+> "Previous studies identified sexually dimorphic neuron populations within the PMv (e.g., PMv-DAT, PMv-PACAP), complementing our systematic identification of subclass-level abundance changes."
+> — Z et al. 2024, Sexually Dimorphic Brain Regions and Structures · [1] <!-- quote_key: 273240437_af6642f9 -->
+
 > "We identified two adjacent regions within the hypothalamus that exhibited significant sexual dimorphism. Region 1 overlaps with the anterior hypothalamic nucleus (AHN), while Region 2 primarily overlaps with the ventral premammillary nucleus (PMv)."
 > — Z et al. 2024, Sexually Dimorphic Brain Regions and Structures · [1] <!-- quote_key: 273240437_ed3a4faa -->
+
+</details>
 
 ---
 
@@ -37,10 +46,10 @@ The **PMv oxytocin receptor (OTR) neuron** is a sexually dimorphic hypothalamic 
 
 **4a. Candidate overview table**
 
-| Rank | WMBv1 node | Taxonomy level | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|
-| 1 | 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] | SUPERTYPE | 🔴 LOW · CROSS_CUTTING | *Oxtr*, *Slc6a3*, *Adcyap1* all CONSISTENT; NT APPROXIMATE; sex bias NOT_ASSESSED | Speculative |
-| 2 | 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] | CLUSTER | 🔴 LOW · PARTIAL_OVERLAP | All 3 markers substantially above supertype mean; sex bias NOT_ASSESSED (MFR absent) | Speculative |
+| Rank | WMBv1 node | Taxonomy level | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+|---|---|---|---|---|---|---|
+| 1 | 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] | SUPERTYPE | n=347 at MBA:1004 (PMv) | 🔴 LOW · CROSS_CUTTING | *Oxtr*, *Slc6a3*, *Adcyap1* all CONSISTENT; NT APPROXIMATE; sex bias NOT_ASSESSED | Speculative |
+| 2 | 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] | CLUSTER | n=192 at MBA:1004 (PMv) | 🔴 LOW · PARTIAL_OVERLAP | All 3 markers substantially above supertype mean; sex bias NOT_ASSESSED (MFR absent) | Speculative |
 
 Total: 2 edges — 2 LOW, 0 MODERATE, 0 UNCERTAIN. Both are atlas-metadata only.
 
@@ -55,6 +64,8 @@ Total: 2 edges — 2 LOW, 0 MODERATE, 0 UNCERTAIN. Both are atlas-metadata only.
 | *Adcyap1* expression | defining marker | mean expression = 4.8 | mean expression = 8.13 (vs supertype mean 4.8) | CONSISTENT |
 | Sex ratio | male-biased (PMv OTR expression higher in males, P14–P56) | not available (MFR computed at rank 0 only) | NOT_ASSESSED — MFR absent from DB for CLUS_2470 (n=192 PMv cells) | NOT_ASSESSED |
 | Annotation transfer | — | NOT_ASSESSED | NOT_ASSESSED | — |
+
+*(CLUS_2470 [PMv n=192, Oxtr=4.45, Slc6a3=6.02, Adcyap1=8.13 — all above supertype mean] is the best identified child cluster of SUPT_0607; MFR data absent for CLUS_2470 — male-bias alignment pending, see proposed experiments.)*
 
 **Note on SUPT_0607 as CROSS_CUTTING:** SUPT_0607 simultaneously expresses all three defining markers (*Oxtr*, *Slc6a3*, *Adcyap1*) at levels corresponding to the three putative PMv subpopulations (PMv-OTR, PMv-DAT, PMv-PACAP). The supertype aggregates what the classical taxonomy may treat as distinct subtypes. CLUS_2470 shows the same co-expression pattern at higher intensities (all three markers substantially above supertype means), confirming that multi-marker co-expression is a cluster-level feature, not merely a supertype-averaging artefact.
 

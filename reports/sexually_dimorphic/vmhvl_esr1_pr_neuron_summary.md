@@ -17,19 +17,43 @@
 
 **Heterogeneity note.** This classical node is acknowledged to be molecularly heterogeneous. At least three functional subpopulations have been described within the broader ERα/PR VMHvl population: (i) *Pgr*+ neurons required for mating in both sexes and fighting in males; (ii) ERα/*Nkx2-1*/*Tac1*+ neurons driving estrogen-dependent female locomotion; and (iii) additional ERα-expressing subtypes with distinct projections and sex-related functions. Seventeen transcriptomic types have been identified by snRNA-seq (Kim 2019). This node may need to be split into multiple sub-nodes in future iterations. No CL term exists; the node is a candidate for new CL term(s).
 
+<details>
+<summary>Literature support — expand for verbatim quotes</summary>
+
+**[1] S et al. 2015 · PMID:25543145 — Developmental and Hormonal Regulation**
+
 > "Estrogen-receptor alpha (ERα) neurons in the ventrolateral region of the ventromedial hypothalamus (VMHVL) control an array of sex-specific responses to maximize reproductive success. In females, these VMHVL neurons are believed to coordinate metabolism and reproduction. However, it remains unknown whether specific neuronal populations control distinct components of this physiological repertoire. Here, we identify a subset of ERα VMHVL neurons that promotes hormone-dependent female locomotion. Activating Nkx2-1-expressing VMHVL neurons via pharmacogenetics elicits a female-specific burst of spontaneous movement, which requires ERα and Tac1 signaling. Disrupting the development of Nkx2-1(+) VMHVL neurons results in female-specific obesity, inactivity, and loss of VMHVL neurons coexpressing ERα and Tac1. Unexpectedly, two responses controlled by ERα(+) neurons, fertility and brown adipose tissue thermogenesis, are unaffected. We conclude that a dedicated subset of VMHVL neurons marked by ERα, NKX2-1, and Tac1 regulates estrogen-dependent fluctuations in physical activity and constitutes one of several neuroendocrine modules that drive sex-specific responses."
 > — S et al. 2015, Developmental and Hormonal Regulation · [1] <!-- quote_key: 27794167_af52b501 -->
 
+**[2] N et al. 2021 · PMID:33910083 — Sexually Dimorphic Brain Regions and Structures**
+
 > "Another molecularly defined sexually dimorphic VMHvl subpopulation that controls sex-typical behaviors in both sexes is the progesterone receptor (PR)-expressing neurons. This subpopulation is required for the normal display of mating in both sexes and for fighting in males."
 > — N et al. 2021, Sexually Dimorphic Brain Regions and Structures · [2] <!-- quote_key: 233446934_8cb6b0bc -->
+
+</details>
 
 ---
 
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| — | 0564 VMH Fezf1 Glut_2 [CS20230722_SUPT_0564] | SUPERTYPE | — | 🟡 MODERATE | MBA:693 dominant location; *Nkx2-1* strong; *Pgr* moderate; *Esr1*/*Tac1* subset-level | Best candidate |
+| 1 | 0564 VMH Fezf1 Glut_2 [CS20230722_SUPT_0564] | SUPERTYPE | n=360 at MBA:693 (VMH) | 🟡 MODERATE | MBA:693 dominant location; *Nkx2-1* strong; *Pgr* moderate; *Esr1*/*Tac1* subset-level | Best candidate |
+
+### 4b. Property alignment table
+
+| Property | Classical | SUPT_0564 (supertype) | Alignment |
+|---|---|---|---|
+| Soma location | Ventromedial hypothalamic nucleus [MBA:693] (VMHvl) | MBA:693 (VMH) n=360 MERFISH (dominant location) | CONSISTENT |
+| NT type | not stated; VMHvl predominantly glutamatergic | Glutamatergic (VMH Fezf1 Glut label) | CONSISTENT |
+| *Nkx2-1* expression | POSITIVE (defining marker) | mean_expression=5.34 | CONSISTENT |
+| *Pgr* expression | POSITIVE (defining marker) | mean_expression=4.54 | APPROXIMATE |
+| *Esr1* expression | POSITIVE (defining marker) | mean_expression=2.35 (subset expression) | APPROXIMATE |
+| *Tac1* expression | POSITIVE (defining marker and neuropeptide) | mean_expression=1.39 (low — subset only) | APPROXIMATE |
+| Sex ratio | not reported | not available | NOT_ASSESSED |
+| Annotation transfer | — | NOT_ASSESSED | — |
+
+*(Child-cluster breakdown not assessed — CS20230722_SUPT_0563 [VMH Fezf1 Glut_1, female-biased clusters CLUS_2290 MFR=0.08, CLUS_2292 MFR=0.12] identified as candidate co-primary mapping target but not yet assessed; see proposed experiments.)*
 
 ---
 
@@ -50,7 +74,9 @@ The property comparison is overall supportive but reflects the acknowledged hete
 
 ### Marker evidence provenance
 
-All expression values cited above are precomputed atlas metadata (WMBv1 mean expression statistics); no primary literature evidence has yet been extracted for marker expression in SUPT_0564 specifically. The classical marker citations are [1] (*Esr1*, *Nkx2-1*, *Tac1*) and [2] (*Pgr*).
+All expression values cited above are precomputed atlas metadata (WMBv1 mean expression statistics); no primary literature evidence has yet been extracted for marker expression in SUPT_0564 specifically.
+
+Atlas annotation/expression discrepancy check: Nkx2-1=5.34, Pgr=4.54, Esr1=2.35, Tac1=1.39 — all above 0.5 threshold; no atlas annotation/expression discrepancy flagged. Tac1 is the lowest (1.39) but is consistent with subset expression of the ERα/Nkx2-1/Tac1+ locomotion subpopulation. The classical marker citations are [1] (*Esr1*, *Nkx2-1*, *Tac1*) and [2] (*Pgr*).
 
 ### Concerns
 

@@ -27,6 +27,31 @@ term for the AVPV/RP3V non-KNDy kisspeptin population may be warranted.
 | Neuropeptides | Kiss1 (kisspeptin) | [6] |
 | CL term | CL:4023123 (hypothalamus kisspeptin neuron) — BROAD | |
 
+<details>
+<summary>Literature support — expand for verbatim quotes</summary>
+
+**[3] S et al. 2017 · PMID:28660243 — Neuronal Markers and Molecular Characteristics**
+
+> "Kiss1-synthesizing neurons reside primarily in the hypothalamic anteroventral periventricular (AVPV/PeN) and arcuate (ARC) nuclei. AVPV/PeN Kiss1 neurons are sexually dimorphic, with females expressing more Kiss1 than males, and participate in estradiol (E2)-induced positive feedback control of GnRH secretion. In mice, most AVPV/PeN Kiss1 cells coexpress tyrosine hydroxylase (TH), the rate-limiting enzyme in catecholamine synthesis (in this case, dopamine)."
+> — S et al. 2017, Neuronal Markers and Molecular Characteristics · [3] <!-- quote_key: 4702847_ebd225e6 -->
+
+**[2] S et al. 2007 · PMID:17213691 — Functional Roles in Reproductive Neuroendocrine Control**
+
+> "Metastin/kisspeptin, the KiSS-1 gene product, has been identified as an endogenous ligand of GPR54 that reportedly regulates GnRH/LH surges and estrous cyclicity in female rats. The aim of the present study was to determine if metastin/kisspeptin neurons are a target of estrogen positive feedback to induce GnRH/LH surges. We demonstrated that preoptic area (POA) infusion of the anti-rat metastin/kisspeptin monoclonal antibody blocked the estrogen-induced LH surge, indicating that endogenous metastin/kisspeptin released around the POA mediates the estrogen positive feedback effect on GnRH/LH release. Metastin/kisspeptin neurons in the anteroventral periventricular nucleus (AVPV) may be responsible for mediating the feedback effect because the percentage of c-Fos-expressing KiSS-1 mRNA-positive cells to total KiSS-1 mRNA-positive cells was significantly higher in the afternoon than in the morning in the anteroventral periventricular nucleus (AVPV) of high estradiol (E(2))-treated females. Most of the KiSS-1 mRNA expressing cells contain ERalpha immunoreactivity in the AVPV and ARC."
+> — S et al. 2007, Functional Roles in Reproductive Neuroendocrine Control · [2] <!-- quote_key: 1357086_85e3d032 -->
+
+**[1] S et al. 2017 · PMID:29201072 — Functional Roles in Reproductive Neuroendocrine Control**
+
+> "The Kisspeptin system is apparently critical for brain gender differentiation, acting through the regulation of postnatal T secretion. Distribution of Kisspeptin neurons in the hypothalamus varies between species. In mammals there are 2 major regions of these neurons; a rostral one in the Pre-Optic Area (POA) and a caudal one in the arcuate nucleus, with proportionally more Kisspeptin neurons in the ARC than in the POA region. In rodents, the POA regions are concentrated in the Anteroventral Periventricular Nucleus (AVPV). Anatomical differences between genders have been reported in the hypothalamus of some species, e.g. the rat AVPV is sexually dimorphic, with a greater number of KISS1 neurons in females compared to males."
+> — S et al. 2017, Functional Roles in Reproductive Neuroendocrine Control · [1] <!-- quote_key: 1227024_3fcab8ab -->
+
+**[6] R et al. 2013 · PMID:23407940 — Functional Roles in Reproductive Neuroendocrine Control**
+
+> "The AVPV is a sexually dimorphic site with a differential distribution pattern of several neurotransmitters and neuropeptides, including kisspeptin"
+> — R et al. 2013, Functional Roles in Reproductive Neuroendocrine Control · [6] <!-- quote_key: 11330110_f135c1a8 -->
+
+</details>
+
 ---
 
 ## 4. Mapping candidates
@@ -37,12 +62,14 @@ Two mapping edges are recorded for avpv_kiss1_neuron: a supertype-level edge to 
 and a cluster-level edge to CLUS_1915, the child cluster with the strongest Kiss1+Th+Esr1
 co-expression profile and the most extreme female bias (male_female_ratio = 0.02).
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | n=3–5 | 🟡 MODERATE | Kiss1 CONSISTENT; Esr1 CONSISTENT; Th CONSISTENT; MFR=0.02 CONSISTENT | Best cluster candidate |
-| 2 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | — | 🟡 MODERATE | Esr1 CONSISTENT; Th APPROXIMATE | Best supertype candidate |
+| 1 | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | n=3–5 * | 🟡 MODERATE | Kiss1 CONSISTENT; Esr1 CONSISTENT; Th CONSISTENT; MFR=0.02 CONSISTENT | Best cluster candidate |
+| 2 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | not available | 🟡 MODERATE | Esr1 CONSISTENT; Th APPROXIMATE | Best supertype candidate |
 
 2 edges total. Relationship type: PARTIAL_OVERLAP (both edges).
+
+\* MERFISH n=3–5; 10x cluster size not yet shown — see ROADMAP.
 
 ### 4b. Property alignment table
 
@@ -55,6 +82,8 @@ co-expression profile and the most extreme female bias (male_female_ratio = 0.02
 | Th expression | POSITIVE (protein, co-expressed with Kiss1) | precomputed mean_expression=2.72 | precomputed mean_expression=6.6 (highest Th of any SUPT_0486 child cluster) | SUPT: APPROXIMATE; CLUS: CONSISTENT |
 | Sex ratio | FEMALE_BIASED (AVPV Kiss1 neurons strongly female-biased) | not available at supertype level | male_female_ratio=0.02 (extreme female bias, ~50:1 F:M) | CONSISTENT (CLUS_1915 MFR=0.02 matches FEMALE_BIASED) |
 | Annotation transfer | — | NOT_ASSESSED | NOT_ASSESSED | — |
+
+*(1 of 5 child clusters of SUPT_0486 — CLUS_1915 — shows the female-biased Kiss1+Th+Esr1 co-expression profile (Kiss1=2.51, Th=6.6, Esr1=9.55, MFR=0.02) concordant with avpv_kiss1_neuron; MFR data are absent at supertype level and for most SUPT_0486 child clusters.)*
 
 ---
 

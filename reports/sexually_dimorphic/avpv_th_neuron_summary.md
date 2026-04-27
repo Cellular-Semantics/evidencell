@@ -18,11 +18,20 @@
 
 **Notes.** AVPV TH neurons are a sexually dimorphic population with 2–4× more TH-immunoreactive neurons in females than in males [4]. In mice, the AVPV/periventricular nucleus (PeN) Kiss1 population substantially overlaps with TH neurons: most AVPV/PeN Kiss1-expressing cells co-express TH [3]. These neurons are distinct from the sexually dimorphic nucleus of the preoptic area (SDN-POA), which contains TH-positive axons and synapses but not TH-positive cell bodies. No CL term currently exists for this population; it is a candidate for a new term as a sibling of CL:4072009 ("A12 dopaminergic neuron"), representing AVPV/RP3V A14 dopaminergic neurons.
 
+<details>
+<summary>Literature support — expand for verbatim quotes</summary>
+
+**[3] S et al. 2017 · PMID:28660243 — Neuronal Markers and Molecular Characteristics**
+
 > "In mice, most AVPV/PeN Kiss1 cells coexpress tyrosine hydroxylase (TH), the rate-limiting enzyme in catecholamine synthesis (in this case, dopamine)."
 > — S et al. 2017, Neuronal Markers and Molecular Characteristics · [3] <!-- quote_key: 4702847_ebd225e6 -->
 
-> "A notable exception is the AVPV of the hypothalamus, which is larger in volume, contains more cells, and sends more projections to multiple reproduction-related brain regions in females compared to males [25,34,71,72,76e[79]. Importantly, it also expresses several sexually dimorphic molecularly defined neuronal populations, including the tyrosine hydroxylase (TH)-expressing population, which contains 3e4 times more neurons in females than in males [34,72]"
+**[4] N et al. 2021 · PMID:33910083 — Sexually Dimorphic Brain Regions and Structures**
+
+> "A notable exception is the AVPV of the hypothalamus, which is larger in volume, contains more cells, and sends more projections to multiple reproduction-related brain regions in females compared to males. Importantly, it also expresses several sexually dimorphic molecularly defined neuronal populations, including the tyrosine hydroxylase (TH)-expressing population, which contains 3–4 times more neurons in females than in males."
 > — N et al. 2021, Sexually Dimorphic Brain Regions and Structures · [4] <!-- quote_key: 233446934_e19240c2 -->
+
+</details>
 
 ---
 
@@ -30,12 +39,14 @@
 
 ### 4a. Candidate overview
 
-| Rank | WMBv1 node | Taxonomy level | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|
-| 1 | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | CLUSTER | 🟡 MODERATE | Th CONSISTENT (mean 6.6) · Kiss1 CONSISTENT (mean 2.51, defining marker) · MFR=0.02 CONSISTENT · NT Dopa CONSISTENT | Best candidate (cluster) |
-| 2 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | SUPERTYPE | 🟡 MODERATE | Th APPROXIMATE (mean 2.72) · Kiss1 APPROXIMATE (mean 0.62) · female bias in child CLUS_1915 | Best candidate (supertype) |
+| Rank | WMBv1 node | Taxonomy level | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+|---|---|---|---|---|---|---|
+| 1 | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | CLUSTER | n=3–5 * | 🟡 MODERATE | Th CONSISTENT (mean 6.6) · Kiss1 CONSISTENT (mean 2.51, defining marker) · MFR=0.02 CONSISTENT · NT Dopa CONSISTENT | Best candidate (cluster) |
+| 2 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | SUPERTYPE | not available | 🟡 MODERATE | Th APPROXIMATE (mean 2.72) · Kiss1 APPROXIMATE (mean 0.62) · female bias in child CLUS_1915 | Best candidate (supertype) |
 
 *2 edges total; relationship type: PARTIAL_OVERLAP. Both edges are MODERATE — no UNCERTAIN edges.*
+
+\* MERFISH n=3–5; 10x cluster size not yet shown — see ROADMAP.
 
 ### 4b. Property alignment table
 
@@ -47,6 +58,8 @@
 | Kiss1 expression | POSITIVE (transcript, co-expressed with Th) | Precomputed mean_expression=0.62 | Precomputed mean_expression=2.51; Kiss1 is a cluster-level DEFINING marker | SUPT: APPROXIMATE; CLUS: CONSISTENT |
 | Sex ratio | Female-biased (2–4× more TH+ neurons in females) | not available at supertype level | male_female_ratio=0.02 (extreme female bias, ~50:1 F:M) [CS20230722_CLUS_1915] | CONSISTENT |
 | Annotation transfer | — | NOT_ASSESSED | NOT_ASSESSED | — |
+
+*(1 of 5 child clusters of SUPT_0486 — CLUS_1915 — shows the female-biased Th+Kiss1 co-expression profile (Th=6.6, Kiss1=2.51, MFR=0.02) concordant with avpv_th_neuron; MFR data absent at supertype level and for most SUPT_0486 child clusters.)*
 
 ---
 

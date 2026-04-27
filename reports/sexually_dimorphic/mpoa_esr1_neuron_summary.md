@@ -19,19 +19,42 @@
 
 **Curation note:** The MPOA Esr1 neuron is a heterogeneous population. As documented in the literature, the MPOA contains molecularly distinct Esr1-expressing subpopulations with non-overlapping functions: an Esr1+ population required for parental (pup-directed) behaviour, an Esr1+ population governing male-type mating behaviour, and an Nts+ population governing female socio-sexual behaviours [1] [2]. The classical node as currently defined likely spans multiple transcriptomic supertypes. It is flagged as a candidate for splitting into finer terms once the transcriptomic landscape is resolved.
 
+<details>
+<summary>Literature support — expand for verbatim quotes</summary>
+
+**[2] https://doi.org/10.1101/2021.09.02.458782 — Neuronal Markers and Molecular Characteristics**
+
 > "Molecularly defined subpopulations of neurons expressing a variety of neuropeptides and/or hormonal receptors in the MPOA are tightly associated with reproductive behaviors. MPOA neurons expressing Gal (galanin) or Esr1 (estrogen receptor 1) are essential for parental behaviors, while MPOA neurons expressing Esr1 or Nts (neurotensin) govern male-type mating behaviors and female socio-sexual behaviors, respectively"
 > — https://doi.org/10.1101/2021.09.02.458782, Neuronal Markers and Molecular Characteristics · [2] <!-- quote_key: 237425192_c17e0213 -->
 
+**[1] N et al. 2021 · PMID:33910083 — Sexually Dimorphic Brain Regions and Structures**
+
 > "A large hypothalamic structure, the MPOA sends projections to multiple downstream brain regions and is both larger and contains more neurons in males than in females [35]. Notably, the MPOA is home to various heterogeneous, molecularly defined, neuronal clusters, including many sexually dimorphic populations, such as androgen receptor (AR)-expressing population and estrogen receptor alpha (ESR1)expressing population [80]"
 > — N et al. 2021, Sexually Dimorphic Brain Regions and Structures · [1] <!-- quote_key: 233446934_5d0fb07e -->
+
+</details>
 
 ---
 
 ## Mapping candidates
 
-| Rank | WMBv1 supertype | Supertype label | Cells (MPN) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 supertype | Supertype label | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | CS20230722_SUPT_0486 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | 37 (MBA:515) | 🟡 MODERATE | Esr1 DEFINING (7.72), Ar (8.15), Pgr (6.80); MBA:515 = MPN | Best candidate — GABAergic fraction only |
+| 1 | CS20230722_SUPT_0486 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | 37 at MBA:515 (MPN) | 🟡 MODERATE | Esr1 DEFINING (7.72), Ar (8.15), Pgr (6.80); MBA:515 = MPN | Best candidate — GABAergic fraction only |
+
+### 4b. Property alignment table
+
+| Property | Classical | SUPT_0486 (supertype) | Alignment |
+|---|---|---|---|
+| Soma location | Medial preoptic nucleus [MBA:464] | MBA:515 (MPN) n=37 MERFISH; also PVpo n=64, AVPV n=16 | CONSISTENT |
+| NT type | Mixed (GABAergic + glutamatergic) | GABAergic (PVpo-VMPO-MPN Hmx2 Gaba subclass) | APPROXIMATE |
+| *Esr1* expression | POSITIVE (defining marker) | mean_expression=7.72 (DEFINING atlas marker) | CONSISTENT |
+| *Ar* expression | POSITIVE (defining marker) | mean_expression=8.15 | CONSISTENT |
+| *Pgr* expression | POSITIVE (defining marker) | mean_expression=6.80 | CONSISTENT |
+| Sex ratio | not reported | not available | NOT_ASSESSED |
+| Annotation transfer | — | NOT_ASSESSED | — |
+
+*(Child-cluster breakdown not assessed — see proposed experiments.)*
 
 ---
 
@@ -55,6 +78,8 @@ All three defining markers of the classical node show high precomputed mean expr
 | Esr1 | Positive, transcript, defining [1] [2] | Mean expression 7.72 (DEFINING atlas marker) | Consistent |
 | Ar | Positive, transcript, defining [1] [2] | Mean expression 8.15 | Consistent |
 | Pgr | Positive, transcript, defining [2] | Mean expression 6.80 | Consistent |
+
+Atlas annotation/expression discrepancy check: Esr1 is a DEFINING atlas marker for SUPT_0486 with mean_expression=7.72 (above 0.5 threshold — no discrepancy flagged). Ar and Pgr are not atlas-assigned DEFINING markers for this supertype but are classical node defining markers; no near-zero expression concern (8.15 and 6.80 respectively).
 
 Marker evidence for the classical node is drawn from two sources: a 2021 review of sexually dimorphic brain regions [1] and a preprint characterising MPOA neuronal subpopulations [2]. Atlas precomputed expression values represent cluster-level means from the WMBv1 taxonomy. No single-cell co-expression data are available at this stage to confirm that all three receptors are co-expressed within individual cells of SUPT_0486.
 

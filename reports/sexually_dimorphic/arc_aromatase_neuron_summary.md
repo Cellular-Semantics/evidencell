@@ -15,16 +15,23 @@ All edges require expert review before use.**
 
 **Notes.** Male-biased sexually dimorphic population. Defined by a single primary source (Wartenberg 2021 [1]). Part of a broader aromatase network spanning hypothalamus and amygdala (~6,000 neurons at birth). No CL term — candidate for a new CL entry. NT type and negative markers not reported.
 
+<details>
+<summary>Literature support — expand for verbatim quotes</summary>
+
+**[1] P et al. 2021 · PMID:34561233 — Neuronal Markers and Molecular Characteristics**
+
 > "We identified an aromatase neuronal network comprising ~6000 neurons in the hypothalamus and amygdala. By birth, this network has become sexually dimorphic in a cluster of aromatase neurons in the arcuate nucleus adjacent to kisspeptin neurons. We demonstrate that male arcuate aromatase neurons convert testosterone to estrogen to regulate kisspeptin neuron activity."
 > — P et al. 2021, Neuronal Markers and Molecular Characteristics · [1] <!-- quote_key: 237626479_5aec04ab -->
+
+</details>
 
 ---
 
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| SUPERTYPE | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | — | — | ⚪ UNCERTAIN | *Cyp19a1* approximate; location critically discordant | Eliminated |
+| SUPERTYPE | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | — | not available | ⚪ UNCERTAIN | *Cyp19a1* approximate; location critically discordant | Eliminated |
 
 ---
 
@@ -36,7 +43,7 @@ All edges require expert review before use.**
 A full WMBv1 database scan found no supertype in MBA:223 (Arcuate hypothalamic nucleus) with *Cyp19a1* as a defining marker. SUPT_0486 is the best available atlas match for *Cyp19a1* expression (mean expression = 1.15 at the supertype level; child cluster CLUS_1907 carries *Cyp19a1* as a defining marker). It is the only supertype in the DB with substantive *Cyp19a1* signal.
 
 **Marker evidence.**
-*Cyp19a1* expression at the supertype level is approximate rather than defining. CLUS_1907, a child of SUPT_0486, does carry *Cyp19a1* as a primary defining marker — the strongest atlas-side *Cyp19a1* signal available. All *Cyp19a1*-expressing clusters found in the full DB scan fall in POA and periventricular zones, not in MBA:223. Evidence basis is atlas metadata only; no literature-derived marker evidence has been extracted to date.
+*Cyp19a1* expression at the supertype level is approximate rather than defining. Precomputed mean_expression = 1.15 for SUPT_0486 (above the 0.5 threshold — no atlas annotation/expression discrepancy flagged). CLUS_1907, a child of SUPT_0486, does carry *Cyp19a1* as a primary defining marker — the strongest atlas-side *Cyp19a1* signal available. All *Cyp19a1*-expressing clusters found in the full DB scan fall in POA and periventricular zones, not in MBA:223. Evidence basis is atlas metadata only; no literature-derived marker evidence has been extracted to date.
 
 **Concerns.**
 
