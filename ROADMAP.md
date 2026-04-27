@@ -13,7 +13,7 @@ Archive of prior roadmap with full milestone write-ups: [planning/ROADMAP_archiv
 |---|---|
 | `#schema` | LinkML schema, enum values, semantic lint rules |
 | `#kb` | KB file structure, naming conventions |
-| `#content` | KB YAML content — updates needed when schema or file structure changes |
+| `#content` | KB YAML content tasks — tracked in `planning/content-notes/` |
 | `#lit` | Literature curation workflows generally |
 | `#at` | Annotation transfer pipeline and report improvements |
 | `#workflow-design` | Orchestrator architecture, data contracts |
@@ -51,11 +51,18 @@ Milestones: `@Allen` (Allen Institute deliverable, date TBC) · `@BICAN` (BICAN 
 
 ## KB structure `#kb`
 
-- [ ] **Flatten kb/ — remove draft/mappings split**: single `kb/` directory; `just qc` + human sign-off as the quality gate `#content`
-- [ ] **Rename and consolidate graphs**: `hippocampus_WMBv1.yaml`, `cerebellum_WMBv1.yaml`, `BG_HMBA.yaml`, `BG_WMBv1.yaml` `#content`
+- [ ] **Flatten kb/ — remove draft/mappings split**: single `kb/` directory; `just qc` + human sign-off as the quality gate `#kb`
 - [ ] Wire remaining orchestrators to `references/`, `research/`, `reports/` at repo root `#asta-ingest` `#gen-report` `#evidence-extraction`
-- [ ] Orchestrators write directly into region graph (read-merge-write); ephemera to `research/` `#asta-ingest` `#evidence-extraction` `#content`
-- [ ] Self-contained KB graphs — inline snippets, `PublicationReference` metadata, ingest provenance (see [planning/schema_self_contained_references.md](planning/schema_self_contained_references.md)) `#content`
+- [ ] Orchestrators write directly into region graph (read-merge-write); ephemera to `research/` `#asta-ingest` `#evidence-extraction`
+- [ ] Self-contained KB graphs — inline snippets, `PublicationReference` metadata, ingest provenance (see [planning/schema_self_contained_references.md](planning/schema_self_contained_references.md)) `#schema`
+
+---
+
+## Precomputed stats HDF5 — download and file structure `#map-cell-type` `#annotation-transfer`
+
+- [ ] **Verify HDF5 download in `at-download-taxonomy`** — the command runs `cd annotation_transfer && uv run annotation-transfer taxonomy-setup CCN20230722 --download` and writes to `annotation_transfer/conf/mapmycells/{id}/precomputed_stats.h5`. During the sexually_dimorphic mapping pilot, the download wrote to an empty directory because the working-directory shift means the file lands in `annotation_transfer/conf/mapmycells/` rather than the repo-root `conf/mapmycells/`. The existing file at `scratch/olm-at/precomputed_stats_ABC_revision_230821.h5` was found manually. Fix: either run `taxonomy-setup` from repo root, or symlink / update sync-mapmycells-paths to point to the actual file wherever it lives.
+- [ ] **Standardise HDF5 canonical path** — define one authoritative location for `precomputed_stats.h5` per taxonomy (e.g. `conf/mapmycells/{taxonomy_id}/precomputed_stats.h5` from repo root) and document it in `CLAUDE.md` / orchestrator preamble. Agents and workflows that need the HDF5 should look there first, with a fallback scan. Currently the path is implicit and differs between runs.
+- [ ] **Pre-run HDF5 check in `map-cell-type.md`** — add a Step 0 preflight: confirm `precomputed_stats.h5` and `conf/gene_mapping_{taxonomy_id}.tsv` exist; if not, print the download command and abort cleanly rather than silently skipping expression cross-check.
 
 ---
 
@@ -105,8 +112,6 @@ exists on every node row, so queries within a single atlas work unchanged.
 
 ## Annotation transfer `#at`
 
-- [ ] **OLM hippocampus**: KB import orchestrator for GSE124847 → WMBv1 AT results (branch `at/olm-hippocampus`) `#annotation-transfer` `#content`
-- [ ] **PV hippocampus**: GSE142546 Que 2021 PV patch-seq AT (branch `at/pv-hippocampus`; awaiting SRA reprocessing) `#annotation-transfer` `#content`
 - [ ] AT orchestrator: use `best_mapping_rank` throughout `#annotation-transfer` `#map-cell-type`
 - [ ] AT-before-edges mapping loop — triage-first ordering, compute preflight gate, sub-node creation rule `#map-cell-type` `#annotation-transfer` (see [planning/adaptive_mapping_loop_design.md](planning/adaptive_mapping_loop_design.md))
 - [ ] Report: assess all rank-0 nodes collectively when AT resolves above rank 0 `#gen-report`
@@ -119,6 +124,10 @@ exists on every node row, so queries within a single atlas work unchanged.
 ## Workflow design `#workflow-design`
 
 - [ ] **`map-cell-type.md` progressive rewrite** — direct KB writes; biologist report review is the main gate; remove per-edge curator gates except reference weeding `#map-cell-type`
+- [x] **Fold expression cross-check into Step 0b refinement (default)** — Implemented: Steps 2a/2b/2c in `map-cell-type.md` now make expression enrichment mandatory (not optional). Step 0b refinement subagent prompt extended to enumerate child-cluster expression and AT evidence for every supertype candidate. `just build-taxonomy-db` called after any `add-expression` writes. `#map-cell-type`
+- [ ] **DB regen performance check** — `just build-taxonomy-db {taxonomy_id}` is called after every `add-expression` run. If the rebuild is slow for large taxonomies, add a `--update-only` flag to `build_from_yaml()` that only re-inserts nodes whose YAML mtime has changed. `#map-cell-type`
+- [x] **Sex bias scoring in `find-candidates`** — `find_candidates()` now accepts `optional_criteria: dict[str, str]`. The `_OPTIONAL_CRITERIA_REGISTRY` supports `sex_bias` (MFR < 0.3 → female, MFR > 3.0 → male, +1 pt at rank 0). `_cmd_find_candidates()` reads `sex_bias` from classical node YAML and passes as optional_criteria automatically. Extensible: new criteria added to registry without changing the call signature. Schema: `SexBias` enum added to `celltype_mapping.yaml`. `#find-candidates`
+- [x] **Property alignment table in gen-report** — Section 4 of synthesis subagent prompt now requires a mandatory property alignment table (soma location, NT, expression, sex ratio, AT evidence) for each primary candidate. Headline null result required for UNCERTAIN-only mappings confirmed by expression data. `#gen-report`
 - [ ] Curation mode vs dev mode — review workflow mode split (WORKFLOW.md / CLAUDE.md routing)
 ### Deliverables
 
@@ -147,7 +156,7 @@ exists on every node row, so queries within a single atlas work unchanged.
 
 ## Infrastructure `#infrastructure`
 
-- [ ] Code/content separation — `content/hmba-mouse` branch; `main` fixture-only KB; `just test` green on main `#content`
+- [ ] Code/content separation — `content/hmba-mouse` branch; `main` fixture-only KB; `just test` green on main `#infrastructure`
 - [ ] Docker setup — `docs/SETUP.md`, `just docker-setup`, `.env.example`
 
 ---
@@ -163,4 +172,4 @@ Brief log — see [planning/ROADMAP_archive_2026-04.md](planning/ROADMAP_archive
 - [x] Taxonomy update ops: `add-expression`, `reingest` with field ownership (`taxonomy_ops.py`); `map-cell-type.md` Step 2b expression enrichment `#ingest-taxonomy` `#map-cell-type`
 - [x] CAS taxonomy ingest: CTX-HPF CS202106160 + cross-taxonomy AT edges `#ingest-taxonomy` `#annotation-transfer`
 - [x] Pre-commit hook: strict schema validation on all staged KB YAML `#qc`
-- [x] Provenance schema unification (v0.8.0): `ElectrophysiologyProfile` + `MorphologyProfile` classes; `AnatomicalLocation.sources`; removed flat `ephys_sources`/`morphology_sources`/`location_sources` `#schema` `#content`
+- [x] Provenance schema unification (v0.8.0): `ElectrophysiologyProfile` + `MorphologyProfile` classes; `AnatomicalLocation.sources`; removed flat `ephys_sources`/`morphology_sources`/`location_sources` `#schema`

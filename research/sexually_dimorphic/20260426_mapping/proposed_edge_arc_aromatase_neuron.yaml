@@ -1,0 +1,202 @@
+# Proposed MappingEdge: arc_aromatase_neuron → CS20230722_SUPT_0486
+# Generated: 2026-04-26
+# Curator-approved mapping from Step 1 GATE
+# Status: PROPOSED — not yet written to KB
+
+- id: edge_arc_aromatase_neuron_to_cs20230722_supt_0486
+  type_a: arc_aromatase_neuron
+  type_b: CS20230722_SUPT_0486
+  relationship: UNCERTAIN
+  confidence: UNCERTAIN
+
+  # ── Atlas node summary ──────────────────────────────────────────
+  # CS20230722_SUPT_0486 "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"
+  # Parent subclass: CS20230722_SUBC_106 (PVpo-VMPO-MPN Hmx2 Gaba)
+  # Taxonomy: CCN20230722 (WMBv1)
+  # Primary MERFISH locations: MBA:133 Periventricular hypothalamic nucleus
+  #   preoptic part (n=64), MBA:515 Medial preoptic nucleus (n=37),
+  #   MBA:1097 Hypothalamus (n=27), MBA:272 Anteroventral periventricular
+  #   nucleus (n=16)
+  # Atlas defining markers: Apoc3, Insm2, Prok2, Esr1 (DEFINING);
+  #   Bmp3, Rarb, Lhx5, Slc18a2 (DEFINING_SCOPED)
+  # Child cluster with Cyp19a1 as defining marker: CS20230722_CLUS_1907
+  #   (noted from child_cluster_expression data)
+
+  # ── Classical node summary ──────────────────────────────────────
+  # arc_aromatase_neuron: Arcuate aromatase neuron
+  # Location: MBA:223 (Arcuate hypothalamic nucleus)
+  # Defining markers: Cyp19a1 (aromatase; transcript)
+  # NT type: not specified
+  # Sex bias: male-biased
+
+  # ── Mapping rationale ───────────────────────────────────────────
+  # The DB scan confirmed that Cyp19a1 does not appear in any WMBv1 cluster
+  # or supertype label — the marker is too specific to drive cluster naming.
+  # A full DB scan found no ARH-located supertype carrying Cyp19a1 as a
+  # defining marker. The best ARH candidates from the original scan were
+  # SUPT_0427 and SUPT_0428 (ARH-PVi Six6 Dopa-Gaba supertypes), driven by
+  # location and male sex bias. However, follow-up expression queries
+  # revealed that SUPT_0486 (PVpo-VMPO-MPN Hmx2 Gaba) contains child cluster
+  # CS20230722_CLUS_1907 with Cyp19a1 as a defining marker — the closest
+  # functional match in the atlas to an aromatase-expressing neuron population.
+  # SUPT_0486 has Cyp19a1 mean_expression = 1.15 at the supertype level.
+  # The anatomical mismatch (POA/periventricular vs ARH) is the critical
+  # constraint; see caveats below.
+
+  evidence:
+    - evidence_type: MARKER_OVERLAP
+      supports: PARTIAL
+      explanation: >
+        Cyp19a1 is the defining marker of arc_aromatase_neuron. SUPT_0486 shows
+        Cyp19a1 mean_expression = 1.15 at the supertype level — modest but present.
+        Child cluster CS20230722_CLUS_1907 (under SUPT_0486) has Cyp19a1 as a
+        defining marker, representing the most direct atlas-level correspondence to
+        an aromatase-expressing population. The broader aromatase neuron network
+        spans approximately 6,000 neurons across hypothalamus and amygdala
+        (Wartenberg 2021), so Cyp19a1-expressing neurons are not confined to
+        a single region in the atlas.
+
+    - evidence_type: ANATOMY
+      supports: AGAINST
+      explanation: >
+        The classical arc_aromatase_neuron is defined at MBA:223 (Arcuate
+        hypothalamic nucleus). SUPT_0486 is located in PVpo-VMPO-MPN
+        (periventricular preoptic / ventromedial preoptic / medial preoptic
+        nucleus) — a preoptic zone entirely distinct from the arcuate. No cells
+        in SUPT_0486 MERFISH data are assigned to MBA:223. This is a
+        substantial anatomical discordance.
+
+    - evidence_type: DB_SCAN_RESULT
+      supports: INFORMATIVE
+      explanation: >
+        A full scan of the CCN20230722 taxonomy DB confirmed that no ARH-located
+        supertype carries Cyp19a1 as a defining marker. The ARH Dopa-Gaba
+        supertypes (SUPT_0427, SUPT_0428) were the strongest ARH candidates
+        by location and sex bias but lack confirmed Cyp19a1 expression at the
+        supertype level. All Cyp19a1-expressing clusters in WMBv1 that could be
+        identified via precomputed expression data appear to be in POA/periventricular
+        zones rather than ARH. This pattern may reflect genuine intermingling of
+        aromatase neurons across the periventricular zone and ARH, or a MERFISH
+        registration artefact at the ARH/periventricular boundary.
+
+  property_comparisons:
+
+    - property: nt_type
+      classical_value: "not specified"
+      atlas_value: "GABAergic (parent subclass: PVpo-VMPO-MPN Hmx2 Gaba; Gaba in label)"
+      concordance: UNKNOWN
+      notes: >
+        The classical arc_aromatase_neuron does not have a specified NT type.
+        Aromatase neurons in the ARC have been reported as both GABAergic and
+        co-expressing dopamine machinery in different studies. The atlas
+        supertype is GABAergic by label and parent subclass. Cannot confirm
+        concordance without a classical NT specification.
+
+    - property: soma_location_MBA_223_ARH
+      classical_value: "MBA:223 (Arcuate hypothalamic nucleus)"
+      atlas_value: "MBA:133 PVpo (n=64), MBA:515 MPN (n=37), MBA:272 AVPV (n=16) — no MBA:223 cells"
+      concordance: DISCORDANT
+      notes: >
+        ANATOMICAL DISCORDANCE. The classical type is defined in the arcuate
+        nucleus (ARH, MBA:223). SUPT_0486 cells are located in the periventricular
+        preoptic zone and medial preoptic nucleus — a distinct anatomical compartment
+        from the ARH. This is the primary constraint driving UNCERTAIN confidence.
+
+    - property: defining_marker_Cyp19a1
+      classical_value: "Cyp19a1 — defining marker (transcript)"
+      atlas_value: "Cyp19a1 mean_expression = 1.15 (supertype level); Cyp19a1 is a defining marker for child cluster CS20230722_CLUS_1907"
+      concordance: PARTIAL
+      notes: >
+        Cyp19a1 is expressed in SUPT_0486 at a modest supertype-level mean (1.15),
+        and is a defining marker for a child cluster (CLUS_1907). This is the
+        strongest available marker evidence for a Cyp19a1-atlas correspondence.
+        However, the expression level is modest at supertype resolution; the
+        Cyp19a1-high cells may be a minority subpopulation within SUPT_0486.
+        No ARH-located supertype showed higher Cyp19a1 expression in the DB scan.
+
+  caveats:
+    - caveat_type: ANATOMICAL_DISCORDANCE
+      severity: HIGH
+      description: >
+        The classical arc_aromatase_neuron is defined in MBA:223 (Arcuate
+        hypothalamic nucleus). SUPT_0486 is located in the periventricular
+        preoptic zone (PVpo-VMPO-MPN), not the arcuate. This is a fundamental
+        anatomical mismatch. The mapping is proposed on the basis of Cyp19a1
+        marker correspondence (child cluster CLUS_1907) in the absence of any
+        ARH-specific Cyp19a1-positive atlas cluster. Possible explanations:
+        (1) aromatase neurons in the ARH and preoptic zone may represent a
+        single transcriptomic type distributed across multiple anatomical zones
+        (consistent with the ~6,000 neuron pan-hypothalamic aromatase network);
+        (2) MERFISH registration at the ARH/periventricular boundary may
+        misassign some ARH cells to periventricular coordinates; (3) the
+        sexually dimorphic ARH aromatase cluster (Wartenberg 2021) may be too
+        small or too transcriptomically similar to neighboring ARH populations
+        to form a distinct supertype in WMBv1.
+
+    - caveat_type: MARKER_EXPRESSION_LEVEL
+      severity: MODERATE
+      description: >
+        Cyp19a1 mean_expression at the SUPT_0486 supertype level is 1.15 —
+        modest. This suggests Cyp19a1-expressing cells are a minority within
+        the supertype. Child cluster CS20230722_CLUS_1907 represents a more
+        specific sub-match, but this edge is drawn at supertype level per the
+        curator-approved mapping. A cluster-level edge to CLUS_1907 would be
+        more specific but still anatomically discordant.
+
+    - caveat_type: SINGLE_SOURCE_CLASSICAL_NODE
+      severity: MODERATE
+      description: >
+        The arc_aromatase_neuron node is based on a single primary source
+        (Wartenberg 2021 / PMID:34561233). The ARH location assignment depends
+        entirely on this paper; independent confirmation of ARH-specific
+        aromatase neuron identity is absent. If the Wartenberg interpretation
+        of ARH location is nuanced (e.g., adjacent to ARH rather than within it),
+        the anatomical discordance with SUPT_0486 may be reduced.
+
+  unresolved_questions:
+    - >
+      Do any ARH-located clusters (under SUPT_0427, SUPT_0428, or TU-ARH
+      supertypes) show detectable Cyp19a1 expression in the precomputed HDF5
+      stats? If yes, those clusters should be compared against SUPT_0486 as
+      alternative mapping targets.
+    - >
+      Is CS20230722_CLUS_1907 (Cyp19a1-defining child of SUPT_0486) located
+      exclusively in POA/periventricular zones in MERFISH data, or do some
+      cells appear in ARH-adjacent coordinates?
+    - >
+      Does the sexually dimorphic ARH aromatase population (male-biased) have
+      a distinct transcriptomic identity from other aromatase neurons in the
+      preoptic zone?
+
+  proposed_experiments:
+    - >
+      Query precomputed expression for Cyp19a1 in all ARH-region supertypes
+      (SUPT_0427, SUPT_0428, SUPT_0478-0480, SUPT_0493-0495) to determine
+      whether any ARH cluster expresses Cyp19a1 at comparable or higher
+      levels than SUPT_0486.
+    - >
+      Inspect MERFISH spatial coordinates for CS20230722_CLUS_1907 to confirm
+      or refute POA-exclusive location.
+    - >
+      Request single-cell resolution Cyp19a1 data from the ABC atlas portal
+      to identify all Cyp19a1+ cells and their regional assignments.
+
+  discovery_evidence:
+    db_score: null
+    rank_used: 1
+    candidate_assessment: BEST_AVAILABLE
+    rationale_summary: >
+      No ARH-located supertype was identified with Cyp19a1 as a defining marker
+      in the full DB scan. SUPT_0486 is proposed as the best available match
+      based on (a) Cyp19a1 mean expression present at the supertype level (1.15)
+      and (b) child cluster CLUS_1907 carrying Cyp19a1 as a defining marker.
+      Original DB scan STRONG candidates (SUPT_0427, SUPT_0428 — ARH Dopa-Gaba
+      supertypes) lacked confirmed Cyp19a1 expression and are documented as
+      alternative candidates to revisit.
+    alternative_candidates:
+      - cell_set_accession: CS20230722_SUPT_0427
+        name: "0427 ARH-PVi Six6 Dopa-Gaba_1"
+        assessment: STRONG (location/sex-bias-based); Cyp19a1 expression unconfirmed
+      - cell_set_accession: CS20230722_SUPT_0428
+        name: "0428 ARH-PVi Six6 Dopa-Gaba_2"
+        assessment: STRONG (location/sex-bias-based); Cyp19a1 expression unconfirmed

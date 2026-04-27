@@ -1,0 +1,234 @@
+# Proposed MappingEdge: pmv_otr_neuron → CS20230722_SUPT_0607
+# Generated: 2026-04-26
+# Curator-approved mapping from Step 1 GATE
+# Status: PROPOSED — not yet written to KB
+
+- id: edge_pmv_otr_neuron_to_cs20230722_supt_0607
+  type_a: pmv_otr_neuron
+  type_b: CS20230722_SUPT_0607
+  relationship: CROSS_CUTTING
+  confidence: LOW
+
+  # ── Atlas node summary ──────────────────────────────────────────
+  # CS20230722_SUPT_0607 "0607 PMv-TMv Pitx2 Glut_3"
+  # Parent subclass: CS20230722_SUBC_136 (PMv-TMv Pitx2 Glut)
+  # Taxonomy: CCN20230722 (WMBv1)
+  # Primary MERFISH locations: MBA:1004 Ventral premammillary nucleus (n=347),
+  #   MBA:1097 Hypothalamus (n=100), MBA:830 Dorsomedial nucleus of hypothalamus (n=37)
+  # Atlas defining markers: Gucy2c, Tac1, Slc6a3 (DEFINING);
+  #   1700042O10Rik, Slc18a2, Gfra1, Oxtr (DEFINING_SCOPED)
+  # DB score: 4 (highest among all pmv_otr_neuron candidates at any rank)
+
+  # ── Classical node summary ──────────────────────────────────────
+  # pmv_otr_neuron: Ventral premammillary nucleus (PMv) oxytocin receptor neuron
+  # Location: MBA:1004 (Ventral premammillary nucleus)
+  # Defining markers: Oxtr, Slc6a3, Adcyap1
+  # NT type: not specified (DAT+ subpopulation implies dopaminergic/glutamatergic)
+  # Sex bias: male-biased (higher OTR expression in males P14-P56)
+  # Known heterogeneity: PMv-DAT (Slc6a3+), PMv-PACAP (Adcyap1+), OTR+ subpopulations
+
+  evidence:
+    - evidence_type: ANATOMY
+      supports: SUPPORT
+      explanation: >
+        MBA:1004 (Ventral premammillary nucleus) is the primary MERFISH location
+        for SUPT_0607 (n=347 cells, dominant location). This exactly matches the
+        classical location of pmv_otr_neuron. Anatomical concordance is strong.
+
+    - evidence_type: MARKER_OVERLAP
+      supports: SUPPORT
+      explanation: >
+        SUPT_0607 carries Oxtr as a DEFINING_SCOPED marker and shows
+        Oxtr mean_expression = 2.0. Oxtr is the primary defining marker of
+        pmv_otr_neuron. The atlas supertype-level expression confirms Oxtr
+        presence. Slc6a3 (DAT) is a DEFINING marker in the atlas (expression = 3.07)
+        and is also a defining marker of the classical node. Adcyap1 (PACAP) shows
+        mean_expression = 4.8 in SUPT_0607 and is a defining marker of the
+        classical node. All three classical defining markers are present in
+        SUPT_0607, constituting strong multi-marker concordance.
+
+    - evidence_type: DB_QUERY
+      supports: SUPPORT
+      explanation: >
+        SUPT_0607 received the highest DB score (4) among all pmv_otr_neuron
+        candidates at any rank in the taxonomy DB scan. The sister supertype
+        SUPT_0605 (PMv-TMv Pitx2 Glut_1, DB score=2) also maps to PMv and
+        likely captures additional PMv neurons not represented in SUPT_0607
+        alone, consistent with a CROSS_CUTTING relationship.
+
+    - evidence_type: HETEROGENEITY_FLAG
+      supports: AGAINST
+      explanation: >
+        The classical pmv_otr_neuron node explicitly acknowledges three partially
+        overlapping subpopulations: PMv-DAT (Slc6a3+), PMv-PACAP (Adcyap1+),
+        and OTR+. SUPT_0607 shows all three markers at supertype level
+        (Slc6a3=3.07, Adcyap1=4.8, Oxtr=2.0), consistent with the supertype
+        spanning multiple classical subtypes. The classical node may need to be
+        split into separate sub-nodes; at current granularity the mapping is
+        inherently imprecise.
+
+  property_comparisons:
+
+    - property: nt_type
+      classical_value: "not specified (DAT+ subpopulation implies dopaminergic; Glut/other for OTR+ and PACAP+ subpopulations)"
+      atlas_value: "Glutamatergic (parent subclass: PMv-TMv Pitx2 Glut; Glut in label)"
+      concordance: PARTIAL
+      notes: >
+        The classical node has no explicit NT type. PMv-DAT (Slc6a3+) neurons are
+        traditionally classified as dopaminergic, but DAT expression in PMv may
+        reflect a glutamatergic neuron with dopamine co-release or a developmental
+        marker. The atlas supertype is classified as glutamatergic (Glut in label,
+        Pitx2 Glut parent subclass). Glutamatergic identity is plausible for OTR+
+        and PACAP+ populations. The dopaminergic Slc6a3+ subpopulation may be a
+        small minority embedded within the glutamatergic cluster. Partial
+        concordance — cannot confirm full NT type alignment without sub-cluster
+        resolution.
+
+    - property: soma_location_MBA_1004_PMv
+      classical_value: "MBA:1004 (Ventral premammillary nucleus)"
+      atlas_value: "MBA:1004 (Ventral premammillary nucleus, n=347; dominant location)"
+      concordance: CONCORDANT
+      notes: >
+        Exact match on MBA:1004 as primary location. SUPT_0607 also includes
+        cells in MBA:830 (dorsomedial hypothalamus, n=37) and MBA:1097
+        (generic hypothalamus annotation, n=100). The PMv-dominant assignment
+        is consistent with the classical location. DMH cells may represent
+        a minor contamination or a genuinely adjacent population.
+
+    - property: defining_marker_Oxtr
+      classical_value: "Oxtr — defining marker (transcript)"
+      atlas_value: "Oxtr mean_expression = 2.0 (DEFINING_SCOPED atlas marker)"
+      concordance: CONCORDANT
+      notes: >
+        Oxtr is listed as a DEFINING_SCOPED atlas marker for SUPT_0607 and
+        shows mean expression of 2.0. Concordant with the classical defining
+        marker. Expression level is moderate, consistent with Oxtr being
+        expressed by a subset of cells within the supertype (OTR+ subpopulation).
+
+    - property: defining_marker_Slc6a3
+      classical_value: "Slc6a3 — defining marker (transcript; DAT, dopamine transporter)"
+      atlas_value: "Slc6a3 mean_expression = 3.07 (DEFINING atlas marker)"
+      concordance: CONCORDANT
+      notes: >
+        Slc6a3 (DAT) is a DEFINING marker at the supertype level in SUPT_0607
+        (not scoped) with mean_expression = 3.07. This is a high-confidence
+        concordance. The DAT+ subpopulation of PMv is well represented in
+        this supertype.
+
+    - property: defining_marker_Adcyap1
+      classical_value: "Adcyap1 — defining marker (PACAP)"
+      atlas_value: "Adcyap1 mean_expression = 4.8"
+      concordance: CONCORDANT
+      notes: >
+        Adcyap1 (encoding PACAP) shows mean_expression = 4.8 in SUPT_0607,
+        consistent with the PMv-PACAP subpopulation. No sources were listed
+        on the Adcyap1 entry in the classical node (added without provenance
+        annotation), so this concordance is informative but the classical
+        assertion itself carries reduced evidential weight.
+
+    - property: Tac1_expression
+      classical_value: "not a defining or neuropeptide marker for pmv_otr_neuron"
+      atlas_value: "Tac1 mean_expression = 8.95 (DEFINING atlas marker)"
+      concordance: INFORMATIVE_DISCREPANCY
+      notes: >
+        Tac1 is a DEFINING marker for SUPT_0607 (highest expression among
+        defining markers at 8.95) but is not listed as a defining marker or
+        neuropeptide for the classical pmv_otr_neuron. This suggests SUPT_0607
+        may represent a broader PMv neuron class that includes a Tac1+ (substance
+        P/neurokinin A) population not emphasized in the classical definition. Tac1
+        is noted here as an informative discrepancy: it may be a useful additional
+        marker for future characterization of PMv OTR+ neurons, or it may indicate
+        that SUPT_0607 spans Tac1+ neurons that are distinct from the OTR+ subtype.
+        This contributes to the CROSS_CUTTING relationship classification.
+
+  caveats:
+    - caveat_type: CROSS_CUTTING_SUBPOPULATIONS
+      severity: HIGH
+      description: >
+        The classical pmv_otr_neuron node explicitly encompasses three partially
+        overlapping subpopulations: PMv-OTR (Oxtr+), PMv-DAT (Slc6a3+), and
+        PMv-PACAP (Adcyap1+). SUPT_0607 shows all three marker signatures
+        simultaneously at supertype level (Oxtr=2.0, Slc6a3=3.07, Adcyap1=4.8),
+        strongly suggesting the supertype aggregates neurons that the classical
+        taxonomy treats as potentially distinct subtypes. The CROSS_CUTTING
+        relationship reflects this: SUPT_0607 likely does not correspond to any
+        single classical subpopulation but instead spans multiple subtypes.
+        Individual clusters within SUPT_0607 (particularly CLUS_2473 with MFR=2.23)
+        may better capture the OTR+ male-biased subpopulation specifically.
+
+    - caveat_type: Tac1_HIGH_EXPRESSION
+      severity: MODERATE
+      description: >
+        Tac1 is the highest-expressing DEFINING marker in SUPT_0607
+        (mean_expression = 8.95) but is absent from the classical node definition
+        for pmv_otr_neuron. This suggests SUPT_0607 may be better characterized
+        as a Tac1+ PMv neuron population, with OTR/DAT/PACAP as secondary or
+        co-expressed markers. The classical definition may be incomplete if Tac1
+        expression is a prominent feature of this population.
+
+    - caveat_type: SEX_RATIO_NOT_CONFIRMED
+      severity: MODERATE
+      description: >
+        The pmv_otr_neuron is male-biased (higher OTR expression in males).
+        Sex ratio data for SUPT_0607 at the supertype level were not available
+        in the DB scan (field not populated). Child cluster CLUS_2473 shows
+        MFR=2.23 (male-biased), and clusters under sister supertype SUPT_0605
+        (CLUS_2460, 2462, 2464) show MFR 1.56-1.78. Supertype-level sex bias
+        is inferred but not directly confirmed.
+
+    - caveat_type: SISTER_SUPERTYPE_OVERLAP
+      severity: LOW
+      description: >
+        Sister supertype SUPT_0605 (PMv-TMv Pitx2 Glut_1, DB score=2) also
+        maps to PMv and may capture part of the OTR+ male-biased population
+        (child clusters with MFR 1.56-1.78). A comprehensive CROSS_CUTTING
+        mapping might encompass both SUPT_0605 and SUPT_0607. This edge focuses
+        on SUPT_0607 as the primary match (higher DB score, Oxtr as
+        DEFINING_SCOPED), with SUPT_0605 noted as a secondary candidate.
+
+  unresolved_questions:
+    - >
+      Do individual clusters within SUPT_0607 segregate cleanly by marker:
+      Oxtr-high clusters (OTR+ subtype), Slc6a3-high clusters (DAT+ subtype),
+      and Adcyap1-high clusters (PACAP+ subtype)? Cluster-level precomputed
+      expression would resolve this.
+    - >
+      Is Tac1 co-expressed with Oxtr in PMv neurons, or do Tac1-high and
+      Oxtr-high cells represent distinct subpopulations within SUPT_0607?
+    - >
+      Should this classical node be split into separate sub-nodes
+      (pmv_otr_neuron, pmv_dat_neuron, pmv_pacap_neuron) prior to final
+      mapping? The heterogeneity noted in the original node definition suggests
+      this split may be warranted.
+
+  proposed_experiments:
+    - >
+      Query precomputed expression for Oxtr, Slc6a3, Adcyap1, and Tac1 in
+      all child clusters of SUPT_0607 (CLUS_2469, 2470, 2472, 2473) to
+      determine if subpopulations segregate at cluster level.
+    - >
+      Confirm male_female_ratio for SUPT_0607 and its child clusters from the
+      taxonomy DB to verify sex bias concordance with the classical male-biased
+      phenotype.
+    - >
+      Consider splitting the classical pmv_otr_neuron node into separate nodes
+      for OTR+, DAT+, and PACAP+ PMv populations and re-mapping each to the
+      appropriate cluster-level target.
+
+  discovery_evidence:
+    db_score: 4
+    rank_used: 1
+    candidate_assessment: STRONG
+    rationale_summary: >
+      CS20230722_SUPT_0607 received the highest DB score (4) of any candidate
+      at any rank for pmv_otr_neuron, driven by PMv location match, Oxtr as
+      DEFINING_SCOPED marker, and Slc6a3 as DEFINING marker. The supertype
+      label encodes PMv, Pitx2 (canonical PMv TF), and Glut, with child clusters
+      showing male bias (CLUS_2473 MFR=2.23). Rank-0 child clusters of SUPT_0607
+      (CLUS_2469, 2470, 2472, 2473) are all PMv-labeled and represent potential
+      subset targets.
+    alternative_candidates:
+      - cell_set_accession: CS20230722_SUPT_0605
+        name: "0605 PMv-TMv Pitx2 Glut_1"
+        assessment: STRONG (DB score=2); sister supertype with male-biased clusters
+        note: May capture part of the OTR+ male-biased subpopulation; see caveats

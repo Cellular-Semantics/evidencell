@@ -1,0 +1,1846 @@
+# Draft KB — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Sex_dimorphic_neurons_hypothalamus_ast_report.pdf
+# Ingestion date: 2026-04-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Qualifying filter: clear sex bias, supported by full paper (conference abstract-only nodes excluded)
+# Excluded: arc_kndy_neuron (not sexually dimorphic in cell number), mpoa_galanin_neuron (sex ratio unclear),
+#   poa_pacap_vip_neuron (fish-only evidence), bnst_kiss1_neuron (abstract-only),
+#   lateral_septum_kiss1_neuron (abstract-only)
+
+name: "Sexually dimorphic hypothalamic and limbic neurons — draft KB"
+description: >
+  Evidence graph capturing classically defined sexually dimorphic neuron types
+  in the hypothalamus and connected limbic regions (BNST, lateral septum).
+  Nodes proposed from a single ASTA deep-research report; properties are
+  literature-derived and have not yet been confirmed against primary papers
+  or mapped to a community atlas. No mapping edges populated in this draft.
+
+target_atlas: "WMBv1"
+
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (predominantly mouse evidence; rat for some studies)"
+
+creation_date: "2026-04-25"
+
+nodes:
+
+  - id: avpv_kiss1_neuron
+    name: "AVPV/PeN kisspeptin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:272
+        label: "Anteroventral periventricular nucleus"
+        name_in_source: "anteroventral periventricular nucleus (AVPV)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_3fcab8ab"
+          - ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+          - ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+      - id: MBA:341
+        label: "Periventricular hypothalamic nucleus, posterior part"
+        name_in_source: "periventricular nucleus (PeN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_3fcab8ab"
+          - ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+          - ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+    nt_type:
+      name_in_source: "GABAergic / dopaminergic (TH co-expression)"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopaminergic"
+      sources:
+        - ref: "PMID:28660243"
+          method: "literature inference"
+          scope: "adult mouse"
+          quote_key: "4702847_ebd225e6"
+    defining_markers:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_3fcab8ab"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_6801ab8e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+      - symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+          - marker_type: PROTEIN
+            ref: "PMID:17699664"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "17692566_78d7ff15"
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_6801ab8e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_9c737a0a"
+    neuropeptides:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:23407940"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "11330110_f135c1a8"
+    morphology:
+      description: >
+        Female-biased sexually dimorphic population: females have a greater number of
+        Kiss1 neurons in the AVPV than males. AVPV is larger in volume, contains more
+        cells, and sends more projections to multiple reproduction-related brain
+        regions in females than males. Most AVPV/PeN Kiss1 cells co-express tyrosine
+        hydroxylase. Sexual dimorphism is established during the perinatal critical
+        period through testosterone exposure.
+      sources:
+        - ref: "PMID:29201072"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "1227024_3fcab8ab"
+        - ref: "PMID:17213691"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "1357086_85e3d032"
+        - ref: "PMID:33910083"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "233446934_e19240c2"
+    electrophysiology:
+      description: >
+        Bimodal resting membrane potential influenced by KATP channels: type I
+        (irregular firing) and type II (quiescent) populations. AVPV/PeN Kiss1 neurons
+        display sexually dimorphic biophysical properties — male neurons exhibit
+        higher action-potential frequency and receive more excitatory synaptic
+        transmission (higher sEPSC frequency) compared to females.
+      sources:
+        - ref: "PMID:23407940"
+          method: "whole-cell patch-clamp"
+          scope: "adult rodent"
+          quote_key: "11330110_f261b092"
+        - ref: "PMID:23407940"
+          method: "whole-cell patch-clamp"
+          scope: "adult rodent"
+          quote_key: "11330110_04c1f564"
+    cl_mapping:
+      cl_term:
+        id: CL:4023123
+        label: "hypothalamus kisspeptin neuron"
+        name_in_source: "hypothalamus kisspeptin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4023123 covers all hypothalamic kisspeptin neurons. The AVPV/PeN (RP3V)
+        population is Kiss1-only (not obligately KNDy), so the more specific
+        CL:4023128 (RP3V KNDy neuron) is inappropriate as it requires NKB and
+        dynorphin co-expression. A dedicated CL term for the AVPV/RP3V Kiss1 non-KNDy
+        subpopulation does not yet exist — potential CL contribution.
+    is_terminal: false
+    sex_bias: FEMALE_BIASED
+    definition_references:
+      - "PMID:29201072"
+      - "PMID:17213691"
+      - "PMID:33910083"
+      - "PMID:28660243"
+      - "PMID:35406710"
+    notes: >
+      Female-biased dimorphism in cell number (greater in females). Mediates
+      estrogen-positive feedback for the preovulatory GnRH/LH surge in females. Two
+      electrophysiological subtypes (type I irregular, type II quiescent). Distinct
+      from arcuate KNDy population which is not sexually dimorphic. Most AVPV/PeN
+      Kiss1 cells co-express TH, overlapping the AVPV TH neuron population. CL term
+      CL:4023123 is BROAD; AVPV/RP3V Kiss1 (non-KNDy) is a candidate for a new CL
+      term.
+
+  - id: avpv_th_neuron
+    name: "AVPV tyrosine hydroxylase (TH) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:272
+        label: "Anteroventral periventricular nucleus"
+        name_in_source: "anteroventral periventricular nucleus (AVPV)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1007/s12031-012-9923-1"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "214694216_9c6ba0ce"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1dd3b718"
+          - ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+    nt_type:
+      name_in_source: "dopaminergic"
+      cl_terms:
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopaminergic"
+      sources:
+        - ref: "PMID:28660243"
+          method: "literature inference"
+          scope: "adult mouse"
+          quote_key: "4702847_ebd225e6"
+    defining_markers:
+      - symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "https://doi.org/10.1007/s12031-012-9923-1"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "214694216_9c6ba0ce"
+          - marker_type: PROTEIN
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_e19240c2"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1dd3b718"
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:17699664"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "17692566_78d7ff15"
+    morphology:
+      description: >
+        Female-biased sexually dimorphic TH-immunoreactive population: females have
+        2-4 times more TH-positive neurons than males in the AVPV, with size
+        differences in addition to number. The AVPV consists mainly of TH-positive
+        neurons. Ovariectomy does not affect TH expression; chronic estradiol
+        treatment reduces it. TH-ir lesioned females show lower maternal behavior,
+        suggesting a role in sexually dimorphic parental behavior.
+      sources:
+        - ref: "https://doi.org/10.1007/s12031-012-9923-1"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "214694216_9c6ba0ce"
+        - ref: "PMID:33910083"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "233446934_e19240c2"
+        - ref: "PMID:20609214"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "15152139_c025cc8f"
+    cl_mapping: null
+    is_terminal: false
+    sex_bias: FEMALE_BIASED
+    definition_references:
+      - "https://doi.org/10.1007/s12031-012-9923-1"
+      - "PMID:33910083"
+      - "PMID:20609214"
+      - "PMID:21243444"
+      - "PMID:25206587"
+    notes: >
+      Female-biased dimorphism (2-4x more TH+ neurons in females). Substantial
+      overlap with AVPV/PeN Kiss1 neurons — most AVPV/PeN Kiss1 cells co-express TH.
+      Distinct from SDN-POA where TH-positive cell bodies are absent (only TH-ir
+      axons/synapses). No exact CL term — candidate for a new term (sibling of
+      CL:4072009 'A12 dopaminergic neuron' for AVPV/RP3V A14 dopaminergic neurons).
+
+  - id: sdn_poa_calbindin_neuron
+    name: "Sexually dimorphic nucleus of the preoptic area (SDN-POA) calbindin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:515
+        label: "Medial preoptic nucleus"
+        name_in_source: "sexually dimorphic nucleus of the preoptic area (SDN-POA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:26672480"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14863067_fa51fcf7"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_d6c3a647"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1098a86b"
+    defining_markers:
+      - symbol: Calb1
+        ncbi_gene_id: "NCBIGene:12307"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_d6c3a647"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_17d4bd9d"
+    negative_markers:
+      - symbol: Th
+        modifier: ABSENT
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "immunohistochemistry"
+            scope: "adult mouse/rat"
+            quote_key: "3481177_562d502e"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "immunohistochemistry"
+            scope: "adult mouse/rat"
+            quote_key: "3481177_17d4bd9d"
+    morphology:
+      description: >
+        Male-biased dimorphism: SDN-POA is larger in males than females and controls
+        male sex behavior. Delineated histologically by Nissl staining or
+        immunohistochemically by calbindin-D28K immunoreactivity. No TH-positive cell
+        bodies are present, but fine TH-positive axon-like projections/synaptic
+        structures are observed.
+      sources:
+        - ref: "PMID:26672480"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "14863067_fa51fcf7"
+        - ref: "PMID:25206587"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "3481177_d6c3a647"
+        - ref: "PMID:25206587"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "3481177_1098a86b"
+    cl_mapping: null
+    is_terminal: false
+    sex_bias: MALE_BIASED
+    definition_references:
+      - "PMID:26672480"
+      - "PMID:25206587"
+    notes: >
+      Male-biased dimorphism (larger in males). Considered the rodent homolog of the
+      third interstitial nucleus of the anterior hypothalamus (INAH3) in humans, and
+      homologous structures in other mammals (ovine SDN, rhesus medial preoptic
+      area) and non-mammalian species (quail). No CL term exists — candidate for a
+      new term.
+
+  - id: mpoa_esr1_neuron
+    name: "MPOA estrogen receptor 1 (Esr1) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:464
+        label: "Medial preoptic nucleus"
+        name_in_source: "medial preoptic area (MPOA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+    defining_markers:
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_9f0f55ea"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_c17e0213"
+      - symbol: Ar
+        ncbi_gene_id: "NCBIGene:11835"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_b8087ed0"
+      - symbol: Pgr
+        ncbi_gene_id: "NCBIGene:18667"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_b8087ed0"
+    morphology:
+      description: >
+        Highly sexually dimorphic in distribution and projection patterns. The MPOA is
+        larger and contains more neurons in males than females. Esr1+ neurons are
+        highly expressed in the MPOA and are involved in both parental behaviors and
+        male-type mating behaviors. The Esr1+ population overlaps with steroid hormone
+        receptor-expressing neurons (Ar, Pgr) enriched in the MPOA. Differential
+        effects of circulating steroids between sexes (estrogen in females,
+        testosterone in males) underlie sexually dimorphic features of the MPOA.
+      sources:
+        - ref: "PMID:33910083"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "233446934_5d0fb07e"
+    cl_mapping: null
+    is_terminal: false
+    definition_references:
+      - "PMID:33910083"
+      - "https://doi.org/10.1101/2021.09.02.458782"
+    notes: >
+      Heterogeneous population — MPOA contains both GABAergic and glutamatergic
+      neurons and may be better represented as multiple terms. MPOA Esr1 neurons are
+      required (alongside galanin neurons) for pup-directed/parental behavior. Esr1
+      governs male-type mating behavior; overlapping Nts (neurotensin)+ neurons
+      govern female socio-sexual behaviors. No CL term — candidate for new term(s).
+
+  - id: vmhvl_esr1_pr_neuron
+    name: "VMHvl estrogen-receptor alpha / progesterone receptor neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:693
+        label: "Ventromedial hypothalamic nucleus"
+        name_in_source: "ventrolateral subdivision of the ventromedial hypothalamus (VMHvl)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+    defining_markers:
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+      - symbol: Pgr
+        ncbi_gene_id: "NCBIGene:18667"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_8cb6b0bc"
+      - symbol: Nkx2-1
+        ncbi_gene_id: "NCBIGene:21869"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+      - symbol: Tac1
+        ncbi_gene_id: "NCBIGene:21333"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+    neuropeptides:
+      - symbol: Tac1
+        ncbi_gene_id: "NCBIGene:21333"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+    morphology:
+      description: >
+        Sexually dimorphic population in VMHvl that controls sex-typical behaviors
+        (mating in both sexes, fighting in males). Contains ERalpha+ neurons
+        coordinating metabolism and reproduction in females; a subset co-expressing
+        ERalpha + Nkx2-1 + Tac1 promotes hormone-dependent female locomotion. snRNA-
+        seq identified 17 transcriptomic types, several sexually dimorphic. VMHvl is
+        essential for lordosis behavior in females through projections to PAG,
+        brainstem, and spinal motor circuits.
+      sources:
+        - ref: "PMID:25543145"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "27794167_af52b501"
+    cl_mapping: null
+    is_terminal: false
+    definition_references:
+      - "PMID:25543145"
+      - "PMID:33910083"
+      - "PMID:31626771"
+      - "PMID:38978624"
+    notes: >
+      Molecularly heterogeneous — multiple defined subpopulations: Pgr+ (mating in
+      both sexes / fighting in males), ERalpha+/Nkx2-1+/Tac1+ (female locomotion),
+      and additional ERalpha-expressing subtypes with different projections and sex-
+      related functions. 17 transcriptomic types identified by snRNA-seq (Kim 2019).
+      HETEROGENEITY: may need to be split into multiple sub-nodes in future
+      iterations. No CL term — candidate for new term(s).
+
+  - id: pvn_crfr1_neuron
+    name: "PVN corticotropin-releasing factor receptor 1 (CRFR1) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:38
+        label: "Paraventricular hypothalamic nucleus"
+        name_in_source: "paraventricular hypothalamic nucleus (PVN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+    defining_markers:
+      - symbol: Crhr1
+        ncbi_gene_id: "NCBIGene:12921"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+      - symbol: Ar
+        ncbi_gene_id: "NCBIGene:11835"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+    morphology:
+      description: >
+        Male-biased sexual dimorphism in PVN (males > females). The sex difference is
+        not present at postnatal days 0, 4, or 21 — it emerges during puberty/early
+        adulthood and persists in old mice (20-24 months). Adult gonadectomy reduces
+        CRFR1-immunoreactive cells in males but not females. Restraint stress induces
+        sexually dimorphic neural activation (males > females) measured by phospho-
+        CREB co-localization.
+      sources:
+        - ref: "PMID:31055007"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "143424909_2b990710"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "corticotropin-releasing neuron"
+      mapping_type: RELATED
+      mapping_notes: >
+        CL:4072021 defines neurons by CRH *secretion*, whereas the proposed PVN CRFR1
+        node is defined by CRFR1 *receptor* expression. These are distinct
+        populations: CRFR1+ PVN neurons receive CRH input, they do not necessarily
+        secrete CRH. Mapping is RELATED only. No CL term for CRFR1-receptor-expressing
+        neurons exists — potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:31055007"
+    notes: >
+      Male-biased dimorphism (males > females). Sex difference emerges during
+      puberty/early adulthood. Co-express estrogen receptor alpha (moderate) and
+      androgen receptor (high), suggesting gonadal-hormone-dependent regulation.
+      Single source (Rosinger 2019) for full characterization. CL:4072021
+      (corticotropin-releasing neuron) is RELATED only — that term defines neurons
+      by CRH *secretion*, while this node is defined by CRFR1 receptor expression.
+      No exact CL term — candidate for new term.
+
+  - id: bnst_crf_neuron
+    name: "BNST (anterolateral) corticotropin-releasing factor (CRF) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:174
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "dorsolateral bed nucleus of the stria terminalis (dlBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+      - id: MBA:174
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "oval nucleus of the BNST (ovBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+      - id: MBA:174
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "anterolateral BNST (alBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+    defining_markers:
+      - symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+    negative_markers:
+      - symbol: Calb1
+        modifier: ABSENT
+        ncbi_gene_id: "NCBIGene:12307"
+    neuropeptides:
+      - symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+    morphology:
+      description: >
+        Female-biased sexual dimorphism: females have larger and more numerous CRF
+        neurons in the dorsolateral BNST than males. The sex difference is not evident
+        at postnatal day 5 and emerges by adulthood. Ovariectomy reduces CRF neuron
+        number in females; orchiectomy increases it in males. CRF neurons in dlBNST
+        lack calbindin (in contrast to the calbindin+ principal nucleus of BNST).
+        Modulates pain sensitivity via CRF release.
+      sources:
+        - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "279874350_b2b4adba"
+        - ref: "PMID:23554470"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "14550592_292dccea"
+    electrophysiology:
+      description: >
+        CRF increases neuronal excitability specifically in 'type II' dlBNST neurons
+        (whole-cell patch-clamp); NPY decreases excitability in the same type II
+        neurons and suppresses CRF-induced excitation.
+      sources:
+        - ref: "PMID:23554470"
+          method: "whole-cell patch-clamp"
+          scope: "adult rodent"
+          quote_key: "14550592_292dccea"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "corticotropin-releasing neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4072021 covers all CRH-secreting neurons across brain regions (PVN,
+        hippocampus, BNST, etc.). BNST CRF neurons do secrete CRH, making this a valid
+        BROAD match. A BNST-specific child term does not yet exist — the female-biased
+        dlBNST CRF population is a potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "https://doi.org/10.3389/fncir.2025.1593443"
+      - "PMID:23554470"
+      - "PMID:33910083"
+      - "PMID:32848568"
+    notes: >
+      Female-biased dimorphism (larger and more numerous in females). Distinguished
+      from calbindin+ principal nucleus of BNST (Kiss1+, male-biased). Type II ephys
+      classification within dlBNST. CL:4072021 (corticotropin-releasing neuron) is a
+      BROAD match — a BNST-specific child term is a candidate for new CL
+      contribution.
+
+  - id: arc_aromatase_neuron
+    name: "Arcuate aromatase neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:223
+        label: "Arcuate hypothalamic nucleus"
+        name_in_source: "arcuate nucleus (adjacent to kisspeptin neurons)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_5aec04ab"
+    defining_markers:
+      - symbol: Cyp19a1
+        ncbi_gene_id: "NCBIGene:13075"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_5aec04ab"
+    morphology:
+      description: >
+        Male-biased sexually dimorphic cluster of aromatase neurons in the arcuate
+        nucleus, adjacent to kisspeptin neurons. Part of a broader network of
+        approximately 6,000 aromatase neurons across hypothalamus and amygdala.
+        Becomes sexually dimorphic by birth. Male arcuate aromatase neurons convert
+        testosterone to estrogen locally to regulate kisspeptin neuron activity.
+      sources:
+        - ref: "PMID:34561233"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "237626479_5aec04ab"
+    cl_mapping: null
+    is_terminal: false
+    definition_references:
+      - "PMID:34561233"
+    notes: >
+      Male-biased dimorphism. Single primary source (Wartenberg 2021) for the
+      sexually dimorphic ARC aromatase cluster. Part of a broader aromatase network
+      spanning hypothalamus and amygdala. No CL term — candidate for new term.
+
+  - id: pmv_otr_neuron
+    name: "Ventral premammillary nucleus (PMv) oxytocin receptor neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:1004
+        label: "Ventral premammillary nucleus"
+        name_in_source: "ventral premammillary nucleus (PMv)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:39416191"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273240437_ed3a4faa"
+          - ref: "PMID:32313029"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "201207691_ff444c30"
+    defining_markers:
+      - symbol: Oxtr
+        ncbi_gene_id: "NCBIGene:18430"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:32313029"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "201207691_ff444c30"
+      - symbol: Slc6a3
+        ncbi_gene_id: "NCBIGene:13162"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:39416191"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273240437_af6642f9"
+      - symbol: Adcyap1
+        ncbi_gene_id: "NCBIGene:11516"
+    morphology:
+      description: >
+        Male-biased sexual dimorphism: significantly higher OTR expression in males
+        compared to females between P14 and P56. PMv is a well-established sexually
+        dimorphic region with roles in maternal aggression, reproductive control, male
+        social behavior, and intermale aggression. Subclass-level abundance
+        differences identified in PMv (Hemminger 2024). Previously identified
+        subpopulations include PMv-DAT and PMv-PACAP.
+      sources:
+        - ref: "PMID:32313029"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "201207691_ff444c30"
+        - ref: "PMID:39416191"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "273240437_ed3a4faa"
+    cl_mapping: null
+    is_terminal: false
+    sex_bias: MALE_BIASED
+    definition_references:
+      - "PMID:32313029"
+      - "PMID:39416191"
+    notes: >
+      Male-biased dimorphism (males > females). Multiple molecularly defined
+      subpopulations: PMv-DAT (Slc6a3+, dopaminergic), PMv-PACAP (Adcyap1+), and
+      OTR+. HETEROGENEITY: the OTR+, DAT+, and PACAP+ subpopulations may not fully
+      overlap and could be split into separate sub-nodes. No CL term — candidate for
+      new term.
+
+
+  # ── Atlas node stubs: WMBv1 (CCN20230722) supertypes referenced by edges ──
+  # Full data lives in kb/taxonomy/CCN20230722/supertype.yaml
+
+  - id: CS20230722_SUPT_0486
+    name: "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0486
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_SUPT_0423
+    name: "0423 BST-MPN Six3 Nrgn Gaba_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0423
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_SUPT_0564
+    name: "0564 VMH Fezf1 Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0564
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_SUPT_0585
+    name: "0585 PVH-SO-PVa Otp Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0585
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_SUPT_0393
+    name: "0393 CEA-BST Rai14 Pdyn Crh Gaba_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0393
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_SUPT_0607
+    name: "0607 PMv-TMv Pitx2 Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0607
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_CLUS_1915
+    name: "1915 PVpo-VMPO-MPN Hmx2 Gaba_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1915
+    taxonomy_level: CLUSTER
+
+  - id: CS20230722_CLUS_1550
+    name: "1550 BST-MPN Six3 Nrgn Gaba_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1550
+    taxonomy_level: CLUSTER
+
+  - id: CS20230722_CLUS_2470
+    name: "2470 PMv-TMv Pitx2 Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_2470
+    taxonomy_level: CLUSTER
+
+edges:
+
+  - id: edge_avpv_kiss1_neuron_to_cs20230722_supt_0486
+    type_a: avpv_kiss1_neuron
+    type_b: CS20230722_SUPT_0486
+    relationship: PARTIAL_OVERLAP
+    confidence: MODERATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0486 (PVpo-VMPO-MPN Hmx2 Gaba_5) is the highest-scoring supertype for
+          AVPV-region preoptic GABAergic neurons. Precomputed expression confirms Esr1=7.72
+          (defining marker for both classical node and supertype), Th=2.72, and Kiss1=0.62.
+          The supertype contains n=16 cells labeled AVPV (MBA:272). Child cluster CLUS_1915
+          (dopaminergic designation, male_female_ratio=0.02) is the strongest sub-resolution
+          candidate for the female-biased AVPV Kiss1/TH population. PARTIAL_OVERLAP because
+          SUPT_0486 spans a broader preoptic zone than the AVPV/PeN.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (Th co-expression)"
+        node_b_value: "GABAergic (Gaba_5 label)"
+        alignment: APPROXIMATE
+        notes: >
+          GABAergic concordant; dopaminergic component present at supertype level
+          (Th=2.72) but diluted. Resolved at cluster level by CLUS_1915 (nt_type=Dopa).
+      - property: location_MBA272
+        node_a_value: "MBA:272 (AVPV)"
+        node_b_value: "MBA:272 (AVPV) n=16; MBA:133 PVpo n=64; MBA:515 MPN n=37"
+        alignment: APPROXIMATE
+        notes: Direct AVPV location match (n=16); supertype spans broader preoptic zone.
+      - property: marker_Kiss1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=0.62"
+        alignment: APPROXIMATE
+        notes: Present but low-moderate at supertype level; consistent with subset expression.
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=7.72 (DEFINING atlas marker)"
+        alignment: CONSISTENT
+      - property: marker_Th
+        node_a_value: "POSITIVE (protein, co-expressed with Kiss1)"
+        node_b_value: "precomputed mean_expression=2.72"
+        alignment: APPROXIMATE
+      - property: sex_ratio
+        node_a_value: "female-biased (AVPV Kiss1 neurons strongly female-biased)"
+        node_b_value: "child CLUS_1915 male_female_ratio=0.02 (extreme female bias)"
+        alignment: CONSISTENT
+        notes: >
+          Sex ratio confirmed at child-cluster level. CLUS_1915 (Kiss1=2.51, Th=6.6, Esr1=9.55)
+          is the only child cluster co-expressing both Kiss1 and Th at high levels and the most
+          strongly female-biased cluster in SUPT_0486 (MFR=0.02). Supertype-level sex ratio
+          not available in DB.
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: Annotation transfer not yet run for avpv_kiss1_neuron. Priority experiment.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          SUPT_0486 spans PVpo-VMPO-MPN and contains multiple preoptic cell types.
+          avpv_kiss1_neuron, avpv_th_neuron, and mpoa_esr1_neuron all map to SUPT_0486,
+          reflecting the heterogeneity of this preoptic GABAergic supertype. AVPV Kiss1
+          neurons are a subset.
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: >
+          Supertype-level sex ratio not directly available. Female-biased sex ratio signal is
+          concentrated in child cluster CLUS_1915 (male_female_ratio=0.02). A cluster-level
+          edge to CLUS_1915 would provide more specific mapping.
+    unresolved_questions:
+      - >
+        Which cluster(s) within SUPT_0486 carry peak Kiss1+Th+Esr1 co-expression
+        consistent with AVPV Kiss1/TH identity?
+      - >
+        Do PeN (MBA:341) Kiss1 neurons map to SUPT_0486 or a different supertype?
+    proposed_experiments:
+      - >
+        Inspect child clusters of SUPT_0486 for Kiss1, Th, Esr1 co-expression at
+        cluster level to identify the AVPV Kiss1/TH candidate cluster.
+      - >
+        MapMyCells annotation transfer of published AVPV Kiss1 scRNA-seq data to WMBv1.
+
+  - id: edge_avpv_th_neuron_to_cs20230722_supt_0486
+    type_a: avpv_th_neuron
+    type_b: CS20230722_SUPT_0486
+    relationship: PARTIAL_OVERLAP
+    confidence: MODERATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          SUPT_0486 is the top-ranked rank-1 candidate for avpv_th_neuron. Child cluster
+          CLUS_1915 (nt_type=Dopa, male_female_ratio=0.02) is the most extremely female-biased
+          cluster in the candidate set, directly concordant with the female-biased AVPV TH
+          population (2-4x more TH+ neurons in females). Th=2.72, Esr1=7.72, Kiss1=0.62
+          at supertype level. Three independent signals (Th expression, AVPV location,
+          female sex ratio in child cluster) converge on SUPT_0486/CLUS_1915.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "dopaminergic (A14 group)"
+        node_b_value: "GABAergic (Gaba_5 label); child CLUS_1915 nt_type=Dopa"
+        alignment: APPROXIMATE
+        notes: Dopaminergic identity resolved at cluster level; supertype label reflects majority.
+      - property: location_MBA272
+        node_a_value: "MBA:272 (AVPV)"
+        node_b_value: "MBA:272 (AVPV) n=16; MBA:133 PVpo n=64; MBA:515 MPN n=37"
+        alignment: APPROXIMATE
+        notes: Direct AVPV cells present (n=16); supertype also spans broader preoptic zone.
+      - property: marker_Th
+        node_a_value: "POSITIVE (protein, primary defining marker)"
+        node_b_value: "precomputed mean_expression=2.72"
+        alignment: APPROXIMATE
+      - property: marker_Kiss1
+        node_a_value: "POSITIVE (transcript, co-expressed with Th in AVPV)"
+        node_b_value: "precomputed mean_expression=0.62"
+        alignment: APPROXIMATE
+      - property: sex_ratio
+        node_a_value: "female-biased (2-4x more TH+ neurons in females)"
+        node_b_value: "child CLUS_1915 male_female_ratio=0.02 (extreme female bias)"
+        alignment: CONSISTENT
+        notes: >
+          Strong female-bias confirmation at child cluster level; supertype-level sex
+          ratio not separately available.
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: Annotation transfer not yet run for avpv_th_neuron. Priority experiment.
+    caveats:
+      - caveat_type: NT_PREDICTION_UNCERTAIN
+        description: >
+          SUPT_0486 carries a Gaba_5 label at supertype level while the classical AVPV
+          TH neuron is dopaminergic. Dopaminergic identity is resolved only at cluster
+          level (CLUS_1915, Dopa designation).
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          avpv_th_neuron and avpv_kiss1_neuron both map to SUPT_0486 — these two classical
+          types substantially overlap (most AVPV/PeN Kiss1 cells co-express Th). Cluster-level
+          resolution needed to determine whether they are separable within SUPT_0486.
+    unresolved_questions:
+      - >
+        Does CLUS_1915 specifically correspond to AVPV A14 TH neurons? Confirm by
+        cluster-level Kiss1/Th/Esr1 co-expression profiling.
+    proposed_experiments:
+      - >
+        MapMyCells annotation transfer of AVPV TH-lineage (Th-Cre or Kiss1-Cre)
+        scRNA-seq data to WMBv1 for F1-based confirmation.
+
+  - id: edge_sdn_poa_calbindin_neuron_to_cs20230722_supt_0423
+    type_a: sdn_poa_calbindin_neuron
+    type_b: CS20230722_SUPT_0423
+    relationship: UNCERTAIN
+    confidence: LOW
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          SUPT_0423 (BST-MPN Six3 Nrgn Gaba_4) is the only anatomically plausible rank-1
+          candidate (DB score=1). Calb1=6.42 (DEFINING_SCOPED atlas marker) matches the
+          primary classical defining marker. MBA:515 (MPN, n=47) matches the classical
+          MBA:464 location. However, Th mean_expression=0.99 conflicts with the Th NEGATIVE
+          marker assertion, and the SDN-POA cannot be resolved from the broader MPN in
+          WMBv1 MERFISH data.
+    property_comparisons:
+      - property: location_MBA515_MPN
+        node_a_value: "MBA:515 (Medial preoptic nucleus; SDN-POA is a histological subnucleus within MPN)"
+        node_b_value: "MBA:515 (MPN) n=47; also BNST n=18, AHN n=46, PVN n=31"
+        alignment: APPROXIMATE
+        notes: >
+          Classical node corrected from MBA:464 (PVN descending division) to MBA:515 (MPN).
+          SDN-POA is a histologically defined subnucleus within MPN, not separately resolved
+          in WMBv1 MERFISH data.
+      - property: marker_Calb1
+        node_a_value: "POSITIVE (protein, primary defining marker)"
+        node_b_value: "precomputed mean_expression=6.42 (DEFINING_SCOPED atlas marker)"
+        alignment: CONSISTENT
+      - property: negative_marker_Th
+        node_a_value: "ABSENT (negative marker; no TH cell bodies in SDN-POA)"
+        node_b_value: "precomputed mean_expression=0.99"
+        alignment: DISCORDANT
+        notes: >
+          Low but non-zero Th expression in SUPT_0423. May reflect Th-expressing cells
+          in the BST/AHN/PVN components rather than MPN-proper cells. Child cluster
+          CLUS_1550 (MPN primary soma) shows Th=2.75 — concern persists at cluster level.
+      - property: sex_ratio
+        node_a_value: "male-biased (SDN-POA has more cells in males; classical IHC)"
+        node_b_value: "child CLUS_1550 male_female_ratio=3.35 (male-biased)"
+        alignment: CONSISTENT
+        notes: >
+          CLUS_1550 (MPN primary soma, n=22) MFR=3.35 is male-biased, consistent with the
+          MALE_BIASED sex_bias of sdn_poa_calbindin_neuron. This is the only cluster in
+          SUPT_0423 with MPN as primary soma and an unambiguous male bias.
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: >
+          Annotation transfer pipeline has not been run for this classical node.
+          Recommended next step: MapMyCells annotation of MPN Calb1+ or SDN-POA scRNA-seq data.
+    caveats:
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          The SDN-POA is a histologically defined subnucleus within MPN, not resolvable
+          as a distinct spatial domain in WMBv1 MERFISH data. Matching is possible only at
+          MPN level (SUPT_0423 MBA:515, n=47); SDN-POA cells cannot be distinguished from
+          other MPN Calb1 neurons.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: >
+          Calb1 is expressed across many brain regions and is DEFINING_SCOPED (not DEFINING)
+          in SUPT_0423. Calb1 alone is insufficient to identify SDN-POA neurons specifically;
+          the supertype spans BST, MPN, AHN, and PVN.
+    unresolved_questions:
+      - >
+        Do any clusters within SUPT_0423 show peak Calb1 co-located with MBA:515 (MPN)
+        and male-biased sex ratio consistent with SDN-POA identity?
+    proposed_experiments:
+      - >
+        Spatial inspection of SUPT_0423 MERFISH cells in MBA:515 for sub-regional
+        clustering consistent with SDN-POA dorsomedial position.
+
+  - id: edge_mpoa_esr1_neuron_to_cs20230722_supt_0486
+    type_a: mpoa_esr1_neuron
+    type_b: CS20230722_SUPT_0486
+    relationship: CROSS_CUTTING
+    confidence: MODERATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          SUPT_0486 (PVpo-VMPO-MPN Hmx2 Gaba_5) directly encodes MPN in its label and has
+          MBA:515 (MPN, n=37) cells. All three defining markers of mpoa_esr1_neuron show high
+          expression: Esr1=7.72 (DEFINING atlas marker), Ar=8.15, Pgr=6.80. CROSS_CUTTING
+          because MPOA Esr1 neurons are heterogeneous (GABAergic and glutamatergic subtypes)
+          and SUPT_0486 captures only the GABAergic fraction.
+    property_comparisons:
+      - property: location_MBA464_MPOA
+        node_a_value: "MBA:464 (Medial preoptic nucleus / MPOA)"
+        node_b_value: "MBA:515 (MPN) n=37; MBA:133 (PVpo) n=64; MBA:272 (AVPV) n=16"
+        alignment: CONSISTENT
+        notes: MBA:515 is the same structure as MBA:464 (MPN). Location concordant.
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=7.72 (DEFINING atlas marker)"
+        alignment: CONSISTENT
+      - property: marker_Ar
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=8.15"
+        alignment: CONSISTENT
+      - property: marker_Pgr
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=6.80"
+        alignment: CONSISTENT
+      - property: nt_type
+        node_a_value: "mixed (GABAergic and glutamatergic, both documented in MPOA)"
+        node_b_value: "GABAergic (PVpo-VMPO-MPN Hmx2 Gaba subclass)"
+        alignment: APPROXIMATE
+        notes: GABAergic component matches; glutamatergic MPOA Esr1 neurons map elsewhere.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          MPOA Esr1 neurons are functionally heterogeneous (parental behavior, male mating,
+          female socio-sexual behavior via Nts+ subtype). The classical node spans multiple
+          transcriptomic supertypes. SUPT_0486 captures the GABAergic fraction only. The
+          glutamatergic fraction requires identification of a preoptic glutamatergic supertype.
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: >
+          The functional subtypes within MPOA Esr1 neurons (parental, mating, female
+          socio-sexual) likely distribute across multiple clusters within SUPT_0486.
+    unresolved_questions:
+      - >
+        Which clusters within SUPT_0486 have highest Esr1/Ar/Pgr and strongest MPN
+        anatomical signal?
+      - >
+        Does the Nts+ female socio-sexual subpopulation map to SUPT_0486 or to a
+        separate preoptic supertype?
+
+  - id: edge_vmhvl_esr1_pr_neuron_to_cs20230722_supt_0564
+    type_a: vmhvl_esr1_pr_neuron
+    type_b: CS20230722_SUPT_0564
+    relationship: CROSS_CUTTING
+    confidence: MODERATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0564 (VMH Fezf1 Glut_2) has MBA:693 (VMH) as primary location (n=360),
+          directly matching VMHvl. Nkx2-1=5.34 and Pgr=4.54 show strong-to-moderate
+          expression consistent with the classical defining markers. Esr1=2.35 and Tac1=1.39
+          indicate subset expression. CROSS_CUTTING because VMHvl contains 17 transcriptomic
+          types (Kim 2019) and the classical node is acknowledged as heterogeneous. Note:
+          CS20230722_SUPT_0563 (VMH Fezf1 Glut_1) — parent of the two most female-biased
+          rank-0 clusters (CLUS_2290 MFR=0.08, CLUS_2292 MFR=0.12) — was not retrieved
+          in the rank-1 DB query and should be assessed as a co-primary mapping target.
+    property_comparisons:
+      - property: location_MBA693_VMHvl
+        node_a_value: "MBA:693 (VMHvl)"
+        node_b_value: "MBA:693 (VMH) n=360 (dominant location)"
+        alignment: CONSISTENT
+      - property: nt_type
+        node_a_value: "not stated; VMHvl neurons predominantly glutamatergic"
+        node_b_value: "Glutamatergic (VMH Fezf1 Glut label)"
+        alignment: CONSISTENT
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=5.34"
+        alignment: CONSISTENT
+      - property: marker_Pgr
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=4.54"
+        alignment: APPROXIMATE
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=2.35"
+        alignment: APPROXIMATE
+        notes: Moderate expression; Esr1 marks a subset, not the full supertype.
+      - property: marker_Tac1
+        node_a_value: "POSITIVE (transcript, defining marker and neuropeptide)"
+        node_b_value: "precomputed mean_expression=1.39"
+        alignment: APPROXIMATE
+        notes: Low expression; consistent with subset Esr1/Nkx2-1/Tac1 functional subpopulation.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          VMHvl contains 17 transcriptomic types (Kim 2019). The classical vmhvl_esr1_pr_neuron
+          spans multiple functional subtypes. CS20230722_SUPT_0563 (VMH Fezf1 Glut_1) — parent
+          of the two most female-biased clusters (CLUS_2290 MFR=0.08, CLUS_2292 MFR=0.12) —
+          was not retrieved in the rank-1 DB query and should be assessed as a co-primary
+          mapping target for the female-biased lordosis subpopulation.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: >
+          Calb1 has the highest mean expression in SUPT_0564 (mean=8.0) but is not a defining
+          marker of vmhvl_esr1_pr_neuron. Calb1 is a canonical marker of the distinct SDN-POA
+          calbindin neuron. High Calb1 in SUPT_0564 warrants primary literature verification.
+    unresolved_questions:
+      - >
+        Should SUPT_0563 be added as a co-primary CROSS_CUTTING target for the
+        female-biased lordosis subpopulation?
+      - >
+        Does Calb1 co-localise with Esr1/Pgr in VMHvl neurons, or does it mark a
+        distinct subpopulation within SUPT_0564?
+
+  - id: edge_pvn_crfr1_neuron_to_cs20230722_supt_0585
+    type_a: pvn_crfr1_neuron
+    type_b: CS20230722_SUPT_0585
+    relationship: PARTIAL_OVERLAP
+    confidence: MODERATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0585 (PVH-SO-PVa Otp Glut_1) has MBA:38 (PVN) as primary location (n=98) and
+          DB score=3 (highest rank-1 candidate). Esr1=3.65 (DEFINING_SCOPED atlas marker) and
+          Ar=4.95 support the steroid hormone biology of pvn_crfr1_neuron. Crh=2.5 confirms
+          PVN neuroendocrine identity. Primary caveat: Crhr1=0.84 is low, indicating CRFR1+
+          neurons are a subset of SUPT_0585. Rank-0 candidate CLUS_2382 (parent SUPT_0589)
+          has male_female_ratio=2.7, consistent with male-biased dimorphism.
+    property_comparisons:
+      - property: location_MBA38_PVN
+        node_a_value: "MBA:38 (Paraventricular hypothalamic nucleus)"
+        node_b_value: "MBA:38 (PVN) n=98 (primary location)"
+        alignment: CONSISTENT
+      - property: nt_type
+        node_a_value: "not stated; PVN principal neurons predominantly glutamatergic"
+        node_b_value: "Glutamatergic (PVH-SO-PVa Otp Glut)"
+        alignment: CONSISTENT
+      - property: marker_Crhr1
+        node_a_value: "POSITIVE (transcript, primary defining marker)"
+        node_b_value: "precomputed mean_expression=0.84"
+        alignment: APPROXIMATE
+        notes: Low Crhr1 expression (0.84) — CRFR1+ neurons represent a subset of SUPT_0585.
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=3.65 (DEFINING_SCOPED atlas marker)"
+        alignment: APPROXIMATE
+      - property: marker_Ar
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=4.95"
+        alignment: APPROXIMATE
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: >
+          pvn_crfr1_neuron characterisation rests on a single primary source (Rosinger 2019,
+          PMID:31055007). Confidence capped at MODERATE pending secondary literature validation.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          Crhr1=0.84 across SUPT_0585 indicates CRFR1+ neurons are a minority subset.
+          SUPT_0589 (parent of male-biased CLUS_2382, ratio 2.7) is an alternative or
+          co-equal mapping target worth curator assessment.
+    unresolved_questions:
+      - >
+        Which cluster within the PVH-SO-PVa Otp Glut subclass shows highest Crhr1
+        expression combined with male-biased sex ratio?
+      - >
+        Is SUPT_0589 a better or co-equal mapping target compared to SUPT_0585?
+
+  - id: edge_bnst_crf_neuron_to_cs20230722_supt_0393
+    type_a: bnst_crf_neuron
+    type_b: CS20230722_SUPT_0393
+    relationship: PARTIAL_OVERLAP
+    confidence: UNCERTAIN
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0393 (CEA-BST Rai14 Pdyn Crh Gaba_2) is the only rank-1 candidate with BST
+          location, Crh marker, and GABAergic NT. Crh=7.96 (DEFINING_SCOPED), BST primary
+          location (MBA:351, n=140), GABAergic identity (Gad2 DEFINING) — all concordant with
+          bnst_crf_neuron. Critical discordance: Calb1=5.57 despite Calb1 being a NEGATIVE
+          marker for the classical type (distinguishes dlBNST CRF neurons from the Calb1+
+          principal nucleus of BNST). This discordance is the primary driver of UNCERTAIN
+          confidence.
+    property_comparisons:
+      - property: location_MBA174_BNST
+        node_a_value: "MBA:174 (BNST — dlBNST, ovBNST, alBNST subnuclei)"
+        node_b_value: "MBA:351 (BNST) n=140 (primary location)"
+        alignment: CONSISTENT
+        notes: MBA:174 and MBA:351 are both BNST-level annotations for the same structure.
+      - property: nt_type
+        node_a_value: "GABAergic (inferred from literature context)"
+        node_b_value: "GABAergic (Gad2 DEFINING marker, Gaba label)"
+        alignment: CONSISTENT
+      - property: marker_Crh
+        node_a_value: "POSITIVE (transcript, defining marker and neuropeptide)"
+        node_b_value: "precomputed mean_expression=7.96 (DEFINING_SCOPED atlas marker)"
+        alignment: CONSISTENT
+      - property: negative_marker_Calb1
+        node_a_value: "ABSENT (negative marker; dlBNST CRF neurons lack Calb1)"
+        node_b_value: "precomputed mean_expression=5.57"
+        alignment: DISCORDANT
+        notes: >
+          Critical discordance. Calb1 is explicitly absent in dlBNST CRF neurons but shows
+          substantial supertype-level expression (5.57). SUPT_0393 likely aggregates both
+          Calb1- CRF neurons and Calb1+ BNST neurons. Primary driver of UNCERTAIN confidence.
+    caveats:
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: >
+          SUPT_0393 shows Calb1=5.57 despite bnst_crf_neuron having Calb1 as a NEGATIVE
+          marker. This supertype likely aggregates multiple BNST GABAergic subtypes. A child
+          cluster with low Calb1 and high Crh would be a more specific mapping candidate and
+          may support confidence upgrade to LOW or MODERATE.
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          The classical type is defined at sub-nucleus resolution (dlBNST, ovBNST, alBNST).
+          WMBv1 MERFISH annotation uses the parent BNST term (MBA:351) without sub-nucleus
+          assignment. Sub-nucleus identity of the matching cells cannot be confirmed.
+    unresolved_questions:
+      - >
+        Do individual clusters under SUPT_0393 segregate into Calb1-high and Calb1-low
+        populations? A Calb1-low, Crh-high child cluster would support confidence upgrade.
+      - >
+        Does SUPT_0393 show female-biased sex ratio consistent with bnst_crf_neuron?
+    proposed_experiments:
+      - >
+        Query precomputed expression for Calb1 across child clusters of SUPT_0393 to
+        identify any Calb1-low cluster as a more specific mapping candidate.
+
+  - id: edge_arc_aromatase_neuron_to_cs20230722_supt_0486
+    type_a: arc_aromatase_neuron
+    type_b: CS20230722_SUPT_0486
+    relationship: UNCERTAIN
+    confidence: UNCERTAIN
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          No WMBv1 supertype in the ARH (MBA:223) carries Cyp19a1 as a defining marker.
+          A full DB scan confirmed all Cyp19a1-expressing clusters are in POA and periventricular
+          zones. SUPT_0486 is proposed because child cluster CLUS_1907 carries Cyp19a1 as a
+          defining marker and supertype-level Cyp19a1=1.15. Critical anatomical discordance:
+          the classical type is in MBA:223 (ARH) but SUPT_0486 is in PVpo-VMPO-MPN. Both
+          relationship and confidence are UNCERTAIN.
+    property_comparisons:
+      - property: location_MBA223_ARH
+        node_a_value: "MBA:223 (Arcuate hypothalamic nucleus)"
+        node_b_value: "MBA:133 PVpo n=64; MBA:515 MPN n=37; MBA:272 AVPV n=16 — no MBA:223 cells"
+        alignment: DISCORDANT
+        notes: >
+          Critical anatomical discordance. Classical type in ARH; SUPT_0486 in periventricular
+          preoptic zone. Possible explanations: MERFISH registration artefact at ARH/
+          periventricular boundary; or aromatase neurons form a transcriptomically coherent
+          pan-hypothalamic network not segregated by anatomical zone in WMBv1.
+      - property: marker_Cyp19a1
+        node_a_value: "POSITIVE (transcript, primary defining marker)"
+        node_b_value: "precomputed mean_expression=1.15; child CLUS_1907 has Cyp19a1 as defining marker"
+        alignment: APPROXIMATE
+        notes: >
+          Best available atlas match for Cyp19a1 expression; no ARH supertype shows higher
+          Cyp19a1 expression in full DB scan.
+    caveats:
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          The classical type is defined in MBA:223 (ARH) but SUPT_0486 is in the periventricular
+          preoptic zone. The mapping is proposed in the absence of any ARH-specific Cyp19a1-
+          positive atlas cluster. MERFISH registration artefacts at the ARH/periventricular
+          boundary, or a pan-hypothalamic aromatase transcriptomic identity, may explain the
+          discordance.
+      - caveat_type: SINGLE_DATASET
+        description: >
+          arc_aromatase_neuron is based on a single primary source (Wartenberg 2021, PMID:34561233).
+          ARH location assignment depends on this paper alone. Alternative ARH candidates
+          SUPT_0427 and SUPT_0428 (ARH-PVi Six6 Dopa-Gaba supertypes) have not had Cyp19a1
+          expression confirmed and should be assessed.
+    unresolved_questions:
+      - >
+        Do SUPT_0427 or SUPT_0428 (ARH Dopa-Gaba supertypes) show Cyp19a1 expression
+        in the precomputed HDF5 stats?
+      - >
+        Is CLUS_1907 located exclusively in POA/periventricular zones in MERFISH data?
+    proposed_experiments:
+      - >
+        Query Cyp19a1 expression in ARH-region supertypes (SUPT_0427, SUPT_0428, and
+        neighbouring ARH supertypes) from the precomputed HDF5.
+
+  - id: edge_pmv_otr_neuron_to_cs20230722_supt_0607
+    type_a: pmv_otr_neuron
+    type_b: CS20230722_SUPT_0607
+    relationship: CROSS_CUTTING
+    confidence: LOW
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          SUPT_0607 (PMv-TMv Pitx2 Glut_3) received the highest DB score (4) of any candidate
+          at any rank for pmv_otr_neuron. MBA:1004 (PMv) is the dominant location (n=347). All
+          three classical defining markers are present: Oxtr=2.0 (DEFINING_SCOPED), Slc6a3=3.07
+          (DEFINING), Adcyap1=4.8. CROSS_CUTTING because SUPT_0607 simultaneously expresses all
+          three markers corresponding to the potentially distinct PMv subpopulations (PMv-OTR,
+          PMv-DAT, PMv-PACAP). Tac1=8.95 (DEFINING atlas marker) is unexpectedly the highest-
+          expressing gene but is not in the classical node definition.
+    property_comparisons:
+      - property: location_MBA1004_PMv
+        node_a_value: "MBA:1004 (Ventral premammillary nucleus)"
+        node_b_value: "MBA:1004 (PMv) n=347 (dominant location)"
+        alignment: CONSISTENT
+      - property: marker_Oxtr
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=2.0 (DEFINING_SCOPED atlas marker)"
+        alignment: CONSISTENT
+      - property: marker_Slc6a3
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=3.07 (DEFINING atlas marker)"
+        alignment: CONSISTENT
+      - property: marker_Adcyap1
+        node_a_value: "POSITIVE (defining marker)"
+        node_b_value: "precomputed mean_expression=4.8"
+        alignment: CONSISTENT
+      - property: nt_type
+        node_a_value: "not specified; DAT+ subpopulation implies dopaminergic co-release"
+        node_b_value: "Glutamatergic (PMv-TMv Pitx2 Glut)"
+        alignment: APPROXIMATE
+        notes: >
+          Glutamatergic identity likely for OTR+ and PACAP+ populations; dopaminergic
+          co-release possible for the Slc6a3+ subset.
+      - property: sex_ratio
+        node_a_value: "male-biased (PMv OTR expression higher in males, P14–P56)"
+        node_b_value: "NOT_ASSESSED — MFR absent from DB for CLUS_2470 (n=192 PMv cells)"
+        alignment: NOT_ASSESSED
+        notes: >
+          MFR data is absent for the best child cluster CLUS_2470 (primary PMv cluster,
+          n=192). CLUS_2473 (PMv, n=86) has MFR=2.23 (mild male bias) but very low marker
+          expression. Sex bias alignment cannot currently be confirmed at cluster level.
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: Annotation transfer not yet run for pmv_otr_neuron.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          pmv_otr_neuron acknowledges three potentially distinct subpopulations (PMv-OTR,
+          PMv-DAT, PMv-PACAP). SUPT_0607 expresses all three marker signatures simultaneously,
+          indicating the supertype aggregates neurons the classical taxonomy may treat as
+          distinct subtypes. Sister supertype SUPT_0605 (PMv-TMv Pitx2 Glut_1, DB score=2)
+          may capture an additional portion of the OTR+ male-biased population.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: >
+          Tac1 is the highest-expressing DEFINING marker in SUPT_0607 (mean=8.95) but is
+          absent from the classical pmv_otr_neuron definition. SUPT_0607 may be more
+          accurately characterized as a Tac1+ PMv population with OTR/DAT/PACAP as
+          co-expressed subtype markers.
+    unresolved_questions:
+      - >
+        Do individual clusters within SUPT_0607 segregate by marker (Oxtr-high,
+        Slc6a3-high, Adcyap1-high), allowing sub-resolution mapping?
+      - >
+        Should pmv_otr_neuron be split into separate pmv_otr, pmv_dat, pmv_pacap
+        sub-nodes prior to final mapping?
+    proposed_experiments:
+      - >
+        Query Oxtr, Slc6a3, Adcyap1, Tac1 expression in child clusters of SUPT_0607
+        to determine if subpopulations are resolvable at cluster level.
+
+  # --- Cluster-level edges (2026-04-26 re-mapping) ---
+
+  - id: edge_avpv_kiss1_neuron_to_cs20230722_clus_1915
+    type_a: avpv_kiss1_neuron
+    type_b: CS20230722_CLUS_1915
+    relationship: PARTIAL_OVERLAP
+    confidence: MODERATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          CLUS_1915 (1915 PVpo-VMPO-MPN Hmx2 Gaba_5) is the child cluster of SUPT_0486 with
+          the highest co-expression of Kiss1 (2.51), Th (6.6), and Esr1 (9.55) — all three
+          classical defining markers. It is the most strongly female-biased cluster in the
+          supertype (male_female_ratio=0.02), directly concordant with the FEMALE_BIASED
+          sex_bias of avpv_kiss1_neuron. Kiss1 and Slc18a2 are cluster-level DEFINING markers.
+          nt_type=Dopa confirmed in cluster.yaml. MBA:272 (AVPV) cells explicitly present.
+          CLUS_1915 was not ranked in the top-30 DB results because its Kiss1/Th/Esr1 profile
+          appears only in precomputed_expression, not in the defining_markers metadata columns.
+          It was identified through child_cluster_expression analysis of the SUPT_0486 parent.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (Th co-expression)"
+        node_b_value: "Dopa (confirmed, cluster.yaml name_in_source='Dopa')"
+        alignment: CONSISTENT
+        notes: Dopaminergic identity confirmed at cluster level despite supertype Gaba_5 label.
+      - property: location_MBA272
+        node_a_value: "MBA:272 (AVPV)"
+        node_b_value: "MBA:272 (AVPV) n=1; MBA:133 PVpo n=1; MBA:1097 Hypothalamus n=3"
+        alignment: APPROXIMATE
+        notes: >
+          AVPV cells present but cluster is very small (n=5 total) and primary soma annotation
+          resolves to the broad Hypothalamus catchall (MBA:1097). MERFISH spatial resolution
+          insufficient to resolve AVPV vs adjacent PVpo/PeN at this cell count.
+      - property: marker_Kiss1
+        node_a_value: "POSITIVE (transcript, primary defining marker)"
+        node_b_value: "precomputed mean_expression=2.51; Kiss1 is a cluster-level DEFINING marker"
+        alignment: CONSISTENT
+      - property: marker_Th
+        node_a_value: "POSITIVE (protein, co-expressed with Kiss1)"
+        node_b_value: "precomputed mean_expression=6.6 (highest Th of any SUPT_0486 child cluster)"
+        alignment: CONSISTENT
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=9.55 (highest Esr1 in SUPT_0486)"
+        alignment: CONSISTENT
+      - property: sex_ratio
+        node_a_value: "female-biased"
+        node_b_value: "male_female_ratio=0.02 (extreme female bias, ~50:1 F:M)"
+        alignment: CONSISTENT
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: AT pipeline not run for avpv_kiss1_neuron. Recommended next step.
+    caveats:
+      - caveat_type: LOW_CELL_COUNT
+        description: >
+          CLUS_1915 contains only n=3–5 total cells in the WMBv1 atlas. The sex ratio
+          (MFR=0.02) and expression values are reliable in direction but have limited
+          statistical power. Confidence is capped at MODERATE pending annotation transfer
+          evidence or larger-dataset replication.
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: >
+          CLUS_1915 is a sub-resolution split of SUPT_0486. The cluster-level Kiss1+Th+Dopa
+          phenotype is the most specific available match for avpv_kiss1_neuron; however,
+          avpv_th_neuron maps to the same cluster (both types substantially overlap in the
+          classical literature — most AVPV Kiss1 cells co-express Th).
+    unresolved_questions:
+      - >
+        Do avpv_kiss1_neuron and avpv_th_neuron represent separable populations within
+        CLUS_1915, or is CLUS_1915 the atlas correlate of both?
+    proposed_experiments:
+      - >
+        MapMyCells annotation transfer of published AVPV Kiss1-Cre or Kiss1-Cre/Rosa-tdTom
+        scRNA-seq data to WMBv1; confirm F1 score against CLUS_1915.
+
+  - id: edge_avpv_th_neuron_to_cs20230722_clus_1915
+    type_a: avpv_th_neuron
+    type_b: CS20230722_CLUS_1915
+    relationship: PARTIAL_OVERLAP
+    confidence: MODERATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          CLUS_1915 is the top-ranked rank-0 candidate (DB score=6) for avpv_th_neuron.
+          Th=6.6 (highest in the SUPT_0486 lineage), Kiss1=2.51 (only cluster with Kiss1
+          substantially above background), MFR=0.02 (extreme female bias), nt_type=Dopa
+          confirmed, MBA:272 (AVPV) cells present. Slc18a2 (VMAT2, vesicular monoamine
+          transporter) is a DEFINING cluster marker, providing independent dopaminergic
+          identity support. Three convergent signals: Th expression, female sex ratio,
+          and dopaminergic NT type.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "dopaminergic (A14 group)"
+        node_b_value: "Dopa (confirmed, cluster.yaml name_in_source='Dopa')"
+        alignment: CONSISTENT
+        notes: Full NT concordance at cluster level; supertype label (Gaba_5) resolved here.
+      - property: location_MBA272
+        node_a_value: "MBA:272 (AVPV)"
+        node_b_value: "MBA:272 (AVPV) n=1; MBA:133 PVpo n=1; MBA:1097 Hypothalamus n=3"
+        alignment: APPROXIMATE
+        notes: AVPV cells present; cluster too small to resolve sub-regional anatomy precisely.
+      - property: marker_Th
+        node_a_value: "POSITIVE (protein, primary defining marker)"
+        node_b_value: "precomputed mean_expression=6.6; VMAT2 (Slc18a2) is a DEFINING marker"
+        alignment: CONSISTENT
+      - property: marker_Kiss1
+        node_a_value: "POSITIVE (transcript, co-expressed with Th)"
+        node_b_value: "precomputed mean_expression=2.51; Kiss1 is a cluster-level DEFINING marker"
+        alignment: CONSISTENT
+      - property: sex_ratio
+        node_a_value: "female-biased (2-4x more TH+ neurons in females)"
+        node_b_value: "male_female_ratio=0.02 (extreme female bias, ~50:1 F:M)"
+        alignment: CONSISTENT
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: AT pipeline not run. Recommended experiment using Th-Cre AVPV scRNA-seq data.
+    caveats:
+      - caveat_type: LOW_CELL_COUNT
+        description: >
+          CLUS_1915 has only n=3–5 total cells. All metrics are directionally correct but
+          have limited statistical power. Confidence capped at MODERATE.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          avpv_th_neuron and avpv_kiss1_neuron both map to CLUS_1915 — the two classical
+          types are substantially overlapping (most AVPV Kiss1 cells co-express Th). These
+          may be the same cell population described from different entry points in the
+          classical literature.
+    unresolved_questions:
+      - >
+        Is CLUS_1915 specifically the A14 TH/Kiss1 cluster, or does it also include
+        TH+ AVPV neurons that are Kiss1-negative?
+    proposed_experiments:
+      - >
+        MapMyCells annotation transfer of Th-Cre AVPV scRNA-seq data for F1-based
+        confirmation at cluster level.
+
+  - id: edge_sdn_poa_calbindin_neuron_to_cs20230722_clus_1550
+    type_a: sdn_poa_calbindin_neuron
+    type_b: CS20230722_CLUS_1550
+    relationship: PARTIAL_OVERLAP
+    confidence: LOW
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          CLUS_1550 (1550 BST-MPN Six3 Nrgn Gaba_4) is the only child cluster of SUPT_0423
+          with MBA:515 (MPN) as its primary soma (n=22 cells). Calb1=6.66 (high expression)
+          matches the primary classical defining marker. MFR=3.35 is male-biased, consistent
+          with MALE_BIASED sex_bias of sdn_poa_calbindin_neuron. Concerns: Th=2.75 (non-zero,
+          discordant with the Th NEGATIVE marker), and CLUS_1550 spans MPN, PVH, PVHap —
+          it is not MPN-restricted. SDN-POA cannot be resolved as a subnucleus within
+          MPN in WMBv1 MERFISH data.
+    property_comparisons:
+      - property: location_MBA515_MPN
+        node_a_value: "MBA:515 (Medial preoptic nucleus; SDN-POA is histological subnucleus)"
+        node_b_value: "MBA:515 (MPN) n=22 (primary soma); also PVH n=9, PVHap n=4, Hypothalamus n=9"
+        alignment: APPROXIMATE
+        notes: >
+          MPN primary soma confirmed (n=22). Cluster also spans PVN-adjacent regions;
+          SDN-POA dorsomedial position within MPN cannot be confirmed from MERFISH data alone.
+      - property: marker_Calb1
+        node_a_value: "POSITIVE (protein, primary defining marker)"
+        node_b_value: "precomputed mean_expression=6.66"
+        alignment: CONSISTENT
+      - property: negative_marker_Th
+        node_a_value: "ABSENT (negative marker; no TH cell bodies in SDN-POA)"
+        node_b_value: "precomputed mean_expression=2.75"
+        alignment: DISCORDANT
+        notes: >
+          Non-zero Th expression is a concern at cluster level. May originate from
+          non-MPN cells within CLUS_1550 (PVH, PVHap components). Cannot exclude Th
+          expression in MPN cells without single-cell spatial resolution.
+      - property: sex_ratio
+        node_a_value: "male-biased (SDN-POA has more cells in males)"
+        node_b_value: "male_female_ratio=3.35 (male-biased)"
+        alignment: CONSISTENT
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: AT pipeline not run for sdn_poa_calbindin_neuron. MapMyCells on MPN Calb1+ data recommended.
+    caveats:
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          SDN-POA is a histologically defined subnucleus within MPN; WMBv1 MERFISH cannot
+          resolve it as a distinct spatial domain. CLUS_1550 represents the best available
+          MPN-primary Calb1+ male-biased atlas cluster but cannot be confirmed to occupy the
+          SDN-POA cytoarchitectonic zone specifically.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: >
+          Th=2.75 in CLUS_1550 is discordant with the classical Th NEGATIVE assertion.
+          Spatial inspection of Th channel in MERFISH data for CLUS_1550 cells at MBA:515 is
+          needed to determine whether Th expression co-occurs with MPN cells, or whether it
+          originates from the PVH/PVHap components of this multi-region cluster.
+    unresolved_questions:
+      - >
+        Do CLUS_1550 cells at MBA:515 express Th, or does Th signal originate from
+        PVH/PVHap components of this cluster?
+      - >
+        Can sub-regional MERFISH spatial data distinguish SDN-POA dorsomedial cells
+        from other MPN Calb1+ neurons within CLUS_1550?
+    proposed_experiments:
+      - >
+        MapMyCells annotation transfer of MPN Calb1+ scRNA-seq data (Calb1-Cre or
+        SDN-POA-focused dataset) to assess F1 score against CLUS_1550.
+      - >
+        MERFISH spatial channel inspection of Th in CLUS_1550 cells assigned to MBA:515.
+
+  - id: edge_pmv_otr_neuron_to_cs20230722_clus_2470
+    type_a: pmv_otr_neuron
+    type_b: CS20230722_CLUS_2470
+    relationship: PARTIAL_OVERLAP
+    confidence: LOW
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          CLUS_2470 is the child cluster of SUPT_0607 with PMv (MBA:1004) as primary soma
+          (n=192 cells — the largest PMv cluster in the supertype) and the highest expression
+          of all three defining markers: Oxtr=4.45, Slc6a3=6.02, Adcyap1=8.13 (all
+          substantially above supertype means). Expression concentrates all three marker-
+          expressing PMv cells into this cluster. MFR is absent from the DB for this cluster;
+          male-biased sex ratio cannot be confirmed at cluster level. Confidence is LOW
+          pending sex bias confirmation and annotation transfer.
+    property_comparisons:
+      - property: location_MBA1004_PMv
+        node_a_value: "MBA:1004 (Ventral premammillary nucleus)"
+        node_b_value: "MBA:1004 (PMv) n=192 (primary soma — dominant location)"
+        alignment: CONSISTENT
+      - property: marker_Oxtr
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=4.45 (vs supertype mean 2.0)"
+        alignment: CONSISTENT
+        notes: Expression substantially above supertype mean; confirms Oxtr-enriched subpopulation.
+      - property: marker_Slc6a3
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=6.02 (vs supertype mean 3.07)"
+        alignment: CONSISTENT
+      - property: marker_Adcyap1
+        node_a_value: "POSITIVE (defining marker)"
+        node_b_value: "precomputed mean_expression=8.13 (vs supertype mean 4.8)"
+        alignment: CONSISTENT
+      - property: sex_ratio
+        node_a_value: "male-biased (PMv OTR expression higher in males, P14-P56)"
+        node_b_value: "NOT_ASSESSED — MFR absent from DB for CLUS_2470"
+        alignment: NOT_ASSESSED
+        notes: >
+          MFR data absent for CLUS_2470 despite n=192 cells. This is the primary gap
+          limiting confidence. CLUS_2473 (PMv, n=86, MFR=2.23) has mild male bias but
+          very low marker expression — it is a distinct PMv subtype.
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: AT pipeline not run for pmv_otr_neuron. Key experiment to confirm sex bias alignment.
+    caveats:
+      - caveat_type: OTHER
+        description: >
+          The classical pmv_otr_neuron is MALE_BIASED but MFR is absent from the DB for
+          CLUS_2470. Until sex bias is confirmed at cluster level, confidence is capped at
+          LOW. The absent MFR may reflect a DB ingest gap rather than genuine absence in
+          the precomputed stats.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          CLUS_2470 co-expresses Oxtr, Slc6a3, and Adcyap1 at levels suggesting it
+          captures the PMv-OTR, PMv-DAT, and PMv-PACAP subpopulations simultaneously.
+          If these are functionally distinct cell types, a single cluster-level edge
+          conflates them. Node splitting (pmv_otr, pmv_dat, pmv_pacap) may be required
+          before a higher-confidence cluster assignment can be made.
+    unresolved_questions:
+      - >
+        Why is MFR absent for CLUS_2470 (n=192 cells)? Is this a DB ingest gap or
+        a genuine absence in precomputed stats?
+      - >
+        Do Oxtr, Slc6a3, and Adcyap1 co-localise within individual CLUS_2470 cells,
+        or do they mark distinct subpopulations within the cluster?
+    proposed_experiments:
+      - >
+        Query precomputed HDF5 directly for CLUS_2470 male_female_ratio to confirm
+        whether MFR is missing from DB ingest or genuinely absent.
+      - >
+        MapMyCells annotation transfer of published PMv scRNA-seq or Oxtr-Cre /
+        Slc6a3-Cre lineage data against WMBv1 for F1-based evidence on CLUS_2470.

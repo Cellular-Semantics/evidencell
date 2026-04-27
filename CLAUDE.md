@@ -19,6 +19,7 @@ Writable zones in this session:
 - `reports/**` — generated reports under pre-edit validation
 - `research/**` — research artifacts (field mappings, summaries, traversals)
 - `planning/dev_requests/**` — dev-request reports (see "Hitting a wall" below)
+- `planning/content-notes/**` — KB YAML curation task notes (file-rename tasks, AT import checklists, etc.)
 
 Out of scope: `src/`, `schema/`, `justfile`, `.claude/`, and `workflows/`.
 The pre-edit hook rejects writes to these paths in curation mode. This is a deliberate barrier against
@@ -26,6 +27,10 @@ accidental code/schema edits during curation sessions — schema fixes as a
 response to a validation error are a common and dangerous anti-pattern. Code
 and schema changes land through normal dev-mode sessions and PR review
 against `main`, not through curation workflows.
+
+Before starting curation work, check `planning/content-notes/` for any pending notes
+about the target region or workflow — these track KB file rename tasks, AT import
+checklists, and other curation-side TODOs that don't belong on the main ROADMAP.
 
 ### Hitting a wall
 

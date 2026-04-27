@@ -1,0 +1,223 @@
+# Proposed MappingEdge — vmhvl_esr1_pr_neuron → CS20230722_SUPT_0564
+# Generated: 2026-04-26
+# Status: PROPOSED — awaiting curator review before KB write
+# Source KB: kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml
+# Discovery candidates: research/sexually_dimorphic/20260426_mapping/discovery_candidates_vmhvl_esr1_pr_neuron.json
+
+id: edge_vmhvl_esr1_pr_neuron_to_cs20230722_supt_0564
+type_a: vmhvl_esr1_pr_neuron
+type_b: CS20230722_SUPT_0564
+relationship: CROSS_CUTTING
+confidence: MODERATE
+
+# Atlas node summary (from KB taxonomy):
+#   name: 0564 VMH Fezf1 Glut_2
+#   subclass: CS20230722_SUBC_128 (128 VMH Fezf1 Glut)
+#   locations: MBA:1097 (Hypothalamus; n=157), MBA:693 (VMH; n=360), MBA:614 (Tuberal; n=66)
+#   NT: Glutamatergic
+#   markers: Fezf1, Sox14, Lncenc1, Dlk1 (DEFINING)
+#   Esr1: 2.35 | Pgr: 4.54 | Nkx2-1: 5.34 | Tac1: 1.39 | Calb1: 8.0 | Ar: 8.28
+
+# NOTE: CS20230722_SUPT_0563 (VMH Fezf1 Glut_1) was NOT retrieved in the rank-1
+# DB query but is parent of the top-scoring female-biased rank-0 clusters (CLUS_2290,
+# CLUS_2292; female:male ratios 12x and 8x). SUPT_0563 is likely the stronger
+# anatomical match for the female-biased lordosis subpopulation. SUPT_0564 is
+# the best retrieved rank-1 candidate (DB score 2). Both supertypes should be
+# assessed by the curator.
+
+property_comparisons:
+
+  - property: nt_type
+    classical_value: "not stated explicitly; VMHvl neurons are predominantly glutamatergic"
+    atlas_value: "Glutamatergic (Glut subclass label; Slc17a6/Vglut2-expressing)"
+    match: CONSISTENT
+    notes: >
+      The classical node does not specify NT type in the KB YAML. VMHvl neurons
+      are well-established in the literature as predominantly glutamatergic
+      (Slc17a6+). SUPT_0564 is classified as glutamatergic (VMH Fezf1 Glut_2),
+      consistent with the expected NT type of VMHvl Esr1/Pgr neurons.
+
+  - property: anatomical_location
+    compartment: SOMA
+    classical_value: "MBA:693 (Ventromedial hypothalamic nucleus / VMHvl)"
+    atlas_value: "MBA:693 (VMH; n=360 = dominant location), MBA:614 (Tuberal; n=66)"
+    match: STRONG
+    notes: >
+      MBA:693 (Ventromedial hypothalamic nucleus) is the primary location for both
+      the classical node and SUPT_0564. 360 of the atlas cells in this supertype
+      are assigned to VMH (MBA:693), confirming anatomical concordance with the
+      classical VMHvl location. Tuberal nucleus (MBA:614) is adjacent; minor
+      anatomical spread is expected.
+
+  - property: defining_marker
+    gene: Esr1
+    ncbi_gene_id: "NCBIGene:13982"
+    classical_evidence: "TRANSCRIPT (PMID:25543145)"
+    atlas_mean_expression: 2.35
+    match: PARTIAL
+    notes: >
+      Esr1 is a defining marker of the classical node. Atlas mean expression is 2.35,
+      which is moderate — substantially lower than in SUPT_0486 (7.72, MPOA preoptic).
+      VMHvl Esr1 expression is documented in the literature, but Esr1 is not a
+      DEFINING marker of SUPT_0564 in the atlas taxonomy, suggesting Esr1 marks a
+      subset of cells within this supertype rather than the full population.
+      Consistent with CROSS_CUTTING interpretation (classical node spans multiple
+      supertypes; Esr1-high clusters within SUPT_0563/0564 are likely the primary
+      targets).
+
+  - property: defining_marker
+    gene: Pgr
+    ncbi_gene_id: "NCBIGene:18667"
+    classical_evidence: "TRANSCRIPT (PMID:33910083)"
+    atlas_mean_expression: 4.54
+    match: MODERATE
+    notes: >
+      Pgr is a defining marker of the classical node. Atlas mean expression is 4.54
+      in SUPT_0564, indicating moderate progesterone receptor expression. This is
+      consistent with the Pgr+ functional identity of VMHvl neurons controlling
+      mating behavior in both sexes and fighting in males. Expression level indicates
+      Pgr is present but not uniformly high across the supertype.
+
+  - property: defining_marker
+    gene: Nkx2-1
+    ncbi_gene_id: "NCBIGene:21869"
+    classical_evidence: "TRANSCRIPT (PMID:25543145)"
+    atlas_mean_expression: 5.34
+    match: STRONG
+    notes: >
+      Nkx2-1 (TTF-1/thyroid transcription factor-1) is a defining marker of the
+      classical node. Atlas mean expression is 5.34, indicating robust Nkx2-1
+      expression in SUPT_0564. Nkx2-1 is a cardinal transcription factor for
+      hypothalamic neurons, consistent with VMHvl identity.
+
+  - property: defining_marker
+    gene: Tac1
+    ncbi_gene_id: "NCBIGene:21333"
+    classical_evidence: "TRANSCRIPT (PMID:25543145)"
+    atlas_mean_expression: 1.39
+    match: PARTIAL
+    notes: >
+      Tac1 (substance P / neurokinin A precursor) is a defining marker and neuropeptide
+      of the classical node. Atlas mean expression is 1.39, indicating Tac1 is
+      expressed in a subset of SUPT_0564 cells but is not a universally high marker
+      for this supertype. Classical evidence specifically describes an Esr1/Nkx2-1/Tac1
+      subpopulation promoting female locomotion — this suggests a sub-cluster within
+      SUPT_0564 rather than the full supertype.
+
+  - property: neuropeptide
+    gene: Tac1
+    ncbi_gene_id: "NCBIGene:21333"
+    classical_evidence: "TRANSCRIPT (PMID:25543145)"
+    atlas_mean_expression: 1.39
+    match: PARTIAL
+    notes: >
+      Same observation as defining_marker entry above. Tac1 as a neuropeptide is
+      expressed at moderate mean level in SUPT_0564, consistent with a subset
+      (not all) cells in this supertype being Tac1+.
+
+  - property: unexpected_atlas_marker
+    gene: Calb1
+    ncbi_gene_id: "NCBIGene:12307"
+    atlas_mean_expression: 8.0
+    notes: >
+      UNEXPECTED: Calb1 (calbindin-D28K) has the highest mean expression of any
+      queried gene in SUPT_0564 (8.0). Calb1 is not a defining marker of the
+      classical vmhvl_esr1_pr_neuron node and is not mentioned in the classical
+      literature for this population. In the sexually dimorphic context, Calb1 is
+      a canonical marker of the SDN-POA (sdn_poa_calbindin_neuron), a distinct
+      classical node. High Calb1 in SUPT_0564 may indicate: (a) a distinct
+      Calb1-expressing VMH subpopulation mixed into this supertype; (b) Calb1
+      expression in VMH neurons not noted in the classical definition; or
+      (c) the supertype encompasses heterogeneous cell types. Calb1 should be
+      explicitly checked against VMHvl functional identity in primary literature.
+      Flagged for curator attention.
+
+evidence:
+
+  - evidence_type: DB_QUERY
+    supports: SUPPORT
+    explanation: >
+      Rank-1 (supertype-level) DB query for vmhvl_esr1_pr_neuron returned
+      CS20230722_SUPT_0564 as the top retrieved VMH candidate with a DB score of 2.
+      Multiple rank-0 (cluster-level) candidates with score 4 were identified within
+      VMH (clusters 2290, 2292, 2295, 2297), confirming strong marker match for VMH
+      location. The two top rank-0 candidates (CLUS_2290, CLUS_2292) are children of
+      SUPT_0563 (VMH Fezf1 Glut_1; not retrieved at rank-1) and show strong female
+      bias (male_female_ratio 0.08 and 0.12), consistent with the female-biased
+      dimorphism of the lordosis subpopulation. SUPT_0564 is the best retrieved
+      rank-1 candidate.
+    db_score_rank1: 2
+    candidate_assessment: STRONG
+
+  - evidence_type: MARKER_COMPARISON
+    supports: PARTIAL
+    explanation: >
+      Two of the four defining markers of vmhvl_esr1_pr_neuron show strong-to-moderate
+      expression in SUPT_0564 (Nkx2-1=5.34, Pgr=4.54), while Esr1 (2.35) and Tac1
+      (1.39) show moderate expression only, consistent with these being subset markers
+      within a heterogeneous supertype rather than pan-supertype markers. The Esr1/
+      Nkx2-1/Tac1 functional subpopulation (female locomotion) likely maps to a
+      sub-cluster within SUPT_0563/0564 rather than the full supertype.
+    markers_consistent:
+      - symbol: Nkx2-1
+        atlas_mean_expr: 5.34
+      - symbol: Pgr
+        atlas_mean_expr: 4.54
+    markers_partial:
+      - symbol: Esr1
+        atlas_mean_expr: 2.35
+      - symbol: Tac1
+        atlas_mean_expr: 1.39
+
+caveats:
+
+  - caveat_type: CROSS_CUTTING
+    description: >
+      VMHvl contains 17 transcriptomic types identified by snRNA-seq (Kim 2019),
+      several of which are sexually dimorphic. The classical vmhvl_esr1_pr_neuron
+      node is acknowledged as molecularly heterogeneous — multiple subpopulations
+      are described (Pgr+ mating/fighting, ERalpha+/Nkx2-1+/Tac1+ female locomotion,
+      additional ERalpha-expressing subtypes). Any single supertype mapping will be
+      CROSS_CUTTING. Both SUPT_0563 and SUPT_0564 (and potentially SUPT_0565, 0566)
+      may partially overlap this classical type.
+
+  - caveat_type: MISSING_CANDIDATE
+    description: >
+      CS20230722_SUPT_0563 (VMH Fezf1 Glut_1) was NOT retrieved in the rank-1 DB
+      query, despite being the direct parent of the two top female-biased rank-0
+      clusters (CLUS_2290 ratio 0.08, CLUS_2292 ratio 0.12). This represents a gap
+      in the DB retrieval. SUPT_0563 is likely the stronger candidate for the
+      female-biased lordosis subpopulation and should be considered an alternative
+      or co-primary mapping target. The DB query gap should be flagged as a potential
+      tool limitation (dev-request if systematic).
+
+  - caveat_type: UNEXPECTED_MARKER
+    description: >
+      Calb1 mean expression in SUPT_0564 is 8.0, the highest value in the gene
+      panel. Calb1 is not a defining marker of vmhvl_esr1_pr_neuron and is a
+      canonical marker of the distinct SDN-POA calbindin neuron. This unexpected
+      high value warrants primary literature verification before any EQUIVALENT
+      or HIGH-confidence mapping is proposed.
+
+  - caveat_type: SEX_RATIO_MISMATCH
+    description: >
+      The female-biased dimorphism of the classical node (female-biased for
+      lordosis/mating functions) is best captured by SUPT_0563 child clusters
+      (CLUS_2290, CLUS_2292 with strong female bias). SUPT_0564 child clusters
+      (CLUS_2295, CLUS_2297) have slight male bias (ratio 1.44), which may
+      indicate SUPT_0564 maps preferentially to male-type VMHvl functions (e.g.,
+      aggression/fighting). Sex ratio data at the supertype level is unavailable.
+
+unresolved_questions:
+  - >
+    Does Calb1 expression in VMHvl neurons reflect a genuine co-expressing
+    population, or is it an artifact of supertype averaging over heterogeneous
+    sub-clusters? Primary literature check needed.
+  - >
+    Why was SUPT_0563 (VMH Fezf1 Glut_1) absent from the rank-1 DB query despite
+    being the parent of the top female-biased rank-0 clusters? Is this a DB scoring
+    artifact or a tool limitation?
+  - >
+    Should the mapping be split into SUPT_0563 (female-biased mating/lordosis
+    subtype) and SUPT_0564 (mixed-sex mating/aggression subtype), each as a
+    separate partial CROSS_CUTTING edge?

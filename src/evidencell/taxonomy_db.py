@@ -1185,6 +1185,29 @@ def _compute_closure(edges: list[tuple[str, str]]) -> list[tuple[str, str, int]]
     return closure
 
 
+# Registry of optional scoring criteria for find_candidates().
+# Each entry maps a criterion name to:
+#   column    — DB column on the nodes table
+#   max_rank  — highest rank at which the column has data (0 = clusters only)
+#   score     — points added on a match
+#   test      — callable(column_value, direction_str) → bool
+#
+# Extend this dict to add new criteria without changing find_candidates() signature.
+_OPTIONAL_CRITERIA_REGISTRY: dict[str, dict] = {
+    "sex_bias": {
+        "column": "male_female_ratio",
+        "max_rank": 0,
+        "score": 1,
+        "test": lambda mfr, direction: (
+            mfr is not None and mfr < 0.3 if direction == "female"
+            else mfr is not None and mfr > 3.0 if direction == "male"
+            else False
+        ),
+    },
+    # Future entries: "ephys_type": {...}, "morphology_class": {...}
+}
+
+
 class TaxonomyDB:
     """SQLite query index for a taxonomy, built from YAML reference files."""
 
@@ -1534,6 +1557,7 @@ class TaxonomyDB:
         rank: int | None = None,
         marker_columns: list[str] | None = None,
         propagate_nt: bool = True,
+        optional_criteria: dict[str, str] | None = None,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -1541,21 +1565,28 @@ class TaxonomyDB:
         or ``level`` (legacy, taxonomy-specific name string).  ``rank`` takes precedence
         when both are provided.
 
-        anat_ids:       exact anat region IDs (leaf match)
-        anat_root_ids:  region IDs resolved transitively via closure tables
-        nt_type:        prefix match; propagated from clusters when propagate_nt=True
-                        (required for supertype/subclass in WMBv1 where nt_type is null)
-        markers:        gene symbols; each match adds 1 pt
-        marker_columns: which SQLite marker columns to score against; defaults to all four
-                        (defining_markers_scoped, defining_markers, tf_markers, merfish_markers).
-                        Pass ["defining_markers_scoped"] for scoped-only marker matching.
-        propagate_nt:   when True (default), fall back to cluster-aggregated NT when the
-                        node's own nt_type is null
-        rank:           integer rank (0 = leaf). Selects nodes by taxonomy_rank column.
-        level:          taxonomy level string (e.g. "cluster", "supertype"). Used when rank
-                        is not provided, for backward compatibility.
+        anat_ids:          exact anat region IDs (leaf match)
+        anat_root_ids:     region IDs resolved transitively via closure tables
+        nt_type:           prefix match; propagated from clusters when propagate_nt=True
+                           (required for supertype/subclass in WMBv1 where nt_type is null)
+        markers:           gene symbols; each match adds 1 pt
+        marker_columns:    which SQLite marker columns to score against; defaults to all four
+                           (defining_markers_scoped, defining_markers, tf_markers, merfish_markers).
+                           Pass ["defining_markers_scoped"] for scoped-only marker matching.
+        propagate_nt:      when True (default), fall back to cluster-aggregated NT when the
+                           node's own nt_type is null
+        rank:              integer rank (0 = leaf). Selects nodes by taxonomy_rank column.
+        level:             taxonomy level string (e.g. "cluster", "supertype"). Used when rank
+                           is not provided, for backward compatibility.
+        optional_criteria: dict mapping criterion name → expected direction string.
+                           Supported criteria are declared in _OPTIONAL_CRITERIA_REGISTRY.
+                           Each matching criterion adds its registered score bonus.
+                           Criteria whose max_rank < current rank are silently skipped.
+                           Unknown criteria emit a warning and are skipped.
+                           Example: {"sex_bias": "female"}
 
         Scoring: region match = 2 pts, NT match = 2 pts, each marker match = 1 pt.
+        Optional criteria add their registered bonus (default 1 pt each).
         Results sorted descending by score.
         """
         if rank is None and level is None:
@@ -1582,6 +1613,26 @@ class TaxonomyDB:
                 _nt_map = self.propagate_nt_types(
                     child_level="cluster", parent_level=level,  # type: ignore[arg-type]
                 )
+
+        # Resolve current rank integer for optional_criteria rank gating
+        effective_rank: int | None = rank  # None only when level-based (legacy path)
+
+        # Validate optional_criteria keys against registry
+        _active_criteria: list[tuple[str, str, dict]] = []  # (name, direction, entry)
+        if optional_criteria:
+            for name, direction in optional_criteria.items():
+                entry = _OPTIONAL_CRITERIA_REGISTRY.get(name)
+                if entry is None:
+                    print(
+                        f"  WARNING: optional_criteria key {name!r} not in "
+                        "_OPTIONAL_CRITERIA_REGISTRY — skipped",
+                        file=sys.stderr,
+                    )
+                    continue
+                if effective_rank is not None and effective_rank > entry["max_rank"]:
+                    # Criterion not available at this rank (e.g. sex_bias only at rank 0)
+                    continue
+                _active_criteria.append((name, direction, entry))
 
         # Select nodes by rank (preferred) or level
         with self._connect() as con:
@@ -1620,6 +1671,15 @@ class TaxonomyDB:
                 for m in markers:
                     if m in node_markers:
                         score += 1
+
+            criteria_applied: list[str] = []
+            for name, direction, entry in _active_criteria:
+                col_val = nd.get(entry["column"])
+                if entry["test"](col_val, direction):
+                    score += entry["score"]
+                    criteria_applied.append(f"{name}={direction}")
+            if criteria_applied:
+                nd["_criteria_applied"] = criteria_applied
 
             if score > 0:
                 nd["_score"] = score
@@ -1995,6 +2055,14 @@ def _cmd_find_candidates(
                         file=sys.stderr,
                     )
 
+    # Extract optional criteria from the classical node
+    # sex_bias: MALE_BIASED → "male", FEMALE_BIASED → "female", NOT_DIMORPHIC / absent → skip
+    optional_criteria: dict[str, str] | None = None
+    sex_bias_raw = classical.get("sex_bias")
+    if sex_bias_raw and sex_bias_raw != "NOT_DIMORPHIC":
+        direction = sex_bias_raw.lower().split("_")[0]  # "male" or "female"
+        optional_criteria = {"sex_bias": direction}
+
     print(f"Classical node: {node_id} ({classical.get('name', '?')})", file=sys.stderr)
     print(f"  NT type: {nt_type}", file=sys.stderr)
     print(f"  Markers: {markers}", file=sys.stderr)
@@ -2003,6 +2071,8 @@ def _cmd_find_candidates(
         print(f"  Resolved MBA IDs: {mba_ids}", file=sys.stderr)
     print(f"  Query rank: {rank}", file=sys.stderr)
     print(f"  Taxonomy: {taxonomy_id}", file=sys.stderr)
+    if optional_criteria:
+        print(f"  Optional criteria: {optional_criteria}", file=sys.stderr)
 
     # Try transitive anatomy matching (requires anat_closure table from MBA ontology).
     # Fall back to no anatomy matching if closure not built.
@@ -2013,6 +2083,7 @@ def _cmd_find_candidates(
             nt_type=nt_type,
             markers=markers,
             rank=rank,
+            optional_criteria=optional_criteria,
         )
     except RuntimeError as exc:
         if "anat_closure" in str(exc):
@@ -2026,6 +2097,7 @@ def _cmd_find_candidates(
                 nt_type=nt_type,
                 markers=markers,
                 rank=rank,
+                optional_criteria=optional_criteria,
             )
         else:
             raise
@@ -2051,6 +2123,8 @@ def _cmd_find_candidates(
                 "parent_id": c.get("parent_id"),
                 **({"male_female_ratio": c["male_female_ratio"]}
                    if c.get("male_female_ratio") is not None else {}),
+                **({"criteria_applied": c["_criteria_applied"]}
+                   if c.get("_criteria_applied") else {}),
             }
             for c in candidates
         ],

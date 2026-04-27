@@ -202,6 +202,20 @@ enums:
           A type description being built up from multiple evidence types; may eventually
           become a new or revised CL term. Not yet anchored to a single classical or T-type definition.
 
+  # ── Sex bias (classical nodes) ──────────────────────────────────
+  SexBias:
+    description: >
+      Expected direction of sexual dimorphism in cell number or marker expression
+      for a classical cell type. Used by find-candidates to score atlas clusters
+      whose male_female_ratio matches the expected direction.
+    permissible_values:
+      MALE_BIASED:
+        description: More cells (or higher expression) in males than females
+      FEMALE_BIASED:
+        description: More cells (or higher expression) in females than males
+      NOT_DIMORPHIC:
+        description: No documented sex difference in cell number or defining markers
+
   # ── Synonym type ────────────────────────────────────────────────
   SynonymType:
     description: Category of alternative name for a cell type.
@@ -1259,6 +1273,13 @@ classes:
           CCF region distribution from atlas, e.g. "CB:0.72,NA:0.25" (from CCF_broad.freq column)
 
       # ── Property provenance (classical / prior-transcriptomic nodes) ─────
+      sex_bias:
+        range: SexBias
+        description: >
+          Expected direction of sexual dimorphism in cell number or defining-marker
+          expression. Set on classical nodes only. Used by find-candidates to score
+          atlas clusters whose male_female_ratio matches the expected direction.
+          Leave absent when sex dimorphism is not documented for this type.
       definition_references:
         multivalued: true
         description: >

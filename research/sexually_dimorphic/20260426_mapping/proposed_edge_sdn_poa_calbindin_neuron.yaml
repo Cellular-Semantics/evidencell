@@ -1,0 +1,211 @@
+# Proposed mapping edge — sdn_poa_calbindin_neuron → CS20230722_SUPT_0423
+# Generated: 2026-04-26
+# Curator-approved at Step 1 GATE
+# Status: PROPOSED — pending expert review at Step 4 GATE
+
+- id: edge_sdn_poa_calbindin_neuron_to_cs20230722_supt_0423
+  type_a: sdn_poa_calbindin_neuron
+  type_b: WMB:CS20230722_SUPT_0423
+  relationship: UNCERTAIN
+  confidence: LOW
+
+  # ── Atlas node summary ─────────────────────────────────────────────────────
+  # SUPT_0423: "0423 BST-MPN Six3 Nrgn Gaba_4"
+  # Subclass: 090 BST-MPN Six3 Nrgn Gaba (CS20230722_SUBC_090)
+  # Soma locations: Hypothalamus (MBA:1097, n=79), MPN (MBA:515, n=47),
+  #                 BNST (MBA:351, n=18), AHN (MBA:88, n=46), PVN (MBA:38, n=31)
+  # Precomputed expression (mean log-normalised CPM):
+  #   Kiss1=0.0, Th=0.99, Esr1=1.83, Calb1=6.42, Ar=5.43, Pgr=5.33
+  # Atlas supertype markers (DEFINING): Sp8, H2-Q2, Pou6f2
+  # Atlas supertype markers (DEFINING_SCOPED): Sp8, Lypd1, Calb1
+
+  property_comparisons:
+
+    # ── Soma location ─────────────────────────────────────────────────────
+    - property: soma_location
+      compartment: SOMA
+      classical_value: "MBA:464 (Medial preoptic nucleus — SDN-POA subnucleus)"
+      atlas_value: >
+        MBA:515 (Medial preoptic nucleus, n=47), MBA:1097 (Hypothalamus, n=79),
+        MBA:88 (AHN, n=46), MBA:351 (BNST, n=18), MBA:38 (PVN, n=31)
+      comparison: PARTIAL_MATCH
+      notes: >
+        The classical node uses MBA:464 (Medial preoptic nucleus) as the
+        soma location for SDN-POA; the atlas uses MBA:515 for Medial preoptic
+        nucleus, which corresponds to the same structure. SUPT_0423 includes
+        MBA:515 (n=47 cells) — a direct label match.
+        However, the SDN-POA is a subnucleus within the MPN defined by
+        specific histological criteria (dense Nissl-staining cluster,
+        calbindin immunoreactivity) that are not resolvable at the spatial
+        resolution of the WMBv1 MERFISH atlas. The classical type is a
+        subnucleus-level entity; the atlas supertype encompasses the entire
+        MPN and surrounding regions including BNST, AHN, and PVN. This is a
+        fundamental resolution limitation.
+        NOTE: MBA:464 and MBA:515 may refer to the same structure under
+        different nomenclature versions; if so, the location match is direct.
+
+    # ── Defining markers ──────────────────────────────────────────────────
+    - property: defining_marker
+      gene: Calb1
+      ncbi_gene_id: "NCBIGene:12307"
+      classical_value: "POSITIVE (protein; calbindin-D28K; primary defining marker)"
+      atlas_value: "mean_expression=6.42 (DEFINING_SCOPED marker of SUPT_0423)"
+      comparison: SUPPORT
+      notes: >
+        Calb1 is listed as a DEFINING_SCOPED marker of SUPT_0423 and has high
+        mean expression (6.42). This is the strongest concordance between the
+        classical node and the atlas supertype. The Calb1 match drove SUPT_0423
+        retrieval from the DB (db_score=1 at rank 1, anatomy-confirmed via MPN
+        label). However, Calb1 is broadly expressed across the brain (cortical
+        interneurons, cerebellar Purkinje cells, olfactory bulb, hippocampus);
+        the DEFINING_SCOPED designation indicates it is discriminating within
+        the BST-MPN subclass context specifically.
+
+    # ── Negative markers ──────────────────────────────────────────────────
+    - property: negative_marker
+      gene: Th
+      ncbi_gene_id: "NCBIGene:21823"
+      classical_value: "NEGATIVE (protein; immunohistochemically absent in SDN-POA cell bodies)"
+      atlas_value: "mean_expression=0.99"
+      comparison: CAVEAT
+      notes: >
+        The classical SDN-POA calbindin node has Th as a negative marker:
+        no TH-positive cell bodies are present in the SDN-POA, though
+        fine TH-positive axon-like projections are observed (likely inputs from
+        AVPV TH neurons). The atlas shows Th mean expression of 0.99 in
+        SUPT_0423 — low but not zero. This caveat requires interpretation:
+        (1) The mean of 0.99 may reflect a small subset of cells within the
+        supertype that are Th-positive (the supertype spans BST, AHN, and
+        PVN in addition to MPN, and some of these regions have TH-expressing
+        cells). (2) Alternatively, a small number of MPN cells within SUPT_0423
+        may genuinely express Th at low levels. This is a non-trivial caveat
+        but does not disqualify the mapping given the low magnitude and the
+        possibility of supertype heterogeneity. An UNCERTAIN relationship
+        accounts for this inconsistency.
+
+    # ── Secondary expression correlates ───────────────────────────────────
+    - property: expression_correlate
+      gene: Esr1
+      ncbi_gene_id: "NCBIGene:13982"
+      classical_value: "not asserted (no Esr1 data in classical node)"
+      atlas_value: "mean_expression=1.83"
+      comparison: NOT_ASSESSED
+      notes: >
+        Esr1 is expressed at low-moderate levels in SUPT_0423 (1.83). The
+        classical SDN-POA definition does not include Esr1 as a marker, so
+        no comparison is possible. The SDN-POA does receive estrogen-mediated
+        regulation but Esr1 expression was not part of the classical marker
+        panel in the source literature.
+
+    - property: expression_correlate
+      gene: Ar
+      ncbi_gene_id: "NCBIGene:11835"
+      classical_value: "not asserted explicitly"
+      atlas_value: "mean_expression=5.43"
+      comparison: NOT_ASSESSED
+      notes: >
+        Androgen receptor (Ar) expression (5.43) is consistent with the
+        male-biased SDN-POA being androgen-regulated (testosterone determines
+        SDN-POA size during perinatal critical period), but Ar was not included
+        as a marker in the KB classical node definition. Provides indirect
+        biological plausibility for the mapping.
+
+  evidence:
+    - evidence_type: DATABASE_CANDIDATE
+      supports: WEAK
+      explanation: >
+        SUPT_0423 was the only rank-1 candidate assessed as PLAUSIBLE for
+        sdn_poa_calbindin_neuron from the find-candidates DB query
+        (db_score=1 at rank 1). All rank-0 candidates received db_score=1
+        with no viable candidates on anatomical grounds — the DB retrieval
+        was driven purely by Calb1 marker expression, which is broadly
+        expressed across the brain. SUPT_0423 is the sole anatomically
+        plausible candidate because it is the only retrieved supertype with
+        MPN (MBA:515) in its location set. The weak db_score reflects the
+        fundamental challenge: Calb1 alone is not a specific enough marker
+        to discriminate SDN-POA neurons in the atlas.
+
+    - evidence_type: PROPERTY_COMPARISON
+      supports: PARTIAL
+      explanation: >
+        Two properties support the mapping: (1) Calb1 is DEFINING_SCOPED in
+        SUPT_0423 (mean=6.42), directly matching the primary classical marker;
+        (2) MBA:515 (MPN) is present in SUPT_0423 cell locations (n=47),
+        matching the classical MBA:464 location. One property introduces a
+        caveat: Th mean expression of 0.99 in SUPT_0423 is low but non-zero,
+        creating ambiguity with the classical Th-negative criterion.
+        Net: two concordant items, one ambiguous item, zero contradictory
+        items. Insufficient for HIGH or MODERATE confidence; LOW / UNCERTAIN
+        appropriate.
+
+  caveats:
+    - caveat_type: ATLAS_RESOLUTION_LIMIT
+      description: >
+        The SDN-POA is a subnucleus-level entity within the MPN, estimated to
+        contain a few hundred cells in adult male mice. WMBv1 MERFISH spatial
+        data does not resolve the SDN-POA as a distinct spatial domain separate
+        from the broader MPN. Even if SDN-POA Calb1 neurons are present in
+        SUPT_0423, they cannot be distinguished from other MPN Calb1 neurons
+        at current atlas resolution. An UNCERTAIN relationship reflects this
+        irreducible uncertainty.
+
+    - caveat_type: TH_NEGATIVE_MARKER_INCONSISTENCY
+      description: >
+        The classical SDN-POA node defines Th as a NEGATIVE marker (no TH
+        cell bodies). SUPT_0423 shows Th mean_expression=0.99 — low but not
+        zero. This may reflect: (a) a minority of TH+ cells elsewhere in
+        the supertype (BST, AHN, PVN components of SUPT_0423 may include
+        Th-expressing cells); (b) low-level Th transcription in MPN cells
+        below protein detection threshold; or (c) a genuine mismatch. This
+        is listed as a caveat rather than a disqualifying contradiction because
+        the magnitude is low and the supertype is heterogeneous.
+
+    - caveat_type: MARKER_SPECIFICITY
+      description: >
+        Calb1 is the only positive concordant marker, but Calb1 is broadly
+        expressed across the brain. SUPT_0423 was retrieved from the atlas DB
+        primarily on Calb1 expression. The DEFINING_SCOPED (rather than
+        DEFINING) designation indicates Calb1 discriminates SUPT_0423 within
+        the BST-MPN subclass but not across the whole atlas — many other
+        supertypes also express Calb1. This reduces the specificity of the
+        Calb1 match as evidence for the SDN-POA assignment.
+
+    - caveat_type: SUPERTYPE_SPAN
+      description: >
+        SUPT_0423 spans BST, MPN, AHN, and PVN — anatomically distinct
+        structures. The SDN-POA is specifically within MPN (MBA:515 / MBA:464).
+        Only 47 of the 221 total cells in SUPT_0423 carry an MPN soma label.
+        The broader supertype span introduces additional uncertainty about
+        which child clusters correspond to genuine MPN/SDN-POA Calb1 neurons.
+
+  unresolved_questions:
+    - >
+      Do any clusters within the SUPT_0423 lineage show peak Calb1 expression
+      co-occurring with MBA:515 (MPN) spatial location and male-biased sex ratio?
+      Cluster-level spatial analysis required.
+    - >
+      Is the Th mean_expression=0.99 in SUPT_0423 driven by MPN cells or by
+      Th-expressing cells in the BST/AHN/PVN components of the supertype?
+    - >
+      Does the WMBv1 atlas contain a dedicated SDN-POA spatial domain in the
+      MERFISH data, or are SDN-POA cells distributed within the broader MPN
+      spatial cluster?
+    - >
+      A published Calb1-lineage scRNA-seq dataset from the preoptic area, if
+      mapped to WMBv1, would allow F1-based confirmation of whether SDN-POA
+      neurons fall within SUPT_0423.
+
+  proposed_experiments:
+    - >
+      Run find-candidates at cluster level (rank 0) within the SUBT_0423
+      lineage to identify MPN-localized Calb1-high clusters with male-biased
+      sex ratio.
+    - >
+      Consult WMBv1 MERFISH spatial viewer (Allen Brain Cell Atlas) to inspect
+      whether cells labeled SUPT_0423 within MBA:515 (MPN) cluster in a
+      subnucleus-level spatial pattern consistent with the SDN-POA location
+      (dorsomedial MPN, compact dense cluster).
+    - >
+      If a published antibody-validated Calb1+ SDN-POA scRNA-seq dataset
+      exists, perform MapMyCells annotation transfer to WMBv1 to test whether
+      SUPT_0423 (or a child cluster) receives majority assignment.

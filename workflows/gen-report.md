@@ -123,10 +123,11 @@ column (e.g. "Sst (100% of OLM cells), Chrna2 (35%), mGluR1/Grm1 (96%)"). These 
 directly assessed from the source dataset and provide stronger evidence than literature
 reports alone.
 
-### 4. Mapping candidates table
+### 4. Mapping candidates table + property alignment table
 
-One row per edge in `edges[]`. Columns: Rank | WMBv1 cluster | Supertype | Cells |
-Confidence | Key property alignment | Verdict.
+**4a. Candidate overview table (one row per edge)**
+
+Columns: Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict.
 
 Sort: MODERATE before LOW before UNCERTAIN. Rank only MODERATE and LOW edges (1, 2, …);
 use "—" for UNCERTAIN.
@@ -137,6 +138,56 @@ property comparison for that edge (e.g. "Chrna2 APPROXIMATE · Npy CONSISTENT").
 Use confidence badges: 🟢 HIGH / 🟡 MODERATE / 🔴 LOW / ⚪ UNCERTAIN.
 
 Note at the end: total edge count and relationship type.
+
+**4b. Property alignment table (mandatory for each primary candidate)**
+
+For the primary (highest-confidence) candidate, and for any secondary candidate
+with confidence ≥ MODERATE, write a property alignment table immediately after
+the candidate overview:
+
+```
+| Property | Classical | Supertype | Best cluster | Alignment |
+|---|---|---|---|---|
+| Soma location | {region [MBA:XXX]} | {n}/{total} cells in target region | {cluster primary soma (MBA:XXX)} | CONSISTENT/APPROXIMATE/DISCORDANT |
+| NT type | {type} | {supertype NT label} | {cluster NT annotation} | |
+| {gene1} expression | defining marker | {supertype mean} | {cluster mean (CLUS_XXXX)} | |
+| {gene2} expression | defining marker | {supertype mean} | {cluster mean} | |
+| Sex ratio | {expected direction or "not documented"} | not available | MFR={value} (CLUS_XXXX) | CONSISTENT/APPROXIMATE/DISCORDANT/NOT_ASSESSED |
+| Annotation transfer | — | NOT_ASSESSED or F1={value} | NOT_ASSESSED or F1={value} | — |
+```
+
+Rules:
+- One row per classical property that has a comparison in `edges[*].property_comparisons`.
+- Supertype column: use `node_b_value` from the property_comparison where
+  `atlas_node_accession` is a supertype (rank ≥ 1). Write "not available" if absent.
+- Best cluster column: if the discovery data or edge YAML identifies a best child
+  cluster (e.g. from `child_cluster_expression` analysis), use that cluster's values.
+  Write "not assessed" if no child-cluster data was collected.
+- Alignment column: use the `alignment` field from property_comparisons. If supertype
+  and cluster alignments differ, show both: "SUPT: APPROXIMATE; CLUS: CONSISTENT".
+- Sex ratio row: always include. Use MFR from the best child cluster; write
+  "not available" at supertype level (MFR is only computed at rank 0).
+- Annotation transfer row: always include. Show F1 score(s) if
+  `AnnotationTransferEvidence` exists in the edge's evidence items, otherwise
+  "NOT_ASSESSED".
+- Use only values from `facts.edges[*].property_comparisons` and
+  `facts.edges[*].evidence_items`. Do not invent quantitative values.
+
+**Null result headline (for UNCERTAIN-only mappings)**
+
+If all edges are UNCERTAIN and the UNCERTAIN classification is confirmed by
+expression data (e.g. Cyp19a1 = 0.0 in all ARH clusters), the report body must
+open with a clear finding statement immediately after the classical type table,
+before the mapping candidates table. Example:
+
+> "A complete scan of CCN20230722 (ranks 0 and 1) confirmed that no cluster in
+> MBA:223 (Arcuate hypothalamic nucleus) expresses Cyp19a1 at detectable levels.
+> SUPT_0427 (ARH primary supertype) shows Cyp19a1 = 0.0; child clusters CLUS_1569,
+> CLUS_1570, CLUS_1571 all show Cyp19a1 = 0.0. The best available match (SUPT_0486)
+> is in periventricular preoptic zones with no ARH cells."
+
+This is NOT the "Eliminated candidates" section — it is the primary finding.
+Use only values from the facts file; do not invent expression values.
 
 ### 5. Candidate paragraphs
 
