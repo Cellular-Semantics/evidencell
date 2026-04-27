@@ -123,11 +123,35 @@ column (e.g. "Sst (100% of OLM cells), Chrna2 (35%), mGluR1/Grm1 (96%)"). These 
 directly assessed from the source dataset and provide stronger evidence than literature
 reports alone.
 
+After the table, add a collapsible details block with per-property literature support:
+
+```html
+<details>
+<summary>### Details — source evidence for classical type properties</summary>
+
+For each property in the table that has a source (from `classical_nodes[0]`), write
+one bullet per source entry:
+- **{Property}:** {method} · {species/scope if specified} · [{n}]
+  If a verbatim quote is available in `facts.quotes` for this source, include it as a
+  sub-blockquote with the required attribution line:
+  > {quote text}
+  > — {author} et al. {year}, {section if known} · [{n}] <!-- quote_key: {key} -->
+
+Omit properties with no source entries. Use `[n]` labels that match the References
+section. Do not invent sources or quotes not present in `facts.quotes`.
+</details>
+```
+
 ### 4. Mapping candidates table + property alignment table
 
 **4a. Candidate overview table (one row per edge)**
 
 Columns: Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict.
+
+The **Cells** column shows MERFISH spatial cell count (sum of `anatomical_location[*].cell_count`
+across all regions for that node). This reflects spatial coverage in the MERFISH dataset only —
+it is not the full 10x scRNA-seq cluster size. If the MERFISH count is very small (< 20),
+add a footnote: "^MERFISH n={N}; 10x cluster size not yet shown — see ROADMAP."
 
 Sort: MODERATE before LOW before UNCERTAIN. Rank only MODERATE and LOW edges (1, 2, …);
 use "—" for UNCERTAIN.
@@ -172,6 +196,20 @@ Rules:
   "NOT_ASSESSED".
 - Use only values from `facts.edges[*].property_comparisons` and
   `facts.edges[*].evidence_items`. Do not invent quantitative values.
+
+**Subcluster concordance note (mandatory for supertype candidates):**
+
+Immediately after the property alignment table, add one sentence summarising how many
+child clusters of the supertype are concordant for the key properties. Draw this from
+the caveats and notes in `edges[*].property_comparisons` — do not invent numbers.
+Format: *(N of M child clusters show {property} concordant with classical type; the
+remainder are {discordant signal}. Best match: CLUS_XXXX.)*
+
+Example: *(1 of 5 child clusters (CLUS_1915) shows the female-biased Kiss1+Th+ profile;
+the remaining 4 are either sex-neutral/male-biased or lack Kiss1 expression.)*
+
+If child-cluster breakdown information is not available in the edge YAML, write:
+*(Child-cluster breakdown not assessed — see proposed experiments.)*
 
 **Null result headline (for UNCERTAIN-only mappings)**
 
@@ -227,6 +265,18 @@ For each marker/neuropeptide on the classical node, assess the evidence chain:
   at zero in precomputed stats; or reported in literature but absent from atlas
   metadata), note the discrepancy factually. Do not explain it away — present
   both values and flag for investigation.
+- **Atlas annotation vs. expression discrepancy (mandatory check)**: For each
+  marker or neuropeptide listed as DEFINING, DEFINING_SCOPED, or NEUROPEPTIDE in
+  the atlas node's metadata, check whether the corresponding precomputed expression
+  value (from `property_comparisons[*].node_b_value`) is near-zero (< 0.5) or
+  absent. If so, flag explicitly:
+  > ⚠ **Atlas annotation/expression discrepancy**: {gene} is listed as a {DEFINING /
+  > NEUROPEPTIDE} marker in WMBv1 atlas metadata for {accession} but shows
+  > precomputed mean expression = {value}. This may reflect a neuropeptide annotation
+  > derived from a different dataset or resolution level, or a marker that is
+  > expressed in a subset of cells below the atlas-level mean. Flag for investigation.
+  This is most common for neuropeptides, which are often low-expressed or cell-sparse.
+  The discrepancy should also appear in the Concerns list for that candidate.
 - **Quantitative cross-check**: If precomputed stats values are available in
   `property_comparisons[*].node_b_value`, note where they confirm or
   challenge the expected marker profile. For negative markers, note any

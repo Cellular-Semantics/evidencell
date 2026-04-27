@@ -118,6 +118,11 @@ exists on every node row, so queries within a single atlas work unchanged.
 - [ ] Workflow: agent-driven sub-node creation when source evidence separates subtypes `#map-cell-type`
 - [ ] F1 heatmap visualisation in AT output / gen-report `#gen-report` `#annotation-transfer`
 - [ ] Report: make classical-type provenance explicit for genetically/morphologically defined source data `#gen-report`
+- [ ] Report: 10x cell count per cluster alongside MERFISH spatial cell count — investigate source (v2/v3 10x counts in taxonomy JSON; reliability flags needed before display); add to DB and render `#gen-report` `#ingest-taxonomy`
+- [ ] Report: structured child-cluster concordance field on edges — add `child_concordance_summary` to edge schema so property alignment table can show "N/M children match" without relying on LLM prose synthesis `#schema` `#gen-report`
+- [ ] Report: expression/annotation discrepancy as programmatic QC in gen-facts — flag when a DEFINING or NEUROPEPTIDE atlas marker shows near-zero precomputed expression vs. what atlas metadata annotates; emit structured `ATLAS_ANNOTATION_EXPRESSION_DISCREPANCY` item `#gen-report` `#qc`
+- [ ] Report: ABC Atlas cell set linkouts — thread taxonomy node URLs (from download metadata) into rendered reports; document URL format `#gen-report` `#community`
+- [ ] Report: ABC Atlas marker gene / combo linkouts — use existing code to generate query URLs for defining markers; add to candidate sections `#gen-report` `#community`
 
 ---
 
