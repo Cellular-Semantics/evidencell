@@ -1,0 +1,56 @@
+{
+  "dg_semilunar_granule_cell": {
+    "cl_term_id": "CL:2000089",
+    "cl_term_label": "dentate gyrus granule cell",
+    "mapping_type": "BROAD",
+    "mapping_notes": "Semilunar granule cells are a morpho-physiologically distinct subtype of DG excitatory projection neurons. CL:2000089 (dentate gyrus granule cell) is the closest available term, but SGCs differ from canonical granule cells in dendritic arborization, axon collaterals, firing pattern, and synaptic input weighting. BROAD mapping reflects that SGC is a sub-population within the broader DG granule cell class; a NARROW CL term specific to SGCs does not currently exist."
+  },
+  "ca2_pyramidal_cell": {
+    "cl_term_id": "CL:0000598",
+    "cl_term_label": "pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_notes": "CA2 pyramidal cells are a well-characterised regional specialisation of hippocampal pyramidal neurons. No CA2-specific CL term equivalent to CL:0000741 (CA1) or CL:0000745 (CA3) exists. CL:0000598 (pyramidal neuron) is the best available ancestor. BROAD mapping reflects that this term does not capture the CA2-specific molecular identity (Pcp4, Rgs14, Amigo2) or distinct electrophysiology."
+  },
+  "subicular_pyramidal_cell": {
+    "cl_term_id": "CL:0000598",
+    "cl_term_label": "pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_notes": "Subicular pyramidal cells are the major glutamatergic output neurons of the subiculum. No subiculum-specific CL term exists. CL:0000598 (pyramidal neuron) is the best available ancestor. BROAD mapping reflects the three electrophysiologically and morphologically distinct subtypes (RF, WB, SB) within the classical type, none of which have dedicated CL terms."
+  },
+  "ec_layer2_stellate_cell": {
+    "cl_term_id": "CL:0000679",
+    "cl_term_label": "glutamatergic neuron",
+    "mapping_type": "BROAD",
+    "mapping_notes": "Entorhinal cortex layer II stellate cells are reelin-positive glutamatergic principal neurons. They are not pyramidal cells in morphology, so CL:0000598 is inappropriate. No EC layer II stellate-specific CL term exists. CL:0000679 (glutamatergic neuron) is used as the broadest accurate mapping. The negative calbindin / positive reelin combination is a classical defining property not captured by any current CL term."
+  },
+  "ec_layer2_pyramidal_cell": {
+    "cl_term_id": "CL:0000598",
+    "cl_term_label": "pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_notes": "Entorhinal cortex layer II calbindin-positive pyramidal cells are glutamatergic principal neurons with pyramidal morphology. CL:0000598 (pyramidal neuron) is the best available match. No EC layer II pyramidal-specific CL term exists. BROAD mapping because CL:0000598 does not encode EC layer, calbindin expression, or theta modulation properties."
+  },
+  "ec_layer3_pyramidal_cell": {
+    "cl_term_id": "CL:0000598",
+    "cl_term_label": "pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_notes": "Entorhinal cortex layer III PCP4-positive pyramidal cells are glutamatergic principal neurons projecting to CA1 and subiculum. CL:0000598 (pyramidal neuron) is the best available match. No EC layer III-specific CL term exists. BROAD because CL:0000598 does not encode layer identity, PCP4 expression, or projection specificity."
+  },
+  "hpc_calretinin_glutamatergic_neuron": {
+    "cl_term_id": "CL:0000679",
+    "cl_term_label": "glutamatergic neuron",
+    "mapping_type": "BROAD",
+    "mapping_notes": "Calretinin-positive hippocampal glutamatergic neurons are a specialized population spanning stratum lacunosum-moleculare, outer molecular layer, and subicular complex. They are not pyramidal cells in classical sense and provide retrograde-direction connectivity. CL:0000679 (glutamatergic neuron) is the broadest accurate mapping. No calretinin-positive glutamatergic interneuron-like CL term exists for this non-GABAergic CR population."
+  },
+  "hpc_glu_dopamine_receptor_pyramidal": {
+    "cl_term_id": "CL:0000598",
+    "cl_term_label": "pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_notes": "Ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neurons are a projection-specific subpopulation of ventral CA1/subiculum pyramidal cells. CL:0000598 (pyramidal neuron) is the best available match. BROAD because CL:0000598 does not encode D1/D2 receptor expression, ventral hippocampal identity, or projection-specificity to anxiety circuits."
+  },
+  "hpc_glur_cell": {
+    "cl_term_id": null,
+    "cl_term_label": null,
+    "mapping_type": null,
+    "mapping_notes": "GluR cells are a hybrid glial-neuronal population expressing S100beta, NG2, and neuronal genes while receiving direct GABAergic and glutamatergic synaptic input. They do not map cleanly to neuron, astrocyte, or oligodendrocyte CL terms. No appropriate CL term exists. cl_mapping omitted from KB stub per curation rules."
+  }
+}

@@ -1,0 +1,303 @@
+name: "Hippocampal glutamatergic cells — v2 additions"
+description: |
+  Additional glutamatergic cell type stubs from updated ASTA report v2.
+  Covers subicular, EC, semilunar granule, and specialized populations
+  not in the v1 ingest. All nodes are CLASSICAL_MULTIMODAL stubs at
+  this stage — defining markers are symbol-only; ncbi_gene_ids and
+  per-marker sources require primary literature verification.
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+species: null
+creation_date: '2026-04-27'
+notes: |
+  This is a v2 additions file covering 9 new types from the 2026-04-27 ASTA
+  report ingest. ca2_pyramidal_cell is flagged is_new in proposed_types.json
+  but a stub (ca2_pc_hippocampus) already exists in hippocampus_glutamatergic.yaml
+  from v1 ingest — see validation_notes.json overlap entry. The stub here uses
+  a distinct id (ca2_pc_v2_hippocampus) to avoid ID collision; curation should
+  decide whether to merge or retire this entry after review.
+  hpc_glur_cell is a hybrid glial-neuronal population; inclusion as a
+  CellTypeNode is provisional pending a curation decision on scope (see
+  validation_notes.json).
+  EC nodes (ec_layer2_stellate_cell, ec_layer2_pyramidal_cell,
+  ec_layer3_pyramidal_cell) are within the medial temporal lobe /
+  hippocampal formation complex; anatomical scope for this graph should
+  be confirmed by curation.
+
+nodes:
+
+  - id: dg_semilunar_granule_cell_hippocampus
+    name: dentate gyrus semilunar granule cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0001885
+        label: dentate gyrus of hippocampal formation
+        name_in_source: dentate gyrus stratum granulosum (inner/outer border)
+        compartment: SOMA
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: dentate gyrus granule cell
+        name_in_source: dentate gyrus granule cell
+      mapping_type: BROAD
+      mapping_notes: >
+        Semilunar granule cells are a distinct morpho-physiological subpopulation
+        of DG excitatory projection neurons. No SGC-specific CL term exists;
+        CL:2000089 (dentate gyrus granule cell) is the closest parent.
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers: []
+
+  - id: ca2_pc_v2_hippocampus
+    name: CA2 pyramidal cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0014549
+        label: pyramidal layer of CA2
+        name_in_source: CA2 stratum pyramidale
+        compartment: SOMA
+    cl_mapping:
+      cl_term:
+        id: CL:0000598
+        label: pyramidal neuron
+        name_in_source: pyramidal neuron
+      mapping_type: BROAD
+      mapping_notes: >
+        No CA2-specific CL term exists (contrast with CL:0000741 for CA1
+        and CL:0000745 for CA3). CL:0000598 (pyramidal neuron) is the
+        broadest accurate ancestor. Note: a v1 stub (ca2_pc_hippocampus)
+        already exists in hippocampus_glutamatergic.yaml with identical
+        markers — curation should resolve whether to merge these entries.
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: Pcp4
+        ncbi_gene_id: null
+      - symbol: Rgs14
+        ncbi_gene_id: null
+      - symbol: Amigo2
+        ncbi_gene_id: null
+
+  - id: subicular_pyramidal_cell_hippocampus
+    name: subicular pyramidal cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0002191
+        label: subiculum
+        name_in_source: subiculum
+        compartment: SOMA
+    cl_mapping:
+      cl_term:
+        id: CL:0000598
+        label: pyramidal neuron
+        name_in_source: pyramidal neuron
+      mapping_type: BROAD
+      mapping_notes: >
+        Subicular pyramidal cells are the primary glutamatergic output neurons
+        of the subiculum. Three electrophysiologically distinct subtypes (RF, WB,
+        SB) have been described (Guinet et al., 2026). No subiculum-specific CL
+        term exists; CL:0000598 (pyramidal neuron) is used as BROAD mapping.
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: Np65
+        ncbi_gene_id: null
+
+  - id: ec_layer2_stellate_cell_hippocampus
+    name: entorhinal cortex layer II stellate cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0001905
+        label: entorhinal cortex
+        name_in_source: entorhinal cortex layer II
+        compartment: SOMA
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: glutamatergic neuron
+        name_in_source: glutamatergic neuron
+      mapping_type: BROAD
+      mapping_notes: >
+        EC layer II stellate cells have stellate morphology and express reelin
+        but not calbindin, distinguishing them from layer II pyramidal cells.
+        No EC layer II stellate-specific CL term exists; CL:0000679 is used
+        as the broadest accurate mapping.
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: Reln
+        ncbi_gene_id: null
+
+  - id: ec_layer2_pyramidal_cell_hippocampus
+    name: entorhinal cortex layer II calbindin-positive pyramidal cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0001905
+        label: entorhinal cortex
+        name_in_source: entorhinal cortex layer II
+        compartment: SOMA
+    cl_mapping:
+      cl_term:
+        id: CL:0000598
+        label: pyramidal neuron
+        name_in_source: pyramidal neuron
+      mapping_type: BROAD
+      mapping_notes: >
+        EC layer II calbindin-positive pyramidal cells originate widespread
+        telencephalic and intrinsic projections and show strong theta modulation.
+        Arranged in a hexagonal patch grid in medial EC. CL:0000598 (pyramidal
+        neuron) is the best available match; no EC layer II pyramidal-specific
+        CL term exists.
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: Calb1
+        ncbi_gene_id: null
+
+  - id: ec_layer3_pyramidal_cell_hippocampus
+    name: entorhinal cortex layer III PCP4-positive pyramidal cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0001905
+        label: entorhinal cortex
+        name_in_source: entorhinal cortex layer III
+        compartment: SOMA
+    cl_mapping:
+      cl_term:
+        id: CL:0000598
+        label: pyramidal neuron
+        name_in_source: pyramidal neuron
+      mapping_type: BROAD
+      mapping_notes: >
+        EC layer III PCP4-positive pyramidal cells project to CA1 and the
+        subiculum. PCP4 is shared with CA2 pyramidal cells but distinguishes
+        EC layer III from layer II populations. CL:0000598 (pyramidal neuron)
+        is the best available match; no EC layer III-specific CL term exists.
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: Pcp4
+        ncbi_gene_id: null
+
+  - id: hpc_calretinin_glu_neuron_hippocampus
+    name: hippocampal calretinin-positive glutamatergic neuron
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0002421
+        label: hippocampal formation
+        name_in_source: stratum lacunosum-moleculare / outer molecular layer
+        compartment: SOMA
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: glutamatergic neuron
+        name_in_source: glutamatergic neuron
+      mapping_type: BROAD
+      mapping_notes: >
+        Calretinin-positive hippocampal glutamatergic neurons are distinct from
+        calretinin-positive GABAergic interneurons. They span SLM, outer
+        molecular layer, and subicular complex, with local-projecting and
+        long-range subpopulations. CL:0000679 is the broadest accurate mapping;
+        no calretinin-positive glutamatergic-specific CL term exists.
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: Calb2
+        ncbi_gene_id: null
+      - symbol: Slc17a8
+        ncbi_gene_id: null
+
+  - id: hpc_glu_dopa_receptor_pyramidal_hippocampus
+    name: ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0002421
+        label: hippocampal formation
+        name_in_source: ventral CA1 / ventral subiculum
+        compartment: SOMA
+    cl_mapping:
+      cl_term:
+        id: CL:0000598
+        label: pyramidal neuron
+        name_in_source: pyramidal neuron
+      mapping_type: BROAD
+      mapping_notes: >
+        Ventral hippocampal D1R/D2R-expressing glutamatergic pyramidal neurons
+        represent ~45% of all dopamine receptor-positive cells in ventral
+        hippocampus (Godino et al., 2023), contrasting with dorsal hippocampus
+        where D1/D2 are interneuron-restricted. Likely correspond to
+        projection-specific ventral CA1/vSubiculum populations. CL:0000598
+        is the best available mapping.
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: Drd1
+        ncbi_gene_id: null
+      - symbol: Drd2
+        ncbi_gene_id: null
+
+  - id: hpc_glur_cell_hippocampus
+    name: hippocampal GluR cell (glutamate receptor-expressing glial-neuronal hybrid cell)
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    anatomical_location:
+      - id: UBERON:0002421
+        label: hippocampal formation
+        name_in_source: hippocampus
+        compartment: SOMA
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: S100b
+        ncbi_gene_id: null
+      - symbol: Cspg4
+        ncbi_gene_id: null
+
+edges: []

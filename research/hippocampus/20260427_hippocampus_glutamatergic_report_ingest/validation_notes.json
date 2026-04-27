@@ -1,0 +1,285 @@
+{
+  "ingest": "20260427_hippocampus_glutamatergic_report_ingest",
+  "region": "hippocampus",
+  "generated_at": "2026-04-27",
+  "node_count": 7,
+  "summary": {
+    "supported_properties": 15,
+    "partial_properties": 19,
+    "gap_properties": 15,
+    "total_property_slots": 49,
+    "issues_count": 13,
+    "contradictions": 0,
+    "ambiguities": 3,
+    "heterogeneities": 6,
+    "gaps": 4
+  },
+  "nodes": {
+    "dg_granule_cell": {
+      "name": "dentate gyrus granule cell",
+      "property_status": {
+        "morphology": "SUPPORTED",
+        "electrophysiology": "PARTIAL",
+        "defining_markers": "SUPPORTED",
+        "negative_markers": "GAP",
+        "neuropeptides": "GAP",
+        "nt_type": "SUPPORTED",
+        "anatomical_location": "PARTIAL"
+      },
+      "high_relevance_quote_count": 13,
+      "moderate_relevance_quote_count": 17
+    },
+    "dg_mossy_cell": {
+      "name": "hilar mossy cell",
+      "property_status": {
+        "morphology": "SUPPORTED",
+        "electrophysiology": "PARTIAL",
+        "defining_markers": "SUPPORTED",
+        "negative_markers": "GAP",
+        "neuropeptides": "GAP",
+        "nt_type": "SUPPORTED",
+        "anatomical_location": "SUPPORTED"
+      },
+      "high_relevance_quote_count": 22,
+      "moderate_relevance_quote_count": 10
+    },
+    "ca3_pyramidal_cell": {
+      "name": "CA3 pyramidal cell",
+      "property_status": {
+        "morphology": "PARTIAL",
+        "electrophysiology": "PARTIAL",
+        "defining_markers": "SUPPORTED",
+        "negative_markers": "GAP",
+        "neuropeptides": "GAP",
+        "nt_type": "PARTIAL",
+        "anatomical_location": "PARTIAL"
+      },
+      "high_relevance_quote_count": 6,
+      "moderate_relevance_quote_count": 24
+    },
+    "ca1_pyramidal_cell": {
+      "name": "CA1 pyramidal cell",
+      "property_status": {
+        "morphology": "PARTIAL",
+        "electrophysiology": "PARTIAL",
+        "defining_markers": "SUPPORTED",
+        "negative_markers": "PARTIAL",
+        "neuropeptides": "GAP",
+        "nt_type": "PARTIAL",
+        "anatomical_location": "PARTIAL"
+      },
+      "high_relevance_quote_count": 5,
+      "moderate_relevance_quote_count": 19
+    },
+    "ms_dbb_glutamatergic_neuron": {
+      "name": "medial septal / diagonal band of Broca glutamatergic neuron",
+      "property_status": {
+        "morphology": "GAP",
+        "electrophysiology": "SUPPORTED",
+        "defining_markers": "PARTIAL",
+        "negative_markers": "PARTIAL",
+        "neuropeptides": "GAP",
+        "nt_type": "GAP",
+        "anatomical_location": "SUPPORTED"
+      },
+      "high_relevance_quote_count": 10,
+      "moderate_relevance_quote_count": 4
+    },
+    "hpc_cajal_retzius_cell": {
+      "name": "hippocampal Cajal-Retzius cell",
+      "property_status": {
+        "morphology": "SUPPORTED",
+        "electrophysiology": "SUPPORTED",
+        "defining_markers": "PARTIAL",
+        "negative_markers": "GAP",
+        "neuropeptides": "GAP",
+        "nt_type": "SUPPORTED",
+        "anatomical_location": "SUPPORTED"
+      },
+      "high_relevance_quote_count": 10,
+      "moderate_relevance_quote_count": 7
+    },
+    "ca1_radiatum_giant_cell": {
+      "name": "CA1 radiatum giant cell",
+      "property_status": {
+        "morphology": "PARTIAL",
+        "electrophysiology": "PARTIAL",
+        "defining_markers": "GAP",
+        "negative_markers": "GAP",
+        "neuropeptides": "GAP",
+        "nt_type": "PARTIAL",
+        "anatomical_location": "PARTIAL"
+      },
+      "high_relevance_quote_count": 2,
+      "moderate_relevance_quote_count": 3
+    }
+  },
+  "issues": [
+    {
+      "node_id": "dg_granule_cell",
+      "type": "AMBIGUITY",
+      "description": "Mossy fiber terminals co-express VGLUT1, VGLUT2 and VGAT; juvenile MF\u2192CA3 currents are mixed glutamatergic+GABAergic. Co-release is developmental; granule cells remain canonically glutamatergic.",
+      "supporting_quote_keys": [
+        "11333153_7e2a7ff8",
+        "11333153_abe1b682",
+        "20519538"
+      ]
+    },
+    {
+      "node_id": "dg_granule_cell",
+      "type": "HETEROGENEITY",
+      "description": "Adult-born immature granule cells form a distinct functional subpopulation with delayed maturation (first glutamatergic input ~2 weeks postnatally; profound GluR1 expression ~3 weeks).",
+      "supporting_quote_keys": [
+        "11333153_d0620f0a",
+        "16383828_dc4eb8fc",
+        "16383828_d014308a",
+        "205599726_9195fa92"
+      ]
+    },
+    {
+      "node_id": "dg_mossy_cell",
+      "type": "HETEROGENEITY",
+      "description": "Dorsal vs ventral mossy cells differ in axonal projection patterns (dorsal MCs project to both IML and MML; ventral MC long-range axons terminate in IML only).",
+      "supporting_quote_keys": [
+        "231953329_ceaf8acb",
+        "231953329_54cbe1b7",
+        "231953329_6269a191"
+      ]
+    },
+    {
+      "node_id": "dg_mossy_cell",
+      "type": "GAP",
+      "description": "No CL term exists for hilar mossy cell; CL contribution candidate.",
+      "supporting_quote_keys": []
+    },
+    {
+      "node_id": "ca3_pyramidal_cell",
+      "type": "HETEROGENEITY",
+      "description": "Pioneer early-generated CA3 glutamatergic neurons (Marissal et al. 2012) show distinct morpho-functional features persisting into adulthood \u2014 likely a separable subtype.",
+      "supporting_quote_keys": [
+        "3153294_c37d3561",
+        "3153294_9a4e3089"
+      ]
+    },
+    {
+      "node_id": "ca3_pyramidal_cell",
+      "type": "GAP",
+      "description": "No CA3-specific electrophysiology quote distinct from generic principal-cell statements; Cx36 mixed electrical-chemical synapse evidence is from a single paper.",
+      "supporting_quote_keys": []
+    },
+    {
+      "node_id": "ca1_pyramidal_cell",
+      "type": "HETEROGENEITY",
+      "description": "Ventral CA1 pyramidal neurons express D1/D2 dopamine receptors (45.1% of vHipp D1/D2 cells are glutamatergic); dorsal CA1 pyramidal cells are D1R-negative \u2014 clear dorsal/ventral divergence.",
+      "supporting_quote_keys": [
+        "260336826_494cac70",
+        "1711204_08c527a1"
+      ]
+    },
+    {
+      "node_id": "ca1_pyramidal_cell",
+      "type": "AMBIGUITY",
+      "description": "Np65 (neuroplastin-65) is expressed at high levels in CA1 and DG but lower in CA3 pyramidal cells \u2014 not a CA1-exclusive marker; included as supporting marker rather than defining marker.",
+      "supporting_quote_keys": [
+        "3288675_37ad1c13",
+        "34872919_c89ee15c"
+      ]
+    },
+    {
+      "node_id": "ms_dbb_glutamatergic_neuron",
+      "type": "AMBIGUITY",
+      "description": "MS-DBB glutamatergic neurons have somata outside hippocampal formation; UBERON soma assignment uses UBERON:0002421 (hippocampal formation) as nearest umbrella term \u2014 primary verification needed for septal-specific UBERON ID.",
+      "supporting_quote_keys": [
+        "21358766_0c242fdc"
+      ]
+    },
+    {
+      "node_id": "ms_dbb_glutamatergic_neuron",
+      "type": "HETEROGENEITY",
+      "description": "Four electrophysiologically distinct VGluT2+ subgroups (fast-spiking, cluster-firing, burst-firing, slow-firing); cluster firing is unique to glutamatergic MS-DBB neurons.",
+      "supporting_quote_keys": [
+        "15897856_d5424e2a",
+        "15897856_5e7429ed",
+        "15897856_06a4dfb6",
+        "15897856_091cecda",
+        "15897856_33179aa6",
+        "15897856_fc458e01"
+      ]
+    },
+    {
+      "node_id": "hpc_cajal_retzius_cell",
+      "type": "HETEROGENEITY",
+      "description": "Population is mixed: some hippocampal CR cells are GABAergic, others glutamatergic; both subtypes interact. Three axonal subtypes (layer-restricted local, cross-fissure local, long-range).",
+      "supporting_quote_keys": [
+        "7981953_ebaa6eee",
+        "2565845_3bfe1a28",
+        "2565845_8c6a8b64",
+        "2565845_b5473309"
+      ]
+    },
+    {
+      "node_id": "hpc_cajal_retzius_cell",
+      "type": "GAP",
+      "description": "Calretinin and VGluT3 marker expression (mentioned in proposed_types.json) is asserted in synthesis but lacks a directly supporting verbatim quote in this ingest \u2014 round 2 cite-traverse needed.",
+      "supporting_quote_keys": []
+    },
+    {
+      "node_id": "ca1_radiatum_giant_cell",
+      "type": "GAP",
+      "description": "Definition rests on a single primary citation (Kirson & Yaari 2000); no marker quotes; awaiting modern molecular and replication studies.",
+      "supporting_quote_keys": [
+        "502543_4f78ac74",
+        "502543_10e7f921"
+      ]
+    }
+  ],
+  "round2_targets": [
+    {
+      "node_id": "dg_granule_cell",
+      "target": "Marin-Burgin et al. 2012",
+      "reason": "lower firing threshold electrophysiology of granule cells",
+      "doi_or_pmid": "PMID:22556093"
+    },
+    {
+      "node_id": "dg_mossy_cell",
+      "target": "Scharfman 2016 review (Nat Rev Neurosci)",
+      "reason": "comprehensive mossy cell morphology and electrophysiology",
+      "doi_or_pmid": "PMID:27241814"
+    },
+    {
+      "node_id": "ca3_pyramidal_cell",
+      "target": "Marissal et al. 2012 (Nat Commun)",
+      "reason": "pioneer glutamatergic subtype morpho-functional features",
+      "doi_or_pmid": "PMID:23271650"
+    },
+    {
+      "node_id": "ca1_pyramidal_cell",
+      "target": "Soltesz & Losonczy 2018 review",
+      "reason": "CA1 pyramidal cell deep/superficial heterogeneity",
+      "doi_or_pmid": "PMID:29426959"
+    },
+    {
+      "node_id": "ms_dbb_glutamatergic_neuron",
+      "target": "Sotty et al. 2003 (J Physiol)",
+      "reason": "VGluT/ChAT/GAD profile of MS-DBB glutamatergic neurons",
+      "doi_or_pmid": "PMID:12923204"
+    },
+    {
+      "node_id": "hpc_cajal_retzius_cell",
+      "target": "Quattrocolo & Maccaferri 2014 (J Neurosci)",
+      "reason": "CR cell calretinin and VGluT3 expression in adult rat hippocampus",
+      "doi_or_pmid": "PMID:25253849"
+    },
+    {
+      "node_id": "ca1_radiatum_giant_cell",
+      "target": "Kirson & Yaari 2000 (J Physiol)",
+      "reason": "primary morphological and electrophysiological characterisation",
+      "doi_or_pmid": "PMID:10864941"
+    },
+    {
+      "node_id": "ca1_radiatum_giant_cell",
+      "target": "any hippocampal RGC follow-up since 2000",
+      "reason": "marker discovery; transcriptomic confirmation"
+    }
+  ]
+}

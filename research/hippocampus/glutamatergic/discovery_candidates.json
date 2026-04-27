@@ -1,0 +1,2085 @@
+{
+  "nodes": {
+    "ca1_pc_hippocampus": {
+      "classical_node_name": "CA1 pyramidal cell",
+      "classical_markers": ["Wfs1", "Fibcd1"],
+      "classical_negative_markers": [],
+      "classical_soma": "CA1 stratum pyramidale (UBERON:0014548)",
+      "candidates_by_rank": {
+        "1": [
+          {
+            "cell_set_accession": "CS20230722_SUPT_0069",
+            "name": "0069 CA1-ProS Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUBC_016",
+            "assessment": "STRONG",
+            "rationale": "Highest-scoring supertype; name explicitly CA1-ProS; parent SUBC_016 is the CA1/ProS glutamatergic subclass. Marker hit on Wfs1 (canonical CA1 deep layer marker). Represents the principal CA1 cluster lineage. No negative marker conflicts."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0072",
+            "name": "0072 CA1-ProS Glut_4",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_016",
+            "assessment": "STRONG",
+            "rationale": "Co-parent SUBC_016 with SUPT_0069; CA1-ProS anatomy; likely represents a CA1 subpopulation (e.g. superficial vs deep pyramidal layer). No negative marker conflicts."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0071",
+            "name": "0071 CA1-ProS Glut_3",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_016",
+            "assessment": "STRONG",
+            "rationale": "Co-parent SUBC_016; CA1-ProS anatomy; another CA1 subtype from the same lineage. No negative marker conflicts."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0070",
+            "name": "0070 CA1-ProS Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_016",
+            "assessment": "STRONG",
+            "rationale": "Co-parent SUBC_016; CA1-ProS anatomy; same lineage. No negative marker conflicts."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0097",
+            "name": "0097 SUB-ProS Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_023",
+            "assessment": "WEAK",
+            "rationale": "Subiculum/ProS anatomy — adjacent to CA1 but subiculum is a distinct subfield. Wfs1 is expressed in subiculum as well, explaining the score. Different parent (SUBC_023). Treat as adjacent-region contamination; not a primary CA1 mapping."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0101",
+            "name": "0101 CA2-FC-IG Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_025",
+            "assessment": "WEAK",
+            "rationale": "CA2/FC/IG anatomy, not CA1. Score likely driven by Fibcd1 which is expressed in CA2. Different parent (SUBC_025). Adjacent region but not the correct subfield; flag caveat — would suit CA2 node better."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0100",
+            "name": "0100 CA2-FC-IG Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_025",
+            "assessment": "WEAK",
+            "rationale": "CA2/FC/IG anatomy, not CA1. Same caveat as SUPT_0101; better suited to CA2 node."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0127",
+            "name": "0127 NP SUB Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_033",
+            "assessment": "WEAK",
+            "rationale": "Near-projection (NP) subiculum population. Anatomy is subiculum, not CA1. Score driven by Wfs1 expression in subicular projection cells. Not a CA1 pyramidal mapping."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0010",
+            "name": "0010 L5/6 IT TPE-ENT Glut_4",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_003",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical (temporal/entorhinal) layer 5/6 IT population. Distant from hippocampus proper. Score 3 likely reflects shared marker expression across cortical glutamatergic cells. Not a hippocampal cell type."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0520",
+            "name": "0520 AVPV-MEPO-SFO Tbr1 Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_116",
+            "assessment": "EXCLUDE",
+            "rationale": "Hypothalamic (AVPV/MEPO/SFO) population — distant region. Not a hippocampal cell type."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0961",
+            "name": "0961 NTS Phox2b Glut_3",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_238",
+            "assessment": "EXCLUDE",
+            "rationale": "Nucleus tractus solitarius brainstem population — distant region. Not a hippocampal cell type."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1154",
+            "name": "1154 CB Granule Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_314",
+            "assessment": "EXCLUDE",
+            "rationale": "Cerebellar granule cell — distant region, different lineage. Score 2 is noise-level."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1155",
+            "name": "1155 CB Granule Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_314",
+            "assessment": "EXCLUDE",
+            "rationale": "Cerebellar granule cell — distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1156",
+            "name": "1156 DCO UBC Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_315",
+            "assessment": "EXCLUDE",
+            "rationale": "Dorsal cochlear nucleus unipolar brush cell — distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1185",
+            "name": "1185 OEC NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_328",
+            "assessment": "EXCLUDE",
+            "rationale": "Olfactory ensheathing cell — non-neuronal. Distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1173",
+            "name": "1173 Tanycyte NN_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_322",
+            "assessment": "EXCLUDE",
+            "rationale": "Tanycyte — non-neuronal hypothalamic cell type."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1178",
+            "name": "1178 CHOR NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_325",
+            "assessment": "EXCLUDE",
+            "rationale": "Choroid plexus non-neuronal cell — distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1161",
+            "name": "1161 Astro-TE NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_319",
+            "assessment": "EXCLUDE",
+            "rationale": "Telencephalic astrocyte — non-neuronal."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1030",
+            "name": "1030 Pineal Crx Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_262",
+            "assessment": "EXCLUDE",
+            "rationale": "Pineal gland cell type — distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1020",
+            "name": "1020 SPVC Ccdc172 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_257",
+            "assessment": "EXCLUDE",
+            "rationale": "Spinal trigeminal nucleus — distant brainstem region."
+          }
+        ],
+        "0": [
+          {
+            "cell_set_accession": "CS20230722_CLUS_0261",
+            "name": "0261 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under the top SUPT_0069; explicit CA1 anatomy; glutamatergic. One of the core CA1 pyramidal clusters."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0262",
+            "name": "0262 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0069; same lineage as CLUS_0261."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0265",
+            "name": "0265 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0069."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0267",
+            "name": "0267 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0069."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0269",
+            "name": "0269 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0069."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0275",
+            "name": "0275 CA1-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0070",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0070 (Glut_2 supertype), same parent subclass SUBC_016."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0287",
+            "name": "0287 CA1-ProS Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0072",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0072 (Glut_4 supertype), same parent subclass SUBC_016."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0388",
+            "name": "0388 SUB-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0097",
+            "assessment": "WEAK",
+            "rationale": "Subiculum/ProS — adjacent region to CA1. Score 5 likely driven by Wfs1 subicular expression. Different parent (SUPT_0097 under SUBC_023). Not a CA1 mapping."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0263",
+            "name": "0263 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0069."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0264",
+            "name": "0264 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0069."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0271",
+            "name": "0271 CA1-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0070",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0070."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0272",
+            "name": "0272 CA1-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0070",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0070."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0273",
+            "name": "0273 CA1-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0070",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0070."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0274",
+            "name": "0274 CA1-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0070",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0070."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0276",
+            "name": "0276 CA1-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0070",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0070."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0277",
+            "name": "0277 CA1-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0070",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0070."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0278",
+            "name": "0278 CA1-ProS Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0071",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0071."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0279",
+            "name": "0279 CA1-ProS Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0071",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0071."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0282",
+            "name": "0282 CA1-ProS Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0071",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0071."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0284",
+            "name": "0284 CA1-ProS Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0072",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0072."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0286",
+            "name": "0286 CA1-ProS Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0072",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0072."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0288",
+            "name": "0288 CA1-ProS Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0072",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0072. High male/female ratio (2.45) — note for sex-biased expression."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0280",
+            "name": "0280 CA1-ProS Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0071",
+            "assessment": "STRONG",
+            "rationale": "CA1-ProS cluster under SUPT_0071."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0293",
+            "name": "0293 CA1-ProS Glut_6",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0074",
+            "assessment": "PLAUSIBLE",
+            "rationale": "CA1-ProS anatomy but parent SUPT_0074 (Glut_6) is outside the core SUBC_016 lineage of SUPT_0069-0072. May represent a minor or transitional CA1 subpopulation. Warrants verification."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0295",
+            "name": "0295 CA1-ProS Glut_6",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0074",
+            "assessment": "PLAUSIBLE",
+            "rationale": "CA1-ProS anatomy under SUPT_0074; same caveat as CLUS_0293."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0292",
+            "name": "0292 CA1-ProS Glut_5",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0073",
+            "assessment": "PLAUSIBLE",
+            "rationale": "CA1-ProS anatomy under SUPT_0073 (Glut_5); outside core SUBC_016 lineage. May represent a transitional CA1 subpopulation."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0392",
+            "name": "0392 SUB-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0097",
+            "assessment": "WEAK",
+            "rationale": "Subiculum/ProS — adjacent region. Not CA1."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0393",
+            "name": "0393 SUB-ProS Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0097",
+            "assessment": "WEAK",
+            "rationale": "Subiculum/ProS — adjacent region. Not CA1."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0395",
+            "name": "0395 SUB-ProS Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0098",
+            "assessment": "WEAK",
+            "rationale": "Subiculum/ProS — adjacent region. Not CA1."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0399",
+            "name": "0399 CA2-FC-IG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0100",
+            "assessment": "WEAK",
+            "rationale": "CA2/FC/IG anatomy — adjacent but wrong subfield. Score driven by Fibcd1 which is expressed in CA2. Better suited to CA2 node."
+          }
+        ]
+      },
+      "non_candidates_summary": "Score-2 candidates at rank-1 (CB granule, DCO UBC, OEC, Tanycyte, CHOR, Astro-TE, Pineal, SPVC) are all non-hippocampal, non-neuronal, or distant-region types. All excluded. The DB scoring function produces baseline scores from promiscuous marker expression; these are clearly irrelevant to CA1 pyramidal cell identity."
+    },
+    "ca2_pc_hippocampus": {
+      "classical_node_name": "CA2 pyramidal cell",
+      "classical_markers": ["Pcp4", "Rgs14", "Amigo2"],
+      "classical_negative_markers": [],
+      "classical_soma": "CA2 stratum pyramidale (UBERON:0014549)",
+      "candidates_by_rank": {
+        "1": [
+          {
+            "cell_set_accession": "CS20230722_SUPT_0100",
+            "name": "0100 CA2-FC-IG Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_025",
+            "assessment": "STRONG",
+            "rationale": "Only high-scoring rank-1 hit (score 4). Name explicitly includes CA2 anatomy alongside FC (fasciola cinereum) and IG (indusium griseum) — these are minor HPF regions that express CA2 markers (Pcp4, Rgs14, Amigo2 are all CA2-enriched). Parent SUBC_025 is the CA2/FC/IG glutamatergic subclass. This is the definitive CA2 pyramidal cell supertype in the WMB atlas. No negative marker conflicts."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1154",
+            "name": "1154 CB Granule Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_314",
+            "assessment": "EXCLUDE",
+            "rationale": "Cerebellar granule cell — distant region, score-2 noise."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1155",
+            "name": "1155 CB Granule Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_314",
+            "assessment": "EXCLUDE",
+            "rationale": "Cerebellar granule cell — distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1156",
+            "name": "1156 DCO UBC Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_315",
+            "assessment": "EXCLUDE",
+            "rationale": "DCO unipolar brush cell — distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1185",
+            "name": "1185 OEC NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_328",
+            "assessment": "EXCLUDE",
+            "rationale": "Olfactory ensheathing cell — non-neuronal."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1173",
+            "name": "1173 Tanycyte NN_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_322",
+            "assessment": "EXCLUDE",
+            "rationale": "Tanycyte — non-neuronal."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1178",
+            "name": "1178 CHOR NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_325",
+            "assessment": "EXCLUDE",
+            "rationale": "Choroid plexus non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1161",
+            "name": "1161 Astro-TE NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_319",
+            "assessment": "EXCLUDE",
+            "rationale": "Telencephalic astrocyte — non-neuronal."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1030",
+            "name": "1030 Pineal Crx Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_262",
+            "assessment": "EXCLUDE",
+            "rationale": "Pineal gland — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1020",
+            "name": "1020 SPVC Ccdc172 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_257",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem trigeminal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1021",
+            "name": "1021 SPVC Nmu Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_258",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem trigeminal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1022",
+            "name": "1022 SPVC Nmu Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_258",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem trigeminal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1023",
+            "name": "1023 MDRNd Bves Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_259",
+            "assessment": "EXCLUDE",
+            "rationale": "Medullary reticular nucleus — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1024",
+            "name": "1024 MDRNv Crp Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_260",
+            "assessment": "EXCLUDE",
+            "rationale": "Medullary reticular nucleus — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1015",
+            "name": "1015 VCO Mafa Meis2 Glut_3",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_254",
+            "assessment": "EXCLUDE",
+            "rationale": "Ventral cochlear nucleus — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1016",
+            "name": "1016 VCO Mafa Meis2 Glut_4",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_254",
+            "assessment": "EXCLUDE",
+            "rationale": "Ventral cochlear nucleus — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1017",
+            "name": "1017 SPVO Mafa Meis2 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_255",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem trigeminal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1018",
+            "name": "1018 SPVC Mafa Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_256",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem trigeminal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1019",
+            "name": "1019 SPVC Mafa Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_256",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem trigeminal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1012",
+            "name": "1012 IO Fgl2 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_253",
+            "assessment": "EXCLUDE",
+            "rationale": "Inferior olive — distant brainstem."
+          }
+        ],
+        "0": [
+          {
+            "cell_set_accession": "CS20230722_CLUS_0399",
+            "name": "0399 CA2-FC-IG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0100",
+            "assessment": "STRONG",
+            "rationale": "Only CA2-labeled cluster in the rank-0 results; parent is the top-ranked CA2 supertype SUPT_0100. Explicit CA2/FC/IG anatomy. This is the definitive CA2 pyramidal cluster. Note: a single cluster at this rank may indicate that CA2 is a rare/small population or that additional CA2 clusters exist under SUPT_0101. Marker match on Pcp4/Rgs14/Amigo2 expected."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0261",
+            "name": "0261 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "WEAK",
+            "rationale": "CA1-ProS cluster — adjacent region. Pcp4 is expressed in CA1 deep layers, contributing to this score. Parent (SUPT_0069) is the CA1 supertype. Not a CA2 mapping."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0269",
+            "name": "0269 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "WEAK",
+            "rationale": "CA1-ProS cluster — adjacent region. Same caveat as CLUS_0261."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0377",
+            "name": "0377 L5 ET CTX Glut_5",
+            "taxonomy_rank": 0,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUPT_0094",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical layer 5 extratelencephalic — distant. Pcp4 expressed in L5 ET neurons; score is a false positive from cross-region marker sharing."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0424",
+            "name": "0424 L6b CTX Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUPT_0110",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical layer 6b — distant. Score driven by promiscuous marker expression."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_2674",
+            "name": "2674 TH Prkcd Grin2c Glut_9",
+            "taxonomy_rank": 0,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUPT_0662",
+            "assessment": "EXCLUDE",
+            "rationale": "Thalamic cluster — distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_3934",
+            "name": "3934 PB Lmx1a Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUPT_0897",
+            "assessment": "EXCLUDE",
+            "rationale": "Parabrachial nucleus — distant brainstem region."
+          }
+        ]
+      },
+      "non_candidates_summary": "CA2 produces a very sparse candidate list at both ranks. The strong score collapse after SUPT_0100 (rank-1) and CLUS_0399 (rank-0) reflects the genuine rarity of CA2 in the atlas and the specificity of its markers (Rgs14, Amigo2). All score-2 rank-1 candidates are brainstem/cerebellar/non-neuronal types excluded as distant-region noise. Score-3 rank-0 candidates (L5 ET, L6b, thalamus) represent false positives from Pcp4 cross-region expression."
+    },
+    "ca3_pc_hippocampus": {
+      "classical_node_name": "CA3 pyramidal cell",
+      "classical_markers": ["Zbtb20"],
+      "classical_negative_markers": [],
+      "classical_soma": "CA3 stratum pyramidale (UBERON:0014550)",
+      "candidates_by_rank": {
+        "1": [
+          {
+            "cell_set_accession": "CS20230722_SUPT_0075",
+            "name": "0075 CA3 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_017",
+            "assessment": "STRONG",
+            "rationale": "Explicit CA3 anatomy; parent SUBC_017 is the CA3 glutamatergic subclass. All five CA3 supertypes (0075-0079) under this parent collectively tile the CA3 pyramidal cell population. No negative marker conflicts. Zbtb20 is expressed across CA3 subfields."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0076",
+            "name": "0076 CA3 Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_017",
+            "assessment": "STRONG",
+            "rationale": "Explicit CA3 anatomy under SUBC_017; another CA3 pyramidal subtype."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0077",
+            "name": "0077 CA3 Glut_3",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_017",
+            "assessment": "STRONG",
+            "rationale": "Explicit CA3 anatomy under SUBC_017."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0078",
+            "name": "0078 CA3 Glut_4",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_017",
+            "assessment": "STRONG",
+            "rationale": "Explicit CA3 anatomy under SUBC_017."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0079",
+            "name": "0079 CA3 Glut_5",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_017",
+            "assessment": "STRONG",
+            "rationale": "Explicit CA3 anatomy under SUBC_017. Note: SUPT_0079 also appears in DG and mossy cell candidate lists, suggesting this supertype may span the CA3-DG border region (CA3c/hilus)."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0100",
+            "name": "0100 CA2-FC-IG Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_025",
+            "assessment": "WEAK",
+            "rationale": "CA2/FC/IG anatomy — adjacent to CA3 but distinct subfield. Zbtb20 is expressed in CA2, explaining the score. Different parent (SUBC_025). Not a CA3 mapping."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0137",
+            "name": "0137 DG Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "WEAK",
+            "rationale": "Dentate gyrus anatomy — adjacent to CA3 but distinct region. Zbtb20 is expressed in DG granule cells (its expression is broad across hippocampal glutamatergic neurons). Different parent (SUBC_037). Field-specificity concern: DG clusters should not be mapped to CA3 node."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0136",
+            "name": "0136 DG Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "WEAK",
+            "rationale": "DG anatomy — same caveat as SUPT_0137."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0141",
+            "name": "0141 DG-PIR Ex IMN_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_038",
+            "assessment": "EXCLUDE",
+            "rationale": "DG-PIR immature excitatory neuron population — represents neurogenic intermediates, not mature CA3 pyramidal cells. Anatomical identity is DG/piriform immature neurons, not CA3. Different lineage (SUBC_038)."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1154",
+            "name": "1154 CB Granule Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_314",
+            "assessment": "EXCLUDE",
+            "rationale": "Cerebellar granule cell — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1155",
+            "name": "1155 CB Granule Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_314",
+            "assessment": "EXCLUDE",
+            "rationale": "Cerebellar granule cell — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1156",
+            "name": "1156 DCO UBC Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_315",
+            "assessment": "EXCLUDE",
+            "rationale": "DCO UBC — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1185",
+            "name": "1185 OEC NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_328",
+            "assessment": "EXCLUDE",
+            "rationale": "Non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1173",
+            "name": "1173 Tanycyte NN_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_322",
+            "assessment": "EXCLUDE",
+            "rationale": "Non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1178",
+            "name": "1178 CHOR NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_325",
+            "assessment": "EXCLUDE",
+            "rationale": "Non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1161",
+            "name": "1161 Astro-TE NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_319",
+            "assessment": "EXCLUDE",
+            "rationale": "Non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1030",
+            "name": "1030 Pineal Crx Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_262",
+            "assessment": "EXCLUDE",
+            "rationale": "Pineal gland — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1020",
+            "name": "1020 SPVC Ccdc172 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_257",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1021",
+            "name": "1021 SPVC Nmu Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_258",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1022",
+            "name": "1022 SPVC Nmu Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_258",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem — distant."
+          }
+        ],
+        "0": [
+          {
+            "cell_set_accession": "CS20230722_CLUS_0297",
+            "name": "0297 CA3 Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0075",
+            "assessment": "STRONG",
+            "rationale": "Explicit CA3 cluster under the CA3 Glut_1 supertype (SUPT_0075). Core CA3 pyramidal cell cluster."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0298",
+            "name": "0298 CA3 Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0075",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0075."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0299",
+            "name": "0299 CA3 Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0075",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0075."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0303",
+            "name": "0303 CA3 Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0076",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0076. High male/female ratio (2.33) — sex-biased expression note."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0304",
+            "name": "0304 CA3 Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0076",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0076. Very high male/female ratio (3.76)."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0305",
+            "name": "0305 CA3 Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0076",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0076."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0307",
+            "name": "0307 CA3 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0077",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0077."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0309",
+            "name": "0309 CA3 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0077",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0077."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0310",
+            "name": "0310 CA3 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0077",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0077."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0311",
+            "name": "0311 CA3 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0077",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0077."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0312",
+            "name": "0312 CA3 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0077",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0077."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0313",
+            "name": "0313 CA3 Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0078",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0078."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0314",
+            "name": "0314 CA3 Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0078",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0078."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0315",
+            "name": "0315 CA3 Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0078",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0078."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0316",
+            "name": "0316 CA3 Glut_5",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0079",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0079. Note SUPT_0079 appears in DG and mossy cell candidates too — this cluster may represent CA3c/hilar border neurons. Very high male/female ratio (3.55)."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0317",
+            "name": "0317 CA3 Glut_5",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0079",
+            "assessment": "STRONG",
+            "rationale": "CA3 cluster under SUPT_0079."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0261",
+            "name": "0261 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "WEAK",
+            "rationale": "CA1-ProS cluster — adjacent but wrong subfield. Zbtb20 pan-hippocampal expression drives score. Field specificity concern."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0270",
+            "name": "0270 CA1-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0069",
+            "assessment": "WEAK",
+            "rationale": "CA1-ProS cluster — adjacent but wrong subfield."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0285",
+            "name": "0285 CA1-ProS Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0072",
+            "assessment": "WEAK",
+            "rationale": "CA1-ProS cluster — adjacent but wrong subfield. Very low male/female ratio (0.19)."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0399",
+            "name": "0399 CA2-FC-IG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0100",
+            "assessment": "WEAK",
+            "rationale": "CA2/FC/IG anatomy — adjacent to CA3 but distinct subfield."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0502",
+            "name": "0502 DG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0136",
+            "assessment": "WEAK",
+            "rationale": "DG granule cell cluster — adjacent region; Zbtb20 expressed in DG. Should not be mapped to CA3 node. Very high male/female ratio (4.56)."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0503",
+            "name": "0503 DG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0136",
+            "assessment": "WEAK",
+            "rationale": "DG granule cell cluster — adjacent region."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0504",
+            "name": "0504 DG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0136",
+            "assessment": "WEAK",
+            "rationale": "DG granule cell cluster — adjacent region."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0505",
+            "name": "0505 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "WEAK",
+            "rationale": "DG granule cell cluster — adjacent region."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0506",
+            "name": "0506 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "WEAK",
+            "rationale": "DG granule cell cluster — adjacent region."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0507",
+            "name": "0507 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "WEAK",
+            "rationale": "DG granule cell cluster — adjacent region."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0509",
+            "name": "0509 DG Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0138",
+            "assessment": "WEAK",
+            "rationale": "DG granule cell cluster — adjacent region."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0514",
+            "name": "0514 DG-PIR Ex IMN_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0141",
+            "assessment": "EXCLUDE",
+            "rationale": "DG-piriform immature excitatory neuron — not a mature CA3 pyramidal cell. Lineage is neurogenic/immature (SUBC_038)."
+          }
+        ]
+      },
+      "non_candidates_summary": "CA3 benefits from the single defining marker Zbtb20, which is broadly expressed across hippocampal glutamatergic neurons (CA1, CA3, DG). This explains the large number of DG and CA1 weak candidates at score 4. Field specificity is the primary differentiator. The five CA3 supertypes (SUPT_0075-0079) under SUBC_017 are the genuine CA3 pyramidal cell population. Score-2 brainstem/cerebellar candidates are distant-region noise."
+    },
+    "dg_granule_cell_hippocampus": {
+      "classical_node_name": "Dentate gyrus granule cell",
+      "classical_markers": ["Prox1", "C1ql2"],
+      "classical_negative_markers": [],
+      "classical_soma": "DG granule cell layer (UBERON:0001885)",
+      "candidates_by_rank": {
+        "1": [
+          {
+            "cell_set_accession": "CS20230722_SUPT_0136",
+            "name": "0136 DG Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "STRONG",
+            "rationale": "Explicit DG anatomy; parent SUBC_037 is the DG glutamatergic subclass. All four DG Glut supertypes (0136-0139) under SUBC_037 represent the granule cell population tiled across DG subtypes. No negative marker conflicts."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0137",
+            "name": "0137 DG Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "STRONG",
+            "rationale": "DG anatomy under SUBC_037; another DG granule cell supertype."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0138",
+            "name": "0138 DG Glut_3",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "STRONG",
+            "rationale": "DG anatomy under SUBC_037."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0139",
+            "name": "0139 DG Glut_4",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "STRONG",
+            "rationale": "DG anatomy under SUBC_037."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0141",
+            "name": "0141 DG-PIR Ex IMN_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_038",
+            "assessment": "PLAUSIBLE",
+            "rationale": "DG-PIR immature excitatory neuron population. Anatomy includes DG; Prox1 is expressed in neurogenic intermediates. However, this population represents immature/newborn neurons in the DG neurogenic lineage, not mature granule cells. Worth flagging as a developmental intermediate rather than a mature granule cell target. Different parent (SUBC_038)."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0135",
+            "name": "0135 HPF CR Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_036",
+            "assessment": "PLAUSIBLE",
+            "rationale": "HPF Cajal-Retzius cell supertype. CR cells express Prox1 and reside in HPF; however, they are a distinct cell type from granule cells (reelin+, transient developmental population in adults). Different parent (SUBC_036). Caution: do not conflate with mature granule cells."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0079",
+            "name": "0079 CA3 Glut_5",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_017",
+            "assessment": "WEAK",
+            "rationale": "CA3 Glut_5 supertype — adjacent to DG (CA3c/hilus border) but anatomy is CA3, not DG granule layer. Marker overlap via Zbtb20/Prox1 co-expression at the CA3-DG interface."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0081",
+            "name": "0081 L2 IT PPP-APr Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_018",
+            "assessment": "WEAK",
+            "rationale": "Postrhinal/parasubicular/APr cortical population. Prox1 is expressed in entorhinal/perirhinal cortex layer 2 cells, explaining this score. Anatomy is cortical, not DG. Different parent (SUBC_018). Adjacent-region caveat."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0082",
+            "name": "0082 L2 IT PPP-APr Glut_3",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_018",
+            "assessment": "WEAK",
+            "rationale": "Same cortical population as SUPT_0081 — Prox1 expression in PPP-APr L2."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0085",
+            "name": "0085 L2/3 IT PPP Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_019",
+            "assessment": "WEAK",
+            "rationale": "Postrhinal/perirhinal cortex L2/3. Prox1 expressed here. Anatomy is cortical entorhinal-adjacent, not DG."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0012",
+            "name": "0012 L5/6 IT TPE-ENT Glut_6",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_003",
+            "assessment": "WEAK",
+            "rationale": "Cortical layer 5/6 temporal/entorhinal. Prox1/C1ql2 expression in deep cortical layers contributes to this score. Distant from DG."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0056",
+            "name": "0056 MEA Slc17a7 Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_012",
+            "assessment": "EXCLUDE",
+            "rationale": "Medial amygdala glutamatergic population — distant region."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0095",
+            "name": "0095 L5 ET CTX Glut_6",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_022",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical L5 ET — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0616",
+            "name": "0616 PH-LHA Foxb1 Glut_5",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_139",
+            "assessment": "EXCLUDE",
+            "rationale": "Posterior hypothalamus/LHA — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0641",
+            "name": "0641 AD Serpinb7 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_147",
+            "assessment": "EXCLUDE",
+            "rationale": "Anterodorsal thalamic nucleus — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0622",
+            "name": "0622 PH-SUM Foxa1 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_141",
+            "assessment": "EXCLUDE",
+            "rationale": "Posterior hypothalamus/SUM — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0599",
+            "name": "0599 STN-PSTN Pitx2 Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_135",
+            "assessment": "EXCLUDE",
+            "rationale": "Subthalamic nucleus — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0716",
+            "name": "0716 PRC-PAG Tcf7l2 Irx2 Glut_4",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_167",
+            "assessment": "EXCLUDE",
+            "rationale": "Periaqueductal gray — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0713",
+            "name": "0713 PRC-PAG Tcf7l2 Irx2 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_167",
+            "assessment": "EXCLUDE",
+            "rationale": "PAG — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0709",
+            "name": "0709 PAG-MRN Pou3f1 Glut_6",
+            "taxonomy_rank": 1,
+            "db_score": 3,
+            "parent_id": "CS20230722_SUBC_165",
+            "assessment": "EXCLUDE",
+            "rationale": "PAG-MRN — distant brainstem."
+          }
+        ],
+        "0": [
+          {
+            "cell_set_accession": "CS20230722_CLUS_0506",
+            "name": "0506 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 6,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "STRONG",
+            "rationale": "Top-scoring DG cluster (score 6); parent is DG Glut_2 supertype under SUBC_037. Explicit DG anatomy. High male/female ratio (3.0) — sex-biased expression note. This cluster likely represents a distinct granule cell subpopulation with strong Prox1 and C1ql2 co-expression."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0508",
+            "name": "0508 DG Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0138",
+            "assessment": "STRONG",
+            "rationale": "DG cluster under SUPT_0138 (DG Glut_3 supertype)."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0503",
+            "name": "0503 DG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0136",
+            "assessment": "STRONG",
+            "rationale": "DG cluster under SUPT_0136 (DG Glut_1 supertype)."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0504",
+            "name": "0504 DG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0136",
+            "assessment": "STRONG",
+            "rationale": "DG cluster under SUPT_0136."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0510",
+            "name": "0510 DG Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0139",
+            "assessment": "STRONG",
+            "rationale": "DG cluster under SUPT_0139 (DG Glut_4 supertype)."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0514",
+            "name": "0514 DG-PIR Ex IMN_2",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0141",
+            "assessment": "PLAUSIBLE",
+            "rationale": "DG-PIR immature excitatory neuron cluster; Prox1-positive neurogenic intermediate in DG. Score 5 reflects Prox1 expression. Represents newborn granule cells rather than mature granule cells — relevant for neurogenesis studies but distinct from the classical mature granule cell identity."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_2846",
+            "name": "2846 APN C1ql2 Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 5,
+            "parent_id": "CS20230722_SUPT_0702",
+            "assessment": "WEAK",
+            "rationale": "Anterior pretectal nucleus cluster — distant region (midbrain/thalamic border). Score 5 driven by C1ql2 expression in APN; C1ql2 is not DG-specific. This is a genuine distant false positive. Flag: C1ql2 alone is insufficient to call DG identity."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0032",
+            "name": "0032 L5/6 IT TPE-ENT Glut_6",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0012",
+            "assessment": "WEAK",
+            "rationale": "Cortical L5/6 TPE-ENT — distant. Prox1 expressed in deep temporal/entorhinal cortex."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0294",
+            "name": "0294 CA1-ProS Glut_6",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0074",
+            "assessment": "WEAK",
+            "rationale": "CA1-ProS cluster — adjacent but wrong region for DG granule cell."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0316",
+            "name": "0316 CA3 Glut_5",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0079",
+            "assessment": "WEAK",
+            "rationale": "CA3 Glut_5 cluster — adjacent (CA3-DG border) but wrong field."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0317",
+            "name": "0317 CA3 Glut_5",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0079",
+            "assessment": "WEAK",
+            "rationale": "CA3 Glut_5 cluster — adjacent but wrong field."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0323",
+            "name": "0323 L2 IT PPP-APr Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0081",
+            "assessment": "WEAK",
+            "rationale": "Cortical PPP-APr L2 — Prox1-positive cortical population, not DG."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0324",
+            "name": "0324 L2 IT PPP-APr Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0081",
+            "assessment": "WEAK",
+            "rationale": "Same cortical PPP-APr population."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0325",
+            "name": "0325 L2 IT PPP-APr Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0081",
+            "assessment": "WEAK",
+            "rationale": "Same cortical PPP-APr population."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0326",
+            "name": "0326 L2 IT PPP-APr Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0082",
+            "assessment": "WEAK",
+            "rationale": "Cortical PPP-APr — Prox1-positive."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0327",
+            "name": "0327 L2 IT PPP-APr Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0082",
+            "assessment": "WEAK",
+            "rationale": "Cortical PPP-APr — same."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0333",
+            "name": "0333 L2/3 IT PPP Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0085",
+            "assessment": "WEAK",
+            "rationale": "Postrhinal/perirhinal cortex — Prox1 expressed."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0335",
+            "name": "0335 L2/3 IT PPP Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0085",
+            "assessment": "WEAK",
+            "rationale": "Same PPP cortical population."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0336",
+            "name": "0336 L2/3 IT PPP Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0085",
+            "assessment": "WEAK",
+            "rationale": "Same PPP cortical population."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0385",
+            "name": "0385 SUB-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0096",
+            "assessment": "WEAK",
+            "rationale": "Subiculum/ProS — adjacent HPF region. Prox1 expressed in subiculum."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0497",
+            "name": "0497 HPF CR Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0135",
+            "assessment": "PLAUSIBLE",
+            "rationale": "HPF Cajal-Retzius cell — Prox1-positive; located in HPF marginal zone. Distinct from mature granule cells; represents a developmentally distinct population. Worth noting but not a DG granule cell mapping."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0507",
+            "name": "0507 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "STRONG",
+            "rationale": "DG Glut_2 cluster under SUPT_0137."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0509",
+            "name": "0509 DG Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0138",
+            "assessment": "STRONG",
+            "rationale": "DG Glut_3 cluster under SUPT_0138."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0500",
+            "name": "0500 HPF CR Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0135",
+            "assessment": "PLAUSIBLE",
+            "rationale": "HPF Cajal-Retzius cluster — Prox1-positive; same caveat as CLUS_0497."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0505",
+            "name": "0505 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "STRONG",
+            "rationale": "DG Glut_2 cluster under SUPT_0137."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0513",
+            "name": "0513 DG-PIR Ex IMN_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0141",
+            "assessment": "PLAUSIBLE",
+            "rationale": "DG-PIR immature excitatory neuron cluster — same caveat as CLUS_0514; represents neurogenic intermediates."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_2607",
+            "name": "2607 LH Pou4f1 Sox1 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0639",
+            "assessment": "EXCLUDE",
+            "rationale": "Lateral hypothalamus — distant region. Score reflects C1ql2 expression in LH."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_2659",
+            "name": "2659 TH Prkcd Grin2c Glut_6",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0659",
+            "assessment": "EXCLUDE",
+            "rationale": "Thalamic cluster — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_2842",
+            "name": "2842 APN C1ql2 Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0702",
+            "assessment": "WEAK",
+            "rationale": "APN C1ql2 cluster — distant region (midbrain). C1ql2 expressed in APN; not DG identity."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_3227",
+            "name": "3227 SCig Foxb1 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0762",
+            "assessment": "EXCLUDE",
+            "rationale": "Superior colliculus — distant midbrain region."
+          }
+        ]
+      },
+      "non_candidates_summary": "DG granule cell produces the widest candidate spread due to Prox1's broad expression in entorhinal/perirhinal cortex L2, hippocampal CR cells, and neurogenic intermediates. C1ql2 also hits APN. The core DG Glut_1-4 supertypes (SUBC_037) and their clusters are the genuine mappings. DG-PIR IMN clusters are PLAUSIBLE for a neurogenesis context but represent developing rather than mature granule cells. HPF CR clusters are Prox1-positive but represent a developmentally distinct cell class. The APN C1ql2 cluster (CLUS_2846) achieving score 5 is a genuine false positive driven by a non-specific marker."
+    },
+    "hilar_mossy_cell_hippocampus": {
+      "classical_node_name": "Hilar mossy cell",
+      "classical_markers": ["Gria4", "Dkk3"],
+      "classical_negative_markers": [],
+      "classical_soma": "DG polymorph layer/hilus (UBERON:0001885)",
+      "candidates_by_rank": {
+        "1": [
+          {
+            "cell_set_accession": "CS20230722_SUPT_0079",
+            "name": "0079 CA3 Glut_5",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_017",
+            "assessment": "PLAUSIBLE",
+            "rationale": "CA3 Glut_5 supertype under SUBC_017. Mossy cells reside in the hilus which is anatomically at the CA3-DG border; CA3c neurons are the immediate neighbours. Gria4 and Dkk3 are expressed in the CA3 hilar region. This is the closest anatomical match at rank-1, but note SUBC_017 is the CA3 subclass — the atlas may not have isolated mossy cells as a separate supertype. Warrants verification with marker co-expression data."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0139",
+            "name": "0139 DG Glut_4",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "PLAUSIBLE",
+            "rationale": "DG Glut_4 supertype under SUBC_037. The DG polymorph layer (hilus) is within the DG anatomical region; Gria4 and Dkk3 are expressed in DG hilar cells. This supertype may include mossy cells that the atlas classifies within the DG population."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0138",
+            "name": "0138 DG Glut_3",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "PLAUSIBLE",
+            "rationale": "DG Glut_3 supertype — same reasoning as SUPT_0139. The atlas DG Glut supertypes may partition granule cells from hilar neurons differently."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0137",
+            "name": "0137 DG Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "WEAK",
+            "rationale": "DG Glut_2 — DG anatomy but predominantly granule cells; less likely to contain mossy cells than DG Glut_3/4."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0136",
+            "name": "0136 DG Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_037",
+            "assessment": "WEAK",
+            "rationale": "DG Glut_1 — likely granule-cell-dominant subtype; less likely to capture mossy cells."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0141",
+            "name": "0141 DG-PIR Ex IMN_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_038",
+            "assessment": "EXCLUDE",
+            "rationale": "Immature excitatory neuron population — not mature mossy cells. Lineage is neurogenic (SUBC_038)."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0135",
+            "name": "0135 HPF CR Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_036",
+            "assessment": "EXCLUDE",
+            "rationale": "HPF Cajal-Retzius cells — distinct cell type from mossy cells."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0081",
+            "name": "0081 L2 IT PPP-APr Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_018",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical PPP-APr population — distant from hippocampal hilus."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0082",
+            "name": "0082 L2 IT PPP-APr Glut_3",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_018",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical PPP-APr — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0085",
+            "name": "0085 L2/3 IT PPP Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_019",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical PPP — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_0012",
+            "name": "0012 L5/6 IT TPE-ENT Glut_6",
+            "taxonomy_rank": 1,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUBC_003",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical L5/6 TPE-ENT — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1154",
+            "name": "1154 CB Granule Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_314",
+            "assessment": "EXCLUDE",
+            "rationale": "Cerebellar granule cell — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1155",
+            "name": "1155 CB Granule Glut_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_314",
+            "assessment": "EXCLUDE",
+            "rationale": "Cerebellar granule cell — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1156",
+            "name": "1156 DCO UBC Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_315",
+            "assessment": "EXCLUDE",
+            "rationale": "DCO UBC — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1185",
+            "name": "1185 OEC NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_328",
+            "assessment": "EXCLUDE",
+            "rationale": "Non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1173",
+            "name": "1173 Tanycyte NN_2",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_322",
+            "assessment": "EXCLUDE",
+            "rationale": "Non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1178",
+            "name": "1178 CHOR NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_325",
+            "assessment": "EXCLUDE",
+            "rationale": "Non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1161",
+            "name": "1161 Astro-TE NN_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_319",
+            "assessment": "EXCLUDE",
+            "rationale": "Non-neuronal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1030",
+            "name": "1030 Pineal Crx Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_262",
+            "assessment": "EXCLUDE",
+            "rationale": "Pineal — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_SUPT_1020",
+            "name": "1020 SPVC Ccdc172 Glut_1",
+            "taxonomy_rank": 1,
+            "db_score": 2,
+            "parent_id": "CS20230722_SUBC_257",
+            "assessment": "EXCLUDE",
+            "rationale": "Brainstem — distant."
+          }
+        ],
+        "0": [
+          {
+            "cell_set_accession": "CS20230722_CLUS_0316",
+            "name": "0316 CA3 Glut_5",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0079",
+            "assessment": "PLAUSIBLE",
+            "rationale": "CA3 Glut_5 cluster under SUPT_0079. Hilus is anatomically CA3 hilus; this cluster may contain mossy cells that the atlas classifies within the CA3 Glut_5 supertype at the CA3c/hilar border. Gria4 and Dkk3 expression in this area expected. Very high male/female ratio (3.55)."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0317",
+            "name": "0317 CA3 Glut_5",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0079",
+            "assessment": "PLAUSIBLE",
+            "rationale": "CA3 Glut_5 cluster — same reasoning as CLUS_0316."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0507",
+            "name": "0507 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "WEAK",
+            "rationale": "DG Glut_2 cluster — anatomy includes DG; could contain hilar neurons but predominantly represents granule cells. Less specific than DG Glut_3/4 for mossy cells."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0508",
+            "name": "0508 DG Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0138",
+            "assessment": "PLAUSIBLE",
+            "rationale": "DG Glut_3 cluster; DG anatomy covering polymorph layer is plausible for mossy cell content."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0509",
+            "name": "0509 DG Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0138",
+            "assessment": "PLAUSIBLE",
+            "rationale": "DG Glut_3 cluster — same reasoning as CLUS_0508."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0510",
+            "name": "0510 DG Glut_4",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0139",
+            "assessment": "PLAUSIBLE",
+            "rationale": "DG Glut_4 cluster — DG polymorph layer anatomy plausible for mossy cell content."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0503",
+            "name": "0503 DG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0136",
+            "assessment": "WEAK",
+            "rationale": "DG Glut_1 — likely granule-cell-dominant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0504",
+            "name": "0504 DG Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0136",
+            "assessment": "WEAK",
+            "rationale": "DG Glut_1 — likely granule-cell-dominant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0505",
+            "name": "0505 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "WEAK",
+            "rationale": "DG Glut_2 — likely granule-cell-dominant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0506",
+            "name": "0506 DG Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0137",
+            "assessment": "WEAK",
+            "rationale": "DG Glut_2 — likely granule-cell-dominant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0513",
+            "name": "0513 DG-PIR Ex IMN_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0141",
+            "assessment": "EXCLUDE",
+            "rationale": "Immature excitatory neuron — not mature mossy cells."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0514",
+            "name": "0514 DG-PIR Ex IMN_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0141",
+            "assessment": "EXCLUDE",
+            "rationale": "Immature excitatory neuron — not mature mossy cells."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0294",
+            "name": "0294 CA1-ProS Glut_6",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0074",
+            "assessment": "EXCLUDE",
+            "rationale": "CA1-ProS — distant from hilus."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0032",
+            "name": "0032 L5/6 IT TPE-ENT Glut_6",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0012",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0323",
+            "name": "0323 L2 IT PPP-APr Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0081",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical PPP-APr — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0324",
+            "name": "0324 L2 IT PPP-APr Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0081",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical PPP-APr — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0325",
+            "name": "0325 L2 IT PPP-APr Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0081",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical PPP-APr — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0326",
+            "name": "0326 L2 IT PPP-APr Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0082",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0327",
+            "name": "0327 L2 IT PPP-APr Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0082",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0333",
+            "name": "0333 L2/3 IT PPP Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0085",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0335",
+            "name": "0335 L2/3 IT PPP Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0085",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0336",
+            "name": "0336 L2/3 IT PPP Glut_2",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0085",
+            "assessment": "EXCLUDE",
+            "rationale": "Cortical — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0385",
+            "name": "0385 SUB-ProS Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0096",
+            "assessment": "EXCLUDE",
+            "rationale": "Subiculum — distant from hilus."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0497",
+            "name": "0497 HPF CR Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0135",
+            "assessment": "EXCLUDE",
+            "rationale": "HPF Cajal-Retzius — distinct cell type from mossy cells."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_0500",
+            "name": "0500 HPF CR Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0135",
+            "assessment": "EXCLUDE",
+            "rationale": "HPF Cajal-Retzius — distinct from mossy cells."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_2607",
+            "name": "2607 LH Pou4f1 Sox1 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0639",
+            "assessment": "EXCLUDE",
+            "rationale": "Lateral hypothalamus — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_2659",
+            "name": "2659 TH Prkcd Grin2c Glut_6",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0659",
+            "assessment": "EXCLUDE",
+            "rationale": "Thalamus — distant."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_2846",
+            "name": "2846 APN C1ql2 Glut_1",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0702",
+            "assessment": "EXCLUDE",
+            "rationale": "Anterior pretectal nucleus — distant midbrain."
+          },
+          {
+            "cell_set_accession": "CS20230722_CLUS_3227",
+            "name": "3227 SCig Foxb1 Glut_3",
+            "taxonomy_rank": 0,
+            "db_score": 4,
+            "parent_id": "CS20230722_SUPT_0762",
+            "assessment": "EXCLUDE",
+            "rationale": "Superior colliculus — distant midbrain."
+          }
+        ]
+      },
+      "non_candidates_summary": "Hilar mossy cell is the most difficult node to resolve from this candidate set. The WMB atlas does not appear to have a dedicated 'mossy cell' supertype or cluster — they are likely subsumed within CA3 Glut_5 (hilus is CA3 anatomically) or within DG Glut_3/4 (hilus is within DG anatomically). The markers Gria4 and Dkk3 are not highly specific, producing broad score-4 hits across HPF and cortical populations. The PLAUSIBLE candidates (CA3 Glut_5 and DG Glut_3/4) should be prioritised for literature verification of Gria4+/Dkk3+ hilar cell identity. Cortical, hypothalamic, and non-neuronal candidates are all noise. This node may require marker enrichment (e.g. addition of Calb2, Hc) before a STRONG candidate can be nominated."
+    }
+  }
+}

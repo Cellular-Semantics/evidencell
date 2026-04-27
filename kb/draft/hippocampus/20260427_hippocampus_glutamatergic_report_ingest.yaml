@@ -1,0 +1,769 @@
+# Draft KB — hippocampus glutamatergic principal cells
+# Source: ASTA deep research report — inputs/deepsearch/Glutamatergic Positive Cells in the Hippocampus_ Types, Characteristics and Properties.pdf
+# Ingestion date: 2026-04-27
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/hippocampus/references.json
+# Classical nodes proposed by: asta-report-ingest
+name: Hippocampal glutamatergic principal cells — draft classical types
+description: Draft evidence graph for classical hippocampal glutamatergic principal cell types extracted from ASTA deep research report on glutamatergic-positive cells of the hippocampus. Node properties
+  are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+species: null
+creation_date: '2026-04-27'
+notes: All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evidence is from rat and mouse; species must be confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require
+  NodeNormalization lookup. Quote provenance lives in references/hippocampus/references.json; quote_keys reference verbatim text only.
+nodes:
+- id: dg_granule_cell
+  name: dentate gyrus granule cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0001885
+    label: dentate gyrus of hippocampal formation
+    name_in_source: dentate gyrus stratum granulosum (granule cell layer)
+    compartment: SOMA
+    sources:
+    - ref: PMID:24319410
+      quote_key: 7458943_efa15be5
+    - ref: PMID:23420672
+      quote_key: 11290620_48a528f1
+    - ref: PMID:24592213
+      quote_key: 11333153_7e2a7ff8
+  - id: UBERON:0014550
+    label: pyramidal layer of CA3
+    name_in_source: CA3 stratum lucidum (mossy fiber projection target)
+    compartment: AXON
+    sources:
+    - ref: PMID:24319410
+      method: review
+      scope: rat hippocampus
+      quote_key: 7458943_efa15be5
+  nt_type:
+    name_in_source: glutamatergic
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+    sources:
+    - ref: PMID:24592213
+      quote_key: 11333153_7e2a7ff8
+    - ref: PMID:24319410
+      quote_key: 7458943_efa15be5
+    - ref: PMID:23420672
+      quote_key: 11290620_48a528f1
+  defining_markers:
+  - symbol: Slc17a7
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27375434
+      method: review
+      scope: rat hippocampus
+      quote_key: 14854554_ed1bdc00
+  - symbol: Gria1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:21927594
+      quote_key: 16383828_dc4eb8fc
+    - ref: PMID:32009891
+      quote_key: 210181642_7ac40176
+  - symbol: Gria2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:32009891
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 210181642_88f001b0
+  - symbol: Grm1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27375434
+      method: review
+      scope: rat hippocampus
+      quote_key: 14854554_b6a5ffa0
+  - symbol: Nptn
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:28779130
+      method: immunohistochemistry
+      scope: human hippocampus
+      quote_key: 3288675_37ad1c13
+  negative_markers: []
+  neuropeptides: []
+  morphology:
+    description: Compact granule cell soma in stratum granulosum; thin unmyelinated mossy fiber axons project into stratum lucidum of CA3. ~1 million GCs in adult rat dentate gyrus. 85% of GCs are generated
+      postnatally; adult-born GCs receive their first glutamatergic input on dendritic spines at the end of the second week after birth.
+    sources:
+    - ref: PMID:24592213
+      quote_key: 11333153_d0620f0a
+    - ref: PMID:21927594
+      quote_key: 16383828_d014308a
+    - ref: PMID:24319410
+      quote_key: 7458943_efa15be5
+  electrophysiology:
+    description: Lower firing threshold than typical cortical neurons; AMPA, kainate, and NMDA receptors broadly co-expressed. Mossy fiber stimulation elicits mixed GABAergic and glutamatergic monosynaptic
+      currents in CA3 principal cells in juvenile animals.
+    sources:
+    - ref: PMID:24592213
+      quote_key: 11333153_abe1b682
+    - ref: PMID:37011759
+      quote_key: 252086716_f9c70b51
+    - ref: PMID:33132900
+      quote_key: 222135486_f65faa4b
+  cl_mapping:
+    cl_term:
+      id: CL:2000089
+      label: dentate gyrus granule cell
+      name_in_source: dentate gyrus granule cell
+    mapping_type: EXACT
+    mapping_notes: Exact label match to CL:2000089.
+  definition_references:
+  - PMID:17765709
+  - PMID:24319410
+  - PMID:24592213
+  - PMID:21927594
+  - PMID:32009891
+  is_terminal: false
+  notes: Adult-born immature granule cells form a distinct functional subpopulation with delayed maturation; dorsal vs. ventral heterogeneity implied. Mossy fiber terminals co-express VGLUT1, VGLUT2, and
+    VGAT (mixed transmission to CA3 in juvenile animals) — co-release is developmental and does not redefine the granule cell as a non-glutamatergic principal cell.
+- id: dg_mossy_cell
+  name: hilar mossy cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0001885
+    label: dentate gyrus of hippocampal formation
+    name_in_source: dentate hilus (polymorph layer of dentate gyrus)
+    compartment: SOMA
+    sources:
+    - ref: PMID:33600026
+      quote_key: 231953329_132cf2e1
+    - ref: PMID:34214666
+      quote_key: 235678538_35b7c784
+    - ref: PMID:28451637
+      quote_key: 3583187_ea3794f5
+  - id: UBERON:0001885
+    label: dentate gyrus of hippocampal formation
+    name_in_source: dentate gyrus inner molecular layer (IML; ipsilateral and contralateral commissural projection)
+    compartment: AXON
+    sources:
+    - ref: PMID:33600026
+      quote_key: 231953329_132cf2e1
+    - ref: PMID:33600026
+      quote_key: 231953329_6269a191
+    - ref: PMID:33600026
+      quote_key: 231953329_54cbe1b7
+  - id: UBERON:0001885
+    label: dentate gyrus of hippocampal formation
+    name_in_source: dentate gyrus middle molecular layer (MML; dorsal mossy cells only)
+    compartment: AXON
+    sources:
+    - ref: PMID:33600026
+      method: Cre-dependent viral tracing
+      scope: Drd2-Cre and Crlr-Cre mouse
+      quote_key: 231953329_ceaf8acb
+  nt_type:
+    name_in_source: glutamatergic
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+    sources:
+    - ref: PMID:23420672
+      quote_key: 11290620_c6e60ece
+    - ref: PMID:23420672
+      quote_key: 11290620_a475a601
+    - ref: PMID:33600026
+      quote_key: 231953329_132cf2e1
+  defining_markers:
+  - symbol: Slc17a7
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27375434
+      method: review
+      scope: rat hippocampus
+      quote_key: 14854554_ed1bdc00
+  - symbol: Drd2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33600026
+      method: Cre-dependent viral labeling (Drd2-Cre)
+      scope: mouse
+      quote_key: 231953329_ceaf8acb
+    - ref: PMID:37546856
+      method: transcriptomics
+      scope: mouse ventral hippocampus
+      quote_key: 260336826_494cac70
+  - symbol: Calcrl
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33600026
+      method: Cre-dependent viral labeling (Crlr-Cre)
+      scope: mouse
+      quote_key: 231953329_ceaf8acb
+  - symbol: Reln
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:25206826
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 7981953_7f1ea74e
+  negative_markers:
+  - symbol: Gad1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:23420672
+      method: review
+      scope: dentate hilus
+      quote_key: 11290620_c6e60ece
+  neuropeptides: []
+  morphology:
+    description: Large hilar somata with thick bushy proximal dendrites encrusted with thorny excrescences (complex spines) receiving mossy fiber input from granule cells. Dendrites mainly in the hilus.
+      ~25% of axon in hilar collaterals; >60% of axon distal in the molecular layer, predominantly the inner molecular layer (IML), with commissural projection to contralateral dentate gyrus. Dorsal MCs
+      uniquely also project to the middle molecular layer (MML).
+    sources:
+    - ref: PMID:23420672
+      quote_key: 11290620_a475a601
+    - ref: PMID:33600026
+      quote_key: 231953329_132cf2e1
+    - ref: PMID:33600026
+      quote_key: 231953329_6269a191
+  electrophysiology:
+    description: Regular-spiking firing pattern in hilar cells with thorny excrescences. Mossy cells produce unitary EPSPs in granule cells, confirming glutamatergic output.
+    sources:
+    - ref: PMID:23420672
+      method: patch-clamp recording in slice
+      scope: rat hippocampus
+      quote_key: 11290620_a475a601
+  cl_mapping:
+    cl_term: null
+    mapping_type: null
+    mapping_notes: No CL term found for hilar mossy cell. Children of CL:4023062 (dentate gyrus neuron) include granule cell (CL:2000089), basket cell (CL:2000087), kisspeptin neuron (CL:4023124) and stellate
+      cell (CL:2000090); none matches mossy cell. Potential CL contribution.
+  definition_references:
+  - PMID:33600026
+  - PMID:34214666
+  - PMID:28451637
+  - PMID:23420672
+  - PMID:25206826
+  is_terminal: false
+  notes: 'Dorsal vs. ventral mossy cells differ in axonal projection (dorsal: IML+MML; ventral: IML only). Reelin-positive mossy cells in the dentate hilus are predominantly glutamatergic (in contrast to
+    GABAergic reelin+ cells in the molecular layer). HETEROGENEITY: dorsal/ventral subtypes likely warrant separate atlas correspondence.'
+- id: ca3_pyramidal_cell
+  name: CA3 pyramidal cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0014550
+    label: pyramidal layer of CA3
+    name_in_source: CA3 stratum pyramidale
+    compartment: SOMA
+    sources:
+    - ref: PMID:24319410
+      quote_key: 7458943_d6507595
+    - ref: PMID:24319410
+      quote_key: 7458943_efa15be5
+    - ref: PMID:32009891
+      quote_key: 210181642_7ac40176
+  - id: UBERON:0005372
+    label: hippocampus stratum radiatum
+    name_in_source: CA3 stratum radiatum / stratum oriens (apical and basal dendritic field)
+    compartment: DENDRITE
+    sources:
+    - ref: PMID:32009891
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 210181642_7ac40176
+  - id: UBERON:0014548
+    label: pyramidal layer of CA1
+    name_in_source: CA1 stratum radiatum (Schaffer collateral projection target)
+    compartment: AXON
+    sources:
+    - ref: PMID:24319410
+      method: review
+      scope: rat hippocampus
+      quote_key: 7458943_efa15be5
+  nt_type:
+    name_in_source: glutamatergic
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+    sources:
+    - ref: DOI:10.3389/fnana.2012.00013
+      quote_key: 1115431_893575fd
+    - ref: PMID:26346726
+      quote_key: 2281033_5b9805ff
+    - ref: PMID:27113915
+      quote_key: 4875295_002a714a
+  defining_markers:
+  - symbol: Gria1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:32009891
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 210181642_7ac40176
+  - symbol: Gria2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:32009891
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 210181642_88f001b0
+  - symbol: Grm1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27375434
+      method: review
+      scope: rat hippocampus
+      quote_key: 14854554_b6a5ffa0
+  - symbol: Slc17a7
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27375434
+      method: review
+      scope: rat hippocampus
+      quote_key: 14854554_ed1bdc00
+  - symbol: Nptn
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:28779130
+      method: immunohistochemistry
+      scope: human hippocampus
+      quote_key: 3288675_37ad1c13
+  - symbol: Gjd2
+    ncbi_gene_id: null
+    sources:
+    - ref: DOI:10.3389/fnana.2012.00013
+      method: freeze-fracture replica immunolabeling
+      scope: adult rat CA3
+      quote_key: 1115431_08a02feb
+  negative_markers: []
+  neuropeptides: []
+  morphology:
+    description: Cell bodies in CA3 stratum pyramidale receive mossy fiber input from granule cells in stratum lucidum; form Schaffer collateral projections to CA1. Form rare mixed electrical-chemical glutamatergic
+      synapses with neuronal gap junctions containing Cx36.
+    sources:
+    - ref: PMID:23271650
+      quote_key: 3153294_c37d3561
+    - ref: DOI:10.3389/fnana.2012.00013
+      quote_key: 1115431_893575fd
+    - ref: DOI:10.3389/fnana.2012.00013
+      quote_key: 1115431_623fc68d
+  electrophysiology:
+    description: Fast excitatory synaptic transmission via non-NMDA (AMPA/kainate) glutamate receptors; NMDA receptors serve a slower modulatory role. AMPA, kainate, and NMDA receptor families are broadly
+      co-localized.
+    sources:
+    - ref: PMID:7722624
+      quote_key: 5468451_656975dd
+    - ref: PMID:10864941
+      quote_key: 502543_02fe99f0
+    - ref: PMID:37011759
+      quote_key: 252086716_f9c70b51
+  cl_mapping:
+    cl_term:
+      id: CL:1001571
+      label: hippocampal pyramidal neuron
+      name_in_source: hippocampal pyramidal neuron
+    mapping_type: BROAD
+    mapping_notes: CA3-specific term absent from CL. Best available match is CL:1001571 (hippocampal pyramidal neuron); synonym 'hippocampus (CA) pyramidal cell' covers CA1–CA3 without subfield specificity.
+  definition_references:
+  - PMID:19342486
+  - DOI:10.3389/fnana.2012.00013
+  - PMID:32009891
+  - PMID:7722624
+  - PMID:23271650
+  is_terminal: false
+  notes: 'AMBIGUITY: Pioneer early-generated CA3 glutamatergic neurons (Marissal et al., 2012) form a morpho-functionally distinct subpopulation with persistent features into adulthood — likely a separable
+    subtype. GAP: no dedicated electrophysiology quotes specific to CA3 pyramidal cells (vs. shared CA1/CA3 receptor descriptions); primary verification needed.'
+- id: ca1_pyramidal_cell
+  name: CA1 pyramidal cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0014548
+    label: pyramidal layer of CA1
+    name_in_source: CA1 stratum pyramidale
+    compartment: SOMA
+    sources:
+    - ref: PMID:24319410
+      quote_key: 7458943_d6507595
+    - ref: PMID:24319410
+      quote_key: 7458943_efa15be5
+    - ref: PMID:32009891
+      quote_key: 210181642_7ac40176
+  - id: UBERON:0005372
+    label: hippocampus stratum radiatum
+    name_in_source: CA1 stratum radiatum (apical dendritic field)
+    compartment: DENDRITE
+    sources:
+    - ref: PMID:32009891
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 210181642_7ac40176
+  - id: UBERON:0005371
+    label: hippocampus stratum oriens
+    name_in_source: CA1 stratum oriens (basal dendritic field)
+    compartment: DENDRITE
+    sources:
+    - ref: PMID:32009891
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 210181642_7ac40176
+  - id: UBERON:0002191
+    label: subiculum
+    name_in_source: subiculum (projection target)
+    compartment: AXON
+    sources:
+    - ref: PMID:24319410
+      method: review
+      scope: rat hippocampus
+      quote_key: 7458943_efa15be5
+  nt_type:
+    name_in_source: glutamatergic
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+    sources:
+    - ref: PMID:26346726
+      quote_key: 2281033_5b9805ff
+    - ref: PMID:27113915
+      quote_key: 4875295_002a714a
+    - ref: PMID:26402459
+      quote_key: 631148_96ad2908
+  defining_markers:
+  - symbol: Gria1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:32009891
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 210181642_7ac40176
+  - symbol: Gria2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:32009891
+      method: immunohistochemistry
+      scope: rat hippocampus
+      quote_key: 210181642_88f001b0
+  - symbol: Nptn
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:28779130
+      method: immunohistochemistry
+      scope: human hippocampus
+      quote_key: 3288675_37ad1c13
+    - ref: PMID:28779130
+      method: immunohistochemistry
+      scope: human hippocampus
+      quote_key: 3288675_d39d0506
+  - symbol: Slc17a7
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27375434
+      method: review
+      scope: rat hippocampus
+      quote_key: 14854554_ed1bdc00
+  negative_markers:
+  - symbol: Drd1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27678395
+      method: transgenic Drd1-tdTomato reporter
+      scope: mouse dorsal CA1
+      quote_key: 1711204_08c527a1
+  neuropeptides: []
+  morphology:
+    description: Pyramidal cell bodies in CA1 stratum pyramidale; receive Schaffer collateral input from CA3 in stratum radiatum and project to subiculum and entorhinal cortex. High Np65 (neuroplastin-65)
+      immunoreactivity at cell body membranes and dendrites. GluA1 strong dense immunoreactivity in str. oriens and radiatum; GluA2 localized to cell bodies in str. pyramidale.
+    sources:
+    - ref: PMID:23180766
+      quote_key: 13358368_423cf3cc
+  electrophysiology:
+    description: Fast excitatory transmission via AMPA receptors; NMDA receptors serve a slower modulatory role. Np65 regulates the number and function of excitatory synapses in CA1. AMPA/kainate and NMDA
+      receptors are colocalized at individual spines.
+    sources:
+    - ref: PMID:7722624
+      quote_key: 5468451_656975dd
+    - ref: PMID:24554721
+      quote_key: 34872919_c89ee15c
+    - ref: PMID:10864941
+      quote_key: 502543_02fe99f0
+  cl_mapping:
+    cl_term:
+      id: CL:1001571
+      label: hippocampal pyramidal neuron
+      name_in_source: hippocampal pyramidal neuron
+    mapping_type: BROAD
+    mapping_notes: CA1-specific term absent from CL. Same BROAD mapping to CL:1001571 as CA3.
+  definition_references:
+  - PMID:19342486
+  - PMID:28779130
+  - PMID:32009891
+  - PMID:27678395
+  - PMID:24319410
+  is_terminal: false
+  notes: 'AMBIGUITY: Ventral CA1 pyramidal neurons express D1/D2 dopamine receptors (45.1% of D1/D2 cells in vHipp are glutamatergic) — likely projection-specific vCA1/vSubiculum subtypes; dorsal CA1 pyramidal
+    cells are D1R-negative. Np65-positive glutamatergic neurons are not CA1-specific (also CA2-3 and subiculum).'
+- id: ms_dbb_glutamatergic_neuron
+  name: medial septal / diagonal band of Broca glutamatergic neuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0002421
+    label: hippocampal formation
+    name_in_source: medial septum / diagonal band of Broca (extrahippocampal soma — UBERON term used as nearest available; soma is not in hippocampal formation)
+    compartment: SOMA
+    sources:
+    - ref: PMID:29250747
+      method: review
+      scope: rodent septohippocampal system
+      quote_key: 21358766_0c242fdc
+  - id: UBERON:0005371
+    label: hippocampus stratum oriens
+    name_in_source: hippocampal stratum oriens near alveus (synaptic target on interneurons)
+    compartment: AXON
+    sources:
+    - ref: PMID:29250747
+      quote_key: 21358766_01840c4a
+  nt_type:
+    name_in_source: glutamatergic
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+    sources:
+    - ref: PMID:29250747
+      method: review
+      scope: rodent MS-DBB
+      quote_key: 21358766_0c242fdc
+  defining_markers:
+  - symbol: Slc17a7
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:29250747
+      method: review
+      scope: rodent MS-DBB
+      quote_key: 21358766_0c242fdc
+  - symbol: Slc17a6
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:29250747
+      method: review
+      scope: rodent MS-DBB
+      quote_key: 21358766_0c242fdc
+    - ref: PMID:32132227
+      method: review
+      scope: rodent fornix/septohippocampal
+      quote_key: 212418354_02349d4e
+  negative_markers:
+  - symbol: Chat
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:29250747
+      method: review
+      scope: rodent MS-DBB
+      quote_key: 21358766_0c242fdc
+  - symbol: Gad1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:29250747
+      method: review
+      scope: rodent MS-DBB
+      quote_key: 21358766_0c242fdc
+  neuropeptides: []
+  morphology:
+    description: Soma in medial septum/diagonal band of Broca; account for ~23% of MS projections to hippocampus; project preferentially to hippocampal interneurons with somata in stratum oriens near the
+      alveus.
+    sources:
+    - ref: PMID:29250747
+      method: review
+      scope: rodent septohippocampal
+      quote_key: 21358766_0c242fdc
+    - ref: PMID:29250747
+      method: review
+      scope: rodent septohippocampal
+      quote_key: 21358766_01840c4a
+  electrophysiology:
+    description: 'Highly heterogeneous firing in four subtypes: (1) fast-spiking with little AP accommodation, occasional spontaneous firing, sometimes pronounced Ih sag; (2) cluster-firing (8-14 Hz) with
+      subthreshold membrane oscillations and strong AP accommodation — UNIQUE to glutamatergic MS-DBB neurons; (3) burst-firing (distinct from GABAergic burst pattern) with little/no sag; (4) slow-firing
+      with broad accommodating APs. Can spontaneously fire rhythmically at theta frequencies. Activity rises before locomotion onset and during running.'
+    sources:
+    - ref: PMID:29250747
+      quote_key: 21358766_0c242fdc
+    - ref: PMID:21106833
+      quote_key: 15897856_d5424e2a
+    - ref: PMID:21106833
+      quote_key: 15897856_5e7429ed
+  cl_mapping:
+    cl_term: null
+    mapping_type: null
+    mapping_notes: No CL term for medial septal / diagonal band of Broca glutamatergic neuron. CL:0000679 (glutamatergic neuron) too broad. Potential CL contribution.
+  definition_references:
+  - PMID:29250747
+  - PMID:21106833
+  - PMID:32132227
+  is_terminal: false
+  notes: Four electrophysiologically distinct VGluT2+ subgroups (fast-spiking, cluster-firing, burst-firing, slow-firing). Cluster firing is a unique electrophysiological marker for glutamatergic (not GABAergic)
+    MS-DBB neurons. Soma is extrahippocampal — node retained because the cell projects into hippocampal formation; UBERON soma assignment is approximate (hippocampal formation used as nearest umbrella term).
+- id: hpc_cajal_retzius_cell
+  name: hippocampal Cajal-Retzius cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005403
+    label: hippocampus stratum lacunosum-moleculare
+    name_in_source: CA1 stratum lacunosum-moleculare (SLM)
+    compartment: SOMA
+    sources:
+    - ref: PMID:25253849
+      method: optogenetic activation in slice
+      scope: mouse hippocampus
+      quote_key: 7165380_5e53cfc0
+    - ref: PMID:26582498
+      method: biocytin fill / morphological reconstruction
+      scope: mouse hippocampus
+      quote_key: 2565845_8c6a8b64
+    - ref: PMID:26402459
+      method: review
+      scope: rodent hippocampus
+      quote_key: 631148_85ae9bb1
+  - id: UBERON:0001885
+    label: dentate gyrus of hippocampal formation
+    name_in_source: outer molecular layer (OML) of dentate gyrus
+    compartment: SOMA
+    sources:
+    - ref: PMID:26582498
+      method: biocytin fill / morphological reconstruction
+      scope: mouse hippocampus
+      quote_key: 2565845_8c6a8b64
+  nt_type:
+    name_in_source: glutamatergic
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+    sources:
+    - ref: PMID:25253849
+      quote_key: 7165380_5e53cfc0
+    - ref: PMID:25206826
+      quote_key: 7981953_ebaa6eee
+    - ref: PMID:26402459
+      quote_key: 631148_85ae9bb1
+  defining_markers:
+  - symbol: Reln
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:25253849
+      method: optogenetic activation in slice
+      scope: mouse hippocampus
+      quote_key: 7165380_5e53cfc0
+    - ref: PMID:25206826
+      method: immunohistochemistry
+      scope: mouse hippocampus
+      quote_key: 7981953_7f1ea74e
+  negative_markers: []
+  neuropeptides: []
+  morphology:
+    description: 'Soma in stratum lacunosum-moleculare (SLM) and outer molecular layer (OML) of the hippocampal formation. Three axonal subtypes: (1) layer-restricted local-projecting CR cells acting as
+      glutamatergic interneurons; (2) local-projecting CR cells whose axons cross the hippocampal fissure between SLM and OML; (3) long-range projecting CR cells targeting distant subregions. CR cells are
+      biased toward targeting dendritic shafts of GABAergic interneurons over spines, and produce large-amplitude glutamatergic unitary postsynaptic potentials on interneurons. Reelin-positive CR cells
+      increase in density with age in adult hippocampus.'
+    sources:
+    - ref: PMID:26582498
+      quote_key: 2565845_ec963328
+    - ref: PMID:26582498
+      quote_key: 2565845_3bfe1a28
+    - ref: PMID:26582498
+      quote_key: 2565845_8c6a8b64
+  electrophysiology:
+    description: Optogenetic activation of CR cells in SLM elicits monosynaptic AMPA/NMDA receptor-mediated EPSCs in local interneurons (faster kinetics) and CA1 pyramidal cells (slower kinetics). Responses
+      are blocked by TTX and rescued in interneurons by 4-AP, indicating direct monosynaptic CR cell-to-interneuron connection. Provides feedforward GABAergic input onto pyramidal cells via interneuron
+      activation.
+    sources:
+    - ref: PMID:25253849
+      method: optogenetic activation in slice
+      scope: mouse hippocampus
+      quote_key: 7165380_5e53cfc0
+    - ref: PMID:26582498
+      method: patch-clamp recording in slice
+      scope: mouse hippocampus
+      quote_key: 2565845_ec963328
+  cl_mapping:
+    cl_term:
+      id: CL:0000695
+      label: Cajal-Retzius cell
+      name_in_source: Cajal-Retzius cell
+    mapping_type: BROAD
+    mapping_notes: CL:0000695 = Cajal-Retzius cell describes the general CR cell class across cortex and hippocampus; the proposed type is the specifically hippocampal, adult-persisting, glutamatergic subpopulation
+      (reelin+/calretinin+/VGluT3+). The CL definition includes hippocampal SLM and OML localisation.
+  definition_references:
+  - PMID:25253849
+  - PMID:26582498
+  - PMID:25206826
+  - PMID:26402459
+  - DOI:10.1523/JNEUROSCI.1407-14.2014
+  is_terminal: false
+  notes: 'HETEROGENEITY: a substantial fraction of hippocampal CR cells are GABAergic; only the glutamatergic (reelin+/calretinin+/VGluT3+) subpopulation is captured here. Three axonal subtypes (layer-restricted
+    local, cross-fissure local, long-range) likely warrant separate sub-nodes. AMBIGUITY: CR cells are more abundant in adult rat than previously assumed (Quattrocolo et al., 2014).'
+- id: ca1_radiatum_giant_cell
+  name: CA1 radiatum giant cell
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005372
+    label: hippocampus stratum radiatum
+    name_in_source: CA1 stratum radiatum
+    compartment: SOMA
+    sources:
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: rat CA1
+      quote_key: 502543_4f78ac74
+  nt_type:
+    name_in_source: glutamatergic
+    cl_terms:
+    - id: CL:0000679
+      label: glutamatergic neuron
+      name_in_source: glutamatergic
+    sources:
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: rat CA1
+      quote_key: 502543_4f78ac74
+  defining_markers: []
+  negative_markers: []
+  neuropeptides: []
+  morphology:
+    description: Specialised glutamatergic projection neuron in CA1 stratum radiatum, distinct from CA1 pyramidal cells. First described by Kirson et al. (2000); rare and not extensively characterised.
+    sources:
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: rat CA1
+      quote_key: 502543_4f78ac74
+  electrophysiology:
+    description: Glutamatergic synaptic activation fires an NMDA receptor-dependent burst of action potentials even after blocking non-NMDA receptors — a unique property distinguishing radiatum giant cells
+      from typical CA1 pyramidal cells. Enhanced synaptic excitability attributed to unique properties of synaptic NMDA receptors.
+    sources:
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: rat CA1
+      quote_key: 502543_4f78ac74
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: rat CA1
+      quote_key: 502543_10e7f921
+  cl_mapping:
+    cl_term: null
+    mapping_type: null
+    mapping_notes: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential CL contribution.
+  definition_references:
+  - PMID:10864941
+  is_terminal: false
+  notes: 'GAP: defined essentially from a single primary citation (Kirson & Yaari 2000); markers absent in source material. Properties await replication and modern molecular characterisation.'
+edges: []

@@ -1,0 +1,29 @@
+{
+  "ambiguities": [
+    "hpc_calretinin_glutamatergic_neuron: The calretinin-positive glutamatergic population overlaps substantially with Cajal-Retzius cells (hpc_cajal_retzius_cell, is_new=false). The Cajal-Retzius cell can be calretinin+ and glutamatergic. This entry explicitly covers the Anstotz et al. 2015 / Ceranik et al. 1997 calretinin+ glutamatergic neuron literature, but the boundary with CR cells must be resolved by curation before these can coexist in the same graph without a clarifying edge.",
+    "ec_layer2_stellate_cell uses the same anatomical UBERON ID (UBERON:0001905, entorhinal cortex) as ec_layer2_pyramidal_cell and ec_layer3_pyramidal_cell because no layer-specific UBERON IDs for EC layers exist at the required granularity. The name_in_source field carries the layer specificity. Curation should consider whether MBA layer-specific anatomy terms are available and appropriate.",
+    "ec_layer3_pyramidal_cell and ca2_pyramidal_cell share Pcp4 as a defining marker. This is biologically attested (PCP4 marks both CA2 and EC layer III), but may cause confusion in marker-based queries. A note field distinguishing these on each node would be appropriate at the evidence extraction stage.",
+    "hpc_glu_dopamine_receptor_pyramidal: D1R/D2R-expressing glutamatergic cells in ventral hippocampus are described as 'likely' projection-specific vCA1/vSubiculum populations (Godino et al., 2023). This typing is provisional — the node may represent a property of vCA1 pyramidal cells rather than a truly distinct type. Curation decision needed on whether this should be a separate node or a property annotation on the subicular/CA1 nodes."
+  ],
+  "overlaps_with_v1": [
+    "ca2_pyramidal_cell (proposed_id) is marked is_new=true in proposed_types.json, but a v1 stub (ca2_pc_hippocampus) already exists in kb/draft/hippocampus/hippocampus_glutamatergic.yaml with identical defining markers (Pcp4, Rgs14, Amigo2). The v2 stub uses id ca2_pc_v2_hippocampus to avoid collision. Curation should: (a) retire ca2_pc_v2_hippocampus and close this report-ingest entry, or (b) merge any new evidence from this report into ca2_pc_hippocampus directly.",
+    "dg_granule_cell is_new=false in proposed_types.json (correctly excluded from v2 stubs). The v1 stub dg_granule_cell_hippocampus already exists. The semilunar granule cell node (dg_semilunar_granule_cell_hippocampus) is new and distinct.",
+    "hilar_mossy_cell is_new=false (correctly excluded). v1 stub hilar_mossy_cell_hippocampus exists.",
+    "ca1_pyramidal_cell is_new=false (correctly excluded). v1 stub ca1_pc_hippocampus exists.",
+    "ca3_pyramidal_cell is_new=false (correctly excluded). v1 stub ca3_pc_hippocampus exists."
+  ],
+  "gaps": [
+    "No atlas transcriptomic stubs (WMBv1 accessions) are included for any of the 9 new nodes. Candidate atlas matches would require running map-cell-type workflow for each new type. EC types are likely not covered by hippocampus-specific WMBv1 subclasses; they may map to isocortex or retrosplenial cortex subclasses.",
+    "hpc_glur_cell: GluR cells are glial-neuronal hybrids described first in Jabs et al. 2005. They are not clearly neurons, which raises a scope question — the CellTypeNode schema is designed for neuronal cell types. No atlas transcriptomic match is expected; these cells may not be resolved in current single-cell RNA-seq atlases. This node is provisional.",
+    "dg_semilunar_granule_cell: No molecular markers are known for SGCs from this report. This makes atlas mapping via transcriptomics impossible at the marker level; a literature search for SGC-specific transcriptomic signatures (e.g. from DG single-cell datasets) is needed before map-cell-type can be run.",
+    "subicular_pyramidal_cell: Np65 (Nptn gene product) is not a subiculum-specific marker — it is expressed broadly across hippocampal pyramidal neurons (CA1, CA2-3, subiculum). A more specific subicular marker is needed for unambiguous transcriptomic mapping.",
+    "hpc_calretinin_glu_neuron: Slc17a8 (VGluT3) is used as a proposed marker, but VGluT3 is more commonly associated with specific interneuron populations in some hippocampal studies. This assignment requires primary literature verification before inclusion."
+  ],
+  "curation_decisions_needed": [
+    "Resolve ca2_pc_v2_hippocampus vs ca2_pc_hippocampus (v1): merge or retire the v2 entry.",
+    "Confirm whether hpc_glur_cell should be represented as a CellTypeNode given its hybrid glial-neuronal identity. If included, add a disclaimer note field and consider whether nt_type glutamatergic accurately describes a cell that receives (rather than releases) glutamate.",
+    "Determine whether hpc_calretinin_glu_neuron_hippocampus and the Cajal-Retzius cell node (hpc_cajal_retzius_cell) require a mapping edge to document their relationship, or whether one should be merged into the other.",
+    "Confirm anatomical scope: EC nodes (ec_layer2_stellate_cell, ec_layer2_pyramidal_cell, ec_layer3_pyramidal_cell) are outside the hippocampal formation proper. Decide whether to keep them in the hippocampus graph or migrate them to a separate medial temporal lobe graph.",
+    "Review whether hpc_glu_dopamine_receptor_pyramidal should be a standalone node or a property annotation (e.g. marker_Drd1, marker_Drd2) on the vCA1 pyramidal cell and subicular pyramidal cell nodes. The current evidence does not unambiguously support a distinct cell type."
+  ]
+}

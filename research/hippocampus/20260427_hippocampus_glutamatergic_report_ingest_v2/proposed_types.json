@@ -1,0 +1,295 @@
+[
+  {
+    "proposed_id": "dg_granule_cell",
+    "name": "dentate gyrus granule cell",
+    "is_new": false,
+    "markers_mentioned": ["GluR1", "GluR2", "GluA1", "GluA2", "vGLUT1", "mGluR1", "VGAT"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": ["GABA (co-release via mossy fiber axons)"],
+    "anatomy_mentioned": [
+      "dentate gyrus stratum granulosum",
+      "dentate gyrus stratum moleculare",
+      "CA3 stratum lucidum (mossy fiber targets)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Compact cell bodies in stratum granulosum; thin unmyelinated mossy fiber axons projecting to CA3 stratum lucidum. ~85% generated postnatally. Dendritic spines receive first glutamatergic input ~2 weeks after birth; first glutamatergic output onto CA3 follows shortly after. Mossy fiber terminals co-express VGLUT1, VGLUT2, and VGAT allowing dual neurotransmitter release.",
+    "ephys_summary": "Express AMPA and NMDA receptors at dendritic spines. GluR1 expression begins profoundly ~3 weeks after cell division. Young (1-week-old) adult-born granule cells receive input from GABAergic interneurons AND from mature dentate granule cells, CA1-3 pyramidal cells, and mossy cells. Mossy fiber axons can produce mixed GABAergic and glutamatergic monosynaptic currents in CA3 principal cells (juvenile animals).",
+    "subtypes_noted": "85% generated postnatally; adult-born (immature) granule cells represent a distinct functional subpopulation with delayed maturation and unique connectivity. Dorsal vs. ventral heterogeneity implied by regional transcriptomics. Semilunar granule cells are a separate excitatory projection neuron type in DG (see dg_semilunar_granule_cell).",
+    "quote_count": 12
+  },
+  {
+    "proposed_id": "dg_semilunar_granule_cell",
+    "name": "dentate gyrus semilunar granule cell",
+    "is_new": true,
+    "markers_mentioned": [],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "dentate gyrus stratum granulosum (inner/outer border)",
+      "dentate gyrus stratum moleculare (axon collaterals)",
+      "dentate hilus (monosynaptic output)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Sparse dentate gyrus glutamatergic projection neurons. Significantly larger dendritic arborization in the molecular layer than regular granule cells. More triangular cell bodies than granule cells. Have axon collaterals in the molecular layer (unlike regular granule cells). Monosynaptically excite both hilar interneurons and mossy cells.",
+    "ephys_summary": "Fire throughout long-duration depolarizing steps (unlike regular granule cells). Show ramp-like depolarizations during interspike periods. Receive stronger medial entorhinal cortex and associational synaptic drive than regular granule cells but lack the short-term facilitation of lateral entorhinal cortex inputs observed in granule cells.",
+    "subtypes_noted": "Overrepresented among neuronal ensembles in spatial memory tasks. Distinct from regular granule cells in morphology, physiology, and synaptic input weighting. Previously described in rats (Williams et al., 2007); input characterization updated in Dovek et al., 2025.",
+    "quote_count": 5
+  },
+  {
+    "proposed_id": "dg_mossy_cell",
+    "name": "hilar mossy cell",
+    "is_new": false,
+    "markers_mentioned": ["vGLUT1"],
+    "negative_markers_mentioned": ["GAD", "GABA"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "dentate hilus",
+      "dentate gyrus inner molecular layer (main axonal target)",
+      "dentate gyrus middle molecular layer (dorsal MC projection)",
+      "contralateral dentate gyrus (commissural projection)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Large somata with thick bushy proximal dendrites mainly within the hilus. Characteristic thorny excrescences (complex spines) on proximal dendrites receive mossy fiber input from granule cells. Axon makes local hilar collaterals plus extensive long-range projections to inner molecular layer of DG across multiple septotemporal levels. Commissural projection to contralateral DG. Dorsal mossy cells additionally project to the middle molecular layer.",
+    "ephys_summary": "Regular-spiking pattern. Produce unitary EPSPs in granule cells, confirming glutamatergic output. Glutamate immunoreactivity confirmed in Golgi-impregnated mossy cells. Principal and only glutamatergic neurons of the dentate hilus.",
+    "subtypes_noted": "Dorsal vs. ventral mossy cells differ in axonal projections: dorsal project to IML and MML; ventral project to IML only. Labeled with Drd2-Cre and Crlr-Cre mouse lines.",
+    "quote_count": 10
+  },
+  {
+    "proposed_id": "ca3_pyramidal_cell",
+    "name": "CA3 pyramidal cell",
+    "is_new": false,
+    "markers_mentioned": ["GluA1", "GluA2", "mGluR1", "vGLUT1", "Cx36"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "CA3 stratum pyramidale",
+      "CA3 stratum lucidum (mossy fiber input)",
+      "CA3 stratum radiatum",
+      "CA3 stratum oriens",
+      "CA3a (distal)", "CA3b (intermediate)", "CA3c (proximal)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Cell bodies in stratum pyramidale of CA3; receive mossy fiber input from granule cells in stratum lucidum. Form Schaffer collateral projections to CA1. GluA1 immunoreactivity diffuse in str. radiatum and oriens; GluA2 localized to pyramidal cell bodies. Form mixed electrical-chemical glutamatergic synapses via Cx36 gap junctions. Subregional heterogeneity along CA3a/b/c axis.",
+    "ephys_summary": "Fast excitatory synaptic transmission mediated by AMPA receptors; NMDA receptors serve slower modulatory role. mGluR1 highly expressed. Can form mixed GABAergic/glutamatergic synapses (receive dual transmitter from mossy fiber terminals). Mixed electrical-chemical synapses with gap junctions (Cx36). Pioneer early-generated CA3 neurons form a morpho-functionally distinct subpopulation.",
+    "subtypes_noted": "Early-generated pioneer glutamatergic neurons (Marissal et al., 2012) persist as a distinct morpho-functional subpopulation from juvenile through adult. CA3c pyramidal cells can be misidentified as CA2 cells (Sanchez-Aguilera et al., 2021).",
+    "quote_count": 7
+  },
+  {
+    "proposed_id": "ca2_pyramidal_cell",
+    "name": "CA2 pyramidal cell",
+    "is_new": true,
+    "markers_mentioned": ["PCP4", "Np65"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "CA2 stratum pyramidale",
+      "CA2 stratum radiatum",
+      "CA1 (output target)",
+      "dentate gyrus (input)",
+      "entorhinal cortex (input)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Located between CA1 and CA3. Relatively large somatic sizes — overall smaller than distal CA3 cells but larger than proximal CA1 cells. Pyramidal cells fall into distinct categories based on unique branching patterns of apical dendrites. Receive direct input from entorhinal cortex (layer III) producing 5-6x larger EPSP at soma compared to CA1. More efficient dendritic propagation than CA1 due to differences in dendritic morphology and Ih expression.",
+    "ephys_summary": "Larger leak currents and more negative resting membrane potentials than CA1 neurons (11-21-day-old animals). Requires stronger current injection to evoke action potentials than CA1. Direct EC input sufficient to drive action potential output from CA2 but not CA1. Enriched for genes encoding mitochondrial proteins compared to CA1, suggesting higher metabolic demand. Distinct expression of hyperpolarization-activated cation current (Ih).",
+    "subtypes_noted": "Multiple dendritic morphology categories. Unique physiological, molecular, and genetic characteristics distinguishing from CA1 and CA3. PCP4 used as a marker for CA2 identification. Np65-positive like other hippocampal pyramidal neurons.",
+    "quote_count": 8
+  },
+  {
+    "proposed_id": "ca1_pyramidal_cell",
+    "name": "CA1 pyramidal cell",
+    "is_new": false,
+    "markers_mentioned": ["GluA1", "GluA2", "Np65"],
+    "negative_markers_mentioned": ["D1R (dorsal CA1 pyramidal cells are D1R-negative)"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "CA1 stratum pyramidale",
+      "CA1 stratum oriens",
+      "CA1 stratum radiatum",
+      "subiculum (output)",
+      "entorhinal cortex (output)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Cell bodies in stratum pyramidale of CA1; receive Schaffer collateral input from CA3 and project topographically to subiculum and entorhinal cortex. High Np65 expression at cell body membranes and dendrites. GluA1 strong dense immunoreactivity in str. oriens and radiatum; GluA2 localized to cell bodies with diffuse staining in oriens and radiatum. Receive smaller EPSPs from direct EC input than CA2.",
+    "ephys_summary": "Fast excitatory transmission via AMPA receptors; NMDA receptors serve modulatory role. Np65 regulates excitatory synapse number and function. D1R not expressed by dorsal CA1 pyramidal cells (expressed only on interneurons in dorsal hippocampus). Ventral CA1 pyramidal neurons can express D1/D2 dopamine receptors.",
+    "subtypes_noted": "Ventral CA1 pyramidal neurons express D1/D2 dopamine receptors (45.1% of D1/D2 cells in vHipp are glutamatergic), likely projection-specific vCA1/vSubiculum populations. Np65-positive glutamatergic neurons include CA1, CA2-3, and subiculum pyramidal neurons.",
+    "quote_count": 6
+  },
+  {
+    "proposed_id": "subicular_pyramidal_cell",
+    "name": "subicular pyramidal cell",
+    "is_new": true,
+    "markers_mentioned": ["Np65"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "subiculum",
+      "entorhinal cortex layers V-VI (output)",
+      "CA1 (input, reciprocal output)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Major output structure of the hippocampal formation alongside CA1. Three morpho-electrically distinct subtypes with variations in apical and basal dendritic spread and branching patterns. Among regular-firing neurons, a divergent morphological subset bears two apical dendrites. Topographically organized: receive CA1 projections conserved along transverse axis from CA1. Transmit information to deep layers (V-VI) of entorhinal cortex in a spatially structured manner. Also provide excitatory synaptic input back to CA1 pyramidal cells (bidirectional connectivity). Np65-positive.",
+    "ephys_summary": "Three distinct electrophysiological subtypes based on discharge patterns: (1) regular firing (RF) — no bursting; (2) weak-bursting (WB); (3) strong-bursting (SB). Subtypes differ in active and passive electrophysiological properties. Subtypes also display specific spatial distributions along both the superficial-deep and proximo-distal axes of the subiculum.",
+    "subtypes_noted": "Three electrophysiological subtypes: regular firing (RF), weak-bursting (WB), and strong-bursting (SB) — Guinet et al., 2026. RF subset: divergent morphology with two apical dendrites. Spatial distribution of subtypes along superficial-deep and proximo-distal axes. Only 6 of 180 Hippocampome.org neuron types from the subiculum, highlighting understudied status.",
+    "quote_count": 9
+  },
+  {
+    "proposed_id": "ec_layer2_stellate_cell",
+    "name": "entorhinal cortex layer II stellate cell",
+    "is_new": true,
+    "markers_mentioned": ["reelin"],
+    "negative_markers_mentioned": ["calbindin"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "entorhinal cortex layer II",
+      "medial entorhinal cortex",
+      "lateral entorhinal cortex"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Stellate-like neuron morphology in entorhinal cortex layer II. Express reelin (distinguishing from layer II pyramidal neurons). Part of medial temporal lobe lying between transentorhinal area and hippocampal formation. Lateral and medial EC subdivisions show distinct anatomical features and input-output connectivity.",
+    "ephys_summary": "Not specifically described in this report beyond general EC principal neuron properties.",
+    "subtypes_noted": "Distinguished from layer II pyramidal neurons (calbindin+) by reelin expression. Part of the two principal neuron populations in EC layer II (stellate-like reelin+ vs. pyramidal calbindin+).",
+    "quote_count": 4
+  },
+  {
+    "proposed_id": "ec_layer2_pyramidal_cell",
+    "name": "entorhinal cortex layer II calbindin-positive pyramidal cell",
+    "is_new": true,
+    "markers_mentioned": ["calbindin"],
+    "negative_markers_mentioned": ["reelin"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "entorhinal cortex layer II",
+      "medial entorhinal cortex (layer 2 patches)",
+      "caudal entorhinal cortex"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Pyramidal neuron morphology in entorhinal cortex layer II. Express calbindin (88% of calbindin-positive EC cells are glutamatergic). Arranged in a hexagonal grid of patches in medial/caudal EC layer 2 with conserved size and periodicity. Receive cholinergic innervation. Form discrete cell clusters with widespread telencephalic and intrinsic projections.",
+    "ephys_summary": "Show strong theta modulation (Naumann et al., 2015).",
+    "subtypes_noted": "Calbindin-positive pyramidal cells originate widespread telencephalic and intrinsic projections (Ohara et al., 2019). Part of the two principal neuron populations in EC layer II (pyramidal calbindin+ vs. stellate-like reelin+). Cholinergic innervation distinguishes their patch arrangement.",
+    "quote_count": 5
+  },
+  {
+    "proposed_id": "ec_layer3_pyramidal_cell",
+    "name": "entorhinal cortex layer III PCP4-positive pyramidal cell",
+    "is_new": true,
+    "markers_mentioned": ["PCP4"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "entorhinal cortex layer III",
+      "CA1 (projection target)",
+      "subiculum (projection target)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Principal neurons in entorhinal cortex layer III expressing Purkinje cell protein 4 (PCP4). Project to CA1 and the subiculum. Part of medial temporal lobe EC principal cell layer.",
+    "ephys_summary": "Not specifically characterized beyond projection target identity in this report.",
+    "subtypes_noted": "PCP4 expression used as a marker (same marker used for CA2 pyramidal cells). Distinct layer-specific projection: EC layer III → CA1 and subiculum (vs. layer II → dentate gyrus via perforant path).",
+    "quote_count": 2
+  },
+  {
+    "proposed_id": "ms_dbb_glutamatergic_neuron",
+    "name": "medial septal / diagonal band of Broca glutamatergic neuron",
+    "is_new": false,
+    "markers_mentioned": ["VGluT1", "VGluT2"],
+    "negative_markers_mentioned": ["ChAT", "GAD"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "medial septum",
+      "diagonal band of Broca",
+      "hippocampal stratum oriens (projection target)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Soma in medial septum/diagonal band of Broca; project to hippocampal interneurons with somata in stratum oriens near the alveus (~23% of MS projections are glutamatergic). Express VGluT1 and/or VGluT2; lack ChAT and GAD. Drive hippocampal pyramidal cells via synaptically targeted interneurons.",
+    "ephys_summary": "Highly heterogeneous firing: four subtypes — (1) fast-spiking with little AP accommodation, sometimes spontaneous, some with pronounced Ih sag; (2) cluster-firing with subthreshold membrane oscillations at 8-14 Hz, strong AP accommodation, little/no sag (unique to glutamatergic MS neurons); (3) burst-firing; (4) slow-firing with accommodating APs. Can spontaneously fire rhythmically at theta frequencies.",
+    "subtypes_noted": "Four electrophysiologically distinct subgroups (fast-spiking, cluster-firing, burst-firing, slow-firing). Cluster firing is a unique electrophysiological marker for glutamatergic (not GABAergic) MS-DBB neurons.",
+    "quote_count": 8
+  },
+  {
+    "proposed_id": "hpc_cajal_retzius_cell",
+    "name": "hippocampal Cajal-Retzius cell",
+    "is_new": false,
+    "markers_mentioned": ["reelin", "EGFP (CXCR4-EGFP mice)", "vGluT2"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "stratum lacunosum-moleculare (CA1)",
+      "outer molecular layer (dentate gyrus)",
+      "subicular complex",
+      "entorhinal cortex"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Located in stratum lacunosum-moleculare (SLM) and outer molecular layer (OML). More abundant in adult rats than previously assumed. Can be subdivided into local-projecting (layer-restricted somatodendritic and axonal domains — function as 'glutamatergic interneurons') and long-range projecting types. Provide first evidence of intrinsic glutamatergic hippocampal connections flowing against the classical trisynaptic circuit direction.",
+    "ephys_summary": "Produce large-amplitude glutamatergic unitary postsynaptic potentials on GABAergic interneurons. Form direct monosynaptic connections with interneurons activating both AMPA and NMDA receptors. Glutamatergic CR cells facilitate migration of GABAergic neurons and interneurons by releasing glutamate acting on AMPA (not NMDA) receptors during development.",
+    "subtypes_noted": "Mixed population: some CR cells are GABAergic, others glutamatergic; interact with each other. Glutamatergic CR cells express reelin and vGluT2. Three axonal subtypes: layer-restricted local, cross-fissure local, and long-range projecting. More abundant in adult rodents than previously assumed (Wheeler et al., 2015).",
+    "quote_count": 8
+  },
+  {
+    "proposed_id": "hpc_calretinin_glutamatergic_neuron",
+    "name": "hippocampal calretinin-positive glutamatergic neuron",
+    "is_new": true,
+    "markers_mentioned": ["calretinin"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "stratum lacunosum-moleculare (CA1)",
+      "outer molecular layer (dentate gyrus)",
+      "subicular complex",
+      "entorhinal cortex"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Subdivided into distinct populations based on local vs. projecting axonal characteristics. Some CR cells have complete layer-restricted location of both somatodendritic and axonal domains — function as 'glutamatergic interneurons'. Others have long-range axons projecting to distant hippocampal regions. Provide first evidence of intrinsic glutamatergic hippocampal connections flowing against classical trisynaptic circuit direction.",
+    "ephys_summary": "Not specifically described beyond their glutamatergic output identity and projection patterns.",
+    "subtypes_noted": "Two main subtypes: (1) local-projecting layer-restricted (function as glutamatergic interneurons); (2) long-range projecting to distant subregions. Overlap with Cajal-Retzius cells (CR cells can be calretinin+), but this entry covers calretinin+ glutamatergic neurons specifically described by Anstotz et al., 2015 and Ceranik et al., 1997.",
+    "quote_count": 4
+  },
+  {
+    "proposed_id": "hpc_glu_dopamine_receptor_pyramidal",
+    "name": "ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron",
+    "is_new": true,
+    "markers_mentioned": ["D1R", "D2R"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "ventral CA1",
+      "ventral subiculum"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Glutamatergic pyramidal neuron clusters in ventral hippocampus (ventral CA1 / ventral subiculum). In ventral hippocampus, 45.1% of all D1 or D2 dopamine receptor-positive cells are glutamatergic, in contrast to dorsal hippocampus where D1/D2 are almost exclusively on interneurons. Likely correspond to projection-specific ventral CA1/ventral subiculum populations.",
+    "ephys_summary": "Not specifically characterized electrophysiologically; identified by D1/D2 receptor expression and glutamatergic identity. Proposed to arbitrate approach and avoidance behaviors in anxiety.",
+    "subtypes_noted": "D1 receptor-expressing vs. D2 receptor-expressing glutamatergic pyramidal neuron populations may correspond to distinct projection targets. Distinct from dorsal hippocampal pyramidal cells where D1/D2 are restricted to interneurons.",
+    "quote_count": 3
+  },
+  {
+    "proposed_id": "hpc_glur_cell",
+    "name": "hippocampal GluR cell (glutamate receptor-expressing glial-neuronal hybrid cell)",
+    "is_new": true,
+    "markers_mentioned": ["S100β", "NG2", "EGFP (hGFAP promoter)"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "hippocampus",
+      "Schaffer collaterals (input site)"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Unique glutamate receptor-expressing cells that escape classification as neurons, astrocytes, or oligodendrocytes. Co-express S100β (astrocyte marker), NG2, and neuronal genes. Show characteristic nodules occurring periodically along their processes. Labeled by EGFP under hGFAP promoter but are distinct from classical astrocytes in antigen profile and functional properties. Also lack characteristic features of oligodendrocytes or neurons.",
+    "ephys_summary": "Receive direct synaptic input from both GABAergic and glutamatergic neurons. Low number of neuronal release sites observed. GABAergic and glutamatergic neurons directly synapse onto GluR cells. ~30% of GluR cells are S100β-positive; all tested GluR cells expressed NG2.",
+    "subtypes_noted": "Distinct from classical astrocytes, oligodendrocytes, and neurons — a hybrid glial-neuronal population. Not clearly neurons but receive direct neuronal synaptic input. First described by Jabs et al., 2005.",
+    "quote_count": 5
+  },
+  {
+    "proposed_id": "ca1_radiatum_giant_cell",
+    "name": "CA1 radiatum giant cell",
+    "is_new": false,
+    "markers_mentioned": [],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": [
+      "CA1 stratum radiatum"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Excitatory projection neuron located in CA1 stratum radiatum. Distinct from pyramidal cells. Large cell body (hence 'giant').",
+    "ephys_summary": "Unique properties of synaptic NMDA receptors allow glutamatergic synaptic activation to fire an NMDA receptor-dependent burst of action potentials even after blocking non-NMDA receptors — a property distinguishing RGCs from typical pyramidal cells. Enhanced synaptic excitability.",
+    "subtypes_noted": "Treated as a single specialized type. First characterized by Kirson and Yaari, 2000.",
+    "quote_count": 2
+  }
+]

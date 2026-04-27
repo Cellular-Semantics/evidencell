@@ -1,0 +1,72 @@
+{
+  "dg_granule_cell": {
+    "cl_term_id": "CL:2000089",
+    "label": "dentate gyrus granule cell",
+    "mapping_type": "EXACT",
+    "mapping_confidence": "HIGH",
+    "definition_references": [
+      "PMID:17765709"
+    ],
+    "note": "Exact label match. Synonym 'dentate gyrus of hippocampal formation granule cell'. Definition: principal cell type of the dentate gyrus with elliptical soma and cone-shaped spiny apical dendrites. In human_subset and mouse_subset."
+  },
+  "dg_mossy_cell": {
+    "cl_term_id": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for hilar mossy cell. Children of CL:4023062 (dentate gyrus neuron) include dentate gyrus granule cell (CL:2000089), basket cell (CL:2000087), kisspeptin neuron (CL:4023124), and stellate cell (CL:2000090); none matches mossy cell. Potential CL contribution — the excitatory hilar mossy cell is a well-characterised glutamatergic principal cell type of the dentate hilus absent from the current CL."
+  },
+  "ca3_pyramidal_cell": {
+    "cl_term_id": "CL:1001571",
+    "label": "hippocampal pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "HIGH",
+    "definition_references": [
+      "PMID:19342486"
+    ],
+    "note": "CA3-specific term absent from CL. Best available match is CL:1001571 (hippocampal pyramidal neuron), which carries the synonym 'hippocampus (CA) pyramidal cell' covering CA1–CA3 without subfield specificity. CL:4023060 (hippocampal CA1-3 neuron) is another BROAD option but lacks the pyramidal identity. BROAD mapping used because the CL term spans the entire CA field."
+  },
+  "ca1_pyramidal_cell": {
+    "cl_term_id": "CL:1001571",
+    "label": "hippocampal pyramidal neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "HIGH",
+    "definition_references": [
+      "PMID:19342486"
+    ],
+    "note": "CA1-specific term absent from CL. Same BROAD mapping to CL:1001571 as CA3; the synonym 'hippocampus (CA) pyramidal cell' covers the CA subfields collectively but does not discriminate CA1 from CA3. BROAD mapping used for the same reason."
+  },
+  "ms_dbb_glutamatergic_neuron": {
+    "cl_term_id": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for medial septal / diagonal band of Broca glutamatergic neuron. CL has cholinergic (CL:0000108) and GABAergic neurons but no region-specific septal glutamatergic type. CL:0000679 (glutamatergic neuron) is too broad. Potential CL contribution — VGluT1/VGluT2+ MS-DBB neurons projecting to hippocampal interneurons are functionally distinct and well-characterised."
+  },
+  "hpc_cajal_retzius_cell": {
+    "cl_term_id": "CL:0000695",
+    "label": "Cajal-Retzius cell",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "HIGH",
+    "definition_references": [
+      "PMID:10600995",
+      "PMID:34047341",
+      "PMID:36774666",
+      "PMID:37775311",
+      "PMID:9728912",
+      "DOI:10.1016/S0166-2236(97)01164-8",
+      "DOI:10.1038/nrn2009",
+      "DOI:10.1111/j.1440-169X.2009.01102.x",
+      "DOI:10.1155/2014/597395",
+      "DOI:10.1523/JNEUROSCI.1407-14.2014"
+    ],
+    "note": "Exact label match at the generic level (CL:0000695 = Cajal-Retzius cell). Mapping type is BROAD because CL:0000695 describes the general CR cell class across cortex and hippocampus, while the proposed type is the specifically hippocampal, adult-persisting, glutamatergic subpopulation (reelin+/calretinin+/VGluT3+). The CL definition explicitly notes the hippocampal stratum lacunosum-moleculare and OML localisation. Rich definition_references harvested."
+  },
+  "ca1_radiatum_giant_cell": {
+    "cl_term_id": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term found for CA1 radiatum giant cell. Searches for 'radiatum giant cell', 'giant cell hippocampus', and 'CA1 radiatum' returned no hippocampus-specific CL neuronal terms. This is a rare specialised excitatory projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential CL contribution."
+  }
+}
