@@ -1,0 +1,174 @@
+# Proposed mapping edge — avpv_th_neuron → CS20230722_SUPT_0486
+# Generated: 2026-04-26
+# Curator-approved at Step 1 GATE
+# Status: PROPOSED — pending expert review at Step 4 GATE
+
+- id: edge_avpv_th_neuron_to_cs20230722_supt_0486
+  type_a: avpv_th_neuron
+  type_b: WMB:CS20230722_SUPT_0486
+  relationship: PARTIAL_OVERLAP
+  confidence: MODERATE
+
+  # ── Atlas node summary ─────────────────────────────────────────────────────
+  # SUPT_0486: "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"
+  # Subclass: 106 PVpo-VMPO-MPN Hmx2 Gaba (CS20230722_SUBC_106)
+  # Soma locations: PVpo (MBA:133, n=64), Hypothalamus (MBA:1097, n=27),
+  #                 MPN (MBA:515, n=37), AVPV (MBA:272, n=16)
+  # Precomputed expression (mean log-normalised CPM):
+  #   Kiss1=0.62, Th=2.72, Esr1=7.72, Calb1=4.16, Ar=8.15, Pgr=6.8,
+  #   Cyp19a1=1.15, Tac1=0.27, Crhr1=1.66, Crh=0.11, Oxtr=0.07
+
+  property_comparisons:
+
+    # ── Neurotransmitter type ──────────────────────────────────────────────
+    - property: nt_type
+      classical_value: "dopaminergic"
+      atlas_value: "GABAergic (Gaba_5 supertype)"
+      comparison: CAVEAT
+      notes: >
+        The classical AVPV TH neuron is defined as dopaminergic (A14 group).
+        SUPT_0486 is classified as GABAergic in the atlas taxonomy label.
+        However, Th mean expression is 2.72 in this supertype, indicating that
+        a subpopulation carries dopaminergic identity. The child cluster
+        CLUS_1915 (PVpo-VMPO-MPN Hmx2 Gaba_5) is explicitly designated as
+        dopaminergic (nt_type=Dopa) and has male_female_ratio=0.02 — the most
+        extremely female-biased cluster in the candidate set. This is the
+        strongest available candidate for the female-biased AVPV TH population.
+        The supertype-level GABAergic label reflects the broader population;
+        the dopaminergic minority is resolved at cluster level (CLUS_1915).
+
+    # ── Soma location ─────────────────────────────────────────────────────
+    - property: soma_location
+      compartment: SOMA
+      classical_value: "MBA:272 (AVPV / anteroventral periventricular nucleus)"
+      atlas_value: >
+        MBA:272 (AVPV, n=16), MBA:133 (PVpo, n=64), MBA:515 (MPN, n=37),
+        MBA:1097 (Hypothalamus unspecified, n=27)
+      comparison: PARTIAL_MATCH
+      notes: >
+        SUPT_0486 contains n=16 cells explicitly labeled as AVPV (MBA:272) —
+        a direct location concordance with the classical AVPV TH neuron soma.
+        The periventricular preoptic (PVpo, MBA:133) is the adjacent preoptic
+        periventricular zone containing AVPV at its rostral pole. However, the
+        supertype also spans MPN (MBA:515, n=37), which is a distinct preoptic
+        nucleus and indicates the atlas does not cleanly segregate AVPV TH
+        neurons into a dedicated supertype.
+
+    # ── Defining markers ──────────────────────────────────────────────────
+    - property: defining_marker
+      gene: Th
+      ncbi_gene_id: "NCBIGene:21823"
+      classical_value: "POSITIVE (protein; primary defining marker)"
+      atlas_value: "mean_expression=2.72"
+      comparison: SUPPORT
+      notes: >
+        Th mean expression is 2.72 in SUPT_0486 — the highest Th expression
+        among all preoptic supertypes identified in the candidate search.
+        This is low-moderate at the supertype level (reflecting dilution across
+        the mixed population) but is the best available atlas-level concordance
+        for the Th-defining criterion. Child cluster CLUS_1915 is explicitly
+        dopaminergic (Dopa) and has male_female_ratio=0.02.
+
+    - property: defining_marker
+      gene: Kiss1
+      ncbi_gene_id: "NCBIGene:280287"
+      classical_value: "POSITIVE (transcript; co-expressed with Th in AVPV)"
+      atlas_value: "mean_expression=0.62"
+      comparison: WEAK_SUPPORT
+      notes: >
+        Kiss1 mean expression is 0.62 in SUPT_0486. Consistent with the
+        classical observation that most AVPV TH neurons co-express Kiss1,
+        but the low mean value indicates Kiss1 expression is present in a
+        minority of the supertype's cells (consistent with AVPV Kiss1/TH
+        neurons being a subset of the broader PVpo-VMPO-MPN population).
+
+    # ── Sex ratio evidence ─────────────────────────────────────────────────
+    - property: sex_ratio
+      classical_value: "female-biased (2-4x more TH+ neurons in females)"
+      atlas_value: >
+        Child cluster CLUS_1915 male_female_ratio=0.02 (extreme female bias).
+        Supertype-level sex ratio not available in DB output.
+      comparison: STRONG_SUPPORT
+      notes: >
+        CLUS_1915, a child of SUPT_0486, has male_female_ratio=0.02 — the
+        most extremely female-biased cluster among all preoptic candidates.
+        This is a very strong positive signal for the female-biased AVPV TH
+        neuron population (2-4x more cells in females). The signal is diluted
+        at supertype level due to the broader cell type composition of
+        SUPT_0486, but it provides strong child-level confirmation.
+
+  evidence:
+    - evidence_type: DATABASE_CANDIDATE
+      supports: SUPPORT
+      explanation: >
+        SUPT_0486 was the top-ranked rank-1 candidate for avpv_th_neuron
+        (assessment=STRONG) in the discovery_candidates JSON. It is the parent
+        supertype of CLUS_1915, which received assessment=STRONG at rank 0
+        based on: dopaminergic NT type, PVpo-VMPO-MPN location (adjacent to
+        AVPV), and extreme female bias (male_female_ratio=0.02). Three
+        independent criteria (NT type, location, sex ratio) converge on
+        SUPT_0486 / CLUS_1915.
+
+    - evidence_type: PROPERTY_COMPARISON
+      supports: PARTIAL
+      explanation: >
+        Th (mean=2.72) is expressed in SUPT_0486 and is the primary defining
+        marker of avpv_th_neuron. Kiss1 (mean=0.62) is co-expressed as
+        expected from the classical literature. Esr1 (mean=7.72) is a
+        supertype-defining marker in SUPT_0486 and is also expressed in
+        AVPV TH neurons (estrogen receptor mediating female-biased regulation).
+        The AVPV soma location (MBA:272, n=16) is present in the supertype.
+        Three of four property classes (NT type/Th, location, sex ratio at
+        cluster level) support the assignment; only the atlas-level GABAergic
+        classification introduces a caveat (resolved at cluster level by
+        CLUS_1915 Dopa designation).
+
+  caveats:
+    - caveat_type: NT_TYPE_LABEL_MISMATCH
+      description: >
+        SUPT_0486 carries a "Gaba_5" label at supertype level, while the
+        classical AVPV TH neuron is dopaminergic. The dopaminergic subpopulation
+        is resolved only at cluster level (CLUS_1915, Dopa). The classical type
+        may be better mapped at cluster level rather than supertype level, but
+        per curator instruction the supertype target is SUPT_0486.
+
+    - caveat_type: SUPERTYPE_HETEROGENEITY
+      description: >
+        SUPT_0486 spans multiple distinct preoptic cell populations (PVpo,
+        VMPO, MPN, AVPV). The AVPV TH neurons (A14 group) are a small subset.
+        The female-biased TH signal is concentrated in CLUS_1915 but the
+        supertype as a whole contains cell types with different sex ratios,
+        markers, and functions. PARTIAL_OVERLAP is the appropriate relationship.
+
+    - caveat_type: SUBSTANTIAL_CLASSICAL_OVERLAP
+      description: >
+        The avpv_th_neuron and avpv_kiss1_neuron classical nodes substantially
+        overlap: most AVPV/PeN Kiss1 cells co-express TH. Both classical nodes
+        map to SUPT_0486 as their best available atlas target. The two classical
+        types are distinguished by their primary defining criterion (Kiss1 vs.
+        Th) but may not be separable at supertype level in the atlas.
+
+  unresolved_questions:
+    - >
+      Does CLUS_1915 (the extreme-female-biased dopaminergic cluster within
+      SUPT_0486) represent a clean match to AVPV A14 TH neurons? Cluster-level
+      marker profiling (Kiss1, Th, Esr1 co-expression) required.
+    - >
+      Are the avpv_th_neuron and avpv_kiss1_neuron classical types resolved as
+      separate clusters within SUPT_0486, or do they collapse into the same
+      cluster (CLUS_1915)?
+    - >
+      How many cells in the WMBv1 atlas carry AVPV spatial coordinates within
+      the SUPT_0486 / CLUS_1915 lineage? The n=16 AVPV cells at supertype level
+      may undercount given atlas spatial resolution.
+
+  proposed_experiments:
+    - >
+      Inspect CLUS_1915 marker profile: confirm Th and Kiss1 co-expression
+      at cluster level (not just supertype mean). If confirmed, refine
+      relationship target from SUPT_0486 to CLUS_1915 with PARTIAL_OVERLAP
+      and higher confidence.
+    - >
+      Run MapMyCells annotation transfer using a published AVPV TH cell
+      dataset (e.g. scRNA-seq of AVPV Kiss1/TH-lineage cells) to WMBv1
+      to obtain F1-based confirmation at supertype and cluster levels.

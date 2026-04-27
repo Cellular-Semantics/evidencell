@@ -32,8 +32,11 @@ PARAMS:
                                 # if null → discovery mode (Step 0 queries taxonomy DB)
   ranks: [0, 1]                 # taxonomy ranks to query (0=leaf, 1=supertype, 2=subclass, …)
                                 # check taxonomy_meta.yaml level_hierarchy for available ranks
-  stats_h5: ""                  # path to precomputed_stats HDF5 (or "" to skip expression enrichment)
-  gene_mapping_tsv: ""          # path to gene mapping TSV (generate with just generate-gene-mapping)
+  stats_h5: "conf/mapmycells/{taxonomy_id}/precomputed_stats.h5"
+                                # canonical HDF5 path; used by Step 2b for expression enrichment
+                                # if not at canonical path, copy/symlink before running
+  gene_mapping_tsv: "conf/gene_mapping_{taxonomy_id}.tsv"
+                                # generate once: just generate-gene-mapping {stats_h5} {gene_mapping_tsv}
   model: "sonnet"
 ```
 
@@ -64,6 +67,10 @@ taxonomy's level_hierarchy — some taxonomies have more or fewer levels.
 This extracts the classical node's property signature (NT type, markers, soma
 locations), resolves UBERON IDs to MBA IDs via anatomy closure tables, and scores
 all taxonomy nodes by region match (+2), NT match (+2), and per-marker match (+1).
+If the classical node has a `sex_bias` field (MALE_BIASED / FEMALE_BIASED), rank-0
+queries automatically apply a +1 bonus to clusters whose `male_female_ratio` matches
+the expected direction (< 0.3 for female-biased; > 3.0 for male-biased). This bonus
+is printed in the stderr log and appears as `criteria_applied` in the output JSON.
 Results are sorted by descending score.
 
 ### Step 0b: Refinement subagent
@@ -110,20 +117,67 @@ TASK:
    Values >3 or <0.33 indicate strong sex bias — relevant for sexually dimorphic
    nuclei (e.g. hypothalamic BNST, VMH, MPN clusters). Can help confirm or
    exclude candidates when the classical type has known sex-specific expression.
+   The find-candidates scoring already boosts rank-0 clusters matching the
+   classical node's sex_bias field — review `criteria_applied` in the JSON.
 
-4. Produce a refined ranking for each rank level. For each candidate include:
+4. For every supertype-rank candidate (taxonomy_rank ≥ 1):
+
+   CHILD-CLUSTER ANALYSIS. Read the candidate's taxonomy YAML (in
+   kb/taxonomy/{taxonomy_id}/) and look for a `child_cluster_expression` block.
+   For each child cluster listed:
+   - Extract expression values for the classical node's defining_markers,
+     negative_markers, and neuropeptides
+   - Retrieve male_female_ratio from the DB (run: just query-taxonomy-db
+     {taxonomy_id} "SELECT male_female_ratio FROM nodes WHERE node_id=?")
+   - Note the child cluster's primary soma region (top region by cell count)
+   Rank child clusters by sum of expression for defining_markers.
+   Flag any cluster where a defining marker expression > 1.5 AND
+   the sex ratio matches the classical node's sex_bias (if set).
+
+   LOCATION FRACTION. Compute: cells in classical soma region / total cells in
+   supertype. If < 20%, note "supertype predominantly off-target".
+
+   AT EVIDENCE CHECK. Search kb/draft/ and kb/ for AnnotationTransferEvidence
+   entries where target_node_id matches the candidate accession. If found:
+   - Report F1 score and source dataset_id — this is a primary confidence signal
+   - F1 ≥ 0.5 strongly supports the mapping; F1 < 0.2 is a concern
+   If absent: note "annotation_transfer_f1: NOT_ASSESSED".
+
+   Output a structured block for each supertype candidate:
+   ```
+   {accession} {label}
+     target_region_fraction: {n}/{total} ({pct}%)
+     expression_at_supertype: {gene}: {value}, ...
+     annotation_transfer_f1: {value or NOT_ASSESSED}
+     best_child_cluster: {accession} {label}
+       expression: {gene}: {value}, ...
+       male_female_ratio: {value or null}
+       primary_soma: {MBA:XXX label (n=NN)}
+   ```
+
+5. For every cluster-rank candidate (taxonomy_rank 0):
+
+   AT EVIDENCE CHECK (same as above — search KB for matching AT evidence).
+
+   Report parent supertype accession and its expression values (if enriched).
+
+6. Produce a refined ranking for each rank level. For each candidate include:
    cell_set_accession, name, taxonomy_rank, DB score, your assessment
    (STRONG / PLAUSIBLE / WEAK / EXCLUDE), and brief rationale.
 
-5. Write to {output_dir}/discovery_candidates.json combining all levels:
+7. Write to {output_dir}/discovery_candidates.json combining all levels:
    {
      "classical_node_id": "...",
      "classical_node_name": "...",
      "taxonomy_id": "...",
      "candidates_by_rank": {
        "0": [ { "cell_set_accession": "...", "name": "...", "taxonomy_rank": 0,
-         "db_score": N, "assessment": "...", "rationale": "..." } ],
-       "1": [ ... same format ... ]
+         "db_score": N, "assessment": "...", "rationale": "...",
+         "annotation_transfer_f1": null or float } ],
+       "1": [ { ..., "target_region_fraction": "n/total (pct%)",
+         "best_child_cluster": { "accession": "...", "label": "...",
+           "expression": {...}, "male_female_ratio": null or float,
+           "primary_soma": "..."}, "annotation_transfer_f1": null or float } ]
      },
      "non_candidates_summary": "..."
    }
@@ -183,39 +237,68 @@ with available evidence, skip to Step 3.
 
 ---
 
-## Step 2b: Ensure expression data on candidate nodes
+## Step 2a: Identify genes to enrich
 
-Before spawning mapping subagents, ensure the candidate atlas nodes have
-`precomputed_expression` covering the classical node's genes.
+From the classical node YAML, collect the target gene list — the genes that must be
+quantified on candidate atlas nodes:
 
-1. Collect all gene symbols from the classical node:
-   `defining_markers`, `negative_markers`, `neuropeptides` → flat list of symbols.
+- `defining_markers[*].gene.symbol` (or `defining_markers[*].symbol` legacy form)
+- `neuropeptides[*].gene.symbol`
+- `negative_markers[*].gene.symbol`
 
-2. For each confirmed candidate, check whether its taxonomy YAML node already has a
+This list is determined entirely by the classical node; no curator input is needed.
+
+---
+
+## Step 2b: Ensure expression data on candidate nodes (mandatory)
+
+Before spawning mapping subagents, every confirmed candidate must have
+`precomputed_expression` covering the target genes identified in Step 2a.
+
+1. For each confirmed candidate, check whether its taxonomy YAML node already has a
    `precomputed_expression` block covering those genes. Read the relevant taxonomy
    level file (`kb/taxonomy/{taxonomy_id}/{level}.yaml`) and find the candidate node
    by `cell_set_accession`.
 
-3. If any candidate is missing expression data and a precomputed stats HDF5 + gene
-   mapping TSV are available:
+2. If any gene is missing from a candidate's precomputed_expression:
 
+   **If `stats_h5` and `gene_mapping_tsv` exist at the PARAMS paths:**
    ```bash
    just add-expression {taxonomy_id} {stats_h5} {gene_mapping_tsv} {gene1} {gene2} ... \
-     --level {level} --accessions {acc1} {acc2} ...
+     --accessions {acc1} {acc2} ...
    ```
+   For supertype-rank candidates, also run:
+   ```bash
+   just add-expression-all {taxonomy_id} {stats_h5} {gene_mapping_tsv} {gene1} ... \
+     --accessions {acc1} ...
+   ```
+   This populates `child_cluster_expression` in the supertype YAML — required for
+   the child-cluster analysis in Step 0b.
 
-   This writes `PrecomputedExpression` blocks to the taxonomy YAML for exactly
-   those genes on exactly those nodes. The data persists across sessions.
-
-   If `--supertype` is needed (candidate is a supertype), use `add-expression-all`
-   which computes weighted means across child clusters.
-
-4. If no HDF5 or gene mapping is available, proceed — the mapping subagent will
-   mark expression comparisons as NOT_ASSESSED.
+   **If HDF5 or gene mapping unavailable:** Log explicitly for each affected candidate:
+   ```
+   EXPRESSION_NOT_ASSESSED: {accession} — {stats_h5} not found;
+     genes {list} unverified. Mapping subagent will mark these NOT_ASSESSED.
+   ```
+   Do NOT silently proceed. The gap must be explicit in the output.
 
 **Gene mapping TSV**: a two-column file (`ensembl_id`, `symbol`) resolving gene
 symbols to Ensembl IDs in the HDF5. Generate once per stats file:
 `just generate-gene-mapping {stats_h5} conf/gene_mapping_{taxonomy_id}.tsv`
+
+---
+
+## Step 2c: Rebuild taxonomy DB
+
+After any `add-expression` or `add-expression-all` writes, rebuild the SQLite DB
+so that downstream queries reflect the new expression data:
+
+```bash
+just build-taxonomy-db {taxonomy_id}
+```
+
+This is mandatory after Step 2b writes. Skip only if Step 2b wrote nothing (all
+candidates already had the required expression data).
 
 ---
 
