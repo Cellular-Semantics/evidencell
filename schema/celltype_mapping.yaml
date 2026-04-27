@@ -34,6 +34,13 @@
 #                               Taxonomy nodes in KB graphs should be minimal stubs (id, name,
 #                               definition_basis, taxonomy_id, cell_set_accession); full data
 #                               lives in kb/taxonomy/{taxonomy_id}/*.yaml
+# Version: 0.8.0 (2026-04-23) — BREAKING: nested provenance on property objects.
+#                               ElectrophysiologyProfile + MorphologyProfile classes (description + sources);
+#                               electrophysiology_class → electrophysiology (ElectrophysiologyProfile);
+#                               morphology_notes → morphology (MorphologyProfile);
+#                               AnatomicalLocation.sources added (replaces CellTypeNode.location_sources);
+#                               ephys_sources, morphology_sources, location_sources removed from CellTypeNode.
+#                               definition_references retained (general citations, not property-scoped).
 # Version: 0.7.1 (2026-04-23) — ADDITIVE: CellTypeNode.male_female_ratio (M/F cell count ratio from taxonomy)
 # Version: 0.7.0 (2026-04-22) — ADDITIVE: MarkerCategory enum; GeneDescriptor.category + expression_score;
 #                               AnatomicalLocation.cell_count; CellTypeNode.markers + neighborhood;
@@ -289,6 +296,11 @@ enums:
 
           Queryable: "show all unresolved CANDIDATE_SYNONYM edges" surfaces
           pending curation decisions without blocking KB construction.
+      OVERLAPS:
+        description: >
+          Cross-taxonomy correspondence where a cell set in one taxonomy has
+          partial overlap with a cell set in another. Used for cross-taxonomy
+          annotation transfer edges where 1:1 equivalence cannot be assumed.
 
   # ── Mapping confidence ──────────────────────────────────────────
   MappingConfidence:
@@ -311,6 +323,10 @@ enums:
       REFUTE: {}
       PARTIAL:
         description: Supports some aspects but not all
+      WEAK:
+        description: >
+          Non-zero but weak evidence — e.g. marker match with anatomical
+          mismatch, or a speculative assignment retained as placeholder.
       NO_EVIDENCE:
         description: Assessed but no relevant evidence found
 
@@ -482,6 +498,30 @@ enums:
         description: NT type from atlas may be unreliable (e.g. nuclear RNA depletion in snRNA-seq)
       PRIOR_MAPPING_ASSUMED:
         description: This edge relies on a prior mapping step whose confidence is UNCERTAIN or LOW
+      AMBIGUOUS_MAPPING:
+        description: >
+          Multiple possible target types; mapping is not clearly one-to-one.
+          Use when the classical type spans several atlas clusters without
+          a dominant match.
+      SINGLE_STUDY:
+        description: >
+          Evidence for this mapping comes from a single study (broader than
+          SINGLE_DATASET — covers the case where independent replication
+          is absent even with multiple datasets from one lab).
+      NO_DISCRIMINATING_MARKER:
+        description: >
+          No single marker uniquely identifies this classical type in the
+          atlas; mapping relies on marker combinations or other evidence.
+      DISCORDANT_ANATOMY:
+        description: >
+          Anatomical location of the classical type and the atlas cluster
+          do not agree — e.g. different layers, subregions, or hemispheric
+          distribution.
+      ELECTROPHYSIOLOGY_ONLY_DEFINITION:
+        description: >
+          This classical type is defined primarily or solely by
+          electrophysiological properties, making transcriptomic matching
+          inherently uncertain.
       OTHER: {}
 
 
@@ -551,6 +591,17 @@ classes:
           Populated from atlas MERFISH registration data (e.g. WMBv1 anat
           cell counts per cluster per region). Enables ranking of anatomical
           locations by cell abundance. Leave absent for non-atlas nodes.
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for this specific anatomical location assertion.
+          Populate for classical and prior-transcriptomic nodes, especially
+          for sub-regional claims where location is specific or contested.
+          scope is critical where location is context-dependent.
+          Leave empty for atlas terminal nodes (provenance implicit from
+          atlas + cell_set_accession).
 
   CLMapping:
     description: >
@@ -679,9 +730,11 @@ classes:
   PropertySource:
     description: >
       Evidence source for a single property assertion on a node.
-      Used for: NeurotransmitterType.sources, ephys_sources, morphology_sources,
-      AnatomicalLocation.sources. For marker assertions use MarkerSource,
-      which adds the controlled marker_type field.
+      Used as the nested sources list on property objects:
+      NeurotransmitterType.sources, ElectrophysiologyProfile.sources,
+      MorphologyProfile.sources, AnatomicalLocation.sources.
+      For marker assertions use MarkerSource (extends PropertySource with
+      the controlled marker_type field).
 
       Leave sources lists empty on ATLAS_TRANSCRIPTOMIC nodes — provenance
       is implicit from atlas + cell_set_accession (see header convention).
@@ -694,11 +747,11 @@ classes:
         "electrophysiology (inhibitory PSPs recorded)". Scope is important —
         NT type can differ across species or developmental stage.
 
-      ephys_sources — ref to the recording study. Scope should note age,
-        temperature, and preparation (acute slice, in vivo, etc.).
+      ElectrophysiologyProfile.sources — ref to the recording study. Scope
+        should note age, temperature, and preparation (acute slice, in vivo, etc.).
 
-      morphology_sources — method e.g. "Golgi stain", "biocytin fill + confocal",
-        "electron microscopy". Snippet from the cell description section.
+      MorphologyProfile.sources — method e.g. "Golgi stain", "biocytin fill +
+        confocal", "electron microscopy". Snippet from the cell description section.
 
       AnatomicalLocation.sources — ref establishing the location claim.
         Scope is critical where location is context-specific or contested.
@@ -740,6 +793,23 @@ classes:
           snippet (which must be a verbatim quote from the cited source).
           Examples: "Detected in 46/46 cells (100%); mean counts 305273",
           "Htr3a-OLM 43% vs Sst-OLM 26% — subtype-specific expression".
+      support:
+        range: EvidenceSupport
+        description: >
+          Whether this source supports, refutes, or is ambiguous for the
+          property assertion. Set by cite-traverse and evidence-extraction
+          workflows. Omit when support level is implicit (e.g. all sources
+          on a property are assumed SUPPORT unless stated otherwise).
+      source:
+        description: >
+          Workflow provenance tag identifying when/how this source was added.
+          E.g. "cite_traverse_2026_04_10", "asta_survey_2026_03". Machine-set;
+          not for human editing.
+      added_by:
+        description: >
+          Identifier of the agent or workflow run that wrote this entry.
+          E.g. "evidence_extraction_olm_cell_ca1_2026-04-22". Machine-set;
+          not for human editing.
 
   TypeSynonym:
     description: >
@@ -795,6 +865,49 @@ classes:
           scope: "adult mouse, WMBv1"
           snippet: "Sst neuropeptide marker present in clusters 1996 and 1997"
           ref: "https://doi.org/10.1038/s41586-023-06812-z"
+
+  ElectrophysiologyProfile:
+    description: >
+      Electrophysiological characterisation of a cell type: e-type classification
+      and firing properties, with evidence provenance. Replaces the former
+      electrophysiology_class string + ephys_sources list pair.
+    attributes:
+      description:
+        required: true
+        description: >
+          E-type label and firing properties. Free text.
+          E.g. "fast-spiking", "regular-spiking adapting with pronounced sag (Ih)",
+          "theta spiking resonance, high input resistance".
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for this electrophysiology characterisation.
+          ref to the recording study; snippet from the e-type description.
+          scope should note age, temperature, and preparation type
+          (e.g. "P21 mouse, acute slice, 32°C").
+
+  MorphologyProfile:
+    description: >
+      Morphological characterisation of a cell type: key structural features
+      with evidence provenance. Replaces the former morphology_notes string +
+      morphology_sources list pair.
+    attributes:
+      description:
+        required: true
+        description: >
+          Key morphological features. Free text.
+          E.g. "large soma, radially-projecting dendrites into ML",
+          "horizontal dendrites in SO, axon ramifies in SLM".
+      sources:
+        multivalued: true
+        inlined_as_list: true
+        range: PropertySource
+        description: >
+          Evidence sources for this morphology characterisation.
+          method e.g. "Golgi stain", "biocytin fill + confocal",
+          "electron microscopy". Snippet from cell description section.
 
   NeurotransmitterType:
     description: >
@@ -1010,15 +1123,6 @@ classes:
           Other cell types that co-localise with or are spatially adjacent to
           this type. Records relative positional context separately from the
           anatomical location above (e.g. "adjacent to GPi core neurons").
-      location_sources:
-        multivalued: true
-        inlined_as_list: true
-        range: PropertySource
-        description: >
-          Evidence sources for the anatomical location assertion. Populate for
-          classical and prior-transcriptomic nodes, especially for sub-regional
-          claims where location is specific or contested. Leave empty for atlas
-          terminal nodes (provenance implicit from atlas + cell_set_accession).
       cl_mapping:
         range: CLMapping
         description: >
@@ -1074,10 +1178,18 @@ classes:
           and atlas terminal nodes (unified field, replaces atlas_nt_type).
           Carries the naming triple: name_in_source (verbatim source label),
           cl_terms (CL identifiers), sources (evidence provenance).
-      electrophysiology_class:
-        description: E-type label if defined, e.g. "fast-spiking", "regular-spiking adapting"
-      morphology_notes:
-        description: Key morphological features, e.g. "large soma, radially-projecting dendrites into ML"
+      electrophysiology:
+        range: ElectrophysiologyProfile
+        inlined: true
+        description: >
+          Electrophysiological characterisation with nested evidence sources.
+          Replaces former electrophysiology_class (string) + ephys_sources (list) pair.
+      morphology:
+        range: MorphologyProfile
+        inlined: true
+        description: >
+          Morphological characterisation with nested evidence sources.
+          Replaces former morphology_notes (string) + morphology_sources (list) pair.
 
       # ── For PRIOR_TRANSCRIPTOMIC nodes ───────────────────────────
       prior_dataset_accession:
@@ -1150,31 +1262,32 @@ classes:
       definition_references:
         multivalued: true
         description: >
-          Source citations for node properties not covered by per-property
-          source fields: morphology description, projection targets, etc.
-          DOI or PMID strings. NT type provenance is now in nt_type.sources.
-          For prior-transcriptomic nodes this replaces prior_reference
-          (prior_reference retained for backward compatibility).
+          General source citations for this node's defining properties — the
+          key papers that established or characterised this cell type.
+          DOI or PMID strings. Not property-scoped; for property-specific
+          provenance use the nested sources on electrophysiology, morphology,
+          anatomical_location, nt_type, and marker GeneDescriptors.
           Not needed for atlas terminal nodes — use metadata_url on
           AtlasMetadataEvidence instead.
-      ephys_sources:
-        multivalued: true
-        inlined_as_list: true
-        range: PropertySource
-        description: >
-          Evidence sources for electrophysiology_class assertion.
-          ref to the recording study; snippet from the e-type description.
-          scope should note age, temperature, and preparation type
-          (e.g. "P21 mouse, acute slice, 32°C").
-      morphology_sources:
-        multivalued: true
-        inlined_as_list: true
-        range: PropertySource
-        description: >
-          Evidence sources for morphology_notes assertion.
-          method e.g. "Golgi stain", "biocytin fill + confocal",
-          "electron microscopy". Snippet from cell description section.
 
+      precomputed_expression:
+        range: PrecomputedExpression
+        inlined: true
+        description: >
+          Precomputed expression statistics for key genes from the atlas
+          taxonomy. Used for property comparison scoring on mapping edges.
+          Populated by the precomputed-stats workflow for atlas terminal
+          nodes. Leave absent for classical/prior-transcriptomic nodes.
+      cell_set_designation:
+        description: >
+          CAS taxonomy designation string for this cell set (e.g. "Vip",
+          "49_Vip"). From CAS-format taxonomy ingest. Distinct from name
+          which may be editorially adjusted.
+      rationale_dois:
+        multivalued: true
+        description: >
+          DOIs cited as rationale for this cell set's designation in the
+          source CAS taxonomy. From CAS-format taxonomy metadata.
       notes:
         description: Any caveats or observations not captured by other fields
 
@@ -1444,6 +1557,11 @@ classes:
         description: >
           DEPRECATED in v0.5 — superseded by MappingEdge.property_comparisons.
           Retained for backward compatibility.
+      name_in_source:
+        description: >
+          Label of the target cluster as it appears in the target taxonomy
+          (the name the source cluster was mapped to). Preserves the exact
+          source wording for review. E.g. "49_Vip", "7_Lamp5 Lhx6".
       tool_version:
         description: Version of tool used, e.g. "MapMyCells v1.2"
       code_reference:
@@ -1694,6 +1812,102 @@ classes:
         range: date
       notes:
         description: Free-text notes about scope, limitations, or outstanding issues
+      source_atlas:
+        description: >
+          When this graph represents cross-taxonomy annotation transfer,
+          the atlas that nodes were transferred FROM (the source taxonomy).
+          E.g. "WMBv1 (CCN20230722)" for WMB→CTX-HPF transfers.
+      annotation_transfer_datasets:
+        multivalued: true
+        inlined_as_list: true
+        range: AnnotationTransferDataset
+        description: >
+          Datasets used or planned for annotation transfer experiments
+          targeting cell types in this graph. Tracked at graph level so
+          multiple nodes can reference the same dataset.
+
+  AnnotationTransferDataset:
+    description: >
+      A dataset used for annotation transfer (MapMyCells or equivalent).
+      Tracked at graph level to avoid duplication across nodes.
+    attributes:
+      accession:
+        required: true
+        description: >
+          Dataset accession, e.g. "GEO:GSE142546", "SCP795".
+      publication:
+        pattern: "^(PMID:[0-9]+|https://doi\\.org/.+)$"
+        description: DOI or PMID of the associated publication
+      description:
+        description: Free-text description of the dataset and its relevance
+      cell_types:
+        multivalued: true
+        description: >
+          Node IDs (within this graph) that this dataset targets.
+      status:
+        description: >
+          Processing status, e.g. "pending_retrieval", "processed",
+          "awaiting_sra_reprocessing". Free text.
+
+  PrecomputedExpression:
+    description: >
+      Precomputed expression statistics for key genes from the atlas taxonomy.
+      Used for scoring property comparisons on mapping edges — e.g. "does the
+      atlas cluster express the classical type's defining markers?"
+    attributes:
+      source:
+        required: true
+        description: >
+          Source file or dataset for the precomputed stats.
+          E.g. "precomputed_stats_ABC_revision_230821.h5"
+      level:
+        description: >
+          Taxonomy level these stats correspond to.
+          E.g. "cluster", "supertype"
+      genes:
+        multivalued: true
+        inlined_as_list: true
+        range: GeneExpression
+        description: >
+          Per-gene expression statistics for this node.
+      child_cluster_expression:
+        multivalued: true
+        inlined_as_list: true
+        range: ChildClusterExpression
+        description: >
+          Per-child-cluster expression breakdown (supertype nodes only).
+          Enables scoring to inspect cluster-level heterogeneity.
+
+  ChildClusterExpression:
+    description: >
+      Per-child-cluster expression breakdown for a supertype node.
+      Enables mapping-edge scoring to inspect cluster-level heterogeneity
+      within a supertype.
+    attributes:
+      cluster_accession:
+        required: true
+        description: Cell set accession of the child cluster
+      n_cells:
+        range: integer
+        description: Number of cells in this cluster
+      expression:
+        description: >
+          Gene symbol → mean expression mapping. Stored as a flat dict;
+          keys are gene symbols, values are floats.
+
+  GeneExpression:
+    description: >
+      Expression level of a single gene in a cell type or cluster.
+      Minimal record: gene symbol + mean expression value.
+    attributes:
+      symbol:
+        required: true
+        description: Gene symbol, e.g. "Sst", "Pvalb"
+      ensembl_id:
+        description: Ensembl gene ID, e.g. "ENSMUSG00000004366"
+      mean_expression:
+        range: float
+        description: Mean expression value (log-normalised or CPM, depending on source)
 
   TaxonomyNodeList:
     description: >

@@ -222,9 +222,10 @@ def build_reference_index(
     # Scan classical node property sources (appear before edge evidence in document)
     if node_id and node_id in nodes_by_id:
         node = nodes_by_id[node_id]
-        for src in node.get("location_sources", []):
-            if src.get("ref"):
-                _add_lit(src["ref"], "soma location")
+        for loc in node.get("anatomical_location", []):
+            for src in loc.get("sources", []):
+                if src.get("ref"):
+                    _add_lit(src["ref"], "soma location")
         nt = node.get("nt_type") or {}
         for src in nt.get("sources", []):
             if src.get("ref"):
@@ -388,8 +389,9 @@ def _collect_quotes(graph: dict, refs: dict, node_id: str) -> dict:
         }
 
     # Node property sources
-    for src in node.get("location_sources", []):
-        _add_quote(src.get("quote_key", ""))
+    for loc in node.get("anatomical_location", []):
+        for src in loc.get("sources", []):
+            _add_quote(src.get("quote_key", ""))
     for src in (node.get("nt_type") or {}).get("sources", []):
         _add_quote(src.get("quote_key", ""))
     for marker in node.get("defining_markers", []):
@@ -474,7 +476,12 @@ def extract_node_facts(
             "name_in_source": loc.get("name_in_source", ""),
         })
 
-    location_refs = [_ref_label(s["ref"]) for s in node.get("location_sources", []) if s.get("ref")]
+    location_refs = [
+        _ref_label(s["ref"])
+        for loc in node.get("anatomical_location", [])
+        for s in loc.get("sources", [])
+        if s.get("ref")
+    ]
 
     # Edges
     edge_facts = []

@@ -103,9 +103,11 @@ Confidence levels (`HIGH`, `MODERATE`, `LOW`, `UNCERTAIN`) follow a decision gui
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and the full curation walkthrough.
 
-See [WORKFLOW.md](WORKFLOW.md) for the orchestrator guide (which workflow to run, when, and with what inputs).
+See [CLAUDE.md](CLAUDE.md) for the default curation guide (which workflow to run, when, and with what inputs). This is the file Claude Code loads automatically in curation sessions.
 
-See [CLAUDE.md](CLAUDE.md) for development and architecture guidelines.
+See [CLAUDE_dev.md](CLAUDE_dev.md) for the dev-mode companion — development and architecture guidelines. Load this explicitly for sessions that touch `src/`, `schema/`, or the `justfile`.
+
+Dev access is gated: writes to `src/`, `schema/`, `justfile`, `.claude/`, and `workflows/` are blocked by the pre-edit hook in curation sessions. If you need to work on code, schema, or tooling, request dev setup from the repo admin (@dosumis). Code and schema changes land through PR review against `main`.
 
 ### Taxonomy reference DB
 

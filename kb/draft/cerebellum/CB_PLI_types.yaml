@@ -106,29 +106,31 @@ nodes:
             scope: "adult mouse cerebellar cortex, PLI1 vs PLI2/PLI3"
             snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); Slc6a5 distinguishes PLI1/CC from PLI2/Globular and PLI3/Lugaro"
             ref: "PMID:35578131"
-    morphology_notes: >
-      Small soma (~10 μm diameter) in the Purkinje cell layer. 1–2 primary
-      dendrites ascend to the pia and branch in the upper molecular layer;
-      secondary dendrites extend to the upper granular layer. Dendrites
-      confined to a parasagittal plane. Beaded axon emanates near soma,
-      branches and extends in the molecular layer; 92% of synapses onto MLIs
-      (preferentially MLI1s; Lackey et al. 2024, Osorno et al. 2022).
-      Expresses high levels of Nrp1 (neuropilin-1), yet unlike basket cells
-      does not target PC axon initial segments — targets MLIs instead
-      (Schilling 2023, citing Telley et al. 2016 re Nrp1/Sema3a mechanism).
-      Most abundant PLI (approximately 80% as many as Golgi1 cells). Present
-      in all cerebellar lobules. Originally described by Lainé & Axelrad 1994
-      (PMID:8300903); comprehensively characterised by Osorno et al. 2022.
-    electrophysiology_class: >
-      Extremely high input resistance; mostly silent with occasional low-frequency
-      spontaneous firing. Highly sensitive to current injection relative to MLI
-      subtypes. Excited by mossy fibres (monosynaptic, ~1.45 ms latency) and
-      granule cell parallel fibres (facilitating). Strongly inhibited by Purkinje
-      cells (~42% of spontaneous IPSCs). Single CC firing at ~60 spikes/s reduces
-      IPSC charge in nearby PCs by ~24% (disinhibition via MLI1 inhibition).
-      PC collaterals preferentially target MLI2s; CCs preferentially inhibit
-      MLI1s — together with PC-PC synapses these form a negative feedback
-      loop (Lackey et al. 2024).
+    morphology:
+      description: >
+        Small soma (~10 μm diameter) in the Purkinje cell layer. 1–2 primary
+        dendrites ascend to the pia and branch in the upper molecular layer;
+        secondary dendrites extend to the upper granular layer. Dendrites
+        confined to a parasagittal plane. Beaded axon emanates near soma,
+        branches and extends in the molecular layer; 92% of synapses onto MLIs
+        (preferentially MLI1s; Lackey et al. 2024, Osorno et al. 2022).
+        Expresses high levels of Nrp1 (neuropilin-1), yet unlike basket cells
+        does not target PC axon initial segments — targets MLIs instead
+        (Schilling 2023, citing Telley et al. 2016 re Nrp1/Sema3a mechanism).
+        Most abundant PLI (approximately 80% as many as Golgi1 cells). Present
+        in all cerebellar lobules. Originally described by Lainé & Axelrad 1994
+        (PMID:8300903); comprehensively characterised by Osorno et al. 2022.
+    electrophysiology:
+      description: >
+        Extremely high input resistance; mostly silent with occasional low-frequency
+        spontaneous firing. Highly sensitive to current injection relative to MLI
+        subtypes. Excited by mossy fibres (monosynaptic, ~1.45 ms latency) and
+        granule cell parallel fibres (facilitating). Strongly inhibited by Purkinje
+        cells (~42% of spontaneous IPSCs). Single CC firing at ~60 spikes/s reduces
+        IPSC charge in nearby PCs by ~24% (disinhibition via MLI1 inhibition).
+        PC collaterals preferentially target MLI2s; CCs preferentially inhibit
+        MLI1s — together with PC-PC synapses these form a negative feedback
+        loop (Lackey et al. 2024).
     definition_references:
       - "PMID:8300903"
       - "PMID:35578131"
@@ -172,9 +174,10 @@ nodes:
           label: glycinergic neuron
           name_in_source: "Glyc"
           # Note: CL:0000084 glycinergic neuron — verify ID in current CL release.
-    morphology_notes: >
-      Globular soma in Purkinje layer. Distinct morphology from Lugaro and Candelabrum.
-      Defined by Osorno et al. 2022.
+    morphology:
+      description: >
+        Globular soma in Purkinje layer. Distinct morphology from Lugaro and Candelabrum.
+        Defined by Osorno et al. 2022.
     is_terminal: false
     proposed_cl_term:
       definition: >
@@ -211,10 +214,11 @@ nodes:
           label: glycinergic neuron
           name_in_source: "Glyc"
           # Note: CL:0000084 glycinergic neuron — verify ID in current CL release.
-    morphology_notes: >
-      Large soma below Purkinje cell layer, long horizontal axon extending across
-      the granule cell layer. Historically named after Luigi Lugaro. Known to
-      be activated by serotonin. Co-transmits GABA and glycine.
+    morphology:
+      description: >
+        Large soma below Purkinje cell layer, long horizontal axon extending across
+        the granule cell layer. Historically named after Luigi Lugaro. Known to
+        be activated by serotonin. Co-transmits GABA and glycine.
     is_terminal: false
     proposed_cl_term:
       cl_id: CL:0011006

@@ -19,7 +19,7 @@ import sys
 import urllib.request
 from collections import defaultdict
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
@@ -31,6 +31,19 @@ MBA_ONTOLOGY_URL = (
     "https://github.com/brain-bican/mouse_brain_atlas_ontology"
     "/releases/latest/download/mbao-full.json"
 )
+MBA_RELEASES_API = (
+    "https://api.github.com/repos/brain-bican/"
+    "mouse_brain_atlas_ontology/releases/latest"
+)
+
+
+def _fetch_latest_mba_release(timeout: float = 5.0) -> str | None:
+    """Return the latest GitHub release tag for the MBA ontology, or None if unreachable."""
+    try:
+        with urllib.request.urlopen(MBA_RELEASES_API, timeout=timeout) as resp:  # noqa: S310
+            return json.loads(resp.read())["tag_name"]
+    except Exception:
+        return None
 
 
 # ── Taxonomy metadata ──────────────────────────────────────────────────────────
@@ -1204,6 +1217,13 @@ class TaxonomyDB:
                     continue
                 for nd in nodes:
                     self._insert_node(con, nd, file_rank=file_rank)
+            con.executescript(
+                "CREATE TABLE IF NOT EXISTS _meta (key TEXT PRIMARY KEY, value TEXT);"
+            )
+            con.execute(
+                "INSERT OR REPLACE INTO _meta VALUES ('taxonomy_built_at', ?)",
+                (datetime.now(tz=timezone.utc).isoformat(),),
+            )
             con.commit()
         finally:
             con.close()
@@ -1438,6 +1458,20 @@ class TaxonomyDB:
             )
             con.executemany(
                 "INSERT INTO anat_closure VALUES (?, ?, ?)", closure
+            )
+            con.executescript(
+                "CREATE TABLE IF NOT EXISTS _meta (key TEXT PRIMARY KEY, value TEXT);"
+            )
+            release = _fetch_latest_mba_release()
+            now = datetime.now(tz=timezone.utc).isoformat()
+            if release is not None:
+                con.execute(
+                    "INSERT OR REPLACE INTO _meta VALUES ('anatomy_closure_release', ?)",
+                    (release,),
+                )
+            con.execute(
+                "INSERT OR REPLACE INTO _meta VALUES ('anatomy_closure_built_at', ?)",
+                (now,),
             )
             con.commit()
         finally:

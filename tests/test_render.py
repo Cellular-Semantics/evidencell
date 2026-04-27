@@ -58,9 +58,9 @@ MINIMAL_GRAPH = {
             "negative_markers": [{"symbol": "PV", "modifier": "ABSENT"}],
             "neuropeptides": [{"symbol": "Sst", "sources": []}],
             "anatomical_location": [
-                {"id": "UBERON:0014548", "label": "stratum oriens", "name_in_source": "CA1 SO"}
+                {"id": "UBERON:0014548", "label": "stratum oriens", "name_in_source": "CA1 SO",
+                 "sources": [{"ref": "PMID:99999999", "method": "biocytin fill", "scope": "mouse"}]}
             ],
-            "location_sources": [{"ref": "PMID:99999999", "method": "biocytin fill", "scope": "mouse"}],
         },
         {
             "id": "atlas_clus_001",
@@ -436,7 +436,7 @@ def test_collect_quotes_valid_key():
     """quote_key present in references.json → returns text verbatim."""
     graph = dict(MINIMAL_GRAPH)
     # Add a quote_key to a node source
-    graph["nodes"][0]["location_sources"][0]["quote_key"] = "111111_abc12345"
+    graph["nodes"][0]["anatomical_location"][0]["sources"][0]["quote_key"] = "111111_abc12345"
     quotes = _collect_quotes(graph, MINIMAL_REFS, "test_classical")
     assert "111111_abc12345" in quotes
     assert quotes["111111_abc12345"]["text"] == "Verbatim quote text from the paper."
@@ -445,7 +445,7 @@ def test_collect_quotes_valid_key():
 def test_collect_quotes_missing_key_raises():
     """quote_key present in YAML but absent from references.json → KeyError."""
     graph = dict(MINIMAL_GRAPH)
-    graph["nodes"][0]["location_sources"][0]["quote_key"] = "111111_NONEXISTENT"
+    graph["nodes"][0]["anatomical_location"][0]["sources"][0]["quote_key"] = "111111_NONEXISTENT"
     with pytest.raises(KeyError, match="111111_NONEXISTENT"):
         _collect_quotes(graph, MINIMAL_REFS, "test_classical")
 
@@ -494,12 +494,12 @@ def test_extract_node_facts_terminal_node_raises():
 def test_extract_node_facts_ref_index_no_invention():
     """Reference index does not include PMIDs absent from graph evidence or node sources."""
     facts = extract_node_facts(MINIMAL_GRAPH, MINIMAL_REFS, "test_classical", Path("test.yaml"))
-    # PMID:99999999 is in location_sources; it should appear with a citation fallback
+    # PMID:99999999 is in anatomical_location[].sources; it should appear with a citation fallback
     # since it's not in MINIMAL_REFS
     ref_pmids = {
         v["pmid"] for v in facts["reference_index"].values() if v.get("pmid")
     }
-    # 99999999 cited in location_sources but not in MINIMAL_REFS → appears as unknown
+    # 99999999 cited in anatomical_location sources but not in MINIMAL_REFS → appears as unknown
     # 12345678 cited in markers/NT sources and IS in MINIMAL_REFS
     assert "12345678" in ref_pmids
 
