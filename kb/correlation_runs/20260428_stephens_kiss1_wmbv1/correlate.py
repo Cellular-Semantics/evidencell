@@ -16,9 +16,21 @@ import pandas as pd
 from scipy.stats import spearmanr
 
 ROOT = Path(__file__).parent
-H5_PATH = "/Users/do12/Documents/GitHub/evidencell/scratch/olm-at/precomputed_stats_ABC_revision_230821.h5"
+
+
+def _repo_root() -> Path:
+    p = ROOT
+    while p != p.parent:
+        if (p / "pyproject.toml").exists():
+            return p
+        p = p.parent
+    raise RuntimeError("repo root (with pyproject.toml) not found")
+
+
+REPO = _repo_root()
+H5_PATH = REPO / "conf/mapmycells/CCN20230722/precomputed_stats.h5"
 BULK_CSV = ROOT / "bulk_supp_table.csv"
-TAX_DB = "/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/taxonomy/CCN20230722/CCN20230722.db"
+TAX_DB = REPO / "kb/taxonomy/CCN20230722/CCN20230722.db"
 
 
 def load_bulk():

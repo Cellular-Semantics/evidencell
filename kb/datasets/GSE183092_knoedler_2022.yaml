@@ -1,0 +1,123 @@
+id: dataset_GSE183092
+record_type: BulkDataset
+source_pmid: "PMID:35143761"
+geo_accession: GSE183092
+technique: TRAP-seq
+species: "NCBITaxon:10090"
+ingested_date: "2026-04-28"
+description: >
+  TRAP-seq (translating-ribosome-affinity-purification + RNA-seq) of Esr1+
+  neurons from four mouse brain regions across three sex/state categories.
+  Knoedler et al. 2022 also profile ATAC-seq and behaviour, but only the
+  bulk RNA-seq is ingested here.
+
+  Design: 4 regions (BNST, MeA, POA, VMH) × 3 states (Male, FR = female-receptive,
+  FNR = female-non-receptive) × 3 biological replicates = 36 samples.
+
+  Processed normalized gene-count matrices (DESeq2 size-factor) are available
+  per region; gene symbols (not Ensembl) — symbol→Ensembl mapping required
+  before correlating against an Ensembl-keyed atlas.
+
+data_files:
+  - relpath: data/GSE183092_BNST_Normalized_Gene_Counts.csv.gz
+    url: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE183nnn/GSE183092/suppl/GSE183092_BNST_Normalized_Gene_Counts.csv.gz
+    sha256: "61a95235429c0913cf277486b42332931ecc02ff046045e4c9323b7de162a652"
+    keyed_by: gene_symbol
+    normalisation: DESeq2_size_factor
+  - relpath: data/GSE183092_MeA_Normalized_Gene_Counts.csv.gz
+    url: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE183nnn/GSE183092/suppl/GSE183092_MeA_Normalized_Gene_Counts.csv.gz
+    sha256: "9eb854f699f462b7c1949edf3476d8711a00892dbdc249b4b6e987ad80f859bd"
+    keyed_by: gene_symbol
+    normalisation: DESeq2_size_factor
+  - relpath: data/GSE183092_POA_Normalized_Gene_Counts.csv.gz
+    url: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE183nnn/GSE183092/suppl/GSE183092_POA_Normalized_Gene_Counts.csv.gz
+    sha256: "e57561f163d0d877c692b5b11393a86641a54727b907edace915f9fbf3ecd241"
+    keyed_by: gene_symbol
+    normalisation: DESeq2_size_factor
+  - relpath: data/GSE183092_VMH_Normalized_Gene_Counts.csv.gz
+    url: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE183nnn/GSE183092/suppl/GSE183092_VMH_Normalized_Gene_Counts.csv.gz
+    sha256: "3f50fca30316cc98176baff0dd444434bb749b04bcf8b6e94cf887c68e23ecbb"
+    keyed_by: gene_symbol
+    normalisation: DESeq2_size_factor
+
+pools:
+  - id: knoedler_BNST_Male
+    tissue: bed_nucleus_of_stria_terminalis
+    sort_marker: Esr1+
+    state: male
+    n_replicates: 3
+    anatomy_id: "MBA:351"
+  - id: knoedler_BNST_FR
+    tissue: bed_nucleus_of_stria_terminalis
+    sort_marker: Esr1+
+    state: female_receptive
+    n_replicates: 3
+    anatomy_id: "MBA:351"
+  - id: knoedler_BNST_FNR
+    tissue: bed_nucleus_of_stria_terminalis
+    sort_marker: Esr1+
+    state: female_non_receptive
+    n_replicates: 3
+    anatomy_id: "MBA:351"
+  - id: knoedler_MeA_Male
+    tissue: medial_amygdalar_nucleus
+    sort_marker: Esr1+
+    state: male
+    n_replicates: 3
+    anatomy_id: "MBA:403"
+  - id: knoedler_MeA_FR
+    tissue: medial_amygdalar_nucleus
+    sort_marker: Esr1+
+    state: female_receptive
+    n_replicates: 3
+    anatomy_id: "MBA:403"
+  - id: knoedler_MeA_FNR
+    tissue: medial_amygdalar_nucleus
+    sort_marker: Esr1+
+    state: female_non_receptive
+    n_replicates: 3
+    anatomy_id: "MBA:403"
+  - id: knoedler_POA_Male
+    tissue: preoptic_area
+    sort_marker: Esr1+
+    state: male
+    n_replicates: 3
+  - id: knoedler_POA_FR
+    tissue: preoptic_area
+    sort_marker: Esr1+
+    state: female_receptive
+    n_replicates: 3
+  - id: knoedler_POA_FNR
+    tissue: preoptic_area
+    sort_marker: Esr1+
+    state: female_non_receptive
+    n_replicates: 3
+  - id: knoedler_VMH_Male
+    tissue: ventromedial_hypothalamic_nucleus
+    sort_marker: Esr1+
+    state: male
+    n_replicates: 3
+    anatomy_id: "MBA:693"
+  - id: knoedler_VMH_FR
+    tissue: ventromedial_hypothalamic_nucleus
+    sort_marker: Esr1+
+    state: female_receptive
+    n_replicates: 3
+    anatomy_id: "MBA:693"
+  - id: knoedler_VMH_FNR
+    tissue: ventromedial_hypothalamic_nucleus
+    sort_marker: Esr1+
+    state: female_non_receptive
+    n_replicates: 3
+    anatomy_id: "MBA:693"
+
+notes: >
+  Used in corr_run_20260428_knoedler_esr1_wmbv1 to support edge mappings for
+  vmhvl_esr1_pr_neuron, mpoa_esr1_neuron, bnst_crf_neuron (Esr1 proxy), and
+  candidate MeA Esr1+ classical type. Cross-region within-state contrasts
+  (POA_FR vs VMH_FR etc.) produce informative δ rankings; cross-sex
+  within-region contrasts (POA_Male vs POA_FR etc.) produce an artefactual
+  signal — see the run's caveats and README. TRAP-seq vs scRNA-seq pseudobulk
+  has known compositional differences (polysome-bound mRNA vs total mRNA);
+  Spearman handles the magnitude offset, but absolute ρ values run lower than
+  for FACS-bulk inputs.

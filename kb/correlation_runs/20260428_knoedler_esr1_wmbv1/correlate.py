@@ -28,9 +28,21 @@ from scipy.stats import spearmanr
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "data"
-H5_PATH = "/Users/do12/Documents/GitHub/evidencell/scratch/olm-at/precomputed_stats_ABC_revision_230821.h5"
-GENE_MAPPING = "/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/conf/gene_mapping_CCN20230722.tsv"
-TAX_DB = "/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/taxonomy/CCN20230722/CCN20230722.db"
+
+
+def _repo_root() -> Path:
+    p = ROOT
+    while p != p.parent:
+        if (p / "pyproject.toml").exists():
+            return p
+        p = p.parent
+    raise RuntimeError("repo root (with pyproject.toml) not found")
+
+
+REPO = _repo_root()
+H5_PATH = REPO / "conf/mapmycells/CCN20230722/precomputed_stats.h5"
+GENE_MAPPING = REPO / "conf/gene_mapping_CCN20230722.tsv"
+TAX_DB = REPO / "kb/taxonomy/CCN20230722/CCN20230722.db"
 
 REGIONS = ["BNST", "MeA", "POA", "VMH"]
 STATES = ["Male", "FR", "FNR"]

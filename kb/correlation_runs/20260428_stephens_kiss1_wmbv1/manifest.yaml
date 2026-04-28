@@ -1,0 +1,46 @@
+id: corr_run_20260428_stephens_kiss1_wmbv1
+record_type: CorrelationRun
+dataset_ref: dataset_PMID_37934722
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+method:
+  statistic_kind: spearman_rho
+  parameters: >
+    pseudobulk_transform=log1p(sum/n_cells); gene_id_space=ensembl_mouse;
+    gene_intersection=bulk_pool_intersection∩atlas_col_names; replicate_pooling=n/a (bulk supp values are already pooled).
+
+contrasts:
+  - id: corr_RP3V_vs_ARC
+    pool_a: stephens_RP3V
+    pool_b: stephens_ARC
+    interpretation: >
+      RP3V-specific signal among Kiss1+ neurons. Top hits are AVPV/PeN
+      candidates for avpv_kiss1_neuron and avpv_th_neuron classical mappings.
+  - id: corr_ARC_vs_RP3V
+    pool_a: stephens_ARC
+    pool_b: stephens_RP3V
+    interpretation: >
+      ARC-specific signal among Kiss1+ neurons. Top hits are arcuate-localised
+      candidates for an ARC Kiss1 (KNDy) classical mapping not currently in the KB.
+
+script:
+  relpath: correlate.py
+  python_version: ">=3.11"
+  packages: [pandas, numpy, scipy, h5py]
+
+output:
+  relpath: all_correlations.tsv
+  format: tsv
+
+caveats: >
+  Bulk pools of 10–15 cells are noisy; absolute ρ values fall in 0.3–0.5 even
+  for true matches. The differential δ statistic is the discriminative one;
+  raw ρ rankings are dominated by housekeeping background. Reported in
+  README.md.
+
+metadata: >
+  paired_bulk_method=true; cross_sex_contrasts=false (single sex throughout); n_clusters_atlas=5322; n_genes_shared=4536.

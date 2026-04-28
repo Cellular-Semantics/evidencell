@@ -915,6 +915,20 @@ nodes:
     cell_set_accession: CS20230722_SUPT_0564
     taxonomy_level: SUPERTYPE
 
+  - id: CS20230722_SUPT_0563
+    name: "0563 VMH Fezf1 Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0563
+    taxonomy_level: SUPERTYPE
+    notes: >
+      Parent of the two most female-biased rank-0 clusters in the VMH region:
+      CLUS_2290 (MFR=0.08) and CLUS_2292 (MFR=0.12). Identified via Knoedler 2022
+      bulk correlation (corr_run_20260428_knoedler_esr1_wmbv1) as the dominant
+      VMH-specific Esr1+ supertype, with three of its child clusters (2293, 2290, 2292)
+      taking the top-4 positions by δ(VMH_FR − BNST_FR).
+
   - id: CS20230722_SUPT_0585
     name: "0585 PVH-SO-PVa Otp Glut_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
@@ -1257,6 +1271,22 @@ edges:
           CS20230722_SUPT_0563 (VMH Fezf1 Glut_1) — parent of the two most female-biased
           rank-0 clusters (CLUS_2290 MFR=0.08, CLUS_2292 MFR=0.12) — was not retrieved
           in the rank-1 DB query and should be assessed as a co-primary mapping target.
+      - evidence_type: BULK_CORRELATION
+        supports: PARTIAL
+        explanation: >
+          Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled VMH female-receptive vs BNST
+          female-receptive. SUPT_0564 itself does not appear in the top 20 by δ — instead,
+          SUPT_0563 takes 3 of the top 4 (CLUS_2293, 2290, 2292). This is independent
+          quantitative support for the open question already raised on this edge: SUPT_0563
+          should be added as a co-primary CROSS_CUTTING target. SUPT_0564 retains its
+          existing ATLAS_METADATA support but should not be the sole mapping target.
+        run_ref: corr_run_20260428_knoedler_esr1_wmbv1
+        contrast_ref: corr_VMH_FR_vs_BNST_FR
+        target_accession: CS20230722_SUPT_0564
+        statistics: >
+          Top-20 δ rank: not present (best SUPT_0564 child cluster ranked outside top 20).
+          Companion target SUPT_0563 takes ranks 1, 2, 4 in the same contrast.
+          See edge_vmhvl_esr1_pr_neuron_to_cs20230722_supt_0563 for the supporting numbers.
     property_comparisons:
       - property: location_MBA693_VMHvl
         node_a_value: "MBA:693 (VMHvl)"
@@ -1299,11 +1329,73 @@ edges:
           calbindin neuron. High Calb1 in SUPT_0564 warrants primary literature verification.
     unresolved_questions:
       - >
-        Should SUPT_0563 be added as a co-primary CROSS_CUTTING target for the
-        female-biased lordosis subpopulation?
-      - >
         Does Calb1 co-localise with Esr1/Pgr in VMHvl neurons, or does it mark a
         distinct subpopulation within SUPT_0564?
+
+  - id: edge_vmhvl_esr1_pr_neuron_to_cs20230722_supt_0563
+    type_a: vmhvl_esr1_pr_neuron
+    type_b: CS20230722_SUPT_0563
+    relationship: CROSS_CUTTING
+    confidence: MODERATE
+    evidence:
+      - evidence_type: BULK_CORRELATION
+        supports: SUPPORT
+        explanation: >
+          Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled VMH female-receptive vs BNST
+          female-receptive. SUPT_0563 takes three of the top four child-cluster positions
+          by δ = ρ(VMH_FR) − ρ(BNST_FR): CLUS_2293 (rank 1, δ=0.0180), CLUS_2290 (rank 2,
+          δ=0.0159, MFR=0.08), CLUS_2292 (rank 4, δ=0.0145, MFR=0.12). The female-biased
+          CLUS_2290 and CLUS_2292 directly correspond to the lordosis-circuit subpopulation
+          flagged in vmhvl_esr1_pr_neuron's classical definition. SUPT_0563 was missed by
+          the rank-1 DB query (no DEFINING_SCOPED markers in atlas metadata for this
+          supertype) and is added here as a co-primary CROSS_CUTTING target alongside
+          SUPT_0564 based on the bulk-correlation evidence.
+        run_ref: corr_run_20260428_knoedler_esr1_wmbv1
+        contrast_ref: corr_VMH_FR_vs_BNST_FR
+        target_accession: CS20230722_SUPT_0563
+        statistics: >
+          best_child_cluster=CLUS_2293 (rank 1 of 5322, δ=0.0180);
+          additional_top_hits: CLUS_2290 (rank 2, δ=0.0159, MFR=0.08), CLUS_2292 (rank 4, δ=0.0145, MFR=0.12);
+          n_child_clusters_in_top_20=3.
+    property_comparisons:
+      - property: location_MBA693_VMHvl
+        node_a_value: "MBA:693 (VMHvl)"
+        node_b_value: "MBA:693 (VMH) primary location across child clusters"
+        alignment: CONSISTENT
+      - property: nt_type
+        node_a_value: "not stated; VMHvl predominantly glutamatergic"
+        node_b_value: "Glutamatergic (VMH Fezf1 Glut label)"
+        alignment: CONSISTENT
+      - property: sex_ratio
+        node_a_value: "female-biased lordosis subpopulation expected"
+        node_b_value: "child clusters CLUS_2290 (MFR=0.08), CLUS_2292 (MFR=0.12) — both strongly female-biased"
+        alignment: CONSISTENT
+        notes: >
+          Sex ratio at supertype level is NULL; signal is concentrated in the two
+          female-biased child clusters that the bulk correlation also surfaces as top hits.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          Co-primary with edge_vmhvl_esr1_pr_neuron_to_cs20230722_supt_0564. The classical
+          vmhvl_esr1_pr_neuron is a heterogeneous population; SUPT_0563 captures the
+          female-biased lordosis subpopulation, SUPT_0564 captures the broader
+          Pgr+/Nkx2-1+/Tac1+ subpopulation. Both edges should be retained until the
+          classical node is split or a finer-grained analysis is performed.
+    unresolved_questions:
+      - >
+        Is SUPT_0563 vs SUPT_0564 a clean female-vs-broader split, or do both supertypes
+        contain heterogeneous sub-populations that cross-cut the classical definition?
+      - >
+        Are CLUS_2290 and CLUS_2292 distinct functional subtypes within SUPT_0563, or
+        replicates of the same lordosis subpopulation?
+    proposed_experiments:
+      - >
+        Cluster-level Esr1, Pgr, Nkx2-1, Tac1 co-expression in CLUS_2290, 2292, 2293 vs
+        the female-biased clusters of SUPT_0564 — distinguish the two SUPT mappings.
+      - >
+        MapMyCells annotation transfer of published VMHvl ERα-Cre or PR-Cre scRNA-seq
+        data to WMBv1; expect F1 split between SUPT_0563 (female-biased) and SUPT_0564
+        (broader).
 
   - id: edge_pvn_crfr1_neuron_to_cs20230722_supt_0585
     type_a: pvn_crfr1_neuron
@@ -1576,6 +1668,21 @@ edges:
           CLUS_1915 was not ranked in the top-30 DB results because its Kiss1/Th/Esr1 profile
           appears only in precomputed_expression, not in the defining_markers metadata columns.
           It was identified through child_cluster_expression analysis of the SUPT_0486 parent.
+      - evidence_type: BULK_CORRELATION
+        supports: SUPPORT
+        explanation: >
+          Stephens 2024 (PMID:37934722) bulk Kiss1+ neurons sorted from RP3V vs ARC.
+          Differential δ = ρ_RP3V − ρ_ARC ranks CLUS_1915 first of 5,322 atlas clusters,
+          with δ=0.090 (ρ_RP3V=0.388, ρ_ARC=0.298). All other top-20 hits are also
+          preoptic/periventricular hypothalamic GABAergic clusters — the differential
+          signal is strongly anatomically clean. Independent quantitative confirmation of
+          the existing ATLAS_METADATA-based mapping; the Kiss1+ pool transcriptomic profile
+          tracks CLUS_1915 specifically more than any other cluster in the atlas.
+        run_ref: corr_run_20260428_stephens_kiss1_wmbv1
+        contrast_ref: corr_RP3V_vs_ARC
+        target_accession: CS20230722_CLUS_1915
+        statistics: >
+          rho_a=0.388 (vs RP3V); rho_b=0.298 (vs ARC); delta=0.090; rank_by_delta=1; rank_total=5322; rank_by_rho_a=65.
     property_comparisons:
       - property: nt_type
         node_a_value: "GABAergic / dopaminergic (Th co-expression)"

@@ -1,0 +1,100 @@
+id: corr_run_20260428_knoedler_esr1_wmbv1
+record_type: CorrelationRun
+dataset_ref: dataset_GSE183092
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+method:
+  statistic_kind: spearman_rho
+  parameters: >
+    pseudobulk_transform=log1p(sum/n_cells); pool_transform=log1p(replicate_mean(DESeq2_normalised_counts));
+    gene_id_space=ensembl_mouse_via_symbol_lookup (conf/gene_mapping_CCN20230722.tsv);
+    gene_intersection=intersection_across_4_regions∩atlas_col_names; n_replicates_per_pool=3.
+
+contrasts:
+  # Region-specific within-state contrasts (informative)
+  - id: corr_POA_FR_vs_VMH_FR
+    pool_a: knoedler_POA_FR
+    pool_b: knoedler_VMH_FR
+    interpretation: >
+      POA-specific Esr1+ signal — candidates for mpoa_esr1_neuron.
+  - id: corr_BNST_FR_vs_VMH_FR
+    pool_a: knoedler_BNST_FR
+    pool_b: knoedler_VMH_FR
+    interpretation: >
+      BNST-specific Esr1+ signal — proxy candidates for bnst_crf_neuron via the
+      Esr1+/Tac1+ overlap with the CRF+ subpopulation.
+  - id: corr_MeA_FR_vs_VMH_FR
+    pool_a: knoedler_MeA_FR
+    pool_b: knoedler_VMH_FR
+    interpretation: >
+      MeA-specific Esr1+ signal — no current classical node; candidates for
+      a future mea_esr1_neuron mapping.
+  - id: corr_VMH_FR_vs_BNST_FR
+    pool_a: knoedler_VMH_FR
+    pool_b: knoedler_BNST_FR
+    interpretation: >
+      VMH-specific Esr1+ signal — candidates for vmhvl_esr1_pr_neuron.
+      Cleaner contrast than VMH_FR_vs_MeA_FR (which surfaces ARC clusters
+      due to dissection overlap with the arcuate).
+  - id: corr_VMH_FR_vs_MeA_FR
+    pool_a: knoedler_VMH_FR
+    pool_b: knoedler_MeA_FR
+    interpretation: >
+      Alternative VMH-specific contrast; surfaces arcuate clusters at the top
+      because the female VMH dissection appears to capture some adjacent ARH.
+      Useful for cross-checking; not the primary VMH contrast.
+  # Cross-sex within-region contrasts (artefactual — see caveats)
+  - id: corr_POA_Male_vs_POA_FR
+    pool_a: knoedler_POA_Male
+    pool_b: knoedler_POA_FR
+    interpretation: >
+      Intended to surface SDN-POA candidates (sdn_poa_calbindin_neuron male-bias).
+      In practice returns hindbrain Calcb cholinergic motor neurons —
+      cross-sex δ within a region is contaminated by global sex-related
+      expression differences. NOT a usable contrast; documented for completeness.
+  - id: corr_VMH_Male_vs_VMH_FR
+    pool_a: knoedler_VMH_Male
+    pool_b: knoedler_VMH_FR
+    interpretation: >
+      Intended to surface male-biased VMH Esr1+ (PR+/aggression population).
+      Same artefact as POA_Male_vs_POA_FR — not usable.
+  - id: corr_BNST_Male_vs_BNST_FR
+    pool_a: knoedler_BNST_Male
+    pool_b: knoedler_BNST_FR
+    interpretation: >
+      Intended to surface male-biased BNST Esr1+ (CRF+ subpopulation).
+      Same artefact — not usable.
+
+script:
+  relpath: correlate.py
+  python_version: ">=3.11"
+  packages: [pandas, numpy, scipy, h5py]
+
+output:
+  relpath: all_correlations.tsv
+  format: tsv
+
+caveats: >
+  Cross-sex within-region δ contrasts (Male vs FR or Male vs FNR) are
+  artefactual: across all three regions tested (POA, VMH, BNST) the top hits
+  are hindbrain Calcb cholinergic motor neurons — a global male-vs-female
+  expression bias that swamps region-specific signals. Suspected causes:
+  Y-linked/X-inactivation gene dosage, batch effects, sex-specific TRAP-seq
+  pulldown efficiency. METHODOLOGICAL RULE: paired-bulk δ requires the two
+  pools to differ in cell population (region/marker/state) holding sex
+  constant. Cross-sex δ within a single population is not a valid use of
+  this method.
+
+  TRAP-seq vs scRNA-seq pseudobulk: polysome-bound mRNA shifts absolute ρ
+  values lower than for FACS-bulk inputs (Stephens-style), but Spearman
+  rank-based statistics handle the magnitude offset; δ rankings are
+  comparable across the two run types.
+
+metadata: >
+  paired_bulk_method=true; cross_sex_contrasts_present=true (flagged as artefactual);
+  n_clusters_atlas=5322; n_genes_shared=11997;
+  n_pools=12; n_contrasts=8.
