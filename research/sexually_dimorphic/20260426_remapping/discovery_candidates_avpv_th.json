@@ -1,0 +1,224 @@
+{
+  "classical_node_id": "avpv_th_neuron",
+  "classical_node_name": "AVPV tyrosine hydroxylase (TH) neuron",
+  "classical_node_summary": {
+    "defining_markers": ["Th (protein, primary)", "Kiss1 (transcript, co-expressed)"],
+    "nt_type": "dopaminergic",
+    "sex_bias": "FEMALE_BIASED",
+    "anatomical_location": ["MBA:272 (AVPV)"],
+    "key_property": "2-4x more TH+ neurons in females; AVPV A14 dopaminergic group"
+  },
+  "taxonomy_id": "CCN20230722",
+  "discovery_date": "2026-04-26",
+  "candidates_by_rank": {
+    "1": {
+      "db_top_score": 2,
+      "db_score_explanation": "Maximum rank-1 DB score was 2 across all 20 candidates. SUPT_0486 appears in the DB list at score=2 but was not ranked higher because Th is not in its supertype-level defining_markers metadata, and the NT mismatch (GABAergic label vs. dopaminergic query) suppressed scoring. The sex_bias bonus does not apply at rank-1 (supertype-level sex ratio not available in DB). Score ceiling of 2 reflects location + partial marker matches only.",
+      "recommended_candidate": {
+        "node_id": "CS20230722_SUPT_0486",
+        "label": "0486 PVpo-VMPO-MPN Hmx2 Gaba_5",
+        "taxonomy_level": "supertype",
+        "db_score": 2,
+        "db_rank_position": 10,
+        "recommendation_basis": "CHILD_CLUSTER_PROMOTION",
+        "recommendation_rationale": "SUPT_0486 is the parent of CLUS_1915, which is the top-ranked rank-0 candidate with score=6, MFR=0.02, Th=6.6, Kiss1=2.51, and nt_type=Dopa confirmed in cluster.yaml. The DB scoring function cannot propagate child-cluster sex-bias signals upward to supertype rank — SUPT_0486 therefore scores only 2 at rank-1 despite being the clear recommended supertype. Three independent convergent signals establish SUPT_0486 as the correct supertype: (1) CLUS_1915 is its child and top rank-0 candidate; (2) supertype-level Th=2.72, Kiss1=0.62, Esr1=7.72 are all concordant with avpv_th_neuron markers; (3) MBA:272 (AVPV) is explicitly represented in SUPT_0486 anatomical_location (n=16 cells).",
+        "nt_type_resolution": "SUPT_0486 carries a GABAergic (Gaba_5) supertype label. This NT mismatch is resolved at cluster level: CLUS_1915 has nt_type=Dopa confirmed in the taxonomy (cluster.yaml, name_in_source='Dopa'). The Gaba_5 label reflects the majority of cells across the full supertype spanning PVpo-VMPO-MPN; the dopaminergic AVPV subpopulation is a minority within SUPT_0486.",
+        "avpv_location_fraction": "MBA:272 (AVPV) n=16 out of ~144 total cells (~11%) — below the 20% primary-location threshold. However, AVPV cells are present and the AVPV-specific child cluster CLUS_1915 (the rank-0 best candidate) is the primary basis for recommendation. Location fraction at supertype level underestimates AVPV relevance because CLUS_1915 contains AVPV cells (MBA:272 n=1, MBA:133 n=1, MBA:1097 n=3).",
+        "supertype_expression": {
+          "Th": 2.72,
+          "Kiss1": 0.62,
+          "Esr1": 7.72,
+          "Ar": 8.15,
+          "Pgr": 6.8,
+          "Calb1": 4.16
+        },
+        "child_cluster_summary": {
+          "CLUS_1912": {"Kiss1": 0.0, "Th": 2.51, "Esr1": 4.55, "MFR": 1.22, "primary_soma": "MBA:1097 (Hypothalamus)", "n_cells": 8, "assessment": "Th-positive, no Kiss1 — background Th expression, not AVPV-specific"},
+          "CLUS_1913": {"Kiss1": 0.54, "Th": 2.59, "Esr1": 7.93, "MFR": 10.11, "primary_soma": "MBA:133 (PVpo)", "n_cells": 30, "assessment": "Male-biased (MFR=10.11), excludes as FEMALE_BIASED AVPV TH candidate"},
+          "CLUS_1914": {"Kiss1": 0.0, "Th": 1.22, "Esr1": 7.02, "MFR": 10.11, "primary_soma": "MBA:133 (PVpo)", "n_cells": 27, "assessment": "Male-biased (MFR=10.11), no Kiss1 — not AVPV TH candidate"},
+          "CLUS_1915": {"Kiss1": 2.51, "Th": 6.6, "Esr1": 9.55, "MFR": 0.02, "primary_soma": "MBA:1097 (Hypothalamus)", "n_cells": 3, "assessment": "BEST CHILD — Th highest in lineage (6.6), Kiss1 only cluster >1.5 (2.51), extreme female bias (MFR=0.02), nt_type=Dopa confirmed. AVPV cells present (MBA:272 n=1). All three defining criteria converge."},
+          "CLUS_1916": {"Kiss1": 0.04, "Th": 0.68, "Esr1": 9.56, "MFR": 0.08, "primary_soma": "MBA:133 (PVpo)", "n_cells": 2, "assessment": "Female-biased but Th=0.68 (very low) and Kiss1=0.04 — not Th-positive; likely a distinct Esr1-high preoptic subtype"}
+        },
+        "caveats": [
+          "NT mismatch at supertype level (Gaba_5 label vs. dopaminergic classical type); resolved at cluster level by CLUS_1915 nt_type=Dopa",
+          "SUPT_0486 is anatomically broader than AVPV: spans PVpo-VMPO-MPN; AVPV cells are a minority (n=16, ~11%)",
+          "avpv_th_neuron, avpv_kiss1_neuron, and mpoa_esr1_neuron all map to SUPT_0486 — supertype is heterogeneous; cluster-level resolution is essential",
+          "CLUS_1915 has only n=3 cells total in the atlas; inference is based on very few cells and sex ratio (MFR=0.02) should be interpreted cautiously given small n"
+        ]
+      },
+      "other_rank1_candidates_assessed": [
+        {
+          "node_id": "CS20230722_SUPT_0427",
+          "label": "0427 ARH-PVi Six6 Dopa-Gaba_1",
+          "db_score": 2,
+          "assessment": "IMPLAUSIBLE — ARH (arcuate hypothalamus) and periventricular zona incerta anatomy; no AVPV cells. Dopaminergic label matches but anatomy is wrong. ARH is the A12 group; AVPV TH neurons are A14.",
+          "exclude_reason": "Wrong anatomy (ARH/PVi not AVPV)"
+        },
+        {
+          "node_id": "CS20230722_SUPT_0428",
+          "label": "0428 ARH-PVi Six6 Dopa-Gaba_2",
+          "db_score": 2,
+          "assessment": "IMPLAUSIBLE — same ARH-PVi anatomy as SUPT_0427; no AVPV cells.",
+          "exclude_reason": "Wrong anatomy (ARH/PVi not AVPV)"
+        },
+        {
+          "node_id": "CS20230722_SUPT_0519_to_0523",
+          "label": "0519-0523 AVPV-MEPO-SFO Tbr1 Glut_1-5",
+          "db_score": 2,
+          "assessment": "IMPLAUSIBLE — glutamatergic supertypes (Tbr1 Glut); avpv_th_neuron is dopaminergic. AVPV location label is present but NT mismatch is fundamental and Th expression is not documented for these supertypes.",
+          "exclude_reason": "NT mismatch (glutamatergic vs. dopaminergic)"
+        },
+        {
+          "node_id": "CS20230722_SUPT_1127",
+          "label": "1127 MV Nr4a2 Gly-Gaba_1",
+          "db_score": 2,
+          "assessment": "FALSE POSITIVE — medulla/pons anatomy (MV = medial vestibular; brainstem). No hypothalamic cells. Anatomically completely discordant with AVPV. Score=2 reflects Th expression only; the sex-bias bonus inflated CLUS_5066 (its child) to score=4 at rank-0 — see rank-0 assessment.",
+          "exclude_reason": "Wrong anatomy (brainstem/medulla, not hypothalamus)"
+        }
+      ]
+    },
+    "0": {
+      "db_top_score": 6,
+      "n_candidates": 30,
+      "top_candidates": [
+        {
+          "node_id": "CS20230722_CLUS_1915",
+          "label": "1915 PVpo-VMPO-MPN Hmx2 Gaba_5",
+          "taxonomy_level": "cluster",
+          "db_score": 6,
+          "db_rank_position": 1,
+          "male_female_ratio": 0.02,
+          "nt_type_db": "Dopa",
+          "nt_type_confirmed": true,
+          "nt_type_source": "cluster.yaml name_in_source='Dopa'",
+          "parent_supertype": "CS20230722_SUPT_0486",
+          "parent_supertype_label": "0486 PVpo-VMPO-MPN Hmx2 Gaba_5",
+          "cluster_defining_markers": ["Kiss1 (DEFINING)", "Slc18a2 (DEFINING)"],
+          "cluster_merfish_markers": ["Prok2", "Ctxn3", "Myo5b", "Slc17a8"],
+          "cluster_neuropeptides": ["Cartpt (5.7)", "Gal (5.5)", "Pdyn (5.3)", "Penk (5.2)"],
+          "anatomical_location": [
+            {"id": "MBA:1097", "label": "Hypothalamus", "n_cells": 3},
+            {"id": "MBA:133", "label": "Periventricular hypothalamic nucleus, preoptic part", "n_cells": 1},
+            {"id": "MBA:272", "label": "Anteroventral periventricular nucleus", "n_cells": 1}
+          ],
+          "precomputed_expression": {
+            "Th": 6.6,
+            "Kiss1": 2.51,
+            "Esr1": 9.55,
+            "Calb1": 1.67,
+            "Ar": 7.82,
+            "Pgr": 6.69
+          },
+          "assessment": "STRONG POSITIVE — all three primary criteria fully met: (1) Th=6.6 is the highest Th expression of any child cluster in the SUPT_0486 lineage and a strong dopaminergic-marker signal; (2) Kiss1=2.51 is the only cluster with Kiss1 substantially above background, matching the defining co-expression pattern of avpv_th_neuron; (3) MFR=0.02 indicates extreme female bias (>50:1 female:male), consistent with 2-4x female-biased cell count reported in the literature. NBA:272 (AVPV) cells explicitly present. Kiss1 is a cluster-level DEFINING marker confirming the Kiss1+Th+ co-expression phenotype. nt_type=Dopa confirmed.",
+          "recommendation": "PRIMARY — recommend as best available cluster-level atlas match for avpv_th_neuron",
+          "caveats": [
+            "Very small cluster (n=3 total cells at primary soma MBA:1097; n=1 each at MBA:133 and MBA:272) — sex ratio (MFR=0.02) based on small N; statistical power is limited",
+            "Kiss1 is DEFINING at cluster level but Th is not listed as a cluster-level DEFINING marker in cluster.yaml — Th expression is high (6.6) but defined as precomputed expression, not a marker annotation",
+            "Slc18a2 (VMAT2, vesicular monoamine transporter) is a DEFINING cluster marker, providing additional dopaminergic/monoaminergic identity support beyond Th expression alone"
+          ]
+        },
+        {
+          "node_id": "CS20230722_CLUS_5066",
+          "label": "5066 MV Nr4a2 Gly-Gaba_1",
+          "taxonomy_level": "cluster",
+          "db_score": 4,
+          "db_rank_position": 2,
+          "male_female_ratio": 0.25,
+          "nt_type_db": "Dopa",
+          "parent_supertype": "CS20230722_SUPT_1127",
+          "parent_supertype_label": "1127 MV Nr4a2 Gly-Gaba_1",
+          "anatomical_location": [
+            {"id": "MBA:549009215", "label": "Peritrigeminal zone", "n_cells": 3},
+            {"id": "MBA:534", "label": "Supratrigeminal nucleus", "n_cells": 9},
+            {"id": "MBA:771", "label": "Pons", "n_cells": 13},
+            {"id": "MBA:852", "label": "Parvicellular reticular nucleus", "n_cells": 8},
+            {"id": "MBA:202", "label": "Medial vestibular nucleus", "n_cells": 4},
+            {"id": "MBA:123", "label": "Koelliker-Fuse subnucleus", "n_cells": 5},
+            {"id": "MBA:354", "label": "Medulla", "n_cells": 3},
+            {"id": "MBA:621", "label": "Motor nucleus of trigeminal", "n_cells": "see cluster.yaml"}
+          ],
+          "cluster_defining_markers": ["Adam34 (DEFINING)", "Slc6a5 (DEFINING)", "Th (DEFINING)"],
+          "cluster_merfish_markers": ["Th", "Slc6a5", "Kcnj5"],
+          "assessment": "FALSE POSITIVE — Th is a DEFINING cluster marker and MFR=0.25 (female-biased) drove score=4 via sex_bias bonus, but anatomy is entirely brainstem (pons, medulla, vestibular nuclei). There are zero hypothalamic cells. This is a brainstem TH-expressing dopaminergic cluster with no relationship to the AVPV A14 group. The score=4 result is a known artifact of the scoring function rewarding Th marker + sex_bias bonus without anatomical penalty.",
+          "recommendation": "EXCLUDE — anatomically incompatible with avpv_th_neuron (brainstem vs. AVPV hypothalamus)"
+        },
+        {
+          "node_id": "CS20230722_CLUS_1301",
+          "label": "1301 MEA-BST Lhx6 Nfib Gaba_4",
+          "taxonomy_level": "cluster",
+          "db_score": 4,
+          "db_rank_position": 3,
+          "male_female_ratio": 0.1,
+          "nt_type_db": "GABA",
+          "parent_supertype": "CS20230722_SUPT_0360",
+          "assessment": "IMPLAUSIBLE — MEA-BST anatomy (medial amygdala/bed nucleus of stria terminalis), GABAergic NT, MFR=0.1 female-biased. Score=4 driven by sex_bias bonus only; no marker concordance with Th or Kiss1; wrong anatomy and wrong NT.",
+          "recommendation": "EXCLUDE"
+        },
+        {
+          "node_id": "CS20230722_CLUS_1904",
+          "label": "1904 PVpo-VMPO-MPN Hmx2 Gaba_3",
+          "taxonomy_level": "cluster",
+          "db_score": 4,
+          "db_rank_position": 4,
+          "male_female_ratio": 1.5,
+          "nt_type_db": "Dopa",
+          "parent_supertype": "CS20230722_SUPT_0484",
+          "assessment": "UNLIKELY — PVpo-VMPO-MPN anatomy is adjacent to AVPV region; nt_type=Dopa. However MFR=1.5 (male-biased), which is discordant with the female-biased avpv_th_neuron. No sex_bias bonus applied (MFR above threshold).",
+          "recommendation": "LOW PRIORITY — anatomically adjacent but sex ratio discordant"
+        },
+        {
+          "node_id": "CS20230722_CLUS_1907",
+          "label": "1907 PVpo-VMPO-MPN Hmx2 Gaba_3",
+          "taxonomy_level": "cluster",
+          "db_score": 4,
+          "db_rank_position": 5,
+          "male_female_ratio": 2.7,
+          "nt_type_db": "Dopa",
+          "parent_supertype": "CS20230722_SUPT_0484",
+          "assessment": "NOTE — this is the same cluster referenced in the arc_aromatase_neuron edge as carrying Cyp19a1 as a defining marker. MFR=2.7 (male-biased), which is incompatible with the female-biased avpv_th_neuron.",
+          "recommendation": "EXCLUDE — male-biased sex ratio directly contradicts female-biased classical type"
+        }
+      ],
+      "sex_bias_flagged_clusters": [
+        "CS20230722_CLUS_1915 (MFR=0.02, AVPV/hypothalamic — PRIMARY CANDIDATE)",
+        "CS20230722_CLUS_5066 (MFR=0.25, brainstem — FALSE POSITIVE, exclude)",
+        "CS20230722_CLUS_1301 (MFR=0.1, MEA-BST — wrong anatomy, exclude)",
+        "CS20230722_CLUS_1891 (MFR=0.1, PVpo-VMPO-MPN Gaba_2 — GABA not Dopa, borderline)",
+        "CS20230722_CLUS_1895 (MFR=0.06, PVpo-VMPO-MPN Gaba_2 — GABA not Dopa, borderline)",
+        "CS20230722_CLUS_2251 (MFR=0.09, MPN-MPO-PVpo Hmx2 Glut_3 — glutamatergic, exclude)"
+      ]
+    }
+  },
+  "best_child_cluster": {
+    "node_id": "CS20230722_CLUS_1915",
+    "label": "1915 PVpo-VMPO-MPN Hmx2 Gaba_5",
+    "parent_supertype": "CS20230722_SUPT_0486",
+    "db_score": 6,
+    "male_female_ratio": 0.02,
+    "nt_type": "Dopa",
+    "nt_type_confirmed_source": "cluster.yaml, name_in_source='Dopa'",
+    "precomputed_expression": {
+      "Th": 6.6,
+      "Kiss1": 2.51,
+      "Esr1": 9.55,
+      "Calb1": 1.67,
+      "Ar": 7.82,
+      "Pgr": 6.69
+    },
+    "cluster_defining_markers_from_yaml": ["Kiss1", "Slc18a2"],
+    "avpv_cells_present": true,
+    "avpv_cell_count": 1,
+    "confidence_assessment": "MODERATE — three convergent signals (Th=6.6, Kiss1=2.51, MFR=0.02) in correct anatomy (hypothalamic/preoptic zone with AVPV cells present). Confidence capped at MODERATE due to very small cluster size (n=3-5 total cells). Slc18a2 (VMAT2) as a DEFINING marker is strong additional support for monoaminergic identity. Cluster-level edge to CLUS_1915 would be more specific than supertype-level edge to SUPT_0486."
+  },
+  "annotation_transfer_f1": {
+    "SUPT_0486": "NOT_ASSESSED",
+    "CLUS_1915": "NOT_ASSESSED",
+    "notes": "No AnnotationTransferEvidence records found in kb/draft/ for SUPT_0486 or CLUS_1915. annotation-transfer workflow has not been run for the sexually_dimorphic KB. F1 assessment deferred."
+  },
+  "summary_recommendation": {
+    "rank_1_recommendation": "CS20230722_SUPT_0486 — recommended despite DB rank position 10 (score=2). Justification: parent of top rank-0 candidate CLUS_1915; direct AVPV location representation; marker concordance (Th, Kiss1, Esr1); NT mismatch at supertype level resolved at cluster level by CLUS_1915 (Dopa confirmed).",
+    "rank_0_recommendation": "CS20230722_CLUS_1915 — top candidate (score=6). Strong positive: Th=6.6 (strongest in lineage), Kiss1=2.51 (only cluster with significant Kiss1), MFR=0.02 (extreme female bias), nt_type=Dopa confirmed, AVPV cells present, Slc18a2 DEFINING marker supports monoaminergic identity.",
+    "key_false_positive_warning": "CS20230722_CLUS_5066 (rank-0 position 2, score=4) is a brainstem false positive. Its score=4 is driven by Th DEFINING marker + MFR=0.25 sex_bias bonus. Anatomy is entirely pons/medulla/vestibular (SUPT_1127 MV). It should be excluded from all mapping consideration for avpv_th_neuron.",
+    "confidence_summary": "MODERATE confidence in SUPT_0486/CLUS_1915 as the primary atlas match. Small cluster size (CLUS_1915 n=3-5 cells) and supertype-level NT mismatch (Gaba_5 vs. dopaminergic) are the main uncertainty drivers. Annotation transfer (MapMyCells on Th-Cre or Kiss1-Cre AVPV scRNA-seq data) would be the critical next step to upgrade confidence."
+  }
+}

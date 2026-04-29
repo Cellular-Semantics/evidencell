@@ -257,7 +257,7 @@ def main():
                 errors_found = True
 
         # 4. LinkML schema validation (subprocess)
-        ok, output = linkml_validate(simulated, schema_path, file_path.name)
+        ok, output = linkml_validate(simulated, schema_path, file_path.name, file_path=file_path)
         if output.strip():
             print(output.strip(), file=sys.stderr)
         if not ok:

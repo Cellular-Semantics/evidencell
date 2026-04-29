@@ -202,6 +202,20 @@ enums:
           A type description being built up from multiple evidence types; may eventually
           become a new or revised CL term. Not yet anchored to a single classical or T-type definition.
 
+  # ── Sex bias (classical nodes) ──────────────────────────────────
+  SexBias:
+    description: >
+      Expected direction of sexual dimorphism in cell number or marker expression
+      for a classical cell type. Used by find-candidates to score atlas clusters
+      whose male_female_ratio matches the expected direction.
+    permissible_values:
+      MALE_BIASED:
+        description: More cells (or higher expression) in males than females
+      FEMALE_BIASED:
+        description: More cells (or higher expression) in females than males
+      NOT_DIMORPHIC:
+        description: No documented sex difference in cell number or defining markers
+
   # ── Synonym type ────────────────────────────────────────────────
   SynonymType:
     description: Category of alternative name for a cell type.
@@ -360,6 +374,13 @@ enums:
           Result is observation-level evidence: reproducible given the same atlas
           version and filter parameters. Stronger than an informal note but weaker
           than a peer-reviewed publication. Record the query URL and atlas version.
+      BULK_CORRELATION:
+        description: >
+          Cluster ranking from a paired-bulk transcriptomic correlation run.
+          Two bulk pools (e.g. region A vs region B) are correlated against atlas
+          cluster pseudobulks; the differential signal δ = ρ_A − ρ_B identifies
+          clusters specifically tracking pool A. Backing record: a CorrelationRun
+          (kb/correlation_runs/{run_id}/manifest.yaml) referenced by run_ref.
 
   # ── Marker type ─────────────────────────────────────────────────
   MarkerType:
@@ -1259,6 +1280,13 @@ classes:
           CCF region distribution from atlas, e.g. "CB:0.72,NA:0.25" (from CCF_broad.freq column)
 
       # ── Property provenance (classical / prior-transcriptomic nodes) ─────
+      sex_bias:
+        range: SexBias
+        description: >
+          Expected direction of sexual dimorphism in cell number or defining-marker
+          expression. Set on classical nodes only. Used by find-candidates to score
+          atlas clusters whose male_female_ratio matches the expected direction.
+          Leave absent when sex dimorphism is not documented for this type.
       definition_references:
         multivalued: true
         description: >
@@ -1675,6 +1703,34 @@ classes:
       method:
         description: Analysis method, e.g. "DEG intersection, Seurat FindMarkers"
 
+  BulkCorrelationEvidence:
+    is_a: EvidenceItem
+    description: >
+      Edge evidence linking a mapping target to a CorrelationRun + contrast +
+      free-form statistics map. Parallels AnnotationTransferEvidence in shape:
+      a thin pointer at a separately-stored analysis (kb/correlation_runs/{run_id}/)
+      together with the relevant target accession and the numeric receipts.
+
+      Conventional keys for paired-bulk Spearman analyses (not enforced):
+        rho_a, rho_b, delta, rank, rank_total
+      Other statistic families (KL divergence, OT distance, regression β, F1)
+      use whatever keys make sense for that family. The CorrelationRun manifest
+      records the statistic_kind that interprets the keys.
+    attributes:
+      run_ref:
+        required: true
+        description: CorrelationRun.id (kb/correlation_runs/{run_id}/manifest.yaml)
+      contrast_ref:
+        required: true
+        description: CorrelationContrast.id within the referenced run
+      target_accession:
+        required: true
+        description: WMBv1 (or other atlas) cluster/supertype accession the evidence supports
+      statistics:
+        description: >
+          Free-form name:value map of statistic name → numeric value.
+          YAML-inline mapping. Validated structurally only — key names are conventional, not enforced.
+
 
 # ══════════════════════════════════════════════════════════════════
 # TYPED CAVEATS
@@ -1935,3 +1991,207 @@ classes:
         inlined_as_list: true
         range: CellTypeNode
         description: All CellTypeNode objects at this taxonomy level
+
+
+# ══════════════════════════════════════════════════════════════════
+# BULK TRANSCRIPTOMIC DATASETS AND CORRELATION RUNS
+# ══════════════════════════════════════════════════════════════════
+#
+# Reusable cross-region records for paired-bulk transcriptomic evidence.
+# A BulkDataset record exists once per published dataset and is referenced
+# by zero or more CorrelationRuns. Each CorrelationRun records reproducibility
+# metadata (input checksums, atlas version, method parameters) and contrasts;
+# BulkCorrelationEvidence entries on MappingEdges point at run + contrast.
+#
+# Free-form `metadata` (range: string) slots are deliberately untyped —
+# they accept any inline mapping. Schema is read by agents, written by agents;
+# rigid keys add little value. Convention examples appear in the descriptions.
+
+  BulkDataset:
+    tree_root: true
+    description: >
+      A published bulk transcriptomic dataset that profiles labelled cell populations.
+      First-class entity, reusable across many MappingEdges. Lives at
+      kb/datasets/{dataset_id}.yaml.
+    attributes:
+      id:
+        identifier: true
+        required: true
+        description: Stable dataset identifier, e.g. dataset_GSE183092
+      record_type:
+        required: true
+        equals_string: BulkDataset
+      source_pmid:
+        pattern: "^PMID:[0-9]+$"
+        description: PubMed ID of the source publication
+      geo_accession:
+        description: GEO series accession, e.g. GSE183092
+      technique:
+        required: true
+        description: "TRAP-seq, FACS-bulk, RiboTag, INTACT, laser-capture, manual-pick, FANS, ..."
+      species:
+        description: NCBITaxon CURIE, e.g. NCBITaxon:10090
+      ingested_date:
+        range: date
+      description:
+        description: Free-text description of the experimental design and what was profiled
+      data_files:
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        range: BulkDataFile
+      pools:
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        range: BulkPool
+      notes:
+        description: Free-text notes (caveats, related datasets, scope limitations)
+      metadata:
+        description: >
+          Free-form name:value map for ancillary properties not captured elsewhere.
+          YAML-inline mapping; key names not enforced.
+
+  BulkDataFile:
+    description: A single data file within a BulkDataset (typically one expression matrix).
+    attributes:
+      relpath:
+        required: true
+        description: Path relative to the dataset's home (or to a standard cache location)
+      url:
+        description: Canonical URL where this file can be re-fetched
+      sha256:
+        description: SHA-256 checksum of the file
+      keyed_by:
+        description: "ensembl_id, gene_symbol, refseq, ..."
+      normalisation:
+        description: "DESeq2_size_factor, log2(TPM+1), CPM, raw_counts, ..."
+      metadata:
+        description: Free-form name:value map for file-specific notes
+
+  BulkPool:
+    description: >
+      A labelled bulk sample group within a BulkDataset. Replicates may be averaged
+      or kept; n_replicates records the underlying biological N.
+    attributes:
+      id:
+        identifier: true
+        required: true
+        description: Stable pool identifier, e.g. knoedler_VMH_FR
+      tissue:
+        description: Source tissue / region (free string; promote to OntologyTerm in future)
+      sort_marker:
+        description: "Esr1+, Kiss1+, Th-Cre/Esr1+, ..."
+      state:
+        description: Animal state at sampling — male, female_receptive, naive, post-stress, etc.
+      n_replicates:
+        range: integer
+      anatomy_id:
+        description: Optional MBA/UBERON CURIE if the tissue maps to a known atlas region
+      metadata:
+        description: Free-form name:value map (animal age, gating strategy, etc.)
+
+  CorrelationRun:
+    tree_root: true
+    description: >
+      A specific correlation analysis between BulkPools and an atlas pseudobulk.
+      Lives at kb/correlation_runs/{run_id}/manifest.yaml alongside the script,
+      data inputs, and ranked output files.
+    attributes:
+      id:
+        identifier: true
+        required: true
+        description: Stable run identifier, e.g. corr_run_20260428_knoedler_wmbv1
+      record_type:
+        required: true
+        equals_string: CorrelationRun
+      dataset_ref:
+        required: true
+        description: BulkDataset.id this run analyses
+      atlas:
+        required: true
+        range: AtlasReference
+        inlined: true
+      method:
+        required: true
+        range: CorrelationMethod
+        inlined: true
+      contrasts:
+        required: true
+        multivalued: true
+        inlined: true
+        inlined_as_list: true
+        range: CorrelationContrast
+      script:
+        range: ScriptReference
+        inlined: true
+      output:
+        range: OutputReference
+        inlined: true
+      caveats:
+        description: Free-text caveats about run-specific findings (e.g. artefact patterns observed)
+      metadata:
+        description: Free-form name:value map for ancillary run-level notes
+
+  AtlasReference:
+    description: Reference to an atlas version + pseudobulk source used in a correlation run.
+    attributes:
+      taxonomy_id:
+        required: true
+        description: e.g. CCN20230722
+      pseudobulk_source:
+        description: Path or URL to the precomputed_stats.h5 (or equivalent)
+      sha256:
+        description: SHA-256 of the pseudobulk source file (for reproducibility)
+
+  CorrelationMethod:
+    description: The statistic family and parameters used in a correlation run.
+    attributes:
+      statistic_kind:
+        required: true
+        description: >
+          Free string naming the statistic family.
+          Examples: spearman_rho, pearson_r, kl_divergence, ot_distance, regression_beta.
+      parameters:
+        description: >
+          Free-form name:value map of method parameters
+          (transform, gene set restriction, normalisation choices, etc.).
+
+  CorrelationContrast:
+    description: >
+      A named contrast between two BulkPools within a CorrelationRun. The differential
+      δ statistic = stat(cluster, pool_a) − stat(cluster, pool_b) ranks clusters by
+      pool_a-specificity.
+    attributes:
+      id:
+        identifier: true
+        required: true
+        description: Stable contrast identifier, e.g. corr_VMH_FR_vs_BNST_FR
+      pool_a:
+        required: true
+        description: BulkPool.id (the "specific" pool — positive δ favours this)
+      pool_b:
+        required: true
+        description: BulkPool.id (the "background" pool)
+      interpretation:
+        description: One-line free text describing what this contrast probes biologically
+
+  ScriptReference:
+    description: Pointer to the script that produced a CorrelationRun's output.
+    attributes:
+      relpath:
+        required: true
+        description: Path relative to the run directory
+      python_version:
+        description: e.g. ">=3.11"
+      packages:
+        multivalued: true
+        description: Required Python packages (no version pins necessary)
+
+  OutputReference:
+    description: Pointer to the primary ranked output file of a CorrelationRun.
+    attributes:
+      relpath:
+        required: true
+      format:
+        description: "tsv, csv, parquet, ..."

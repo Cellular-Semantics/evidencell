@@ -334,6 +334,28 @@ def test_linkml_validate_returns_false_on_failure(tmp_path: Path):
     assert "missing required field" in output
 
 
+def test_linkml_validate_dispatches_target_class_by_path(tmp_path: Path):
+    """target_class is selected by file_path location."""
+    from evidencell.validate import _target_class_for_kb_path
+
+    assert _target_class_for_kb_path(Path("kb/datasets/foo.yaml")) == "BulkDataset"
+    assert _target_class_for_kb_path(Path("kb/correlation_runs/run_x/manifest.yaml")) == "CorrelationRun"
+    assert _target_class_for_kb_path(Path("kb/correlation_runs/run_x/other.yaml")) is None
+    assert _target_class_for_kb_path(Path("kb/draft/region/foo.yaml")) == "CellTypeMappingGraph"
+    assert _target_class_for_kb_path(Path("kb/mappings/region/foo.yaml")) == "CellTypeMappingGraph"
+    assert _target_class_for_kb_path(Path("kb/taxonomy/CCN20230722/cluster.yaml")) == "TaxonomyNodeList"
+    assert _target_class_for_kb_path(Path("kb/taxonomy/CCN20230722/taxonomy_meta.yaml")) is None
+
+
+def test_linkml_validate_skips_paths_with_no_schema_class(tmp_path: Path):
+    """If file_path resolves to None target_class, validation is skipped."""
+    schema = tmp_path / "schema.yaml"
+    schema.write_text("id: fake")
+    ok, msg = linkml_validate("anything: goes", schema, file_path=Path("kb/taxonomy/CCN20230722/taxonomy_meta.yaml"))
+    assert ok is True
+    assert "skipped" in msg.lower() or "no schema class" in msg.lower()
+
+
 # ── Provenance check fixtures ─────────────────────────────────────────────────
 
 

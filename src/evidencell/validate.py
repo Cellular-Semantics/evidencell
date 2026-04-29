@@ -255,15 +255,59 @@ def simulate_edit(tool_name: str, tool_input: dict, file_path: Path) -> str:
 
 # ── LinkML schema validation (subprocess) ──────────────────────────────────────
 
-def linkml_validate(content: str, schema_path: Path, original_name: str = "input.yaml") -> tuple[bool, str]:
+def _target_class_for_kb_path(file_path: Path) -> str | None:
+    """
+    Pick the LinkML target_class for a KB YAML file by its location.
+
+    Returns None if the file is in a path with no schema class (validation skipped).
+    """
+    parts = file_path.parts
+    try:
+        kb_idx = parts.index("kb")
+    except ValueError:
+        return "CellTypeMappingGraph"
+
+    sub = parts[kb_idx + 1] if kb_idx + 1 < len(parts) else ""
+    name = file_path.name
+
+    if sub == "datasets":
+        return "BulkDataset"
+    if sub == "correlation_runs":
+        if name == "manifest.yaml":
+            return "CorrelationRun"
+        return None
+    if sub == "taxonomy":
+        if name in {"cluster.yaml", "supertype.yaml", "subclass.yaml",
+                    "class.yaml", "neurotransmitter.yaml"}:
+            return "TaxonomyNodeList"
+        return None
+    return "CellTypeMappingGraph"
+
+
+def linkml_validate(
+    content: str,
+    schema_path: Path,
+    original_name: str = "input.yaml",
+    file_path: Path | None = None,
+) -> tuple[bool, str]:
     """
     Validate YAML content against a LinkML schema.
 
     Writes content to a temp file and runs linkml-validate as a subprocess.
+    The target_class is chosen by file_path location when provided; defaults
+    to CellTypeMappingGraph otherwise.
+
     Returns (passed: bool, output_text: str).
     """
     if not schema_path.exists():
         return True, f"(schema not found at {schema_path} — linkml-validate skipped)"
+
+    if file_path is not None:
+        target_class = _target_class_for_kb_path(file_path)
+        if target_class is None:
+            return True, f"(no schema class for {file_path} — linkml-validate skipped)"
+    else:
+        target_class = "CellTypeMappingGraph"
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir) / original_name
@@ -273,7 +317,7 @@ def linkml_validate(content: str, schema_path: Path, original_name: str = "input
             [
                 "uv", "run", "linkml-validate",
                 "--schema", str(schema_path),
-                "--target-class", "CellTypeMappingGraph",
+                "--target-class", target_class,
                 str(tmp),
             ],
             capture_output=True,

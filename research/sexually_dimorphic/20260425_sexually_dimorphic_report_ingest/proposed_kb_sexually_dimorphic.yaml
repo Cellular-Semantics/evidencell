@@ -1,0 +1,1413 @@
+# Draft KB — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Sex_dimorphic_neurons_hypothalamus_ast_report.pdf
+# Ingestion date: 2026-04-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest
+
+name: "Sexually dimorphic hypothalamic and limbic neurons — draft KB"
+description: >
+  Evidence graph capturing classically defined sexually dimorphic neuron types
+  in the hypothalamus and connected limbic regions (BNST, lateral septum).
+  Nodes proposed from a single ASTA deep-research report; properties are
+  literature-derived and have not yet been confirmed against primary papers
+  or mapped to a community atlas. No mapping edges populated in this draft.
+
+target_atlas: "WMBv1"
+
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (predominantly mouse evidence; rat for some studies)"
+
+creation_date: "2026-04-25"
+
+nodes:
+
+  - id: avpv_kiss1_neuron
+    name: "AVPV/PeN kisspeptin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:272
+        label: "Anteroventral periventricular nucleus"
+        name_in_source: "anteroventral periventricular nucleus (AVPV)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_3fcab8ab"
+          - ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+          - ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+      - id: MBA:341
+        label: "Periventricular hypothalamic nucleus, posterior part"
+        name_in_source: "periventricular nucleus (PeN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_3fcab8ab"
+          - ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+          - ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+        # NOTE: MBA term assignment provisional — PeN here refers to the rostral periventricular area; verify.
+    nt_type:
+      name_in_source: "GABAergic / dopaminergic (TH co-expression)"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopaminergic"
+      sources:
+        - ref: "PMID:28660243"
+          method: "literature inference"
+          scope: "adult mouse"
+          quote_key: "4702847_ebd225e6"
+    defining_markers:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_3fcab8ab"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_6801ab8e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+      - symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+          - marker_type: PROTEIN
+            ref: "PMID:17699664"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "17692566_78d7ff15"
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_6801ab8e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_9c737a0a"
+    neuropeptides:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:23407940"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "11330110_f135c1a8"
+    morphology:
+      description: >
+        Female-biased sexually dimorphic population: females have a greater number of
+        Kiss1 neurons in the AVPV than males. AVPV is larger in volume, contains more
+        cells, and sends more projections to multiple reproduction-related brain
+        regions in females than males. Most AVPV/PeN Kiss1 cells co-express tyrosine
+        hydroxylase. Sexual dimorphism is established during the perinatal critical
+        period through testosterone exposure.
+      sources:
+        - ref: "PMID:29201072"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "1227024_3fcab8ab"
+        - ref: "PMID:17213691"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "1357086_85e3d032"
+        - ref: "PMID:33910083"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "233446934_e19240c2"
+    electrophysiology:
+      description: >
+        Bimodal resting membrane potential influenced by KATP channels: type I
+        (irregular firing) and type II (quiescent) populations. AVPV/PeN Kiss1 neurons
+        display sexually dimorphic biophysical properties — male neurons exhibit
+        higher action-potential frequency and receive more excitatory synaptic
+        transmission (higher sEPSC frequency) compared to females.
+      sources:
+        - ref: "PMID:23407940"
+          method: "whole-cell patch-clamp"
+          scope: "adult rodent"
+          quote_key: "11330110_f261b092"
+        - ref: "PMID:23407940"
+          method: "whole-cell patch-clamp"
+          scope: "adult rodent"
+          quote_key: "11330110_04c1f564"
+    cl_mapping:
+      cl_term:
+        id: CL:4023123
+        label: "hypothalamus kisspeptin neuron"
+        name_in_source: "hypothalamus kisspeptin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4023123 covers all hypothalamic kisspeptin neurons. The AVPV/PeN (RP3V)
+        population is Kiss1-only (not obligately KNDy), so the more specific
+        CL:4023128 (RP3V KNDy neuron) is inappropriate as it requires NKB and
+        dynorphin co-expression. A dedicated CL term for the AVPV/RP3V Kiss1 non-KNDy
+        subpopulation does not yet exist — potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:29201072"
+      - "PMID:17213691"
+      - "PMID:33910083"
+      - "PMID:28660243"
+      - "PMID:35406710"
+    notes: >
+      Female-biased dimorphism in cell number (greater in females). Mediates
+      estrogen-positive feedback for the preovulatory GnRH/LH surge in females. Two
+      electrophysiological subtypes (type I irregular, type II quiescent). Distinct
+      from arcuate KNDy population which is not sexually dimorphic. Most AVPV/PeN
+      Kiss1 cells co-express TH, overlapping the AVPV TH neuron population. CL term
+      CL:4023123 is BROAD; AVPV/RP3V Kiss1 (non-KNDy) is a candidate for a new CL
+      term.
+
+  - id: arc_kndy_neuron
+    name: "Arcuate KNDy (kisspeptin/neurokinin B/dynorphin) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:223
+        label: "Arcuate hypothalamic nucleus"
+        name_in_source: "arcuate nucleus (ARC)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:35406710"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "247882232_5b52821f"
+          - ref: "https://doi.org/10.1210/JS.2019-SAT-426"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "164802066_0dfcbb3e"
+          - ref: "PMID:31611573"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "204460206_c55bedb4"
+    defining_markers:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_6801ab8e"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1210/JS.2019-SAT-426"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "164802066_0dfcbb3e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31611573"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "204460206_c55bedb4"
+      - symbol: Tac2
+        ncbi_gene_id: "NCBIGene:21334"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1210/JS.2019-SAT-426"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "164802066_0dfcbb3e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31611573"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "204460206_c55bedb4"
+      - symbol: Pdyn
+        ncbi_gene_id: "NCBIGene:18610"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1210/JS.2019-SAT-426"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "164802066_0dfcbb3e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31611573"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "204460206_c55bedb4"
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:29201072"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1227024_6801ab8e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:17213691"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "1357086_85e3d032"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_9c737a0a"
+    neuropeptides:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1210/JS.2019-SAT-426"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "164802066_0dfcbb3e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31611573"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "204460206_c55bedb4"
+      - symbol: Tac2
+        ncbi_gene_id: "NCBIGene:21334"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1210/JS.2019-SAT-426"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "164802066_0dfcbb3e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31611573"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "204460206_c55bedb4"
+      - symbol: Pdyn
+        ncbi_gene_id: "NCBIGene:18610"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1210/JS.2019-SAT-426"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "164802066_0dfcbb3e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31611573"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "204460206_c55bedb4"
+    morphology:
+      description: >
+        Located in the arcuate nucleus. Not sexually dimorphic in cell number or Kiss1
+        mRNA distribution between sexes. Generates pulsatile GnRH-mediated
+        gonadotropin secretion in both sexes through inhibition by gonadal hormones.
+        Receives sexually dimorphic afferent input despite monomorphic distribution:
+        female KNDy cells receive a higher percentage of afferents from the rostral
+        periventricular area (RP3V/PeN), with a greater fraction of those afferents
+        co-expressing ERalpha in females.
+      sources:
+        - ref: "PMID:29201072"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "1227024_4974dba1"
+        - ref: "PMID:23407940"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "11330110_b026342a"
+        - ref: "PMID:35406710"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "247882232_5b52821f"
+    electrophysiology:
+      description: >
+        Heterogeneous pattern of cellular activity (firing and quiescent cells), but
+        no bimodal RMP distribution. No sexually dimorphic pattern of cellular
+        activity in the ARC, consistent with the lack of sex difference in Kiss1 mRNA
+        distribution.
+      sources:
+        - ref: "PMID:23407940"
+          method: "whole-cell patch-clamp"
+          scope: "adult rodent"
+          quote_key: "11330110_f261b092"
+        - ref: "PMID:23407940"
+          method: "whole-cell patch-clamp"
+          scope: "adult rodent"
+          quote_key: "11330110_b026342a"
+    cl_mapping:
+      cl_term:
+        id: CL:4023127
+        label: "arcuate nucleus of hypothalamus KNDy neuron"
+        name_in_source: "arcuate nucleus of hypothalamus KNDy neuron"
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:4023127 is defined as a KNDy neuron in the arcuate nucleus of the
+        hypothalamus, matching the proposed node exactly. Parent term CL:4023125 (KNDy
+        neuron) carries WikipediaVersioned xref only; CL:4023127 carries
+        PMID:30042117.
+    is_terminal: false
+    definition_references:
+      - "PMID:29201072"
+      - "PMID:23407940"
+      - "PMID:35406710"
+      - "https://doi.org/10.1210/JS.2019-SAT-426"
+      - "PMID:31611573"
+    notes: >
+      Distinct from AVPV/PeN Kiss1 population (which is sexually dimorphic). KNDy
+      cells co-express kisspeptin, neurokinin B, and dynorphin. Although the cell
+      distribution is monomorphic, the afferent connectivity from RP3V/PeN/MPON is
+      sexually dimorphic (female-biased). Mapped EXACT to CL:4023127.
+
+  - id: avpv_th_neuron
+    name: "AVPV tyrosine hydroxylase (TH) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:272
+        label: "Anteroventral periventricular nucleus"
+        name_in_source: "anteroventral periventricular nucleus (AVPV)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1007/s12031-012-9923-1"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "214694216_9c6ba0ce"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1dd3b718"
+          - ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+    nt_type:
+      name_in_source: "dopaminergic"
+      cl_terms:
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopaminergic"
+      sources:
+        - ref: "PMID:28660243"
+          method: "literature inference"
+          scope: "adult mouse"
+          quote_key: "4702847_ebd225e6"
+    defining_markers:
+      - symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "https://doi.org/10.1007/s12031-012-9923-1"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "214694216_9c6ba0ce"
+          - marker_type: PROTEIN
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_e19240c2"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1dd3b718"
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:17699664"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "17692566_78d7ff15"
+    morphology:
+      description: >
+        Female-biased sexually dimorphic TH-immunoreactive population: females have
+        2-4 times more TH-positive neurons than males in the AVPV, with size
+        differences in addition to number. The AVPV consists mainly of TH-positive
+        neurons. Ovariectomy does not affect TH expression; chronic estradiol
+        treatment reduces it. TH-ir lesioned females show lower maternal behavior,
+        suggesting a role in sexually dimorphic parental behavior.
+      sources:
+        - ref: "https://doi.org/10.1007/s12031-012-9923-1"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "214694216_9c6ba0ce"
+        - ref: "PMID:33910083"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "233446934_e19240c2"
+        - ref: "PMID:20609214"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "15152139_c025cc8f"
+    cl_mapping: null
+    # CL CANDIDATE: No CL term for AVPV/RP3V TH-immunoreactive (dopaminergic) neurons. CL:4072009 (A12 dopaminergic neuron) is in the arcuate nucleus, not AVPV. CL:0000700 (dopaminergic neuron) is too broad. Potential CL contribution: a child of CL:0000700 or CL:4072009's sibling for AVPV/RP3V A14 dopaminergic neurons.
+    is_terminal: false
+    definition_references:
+      - "https://doi.org/10.1007/s12031-012-9923-1"
+      - "PMID:33910083"
+      - "PMID:20609214"
+      - "PMID:21243444"
+      - "PMID:25206587"
+    notes: >
+      Female-biased dimorphism (2-4x more TH+ neurons in females). Substantial
+      overlap with AVPV/PeN Kiss1 neurons — most AVPV/PeN Kiss1 cells co-express TH.
+      Distinct from SDN-POA where TH-positive cell bodies are absent (only TH-ir
+      axons/synapses). No exact CL term — candidate for a new term (sibling of
+      CL:4072009 'A12 dopaminergic neuron' for AVPV/RP3V A14 dopaminergic neurons).
+
+  - id: sdn_poa_calbindin_neuron
+    name: "Sexually dimorphic nucleus of the preoptic area (SDN-POA) calbindin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:464
+        label: "Medial preoptic nucleus"
+        name_in_source: "sexually dimorphic nucleus of the preoptic area (SDN-POA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:26672480"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14863067_fa51fcf7"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_d6c3a647"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1098a86b"
+        # NOTE: SDN-POA lies within the medial preoptic nucleus; no dedicated MBA term. Provisional id assignment — verify against Allen atlas.
+    defining_markers:
+      - symbol: Calb1
+        ncbi_gene_id: "NCBIGene:12307"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_d6c3a647"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_17d4bd9d"
+    negative_markers:
+      - symbol: Th
+        modifier: ABSENT
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "immunohistochemistry"
+            scope: "adult mouse/rat"
+            quote_key: "3481177_562d502e"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "immunohistochemistry"
+            scope: "adult mouse/rat"
+            quote_key: "3481177_17d4bd9d"
+    morphology:
+      description: >
+        Male-biased dimorphism: SDN-POA is larger in males than females and controls
+        male sex behavior. Delineated histologically by Nissl staining or
+        immunohistochemically by calbindin-D28K immunoreactivity. No TH-positive cell
+        bodies are present, but fine TH-positive axon-like projections/synaptic
+        structures are observed.
+      sources:
+        - ref: "PMID:26672480"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "14863067_fa51fcf7"
+        - ref: "PMID:25206587"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "3481177_d6c3a647"
+        - ref: "PMID:25206587"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "3481177_1098a86b"
+    cl_mapping: null
+    # CL CANDIDATE: No CL term for the calbindin-D28K-immunoreactive SDN-POA neuron population. Searches for 'sexually dimorphic nucleus', 'calbindin preoptic', and 'SDN-POA' returned no relevant CL terms. Potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:26672480"
+      - "PMID:25206587"
+    notes: >
+      Male-biased dimorphism (larger in males). Considered the rodent homolog of the
+      third interstitial nucleus of the anterior hypothalamus (INAH3) in humans, and
+      homologous structures in other mammals (ovine SDN, rhesus medial preoptic
+      area) and non-mammalian species (quail). No CL term exists — candidate for a
+      new term.
+
+  - id: mpoa_esr1_neuron
+    name: "MPOA estrogen receptor 1 (Esr1) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:464
+        label: "Medial preoptic nucleus"
+        name_in_source: "medial preoptic area (MPOA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+    defining_markers:
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_9f0f55ea"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_c17e0213"
+      - symbol: Ar
+        ncbi_gene_id: "NCBIGene:11835"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_b8087ed0"
+      - symbol: Pgr
+        ncbi_gene_id: "NCBIGene:18667"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_b8087ed0"
+    morphology:
+      description: >
+        Highly sexually dimorphic in distribution and projection patterns. The MPOA is
+        larger and contains more neurons in males than females. Esr1+ neurons are
+        highly expressed in the MPOA and are involved in both parental behaviors and
+        male-type mating behaviors. The Esr1+ population overlaps with steroid hormone
+        receptor-expressing neurons (Ar, Pgr) enriched in the MPOA. Differential
+        effects of circulating steroids between sexes (estrogen in females,
+        testosterone in males) underlie sexually dimorphic features of the MPOA.
+      sources:
+        - ref: "PMID:33910083"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "233446934_5d0fb07e"
+    cl_mapping: null
+    # CL CANDIDATE: No CL term for Esr1+ MPOA neurons. Searches for 'estrogen receptor neuron preoptic' and 'medial preoptic area neuron' returned no CL matches. A heterogeneous population (includes both GABAergic and glutamatergic cells); may be better represented as multiple terms. Potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:33910083"
+      - "https://doi.org/10.1101/2021.09.02.458782"
+    notes: >
+      Heterogeneous population — MPOA contains both GABAergic and glutamatergic
+      neurons and may be better represented as multiple terms. MPOA Esr1 neurons are
+      required (alongside galanin neurons) for pup-directed/parental behavior. Esr1
+      governs male-type mating behavior; overlapping Nts (neurotensin)+ neurons
+      govern female socio-sexual behaviors. No CL term — candidate for new term(s).
+
+  - id: mpoa_galanin_neuron
+    name: "MPOA galanin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:464
+        label: "Medial preoptic nucleus"
+        name_in_source: "medial preoptic area (MPOA)"
+        compartment: SOMA
+    defining_markers:
+      - symbol: Gal
+        ncbi_gene_id: "NCBIGene:14419"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_eda764a3"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_c17e0213"
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_c17e0213"
+    neuropeptides:
+      - symbol: Gal
+        ncbi_gene_id: "NCBIGene:14419"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_eda764a3"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_c17e0213"
+    morphology:
+      description: >
+        Sexually dimorphic MPOA subpopulation essential for parental behaviors. One of
+        two MPOA subpopulations (with Esr1+) required for the regulation of pup-
+        directed behavior.
+    cl_mapping: null
+    # CL CANDIDATE: No CL term for galanin-expressing MPOA neurons. Search for 'galanin neuron' returned only the galanin protein (PR term) and generic neuron terms. Potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:33910083"
+      - "https://doi.org/10.1101/2021.09.02.458782"
+      - "PMID:32380724"
+    notes: >
+      Likely overlaps partially with MPOA Esr1+ population. Sex ratio direction not
+      explicitly quantified in the source quotes (described as 'sexually dimorphic'
+      without explicit polarity). No CL term — candidate for new term.
+
+  - id: vmhvl_esr1_pr_neuron
+    name: "VMHvl estrogen-receptor alpha / progesterone receptor neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:693
+        label: "Ventromedial hypothalamic nucleus"
+        name_in_source: "ventrolateral subdivision of the ventromedial hypothalamus (VMHvl)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+        # NOTE: VMHvl is the ventrolateral subdivision of MBA:693; no dedicated MBA subterm.
+    defining_markers:
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+      - symbol: Pgr
+        ncbi_gene_id: "NCBIGene:18667"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_8cb6b0bc"
+      - symbol: Nkx2-1
+        ncbi_gene_id: "NCBIGene:21869"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+      - symbol: Tac1
+        ncbi_gene_id: "NCBIGene:21333"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+    neuropeptides:
+      - symbol: Tac1
+        ncbi_gene_id: "NCBIGene:21333"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:25543145"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "27794167_af52b501"
+    morphology:
+      description: >
+        Sexually dimorphic population in VMHvl that controls sex-typical behaviors
+        (mating in both sexes, fighting in males). Contains ERalpha+ neurons
+        coordinating metabolism and reproduction in females; a subset co-expressing
+        ERalpha + Nkx2-1 + Tac1 promotes hormone-dependent female locomotion. snRNA-
+        seq identified 17 transcriptomic types, several sexually dimorphic. VMHvl is
+        essential for lordosis behavior in females through projections to PAG,
+        brainstem, and spinal motor circuits.
+      sources:
+        - ref: "PMID:25543145"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "27794167_af52b501"
+    cl_mapping: null
+    # CL CANDIDATE: No CL term for VMHvl ERalpha/progesterone receptor neurons. Search for 'ventromedial hypothalamus neuron' returned only kisspeptin/KNDy and generic neurons. A molecularly heterogeneous population with multiple transcriptomic subtypes. Potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:25543145"
+      - "PMID:33910083"
+      - "PMID:31626771"
+      - "PMID:38978624"
+    notes: >
+      Molecularly heterogeneous — multiple defined subpopulations: Pgr+ (mating in
+      both sexes / fighting in males), ERalpha+/Nkx2-1+/Tac1+ (female locomotion),
+      and additional ERalpha-expressing subtypes with different projections and sex-
+      related functions. 17 transcriptomic types identified by snRNA-seq (Kim 2019).
+      HETEROGENEITY: may need to be split into multiple sub-nodes in future
+      iterations. No CL term — candidate for new term(s).
+
+  - id: pvn_crfr1_neuron
+    name: "PVN corticotropin-releasing factor receptor 1 (CRFR1) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:38
+        label: "Paraventricular hypothalamic nucleus"
+        name_in_source: "paraventricular hypothalamic nucleus (PVN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+    defining_markers:
+      - symbol: Crhr1
+        ncbi_gene_id: "NCBIGene:12921"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+      - symbol: Ar
+        ncbi_gene_id: "NCBIGene:11835"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+    morphology:
+      description: >
+        Male-biased sexual dimorphism in PVN (males > females). The sex difference is
+        not present at postnatal days 0, 4, or 21 — it emerges during puberty/early
+        adulthood and persists in old mice (20-24 months). Adult gonadectomy reduces
+        CRFR1-immunoreactive cells in males but not females. Restraint stress induces
+        sexually dimorphic neural activation (males > females) measured by phospho-
+        CREB co-localization.
+      sources:
+        - ref: "PMID:31055007"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "143424909_2b990710"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "corticotropin-releasing neuron"
+      mapping_type: RELATED
+      mapping_notes: >
+        CL:4072021 defines neurons by CRH *secretion*, whereas the proposed PVN CRFR1
+        node is defined by CRFR1 *receptor* expression. These are distinct
+        populations: CRFR1+ PVN neurons receive CRH input, they do not necessarily
+        secrete CRH. Mapping is RELATED only. No CL term for CRFR1-receptor-expressing
+        neurons exists — potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:31055007"
+    notes: >
+      Male-biased dimorphism (males > females). Sex difference emerges during
+      puberty/early adulthood. Co-express estrogen receptor alpha (moderate) and
+      androgen receptor (high), suggesting gonadal-hormone-dependent regulation.
+      Single source (Rosinger 2019) for full characterization. CL:4072021
+      (corticotropin-releasing neuron) is RELATED only — that term defines neurons
+      by CRH *secretion*, while this node is defined by CRFR1 receptor expression.
+      No exact CL term — candidate for new term.
+
+  - id: bnst_crf_neuron
+    name: "BNST (anterolateral) corticotropin-releasing factor (CRF) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:174
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "dorsolateral bed nucleus of the stria terminalis (dlBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+      - id: MBA:174
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "oval nucleus of the BNST (ovBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+        # NOTE: ovBNST is a subnucleus of the dorsolateral BNST; no dedicated MBA term.
+      - id: MBA:174
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "anterolateral BNST (alBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+        # NOTE: alBNST is a subdivision of the dorsolateral BNST; no dedicated MBA term.
+    defining_markers:
+      - symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+    negative_markers:
+      - symbol: Calb1
+        modifier: ABSENT
+        ncbi_gene_id: "NCBIGene:12307"
+    neuropeptides:
+      - symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+    morphology:
+      description: >
+        Female-biased sexual dimorphism: females have larger and more numerous CRF
+        neurons in the dorsolateral BNST than males. The sex difference is not evident
+        at postnatal day 5 and emerges by adulthood. Ovariectomy reduces CRF neuron
+        number in females; orchiectomy increases it in males. CRF neurons in dlBNST
+        lack calbindin (in contrast to the calbindin+ principal nucleus of BNST).
+        Modulates pain sensitivity via CRF release.
+      sources:
+        - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "279874350_b2b4adba"
+        - ref: "PMID:23554470"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "14550592_292dccea"
+    electrophysiology:
+      description: >
+        CRF increases neuronal excitability specifically in 'type II' dlBNST neurons
+        (whole-cell patch-clamp); NPY decreases excitability in the same type II
+        neurons and suppresses CRF-induced excitation.
+      sources:
+        - ref: "PMID:23554470"
+          method: "whole-cell patch-clamp"
+          scope: "adult rodent"
+          quote_key: "14550592_292dccea"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "corticotropin-releasing neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4072021 covers all CRH-secreting neurons across brain regions (PVN,
+        hippocampus, BNST, etc.). BNST CRF neurons do secrete CRH, making this a valid
+        BROAD match. A BNST-specific child term does not yet exist — the female-biased
+        dlBNST CRF population is a potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "https://doi.org/10.3389/fncir.2025.1593443"
+      - "PMID:23554470"
+      - "PMID:33910083"
+      - "PMID:32848568"
+    notes: >
+      Female-biased dimorphism (larger and more numerous in females). Distinguished
+      from calbindin+ principal nucleus of BNST (Kiss1+, male-biased). Type II ephys
+      classification within dlBNST. CL:4072021 (corticotropin-releasing neuron) is a
+      BROAD match — a BNST-specific child term is a candidate for new CL
+      contribution.
+
+  - id: bnst_kiss1_neuron
+    name: "BNST (principal nucleus) kisspeptin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:174
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "principal nucleus of the BNST (prBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_4ae46b4c"
+          - ref: "https://doi.org/10.1210/jendso/bvae163.1280"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273148430_31f3c69b"
+          - ref: "https://doi.org/10.1210/jendso/bvae163.1280"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273148430_e6688522"
+        # NOTE: prBNST is a subnucleus of BNST; no dedicated MBA term.
+      - id: MBA:174
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "anterior BNST (aBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_4ae46b4c"
+          - ref: "https://doi.org/10.1210/jendso/bvae163.1280"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273148430_31f3c69b"
+          - ref: "https://doi.org/10.1210/jendso/bvae163.1280"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273148430_e6688522"
+    defining_markers:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1210/jendso/bvae163.1280"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273148430_31f3c69b"
+    neuropeptides:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+    morphology:
+      description: >
+        Male-biased sexual dimorphism in the principal nucleus of BNST (prBNST): males
+        have significantly more Kiss1prBNST neurons than females (139.4 +/- 23.32 vs.
+        43.70 +/- 5.33, P<0.01). This sex-biased distribution is absent in Kiss1aBNST
+        neurons. prBNST Kiss1 neurons project to dlBNST, juxta-periventricular lateral
+        hypothalamic area (JPLH), and posterolateral stria terminalis. aBNST Kiss1
+        neurons project to AVPV, MPO, LPO, and PVH.
+      sources:
+        - ref: "https://doi.org/10.1210/jendso/bvae163.1280"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "273148430_e6688522"
+        - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "279874350_4ae46b4c"
+        - ref: "https://doi.org/10.1210/jendso/bvae163.1280"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "273148430_31f3c69b"
+    cl_mapping:
+      cl_term:
+        id: CL:4023130
+        label: "kisspeptin neuron"
+        name_in_source: "kisspeptin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4023130 covers all kisspeptin-expressing neurons. No BNST-specific
+        kisspeptin term exists in CL. The prBNST Kiss1 population is male-biased and
+        morphologically/functionally distinct from AVPV and ARC populations. Potential
+        CL contribution.
+    is_terminal: false
+    definition_references:
+      - "https://doi.org/10.1210/jendso/bvae163.1280"
+      - "https://doi.org/10.3389/fncir.2025.1593443"
+      - "PMID:32848568"
+    notes: >
+      Male-biased dimorphism in prBNST only; aBNST Kiss1 population is not sexually
+      dimorphic. Two BNST Kiss1 subpopulations (prBNST and aBNST) with distinct
+      projection targets — could be split into separate sub-nodes. Integrates HPG
+      axis with sex-dependent social behaviors and metabolic functions. CL:4023130
+      is BROAD; BNST-specific child term is a candidate for new CL contribution.
+
+  - id: lateral_septum_kiss1_neuron
+    name: "Lateral septum (intermediate division) kisspeptin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:564
+        label: "Lateral septal nucleus"
+        name_in_source: "intermediate lateral septum (ILS)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1210/jendso/bvaf149.1673"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "282319169_32f8ec9e"
+          - ref: "https://doi.org/10.1210/jendso/bvaf149.1673"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "282319169_fd8ebee1"
+        # NOTE: ILS is a subdivision of MBA:564 lateral septal nucleus.
+    defining_markers:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1210/jendso/bvaf149.1673"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "282319169_32f8ec9e"
+    neuropeptides:
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+    morphology:
+      description: >
+        Female-biased sexual dimorphism in the intermediate lateral septum (ILS):
+        females have significantly more Kiss1ILS neurons than males (74.40 +/- 17.68
+        vs. 7.00 +/- 2.864, P=0.0043). This dimorphism is absent in Kiss1VLS neurons.
+        Regulated by sex steroids; the lateral septum integrates social, feeding,
+        anxiety, and fear behaviors.
+      sources:
+        - ref: "https://doi.org/10.1210/jendso/bvaf149.1673"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "282319169_fd8ebee1"
+        - ref: "https://doi.org/10.1210/jendso/bvaf149.1673"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "282319169_32f8ec9e"
+    cl_mapping:
+      cl_term:
+        id: CL:4023130
+        label: "kisspeptin neuron"
+        name_in_source: "kisspeptin neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4023130 is the broadest kisspeptin neuron class. No lateral septum
+        kisspeptin term exists in CL. The female-biased ILS Kiss1 population is novel
+        and poorly characterised. Potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "https://doi.org/10.1210/jendso/bvaf149.1673"
+    notes: >
+      Female-biased dimorphism in ILS only; VLS Kiss1 population is not sexually
+      dimorphic. Novel population, poorly characterised — characterized in
+      conference abstract (Zdon 2025). CL:4023130 is BROAD; LS-specific child term
+      is a candidate for new CL contribution.
+
+  - id: arc_aromatase_neuron
+    name: "Arcuate aromatase neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:223
+        label: "Arcuate hypothalamic nucleus"
+        name_in_source: "arcuate nucleus (adjacent to kisspeptin neurons)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_5aec04ab"
+    defining_markers:
+      - symbol: Cyp19a1
+        ncbi_gene_id: "NCBIGene:13075"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_5aec04ab"
+    morphology:
+      description: >
+        Male-biased sexually dimorphic cluster of aromatase neurons in the arcuate
+        nucleus, adjacent to kisspeptin neurons. Part of a broader network of
+        approximately 6,000 aromatase neurons across hypothalamus and amygdala.
+        Becomes sexually dimorphic by birth. Male arcuate aromatase neurons convert
+        testosterone to estrogen locally to regulate kisspeptin neuron activity.
+      sources:
+        - ref: "PMID:34561233"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "237626479_5aec04ab"
+    cl_mapping: null
+    # CL CANDIDATE: No CL term for aromatase (Cyp19a1)-expressing neurons. Search for 'aromatase neuron' returned no CL hits. Sexually dimorphic arcuate aromatase cluster adjacent to Kiss1 neurons is a novel population. Potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:34561233"
+    notes: >
+      Male-biased dimorphism. Single primary source (Wartenberg 2021) for the
+      sexually dimorphic ARC aromatase cluster. Part of a broader aromatase network
+      spanning hypothalamus and amygdala. No CL term — candidate for new term.
+
+  - id: poa_pacap_vip_neuron
+    name: "POA PACAP/VIP hypophysiotropic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:464
+        label: "Medial preoptic nucleus"
+        name_in_source: "preoptic area (POA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:34373576"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "236963220_47c26a7b"
+          - ref: "PMID:34373576"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "236963220_d885c41b"
+        # NOTE: POA in medaka maps loosely to mammalian preoptic area; cross-species homology assumption.
+    defining_markers:
+      - symbol: Adcyap1
+        ncbi_gene_id: "NCBIGene:11516"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34373576"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "236963220_47c26a7b"
+      - symbol: Vip
+        ncbi_gene_id: "NCBIGene:22353"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34373576"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "236963220_47c26a7b"
+    neuropeptides:
+      - symbol: Adcyap1
+        ncbi_gene_id: "NCBIGene:11516"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34373576"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "236963220_47c26a7b"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34373576"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "236963220_d885c41b"
+      - symbol: Vip
+        ncbi_gene_id: "NCBIGene:22353"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34373576"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "236963220_47c26a7b"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34373576"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "236963220_d885c41b"
+    morphology:
+      description: >
+        Single population of POA neurons projecting to the anterior pituitary that
+        shows opposite sexually dimorphic neuropeptide expression: PACAP is male-
+        biased while VIP is female-biased. Sexual dimorphism is caused by adult
+        estrogen secretion. PACAP and VIP produced by these neurons act as
+        hypophysiotropic factors via functional pituitary receptors.
+      sources:
+        - ref: "PMID:34373576"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "236963220_47c26a7b"
+        - ref: "PMID:34373576"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "236963220_d885c41b"
+    cl_mapping: null
+    # CL CANDIDATE: No CL term for POA PACAP/VIP hypophysiotropic neurons. Searches for 'PACAP VIP neuron', 'VIP neuron hypothalamus' returned only ganglion VIP neurons and cortical VIP interneurons — no hypothalamic hypophysiotropic VIP/PACAP cell type. Initially described in medaka (teleost) with sexually dimorphic neuropeptide expression. Potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:34373576"
+    notes: >
+      Bidirectional dimorphism — same neuron population shows PACAP male-bias and
+      VIP female-bias. Studied in medaka (teleost); mammalian homology assumed but
+      not directly demonstrated. CROSS_SPECIES_EXTRAPOLATION caveat: evidence base
+      is fish-only. No CL term — candidate for new term.
+
+  - id: pmv_otr_neuron
+    name: "Ventral premammillary nucleus (PMv) oxytocin receptor neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:1004
+        label: "Ventral premammillary nucleus"
+        name_in_source: "ventral premammillary nucleus (PMv)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:39416191"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273240437_ed3a4faa"
+          - ref: "PMID:32313029"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "201207691_ff444c30"
+    defining_markers:
+      - symbol: Oxtr
+        ncbi_gene_id: "NCBIGene:18430"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:32313029"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "201207691_ff444c30"
+      - symbol: Slc6a3
+        ncbi_gene_id: "NCBIGene:13162"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:39416191"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "273240437_af6642f9"
+      - symbol: Adcyap1
+        ncbi_gene_id: "NCBIGene:11516"
+    morphology:
+      description: >
+        Male-biased sexual dimorphism: significantly higher OTR expression in males
+        compared to females between P14 and P56. PMv is a well-established sexually
+        dimorphic region with roles in maternal aggression, reproductive control, male
+        social behavior, and intermale aggression. Subclass-level abundance
+        differences identified in PMv (Hemminger 2024). Previously identified
+        subpopulations include PMv-DAT and PMv-PACAP.
+      sources:
+        - ref: "PMID:32313029"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "201207691_ff444c30"
+        - ref: "PMID:39416191"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "273240437_ed3a4faa"
+    cl_mapping: null
+    # CL CANDIDATE: No CL term for ventral premammillary nucleus (PMv) oxytocin receptor neurons. Search for 'oxytocin receptor neuron' returned only CL:4023122 (cortical OxtrINs, somatostatin+), which is unrelated. PMv-OTR is a male-biased sexually dimorphic hypothalamic population. Potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:32313029"
+      - "PMID:39416191"
+    notes: >
+      Male-biased dimorphism (males > females). Multiple molecularly defined
+      subpopulations: PMv-DAT (Slc6a3+, dopaminergic), PMv-PACAP (Adcyap1+), and
+      OTR+. HETEROGENEITY: the OTR+, DAT+, and PACAP+ subpopulations may not fully
+      overlap and could be split into separate sub-nodes. No CL term — candidate for
+      new term.
+
+
+# ══════════════════════════════════════════════════════════════════
+# EDGES — none (mapping not yet performed)
+# ══════════════════════════════════════════════════════════════════
+
+edges: []

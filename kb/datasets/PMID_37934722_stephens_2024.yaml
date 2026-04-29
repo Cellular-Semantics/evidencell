@@ -1,0 +1,53 @@
+id: dataset_PMID_37934722
+record_type: BulkDataset
+source_pmid: "PMID:37934722"
+technique: bulk_RNAseq_FACS_sorted
+species: "NCBITaxon:10090"
+ingested_date: "2026-04-28"
+description: >
+  Bulk RNA-seq of FACS-sorted Kiss1+ neurons from two hypothalamic regions in
+  adult female mice — rostral periventricular area of the third ventricle (RP3V)
+  and arcuate nucleus (ARC). Pools of 10–15 cells per replicate. Stephens et al.
+  2024 identify 332 differentially expressed genes between the populations,
+  with Cartpt, Ddc, Gal, and Th enriched in RP3V neurons and Gpr83, Nhlh2,
+  Nr4a2, and Tacr3 enriched in ARC neurons.
+
+  Repository: https://www.repository.cam.ac.uk/items/ca9ff6c0-7f38-4d06-bf89-dfd432b6a335
+  (raw FASTQs only). Processed expression table is supplementary table 3 from
+  the Reproduction publication.
+
+data_files:
+  - relpath: bulk_supp_table.csv
+    url: https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/reproduction/167/1/10.1530_REP-23-0342/3/rep-23-0342_supplementary_table_3.csv
+    sha256: "280739cdd9b0f798b56b8cfbb988522e751c321f2796ce84543ceb1f47eeacff"
+    keyed_by: ensembl_id
+    normalisation: log2_filtered_max_gt_7
+    metadata: >
+      4,725 rows × 2 expression columns (RP3V, ARC) + Ensembl ID + gene symbol.
+      Filter: at least one of RP3V/ARC log2 > 7. 22 duplicate Ensembl rows
+      present (gene symbols re-listed); deduplicate before correlation.
+
+pools:
+  - id: stephens_RP3V
+    tissue: rostral_periventricular_area_of_third_ventricle
+    sort_marker: Kiss1+
+    state: female_adult
+    n_replicates: 4
+    metadata: >
+      Source repository tags samples as A4/A6/C7 etc. across 4 RP3V pools.
+      Mean log2 expression vector reported in supp table column "RP3V".
+  - id: stephens_ARC
+    tissue: arcuate_nucleus
+    sort_marker: Kiss1+
+    state: female_adult
+    n_replicates: 4
+    metadata: >
+      Mean log2 expression vector reported in supp table column "ARC Log2>7".
+
+notes: >
+  Used in corr_run_20260428_stephens_kiss1_wmbv1 to validate the
+  avpv_kiss1_neuron mapping. The RP3V vs ARC contrast is the canonical
+  paired-bulk differential — both pools are Kiss1+, differing only in
+  anatomical region. Ideal for δ-style cluster-specificity ranking
+  because regional expression differences dominate over Kiss1 signature
+  noise.
