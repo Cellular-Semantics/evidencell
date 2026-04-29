@@ -136,9 +136,43 @@ def _find_corpus_by_doi(bare_doi: str, refs: dict) -> dict | None:
     return None
 
 
+def _coerce_authors(authors) -> list[str]:
+    """Coerce a references.json `authors` field to list[str].
+
+    Canonical shape is list[str]; defensive against the historical bug-class
+    documented in planning/minirefs_author_rendering_fix.md, where the
+    asta-report-ingest writer has shipped:
+      - list[str]                      → returned as-is
+      - list[dict] (S2 batch shape)    → extract `name` from each dict
+      - "First, Second, ... et al."    → split on commas, strip et-al suffix
+      - empty / None / whitespace      → []
+    """
+    if not authors:
+        return []
+    if isinstance(authors, str):
+        s = authors.strip()
+        if not s:
+            return []
+        # Drop a trailing 'et al.' / 'et al' token (with optional comma before)
+        for suffix in (", et al.", ", et al", " et al.", " et al"):
+            if s.endswith(suffix):
+                s = s[: -len(suffix)].rstrip(",").rstrip()
+                break
+        return [part.strip() for part in s.split(",") if part.strip()]
+    result: list[str] = []
+    for a in authors:
+        if isinstance(a, str):
+            result.append(a)
+        elif isinstance(a, dict):
+            name = a.get("name", "")
+            if name:
+                result.append(name)
+    return result
+
+
 def _format_citation_line(entry: dict) -> str:
     """Format a references.json entry as 'Author et al. YYYY · PMID:…'"""
-    authors = entry.get("authors", [])
+    authors = _coerce_authors(entry.get("authors"))
     year = entry.get("year", "")
     pmid = entry.get("pmid", "")
     doi = entry.get("doi", "")
@@ -929,7 +963,7 @@ def render_drilldown(
         raise ValueError(f"PMID/corpus_id '{pmid_or_corpus}' not found in references.json")
 
     corpus_id = corpus_entry["corpus_id"]
-    authors = corpus_entry.get("authors", [])
+    authors = _coerce_authors(corpus_entry.get("authors"))
     year = corpus_entry.get("year", "")
     pmid = corpus_entry.get("pmid", "")
     doi = corpus_entry.get("doi", "")
@@ -1316,7 +1350,7 @@ def _gen_single_drilldown(
     if corpus_entry is None:
         print(f"WARNING: PMID '{pmid}' not found in references.json; skipping", file=sys.stderr)
         return
-    authors = corpus_entry.get("authors", [])
+    authors = _coerce_authors(corpus_entry.get("authors"))
     year = corpus_entry.get("year", "")
     first_author_last = authors[0].split()[-1] if authors else "Unknown"
     filename = f"{node_id}_drilldown_{first_author_last}{year}.md"

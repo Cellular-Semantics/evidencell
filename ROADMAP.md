@@ -123,6 +123,7 @@ exists on every node row, so queries within a single atlas work unchanged.
 - [ ] Report: expression/annotation discrepancy as programmatic QC in gen-facts — flag when a DEFINING or NEUROPEPTIDE atlas marker shows near-zero precomputed expression vs. what atlas metadata annotates; emit structured `ATLAS_ANNOTATION_EXPRESSION_DISCREPANCY` item `#gen-report` `#qc`
 - [ ] Report: ABC Atlas cell set linkouts — thread taxonomy node URLs (from download metadata) into rendered reports; document URL format `#gen-report` `#community`
 - [ ] Report: ABC Atlas marker gene / combo linkouts — use existing code to generate query URLs for defining markers; add to candidate sections `#gen-report` `#community`
+- [x] Report: minirefs author rendering — defensive `_coerce_authors()` in render.py + `_normalise_authors()` extended to handle string input + asta-report-ingest Step 2 prompt now spells out the field shape contract. Third instance of the asta-report-ingest free-form-writer class of bug (PMID prefix, DOI prefix, now authors shape — see [planning/asta_ingest_lessons_sexually_dimorphic.md](planning/asta_ingest_lessons_sexually_dimorphic.md) §1–2). Plan: [planning/minirefs_author_rendering_fix.md](planning/minirefs_author_rendering_fix.md). Medium-term structural fix subsumed by [planning/schema_self_contained_references.md](planning/schema_self_contained_references.md) Phase A `PublicationReference`. `#gen-report` `#asta-ingest`
 
 ---
 

@@ -339,6 +339,31 @@ TASK:
         author_keys list.
       - If new: add full entry with metadata + quotes.
 
+   c1. Field shape contract — write each entry in this exact shape:
+       {
+         "corpus_id": "<digits-only>",
+         "author_keys": ["Last et al., YYYY"],          // list[str]
+         "title": "<paper title>",
+         "year": <int>,
+         "authors": ["First Author", "Second Author"],   // list[str], full
+                                                         // names. NOT a single
+                                                         // comma-joined string;
+                                                         // NOT 'et al.' suffix
+                                                         // appended.
+         "pmid": "<digits-only>",                        // NO 'PMID:' prefix
+         "doi": "<bare path, e.g. 10.1111/ejn.14606>",   // NO 'DOI:' prefix,
+                                                         // NO 'https://' URL
+         "resolution_confidence": "HIGH" | "MODERATE" | "UNRESOLVED",
+         "quotes": { ... }
+       }
+       Semantic Scholar `get_paper_batch` returns authors as
+       `[{"authorId": "...", "name": "..."}, ...]`. Extract `name` from each
+       dict; do not flatten to a string. Three prior pilots have shipped
+       wrong field shapes here (see
+       planning/asta_ingest_lessons_sexually_dimorphic.md §1–2 and
+       planning/minirefs_author_rendering_fix.md) — every one was caught
+       only after KB writes started failing.
+
    d. Each quote entry:
       {
         "text": "<exact quote>",

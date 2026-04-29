@@ -14,8 +14,10 @@ import pytest
 from evidencell.render import (
     _best_edge,
     _candidate_verdict,
+    _coerce_authors,
     _collect_quotes,
     _conf_badge,
+    _format_citation_line,
     _gen_all_drilldowns,
     _gen_single_drilldown,
     _group_experiments,
@@ -806,3 +808,94 @@ def test_cli_facts(tmp_path):
             main()
     facts_files = list(tmp_path.glob("reports/**/*_facts.json"))
     assert len(facts_files) == 1
+
+
+# ── _coerce_authors / _format_citation_line ───────────────────────────────────
+#
+# Regression for the asta-report-ingest free-form-writer bug class
+# (planning/minirefs_author_rendering_fix.md): references.json may carry
+# `authors` as list[str], list[dict] (Semantic Scholar shape), or — in
+# sexually_dimorphic ingest output — a single comma-joined string. The
+# renderer must produce a correct surname in all of these shapes.
+
+def test_coerce_authors_list_of_strings():
+    assert _coerce_authors(["Iris Oren", "Wiebke Nissen"]) == ["Iris Oren", "Wiebke Nissen"]
+
+
+def test_coerce_authors_list_of_dicts():
+    """Semantic Scholar batch shape: [{'authorId': '...', 'name': '...'}, ...]."""
+    assert _coerce_authors(
+        [{"authorId": "1", "name": "Jane Doe"}, {"authorId": "2", "name": "Bob Lee"}]
+    ) == ["Jane Doe", "Bob Lee"]
+
+
+def test_coerce_authors_comma_joined_string_with_et_al():
+    """sexually_dimorphic shape: 'First Author, Second Author, ... et al.'"""
+    result = _coerce_authors(
+        "Shannon B. Z. Stephens, Melvin L. Rouse, K. Tolson, R. Liaw et al."
+    )
+    assert result == [
+        "Shannon B. Z. Stephens",
+        "Melvin L. Rouse",
+        "K. Tolson",
+        "R. Liaw",
+    ]
+
+
+def test_coerce_authors_comma_joined_string_no_et_al():
+    assert _coerce_authors("Ha Na Choe, E. Jarvis") == ["Ha Na Choe", "E. Jarvis"]
+
+
+def test_coerce_authors_single_name_string():
+    assert _coerce_authors("Solo Author") == ["Solo Author"]
+
+
+def test_coerce_authors_empty_inputs():
+    assert _coerce_authors([]) == []
+    assert _coerce_authors(None) == []
+    assert _coerce_authors("") == []
+    assert _coerce_authors("   ") == []
+
+
+def test_format_citation_line_string_authors_regression():
+    """Regression: minirefs collapsed to 'S et al. 2017' when authors was a string.
+
+    See planning/minirefs_author_rendering_fix.md.
+    """
+    entry = {
+        "authors": "Shannon B. Z. Stephens, Melvin L. Rouse, K. Tolson et al.",
+        "year": 2017,
+        "pmid": "28660243",
+    }
+    line = _format_citation_line(entry)
+    assert line.startswith("Stephens et al. 2017"), (
+        f"Expected 'Stephens et al. 2017 ...', got: {line!r}"
+    )
+    assert "PMID:28660243" in line
+
+
+def test_format_citation_line_list_authors_unchanged():
+    """Canonical list[str] shape produces identical output as before the fix."""
+    entry = {
+        "authors": ["Iris Oren", "Wiebke Nissen", "D. Kullmann"],
+        "year": 2019,
+        "pmid": "31420995",
+    }
+    line = _format_citation_line(entry)
+    assert line == "Oren et al. 2019 · PMID:31420995"
+
+
+def test_format_citation_line_two_authors_string():
+    entry = {
+        "authors": "Ha Na Choe, E. Jarvis",
+        "year": 2021,
+        "pmid": "33895570",
+    }
+    line = _format_citation_line(entry)
+    assert "Choe & Jarvis 2021" in line
+
+
+def test_format_citation_line_single_author_string():
+    entry = {"authors": "Solo Author", "year": 2020, "pmid": "12345678"}
+    line = _format_citation_line(entry)
+    assert line == "Author 2020 · PMID:12345678"
