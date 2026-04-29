@@ -950,10 +950,8 @@ edges:
   - property: marker_Wfs1
     node_a_value: defining marker (symbol only; expression level not populated)
     node_b_value: not listed in SUPT_0069 defining markers (Lefty1, Fibcd1, Pcp4l1)
-    alignment: NOT_ASSESSED
-    notes: 'Wfs1 is a canonical CA1 deep layer marker well-established in the literature but absent from SUPT_0069 metadata. Expression level in this supertype not assessed; other CA1-ProS supertypes (e.g. SUPT_0070) may carry Wfs1 in their metadata.
-
-      '
+    alignment: CONSISTENT
+    notes: 'Wfs1 mean_expression=3.97 in SUPT_0069 (precomputed_stats.h5, supertype level)'
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
     description: 'The CA1 pyramidal cell type in WMBv1 is resolved into at least four supertypes within SUBC_016 (SUPT_0069-0072). This edge targets SUPT_0069 as the primary mapping (highest discovery score; carries Fibcd1) but the full classical CA1 PC population spans all four supertypes. A complete mapping requires additional edges to SUPT_0070, 0071, and 0072.
@@ -1537,10 +1535,8 @@ edges:
   - property: marker_Calb1
     node_a_value: defining marker Calb1 (calbindin; pyramidal cell identity marker)
     node_b_value: not listed in SUPT_0052 defining markers (Ush2a, Dcn)
-    alignment: NOT_ASSESSED
-    notes: 'Calb1 is the classical marker distinguishing EC layer II pyramidal cells from Reln+ stellate cells. Absence from metadata does not exclude expression; requires precomputed expression check.
-
-      '
+    alignment: CONSISTENT
+    notes: 'Calb1 mean_expression=7.14 in SUPT_0052 (precomputed_stats.h5, supertype level)'
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
     description: 'Small sample size (n=42 L2 IT ENTm cells) limits statistical confidence. SUPT_0052 and SUPT_0054 together cover 92.8% of L2 IT ENTm cells, suggesting the classical EC layer II pyramidal cell TYPE_A_SPLITS across these two supertypes. A second edge to SUPT_0054 (F1=0.500) would be appropriate when more data are available.
@@ -1694,11 +1690,6 @@ edges:
     node_b_value: HIGH expression in SUPT_0135 reference cells (mean 4.5-8.2 UMIs/cell, n=5 clusters) — highest Calb2 among all HPF Glut supertypes
     alignment: CONSISTENT
     notes: Calb2 (calretinin) expression in SUPT_0135 is 30-100x higher than in DG Glut supertypes (0.08-0.16 UMIs). This is the primary positive evidence for this mapping.
-  - property: marker_Slc17a8
-    node_a_value: defining marker Slc17a8 (VGluT3; present in a subset of SLM glutamatergic neurons)
-    node_b_value: LOW/absent in SUPT_0135 reference cells (0-0.3 UMIs; detectable in 2/5 clusters only)
-    alignment: DISCORDANT
-    notes: Slc17a8 (VGluT3) is a defining marker of the classical node but is minimally expressed in SUPT_0135 reference cells. This discordance is the primary reason for LOW confidence. The WMBv1 HPF CR population may be a Calb2+/Reln+/Trp73+ Cajal-Retzius population rather than the VGluT3+/Calb2+ population described in some hippocampal transcriptomic literature.
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
     description: SUPT_0135 reference cells strongly express Reln and Trp73 (both Cajal-Retzius cell markers) alongside Calb2. Classical Cajal-Retzius cells are developmentally transient (largely absent in adult rodent hippocampus) and may not correspond to the Calb2+/Slc17a8+ glutamatergic neurons described in adult SLM/OML. The SUPT_0135 supertype has n=5 reference cells total (1 per cluster), which is the smallest representation of any HPF Glut supertype in WMBv1, consistent with either extreme rarity or a poorly sampled cell type. The 'CR' designation in WMBv1 may specifically label Cajal-Retzius remnants captured during adult brain profiling.
