@@ -1499,6 +1499,47 @@ class TaxonomyDB:
             ).fetchall()
         return [dict(r) for r in rows]
 
+    def get_node_by_accession(self, accession: str) -> dict | None:
+        """Look up a single node by its accession.
+
+        Accepts either bare short_form (`CS20230722_SUPT_0206`) or full CURIE
+        (`WMB:CS20230722_SUPT_0206`). Returns the row as a dict, or None if no
+        match.
+        """
+        if not accession:
+            return None
+        with self._connect() as con:
+            row = con.execute(
+                "SELECT * FROM nodes WHERE node_id = ? OR short_form = ? LIMIT 1",
+                (accession, accession),
+            ).fetchone()
+        return dict(row) if row else None
+
+    def get_parent_hierarchy(self, accession: str) -> list[dict]:
+        """Walk the parent_id chain and return ancestors from immediate parent up.
+
+        Each entry: `{level, name, cell_set_accession}`. Empty list if the node
+        is missing or has no parent. Cycles are guarded by a visited set.
+        """
+        chain: list[dict] = []
+        seen: set[str] = set()
+        cur = self.get_node_by_accession(accession)
+        while cur and cur.get("parent_id"):
+            parent_id = cur["parent_id"]
+            if parent_id in seen:
+                break
+            seen.add(parent_id)
+            parent = self.get_node_by_accession(parent_id)
+            if not parent:
+                break
+            chain.append({
+                "level": parent.get("taxonomy_level", ""),
+                "name": parent.get("label", ""),
+                "cell_set_accession": parent.get("short_form", ""),
+            })
+            cur = parent
+        return chain
+
     def build_anat_closure(self, mba_json: Path) -> None:
         """Populate anat_terms, anat_hierarchy, and anat_closure from an MBA OBO JSON file.
 

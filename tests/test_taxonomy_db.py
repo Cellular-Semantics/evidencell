@@ -281,6 +281,43 @@ def test_taxonomy_db_query_by_cl(populated_db):
     assert isinstance(results, list)
 
 
+def test_taxonomy_db_get_node_by_accession(populated_db):
+    db, _, _ = populated_db
+    # Pick any real node and round-trip its accession both ways (bare and CURIE)
+    with db._connect() as con:
+        row = con.execute(
+            "SELECT node_id, short_form, label FROM nodes LIMIT 1"
+        ).fetchone()
+    assert row is not None
+    full = row["node_id"]
+    bare = row["short_form"]
+    by_full = db.get_node_by_accession(full)
+    by_bare = db.get_node_by_accession(bare)
+    assert by_full is not None and by_bare is not None
+    assert by_full["short_form"] == bare
+    assert by_bare["node_id"] == full
+    assert db.get_node_by_accession("WMB:does_not_exist") is None
+    assert db.get_node_by_accession("") is None
+
+
+def test_taxonomy_db_get_parent_hierarchy(populated_db):
+    db, _, _ = populated_db
+    with db._connect() as con:
+        row = con.execute(
+            "SELECT short_form FROM nodes WHERE parent_id IS NOT NULL LIMIT 1"
+        ).fetchone()
+    if row is None:
+        pytest.skip("Fixture has no nodes with a parent")
+    chain = db.get_parent_hierarchy(row["short_form"])
+    # Chain may be empty when the named parent is missing from the DB (single-
+    # row fixtures); when present, every entry must carry the canonical keys.
+    assert isinstance(chain, list)
+    for entry in chain:
+        assert {"level", "name", "cell_set_accession"} <= entry.keys()
+    # Unknown accession produces empty chain, not an error
+    assert db.get_parent_hierarchy("WMB:does_not_exist") == []
+
+
 def test_taxonomy_db_find_candidates_empty(populated_db):
     db, _, _ = populated_db
     results = db.find_candidates(anat_ids=["MBA:99999999"], level="cluster")
@@ -437,6 +474,20 @@ def test_full_wmbv1_ingest(tmp_path):
             "SELECT COUNT(*) FROM nodes WHERE male_female_ratio IS NOT NULL"
         ).fetchone()[0]
     assert db_count > 5000
+
+    # Parent-hierarchy walk on a cluster: should reach SUPERTYPE -> SUBCLASS ->
+    # CLASS (real WMBv1 hierarchy). Pick any cluster with a parent_id.
+    with db._connect() as con:
+        cl_row = con.execute(
+            "SELECT short_form FROM nodes "
+            "WHERE taxonomy_level='cluster' AND parent_id IS NOT NULL LIMIT 1"
+        ).fetchone()
+    if cl_row is not None:
+        chain = db.get_parent_hierarchy(cl_row["short_form"])
+        levels = [(e.get("level") or "").upper() for e in chain]
+        assert "SUPERTYPE" in levels
+        assert "SUBCLASS" in levels
+        assert "CLASS" in levels
 
     # n_cells (10x per-node count): present on the new KG export only.
     # The legacy wmbv1_full.json predates the cell_count property — skip the
