@@ -92,9 +92,13 @@ First, read the facts file completely. Then write the Markdown report below.
 *{graph_meta.status} · {graph_meta.creation_date} · Source: `{graph_meta.graph_file}`*
 ```
 
-If `graph_meta.status` is "draft", add the warning banner:
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+If `graph_meta.status` is "draft", add the warning banner as bold inline
+text (NOT a blockquote — blockquote-based banners fail the hook because
+they have no `quote_key` and no `[n]` attribution to a references table):
+
+```markdown
+**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+```
 
 ### 2. Location note (conditional)
 
@@ -166,8 +170,11 @@ Note at the end: total edge count and relationship type.
 **4b. Property alignment table (mandatory for each primary candidate)**
 
 For the primary (highest-confidence) candidate, and for any secondary candidate
-with confidence ≥ MODERATE, write a property alignment table immediately after
-the candidate overview:
+with confidence ≥ MODERATE, write **two** tables immediately after the candidate
+overview:
+
+**Table 1 — Property comparison.** One row per *classical property* that has a
+comparison in `edges[*].property_comparisons`:
 
 ```
 | Property | Classical | Supertype | Best cluster | Alignment |
@@ -175,27 +182,57 @@ the candidate overview:
 | Soma location | {region [MBA:XXX]} | {n}/{total} cells in target region | {cluster primary soma (MBA:XXX)} | CONSISTENT/APPROXIMATE/DISCORDANT |
 | NT type | {type} | {supertype NT label} | {cluster NT annotation} | |
 | {gene1} expression | defining marker | {supertype mean} | {cluster mean (CLUS_XXXX)} | |
-| {gene2} expression | defining marker | {supertype mean} | {cluster mean} | |
 | Sex ratio | {expected direction or "not documented"} | not available | MFR={value} (CLUS_XXXX) | CONSISTENT/APPROXIMATE/DISCORDANT/NOT_ASSESSED |
-| Annotation transfer | — | NOT_ASSESSED or F1={value} | NOT_ASSESSED or F1={value} | — |
 ```
 
-Rules:
-- One row per classical property that has a comparison in `edges[*].property_comparisons`.
+Rules for Table 1:
+- One row per property comparison; do NOT include evidence-item rows here.
 - Supertype column: use `node_b_value` from the property_comparison where
   `atlas_node_accession` is a supertype (rank ≥ 1). Write "not available" if absent.
 - Best cluster column: if the discovery data or edge YAML identifies a best child
-  cluster (e.g. from `child_cluster_expression` analysis), use that cluster's values.
-  Write "not assessed" if no child-cluster data was collected.
-- Alignment column: use the `alignment` field from property_comparisons. If supertype
-  and cluster alignments differ, show both: "SUPT: APPROXIMATE; CLUS: CONSISTENT".
+  cluster, use that cluster's values. Write "not assessed" if no child-cluster
+  data was collected.
+- Alignment column: use the `alignment` field from property_comparisons. If
+  supertype and cluster alignments differ, show both: "SUPT: APPROXIMATE; CLUS:
+  CONSISTENT".
 - Sex ratio row: always include. Use MFR from the best child cluster; write
   "not available" at supertype level (MFR is only computed at rank 0).
-- Annotation transfer row: always include. Show F1 score(s) if
-  `AnnotationTransferEvidence` exists in the edge's evidence items, otherwise
-  "NOT_ASSESSED".
-- Use only values from `facts.edges[*].property_comparisons` and
-  `facts.edges[*].evidence_items`. Do not invent quantitative values.
+- Use only values from `facts.edges[*].property_comparisons`. Do not invent.
+
+**Table 2 — Evidence support.** One row per evidence item on the edge,
+generated *generically* from `edges[*].evidence_items[*]`. NO per-evidence-type
+hard-coded rows or rules. New evidence types appear automatically.
+
+```
+| Evidence | Type | Supports | Headline | Source |
+|---|---|---|---|---|
+| {short label} | {EVIDENCE_TYPE_LABELS[evidence_type]} | {supports} | {headline metric or digest} | {ref_label or "atlas-internal"} |
+```
+
+Rules for Table 2:
+- **Evidence**: a short human label. Derive from `explanation` (first phrase),
+  or from `fields.run_ref` / dataset name when more informative. Examples:
+  "Knoedler 2022 TRAP-seq", "Atlas precomputed expression", "MapMyCells AT".
+- **Type**: the human label for `evidence_item.evidence_type`. The renderer's
+  `EVIDENCE_TYPE_LABELS` covers known types; for unknown types fall back to
+  the raw enum string.
+- **Supports**: `evidence_item.supports` (SUPPORT / PARTIAL / REFUTE /
+  NOT_ASSESSED).
+- **Headline**: a one-line digest. Pull from `evidence_item.fields` whichever
+  field(s) make the supporting numerics legible — examples:
+  - `BULK_CORRELATION`: read `fields.statistics` (e.g. "δ=0.0180, rank 1/5322")
+  - `ANNOTATION_TRANSFER`: read `fields.best_f1_score` (e.g. "F1=0.62")
+  - `LITERATURE`: omit (the snippet appears as a blockquote elsewhere)
+  - other types: digest of `explanation`
+  If no obvious headline numeric is present, leave blank.
+- **Source**: `evidence_item.ref_label` if populated (e.g. "[3]"); else
+  "atlas-internal" for ATLAS_METADATA / ATLAS_QUERY items where the data lives
+  in the atlas itself; else "—".
+
+This Evidence support table replaces the previous hardcoded "Annotation
+transfer" row. Any new EvidenceItem subclass added to the schema surfaces here
+without editing this workflow — the renderer extracts the necessary fields
+generically and the synthesis subagent populates one row per item.
 
 **Subcluster concordance note (mandatory for supertype candidates):**
 
@@ -370,17 +407,32 @@ Do not invent PMIDs or query URLs.
 ## Strict rules
 
 1. Every `[n]` or `[A]` citation MUST correspond to an entry in `facts.reference_index`.
-2. Do not write any blockquote or verbatim passage unless it appears in `facts.quotes`.
+2. Do not write any blockquote or verbatim passage unless it appears in `facts.quotes`
+   (verbatim-quote path) OR it directly reproduces an `evidence_items[*].explanation`
+   string from `facts.edges[*]` (authored-prose path; see rule 6b).
 3. Do not mention any cluster accession, node ID, or UBERON/MBA term not present in facts.
 4. You MAY use neuroanatomical knowledge (brain region adjacency, lineage, marker
    specificity) for interpretation — but mark interpretations that go beyond the facts
    with "*(note: ...)*" so the validation subagent can distinguish them from claimed facts.
 5. Do not add references from your training knowledge. If a paper seems relevant but
    isn't in `reference_index`, do not cite it.
-6. Every blockquote must have an attribution line immediately after it:
+6. Every blockquote must carry one of two attribution forms:
+
+   **6a. Verbatim-quote path** (for `LiteratureEvidence.snippet` text from `facts.quotes`):
    `> — {First author} et al. {Year}, {Section} · [{n}] <!-- quote_key: {key} -->`
    Copy the `quote_key` exactly from `facts.quotes` for that entry. Do not invent it.
-   Do not write a blockquote without this attribution line.
+
+   **6b. Numbered-ref path** (for authored-prose evidence narratives — typically
+   from non-LITERATURE evidence with a resolved `ref_label`, e.g. BulkCorrelationEvidence,
+   AnnotationTransferEvidence, MarkerAnalysisEvidence):
+   `> — {First author} et al. {Year} · [{n}]`
+   Use this form when surfacing an `evidence_item.explanation` whose `ref_label`
+   is populated. The blockquote body MUST be the verbatim `explanation` text from
+   the evidence item — do not paraphrase. The `[n]` MUST appear in the References
+   table. No `quote_key` is required (the text is curator-authored prose, not a
+   verbatim quote from the cited paper).
+
+   Do not write a blockquote without one of these attribution forms.
 7. Every anatomical location (soma location, layer, region) must be written as:
    `Name [PREFIX:ID]`
    using the `id` field from `facts.classical_nodes[].anatomical_location`. Do not invent IDs.
@@ -415,11 +467,24 @@ Read both files. Then perform these checks:
    confirm it matches the `pmid` field of the corresponding reference_index entry.
    Flag any mismatch.
 
-3. **Blockquote integrity**: For each blockquote (lines starting with `>`) in the report:
-   Search for matching text in facts.quotes[*].text.
-   - PASS: text appears verbatim (exact match).
-   - FAIL: text is truncated, paraphrased, or absent from facts.quotes.
-   Flag each failing blockquote.
+3. **Blockquote integrity**: For each blockquote (lines starting with `>`) in the report,
+   determine which attribution form it uses by inspecting the attribution line:
+
+   **(a) Verbatim-quote path** — attribution contains `<!-- quote_key: X -->`:
+   - PASS if quote_key X exists in facts.quotes AND the blockquote body matches
+     facts.quotes[X].text verbatim (exact substring match).
+   - FAIL if X is absent from facts.quotes, or if the body is paraphrased/truncated.
+
+   **(b) Numbered-ref path** — attribution contains `[n]` cite without quote_key:
+   - PASS if [n] resolves in facts.reference_index AND the blockquote body matches
+     verbatim some `evidence_items[*].explanation` string within
+     facts.edges (exact substring match — the body is the curator-authored prose
+     copied from the YAML).
+   - FAIL if [n] is absent from facts.reference_index, or if the body is not
+     traceable to any evidence item explanation.
+
+   Blockquotes with neither attribution form FAIL.
+   Flag each failing blockquote with which check fired.
 
 4. **Accession / ID integrity**: For each cluster name (e.g. "0769 Sst Gaba_3"),
    cluster accession (e.g. CS20230722_CLUS_0769), UBERON term, or MBA term mentioned

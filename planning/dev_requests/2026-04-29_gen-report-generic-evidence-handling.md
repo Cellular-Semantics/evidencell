@@ -1,6 +1,11 @@
 # Dev request: gen-report should handle any EvidenceItem subclass generically
 
 **Date:** 2026-04-29
+**Status:** **CLOSED 2026-04-29** — landed on branch `gen-report-liberalisation`.
+- `src/evidencell/render.py` extracts evidence items generically; `BULK_CORRELATION` added to `EVIDENCE_TYPE_LABELS`.
+- `build_reference_index` traverses `run_ref → manifest → dataset.source_pmid` so non-LITERATURE evidence cited papers appear in the reference table with `[n]` labels.
+- `workflows/gen-report.md` Property alignment table replaced with a generic Evidence support table; new evidence types appear automatically.
+- Validation hook accepts blockquotes attributed to numbered refs (`[n]`) as alternative to `quote_key` (see `2026-04-26_gen-report-draft-banner-format.md` for the related blockquote-banner fix).
 **Severity:** Medium — affects scalability of evidence integration; new evidence types currently require workflow edits to surface in reports.
 
 ---
