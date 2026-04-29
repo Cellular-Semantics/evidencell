@@ -309,6 +309,12 @@ nodes:
       quote_key: 14854554_439a5d0b
   - symbol: C1ql2
     ncbi_gene_id: 226359
+    sources:
+    - ref: PMID:29674952
+      method: RNA-seq differential expression + in situ hybridization validation
+      scope: adult mouse hippocampus, dentate granule neurons
+      quote_key: 5895709_81a3d36b
+      marker_type: TRANSCRIPT
 - id: hilar_mossy_cell_hippocampus
   name: Hilar mossy cell
   definition_basis: CLASSICAL_MULTIMODAL
@@ -502,6 +508,12 @@ nodes:
   defining_markers:
   - ncbi_gene_id: 20320
     symbol: Np65
+    sources:
+    - ref: PMID:30488668
+      method: IHC (anti-Np65 antibody, human hippocampus)
+      scope: adult human hippocampus (control and AD cases)
+      quote_key: 54102201_823cc8cc
+      marker_type: PROTEIN
   definition_basis: CLASSICAL_MULTIMODAL
   id: subicular_pyramidal_cell_hippocampus
   name: subicular pyramidal cell
@@ -961,7 +973,7 @@ edges:
   type_a: ca2_pc_hippocampus
   type_b: CS20230722_SUPT_0100
   relationship: PARTIAL_OVERLAP
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
@@ -983,18 +995,18 @@ edges:
   - property: marker_Pcp4
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0100 defining markers (Lefty1, Il16, Etv1)
-    alignment: NOT_ASSESSED
-    notes: 'Pcp4 is a well-established CA2 marker (Bhatt et al. 2009). Its absence from SUPT_0100 metadata does not exclude expression; expression levels not assessed without precomputed stats.
-
-      '
+    alignment: CONSISTENT
+    notes: 'Pcp4 mean_expression=11.26 in SUPT_0100 (precomputed_stats.h5, supertype level)'
   - property: marker_Rgs14
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0100 defining markers
-    alignment: NOT_ASSESSED
+    alignment: CONSISTENT
+    notes: Rgs14 mean_expression=8.84 in SUPT_0100 (precomputed_stats.h5, supertype level)
   - property: marker_Amigo2
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0100 defining markers
-    alignment: NOT_ASSESSED
+    alignment: CONSISTENT
+    notes: Amigo2 mean_expression=7.39 in SUPT_0100 (precomputed_stats.h5, supertype level)
   caveats:
   - caveat_type: DISCORDANT_ANATOMY
     description: 'SUBT_0100 name includes FC (fasciola cinerea) and IG (indusium griseum) alongside CA2. These are small CA2-adjacent structures; classical CA2 pyramidal cells are distinct from FC/IG neurons. The PARTIAL_OVERLAP relationship reflects uncertainty about whether this supertype cleanly captures CA2 PCs or conflates them with FC/IG populations.
@@ -1100,14 +1112,13 @@ edges:
   - property: marker_Prox1
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0137 defining markers (Dsp, Kcnh3, Syndig1)
-    alignment: NOT_ASSESSED
-    notes: 'Prox1 is a canonical DG granule cell transcription factor. Its absence from SUPT_0137 metadata is unexpected; expression may be present but not listed as a defining marker. Requires precomputed expression cross-check.
-
-      '
+    alignment: CONSISTENT
+    notes: 'Prox1 mean_expression=8.59 in SUPT_0137 (precomputed_stats.h5, supertype level)'
   - property: marker_C1ql2
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0137 defining markers
-    alignment: NOT_ASSESSED
+    alignment: CONSISTENT
+    notes: C1ql2 mean_expression=5.77 in SUPT_0137 (precomputed_stats.h5, supertype level)
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
     description: 'DG Glut subclass (SUBC_037) in WMBv1 contains at least four supertypes (SUPT_0136-0139). Hochgerner Granule-mature and Granule-immature both map predominantly to SUPT_0137 (F1 ~0.59-0.60), suggesting SUPT_0137 is the dominant mature granule cell supertype. However, adult-born immature granule cells may also map to SUPT_0141 (DG-PIR Ex IMN_2; F1=0.146 for Granule-immature). The classical DG granule cell type as described here spans both mature and immature populations.
@@ -1175,11 +1186,13 @@ edges:
   - property: marker_Gria4
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0078 defining markers (Homer3, Cldn22)
-    alignment: NOT_ASSESSED
+    alignment: CONSISTENT
+    notes: Gria4 mean_expression=5.37 in SUPT_0078 (precomputed_stats.h5, supertype level)
   - property: marker_Dkk3
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0078 defining markers
-    alignment: NOT_ASSESSED
+    alignment: CONSISTENT
+    notes: Dkk3 mean_expression=8.71 in SUPT_0078 (precomputed_stats.h5, supertype level)
   caveats:
   - caveat_type: DISCORDANT_ANATOMY
     description: 'The anatomical discordance between SUPT_0078 (CA3 strata) and classical hilar mossy cells (hilus/polymorph layer) is a key unresolved issue. Hilar mossy cells at the CA3c/hilus boundary may register as CA3 cells in MERFISH data, or the Cyp26b1+ subpopulation may have soma positions that overlap with proximal CA3c. This mapping remains a hypothesis pending independent anatomy validation.
@@ -1237,11 +1250,13 @@ edges:
   - property: marker_Gria4
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0079 defining markers (Rcn3, Csf2rb2)
-    alignment: NOT_ASSESSED
+    alignment: CONSISTENT
+    notes: Gria4 mean_expression=8.05 in SUPT_0079 (precomputed_stats.h5, supertype level)
   - property: marker_Dkk3
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0079 defining markers
-    alignment: NOT_ASSESSED
+    alignment: CONSISTENT
+    notes: Dkk3 mean_expression=5.32 in SUPT_0079 (precomputed_stats.h5, supertype level)
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
     description: 'Hochgerner 2018 identifies three molecular subtypes of hilar mossy cells: Mossy-Cyp26b1, Mossy-Adcyap1, and Mossy-Klk8. These map to SUPT_0078 (Cyp26b1, F1=0.943) and SUPT_0079 (Adcyap1, F1=0.833) respectively. Mossy-Klk8 (n=6 cells) maps ambiguously across multiple CA3 supertypes (best: SUPT_0077, F1=0.308) — insufficient evidence to build a separate edge. Together, SUPT_0078 and SUPT_0079 represent the molecular subdivision of the classical hilar mossy cell into two WMBv1 transcriptomic types.
@@ -1468,10 +1483,8 @@ edges:
   - property: marker_Reln
     node_a_value: defining marker Reln (reelin; stellate cell identity marker)
     node_b_value: not listed in SUPT_0042 defining markers (Igfn1, Endou, Bcl11b, Boc)
-    alignment: NOT_ASSESSED
-    notes: 'Reln expression distinguishes EC layer II stellate cells from calbindin-positive pyramidal cells. Absence from SUPT_0042 metadata does not exclude expression; requires precomputed expression check.
-
-      '
+    alignment: CONSISTENT
+    notes: 'Reln mean_expression=8.17 in SUPT_0042 (precomputed_stats.h5, supertype level)'
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
     description: 'The ''L2 IT ENTl'' Yao 2021 subclass may include both Reln+ stellate cells and minor non-stellate populations in lateral EC layer II. The classical ec_layer2_stellate_cell is specifically Reln+; the Yao 2021 subclass may contain a small Reln- fraction. This does not substantially affect the mapping given the extremely high purity (F1=0.964). The ''PIR'' component of the SUPT_0042 name warrants investigation to confirm EC vs. piriform contribution.
@@ -1581,10 +1594,8 @@ edges:
   - property: marker_Pcp4
     node_a_value: defining marker Pcp4 (PCP4; shared with CA2 pyramidal cells)
     node_b_value: not listed in SUPT_0036 defining markers (Fermt1, Cxcl14)
-    alignment: NOT_ASSESSED
-    notes: 'PCP4 is expressed in EC layer III cells and distinguishes them from EC layer II populations. Pcp4 shared with CA2 pyramidal cells (ca2_pc_hippocampus) but the AT evidence clearly separates these as distinct atlas types (SUPT_0036 vs CA2-FC-IG supertypes).
-
-      '
+    alignment: CONSISTENT
+    notes: 'Pcp4 mean_expression=10.57 in SUPT_0036 (precomputed_stats.h5, supertype level)'
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
     description: 'SUPT_0036 and SUPT_0037 together capture 99.0% of Yao 2021 L3 IT ENT cells. The classical ec_layer3_pyramidal_cell (Pcp4+) may TYPE_A_SPLITS across these two supertypes. SUPT_0036 is the dominant target (F1=0.937); a secondary edge to SUPT_0037 (F1=0.177, due to lower group purity) would complete the mapping.
@@ -1636,11 +1647,13 @@ edges:
   - property: marker_Drd1
     node_a_value: defining marker Drd1 (D1 dopamine receptor)
     node_b_value: not listed in SUPT_0069 defining markers
-    alignment: NOT_ASSESSED
+    alignment: DISCORDANT
+    notes: Drd1 mean_expression=0.09 in SUPT_0069 — effectively absent (precomputed_stats.h5, supertype level)
   - property: marker_Drd2
     node_a_value: defining marker Drd2 (D2 dopamine receptor)
     node_b_value: not listed in SUPT_0069 defining markers
-    alignment: NOT_ASSESSED
+    alignment: DISCORDANT
+    notes: Drd2 mean_expression=0.02 in SUPT_0069 — effectively absent (precomputed_stats.h5, supertype level)
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
     description: 'The dopamine receptor-expressing glutamatergic pyramidal cells are described as a ventral-specific subpopulation (Godino et al., 2023) within vCA1/vSubiculum. The curation decision in validation_notes.json (whether this is a distinct type or a property annotation) is unresolved. If resolved as a property annotation, this edge should be replaced by Drd1/Drd2 expression annotations on the CA1 and subicular pyramidal cell nodes.
