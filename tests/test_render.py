@@ -1026,3 +1026,41 @@ def test_build_reference_index_traverses_run_ref_for_bulk_correlation():
     # Stephens 2024 (PMID:37934722) registered via run_ref traversal
     pmids = {v.pmid for v in idx.values() if v.pmid}
     assert "37934722" in pmids
+
+
+def test_build_reference_index_uses_dataset_authors_year_for_citation_line():
+    """When references.json has no entry for a run_ref-resolved PMID, the
+    citation line is synthesised from the BulkDataset descriptor's
+    authors/year fields (rather than falling back to the bare PMID)."""
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {"id": "cl", "name": "cl", "definition_basis": "CLASSICAL_MULTIMODAL", "is_terminal": False},
+            {"id": "ax", "name": "ax", "definition_basis": "ATLAS_TRANSCRIPTOMIC", "is_terminal": True, "atlas": "WMBv1"},
+        ],
+        "edges": [
+            {
+                "id": "e",
+                "type_a": "cl",
+                "type_b": "ax",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "BULK_CORRELATION",
+                        "supports": "SUPPORT",
+                        "explanation": "...",
+                        "run_ref": "corr_run_20260428_stephens_kiss1_wmbv1",
+                    },
+                ],
+            },
+        ],
+    }
+    # references.json is empty — citation line must come from the dataset YAML
+    idx = build_reference_index(graph, {}, "cl")
+    stephens = next((v for v in idx.values() if v.pmid == "37934722"), None)
+    assert stephens is not None
+    assert "Stephens" in stephens.citation_line
+    assert "2024" in stephens.citation_line

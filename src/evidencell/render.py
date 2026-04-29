@@ -207,6 +207,9 @@ def _format_citation_line(entry: dict) -> str:
 # blockquote rendering so non-LITERATURE evidence narratives carry attributions.
 
 _RUN_REF_PMID_CACHE: dict[str, str | None] = {}
+# Cache (run_ref → dataset descriptor dict) so build_reference_index can pull
+# authors/year/title for citation-line formatting without re-reading dataset YAMLs.
+_RUN_REF_DATASET_CACHE: dict[str, dict] = {}
 
 
 def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
@@ -215,6 +218,11 @@ def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
     Returns "PMID:NNNN" or None if any step fails (file missing, malformed,
     or no source_pmid). Failures are non-fatal — the evidence item still
     flows through the renderer, just without a [n] ref label.
+
+    Side effect: populates `_RUN_REF_DATASET_CACHE[run_ref]` with the dataset
+    descriptor (authors, year, title, source_pmid, etc.) when the chain
+    resolves. Callers wanting the citation-formatting fields can read from
+    that cache directly via `_dataset_for_run_ref()`.
 
     Cached for the lifetime of the module to avoid re-reading manifests
     when multiple evidence items share a run_ref.
@@ -284,10 +292,21 @@ def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
             continue
         pmid = ds.get("source_pmid")
         _RUN_REF_PMID_CACHE[run_ref] = pmid
+        _RUN_REF_DATASET_CACHE[run_ref] = ds
         return pmid
 
     _RUN_REF_PMID_CACHE[run_ref] = None
     return None
+
+
+def _dataset_for_run_ref(run_ref: str) -> dict | None:
+    """Return the BulkDataset descriptor for a given run_ref, or None.
+
+    Triggers `_resolve_run_ref_to_pmid` to populate the cache lazily.
+    """
+    if run_ref not in _RUN_REF_DATASET_CACHE:
+        _resolve_run_ref_to_pmid(run_ref)
+    return _RUN_REF_DATASET_CACHE.get(run_ref)
 
 
 # ── Reference index builder ───────────────────────────────────────────────────
@@ -392,11 +411,38 @@ def build_reference_index(
             else:
                 # Generic path: any evidence type carrying run_ref resolves
                 # to its source publication via manifest → dataset → source_pmid.
+                # If references.json doesn't have an entry for the resolved
+                # PMID, fall back to authors/year/title from the BulkDataset
+                # descriptor itself so the citation line renders properly.
                 run_ref = ev.get("run_ref", "")
                 if run_ref:
                     pmid = _resolve_run_ref_to_pmid(run_ref)
                     if pmid:
-                        _add_lit(pmid, (ev.get("explanation") or "")[:80].strip())
+                        label = _add_lit(pmid, (ev.get("explanation") or "")[:80].strip())
+                        ref_type, bare = _ref_identifier(pmid)
+                        key = f"{ref_type}:{bare}"
+                        existing = index.get(key)
+                        # If _add_lit fell back to the bare PMID (no
+                        # references.json hit), patch the citation_line from
+                        # the dataset descriptor.
+                        if existing and existing.citation_line == pmid:
+                            ds = _dataset_for_run_ref(run_ref)
+                            if ds:
+                                synthetic = {
+                                    "authors": ds.get("authors") or [],
+                                    "year": ds.get("year"),
+                                    "pmid": bare,
+                                    "doi": None,
+                                }
+                                citation_line = _format_citation_line(synthetic)
+                                if citation_line and citation_line != pmid:
+                                    index[key] = RefEntry(
+                                        label=label, pmid=existing.pmid,
+                                        doi=existing.doi, corpus_id=existing.corpus_id,
+                                        query_url=existing.query_url,
+                                        citation_line=citation_line,
+                                        used_for=existing.used_for,
+                                    )
 
     return index
 
