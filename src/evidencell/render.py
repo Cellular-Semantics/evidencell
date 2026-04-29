@@ -47,6 +47,7 @@ EVIDENCE_TYPE_LABELS = {
     "MORPHOLOGY": "Morphology",
     "MARKER_ANALYSIS": "Marker analysis",
     "ATLAS_QUERY": "Atlas query",
+    "BULK_CORRELATION": "Bulk correlation",
 }
 REL_LABELS = {
     "EQUIVALENT": "≡ EQUIVALENT",
@@ -192,6 +193,103 @@ def _format_citation_line(entry: dict) -> str:
     return " · ".join(parts)
 
 
+# ── Run-ref → publication PMID resolver ───────────────────────────────────────
+#
+# Evidence types whose source is a CorrelationRun (BulkCorrelationEvidence,
+# future analogues) carry `run_ref: <run_id>`. The publication PMID lives
+# indirectly via:
+#   evidence.run_ref            → kb/correlation_runs/{run_id}/manifest.yaml
+#   manifest.dataset_ref        → kb/datasets/<file>.yaml (lookup by `id`)
+#   dataset.source_pmid         → "PMID:NNNN"
+#
+# Resolved PMIDs feed into build_reference_index() so cited papers appear
+# in the report's references table with a [n] label, and into the drilldown
+# blockquote rendering so non-LITERATURE evidence narratives carry attributions.
+
+_RUN_REF_PMID_CACHE: dict[str, str | None] = {}
+
+
+def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
+    """Trace run_ref → manifest.yaml → dataset.yaml → source_pmid.
+
+    Returns "PMID:NNNN" or None if any step fails (file missing, malformed,
+    or no source_pmid). Failures are non-fatal — the evidence item still
+    flows through the renderer, just without a [n] ref label.
+
+    Cached for the lifetime of the module to avoid re-reading manifests
+    when multiple evidence items share a run_ref.
+    """
+    if run_ref in _RUN_REF_PMID_CACHE:
+        return _RUN_REF_PMID_CACHE[run_ref]
+
+    from evidencell.paths import repo_root  # local to avoid import cycles
+    try:
+        root = repo_root()
+    except RuntimeError:
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+
+    runs_dir = root / "kb" / "correlation_runs"
+    if not runs_dir.is_dir():
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+
+    # Run directories are typically named with a date prefix (e.g.
+    # 20260428_stephens_kiss1_wmbv1) while the manifest's `id` field carries
+    # the full identifier (corr_run_20260428_stephens_kiss1_wmbv1). Try the
+    # direct path first for cheapness, then scan + match by `id` if missing.
+    manifest = None
+    direct = runs_dir / run_ref / "manifest.yaml"
+    if direct.exists():
+        try:
+            manifest = yaml.safe_load(direct.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError:
+            manifest = None
+    if not manifest or manifest.get("id") != run_ref:
+        manifest = None
+        for run_subdir in runs_dir.iterdir():
+            if not run_subdir.is_dir():
+                continue
+            mp = run_subdir / "manifest.yaml"
+            if not mp.exists():
+                continue
+            try:
+                m = yaml.safe_load(mp.read_text(encoding="utf-8")) or {}
+            except yaml.YAMLError:
+                continue
+            if m.get("id") == run_ref:
+                manifest = m
+                break
+    if not manifest:
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+
+    dataset_ref = manifest.get("dataset_ref")
+    if not dataset_ref:
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+
+    # kb/datasets/*.yaml are named by source identifier (PMID/GEO), not by
+    # the dataset id field. Scan and match by id.
+    datasets_dir = root / "kb" / "datasets"
+    if not datasets_dir.is_dir():
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+    for yaml_path in datasets_dir.glob("*.yaml"):
+        try:
+            ds = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError:
+            continue
+        if ds.get("id") != dataset_ref:
+            continue
+        pmid = ds.get("source_pmid")
+        _RUN_REF_PMID_CACHE[run_ref] = pmid
+        return pmid
+
+    _RUN_REF_PMID_CACHE[run_ref] = None
+    return None
+
+
 # ── Reference index builder ───────────────────────────────────────────────────
 
 def build_reference_index(
@@ -291,6 +389,14 @@ def build_reference_index(
                         atlas=ev.get("atlas", ""),
                         filters=ev.get("filters_applied", ""),
                     )
+            else:
+                # Generic path: any evidence type carrying run_ref resolves
+                # to its source publication via manifest → dataset → source_pmid.
+                run_ref = ev.get("run_ref", "")
+                if run_ref:
+                    pmid = _resolve_run_ref_to_pmid(run_ref)
+                    if pmid:
+                        _add_lit(pmid, (ev.get("explanation") or "")[:80].strip())
 
     return index
 
@@ -523,8 +629,14 @@ def extract_node_facts(
         b_info = _node_b_info(edge, nodes_by_id)
         verdict = _candidate_verdict(edge, nodes_by_id)
 
-        # Evidence items with ref labels
+        # Evidence items — generic extraction.
+        # All EvidenceItem subclasses share evidence_type, supports, explanation
+        # (the abstract parent's required fields). Subclass-specific fields
+        # (snippet, run_ref, statistics, best_f1_score, ...) are preserved
+        # verbatim under `fields:` so the synthesis subagent can use any of
+        # them without per-type code paths in the renderer.
         ev_items = []
+        _BASE_KEYS = {"evidence_type", "supports", "explanation"}
         for ev in edge.get("evidence", []):
             et = ev.get("evidence_type", "")
             item: dict = {
@@ -532,32 +644,32 @@ def extract_node_facts(
                 "supports": ev.get("supports", ""),
                 "explanation": (ev.get("explanation") or "").strip(),
             }
+            # Resolve a [n] ref label by the appropriate lookup for each
+            # evidence type. LITERATURE has a direct `reference`; ATLAS_QUERY
+            # uses `query_url` (gets a letter label); other types may carry a
+            # `run_ref` that resolves through the dataset chain to a PMID.
+            ref_label = ""
             if et == "LITERATURE":
                 ref = ev.get("reference", "")
-                item["ref_label"] = _ref_label(ref) if ref else ""
-                item["reference"] = ref
-                item["snippet"] = (ev.get("snippet") or "").strip()
-                item["study_type"] = ev.get("study_type", "")
+                if ref:
+                    ref_label = _ref_label(ref)
             elif et == "ATLAS_QUERY":
                 qurl = ev.get("query_url", "")
-                item["ref_label"] = _query_label(qurl) if qurl else ""
-                item["query_url"] = qurl
-                item["atlas"] = ev.get("atlas", "")
-                item["filters_applied"] = ev.get("filters_applied", "")
-                item["atlas_version"] = ev.get("atlas_version", "")
-            elif et == "ATLAS_METADATA":
-                item["atlas"] = ev.get("atlas", "")
-                item["cell_set_accession"] = ev.get("cell_set_accession", "")
-                item["metadata_url"] = ev.get("metadata_url", "")
-            elif et == "ANNOTATION_TRANSFER":
-                item["method"] = ev.get("method", "")
-                item["target_atlas"] = ev.get("target_atlas", "")
-                item["source_dataset_accession"] = ev.get("source_dataset_accession", "")
-                item["best_f1_score"] = ev.get("best_f1_score")
-                item["best_mapping_level"] = ev.get("best_mapping_level", "")
-                item["source_species"] = ev.get("source_species", "")
-                item["target_species"] = ev.get("target_species", "")
-                item["metrics_by_level"] = ev.get("metrics_by_level", [])
+                if qurl:
+                    ref_label = _query_label(qurl)
+            elif ev.get("run_ref"):
+                pmid = _resolve_run_ref_to_pmid(ev["run_ref"])
+                if pmid:
+                    ref_label = _ref_label(pmid)
+            item["ref_label"] = ref_label
+
+            # Preserve every other populated field verbatim under `fields:`.
+            extras = {
+                k: v for k, v in ev.items()
+                if k not in _BASE_KEYS and v not in (None, "", [], {})
+            }
+            if extras:
+                item["fields"] = extras
             ev_items.append(item)
 
         edge_facts.append({
@@ -982,15 +1094,26 @@ def render_drilldown(
     lines: list[str] = []
     lines.append(f"# Evidence Drill-down: {first_author_last} et al. {year}")
 
-    # Find edges citing this paper in edge evidence items
+    # Find edges citing this paper in edge evidence items.
+    # LITERATURE evidence has the cite directly in `reference`. Other evidence
+    # types (BULK_CORRELATION, ...) cite via run_ref → manifest → dataset →
+    # source_pmid; resolve and match.
     citing_edges = []
     for edge in node_edges:
         for ev in edge.get("evidence", []):
             ref = ev.get("reference", "")
             ref_type, bare = _ref_identifier(ref) if ref else ("", "")
-            if bare == pmid or bare == doi or bare == corpus_id:
+            if bare and (bare == pmid or bare == doi or bare == corpus_id):
                 citing_edges.append(edge)
                 break
+            run_ref = ev.get("run_ref", "")
+            if run_ref:
+                resolved = _resolve_run_ref_to_pmid(run_ref)
+                if resolved:
+                    _, resolved_bare = _ref_identifier(resolved)
+                    if resolved_bare == pmid:
+                        citing_edges.append(edge)
+                        break
 
     # Also scan node marker sources — papers cited there provide classical-type
     # evidence that informs all edges, even if not listed per-edge.

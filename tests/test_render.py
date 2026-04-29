@@ -899,3 +899,130 @@ def test_format_citation_line_single_author_string():
     entry = {"authors": "Solo Author", "year": 2020, "pmid": "12345678"}
     line = _format_citation_line(entry)
     assert line == "Author 2020 · PMID:12345678"
+
+
+# ── Generic evidence extraction (any EvidenceItem subclass) ───────────────────
+
+def test_extract_node_facts_generic_evidence_fields_preserved():
+    """Non-LITERATURE evidence types (e.g. BULK_CORRELATION) round-trip
+    type-specific fields under `fields:` without per-type extraction code.
+    """
+    graph = {
+        "name": "Test region",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {
+                "id": "test_classical",
+                "name": "Test classical",
+                "definition_basis": "CLASSICAL_MULTIMODAL",
+                "is_terminal": False,
+            },
+            {
+                "id": "atlas_X",
+                "name": "Atlas X",
+                "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+                "is_terminal": True,
+                "atlas": "WMBv1",
+            },
+        ],
+        "edges": [
+            {
+                "id": "edge_test_to_X",
+                "type_a": "test_classical",
+                "type_b": "atlas_X",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "BULK_CORRELATION",
+                        "supports": "SUPPORT",
+                        "explanation": "Knoedler 2022 ... rank 1/5322.",
+                        "run_ref": "corr_run_xyz",
+                        "contrast_ref": "corr_A_vs_B",
+                        "target_accession": "CS_X",
+                        "statistics": "delta=0.090",
+                    }
+                ],
+            },
+        ],
+    }
+    facts = extract_node_facts(graph, {}, "test_classical", Path("test.yaml"))
+    ev_items = facts["edges"][0]["evidence_items"]
+    assert ev_items[0]["evidence_type"] == "BULK_CORRELATION"
+    # Required fields surfaced at top level
+    assert ev_items[0]["supports"] == "SUPPORT"
+    assert ev_items[0]["explanation"].startswith("Knoedler 2022")
+    # Type-specific fields preserved verbatim under `fields:`
+    assert ev_items[0]["fields"]["run_ref"] == "corr_run_xyz"
+    assert ev_items[0]["fields"]["contrast_ref"] == "corr_A_vs_B"
+    assert ev_items[0]["fields"]["target_accession"] == "CS_X"
+    assert ev_items[0]["fields"]["statistics"] == "delta=0.090"
+    # ref_label is empty when run_ref doesn't resolve to a PMID via filesystem
+    # (no manifest exists for this fake run_ref) — the evidence still flows.
+    assert ev_items[0]["ref_label"] == ""
+
+
+def test_extract_node_facts_evidence_type_label_includes_bulk_correlation():
+    """EVIDENCE_TYPE_LABELS dict covers BULK_CORRELATION."""
+    from evidencell.render import EVIDENCE_TYPE_LABELS
+    assert "BULK_CORRELATION" in EVIDENCE_TYPE_LABELS
+    assert EVIDENCE_TYPE_LABELS["BULK_CORRELATION"] == "Bulk correlation"
+
+
+def test_resolve_run_ref_to_pmid_returns_none_for_missing_run():
+    """Unknown run_ref returns None (graceful failure, not exception)."""
+    from evidencell.render import _resolve_run_ref_to_pmid
+    assert _resolve_run_ref_to_pmid("definitely_not_a_real_run_id_xyz") is None
+
+
+def test_resolve_run_ref_to_pmid_traverses_chain():
+    """Real run_ref → manifest → dataset chain resolves to source PMID.
+
+    Smoke test against the actual kb/correlation_runs and kb/datasets entries
+    from the sexually_dimorphic mapping work — verifies the renderer can reach
+    Stephens 2024 from corr_run_20260428_stephens_kiss1_wmbv1 and Knoedler 2022
+    from corr_run_20260428_knoedler_esr1_wmbv1.
+    """
+    from evidencell.render import _resolve_run_ref_to_pmid, _RUN_REF_PMID_CACHE
+    # Bypass cache for deterministic smoke
+    _RUN_REF_PMID_CACHE.clear()
+    pmid = _resolve_run_ref_to_pmid("corr_run_20260428_stephens_kiss1_wmbv1")
+    assert pmid == "PMID:37934722"
+    pmid = _resolve_run_ref_to_pmid("corr_run_20260428_knoedler_esr1_wmbv1")
+    assert pmid == "PMID:35143761"
+
+
+def test_build_reference_index_traverses_run_ref_for_bulk_correlation():
+    """build_reference_index registers a [n] label for BULK_CORRELATION evidence
+    whose run_ref resolves to a real PMID."""
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {"id": "cl", "name": "cl", "definition_basis": "CLASSICAL_MULTIMODAL", "is_terminal": False},
+            {"id": "ax", "name": "ax", "definition_basis": "ATLAS_TRANSCRIPTOMIC", "is_terminal": True, "atlas": "WMBv1"},
+        ],
+        "edges": [
+            {
+                "id": "e",
+                "type_a": "cl",
+                "type_b": "ax",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "BULK_CORRELATION",
+                        "supports": "SUPPORT",
+                        "explanation": "...",
+                        "run_ref": "corr_run_20260428_stephens_kiss1_wmbv1",
+                    },
+                ],
+            },
+        ],
+    }
+    idx = build_reference_index(graph, {}, "cl")
+    # Stephens 2024 (PMID:37934722) registered via run_ref traversal
+    pmids = {v.pmid for v in idx.values() if v.pmid}
+    assert "37934722" in pmids
