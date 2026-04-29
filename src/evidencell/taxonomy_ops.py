@@ -42,6 +42,7 @@ INGEST_FIELDS: frozenset[str] = frozenset({
     "anatomical_location",
     "neighborhood",
     "male_female_ratio",
+    "n_cells",
     "species",
     "cell_set_designation",
     "rationale_dois",

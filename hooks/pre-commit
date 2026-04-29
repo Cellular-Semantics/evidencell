@@ -32,11 +32,15 @@ for f in $kb_files; do
         */taxonomy_meta.yaml|*/field_mapping.yaml) continue ;;
     esac
 
-    # Determine target class based on path
+    # Determine target class based on path; skip directories containing
+    # non-graph content (datasets, correlation runs, etc.) that use other
+    # schema classes not validated by this hook.
     if echo "$f" | grep -q '^kb/taxonomy/'; then
         target_class="TaxonomyNodeList"
-    else
+    elif echo "$f" | grep -qE '^kb/(draft|mappings)/'; then
         target_class="CellTypeMappingGraph"
+    else
+        continue
     fi
 
     echo "Validating $f ($target_class)..."

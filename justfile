@@ -185,7 +185,7 @@ ingest-report region pdf_file:
 # ── Taxonomy reference DB (M8) ─────────────────────────────────────────────────
 
 # Fetch taxonomy JSON from local brain_cell_KG via Cypher query
-# Requires: [kg] optional deps — run once: uv sync --group kg
+# Requires: [kg] optional deps — run once: uv sync --extra kg
 # Requires: local neo4j KG running at bolt://localhost:7687
 # Usage: just fetch-taxonomy-kg inputs/taxonomies/CCN20230722.cypher CCN20230722
 [group('workflows')]
