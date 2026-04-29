@@ -1,0 +1,15 @@
+id: CCN20230722
+name: Whole Mouse Brain (Yao 2023)
+species: mouse
+web_available: true
+web_ref_id: 10xGene
+web_display_name: 10x Whole Mouse Brain (CCN20230722)
+algorithms:
+- HierarchicalAlgorithmRun
+- CorrelationAlgorithmRun
+local_stats_path: conf/mapmycells/CCN20230722/precomputed_stats.h5
+local_markers_path: conf/mapmycells/CCN20230722/marker_genes.json
+stats_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/WMB-10X/20240831/precomputed_stats_ABC_revision_230821.h5
+markers_s3_url: https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/mapmycells/WMB-10X/20240831/mouse_markers_230821.json
+local_cli_variant: from_specified_markers
+preferred_backend: auto
