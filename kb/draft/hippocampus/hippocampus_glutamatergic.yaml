@@ -15,11 +15,11 @@ brain_region:
   id: UBERON:0002421
   label: hippocampal formation
   name_in_source: hippocampus
-species: null
+species:
 creation_date: '2026-04-27'
 notes: 'Species: core evidence is from mouse (Mus musculus) and rat; confirm per-node from
 
-  primary sources. ncbi_gene_ids not populated — require lookup before lit review.
+  primary sources. ncbi_gene_ids populated (mouse NCBITaxon:10090) from NCBI Gene 2026-04-28.
 
   Marker sources not yet populated — nodes are at stub stage; confidence will be set
 
@@ -34,103 +34,339 @@ nodes:
 - id: ca1_pc_hippocampus
   name: CA1 pyramidal cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
   anatomical_location:
   - id: UBERON:0014548
     label: pyramidal layer of CA1
     name_in_source: CA1 stratum pyramidale
     compartment: SOMA
+    sources:
+    - ref: PMID:27113915
+      method: RNA-seq
+      scope: adult mouse hippocampus, dorsal and ventral
+      quote_key: 4875295_4a456257
+    - ref: PMID:29250747
+      method: review (anatomy)
+      scope: rodent CA1 + subiculum
+      quote_key: 2171766_537d45ba
+    - ref: https://doi.org/10.1038/s41598-017-11268-z
+      method: viral retrograde tracing
+      scope: adult male C57Bl/6 mouse hippocampus
+      quote_key: 256894421_9195fa92
+    - ref: PMID:26346726
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 2281033_0422472c
+    - ref: PMID:37011759
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 252086716_9d46d627
   nt_type:
     name_in_source: glutamatergic
     cl_terms:
     - id: CL:0000679
       label: glutamatergic neuron
       name_in_source: glutamatergic
+    sources:
+    - ref: PMID:26346726
+      method: review (anatomical classification of hippocampal principal cell types)
+      scope: mouse/rat hippocampus, adult
+      quote_key: 2281033_5b9805ff
   defining_markers:
   - symbol: Wfs1
-    ncbi_gene_id: null
-  - symbol: Fibcd1
-    ncbi_gene_id: null
+    ncbi_gene_id: 22393
+    sources:
+    - ref: PMID:7722624
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 5468451_9958f302
+    - ref: PMID:32009891
+      method: synthesis (ASTA report)
+      scope: mouse hippocampus
+      quote_key: 210181642_fe20295e
+    - ref: PMID:28779130
+      method: synthesis (ASTA report)
+      scope: rat hippocampus
+      quote_key: 3288675_d83802d0
+    - ref: PMID:8995369
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 20157937_a263df39
+    - ref: PMID:24554721
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 34872919_d652553e
+  electrophysiology:
+    description: CA1 pyramidal cells receive entorhinal cortical inputs producing somatic EPSPs that are 5-6 fold smaller than CA2 pyramidal neurons; perforant-path input alone is insufficient to drive action potential output. AMPA receptors mediate excitatory synaptic transmission at CA1 pyramidal cell synapses.
+    sources:
+    - ref: PMID:28213444
+      method: patch-clamp (slice)
+      scope: mouse CA1 vs CA2 pyramidal neurons, entorhinal input
+      quote_key: 207513684_5ee43212
+    - ref: PMID:33132900
+      method: immunolocalization (IHC)
+      scope: APP/PS1 mouse model, CA1 hippocampal region
+      quote_key: '222135486_47019332'
+  morphology:
+    description: CA1 pyramidal cells have the smallest soma size compared to CA2 and CA3 in mouse hippocampus; fewer primary apical branches and more distant branching points compared to CA3 cells.
+    sources:
+    - ref: PMID:24166578
+      method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
+      scope: adult mouse hippocampus, P15-P18
+      quote_key: 18746823_fd8665d7
 - id: ca2_pc_hippocampus
   name: CA2 pyramidal cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
   anatomical_location:
   - id: UBERON:0014549
     label: pyramidal layer of CA2
     name_in_source: CA2 stratum pyramidale
     compartment: SOMA
+    sources:
+    - ref: PMID:27113915
+      method: RNA-seq
+      scope: adult mouse CA2, dorsal and ventral
+      quote_key: 4875295_8cb069d9
+    - ref: CorpusId:18555666
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 18555666_d095397d
+    - ref: PMID:33956790
+      method: synthesis (ASTA report)
+      scope: rat hippocampus
+      quote_key: 233984943_56acd5f8
   nt_type:
     name_in_source: glutamatergic
     cl_terms:
     - id: CL:0000679
       label: glutamatergic neuron
       name_in_source: glutamatergic
+    sources:
+    - ref: PMID:26346726
+      method: review (anatomical classification of hippocampal principal cell types)
+      scope: mouse/rat hippocampus, adult
+      quote_key: 2281033_5b9805ff
   defining_markers:
   - symbol: Pcp4
-    ncbi_gene_id: null
+    ncbi_gene_id: 18546
+    sources:
+    - ref: PMID:24166578
+      method: IHC (anti-PCP4 antibody)
+      scope: adult mouse hippocampus, CA2/CA1 and CA3/CA2 borders
+      quote_key: 18746823_614030d2
+      marker_type: PROTEIN
   - symbol: Rgs14
-    ncbi_gene_id: null
+    ncbi_gene_id: 51791
+    sources:
+    - ref: PMID:24166578
+      method: review of in situ hybridization and immunostaining data
+      scope: adult rodent hippocampus CA2
+      quote_key: 18746823_8ba0bf29
+      marker_type: TRANSCRIPT
   - symbol: Amigo2
-    ncbi_gene_id: null
+    ncbi_gene_id: 105827
+    sources:
+    - ref: PMID:22904370
+      method: review (gene expression profiling, ISH/ABA data)
+      scope: adult rodent hippocampus CA2
+      quote_key: 20853920_44ab38bb
+      marker_type: TRANSCRIPT
+  electrophysiology:
+    description: CA2 pyramidal cells exhibit more efficient dendritic propagation than CA1, with entorhinal cortical inputs producing 5-6 fold larger somatic EPSPs sufficient to drive action potential output. Schaffer collateral inputs to CA2 are atypically resistant to canonical activity-dependent LTP. CA2 neurons are enriched for mitochondrial protein-encoding genes compared to CA1, consistent with higher metabolic demand.
+    sources:
+    - ref: PMID:28213444
+      method: patch-clamp (slice)
+      scope: mouse CA2 vs CA1 pyramidal neurons, entorhinal input
+      quote_key: 207513684_bb3793d4
+    - ref: PMID:22904370
+      method: electrophysiology (LTP induction at SC-CA2)
+      scope: mouse hippocampal CA2
+      quote_key: 20853920_19e668eb
+    - ref: PMID:41473278
+      method: transcriptomics + mitochondrial imaging
+      scope: mouse CA1 vs CA2 hippocampus
+      quote_key: 284018783_0507bb17
+  morphology:
+    description: CA2 pyramidal cells bear dense dendritic spines but lack the thorny excrescences of CA3; soma size is intermediate between CA1 and CA3; apical dendrites show distinct branching patterns.
+    sources:
+    - ref: PMID:24166578
+      method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
+      scope: adult mouse hippocampus, P15-P18
+      quote_key: 18746823_437ba8b3
 - id: ca3_pc_hippocampus
   name: CA3 pyramidal cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
   anatomical_location:
   - id: UBERON:0014550
     label: pyramidal layer of CA3
     name_in_source: CA3 stratum pyramidale
     compartment: SOMA
+    sources:
+    - ref: PMID:27113915
+      method: RNA-seq
+      scope: adult mouse CA3, dorsal and ventral
+      quote_key: 4875295_4a456257
+    - ref: PMID:26402459
+      method: literature mining + curation
+      scope: rodent hippocampal formation (CA3)
+      quote_key: 631148_edb9eac6
   nt_type:
     name_in_source: glutamatergic
     cl_terms:
     - id: CL:0000679
       label: glutamatergic neuron
       name_in_source: glutamatergic
-  defining_markers:
-  - symbol: Zbtb20
-    ncbi_gene_id: null
+    sources:
+    - ref: PMID:26346726
+      method: review (anatomical classification of hippocampal principal cell types)
+      scope: mouse/rat hippocampus, adult
+      quote_key: 2281033_5b9805ff
+  defining_markers: []
+  electrophysiology:
+    description: In adult CA3, single pyramidal neurons can act as hub neurons capable of triggering network bursts when fast GABAergic transmission is blocked, reflecting the high recurrent excitatory connectivity of the CA3 pyramidal cell network.
+    sources:
+    - ref: PMID:23271650
+      method: patch-clamp + multineuron Ca2+ imaging
+      scope: juvenile and adult mouse hippocampal CA3
+      quote_key: 3153294_53089f6d
+  morphology:
+    description: CA3 pyramidal cells bear thorny excrescences on their proximal apical dendrites that are postsynaptic targets of dentate granule cell mossy fiber terminals, forming primarily glutamatergic mixed electrical-chemical synapses (gap junctions plus glutamatergic chemical synapses, coupled by Connexin-36).
+    sources:
+    - ref: https://doi.org/10.3389/fnana.2012.00013
+      method: electron microscopy + immunohistochemistry
+      scope: adult rat hippocampus mossy fibers on CA3pyr
+      quote_key: 1115431_2cbd1dc8
+    - ref: PMID:24319410
+      method: review (anatomy + physiology)
+      scope: rodent hippocampal mossy fiber pathway to CA3
+      quote_key: 7458943_e2eed73d
 - id: dg_granule_cell_hippocampus
   name: Dentate gyrus granule cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
   anatomical_location:
   - id: UBERON:0001885
     label: dentate gyrus of hippocampal formation
     name_in_source: dentate gyrus granule cell layer
     compartment: SOMA
+    sources:
+    - ref: PMID:24319410
+      method: review
+      scope: rodent hippocampus, dentate gyrus granule cells
+      quote_key: 7458943_e2eed73d
+    - ref: PMID:21927594
+      method: IHC
+      scope: neonatal/adult mouse dentate gyrus granule cells
+      quote_key: 16383828_d2ad6dc6
+    - ref: CorpusId:18555666
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 18555666_a3b9ded7
+    - ref: PMID:26380120
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 1705399_6ee6563e
+    - ref: https://doi.org/10.1038/s41598-017-11268-z
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 256894421_70aaba92
   nt_type:
     name_in_source: glutamatergic
     cl_terms:
     - id: CL:0000679
       label: glutamatergic neuron
       name_in_source: glutamatergic
+    sources:
+    - ref: PMID:27113915
+      method: RNA-seq
+      scope: mouse hippocampus, dentate gyrus granule cells
+      quote_key: 4875295_4a456257
+    - ref: PMID:20519538
+      method: postembedding immunogold double labeling
+      scope: rodent hippocampus, mossy fiber terminals (DG granule cell axons)
+      quote_key: 539922_281341b3
+    - ref: PMID:24592213
+      method: whole cell patch-clamp
+      scope: neonatal mouse dentate gyrus granule cells
+      quote_key: 11333153_3bc75fe5
   defining_markers:
   - symbol: Prox1
-    ncbi_gene_id: null
+    ncbi_gene_id: 19130
+    sources:
+    - ref: PMID:27375434
+      method: synthesis (ASTA report)
+      scope: rat hippocampus
+      quote_key: 14854554_439a5d0b
   - symbol: C1ql2
-    ncbi_gene_id: null
+    ncbi_gene_id: 226359
 - id: hilar_mossy_cell_hippocampus
   name: Hilar mossy cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
   anatomical_location:
   - id: UBERON:0001885
     label: dentate gyrus of hippocampal formation
     name_in_source: dentate gyrus polymorph layer
     compartment: SOMA
+    sources:
+    - ref: PMID:33600026
+      method: Cre-line genetic labeling (Drd2-Cre, Crlr-Cre)
+      scope: adult mouse dentate gyrus, hilar mossy cells
+      quote_key: 231953329_3a0a57e1
+    - ref: PMID:34214666
+      method: review
+      scope: rodent dentate gyrus, hilar mossy cells (dorsal and ventral)
+      quote_key: 235678538_22af50d5
   nt_type:
     name_in_source: glutamatergic
     cl_terms:
     - id: CL:0000679
       label: glutamatergic neuron
       name_in_source: glutamatergic
+    sources:
+    - ref: PMID:28451637
+      method: viral genetic circuit mapping
+      scope: adult mouse dentate gyrus, hilar mossy cells
+      quote_key: 3583187_ea3794f5
+    - ref: PMID:23420672
+      method: review
+      scope: rodent dentate gyrus, hilar mossy cells
+      quote_key: 11290620_27f933af
+    - ref: PMID:26347618
+      method: review
+      scope: rodent dentate gyrus, hilar mossy cells
+      quote_key: 13657743_1eea4393
   defining_markers:
   - symbol: Gria4
-    ncbi_gene_id: null
+    ncbi_gene_id: 14802
   - symbol: Dkk3
-    ncbi_gene_id: null
+    ncbi_gene_id: 50781
+  morphology:
+    description: Large multipolar neurons with hilar location; extensive thorny excrescences on proximal dendrites and commissural/associational projections
+    sources:
+    - ref: PMID:28451637
+      method: narrative review
+      scope: rodent hippocampus
+      quote_key: 3583187_35db154e
+  electrophysiology:
+    description: Depolarized resting potential; prominent Ih; firing accommodation
+    sources:
+    - ref: PMID:23420672
+      method: sharp electrode recording (guinea pig)
+      scope: guinea pig hippocampus
+      quote_key: 11290620_0f99e676
 - id: CS20230722_SUPT_0069
   name: 0069 CA1-ProS Glut_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
@@ -166,13 +402,17 @@ nodes:
     id: UBERON:0001885
     label: dentate gyrus of hippocampal formation
     name_in_source: dentate gyrus stratum granulosum (inner/outer border)
+    sources:
+    - ref: PMID:18077687
+      method: two-photon imaging + patch clamp (acute slice)
+      scope: rat dentate gyrus inner molecular layer, semilunar granule cells
+      quote_key: 30068647_4c023496
   cl_mapping:
     cl_term:
       id: CL:2000089
       label: dentate gyrus granule cell
       name_in_source: dentate gyrus granule cell
-    mapping_notes: 'Semilunar granule cells are a distinct morpho-physiological subpopulation of DG excitatory projection
-      neurons. No SGC-specific CL term exists; CL:2000089 (dentate gyrus granule cell) is the closest parent.
+    mapping_notes: 'Semilunar granule cells are a distinct morpho-physiological subpopulation of DG excitatory projection neurons. No SGC-specific CL term exists; CL:2000089 (dentate gyrus granule cell) is the closest parent.
 
       '
     mapping_type: BROAD
@@ -186,25 +426,81 @@ nodes:
       label: glutamatergic neuron
       name_in_source: glutamatergic
     name_in_source: glutamatergic
-  species: null
+    sources:
+    - ref: PMID:40161709
+      method: dual GC-SGC patch clamp recordings
+      scope: rodent dentate gyrus, semilunar granule cells
+      quote_key: 277071421_57aeddb7
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+  synonyms:
+  - term: SGCs
+    synonym_type: ABBREVIATION
+    sources:
+    - ref: PMID:18077687
+      method: defined in abstract as abbreviation for semilunar granule cells
+      scope: rat dentate gyrus
+      quote_key: 30068647_874c8023
+  morphology:
+    description: Semilunar soma in outer granule cell layer; apical dendrite extending into molecular layer; no basal dendrites
+    sources:
+    - ref: PMID:18077687
+      method: patch-clamp + biocytin fill (rat slice)
+      scope: adult rat dentate gyrus
+      quote_key: 30068647_f4e78cdf
+  electrophysiology:
+    description: Higher spontaneous excitability than granule cells; prolonged depolarization; distinct firing pattern
+    sources:
+    - ref: PMID:18077687
+      method: patch-clamp current-clamp (rat slice)
+      scope: adult rat dentate gyrus
+      quote_key: 30068647_7a7e683e
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0002191
     label: subiculum
     name_in_source: subiculum
+    sources:
+    - ref: PMID:41693678
+      method: whole-cell patch-clamp + morphological reconstruction
+      scope: rodent subiculum, pyramidal neurons (sub2)
+      quote_key: '285611647_01e75429'
+    - ref: PMID:27150503
+      method: review (anatomical tracing)
+      scope: rodent subiculum, pyramidal cell projections to CA1
+      quote_key: 6552145_472efe77
+    - ref: PMID:41509312
+      method: knowledge base aggregation
+      scope: rodent subiculum
+      quote_key: 284374132_0534d2cf
+    - ref: PMID:24303119
+      method: in vivo electrophysiology
+      scope: anesthetized rat dorsal subiculum, pyramidal cells
+      quote_key: 2171766_537d45ba
+    - ref: PMID:24303119
+      method: review
+      scope: rodent hippocampus
+      quote_key: 2171766_2eaf3e02
+    - ref: PMID:24303119
+      method: review
+      scope: rodent hippocampus
+      quote_key: 2171766_ae8e7717
+    - ref: PMID:27150503
+      method: review
+      scope: rodent hippocampus
+      quote_key: 6552145_e1cd39ad
   cl_mapping:
     cl_term:
       id: CL:0000598
       label: pyramidal neuron
       name_in_source: pyramidal neuron
-    mapping_notes: 'Subicular pyramidal cells are the primary glutamatergic output neurons of the subiculum. Three electrophysiologically
-      distinct subtypes (RF, WB, SB) have been described (Guinet et al., 2026). No subiculum-specific CL term exists; CL:0000598
-      (pyramidal neuron) is used as BROAD mapping.
+    mapping_notes: 'Subicular pyramidal cells are the primary glutamatergic output neurons of the subiculum. Three electrophysiologically distinct subtypes (RF, WB, SB) have been described (Guinet et al., 2026). No subiculum-specific CL term exists; CL:0000598 (pyramidal neuron) is used as BROAD mapping.
 
       '
     mapping_type: BROAD
   defining_markers:
-  - ncbi_gene_id: null
+  - ncbi_gene_id: 20320
     symbol: Np65
   definition_basis: CLASSICAL_MULTIMODAL
   id: subicular_pyramidal_cell_hippocampus
@@ -215,26 +511,82 @@ nodes:
       label: glutamatergic neuron
       name_in_source: glutamatergic
     name_in_source: glutamatergic
-  species: null
+    sources:
+    - ref: PMID:26346726
+      method: narrative review
+      scope: rodent subiculum
+      quote_key: 2281033_8482ea88
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+  electrophysiology:
+    sources:
+    - ref: PMID:41693678
+      method: whole-cell patch-clamp (acute slice)
+      scope: mouse subiculum, adult
+      quote_key: 285611647_e5dc070d
+    - ref: PMID:41693678
+      method: whole-cell patch-clamp (acute slice)
+      scope: mouse subiculum, adult
+      quote_key: 285611647_6a173ab1
+  morphology:
+    sources:
+    - ref: PMID:41693678
+      method: biocytin fill + confocal
+      scope: mouse subiculum, adult
+      quote_key: 285611647_7c1687fe
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0001905
     label: entorhinal cortex
     name_in_source: entorhinal cortex layer II
+    sources:
+    - ref: PMID:26223342
+      method: morphological + IHC analysis
+      scope: medial/caudal entorhinal cortex layer 2, multiple mammalian species
+      quote_key: 10060696_40a9cee6
+    - ref: PMID:26711115
+      method: patch-clamp + circuit mapping
+      scope: medial entorhinal cortex layer II
+      quote_key: 16218278_b1f423dd
+    - ref: PMID:20512133
+      method: paired patch-clamp recordings
+      scope: rat medial entorhinal cortex layer II principal cells
+      quote_key: 10189534_bd3e2e57
+    - ref: PMID:34949991
+      method: IHC + connectivity mapping
+      scope: macaque entorhinal cortex layer II
+      quote_key: 244909998_0364a3fb
+    - ref: PMID:37219048
+      method: synthesis (ASTA report)
+      scope: rat hippocampus
+      quote_key: 258843956_9ed20870
+    - ref: PMID:29665671
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 4935821_0f0827e4
+    - ref: PMID:30209250
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 52194250_9b25e78b
   cl_mapping:
     cl_term:
       id: CL:0000679
       label: glutamatergic neuron
       name_in_source: glutamatergic neuron
-    mapping_notes: 'EC layer II stellate cells have stellate morphology and express reelin but not calbindin, distinguishing
-      them from layer II pyramidal cells. No EC layer II stellate-specific CL term exists; CL:0000679 is used as the broadest
-      accurate mapping.
+    mapping_notes: 'EC layer II stellate cells have stellate morphology and express reelin but not calbindin, distinguishing them from layer II pyramidal cells. No EC layer II stellate-specific CL term exists; CL:0000679 is used as the broadest accurate mapping.
 
       '
     mapping_type: BROAD
   defining_markers:
-  - ncbi_gene_id: null
+  - ncbi_gene_id: 19699
     symbol: Reln
+    sources:
+    - ref: PMID:26223342
+      method: IHC (reelin antibody)
+      scope: rodent medial entorhinal cortex
+      quote_key: 10060696_46dbde68
+      marker_type: PROTEIN
   definition_basis: CLASSICAL_MULTIMODAL
   id: ec_layer2_stellate_cell_hippocampus
   name: entorhinal cortex layer II stellate cell
@@ -244,26 +596,68 @@ nodes:
       label: glutamatergic neuron
       name_in_source: glutamatergic
     name_in_source: glutamatergic
-  species: null
+    sources:
+    - ref: PMID:34949991
+      method: anatomical review
+      scope: rodent entorhinal cortex
+      quote_key: 244909998_e232144b
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+  morphology:
+    description: Star-shaped multipolar soma with multiple primary dendrites; principal neuron of layer II medial entorhinal cortex
+    sources:
+    - ref: PMID:26223342
+      method: morphological classification
+      scope: rodent medial entorhinal cortex
+      quote_key: 10060696_0c73e14b
+  electrophysiology:
+    description: Prominent voltage sag (Ih); subthreshold membrane oscillations in theta range; spike clustering
+    sources:
+    - ref: PMID:26223342
+      method: electrophysiology (rodent mEC)
+      scope: rodent medial entorhinal cortex
+      quote_key: 10060696_a2c97e67
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0001905
     label: entorhinal cortex
     name_in_source: entorhinal cortex layer II
+    sources:
+    - ref: PMID:31680885
+      method: retrograde + anterograde tracing
+      scope: rodent entorhinal cortex layer II calbindin-positive principal cells
+      quote_key: 204538361_555db016
+    - ref: PMID:30209250
+      method: optogenetics + in vivo recordings
+      scope: mouse medial entorhinal cortex layer II pyramidal cells
+      quote_key: 52194250_dabdef57
+    - ref: PMID:34949991
+      method: IHC + connectivity mapping
+      scope: macaque entorhinal cortex layer II
+      quote_key: 244909998_3c05e0b2
   cl_mapping:
     cl_term:
       id: CL:0000598
       label: pyramidal neuron
       name_in_source: pyramidal neuron
-    mapping_notes: 'EC layer II calbindin-positive pyramidal cells originate widespread telencephalic and intrinsic projections
-      and show strong theta modulation. Arranged in a hexagonal patch grid in medial EC. CL:0000598 (pyramidal neuron) is
-      the best available match; no EC layer II pyramidal-specific CL term exists.
+    mapping_notes: 'EC layer II calbindin-positive pyramidal cells originate widespread telencephalic and intrinsic projections and show strong theta modulation. Arranged in a hexagonal patch grid in medial EC. CL:0000598 (pyramidal neuron) is the best available match; no EC layer II pyramidal-specific CL term exists.
 
       '
     mapping_type: BROAD
   defining_markers:
-  - ncbi_gene_id: null
+  - ncbi_gene_id: 12307
     symbol: Calb1
+    sources:
+    - ref: PMID:26223342
+      method: IHC
+      scope: medial/caudal entorhinal cortex layer 2, multiple mammalian species
+      quote_key: 10060696_93c3874e
+      marker_type: PROTEIN
+    - ref: PMID:20512133
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 10189534_9b25e78b
   definition_basis: CLASSICAL_MULTIMODAL
   id: ec_layer2_pyramidal_cell_hippocampus
   name: entorhinal cortex layer II calbindin-positive pyramidal cell
@@ -273,7 +667,28 @@ nodes:
       label: glutamatergic neuron
       name_in_source: glutamatergic
     name_in_source: glutamatergic
-  species: null
+    sources:
+    - ref: PMID:26223342
+      method: narrative review
+      scope: rodent entorhinal cortex
+      quote_key: 10060696_f4cc1f5f
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+  morphology:
+    description: Pyramidal soma morphology; calbindin-positive; morphologically distinct from co-laminar stellate cells
+    sources:
+    - ref: PMID:26223342
+      method: IHC calbindin
+      scope: rodent medial entorhinal cortex
+      quote_key: 10060696_8d73fd78
+  electrophysiology:
+    description: Less prominent Ih than stellate cells; distinct firing properties in medial entorhinal cortex layer II
+    sources:
+    - ref: PMID:26223342
+      method: electrophysiology (rodent mEC)
+      scope: rodent medial entorhinal cortex
+      quote_key: 10060696_0f9d76b1
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0001905
@@ -284,15 +699,23 @@ nodes:
       id: CL:0000598
       label: pyramidal neuron
       name_in_source: pyramidal neuron
-    mapping_notes: 'EC layer III PCP4-positive pyramidal cells project to CA1 and the subiculum. PCP4 is shared with CA2 pyramidal
-      cells but distinguishes EC layer III from layer II populations. CL:0000598 (pyramidal neuron) is the best available
-      match; no EC layer III-specific CL term exists.
+    mapping_notes: 'EC layer III PCP4-positive pyramidal cells project to CA1 and the subiculum. PCP4 is shared with CA2 pyramidal cells but distinguishes EC layer III from layer II populations. CL:0000598 (pyramidal neuron) is the best available match; no EC layer III-specific CL term exists.
 
       '
     mapping_type: BROAD
   defining_markers:
-  - ncbi_gene_id: null
+  - ncbi_gene_id: 18546
     symbol: Pcp4
+    sources:
+    - ref: PMID:24166578
+      method: IHC
+      scope: mouse hippocampus and entorhinal cortex; Pcp4 marker
+      quote_key: 18746823_614030d2
+      marker_type: PROTEIN
+    - ref: PMID:34949991
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 244909998_c43772d2
   definition_basis: CLASSICAL_MULTIMODAL
   id: ec_layer3_pyramidal_cell_hippocampus
   name: entorhinal cortex layer III PCP4-positive pyramidal cell
@@ -302,27 +725,41 @@ nodes:
       label: glutamatergic neuron
       name_in_source: glutamatergic
     name_in_source: glutamatergic
-  species: null
+    sources:
+    - ref: PMID:34949991
+      method: IHC + tract-tracing review
+      scope: rodent entorhinal cortex
+      quote_key: 244909998_bdbb7689
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0002421
     label: hippocampal formation
     name_in_source: stratum lacunosum-moleculare / outer molecular layer
+    sources:
+    - ref: PMID:26402459
+      method: knowledge base aggregation
+      scope: rodent hippocampal formation
+      quote_key: 631148_edb9eac6
+    - ref: PMID:9204922
+      method: synthesis (ASTA report)
+      scope: rodent hippocampus
+      quote_key: 393787_0325d3d4
   cl_mapping:
     cl_term:
       id: CL:0000679
       label: glutamatergic neuron
       name_in_source: glutamatergic neuron
-    mapping_notes: 'Calretinin-positive hippocampal glutamatergic neurons are distinct from calretinin-positive GABAergic
-      interneurons. They span SLM, outer molecular layer, and subicular complex, with local-projecting and long-range subpopulations.
-      CL:0000679 is the broadest accurate mapping; no calretinin-positive glutamatergic-specific CL term exists.
+    mapping_notes: 'Calretinin-positive hippocampal glutamatergic neurons are distinct from calretinin-positive GABAergic interneurons. They span SLM, outer molecular layer, and subicular complex, with local-projecting and long-range subpopulations. CL:0000679 is the broadest accurate mapping; no calretinin-positive glutamatergic-specific CL term exists.
 
       '
     mapping_type: BROAD
   defining_markers:
-  - ncbi_gene_id: null
+  - ncbi_gene_id: 12308
     symbol: Calb2
-  - ncbi_gene_id: null
+  - ncbi_gene_id: 216227
     symbol: Slc17a8
   definition_basis: CLASSICAL_MULTIMODAL
   id: hpc_calretinin_glu_neuron_hippocampus
@@ -333,29 +770,60 @@ nodes:
       label: glutamatergic neuron
       name_in_source: glutamatergic
     name_in_source: glutamatergic
-  species: null
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+  morphology:
+    sources:
+    - ref: PMID:26582498
+      method: synthesis (ASTA report)
+      scope: mouse hippocampus
+      quote_key: 2565845_2453978e
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0002421
     label: hippocampal formation
     name_in_source: ventral CA1 / ventral subiculum
+    sources:
+    - ref: PMID:37546856
+      method: snRNA-seq + topographic mapping
+      scope: mouse ventral hippocampus (vCA1, vSubiculum)
+      quote_key: 260336826_67252bb8
+    - ref: PMID:37546856
+      method: IHC + confocal (BAC transgenic Drd1/Drd2-Cre mice)
+      scope: mouse ventral hippocampus
+      quote_key: 260336826_acc436ad
   cl_mapping:
     cl_term:
       id: CL:0000598
       label: pyramidal neuron
       name_in_source: pyramidal neuron
-    mapping_notes: 'Ventral hippocampal D1R/D2R-expressing glutamatergic pyramidal neurons represent ~45% of all dopamine
-      receptor-positive cells in ventral hippocampus (Godino et al., 2023), contrasting with dorsal hippocampus where D1/D2
-      are interneuron-restricted. Likely correspond to projection-specific ventral CA1/vSubiculum populations. CL:0000598
-      is the best available mapping.
+    mapping_notes: 'Ventral hippocampal D1R/D2R-expressing glutamatergic pyramidal neurons represent ~45% of all dopamine receptor-positive cells in ventral hippocampus (Godino et al., 2023), contrasting with dorsal hippocampus where D1/D2 are interneuron-restricted. Likely correspond to projection-specific ventral CA1/vSubiculum populations. CL:0000598 is the best available mapping.
 
       '
     mapping_type: BROAD
   defining_markers:
-  - ncbi_gene_id: null
+  - ncbi_gene_id: 13488
     symbol: Drd1
-  - ncbi_gene_id: null
+    sources:
+    - ref: PMID:37546856
+      method: snRNA-seq (D1R-expressing vHipp neurons)
+      scope: mouse ventral hippocampus
+      quote_key: 260336826_f0ffda84
+      marker_type: TRANSCRIPT
+    - ref: PMID:27678395
+      method: BAC transgenic D1R-EGFP reporter
+      scope: mouse dorsal CA1 hippocampus
+      quote_key: 1711204_2c89b7e1
+      marker_type: TRANSCRIPT
+  - ncbi_gene_id: 13489
     symbol: Drd2
+    sources:
+    - ref: PMID:37546856
+      method: snRNA-seq (D2R-expressing vHipp neurons)
+      scope: mouse ventral hippocampus
+      quote_key: 260336826_f0ffda84
+      marker_type: TRANSCRIPT
   definition_basis: CLASSICAL_MULTIMODAL
   id: hpc_glu_dopa_receptor_pyramidal_hippocampus
   name: ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron
@@ -365,17 +833,48 @@ nodes:
       label: glutamatergic neuron
       name_in_source: glutamatergic
     name_in_source: glutamatergic
-  species: null
+    sources:
+    - ref: PMID:37546856
+      method: snRNA-seq cluster annotation
+      scope: mouse ventral hippocampus dopaminoceptive neurons
+      quote_key: 260336826_f0ffda84
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+  electrophysiology:
+    description: D2-expressing pyramidal neurons hyperpolarize with D2 agonist quinpirole; D1-expressing pyramidal neurons show subtle response to D1 agonist
+    sources:
+    - ref: PMID:37546856
+      method: patch-clamp current-clamp (mouse vCA1/vSub slice)
+      scope: mouse ventral CA1/subiculum
+      quote_key: 260336826_c6916d85
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0002421
     label: hippocampal formation
     name_in_source: hippocampus
+    sources:
+    - ref: PMID:16076898
+      method: patch-clamp + IHC (acute slices)
+      scope: mouse hippocampus, Schaffer collateral pathway
+      quote_key: 15354140_c1bc8ebc
   defining_markers:
-  - ncbi_gene_id: null
+  - ncbi_gene_id: 20203
     symbol: S100b
-  - ncbi_gene_id: null
+    sources:
+    - ref: PMID:16076898
+      method: IHC (anti-S100beta)
+      scope: hippocampal GluR cells, mouse
+      quote_key: '15354140_479e5693'
+      marker_type: PROTEIN
+  - ncbi_gene_id: 121021
     symbol: Cspg4
+    sources:
+    - ref: PMID:16076898
+      method: IHC (anti-NG2)
+      scope: hippocampal GluR cells, mouse
+      quote_key: '15354140_75c073f3'
+      marker_type: PROTEIN
   definition_basis: CLASSICAL_MULTIMODAL
   id: hpc_glur_cell_hippocampus
   name: hippocampal GluR cell (glutamate receptor-expressing glial-neuronal hybrid cell)
@@ -385,7 +884,28 @@ nodes:
       label: glutamatergic neuron
       name_in_source: glutamatergic
     name_in_source: glutamatergic
-  species: null
+    sources:
+    - ref: PMID:16076898
+      method: patch-clamp (Schaffer collateral evoked EPSCs)
+      scope: hippocampal GluR cells, mouse
+      quote_key: 15354140_c1bc8ebc
+  species:
+    id: NCBITaxon:10090
+    label: Mus musculus
+  morphology:
+    description: Extended net of thin processes with characteristic nodules; NG2-positive; lacks dye coupling and blood vessel contact
+    sources:
+    - ref: PMID:16076898
+      method: whole-cell patch-clamp + intracellular fill (hippocampal slice)
+      scope: mouse CA1 stratum radiatum
+      quote_key: 15354140_d16f4fee
+  electrophysiology:
+    description: Complex current pattern; receives sPSPs and ePSPs sensitive to NBQX and bicuculline; low input resistance
+    sources:
+    - ref: PMID:16076898
+      method: whole-cell patch-clamp (mouse hippocampal slice)
+      scope: mouse CA1 stratum radiatum
+      quote_key: 15354140_b3012523
 - id: CS20230722_SUPT_0096
   name: 0096 SUB-ProS Glut_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
@@ -451,17 +971,18 @@ edges:
   type_a: ca1_pc_hippocampus
   type_b: CS20230722_SUPT_0069
   relationship: TYPE_A_SPLITS
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
-    explanation: 'SUPT_0069 (0069 CA1-ProS Glut_1) is the highest-scoring WMBv1 supertype candidate for CA1 pyramidal cells
-      (discovery score 5). It belongs to subclass CS20230722_SUBC_016 (016 CA1-ProS Glut), which is the dedicated CA1/ProS
-      glutamatergic subclass in WMBv1. SUPT_0069 has 2553 cells in Field CA1, pyramidal layer (MBA:407) and shares the defining
-      marker Fibcd1 with the classical CA1 PC node. The TYPE_A_SPLITS relationship is used because WMBv1 resolves at least
-      four CA1-ProS supertypes (SUPT_0069-0072) within SUBC_016; the classical CA1 pyramidal cell encompasses all of these.
-
-      '
+    explanation: |
+      SUPT_0069 (0069 CA1-ProS Glut_1) is the highest-scoring WMBv1 supertype candidate for CA1 pyramidal cells (discovery score 5). It belongs to subclass CS20230722_SUBC_016 (016 CA1-ProS Glut), which is the dedicated CA1/ProS glutamatergic subclass in WMBv1. SUPT_0069 has 2553 cells in Field CA1, pyramidal layer (MBA:407). The TYPE_A_SPLITS relationship is used because WMBv1 resolves at least four CA1-ProS supertypes (SUPT_0069-0072) within SUBC_016; the classical CA1 pyramidal cell encompasses all of these.
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: |
+      MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 scRNA-seq CA1-ProS subclass label onto WMBv1 (CCN20230722). Of 1704 CA1-ProS cells, 1011 (59.3%) map to SUPT_0069 at the supertype level. F1 score = 0.745 (group_purity=0.593, target_purity=1.0). Target_purity=1.0 confirms SUPT_0069 is exclusively populated by CA1-ProS cells in this dataset. The remaining CA1-ProS cells distribute across SUPT_0070 (20.1%), SUPT_0072 (13.3%), SUPT_0071 (3.5%), and SUPT_0073 (2.8%), consistent with the TYPE_A_SPLITS relationship: the classical CA1 pyramidal cell encompasses all CA1-ProS Glut supertypes, with SUPT_0069 as the primary correspondence.
+    source_dataset_accession: GEO:GSE185862
+    source_cluster_label: CA1-ProS
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -469,45 +990,29 @@ edges:
     alignment: CONSISTENT
   - property: location
     node_a_value: 'CA1 stratum pyramidale (UBERON:0014548, compartment: SOMA)'
-    node_b_value: 'Field CA1, pyramidal layer (MBA:407): 2553 cells; Field CA1, stratum oriens (MBA:399): 5205 cells; Field
-      CA1, stratum radiatum (MBA:415): 4162 cells'
+    node_b_value: 'Field CA1, pyramidal layer (MBA:407): 2553 cells; Field CA1, stratum oriens (MBA:399): 5205 cells; Field CA1, stratum radiatum (MBA:415): 4162 cells'
     alignment: CONSISTENT
-    notes: 'MERFISH SOMA assignment in WMBv1 distributes CA1-ProS cells across pyramidal layer and adjacent strata. The pyramidal
-      layer presence is consistent with CA1 PC soma location.
+    notes: 'MERFISH SOMA assignment in WMBv1 distributes CA1-ProS cells across pyramidal layer and adjacent strata. The pyramidal layer presence is consistent with CA1 PC soma location.
 
       '
   - property: marker_Wfs1
     node_a_value: defining marker (symbol only; expression level not populated)
     node_b_value: not listed in SUPT_0069 defining markers (Lefty1, Fibcd1, Pcp4l1)
     alignment: NOT_ASSESSED
-    notes: 'Wfs1 is a canonical CA1 deep layer marker well-established in the literature but absent from SUPT_0069 metadata.
-      Expression level in this supertype not assessed; other CA1-ProS supertypes (e.g. SUPT_0070) may carry Wfs1 in their
-      metadata.
+    notes: 'Wfs1 is a canonical CA1 deep layer marker well-established in the literature but absent from SUPT_0069 metadata. Expression level in this supertype not assessed; other CA1-ProS supertypes (e.g. SUPT_0070) may carry Wfs1 in their metadata.
 
       '
-  - property: marker_Fibcd1
-    node_a_value: defining marker (symbol only)
-    node_b_value: DEFINING marker in SUPT_0069 (Lefty1, Fibcd1, Pcp4l1)
-    alignment: CONSISTENT
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'The CA1 pyramidal cell type in WMBv1 is resolved into at least four supertypes within SUBC_016 (SUPT_0069-0072).
-      This edge targets SUPT_0069 as the primary mapping (highest discovery score; carries Fibcd1) but the full classical
-      CA1 PC population spans all four supertypes. A complete mapping requires additional edges to SUPT_0070, 0071, and 0072.
+    description: 'The CA1 pyramidal cell type in WMBv1 is resolved into at least four supertypes within SUBC_016 (SUPT_0069-0072). This edge targets SUPT_0069 as the primary mapping (highest discovery score; carries Fibcd1) but the full classical CA1 PC population spans all four supertypes. A complete mapping requires additional edges to SUPT_0070, 0071, and 0072.
 
       '
   unresolved_questions:
-  - 'Which CA1-ProS supertypes (0069-0072) correspond to deep vs. superficial CA1 pyramidal cell sublayers? Wfs1 marks deep-layer
-    CA1 PCs in the literature; checking which supertype carries Wfs1 in the atlas would resolve the sublayer correspondence.
-
-    '
-  - 'Annotation transfer from a CA1-enriched dataset (e.g. Cembrowski 2016 dorsal/ventral CA1 scRNA-seq) would quantify F1
-    scores and upgrade confidence to MODERATE.
+  - 'Which CA1-ProS supertypes (0069-0072) correspond to deep vs. superficial CA1 pyramidal cell sublayers? Wfs1 marks deep-layer CA1 PCs in the literature; checking which supertype carries Wfs1 in the atlas would resolve the sublayer correspondence.
 
     '
   proposed_experiments:
-  - 'Run MapMyCells annotation transfer of Cembrowski 2016 or Zeisel 2018 dorsal CA1 pyramidal cell labels onto WMBv1 to resolve
-    SUPT_0069-0072 correspondence.
+  - 'Run MapMyCells annotation transfer of Cembrowski 2016 or Zeisel 2018 dorsal CA1 pyramidal cell labels onto WMBv1 to resolve SUPT_0069-0072 correspondence.
 
     '
 - id: edge_ca2_pc_hippocampus_to_supt_0100
@@ -518,12 +1023,7 @@ edges:
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
-    explanation: 'SUPT_0100 (0100 CA2-FC-IG Glut_1) is the highest-scoring WMBv1 supertype candidate for CA2 pyramidal cells
-      (discovery score 4). It belongs to subclass CS20230722_SUBC_025 (025 CA2-FC-IG Glut), which groups CA2 together with
-      fasciola cinerea (FC) and indusium griseum (IG) glutamatergic cells. SUPT_0100 has 446 cells in Field CA2, pyramidal
-      layer (MBA:446) consistent with the CA2 PC soma location. However, SUPT_0100 also has substantial cells in CA1/CA3 strata,
-      raising the possibility that this supertype spans CA2 and transitional CA1/CA3 pyramidal cells or contains MERFISH registration
-      noise at subfield borders.
+    explanation: 'SUPT_0100 (0100 CA2-FC-IG Glut_1) is the highest-scoring WMBv1 supertype candidate for CA2 pyramidal cells (discovery score 4). It belongs to subclass CS20230722_SUBC_025 (025 CA2-FC-IG Glut), which groups CA2 together with fasciola cinerea (FC) and indusium griseum (IG) glutamatergic cells. SUPT_0100 has 446 cells in Field CA2, pyramidal layer (MBA:446) consistent with the CA2 PC soma location. However, SUPT_0100 also has substantial cells in CA1/CA3 strata, raising the possibility that this supertype spans CA2 and transitional CA1/CA3 pyramidal cells or contains MERFISH registration noise at subfield borders.
 
       '
   property_comparisons:
@@ -533,21 +1033,16 @@ edges:
     alignment: CONSISTENT
   - property: location
     node_a_value: 'CA2 stratum pyramidale (UBERON:0014549, compartment: SOMA)'
-    node_b_value: 'Field CA2, pyramidal layer (MBA:446): 446 cells; Field CA1, stratum oriens (MBA:399): 292 cells; Field
-      CA3, stratum oriens (MBA:486): 215 cells; Field CA3, pyramidal layer (MBA:495): 165 cells; Field CA2, stratum radiatum
-      (MBA:454): 55 cells'
+    node_b_value: 'Field CA2, pyramidal layer (MBA:446): 446 cells; Field CA1, stratum oriens (MBA:399): 292 cells; Field CA3, stratum oriens (MBA:486): 215 cells; Field CA3, pyramidal layer (MBA:495): 165 cells; Field CA2, stratum radiatum (MBA:454): 55 cells'
     alignment: APPROXIMATE
-    notes: 'CA2 pyramidal layer cells are present (446 cells) but SUPT_0100 has comparable or greater cell counts in CA1 and
-      CA3 strata. The FC and IG component of the CA2-FC-IG subclass may drive cells to non-CA2 MERFISH regions. Classic CA2
-      PCs are a subset of the broader SUBC_025 population.
+    notes: 'CA2 pyramidal layer cells are present (446 cells) but SUPT_0100 has comparable or greater cell counts in CA1 and CA3 strata. The FC and IG component of the CA2-FC-IG subclass may drive cells to non-CA2 MERFISH regions. Classic CA2 PCs are a subset of the broader SUBC_025 population.
 
       '
   - property: marker_Pcp4
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0100 defining markers (Lefty1, Il16, Etv1)
     alignment: NOT_ASSESSED
-    notes: 'Pcp4 is a well-established CA2 marker (Bhatt et al. 2009). Its absence from SUPT_0100 metadata does not exclude
-      expression; expression levels not assessed without precomputed stats.
+    notes: 'Pcp4 is a well-established CA2 marker (Bhatt et al. 2009). Its absence from SUPT_0100 metadata does not exclude expression; expression levels not assessed without precomputed stats.
 
       '
   - property: marker_Rgs14
@@ -560,37 +1055,38 @@ edges:
     alignment: NOT_ASSESSED
   caveats:
   - caveat_type: DISCORDANT_ANATOMY
-    description: 'SUBT_0100 name includes FC (fasciola cinerea) and IG (indusium griseum) alongside CA2. These are small CA2-adjacent
-      structures; classical CA2 pyramidal cells are distinct from FC/IG neurons. The PARTIAL_OVERLAP relationship reflects
-      uncertainty about whether this supertype cleanly captures CA2 PCs or conflates them with FC/IG populations.
+    description: 'SUBT_0100 name includes FC (fasciola cinerea) and IG (indusium griseum) alongside CA2. These are small CA2-adjacent structures; classical CA2 pyramidal cells are distinct from FC/IG neurons. The PARTIAL_OVERLAP relationship reflects uncertainty about whether this supertype cleanly captures CA2 PCs or conflates them with FC/IG populations.
 
       '
+  - caveat_type: ANNOTATION_TRANSFER_INDIRECT
+    description: |
+      Annotation transfer of Yao 2021 (GSE185862) CA2-IG-FC subclass label (n=19) maps 94.7% of cells to SUPT_0101 (0101 CA2-FC-IG Glut_2, F1=0.947), not to SUPT_0100 (F1=0.1). However, SUPT_0101 MERFISH anatomy shows 0 cells in CA2 pyramidal layer (MBA:446) and is dominated by Fasciola cinerea (175 cells) and Induseum griseum (61 cells). SUPT_0100 has 106 CA2 pyramidal layer cells and 0 FC/IG cells. The AT result therefore reflects the FC/IG component of Yao's mixed CA2-IG-FC label mapping to the FC/IG-enriched atlas supertype SUPT_0101 — it does not constitute evidence that SUPT_0100 is the wrong target for CA2 pyramidal cells. A CA2-specific dataset (Yao CA2-only or Caramello 2024 CA2 scRNA-seq) would be required for definitive AT.
   unresolved_questions:
-  - 'Do SUPT_0100 cells in CA1 and CA3 strata represent genuine pyramidal neurons (e.g. deep CA3c cells near CA2 border) or
-    MERFISH registration errors? FISH validation of Rgs14 or Amigo2 in CA2 cells assigned to SUPT_0100 would clarify.
+  - 'Do SUPT_0100 cells in CA1 and CA3 strata represent genuine pyramidal neurons (e.g. deep CA3c cells near CA2 border) or MERFISH registration errors? FISH validation of Rgs14 or Amigo2 in CA2 cells assigned to SUPT_0100 would clarify.
 
     '
   proposed_experiments:
-  - 'Check precomputed expression for Rgs14 and Pcp4 in SUPT_0100 via add-expression to distinguish CA2 PC subset from FC/IG
-    contamination.
+  - 'Check precomputed expression for Rgs14 and Pcp4 in SUPT_0100 via add-expression to distinguish CA2 PC subset from FC/IG contamination.
 
     '
-- id: edge_ca3_pc_hippocampus_to_supt_0075
+  - |
+    Run annotation transfer from a CA2-specific dataset (not a CA2-IG-FC mixed label) to distinguish SUPT_0100 vs SUPT_0101 correspondence for CA2 pyramidal cells proper.
+- id: edge_ca3_pc_hippocampus_to_supt_0078
   type_a: ca3_pc_hippocampus
-  type_b: CS20230722_SUPT_0075
+  type_b: CS20230722_SUPT_0078
   relationship: TYPE_A_SPLITS
-  confidence: LOW
+  confidence: MODERATE
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
-    explanation: 'SUPT_0075 (0075 CA3 Glut_1) is the highest-scoring WMBv1 supertype candidate for CA3 pyramidal cells (discovery
-      score 4). It belongs to subclass CS20230722_SUBC_017 (017 CA3 Glut), which is the dedicated CA3 glutamatergic subclass
-      in WMBv1. SUBC_017 contains at least five supertypes (SUPT_0075-0079). SUPT_0075 has cells in CA3 stratum oriens (995
-      cells) and CA3 pyramidal layer (181 cells). The TYPE_A_SPLITS relationship reflects that the classical CA3 pyramidal
-      cell spans the entire SUBC_017 supertype range; SUPT_0078-0079 also include cells consistent with CA3c/hilar mossy cells
-      (see separate edges).
-
-      '
+    explanation: |
+      SUPT_0078 (0078 CA3 Glut_4) is the WMBv1 supertype with the strongest annotation transfer support for CA3 pyramidal cells (see ANNOTATION_TRANSFER evidence below). It belongs to subclass CS20230722_SUBC_017 (017 CA3 Glut), the dedicated CA3 glutamatergic subclass. SUPT_0078 MERFISH anatomy is entirely CA3: pyramidal layer (1467 cells), stratum oriens (1381), stratum radiatum (945), stratum lucidum (868), and stratum lacunosum-moleculare (437). Defining markers: Homer3, Cldn22. SUBC_017 contains five supertypes (SUPT_0075-0079); the classical CA3 pyramidal cell type spans this entire range. The previous primary candidate SUPT_0075 received only 16.8% of Yao 2021 CA3 cells (F1=0.288); SUPT_0078 received 63.0% (F1=0.773), indicating it is the dominant CA3 PC supertype in the atlas.
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: |
+      MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 scRNA-seq CA3 subclass label onto WMBv1 (CCN20230722). Of 322 CA3 cells, 203 (63.0%) map to SUPT_0078 at the supertype level. F1 score = 0.773 (group_purity=0.630, target_purity=1.0). Target_purity=1.0 confirms SUPT_0078 receives only CA3 cells in this dataset. The remaining cells distribute across SUPT_0075 (16.8%), SUPT_0077 (11.5%), SUPT_0076 (6.5%), and SUPT_0079 (1.6%), consistent with TYPE_A_SPLITS: the classical CA3 pyramidal cell spans all SUBC_017 supertypes, with SUPT_0078 as the dominant correspondence.
+    source_dataset_accession: GEO:GSE185862
+    source_cluster_label: CA3
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -598,40 +1094,21 @@ edges:
     alignment: CONSISTENT
   - property: location
     node_a_value: 'CA3 stratum pyramidale (UBERON:0014550, compartment: SOMA)'
-    node_b_value: 'Field CA3, stratum oriens (MBA:486): 995 cells; Field CA3, pyramidal layer (MBA:495): 181 cells; alveus
-      (MBA:466): 203 cells; lateral ventricle (MBA:81): 228 cells'
-    alignment: APPROXIMATE
-    notes: 'SUPT_0075 has relatively few cells in CA3 pyramidal layer (181) compared to CA3 stratum oriens (995). MERFISH
-      SOMA assignment often places cell bodies in adjacent stratum oriens. The lateral ventricle and alveus entries (228 and
-      203 cells) likely reflect MERFISH registration artefacts at the lateral border of CA1/CA3.
-
-      '
-  - property: marker_Zbtb20
-    node_a_value: defining marker (symbol only)
-    node_b_value: not listed in SUPT_0075 defining markers (Spink8, St18, Ccdc3)
-    alignment: NOT_ASSESSED
-    notes: 'Zbtb20 marks CA3 pyramidal cells in the transcriptomic literature (Bhatt et al.) but is absent from SUPT_0075
-      metadata. May be a subclass- or supertype-level marker for other SUBC_017 supertypes.
-
-      '
+    node_b_value: 'Field CA3, pyramidal layer (MBA:495): 1467 cells; Field CA3, stratum oriens (MBA:486): 1381 cells; Field CA3, stratum radiatum (MBA:504): 945 cells; Field CA3, stratum lucidum (MBA:479): 868 cells; Field CA3, stratum lacunosum-moleculare (MBA:471): 437 cells'
+    alignment: CONSISTENT
+    notes: |
+      SUPT_0078 distributes exclusively across CA3 strata. Pyramidal layer (1467) and stratum oriens (1381) are the dominant compartments; MERFISH SOMA assignment routinely places CA3 PC soma in adjacent oriens. No artefactual off-target regions (contrast with SUPT_0075 which showed lateral ventricle and alveus entries).
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'WMBv1 SUBC_017 (CA3 Glut) contains five supertypes: SUPT_0075-0079. SUPT_0078-0079 capture predominantly
-      mossy cell (hilar) populations based on annotation transfer (see separate edges). SUPT_0075-0077 are more likely canonical
-      CA3 pyramidal cells, but their individual correspondence to CA3 sublayers (CA3a/b/c) is unresolved. This edge targets
-      SUPT_0075 as the primary candidate; SUPT_0076 and 0077 require additional edges.
-
-      '
+    description: |
+      WMBv1 SUBC_017 (CA3 Glut) contains five supertypes: SUPT_0075-0079. Annotation transfer (Yao 2021) confirms SUPT_0078 as the primary CA3 PC correspondence (63.0% of CA3 cells, F1=0.773). The previous claim that SUPT_0078-0079 represent mossy cell populations is not supported — SUPT_0078 anatomy is exclusively CA3 pyramidal/oriens/radiatum/lucidum/SLM strata with no hilar representation. Sublayer correspondence of SUPT_0075-0077 (CA3 Glut_1-3) to CA3a/b/c remains unresolved; those supertypes collectively received 34.8% of Yao 2021 CA3 cells.
   unresolved_questions:
-  - 'Do SUPT_0075, 0076, 0077 correspond to CA3a, CA3b, CA3c sublayers respectively, or to other organisational principles
-    (e.g. proximal vs. distal mossy fiber input zone)?
+  - 'Do SUPT_0075, 0076, 0077 correspond to CA3a, CA3b, CA3c sublayers respectively, or to other organisational principles (e.g. proximal vs. distal mossy fiber input zone)?
 
     '
   proposed_experiments:
-  - 'Run annotation transfer from a CA3-resolved dataset (e.g. Thompson 2008 CA3 bulk or available scRNA-seq) to distinguish
-    CA3a/b/c correspondence among SUBC_017 supertypes.
-
-    '
+  - |
+    Run annotation transfer from a CA3 sublayer-resolved dataset to map CA3a/b/c correspondence among SUBT_0075-0077 and clarify the role of SUPT_0078 vs 0075-0077 in the sublayer organisation.
 - id: edge_dg_granule_cell_hippocampus_to_supt_0137
   type_a: dg_granule_cell_hippocampus
   type_b: CS20230722_SUPT_0137
@@ -640,13 +1117,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: SUPPORT
-    explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) mouse hippocampus scRNA-seq Granule-mature
-      and Granule-immature labels onto WMBv1 (CCN20230722). Both mature and immature granule cell populations map primarily
-      to SUPT_0137 (0137 DG Glut_2) at the supertype level. F1 scores of 0.584 (Granule-mature, 433/609 cells) and 0.601 (Granule-immature,
-      437/581 cells) indicate robust but partial overlap; a minority of granule cells map to adjacent DG Glut supertypes (SUPT_0136,
-      SUPT_0138) and to CA3/CA2 clusters, suggesting either genuine DG transcriptomic heterogeneity or minor contamination.
-      At subclass level, group_purity for DG Glut subclass (037) is 0.988 (Granule-mature) and 0.888 (Granule-immature), confirming
-      DG Glut as the dominant classification.
+    explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) mouse hippocampus scRNA-seq Granule-mature and Granule-immature labels onto WMBv1 (CCN20230722). Both mature and immature granule cell populations map primarily to SUPT_0137 (0137 DG Glut_2) at the supertype level. F1 scores of 0.584 (Granule-mature, 433/609 cells) and 0.601 (Granule-immature, 437/581 cells) indicate robust but partial overlap; a minority of granule cells map to adjacent DG Glut supertypes (SUPT_0136, SUPT_0138) and to CA3/CA2 clusters, suggesting either genuine DG transcriptomic heterogeneity or minor contamination. At subclass level, group_purity for DG Glut subclass (037) is 0.988 (Granule-mature) and 0.888 (Granule-immature), confirming DG Glut as the dominant classification.
 
       '
     source_dataset_accession: GEO:GSE95315
@@ -669,9 +1140,7 @@ edges:
       n_cells_mapped: 433
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
-    explanation: 'SUPT_0137 has 7199 cells in Dentate gyrus, granule cell layer (MBA:632), 6636 in molecular layer, and 3067
-      in polymorph layer — consistent with DG granule cell soma location. Defining markers Dsp, Kcnh3, Syndig1 have not been
-      compared against classical granule cell transcriptomics (require precomputed expression cross-check).
+    explanation: 'SUPT_0137 has 7199 cells in Dentate gyrus, granule cell layer (MBA:632), 6636 in molecular layer, and 3067 in polymorph layer — consistent with DG granule cell soma location. Defining markers Dsp, Kcnh3, Syndig1 have not been compared against classical granule cell transcriptomics (require precomputed expression cross-check).
 
       '
   property_comparisons:
@@ -681,20 +1150,16 @@ edges:
     alignment: CONSISTENT
   - property: location
     node_a_value: 'dentate gyrus granule cell layer (UBERON:0001885, compartment: SOMA)'
-    node_b_value: 'Dentate gyrus, granule cell layer (MBA:632): 7199 cells; Dentate gyrus, molecular layer (MBA:10703): 6636
-      cells; Dentate gyrus, polymorph layer (MBA:10704): 3067 cells; Field CA3, pyramidal layer (MBA:495): 1529 cells'
+    node_b_value: 'Dentate gyrus, granule cell layer (MBA:632): 7199 cells; Dentate gyrus, molecular layer (MBA:10703): 6636 cells; Dentate gyrus, polymorph layer (MBA:10704): 3067 cells; Field CA3, pyramidal layer (MBA:495): 1529 cells'
     alignment: CONSISTENT
-    notes: 'Granule cell layer cells are well-represented (7199). The molecular layer signal likely reflects dendritic processes
-      of granule cells extending into the molecular layer, or immature granule cells with broader distribution. The 1529 CA3
-      pyramidal layer cells may represent adult-born granule cells in transit or MERFISH registration overlap at CA3c.
+    notes: 'Granule cell layer cells are well-represented (7199). The molecular layer signal likely reflects dendritic processes of granule cells extending into the molecular layer, or immature granule cells with broader distribution. The 1529 CA3 pyramidal layer cells may represent adult-born granule cells in transit or MERFISH registration overlap at CA3c.
 
       '
   - property: marker_Prox1
     node_a_value: defining marker (symbol only)
     node_b_value: not listed in SUPT_0137 defining markers (Dsp, Kcnh3, Syndig1)
     alignment: NOT_ASSESSED
-    notes: 'Prox1 is a canonical DG granule cell transcription factor. Its absence from SUPT_0137 metadata is unexpected;
-      expression may be present but not listed as a defining marker. Requires precomputed expression cross-check.
+    notes: 'Prox1 is a canonical DG granule cell transcription factor. Its absence from SUPT_0137 metadata is unexpected; expression may be present but not listed as a defining marker. Requires precomputed expression cross-check.
 
       '
   - property: marker_C1ql2
@@ -703,32 +1168,25 @@ edges:
     alignment: NOT_ASSESSED
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'DG Glut subclass (SUBC_037) in WMBv1 contains at least four supertypes (SUPT_0136-0139). Hochgerner Granule-mature
-      and Granule-immature both map predominantly to SUPT_0137 (F1 ~0.59-0.60), suggesting SUPT_0137 is the dominant mature
-      granule cell supertype. However, adult-born immature granule cells may also map to SUPT_0141 (DG-PIR Ex IMN_2; F1=0.146
-      for Granule-immature). The classical DG granule cell type as described here spans both mature and immature populations.
+    description: 'DG Glut subclass (SUBC_037) in WMBv1 contains at least four supertypes (SUPT_0136-0139). Hochgerner Granule-mature and Granule-immature both map predominantly to SUPT_0137 (F1 ~0.59-0.60), suggesting SUPT_0137 is the dominant mature granule cell supertype. However, adult-born immature granule cells may also map to SUPT_0141 (DG-PIR Ex IMN_2; F1=0.146 for Granule-immature). The classical DG granule cell type as described here spans both mature and immature populations.
 
       '
   - caveat_type: CROSS_SPECIES_EXTRAPOLATION
-    description: 'Annotation transfer from rat (Hochgerner 2018) to mouse WMBv1 atlas; species-level differences in granule
-      cell transcriptomics are unquantified.
+    description: 'Annotation transfer from rat (Hochgerner 2018) to mouse WMBv1 atlas; species-level differences in granule cell transcriptomics are unquantified.
 
       '
   unresolved_questions:
-  - 'Do SUPT_0136, SUPT_0137, SUPT_0138 correspond to functionally distinct granule cell populations (e.g. adult-born vs.
-    developmentally-born, or dorsal vs. ventral DG)?
+  - 'Do SUPT_0136, SUPT_0137, SUPT_0138 correspond to functionally distinct granule cell populations (e.g. adult-born vs. developmentally-born, or dorsal vs. ventral DG)?
 
     '
   - 'Are Prox1 and C1ql2 expressed in SUPT_0137 cells? Requires add-expression from precomputed stats to resolve.
 
     '
   proposed_experiments:
-  - 'Run add-expression for Prox1 and C1ql2 on SUPT_0136-0139 to assess granule cell marker expression across the DG Glut
-    supertypes.
+  - 'Run add-expression for Prox1 and C1ql2 on SUPT_0136-0139 to assess granule cell marker expression across the DG Glut supertypes.
 
     '
-  - 'Perform annotation transfer from a mouse granule cell dataset (e.g. Artimovich 2020 or Shin 2015) to cross-validate the
-    SUPT_0137 mapping in the same species as WMBv1.
+  - 'Perform annotation transfer from a mouse granule cell dataset (e.g. Artimovich 2020 or Shin 2015) to cross-validate the SUPT_0137 mapping in the same species as WMBv1.
 
     '
 - id: edge_hilar_mossy_cell_hippocampus_to_supt_0078
@@ -739,13 +1197,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: SUPPORT
-    explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Cyp26b1 label onto WMBv1 (CCN20230722).
-      33 of 34 Mossy-Cyp26b1 cells map to SUPT_0078 (0078 CA3 Glut_4) at the supertype level (F1=0.943; group_purity=0.971,
-      target_purity=0.917). At cluster level, the best cluster is 0315 CA3 Glut_4 (n=20, F1=0.833) followed by 0314 CA3 Glut_4
-      (n=7). The high F1 indicates that Mossy-Cyp26b1 cells are a near-complete subset of SUPT_0078. The PARTIAL_OVERLAP relationship
-      is used because SUPT_0078 MERFISH cells are distributed across CA3 strata rather than the dentate hilus, suggesting
-      this supertype captures mossy cells resident at the CA3c/hilus border or includes CA3 pyramidal cells sharing the Cyp26b1
-      transcriptomic profile.
+    explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Cyp26b1 label onto WMBv1 (CCN20230722). 33 of 34 Mossy-Cyp26b1 cells map to SUPT_0078 (0078 CA3 Glut_4) at the supertype level (F1=0.943; group_purity=0.971, target_purity=0.917). At cluster level, the best cluster is 0315 CA3 Glut_4 (n=20, F1=0.833) followed by 0314 CA3 Glut_4 (n=7). The high F1 indicates that Mossy-Cyp26b1 cells are a near-complete subset of SUPT_0078. The PARTIAL_OVERLAP relationship is used because SUPT_0078 MERFISH cells are distributed across CA3 strata rather than the dentate hilus, suggesting this supertype captures mossy cells resident at the CA3c/hilus border or includes CA3 pyramidal cells sharing the Cyp26b1 transcriptomic profile.
 
       '
     source_dataset_accession: GEO:GSE95315
@@ -773,15 +1225,9 @@ edges:
     alignment: CONSISTENT
   - property: location
     node_a_value: 'dentate gyrus polymorph layer / hilus (UBERON:0001885, compartment: SOMA)'
-    node_b_value: 'Field CA3, pyramidal layer (MBA:495): 1467 cells; Field CA3, stratum oriens (MBA:486): 1381 cells; Field
-      CA3, stratum radiatum (MBA:504): 945 cells; Field CA3, stratum lucidum (MBA:479): 868 cells; Field CA3, stratum lacunosum-moleculare
-      (MBA:471): 437 cells'
+    node_b_value: 'Field CA3, pyramidal layer (MBA:495): 1467 cells; Field CA3, stratum oriens (MBA:486): 1381 cells; Field CA3, stratum radiatum (MBA:504): 945 cells; Field CA3, stratum lucidum (MBA:479): 868 cells; Field CA3, stratum lacunosum-moleculare (MBA:471): 437 cells'
     alignment: DISCORDANT
-    notes: 'SUPT_0078 MERFISH soma assignments are entirely within CA3 strata; no cells are listed in the dentate gyrus polymorph
-      layer (MBA:10704) or granule cell layer (MBA:632). Classical hilar mossy cells have soma in the hilus/polymorph layer.
-      The high AT F1 (0.943) suggests Mossy-Cyp26b1 cells are transcriptomically equivalent to SUPT_0078 despite this anatomical
-      discordance. Hilar mossy cells at the CA3c border may fall within MERFISH CA3 registration, or the Cyp26b1+ mossy cell
-      subtype may have a distinct anatomical distribution compared to the broader mossy cell population.
+    notes: 'SUPT_0078 MERFISH soma assignments are entirely within CA3 strata; no cells are listed in the dentate gyrus polymorph layer (MBA:10704) or granule cell layer (MBA:632). Classical hilar mossy cells have soma in the hilus/polymorph layer. The high AT F1 (0.943) suggests Mossy-Cyp26b1 cells are transcriptomically equivalent to SUPT_0078 despite this anatomical discordance. Hilar mossy cells at the CA3c border may fall within MERFISH CA3 registration, or the Cyp26b1+ mossy cell subtype may have a distinct anatomical distribution compared to the broader mossy cell population.
 
       '
   - property: marker_Gria4
@@ -794,20 +1240,15 @@ edges:
     alignment: NOT_ASSESSED
   caveats:
   - caveat_type: DISCORDANT_ANATOMY
-    description: 'The anatomical discordance between SUPT_0078 (CA3 strata) and classical hilar mossy cells (hilus/polymorph
-      layer) is a key unresolved issue. Hilar mossy cells at the CA3c/hilus boundary may register as CA3 cells in MERFISH
-      data, or the Cyp26b1+ subpopulation may have soma positions that overlap with proximal CA3c. This mapping remains a
-      hypothesis pending independent anatomy validation.
+    description: 'The anatomical discordance between SUPT_0078 (CA3 strata) and classical hilar mossy cells (hilus/polymorph layer) is a key unresolved issue. Hilar mossy cells at the CA3c/hilus boundary may register as CA3 cells in MERFISH data, or the Cyp26b1+ subpopulation may have soma positions that overlap with proximal CA3c. This mapping remains a hypothesis pending independent anatomy validation.
 
       '
   unresolved_questions:
-  - 'Are SUPT_0078 cells that map to CA3 pyramidal layer actually at the CA3c/hilar boundary? High-resolution FISH of Homer3
-    or Cldn22 (SUPT_0078 defining markers) in hilus/CA3c would resolve this.
+  - 'Are SUPT_0078 cells that map to CA3 pyramidal layer actually at the CA3c/hilar boundary? High-resolution FISH of Homer3 or Cldn22 (SUPT_0078 defining markers) in hilus/CA3c would resolve this.
 
     '
   proposed_experiments:
-  - 'smFISH or MERFISH spot validation of SUPT_0078 defining markers (Homer3, Cldn22) in dentate hilus to test whether soma
-    positions span the CA3c/hilus boundary.
+  - 'smFISH or MERFISH spot validation of SUPT_0078 defining markers (Homer3, Cldn22) in dentate hilus to test whether soma positions span the CA3c/hilus boundary.
 
     '
 - id: edge_hilar_mossy_cell_hippocampus_to_supt_0079
@@ -818,13 +1259,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: SUPPORT
-    explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Adcyap1 label onto WMBv1 (CCN20230722).
-      20 of 27 Mossy-Adcyap1 cells map to SUPT_0079 (0079 CA3 Glut_5) at the supertype level (F1=0.833; group_purity=0.741,
-      target_purity=0.952). The high target_purity (0.952) indicates Mossy-Adcyap1 cells account for the majority of SUPT_0079
-      cells captured by AT — suggesting this supertype may be specific to the Adcyap1+ mossy cell subtype. SUPT_0079 uniquely
-      has 181 cells in Dentate gyrus, polymorph layer (MBA:10704, the hilus), consistent with the hilar soma location of classical
-      mossy cells. The PARTIAL_OVERLAP relationship is used because SUPT_0079 also has substantial cells in CA3 strata, indicating
-      a broader supertype than the hilar-restricted classical mossy cell.
+    explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Adcyap1 label onto WMBv1 (CCN20230722). 20 of 27 Mossy-Adcyap1 cells map to SUPT_0079 (0079 CA3 Glut_5) at the supertype level (F1=0.833; group_purity=0.741, target_purity=0.952). The high target_purity (0.952) indicates Mossy-Adcyap1 cells account for the majority of SUPT_0079 cells captured by AT — suggesting this supertype may be specific to the Adcyap1+ mossy cell subtype. SUPT_0079 uniquely has 181 cells in Dentate gyrus, polymorph layer (MBA:10704, the hilus), consistent with the hilar soma location of classical mossy cells. The PARTIAL_OVERLAP relationship is used because SUPT_0079 also has substantial cells in CA3 strata, indicating a broader supertype than the hilar-restricted classical mossy cell.
 
       '
     source_dataset_accession: GEO:GSE95315
@@ -852,14 +1287,9 @@ edges:
     alignment: CONSISTENT
   - property: location
     node_a_value: 'dentate gyrus polymorph layer / hilus (UBERON:0001885, compartment: SOMA)'
-    node_b_value: 'Dentate gyrus, polymorph layer (MBA:10704): 181 cells; Dentate gyrus, granule cell layer (MBA:632): 147
-      cells; Field CA3, pyramidal layer (MBA:495): 294 cells; Field CA3, stratum oriens (MBA:486): 121 cells; Field CA3, stratum
-      lucidum (MBA:479): 175 cells; Field CA3, stratum radiatum (MBA:504): 261 cells'
+    node_b_value: 'Dentate gyrus, polymorph layer (MBA:10704): 181 cells; Dentate gyrus, granule cell layer (MBA:632): 147 cells; Field CA3, pyramidal layer (MBA:495): 294 cells; Field CA3, stratum oriens (MBA:486): 121 cells; Field CA3, stratum lucidum (MBA:479): 175 cells; Field CA3, stratum radiatum (MBA:504): 261 cells'
     alignment: APPROXIMATE
-    notes: 'SUPT_0079 is the only WMBv1 CA3 Glut supertype with cells assigned to the dentate gyrus polymorph layer (181 cells,
-      MBA:10704), which is the hilus — the classical mossy cell soma location. This is a positive anatomical correspondence.
-      The majority of cells are however in CA3 strata, which may reflect CA3c pyramidal cells that share the Adcyap1+ transcriptomic
-      signature, or MERFISH registration of hilus cells into adjacent CA3c.
+    notes: 'SUPT_0079 is the only WMBv1 CA3 Glut supertype with cells assigned to the dentate gyrus polymorph layer (181 cells, MBA:10704), which is the hilus — the classical mossy cell soma location. This is a positive anatomical correspondence. The majority of cells are however in CA3 strata, which may reflect CA3c pyramidal cells that share the Adcyap1+ transcriptomic signature, or MERFISH registration of hilus cells into adjacent CA3c.
 
       '
   - property: marker_Gria4
@@ -872,22 +1302,15 @@ edges:
     alignment: NOT_ASSESSED
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'Hochgerner 2018 identifies three molecular subtypes of hilar mossy cells: Mossy-Cyp26b1, Mossy-Adcyap1,
-      and Mossy-Klk8. These map to SUPT_0078 (Cyp26b1, F1=0.943) and SUPT_0079 (Adcyap1, F1=0.833) respectively. Mossy-Klk8
-      (n=6 cells) maps ambiguously across multiple CA3 supertypes (best: SUPT_0077, F1=0.308) — insufficient evidence to build
-      a separate edge. Together, SUPT_0078 and SUPT_0079 represent the molecular subdivision of the classical hilar mossy
-      cell into two WMBv1 transcriptomic types.
+    description: 'Hochgerner 2018 identifies three molecular subtypes of hilar mossy cells: Mossy-Cyp26b1, Mossy-Adcyap1, and Mossy-Klk8. These map to SUPT_0078 (Cyp26b1, F1=0.943) and SUPT_0079 (Adcyap1, F1=0.833) respectively. Mossy-Klk8 (n=6 cells) maps ambiguously across multiple CA3 supertypes (best: SUPT_0077, F1=0.308) — insufficient evidence to build a separate edge. Together, SUPT_0078 and SUPT_0079 represent the molecular subdivision of the classical hilar mossy cell into two WMBv1 transcriptomic types.
 
       '
   unresolved_questions:
-  - 'What is the functional and anatomical distinction between the SUPT_0078 (Cyp26b1+) and SUPT_0079 (Adcyap1+) mossy cell
-    subtypes? Do they correspond to dorsal vs. ventral mossy cells, or to distinct projection patterns (IML-only vs. IML+MML
-    in dorsal mossy cells)?
+  - 'What is the functional and anatomical distinction between the SUPT_0078 (Cyp26b1+) and SUPT_0079 (Adcyap1+) mossy cell subtypes? Do they correspond to dorsal vs. ventral mossy cells, or to distinct projection patterns (IML-only vs. IML+MML in dorsal mossy cells)?
 
     '
   proposed_experiments:
-  - 'ISH co-labelling of Cyp26b1 and Adcyap1 in dentate hilus to confirm non-overlapping expression and validate the two-supertype
-    mossy cell split.
+  - 'ISH co-labelling of Cyp26b1 and Adcyap1 in dentate hilus to confirm non-overlapping expression and validate the two-supertype mossy cell split.
 
     '
   - 'Run AT from a full Hochgerner 2018 mouse replication to confirm species-generality of the SUPT_0078/0079 mossy cell split.
@@ -901,13 +1324,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: PARTIAL
-    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells.
-      Yao 2021 DG subclass cells (n=2473) map to SUPT_0137 with group_purity=0.878 and F1=0.935, confirming SUPT_0137 as the
-      dominant DG glutamatergic supertype. SUPT_0137 is shared between dg_granule_cell_hippocampus and this node (dg_semilunar_granule_cell_hippocampus);
-      the semilunar granule cell is a morpho-physiologically distinct DG subpopulation for which no transcriptome-specific
-      markers are available in this dataset. PARTIAL_SUPPORT reflects that this edge targets the same atlas node as the regular
-      granule cell — a more specific sub-supertype mapping requires either molecular markers (see gaps in validation_notes.json)
-      or the Bhatt 2025 (GSE280167) SGC snRNA-seq data.
+    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 DG subclass cells (n=2473) map to SUPT_0137 with group_purity=0.878 and F1=0.935, confirming SUPT_0137 as the dominant DG glutamatergic supertype. SUPT_0137 is shared between dg_granule_cell_hippocampus and this node (dg_semilunar_granule_cell_hippocampus); the semilunar granule cell is a morpho-physiologically distinct DG subpopulation for which no transcriptome-specific markers are available in this dataset. PARTIAL_SUPPORT reflects that this edge targets the same atlas node as the regular granule cell — a more specific sub-supertype mapping requires either molecular markers (see gaps in validation_notes.json) or the Bhatt 2025 (GSE280167) SGC snRNA-seq data.
 
       '
     source_dataset_accession: GEO:GSE185862
@@ -931,8 +1348,7 @@ edges:
     node_a_value: dentate gyrus stratum granulosum inner/outer border (UBERON:0001885)
     node_b_value: SUPT_0137 includes cells in DG granule cell layer and molecular layer
     alignment: APPROXIMATE
-    notes: 'Semilunar granule cells are found at the inner/outer border of the stratum granulosum; the MERFISH assignment
-      for SUPT_0137 covers the granule cell layer broadly (MBA:632).
+    notes: 'Semilunar granule cells are found at the inner/outer border of the stratum granulosum; the MERFISH assignment for SUPT_0137 covers the granule cell layer broadly (MBA:632).
 
       '
   - property: defining_markers
@@ -941,24 +1357,18 @@ edges:
     alignment: NOT_ASSESSED
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'Semilunar granule cells (SGCs) share the SUPT_0137 target with dg_granule_cell_hippocampus (see edge_dg_granule_cell_hippocampus_to_supt_0137).
-      Without molecular markers specific to SGCs, there is no evidence that SUPT_0137 preferentially captures SGCs vs. regular
-      granule cells. SUPT_0139 (DG Glut_4, 9.1% of DG cells) is also a candidate for a morpho-physiologically distinct DG
-      subpopulation.
+    description: 'Semilunar granule cells (SGCs) share the SUPT_0137 target with dg_granule_cell_hippocampus (see edge_dg_granule_cell_hippocampus_to_supt_0137). Without molecular markers specific to SGCs, there is no evidence that SUPT_0137 preferentially captures SGCs vs. regular granule cells. SUPT_0139 (DG Glut_4, 9.1% of DG cells) is also a candidate for a morpho-physiologically distinct DG subpopulation.
 
       '
   unresolved_questions:
-  - 'Bhatt 2025 (GSE280167) identifies a SGC-enriched cluster (Cluster 18, Sorcs3+/Penk+/Nptx2+). Does this cluster map specifically
-    to SUPT_0139 or to a SUPT_0137 sub-cluster? Running MapMyCells on GSE280167 will resolve.
+  - 'Bhatt 2025 (GSE280167) identifies a SGC-enriched cluster (Cluster 18, Sorcs3+/Penk+/Nptx2+). Does this cluster map specifically to SUPT_0139 or to a SUPT_0137 sub-cluster? Running MapMyCells on GSE280167 will resolve.
 
     '
-  - 'Are there transcriptomic markers that distinguish SGCs from regular DG granule cells in the Yao 2021 dataset? Differential
-    expression between DG cells mapping to SUPT_0139 vs SUPT_0137 might reveal candidate markers.
+  - 'Are there transcriptomic markers that distinguish SGCs from regular DG granule cells in the Yao 2021 dataset? Differential expression between DG cells mapping to SUPT_0139 vs SUPT_0137 might reveal candidate markers.
 
     '
   proposed_experiments:
-  - 'Run add-expression for Sorcs3 and Nptx2 in DG Glut supertypes (SUBT_037) via CCN20230722 precomputed stats to validate
-    the SUPT_0138 enrichment signal seen in GSE280167 cells.
+  - 'Run add-expression for Sorcs3 and Nptx2 in DG Glut supertypes (SUBT_037) via CCN20230722 precomputed stats to validate the SUPT_0138 enrichment signal seen in GSE280167 cells.
 
     '
 - id: edge_dg_semilunar_granule_cell_hippocampus_to_supt_0138
@@ -969,14 +1379,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: SUPPORT
-    explanation: 'MapMyCells local annotation transfer of Bhatt 2025 (GSE280167) dentate gyrus snRNA-seq (wild-type VV samples,
-      4 animals, 11,601 DG Glut cells) onto WMBv1 (CCN20230722). Among the four DG Glut supertypes, SUPT_0138 (DG Glut_3,
-      n=82 cells, 0.7% of DG cells) shows marked enrichment for the semilunar granule cell (SGC) marker Sorcs3: 53.7% of SUPT_0138
-      cells express Sorcs3 (mean=4.93 UMIs) vs 9.1% in SUPT_0137 (mean=0.20). Nptx2, a second SGC marker, is also elevated
-      in SUPT_0138 (15.9% cells) vs near-absent in other DG supertypes (<1%). Penk, the third Bhatt 2025 SGC marker, is sparsely
-      detected across all DG supertypes (<2%), likely due to nuclear RNA dropout in snRNA-seq. The minor cell count (0.7%
-      of DG) is consistent with the known rarity of SGCs in the DG granule cell layer. SUPT_0138 markers Lct and Atf3 are
-      not classical SGC markers but may reflect the transcriptomic state captured by WMBv1.
+    explanation: 'MapMyCells local annotation transfer of Bhatt 2025 (GSE280167) dentate gyrus snRNA-seq (wild-type VV samples, 4 animals, 11,601 DG Glut cells) onto WMBv1 (CCN20230722). Among the four DG Glut supertypes, SUPT_0138 (DG Glut_3, n=82 cells, 0.7% of DG cells) shows marked enrichment for the semilunar granule cell (SGC) marker Sorcs3: 53.7% of SUPT_0138 cells express Sorcs3 (mean=4.93 UMIs) vs 9.1% in SUPT_0137 (mean=0.20). Nptx2, a second SGC marker, is also elevated in SUPT_0138 (15.9% cells) vs near-absent in other DG supertypes (<1%). Penk, the third Bhatt 2025 SGC marker, is sparsely detected across all DG supertypes (<2%), likely due to nuclear RNA dropout in snRNA-seq. The minor cell count (0.7% of DG) is consistent with the known rarity of SGCs in the DG granule cell layer. SUPT_0138 markers Lct and Atf3 are not classical SGC markers but may reflect the transcriptomic state captured by WMBv1.
 
       '
     source_dataset_accession: GEO:GSE280167
@@ -987,9 +1390,9 @@ edges:
     metrics_by_level:
     - taxonomy_level: SUPERTYPE
       best_target_name: 0138 DG Glut_3
-      group_purity: null
-      target_purity: null
-      f1_score: null
+      group_purity:
+      target_purity:
+      f1_score:
       n_cells_mapped: 82
   property_comparisons:
   - property: nt_type
@@ -1004,8 +1407,7 @@ edges:
     node_a_value: Sorcs3 established as SGC marker (Bhatt 2025)
     node_b_value: Sorcs3 expressed in 53.7% of SUPT_0138 cells (mean=4.93 UMIs) vs 9.1% in SUPT_0137 — 6x enrichment
     alignment: CONSISTENT
-    notes: 'Sorcs3 enrichment is the primary evidence for SUPT_0138 capturing SGCs. The 6x relative enrichment compared to
-      the main DG supertype (SUPT_0137) is consistent with SUPT_0138 representing an SGC-enriched subpopulation.
+    notes: 'Sorcs3 enrichment is the primary evidence for SUPT_0138 capturing SGCs. The 6x relative enrichment compared to the main DG supertype (SUPT_0137) is consistent with SUPT_0138 representing an SGC-enriched subpopulation.
 
       '
   - property: marker_Nptx2_enrichment
@@ -1014,28 +1416,21 @@ edges:
     alignment: CONSISTENT
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'The SGC evidence is based on marker enrichment (Sorcs3, Nptx2) in SUPT_0138 from GSE280167, not from a formally
-      annotated SGC cluster. The Bhatt 2025 paper uses ATAC and RNA data together for cluster annotation; our RNA-only analysis
-      may miss the full SGC signature. SUPT_0138 (n=82 in GSE280167, n=28 in Yao 2021) is a minor DG subpopulation. The edge
-      to SUPT_0137 (dg_semilunar_granule_cell edge to dominant DG supertype) should be retained as the major mapping uncertainty.
+    description: 'The SGC evidence is based on marker enrichment (Sorcs3, Nptx2) in SUPT_0138 from GSE280167, not from a formally annotated SGC cluster. The Bhatt 2025 paper uses ATAC and RNA data together for cluster annotation; our RNA-only analysis may miss the full SGC signature. SUPT_0138 (n=82 in GSE280167, n=28 in Yao 2021) is a minor DG subpopulation. The edge to SUPT_0137 (dg_semilunar_granule_cell edge to dominant DG supertype) should be retained as the major mapping uncertainty.
 
       '
   unresolved_questions:
-  - 'Does Sorcs3 appear in the SUPT_0138 defining markers in the WMBv1 precomputed stats? Running add-expression for Sorcs3
-    and Nptx2 in DG Glut supertypes (SUBC_037) would formalize this enrichment at the atlas level.
+  - 'Does Sorcs3 appear in the SUPT_0138 defining markers in the WMBv1 precomputed stats? Running add-expression for Sorcs3 and Nptx2 in DG Glut supertypes (SUBC_037) would formalize this enrichment at the atlas level.
 
     '
-  - 'Are SUPT_0138 cells specifically enriched at the inner/outer border of the DG granule cell layer (the anatomical location
-    of SGCs) in the WMBv1 MERFISH data?
+  - 'Are SUPT_0138 cells specifically enriched at the inner/outer border of the DG granule cell layer (the anatomical location of SGCs) in the WMBv1 MERFISH data?
 
     '
   proposed_experiments:
-  - 'Run differential expression between Sorcs3-high SUPT_0138 cells and SUPT_0137 cells in GSE280167 to find additional SGC-specific
-    markers.
+  - 'Run differential expression between Sorcs3-high SUPT_0138 cells and SUPT_0137 cells in GSE280167 to find additional SGC-specific markers.
 
     '
-  - 'Obtain the Bhatt 2025 published cluster annotations for GSE280167 to formally identify Cluster 18 (SGC) and confirm SUPT_0138
-    correspondence.
+  - 'Obtain the Bhatt 2025 published cluster annotations for GSE280167 to formally identify Cluster 18 (SGC) and confirm SUPT_0138 correspondence.
 
     '
 - id: edge_subicular_pyramidal_cell_hippocampus_to_supt_0096
@@ -1046,13 +1441,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: SUPPORT
-    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells.
-      Yao 2021 SUB-ProS subclass cells (n=471) representing IT subicular pyramidal neurons map to three SUB-ProS supertypes:
-      SUPT_0096 (66.5%, F1=0.798), SUPT_0097 (14.6%, F1=0.253), SUPT_0098 (18.0%, F1=0.305). Together these three supertypes
-      account for 99.1% of SUB-ProS cells. SUPT_0096 has the highest group purity (0.665) and near-perfect target purity (1.000),
-      indicating all cells assigned to SUPT_0096 originate from subicular neurons. The TYPE_A_SPLITS relationship reflects
-      that the classical subicular pyramidal cell encompasses all three IT subicular supertypes; this edge targets SUPT_0096
-      as the primary and most abundant mapping.
+    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 SUB-ProS subclass cells (n=471) representing IT subicular pyramidal neurons map to three SUB-ProS supertypes: SUPT_0096 (66.5%, F1=0.798), SUPT_0097 (14.6%, F1=0.253), SUPT_0098 (18.0%, F1=0.305). Together these three supertypes account for 99.1% of SUB-ProS cells. SUPT_0096 has the highest group purity (0.665) and near-perfect target purity (1.000), indicating all cells assigned to SUPT_0096 originate from subicular neurons. The TYPE_A_SPLITS relationship reflects that the classical subicular pyramidal cell encompasses all three IT subicular supertypes; this edge targets SUPT_0096 as the primary and most abundant mapping.
 
       '
     source_dataset_accession: GEO:GSE185862
@@ -1080,28 +1469,19 @@ edges:
     node_a_value: defining marker (symbol only; Nptn gene product)
     node_b_value: not listed in SUPT_0096 defining markers (Fn1, Rxfp1, Fyb2)
     alignment: NOT_ASSESSED
-    notes: 'Np65 (NPTN/neuroplastin-65) is broadly expressed in hippocampal pyramidal neurons and is not subiculum-specific.
-      Its absence from SUPT_0096 metadata does not exclude expression.
+    notes: 'Np65 (NPTN/neuroplastin-65) is broadly expressed in hippocampal pyramidal neurons and is not subiculum-specific. Its absence from SUPT_0096 metadata does not exclude expression.
 
       '
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'The classical subicular pyramidal cell type encompasses the full range of IT projection neurons in the subiculum.
-      WMBv1 resolves this into three SUB-ProS supertypes (SUPT_0096-0098) plus two CT SUB supertypes (SUPT_0120-0121) and
-      two NP SUB supertypes (SUPT_0127-0128). This edge targets SUPT_0096 as the primary IT subicular supertype. A complete
-      mapping requires edges to SUPT_0097 and SUPT_0098 as well. CT SUB and NP SUB represent projection-defined subpopulations
-      (corticothalamic, near-projection) that may be classical subicular pyramidal subtypes (WB and SB firing types) or may
-      be distinct functional populations.
+    description: 'The classical subicular pyramidal cell type encompasses the full range of IT projection neurons in the subiculum. WMBv1 resolves this into three SUB-ProS supertypes (SUPT_0096-0098) plus two CT SUB supertypes (SUPT_0120-0121) and two NP SUB supertypes (SUPT_0127-0128). This edge targets SUPT_0096 as the primary IT subicular supertype. A complete mapping requires edges to SUPT_0097 and SUPT_0098 as well. CT SUB and NP SUB represent projection-defined subpopulations (corticothalamic, near-projection) that may be classical subicular pyramidal subtypes (WB and SB firing types) or may be distinct functional populations.
 
       '
   unresolved_questions:
-  - 'Which of the three electrophysiological subtypes of subicular pyramidal cells (regular-firing RF, weak-burst WB, strong-burst
-    SB) correspond to SUPT_0096, 0097, 0098? F1 scores for each subtype would require datasets with electrophysiologically
-    characterised single-cell transcriptomics.
+  - 'Which of the three electrophysiological subtypes of subicular pyramidal cells (regular-firing RF, weak-burst WB, strong-burst SB) correspond to SUPT_0096, 0097, 0098? F1 scores for each subtype would require datasets with electrophysiologically characterised single-cell transcriptomics.
 
     '
-  - 'Does Np65 expression distinguish any of the three SUB-ProS supertypes? Running add-expression for Nptn on the precomputed
-    stats would clarify.
+  - 'Does Np65 expression distinguish any of the three SUB-ProS supertypes? Running add-expression for Nptn on the precomputed stats would clarify.
 
     '
   proposed_experiments:
@@ -1116,13 +1496,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: SUPPORT
-    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells.
-      Yao 2021 ''L2 IT ENTl'' subclass cells (n=180), representing lateral entorhinal cortex layer II IT neurons, map to SUPT_0042
-      (L2/3 IT PIR-ENTl Glut_4) with group_purity=0.956 and F1=0.964. The near-perfect F1 indicates SUPT_0042 is a highly
-      specific match for lateral EC layer II cells. The Yao 2021 ''L2 IT ENTl'' subclass corresponds to the population containing
-      reelin-positive stellate cells — the dominant excitatory neuron type in lateral EC layer II. The ''PIR-ENTl'' designation
-      in the supertype name reflects the shared transcriptomic signature between piriform cortex and lateral entorhinal cortex
-      layer II populations.
+    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L2 IT ENTl'' subclass cells (n=180), representing lateral entorhinal cortex layer II IT neurons, map to SUPT_0042 (L2/3 IT PIR-ENTl Glut_4) with group_purity=0.956 and F1=0.964. The near-perfect F1 indicates SUPT_0042 is a highly specific match for lateral EC layer II cells. The Yao 2021 ''L2 IT ENTl'' subclass corresponds to the population containing reelin-positive stellate cells — the dominant excitatory neuron type in lateral EC layer II. The ''PIR-ENTl'' designation in the supertype name reflects the shared transcriptomic signature between piriform cortex and lateral entorhinal cortex layer II populations.
 
       '
     source_dataset_accession: GEO:GSE185862
@@ -1146,39 +1520,30 @@ edges:
     node_a_value: 'entorhinal cortex layer II (UBERON:0001905, compartment: SOMA)'
     node_b_value: SUPT_0042 in PIR-ENTl subclass; MERFISH assignment not assessed
     alignment: APPROXIMATE
-    notes: 'The SUBC_009 (L2/3 IT PIR-ENTl Glut) subclass spans both lateral entorhinal cortex and piriform cortex, reflecting
-      a shared transcriptomic signature. EC layer II stellate cells are in entorhinal cortex; any PIR component in SUPT_0042
-      may represent piriform layer II neurons with similar molecular profiles.
+    notes: 'The SUBC_009 (L2/3 IT PIR-ENTl Glut) subclass spans both lateral entorhinal cortex and piriform cortex, reflecting a shared transcriptomic signature. EC layer II stellate cells are in entorhinal cortex; any PIR component in SUPT_0042 may represent piriform layer II neurons with similar molecular profiles.
 
       '
   - property: marker_Reln
     node_a_value: defining marker Reln (reelin; stellate cell identity marker)
     node_b_value: not listed in SUPT_0042 defining markers (Igfn1, Endou, Bcl11b, Boc)
     alignment: NOT_ASSESSED
-    notes: 'Reln expression distinguishes EC layer II stellate cells from calbindin-positive pyramidal cells. Absence from
-      SUPT_0042 metadata does not exclude expression; requires precomputed expression check.
+    notes: 'Reln expression distinguishes EC layer II stellate cells from calbindin-positive pyramidal cells. Absence from SUPT_0042 metadata does not exclude expression; requires precomputed expression check.
 
       '
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'The ''L2 IT ENTl'' Yao 2021 subclass may include both Reln+ stellate cells and minor non-stellate populations
-      in lateral EC layer II. The classical ec_layer2_stellate_cell is specifically Reln+; the Yao 2021 subclass may contain
-      a small Reln- fraction. This does not substantially affect the mapping given the extremely high purity (F1=0.964). The
-      ''PIR'' component of the SUPT_0042 name warrants investigation to confirm EC vs. piriform contribution.
+    description: 'The ''L2 IT ENTl'' Yao 2021 subclass may include both Reln+ stellate cells and minor non-stellate populations in lateral EC layer II. The classical ec_layer2_stellate_cell is specifically Reln+; the Yao 2021 subclass may contain a small Reln- fraction. This does not substantially affect the mapping given the extremely high purity (F1=0.964). The ''PIR'' component of the SUPT_0042 name warrants investigation to confirm EC vs. piriform contribution.
 
       '
   unresolved_questions:
-  - 'Does SUPT_0042 expression include a significant piriform cortex component in the WMBv1 MERFISH data, or is the PIR-ENTl
-    designation primarily driven by transcriptomic similarity rather than spatial overlap?
+  - 'Does SUPT_0042 expression include a significant piriform cortex component in the WMBv1 MERFISH data, or is the PIR-ENTl designation primarily driven by transcriptomic similarity rather than spatial overlap?
 
     '
-  - 'Is Reln expressed in SUPT_0042 at the level expected for stellate cells? Running add-expression for Reln on CCN20230722
-    precomputed stats would confirm.
+  - 'Is Reln expressed in SUPT_0042 at the level expected for stellate cells? Running add-expression for Reln on CCN20230722 precomputed stats would confirm.
 
     '
   proposed_experiments:
-  - 'Run add-expression for Reln and Calb1 on CCN20230722 to distinguish SUPT_0042 (Reln+, stellate) from SUPT_0052 (potentially
-    Calb1+, pyramidal) at the atlas level.
+  - 'Run add-expression for Reln and Calb1 on CCN20230722 to distinguish SUPT_0042 (Reln+, stellate) from SUPT_0052 (potentially Calb1+, pyramidal) at the atlas level.
 
     '
 - id: edge_ec_layer2_pyramidal_cell_hippocampus_to_supt_0052
@@ -1189,12 +1554,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: SUPPORT
-    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells.
-      Yao 2021 ''L2 IT ENTm'' subclass cells (n=42), representing medial entorhinal cortex layer II IT neurons (principally
-      calbindin-positive pyramidal cells), map to SUPT_0052 (L2 IT ENT-po Glut_2) with group_purity=0.595 and F1=0.694. SUPT_0054
-      (L2 IT ENT-po Glut_4) accounts for a further 33.3% of L2 IT ENTm cells. Together SUPT_0052 and SUPT_0054 cover 92.8%
-      of L2 IT ENTm cells. Note: n=42 is a small sample; results should be interpreted with appropriate caution. The ''ENT-po''
-      designation (entorhinal postrhinal) encompasses medial EC and postrhinal cortex layer II populations.
+    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L2 IT ENTm'' subclass cells (n=42), representing medial entorhinal cortex layer II IT neurons (principally calbindin-positive pyramidal cells), map to SUPT_0052 (L2 IT ENT-po Glut_2) with group_purity=0.595 and F1=0.694. SUPT_0054 (L2 IT ENT-po Glut_4) accounts for a further 33.3% of L2 IT ENTm cells. Together SUPT_0052 and SUPT_0054 cover 92.8% of L2 IT ENTm cells. Note: n=42 is a small sample; results should be interpreted with appropriate caution. The ''ENT-po'' designation (entorhinal postrhinal) encompasses medial EC and postrhinal cortex layer II populations.
 
       '
     source_dataset_accession: GEO:GSE185862
@@ -1218,33 +1578,27 @@ edges:
     node_a_value: 'entorhinal cortex layer II (UBERON:0001905, compartment: SOMA)'
     node_b_value: SUPT_0052 in L2 IT ENT-po (entorhinal postrhinal) subclass
     alignment: APPROXIMATE
-    notes: 'Medial EC layer II calbindin-positive pyramidal cells are the primary cell type in this mapping. The ''ENT-po''
-      designation covers medial EC and postrhinal cortex; classical EC layer II pyramidal cells are restricted to medial EC.
+    notes: 'Medial EC layer II calbindin-positive pyramidal cells are the primary cell type in this mapping. The ''ENT-po'' designation covers medial EC and postrhinal cortex; classical EC layer II pyramidal cells are restricted to medial EC.
 
       '
   - property: marker_Calb1
     node_a_value: defining marker Calb1 (calbindin; pyramidal cell identity marker)
     node_b_value: not listed in SUPT_0052 defining markers (Ush2a, Dcn)
     alignment: NOT_ASSESSED
-    notes: 'Calb1 is the classical marker distinguishing EC layer II pyramidal cells from Reln+ stellate cells. Absence from
-      metadata does not exclude expression; requires precomputed expression check.
+    notes: 'Calb1 is the classical marker distinguishing EC layer II pyramidal cells from Reln+ stellate cells. Absence from metadata does not exclude expression; requires precomputed expression check.
 
       '
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'Small sample size (n=42 L2 IT ENTm cells) limits statistical confidence. SUPT_0052 and SUPT_0054 together
-      cover 92.8% of L2 IT ENTm cells, suggesting the classical EC layer II pyramidal cell TYPE_A_SPLITS across these two
-      supertypes. A second edge to SUPT_0054 (F1=0.500) would be appropriate when more data are available.
+    description: 'Small sample size (n=42 L2 IT ENTm cells) limits statistical confidence. SUPT_0052 and SUPT_0054 together cover 92.8% of L2 IT ENTm cells, suggesting the classical EC layer II pyramidal cell TYPE_A_SPLITS across these two supertypes. A second edge to SUPT_0054 (F1=0.500) would be appropriate when more data are available.
 
       '
   unresolved_questions:
-  - 'Does Calb1 expression distinguish SUPT_0052 from SUPT_0042 (stellate)? Precomputed expression check for Calb1 and Reln
-    in SUBT_011 (ENT-po) vs SUBC_009 (PIR-ENTl) supertypes would resolve the stellate/pyramidal distinction at the atlas level.
+  - 'Does Calb1 expression distinguish SUPT_0052 from SUPT_0042 (stellate)? Precomputed expression check for Calb1 and Reln in SUBT_011 (ENT-po) vs SUBC_009 (PIR-ENTl) supertypes would resolve the stellate/pyramidal distinction at the atlas level.
 
     '
   proposed_experiments:
-  - 'Obtain more medial EC layer II cells (larger HPF dataset with EC) to improve statistical confidence for L2 IT ENTm→SUPT_0052
-    mapping.
+  - 'Obtain more medial EC layer II cells (larger HPF dataset with EC) to improve statistical confidence for L2 IT ENTm→SUPT_0052 mapping.
 
     '
 - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0036
@@ -1255,11 +1609,7 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: SUPPORT
-    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells.
-      Yao 2021 ''L3 IT ENT'' subclass cells (n=588), representing entorhinal cortex layer III IT projection neurons (including
-      PCP4+ pyramidal cells projecting to CA1 and subiculum via the temporoammonic pathway), map to SUPT_0036 (L2/3 IT ENT
-      Glut_4) with group_purity=0.888 and F1=0.937. This is a strong, high-purity mapping. SUPT_0037 (L2/3 IT ENT Glut_5)
-      accounts for a further 10.2% of L3 IT ENT cells. Together SUPT_0036+0037 cover 99.0% of L3 IT ENT cells.
+    explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L3 IT ENT'' subclass cells (n=588), representing entorhinal cortex layer III IT projection neurons (including PCP4+ pyramidal cells projecting to CA1 and subiculum via the temporoammonic pathway), map to SUPT_0036 (L2/3 IT ENT Glut_4) with group_purity=0.888 and F1=0.937. This is a strong, high-purity mapping. SUPT_0037 (L2/3 IT ENT Glut_5) accounts for a further 10.2% of L3 IT ENT cells. Together SUPT_0036+0037 cover 99.0% of L3 IT ENT cells.
 
       '
     source_dataset_accession: GEO:GSE185862
@@ -1283,35 +1633,27 @@ edges:
     node_a_value: 'entorhinal cortex layer III (UBERON:0001905, compartment: SOMA)'
     node_b_value: SUPT_0036 in L2/3 IT ENT subclass; layer III corresponds to Yao 2021 L3 IT ENT
     alignment: CONSISTENT
-    notes: 'The Yao 2021 ''L3 IT ENT'' subclass explicitly labels layer III cells of the entorhinal cortex. The WMBv1 ''L2/3
-      IT ENT'' designation is consistent with this, grouping layer 2-3 EC IT neurons. SUPT_0036 captures the dominant layer
-      III population.
+    notes: 'The Yao 2021 ''L3 IT ENT'' subclass explicitly labels layer III cells of the entorhinal cortex. The WMBv1 ''L2/3 IT ENT'' designation is consistent with this, grouping layer 2-3 EC IT neurons. SUPT_0036 captures the dominant layer III population.
 
       '
   - property: marker_Pcp4
     node_a_value: defining marker Pcp4 (PCP4; shared with CA2 pyramidal cells)
     node_b_value: not listed in SUPT_0036 defining markers (Fermt1, Cxcl14)
     alignment: NOT_ASSESSED
-    notes: 'PCP4 is expressed in EC layer III cells and distinguishes them from EC layer II populations. Pcp4 shared with
-      CA2 pyramidal cells (ca2_pc_hippocampus) but the AT evidence clearly separates these as distinct atlas types (SUPT_0036
-      vs CA2-FC-IG supertypes).
+    notes: 'PCP4 is expressed in EC layer III cells and distinguishes them from EC layer II populations. Pcp4 shared with CA2 pyramidal cells (ca2_pc_hippocampus) but the AT evidence clearly separates these as distinct atlas types (SUPT_0036 vs CA2-FC-IG supertypes).
 
       '
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'SUPT_0036 and SUPT_0037 together capture 99.0% of Yao 2021 L3 IT ENT cells. The classical ec_layer3_pyramidal_cell
-      (Pcp4+) may TYPE_A_SPLITS across these two supertypes. SUPT_0036 is the dominant target (F1=0.937); a secondary edge
-      to SUPT_0037 (F1=0.177, due to lower group purity) would complete the mapping.
+    description: 'SUPT_0036 and SUPT_0037 together capture 99.0% of Yao 2021 L3 IT ENT cells. The classical ec_layer3_pyramidal_cell (Pcp4+) may TYPE_A_SPLITS across these two supertypes. SUPT_0036 is the dominant target (F1=0.937); a secondary edge to SUPT_0037 (F1=0.177, due to lower group purity) would complete the mapping.
 
       '
   unresolved_questions:
-  - 'Does PCP4 expression pattern in WMBv1 distinguish SUPT_0036 (EC layer III) from SUPT_0100/0101 (CA2-FC-IG) supertypes?
-    This would confirm the PCP4 marker is not confounded across atlas types.
+  - 'Does PCP4 expression pattern in WMBv1 distinguish SUPT_0036 (EC layer III) from SUPT_0100/0101 (CA2-FC-IG) supertypes? This would confirm the PCP4 marker is not confounded across atlas types.
 
     '
   proposed_experiments:
-  - 'Add edge to SUPT_0037 (L2/3 IT ENT Glut_5) as secondary EC layer III mapping. Add-expression for Pcp4 in SUBC_008 (L2/3
-    IT ENT) supertypes.
+  - 'Add edge to SUPT_0037 (L2/3 IT ENT Glut_5) as secondary EC layer III mapping. Add-expression for Pcp4 in SUBC_008 (L2/3 IT ENT) supertypes.
 
     '
 - id: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069
@@ -1322,12 +1664,7 @@ edges:
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
-    explanation: 'SUPT_0069 (0069 CA1-ProS Glut_1) is the highest-scoring candidate for ventral CA1 pyramidal cells in WMBv1
-      (shared target with ca1_pc_hippocampus). Yao 2021 CA1-ProS cells (n=1704) map to SUPT_0069 with 59.3% purity and F1=0.744.
-      The ventral CA1 / ventral subiculum location of hpc_glu_dopa_receptor_pyramidal cells suggests they are a subpopulation
-      within CA1-ProS or SUB-ProS supertypes. Without Drd1/Drd2-specific expression data in the atlas, it is not possible
-      to determine which specific supertype(s) capture the dopamine receptor-expressing subset. This edge is provisional and
-      should be upgraded once AT evidence from a ventral hippocampus dataset with D1R/D2R labelling is available.
+    explanation: 'SUPT_0069 (0069 CA1-ProS Glut_1) is the highest-scoring candidate for ventral CA1 pyramidal cells in WMBv1 (shared target with ca1_pc_hippocampus). Yao 2021 CA1-ProS cells (n=1704) map to SUPT_0069 with 59.3% purity and F1=0.744. The ventral CA1 / ventral subiculum location of hpc_glu_dopa_receptor_pyramidal cells suggests they are a subpopulation within CA1-ProS or SUB-ProS supertypes. Without Drd1/Drd2-specific expression data in the atlas, it is not possible to determine which specific supertype(s) capture the dopamine receptor-expressing subset. This edge is provisional and should be upgraded once AT evidence from a ventral hippocampus dataset with D1R/D2R labelling is available.
 
       '
     source_dataset_accession: GEO:GSE185862
@@ -1351,9 +1688,7 @@ edges:
     node_a_value: ventral CA1 / ventral subiculum (UBERON:0002421)
     node_b_value: SUPT_0069 in CA1-ProS Glut subclass (dorsal + ventral CA1)
     alignment: APPROXIMATE
-    notes: 'The dopamine receptor-expressing cells are specifically described in ventral hippocampus (Godino et al., 2023),
-      while SUPT_0069 captures the full CA1-ProS range (dorsal + ventral). WMBv1 does not clearly separate dorsal/ventral
-      CA1 at the supertype level without MERFISH SOMA location breakdown.
+    notes: 'The dopamine receptor-expressing cells are specifically described in ventral hippocampus (Godino et al., 2023), while SUPT_0069 captures the full CA1-ProS range (dorsal + ventral). WMBv1 does not clearly separate dorsal/ventral CA1 at the supertype level without MERFISH SOMA location breakdown.
 
       '
   - property: marker_Drd1
@@ -1366,19 +1701,14 @@ edges:
     alignment: NOT_ASSESSED
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'The dopamine receptor-expressing glutamatergic pyramidal cells are described as a ventral-specific subpopulation
-      (Godino et al., 2023) within vCA1/vSubiculum. The curation decision in validation_notes.json (whether this is a distinct
-      type or a property annotation) is unresolved. If resolved as a property annotation, this edge should be replaced by
-      Drd1/Drd2 expression annotations on the CA1 and subicular pyramidal cell nodes.
+    description: 'The dopamine receptor-expressing glutamatergic pyramidal cells are described as a ventral-specific subpopulation (Godino et al., 2023) within vCA1/vSubiculum. The curation decision in validation_notes.json (whether this is a distinct type or a property annotation) is unresolved. If resolved as a property annotation, this edge should be replaced by Drd1/Drd2 expression annotations on the CA1 and subicular pyramidal cell nodes.
 
       '
   unresolved_questions:
-  - 'Is hpc_glu_dopa_receptor_pyramidal_hippocampus a distinct cell type or a property of vCA1/vSubiculum pyramidal cells?
-    See curation_decisions_needed in validation_notes.json.
+  - 'Is hpc_glu_dopa_receptor_pyramidal_hippocampus a distinct cell type or a property of vCA1/vSubiculum pyramidal cells? See curation_decisions_needed in validation_notes.json.
 
     '
-  - 'Does any CA1-ProS supertype specifically enrich for ventral CA1 (which would provide a candidate for Drd1/Drd2-expressing
-    cells)?
+  - 'Does any CA1-ProS supertype specifically enrich for ventral CA1 (which would provide a candidate for Drd1/Drd2-expressing cells)?
 
     '
   proposed_experiments:
@@ -1393,17 +1723,7 @@ edges:
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
-    explanation: 'SUPT_0135 (0135 HPF CR Glut_1) is the only WMBv1 glutamatergic supertype located in the stratum lacunosum-moleculare
-      / outer molecular layer of the HPF, matching the anatomical location of hpc_calretinin_glu_neuron_hippocampus. Analysis
-      of the WMBv1 precomputed stats (CCN20230722) reveals high Calb2 expression in SUPT_0135 reference cells (mean 4.5-8.2
-      UMIs/cell across 5 clusters; n=1 each) compared to near-absent Calb2 in DG Glut supertypes (0.08-0.16 UMIs). SUPT_0135
-      reference cells co-express high Reln (12-13 UMIs/cell) and Trp73 (8.8-9.7 UMIs/cell), consistent with Cajal-Retzius
-      cell identity, placing these cells in the SLM/OML. SUPT_0135 is the only HPF Glut supertype not assigned to DG, CA1,
-      CA2, CA3, or SUB subclasses. Confidence is LOW because: (1) Slc17a8 (VGluT3), the second defining marker of this classical
-      node, is essentially absent from SUPT_0135 (0-0.3 UMIs in 2/5 clusters only); (2) the reference population is extremely
-      small (n=5 cells total across 5 clusters), limiting statistical confidence; (3) the WMBv1 ''HPF CR'' designation may
-      specifically capture developmentally transient Cajal-Retzius cells rather than the proposed VGluT3+/Calb2+ glutamatergic
-      population described in the hippocampal literature.'
+    explanation: 'SUPT_0135 (0135 HPF CR Glut_1) is the only WMBv1 glutamatergic supertype located in the stratum lacunosum-moleculare / outer molecular layer of the HPF, matching the anatomical location of hpc_calretinin_glu_neuron_hippocampus. Analysis of the WMBv1 precomputed stats (CCN20230722) reveals high Calb2 expression in SUPT_0135 reference cells (mean 4.5-8.2 UMIs/cell across 5 clusters; n=1 each) compared to near-absent Calb2 in DG Glut supertypes (0.08-0.16 UMIs). SUPT_0135 reference cells co-express high Reln (12-13 UMIs/cell) and Trp73 (8.8-9.7 UMIs/cell), consistent with Cajal-Retzius cell identity, placing these cells in the SLM/OML. SUPT_0135 is the only HPF Glut supertype not assigned to DG, CA1, CA2, CA3, or SUB subclasses. Confidence is LOW because: (1) Slc17a8 (VGluT3), the second defining marker of this classical node, is essentially absent from SUPT_0135 (0-0.3 UMIs in 2/5 clusters only); (2) the reference population is extremely small (n=5 cells total across 5 clusters), limiting statistical confidence; (3) the WMBv1 ''HPF CR'' designation may specifically capture developmentally transient Cajal-Retzius cells rather than the proposed VGluT3+/Calb2+ glutamatergic population described in the hippocampal literature.'
     target_atlas: WMBv1 (CCN20230722)
     method: Precomputed stats expression analysis (WMBv1 reference cells)
   property_comparisons:
@@ -1415,38 +1735,23 @@ edges:
     node_a_value: 'stratum lacunosum-moleculare / outer molecular layer (UBERON:0002421, compartment: SOMA)'
     node_b_value: HPF CR Glut_1 — only HPF Glut supertype outside DG/CA/SUB subclasses; MERFISH anatomy not assessed
     alignment: APPROXIMATE
-    notes: SUPT_0135 is the only WMBv1 glutamatergic supertype in the HPF that falls outside the DG, CA1-ProS, CA2-FC-IG,
-      CA3, and SUB-ProS subclasses. The SLM/OML location of the classical node is consistent with the HPF CR designation,
-      though precise MERFISH soma assignments have not been assessed.
+    notes: SUPT_0135 is the only WMBv1 glutamatergic supertype in the HPF that falls outside the DG, CA1-ProS, CA2-FC-IG, CA3, and SUB-ProS subclasses. The SLM/OML location of the classical node is consistent with the HPF CR designation, though precise MERFISH soma assignments have not been assessed.
   - property: marker_Calb2
     node_a_value: defining marker Calb2 (calretinin; SLM/OML glutamatergic cell marker)
-    node_b_value: HIGH expression in SUPT_0135 reference cells (mean 4.5-8.2 UMIs/cell, n=5 clusters) — highest Calb2 among
-      all HPF Glut supertypes
+    node_b_value: HIGH expression in SUPT_0135 reference cells (mean 4.5-8.2 UMIs/cell, n=5 clusters) — highest Calb2 among all HPF Glut supertypes
     alignment: CONSISTENT
-    notes: Calb2 (calretinin) expression in SUPT_0135 is 30-100x higher than in DG Glut supertypes (0.08-0.16 UMIs). This
-      is the primary positive evidence for this mapping.
+    notes: Calb2 (calretinin) expression in SUPT_0135 is 30-100x higher than in DG Glut supertypes (0.08-0.16 UMIs). This is the primary positive evidence for this mapping.
   - property: marker_Slc17a8
     node_a_value: defining marker Slc17a8 (VGluT3; present in a subset of SLM glutamatergic neurons)
     node_b_value: LOW/absent in SUPT_0135 reference cells (0-0.3 UMIs; detectable in 2/5 clusters only)
     alignment: DISCORDANT
-    notes: Slc17a8 (VGluT3) is a defining marker of the classical node but is minimally expressed in SUPT_0135 reference cells.
-      This discordance is the primary reason for LOW confidence. The WMBv1 HPF CR population may be a Calb2+/Reln+/Trp73+
-      Cajal-Retzius population rather than the VGluT3+/Calb2+ population described in some hippocampal transcriptomic literature.
+    notes: Slc17a8 (VGluT3) is a defining marker of the classical node but is minimally expressed in SUPT_0135 reference cells. This discordance is the primary reason for LOW confidence. The WMBv1 HPF CR population may be a Calb2+/Reln+/Trp73+ Cajal-Retzius population rather than the VGluT3+/Calb2+ population described in some hippocampal transcriptomic literature.
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: SUPT_0135 reference cells strongly express Reln and Trp73 (both Cajal-Retzius cell markers) alongside Calb2.
-      Classical Cajal-Retzius cells are developmentally transient (largely absent in adult rodent hippocampus) and may not
-      correspond to the Calb2+/Slc17a8+ glutamatergic neurons described in adult SLM/OML. The SUPT_0135 supertype has n=5
-      reference cells total (1 per cluster), which is the smallest representation of any HPF Glut supertype in WMBv1, consistent
-      with either extreme rarity or a poorly sampled cell type. The 'CR' designation in WMBv1 may specifically label Cajal-Retzius
-      remnants captured during adult brain profiling.
+    description: SUPT_0135 reference cells strongly express Reln and Trp73 (both Cajal-Retzius cell markers) alongside Calb2. Classical Cajal-Retzius cells are developmentally transient (largely absent in adult rodent hippocampus) and may not correspond to the Calb2+/Slc17a8+ glutamatergic neurons described in adult SLM/OML. The SUPT_0135 supertype has n=5 reference cells total (1 per cluster), which is the smallest representation of any HPF Glut supertype in WMBv1, consistent with either extreme rarity or a poorly sampled cell type. The 'CR' designation in WMBv1 may specifically label Cajal-Retzius remnants captured during adult brain profiling.
   unresolved_questions:
-  - Is SUPT_0135 a Cajal-Retzius remnant population or does it represent the adult SLM/OML Calb2+/Slc17a8+ glutamatergic neurons
-    described in the literature? ISH validation of Trp73 and Calb2 co-expression in adult SLM/OML would resolve this.
-  - Why is Slc17a8 (VGluT3) absent from SUPT_0135 given that SLM glutamatergic neurons are described as VGluT3+? Is VGluT3
-    expression limited to a subset of Calb2+ SLM cells, or is the classical node definition too broad?
+  - Is SUPT_0135 a Cajal-Retzius remnant population or does it represent the adult SLM/OML Calb2+/Slc17a8+ glutamatergic neurons described in the literature? ISH validation of Trp73 and Calb2 co-expression in adult SLM/OML would resolve this.
+  - Why is Slc17a8 (VGluT3) absent from SUPT_0135 given that SLM glutamatergic neurons are described as VGluT3+? Is VGluT3 expression limited to a subset of Calb2+ SLM cells, or is the classical node definition too broad?
   proposed_experiments:
-  - Run annotation transfer from a dataset with validated Calb2+/Slc17a8+ SLM cells onto WMBv1 to confirm whether these cells
-    map to SUPT_0135 or to other supertypes.
-  - Check MERFISH soma locations for SUPT_0135 cells in WMBv1 (via atlas browser or MERFISH cell type distribution data) to
-    confirm SLM/OML placement.
+  - Run annotation transfer from a dataset with validated Calb2+/Slc17a8+ SLM cells onto WMBv1 to confirm whether these cells map to SUPT_0135 or to other supertypes.
+  - Check MERFISH soma locations for SUPT_0135 cells in WMBv1 (via atlas browser or MERFISH cell type distribution data) to confirm SLM/OML placement.
