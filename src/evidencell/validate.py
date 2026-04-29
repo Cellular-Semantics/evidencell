@@ -340,35 +340,59 @@ _MD_CURIE_RE = re.compile(r"\[([A-Z]+:\d+)\]")
 _MD_ACCESSION_RE = re.compile(r"\[(CS[A-Z0-9_]+)\]")
 # PMID from pubmed hyperlink in reference table: [digits](https://pubmed...)
 _MD_PMID_RE = re.compile(r"\[(\d{7,9})\]\(https://pubmed")
+# Numbered reference label at the start of a references-table row:
+# `| [3] | Author 2024 | ... |`
+_MD_REF_TABLE_LABEL_RE = re.compile(r"^\|\s*\[(\d+)\]\s*\|")
+# Numbered reference cite anywhere in text: `[3]`. Used to detect attributions
+# like `> — Knoedler et al. 2022 · [3]`. Distinct from CURIE and accession
+# patterns above.
+_MD_NUMBERED_REF_CITE_RE = re.compile(r"\[(\d+)\]")
 
 
 def parse_md_annotations(text: str) -> dict:
     """
     Parse machine-readable annotations embedded in a Markdown report.
 
+    A blockquote block is considered validly annotated if EITHER:
+      (a) it contains a `<!-- quote_key: X -->` annotation (verbatim-quote
+          path; X is validated against references.json), OR
+      (b) it carries an attribution line `> — ...` containing a numbered
+          reference cite `[N]` where N matches a row in the report's
+          References table (authored-prose path; trades text-content
+          validation for visible numbered-ref provenance).
+
+    Blocks meeting neither criterion are flagged in `unannotated_blockquotes`.
+
     Returns a dict with:
       quote_keys             — list of quote_key values from <!-- quote_key: X --> on > lines
-      unannotated_blockquotes— blockquote blocks with no <!-- quote_key --> annotation anywhere
-                               in the block (represented by first content line of each block)
+      unannotated_blockquotes— blockquote blocks with no acceptable attribution
+                               (represented by first content line of each block)
       curie_ids              — list of [PREFIX:digits] CURIEs found anywhere in text
       accessions             — list of [CS...] atlas accessions found anywhere
       pmids                  — list of PMIDs from PubMed hyperlinks in reference table
+      ref_table_labels       — set of numbered ref labels declared in the References table
     """
     quote_keys: list[str] = []
     unannotated_blockquotes: list[str] = []
     curie_ids: list[str] = []
     accessions: list[str] = []
     pmids: list[str] = []
+    ref_table_labels: set[str] = set()
 
     lines = text.splitlines()
 
-    # Pass 1: extract CURIEs, accessions, PMIDs from every line
+    # Pass 1a: extract CURIEs, accessions, PMIDs from every line; collect
+    # numbered ref labels from any `| [N] | ... |` table row (typically the
+    # References table at the bottom of the report).
     for line in lines:
         curie_ids.extend(_MD_CURIE_RE.findall(line))
         accessions.extend(_MD_ACCESSION_RE.findall(line))
         pmids.extend(_MD_PMID_RE.findall(line))
+        m = _MD_REF_TABLE_LABEL_RE.match(line)
+        if m:
+            ref_table_labels.add(m.group(1))
 
-    # Pass 2: blockquote blocks — check for quote_key annotation at block level
+    # Pass 2: blockquote blocks — check for an acceptable annotation
     i = 0
     while i < len(lines):
         stripped = lines[i].strip()
@@ -379,7 +403,7 @@ def parse_md_annotations(text: str) -> dict:
                 block_lines.append(lines[i].strip())
                 i += 1
 
-            # Extract all quote keys from the block
+            # Extract all quote keys from the block (path (a))
             block_has_key = False
             for bl in block_lines:
                 qk_match = _MD_QUOTE_KEY_RE.search(bl)
@@ -387,9 +411,20 @@ def parse_md_annotations(text: str) -> dict:
                     quote_keys.append(qk_match.group(1))
                     block_has_key = True
 
-            # Flag the whole block if it has no quote_key annotation
+            # If no quote_key, look for a numbered-ref cite on the
+            # attribution line(s) (path (b)).
+            block_has_numbered_ref = False
             if not block_has_key:
-                # Use first non-attribution content line as the representative
+                for bl in block_lines:
+                    if not _MD_ATTRIBUTION_RE.match(bl):
+                        continue
+                    nums = _MD_NUMBERED_REF_CITE_RE.findall(bl)
+                    if any(n in ref_table_labels for n in nums):
+                        block_has_numbered_ref = True
+                        break
+
+            # Flag if neither annotation form is present
+            if not block_has_key and not block_has_numbered_ref:
                 representative = next(
                     (bl for bl in block_lines if not _MD_ATTRIBUTION_RE.match(bl)),
                     block_lines[0],
@@ -404,6 +439,7 @@ def parse_md_annotations(text: str) -> dict:
         "curie_ids": curie_ids,
         "accessions": accessions,
         "pmids": pmids,
+        "ref_table_labels": ref_table_labels,
     }
 
 

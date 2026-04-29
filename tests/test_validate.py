@@ -560,6 +560,62 @@ def test_parse_md_empty_document():
     assert result["pmids"] == []
 
 
+# ── parse_md_annotations: numbered-ref attribution path ───────────────────────
+
+
+_NUMBERED_REF_MD = """\
+# Test report
+
+## Mapping candidates
+
+> Some authored-prose evidence narrative (e.g. derived from a bulk-correlation analysis).
+> — Knoedler et al. 2022 · [3]
+
+> A LITERATURE quote with quote_key (existing path).
+> — Winterer et al. 2019 · [1] <!-- quote_key: 201041756_aabb1234 -->
+
+> Bogus-ref blockquote — [99] does not exist in the references table below.
+> — Nobody · [99]
+
+## References
+
+| # | Citation | PMID | Used for |
+|---|---|---|---|
+| [1] | Winterer et al. 2019 | [31420995](https://pubmed.ncbi.nlm.nih.gov/31420995/) | OLM markers |
+| [3] | Knoedler et al. 2022 | [35143761](https://pubmed.ncbi.nlm.nih.gov/35143761/) | Bulk correlation evidence |
+"""
+
+
+def test_parse_md_collects_ref_table_labels():
+    """References-table rows like `| [3] | ... |` populate ref_table_labels."""
+    result = parse_md_annotations(_NUMBERED_REF_MD)
+    assert result["ref_table_labels"] == {"1", "3"}
+
+
+def test_parse_md_blockquote_with_numbered_ref_passes():
+    """A blockquote attributed to `[N]` where N is in the references table is
+    NOT flagged as unannotated, even without a quote_key."""
+    result = parse_md_annotations(_NUMBERED_REF_MD)
+    # The Knoedler blockquote should NOT be in unannotated
+    for line in result["unannotated_blockquotes"]:
+        assert "Knoedler" not in line
+        assert "bulk-correlation" not in line
+
+
+def test_parse_md_blockquote_with_bogus_numbered_ref_fails():
+    """A blockquote attributed to a `[N]` not in the references table IS flagged."""
+    result = parse_md_annotations(_NUMBERED_REF_MD)
+    assert any("Bogus-ref" in line for line in result["unannotated_blockquotes"])
+
+
+def test_parse_md_quote_key_path_still_works():
+    """Existing quote_key-annotated blockquote is still extracted and not flagged."""
+    result = parse_md_annotations(_NUMBERED_REF_MD)
+    assert "201041756_aabb1234" in result["quote_keys"]
+    for line in result["unannotated_blockquotes"]:
+        assert "LITERATURE quote" not in line
+
+
 # ── check_md_ids ───────────────────────────────────────────────────────────────
 
 

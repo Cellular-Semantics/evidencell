@@ -2026,6 +2026,18 @@ classes:
         description: PubMed ID of the source publication
       geo_accession:
         description: GEO series accession, e.g. GSE183092
+      authors:
+        multivalued: true
+        description: >
+          Authors of the source publication, full names, in publication order.
+          Used by the renderer to format a citation line for evidence items
+          that cite this dataset via run_ref. Optional — if absent, the
+          citation falls back to the bare PMID.
+      year:
+        range: integer
+        description: Publication year of the source publication.
+      title:
+        description: Title of the source publication.
       technique:
         required: true
         description: "TRAP-seq, FACS-bulk, RiboTag, INTACT, laser-capture, manual-pick, FANS, ..."

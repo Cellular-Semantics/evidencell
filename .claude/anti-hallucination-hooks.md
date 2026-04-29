@@ -168,21 +168,46 @@ to a reader appear as hidden HTML comments.
 
 ### Blockquote pattern
 
-Every blockquote block must contain an attribution line with a `quote_key` comment:
+Every blockquote block must carry one of two attribution forms:
+
+**(a) Verbatim-quote path** — for `LiteratureEvidence.snippet` text:
 
 ```markdown
 > verbatim quote text
-> — Winterer et al. 2019, Results §3.3 <!-- quote_key: 201041756_aabb1234 -->
+> — Winterer et al. 2019, Results §3.3 · [1] <!-- quote_key: 201041756_aabb1234 -->
 ```
 
-- The attribution line (`> — ...`) is for readers: miniref and numbered citation
-- `<!-- quote_key: X -->` is for the hook: `parse_md_annotations()` extracts it with
-  `<!--\s*quote_key:\s*(\S+)\s*-->`
-- A blockquote block (consecutive `>` lines) with no `quote_key` comment in any line
-  is flagged as unannotated and blocks the write
+- `<!-- quote_key: X -->` is for the hook: `parse_md_annotations()` extracts X
+  and validates it exists in `references/{region}/references.json`. The quote
+  text must match its content-hashed entry in references.json (anti-hallucination
+  guarantee for verbatim-quote provenance).
 
-`render.py` emits this pattern automatically for programmatic drill-down output.
-For synthesis-agent-authored summaries, rules 6–8 in `gen-report.md` enforce it.
+**(b) Numbered-ref path** — for authored-prose evidence narratives (e.g.
+`BulkCorrelationEvidence.explanation`, computed analyses):
+
+```markdown
+> Knoedler 2022 Esr1+ TRAP-seq pooled VMH female-receptive vs BNST female-receptive.
+> SUPT_0563 takes 3 of top-4 child-cluster positions by δ.
+> — Knoedler et al. 2022 · [3]
+```
+
+- The attribution line cites a numbered reference `[N]`.
+- The hook accepts the block if `[N]` matches a row in the report's References
+  table (`| [N] | ... |`).
+- No `quote_key` is required because the text is authored prose, not verbatim
+  from the cited paper. The trade-off: the hook does NOT validate the text
+  content; the renderer is responsible for grounding it in the underlying
+  YAML `explanation` field. This is the cost of supporting evidence narratives
+  for non-LITERATURE evidence types alongside the existing verbatim-quote path.
+
+A blockquote with neither form (no quote_key, no recognised numbered ref) is
+flagged as unannotated and blocks the write.
+
+`render.py` emits attribution form (a) automatically for programmatic
+drill-down output of LITERATURE quotes. For synthesis-agent-authored
+summaries, the workflow rules in `gen-report.md` instruct the LLM to use form
+(a) for verbatim quotes and form (b) for authored evidence narratives that
+cite a publication via `run_ref → manifest → dataset.source_pmid`.
 
 ### Ontology and accession brackets
 

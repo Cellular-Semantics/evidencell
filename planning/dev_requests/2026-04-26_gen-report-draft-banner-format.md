@@ -1,7 +1,9 @@
 # Dev request: Fix draft warning banner format in gen-report.md
 
-**Date:** 2026-04-26  
-**Blocked step:** `workflows/gen-report.md` — Section 1 (Report header), draft status banner  
+**Date:** 2026-04-26
+**Status:** **CLOSED 2026-04-29** — landed on branch `gen-report-liberalisation`. The banner
+now uses bold inline text (`**⚠ Draft mappings...**`) instead of a `> ⚠ ...` blockquote.
+**Blocked step:** `workflows/gen-report.md` — Section 1 (Report header), draft status banner
 **Severity:** Medium — causes validation hook failures on all agent-generated reports for draft graphs
 
 ---
