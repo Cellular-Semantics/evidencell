@@ -977,6 +977,72 @@ nodes:
     cell_set_accession: CS20230722_CLUS_2470
     taxonomy_level: CLUSTER
 
+  - id: CS20230722_SUPT_0521
+    name: "0521 AVPV-MEPO-SFO Tbr1 Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0521
+    taxonomy_level: SUPERTYPE
+    notes: >
+      Glutamatergic preoptic supertype. Top hit for Knoedler 2022 POA Esr1+
+      TRAP-seq via δ(POA_FR − VMH_FR) — ranks #1 of 5,322 atlas clusters with
+      child cluster CLUS_2085 (top_anat=Anteroventral periventricular nucleus).
+      Candidate co-primary mapping target for mpoa_esr1_neuron alongside the
+      existing GABAergic SUPT_0486; suggests classical node may need
+      glut/GABA split at curator review.
+
+  - id: CS20230722_SUPT_0358
+    name: "0358 MEA-BST Lhx6 Nfib Gaba_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0358
+    taxonomy_level: SUPERTYPE
+    notes: >
+      MEA/BST GABAergic supertype with multiple child clusters covering both
+      Medial amygdalar nucleus and Bed nuclei of stria terminalis. Knoedler
+      2022 BNST Esr1+ TRAP-seq identifies this supertype via δ(BNST_FR −
+      VMH_FR): CLUS_1295, 1291, 1290 (BST proper), 1293 (MFR=99 male-biased)
+      all rank in top 10. Esr1+ proxy for the bnst_crf_neuron CRF+
+      subpopulation.
+
+  - id: CS20230722_SUPT_0055
+    name: "0055 MEA Slc17a7 Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0055
+    taxonomy_level: SUPERTYPE
+    notes: >
+      MEA glutamatergic supertype. Knoedler 2022 MeA Esr1+ TRAP-seq identifies
+      this supertype via δ(MeA_FR − VMH_FR): CLUS_0197 (MFR=10.11, male-biased)
+      ranks #3 with the highest δ value (0.052) of any contrast in the run.
+      Anatomically clean signal. Candidate WMBv1 home for an MeA Esr1+
+      classical type not yet defined in the KB.
+
+  - id: mea_esr1_neuron
+    name: Medial amygdala estrogen-receptor alpha neuron
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    sex_bias: MALE_BIASED
+    notes: >
+      CANDIDATE classical type proposed from bulk-correlation evidence
+      (Knoedler 2022, PMID:35143761). The sexually dimorphic Esr1+ population
+      of the medial amygdalar nucleus is well-described in the classical
+      literature as part of the male-typical reproductive behaviour circuit
+      (mating, aggression). Not in the original asta-report-ingest yield —
+      added here as a stub so the bulk-correlation evidence can land as an
+      edge. Literature ingest needed before this can move past LOW confidence.
+    anatomical_location:
+      - id: "MBA:403"
+        label: Medial amygdalar nucleus
+        name_in_source: medial amygdala
+    defining_markers:
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+    definition_references:
+      - "PMID:35143761"
+
 edges:
 
   - id: edge_avpv_kiss1_neuron_to_cs20230722_supt_0486
@@ -1254,6 +1320,78 @@ edges:
         Does the Nts+ female socio-sexual subpopulation map to SUPT_0486 or to a
         separate preoptic supertype?
 
+  - id: edge_mpoa_esr1_neuron_to_cs20230722_supt_0521
+    type_a: mpoa_esr1_neuron
+    type_b: CS20230722_SUPT_0521
+    relationship: CROSS_CUTTING
+    confidence: MODERATE
+    evidence:
+      - evidence_type: BULK_CORRELATION
+        supports: SUPPORT
+        explanation: >
+          Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled POA female-receptive vs VMH
+          female-receptive. SUPT_0521 (AVPV-MEPO-SFO Tbr1 Glut_3, glutamatergic) child cluster
+          CLUS_2085 ranks #1 of 5,322 atlas clusters by δ = ρ(POA_FR) − ρ(VMH_FR), with
+          δ=0.0151 and primary soma in the Anteroventral periventricular nucleus. Three
+          additional SUPT_0521 child clusters (2087, 2082, 2079) appear in the top 10.
+          This is the dominant POA-Esr1+ supertype by bulk correlation — but is glutamatergic,
+          not GABAergic like the existing SUPT_0486 mapping. Suggests the classical
+          mpoa_esr1_neuron node may be heterogeneous and need a glut/GABA split, or that
+          SUPT_0486 captures only a subset of the classical population.
+        run_ref: corr_run_20260428_knoedler_esr1_wmbv1
+        contrast_ref: corr_POA_FR_vs_VMH_FR
+        target_accession: CS20230722_SUPT_0521
+        statistics: >
+          best_child_cluster=CLUS_2085 (rank 1 of 5322, δ=0.0151);
+          additional_top_hits: CLUS_2087 (rank 3, δ=0.0141), CLUS_2082 (rank 4, δ=0.0140), CLUS_2079 (rank 10, δ=0.0131);
+          n_child_clusters_in_top_10=4.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic and/or glutamatergic (classical population is heterogeneous)"
+        node_b_value: "Glutamatergic (Tbr1 Glut_3 label)"
+        alignment: APPROXIMATE
+        notes: >
+          Existing edge to SUPT_0486 (GABAergic) covers the GABAergic fraction;
+          SUPT_0521 covers a glutamatergic fraction not previously mapped.
+      - property: location_MBA_preoptic
+        node_a_value: "MBA:515 (MPN) and broader medial preoptic"
+        node_b_value: "Anteroventral periventricular nucleus, Median preoptic nucleus"
+        alignment: APPROXIMATE
+        notes: >
+          AVPV/MePO is part of the broader medial preoptic area but not the MPN proper.
+          The classical mpoa_esr1_neuron may include AVPV/MePO Esr1+ populations or
+          may need to be narrowed to MPN-specific Esr1+ neurons.
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, primary defining marker)"
+        node_b_value: "Esr1+ by experimental design (TRAP-Cre line)"
+        alignment: CONSISTENT
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          Co-primary candidate alongside edge_mpoa_esr1_neuron_to_cs20230722_supt_0486.
+          The two supertypes capture different NT-typed Esr1+ preoptic populations; the
+          classical node may need to be split (mpoa_esr1_neuron_GABAergic vs
+          mpoa_esr1_neuron_glutamatergic) or narrowed to MPN proper.
+      - caveat_type: OTHER
+        description: >
+          ATLAS_DISSECTION_OVERLAP — Knoedler's "POA" dissection captures a broader preoptic
+          zone than MPN proper; AVPV and MePO Esr1+ neurons (anatomically anterior to MPN)
+          are likely included in the bulk pool and contribute to the SUPT_0521 signal.
+    unresolved_questions:
+      - >
+        Should mpoa_esr1_neuron be split into GABAergic (SUPT_0486) and glutamatergic
+        (SUPT_0521) subnodes, or narrowed to MPN-proper Esr1+ neurons?
+      - >
+        Is the AVPV/MePO Esr1+ population (SUPT_0521) functionally distinct from MPN
+        Esr1+ (SUPT_0486) in the parental/mating circuit literature?
+    proposed_experiments:
+      - >
+        ISH or MERFISH co-staining for Esr1, Slc17a6 (vGlut2), Slc32a1 (vGAT) in MPOA
+        to quantify the GABAergic vs glutamatergic fractions of Esr1+ cells.
+      - >
+        MapMyCells annotation transfer of published MPOA Esr1+ scRNA-seq data
+        (e.g. Moffitt 2018) to SUPT_0521 vs SUPT_0486; expect F1 split.
+
   - id: edge_vmhvl_esr1_pr_neuron_to_cs20230722_supt_0564
     type_a: vmhvl_esr1_pr_neuron
     type_b: CS20230722_SUPT_0564
@@ -1511,6 +1649,159 @@ edges:
       - >
         Query precomputed expression for Calb1 across child clusters of SUPT_0393 to
         identify any Calb1-low cluster as a more specific mapping candidate.
+
+  - id: edge_bnst_crf_neuron_to_cs20230722_supt_0358
+    type_a: bnst_crf_neuron
+    type_b: CS20230722_SUPT_0358
+    relationship: PARTIAL_OVERLAP
+    confidence: LOW
+    evidence:
+      - evidence_type: BULK_CORRELATION
+        supports: PARTIAL
+        explanation: >
+          Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled BNST female-receptive vs VMH
+          female-receptive identifies SUPT_0358 (MEA-BST Lhx6 Nfib Gaba_2) as a top
+          BNST-specific signal. Multiple child clusters appear in top 10 by δ(BNST_FR −
+          VMH_FR): CLUS_1295 (rank 4), CLUS_1291 (rank 5), CLUS_1290 (rank 9, primary
+          soma BST proper), CLUS_1293 (rank 10, MFR=99 — extreme male bias).
+          CRITICAL CAVEAT: Knoedler sorted on Esr1+, not Crh+. This evidence supports
+          SUPT_0358 as the BST-localised Esr1+ supertype; CRF+/Crh+ co-localisation within
+          this supertype must be confirmed by direct evidence (ISH, scRNA-seq for Crh) before
+          accepting SUPT_0358 as a bnst_crf_neuron mapping target. Confidence held at LOW
+          pending that confirmation.
+        run_ref: corr_run_20260428_knoedler_esr1_wmbv1
+        contrast_ref: corr_BNST_FR_vs_VMH_FR
+        target_accession: CS20230722_SUPT_0358
+        statistics: >
+          best_child_cluster=CLUS_1295 (rank 4, δ=0.0161);
+          additional_top_hits: CLUS_1291 (rank 5, δ=0.0160), CLUS_1290 (rank 9, δ=0.0156, BST proper),
+          CLUS_1293 (rank 10, δ=0.0152, MFR=99);
+          n_child_clusters_in_top_10=4.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic (CRF+ BST neurons predominantly GABAergic)"
+        node_b_value: "GABAergic (Lhx6 Nfib Gaba_2)"
+        alignment: CONSISTENT
+      - property: location_MBA351_BNST
+        node_a_value: "MBA:351 (Bed nuclei of stria terminalis)"
+        node_b_value: "Multiple child clusters; CLUS_1290 primary soma=BST"
+        alignment: APPROXIMATE
+        notes: >
+          SUPT_0358 spans BST and MEA; cluster-level resolution shows mixed
+          BST/MEA distribution. CLUS_1290 specifically maps to BST proper.
+      - property: marker_Crh
+        node_a_value: "POSITIVE (defining marker)"
+        node_b_value: "NOT_ASSESSED — Knoedler sorted on Esr1, not Crh"
+        alignment: NOT_ASSESSED
+        notes: >
+          Direct Crh expression evidence required. The Esr1+/Crh+ overlap fraction
+          in BST is not established by this run.
+      - property: sex_ratio
+        node_a_value: "sexually dimorphic (anterolateral BST CRF+ neurons larger in females)"
+        node_b_value: "child cluster MFRs span 0.82 to 99.0; CLUS_1293 MFR=99 (male-biased)"
+        alignment: APPROXIMATE
+        notes: >
+          Female-biased BNST-CRF neurons are well-characterised; male-biased MFR=99 cluster
+          may represent a distinct subpopulation within SUPT_0358.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          Alternative or co-primary candidate to edge_bnst_crf_neuron_to_cs20230722_supt_0393.
+          SUPT_0393 (CEA-BST Rai14 Pdyn Crh Gaba_2) is the existing mapping based on direct
+          Crh expression (DEFINING_SCOPED, mean 7.96); SUPT_0358 is the BNST-Esr1+
+          supertype identified by Knoedler bulk correlation. Both may capture parts of the
+          heterogeneous BNST-CRF population; curator review needed.
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: >
+          SUPT_0358 has no DEFINING marker for Crh in atlas metadata. The mapping rests on
+          bulk-correlation co-localisation evidence (Esr1+ proxy) only. Direct Crh expression
+          measurement at cluster level required for confidence upgrade.
+    unresolved_questions:
+      - >
+        What fraction of SUPT_0358 cells co-express Esr1 and Crh? ISH or scRNA-seq for
+        Crh+/Esr1+ overlap in BST would resolve this.
+      - >
+        Is SUPT_0393 (high Crh) or SUPT_0358 (Esr1+ proxy) the better mapping for the
+        sexually dimorphic anterolateral BST CRF+ population?
+    proposed_experiments:
+      - >
+        ISH or MERFISH co-staining for Crh, Esr1, Calb1 in BST to identify the cluster
+        boundary between SUPT_0358 (Esr1+) and SUPT_0393 (Crh+).
+      - >
+        MapMyCells annotation transfer of published BNST scRNA-seq with Crh+ subset
+        annotations to WMBv1; expect F1 split between SUPT_0358 and SUPT_0393.
+
+  - id: edge_mea_esr1_neuron_to_cs20230722_supt_0055
+    type_a: mea_esr1_neuron
+    type_b: CS20230722_SUPT_0055
+    relationship: PARTIAL_OVERLAP
+    confidence: LOW
+    evidence:
+      - evidence_type: BULK_CORRELATION
+        supports: SUPPORT
+        explanation: >
+          Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled MeA female-receptive vs VMH
+          female-receptive identifies SUPT_0055 (MEA Slc17a7 Glut_1) as the dominant
+          MeA-specific signal. Child cluster CLUS_0197 ranks #3 of 5,322 by δ = ρ(MeA_FR)
+          − ρ(VMH_FR), with δ=0.0519 (the highest absolute δ value in the entire run) and
+          MFR=10.11 (strongly male-biased — consistent with the well-known sexually
+          dimorphic male-typical MeA Esr1+ population). Multiple sister clusters from
+          SUPT_0055 (CLUS_0194, CLUS_0198) and the related SUPT_0057 also rank in the
+          top 6. Anatomically clean signal. Confidence held at LOW because
+          mea_esr1_neuron is a candidate classical node — full literature ingest has not
+          yet been performed.
+        run_ref: corr_run_20260428_knoedler_esr1_wmbv1
+        contrast_ref: corr_MeA_FR_vs_VMH_FR
+        target_accession: CS20230722_SUPT_0055
+        statistics: >
+          best_child_cluster=CLUS_0197 (rank 3, δ=0.0519, MFR=10.11);
+          additional_top_hits: CLUS_0194 (rank 6, δ=0.0508, MFR=2.70), CLUS_0198 (rank 4, δ=0.0515);
+          highest_delta_value_in_entire_run=0.0519.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "Glutamatergic (MeA principal neurons predominantly glutamatergic)"
+        node_b_value: "Glutamatergic (Slc17a7 Glut_1)"
+        alignment: CONSISTENT
+      - property: location_MBA403_MeA
+        node_a_value: "MBA:403 (Medial amygdalar nucleus)"
+        node_b_value: "Medial amygdalar nucleus (primary soma across child clusters)"
+        alignment: CONSISTENT
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (primary defining marker)"
+        node_b_value: "Esr1+ by experimental design (TRAP-Cre line)"
+        alignment: CONSISTENT
+      - property: sex_ratio
+        node_a_value: "male-biased (MeA Esr1+ population larger in males)"
+        node_b_value: "CLUS_0197 MFR=10.11 (extreme male bias)"
+        alignment: CONSISTENT
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: >
+          mea_esr1_neuron classical node is a stub; supporting evidence is from Knoedler
+          2022 only. Literature ingest from broader MeA classical literature
+          (Choi 2005, Unger 2015, Yamaguchi 2020 etc.) needed to upgrade confidence
+          past LOW.
+      - caveat_type: PRIOR_MAPPING_ASSUMED
+        description: >
+          The MeA Esr1+ population is well-described in classical literature but was not
+          included in the original sexually-dimorphic asta-report-ingest cycle. This
+          edge is added based on bulk-correlation evidence alone; the classical node
+          itself awaits proper ingest.
+    unresolved_questions:
+      - >
+        Does the existing classical literature support a single MeA Esr1+ classical
+        type, or multiple subpopulations (e.g. male-typical aggression vs neutral)?
+      - >
+        Are CLUS_0197 (MFR=10.11) and CLUS_0194 (MFR=2.70) functionally distinct
+        male-biased subpopulations?
+    proposed_experiments:
+      - >
+        Run asta-report-ingest or cite-traverse on MeA Esr1+ classical literature
+        (Choi 2005 PMID:16267094, Unger 2015 PMID:26119027, Yamaguchi 2020 PMID:31831664)
+        to upgrade mea_esr1_neuron from stub to fully ingested classical node.
+      - >
+        MapMyCells annotation transfer of published MeA Esr1+ scRNA-seq data to
+        WMBv1 to provide direct AT evidence alongside bulk correlation.
 
   - id: edge_arc_aromatase_neuron_to_cs20230722_supt_0486
     type_a: arc_aromatase_neuron
