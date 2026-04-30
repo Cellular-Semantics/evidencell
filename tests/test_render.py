@@ -1028,6 +1028,37 @@ def test_build_reference_index_traverses_run_ref_for_bulk_correlation():
     assert "37934722" in pmids
 
 
+def test_top_n_hits_for_contrast_returns_ranked_rows():
+    """Reads a CorrelationRun's per-contrast TSV and returns ranked rows.
+
+    Smoke test against the actual Knoedler run — confirms VMH-FR vs BNST-FR
+    contrast surfaces SUPT_0563's child clusters at the top with is_target=True
+    when target_accession is the parent supertype.
+    """
+    from evidencell.render import _top_n_hits_for_contrast, _RUN_REF_PMID_CACHE
+    _RUN_REF_PMID_CACHE.clear()
+    hits = _top_n_hits_for_contrast(
+        "corr_run_20260428_knoedler_esr1_wmbv1",
+        "corr_VMH_FR_vs_BNST_FR",
+        target_accession="CS20230722_SUPT_0563",
+        n=5,
+    )
+    assert len(hits) == 5
+    assert hits[0]["cluster_id"] == "CS20230722_CLUS_2293"
+    assert hits[0]["is_target"] is True  # parent SUPT_0563 matches target
+    assert float(hits[0]["delta"]) > 0.015
+    # CLUS_2298 sits at rank 3, parent SUPT_0565 — NOT the target supertype
+    rank3 = hits[2]
+    assert rank3["cluster_id"] == "CS20230722_CLUS_2298"
+    assert rank3["is_target"] is False
+
+
+def test_top_n_hits_for_contrast_handles_missing_run():
+    from evidencell.render import _top_n_hits_for_contrast
+    hits = _top_n_hits_for_contrast("not_a_run_id", "not_a_contrast")
+    assert hits == []
+
+
 def test_build_reference_index_uses_dataset_authors_year_for_citation_line():
     """When references.json has no entry for a run_ref-resolved PMID, the
     citation line is synthesised from the BulkDataset descriptor's

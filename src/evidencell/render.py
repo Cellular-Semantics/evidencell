@@ -210,6 +210,13 @@ _RUN_REF_PMID_CACHE: dict[str, str | None] = {}
 # Cache (run_ref → dataset descriptor dict) so build_reference_index can pull
 # authors/year/title for citation-line formatting without re-reading dataset YAMLs.
 _RUN_REF_DATASET_CACHE: dict[str, dict] = {}
+# Cache (run_ref → full manifest dict) so methods extraction and figure
+# generation can read run-level details (script, atlas SHA, contrasts,
+# code_version) without re-reading manifests.
+_RUN_REF_MANIFEST_CACHE: dict[str, dict] = {}
+# Cache (run_ref → run directory Path) for locating ranked output TSVs and
+# scripts during figure generation.
+_RUN_REF_DIR_CACHE: dict[str, Path | None] = {}
 
 
 def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
@@ -247,14 +254,18 @@ def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
     # the full identifier (corr_run_20260428_stephens_kiss1_wmbv1). Try the
     # direct path first for cheapness, then scan + match by `id` if missing.
     manifest = None
+    run_dir = None
     direct = runs_dir / run_ref / "manifest.yaml"
     if direct.exists():
         try:
             manifest = yaml.safe_load(direct.read_text(encoding="utf-8")) or {}
+            run_dir = direct.parent
         except yaml.YAMLError:
             manifest = None
+            run_dir = None
     if not manifest or manifest.get("id") != run_ref:
         manifest = None
+        run_dir = None
         for run_subdir in runs_dir.iterdir():
             if not run_subdir.is_dir():
                 continue
@@ -267,10 +278,13 @@ def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
                 continue
             if m.get("id") == run_ref:
                 manifest = m
+                run_dir = run_subdir
                 break
     if not manifest:
         _RUN_REF_PMID_CACHE[run_ref] = None
         return None
+    _RUN_REF_MANIFEST_CACHE[run_ref] = manifest
+    _RUN_REF_DIR_CACHE[run_ref] = run_dir
 
     dataset_ref = manifest.get("dataset_ref")
     if not dataset_ref:
@@ -307,6 +321,179 @@ def _dataset_for_run_ref(run_ref: str) -> dict | None:
     if run_ref not in _RUN_REF_DATASET_CACHE:
         _resolve_run_ref_to_pmid(run_ref)
     return _RUN_REF_DATASET_CACHE.get(run_ref)
+
+
+def _manifest_for_run_ref(run_ref: str) -> dict | None:
+    """Return the CorrelationRun manifest for a given run_ref, or None.
+
+    Triggers `_resolve_run_ref_to_pmid` to populate the cache lazily.
+    """
+    if run_ref not in _RUN_REF_MANIFEST_CACHE:
+        _resolve_run_ref_to_pmid(run_ref)
+    return _RUN_REF_MANIFEST_CACHE.get(run_ref)
+
+
+def _run_dir_for_run_ref(run_ref: str) -> Path | None:
+    """Return the on-disk directory for a given run_ref, or None."""
+    if run_ref not in _RUN_REF_DIR_CACHE:
+        _resolve_run_ref_to_pmid(run_ref)
+    return _RUN_REF_DIR_CACHE.get(run_ref)
+
+
+def _top_n_hits_for_contrast(
+    run_ref: str,
+    contrast_id: str,
+    target_accession: str | None = None,
+    n: int = 10,
+) -> list[dict]:
+    """Read the top-N rows from a CorrelationRun's ranked TSV for a contrast.
+
+    Returns a list of dicts (one per cluster row) with keys:
+      rank, cluster_id, label, parent_supertype, mfr, top_anat,
+      top_anat_n, delta, is_target.
+
+    `is_target` is True when cluster_id == target_accession (used by the
+    renderer/synthesis prompt to highlight the row in the report).
+
+    Returns an empty list if the run dir, the ranked output, or the
+    contrast can't be located. The contrast's δ column is identified by
+    convention: a column matching `delta_{contrast_id_short}` or, failing
+    that, the contrast id substring.
+
+    For the existing two runs (Stephens, Knoedler), the per-contrast TSVs
+    live at:
+      stephens: {run_dir}/delta_rp3v_specific.tsv etc. (ranked by delta)
+      knoedler: {run_dir}/ranked_contrasts/{contrast_name}.tsv
+
+    The function tolerates both layouts.
+    """
+    run_dir = _run_dir_for_run_ref(run_ref)
+    if run_dir is None or not run_dir.is_dir():
+        return []
+
+    # Resolve contrast → (pool_a, pool_b) via the manifest. The contrast id
+    # alone isn't enough to match a TSV filename: contrast ids use `_vs_`
+    # while ranked TSVs use `_minus_` or `_specific`.
+    manifest = _manifest_for_run_ref(run_ref) or {}
+    pool_a = pool_b = ""
+    for c in manifest.get("contrasts") or []:
+        if c.get("id") == contrast_id:
+            pool_a = c.get("pool_a", "")
+            pool_b = c.get("pool_b", "")
+            break
+
+    def _short(pool_id: str) -> str:
+        # pool ids are `{dataset}_{label}` (e.g. stephens_RP3V, knoedler_POA_FR);
+        # the filename uses just the label.
+        return pool_id.split("_", 1)[1] if "_" in pool_id else pool_id
+
+    a_short = _short(pool_a)
+    b_short = _short(pool_b)
+
+    # Generate candidate filename stems in priority order.
+    stems: list[str] = []
+    if a_short and b_short:
+        stems.extend([
+            f"delta_{a_short}_minus_{b_short}",
+            f"{a_short}_minus_{b_short}",
+        ])
+    if a_short:
+        stems.extend([
+            f"delta_{a_short}_specific",
+            f"{a_short}_specific",
+        ])
+    # Last-resort: substring of the raw contrast id.
+    short = contrast_id.removeprefix("corr_")
+    stems.append(short)
+
+    # Search both run_dir/ and run_dir/ranked_contrasts/ in priority order.
+    search_dirs: list[Path] = [run_dir]
+    nested = run_dir / "ranked_contrasts"
+    if nested.is_dir():
+        search_dirs.append(nested)
+
+    tsv_path: Path | None = None
+    for stem in stems:
+        for d in search_dirs:
+            for ci in (False, True):
+                p = d / f"{stem}.tsv"
+                if not p.exists() and ci:
+                    # Case-insensitive fallback
+                    matches = [q for q in d.glob("*.tsv") if q.stem.lower() == stem.lower()]
+                    if matches:
+                        p = matches[0]
+                if p.exists():
+                    tsv_path = p
+                    break
+            if tsv_path:
+                break
+        if tsv_path:
+            break
+    if tsv_path is None:
+        return []
+
+    try:
+        rows = []
+        with tsv_path.open(encoding="utf-8") as fh:
+            header = fh.readline().rstrip("\n").split("\t")
+            for line in fh:
+                cells = line.rstrip("\n").split("\t")
+                if len(cells) != len(header):
+                    continue
+                rows.append(dict(zip(header, cells)))
+    except OSError:
+        return []
+
+    # Identify the δ column matching this contrast. The contrast id uses `_vs_`
+    # (e.g. corr_VMH_FR_vs_BNST_FR) while column names use `_minus_`
+    # (e.g. delta_VMH_FR_minus_BNST_FR). Translate before matching.
+    delta_col: str | None = None
+    contrast_name = contrast_id.removeprefix("corr_")
+    contrast_minus = contrast_name.replace("_vs_", "_minus_")
+    for col in header:
+        if col.startswith("delta_") and contrast_minus in col:
+            delta_col = col
+            break
+    if delta_col is None:
+        # Fallback: first delta_* column (e.g. for runs that stash a single
+        # contrast per file with a less canonical naming).
+        for col in header:
+            if col.startswith("delta_"):
+                delta_col = col
+                break
+    if delta_col is None:
+        return []
+
+    # Sort rows by the chosen δ column (descending), then take top N.
+    def _f(row: dict, col: str) -> float:
+        v = row.get(col, "")
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return float("-inf")
+
+    rows_sorted = sorted(rows, key=lambda r: _f(r, delta_col), reverse=True)
+    out: list[dict] = []
+    for rank, r in enumerate(rows_sorted[:n], start=1):
+        cid = r.get("cluster_id", "")
+        parent = r.get("parent_supertype", "")
+        # Target match: direct (cluster→cluster) or via parent (cluster→supertype).
+        is_target = bool(
+            target_accession is not None
+            and (cid == target_accession or parent == target_accession)
+        )
+        out.append({
+            "rank": rank,
+            "cluster_id": cid,
+            "label": r.get("label", ""),
+            "parent_supertype": parent,
+            "mfr": r.get("mfr", ""),
+            "top_anat": r.get("top_anat", ""),
+            "top_anat_n": r.get("top_anat_n", ""),
+            "delta": r.get(delta_col, ""),
+            "is_target": is_target,
+        })
+    return out
 
 
 # ── Reference index builder ───────────────────────────────────────────────────
@@ -714,6 +901,21 @@ def extract_node_facts(
                 k: v for k, v in ev.items()
                 if k not in _BASE_KEYS and v not in (None, "", [], {})
             }
+            # For evidence items pointing at a CorrelationRun, attach the top-N
+            # ranked hits for the named contrast. This lets the synthesis
+            # subagent emit a "show your work" table alongside the
+            # attributed-blockquote evidence narrative — addresses the
+            # 2026-04-29_bulk-correlation-show-top-hits.md feedback.
+            run_ref = ev.get("run_ref")
+            contrast_ref = ev.get("contrast_ref")
+            if run_ref and contrast_ref:
+                hits = _top_n_hits_for_contrast(
+                    run_ref, contrast_ref,
+                    target_accession=ev.get("target_accession"),
+                    n=10,
+                )
+                if hits:
+                    extras["top_n_hits"] = hits
             if extras:
                 item["fields"] = extras
             ev_items.append(item)
