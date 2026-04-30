@@ -109,7 +109,7 @@ def render_top_n_hits_figure(
     y_pos = list(range(n - 1, -1, -1))  # rank 1 at top
     colours = ["#1f77b4" if not t else "#d62728" for t in is_target]
     edgecolours = ["#11425c" if not t else "#7a1f1f" for t in is_target]
-    bars = ax.barh(y_pos, deltas, color=colours, edgecolor=edgecolours, linewidth=0.6)
+    ax.barh(y_pos, deltas, color=colours, edgecolor=edgecolours, linewidth=0.6)
 
     ax.set_yticks(y_pos)
     ax.set_yticklabels(labels, fontsize=8)
