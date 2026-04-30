@@ -1085,6 +1085,37 @@ def extract_node_facts(
                 )
                 if hits:
                     extras["top_n_hits"] = hits
+                    # Render the matching δ ranked-bar figure alongside the
+                    # report. Filename is content-hashed; the report's
+                    # reference becomes a visibly broken link if the
+                    # underlying data changes (sync mechanism — see
+                    # planning/paper_style_reports_review_addendum.md §4).
+                    try:
+                        from evidencell.figures import render_top_n_hits_figure
+                        from evidencell.paths import reports_dir_for_region
+                        # Region is the parent directory of the graph file
+                        # (kb/draft/{region}/file.yaml or kb/mappings/{region}/file.yaml).
+                        region = graph_file.parent.name if graph_file else ""
+                        if region:
+                            figures_dir = reports_dir_for_region(region) / "figures"
+                            short_contrast = contrast_ref.removeprefix("corr_")
+                            caption = (
+                                f"Top {len(hits)} clusters by δ for {short_contrast} "
+                                f"({ev.get('target_accession', node_id)})"
+                            )
+                            png_path, _ = render_top_n_hits_figure(
+                                hits, figures_dir, node_id, contrast_ref,
+                                caption=caption,
+                                framework_version=_evidencell_commit(),
+                            )
+                            # Path relative to the report file (which lives
+                            # in reports/{region}/).
+                            extras["figure_relpath"] = f"figures/{png_path.name}"
+                            extras["figure_caption"] = caption
+                    except (ImportError, ValueError, OSError) as exc:
+                        # Figure rendering is best-effort — never fail facts
+                        # extraction over a plotting issue.
+                        print(f"WARNING: figure rendering failed for {run_ref} / {contrast_ref}: {exc}", file=sys.stderr)
             if extras:
                 item["fields"] = extras
             ev_items.append(item)
