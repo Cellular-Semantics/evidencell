@@ -1059,6 +1059,144 @@ def test_top_n_hits_for_contrast_handles_missing_run():
     assert hits == []
 
 
+def test_methods_summary_aggregates_bulk_run_data():
+    """methods_summary surfaces bulk-correlation provenance for the Methods
+    section: dataset citation, atlas SHA, statistic, parameters, script
+    git provenance, code_version. Single run summary per run_ref."""
+    from evidencell.render import extract_methods_summary
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {"id": "cl", "name": "cl", "definition_basis": "CLASSICAL_MULTIMODAL", "is_terminal": False},
+            {"id": "ax", "name": "ax", "definition_basis": "ATLAS_TRANSCRIPTOMIC", "is_terminal": True, "atlas": "WMBv1"},
+        ],
+        "edges": [
+            {
+                "id": "e",
+                "type_a": "cl",
+                "type_b": "ax",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "BULK_CORRELATION",
+                        "supports": "SUPPORT",
+                        "explanation": "Stephens 2024 ...",
+                        "run_ref": "corr_run_20260428_stephens_kiss1_wmbv1",
+                    },
+                    {
+                        "evidence_type": "ATLAS_METADATA",
+                        "supports": "SUPPORT",
+                        "explanation": "Atlas markers align.",
+                    },
+                ],
+            },
+        ],
+    }
+    ms = extract_methods_summary(graph, "cl", Path("test.yaml"))
+    assert ms["evidence_type_counts"] == {"BULK_CORRELATION": 1, "ATLAS_METADATA": 1}
+    assert len(ms["bulk_correlation_runs"]) == 1
+    run = ms["bulk_correlation_runs"][0]
+    assert run["statistic_kind"] == "spearman_rho"
+    assert run["script_git_repo_url"] == "https://github.com/Cellular-Semantics/evidencell"
+    assert run["script_git_commit"] == "d7c4445"
+    assert run["code_version"] == "d7c4445"
+    assert len(ms["bulk_data_sources"]) == 1
+    ds = ms["bulk_data_sources"][0]
+    assert ds["source_pmid"] == "PMID:37934722"
+    assert ds["year"] == 2024
+    assert "Stephens" in ds["authors"][0]
+    assert len(ms["atlas_data_sources"]) == 1
+    assert ms["atlas_data_sources"][0]["taxonomy_id"] == "CCN20230722"
+
+
+def test_methods_summary_dedups_at_runs_by_method_dataset_target():
+    """Multiple AnnotationTransferEvidence items with the same
+    (method, source_dataset_accession, target_atlas) collapse to one entry —
+    the Methods section describes the AT run once, not per cluster."""
+    from evidencell.render import extract_methods_summary
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {"id": "cl", "name": "cl", "definition_basis": "CLASSICAL_MULTIMODAL", "is_terminal": False},
+            {"id": "ax", "name": "ax", "definition_basis": "ATLAS_TRANSCRIPTOMIC", "is_terminal": True, "atlas": "WMBv1"},
+        ],
+        "edges": [
+            {
+                "id": "e",
+                "type_a": "cl",
+                "type_b": "ax",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "ANNOTATION_TRANSFER",
+                        "supports": "SUPPORT",
+                        "explanation": "...",
+                        "method": "MapMyCells v1.7.1",
+                        "source_dataset_accession": "GEO:GSE124847",
+                        "target_atlas": "WMBv1",
+                        "best_f1_score": 0.62,
+                        "best_mapping_level": "SUPERTYPE",
+                    },
+                    {
+                        "evidence_type": "ANNOTATION_TRANSFER",
+                        "supports": "REFUTE",
+                        "explanation": "...",
+                        "method": "MapMyCells v1.7.1",
+                        "source_dataset_accession": "GEO:GSE124847",
+                        "target_atlas": "WMBv1",
+                        "best_f1_score": 0.0,
+                    },
+                ],
+            },
+        ],
+    }
+    ms = extract_methods_summary(graph, "cl", Path("test.yaml"))
+    assert len(ms["annotation_transfer_runs"]) == 1
+    assert ms["evidence_type_counts"]["ANNOTATION_TRANSFER"] == 2
+
+
+def test_methods_summary_cl_mapping_surfaced_with_ols_url():
+    """CL mapping flows through with id, label, mapping_type, and an OLS URL
+    for the front of the report and the Discussion best-candidate summary."""
+    from evidencell.render import extract_methods_summary
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {
+                "id": "cl",
+                "name": "cl",
+                "definition_basis": "CLASSICAL_MULTIMODAL",
+                "is_terminal": False,
+                "cl_mapping": {
+                    "cl_term": {
+                        "id": "CL:0000617",
+                        "label": "GABAergic neuron",
+                        "name_in_source": "GABAergic neuron",
+                    },
+                    "mapping_type": "BROAD",
+                    "mapping_notes": "Classical type maps broadly to GABAergic neuron.",
+                },
+            },
+        ],
+        "edges": [],
+    }
+    ms = extract_methods_summary(graph, "cl", Path("test.yaml"))
+    cl = ms["cl_mapping"]
+    assert cl["cl_term_id"] == "CL:0000617"
+    assert cl["cl_term_label"] == "GABAergic neuron"
+    assert cl["mapping_type"] == "BROAD"
+    assert cl["mapping_notes"].startswith("Classical type")
+    assert cl["ols_url"] == "https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0000617"
+
+
 def test_build_reference_index_uses_dataset_authors_year_for_citation_line():
     """When references.json has no entry for a run_ref-resolved PMID, the
     citation line is synthesised from the BulkDataset descriptor's

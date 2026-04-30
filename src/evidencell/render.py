@@ -496,6 +496,175 @@ def _top_n_hits_for_contrast(
     return out
 
 
+# ── Methods summary (for paper-style Methods section) ─────────────────────────
+
+def _evidencell_commit() -> str:
+    """Return the current evidencell git short SHA (or empty string on failure).
+
+    Used by the renderer to stamp the report with the codebase version that
+    produced it — equivalent to a paper's "code availability" footer.
+    """
+    import subprocess
+    from evidencell.paths import repo_root
+    try:
+        root = repo_root()
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, cwd=str(root), timeout=5,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    except (RuntimeError, OSError, subprocess.TimeoutExpired):
+        pass
+    return ""
+
+
+def extract_methods_summary(
+    graph: dict,
+    node_id: str,
+    graph_file: Path,
+) -> dict:
+    """Aggregate methods/provenance data across all edges for a classical node.
+
+    Returns a structured dict the synthesis subagent uses to build the Methods
+    section narrative. Deterministic — no prose generation here.
+
+    Keys:
+      evidence_type_counts: {EVIDENCE_TYPE: count} across all edges
+      bulk_correlation_runs: list of run summaries (run_ref, dataset citation,
+        statistic, parameters, script provenance, contrasts cited)
+      annotation_transfer_runs: list of AT method summaries
+      atlas_data_sources: list of {atlas, taxonomy_id, pseudobulk_sha}
+      bulk_data_sources: list of {dataset_id, source_pmid, geo_accession,
+        technique, n_pools, citation}
+      framework_version: evidencell git commit at extract time
+      gen_timestamp: ISO 8601 of the extract call
+      kb_graph_file: relative path to the KB YAML
+    """
+    from datetime import datetime, timezone
+
+    edges = [e for e in graph.get("edges", []) if e.get("type_a") == node_id]
+
+    evidence_type_counts: dict[str, int] = {}
+    bulk_runs: list[dict] = []
+    at_runs: list[dict] = []
+    atlas_sources_seen: dict[str, dict] = {}
+    bulk_dataset_sources_seen: dict[str, dict] = {}
+    seen_run_refs: set[str] = set()
+    seen_at_keys: set[tuple] = set()
+
+    for edge in edges:
+        for ev in edge.get("evidence", []):
+            et = ev.get("evidence_type", "")
+            if et:
+                evidence_type_counts[et] = evidence_type_counts.get(et, 0) + 1
+
+            run_ref = ev.get("run_ref")
+            if run_ref and run_ref not in seen_run_refs:
+                seen_run_refs.add(run_ref)
+                manifest = _manifest_for_run_ref(run_ref) or {}
+                dataset = _dataset_for_run_ref(run_ref) or {}
+                method = manifest.get("method") or {}
+                script = manifest.get("script") or {}
+                atlas = manifest.get("atlas") or {}
+
+                bulk_runs.append({
+                    "run_ref": run_ref,
+                    "dataset_ref": manifest.get("dataset_ref", ""),
+                    "statistic_kind": method.get("statistic_kind", ""),
+                    "parameters": method.get("parameters", ""),
+                    "atlas_taxonomy_id": atlas.get("taxonomy_id", ""),
+                    "atlas_pseudobulk_sha": atlas.get("sha256", ""),
+                    "script_relpath": script.get("relpath", ""),
+                    "script_python_version": script.get("python_version", ""),
+                    "script_packages": script.get("packages", []),
+                    "script_git_repo_url": script.get("git_repo_url", ""),
+                    "script_git_commit": script.get("git_commit", ""),
+                    "code_version": manifest.get("code_version", ""),
+                    "n_contrasts": len(manifest.get("contrasts") or []),
+                    "caveats": manifest.get("caveats", ""),
+                })
+
+                # Bulk data source (one per dataset across runs)
+                ds_id = dataset.get("id", "")
+                if ds_id and ds_id not in bulk_dataset_sources_seen:
+                    bulk_dataset_sources_seen[ds_id] = {
+                        "dataset_id": ds_id,
+                        "source_pmid": dataset.get("source_pmid", ""),
+                        "geo_accession": dataset.get("geo_accession", ""),
+                        "technique": dataset.get("technique", ""),
+                        "n_pools": len(dataset.get("pools") or []),
+                        "n_data_files": len(dataset.get("data_files") or []),
+                        "authors": dataset.get("authors") or [],
+                        "year": dataset.get("year"),
+                        "title": dataset.get("title", ""),
+                    }
+
+                # Atlas data source (deduped by sha)
+                atlas_key = atlas.get("sha256") or atlas.get("taxonomy_id", "")
+                if atlas_key and atlas_key not in atlas_sources_seen:
+                    atlas_sources_seen[atlas_key] = {
+                        "atlas": "WMBv1",
+                        "taxonomy_id": atlas.get("taxonomy_id", ""),
+                        "pseudobulk_source": atlas.get("pseudobulk_source", ""),
+                        "pseudobulk_sha256": atlas.get("sha256", ""),
+                    }
+
+            if et == "ANNOTATION_TRANSFER":
+                key = (
+                    ev.get("source_dataset_accession", ""),
+                    ev.get("method", ""),
+                    ev.get("target_atlas", ""),
+                )
+                if key not in seen_at_keys:
+                    seen_at_keys.add(key)
+                    at_runs.append({
+                        "method": ev.get("method", ""),
+                        "tool_version": ev.get("tool_version", ""),
+                        "code_reference": ev.get("code_reference", ""),
+                        "source_dataset_accession": ev.get("source_dataset_accession", ""),
+                        "source_species": ev.get("source_species", ""),
+                        "target_atlas": ev.get("target_atlas", ""),
+                        "target_species": ev.get("target_species", ""),
+                        "best_f1_score": ev.get("best_f1_score"),
+                        "best_mapping_level": ev.get("best_mapping_level", ""),
+                        "bootstrap_threshold": ev.get("bootstrap_threshold"),
+                        "n_cells_total": ev.get("n_cells_total"),
+                        "n_cells_after_filter": ev.get("n_cells_after_filter"),
+                    })
+
+    # Surface CL mapping at top of methods summary so the synthesis subagent
+    # can reuse it in the Discussion best-candidate block.
+    nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
+    classical = nodes_by_id.get(node_id, {})
+    cl = classical.get("cl_mapping") or {}
+    cl_term = cl.get("cl_term") or {}
+    cl_id = cl_term.get("id", "") if isinstance(cl_term, dict) else ""
+    cl_mapping_summary = {
+        "cl_term_id": cl_id,
+        "cl_term_label": cl_term.get("label", "") if isinstance(cl_term, dict) else "",
+        "cl_term_name_in_source": cl_term.get("name_in_source", "") if isinstance(cl_term, dict) else "",
+        "mapping_type": cl.get("mapping_type", ""),
+        "mapping_notes": cl.get("mapping_notes", ""),
+        "ols_url": (
+            f"https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id={cl_id}"
+            if cl_id.startswith("CL:") else ""
+        ),
+    }
+
+    return {
+        "evidence_type_counts": evidence_type_counts,
+        "cl_mapping": cl_mapping_summary,
+        "bulk_correlation_runs": bulk_runs,
+        "annotation_transfer_runs": at_runs,
+        "atlas_data_sources": list(atlas_sources_seen.values()),
+        "bulk_data_sources": list(bulk_dataset_sources_seen.values()),
+        "framework_version": _evidencell_commit(),
+        "gen_timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "kb_graph_file": str(graph_file),
+    }
+
+
 # ── Reference index builder ───────────────────────────────────────────────────
 
 def build_reference_index(
@@ -961,6 +1130,8 @@ def extract_node_facts(
         for k, v in ref_index.items()
     }
 
+    methods_summary = extract_methods_summary(graph, node_id, graph_file)
+
     return {
         "graph_meta": {
             "name": graph.get("name", ""),
@@ -972,6 +1143,7 @@ def extract_node_facts(
             "graph_file": str(graph_file),
             "has_merfish_location": has_merfish,
         },
+        "methods_summary": methods_summary,
         "reference_index": ref_index_serial,
         "classical_nodes": [{
             "id": node_id,
