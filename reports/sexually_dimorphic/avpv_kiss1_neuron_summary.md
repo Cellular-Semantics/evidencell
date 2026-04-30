@@ -5,27 +5,21 @@
 
 ---
 
-## 1. Classical type
+## Introduction
 
-**AVPV/PeN kisspeptin neuron** is defined by neurochemical criteria: Kiss1 expression,
-TH co-expression (marking a dopaminergic component within a broader GABAergic phenotype),
-and obligate Esr1 co-expression. Somas are concentrated in two periventricular zones of the
-rostral hypothalamus. The population is female-biased in cell number, mediates estrogen
-positive-feedback control of the preovulatory GnRH/LH surge, and is functionally and
-molecularly distinct from the arcuate KNDy (kisspeptin/neurokinin B/dynorphin) population.
-Most AVPV/PeN Kiss1 cells co-express TH, overlapping the AVPV TH neuron population.
+**AVPV/PeN kisspeptin neuron** is defined by neurochemical criteria: Kiss1 expression, TH co-expression (marking a dopaminergic component within a broader GABAergic phenotype), and obligate Esr1 co-expression. Somas are concentrated in two periventricular zones of the rostral hypothalamus. The population is female-biased in cell number, mediates estrogen positive-feedback control of the preovulatory GnRH/LH surge, and is functionally and molecularly distinct from the arcuate KNDy (kisspeptin/neurokinin B/dynorphin) population. Most AVPV/PeN Kiss1 cells co-express TH, overlapping the AVPV TH neuron population.
 
-CL term: **hypothalamus kisspeptin neuron (CL:4023123)** — mapping is BROAD; a dedicated
-term for the AVPV/RP3V non-KNDy kisspeptin population may be warranted.
+Cell Ontology mapping: **hypothalamus kisspeptin neuron [[CL:4023123](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:4023123)] (BROAD)** — see Discussion for the rationale.
+
+### Classical type table
 
 | Property | Value | References |
 |---|---|---|
 | Soma location | Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:341] | [1], [2], [3] |
-| NT | GABAergic / dopaminergic (TH co-expression) | [3] |
+| NT | GABAergic / dopaminergic (Th co-expression) | [3] |
 | Defining markers | Kiss1 (transcript), Th (protein, co-expressed with Kiss1), Esr1 (transcript) | [1], [2], [3], [4], [5] |
 | Negative markers | — | |
 | Neuropeptides | Kiss1 (kisspeptin) | [6] |
-| CL term | CL:4023123 (hypothalamus kisspeptin neuron) — BROAD | |
 
 <details>
 <summary>Literature support — expand for verbatim quotes</summary>
@@ -69,13 +63,15 @@ term for the AVPV/RP3V non-KNDy kisspeptin population may be warranted.
 
 ---
 
-## 4. Mapping candidates
+## Results
 
-### 4a. Candidate overview
+Two mapping edges are recorded for avpv_kiss1_neuron: a supertype-level edge to SUPT_0486 (PVpo-VMPO-MPN Hmx2 Gaba_5) at MODERATE confidence, and a cluster-level edge to CLUS_1915 — the child cluster with the strongest Kiss1+Th+Esr1 co-expression profile and the most extreme female bias (male_female_ratio = 0.02). Independent bulk-correlation evidence from Stephens 2024 places CLUS_1915 at rank 1 of 5,322 atlas clusters by RP3V-specificity.
 
-Two mapping edges are recorded for avpv_kiss1_neuron: a supertype-level edge to SUPT_0486
-and a cluster-level edge to CLUS_1915, the child cluster with the strongest Kiss1+Th+Esr1
-co-expression profile and the most extreme female bias (male_female_ratio = 0.02).
+![Top 10 clusters by δ for RP3V_vs_ARC (CS20230722_CLUS_1915)](figures/avpv_kiss1_neuron_RP3V_vs_ARC_da0cac2d.png)
+
+*Bulk-correlation δ ranking of WMBv1 clusters by RP3V- vs ARC-specificity (Stephens 2024 [7]). CLUS_1915 (target row, red) ranks first; all top-10 hits are preoptic / periventricular hypothalamic GABAergic clusters — the differential signal is anatomically clean.*
+
+### Mapping candidates
 
 | Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
@@ -86,9 +82,9 @@ co-expression profile and the most extreme female bias (male_female_ratio = 0.02
 
 ^MERFISH n=3–5; 10x cluster size not yet shown — see ROADMAP.
 
-### 4b. Property alignment — primary candidate (CLUS_1915)
+### 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] · 🟡 MODERATE
 
-**Table 1 — Property comparison.**
+**Property comparison.**
 
 | Property | Classical | Supertype | Best cluster | Alignment |
 |---|---|---|---|---|
@@ -98,9 +94,8 @@ co-expression profile and the most extreme female bias (male_female_ratio = 0.02
 | Esr1 expression | POSITIVE (transcript, defining marker) | precomputed mean_expression=7.72 (DEFINING atlas marker) | precomputed mean_expression=9.55 (highest Esr1 in SUPT_0486) | CONSISTENT (both levels) |
 | Th expression | POSITIVE (protein, co-expressed with Kiss1) | precomputed mean_expression=2.72 | precomputed mean_expression=6.6 (highest Th of any SUPT_0486 child cluster) | SUPT: APPROXIMATE; CLUS: CONSISTENT |
 | Sex ratio | FEMALE_BIASED (AVPV Kiss1 neurons strongly female-biased) | not available at supertype level | MFR=0.02 (CLUS_1915) — extreme female bias, ~50:1 F:M | CONSISTENT |
-| Annotation transfer F1 | not applicable | NOT_ASSESSED | NOT_ASSESSED | NOT_ASSESSED |
 
-**Table 2 — Evidence support.**
+**Evidence support.**
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
@@ -110,114 +105,100 @@ co-expression profile and the most extreme female bias (male_female_ratio = 0.02
 
 *(1 of 5 child clusters of SUPT_0486 — CLUS_1915 — shows the female-biased Kiss1+Th+Esr1 co-expression profile (Kiss1=2.51, Th=6.6, Esr1=9.55, MFR=0.02) concordant with avpv_kiss1_neuron; MFR data are absent at supertype level and for most other SUPT_0486 child clusters. Best match: CLUS_1915.)*
 
----
-
-## 5. Candidate paragraphs
-
-## 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] · 🟡 MODERATE
-
-### Supporting evidence
+**Supporting evidence**
 
 - **Kiss1, Th, and Esr1 all reach CONSISTENT alignment at cluster level.** CLUS_1915 shows the highest co-expression of all three classical defining markers among SUPT_0486 child clusters: Kiss1 = 2.51, Th = 6.6, Esr1 = 9.55. Kiss1 is a cluster-level DEFINING marker for CLUS_1915 — directly matching its role as the primary defining marker of the classical node.
 - **Dopaminergic NT type is confirmed.** cluster.yaml annotates nt_type = Dopa (name_in_source = 'Dopa'), resolving the APPROXIMATE supertype Gaba_5 label and providing CONSISTENT alignment with the classical node's GABAergic/dopaminergic co-phenotype.
 - **Sex ratio is strongly concordant.** male_female_ratio = 0.02 (~50:1 female-to-male) is the most extreme female bias in SUPT_0486 and directly matches the FEMALE_BIASED sex dimorphism that defines avpv_kiss1_neuron [1], [3].
 - **AVPV cells are explicitly present.** MBA:272 (AVPV) cells are present in CLUS_1915, providing a direct anatomical link, albeit at low cell counts.
-- **Cluster was identified by targeted child-cluster analysis.** CLUS_1915 was not surfaced in the initial top-30 DB query (the Kiss1/Th/Esr1 profile resides in `precomputed_expression`, not in `defining_markers` metadata columns). It was identified by systematic child-cluster expression analysis of SUPT_0486 — indicating the cluster-level signal is real but sub-threshold for routine discovery queries.
 - **Independent quantitative bulk-transcriptomic confirmation [7].**
   > Stephens 2024 (PMID:37934722) bulk Kiss1+ neurons sorted from RP3V vs ARC. Differential δ = ρ_RP3V − ρ_ARC ranks CLUS_1915 first of 5,322 atlas clusters, with δ=0.090 (ρ_RP3V=0.388, ρ_ARC=0.298). All other top-20 hits are also preoptic/periventricular hypothalamic GABAergic clusters — the differential signal is strongly anatomically clean. Independent quantitative confirmation of the existing ATLAS_METADATA-based mapping; the Kiss1+ pool transcriptomic profile tracks CLUS_1915 specifically more than any other cluster in the atlas.
   > — Stephens et al. 2024 · [7]
 
-### Marker evidence provenance
-
-- **Kiss1** — at CLUS_1915, Kiss1 = 2.51 and is listed as a cluster-level DEFINING marker. This is a substantially stronger signal than the supertype mean (0.62) and directly confirms the primary classical criterion. Evidence is transcript-based on both sides (literature ISH [1], [2], [3]; atlas 10x Chromium). No data-source discrepancy.
-- **Th** — CLUS_1915 Th = 6.6, the highest of any child cluster in SUPT_0486, consistent with the concentrated TH/dopaminergic signal expected in the AVPV Kiss1 population [3], [4]. The nt_type = Dopa annotation independently confirms dopaminergic identity at transcript level.
-- **Esr1** — CLUS_1915 Esr1 = 9.55, the highest in SUPT_0486. This is strongly consistent with classical evidence that ERalpha is obligately co-expressed with Kiss1 in AVPV [1], [2], [5].
-- **Slc18a2 (VMAT2)** — listed as a co-defining marker in cluster.yaml alongside Kiss1. This is consistent with dopaminergic vesicular packaging in AVPV TH/Kiss1 neurons *(note: Slc18a2 is not listed on the classical node; this represents a testable additional prediction from atlas data that could be verified by ISH or scRNA-seq re-analysis)*.
-
-### Concerns
+**Concerns**
 
 - **Very low cell count (n = 3–5 total cells in WMBv1).** The sex ratio (MFR = 0.02) and expression values are directionally reliable but have limited statistical power. Confidence is capped at MODERATE pending annotation transfer or replication in a larger dataset.
-- **MERFISH spatial resolution is insufficient to discriminate AVPV from adjacent PVpo/PeN.** The primary soma annotation resolves to the broad Hypothalamus catchall [MBA:1097] (n=3) for most CLUS_1915 cells, with only n=1 cell each in MBA:272 (AVPV) and MBA:133 (PVpo). This does not refute AVPV identity — MERFISH spatial registration at periventricular boundaries has limited precision — but it prevents location from contributing CONSISTENT evidence. *(adjacent region — could reflect registration boundary error; weak counter-evidence)*
-- **avpv_kiss1_neuron and avpv_th_neuron both map to CLUS_1915.** Because most AVPV Kiss1 cells co-express TH, these classical types substantially overlap; CLUS_1915 may represent the shared atlas correlate rather than a distinct transcriptomic split between them. Resolution would require single-cell co-expression data with morphological or functional validation.
+- **MERFISH spatial resolution is insufficient to discriminate AVPV from adjacent PVpo/PeN.** *(adjacent region — could reflect registration boundary error; weak counter-evidence)*
+- **avpv_kiss1_neuron and avpv_th_neuron both map to CLUS_1915.** Because most AVPV Kiss1 cells co-express TH, these classical types substantially overlap; CLUS_1915 may represent the shared atlas correlate rather than a distinct transcriptomic split between them.
 - **Annotation transfer not yet performed.** No independent, data-driven cell-level mapping of published AVPV Kiss1 scRNA-seq cells to WMBv1 has been run; this is the most important remaining gap in the evidence base for this edge.
 
-### What would upgrade confidence
+### 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] · 🟡 MODERATE
 
-- **MapMyCells annotation transfer** (see Proposed experiments) is the priority experiment; F1 ≥ 0.80 against CLUS_1915 at cluster level would substantially support upgrading to HIGH confidence and would add `AnnotationTransferEvidence`.
-- **Independent bulk-correlation replication** of the Stephens 2024 RP3V-vs-ARC differential ranking using a second FACS-sorted Kiss1+ pool would confirm the rank-1/5322 placement is not dataset-specific. Expected: an additional `BulkCorrelationEvidence` entry.
-- **Targeted cite-traverse** for papers co-profiling AVPV Kiss1 and TH neurons by scRNA-seq could confirm Slc18a2 co-expression and resolve avpv_kiss1_neuron vs avpv_th_neuron as separable clusters.
-
----
-
-## 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] · 🟡 MODERATE
-
-### Supporting evidence
+**Supporting evidence**
 
 - **Esr1 expression is strongly consistent.** Precomputed mean expression Esr1 = 7.72 at the supertype level, matching the canonical defining marker for AVPV/PeN kisspeptin neurons. Esr1 is a DEFINING atlas marker for SUPT_0486 — this is the strongest quantitative agreement between classical node and supertype.
 - **GABAergic identity is concordant.** The supertype carries a Gaba_5 label, consistent with the GABAergic component of the classical node's mixed GABAergic/dopaminergic phenotype.
 - **TH expression is present.** Precomputed mean Th = 2.72, reflecting the dopaminergic co-expression characteristic of AVPV Kiss1 neurons, though diluted across the broader supertype.
-- **Kiss1 expression is detected.** Precomputed mean Kiss1 = 0.62, consistent with subset expression within a heterogeneous supertype spanning multiple preoptic subregions.
 - **Direct AVPV location match.** n = 16 cells within SUPT_0486 are labelled to Anteroventral periventricular nucleus [MBA:272], providing a direct anatomical anchor.
-- **Child cluster CLUS_1915 concentrates the female-biased signal.** Child cluster 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] shows male_female_ratio = 0.02 — the most extreme female bias in SUPT_0486 — and co-expresses Kiss1=2.51, Th=6.6, Esr1=9.55 at the highest levels of any child cluster. This cluster-level evidence substantially strengthens the supertype assignment.
+- **Child cluster CLUS_1915 concentrates the female-biased signal.** See cluster-level paragraph above.
 
-### Marker evidence provenance
+**Concerns**
 
-- **Kiss1** — classical node evidence is transcript-based (ISH, KiSS-1 mRNA in situ) [1], [2], [3]. Atlas precomputed value (mean = 0.62) is transcript-based (10x Chromium). The moderate atlas value is expected for a subset marker diluted across a broad supertype; it does not contradict Kiss1 identity but does not confirm it at the population level. Specificity requires cluster-level resolution (resolved at CLUS_1915: mean = 2.51, DEFINING marker status).
-- **Th** — classical node evidence mixes protein (IHC for TH protein) [4] and transcript evidence [3]. Atlas precomputed value is transcript-based (mean = 2.72). A protein-vs-transcript discrepancy is a known caveat for Th: IHC may detect TH protein in cells with low transcript abundance *(note: well-documented in catecholaminergic neurons under dopamine-depleted or dopamine-regulated conditions)*. The atlas value is moderately supportive at supertype level; cluster-level Th = 6.6 at CLUS_1915 provides stronger agreement.
-- **Esr1** — classical node evidence is transcript-based [1], [2], [5], including demonstration that ERalpha immunoreactivity co-localises with KiSS-1 mRNA in AVPV [2]. Atlas precomputed Esr1 = 7.72 (supertype) and 9.55 (CLUS_1915) are both high and consistent. This is the most robustly supported marker alignment across all levels.
-- **Kiss1 (as neuropeptide)** — supported by functional evidence that kisspeptin peptide mediates estrogen positive feedback via the POA [2], [6]. Atlas expression captures the gene transcript; peptidergic identity is inferred rather than directly confirmed by atlas data.
-
-### Concerns
-
-- **Supertype spans a broader preoptic territory than AVPV/PeN.** SUPT_0486 covers PVpo [MBA:133] (n=64 cells), MPN [MBA:515] (n=37 cells), and VMPO in addition to AVPV [MBA:272] (n=16 cells). Multiple classical types — including avpv_th_neuron and mpoa_esr1_neuron — are expected to map to this same supertype; AVPV Kiss1 neurons are a subset. *(adjacent region — weak counter-evidence at supertype level)*
-- **Dopaminergic identity is not resolved at supertype level.** The supertype label is Gaba_5, not dopaminergic. Th = 2.72 is present but the full dopaminergic signal is concentrated in CLUS_1915 (nt_type = Dopa). Mapping to SUPT_0486 as a whole leaves the GABAergic/dopaminergic co-phenotype only partially captured (APPROXIMATE).
-- **Sex ratio data not available at supertype level.** Female-biased sex dimorphism — a defining feature of AVPV Kiss1 neurons [1], [3] — cannot be assessed from supertype-level metadata. The signal is visible only in CLUS_1915 (male_female_ratio = 0.02).
+- **Supertype spans a broader preoptic territory than AVPV/PeN.** SUPT_0486 covers PVpo [MBA:133] (n=64 cells), MPN [MBA:515] (n=37 cells), and VMPO in addition to AVPV [MBA:272] (n=16 cells). Multiple classical types — including avpv_th_neuron and mpoa_esr1_neuron — are expected to map to this same supertype; AVPV Kiss1 neurons are a subset.
+- **Dopaminergic identity is not resolved at supertype level.** The supertype label is Gaba_5, not dopaminergic. Th = 2.72 is present but the full dopaminergic signal is concentrated in CLUS_1915.
+- **Sex ratio data not available at supertype level.** Female-biased sex dimorphism — a defining feature of AVPV Kiss1 neurons [1], [3] — cannot be assessed from supertype-level metadata.
 - **PeN Kiss1 neurons are unresolved.** It is unknown whether Periventricular hypothalamic nucleus, posterior part [MBA:341] Kiss1 neurons co-map to SUPT_0486 or a distinct supertype.
 - **Annotation transfer NOT_ASSESSED.**
 
-### What would upgrade confidence
+---
 
-- The child-cluster inspection (proposed in this edge) has already been carried out and is captured in the CLUS_1915 edge above.
-- Annotation transfer (MapMyCells) of published AVPV Kiss1-Cre or Kiss1-Cre/Rosa-tdTom scRNA-seq data to WMBv1; F1 ≥ 0.50 at SUPT_0486 would upgrade this edge; F1 ≥ 0.80 at CLUS_1915 level would support HIGH confidence. Expected output: `AnnotationTransferEvidence`.
-- A targeted literature search for studies reporting scRNA-seq of AVPV neurons from both sexes would address the sex-ratio open question at atlas resolution.
+### Methods
+
+<details>
+<summary>Data sources, analyses, and reproducibility receipts</summary>
+
+**Classical type definition.** avpv_kiss1_neuron is defined on a CLASSICAL_NEUROCHEMICAL basis: defining markers Kiss1 [1], [2], [3], Th (protein, co-expressed) [3], [4], and Esr1 [1], [2], [5]; soma location in AVPV [MBA:272] and PeN [MBA:341]; FEMALE_BIASED sex dimorphism [1], [3]; and obligate functional involvement in estrogen positive feedback control of the GnRH/LH surge [2]. Multi-modal evidentiary base: ISH for Kiss1 mRNA, IHC for TH and ERα protein, c-Fos activation studies, and KO/transgenic perturbation.
+
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the WMBv1 taxonomy (CCN20230722) at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match, NT type, defining markers, sex bias). Full scoring rules: `workflows/map-cell-type.md`.
+
+**Property alignment.** Each defining property was compared to the corresponding atlas-side value via the `property_comparisons` schema; alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml) and from MERFISH spatial registration for soma location.
+
+**Bulk transcriptomic correlation.**
+
+| Field | Value |
+|---|---|
+| Source publication | Stephens et al. 2024 [7] |
+| GEO accession | — (Sanger repository: ca9ff6c0-7f38-4d06-bf89-dfd432b6a335) |
+| Technique | bulk_RNAseq_FACS_sorted |
+| n pools | 2 (RP3V Kiss1+, ARC Kiss1+) |
+| Atlas | CCN20230722 (SHA-256: `b21ca985`) |
+| Statistic | spearman_rho |
+| Parameters | pseudobulk_transform=log1p(sum/n_cells); gene_intersection=bulk∩atlas |
+| Script | [`correlate.py`](https://github.com/Cellular-Semantics/evidencell/blob/d7c4445/kb/correlation_runs/20260428_stephens_kiss1_wmbv1/correlate.py) |
+| Code version | d7c4445 |
+| Caveats | Bulk pools of 10–15 cells; absolute ρ in 0.3–0.5 even for true matches. Differential δ is the discriminative statistic. |
+
+**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects unresolvable identifiers or unattributed blockquotes.
+
+*Generated by evidencell `0c97cfa` from [`kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml`](../../kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml).*
+
+<details>
+<summary>Evidence base table</summary>
+
+| Edge ID | Evidence types | Supports | Source |
+|---|---|---|---|
+| edge_avpv_kiss1_neuron_to_cs20230722_supt_0486 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_avpv_kiss1_neuron_to_cs20230722_clus_1915 | ATLAS_METADATA; BULK_CORRELATION | SUPPORT; SUPPORT | atlas-internal, [7] |
+
+</details>
+
+</details>
 
 ---
 
-## 6. Proposed experiments
+## Discussion
 
-### 1. MapMyCells annotation transfer of an external AVPV Kiss1 scRNA-seq dataset against WMBv1
+**Primary mapping:** AVPV/PeN kisspeptin neuron → 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] at MODERATE confidence. Key support: ATLAS_METADATA (Kiss1=2.51, Th=6.6, Esr1=9.55, MFR=0.02, nt_type=Dopa) and BULK_CORRELATION (Stephens 2024 [7], rank 1/5322 by δ_RP3V − δ_ARC). Key caveats: `LOW_CELL_COUNT` (CLUS_1915 has n=3–5 MERFISH cells) and `TAXONOMY_LEVEL_MISMATCH` (avpv_kiss1_neuron and avpv_th_neuron both map to CLUS_1915).
 
-**What:** Retrieve a published scRNA-seq dataset enriched for AVPV/preoptic kisspeptin neurons (e.g., Kiss1-Cre or Kiss1-Cre/Rosa-tdTom sorted preparations, or sex-stratified hypothalamic atlases). Run MapMyCells against WMBv1 at cluster resolution.
+The Cell Ontology term **hypothalamus kisspeptin neuron [[CL:4023123](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:4023123)]** is a BROAD parent: CL:4023123 covers all hypothalamic kisspeptin neurons. The AVPV/PeN (RP3V) population is Kiss1-only (not obligately KNDy), so the more specific CL:4023128 (RP3V KNDy neuron) is inappropriate. A dedicated CL term for the AVPV/RP3V Kiss1 non-KNDy subpopulation does not yet exist — potential CL contribution.
 
-**Target:** F1 ≥ 0.50 at SUPT_0486 level; F1 ≥ 0.80 at CLUS_1915 level for Kiss1+ cells.
+### Proposed experiments and follow-ups
 
-**Expected output:** `AnnotationTransferEvidence` entries on both edges (edge_avpv_kiss1_neuron_to_cs20230722_supt_0486 and edge_avpv_kiss1_neuron_to_cs20230722_clus_1915). Atlas: WMBv1. Tool: MapMyCells. Output format: F1 matrix per cluster, fed back as `AnnotationTransferEvidence` YAML.
+1. **MapMyCells annotation transfer of an external AVPV Kiss1 scRNA-seq dataset against WMBv1.** Retrieve a published dataset enriched for AVPV/preoptic kisspeptin neurons (e.g. Kiss1-Cre or Kiss1-Cre/Rosa-tdTom sorted preparations, or sex-stratified hypothalamic atlases). Target: F1 ≥ 0.50 at SUPT_0486 level; F1 ≥ 0.80 at CLUS_1915 level for Kiss1+ cells. Expected output: `AnnotationTransferEvidence` on both edges. Resolves Open questions 1 and 3.
+2. **Sub-clustering / marker-stratified separation of CLUS_1915.** Within-cluster re-clustering of CLUS_1915 cells, stratified by Kiss1+/Th+ vs Kiss1−/Th+ profiles; or AT of a Kiss1-Cre-only dataset and a TH-Cre-only dataset against the same target. Expected output: additional `AnnotationTransferEvidence` and/or `MarkerAnalysisEvidence`. Resolves Open question 3.
+3. **Independent bulk-correlation replication of Stephens 2024.** Repeat the δ = ρ_RP3V − ρ_ARC computation against WMBv1 using a second FACS-sorted Kiss1+ pool. Target: CLUS_1915 retains rank 1 (or top-3) of 5,322 clusters by δ. Expected output: an additional `BulkCorrelationEvidence` entry on the CLUS_1915 edge.
 
-**Resolves:** Open questions 1 and 3. Confirms or refutes CLUS_1915 as the correct cluster assignment. Addresses the `annotation_transfer_f1` NOT_ASSESSED gap on both edges.
-
-### 2. Sub-clustering / marker-stratified separation of CLUS_1915
-
-**What:** Within-cluster re-clustering of CLUS_1915 cells, stratified by Kiss1+/Th+ vs Kiss1−/Th+ profiles; or AT of a Kiss1-Cre-only dataset and a TH-Cre-only dataset against the same target.
-
-**Target:** Detection of two separable sub-populations within CLUS_1915, or formal demonstration that they are co-extensive at this resolution.
-
-**Expected output:** Additional `AnnotationTransferEvidence` and/or `MarkerAnalysisEvidence` records.
-
-**Resolves:** Open question 3.
-
-### 3. Independent bulk-correlation replication of Stephens 2024
-
-**What:** Repeat the δ = ρ_RP3V − ρ_ARC computation against WMBv1 using a second FACS-sorted Kiss1+ pool (e.g. an independent Kiss1-tdTom dataset).
-
-**Target:** CLUS_1915 retains rank 1 (or top-3) of 5,322 clusters by δ.
-
-**Expected output:** An additional `BulkCorrelationEvidence` entry on the CLUS_1915 edge.
-
-**Resolves:** Robustness check on the primary external evidence [7].
-
----
-
-## 7. Open questions
+### Open questions
 
 1. Which cluster(s) within SUPT_0486 [CS20230722_SUPT_0486] carry peak Kiss1+Th+Esr1 co-expression consistent with AVPV Kiss1/TH identity? *(Partially addressed by CLUS_1915 ATLAS_METADATA evidence and by the Stephens 2024 bulk-correlation rank-1 placement [7]; full confirmation requires annotation transfer.)*
 2. Do Periventricular hypothalamic nucleus, posterior part [MBA:341] Kiss1 neurons map to SUPT_0486 or to a different supertype? *(Appears on the supertype edge.)*
@@ -225,17 +206,7 @@ co-expression profile and the most extreme female bias (male_female_ratio = 0.02
 
 ---
 
-## 8. Evidence base
-
-| Edge ID | Evidence type | Supports |
-|---|---|---|
-| edge_avpv_kiss1_neuron_to_cs20230722_supt_0486 | ATLAS_METADATA | PARTIAL — Esr1=7.72 (DEFINING), Th=2.72, Kiss1=0.62 at supertype; n=16 AVPV cells; CLUS_1915 sex ratio (MFR=0.02) noted as child-cluster support |
-| edge_avpv_kiss1_neuron_to_cs20230722_clus_1915 | ATLAS_METADATA | SUPPORT — Kiss1=2.51 (DEFINING marker), Th=6.6 (highest in supertype), Esr1=9.55 (highest in supertype), MFR=0.02 (extreme female bias), nt_type=Dopa confirmed |
-| edge_avpv_kiss1_neuron_to_cs20230722_clus_1915 | BULK_CORRELATION ([7] Stephens 2024) | SUPPORT — δ=0.090 (RP3V vs ARC); rank 1/5322 atlas clusters |
-
----
-
-## 9. References
+## References
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
