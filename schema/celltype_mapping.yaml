@@ -1513,6 +1513,15 @@ classes:
         (b) Allen taxonomy → Allen taxonomy: e.g. HMBA BG → WMBv1, or one atlas version
             to another. Source cluster identified by CCN cell_set_accession on both sides.
             Populate source_cell_set_accession when the source node has a CCN accession.
+
+      For evidence items derived from a stored AnnotationTransferRun (parallels
+      the BulkCorrelationEvidence/CorrelationRun pattern), populate `run_ref`
+      with the run id; the renderer follows it to the run manifest at
+      kb/annotation_transfer_runs/{run_id}/manifest.yaml for full provenance,
+      F1 matrix, and figures. The per-evidence `method`, `tool_version`,
+      `code_reference`, `bootstrap_threshold` etc. become redundant in that
+      case and may be omitted on new evidence items (kept for back-compat
+      with existing evidence ingested before the run schema landed).
     attributes:
       # ── Required ──────────────────────────────────────────────────
       target_atlas:
@@ -1521,6 +1530,16 @@ classes:
       method:
         required: true
         description: Transfer method, e.g. "MapMyCells (default parameters)", "Seurat v4 label transfer"
+      # ── Optional pointer to an AnnotationTransferRun ──────────────
+      run_ref:
+        description: >
+          AnnotationTransferRun.id (pointing at
+          kb/annotation_transfer_runs/{run_id}/manifest.yaml). Optional —
+          when populated, the run carries the full F1 matrix, script
+          provenance, and figures; this evidence item is a thin pointer at
+          the relevant target_accession's row in that matrix. New evidence
+          items should populate run_ref; existing evidence remains valid
+          via its inline method/tool_version fields.
       source_species:
         range: OntologyTerm
         description: >
@@ -2223,3 +2242,81 @@ classes:
         required: true
       format:
         description: "tsv, csv, parquet, ..."
+
+  AnnotationTransferRun:
+    tree_root: true
+    description: >
+      A specific annotation-transfer analysis (typically MapMyCells against an
+      atlas pseudobulk). Lives at kb/annotation_transfer_runs/{run_id}/manifest.yaml
+      alongside the F1 matrix, the input h5ad, the script, and any figures.
+
+      Mirrors CorrelationRun in structure: each AnnotationTransferEvidence
+      item on a MappingEdge is a thin pointer at one row of this run's F1
+      matrix (target_accession × source_label), with the run carrying the
+      full provenance (input data SHA, atlas SHA, method version, code
+      version, figures). Promotes per-evidence inline metadata
+      (method, tool_version, code_reference, bootstrap_threshold...) to a
+      single shared record.
+    attributes:
+      id:
+        identifier: true
+        required: true
+        description: Stable run identifier, e.g. at_run_20260408_winterer_olm_mmc_wmbv1
+      record_type:
+        required: true
+        equals_string: AnnotationTransferRun
+      source_dataset_accession:
+        description: Accession of the source dataset, e.g. GEO:GSE124847
+      source_cluster_label:
+        description: >
+          Source cluster label or grouping convention used in the run
+          (free string; may differ across runs of the same source dataset).
+      source_species:
+        description: NCBITaxon CURIE of the source dataset species
+      target_atlas:
+        required: true
+        description: Atlas the cells were mapped to, e.g. "WMBv1"
+      target_taxonomy_id:
+        description: e.g. CCN20230722 (when target_atlas has a versioned taxonomy id)
+      target_species:
+        description: NCBITaxon CURIE of the target atlas species
+      method:
+        required: true
+        description: e.g. "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
+      tool_version:
+        description: Specific tool version, e.g. "cell_type_mapper v1.7.1"
+      code_reference:
+        description: URL of the run's notebook or script (canonical link)
+      bootstrap_threshold:
+        range: float
+        description: Bootstrap score cutoff applied (0–1)
+      n_cells_total:
+        range: integer
+      n_cells_after_filter:
+        range: integer
+      atlas:
+        range: AtlasReference
+        inlined: true
+        description: Atlas pseudobulk + SHA (mirrors CorrelationRun.atlas)
+      script:
+        range: ScriptReference
+        inlined: true
+        description: >
+          Script that produced the F1 matrix. Carries git_repo_url +
+          git_commit + relpath for stable permalinks.
+      output:
+        range: OutputReference
+        inlined: true
+        description: Primary ranked output (typically f1_matrix.tsv)
+      figure:
+        range: OutputReference
+        inlined: true
+        description: >
+          Optional pre-rendered figure (e.g. faceted F1 heatmap).
+          relpath is relative to the run directory.
+      code_version:
+        description: Codebase commit/tag for the run
+      caveats:
+        description: Free-text caveats about run-specific findings
+      metadata:
+        description: Free-form name:value map for ancillary run-level notes

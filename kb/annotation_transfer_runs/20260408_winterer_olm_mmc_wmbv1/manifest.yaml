@@ -1,0 +1,61 @@
+id: at_run_20260408_winterer_olm_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE124847"
+source_cluster_label: "Sst-OLM, Htr3a-OLM (per-cell labels in source_cell_labels.json)"
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization).
+  Bootstrap-iteration assignment with default thresholds; per-cell labels
+  aggregated by source_cluster_label and target taxonomy level for F1 scoring.
+tool_version: "cell_type_mapper v1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.0
+n_cells_total: 46
+n_cells_after_filter: 45
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.11"
+  packages: [cell_type_mapper, pandas, numpy, anndata]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "(rendered externally — see README for reproduction)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv
+
+figure:
+  relpath: figures/f1_heatmap.png
+  format: png
+
+code_version: "(external; precomputed)"
+
+caveats: >
+  Source dataset has only 46 OLM cells (Winterer 2019); 45 retained after
+  bootstrap filtering. The "Sst-OLM" and "Htr3a-OLM" source labels reflect
+  Cre-driver subgroups in the Winterer dataset and are scored separately.
+  At cluster (rank 0) resolution F1 is low across all candidates (max 0.26
+  for Sst-OLM → CLUS_0768 within Sst Gaba_3 supertype) — the OLM cell type
+  is captured at supertype/subclass level (Sst Gaba_3 / Sst Gaba; F1 ≈ 0.65)
+  but scatters across sibling clusters. This is a real biological signal,
+  not a methodological failure: OLM is a transcriptomic subtype not yet
+  resolved at WMBv1 cluster rank.
+
+metadata: >
+  source_dataset=Winterer 2019 (GSE124847); source_format=h5ad; source_file=GSE124847_OLM_mmc.h5ad;
+  source_file_sha256=a43aa932dedd6e7f8fa952f8fd856a8471974fec004f829b83829b9e722e0dd8;
+  f1_matrix_sha256=e048d1a75d4666ac9316e330f97422a0310f55825a5413fc92a684229921c831;
+  heatmap_sha256=ab68d21956a222f950a2018631d6ccb30f2b60df584e5710f9b13e8ce2263a6b;
+  taxonomy_levels_scored=[class, subclass, supertype, cluster];
+  source_groups=[Sst-OLM (n=22), Htr3a-OLM (n=23)].

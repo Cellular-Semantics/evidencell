@@ -276,6 +276,10 @@ def _target_class_for_kb_path(file_path: Path) -> str | None:
         if name == "manifest.yaml":
             return "CorrelationRun"
         return None
+    if sub == "annotation_transfer_runs":
+        if name == "manifest.yaml":
+            return "AnnotationTransferRun"
+        return None
     if sub == "taxonomy":
         if name in {"cluster.yaml", "supertype.yaml", "subclass.yaml",
                     "class.yaml", "neurotransmitter.yaml"}:

@@ -323,6 +323,77 @@ def _dataset_for_run_ref(run_ref: str) -> dict | None:
     return _RUN_REF_DATASET_CACHE.get(run_ref)
 
 
+# ── AT run resolver (parallels _resolve_run_ref_to_pmid for CorrelationRun) ───
+
+_AT_RUN_MANIFEST_CACHE: dict[str, dict] = {}
+_AT_RUN_DIR_CACHE: dict[str, Path | None] = {}
+
+
+def _resolve_at_run_ref(run_ref: str) -> tuple[dict | None, Path | None]:
+    """Find an AnnotationTransferRun manifest by id under kb/annotation_transfer_runs/.
+
+    Returns (manifest_dict, run_dir). Either may be None if not found.
+    Caches the lookup for the lifetime of the module.
+
+    Run directories are typically named with a date prefix (e.g.
+    20260408_winterer_olm_mmc_wmbv1) while the manifest's `id` field carries
+    the full identifier. Try the direct path first, then scan + match by `id`.
+    """
+    if run_ref in _AT_RUN_MANIFEST_CACHE or run_ref in _AT_RUN_DIR_CACHE:
+        return _AT_RUN_MANIFEST_CACHE.get(run_ref), _AT_RUN_DIR_CACHE.get(run_ref)
+
+    from evidencell.paths import repo_root
+    try:
+        root = repo_root()
+    except RuntimeError:
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    runs_dir = root / "kb" / "annotation_transfer_runs"
+    if not runs_dir.is_dir():
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    manifest = None
+    run_dir = None
+    direct = runs_dir / run_ref / "manifest.yaml"
+    if direct.exists():
+        try:
+            manifest = yaml.safe_load(direct.read_text(encoding="utf-8")) or {}
+            run_dir = direct.parent
+        except yaml.YAMLError:
+            manifest = None
+            run_dir = None
+    if not manifest or manifest.get("id") != run_ref:
+        manifest = None
+        run_dir = None
+        for run_subdir in runs_dir.iterdir():
+            if not run_subdir.is_dir():
+                continue
+            mp = run_subdir / "manifest.yaml"
+            if not mp.exists():
+                continue
+            try:
+                m = yaml.safe_load(mp.read_text(encoding="utf-8")) or {}
+            except yaml.YAMLError:
+                continue
+            if m.get("id") == run_ref:
+                manifest = m
+                run_dir = run_subdir
+                break
+
+    if not manifest:
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    _AT_RUN_MANIFEST_CACHE[run_ref] = manifest
+    _AT_RUN_DIR_CACHE[run_ref] = run_dir
+    return manifest, run_dir
+
+
 def _manifest_for_run_ref(run_ref: str) -> dict | None:
     """Return the CorrelationRun manifest for a given run_ref, or None.
 
@@ -611,27 +682,67 @@ def extract_methods_summary(
                     }
 
             if et == "ANNOTATION_TRANSFER":
-                key = (
-                    ev.get("source_dataset_accession", ""),
-                    ev.get("method", ""),
-                    ev.get("target_atlas", ""),
-                )
-                if key not in seen_at_keys:
-                    seen_at_keys.add(key)
-                    at_runs.append({
-                        "method": ev.get("method", ""),
-                        "tool_version": ev.get("tool_version", ""),
-                        "code_reference": ev.get("code_reference", ""),
-                        "source_dataset_accession": ev.get("source_dataset_accession", ""),
-                        "source_species": ev.get("source_species", ""),
-                        "target_atlas": ev.get("target_atlas", ""),
-                        "target_species": ev.get("target_species", ""),
-                        "best_f1_score": ev.get("best_f1_score"),
-                        "best_mapping_level": ev.get("best_mapping_level", ""),
-                        "bootstrap_threshold": ev.get("bootstrap_threshold"),
-                        "n_cells_total": ev.get("n_cells_total"),
-                        "n_cells_after_filter": ev.get("n_cells_after_filter"),
-                    })
+                # If the evidence carries run_ref, the AnnotationTransferRun
+                # manifest is the canonical provenance source. Otherwise fall
+                # back to the inline fields (back-compat with evidence
+                # ingested before the run schema landed).
+                run_ref_at = ev.get("run_ref", "")
+                if run_ref_at:
+                    if run_ref_at not in seen_at_keys:
+                        seen_at_keys.add(run_ref_at)
+                        m, run_dir = _resolve_at_run_ref(run_ref_at)
+                        if m:
+                            atlas_at = m.get("atlas") or {}
+                            script_at = m.get("script") or {}
+                            output_at = m.get("output") or {}
+                            figure_at = m.get("figure") or {}
+                            at_runs.append({
+                                "run_ref": run_ref_at,
+                                "method": m.get("method", ""),
+                                "tool_version": m.get("tool_version", ""),
+                                "code_reference": m.get("code_reference", ""),
+                                "source_dataset_accession": m.get("source_dataset_accession", ""),
+                                "source_cluster_label": m.get("source_cluster_label", ""),
+                                "source_species": m.get("source_species", ""),
+                                "target_atlas": m.get("target_atlas", ""),
+                                "target_taxonomy_id": m.get("target_taxonomy_id", ""),
+                                "target_species": m.get("target_species", ""),
+                                "bootstrap_threshold": m.get("bootstrap_threshold"),
+                                "n_cells_total": m.get("n_cells_total"),
+                                "n_cells_after_filter": m.get("n_cells_after_filter"),
+                                "atlas_pseudobulk_sha": atlas_at.get("sha256", ""),
+                                "script_relpath": script_at.get("relpath", ""),
+                                "script_git_repo_url": script_at.get("git_repo_url", ""),
+                                "script_git_commit": script_at.get("git_commit", ""),
+                                "code_version": m.get("code_version", ""),
+                                "output_relpath": output_at.get("relpath", ""),
+                                "figure_relpath": figure_at.get("relpath", ""),
+                                "run_dir_name": run_dir.name if run_dir else "",
+                                "caveats": m.get("caveats", ""),
+                            })
+                else:
+                    # Back-compat path: evidence has inline fields, no run_ref.
+                    key = (
+                        ev.get("source_dataset_accession", ""),
+                        ev.get("method", ""),
+                        ev.get("target_atlas", ""),
+                    )
+                    if key not in seen_at_keys:
+                        seen_at_keys.add(key)
+                        at_runs.append({
+                            "method": ev.get("method", ""),
+                            "tool_version": ev.get("tool_version", ""),
+                            "code_reference": ev.get("code_reference", ""),
+                            "source_dataset_accession": ev.get("source_dataset_accession", ""),
+                            "source_species": ev.get("source_species", ""),
+                            "target_atlas": ev.get("target_atlas", ""),
+                            "target_species": ev.get("target_species", ""),
+                            "best_f1_score": ev.get("best_f1_score"),
+                            "best_mapping_level": ev.get("best_mapping_level", ""),
+                            "bootstrap_threshold": ev.get("bootstrap_threshold"),
+                            "n_cells_total": ev.get("n_cells_total"),
+                            "n_cells_after_filter": ev.get("n_cells_after_filter"),
+                        })
 
     # Surface CL mapping at top of methods summary so the synthesis subagent
     # can reuse it in the Discussion best-candidate block.
@@ -1075,6 +1186,32 @@ def extract_node_facts(
             # subagent emit a "show your work" table alongside the
             # attributed-blockquote evidence narrative — addresses the
             # 2026-04-29_bulk-correlation-show-top-hits.md feedback.
+            # AnnotationTransferEvidence with run_ref: pull the run-level
+            # figure (e.g. F1 heatmap) from the manifest. The figure is
+            # run-level (one PNG per AT run, covering all candidates) so
+            # it embeds once in the report — the synthesis subagent decides
+            # where (typically Results overview).
+            if et == "ANNOTATION_TRANSFER" and ev.get("run_ref"):
+                at_manifest, at_dir = _resolve_at_run_ref(ev["run_ref"])
+                if at_manifest and at_dir:
+                    fig = at_manifest.get("figure") or {}
+                    fig_relpath = fig.get("relpath", "")
+                    if fig_relpath:
+                        # Path the report references — relative to the report
+                        # dir (reports/{region}/), pointing into the run dir.
+                        # We use a path of the form:
+                        #   ../../kb/annotation_transfer_runs/{run_dir.name}/{fig_relpath}
+                        # Two ".." steps because reports/{region}/file.md sits two
+                        # levels below the repo root.
+                        extras["figure_relpath"] = (
+                            f"../../kb/annotation_transfer_runs/{at_dir.name}/{fig_relpath}"
+                        )
+                        extras["figure_caption"] = (
+                            f"Annotation transfer F1 heatmap "
+                            f"({at_manifest.get('source_dataset_accession', 'source')} "
+                            f"→ {at_manifest.get('target_atlas', 'target')})"
+                        )
+
             run_ref = ev.get("run_ref")
             contrast_ref = ev.get("contrast_ref")
             if run_ref and contrast_ref:

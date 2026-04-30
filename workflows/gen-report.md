@@ -181,6 +181,30 @@ Open with one summary sentence: how many candidates were assessed and what the
 primary verdict is (e.g. "Three candidate atlas clusters were assessed; CLUS_1915
 in SUPT_0486 is the primary mapping at MODERATE confidence").
 
+**Annotation-transfer overview figure (run-level)**
+
+If `methods_summary.annotation_transfer_runs[*].figure_relpath` is non-empty
+for any run, embed each run's figure once near the top of Results (after the
+opening summary sentence, before the candidates table). The figure is
+run-level — it covers all candidates at all taxonomy levels — so it does NOT
+go in any specific candidate paragraph.
+
+The renderer also attaches `fields.figure_relpath` and `fields.figure_caption`
+to each AT evidence item; pick any one of those (they all point at the same
+run figure) to compose the embed:
+
+```markdown
+![{fields.figure_caption}]({fields.figure_relpath})
+
+*F1 across taxonomy levels. Each row is a source-cell group; columns are top
+target classes/subclasses/supertypes/clusters. F1 ≥ 0.5 indicates a clean
+mapping at that level; the spread across columns reveals where the source
+cells split among atlas siblings.*
+```
+
+Use a short interpretive line below the figure (≤2 sentences) drawing on
+`methods_summary.annotation_transfer_runs[*].caveats` if relevant.
+
 ### 4. Mapping candidates table + property alignment table
 
 **4a. Candidate overview table (one row per edge)**
@@ -456,8 +480,35 @@ etc.) so the reader knows what evidentiary base the classical node sits on.
 > location.
 
 **Annotation transfer** *(only if `methods_summary.annotation_transfer_runs` is non-empty)*:
-For each AT run summary, render one paragraph or compact table row with:
-- Method + tool_version (e.g. "MapMyCells v1.7.1, default parameters, raw normalisation")
+For each AT run summary, render a compact table. AT run records may come
+from one of two sources:
+- New shape (preferred): the evidence carries `run_ref` and the renderer
+  populated the run summary from a `kb/annotation_transfer_runs/{run_id}/manifest.yaml`
+  record. Run summary has rich provenance (atlas SHA, script Git refs).
+- Old shape (back-compat): the evidence has inline `method` / `tool_version`
+  fields and no run_ref. Run summary has the inline fields only.
+
+For new-shape runs, render this table (omit any row with empty value):
+
+```
+| Field | Value |
+|---|---|
+| Source dataset | {source_dataset_accession} ({source_cluster_label}) |
+| Source species | {source_species} |
+| Target atlas | {target_atlas} ({target_taxonomy_id}; SHA-256: {atlas_pseudobulk_sha[:8]}) |
+| Method | {method} |
+| Tool version | {tool_version} |
+| Bootstrap threshold | {bootstrap_threshold} |
+| n cells | {n_cells_total} (filtered to {n_cells_after_filter}) |
+| Run record | [`kb/annotation_transfer_runs/{run_dir_name}/manifest.yaml`](../../kb/annotation_transfer_runs/{run_dir_name}/manifest.yaml) |
+| Script (external) | {script_relpath} ({code_version}) |
+| Code reference | [{code_reference}]({code_reference}) |
+| F1 matrix | [`{output_relpath}`](../../kb/annotation_transfer_runs/{run_dir_name}/{output_relpath}) |
+| Caveats | {caveats} |
+```
+
+For old-shape runs, use the simpler bullets:
+- Method + tool_version
 - Source dataset accession + species
 - Target atlas + species (only if cross-species; omit for same-species)
 - Best F1 score + level
