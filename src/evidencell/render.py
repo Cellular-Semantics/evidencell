@@ -210,6 +210,13 @@ _RUN_REF_PMID_CACHE: dict[str, str | None] = {}
 # Cache (run_ref → dataset descriptor dict) so build_reference_index can pull
 # authors/year/title for citation-line formatting without re-reading dataset YAMLs.
 _RUN_REF_DATASET_CACHE: dict[str, dict] = {}
+# Cache (run_ref → full manifest dict) so methods extraction and figure
+# generation can read run-level details (script, atlas SHA, contrasts,
+# code_version) without re-reading manifests.
+_RUN_REF_MANIFEST_CACHE: dict[str, dict] = {}
+# Cache (run_ref → run directory Path) for locating ranked output TSVs and
+# scripts during figure generation.
+_RUN_REF_DIR_CACHE: dict[str, Path | None] = {}
 
 
 def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
@@ -247,14 +254,18 @@ def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
     # the full identifier (corr_run_20260428_stephens_kiss1_wmbv1). Try the
     # direct path first for cheapness, then scan + match by `id` if missing.
     manifest = None
+    run_dir = None
     direct = runs_dir / run_ref / "manifest.yaml"
     if direct.exists():
         try:
             manifest = yaml.safe_load(direct.read_text(encoding="utf-8")) or {}
+            run_dir = direct.parent
         except yaml.YAMLError:
             manifest = None
+            run_dir = None
     if not manifest or manifest.get("id") != run_ref:
         manifest = None
+        run_dir = None
         for run_subdir in runs_dir.iterdir():
             if not run_subdir.is_dir():
                 continue
@@ -267,10 +278,13 @@ def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
                 continue
             if m.get("id") == run_ref:
                 manifest = m
+                run_dir = run_subdir
                 break
     if not manifest:
         _RUN_REF_PMID_CACHE[run_ref] = None
         return None
+    _RUN_REF_MANIFEST_CACHE[run_ref] = manifest
+    _RUN_REF_DIR_CACHE[run_ref] = run_dir
 
     dataset_ref = manifest.get("dataset_ref")
     if not dataset_ref:
@@ -307,6 +321,467 @@ def _dataset_for_run_ref(run_ref: str) -> dict | None:
     if run_ref not in _RUN_REF_DATASET_CACHE:
         _resolve_run_ref_to_pmid(run_ref)
     return _RUN_REF_DATASET_CACHE.get(run_ref)
+
+
+# ── AT run resolver (parallels _resolve_run_ref_to_pmid for CorrelationRun) ───
+
+_AT_RUN_MANIFEST_CACHE: dict[str, dict] = {}
+_AT_RUN_DIR_CACHE: dict[str, Path | None] = {}
+
+
+def _resolve_at_run_ref(run_ref: str) -> tuple[dict | None, Path | None]:
+    """Find an AnnotationTransferRun manifest by id under kb/annotation_transfer_runs/.
+
+    Returns (manifest_dict, run_dir). Either may be None if not found.
+    Caches the lookup for the lifetime of the module.
+
+    Run directories are typically named with a date prefix (e.g.
+    20260408_winterer_olm_mmc_wmbv1) while the manifest's `id` field carries
+    the full identifier. Try the direct path first, then scan + match by `id`.
+    """
+    if run_ref in _AT_RUN_MANIFEST_CACHE or run_ref in _AT_RUN_DIR_CACHE:
+        return _AT_RUN_MANIFEST_CACHE.get(run_ref), _AT_RUN_DIR_CACHE.get(run_ref)
+
+    from evidencell.paths import repo_root
+    try:
+        root = repo_root()
+    except RuntimeError:
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    runs_dir = root / "kb" / "annotation_transfer_runs"
+    if not runs_dir.is_dir():
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    manifest = None
+    run_dir = None
+    direct = runs_dir / run_ref / "manifest.yaml"
+    if direct.exists():
+        try:
+            manifest = yaml.safe_load(direct.read_text(encoding="utf-8")) or {}
+            run_dir = direct.parent
+        except yaml.YAMLError:
+            manifest = None
+            run_dir = None
+    if not manifest or manifest.get("id") != run_ref:
+        manifest = None
+        run_dir = None
+        for run_subdir in runs_dir.iterdir():
+            if not run_subdir.is_dir():
+                continue
+            mp = run_subdir / "manifest.yaml"
+            if not mp.exists():
+                continue
+            try:
+                m = yaml.safe_load(mp.read_text(encoding="utf-8")) or {}
+            except yaml.YAMLError:
+                continue
+            if m.get("id") == run_ref:
+                manifest = m
+                run_dir = run_subdir
+                break
+
+    if not manifest:
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    _AT_RUN_MANIFEST_CACHE[run_ref] = manifest
+    _AT_RUN_DIR_CACHE[run_ref] = run_dir
+    return manifest, run_dir
+
+
+def _manifest_for_run_ref(run_ref: str) -> dict | None:
+    """Return the CorrelationRun manifest for a given run_ref, or None.
+
+    Triggers `_resolve_run_ref_to_pmid` to populate the cache lazily.
+    """
+    if run_ref not in _RUN_REF_MANIFEST_CACHE:
+        _resolve_run_ref_to_pmid(run_ref)
+    return _RUN_REF_MANIFEST_CACHE.get(run_ref)
+
+
+def _run_dir_for_run_ref(run_ref: str) -> Path | None:
+    """Return the on-disk directory for a given run_ref, or None."""
+    if run_ref not in _RUN_REF_DIR_CACHE:
+        _resolve_run_ref_to_pmid(run_ref)
+    return _RUN_REF_DIR_CACHE.get(run_ref)
+
+
+def _top_n_hits_for_contrast(
+    run_ref: str,
+    contrast_id: str,
+    target_accession: str | None = None,
+    n: int = 10,
+) -> list[dict]:
+    """Read the top-N rows from a CorrelationRun's ranked TSV for a contrast.
+
+    Returns a list of dicts (one per cluster row) with keys:
+      rank, cluster_id, label, parent_supertype, mfr, top_anat,
+      top_anat_n, delta, is_target.
+
+    `is_target` is True when cluster_id == target_accession (used by the
+    renderer/synthesis prompt to highlight the row in the report).
+
+    Returns an empty list if the run dir, the ranked output, or the
+    contrast can't be located. The contrast's δ column is identified by
+    convention: a column matching `delta_{contrast_id_short}` or, failing
+    that, the contrast id substring.
+
+    For the existing two runs (Stephens, Knoedler), the per-contrast TSVs
+    live at:
+      stephens: {run_dir}/delta_rp3v_specific.tsv etc. (ranked by delta)
+      knoedler: {run_dir}/ranked_contrasts/{contrast_name}.tsv
+
+    The function tolerates both layouts.
+    """
+    run_dir = _run_dir_for_run_ref(run_ref)
+    if run_dir is None or not run_dir.is_dir():
+        return []
+
+    # Resolve contrast → (pool_a, pool_b) via the manifest. The contrast id
+    # alone isn't enough to match a TSV filename: contrast ids use `_vs_`
+    # while ranked TSVs use `_minus_` or `_specific`.
+    manifest = _manifest_for_run_ref(run_ref) or {}
+    pool_a = pool_b = ""
+    for c in manifest.get("contrasts") or []:
+        if c.get("id") == contrast_id:
+            pool_a = c.get("pool_a", "")
+            pool_b = c.get("pool_b", "")
+            break
+
+    def _short(pool_id: str) -> str:
+        # pool ids are `{dataset}_{label}` (e.g. stephens_RP3V, knoedler_POA_FR);
+        # the filename uses just the label.
+        return pool_id.split("_", 1)[1] if "_" in pool_id else pool_id
+
+    a_short = _short(pool_a)
+    b_short = _short(pool_b)
+
+    # Generate candidate filename stems in priority order.
+    stems: list[str] = []
+    if a_short and b_short:
+        stems.extend([
+            f"delta_{a_short}_minus_{b_short}",
+            f"{a_short}_minus_{b_short}",
+        ])
+    if a_short:
+        stems.extend([
+            f"delta_{a_short}_specific",
+            f"{a_short}_specific",
+        ])
+    # Last-resort: substring of the raw contrast id.
+    short = contrast_id.removeprefix("corr_")
+    stems.append(short)
+
+    # Search both run_dir/ and run_dir/ranked_contrasts/ in priority order.
+    search_dirs: list[Path] = [run_dir]
+    nested = run_dir / "ranked_contrasts"
+    if nested.is_dir():
+        search_dirs.append(nested)
+
+    tsv_path: Path | None = None
+    for stem in stems:
+        for d in search_dirs:
+            for ci in (False, True):
+                p = d / f"{stem}.tsv"
+                if not p.exists() and ci:
+                    # Case-insensitive fallback
+                    matches = [q for q in d.glob("*.tsv") if q.stem.lower() == stem.lower()]
+                    if matches:
+                        p = matches[0]
+                if p.exists():
+                    tsv_path = p
+                    break
+            if tsv_path:
+                break
+        if tsv_path:
+            break
+    if tsv_path is None:
+        return []
+
+    try:
+        rows = []
+        with tsv_path.open(encoding="utf-8") as fh:
+            header = fh.readline().rstrip("\n").split("\t")
+            for line in fh:
+                cells = line.rstrip("\n").split("\t")
+                if len(cells) != len(header):
+                    continue
+                rows.append(dict(zip(header, cells)))
+    except OSError:
+        return []
+
+    # Identify the δ column matching this contrast. The contrast id uses `_vs_`
+    # (e.g. corr_VMH_FR_vs_BNST_FR) while column names use `_minus_`
+    # (e.g. delta_VMH_FR_minus_BNST_FR). Translate before matching.
+    delta_col: str | None = None
+    contrast_name = contrast_id.removeprefix("corr_")
+    contrast_minus = contrast_name.replace("_vs_", "_minus_")
+    for col in header:
+        if col.startswith("delta_") and contrast_minus in col:
+            delta_col = col
+            break
+    if delta_col is None:
+        # Fallback: first delta_* column (e.g. for runs that stash a single
+        # contrast per file with a less canonical naming).
+        for col in header:
+            if col.startswith("delta_"):
+                delta_col = col
+                break
+    if delta_col is None:
+        return []
+
+    # Sort rows by the chosen δ column (descending), then take top N.
+    def _f(row: dict, col: str) -> float:
+        v = row.get(col, "")
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return float("-inf")
+
+    rows_sorted = sorted(rows, key=lambda r: _f(r, delta_col), reverse=True)
+    out: list[dict] = []
+    for rank, r in enumerate(rows_sorted[:n], start=1):
+        cid = r.get("cluster_id", "")
+        parent = r.get("parent_supertype", "")
+        # Target match: direct (cluster→cluster) or via parent (cluster→supertype).
+        is_target = bool(
+            target_accession is not None
+            and (cid == target_accession or parent == target_accession)
+        )
+        out.append({
+            "rank": rank,
+            "cluster_id": cid,
+            "label": r.get("label", ""),
+            "parent_supertype": parent,
+            "mfr": r.get("mfr", ""),
+            "top_anat": r.get("top_anat", ""),
+            "top_anat_n": r.get("top_anat_n", ""),
+            "delta": r.get(delta_col, ""),
+            "is_target": is_target,
+        })
+    return out
+
+
+# ── Methods summary (for paper-style Methods section) ─────────────────────────
+
+def _evidencell_commit() -> str:
+    """Return the current evidencell git short SHA (or empty string on failure).
+
+    Used by the renderer to stamp the report with the codebase version that
+    produced it — equivalent to a paper's "code availability" footer.
+    """
+    import subprocess
+    from evidencell.paths import repo_root
+    try:
+        root = repo_root()
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, cwd=str(root), timeout=5,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    except (RuntimeError, OSError, subprocess.TimeoutExpired):
+        pass
+    return ""
+
+
+def extract_methods_summary(
+    graph: dict,
+    node_id: str,
+    graph_file: Path,
+) -> dict:
+    """Aggregate methods/provenance data across all edges for a classical node.
+
+    Returns a structured dict the synthesis subagent uses to build the Methods
+    section narrative. Deterministic — no prose generation here.
+
+    Keys:
+      evidence_type_counts: {EVIDENCE_TYPE: count} across all edges
+      bulk_correlation_runs: list of run summaries (run_ref, dataset citation,
+        statistic, parameters, script provenance, contrasts cited)
+      annotation_transfer_runs: list of AT method summaries
+      atlas_data_sources: list of {atlas, taxonomy_id, pseudobulk_sha}
+      bulk_data_sources: list of {dataset_id, source_pmid, geo_accession,
+        technique, n_pools, citation}
+      framework_version: evidencell git commit at extract time
+      gen_timestamp: ISO 8601 of the extract call
+      kb_graph_file: relative path to the KB YAML
+    """
+    from datetime import datetime, timezone
+
+    edges = [e for e in graph.get("edges", []) if e.get("type_a") == node_id]
+
+    evidence_type_counts: dict[str, int] = {}
+    bulk_runs: list[dict] = []
+    at_runs: list[dict] = []
+    atlas_sources_seen: dict[str, dict] = {}
+    bulk_dataset_sources_seen: dict[str, dict] = {}
+    seen_run_refs: set[str] = set()
+    seen_at_keys: set[tuple] = set()
+
+    for edge in edges:
+        for ev in edge.get("evidence", []):
+            et = ev.get("evidence_type", "")
+            if et:
+                evidence_type_counts[et] = evidence_type_counts.get(et, 0) + 1
+
+            run_ref = ev.get("run_ref")
+            if run_ref and run_ref not in seen_run_refs:
+                seen_run_refs.add(run_ref)
+                manifest = _manifest_for_run_ref(run_ref) or {}
+                dataset = _dataset_for_run_ref(run_ref) or {}
+                method = manifest.get("method") or {}
+                script = manifest.get("script") or {}
+                atlas = manifest.get("atlas") or {}
+
+                bulk_runs.append({
+                    "run_ref": run_ref,
+                    "dataset_ref": manifest.get("dataset_ref", ""),
+                    "statistic_kind": method.get("statistic_kind", ""),
+                    "parameters": method.get("parameters", ""),
+                    "atlas_taxonomy_id": atlas.get("taxonomy_id", ""),
+                    "atlas_pseudobulk_sha": atlas.get("sha256", ""),
+                    "script_relpath": script.get("relpath", ""),
+                    "script_python_version": script.get("python_version", ""),
+                    "script_packages": script.get("packages", []),
+                    "script_git_repo_url": script.get("git_repo_url", ""),
+                    "script_git_commit": script.get("git_commit", ""),
+                    "code_version": manifest.get("code_version", ""),
+                    "n_contrasts": len(manifest.get("contrasts") or []),
+                    "caveats": manifest.get("caveats", ""),
+                })
+
+                # Bulk data source (one per dataset across runs)
+                ds_id = dataset.get("id", "")
+                if ds_id and ds_id not in bulk_dataset_sources_seen:
+                    bulk_dataset_sources_seen[ds_id] = {
+                        "dataset_id": ds_id,
+                        "source_pmid": dataset.get("source_pmid", ""),
+                        "geo_accession": dataset.get("geo_accession", ""),
+                        "technique": dataset.get("technique", ""),
+                        "n_pools": len(dataset.get("pools") or []),
+                        "n_data_files": len(dataset.get("data_files") or []),
+                        "authors": dataset.get("authors") or [],
+                        "year": dataset.get("year"),
+                        "title": dataset.get("title", ""),
+                    }
+
+                # Atlas data source (deduped by sha)
+                atlas_key = atlas.get("sha256") or atlas.get("taxonomy_id", "")
+                if atlas_key and atlas_key not in atlas_sources_seen:
+                    atlas_sources_seen[atlas_key] = {
+                        "atlas": "WMBv1",
+                        "taxonomy_id": atlas.get("taxonomy_id", ""),
+                        "pseudobulk_source": atlas.get("pseudobulk_source", ""),
+                        "pseudobulk_sha256": atlas.get("sha256", ""),
+                    }
+
+            if et == "ANNOTATION_TRANSFER":
+                # If the evidence carries run_ref, the AnnotationTransferRun
+                # manifest is the canonical provenance source. Otherwise fall
+                # back to the inline fields (back-compat with evidence
+                # ingested before the run schema landed).
+                run_ref_at = ev.get("run_ref", "")
+                if run_ref_at:
+                    if run_ref_at not in seen_at_keys:
+                        seen_at_keys.add(run_ref_at)
+                        m, run_dir = _resolve_at_run_ref(run_ref_at)
+                        if m:
+                            atlas_at = m.get("atlas") or {}
+                            script_at = m.get("script") or {}
+                            output_at = m.get("output") or {}
+                            figure_at = m.get("figure") or {}
+                            at_runs.append({
+                                "run_ref": run_ref_at,
+                                "method": m.get("method", ""),
+                                "tool_version": m.get("tool_version", ""),
+                                "code_reference": m.get("code_reference", ""),
+                                "source_dataset_accession": m.get("source_dataset_accession", ""),
+                                "source_cluster_label": m.get("source_cluster_label", ""),
+                                "source_species": m.get("source_species", ""),
+                                "target_atlas": m.get("target_atlas", ""),
+                                "target_taxonomy_id": m.get("target_taxonomy_id", ""),
+                                "target_species": m.get("target_species", ""),
+                                "bootstrap_threshold": m.get("bootstrap_threshold"),
+                                "n_cells_total": m.get("n_cells_total"),
+                                "n_cells_after_filter": m.get("n_cells_after_filter"),
+                                "atlas_pseudobulk_sha": atlas_at.get("sha256", ""),
+                                "script_relpath": script_at.get("relpath", ""),
+                                "script_git_repo_url": script_at.get("git_repo_url", ""),
+                                "script_git_commit": script_at.get("git_commit", ""),
+                                "code_version": m.get("code_version", ""),
+                                "output_relpath": output_at.get("relpath", ""),
+                                "figure_relpath": figure_at.get("relpath", ""),
+                                "run_dir_name": run_dir.name if run_dir else "",
+                                "caveats": m.get("caveats", ""),
+                            })
+                else:
+                    # Back-compat path: evidence has inline fields, no run_ref.
+                    key = (
+                        ev.get("source_dataset_accession", ""),
+                        ev.get("method", ""),
+                        ev.get("target_atlas", ""),
+                    )
+                    if key not in seen_at_keys:
+                        seen_at_keys.add(key)
+                        at_runs.append({
+                            "method": ev.get("method", ""),
+                            "tool_version": ev.get("tool_version", ""),
+                            "code_reference": ev.get("code_reference", ""),
+                            "source_dataset_accession": ev.get("source_dataset_accession", ""),
+                            "source_species": ev.get("source_species", ""),
+                            "target_atlas": ev.get("target_atlas", ""),
+                            "target_species": ev.get("target_species", ""),
+                            "best_f1_score": ev.get("best_f1_score"),
+                            "best_mapping_level": ev.get("best_mapping_level", ""),
+                            "bootstrap_threshold": ev.get("bootstrap_threshold"),
+                            "n_cells_total": ev.get("n_cells_total"),
+                            "n_cells_after_filter": ev.get("n_cells_after_filter"),
+                        })
+
+    # Surface CL mapping at top of methods summary so the synthesis subagent
+    # can reuse it in the Discussion best-candidate block.
+    nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
+    classical = nodes_by_id.get(node_id, {})
+    cl = classical.get("cl_mapping") or {}
+    cl_term = cl.get("cl_term") or {}
+    cl_id = cl_term.get("id", "") if isinstance(cl_term, dict) else ""
+    cl_mapping_summary = {
+        "cl_term_id": cl_id,
+        "cl_term_label": cl_term.get("label", "") if isinstance(cl_term, dict) else "",
+        "cl_term_name_in_source": cl_term.get("name_in_source", "") if isinstance(cl_term, dict) else "",
+        "mapping_type": cl.get("mapping_type", ""),
+        "mapping_notes": cl.get("mapping_notes", ""),
+        "ols_url": (
+            f"https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id={cl_id}"
+            if cl_id.startswith("CL:") else ""
+        ),
+    }
+
+    # Render kb_graph_file as repo-relative when possible, so the report's
+    # reproducibility footer carries a portable path (not someone's $HOME).
+    try:
+        from evidencell.paths import repo_root
+        rel_graph = str(Path(graph_file).resolve().relative_to(repo_root().resolve()))
+    except (ValueError, RuntimeError):
+        rel_graph = str(graph_file)
+
+    return {
+        "evidence_type_counts": evidence_type_counts,
+        "cl_mapping": cl_mapping_summary,
+        "bulk_correlation_runs": bulk_runs,
+        "annotation_transfer_runs": at_runs,
+        "atlas_data_sources": list(atlas_sources_seen.values()),
+        "bulk_data_sources": list(bulk_dataset_sources_seen.values()),
+        "framework_version": _evidencell_commit(),
+        "gen_timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "kb_graph_file": rel_graph,
+    }
 
 
 # ── Reference index builder ───────────────────────────────────────────────────
@@ -773,6 +1248,78 @@ def extract_node_facts(
                 k: v for k, v in ev.items()
                 if k not in _BASE_KEYS and v not in (None, "", [], {})
             }
+            # For evidence items pointing at a CorrelationRun, attach the top-N
+            # ranked hits for the named contrast. This lets the synthesis
+            # subagent emit a "show your work" table alongside the
+            # attributed-blockquote evidence narrative — addresses the
+            # 2026-04-29_bulk-correlation-show-top-hits.md feedback.
+            # AnnotationTransferEvidence with run_ref: pull the run-level
+            # figure (e.g. F1 heatmap) from the manifest. The figure is
+            # run-level (one PNG per AT run, covering all candidates) so
+            # it embeds once in the report — the synthesis subagent decides
+            # where (typically Results overview).
+            if et == "ANNOTATION_TRANSFER" and ev.get("run_ref"):
+                at_manifest, at_dir = _resolve_at_run_ref(ev["run_ref"])
+                if at_manifest and at_dir:
+                    fig = at_manifest.get("figure") or {}
+                    fig_relpath = fig.get("relpath", "")
+                    if fig_relpath:
+                        # Path the report references — relative to the report
+                        # dir (reports/{region}/), pointing into the run dir.
+                        # We use a path of the form:
+                        #   ../../kb/annotation_transfer_runs/{run_dir.name}/{fig_relpath}
+                        # Two ".." steps because reports/{region}/file.md sits two
+                        # levels below the repo root.
+                        extras["figure_relpath"] = (
+                            f"../../kb/annotation_transfer_runs/{at_dir.name}/{fig_relpath}"
+                        )
+                        extras["figure_caption"] = (
+                            f"Annotation transfer F1 heatmap "
+                            f"({at_manifest.get('source_dataset_accession', 'source')} "
+                            f"→ {at_manifest.get('target_atlas', 'target')})"
+                        )
+
+            run_ref = ev.get("run_ref")
+            contrast_ref = ev.get("contrast_ref")
+            if run_ref and contrast_ref:
+                hits = _top_n_hits_for_contrast(
+                    run_ref, contrast_ref,
+                    target_accession=ev.get("target_accession"),
+                    n=10,
+                )
+                if hits:
+                    extras["top_n_hits"] = hits
+                    # Render the matching δ ranked-bar figure alongside the
+                    # report. Filename is content-hashed; the report's
+                    # reference becomes a visibly broken link if the
+                    # underlying data changes (sync mechanism — see
+                    # planning/paper_style_reports_review_addendum.md §4).
+                    try:
+                        from evidencell.figures import render_top_n_hits_figure
+                        from evidencell.paths import reports_dir_for_region
+                        # Region is the parent directory of the graph file
+                        # (kb/draft/{region}/file.yaml or kb/mappings/{region}/file.yaml).
+                        region = graph_file.parent.name if graph_file else ""
+                        if region:
+                            figures_dir = reports_dir_for_region(region) / "figures"
+                            short_contrast = contrast_ref.removeprefix("corr_")
+                            caption = (
+                                f"Top {len(hits)} clusters by δ for {short_contrast} "
+                                f"({ev.get('target_accession', node_id)})"
+                            )
+                            png_path, _ = render_top_n_hits_figure(
+                                hits, figures_dir, node_id, contrast_ref,
+                                caption=caption,
+                                framework_version=_evidencell_commit(),
+                            )
+                            # Path relative to the report file (which lives
+                            # in reports/{region}/).
+                            extras["figure_relpath"] = f"figures/{png_path.name}"
+                            extras["figure_caption"] = caption
+                    except (ImportError, ValueError, OSError) as exc:
+                        # Figure rendering is best-effort — never fail facts
+                        # extraction over a plotting issue.
+                        print(f"WARNING: figure rendering failed for {run_ref} / {contrast_ref}: {exc}", file=sys.stderr)
             if extras:
                 item["fields"] = extras
             ev_items.append(item)
@@ -818,6 +1365,8 @@ def extract_node_facts(
         for k, v in ref_index.items()
     }
 
+    methods_summary = extract_methods_summary(graph, node_id, graph_file)
+
     return {
         "graph_meta": {
             "name": graph.get("name", ""),
@@ -829,6 +1378,7 @@ def extract_node_facts(
             "graph_file": str(graph_file),
             "has_merfish_location": has_merfish,
         },
+        "methods_summary": methods_summary,
         "reference_index": ref_index_serial,
         "classical_nodes": [{
             "id": node_id,

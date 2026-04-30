@@ -73,6 +73,8 @@ script:
   relpath: correlate.py
   python_version: ">=3.11"
   packages: [pandas, numpy, scipy, h5py]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: 4e67d6b
 
 output:
   relpath: all_correlations.tsv
@@ -93,6 +95,8 @@ caveats: >
   values lower than for FACS-bulk inputs (Stephens-style), but Spearman
   rank-based statistics handle the magnitude offset; δ rankings are
   comparable across the two run types.
+
+code_version: 4e67d6b
 
 metadata: >
   paired_bulk_method=true; cross_sex_contrasts_present=true (flagged as artefactual);
