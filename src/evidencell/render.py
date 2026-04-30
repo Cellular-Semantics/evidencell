@@ -763,6 +763,14 @@ def extract_methods_summary(
         ),
     }
 
+    # Render kb_graph_file as repo-relative when possible, so the report's
+    # reproducibility footer carries a portable path (not someone's $HOME).
+    try:
+        from evidencell.paths import repo_root
+        rel_graph = str(Path(graph_file).resolve().relative_to(repo_root().resolve()))
+    except (ValueError, RuntimeError):
+        rel_graph = str(graph_file)
+
     return {
         "evidence_type_counts": evidence_type_counts,
         "cl_mapping": cl_mapping_summary,
@@ -772,7 +780,7 @@ def extract_methods_summary(
         "bulk_data_sources": list(bulk_dataset_sources_seen.values()),
         "framework_version": _evidencell_commit(),
         "gen_timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "kb_graph_file": str(graph_file),
+        "kb_graph_file": rel_graph,
     }
 
 
