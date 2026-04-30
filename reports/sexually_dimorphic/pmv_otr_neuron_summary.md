@@ -52,11 +52,10 @@ Two mapping edges are recorded for pmv_otr_neuron: a supertype-level edge to SUP
 markers) and a child-cluster edge to CLUS_2470 (the PMv-dominant child cluster with
 the highest expression of all three markers).
 
-| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] | 0607 PMv-TMv Pitx2 Glut_3 | n=192 (PMv) | 🔴 LOW | Oxtr/Slc6a3/Adcyap1 CONSISTENT; sex ratio NOT_ASSESSED | Speculative |
-| 2 | 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] | (self) | n=347 (PMv) | 🔴 LOW | Oxtr/Slc6a3/Adcyap1 CONSISTENT; nt_type APPROXIMATE | Speculative |
-
+| 1 | 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] | 0607 PMv-TMv Pitx2 Glut_3 | 284 | 🔴 LOW | Oxtr/Slc6a3/Adcyap1 CONSISTENT; sex ratio NOT_ASSESSED | Speculative |
+| 2 | 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] | (self) | 547 | 🔴 LOW | Oxtr/Slc6a3/Adcyap1 CONSISTENT; nt_type APPROXIMATE | Speculative |
 2 edges total. Relationship type: PARTIAL_OVERLAP (CLUS_2470) and CROSS_CUTTING (SUPT_0607).
 
 ### Property alignment — primary candidate (CLUS_2470)

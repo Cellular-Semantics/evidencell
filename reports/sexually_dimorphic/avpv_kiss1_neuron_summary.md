@@ -73,14 +73,11 @@ Two mapping edges are recorded for avpv_kiss1_neuron: a supertype-level edge to 
 
 ### Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | n=3–5 ^ | 🟡 MODERATE | Kiss1 CONSISTENT; Esr1 CONSISTENT; Th CONSISTENT; MFR=0.02 CONSISTENT | Best cluster candidate |
-| 2 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | n=117 (16 AVPV / 64 PVpo / 37 MPN) | 🟡 MODERATE | Esr1 CONSISTENT; Kiss1/Th APPROXIMATE | Best supertype candidate |
-
+| 1 | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | 5 | 🟡 MODERATE | Kiss1 CONSISTENT; Esr1 CONSISTENT; Th CONSISTENT; MFR=0.02 CONSISTENT | Best cluster candidate |
+| 2 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | 178 | 🟡 MODERATE | Esr1 CONSISTENT; Kiss1/Th APPROXIMATE | Best supertype candidate |
 2 edges total. Relationship type: PARTIAL_OVERLAP (both edges).
-
-^MERFISH n=3–5; 10x cluster size not yet shown — see ROADMAP.
 
 ### 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] · 🟡 MODERATE
 

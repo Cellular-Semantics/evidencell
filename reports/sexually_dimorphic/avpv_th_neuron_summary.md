@@ -69,14 +69,11 @@ SUPT_0486 and a cluster-level edge to CLUS_1915, the child cluster carrying the
 strongest Th+Kiss1 co-expression signal, dopaminergic NT annotation, and the
 most extreme female bias (male_female_ratio = 0.02).
 
-| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | n=3–5 ^ | 🟡 MODERATE | Th CONSISTENT; Kiss1 CONSISTENT; nt_type=Dopa; MFR=0.02 CONSISTENT | Best cluster candidate |
-| 2 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | n=117 (16 AVPV / 64 PVpo / 37 MPN) | 🟡 MODERATE | Th APPROXIMATE; Kiss1 APPROXIMATE; child CLUS_1915 MFR=0.02 | Best supertype candidate |
-
+| 1 | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | 5 | 🟡 MODERATE | Th CONSISTENT; Kiss1 CONSISTENT; nt_type=Dopa; MFR=0.02 CONSISTENT | Best cluster candidate |
+| 2 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | 178 | 🟡 MODERATE | Th APPROXIMATE; Kiss1 APPROXIMATE; child CLUS_1915 MFR=0.02 | Best supertype candidate |
 2 edges total. Relationship type: PARTIAL_OVERLAP (both edges).
-
-^MERFISH n=3–5; 10x cluster size not yet shown — see ROADMAP.
 
 ### Property alignment — primary candidate (CLUS_1915)
 

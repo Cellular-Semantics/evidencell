@@ -62,11 +62,10 @@ whose primary soma is MBA:515 (MPN) and which carries an unambiguous male bias.
 Both edges are LOW confidence: SDN-POA is a histologically defined subnucleus within
 MPN that cannot be resolved as a distinct spatial domain in WMBv1 MERFISH data.
 
-| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 1550 BST-MPN Six3 Nrgn Gaba_4 [CS20230722_CLUS_1550] | 0423 BST-MPN Six3 Nrgn Gaba_4 | n=22 MPN (also PVH n=9, PVHap n=4, Hypothalamus n=9) | 🔴 LOW | Calb1 CONSISTENT; MFR=3.35 CONSISTENT; Th DISCORDANT | Speculative |
-| 2 | 0423 BST-MPN Six3 Nrgn Gaba_4 [CS20230722_SUPT_0423] | (self) | n=47 MPN (also BNST n=18, AHN n=46, PVN n=31) | 🔴 LOW | Calb1 CONSISTENT; Th DISCORDANT | Speculative |
-
+| 1 | 1550 BST-MPN Six3 Nrgn Gaba_4 [CS20230722_CLUS_1550] | 0423 BST-MPN Six3 Nrgn Gaba_4 | 48 | 🔴 LOW | Calb1 CONSISTENT; MFR=3.35 CONSISTENT; Th DISCORDANT | Speculative |
+| 2 | 0423 BST-MPN Six3 Nrgn Gaba_4 [CS20230722_SUPT_0423] | (self) | 336 | 🔴 LOW | Calb1 CONSISTENT; Th DISCORDANT | Speculative |
 2 edges total. Relationship type: PARTIAL_OVERLAP (CLUS_1550) / UNCERTAIN (SUPT_0423).
 
 ### Property alignment — primary candidate (CLUS_1550)

@@ -41,10 +41,9 @@ a single piece of evidence — the Knoedler 2022 Esr1+ TRAP-seq bulk correlation
 — and by node-level metadata alignment. LOW confidence reflects the
 single-dataset support and the stub status of the classical node.
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 0055 MEA Slc17a7 Glut_1 [CS20230722_SUPT_0055] | (self) | not assessed | 🔴 LOW | Location CONSISTENT; NT CONSISTENT; Esr1 CONSISTENT; sex ratio CONSISTENT (CLUS_0197 MFR=10.11) | Speculative |
-
+| 1 | 0055 MEA Slc17a7 Glut_1 [CS20230722_SUPT_0055] | (self) | 3249 | 🔴 LOW | Location CONSISTENT; NT CONSISTENT; Esr1 CONSISTENT; sex ratio CONSISTENT (CLUS_0197 MFR=10.11) | Speculative |
 1 edge total. Relationship type: PARTIAL_OVERLAP.
 
 ### Property alignment — primary candidate (SUPT_0055)

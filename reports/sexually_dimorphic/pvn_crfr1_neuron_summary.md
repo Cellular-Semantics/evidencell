@@ -47,10 +47,9 @@ One mapping edge is recorded for pvn_crfr1_neuron: a supertype-level edge to SUP
 (0585 PVH-SO-PVa Otp Glut_1), the highest rank-1 candidate by DB score (=3) among PVN-localised
 supertypes.
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 0585 PVH-SO-PVa Otp Glut_1 [CS20230722_SUPT_0585] | (self) | n=98 (MBA:38 PVN, primary location) | 🟡 MODERATE | Esr1 APPROXIMATE; Ar APPROXIMATE; Crhr1 APPROXIMATE (low) | Best candidate |
-
+| 1 | 0585 PVH-SO-PVa Otp Glut_1 [CS20230722_SUPT_0585] | (self) | 183 | 🟡 MODERATE | Esr1 APPROXIMATE; Ar APPROXIMATE; Crhr1 APPROXIMATE (low) | Best candidate |
 1 edge total. Relationship type: PARTIAL_OVERLAP.
 
 ### Property alignment — primary candidate (SUPT_0585)

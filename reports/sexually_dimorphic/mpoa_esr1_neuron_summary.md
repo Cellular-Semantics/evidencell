@@ -51,11 +51,10 @@ identified as the dominant POA-Esr1+ supertype by Knoedler 2022 bulk
 correlation [3]. Both are CROSS_CUTTING relationships and the classical node
 likely requires a glut/GABA split.
 
-| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | n=117 (16 AVPV / 64 PVpo / 37 MPN) | 🟡 MODERATE | Esr1/Ar/Pgr CONSISTENT; NT APPROXIMATE (GABA only) | Best candidate (GABAergic fraction) |
-| 2 | 0521 AVPV-MEPO-SFO Tbr1 Glut_3 [CS20230722_SUPT_0521] | (self) | not reported | 🟡 MODERATE | Esr1 CONSISTENT; NT APPROXIMATE (Glut only); location APPROXIMATE | Best candidate (glutamatergic fraction) |
-
+| 1 | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | 178 | 🟡 MODERATE | Esr1/Ar/Pgr CONSISTENT; NT APPROXIMATE (GABA only) | Best candidate (GABAergic fraction) |
+| 2 | 0521 AVPV-MEPO-SFO Tbr1 Glut_3 [CS20230722_SUPT_0521] | (self) | 391 | 🟡 MODERATE | Esr1 CONSISTENT; NT APPROXIMATE (Glut only); location APPROXIMATE | Best candidate (glutamatergic fraction) |
 2 edges total. Relationship type: CROSS_CUTTING (both edges).
 
 ### Property alignment — primary candidate (SUPT_0486)

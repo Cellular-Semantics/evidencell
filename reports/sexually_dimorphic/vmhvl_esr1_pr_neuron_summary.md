@@ -60,11 +60,10 @@ for the VMH female-receptive vs BNST female-receptive δ.
 
 **Candidate overview.**
 
-| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 0564 VMH Fezf1 Glut_2 [CS20230722_SUPT_0564] | (self) | n=360 (MBA:693 VMH dominant) | 🟡 MODERATE | VMH location CONSISTENT; Nkx2-1 CONSISTENT; Pgr APPROXIMATE | Best candidate (broader Pgr/Nkx2-1/Tac1 subpop.) |
-| 1 | 0563 VMH Fezf1 Glut_1 [CS20230722_SUPT_0563] | (self) | n.r. ^ | 🟡 MODERATE | VMH location CONSISTENT; female-biased child clusters CONSISTENT (Knoedler 2022 δ ranks 1, 2, 4) | Best candidate (female-biased lordosis subpop.) |
-
+| 1 | 0564 VMH Fezf1 Glut_2 [CS20230722_SUPT_0564] | (self) | 621 | 🟡 MODERATE | VMH location CONSISTENT; Nkx2-1 CONSISTENT; Pgr APPROXIMATE | Best candidate (broader Pgr/Nkx2-1/Tac1 subpop.) |
+| 1 | 0563 VMH Fezf1 Glut_1 [CS20230722_SUPT_0563] | (self) | 153 | 🟡 MODERATE | VMH location CONSISTENT; female-biased child clusters CONSISTENT (Knoedler 2022 δ ranks 1, 2, 4) | Best candidate (female-biased lordosis subpop.) |
 2 edges total. Relationship type: CROSS_CUTTING (both edges; the heterogeneous classical
 node is split across both supertypes).
 

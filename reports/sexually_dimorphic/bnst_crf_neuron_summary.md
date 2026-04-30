@@ -57,11 +57,10 @@ Crh as a DEFINING_SCOPED atlas marker, eliminated at supertype resolution by
 Calb1 discordance). Both are speculative or eliminated at supertype resolution
 and require child-cluster analysis.
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 0358 MEA-BST Lhx6 Nfib Gaba_2 [CS20230722_SUPT_0358] | (self) | not assessed | 🔴 LOW | NT CONSISTENT; Crh NOT_ASSESSED (Esr1+ proxy); location APPROXIMATE | Speculative |
-| — | 0393 CEA-BST Rai14 Pdyn Crh Gaba_2 [CS20230722_SUPT_0393] | (self) | not assessed | ⚪ UNCERTAIN | Crh CONSISTENT; Calb1 DISCORDANT | Eliminated (negative_Calb1) |
-
+| 1 | 0358 MEA-BST Lhx6 Nfib Gaba_2 [CS20230722_SUPT_0358] | (self) | 666 | 🔴 LOW | NT CONSISTENT; Crh NOT_ASSESSED (Esr1+ proxy); location APPROXIMATE | Speculative |
+| — | 0393 CEA-BST Rai14 Pdyn Crh Gaba_2 [CS20230722_SUPT_0393] | (self) | 231 | ⚪ UNCERTAIN | Crh CONSISTENT; Calb1 DISCORDANT | Eliminated (negative_Calb1) |
 2 edges total. Relationship type: PARTIAL_OVERLAP (both edges).
 
 ### Property alignment — primary candidate (SUPT_0358)

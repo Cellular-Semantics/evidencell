@@ -50,10 +50,9 @@ defining ARH location.
 
 ### Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells (MERFISH) | Confidence | Key property alignment | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| — | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | n=117 (PVpo 64 / MPN 37 / AVPV 16; **0 in MBA:223**) | ⚪ UNCERTAIN | Cyp19a1 APPROXIMATE; location DISCORDANT | Eliminated |
-
+| — | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] | (self) | 178 | ⚪ UNCERTAIN | Cyp19a1 APPROXIMATE; location DISCORDANT | Eliminated |
 1 edge total. Relationship type: UNCERTAIN.
 
 ### Property alignment — primary candidate (SUPT_0486)
