@@ -286,8 +286,10 @@ so its absence is direct counter-evidence at the supertype level.
 
 ---
 
+### Methods
+
 <details>
-<summary>### Methods — data sources, analyses, and reproducibility receipts</summary>
+<summary>Data sources, analyses, and reproducibility receipts</summary>
 
 **Classical type definition.** The classical Oriens-Lacunosum Moleculare (O-LM)
 interneuron is defined by the convergence of morphology (horizontal somatic and

@@ -452,9 +452,16 @@ JSON; subsections appear only when their underlying evidence is present
 (omit `Annotation transfer` if no AT runs, omit `Bulk transcriptomic correlation`
 if no BulkCorrelation runs, etc.).
 
+The `### Methods` heading sits OUTSIDE the fold (so the section appears in
+the table of contents and the heading remains visible when the fold is
+collapsed). The fold's `<summary>` carries a short descriptive label, NOT
+another heading:
+
 ```markdown
+### Methods
+
 <details>
-<summary>### Methods — data sources, analyses, and reproducibility receipts</summary>
+<summary>Data sources, analyses, and reproducibility receipts</summary>
 ```
 
 Subsections (omit any whose data is empty):

@@ -177,8 +177,10 @@ hypothalamic nucleus.
 
 ---
 
+### Methods
+
 <details>
-<summary>Methods — data sources, analyses, and reproducibility receipts</summary>
+<summary>Data sources, analyses, and reproducibility receipts</summary>
 
 **Classical type definition.** vmhvl_esr1_pr_neuron is defined on a CLASSICAL_NEUROCHEMICAL
 basis: defining markers Esr1, Nkx2-1, Tac1 (transcript) [1] and Pgr (transcript) [2];
