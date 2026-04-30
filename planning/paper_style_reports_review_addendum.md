@@ -173,6 +173,43 @@ Updated content list for the Methods `<details>` fold (reflecting Q1 = fold, Q2 
 
 ---
 
+## 6.1 CL term mapping (added 2026-04-30)
+
+The schema already structures CL mappings via `CellTypeNode.cl_mapping`:
+
+- `cl_mapping.cl_term` — OntologyTerm (id like `CL:0000617`, label `GABAergic neuron`)
+- `cl_mapping.mapping_type` — enum (EXACT / BROAD / RELATED / NARROW / etc.)
+- `cl_mapping.mapping_notes` — free text rationale
+
+These are already extracted into `facts.classical_nodes[*].cl_term` and
+`cl_mapping_type`. The current report surfaces only the `cl_term` as a row in
+the classical type table.
+
+**Paper-style upgrade (no schema change):**
+
+1. **Intro** — show CL term prominently with OLS link, alongside the
+   mapping_type qualifier:
+   `Cell Ontology mapping: GABAergic neuron [[CL:0000617](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0000617)] (BROAD — see Discussion for the rationale).`
+
+2. **Discussion (Best candidate + caveats summary)** — restate the CL
+   mapping with one line interpreting the mapping_type:
+   - EXACT → "Direct correspondence to the Cell Ontology term."
+   - BROAD → "The Cell Ontology has no specific term for this population; CL:X is the closest ancestor. A new child term may be warranted."
+   - RELATED / NARROW / etc. → similar one-liners.
+   The text comes from a small helper in the renderer (deterministic);
+   `cl_mapping.mapping_notes` is appended verbatim if present.
+
+3. **Methods** — no change. The CL mapping is identity, not method.
+
+**Future hook for new-term tickets** *(deferred per user — separate branch)*:
+when CL proposal tickets are auto-generated, a small optional field on
+`CLMapping` (e.g. `proposal_ticket_url`) will let reports link to the
+GitHub issue for new-term proposals. Reports will pick it up in the
+Intro/Discussion CL summary line. This addition is **not in this PR**;
+the paper-style reports just use the existing CL term + mapping_type.
+
+---
+
 ## 7. Files in scope (revised)
 
 | File | Change |
