@@ -30,8 +30,14 @@ def _make_mock_driver(records: list[dict]):
 
 
 def _make_mock_record(d: dict):
+    """Mock a neo4j Record exposing keys() and __getitem__.
+
+    Mirrors what `_record_to_dict` consumes. Plain (non-Node) values pass through
+    `_wrap_value` unchanged, so the mock dict round-trips as-is.
+    """
     rec = MagicMock()
-    rec.data = MagicMock(return_value=d)
+    rec.keys = MagicMock(return_value=list(d.keys()))
+    rec.__getitem__ = MagicMock(side_effect=lambda k: d[k])
     return rec
 
 
@@ -42,7 +48,16 @@ def patch_neo4j(monkeypatch):
     mock_neo4j = MagicMock()
     mock_neo4j.GraphDatabase.driver = MagicMock()
     mock_neo4j.basic_auth = MagicMock(return_value=("user", "pass"))
+    # _wrap_value does `from neo4j.graph import Node` to type-check values;
+    # register a stub class so the import resolves without the real driver.
+    mock_neo4j_graph = MagicMock()
+
+    class _StubNode:
+        pass
+
+    mock_neo4j_graph.Node = _StubNode
     monkeypatch.setitem(sys.modules, "neo4j", mock_neo4j)
+    monkeypatch.setitem(sys.modules, "neo4j.graph", mock_neo4j_graph)
     yield mock_neo4j
 
 

@@ -530,16 +530,72 @@ def _group_experiments(edges: list[dict]) -> list[dict]:
     return list(groups.values())
 
 
-def _node_b_info(edge: dict, nodes_by_id: dict) -> dict:
-    """Extract display info for the atlas (type_b) node of an edge."""
+def _open_taxonomy_db(taxonomy_id: str) -> "object | None":
+    """Open the SQLite TaxonomyDB for a taxonomy_id, or None if unavailable.
+
+    Imported lazily to keep `render` usable in environments where the taxonomy
+    DB hasn't been built yet (e.g. CI fixtures, tests). Failures degrade
+    gracefully — render still emits a valid report, just without atlas-side
+    enrichment (n_cells, supertype).
+    """
+    if not taxonomy_id:
+        return None
+    try:
+        from evidencell.paths import taxonomy_dir
+        from evidencell.taxonomy_db import TaxonomyDB
+    except Exception:
+        return None
+    db_path = taxonomy_dir(taxonomy_id) / f"{taxonomy_id}.db"
+    if not db_path.exists():
+        return None
+    return TaxonomyDB(db_path)
+
+
+def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) -> dict:
+    """Extract display info for the atlas (type_b) node of an edge.
+
+    `db_cache` is a per-render mutable dict keyed by taxonomy_id; if provided,
+    looks up atlas-only properties (n_cells, parent supertype) from the
+    TaxonomyDB by accession. Stubs in mapping-graph YAML carry minimal data
+    per the KB convention (taxonomy YAML is canonical for atlas properties),
+    so this lookup is what surfaces the per-node 10x cell count and the
+    nearest-supertype label in reports.
+    """
     b_id = edge.get("type_b", "")
     b_node = nodes_by_id.get(b_id, {})
+    accession = b_node.get("cell_set_accession", "")
+    n_cells = b_node.get("n_cells")
+    supertype = ""
+
+    if db_cache is not None and accession:
+        tax_id = b_node.get("taxonomy_id") or ""
+        if tax_id and tax_id not in db_cache:
+            db_cache[tax_id] = _open_taxonomy_db(tax_id)
+        db = db_cache.get(tax_id)
+        if db is not None:
+            try:
+                tax_node = db.get_node_by_accession(accession)
+                if tax_node:
+                    if n_cells is None:
+                        n_cells = tax_node.get("n_cells")
+                    parents = db.get_parent_hierarchy(accession)
+                    supt_entry = next(
+                        (p for p in parents
+                         if (p.get("level") or "").upper() == "SUPERTYPE"),
+                        None,
+                    )
+                    if supt_entry:
+                        supertype = supt_entry.get("name", "")
+            except Exception:
+                # DB lookup is best-effort — never block report rendering
+                pass
+
     return {
         "id": b_id,
         "name": b_node.get("name", b_id),
-        "accession": b_node.get("cell_set_accession", ""),
-        "supertype": "",  # filled from parent_hierarchy if present
-        "n_cells": b_node.get("n_cells"),
+        "accession": accession,
+        "supertype": supertype,
+        "n_cells": n_cells,
         "taxonomy_level": b_node.get("taxonomy_level", ""),
     }
 
@@ -669,10 +725,13 @@ def extract_node_facts(
         if s.get("ref")
     ]
 
-    # Edges
+    # Edges. db_cache holds opened TaxonomyDBs keyed by taxonomy_id so we
+    # don't reconnect for every edge; lookups fill n_cells / supertype on
+    # b_info from the canonical taxonomy reference DB.
     edge_facts = []
+    db_cache: dict = {}
     for edge in node_edges:
-        b_info = _node_b_info(edge, nodes_by_id)
+        b_info = _node_b_info(edge, nodes_by_id, db_cache=db_cache)
         verdict = _candidate_verdict(edge, nodes_by_id)
 
         # Evidence items — generic extraction.
@@ -889,7 +948,7 @@ def render_summary(
     # 4. Mapping candidates table
     lines.append("## Mapping candidates")
     lines.append("")
-    lines.append("| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |")
+    lines.append("| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |")
     lines.append("|---|---|---|---|---|---|")
     rank = 0
     for edge in edges:
@@ -902,7 +961,7 @@ def render_summary(
         name = edge["node_b_name"]
         acc = edge.get("node_b_accession", "")
         cluster_label = f"{name} [{acc}]" if acc else name
-        n_cells = edge["n_cells"] if edge["n_cells"] is not None else "—"
+        n_cells = f"{edge['n_cells']:,}" if edge["n_cells"] is not None else "—"
         badge = _conf_badge(conf)
         verdict = edge["verdict"]
         lines.append(f"| {rank_str} | {cluster_label} | {edge['supertype']} | {n_cells} | {badge} | {verdict} |")
@@ -922,10 +981,24 @@ def render_summary(
     for edge in confident_edges:
         conf = edge["confidence"]
         name = edge["node_b_name"]
-        n = edge["n_cells"] if edge["n_cells"] is not None else "?"
+        n = edge["n_cells"]
         badge = _conf_badge(conf)
         lines.append(f"## {name} · {badge}")
         lines.append("")
+
+        # One-line node summary: accession · 10x cell count · supertype
+        acc = edge.get("node_b_accession") or ""
+        supt = edge.get("supertype") or ""
+        summary_parts: list[str] = []
+        if acc:
+            summary_parts.append(f"`{acc}`")
+        if n is not None:
+            summary_parts.append(f"{n:,} cells (10x)")
+        if supt:
+            summary_parts.append(f"supertype: {supt}")
+        if summary_parts:
+            lines.append("*" + " · ".join(summary_parts) + "*")
+            lines.append("")
 
         support_items = [ev for ev in edge["evidence_items"] if ev["supports"] in ("SUPPORT", "PARTIAL")]
         refute_items = [ev for ev in edge["evidence_items"] if ev["supports"] == "REFUTE"]
@@ -1000,7 +1073,7 @@ def render_summary(
             lines.append("")
         for edge in uncertain_edges:
             name = edge["node_b_name"]
-            n = edge["n_cells"] if edge["n_cells"] is not None else "?"
+            n = f"{edge['n_cells']:,}" if edge["n_cells"] is not None else "?"
             refutes = [
                 ev for ev in edge["evidence_items"] if ev["supports"] == "REFUTE"
             ]

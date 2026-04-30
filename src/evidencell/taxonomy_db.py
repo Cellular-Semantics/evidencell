@@ -194,8 +194,15 @@ def clean_taxonomy_json(path: Path) -> bytes:
 
     cleaned = bytes(out)
 
-    # Fix double-escaped quotes inside prose (\\" → \")
-    cleaned = cleaned.replace(b'\\\\"', b'\\"')
+    # Fix multi-escaped quotes inside prose. Two known variants:
+    #   4-byte triple-backslash + quote (\\\"  — current KG export from kg_query.py)
+    #   3-byte double-backslash + quote (\\"   — legacy wmbv1_full.json export)
+    # Both should normalise to the JSON-valid 2-byte form (\").
+    triple_bs_quote = b"\\" * 3 + b'"'
+    double_bs_quote = b"\\" * 2 + b'"'
+    valid_escaped_quote = b"\\" + b'"'
+    cleaned = cleaned.replace(triple_bs_quote, valid_escaped_quote)
+    cleaned = cleaned.replace(double_bs_quote, valid_escaped_quote)
 
     return cleaned
 
@@ -230,6 +237,7 @@ class TaxonomyNode:
     rationale: str | None = None
     rationale_dois: list[str] = field(default_factory=list)
     male_female_ratio: float | None = None  # Male/Female cell count ratio, 2 dp
+    n_cells: int | None = None  # 10x dataset per-node cell count (sum across regions)
     # class-level extras
     neuronal: bool | None = None
     glial: bool | None = None
@@ -354,6 +362,21 @@ def _male_female_ratio(props: dict, fc: dict[str, list[str]]) -> float | None:
     return round(male / female, 2)
 
 
+def _n_cells(props: dict, fc: dict[str, list[str]]) -> int | None:
+    """Read the 10x per-node cell count from source props.
+
+    Source values may be a bare int or a single-element list (the KG returns
+    `[1452]`).  Returns int or None.
+    """
+    raw = _scalar(_first_prop(props, fc.get("n_cells", ["cell_count"])))
+    if raw is None:
+        return None
+    try:
+        return int(raw)
+    except (ValueError, TypeError):
+        return None
+
+
 def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> TaxonomyNode:
     """Extract a TaxonomyNode from a raw VFB graph export row.
 
@@ -365,10 +388,21 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
     field_mapping.json continue to work.
     """
     rk = fc.get("row_keys", {})
-    wmb = row[rk.get("node", "node")]
+    # Accept both canonical (post-2026-04 KG export) and legacy VFB graph export
+    # key names. Either may appear in the wild depending on which JSON file is
+    # being ingested.
+    wmb = (
+        row.get(rk.get("node", "node"))
+        or row.get("node")
+        or row.get("wmb")
+        or {}
+    )
     props = wmb.get("properties", {})
     labels = wmb.get("labels", [])
-    level = _extract_level(labels, taxonomy_id)
+    # Prefer explicit `level` from the cypher (post-2026-04 KG rebuild exposes it
+    # via has_labelset); fall back to legacy label-prefix extraction for cached
+    # JSON exports from older KG snapshots.
+    level = row.get(rk.get("level", "level")) or _extract_level(labels, taxonomy_id)
 
     cl_obj = row.get(rk.get("cl", "cl"))
     cl_props = cl_obj.get("properties", {}) if cl_obj else {}
@@ -408,7 +442,11 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
         label=props.get("label", ""),
         taxonomy_id=taxonomy_id,
         taxonomy_level=level,
-        parent_id=row.get(rk.get("parent_curie", "parent_curie")),
+        parent_id=(
+            row.get(rk.get("parent_curie", "parent_curie"))
+            or row.get("parent_curie")
+            or row.get("wmb_parent.curie")
+        ),
         cl_id=cl_props.get("curie"),
         cl_label=cl_props.get("label"),
         cell_ontology_term=cot_raw if not cl_props.get("curie") else None,
@@ -446,6 +484,7 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
         rationale=rationale,
         rationale_dois=rationale_dois,
         male_female_ratio=_male_female_ratio(props, fc),
+        n_cells=_n_cells(props, fc),
         neuronal=neuronal,
         glial=glial,
     )
@@ -692,6 +731,8 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         d["neighborhood"] = n.neighborhood
     if n.male_female_ratio is not None:
         d["male_female_ratio"] = n.male_female_ratio
+    if n.n_cells is not None:
+        d["n_cells"] = n.n_cells
     if species:
         d["species"] = species
     return d
@@ -1047,7 +1088,8 @@ CREATE TABLE IF NOT EXISTS nodes (
   circadian_ratio        REAL,
   rationale              TEXT,
   rationale_dois         TEXT,
-  male_female_ratio      REAL
+  male_female_ratio      REAL,
+  n_cells                INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS anat (
@@ -1312,7 +1354,7 @@ class TaxonomyDB:
                :cell_ontology_term, :nt_type,
                :defining_markers_scoped, :defining_markers, :tf_markers,
                :merfish_markers, :np_markers, :neighborhood, :circadian_ratio,
-               :rationale, :rationale_dois, :male_female_ratio
+               :rationale, :rationale_dois, :male_female_ratio, :n_cells
             )""",
             {
                 "node_id": node_id,
@@ -1338,6 +1380,7 @@ class TaxonomyDB:
                 "rationale": None,        # not in CellTypeNode schema
                 "rationale_dois": None,   # not in CellTypeNode schema
                 "male_female_ratio": nd.get("male_female_ratio"),
+                "n_cells": nd.get("n_cells"),
             },
         )
         for a in nd.get("anatomical_location") or []:
@@ -1455,6 +1498,47 @@ class TaxonomyDB:
                 (cl_id,),
             ).fetchall()
         return [dict(r) for r in rows]
+
+    def get_node_by_accession(self, accession: str) -> dict | None:
+        """Look up a single node by its accession.
+
+        Accepts either bare short_form (`CS20230722_SUPT_0206`) or full CURIE
+        (`WMB:CS20230722_SUPT_0206`). Returns the row as a dict, or None if no
+        match.
+        """
+        if not accession:
+            return None
+        with self._connect() as con:
+            row = con.execute(
+                "SELECT * FROM nodes WHERE node_id = ? OR short_form = ? LIMIT 1",
+                (accession, accession),
+            ).fetchone()
+        return dict(row) if row else None
+
+    def get_parent_hierarchy(self, accession: str) -> list[dict]:
+        """Walk the parent_id chain and return ancestors from immediate parent up.
+
+        Each entry: `{level, name, cell_set_accession}`. Empty list if the node
+        is missing or has no parent. Cycles are guarded by a visited set.
+        """
+        chain: list[dict] = []
+        seen: set[str] = set()
+        cur = self.get_node_by_accession(accession)
+        while cur and cur.get("parent_id"):
+            parent_id = cur["parent_id"]
+            if parent_id in seen:
+                break
+            seen.add(parent_id)
+            parent = self.get_node_by_accession(parent_id)
+            if not parent:
+                break
+            chain.append({
+                "level": parent.get("taxonomy_level", ""),
+                "name": parent.get("label", ""),
+                "cell_set_accession": parent.get("short_form", ""),
+            })
+            cur = parent
+        return chain
 
     def build_anat_closure(self, mba_json: Path) -> None:
         """Populate anat_terms, anat_hierarchy, and anat_closure from an MBA OBO JSON file.

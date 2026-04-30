@@ -281,6 +281,43 @@ def test_taxonomy_db_query_by_cl(populated_db):
     assert isinstance(results, list)
 
 
+def test_taxonomy_db_get_node_by_accession(populated_db):
+    db, _, _ = populated_db
+    # Pick any real node and round-trip its accession both ways (bare and CURIE)
+    with db._connect() as con:
+        row = con.execute(
+            "SELECT node_id, short_form, label FROM nodes LIMIT 1"
+        ).fetchone()
+    assert row is not None
+    full = row["node_id"]
+    bare = row["short_form"]
+    by_full = db.get_node_by_accession(full)
+    by_bare = db.get_node_by_accession(bare)
+    assert by_full is not None and by_bare is not None
+    assert by_full["short_form"] == bare
+    assert by_bare["node_id"] == full
+    assert db.get_node_by_accession("WMB:does_not_exist") is None
+    assert db.get_node_by_accession("") is None
+
+
+def test_taxonomy_db_get_parent_hierarchy(populated_db):
+    db, _, _ = populated_db
+    with db._connect() as con:
+        row = con.execute(
+            "SELECT short_form FROM nodes WHERE parent_id IS NOT NULL LIMIT 1"
+        ).fetchone()
+    if row is None:
+        pytest.skip("Fixture has no nodes with a parent")
+    chain = db.get_parent_hierarchy(row["short_form"])
+    # Chain may be empty when the named parent is missing from the DB (single-
+    # row fixtures); when present, every entry must carry the canonical keys.
+    assert isinstance(chain, list)
+    for entry in chain:
+        assert {"level", "name", "cell_set_accession"} <= entry.keys()
+    # Unknown accession produces empty chain, not an error
+    assert db.get_parent_hierarchy("WMB:does_not_exist") == []
+
+
 def test_taxonomy_db_find_candidates_empty(populated_db):
     db, _, _ = populated_db
     results = db.find_candidates(anat_ids=["MBA:99999999"], level="cluster")
@@ -388,10 +425,20 @@ def test_ingest_to_yaml_writes_enriched_meta(tmp_path, monkeypatch):
 
 @pytest.mark.slow
 def test_full_wmbv1_ingest(tmp_path):
-    """Full ingest of wmbv1_full.json — slow, only in just test."""
-    source = FIXTURE_DIR / "wmbv1_full.json"
-    if not source.exists():
-        pytest.skip("wmbv1_full.json not present")
+    """Full ingest of WMBv1 source JSON — slow, only in just test.
+
+    Prefers the post-2026-04 KG export `CCN20230722.json` when present (current
+    source of record) and falls back to the legacy `wmbv1_full.json` for
+    backwards-compat verification.
+    """
+    new_source = FIXTURE_DIR / "CCN20230722.json"
+    legacy_source = FIXTURE_DIR / "wmbv1_full.json"
+    if new_source.exists():
+        source = new_source
+    elif legacy_source.exists():
+        source = legacy_source
+    else:
+        pytest.skip("Neither CCN20230722.json nor wmbv1_full.json present")
     counts = ingest_to_yaml(source, "CCN20230722", tmp_path)
     assert counts.get("cluster", 0) == 5322
     assert counts.get("supertype", 0) == 1201
@@ -427,3 +474,33 @@ def test_full_wmbv1_ingest(tmp_path):
             "SELECT COUNT(*) FROM nodes WHERE male_female_ratio IS NOT NULL"
         ).fetchone()[0]
     assert db_count > 5000
+
+    # Parent-hierarchy walk on a cluster: should reach SUPERTYPE -> SUBCLASS ->
+    # CLASS (real WMBv1 hierarchy). Pick any cluster with a parent_id.
+    with db._connect() as con:
+        cl_row = con.execute(
+            "SELECT short_form FROM nodes "
+            "WHERE taxonomy_level='cluster' AND parent_id IS NOT NULL LIMIT 1"
+        ).fetchone()
+    if cl_row is not None:
+        chain = db.get_parent_hierarchy(cl_row["short_form"])
+        levels = [(e.get("level") or "").upper() for e in chain]
+        assert "SUPERTYPE" in levels
+        assert "SUBCLASS" in levels
+        assert "CLASS" in levels
+
+    # n_cells (10x per-node count): present on the new KG export only.
+    # The legacy wmbv1_full.json predates the cell_count property — skip the
+    # assertion when the legacy file is the source.
+    if source == new_source:
+        nodes_with_n_cells = [
+            n for n in cluster_yaml["nodes"] if n.get("n_cells") is not None
+        ]
+        assert len(nodes_with_n_cells) > 5000  # 5235 expected
+        assert all(isinstance(n["n_cells"], int) and n["n_cells"] > 0
+                   for n in nodes_with_n_cells)
+        with db._connect() as con:
+            db_n_cells_count = con.execute(
+                "SELECT COUNT(*) FROM nodes WHERE n_cells IS NOT NULL"
+            ).fetchone()[0]
+        assert db_n_cells_count > 6000  # ~6777 across all levels expected

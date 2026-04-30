@@ -1248,6 +1248,12 @@ classes:
         description: All parent levels in the atlas taxonomy, from immediate parent to root
       n_cells:
         range: integer
+        description: >
+          Number of cells of this type in the 10x dataset, summed across all
+          regions. Populated from the atlas taxonomy source (e.g. WMBv1 KG
+          node `cell_count` property). Distinct from
+          `anatomical_location[].cell_count`, which is the per-region MerFish
+          count. Leave absent for non-atlas nodes.
       merfish_markers:
         range: GeneDescriptor
         multivalued: true
