@@ -31,6 +31,8 @@ script:
   relpath: correlate.py
   python_version: ">=3.11"
   packages: [pandas, numpy, scipy, h5py]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: d7c4445
 
 output:
   relpath: all_correlations.tsv
@@ -41,6 +43,8 @@ caveats: >
   for true matches. The differential δ statistic is the discriminative one;
   raw ρ rankings are dominated by housekeeping background. Reported in
   README.md.
+
+code_version: d7c4445
 
 metadata: >
   paired_bulk_method=true; cross_sex_contrasts=false (single sex throughout); n_clusters_atlas=5322; n_genes_shared=4536.

@@ -2142,6 +2142,11 @@ classes:
         inlined: true
       caveats:
         description: Free-text caveats about run-specific findings (e.g. artefact patterns observed)
+      code_version:
+        description: >
+          Codebase version (commit SHA, tag, or version string) at the time the
+          run was executed. Optional — script.git_commit covers the per-script
+          version; this field is for the broader codebase if different.
       metadata:
         description: Free-form name:value map for ancillary run-level notes
 
@@ -2199,6 +2204,17 @@ classes:
       packages:
         multivalued: true
         description: Required Python packages (no version pins necessary)
+      git_repo_url:
+        pattern: "^https://(github|gitlab)\\.com/.+$"
+        description: >
+          Canonical repository URL where the script lives. Combined with
+          git_commit + relpath gives a stable permalink for audit.
+          E.g. https://github.com/Cellular-Semantics/evidencell
+      git_commit:
+        description: >
+          Commit SHA, short SHA, or tag pinning the exact version of the
+          script that was run. With git_repo_url + relpath, lets a reader
+          form a permalink to the code that produced the run's output.
 
   OutputReference:
     description: Pointer to the primary ranked output file of a CorrelationRun.
