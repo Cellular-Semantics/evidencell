@@ -26,67 +26,75 @@ finer parcellation. For at least one cluster we've spot-checked:
 Zhuang adds biologically meaningful regions Yao didn't catch (e.g. **MPN**
 26 cells, **PS** 1 cell), and reinforces existing ones by 100× (PVpo: 1 → 135).
 
-## What needs to change (in brain_cell_KG)
+## Status update — 2026-05-01
 
-Ingest Zhuang-ABCA-1..4 spatial data the same way Yao MERFISH was ingested:
-add `obsolete_some_soma_located_in` edges from `(WMB:cluster)` to `(MBA:region)`
-with per-edge counts, **plus a source attribution property** so the two
-sources stay distinguishable.
+Zhuang-ABCA spatial counts are **already ingested in the KG** (resolved upstream
+during the 2026-04 KG rebuild). The actual ingest shape is different from the
+"multi-edge with `source_dataset` property" originally proposed below: edges
+are **list-merged**, not multi-edged.
 
-### Proposed edge shape
+### Actual KG edge shape (verified 2026-05-01)
+
+One `obsolete_some_soma_located_in` edge per (WMB cluster, MBA region) pair,
+with three parallel lists carrying per-source contributions. Order is aligned
+across the three lists — index `i` is one source's count + ratio + DOI:
 
 ```
-(node:Individual {curie: "WMB:CS20230722_CLUS_1915"})
+(:Individual {curie: "WMB:CS20230722_CLUS_1915"})
   -[r:obsolete_some_soma_located_in {
-      cell_count: 135,
-      cell_ratio: 0.6,                        // cells in this region / total cells of this cluster in this dataset
-      source_dataset: "Zhuang-ABCA-1",        // or "Yao-MERFISH" for existing edges
-      parcellation_release: "Allen-CCF-2020/20230630",
-      source_doi: "10.1038/s41586-023-06808-9"  // confirm with Zhuang team
-  }]->
-(anat:Multicellular_anatomical_structure {curie: "MBA:133"})
+      cell_count:           [1, 135],
+      obsolete_cell_ratio:  [0.2, 0.6],
+      source: ["https://doi.org/10.1038/s41586-023-06812-z",  // Zhuang 2023
+               "https://doi.org/10.1038/s41586-023-06808-9"]  // Yao 2024
+  }]->(:Multicellular_anatomical_structure {curie: "MBA:133"})
 ```
 
-Key requirements:
+Single-source edges still wrap their values in length-1 lists. There are no
+`source_dataset` / `parcellation_release` properties — only the bare DOI.
+The list-merge is an artefact of the OWL-axiom → Neo4j translation in the KG
+build, not a deliberate evidencell schema choice.
 
-- **Multi-edge per (cluster, region) pair.** A cluster + region can have
-  one edge from Yao and one from each Zhuang dataset. Don't union them
-  upstream — keep attributable.
-- **Backfill `source_dataset` on existing Yao edges** (e.g.
-  `source_dataset: "Yao-MERFISH"`) so consumers can filter / weight.
+### evidencell handling — chosen approach
+
+The evidencell schema and KB **do not mirror** the list-merged KG shape. Each
+(cluster, region, source) tuple becomes its own `AnatomicalLocation` entry in
+the taxonomy YAML, with a single `cell_count` and a single `PropertySource`
+in `sources[]` carrying the DOI as `ref` and a method label derived from the
+DOI ("MERFISH (Yao 2024)" / "MERFISH (Zhuang 2023)"). Same region therefore
+appears multiple times under one node when multi-sourced. No schema change.
+
+This is an explicit exception to the "no PropertySource on
+ATLAS_TRANSCRIPTOMIC nodes" rule — multiple spatial studies contribute and
+must stay attributable.
+
+### Filtering caveats (still upstream KG-side)
+
 - **Drop unassigned cells before counting.** Zhuang `parcellation_index = 0`
   is unassigned; it should not produce an edge. Substructures whose name
   contains "unassigned" or whose parent is `fiber tracts` / ventricular
   systems are coordinate-boundary artefacts (~25% of Zhuang cells in our
   spot check) — recommend filtering at ingest time, but at minimum tag them
-  so downstream can ignore.
-- **One `cell_ratio` per source per cluster.** Compute as
-  `count / total_cells_for_cluster_in_dataset` so Zhuang ratios are
-  comparable across datasets but not directly to Yao.
+  so downstream can ignore. evidencell trusts whatever the KG provides;
+  if these reach the YAML they'll need a KG-side fix, not a downstream one.
 
-### What evidencell needs after the KG change
+### evidencell changes (landing on `at/zhuang-spatial-ingest`)
 
-Minimal:
-
-- `inputs/taxonomies/CCN20230722.cypher` — extend the anat collect to
-  capture `r.source_dataset` (and optionally `r.parcellation_release`,
-  `r.source_doi`):
-  ```cypher
-  collect({cell_count: r.cell_count, cell_ratio: r.obsolete_cell_ratio,
-           anat_label: anat.label, anat_id: anat.curie,
-           source_dataset: r.source_dataset}) AS anat
-  ```
-- `src/evidencell/taxonomy_db.py` — extend `_extract_node` anat block to
-  pass `source_dataset` through to `AnatomicalLocation.sources[].method`
-  (or a similar slot). The schema already supports per-source attribution
-  on `AnatomicalLocation` via the `sources` list — no schema change needed.
+- `inputs/taxonomies/CCN20230722.cypher` — collect `r.source` alongside
+  `r.cell_count` and `r.obsolete_cell_ratio`.
+- `src/evidencell/taxonomy_db.py` — `_extract_node` expands the parallel
+  count/ratio/source lists into one anat entry per source; the YAML emitter
+  populates `AnatomicalLocation.sources[]` with a `PropertySource` per entry
+  (`ref` = DOI, `method` from the `_SPATIAL_METHOD_BY_DOI` table).
+- `tests/test_taxonomy_db.py` — adds `test_anat_multi_source_expansion`
+  covering the merged-edge → per-source-AP transform.
 - Reingest: `just reingest CCN20230722 inputs/taxonomies/CCN20230722.json`
-  (the recently-merged work on the `cell_counts` branch already preserves
-  enrichments and refreshes `anatomical_location[]` from KG).
+  after a fresh `just fetch-taxonomy-kg` to pick up the new `source` field.
+  Reingest preserves enrichments and refreshes `anatomical_location[]`.
 
 Reports and `find_candidates` queries that read `anatomical_location[]`
-will see all sources and can weight or display them as needed; no caller
-change strictly required.
+will see one entry per source and can weight or display them as needed.
+Callers that previously assumed one entry per region will now see
+duplicates — verify before relying on count-by-region semantics.
 
 ## What was tried
 
@@ -113,8 +121,8 @@ preoptic / brainstem / rare-NT subclasses.
 
 | Layer | Change |
 |---|---|
-| brain_cell_KG ingest | Add Zhuang-ABCA-1..4 spatial CSVs as a parallel source to Yao MERFISH. Multi-edge per (cluster, region) with `source_dataset`, `parcellation_release`, `source_doi` properties. Backfill `source_dataset` on existing Yao edges. |
-| `inputs/taxonomies/CCN20230722.cypher` | Extend anat collect to include `source_dataset`. |
-| `src/evidencell/taxonomy_db.py` | Pass `source_dataset` through to `AnatomicalLocation.sources[].method` (or equivalent slot). |
+| brain_cell_KG ingest | **Done upstream (2026-04 KG rebuild).** Spatial sources merged onto a single edge per (cluster, region) with parallel `cell_count` / `obsolete_cell_ratio` / `source` lists; `source` is the bare DOI. |
+| `inputs/taxonomies/CCN20230722.cypher` | Anat collect extended to include `r.source`. |
+| `src/evidencell/taxonomy_db.py` | `_extract_node` expands parallel lists into one entry per (region, source); YAML emitter populates `AnatomicalLocation.sources[]` with a single `PropertySource` per entry (`ref` = DOI, `method` from DOI lookup). |
 | `kb/taxonomy/CCN20230722/*.yaml` | Refreshed via `just reingest`. No manual edits. |
 | schema | No change. `AnatomicalLocation.sources[]` already supports per-source attribution. |
