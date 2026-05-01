@@ -83,7 +83,13 @@ First, read the facts file completely. Then write the Markdown report below.
 
 ---
 
-## Report structure (follow exactly, in this order)
+## Report structure (paper-style — follow exactly, in this order)
+
+The report uses paper-style top-level sections so it can be screenshotted
+into a publication. Sections appear in the order: Header → Introduction →
+Results → Methods → Discussion → References. Methods is a `<details>` fold
+to limit scrolling on screen review (it carries provenance receipts most
+readers don't need by default).
 
 ### 1. Header
 
@@ -100,31 +106,21 @@ they have no `quote_key` and no `[n]` attribution to a references table):
 **⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
 ```
 
-### 2. Introduction — CL mapping context
+---
 
-Emit a `## Introduction` section using only the fields on `classical_nodes[0]`:
-`cl_term`, `cl_id`, `cl_mapping_type`, `cl_mapping_notes`, `proposed_cl_term`.
+## Introduction
 
-Write 2–4 sentences placing this type in the Cell Ontology:
+This top-level section bundles location note + classical type table + literature
+support. Open the `## Introduction` section with one or two sentences of biological
+framing — what is this cell type, why does the mapping matter — drawn from the
+classical literature (LITERATURE evidence on the node). Use only facts present in
+the facts file; do not invent biological context.
 
-- If `cl_mapping_type == "EXACT"`: state that the existing CL term
-  `{cl_term} ({cl_id})` covers this type as an exact match (skos:exactMatch).
-- If `cl_mapping_type ∈ {"BROAD", "RELATED"}`: state that `{cl_term} ({cl_id})`
-  is the closest existing CL term — an ancestor (BROAD) or related concept
-  (RELATED) — and that a new child term is a candidate for submission to CL.
-  Quote `cl_mapping_notes` verbatim if present (no paraphrase).
-- If no `cl_term` is present: state that no existing CL term covers this type
-  and that it is a candidate for a new CL term.
+The Cell Ontology mapping line (see "### 4. Cell Ontology mapping" below) is
+emitted *after* the classical type description block, not in the framing
+paragraph — readers see the biology first, then the ontology placement.
 
-If `proposed_cl_term` is populated, add: `**Proposed CL term:** *{label}*
-({status})` and, if `definition` is present, render it as a single
-blockquote — verbatim, no attribution required (this is curator-authored
-prose stored on the node, not a quoted source).
-
-Do not invent CL IDs or definitions. Use only what is present on the facts
-file. End the section with `---`.
-
-### 3. Location note (conditional)
+### 2. Location note (conditional)
 
 Emit only if `graph_meta.has_merfish_location` is true:
 
@@ -137,7 +133,7 @@ Then explain briefly why this matters for this specific classical type (e.g. if 
 classical type has an axonal projection target that might be confused with soma location).
 Use only information from the facts file; do not invent projection targets.
 
-### 4. Classical type table
+### 3. Classical type table
 
 One row per property from `classical_nodes[0]`. Columns: Property | Value | References.
 Use `[n]` labels from `classical_nodes[0].location_refs`, `nt_refs`, marker `refs` etc.
@@ -170,7 +166,71 @@ section. Do not invent sources or quotes not present in `facts.quotes`.
 </details>
 ```
 
-### 5. Mapping candidates table + property alignment table
+### 4. Cell Ontology mapping
+
+Closes the Introduction. Place this *after* the classical type table and its
+Details fold so the reader has the biological description in mind before the
+ontology placement.
+
+If `methods_summary.cl_mapping.cl_term_id` is non-empty, emit one line citing
+the Cell Ontology term:
+
+> Cell Ontology mapping: {cl_term_label} [[{cl_term_id}]({ols_url})] ({mapping_type}).
+
+If `cl_mapping.cl_term_id` is empty, state:
+
+> No Cell Ontology term currently covers this type — candidate for a new CL term.
+
+If `classical_nodes[0].proposed_cl_term` is populated, follow with:
+
+```markdown
+**Proposed CL term:** *{proposed_cl_term.label}* ({proposed_cl_term.status})
+> {proposed_cl_term.definition}
+```
+
+The blockquote body is the verbatim `proposed_cl_term.definition` text — this
+is curator-authored prose stored on the KB node, not a quoted literature
+source, so no `quote_key` attribution is required (the hook treats node-level
+authored prose like other authored-prose blockquote paths).
+
+For BROAD / RELATED / NARROW mappings, `mapping_notes` is reprised in the
+Discussion's Best candidate + caveats section (do not duplicate it here).
+
+---
+
+## Results
+
+This top-level section bundles the mapping candidate overview, per-candidate
+property alignment + Evidence support tables, and the per-candidate paragraph(s).
+Open with one summary sentence: how many candidates were assessed and what the
+primary verdict is (e.g. "Three candidate atlas clusters were assessed; CLUS_1915
+in SUPT_0486 is the primary mapping at MODERATE confidence").
+
+**Annotation-transfer overview figure (run-level)**
+
+If `methods_summary.annotation_transfer_runs[*].figure_relpath` is non-empty
+for any run, embed each run's figure once near the top of Results (after the
+opening summary sentence, before the candidates table). The figure is
+run-level — it covers all candidates at all taxonomy levels — so it does NOT
+go in any specific candidate paragraph.
+
+The renderer also attaches `fields.figure_relpath` and `fields.figure_caption`
+to each AT evidence item; pick any one of those (they all point at the same
+run figure) to compose the embed:
+
+```markdown
+![{fields.figure_caption}]({fields.figure_relpath})
+
+*F1 across taxonomy levels. Each row is a source-cell group; columns are top
+target classes/subclasses/supertypes/clusters. F1 ≥ 0.5 indicates a clean
+mapping at that level; the spread across columns reveals where the source
+cells split among atlas siblings.*
+```
+
+Use a short interpretive line below the figure (≤2 sentences) drawing on
+`methods_summary.annotation_transfer_runs[*].caveats` if relevant.
+
+### 4. Mapping candidates table + property alignment table
 
 **4a. Candidate overview table (one row per edge)**
 
@@ -288,11 +348,12 @@ before the mapping candidates table. Example:
 This is NOT the "Eliminated candidates" section — it is the primary finding.
 Use only values from the facts file; do not invent expression values.
 
-### 6. Candidate paragraphs
+### 5. Candidate paragraphs
 
-**MODERATE and LOW edges:** one `##` section each.
+**MODERATE and LOW edges:** one `###` section each (Note: under the
+top-level `## Results` section above, candidate sections use `###` headings.)
 
-Section title: `## {node_b_name} · {confidence_badge}`
+Section title: `### {node_b_name} · {confidence_badge}`
 
 Each section must have:
 
@@ -301,6 +362,31 @@ Each section must have:
   - Be specific — don't just say "atlas metadata". Say what the metadata shows.
   - Cite using the `ref_label` from the evidence item (e.g. `[1]`, `[A]`).
   - For ATLAS_QUERY items: state what filter was applied and what survived/was eliminated.
+
+**Embedded figure** (for any evidence item with `fields.figure_relpath`):
+- The renderer auto-generates a δ ranked-bar PNG for each `BulkCorrelationEvidence`
+  item with `top_n_hits`. Embed it after the evidence-narrative blockquote using
+  standard Markdown:
+  ```
+  ![{fields.figure_caption}]({fields.figure_relpath})
+  ```
+- The path is relative to the report file (`figures/{node}_{contrast}_{sha8}.png`).
+  Do NOT paraphrase the caption — it's deterministic provenance.
+- The figure highlights `is_target` rows in red; the caption already names the
+  target. No extra text needed describing the figure — it speaks for itself.
+
+**Top-N hits table** (compact alternative to the figure for screen review):
+- For evidence items with `fields.top_n_hits` you may render a compact Markdown
+  table after the figure:
+  ```
+  | Rank | Cluster | Supertype | δ | MFR | Top anatomy |
+  |---:|---|---|---:|---:|---|
+  | 1 | CLUS_2293 | SUPT_0563 | 0.0180 | — | Ventromedial hypothalamic nucleus |
+  | ... | | | | | |
+  ```
+  Bold or mark `is_target=True` rows. Use this when the figure is enough but a
+  precise δ readout helps. For very small reports (≤2 evidence items), skipping
+  the table and relying on the figure is fine.
 - For property comparisons where `node_a_value` or `notes` contain quantitative expression
   data from direct re-analysis (detection rates, mean counts): mention these numbers in
   the relevant supporting or concern bullet. Direct expression evidence strengthens or
@@ -381,7 +467,176 @@ OLM hippocampus' may resolve this").
 - For location evidence on eliminated edges, apply the adjacent/distant interpretation rule.
 - Note which counter-evidence is weak (adjacent region) vs strong (distant region).
 
-### 7. Proposed experiments
+---
+
+## Methods
+
+Methods is a `<details>` fold (per design — limit scrolling on screen review).
+The section's audit-trail content draws from `methods_summary` in the facts
+JSON; subsections appear only when their underlying evidence is present
+(omit `Annotation transfer` if no AT runs, omit `Bulk transcriptomic correlation`
+if no BulkCorrelation runs, etc.).
+
+The `### Methods` heading sits OUTSIDE the fold (so the section appears in
+the table of contents and the heading remains visible when the fold is
+collapsed). The fold's `<summary>` carries a short descriptive label, NOT
+another heading:
+
+```markdown
+### Methods
+
+<details>
+<summary>Data sources, analyses, and reproducibility receipts</summary>
+```
+
+Subsections (omit any whose data is empty):
+
+**Classical type definition.** One paragraph from `classical_nodes[0]`:
+defining markers, NT type, soma location, with the `[n]` literature citations
+in `classical_nodes[0].location_refs / nt_refs / defining_markers[*].refs` etc.
+Mention the `definition_basis` value (CLASSICAL_MULTIMODAL / PRIOR_TRANSCRIPTOMIC /
+etc.) so the reader knows what evidentiary base the classical node sits on.
+
+**Atlas mapping query.** Static text:
+> Candidate atlas clusters were retrieved from the {atlas_data_sources[0].atlas}
+> taxonomy ({atlas_data_sources[0].taxonomy_id}) at ranks 0 (cluster) and 1
+> (supertype) using metadata-based scoring (region match, NT type, defining
+> markers, sex bias when applicable). Full scoring rules: `workflows/map-cell-type.md`.
+
+**Property alignment.** Static text:
+> Each defining property of the classical type was compared to the corresponding
+> atlas-side value via the `property_comparisons` schema, with alignments graded
+> CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical
+> values came from precomputed expression on the cluster (cluster.yaml in the
+> taxonomy reference store) and from MERFISH spatial registration for soma
+> location.
+
+**Annotation transfer** *(only if `methods_summary.annotation_transfer_runs` is non-empty)*:
+For each AT run summary, render a compact table. AT run records may come
+from one of two sources:
+- New shape (preferred): the evidence carries `run_ref` and the renderer
+  populated the run summary from a `kb/annotation_transfer_runs/{run_id}/manifest.yaml`
+  record. Run summary has rich provenance (atlas SHA, script Git refs).
+- Old shape (back-compat): the evidence has inline `method` / `tool_version`
+  fields and no run_ref. Run summary has the inline fields only.
+
+For new-shape runs, render this table (omit any row with empty value):
+
+```
+| Field | Value |
+|---|---|
+| Source dataset | {source_dataset_accession} ({source_cluster_label}) |
+| Source species | {source_species} |
+| Target atlas | {target_atlas} ({target_taxonomy_id}; SHA-256: {atlas_pseudobulk_sha[:8]}) |
+| Method | {method} |
+| Tool version | {tool_version} |
+| Bootstrap threshold | {bootstrap_threshold} |
+| n cells | {n_cells_total} (filtered to {n_cells_after_filter}) |
+| Run record | [`kb/annotation_transfer_runs/{run_dir_name}/manifest.yaml`](../../kb/annotation_transfer_runs/{run_dir_name}/manifest.yaml) |
+| Script (external) | {script_relpath} ({code_version}) |
+| Code reference | [{code_reference}]({code_reference}) |
+| F1 matrix | [`{output_relpath}`](../../kb/annotation_transfer_runs/{run_dir_name}/{output_relpath}) |
+| Caveats | {caveats} |
+```
+
+For old-shape runs, use the simpler bullets:
+- Method + tool_version
+- Source dataset accession + species
+- Target atlas + species (only if cross-species; omit for same-species)
+- Best F1 score + level
+- Bootstrap threshold + n_cells_total / n_cells_after_filter (if recorded)
+- `code_reference` URL as an inline link if present
+
+**Bulk transcriptomic correlation** *(only if `methods_summary.bulk_correlation_runs` is non-empty)*:
+For each run summary, render a compact table (or paragraph for a single run) with:
+
+```
+| Field | Value |
+|---|---|
+| Source publication | {citation from bulk_data_sources, with `[n]` ref label} |
+| GEO accession | {bulk_data_sources[i].geo_accession} or — |
+| Technique | {bulk_data_sources[i].technique} |
+| n pools | {bulk_data_sources[i].n_pools} |
+| Atlas | {bulk_correlation_runs[i].atlas_taxonomy_id} (SHA-256: {atlas_pseudobulk_sha[:8]}) |
+| Statistic | {bulk_correlation_runs[i].statistic_kind} |
+| Parameters | {bulk_correlation_runs[i].parameters} |
+| Script | [{script_relpath}]({script_git_repo_url}/blob/{script_git_commit}/kb/correlation_runs/{run_dir}/{script_relpath}) |
+| Code version | {code_version} |
+| Caveats | {caveats} |
+```
+
+The Script row builds a permalink from `git_repo_url + git_commit + relpath`;
+omit the link if any of those fields are empty (just print `relpath`).
+
+**Atlas data sources.** One row per entry in `methods_summary.atlas_data_sources`:
+- Atlas + taxonomy_id + pseudobulk_source path + SHA-256 (full).
+
+**Anti-hallucination.** Static paragraph (verbatim):
+> All citations, atlas accessions, ontology CURIEs, and verbatim literature
+> quotes in this report are validated against the evidencell knowledge base
+> at write time. Authored-prose evidence narratives are validated against
+> their source `evidence_items[*].explanation` fields. The pre-write hook
+> rejects any unresolvable identifier or unattributed blockquote. Specific
+> mapping limitations and caveats are documented per-candidate in the
+> Discussion section.
+
+**Reproducibility footer.** Auto-generated at gen time, single line at the
+end of the Methods fold (verbatim from `methods_summary`). Format as
+italic paragraph, NOT a blockquote (no `quote_key`, would fail the hook):
+
+```markdown
+*Generated by evidencell `{methods_summary.framework_version}` at
+{methods_summary.gen_timestamp} from
+[{methods_summary.kb_graph_file}]({methods_summary.kb_graph_file}).*
+```
+
+**Evidence base table** (audit subsection — fold within fold):
+Compact table at the bottom of the Methods fold listing every evidence item:
+| Edge ID | Evidence types | Supports | Source |
+| --- | --- | --- | --- |
+| edge_X | LITERATURE; ATLAS_METADATA; BULK_CORRELATION | ... | [1], [3], [7] |
+
+Close the Methods fold:
+```markdown
+</details>
+```
+
+---
+
+## Discussion
+
+This top-level section bundles the "best candidate + caveats" headline,
+proposed experiments, and open questions.
+
+### 6. Best candidate + caveats summary
+
+Open the Discussion with one paragraph naming the primary candidate and
+its key caveats. Format as a normal paragraph with bold lead (NOT as a
+`> ...` blockquote — this is structural framework text, not a literature
+quote, so it has no `quote_key` and would fail the hook):
+
+```markdown
+**Primary mapping:** {classical_node.name} → {best_edge.node_b_name} [{accession}]
+at {confidence} confidence. Key support: {1-2 evidence types}. Key caveats:
+{1-2 caveat_type values from the edge's caveats}.
+```
+
+If `methods_summary.cl_mapping.cl_term_id` is non-empty, add a follow-up sentence
+naming the CL mapping and interpreting the mapping_type:
+- **EXACT**: "This classical type maps directly to the Cell Ontology term
+  {cl_term_label} [[{cl_term_id}]({ols_url})]."
+- **BROAD**: "The Cell Ontology has no specific term for this population;
+  {cl_term_label} [[{cl_term_id}]({ols_url})] is the closest ancestor.
+  {mapping_notes — verbatim if non-empty}."
+- **RELATED**: "{cl_term_label} [[{cl_term_id}]({ols_url})] is a related
+  but non-identical Cell Ontology term. {mapping_notes}"
+- **NARROW** / other: similar one-line interpretation; include `mapping_notes` verbatim.
+
+If `cl_mapping.cl_term_id` is empty (no CL term assigned), state:
+> No Cell Ontology term currently assigned. {Reason from `notes` on the
+> classical node, if available — e.g. "Candidate for CL contribution".}
+
+### 7. Proposed experiments and follow-ups
 
 **First, cross-check each proposed experiment against existing evidence items on the same
 edge.** If an evidence item already partially or fully addresses a proposed experiment
@@ -410,12 +665,14 @@ and how results would feed back as `AnnotationTransferEvidence`.
 Numbered list. Collect from `unresolved_questions[]` across all edges. Deduplicate.
 If a question appears on multiple edges, note that.
 
-### 9. Evidence base table
+> The Evidence base audit table previously at section 8 has moved into the
+> Methods fold (see "Evidence base table" subsection there). This keeps the
+> Discussion focused on interpretation and the audit table closer to its
+> reproducibility receipts.
 
-Compact table: Edge ID | Evidence types | Supports. One line per evidence item.
-No verbatim quotes in this table. Make clear what is atlas-metadata vs literature.
+---
 
-### 10. References
+## References
 
 `[1]`–`[N]` for literature (PMID as hyperlink to PubMed).
 `[A]`–… for atlas queries (query_url as hyperlink labelled "view").

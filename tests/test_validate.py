@@ -341,6 +341,8 @@ def test_linkml_validate_dispatches_target_class_by_path(tmp_path: Path):
     assert _target_class_for_kb_path(Path("kb/datasets/foo.yaml")) == "BulkDataset"
     assert _target_class_for_kb_path(Path("kb/correlation_runs/run_x/manifest.yaml")) == "CorrelationRun"
     assert _target_class_for_kb_path(Path("kb/correlation_runs/run_x/other.yaml")) is None
+    assert _target_class_for_kb_path(Path("kb/annotation_transfer_runs/at_run/manifest.yaml")) == "AnnotationTransferRun"
+    assert _target_class_for_kb_path(Path("kb/annotation_transfer_runs/at_run/other.yaml")) is None
     assert _target_class_for_kb_path(Path("kb/draft/region/foo.yaml")) == "CellTypeMappingGraph"
     assert _target_class_for_kb_path(Path("kb/mappings/region/foo.yaml")) == "CellTypeMappingGraph"
     assert _target_class_for_kb_path(Path("kb/taxonomy/CCN20230722/cluster.yaml")) == "TaxonomyNodeList"
