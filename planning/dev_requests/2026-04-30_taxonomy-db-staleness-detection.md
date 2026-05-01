@@ -1,6 +1,7 @@
 # Dev request: detect stale taxonomy DB during gen-facts / render
 
 **Date:** 2026-04-30
+**Status:** **CLOSED 2026-05-01** — landed on branch `regen-sexually-dimorphic-paper-style`. `taxonomy_db._SCHEMA_HASH` + `_meta.schema_hash` row at build time, `taxonomy_db.taxonomy_db_freshness(taxonomy_id)` and the path-explicit `_freshness_at(db_path, yaml_dir)`, render.py emits a single stderr WARNING per taxonomy_id per process when stale. Six unit tests cover fresh / missing-DB / missing-hash / hash-mismatch / yaml-newer / recovers-after-rebuild.
 **Severity:** Medium — silent data dropping; user-discoverable only by spot-check.
 
 ---

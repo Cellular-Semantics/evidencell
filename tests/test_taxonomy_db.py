@@ -20,6 +20,8 @@ from evidencell.taxonomy_db import (
     ingest_to_yaml,
     iter_taxonomy_rows,
     read_taxonomy_meta,
+    _SCHEMA_HASH,
+    _freshness_at,
     _is_cas_format,
     _meta_to_dict,
 )
@@ -504,3 +506,86 @@ def test_full_wmbv1_ingest(tmp_path):
                 "SELECT COUNT(*) FROM nodes WHERE n_cells IS NOT NULL"
             ).fetchone()[0]
         assert db_n_cells_count > 6000  # ~6777 across all levels expected
+
+
+# ── Freshness check (DB staleness detection) ──────────────────────────────────
+
+def test_freshness_fresh_db(populated_db):
+    """A freshly-built DB is fresh; reasons list is empty."""
+    db, tmp_path, _ = populated_db
+    stale, reasons = _freshness_at(db.db_path, tmp_path)
+    assert stale is False
+    assert reasons == []
+
+
+def test_freshness_missing_db(tmp_path):
+    """A missing DB is reported stale with a single reason."""
+    stale, reasons = _freshness_at(tmp_path / "no.db", tmp_path)
+    assert stale is True
+    assert len(reasons) == 1
+    assert "DB not found" in reasons[0]
+
+
+def test_freshness_missing_schema_hash(populated_db):
+    """A DB built before staleness tracking has no schema_hash row → stale."""
+    db, tmp_path, _ = populated_db
+    con = sqlite3.connect(db.db_path)
+    try:
+        con.execute("DELETE FROM _meta WHERE key = 'schema_hash'")
+        con.commit()
+    finally:
+        con.close()
+    stale, reasons = _freshness_at(db.db_path, tmp_path)
+    assert stale is True
+    assert any("lacks _meta.schema_hash" in r for r in reasons)
+
+
+def test_freshness_schema_hash_mismatch(populated_db):
+    """A DB built against a different schema (older or experimental) → stale."""
+    db, tmp_path, _ = populated_db
+    con = sqlite3.connect(db.db_path)
+    try:
+        con.execute(
+            "UPDATE _meta SET value = 'badhash0badhash0' WHERE key = 'schema_hash'"
+        )
+        con.commit()
+    finally:
+        con.close()
+    stale, reasons = _freshness_at(db.db_path, tmp_path)
+    assert stale is True
+    assert any("schema_hash mismatch" in r for r in reasons)
+    # Both the stored truncation AND the current truncation appear in the message
+    assert any(_SCHEMA_HASH[:8] in r for r in reasons)
+
+
+def test_freshness_yaml_newer_than_db(populated_db):
+    """A YAML file edited after the DB was built → stale."""
+    import os
+    import time
+    db, tmp_path, _ = populated_db
+    # Touch a YAML file with a future mtime (cleanly newer than db.db_path)
+    yaml_files = list(tmp_path.glob("*.yaml"))
+    assert yaml_files, "fixture should have produced YAML files"
+    target = yaml_files[0]
+    future = time.time() + 60
+    os.utime(target, (future, future))
+    stale, reasons = _freshness_at(db.db_path, tmp_path)
+    assert stale is True
+    assert any("YAML newer than DB" in r for r in reasons)
+
+
+def test_freshness_recovers_after_rebuild(populated_db):
+    """Rebuilding the DB after a schema_hash corruption refreshes the hash."""
+    db, tmp_path, _ = populated_db
+    con = sqlite3.connect(db.db_path)
+    try:
+        con.execute(
+            "UPDATE _meta SET value = 'corrupt0corrupt0' WHERE key = 'schema_hash'"
+        )
+        con.commit()
+    finally:
+        con.close()
+    assert _freshness_at(db.db_path, tmp_path)[0] is True  # stale
+    db.build_from_yaml(tmp_path)
+    stale, reasons = _freshness_at(db.db_path, tmp_path)
+    assert stale is False, f"expected fresh after rebuild, got reasons={reasons}"
