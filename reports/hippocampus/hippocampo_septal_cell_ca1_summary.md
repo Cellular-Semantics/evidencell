@@ -1,67 +1,98 @@
 # Hippocampo-septal (HS) cell — WMBv1 (CCN20230722) Mapping Report
-*Draft · 2026-04-09 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
+*draft · 2026-04-09 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
 
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
 
 ---
 
-## Classical type
+## Classical type summary
 
 | Property | Value | References |
 |---|---|---|
-| CL term | sst chodl GABAergic interneuron (CL:4023121) | |
-| Soma location | CA1 stratum oriens [UBERON:0005383] | [1] [2] [3] [4] |
-| NT | GABAergic |  |
-| Markers | Sst+ | [1] [5] [6] |
-| Neuropeptides | Sst |  |
+| Soma location | Stratum oriens [UBERON:0005383] (CA1) | [1][2][3][4] |
+| Neurotransmitter | GABAergic | — |
+| CL term | sst chodl GABAergic interneuron (CL:4023121) | — |
+| CL mapping type | RELATED | — |
+| Defining markers | Sst | [1][5][6] |
+| Neuropeptides | Sst | — |
+
+**Notes:** Very limited reference coverage (one direct quote available). Electrophysiology is not characterised, removing a potentially discriminating property. The relationship to Chodl+ long-range projecting cortical interneurons is unclear. HS cells are one of two main SST+ interneuron types in CA1 alongside OLM cells; the defining feature distinguishing them is their long-range axonal projection to the medial septum, which cannot be resolved from atlas metadata alone. *(note: HS cells belong to the stratum oriens family of Sst+ interneurons alongside OLM, bistratified, and oriens-oriens cells; all share significant transcriptomic overlap at the SST+ subclass level.)*
 
 ---
 
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
+| Rank | WMBv1 supertype | Cells | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|
-| 1 | 0216 Sst Gaba_3 [CS20230722_SUPT_0216] |  | — | 🔴 LOW | Speculative |
+| 1 | 0216 Sst Gaba_3 [CS20230722_SUPT_0216] | — | 🔴 LOW | Sst+, GABAergic, CA1 stratum oriens all consistent; Reln defining marker discordant with HS identity; supertype is OLM-enriched | Speculative |
 
-All edges: `PARTIAL_OVERLAP`
+**1 edge total · Relationship type: PARTIAL_OVERLAP**
 
 ---
 
 ## 0216 Sst Gaba_3 · 🔴 LOW
 
-**Supporting evidence:**
+### Supporting evidence
 
-- Sst Gaba_3 supertype is MGE-derived Sst+ GABA interneuron in hippocampal stratum oriens (CA1 SO: 818 cells, largest single location). HS cell is Sst+ GABAergic with soma in CA1 stratum oriens — both properties match. However, the supertype also captures OLM cells and potentially bistratified cells; the HS-specific feature (long-range projection to medial septum) is not resolvable from atlas metadata. The Reln defining marker of SUPT_0216 is inconsistent with HS cell identity (Reln is an OLM marker). This is a shared supertype with OLM and other SO interneurons, not an HS-specific target. [Atlas metadata]
-- MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. Sst cells map strongly to SUBC_053 (F1=0.983) at SUBCLASS level. At SUPERTYPE level, SUPT_0216 (Sst Gaba_3) receives 83/273 Sst cells (F1=0.488, target_purity=1.0). PARTIAL: hippocampo-septal cells are Sst+ long-range projection neurons; the Sst SSv4 label is mixed and cannot discriminate this cell type. SUPT_0219 (Sst Gaba_6) is the dominant Sst supertype target (F1=0.759) and may be a better correspondent for some Sst subtypes. Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels. [Annotation transfer]
+- **Neurotransmitter match:** 0216 Sst Gaba_3 [CS20230722_SUPT_0216] is annotated as a GABA interneuron, fully consistent with the GABAergic identity of HS cells. Property comparison: CONSISTENT.
+- **Stratum oriens location:** Atlas metadata places the largest cell count for this supertype in Field CA1, stratum oriens (MBA:399, 818 cells), directly matching the canonical soma location of HS cells in CA1 stratum oriens [UBERON:0005383] [1][2][3][4]. Property comparison: CONSISTENT.
+- **Sst marker expression:** Sst is a defining marker at the Sst Gaba subclass level; precomputed expression mean for Sst = 11.44 across this supertype, consistent with robust Sst expression expected in HS cells [1][5][6]. Property comparison: CONSISTENT.
+- **Annotation transfer — subclass coherence:** MapMyCells re-analysis of Yao 2021 (GEO:GSE185862) SSv4 Sst subclass (n=273 HIP cells) maps 265/273 cells to the Sst Gaba subclass at subclass level (F1=0.983, group_purity=0.989, target_purity=0.978), confirming strong subclass-level coherence for Sst interneurons in this atlas.
+- **Annotation transfer — supertype fraction:** At supertype level, 0216 Sst Gaba_3 [CS20230722_SUPT_0216] receives 83/273 Sst cells (F1=0.488, target_purity=1.0), indicating a subset of Sst interneurons map here with complete purity; these could include HS cells alongside OLM cells.
 
-**Concerns:**
+### Marker evidence provenance
 
-- **marker_Reln** (DISCORDANT): A=not listed — not a HS defining marker / B=Reln — DEFINING marker of SUPT_0216; precomputed stats mean: 7.9. Reln is a known OLM marker (Chrna2::Reln coexpression confirmed). Its presence as a defining marker of this supertype is consistent with OLM but not expected for HS cells. May indicate SUPT_0216 predominantly captures OLM-like cells.
+- Sst positivity in HS cells is established by IHC in mouse hippocampus in multiple independent studies [1][5][6]. However, Sst is a shared subclass-level marker across all stratum oriens Sst+ interneurons (OLM, bistratified, HS, oriens-oriens) and does not discriminate HS cells at the transcript level.
+- Neuropeptide Sst is listed for HS cells but lacks direct quantitative support specific to HS cells; the precomputed expression mean of 11.44 reflects the full 0216 Sst Gaba_3 supertype, not a resolved HS subset.
+- Rbp4 is listed as a defining marker of SUPT_0216 in the atlas; this gene has no annotation in the HS classical node and the alignment was not assessed.
+- The Yao 2021 SSv4 "Sst" subclass (n=273 HIP cells) used for annotation transfer encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); no morphological labels are available to resolve the HS fraction, so annotation transfer results are interpretable only at the population level.
 
-- SUPT_0216 (Sst Gaba_3) is a shared supertype: MapMyCells annotation transfer of OLM interneurons (GSE124847) maps 43/46 OLM cells to this supertype with F1=0.67. Bistratified cells (Pvalb/Sst/Tac1+) may also contribute. HS-specific long-range projection identity cannot be verified from atlas metadata.
-- The Reln defining marker of SUPT_0216 is an OLM marker, not an HS marker. This may indicate the supertype predominantly captures OLM rather than HS cells.
+### Concerns
 
-**What would upgrade confidence:**
+- **Reln discordance (DISCORDANT):** Reln is listed as a DEFINING marker of 0216 Sst Gaba_3 [CS20230722_SUPT_0216] (precomputed mean = 7.9), but Reln is a well-established marker of OLM cells (Chrna2::Reln co-expression confirmed in the literature). Its prominence as a defining marker of this supertype strongly suggests SUPT_0216 predominantly captures OLM cells rather than HS cells. Reln is not a listed feature of HS cells.
+- **Shared, OLM-enriched supertype:** MapMyCells annotation transfer of OLM interneurons (GEO:GSE124847) maps 43/46 OLM cells to 0216 Sst Gaba_3 [CS20230722_SUPT_0216] with F1=0.67, confirming this is an OLM-enriched supertype. Bistratified cells (Pvalb/Sst/Tac1+) may also contribute. HS-specific long-range projection identity cannot be verified from atlas metadata alone.
+- **SUPT_0219 dominance:** At supertype level, 0219 Sst Gaba_6 [CS20230722_SUPT_0219] is the dominant recipient of Sst cells in the annotation transfer (161/273 cells, F1=0.759, group_purity=0.626, target_purity=0.964), making it the primary Sst supertype target overall; SUPT_0216 captures a smaller and distinct fraction.
+- **No HS-defining projecting feature:** The long-range axonal projection to the medial septum that defines HS cells is not encoded in atlas metadata and cannot be evaluated with current evidence.
+- **Limited reference coverage:** Very limited reference support (one direct quote), and electrophysiology is uncharacterised, removing an additional discriminating property that might distinguish HS from OLM cells.
 
-- *Unresolved:* Does SUPT_0216 contain any long-range projecting Sst+ neurons or is it exclusively local-circuit (OLM)?
-- *Unresolved:* Is there a more appropriate HS candidate outside the Sst Gaba_3 supertype (e.g. Chodl+ class)?
+### What would upgrade confidence
+
+- Determine whether 0216 Sst Gaba_3 [CS20230722_SUPT_0216] contains any long-range projecting Sst+ neurons or whether it is exclusively a local-circuit (OLM-dominant) supertype. Retrograde tracing combined with single-cell transcriptomics would resolve this directly.
+- Clarify the relationship to Chodl+ long-range projecting interneurons: the CL RELATED term (CL:4023121) is the sst chodl GABAergic interneuron. If HS cells are Chodl+, checking Chodl expression across Sst supertypes could identify a more specific WMBv1 supertype.
+- Investigate whether a more appropriate WMBv1 supertype for HS cells exists outside the Sst Gaba_3 supertype — for example within a different Sst supertype or a Chodl+ supertype.
+- Obtain a reference dataset with morphologically or projection-confirmed HS cell labels and run MapMyCells annotation transfer to assign supertype-level cluster correspondences directly.
+
+---
+
+## Proposed experiments
+
+### Retrograde tracing + single-cell transcriptomics
+- Perform retrograde labelling from the medial septum in mouse, followed by single-cell RNA-seq or patch-seq of CA1 stratum oriens neurons. This would directly identify the transcriptomic profile of HS cells and enable targeted annotation transfer to WMBv1 supertypes.
+- Cross-check: no current evidence exists for the transcriptomic identity of projection-confirmed HS cells; this is the primary evidence gap.
+
+### Multiplexed FISH / IHC
+- Test co-expression of Sst, Chodl, Reln, and Rbp4 in CA1 stratum oriens to define the molecular boundary between HS and OLM cells at protein and transcript level. *(note: Reln positivity is expected in OLM cells and would argue against HS identity for a given cell; Chodl positivity would support a long-range projecting identity consistent with HS cells.)*
+- Cross-check: the Reln DISCORDANT property comparison (precomputed mean = 7.9 in SUPT_0216) makes this experiment informative for both candidate typing and supertype interpretation.
+
+### Annotation transfer with labelled reference
+- Apply MapMyCells to a dataset with morphologically or projection-confirmed HS cell labels and compare F1 profiles across Sst supertypes (SUPT_0216 vs. SUPT_0219 and others) to identify the best WMBv1 supertype correspondence.
+- Cross-check: current annotation transfer uses the bulk Sst subclass (Yao 2021 SSv4; GEO:GSE185862) without HS-specific labelling; a resolved reference would directly address the primary ambiguity.
 
 ---
 
 ## Open questions
 
-1. Does SUPT_0216 contain any long-range projecting Sst+ neurons or is it exclusively local-circuit (OLM)?
-2. Is there a more appropriate HS candidate outside the Sst Gaba_3 supertype (e.g. Chodl+ class)?
+1. Does 0216 Sst Gaba_3 [CS20230722_SUPT_0216] contain any long-range projecting Sst+ neurons, or is it exclusively a local-circuit (OLM-dominant) supertype?
+2. Is there a more appropriate WMBv1 supertype for HS cells outside the Sst Gaba_3 supertype — for example a Chodl+ supertype or a different Sst subtype?
 
 ---
 
 ## Evidence base
 
-| Edge | Evidence types | Supports |
+| Edge ID | Evidence types | Supports |
 |---|---|---|
-| edge_hippocampo_septal_cell_ca1_to_CS20230722_SUPT_0216 | Atlas metadata | PARTIAL |
-| edge_hippocampo_septal_cell_ca1_to_CS20230722_SUPT_0216 | Annotation transfer | PARTIAL |
+| edge_hippocampo_septal_cell_ca1_to_CS20230722_SUPT_0216 | ATLAS_METADATA | PARTIAL |
+| edge_hippocampo_septal_cell_ca1_to_CS20230722_SUPT_0216 | ANNOTATION_TRANSFER | PARTIAL |
 
 ---
 
@@ -69,9 +100,9 @@ All edges: `PARTIAL_OVERLAP`
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | https://doi.org/10.1101/598599 | — | soma location |
-| [2] | Müller & Remy 2017 · PMID:29250747 | [29250747](https://pubmed.ncbi.nlm.nih.gov/29250747/) | soma location |
-| [3] | Perez et al. 2020 · PMID:33404500 | [33404500](https://pubmed.ncbi.nlm.nih.gov/33404500/) | soma location |
-| [4] | Oren et al. 2009 · PMID:19176803 | [19176803](https://pubmed.ncbi.nlm.nih.gov/19176803/) | soma location |
-| [5] | Takács et al. 2024 · PMID:38470935 | [38470935](https://pubmed.ncbi.nlm.nih.gov/38470935/) | Sst marker |
-| [6] | Katona et al. 2017 · PMID:27997999 | [27997999](https://pubmed.ncbi.nlm.nih.gov/27997999/) | Sst marker |
+| [1] | https://doi.org/10.1101/598599 | — | Soma location |
+| [2] | Müller & Remy 2017 | [29250747](https://pubmed.ncbi.nlm.nih.gov/29250747/) | Soma location |
+| [3] | Perez et al. 2020 | [33404500](https://pubmed.ncbi.nlm.nih.gov/33404500/) | Soma location |
+| [4] | Oren et al. 2009 | [19176803](https://pubmed.ncbi.nlm.nih.gov/19176803/) | Soma location |
+| [5] | Takács et al. 2024 | [38470935](https://pubmed.ncbi.nlm.nih.gov/38470935/) | Sst marker |
+| [6] | Katona et al. 2017 | [27997999](https://pubmed.ncbi.nlm.nih.gov/27997999/) | Sst marker |
