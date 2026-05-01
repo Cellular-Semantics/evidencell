@@ -116,14 +116,9 @@ framing — what is this cell type, why does the mapping matter — drawn from t
 classical literature (LITERATURE evidence on the node). Use only facts present in
 the facts file; do not invent biological context.
 
-If `methods_summary.cl_mapping.cl_term_id` is non-empty, finish the framing
-paragraph with one line citing the Cell Ontology mapping:
-
-> Cell Ontology mapping: {cl_term_label} [[{cl_term_id}]({ols_url})] ({mapping_type}).
-
-If `mapping_type` is BROAD/RELATED/NARROW and `mapping_notes` is present, the
-Discussion section (Best candidate + caveats) should reprise this with the
-mapping_notes verbatim — see Discussion rules below.
+The Cell Ontology mapping line (see "### 4. Cell Ontology mapping" below) is
+emitted *after* the classical type description block, not in the framing
+paragraph — readers see the biology first, then the ontology placement.
 
 ### 2. Location note (conditional)
 
@@ -170,6 +165,36 @@ Omit properties with no source entries. Use `[n]` labels that match the Referenc
 section. Do not invent sources or quotes not present in `facts.quotes`.
 </details>
 ```
+
+### 4. Cell Ontology mapping
+
+Closes the Introduction. Place this *after* the classical type table and its
+Details fold so the reader has the biological description in mind before the
+ontology placement.
+
+If `methods_summary.cl_mapping.cl_term_id` is non-empty, emit one line citing
+the Cell Ontology term:
+
+> Cell Ontology mapping: {cl_term_label} [[{cl_term_id}]({ols_url})] ({mapping_type}).
+
+If `cl_mapping.cl_term_id` is empty, state:
+
+> No Cell Ontology term currently covers this type — candidate for a new CL term.
+
+If `classical_nodes[0].proposed_cl_term` is populated, follow with:
+
+```markdown
+**Proposed CL term:** *{proposed_cl_term.label}* ({proposed_cl_term.status})
+> {proposed_cl_term.definition}
+```
+
+The blockquote body is the verbatim `proposed_cl_term.definition` text — this
+is curator-authored prose stored on the KB node, not a quoted literature
+source, so no `quote_key` attribution is required (the hook treats node-level
+authored prose like other authored-prose blockquote paths).
+
+For BROAD / RELATED / NARROW mappings, `mapping_notes` is reprised in the
+Discussion's Best candidate + caveats section (do not duplicate it here).
 
 ---
 
