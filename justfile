@@ -323,6 +323,8 @@ gen-report-all:
     for region in $(ls kb/mappings 2>/dev/null); do
         uv run python -m evidencell.render index "$region"
     done
+    # Combined taxonomy-indexed TOC (default MODERATE+).
+    uv run python -m evidencell.toc --all
 
 # Regenerate all reports + indices for draft KB (programmatic mode, no LLM)
 # Use this during active curation before content graduates to kb/mappings/

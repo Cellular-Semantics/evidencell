@@ -8,11 +8,14 @@ CLI:
   python -m evidencell.toc <taxonomy_id> [--root ACCESSION]
                            [--min-confidence MODERATE]
                            [--output PATH]
+  python -m evidencell.toc --all [--min-confidence MODERATE]
+                                 [--output PATH]
 """
 
 from __future__ import annotations
 
 import argparse
+import re
 import sqlite3
 import sys
 from collections import defaultdict
@@ -48,6 +51,7 @@ class Edge:
     confidence: str
     region: str
     source_file: Path
+    relationship: str | None = None
 
 
 @dataclass
@@ -95,6 +99,7 @@ def load_mappings(kb_root: Path | None = None) -> list[Edge]:
                     confidence=conf,
                     region=region,
                     source_file=yaml_file,
+                    relationship=edge.get("relationship"),
                 )
     return list(by_classical_target.values())
 
@@ -227,40 +232,136 @@ def _heading_depth_for(rank: int, top_rank: int) -> int:
     return min(max(depth, 2), 6)
 
 
+def _load_enum_descriptions(enum_name: str) -> dict[str, str]:
+    """Read permissible-value descriptions for a LinkML enum from the schema.
+
+    Returns {} if the schema is missing (e.g. in test fixtures with a
+    monkeypatched repo_root).
+    """
+    schema_path = repo_root() / "schema" / "celltype_mapping.yaml"
+    if not schema_path.exists():
+        return {}
+    try:
+        data = yaml.safe_load(schema_path.read_text())
+    except Exception:
+        return {}
+    enum = (data.get("enums") or {}).get(enum_name) or {}
+    out: dict[str, str] = {}
+    for value, body in (enum.get("permissible_values") or {}).items():
+        if not isinstance(body, dict):
+            continue
+        desc = body.get("description") or ""
+        # Collapse whitespace from folded YAML scalars.
+        out[value] = " ".join(desc.split())
+    return out
+
+
+def _collect_used_terms(roots: list[TaxonomyNode]) -> tuple[set[str], set[str]]:
+    """Walk surviving tree; return (relationships_used, confidences_used)."""
+    rels: set[str] = set()
+    confs: set[str] = set()
+    stack = list(roots)
+    while stack:
+        node = stack.pop()
+        for edge in node.edges:
+            if edge.relationship:
+                rels.add(edge.relationship)
+            confs.add(edge.confidence)
+        stack.extend(node.children)
+    return rels, confs
+
+
+def _render_glossary(
+    rels_used: set[str],
+    confs_used: set[str],
+    *,
+    heading_offset: int = 0,
+) -> list[str]:
+    """Emit a glossary section for the relationship + confidence terms in use."""
+    if not rels_used and not confs_used:
+        return []
+    rel_descs = _load_enum_descriptions("MappingRelationship")
+    conf_descs = _load_enum_descriptions("MappingConfidence")
+    h = "#" * (2 + heading_offset)
+    sub = "#" * (3 + heading_offset)
+    lines = [f"{h} Glossary", ""]
+    if rels_used:
+        lines += [f"{sub} Mapping relationship", ""]
+        for term in sorted(rels_used):
+            desc = rel_descs.get(term, "")
+            lines.append(f"- **{term}** — {desc}" if desc else f"- **{term}**")
+        lines.append("")
+    if confs_used:
+        lines += [f"{sub} Mapping confidence", ""]
+        for term in sorted(confs_used, key=lambda c: -CONFIDENCE_ORDER.index(c) if c in CONFIDENCE_ORDER else 0):
+            desc = conf_descs.get(term, "")
+            lines.append(f"- **{term}** — {desc}" if desc else f"- **{term}**")
+        lines.append("")
+    return lines
+
+
+def slugify(value: str) -> str:
+    """Filename-safe slug: keep alphanumerics + hyphens, replace runs of other chars with `_`."""
+    value = re.sub(r"[^A-Za-z0-9-]+", "_", value).strip("_")
+    return value or "untitled"
+
+
 def render_markdown(
     roots: list[TaxonomyNode],
     taxonomy_meta: dict,
     min_confidence: str,
+    *,
+    heading_offset: int = 0,
+    include_header: bool = True,
+    include_glossary: bool = True,
 ) -> str:
+    """Render a single taxonomy's tree as markdown.
+
+    `heading_offset` shifts every emitted heading down by N levels; used by
+    the combined `--all` renderer so each taxonomy gets its own H2 with
+    children pushed one level deeper.
+    """
     name = taxonomy_meta.get("taxonomy_name", taxonomy_meta.get("taxonomy_id", "Taxonomy"))
     tax_id = taxonomy_meta.get("taxonomy_id", "")
     species = taxonomy_meta.get("species_label", "")
     source_file = taxonomy_meta.get("source_file", "")
 
-    lines = [
-        f"# {name} — mapping contents",
-        "",
-        f"Taxonomy ID: `{tax_id}`" + (f" · Species: {species}" if species else ""),
-    ]
-    if source_file:
-        lines.append(f"Source: `{source_file}`")
-    lines.append(f"Minimum mapping confidence: **{min_confidence.upper()}**")
-    lines.append("")
+    lines: list[str] = []
+    if include_header:
+        lines += [
+            f"# {name} — mapping contents",
+            "",
+            f"Taxonomy ID: `{tax_id}`" + (f" · Species: {species}" if species else ""),
+        ]
+        if source_file:
+            lines.append(f"Source: `{source_file}`")
+        lines.append(f"Minimum mapping confidence: **{min_confidence.upper()}**")
+        lines.append("")
 
     if not roots:
         lines.append("_No mapping reports meet the confidence threshold._")
         return "\n".join(lines) + "\n"
 
+    if include_glossary:
+        rels_used, confs_used = _collect_used_terms(roots)
+        lines += _render_glossary(rels_used, confs_used, heading_offset=heading_offset)
+
     top_rank = max((r.rank for r in roots), default=0)
 
     for root in roots:
-        _emit_node(root, top_rank=top_rank, lines=lines)
+        _emit_node(root, top_rank=top_rank, lines=lines, heading_offset=heading_offset)
 
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines) + ("\n" if not lines or lines[-1] != "" else "")
 
 
-def _emit_node(node: TaxonomyNode, top_rank: int, lines: list[str]) -> None:
-    depth = _heading_depth_for(node.rank, top_rank)
+def _emit_node(
+    node: TaxonomyNode,
+    top_rank: int,
+    lines: list[str],
+    heading_offset: int = 0,
+) -> None:
+    depth = _heading_depth_for(node.rank, top_rank) + heading_offset
+    depth = min(depth, 6)
     hashes = "#" * depth
     lines.append(f"{hashes} {_level_label(node.level)} — {node.label}")
     lines.append("")
@@ -274,14 +375,38 @@ def _emit_node(node: TaxonomyNode, top_rank: int, lines: list[str]) -> None:
             else:
                 link = ""
             label = edge.classical_id
-            confidence = edge.confidence
+            tags = " · ".join(t for t in (edge.relationship, edge.confidence) if t)
             if link:
-                lines.append(f"- [{label}]({link}) — {confidence}")
+                lines.append(f"- [{label}]({link}) — {tags}")
             else:
-                lines.append(f"- {label} — {confidence} _(no report file)_")
+                lines.append(f"- {label} — {tags} _(no report file)_")
         lines.append("")
     for child in node.children:
-        _emit_node(child, top_rank, lines)
+        _emit_node(child, top_rank, lines, heading_offset=heading_offset)
+
+
+def _build_taxonomy(
+    taxonomy_id: str,
+    root_accession: str | None,
+    min_confidence: str,
+) -> tuple[list[TaxonomyNode], dict, TaxonomyNode | None]:
+    """Shared pipeline: nodes → edges → tree → prune. Returns (surviving_roots, meta, root_node).
+
+    `root_node` is the requested subtree root if `root_accession` was given, else None.
+    """
+    nodes = load_taxonomy_tree(taxonomy_id, root_accession=root_accession)
+    edges = [e for e in load_mappings() if e.taxonomy_node_id in nodes]
+    attach_edges(nodes, edges, min_confidence)
+    roots = build_tree(nodes)
+    surviving_roots = [r for r in roots if prune_empty(r)]
+    meta_path = taxonomy_meta_path(taxonomy_id)
+    meta = (
+        yaml.safe_load(meta_path.read_text())
+        if meta_path.exists()
+        else {"taxonomy_id": taxonomy_id}
+    )
+    root_node = nodes.get(root_accession) if root_accession else None
+    return surviving_roots, meta, root_node
 
 
 def generate(
@@ -290,26 +415,104 @@ def generate(
     min_confidence: str = "MODERATE",
 ) -> str:
     """End-to-end: load DB + mappings, build pruned tree, render markdown."""
-    nodes = load_taxonomy_tree(taxonomy_id, root_accession=root_accession)
-    edges = [e for e in load_mappings() if e.taxonomy_node_id in nodes]
-    attach_edges(nodes, edges, min_confidence)
-    roots = build_tree(nodes)
-    surviving_roots = [r for r in roots if prune_empty(r)]
-    meta_path = taxonomy_meta_path(taxonomy_id)
-    meta = yaml.safe_load(meta_path.read_text()) if meta_path.exists() else {"taxonomy_id": taxonomy_id}
+    surviving_roots, meta, _ = _build_taxonomy(taxonomy_id, root_accession, min_confidence)
     return render_markdown(surviving_roots, meta, min_confidence)
 
 
-def _default_output_path(taxonomy_id: str, root_accession: str | None) -> Path:
+def list_taxonomy_ids() -> list[str]:
+    """Return all taxonomy IDs that have a built SQLite DB under kb/taxonomy/."""
+    tax_dir = repo_root() / "kb" / "taxonomy"
+    if not tax_dir.exists():
+        return []
+    out = []
+    for sub in sorted(tax_dir.iterdir()):
+        if sub.is_dir() and (sub / f"{sub.name}.db").exists():
+            out.append(sub.name)
+    return out
+
+
+def generate_all(min_confidence: str = "MODERATE") -> str:
+    """Combined TOC across all taxonomies. H1 title; each taxonomy gets H2 + offset children."""
+    taxonomy_ids = list_taxonomy_ids()
+    lines = [
+        "# Taxonomy-indexed mapping reports",
+        "",
+        f"Minimum mapping confidence: **{min_confidence.upper()}**",
+        "",
+    ]
+    if not taxonomy_ids:
+        lines.append("_No taxonomies found under `kb/taxonomy/`._")
+        return "\n".join(lines) + "\n"
+
+    rendered: list[tuple[dict, list[TaxonomyNode], str]] = []
+    for tax_id in taxonomy_ids:
+        surviving_roots, meta, _ = _build_taxonomy(tax_id, None, min_confidence)
+        if not surviving_roots:
+            continue
+        rendered.append((meta, surviving_roots, tax_id))
+
+    if not rendered:
+        lines.append("_No mapping reports meet the confidence threshold._")
+        return "\n".join(lines).rstrip() + "\n"
+
+    # One unified glossary at the top, covering every taxonomy in the report.
+    rels_used: set[str] = set()
+    confs_used: set[str] = set()
+    for _, roots, _ in rendered:
+        r, c = _collect_used_terms(roots)
+        rels_used |= r
+        confs_used |= c
+    lines += _render_glossary(rels_used, confs_used)
+
+    for meta, surviving_roots, tax_id in rendered:
+        name = meta.get("taxonomy_name", tax_id)
+        species = meta.get("species_label", "")
+        lines.append(f"## {name}")
+        lines.append("")
+        meta_bits = [f"`{tax_id}`"]
+        if species:
+            meta_bits.append(species)
+        lines.append(" · ".join(meta_bits))
+        lines.append("")
+        body = render_markdown(
+            surviving_roots,
+            meta,
+            min_confidence,
+            heading_offset=1,
+            include_header=False,
+            include_glossary=False,
+        )
+        lines.append(body.rstrip())
+        lines.append("")
+
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def _default_output_path(
+    taxonomy_id: str,
+    root_accession: str | None,
+    taxonomy_meta: dict | None = None,
+    root_node: TaxonomyNode | None = None,
+) -> Path:
+    """Build a human-readable default path under reports/_toc/.
+
+    Full taxonomy → `{TaxonomyName}.md`
+    Subtree      → `{TaxonomyName}__{NodeLabel}.md`
+
+    Falls back to IDs when name/label lookups are unavailable.
+    """
     out_dir = repo_root() / "reports" / "_toc"
+    tax_slug = slugify((taxonomy_meta or {}).get("taxonomy_name") or taxonomy_id)
     if root_accession:
-        return out_dir / f"{taxonomy_id}_{root_accession}.md"
-    return out_dir / f"{taxonomy_id}.md"
+        node_slug = slugify(root_node.label if root_node else root_accession)
+        return out_dir / f"{tax_slug}__{node_slug}.md"
+    return out_dir / f"{tax_slug}.md"
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("taxonomy_id")
+    parser.add_argument("taxonomy_id", nargs="?", help="Taxonomy ID (omit when using --all).")
+    parser.add_argument("--all", action="store_true", help="Combined TOC across every taxonomy.")
     parser.add_argument("--root", help="Root accession to scope a subtree.")
     parser.add_argument(
         "--min-confidence",
@@ -319,12 +522,22 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
 
-    markdown = generate(
-        taxonomy_id=args.taxonomy_id,
-        root_accession=args.root,
-        min_confidence=args.min_confidence,
-    )
-    out = args.output or _default_output_path(args.taxonomy_id, args.root)
+    if args.all:
+        if args.taxonomy_id or args.root:
+            parser.error("--all is incompatible with positional taxonomy_id or --root")
+        markdown = generate_all(min_confidence=args.min_confidence)
+        out = args.output or (repo_root() / "reports" / "_toc" / "all_taxonomies.md")
+    else:
+        if not args.taxonomy_id:
+            parser.error("taxonomy_id is required unless --all is given")
+        surviving_roots, meta, root_node = _build_taxonomy(
+            args.taxonomy_id, args.root, args.min_confidence
+        )
+        markdown = render_markdown(surviving_roots, meta, args.min_confidence)
+        out = args.output or _default_output_path(
+            args.taxonomy_id, args.root, taxonomy_meta=meta, root_node=root_node
+        )
+
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(markdown)
     print(f"Wrote {out}")

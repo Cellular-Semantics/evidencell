@@ -43,9 +43,12 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
     # KB graph.
     graph = {
         "edges": [
-            {"type_a": "classical_X", "type_b": "TX_CLUS_A1a1", "confidence": "HIGH"},
-            {"type_a": "classical_Y", "type_b": "TX_SUPT_A1b", "confidence": "LOW"},
-            {"type_a": "classical_Z", "type_b": "TX_SUBC_A1", "confidence": "MODERATE"},
+            {"type_a": "classical_X", "type_b": "TX_CLUS_A1a1", "confidence": "HIGH",
+             "relationship": "EQUIVALENT"},
+            {"type_a": "classical_Y", "type_b": "TX_SUPT_A1b", "confidence": "LOW",
+             "relationship": "PARTIAL_OVERLAP"},
+            {"type_a": "classical_Z", "type_b": "TX_SUBC_A1", "confidence": "MODERATE",
+             "relationship": "TYPE_A_SPLITS"},
         ]
     }
     (repo / "kb" / "draft" / "region1" / "graph.yaml").write_text(yaml.safe_dump(graph))
@@ -137,3 +140,67 @@ def test_empty_taxonomy_renders_placeholder(fake_taxonomy, tmp_path):
     md = toc.generate(fake_taxonomy, min_confidence="HIGH", root_accession="TX_SUBC_A2")
     # SUBC_A2 has no edges anywhere — empty placeholder.
     assert "No mapping reports meet the confidence threshold" in md
+
+
+def test_slugify_basic():
+    assert toc.slugify("WMBv1 (Whole Mouse Brain v1)") == "WMBv1_Whole_Mouse_Brain_v1"
+    assert toc.slugify("07 CTX-MGE GABA") == "07_CTX-MGE_GABA"
+    assert toc.slugify("   ") == "untitled"
+
+
+def test_default_output_path_uses_names(fake_taxonomy, monkeypatch):
+    # Single taxonomy: filename uses taxonomy_name slug.
+    surviving_roots, meta, root_node = toc._build_taxonomy(fake_taxonomy, None, "MODERATE")
+    out = toc._default_output_path(fake_taxonomy, None, taxonomy_meta=meta, root_node=root_node)
+    assert out.name == "Test_Taxonomy.md"
+
+    # Subtree: uses node label slug.
+    surviving_roots, meta, root_node = toc._build_taxonomy(
+        fake_taxonomy, "TX_SUBC_A1", "MODERATE"
+    )
+    out = toc._default_output_path(fake_taxonomy, "TX_SUBC_A1", taxonomy_meta=meta, root_node=root_node)
+    assert out.name == "Test_Taxonomy__A1_subclass.md"
+
+
+def test_generate_all_combines_taxonomies_with_offset(fake_taxonomy):
+    md = toc.generate_all(min_confidence="MODERATE")
+    # H1 title for the combined report.
+    assert md.startswith("# Taxonomy-indexed mapping reports\n")
+    # Per-taxonomy H2.
+    assert "\n## Test Taxonomy\n" in md
+    # Top class heading is shifted from H2 to H3 by the offset.
+    assert "### Class — A class" in md
+    # Subclass shifted from H3 to H4.
+    assert "#### Subclass — A1 subclass" in md
+    # Cluster (rank 0) shifted to H6 (capped).
+    assert "###### Cluster — A1a1 clus" in md
+
+
+def test_relationship_appears_on_edge_lines(fake_taxonomy):
+    md = toc.generate(fake_taxonomy, min_confidence="MODERATE")
+    # Each surviving edge line carries its relationship + confidence.
+    assert "EQUIVALENT · HIGH" in md
+    assert "TYPE_A_SPLITS · MODERATE" in md
+
+
+def test_glossary_lists_only_used_terms(fake_taxonomy):
+    md = toc.generate(fake_taxonomy, min_confidence="MODERATE")
+    assert "## Glossary" in md
+    assert "### Mapping relationship" in md
+    assert "### Mapping confidence" in md
+    # Used terms appear.
+    assert "**EQUIVALENT**" in md
+    assert "**TYPE_A_SPLITS**" in md
+    assert "**HIGH**" in md
+    assert "**MODERATE**" in md
+    # Unused terms (from the LOW-filtered Y edge or never-used enum values) absent.
+    assert "**PARTIAL_OVERLAP**" not in md
+    assert "**LOW**" not in md
+    assert "**REFUTED**" not in md
+
+
+def test_generate_all_empty(monkeypatch, tmp_path):
+    """No taxonomies found → placeholder, no traceback."""
+    monkeypatch.setattr(toc, "repo_root", lambda: tmp_path)
+    md = toc.generate_all()
+    assert "No taxonomies found" in md
