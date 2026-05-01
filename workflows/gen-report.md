@@ -100,7 +100,31 @@ they have no `quote_key` and no `[n]` attribution to a references table):
 **⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
 ```
 
-### 2. Location note (conditional)
+### 2. Introduction — CL mapping context
+
+Emit a `## Introduction` section using only the fields on `classical_nodes[0]`:
+`cl_term`, `cl_id`, `cl_mapping_type`, `cl_mapping_notes`, `proposed_cl_term`.
+
+Write 2–4 sentences placing this type in the Cell Ontology:
+
+- If `cl_mapping_type == "EXACT"`: state that the existing CL term
+  `{cl_term} ({cl_id})` covers this type as an exact match (skos:exactMatch).
+- If `cl_mapping_type ∈ {"BROAD", "RELATED"}`: state that `{cl_term} ({cl_id})`
+  is the closest existing CL term — an ancestor (BROAD) or related concept
+  (RELATED) — and that a new child term is a candidate for submission to CL.
+  Quote `cl_mapping_notes` verbatim if present (no paraphrase).
+- If no `cl_term` is present: state that no existing CL term covers this type
+  and that it is a candidate for a new CL term.
+
+If `proposed_cl_term` is populated, add: `**Proposed CL term:** *{label}*
+({status})` and, if `definition` is present, render it as a single
+blockquote — verbatim, no attribution required (this is curator-authored
+prose stored on the node, not a quoted source).
+
+Do not invent CL IDs or definitions. Use only what is present on the facts
+file. End the section with `---`.
+
+### 3. Location note (conditional)
 
 Emit only if `graph_meta.has_merfish_location` is true:
 
@@ -113,7 +137,7 @@ Then explain briefly why this matters for this specific classical type (e.g. if 
 classical type has an axonal projection target that might be confused with soma location).
 Use only information from the facts file; do not invent projection targets.
 
-### 3. Classical type table
+### 4. Classical type table
 
 One row per property from `classical_nodes[0]`. Columns: Property | Value | References.
 Use `[n]` labels from `classical_nodes[0].location_refs`, `nt_refs`, marker `refs` etc.
@@ -146,7 +170,7 @@ section. Do not invent sources or quotes not present in `facts.quotes`.
 </details>
 ```
 
-### 4. Mapping candidates table + property alignment table
+### 5. Mapping candidates table + property alignment table
 
 **4a. Candidate overview table (one row per edge)**
 
@@ -264,7 +288,7 @@ before the mapping candidates table. Example:
 This is NOT the "Eliminated candidates" section — it is the primary finding.
 Use only values from the facts file; do not invent expression values.
 
-### 5. Candidate paragraphs
+### 6. Candidate paragraphs
 
 **MODERATE and LOW edges:** one `##` section each.
 
@@ -357,7 +381,7 @@ OLM hippocampus' may resolve this").
 - For location evidence on eliminated edges, apply the adjacent/distant interpretation rule.
 - Note which counter-evidence is weak (adjacent region) vs strong (distant region).
 
-### 6. Proposed experiments
+### 7. Proposed experiments
 
 **First, cross-check each proposed experiment against existing evidence items on the same
 edge.** If an evidence item already partially or fully addresses a proposed experiment
@@ -381,17 +405,17 @@ For each group:
 For annotation transfer experiments: include atlas, tool, expected output format,
 and how results would feed back as `AnnotationTransferEvidence`.
 
-### 7. Open questions
+### 8. Open questions
 
 Numbered list. Collect from `unresolved_questions[]` across all edges. Deduplicate.
 If a question appears on multiple edges, note that.
 
-### 8. Evidence base table
+### 9. Evidence base table
 
 Compact table: Edge ID | Evidence types | Supports. One line per evidence item.
 No verbatim quotes in this table. Make clear what is atlas-metadata vs literature.
 
-### 9. References
+### 10. References
 
 `[1]`–`[N]` for literature (PMID as hyperlink to PubMed).
 `[A]`–… for atlas queries (query_url as hyperlink labelled "view").

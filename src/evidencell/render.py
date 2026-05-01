@@ -459,6 +459,70 @@ def _location_note(graph: dict) -> str | None:
     return None
 
 
+def _cl_introduction(cn: dict) -> list[str]:
+    """
+    Render the Introduction paragraph(s) describing this node's relationship
+    to the Cell Ontology. Pulls from cl_term / cl_id / cl_mapping_type /
+    cl_mapping_notes / proposed_cl_term on the classical_node facts dict.
+    Returns an empty list if no CL information is present.
+    """
+    cl_term = cn.get("cl_term") or ""
+    cl_id = cn.get("cl_id") or ""
+    mapping_type = cn.get("cl_mapping_type") or ""
+    notes = cn.get("cl_mapping_notes") or ""
+    proposed = cn.get("proposed_cl_term") or {}
+    name = cn.get("name") or "this cell type"
+
+    if not cl_term and not proposed and not mapping_type:
+        return []
+
+    out: list[str] = []
+    # cl_term is already formatted "label (id)" by _ot(); cl_id is exposed
+    # separately for downstream consumers (e.g. NTR drafting).
+    parent_str = f"**{cl_term}**" if cl_term else "—"
+
+    if mapping_type == "EXACT":
+        out.append(
+            f"{name} is mapped to {parent_str} as an **exact match** in the "
+            f"Cell Ontology (skos:exactMatch); the existing CL term covers this type."
+        )
+    elif mapping_type in ("BROAD", "RELATED"):
+        out.append(
+            f"{name} is a **{mapping_type.lower()} match** to {parent_str} in the "
+            f"Cell Ontology — i.e. {parent_str} is the closest existing CL term "
+            f"({'an ancestor' if mapping_type == 'BROAD' else 'a related concept'}) "
+            f"but does not fully cover this type. A new child term is a candidate "
+            f"for submission to CL."
+        )
+    elif cl_term or cl_id:
+        out.append(
+            f"{name} has a CL mapping to {parent_str} (mapping_type unspecified)."
+        )
+    else:
+        out.append(
+            f"No existing Cell Ontology term currently covers {name}. "
+            f"This type is a candidate for a new CL term."
+        )
+
+    if notes:
+        out.append("")
+        out.append(f"*Mapping notes:* {notes}")
+
+    if proposed:
+        plabel = proposed.get("label") or ""
+        pdef = (proposed.get("definition") or "").strip()
+        pstatus = proposed.get("status") or "DRAFT"
+        if plabel or pdef:
+            out.append("")
+            head = f"**Proposed CL term:** *{plabel}* ({pstatus})" if plabel else f"**Proposed CL term** ({pstatus})"
+            out.append(head)
+            if pdef:
+                out.append("")
+                out.append(f"> {pdef}")
+
+    return out
+
+
 def _candidate_verdict(edge: dict, nodes_by_id: dict) -> str:
     """
     Derive verdict from confidence + property_comparisons.
@@ -835,7 +899,10 @@ def extract_node_facts(
             "name": node.get("name", ""),
             "definition_basis": node.get("definition_basis", ""),
             "cl_term": cl_term_str,
+            "cl_id": (cl.get("cl_term") or {}).get("id", "") if cl else "",
             "cl_mapping_type": cl.get("mapping_type", "") if cl else "",
+            "cl_mapping_notes": (cl.get("mapping_notes") or "").strip() if cl else "",
+            "proposed_cl_term": node.get("proposed_cl_term") or None,
             "nt": nt_obj.get("name_in_source", ""),
             "nt_refs": nt_sources_labels,
             "defining_markers": [
@@ -897,7 +964,17 @@ def render_summary(
     lines.append("---")
     lines.append("")
 
-    # 2. Location note (conditional)
+    # 2. Introduction — CL mapping context
+    intro_lines = _cl_introduction(cn)
+    if intro_lines:
+        lines.append("## Introduction")
+        lines.append("")
+        lines.extend(intro_lines)
+        lines.append("")
+        lines.append("---")
+        lines.append("")
+
+    # 3. Location note (conditional)
     loc_note = _location_note(graph)
     if loc_note:
         lines.append(loc_note)
@@ -905,7 +982,7 @@ def render_summary(
         lines.append("---")
         lines.append("")
 
-    # 3. Classical type table
+    # 4. Classical type table
     lines.append("## Classical type")
     lines.append("")
     markers_str = ", ".join(

@@ -333,6 +333,21 @@ gen-report-draft REGION:
 gen-drilldowns-draft GRAPH_FILE NODE_ID:
     uv run python -m evidencell.render drilldowns {{GRAPH_FILE}} --node {{NODE_ID}}
 
+# ── CL term requests ──────────────────────────────────────────────────────────
+
+# Preview a drafted CL new term request without posting (default — safe).
+# Output is rendered from workflows/cl-term-request.md.
+[group('reports')]
+preview-cl-ntr NTR_FILE:
+    uv run python -m evidencell.cl_post {{NTR_FILE}}
+
+# Post a drafted CL new term request as a GitHub issue against
+# obophenotype/cell-ontology. Requires CELLSEM_GH_TOKEN in the environment.
+# Always preview with `just preview-cl-ntr` first.
+[group('reports')]
+post-cl-ntr NTR_FILE:
+    uv run python -m evidencell.cl_post {{NTR_FILE}} --confirm
+
 # ── Annotation Transfer ───────────────────────────────────────────────────────
 
 # Run preflight resource check on a dataset file
