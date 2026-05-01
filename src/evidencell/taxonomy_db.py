@@ -243,6 +243,22 @@ class TaxonomyNode:
     glial: bool | None = None
 
 
+# DOI → human-readable method label for spatial (MERFISH) counts on
+# AnatomicalLocation.sources. Used during taxonomy ingest where the KG
+# carries only the bare DOI on each edge. Add new mappings here as
+# additional spatial datasets are ingested upstream.
+_SPATIAL_METHOD_BY_DOI: dict[str, str] = {
+    "https://doi.org/10.1038/s41586-023-06808-9": "MERFISH (Yao 2024)",
+    "https://doi.org/10.1038/s41586-023-06812-z": "MERFISH (Zhuang 2023)",
+}
+
+
+def _spatial_method_from_doi(doi: str | None) -> str:
+    if not doi:
+        return "MERFISH"
+    return _SPATIAL_METHOD_BY_DOI.get(doi, "MERFISH")
+
+
 def _extract_level(labels: list[str], taxonomy_id: str) -> str:
     """Extract taxonomy level from wmb.labels list by stripping the taxonomy_id prefix."""
     prefix = f"{taxonomy_id}_"
@@ -419,18 +435,33 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
     dois_raw = props.get("rationale_dois")
     rationale_dois = dois_raw if isinstance(dois_raw, list) else []
 
-    # anat
+    # anat — KG returns one merged edge per (cluster, region) with parallel
+    # lists for cell_count, cell_ratio, and source (DOI). Order is aligned:
+    # index i is one source's contribution. Expand into one entry per source
+    # so each AnatomicalLocation in the output YAML has a single count and a
+    # single source DOI (option (a) per planning/dev_requests/
+    # 2026-04-30_zhuang-spatial-ingest.md). Legacy scalar fields (no list,
+    # no source) are still accepted for older fixtures and CAS imports.
     anat_entries = []
     for a in (row.get(rk.get("anat", "anat")) or []):
-        entry = {
-            "id": a.get("anat_id"),
-            "label": a.get("anat_label"),
-            "cell_count": a.get("cell_count"),
-            "cell_ratio": a.get("cell_ratio"),
-        }
-        if isinstance(entry["cell_count"], list):
-            entry["cell_count"] = entry["cell_count"][0] if entry["cell_count"] else None
-        anat_entries.append(entry)
+        anat_id = a.get("anat_id")
+        anat_label = a.get("anat_label")
+        counts = a.get("cell_count")
+        ratios = a.get("cell_ratio")
+        sources = a.get("source")
+        # Normalise to parallel lists. Treat scalar inputs (legacy) as length-1.
+        counts_list = counts if isinstance(counts, list) else [counts]
+        ratios_list = ratios if isinstance(ratios, list) else [ratios]
+        sources_list = sources if isinstance(sources, list) else [sources]
+        n = max(len(counts_list), len(ratios_list), len(sources_list), 1)
+        for i in range(n):
+            anat_entries.append({
+                "id": anat_id,
+                "label": anat_label,
+                "cell_count": counts_list[i] if i < len(counts_list) else None,
+                "cell_ratio": ratios_list[i] if i < len(ratios_list) else None,
+                "source": sources_list[i] if i < len(sources_list) else None,
+            })
 
     # Neuronal / Glial booleans (class level)
     neuronal = _scalar(_first_prop(props, fc.get("neuronal", ["Neuronal"])))
@@ -671,7 +702,13 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         }
         cl_mapping = {"cl_term": cl_term, "mapping_type": "EXACT"}
 
-    # Anatomical location (soma only)
+    # Anatomical location (soma only). One entry per (region, source DOI):
+    # the KG merges spatial sources onto a single edge with parallel lists,
+    # but the schema and KB keep them split so each count carries its own
+    # PropertySource. Atlas nodes normally leave sources empty (provenance
+    # implicit from atlas + cell_set_accession), but spatial counts are an
+    # explicit exception — multiple studies (Yao 2024 MERFISH, Zhuang 2023)
+    # contribute and must stay attributable.
     anat_locs: list[dict] = []
     for a in n.anat:
         anat_id = a.get("id")
@@ -685,6 +722,12 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         }
         if a.get("cell_count") is not None:
             loc["cell_count"] = a["cell_count"]
+        src_doi = a.get("source")
+        if src_doi:
+            loc["sources"] = [{
+                "ref": src_doi,
+                "method": _spatial_method_from_doi(src_doi),
+            }]
         anat_locs.append(loc)
 
     # Parent hierarchy (single immediate parent for atlas nodes)

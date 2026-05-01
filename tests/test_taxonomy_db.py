@@ -156,6 +156,68 @@ def test_anat_cell_count(tmp_path):
         break
 
 
+def test_anat_multi_source_expansion(tmp_path):
+    """A merged-edge anat entry with parallel cell_count/source lists expands
+    into one AnatomicalLocation per source, each with its own count and a
+    single PropertySource carrying the DOI."""
+    yao = "https://doi.org/10.1038/s41586-023-06808-9"
+    zhuang = "https://doi.org/10.1038/s41586-023-06812-z"
+    fixture = [{
+        "cl": None,
+        "node": {
+            "labels": ["CCN20230722_cluster", "Individual"],
+            "properties": {
+                "curie": "WMB:CS20230722_CLUS_TEST",
+                "short_form": "CS20230722_CLUS_TEST",
+                "label": "TEST cluster",
+            },
+        },
+        "parent_curie": None,
+        "level": "CCN20230722_cluster",
+        "anat": [
+            {
+                "anat_id": "MBA:133",
+                "anat_label": "Periventricular preoptic",
+                "cell_count": [135, 1],
+                "cell_ratio": [0.6, 0.2],
+                "source": [yao, zhuang],
+            },
+            {
+                "anat_id": "MBA:515",
+                "anat_label": "Medial preoptic",
+                "cell_count": [26],
+                "cell_ratio": [0.115556],
+                "source": [yao],
+            },
+        ],
+    }]
+    src = tmp_path / "merged.json"
+    src.write_text(json.dumps(fixture))
+    out = tmp_path / "out"
+    out.mkdir()
+    ingest_to_yaml(src, "TEST_MERGED", out)
+    cluster_yaml = yaml.safe_load((out / "CCN20230722_cluster.yaml").read_text())
+    node = cluster_yaml["nodes"][0]
+    anat = node["anatomical_location"]
+    by_region: dict[str, list[dict]] = {}
+    for loc in anat:
+        by_region.setdefault(loc["id"], []).append(loc)
+    # MBA:133 expands into two entries (Yao + Zhuang); order matches input.
+    pvpo = by_region["MBA:133"]
+    assert len(pvpo) == 2
+    assert pvpo[0]["cell_count"] == 135
+    assert pvpo[0]["sources"][0]["ref"] == yao
+    assert pvpo[0]["sources"][0]["method"] == "MERFISH (Yao 2024)"
+    assert pvpo[1]["cell_count"] == 1
+    assert pvpo[1]["sources"][0]["ref"] == zhuang
+    assert pvpo[1]["sources"][0]["method"] == "MERFISH (Zhuang 2023)"
+    # Single-source region stays as one entry.
+    mpo = by_region["MBA:515"]
+    assert len(mpo) == 1
+    assert mpo[0]["cell_count"] == 26
+    assert mpo[0]["sources"][0]["ref"] == yao
+
+
 def test_ingest_to_yaml_idempotent(tmp_path):
     counts1 = ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
     counts2 = ingest_to_yaml(SINGLE_ROW, "TEST_TAX", tmp_path)
