@@ -1134,6 +1134,103 @@ CREATE INDEX IF NOT EXISTS idx_terms_uberon        ON anat_terms(uberon_id);
 """
 
 
+# Schema hash — recomputed each module load; written into _meta.schema_hash
+# at build time. Used by taxonomy_db_freshness() to detect mismatch when the
+# schema has gained a column (or other structural change) since the on-disk
+# DB was last built. Hash includes DDL only — index changes don't matter.
+def _compute_schema_hash() -> str:
+    import hashlib
+    return hashlib.sha256((_DDL + _CLOSURE_DDL).encode("utf-8")).hexdigest()[:16]
+
+
+_SCHEMA_HASH = _compute_schema_hash()
+
+
+def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
+    """Path-explicit freshness check (testable).
+
+    Returns (is_stale, reasons). See `taxonomy_db_freshness` for semantics.
+    """
+    if not db_path.exists():
+        return True, [f"DB not found at {db_path}"]
+
+    reasons: list[str] = []
+
+    # 1. Schema hash check
+    try:
+        con = sqlite3.connect(db_path)
+        try:
+            row = con.execute(
+                "SELECT value FROM _meta WHERE key = 'schema_hash'"
+            ).fetchone()
+            stored_hash = row[0] if row else None
+        finally:
+            con.close()
+    except sqlite3.Error as exc:
+        return True, [f"DB unreadable ({exc})"]
+
+    if stored_hash is None:
+        reasons.append(
+            "DB lacks _meta.schema_hash (built before staleness tracking landed)"
+        )
+    elif stored_hash != _SCHEMA_HASH:
+        reasons.append(
+            f"schema_hash mismatch (DB={stored_hash[:8]}, "
+            f"current={_SCHEMA_HASH[:8]}) — schema gained or changed columns"
+        )
+
+    # 2. Source-newer-than-DB check
+    try:
+        db_mtime = db_path.stat().st_mtime
+    except OSError:
+        return True, reasons + [f"DB mtime unreadable at {db_path}"]
+    yaml_files = list(yaml_dir.glob("*.yaml")) if yaml_dir.is_dir() else []
+    if yaml_files:
+        newest_yaml = max(p.stat().st_mtime for p in yaml_files)
+        if newest_yaml > db_mtime:
+            from datetime import datetime
+            from datetime import timezone
+            yaml_dt = datetime.fromtimestamp(newest_yaml, tz=timezone.utc).isoformat(timespec="seconds")
+            db_dt = datetime.fromtimestamp(db_mtime, tz=timezone.utc).isoformat(timespec="seconds")
+            reasons.append(
+                f"YAML newer than DB (newest YAML {yaml_dt}, DB {db_dt}) — "
+                "re-ingest happened after last build"
+            )
+
+    return (bool(reasons), reasons)
+
+
+def taxonomy_db_freshness(taxonomy_id: str) -> tuple[bool, list[str]]:
+    """Check whether the on-disk taxonomy DB is fresh relative to the schema
+    + the YAML source files.
+
+    Returns (is_stale, reasons). is_stale is True if any check fails;
+    reasons explain why. Empty reasons list when fresh.
+
+    Checks performed:
+      1. DB exists at kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db
+      2. _meta.schema_hash present and equal to current _SCHEMA_HASH
+      3. DB mtime ≥ newest YAML mtime under kb/taxonomy/{taxonomy_id}/
+
+    Failure mode 2 means the schema gained a column since the DB was built
+    (e.g. a new INTEGER field on `nodes`). Failure mode 3 means the YAML
+    source files have been edited since the DB was built (re-ingest may
+    have populated a new field, or a curator added enrichment).
+
+    Both modes call for `just build-taxonomy-db {taxonomy_id}` and a re-run
+    of any `gen-facts` command depending on the DB.
+    """
+    if not taxonomy_id:
+        return False, []
+    try:
+        from evidencell.paths import taxonomy_dir
+    except ImportError:
+        return False, []
+    tax_dir = taxonomy_dir(taxonomy_id)
+    db_path = tax_dir / f"{taxonomy_id}.db"
+    return _freshness_at(db_path, tax_dir)
+
+
 def _iri_to_curie(iri: str) -> str | None:
     """Convert an OBO-graph IRI to a CURIE string.
 
@@ -1288,6 +1385,12 @@ class TaxonomyDB:
             con.execute(
                 "INSERT OR REPLACE INTO _meta VALUES ('taxonomy_built_at', ?)",
                 (datetime.now(tz=timezone.utc).isoformat(),),
+            )
+            # Pin the schema hash so taxonomy_db_freshness() can detect when
+            # the schema has gained or lost a column since this DB was built.
+            con.execute(
+                "INSERT OR REPLACE INTO _meta VALUES ('schema_hash', ?)",
+                (_SCHEMA_HASH,),
             )
             con.commit()
         finally:

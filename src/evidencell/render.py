@@ -1069,6 +1069,11 @@ def _group_experiments(edges: list[dict]) -> list[dict]:
     return list(groups.values())
 
 
+# Track which taxonomies we've already emitted a staleness warning for, so a
+# single render call (which iterates many edges per node) doesn't spam stderr.
+_STALE_WARNED: set[str] = set()
+
+
 def _open_taxonomy_db(taxonomy_id: str) -> "object | None":
     """Open the SQLite TaxonomyDB for a taxonomy_id, or None if unavailable.
 
@@ -1076,17 +1081,42 @@ def _open_taxonomy_db(taxonomy_id: str) -> "object | None":
     DB hasn't been built yet (e.g. CI fixtures, tests). Failures degrade
     gracefully — render still emits a valid report, just without atlas-side
     enrichment (n_cells, supertype).
+
+    Emits a single stderr WARNING per taxonomy_id per process when the DB is
+    stale relative to the schema or the YAML sources (see
+    `taxonomy_db.taxonomy_db_freshness`). The DB is still opened — staleness
+    means some columns may be missing/outdated, but partial data is more
+    useful than dropping the lookup entirely.
     """
     if not taxonomy_id:
         return None
     try:
         from evidencell.paths import taxonomy_dir
-        from evidencell.taxonomy_db import TaxonomyDB
+        from evidencell.taxonomy_db import TaxonomyDB, taxonomy_db_freshness
     except Exception:
         return None
     db_path = taxonomy_dir(taxonomy_id) / f"{taxonomy_id}.db"
     if not db_path.exists():
         return None
+
+    # Freshness check (one warning per taxonomy_id per process)
+    if taxonomy_id not in _STALE_WARNED:
+        _STALE_WARNED.add(taxonomy_id)
+        try:
+            stale, reasons = taxonomy_db_freshness(taxonomy_id)
+            if stale:
+                print(
+                    f"WARNING: taxonomy DB for {taxonomy_id} appears stale; "
+                    f"derived facts (e.g. n_cells, parent supertype) may be "
+                    f"missing or outdated. Run: just build-taxonomy-db {taxonomy_id}",
+                    file=sys.stderr,
+                )
+                for reason in reasons:
+                    print(f"  - {reason}", file=sys.stderr)
+        except Exception:
+            # Freshness check is best-effort — never fail the render over it.
+            pass
+
     return TaxonomyDB(db_path)
 
 

@@ -234,12 +234,18 @@ Use a short interpretive line below the figure (≤2 sentences) drawing on
 
 **4a. Candidate overview table (one row per edge)**
 
-Columns: Rank | WMBv1 cluster | Supertype | Cells | Confidence | Key property alignment | Verdict.
+Columns: Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict.
 
-The **Cells** column shows MERFISH spatial cell count (sum of `anatomical_location[*].cell_count`
-across all regions for that node). This reflects spatial coverage in the MERFISH dataset only —
-it is not the full 10x scRNA-seq cluster size. If the MERFISH count is very small (< 20),
-add a footnote: "^MERFISH n={N}; 10x cluster size not yet shown — see ROADMAP."
+The **Cells (10x)** column shows the total 10x scRNA-seq cluster size from
+`facts.edges[*].n_cells` (sourced from the taxonomy reference DB at gen-facts
+time). MERFISH spatial cell counts (per-region distribution from
+`anatomical_location[*].cell_count`) belong in the property-alignment table's
+location row, not in this column.
+
+Note: if the rendered facts file shows `n_cells: null` for an edge, the
+taxonomy DB is stale relative to the schema (the n_cells column was added in
+PR #21). Rebuild with `just build-taxonomy-db {taxonomy_id}` and re-run
+`just gen-facts` before continuing.
 
 Sort: MODERATE before LOW before UNCERTAIN. Rank only MODERATE and LOW edges (1, 2, …);
 use "—" for UNCERTAIN.
