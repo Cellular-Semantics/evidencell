@@ -4,8 +4,70 @@ This is the **dev-mode** companion to `CLAUDE.md` (the default curation guide).
 Load this file explicitly when the session involves changes to `src/`,
 `schema/`, `.claude/`, `workflows/`, or `justfile`. Write access to those paths is
 gated by the pre-edit hook; if you hit a block, contact the repo maintainer
-or file a dev-request report under `planning/dev_requests/`. Dev work lands
-through PR review against `main`.
+or file a dev-request **GitHub issue** (see "Dev request workflow" below).
+Dev work lands through PR review against `main`, with PRs closing the
+originating issue via `Closes #N`.
+
+## Dev request workflow
+
+Dev requests are tracked as **GitHub issues** on
+`Cellular-Semantics/evidencell`, not as markdown files. Each issue captures
+one blocker or feature ask; a PR resolves it with `Closes #N` in the body.
+
+### Filing an issue
+
+Use the project PAT exposed via `$CELLSEM_GH_TOKEN` (set in
+`.claude/settings.local.json`, gitignored). Pattern:
+
+```bash
+GH_TOKEN="$CELLSEM_GH_TOKEN" gh issue create --repo Cellular-Semantics/evidencell \
+  --title "{short description}" \
+  --body "$(cat <<'EOF'
+## Goal
+...
+
+## Scope
+...
+
+## Proposed surface
+...
+
+## Open questions
+...
+EOF
+)"
+```
+
+If `$CELLSEM_GH_TOKEN` is unset (e.g. in a CI or fresh-clone environment),
+`gh` falls back to the system keychain — the wrapper degrades gracefully.
+
+Required body sections: **Goal**, **Scope**, **Proposed surface**. Add
+**Open questions** and **Out of scope** when relevant. Keep the issue
+self-contained — it should be readable without the originating chat
+transcript.
+
+### Linking from ROADMAP
+
+When a roadmap item maps to a tracked issue, link it inline:
+
+```markdown
+- [ ] Taxonomy-indexed report TOC ([#26](https://github.com/Cellular-Semantics/evidencell/issues/26)) `#gen-report`
+```
+
+Roadmap entries without a corresponding issue are fine — issues are for
+items that need a dedicated PR.
+
+### Closing via PR
+
+End the PR body with `Closes #N` (one line per issue) so merge auto-closes
+the issue. Do not delete the issue; the closed thread is the historical
+record.
+
+### Migration note
+
+The legacy markdown reports under `planning/dev_requests/*.md` are the
+historical record up to 2026-04-30. New dev requests go to GitHub issues.
+The directory's `README.md` redirects to this workflow.
 
 This file provides guidance to Claude Code when working on the code, schema,
 and tooling in the **evidencell** repository.

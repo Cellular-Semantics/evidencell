@@ -151,6 +151,12 @@ exists on every node row, so queries within a single atlas work unchanged.
 
 ---
 
+## Reports `#gen-report`
+
+- [x] Taxonomy-indexed report contents page ([#26](https://github.com/Cellular-Semantics/evidencell/issues/26)) — `src/evidencell/toc.py` + `just gen-toc`; supports `--root {accession}` subtree and `--min-confidence` filter; prunes empty branches `#gen-report`
+
+---
+
 ## Community feedback `#community`
 
 - [ ] Biologist report review workflow — structured path from feedback → KB change with provenance `#gen-report`

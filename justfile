@@ -301,6 +301,15 @@ gen-drilldown-pmid GRAPH_FILE NODE_ID PMID:
 gen-index REGION:
     uv run python -m evidencell.render index {{REGION}}
 
+# Generate a taxonomy-indexed contents page for mapping reports
+# Usage: just gen-toc CCN20230722
+#        just gen-toc CCN20230722 --root CS20230722_CLAS_07
+#        just gen-toc CCN20230722 --min-confidence HIGH
+# Output: reports/_toc/{taxonomy_id}[_{root}].md
+[group('reports')]
+gen-toc TAXONOMY_ID *ARGS:
+    uv run python -m evidencell.toc {{TAXONOMY_ID}} {{ARGS}}
+
 # Regenerate all reports + indices for canonical KB (programmatic mode, no LLM)
 [group('reports')]
 gen-report-all:
@@ -314,6 +323,8 @@ gen-report-all:
     for region in $(ls kb/mappings 2>/dev/null); do
         uv run python -m evidencell.render index "$region"
     done
+    # Combined taxonomy-indexed TOC (default MODERATE+).
+    uv run python -m evidencell.toc --all
 
 # Regenerate all reports + indices for draft KB (programmatic mode, no LLM)
 # Use this during active curation before content graduates to kb/mappings/
