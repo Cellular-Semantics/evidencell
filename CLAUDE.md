@@ -18,7 +18,7 @@ Writable zones in this session:
 - `references/**` — reference stores under ingest-path governance
 - `reports/**` — generated reports under pre-edit validation
 - `research/**` — research artifacts (field mappings, summaries, traversals)
-- `planning/dev_requests/**` — dev-request reports (see "Hitting a wall" below)
+- `planning/dev_requests/**` — historical dev-request reports (new requests go to GitHub issues; see "Hitting a wall" below)
 - `planning/content-notes/**` — KB YAML curation task notes (file-rename tasks, AT import checklists, etc.)
 
 Out of scope: `src/`, `schema/`, `justfile`, `.claude/`, and `workflows/`.
@@ -38,10 +38,13 @@ When a workflow step needs functionality that doesn't yet exist in `src/`, or
 when a validation error reveals a real schema gap, do **not** attempt to fix
 code or schema directly. Instead:
 
-1. **File a dev-request report** at
-   `planning/dev_requests/{YYYY-MM-DD}_{short-slug}.md` describing: what
-   orchestrator step is blocked, what's missing, a proposed surface (what
-   would need to be added or changed and where), and what was tried.
+1. **File a dev-request GitHub issue** on `Cellular-Semantics/evidencell`
+   describing: what orchestrator step is blocked, what's missing, a
+   proposed surface (what would need to be added or changed and where),
+   and what was tried. Use the `$CELLSEM_GH_TOKEN` PAT pattern documented
+   in `CLAUDE_dev.md` § Dev request workflow. Legacy markdown reports
+   under `planning/dev_requests/` remain as historical record but are no
+   longer the filing path.
 2. **Or load `CLAUDE_dev.md`** explicitly when you're authorised to do dev
    work this session. Schema changes in particular MUST be discussed and
    reviewed before implementation — they are occasionally legitimate (new
