@@ -10,7 +10,7 @@
 | Property | Value | References |
 |---|---|---|
 | CL term | pyramidal neuron (CL:0000598) | |
-| Soma location | entorhinal cortex layer II [UBERON:0001905] | [1][2][3] |
+| Soma location | entorhinal cortex layer II [UBERON:0002728] | [1][2][3] |
 | NT | glutamatergic | [4] |
 | Defining markers | Calb1 (calbindin) | [4][5] |
 | Negative markers | — | |
@@ -40,7 +40,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (the classical EC layer II cal
 
 - **Marker Calb1 — CONSISTENT.** Calb1 is listed as the defining identity marker of EC layer II calbindin-positive pyramidal cells [4][5]. Precomputed expression stats (precomputed_stats.h5, supertype level) confirm Calb1 mean expression = 7.14 in SUPT_0052. Although Calb1 does not appear among the defining discriminating markers for SUPT_0052 in the atlas (Ush2a, Dcn), the quantitative expression value is consistent with calbindin expression in this population.
 
-- **Location — APPROXIMATE.** The 'ENT-po' (entorhinal postrhinal) subclass designation reflects a shared transcriptomic signature between medial entorhinal cortex and postrhinal cortex. Classical EC layer II calbindin-positive pyramidal cells are restricted to medial entorhinal cortex [UBERON:0001905] [1][2][3]; postrhinal cortex is a distinct but adjacent area. *(note: medial entorhinal cortex and postrhinal cortex are anatomically adjacent posterior cortical regions — the ENT-po grouping likely reflects transcriptomic similarity rather than equal spatial representation, consistent with an adjacent-region boundary effect rather than a strong counter-evidence signal.)*
+- **Location — APPROXIMATE.** The 'ENT-po' (entorhinal postrhinal) subclass designation reflects a shared transcriptomic signature between medial entorhinal cortex and postrhinal cortex. Classical EC layer II calbindin-positive pyramidal cells are restricted to medial entorhinal cortex [UBERON:0002728] [1][2][3]; postrhinal cortex is a distinct but adjacent area. *(note: medial entorhinal cortex and postrhinal cortex are anatomically adjacent posterior cortical regions — the ENT-po grouping likely reflects transcriptomic similarity rather than equal spatial representation, consistent with an adjacent-region boundary effect rather than a strong counter-evidence signal.)*
 
 **Marker evidence provenance**
 

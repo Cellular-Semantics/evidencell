@@ -10,7 +10,7 @@
 | Property | Value | References |
 |---|---|---|
 | CL term | pyramidal neuron (CL:0000598) | |
-| Soma location | entorhinal cortex layer III [UBERON:0001905] | |
+| Soma location | entorhinal cortex layer III [UBERON:0002728] | |
 | NT | glutamatergic | [1] |
 | Defining markers | Pcp4 (PCP4/Purkinje cell protein 4) | [2][1] |
 | Negative markers | — | |

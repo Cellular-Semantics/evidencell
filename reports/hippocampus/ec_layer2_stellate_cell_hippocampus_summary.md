@@ -10,7 +10,7 @@
 | Property | Value | References |
 |---|---|---|
 | CL term | glutamatergic neuron (CL:0000679) | |
-| Soma location | entorhinal cortex layer II [UBERON:0001905] | [1][2][3][4][5][6][7] |
+| Soma location | entorhinal cortex layer II [UBERON:0002728] | [1][2][3][4][5][6][7] |
 | NT | glutamatergic | [4] |
 | Defining markers | Reln (reelin) | [1] |
 | Negative markers | — | |
@@ -40,7 +40,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (the classical EC layer II ste
 
 - **Marker Reln — CONSISTENT.** Reln is listed as the defining identity marker of EC layer II stellate cells [1]. Precomputed expression stats (precomputed_stats.h5, supertype level) confirm Reln mean expression = 8.17 in SUPT_0042. Although Reln does not appear among the defining discriminating markers listed for SUPT_0042 in the atlas (Igfn1, Endou, Bcl11b, Boc), the high precomputed Reln expression confirms that stellate cell-level Reln expression is present in this supertype, consistent with stellate cell identity.
 
-- **Location — APPROXIMATE.** The 'PIR-ENTl' subclass designation reflects a shared transcriptomic signature between lateral entorhinal cortex and piriform cortex. EC layer II stellate cells reside specifically in the entorhinal cortex [UBERON:0001905]; piriform cortex layer II neurons share a similar molecular profile but are a distinct population. *(note: piriform cortex and lateral entorhinal cortex are anatomically adjacent — the piriform-entorhinal border is not sharply delineated — which may explain the shared transcriptomic cluster identity; this adjacency makes the location APPROXIMATE rather than DISCORDANT.)*
+- **Location — APPROXIMATE.** The 'PIR-ENTl' subclass designation reflects a shared transcriptomic signature between lateral entorhinal cortex and piriform cortex. EC layer II stellate cells reside specifically in the entorhinal cortex [UBERON:0002728]; piriform cortex layer II neurons share a similar molecular profile but are a distinct population. *(note: piriform cortex and lateral entorhinal cortex are anatomically adjacent — the piriform-entorhinal border is not sharply delineated — which may explain the shared transcriptomic cluster identity; this adjacency makes the location APPROXIMATE rather than DISCORDANT.)*
 
 **Marker evidence provenance**
 
