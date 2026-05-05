@@ -384,6 +384,17 @@ Sst Gaba_3 supertype as the correct level and rules out Sst Gaba_6 and the
 Lamp5 Lhx6 candidates. What remains is finer-grained, cluster-level
 disambiguation.
 
+- **Reanalysis pathway: Harris 2018 + Chamberland 2024 subfamily labels → MapMyCells**.
+  The current annotation-transfer evidence is drawn from a single source dataset
+  (Winterer et al. 2019) in which OLM cells were labelled by Sst-Cre and Htr3a-Cre,
+  neither of which resolves recently described Sst-IN subfamilies. Chamberland et al.
+  2024 partition hippocampal Sst+ interneurons into four genetically distinct
+  subfamilies and provide per-cell subfamily labels overlaid on the publicly
+  available Harris et al. 2018 CA1 scRNA-seq dataset. Running MapMyCells with the
+  Harris matrix and Chamberland's subfamily labels against WMBv1 would directly
+  test whether the cluster-level scatter within Sst Gaba_3 reflects over-clustering
+  or genuine Ndnf::Nkx2-1-OLM versus Chrna2-OLM substructure, with no new data
+  generation required.
 - **Chrna2-Cre + MapMyCells** (proposed on edges 0769, 0727, 0788, 0789).
   - **What:** scRNA-seq of Chrna2-Cre+ stratum oriens neurons (CA1 and CA3),
     followed by MapMyCells against WMBv1.
