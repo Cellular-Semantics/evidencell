@@ -80,7 +80,7 @@
 **Marker evidence provenance**
 
 - **Pvalb, Gad1, Gad2, Cnr1**: Same as SUPT_0206 edge above. Precomputed stats are stronger at cluster level: Pvalb=10.63 is the highest among SUPT_0206 children, supporting this cluster as the most Pvalb-enriched node within the supertype.
-- **Cck (neuropeptide — DISCORDANT)**: Cck is present in the cluster's neuropeptide list (expression score 7.6; precomputed stats mean 7.56). No Cck expression is expected for PV basket cells, which are defined in part by their Cnr1/CB1R-negative, non-CCK profile. The CCK/PV distinction in perisomatic hippocampal interneurons is well-established [5] [8]. This is a genuine DISCORDANT signal. Two interpretations are possible: (a) the cluster contains a mixed population including PV cells that co-express low levels of Cck, or (b) the cluster boundaries do not align cleanly to classical PV basket cell identity and include CCK-co-expressing neurons. Neither interpretation is resolved by atlas metadata alone. A targeted cite-traverse for "Cck PV basket cell hippocampus co-expression" would clarify whether any primary literature reports Cck co-expression in PV cells in mouse hippocampus.
+- **Cck (neuropeptide — DISCORDANT)**: Cck is present in the cluster's neuropeptide list (expression score 7.6; precomputed stats mean 7.56). No Cck expression is expected for PV basket cells, which are defined in part by their Cnr1/CB1R-negative, non-CCK profile. The CCK/PV distinction in perisomatic hippocampal interneurons is well-established [5] [8]. This is a genuine DISCORDANT signal. Two interpretations are possible: (a) the cluster contains a mixed population including PV cells that co-express low levels of Cck, or (b) the cluster boundaries do not align cleanly to classical PV basket cell identity and include CCK-co-expressing neurons. Neither interpretation is resolved by atlas metadata alone.
 
 **Concerns**
 
@@ -93,7 +93,7 @@
 
 - **Resolve the Cck discordance**: A targeted cite-traverse for "Cck PV basket cell hippocampus co-expression" would clarify whether primary literature reports Cck co-expression in PV cells, or confirms it is exclusive to CCK basket cells in mouse hippocampus. If Cck positivity is confirmed to exclude PV basket identity, this edge should be downgraded to LOW or UNCERTAIN. Would add `LiteratureEvidence`.
 - **Annotation transfer with a morphologically identified PV basket cell dataset** (same as parent edge): Target F1 ≥ 0.80 at CLUSTER level for CLUS_0739. If a morphologically clean PV basket dataset maps preferentially to CLUS_0739 rather than to CLUS_0732 (chandelier), confidence would upgrade toward HIGH. Output: `AnnotationTransferEvidence`.
-- **Single-cell resolve of Cck/Pvalb co-expression**: A PATCH_SEQ experiment on morphology-confirmed PV basket cells would determine whether any cells express both Pvalb and Cck, and would add `LiteratureEvidence` directly relevant to the neuropeptide discordance.
+- **Single-cell resolve of Cck/Pvalb co-expression**: A patch-seq experiment on morphology-confirmed PV basket cells would determine whether any cells express both Pvalb and Cck, and would add `LiteratureEvidence` directly relevant to the neuropeptide discordance.
 
 ---
 
