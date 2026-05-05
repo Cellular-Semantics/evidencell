@@ -39,6 +39,8 @@ Milestones: `@Allen` (Allen Institute deliverable, date TBC) · `@BICAN` (BICAN 
 - [~] **Taxonomy rank encoding** — `taxonomy_rank: int` on `CellTypeNode` + `TaxonomyNodeList` `#ingest-taxonomy` `#map-cell-type`
   - [x] Schema fields + WMB YAML rank assignments (v0.7.1)
   - [x] `find_candidates()` accepts rank or level
+- [ ] **Evidence-capture schema additions** ([#37](https://github.com/Cellular-Semantics/evidencell/issues/37)) — `negative_markers[*].sources[]`, `proposed_subtypes[]` on classical nodes, `off_target_cell_identification[]` on edges. Unblocks `refine-mapping` goals (#38) and prevents corpus content silently failing to land. `#schema` `#evidence-extraction`
+- [ ] **MappingEdge: durable vs regenerable fields** ([#33](https://github.com/Cellular-Semantics/evidencell/issues/33), Draft/Discussion) — split edge content by regeneration semantics; specify which fields refresh on data change vs accrue durably; relocate cross-edge synthesis to gen-report. `#schema` `#map-cell-type` `#gen-report`
 - [ ] Review v0.8.0 schema additions — `PropertySource.source` rename candidate, WEAK vs PARTIAL, OVERLAPS vs PARTIAL_OVERLAP, CAS-specific fields on core `CellTypeNode`
 - [ ] Marker/assay consistency — split `detected_molecule` + `assay_method`, or add SC1 lint check `#qc`
 - [ ] Dual MBA + UBERON anatomy at ingest — annotate classical nodes with both IDs; shared `annotate-anatomy` skill `#asta-ingest` `#survey`
@@ -103,6 +105,7 @@ exists on every node row, so queries within a single atlas work unchanged.
 
 ## Literature curation `#lit`
 
+- [ ] **Goal-driven `refine-mapping` workflow** ([#38](https://github.com/Cellular-Semantics/evidencell/issues/38), Draft/Discussion) — declared mapping-purpose goals (negative-marker provenance, subtype hypotheses, off-target identification, cross-species confirmation, schema-citation gaps, new-dataset discovery) over the cached corpus, one goal at a time per node, with structured output and curator gates. Addresses why evidence-extraction silently misses corpus content (no slot, no goal). Depends on #37. `#workflow-design` `#evidence-extraction` `#lit`
 - [ ] **Survey/targeted workflow split** — `survey.md` + `targeted-search.md` orchestrators; cite-traverse → skill; KB gap flags on nodes `#survey` `#targeted-search` `#cite-traverse` `#workflow-design` (see [planning/workflow_architecture_design.md](planning/workflow_architecture_design.md))
 - [ ] Lit pipeline file schemas — Pydantic models for summary/refs/manifest; validated handovers between steps `#cite-traverse` `#evidence-extraction` `#workflow-design`
 - [ ] Workflow handover contracts — handover inventory, schema coverage map, user-facing gate terminology `#workflow-design`
@@ -112,8 +115,11 @@ exists on every node row, so queries within a single atlas work unchanged.
 
 ## Annotation transfer `#at`
 
+- [ ] **AnnotationTransfer graph integration** ([#32](https://github.com/Cellular-Semantics/evidencell/issues/32), Draft/Discussion) — make AT runs first-class graph entities (registry or DB-resident); replace free-text `run_ref` strings; pre-write hook validates resolution; back-index from runs to citing edges. Becomes load-bearing as AT-run count grows. `#annotation-transfer` `#schema`
 - [ ] AT orchestrator: use `best_mapping_rank` throughout `#annotation-transfer` `#map-cell-type`
 - [ ] AT-before-edges mapping loop — triage-first ordering, compute preflight gate, sub-node creation rule `#map-cell-type` `#annotation-transfer` (see [planning/adaptive_mapping_loop_design.md](planning/adaptive_mapping_loop_design.md))
+- [ ] **gen-facts: enrich edges with parent supertype expression + location** ([#35](https://github.com/Cellular-Semantics/evidencell/issues/35)) — currently the facts JSON carries `supertype` as a name string only; the report's property-comparison Table 1 supertype column shows "not available" for cluster-level edges even though the data is in the taxonomy YAML. Required for paper-quality reports without hand-patching. `#gen-report` `#ingest-taxonomy`
+- [ ] **Reports: separate corpus/data-resolvable analyses from wet-lab proposals** ([#39](https://github.com/Cellular-Semantics/evidencell/issues/39)) — split `proposed_experiments[]` into `proposed_analyses[]` (executable now against existing data/corpus) and `proposed_experiments[]` (require new reagents/data); render in distinct subsections. `#gen-report` `#schema`
 - [ ] Report: assess all rank-0 nodes collectively when AT resolves above rank 0 `#gen-report`
 - [ ] Workflow: agent-driven sub-node creation when source evidence separates subtypes `#map-cell-type`
 - [ ] F1 heatmap visualisation in AT output / gen-report `#gen-report` `#annotation-transfer`
@@ -129,6 +135,8 @@ exists on every node row, so queries within a single atlas work unchanged.
 
 ## Workflow design `#workflow-design`
 
+- [ ] **find-candidates: DB rebuild + quantitative marker scoring** ([#34](https://github.com/Cellular-Semantics/evidencell/issues/34)) — auto-rebuild SQLite DB after `add-expression` writes (mirroring `gen-report` freshness check); use `precomputed_expression.genes[*].mean_expression` in candidate scoring rather than binary marker-category presence; consider z-score-within-supertype variant. Without this, OLM-style cases where a supertype's defining-marker signal concentrates in one specific child cluster get scored identically to siblings. `#map-cell-type` `#find-candidates`
+- [ ] **Disk-space preflight extension** ([#36](https://github.com/Cellular-Semantics/evidencell/issues/36)) — uniform free-disk gating across all download paths (currently only the MapMyCells taxonomy bundle); covers `retrieve_dataset`, MBA ontology fetch, ASTA reference cache, cite-traverse PDF cache. `#infrastructure` `#annotation-transfer`
 - [ ] **`map-cell-type.md` progressive rewrite** — direct KB writes; biologist report review is the main gate; remove per-edge curator gates except reference weeding `#map-cell-type`
 - [x] **Fold expression cross-check into Step 0b refinement (default)** — Implemented: Steps 2a/2b/2c in `map-cell-type.md` now make expression enrichment mandatory (not optional). Step 0b refinement subagent prompt extended to enumerate child-cluster expression and AT evidence for every supertype candidate. `just build-taxonomy-db` called after any `add-expression` writes. `#map-cell-type`
 - [ ] **DB regen performance check** — `just build-taxonomy-db {taxonomy_id}` is called after every `add-expression` run. If the rebuild is slow for large taxonomies, add a `--update-only` flag to `build_from_yaml()` that only re-inserts nodes whose YAML mtime has changed. `#map-cell-type`
