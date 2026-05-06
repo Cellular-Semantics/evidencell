@@ -428,13 +428,6 @@ def test_find_candidates_expression_scoring(populated_db):
     """Expression data boosts candidates with high expression of queried markers."""
     db, _, _ = populated_db
 
-    # Use level= to avoid needing rank in test fixture
-    # No expression data → binary +1 per marker
-    binary_results = db.find_candidates(
-        markers=["Sst"],
-        level="cluster",
-    )
-
     # Build expression data: node 1 has Sst=8.0 (high), node 2 has Sst=0.0 (absent)
     # Extract node IDs from the DB
     import sqlite3
