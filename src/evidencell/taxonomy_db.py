@@ -1367,6 +1367,108 @@ def _compute_closure(edges: list[tuple[str, str]]) -> list[tuple[str, str, int]]
     return closure
 
 
+# ── Quantitative expression scoring helpers ───────────────────────────────────
+
+# Minimum log₂(CPM+1) value below which expression is considered unreliable
+# (likely dropout or ambient RNA rather than real signal).
+MIN_DETECTABLE: float = 0.1
+
+
+def _expression_percentile(val: float, reference: list[float]) -> float:
+    """Fraction of reference values strictly less than val (0.0–1.0)."""
+    if not reference:
+        return 0.0
+    return sum(v < val for v in reference) / len(reference)
+
+
+def _score_from_percentiles(
+    sibling_pct: float,
+    global_pct: float,
+    is_negative: bool = False,
+) -> int:
+    """Convert sibling and global percentiles to an integer score contribution.
+
+    Positive markers (defining / neuropeptide):
+      sibling_pct ≥ 0.80  → +2  (top 20% among siblings — strong discriminator)
+      sibling_pct ≥ 0.50  → +1  (above-median among siblings)
+      sibling_pct < 0.50  →  0  (below-median; marker does not distinguish here)
+      global_pct  ≥ 0.90  → +1 additional (marker is atlas-globally specific)
+
+    Negative markers (inverted — high expression is bad):
+      sibling_pct ≥ 0.80  → −2
+      sibling_pct ≥ 0.50  → −1
+      sibling_pct < 0.50  → +1  (low expression confirms negative-marker expectation)
+    """
+    if is_negative:
+        if sibling_pct >= 0.80:
+            return -2
+        if sibling_pct >= 0.50:
+            return -1
+        return +1
+    else:
+        if sibling_pct >= 0.80:
+            score = 2
+        elif sibling_pct >= 0.50:
+            score = 1
+        else:
+            return 0  # below-median among siblings; global bonus does not apply
+        if global_pct >= 0.90:
+            score += 1
+        return score
+
+
+def _expression_score(mean_expr: float) -> int:
+    """Legacy absolute-threshold score — kept for backward compat with tests.
+
+    Prefer percentile-based scoring via _score_from_percentiles() for new code.
+    """
+    if mean_expr >= 5.0:
+        return 2
+    if mean_expr >= 1.0:
+        return 1
+    if mean_expr >= 0.1:
+        return 0
+    return -2
+
+
+def _neg_expression_score(mean_expr: float) -> int:
+    """Legacy inverted absolute-threshold score — kept for backward compat with tests."""
+    return -_expression_score(mean_expr)
+
+
+def load_expression_data(taxonomy_id: str, level: str) -> dict[str, dict[str, float]]:
+    """Load precomputed_expression from a taxonomy YAML level file.
+
+    Returns ``{cell_set_accession: {gene_symbol: mean_expression}}``.
+    Returns an empty dict if the YAML or precomputed_expression data is absent.
+    """
+    from evidencell.paths import taxonomy_yaml_path
+
+    yaml_path = taxonomy_yaml_path(taxonomy_id, level)
+    if not yaml_path.exists():
+        return {}
+
+    try:
+        data = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
+
+    result: dict[str, dict[str, float]] = {}
+    for node in data.get("nodes", []):
+        acc = node.get("cell_set_accession")
+        expr_block = node.get("precomputed_expression")
+        if not acc or not expr_block:
+            continue
+        genes = expr_block.get("genes", [])
+        if genes:
+            result[acc] = {
+                g["symbol"]: float(g.get("mean_expression", 0.0))
+                for g in genes
+                if isinstance(g, dict) and g.get("symbol")
+            }
+    return result
+
+
 # Registry of optional scoring criteria for find_candidates().
 # Each entry maps a criterion name to:
 #   column    — DB column on the nodes table
@@ -1783,11 +1885,13 @@ class TaxonomyDB:
         anat_root_ids: list[str] | None = None,
         nt_type: str | None = None,
         markers: list[str] | None = None,
+        negative_markers: list[str] | None = None,
         level: str | None = None,
         rank: int | None = None,
         marker_columns: list[str] | None = None,
         propagate_nt: bool = True,
         optional_criteria: dict[str, str] | None = None,
+        expression_data: dict[str, dict[str, float]] | None = None,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -1815,7 +1919,20 @@ class TaxonomyDB:
                            Unknown criteria emit a warning and are skipped.
                            Example: {"sex_bias": "female"}
 
-        Scoring: region match = 2 pts, NT match = 2 pts, each marker match = 1 pt.
+        negative_markers: gene symbols expected to be absent; penalise candidates
+                           where these are expressed. Uses expression_data when available.
+        expression_data:  ``{cell_set_accession: {symbol: mean_expression}}`` from
+                          the taxonomy YAML (load with ``load_expression_data()``).
+                          When provided, marker scoring uses percentile-based scoring
+                          (see README § Expression scoring) instead of binary +1.
+                          Falls back to binary +1 for genes absent from expression_data.
+
+        Scoring: region match = 2 pts, NT match = 2 pts.
+        Marker scoring (with expression_data): sibling-percentile primary (+2/+1/0),
+        global-percentile specificity bonus (+1 if top 10% atlas-wide), negative markers
+        inverted. Without expression_data: binary +1 per marker found in DB columns.
+        Candidates with mean_expression < MIN_DETECTABLE for a queried gene are flagged
+        as unreliable and contribute 0 from that gene.
         Optional criteria add their registered bonus (default 1 pt each).
         Results sorted descending by score.
         """
@@ -1875,6 +1992,29 @@ class TaxonomyDB:
                     "SELECT * FROM nodes WHERE taxonomy_level = ?", (level,)
                 ).fetchall()
 
+        # ── Pre-compute gene distribution references for percentile scoring ──────
+        # global_gene_vals: gene → all mean_expression values across every node
+        #   in expression_data (atlas-wide reference).
+        # sibling_gene_vals: parent_id → gene → values for nodes sharing that parent.
+        #   Siblings are nodes at the same rank that share a parent_id; this gives
+        #   a within-clade reference capturing local anatomical/type variation.
+        global_gene_vals: dict[str, list[float]] = defaultdict(list)
+        sibling_gene_vals: dict[str, dict[str, list[float]]] = defaultdict(
+            lambda: defaultdict(list)
+        )
+        if expression_data:
+            # Build a parent_id lookup from DB rows (rows already fetched above)
+            row_parent: dict[str, str | None] = {
+                dict(r)["node_id"]: dict(r).get("parent_id") for r in rows
+            }
+            for acc, gene_map in expression_data.items():
+                for sym, val in gene_map.items():
+                    global_gene_vals[sym].append(val)
+                pid = row_parent.get(acc)
+                if pid:
+                    for sym, val in expression_data[acc].items():
+                        sibling_gene_vals[pid][sym].append(val)
+
         results = []
         for row in rows:
             nd = dict(row)
@@ -1892,15 +2032,107 @@ class TaxonomyDB:
                     if nn.startswith(qt) or qt.startswith(nn):
                         score += 2
 
+            node_acc = nd.get("node_id", "")
+            node_expr = expression_data.get(node_acc, {}) if expression_data else {}
+            node_parent_id = nd.get("parent_id")
+
+            # ── Marker scoring ────────────────────────────────────────────────
+            # Positive markers — collect all gene symbols from DB marker columns.
+            # _marker_cols covers DEFINING/DEFINING_SCOPED/TF/MERFISH (JSON arrays).
+            # np_markers is a packed string ("Sst:9.2,Crh:4.4") that stores
+            # NEUROPEPTIDE-category markers; decode symbols and include in the
+            # fallback set so callers querying neuropeptide markers are not silently
+            # missed. Full presence-vs-discriminating scoring is tracked in #43.
+            node_markers: set[str] = set()
+            for col in _marker_cols:
+                raw = nd.get(col)
+                if raw:
+                    node_markers.update(json.loads(raw))
+            np_raw = nd.get("np_markers")
+            if np_raw:
+                for part in np_raw.split(","):
+                    sym = part.split(":")[0].strip()
+                    if sym:
+                        node_markers.add(sym)
+
+            expr_detail: dict[str, dict] = {}  # gene → {val, reliable, sibling_pct, global_pct, score}
+
             if markers:
-                node_markers: set[str] = set()
-                for col in _marker_cols:
-                    raw = nd.get(col)
-                    if raw:
-                        node_markers.update(json.loads(raw))
                 for m in markers:
-                    if m in node_markers:
-                        score += 1
+                    if m in node_expr:
+                        val = node_expr[m]
+                        reliable = val >= MIN_DETECTABLE
+                        if reliable and expression_data:
+                            g_ref = global_gene_vals.get(m, [])
+                            s_ref = (
+                                sibling_gene_vals[node_parent_id].get(m, [])
+                                if node_parent_id
+                                else []
+                            )
+                            g_pct = _expression_percentile(val, g_ref)
+                            s_pct = _expression_percentile(val, s_ref)
+                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=False)
+                            expr_detail[m] = {
+                                "val": val,
+                                "reliable": True,
+                                "sibling_pct": round(s_pct, 3),
+                                "global_pct": round(g_pct, 3),
+                                "score": delta,
+                            }
+                        elif not reliable:
+                            delta = 0
+                            expr_detail[m] = {
+                                "val": val,
+                                "reliable": False,
+                                "sibling_pct": None,
+                                "global_pct": None,
+                                "score": 0,
+                            }
+                        else:
+                            # expression_data not loaded — fallback binary
+                            delta = 1
+                        score += delta
+                    elif m in node_markers:
+                        score += 1  # fallback: gene in DB marker columns
+
+            # Negative markers
+            if negative_markers and node_expr:
+                for m in negative_markers:
+                    if m in node_expr:
+                        val = node_expr[m]
+                        reliable = val >= MIN_DETECTABLE
+                        if reliable and expression_data:
+                            g_ref = global_gene_vals.get(m, [])
+                            s_ref = (
+                                sibling_gene_vals[node_parent_id].get(m, [])
+                                if node_parent_id
+                                else []
+                            )
+                            g_pct = _expression_percentile(val, g_ref)
+                            s_pct = _expression_percentile(val, s_ref)
+                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=True)
+                            expr_detail[f"-{m}"] = {
+                                "val": val,
+                                "reliable": True,
+                                "sibling_pct": round(s_pct, 3),
+                                "global_pct": round(g_pct, 3),
+                                "score": delta,
+                            }
+                        elif not reliable:
+                            delta = 0
+                            expr_detail[f"-{m}"] = {
+                                "val": val,
+                                "reliable": False,
+                                "sibling_pct": None,
+                                "global_pct": None,
+                                "score": 0,
+                            }
+                        else:
+                            delta = 0  # no expression_data; can't penalise
+                        score += delta
+
+            if expr_detail:
+                nd["_expression_detail"] = expr_detail
 
             criteria_applied: list[str] = []
             for name, direction, entry in _active_criteria:
@@ -2186,6 +2418,15 @@ def _cmd_find_candidates(
         )
         sys.exit(1)
 
+    # Preflight: warn (and abort) if DB is stale relative to YAML source
+    is_stale, stale_reasons = taxonomy_db_freshness(taxonomy_id)
+    if is_stale:
+        print("ERROR: taxonomy DB is stale — rebuild before find-candidates:", file=sys.stderr)
+        for r in stale_reasons:
+            print(f"  {r}", file=sys.stderr)
+        print(f"  Run: just build-taxonomy-db {taxonomy_id}", file=sys.stderr)
+        sys.exit(1)
+
     with graph_path.open(encoding="utf-8") as fh:
         doc = yaml.safe_load(fh)
 
@@ -2208,6 +2449,12 @@ def _cmd_find_candidates(
         if sym:
             markers.append(sym)
 
+    neg_markers: list[str] = []
+    for m in classical.get("negative_markers") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym:
+            neg_markers.append(sym)
+
     nt_obj = classical.get("nt_type")
     nt_type: str | None = None
     if isinstance(nt_obj, dict):
@@ -2228,6 +2475,25 @@ def _cmd_find_candidates(
             anat_ids.append(loc_id)
 
     db = TaxonomyDB(db_path)
+
+    # Load precomputed expression data from the taxonomy YAML at the target rank's level
+    with db._connect() as _con:
+        _level_row = _con.execute(
+            "SELECT taxonomy_level FROM nodes WHERE taxonomy_rank = ? LIMIT 1", (rank,)
+        ).fetchone()
+    _expr_level = _level_row[0] if _level_row else "cluster"
+    expression_data = load_expression_data(taxonomy_id, _expr_level)
+    if expression_data:
+        print(
+            f"  Loaded expression data: {len(expression_data)} nodes at {_expr_level} level",
+            file=sys.stderr,
+        )
+    else:
+        print(
+            f"  No precomputed_expression found for {taxonomy_id}/{_expr_level} "
+            "— falling back to binary marker scoring",
+            file=sys.stderr,
+        )
 
     # Resolve UBERON IDs to MBA IDs via anat_terms lookup, with name fallback
     mba_ids: list[str] = []
@@ -2296,6 +2562,8 @@ def _cmd_find_candidates(
     print(f"Classical node: {node_id} ({classical.get('name', '?')})", file=sys.stderr)
     print(f"  NT type: {nt_type}", file=sys.stderr)
     print(f"  Markers: {markers}", file=sys.stderr)
+    if neg_markers:
+        print(f"  Negative markers: {neg_markers}", file=sys.stderr)
     print(f"  Soma locations: {anat_ids}", file=sys.stderr)
     if mba_ids != anat_ids:
         print(f"  Resolved MBA IDs: {mba_ids}", file=sys.stderr)
@@ -2307,13 +2575,18 @@ def _cmd_find_candidates(
     # Try transitive anatomy matching (requires anat_closure table from MBA ontology).
     # Fall back to no anatomy matching if closure not built.
     query_anat = mba_ids if mba_ids else None
+    _fc_kwargs: dict = dict(
+        nt_type=nt_type,
+        markers=markers,
+        negative_markers=neg_markers or None,
+        rank=rank,
+        optional_criteria=optional_criteria,
+        expression_data=expression_data or None,
+    )
     try:
         candidates = db.find_candidates(
             anat_root_ids=query_anat,
-            nt_type=nt_type,
-            markers=markers,
-            rank=rank,
-            optional_criteria=optional_criteria,
+            **_fc_kwargs,
         )
     except RuntimeError as exc:
         if "anat_closure" in str(exc):
@@ -2323,12 +2596,7 @@ def _cmd_find_candidates(
                 f"{taxonomy_id}",
                 file=sys.stderr,
             )
-            candidates = db.find_candidates(
-                nt_type=nt_type,
-                markers=markers,
-                rank=rank,
-                optional_criteria=optional_criteria,
-            )
+            candidates = db.find_candidates(**_fc_kwargs)
         else:
             raise
 

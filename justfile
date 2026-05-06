@@ -414,6 +414,12 @@ at-taxonomy-list:
 at-test:
     cd annotation_transfer && uv run pytest -v
 
+# Build/rebuild kb/annotation_transfer_runs/index.yaml from manifest files.
+# Run after adding a new AT run directory.
+[group('annotation-transfer')]
+register-at-run:
+    uv run python -m evidencell.taxonomy_ops build-at-index
+
 # ── Utilities ──────────────────────────────────────────────────────────────────
 
 # Pretty-print a KB file (YAML round-trip sanity check)

@@ -17,7 +17,7 @@ from typing import Any
 
 import yaml
 
-from evidencell.paths import taxonomy_dir, taxonomy_yaml_path
+from evidencell.paths import taxonomy_dir, taxonomy_yaml_path, at_runs_dir, at_run_index_path
 from evidencell.taxonomy_db import ingest_to_yaml, ingest_cas_to_yaml, _is_cas_format
 
 log = logging.getLogger(__name__)
@@ -274,11 +274,16 @@ def add_expression(
                 "mean_expression": round(val, 2),
             })
 
-        # Write PrecomputedExpression block
+        # Merge with existing genes[] — update by symbol, preserve others
+        existing_expr = node.get("precomputed_expression", {})
+        merged: dict[str, Any] = {g["symbol"]: g for g in existing_expr.get("genes", [])}
+        for entry in gene_entries:
+            merged[entry["symbol"]] = entry
+
         node["precomputed_expression"] = {
             "source": source_name,
             "level": level,
-            "genes": gene_entries,
+            "genes": list(merged.values()),
         }
         updated += 1
 
@@ -429,21 +434,44 @@ def add_expression_supertype(
 
         # Optional child cluster breakdown
         if include_child_clusters:
-            child_entries: list[dict[str, Any]] = []
+            # Merge with existing child_cluster_expression by cluster_accession
+            existing_expr = node.get("precomputed_expression", {})
+            existing_children: dict[str, dict[str, Any]] = {
+                e["cluster_accession"]: e
+                for e in existing_expr.get("child_cluster_expression", [])
+            }
             for ca in child_accs:
                 row = cluster_to_row.get(ca)
                 if row is None:
                     continue
-                expr_dict: dict[str, float] = {}
+                new_expr: dict[str, float] = {}
                 for sym, ens, col in gene_cols:
-                    expr_dict[sym] = round(float(sum_matrix[row, col]), 2)
-                child_entries.append({
-                    "cluster_accession": ca,
-                    "n_cells": int(n_cells[row]),
-                    "expression": json.dumps(expr_dict),
-                })
+                    new_expr[sym] = round(float(sum_matrix[row, col]), 2)
+                if ca in existing_children:
+                    # Merge expression dicts
+                    old_expr = json.loads(existing_children[ca]["expression"])
+                    old_expr.update(new_expr)
+                    existing_children[ca] = {
+                        "cluster_accession": ca,
+                        "n_cells": int(n_cells[row]),
+                        "expression": json.dumps(old_expr),
+                    }
+                else:
+                    existing_children[ca] = {
+                        "cluster_accession": ca,
+                        "n_cells": int(n_cells[row]),
+                        "expression": json.dumps(new_expr),
+                    }
+            child_entries = list(existing_children.values())
             if child_entries:
                 expr_block["child_cluster_expression"] = child_entries
+
+        # Merge top-level genes[] with existing by symbol
+        existing_expr = node.get("precomputed_expression", {})
+        merged_genes: dict[str, Any] = {g["symbol"]: g for g in existing_expr.get("genes", [])}
+        for entry in gene_entries:
+            merged_genes[entry["symbol"]] = entry
+        expr_block["genes"] = list(merged_genes.values())
 
         node["precomputed_expression"] = expr_block
         updated += 1
@@ -629,6 +657,100 @@ def _merge_meta(old_path: Path, new_path: Path) -> None:
         yaml.dump(new, fh, allow_unicode=True, sort_keys=False)
 
 
+# ── AT run registry ──────────────────────────────────────────────────────────
+
+def build_at_index() -> dict[str, Any]:
+    """Build (or rebuild) the AT run registry index from manifest files.
+
+    Scans ``kb/annotation_transfer_runs/*/manifest.yaml``, reads each manifest,
+    and writes ``kb/annotation_transfer_runs/index.yaml`` with one entry per run
+    keyed by the run ``id`` declared in the manifest.
+
+    Returns a summary dict with ``indexed`` (int) and ``skipped`` (list of paths).
+    """
+    runs_dir = at_runs_dir()
+    index_path = at_run_index_path()
+
+    indexed: dict[str, dict[str, str]] = {}
+    skipped: list[str] = []
+
+    for manifest in sorted(runs_dir.glob("*/manifest.yaml")):
+        try:
+            data = yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
+        except Exception as exc:
+            skipped.append(f"{manifest}: {exc}")
+            continue
+
+        run_id = data.get("id")
+        if not run_id:
+            skipped.append(f"{manifest}: missing 'id' field")
+            continue
+
+        # Relative path from repo root for portability
+        try:
+            rel = manifest.relative_to(runs_dir.parent.parent)
+        except ValueError:
+            rel = manifest
+
+        indexed[run_id] = {
+            "id": run_id,
+            "target_taxonomy_id": data.get("target_taxonomy_id", ""),
+            "source_dataset_accession": data.get("source_dataset_accession", ""),
+            "manifest_path": str(rel),
+        }
+
+    header = (
+        "# Auto-generated by `just register-at-run`. Do not edit manually.\n"
+        "# Regenerate after adding a new AT run: just register-at-run\n"
+    )
+    # Emit as list (LinkML AnnotationTransferIndex / AnnotationTransferRunSummary)
+    index_doc = {"runs": [indexed[k] for k in sorted(indexed)]}
+    with index_path.open("w", encoding="utf-8") as fh:
+        fh.write(header)
+        yaml.dump(index_doc, fh, allow_unicode=True, sort_keys=False)
+
+    log.info("build-at-index: indexed %d runs, skipped %d", len(indexed), len(skipped))
+    return {"indexed": len(indexed), "run_ids": sorted(indexed), "skipped": skipped}
+
+
+def at_back_index() -> dict[str, list[str]]:
+    """Return a mapping from AT run_id → list of KB YAML file paths that cite it.
+
+    Generated on demand by scanning all KB YAML files for ``run_ref`` fields.
+    """
+    from evidencell.paths import repo_root
+
+    root = repo_root()
+    back: dict[str, list[str]] = {}
+
+    for kb_yaml in sorted((root / "kb").rglob("*.yaml")):
+        try:
+            doc = yaml.safe_load(kb_yaml.read_text(encoding="utf-8")) or {}
+        except Exception:
+            continue
+        run_refs = _collect_run_refs(doc)
+        for ref in run_refs:
+            back.setdefault(ref, []).append(str(kb_yaml.relative_to(root)))
+
+    return back
+
+
+def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]:
+    """Recursively collect all ``run_ref`` string values from a nested dict/list."""
+    if result is None:
+        result = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == "run_ref" and isinstance(v, str) and v:
+                result.append(v)
+            else:
+                _collect_run_refs(v, result)
+    elif isinstance(obj, list):
+        for item in obj:
+            _collect_run_refs(item, result)
+    return result
+
+
 # ── CLI ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -693,6 +815,12 @@ def main() -> None:
     p_gm.add_argument("stats_h5", help="Path to precomputed_stats HDF5")
     p_gm.add_argument("output", help="Output TSV path")
 
+    # build-at-index
+    sub.add_parser(
+        "build-at-index",
+        help="Build/rebuild kb/annotation_transfer_runs/index.yaml from manifest files",
+    )
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -736,6 +864,10 @@ def main() -> None:
     elif args.command == "generate-gene-mapping":
         out = generate_gene_mapping_tsv(args.stats_h5, args.output)
         print(f"Gene mapping written to {out}")
+
+    elif args.command == "build-at-index":
+        result = build_at_index()
+        print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":
