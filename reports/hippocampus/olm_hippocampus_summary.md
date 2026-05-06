@@ -464,4 +464,6 @@ disambiguation.
 | [7] | Winterer et al. 2019 | [31420995](https://pubmed.ncbi.nlm.nih.gov/31420995/) | Sst marker |
 | [8] | Leão et al. 2012 | [23042082](https://pubmed.ncbi.nlm.nih.gov/23042082/) | Chrna2 marker |
 | [9] | Thulin et al. 2025 | [40757734](https://pubmed.ncbi.nlm.nih.gov/40757734/) | Pnoc neuropeptide |
+| [10] | Harris et al. 2018 | [29912866](https://pubmed.ncbi.nlm.nih.gov/29912866/) | CA1 inhibitory taxonomy (reanalysis source) |
+| [11] | Chamberland et al. 2024 | [38640347](https://pubmed.ncbi.nlm.nih.gov/38640347/) | Sst-IN subfamily classification (Chrna2 vs Ndnf::Nkx2-1 OLM) |
 | [A] | ABC Atlas — anatomy=HPF; NT=GABA; expression=Chrna2 ([view](https://tinyurl.com/a4f3kd4v)) | — | atlas query — Chrna2+ HPF GABA filter |
