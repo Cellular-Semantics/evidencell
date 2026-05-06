@@ -116,9 +116,21 @@ When `find_candidates()` runs with expression data loaded (via `load_expression_
 
 **Reliability floor.** Genes with mean expression < 0.1 log₂(CPM+1) (`MIN_DETECTABLE`) are flagged as unreliable (likely dropout or ambient RNA) and contribute 0 points regardless of percentile. This threshold is deliberately permissive — it excludes only near-zero values where the signal cannot be distinguished from noise.
 
-**Fallback.** When expression data is not loaded, scoring falls back to binary +1 per gene found in any of the four DB marker columns (defining, defining-scoped, TF, MERFISH). This preserves backward compatibility for workflows that run without the HDF5.
+**Fallback.** When expression data is not loaded, scoring falls back to binary +1 per gene found in any DB marker column (defining, defining-scoped, TF, MERFISH, neuropeptide). Neuropeptide markers (stored as a packed string `"Sst:9.2,Crh:4.4"` in the atlas `np_markers` column) are decoded to symbols for this fallback — they are the most common silent-miss case, since atlas taxonomy names clusters after their neuropeptide identity but stores those genes in a separate column that was historically excluded from the binary fallback.
 
 **Per-gene output.** Each candidate returned by `find_candidates()` (when expression data is provided) includes `_expression_detail`: a dict keyed by gene symbol (or `-gene` for negative markers) containing `val`, `reliable`, `sibling_pct`, `global_pct`, and `score`. This lets downstream code and reports show exactly why each candidate scored as it did.
+
+### Current limitations
+
+The scoring approach described above conflates two conceptually distinct marker roles that warrant different scoring regimes — tracked in issue #43:
+
+**Discriminating markers** (what the percentile system scores): genes where a cell type ranks unusually high relative to its peers. The sibling/global percentile design is well-suited to these. DEFINING and DEFINING_SCOPED category markers in the atlas are typically in this class.
+
+**Presence / functional identity markers**: genes whose expression *at any detectable level* is diagnostic for cell identity. For these, the question is not "is this cell type in the top 20% of expressors?" but "does this cell type express this gene at all?". Classic examples are neuropeptide co-transmitters (Sst, Pvalb, Vip, Cck) and NT pathway genes (Gad1/2, Slc17a7). In practice the percentile approach still scores these correctly when expression data is loaded — an SST cluster scoring Sst at the 95th global percentile earns full marks — but there is no explicit presence-only scoring path for workflows that want to assert "detectable = +1" without committing to the HDF5 dependency.
+
+**Percentile reference includes non-expressing cells**: global and sibling percentile distributions currently include all nodes, including those near zero (dropout or genuine absence). For hard-to-detect transcripts (some ion channels, certain GPCRs) this can compress the reference distribution and make the percentile noisy. A future fix will filter reference distributions to expressing cells (val > `MIN_DETECTABLE`) before computing percentiles.
+
+**No anatomical-context scoring**: markers known to be discriminating in a specific anatomical region (e.g. Grm1 for OLM cells in hippocampus) can be better assessed with an anatomically-scoped reference distribution. This is a planned extension but not yet implemented.
 
 ---
 

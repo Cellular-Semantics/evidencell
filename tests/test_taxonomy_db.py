@@ -556,6 +556,44 @@ def test_find_candidates_negative_marker_detail(populated_db):
         assert "global_pct" in detail
 
 
+def test_find_candidates_np_markers_fallback(populated_db):
+    """Neuropeptide markers stored in np_markers column are included in binary fallback.
+
+    Before this fix, genes only in np_markers were silently missed when no
+    expression_data was provided — find_candidates would return 0 matches even
+    for a gene prominently labelling the cluster (e.g. Sst for Sst Gaba clusters).
+    """
+    db, tmp_path, _ = populated_db
+
+    # Manually inject an np_markers value into the DB for our test node
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id"
+        ).fetchall()
+    node_ids = [r["node_id"] for r in rows]
+    if not node_ids:
+        return
+
+    # Write a packed np_markers string directly — simulates an atlas cluster
+    # whose neuropeptide identity marker is only in np_markers, not defining_markers
+    with sqlite3.connect(db.db_path) as con:
+        con.execute(
+            "UPDATE nodes SET np_markers = ? WHERE node_id = ?",
+            ("Sst:9.5,Crh:4.2", node_ids[0]),
+        )
+        con.commit()
+
+    # Without expression_data: Sst must still be found via binary fallback
+    results = db.find_candidates(markers=["Sst"], level="cluster")
+    found = next((c for c in results if c["node_id"] == node_ids[0]), None)
+    assert found is not None, (
+        "Node with Sst in np_markers must be returned by binary fallback; "
+        "was silently missed before np_markers decoding was added"
+    )
+    assert found["_score"] >= 1
+
+
 # ── TaxonomyMeta ──────────────────────────────────────────────────────────────
 
 def test_taxonomy_meta_round_trip(tmp_path):

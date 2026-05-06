@@ -2037,12 +2037,23 @@ class TaxonomyDB:
             node_parent_id = nd.get("parent_id")
 
             # ── Marker scoring ────────────────────────────────────────────────
-            # Positive markers
+            # Positive markers — collect all gene symbols from DB marker columns.
+            # _marker_cols covers DEFINING/DEFINING_SCOPED/TF/MERFISH (JSON arrays).
+            # np_markers is a packed string ("Sst:9.2,Crh:4.4") that stores
+            # NEUROPEPTIDE-category markers; decode symbols and include in the
+            # fallback set so callers querying neuropeptide markers are not silently
+            # missed. Full presence-vs-discriminating scoring is tracked in #43.
             node_markers: set[str] = set()
             for col in _marker_cols:
                 raw = nd.get(col)
                 if raw:
                     node_markers.update(json.loads(raw))
+            np_raw = nd.get("np_markers")
+            if np_raw:
+                for part in np_raw.split(","):
+                    sym = part.split(":")[0].strip()
+                    if sym:
+                        node_markers.add(sym)
 
             expr_detail: dict[str, dict] = {}  # gene → {val, reliable, sibling_pct, global_pct, score}
 
