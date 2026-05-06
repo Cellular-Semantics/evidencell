@@ -263,7 +263,12 @@ def check_run_refs(doc: dict, index_path: Path) -> list[str]:
     except Exception as exc:
         return [f"Could not read AT run index {index_path}: {exc}"]
 
-    known: set[str] = set((index.get("runs") or {}).keys())
+    runs = index.get("runs") or []
+    # Supports both list format (current: [{id: ...}, ...]) and legacy dict format
+    if isinstance(runs, dict):
+        known: set[str] = set(runs.keys())
+    else:
+        known: set[str] = {e["id"] for e in runs if isinstance(e, dict) and "id" in e}
 
     errors: list[str] = []
     for ref in run_refs:
