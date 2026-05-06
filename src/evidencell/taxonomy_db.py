@@ -1369,33 +1369,70 @@ def _compute_closure(edges: list[tuple[str, str]]) -> list[tuple[str, str, int]]
 
 # ── Quantitative expression scoring helpers ───────────────────────────────────
 
-def _expression_score(mean_expr: float) -> int:
-    """Map a mean expression value to a marker-presence score bonus.
+# Minimum log₂(CPM+1) value below which expression is considered unreliable
+# (likely dropout or ambient RNA rather than real signal).
+MIN_DETECTABLE: float = 0.1
 
-    Thresholds (defining markers):
-      ≥ 5.0  → +2  (high, confident presence)
-      ≥ 1.0  → +1  (moderate presence)
-      ≥ 0.1  →  0  (scattered / borderline — flagged in stderr)
-      < 0.1  → −2  (effectively absent — major penalty)
+
+def _expression_percentile(val: float, reference: list[float]) -> float:
+    """Fraction of reference values strictly less than val (0.0–1.0)."""
+    if not reference:
+        return 0.0
+    return sum(v < val for v in reference) / len(reference)
+
+
+def _score_from_percentiles(
+    sibling_pct: float,
+    global_pct: float,
+    is_negative: bool = False,
+) -> int:
+    """Convert sibling and global percentiles to an integer score contribution.
+
+    Positive markers (defining / neuropeptide):
+      sibling_pct ≥ 0.80  → +2  (top 20% among siblings — strong discriminator)
+      sibling_pct ≥ 0.50  → +1  (above-median among siblings)
+      sibling_pct < 0.50  →  0  (below-median; marker does not distinguish here)
+      global_pct  ≥ 0.90  → +1 additional (marker is atlas-globally specific)
+
+    Negative markers (inverted — high expression is bad):
+      sibling_pct ≥ 0.80  → −2
+      sibling_pct ≥ 0.50  → −1
+      sibling_pct < 0.50  → +1  (low expression confirms negative-marker expectation)
+    """
+    if is_negative:
+        if sibling_pct >= 0.80:
+            return -2
+        if sibling_pct >= 0.50:
+            return -1
+        return +1
+    else:
+        if sibling_pct >= 0.80:
+            score = 2
+        elif sibling_pct >= 0.50:
+            score = 1
+        else:
+            return 0  # below-median among siblings; global bonus does not apply
+        if global_pct >= 0.90:
+            score += 1
+        return score
+
+
+def _expression_score(mean_expr: float) -> int:
+    """Legacy absolute-threshold score — kept for backward compat with tests.
+
+    Prefer percentile-based scoring via _score_from_percentiles() for new code.
     """
     if mean_expr >= 5.0:
         return 2
     if mean_expr >= 1.0:
         return 1
     if mean_expr >= 0.1:
-        return 0  # scattered; caller may log
+        return 0
     return -2
 
 
 def _neg_expression_score(mean_expr: float) -> int:
-    """Map a mean expression value to a negative-marker score (inverted).
-
-    High expression of a negative marker → penalty:
-      ≥ 5.0  → −2
-      ≥ 1.0  → −1
-      ≥ 0.1  →  0  (scattered)
-      < 0.1  → +1  (marker absent → confirms negative-marker expectation)
-    """
+    """Legacy inverted absolute-threshold score — kept for backward compat with tests."""
     return -_expression_score(mean_expr)
 
 
@@ -1886,15 +1923,16 @@ class TaxonomyDB:
                            where these are expressed. Uses expression_data when available.
         expression_data:  ``{cell_set_accession: {symbol: mean_expression}}`` from
                           the taxonomy YAML (load with ``load_expression_data()``).
-                          When provided, marker scoring uses quantitative thresholds
-                          instead of binary +1:
-                            ≥ 5.0 → +2 (high), ≥ 1.0 → +1 (moderate),
-                            ≥ 0.1 → 0 (scattered, flagged), < 0.1 → −2 (absent).
-                          Negative markers use the inverted scale.
-                          Falls back to binary +1 for genes not in expression_data.
+                          When provided, marker scoring uses percentile-based scoring
+                          (see README § Expression scoring) instead of binary +1.
+                          Falls back to binary +1 for genes absent from expression_data.
 
-        Scoring: region match = 2 pts, NT match = 2 pts, each marker match = 1 pt
-        (binary) or ±2/1/0/−2 (quantitative when expression_data provided).
+        Scoring: region match = 2 pts, NT match = 2 pts.
+        Marker scoring (with expression_data): sibling-percentile primary (+2/+1/0),
+        global-percentile specificity bonus (+1 if top 10% atlas-wide), negative markers
+        inverted. Without expression_data: binary +1 per marker found in DB columns.
+        Candidates with mean_expression < MIN_DETECTABLE for a queried gene are flagged
+        as unreliable and contribute 0 from that gene.
         Optional criteria add their registered bonus (default 1 pt each).
         Results sorted descending by score.
         """
@@ -1954,6 +1992,29 @@ class TaxonomyDB:
                     "SELECT * FROM nodes WHERE taxonomy_level = ?", (level,)
                 ).fetchall()
 
+        # ── Pre-compute gene distribution references for percentile scoring ──────
+        # global_gene_vals: gene → all mean_expression values across every node
+        #   in expression_data (atlas-wide reference).
+        # sibling_gene_vals: parent_id → gene → values for nodes sharing that parent.
+        #   Siblings are nodes at the same rank that share a parent_id; this gives
+        #   a within-clade reference capturing local anatomical/type variation.
+        global_gene_vals: dict[str, list[float]] = defaultdict(list)
+        sibling_gene_vals: dict[str, dict[str, list[float]]] = defaultdict(
+            lambda: defaultdict(list)
+        )
+        if expression_data:
+            # Build a parent_id lookup from DB rows (rows already fetched above)
+            row_parent: dict[str, str | None] = {
+                dict(r)["node_id"]: dict(r).get("parent_id") for r in rows
+            }
+            for acc, gene_map in expression_data.items():
+                for sym, val in gene_map.items():
+                    global_gene_vals[sym].append(val)
+                pid = row_parent.get(acc)
+                if pid:
+                    for sym, val in expression_data[acc].items():
+                        sibling_gene_vals[pid][sym].append(val)
+
         results = []
         for row in rows:
             nd = dict(row)
@@ -1973,31 +2034,94 @@ class TaxonomyDB:
 
             node_acc = nd.get("node_id", "")
             node_expr = expression_data.get(node_acc, {}) if expression_data else {}
+            node_parent_id = nd.get("parent_id")
+
+            # ── Marker scoring ────────────────────────────────────────────────
+            # Positive markers
+            node_markers: set[str] = set()
+            for col in _marker_cols:
+                raw = nd.get(col)
+                if raw:
+                    node_markers.update(json.loads(raw))
+
+            expr_detail: dict[str, dict] = {}  # gene → {val, reliable, sibling_pct, global_pct, score}
 
             if markers:
-                node_markers: set[str] = set()
-                for col in _marker_cols:
-                    raw = nd.get(col)
-                    if raw:
-                        node_markers.update(json.loads(raw))
                 for m in markers:
                     if m in node_expr:
-                        delta = _expression_score(node_expr[m])
-                        score += delta
-                        if 0.1 <= node_expr[m] < 1.0:
-                            print(
-                                f"  [{node_acc}] {m}: mean_expression={node_expr[m]:.2f} "
-                                "(scattered/borderline — 0 pts)",
-                                file=sys.stderr,
+                        val = node_expr[m]
+                        reliable = val >= MIN_DETECTABLE
+                        if reliable and expression_data:
+                            g_ref = global_gene_vals.get(m, [])
+                            s_ref = (
+                                sibling_gene_vals[node_parent_id].get(m, [])
+                                if node_parent_id
+                                else []
                             )
+                            g_pct = _expression_percentile(val, g_ref)
+                            s_pct = _expression_percentile(val, s_ref)
+                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=False)
+                            expr_detail[m] = {
+                                "val": val,
+                                "reliable": True,
+                                "sibling_pct": round(s_pct, 3),
+                                "global_pct": round(g_pct, 3),
+                                "score": delta,
+                            }
+                        elif not reliable:
+                            delta = 0
+                            expr_detail[m] = {
+                                "val": val,
+                                "reliable": False,
+                                "sibling_pct": None,
+                                "global_pct": None,
+                                "score": 0,
+                            }
+                        else:
+                            # expression_data not loaded — fallback binary
+                            delta = 1
+                        score += delta
                     elif m in node_markers:
-                        score += 1  # fallback binary
+                        score += 1  # fallback: gene in DB marker columns
 
+            # Negative markers
             if negative_markers and node_expr:
                 for m in negative_markers:
                     if m in node_expr:
-                        delta = _neg_expression_score(node_expr[m])
+                        val = node_expr[m]
+                        reliable = val >= MIN_DETECTABLE
+                        if reliable and expression_data:
+                            g_ref = global_gene_vals.get(m, [])
+                            s_ref = (
+                                sibling_gene_vals[node_parent_id].get(m, [])
+                                if node_parent_id
+                                else []
+                            )
+                            g_pct = _expression_percentile(val, g_ref)
+                            s_pct = _expression_percentile(val, s_ref)
+                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=True)
+                            expr_detail[f"-{m}"] = {
+                                "val": val,
+                                "reliable": True,
+                                "sibling_pct": round(s_pct, 3),
+                                "global_pct": round(g_pct, 3),
+                                "score": delta,
+                            }
+                        elif not reliable:
+                            delta = 0
+                            expr_detail[f"-{m}"] = {
+                                "val": val,
+                                "reliable": False,
+                                "sibling_pct": None,
+                                "global_pct": None,
+                                "score": 0,
+                            }
+                        else:
+                            delta = 0  # no expression_data; can't penalise
                         score += delta
+
+            if expr_detail:
+                nd["_expression_detail"] = expr_detail
 
             criteria_applied: list[str] = []
             for name, direction, entry in _active_criteria:

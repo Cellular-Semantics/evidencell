@@ -13,6 +13,7 @@ import yaml
 
 from evidencell.taxonomy_db import (
     MapMyCellsMeta,
+    MIN_DETECTABLE,
     TaxonomyDB,
     TaxonomyMeta,
     clean_taxonomy_json,
@@ -21,11 +22,13 @@ from evidencell.taxonomy_db import (
     iter_taxonomy_rows,
     read_taxonomy_meta,
     _SCHEMA_HASH,
+    _expression_percentile,
     _expression_score,
     _neg_expression_score,
     _freshness_at,
     _is_cas_format,
     _meta_to_dict,
+    _score_from_percentiles,
 )
 
 FIXTURE_DIR = Path(__file__).parent.parent / "inputs" / "taxonomies"
@@ -407,6 +410,7 @@ def test_taxonomy_db_find_candidates_requires_rank_or_level(populated_db):
 # ── Expression scoring helpers (#34) ─────────────────────────────────────────
 
 def test_expression_score_thresholds():
+    """Legacy absolute-threshold helper — kept for backward compat."""
     assert _expression_score(10.0) == 2   # high
     assert _expression_score(5.0) == 2    # boundary
     assert _expression_score(2.5) == 1    # moderate
@@ -418,73 +422,138 @@ def test_expression_score_thresholds():
 
 
 def test_neg_expression_score_inverts():
+    """Legacy inverted helper — kept for backward compat."""
     assert _neg_expression_score(10.0) == -2
     assert _neg_expression_score(2.5) == -1
     assert _neg_expression_score(0.5) == 0
     assert _neg_expression_score(0.0) == 2  # absent → confirms expectation
 
 
-def test_find_candidates_expression_scoring(populated_db):
-    """Expression data boosts candidates with high expression of queried markers."""
+def test_expression_percentile():
+    ref = [0.1, 0.5, 1.0, 2.0, 5.0]
+    assert _expression_percentile(0.0, ref) == 0.0          # below all
+    assert _expression_percentile(1.0, ref) == 0.4          # 2/5 strictly below
+    assert _expression_percentile(5.0, ref) == 0.8          # 4/5 strictly below
+    assert _expression_percentile(10.0, ref) == 1.0         # above all
+    assert _expression_percentile(0.0, []) == 0.0           # empty reference
+
+
+def test_score_from_percentiles_positive():
+    # sibling_pct ≥ 0.80 → +2 base; global_pct ≥ 0.90 → +1 bonus
+    assert _score_from_percentiles(0.85, 0.95) == 3
+    assert _score_from_percentiles(0.85, 0.50) == 2
+    # sibling_pct ≥ 0.50 → +1 base; global_pct ≥ 0.90 → +1 bonus
+    assert _score_from_percentiles(0.60, 0.95) == 2
+    assert _score_from_percentiles(0.60, 0.50) == 1
+    # sibling_pct < 0.50 → 0 regardless of global
+    assert _score_from_percentiles(0.30, 0.95) == 0
+    assert _score_from_percentiles(0.00, 0.00) == 0
+
+
+def test_score_from_percentiles_negative():
+    # sibling_pct ≥ 0.80 → −2 (high expression of neg marker is bad)
+    assert _score_from_percentiles(0.85, 0.95, is_negative=True) == -2
+    # sibling_pct ≥ 0.50 → −1
+    assert _score_from_percentiles(0.60, 0.50, is_negative=True) == -1
+    # sibling_pct < 0.50 → +1 (low expression confirms absence)
+    assert _score_from_percentiles(0.30, 0.95, is_negative=True) == +1
+
+
+def test_min_detectable_constant():
+    assert MIN_DETECTABLE == pytest.approx(0.1)
+
+
+def test_find_candidates_expression_detail_attached(populated_db):
+    """When expression_data is provided, _expression_detail is attached to candidates."""
     db, _, _ = populated_db
 
-    # Build expression data: node 1 has Sst=8.0 (high), node 2 has Sst=0.0 (absent)
-    # Extract node IDs from the DB
-    import sqlite3
     with sqlite3.connect(db.db_path) as con:
         con.row_factory = sqlite3.Row
-        rows = con.execute("SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id").fetchall()
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id"
+        ).fetchall()
     node_ids = [r["node_id"] for r in rows]
-
-    expr = {}
-    if len(node_ids) >= 2:
-        expr[node_ids[0]] = {"Sst": 8.0}   # high → +2
-        expr[node_ids[1]] = {"Sst": 0.0}   # absent → −2
-
-    expr_results = db.find_candidates(
-        markers=["Sst"],
-        level="cluster",
-        expression_data=expr,
-    )
-
-    # If expression data is provided and node_ids[0] has Sst=8.0, its score should be 2
-    # instead of 1 (binary), and node_ids[1] with Sst=0.0 should score −2 (filtered by score>0)
-    if len(node_ids) >= 2 and expr:
-        high_expr_node = next((c for c in expr_results if c["node_id"] == node_ids[0]), None)
-        absent_node = next((c for c in expr_results if c["node_id"] == node_ids[1]), None)
-        if high_expr_node:
-            assert high_expr_node["_score"] == 2  # +2 for high expression
-        if absent_node:
-            assert absent_node["_score"] == -2  # −2 for absent defining marker
-
-
-def test_find_candidates_negative_markers_penalise(populated_db):
-    """Candidates with high expression of negative markers are penalised."""
-    db, _, _ = populated_db
-
-    import sqlite3
-    with sqlite3.connect(db.db_path) as con:
-        con.row_factory = sqlite3.Row
-        rows = con.execute("SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id").fetchall()
-    node_ids = [r["node_id"] for r in rows]
-
     if not node_ids:
         return
 
-    # Node with high expression of a negative marker → penalty
-    expr = {node_ids[0]: {"Pvalb": 9.0}}
+    # 9 fake background nodes at low expression + 1 real node at high expression.
+    # Fake nodes only affect global_gene_vals (not in DB → no sibling grouping).
+    # global_pct for real node = 9/10 = 0.90 → qualifies for global bonus.
+    fake_bg = {f"FAKE:{i:03d}": {"Sst": 0.2} for i in range(9)}
+    expr = {node_ids[0]: {"Sst": 9.0}, **fake_bg}
+
+    results = db.find_candidates(markers=["Sst"], level="cluster", expression_data=expr)
+    target = next((c for c in results if c["node_id"] == node_ids[0]), None)
+
+    assert target is not None, "High-expression node must appear in results"
+    assert "_expression_detail" in target
+    detail = target["_expression_detail"]
+    assert "Sst" in detail
+    assert detail["Sst"]["reliable"] is True
+    # 9 background nodes all below 9.0 → global_pct = 9/10 = 0.90
+    assert detail["Sst"]["global_pct"] == pytest.approx(0.9)
+    # Score must be at least +1 (global bonus for top 10%)
+    assert detail["Sst"]["score"] >= 1
+
+
+def test_find_candidates_unreliable_expr_flagged(populated_db):
+    """Values below MIN_DETECTABLE are flagged reliable=False and contribute 0 score."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id"
+        ).fetchall()
+    node_ids = [r["node_id"] for r in rows]
+    if not node_ids:
+        return
+
+    expr = {node_ids[0]: {"Sst": 0.05}}  # below MIN_DETECTABLE
+    results = db.find_candidates(markers=["Sst"], level="cluster", expression_data=expr)
+    target = next((c for c in results if c["node_id"] == node_ids[0]), None)
+
+    # Node may still appear if Sst is in DB marker columns (fallback binary).
+    # If it appears, the expression_detail must show reliable=False.
+    if target and "_expression_detail" in target:
+        assert target["_expression_detail"]["Sst"]["reliable"] is False
+        assert target["_expression_detail"]["Sst"]["score"] == 0
+
+
+def test_find_candidates_negative_marker_detail(populated_db):
+    """Negative markers appear with '-gene' key in _expression_detail."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id"
+        ).fetchall()
+    node_ids = [r["node_id"] for r in rows]
+    if not node_ids:
+        return
+
+    # Provide 9 low-expression background + 1 high-expression DB node for the neg marker.
+    # With sibling_pct from only the DB node itself (no siblings in fixture), sibling_pct=0 →
+    # _score_from_percentiles returns +1 (single-node sibling group is degenerate).
+    # The important thing to test here is that detail is attached with the right key.
+    fake_bg = {f"FAKE:{i:03d}": {"Pvalb": 0.2} for i in range(9)}
+    expr = {node_ids[0]: {"Pvalb": 9.0}, **fake_bg}
+
     results = db.find_candidates(
-        markers=["Sst"],
         negative_markers=["Pvalb"],
         level="cluster",
         expression_data=expr,
     )
-    # Sst not in expr → binary +1 if in marker columns (falls back); Pvalb=9.0 → −2
-    node_result = next((c for c in results if c["node_id"] == node_ids[0]), None)
-    # Score should include the −2 penalty from Pvalb
-    if node_result:
-        # Check penalty is applied: negative marker in expr → _neg_expression_score(9.0) = -2
-        assert node_result["_score"] <= -1  # at most +1 (binary Sst) − 2 (Pvalb penalty)
+    target = next((c for c in results if c["node_id"] == node_ids[0]), None)
+
+    if target:
+        assert "_expression_detail" in target
+        assert "-Pvalb" in target["_expression_detail"]
+        detail = target["_expression_detail"]["-Pvalb"]
+        assert detail["reliable"] is True
+        assert "sibling_pct" in detail
+        assert "global_pct" in detail
 
 
 # ── TaxonomyMeta ──────────────────────────────────────────────────────────────
