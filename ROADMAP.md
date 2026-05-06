@@ -190,6 +190,7 @@ Brief log — see [planning/ROADMAP_archive_2026-04.md](planning/ROADMAP_archive
 - [x] M8 Ph1: taxonomy SQLite DB + YAML ingest (CCN20230722); `taxonomy_db.py` `#ingest-taxonomy`
 - [x] S1 (partial): `taxonomy_rank` schema + WMB rank assignments + `find_candidates` rank support
 - [x] Taxonomy update ops: `add-expression`, `reingest` with field ownership (`taxonomy_ops.py`); `map-cell-type.md` Step 2b expression enrichment `#ingest-taxonomy` `#map-cell-type`
+- [x] **Bugfix: `add-expression-all` merge** ([#40](https://github.com/Cellular-Semantics/evidencell/issues/40)) — sequential calls with disjoint gene sets now preserve all genes (upsert by symbol); prior behaviour silently dropped genes from earlier calls `#ingest-taxonomy`
 - [x] CAS taxonomy ingest: CTX-HPF CS202106160 + cross-taxonomy AT edges `#ingest-taxonomy` `#annotation-transfer`
 - [x] Pre-commit hook: strict schema validation on all staged KB YAML `#qc`
 - [x] Provenance schema unification (v0.8.0): `ElectrophysiologyProfile` + `MorphologyProfile` classes; `AnatomicalLocation.sources`; removed flat `ephys_sources`/`morphology_sources`/`location_sources` `#schema`
