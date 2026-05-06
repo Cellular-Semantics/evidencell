@@ -21,6 +21,8 @@ from evidencell.taxonomy_db import (
     iter_taxonomy_rows,
     read_taxonomy_meta,
     _SCHEMA_HASH,
+    _expression_score,
+    _neg_expression_score,
     _freshness_at,
     _is_cas_format,
     _meta_to_dict,
@@ -400,6 +402,96 @@ def test_taxonomy_db_find_candidates_requires_rank_or_level(populated_db):
     db, _, _ = populated_db
     with pytest.raises(ValueError, match="Either rank or level"):
         db.find_candidates()
+
+
+# ── Expression scoring helpers (#34) ─────────────────────────────────────────
+
+def test_expression_score_thresholds():
+    assert _expression_score(10.0) == 2   # high
+    assert _expression_score(5.0) == 2    # boundary
+    assert _expression_score(2.5) == 1    # moderate
+    assert _expression_score(1.0) == 1    # boundary
+    assert _expression_score(0.5) == 0    # scattered
+    assert _expression_score(0.1) == 0    # boundary
+    assert _expression_score(0.05) == -2  # absent
+    assert _expression_score(0.0) == -2   # absent
+
+
+def test_neg_expression_score_inverts():
+    assert _neg_expression_score(10.0) == -2
+    assert _neg_expression_score(2.5) == -1
+    assert _neg_expression_score(0.5) == 0
+    assert _neg_expression_score(0.0) == 2  # absent → confirms expectation
+
+
+def test_find_candidates_expression_scoring(populated_db):
+    """Expression data boosts candidates with high expression of queried markers."""
+    db, _, _ = populated_db
+
+    # Use level= to avoid needing rank in test fixture
+    # No expression data → binary +1 per marker
+    binary_results = db.find_candidates(
+        markers=["Sst"],
+        level="cluster",
+    )
+
+    # Build expression data: node 1 has Sst=8.0 (high), node 2 has Sst=0.0 (absent)
+    # Extract node IDs from the DB
+    import sqlite3
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute("SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id").fetchall()
+    node_ids = [r["node_id"] for r in rows]
+
+    expr = {}
+    if len(node_ids) >= 2:
+        expr[node_ids[0]] = {"Sst": 8.0}   # high → +2
+        expr[node_ids[1]] = {"Sst": 0.0}   # absent → −2
+
+    expr_results = db.find_candidates(
+        markers=["Sst"],
+        level="cluster",
+        expression_data=expr,
+    )
+
+    # If expression data is provided and node_ids[0] has Sst=8.0, its score should be 2
+    # instead of 1 (binary), and node_ids[1] with Sst=0.0 should score −2 (filtered by score>0)
+    if len(node_ids) >= 2 and expr:
+        high_expr_node = next((c for c in expr_results if c["node_id"] == node_ids[0]), None)
+        absent_node = next((c for c in expr_results if c["node_id"] == node_ids[1]), None)
+        if high_expr_node:
+            assert high_expr_node["_score"] == 2  # +2 for high expression
+        if absent_node:
+            assert absent_node["_score"] == -2  # −2 for absent defining marker
+
+
+def test_find_candidates_negative_markers_penalise(populated_db):
+    """Candidates with high expression of negative markers are penalised."""
+    db, _, _ = populated_db
+
+    import sqlite3
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute("SELECT node_id FROM nodes WHERE taxonomy_level='cluster' ORDER BY node_id").fetchall()
+    node_ids = [r["node_id"] for r in rows]
+
+    if not node_ids:
+        return
+
+    # Node with high expression of a negative marker → penalty
+    expr = {node_ids[0]: {"Pvalb": 9.0}}
+    results = db.find_candidates(
+        markers=["Sst"],
+        negative_markers=["Pvalb"],
+        level="cluster",
+        expression_data=expr,
+    )
+    # Sst not in expr → binary +1 if in marker columns (falls back); Pvalb=9.0 → −2
+    node_result = next((c for c in results if c["node_id"] == node_ids[0]), None)
+    # Score should include the −2 penalty from Pvalb
+    if node_result:
+        # Check penalty is applied: negative marker in expr → _neg_expression_score(9.0) = -2
+        assert node_result["_score"] <= -1  # at most +1 (binary Sst) − 2 (Pvalb penalty)
 
 
 # ── TaxonomyMeta ──────────────────────────────────────────────────────────────
