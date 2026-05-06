@@ -274,11 +274,16 @@ def add_expression(
                 "mean_expression": round(val, 2),
             })
 
-        # Write PrecomputedExpression block
+        # Merge with existing genes[] — update by symbol, preserve others
+        existing_expr = node.get("precomputed_expression", {})
+        merged: dict[str, Any] = {g["symbol"]: g for g in existing_expr.get("genes", [])}
+        for entry in gene_entries:
+            merged[entry["symbol"]] = entry
+
         node["precomputed_expression"] = {
             "source": source_name,
             "level": level,
-            "genes": gene_entries,
+            "genes": list(merged.values()),
         }
         updated += 1
 
@@ -429,21 +434,44 @@ def add_expression_supertype(
 
         # Optional child cluster breakdown
         if include_child_clusters:
-            child_entries: list[dict[str, Any]] = []
+            # Merge with existing child_cluster_expression by cluster_accession
+            existing_expr = node.get("precomputed_expression", {})
+            existing_children: dict[str, dict[str, Any]] = {
+                e["cluster_accession"]: e
+                for e in existing_expr.get("child_cluster_expression", [])
+            }
             for ca in child_accs:
                 row = cluster_to_row.get(ca)
                 if row is None:
                     continue
-                expr_dict: dict[str, float] = {}
+                new_expr: dict[str, float] = {}
                 for sym, ens, col in gene_cols:
-                    expr_dict[sym] = round(float(sum_matrix[row, col]), 2)
-                child_entries.append({
-                    "cluster_accession": ca,
-                    "n_cells": int(n_cells[row]),
-                    "expression": json.dumps(expr_dict),
-                })
+                    new_expr[sym] = round(float(sum_matrix[row, col]), 2)
+                if ca in existing_children:
+                    # Merge expression dicts
+                    old_expr = json.loads(existing_children[ca]["expression"])
+                    old_expr.update(new_expr)
+                    existing_children[ca] = {
+                        "cluster_accession": ca,
+                        "n_cells": int(n_cells[row]),
+                        "expression": json.dumps(old_expr),
+                    }
+                else:
+                    existing_children[ca] = {
+                        "cluster_accession": ca,
+                        "n_cells": int(n_cells[row]),
+                        "expression": json.dumps(new_expr),
+                    }
+            child_entries = list(existing_children.values())
             if child_entries:
                 expr_block["child_cluster_expression"] = child_entries
+
+        # Merge top-level genes[] with existing by symbol
+        existing_expr = node.get("precomputed_expression", {})
+        merged_genes: dict[str, Any] = {g["symbol"]: g for g in existing_expr.get("genes", [])}
+        for entry in gene_entries:
+            merged_genes[entry["symbol"]] = entry
+        expr_block["genes"] = list(merged_genes.values())
 
         node["precomputed_expression"] = expr_block
         updated += 1

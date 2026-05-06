@@ -333,6 +333,98 @@ class TestAddExpression:
 
         assert "FakeGene" in result["genes_missing"]
 
+    def test_add_expression_merges_sequential_calls(self, tmp_taxonomy: Path, gene_mapping_tsv: Path):
+        """Two sequential calls with disjoint gene sets leave both sets in YAML (issue #40)."""
+        import numpy as np
+
+        gene_mapping = load_gene_mapping(gene_mapping_tsv)
+
+        # First call: Sst + Gad1
+        col_names_1 = ["ENSMUSG00000004366", "ENSMUSG00000026787"]  # Sst, Gad1
+        cluster_to_row = {"CLUS_001": 0, "CLUS_002": 1}
+        sum_matrix_1 = np.array([[3.5, 1.2], [0.3, 0.8]])
+
+        with (
+            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
+            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
+        ):
+            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
+            mock_h5.return_value = (col_names_1, cluster_to_row, sum_matrix_1)
+            add_expression(
+                taxonomy_id="TEST001",
+                stats_path="fake1.h5",
+                genes=["Sst", "Gad1"],
+                gene_mapping=gene_mapping,
+                level="cluster",
+            )
+
+        # Second call: Cck only (disjoint)
+        col_names_2 = ["ENSMUSG00000032532"]  # Cck
+        sum_matrix_2 = np.array([[5.1], [2.3]])
+
+        with (
+            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
+            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
+        ):
+            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
+            mock_h5.return_value = (col_names_2, cluster_to_row, sum_matrix_2)
+            add_expression(
+                taxonomy_id="TEST001",
+                stats_path="fake2.h5",
+                genes=["Cck"],
+                gene_mapping=gene_mapping,
+                level="cluster",
+            )
+
+        with (tmp_taxonomy / "cluster.yaml").open() as fh:
+            data = yaml.safe_load(fh)
+
+        node1 = data["nodes"][0]
+        symbols = {g["symbol"] for g in node1["precomputed_expression"]["genes"]}
+        assert "Sst" in symbols, "Sst from first call was dropped"
+        assert "Gad1" in symbols, "Gad1 from first call was dropped"
+        assert "Cck" in symbols, "Cck from second call is missing"
+        assert len(symbols) == 3
+
+    def test_add_expression_updates_existing_gene(self, tmp_taxonomy: Path, gene_mapping_tsv: Path):
+        """Re-pushing a gene with a new value replaces it rather than duplicating."""
+        import numpy as np
+
+        gene_mapping = load_gene_mapping(gene_mapping_tsv)
+        col_names = ["ENSMUSG00000004366"]  # Sst
+        cluster_to_row = {"CLUS_001": 0, "CLUS_002": 1}
+
+        with (
+            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
+            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
+        ):
+            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
+            mock_h5.return_value = (col_names, cluster_to_row, np.array([[3.5], [0.3]]))
+            add_expression(
+                taxonomy_id="TEST001", stats_path="fake.h5",
+                genes=["Sst"], gene_mapping=gene_mapping, level="cluster",
+            )
+
+        with (
+            patch("evidencell.taxonomy_ops.taxonomy_yaml_path") as mock_path,
+            patch("evidencell.taxonomy_ops.load_stats_h5") as mock_h5,
+        ):
+            mock_path.return_value = tmp_taxonomy / "cluster.yaml"
+            mock_h5.return_value = (col_names, cluster_to_row, np.array([[9.9], [0.1]]))
+            add_expression(
+                taxonomy_id="TEST001", stats_path="fake.h5",
+                genes=["Sst"], gene_mapping=gene_mapping, level="cluster",
+            )
+
+        with (tmp_taxonomy / "cluster.yaml").open() as fh:
+            data = yaml.safe_load(fh)
+
+        node1 = data["nodes"][0]
+        genes = node1["precomputed_expression"]["genes"]
+        sst_entries = [g for g in genes if g["symbol"] == "Sst"]
+        assert len(sst_entries) == 1, "Sst should not be duplicated"
+        assert sst_entries[0]["mean_expression"] == 9.9
+
 
 class TestReingest:
     def test_reingest_preserves_enrichment(self, tmp_taxonomy: Path, tmp_path: Path):
