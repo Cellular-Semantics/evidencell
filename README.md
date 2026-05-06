@@ -89,6 +89,39 @@ Confidence levels (`HIGH`, `MODERATE`, `LOW`, `UNCERTAIN`) follow a decision gui
 
 ---
 
+## Expression scoring
+
+When `find_candidates()` runs with expression data loaded (via `load_expression_data()`), marker scoring is **percentile-based** rather than threshold-based.
+
+**Why percentile scoring?** Absolute thresholds on log₂(CPM+1) are not generalisable across genes or atlases. A threshold calibrated for one gene (e.g. Grm1 ≥ 5.0) flags 74% of WMBv1 clusters as "high" — meaningless as a discriminator. Percentile scoring is self-calibrating: it asks "is this gene unusually high *for this cell type in context*?" rather than applying a fixed cut.
+
+**What the expression values represent.** The values come from the MapMyCells precomputed stats HDF5, which stores per-cluster means of the per-cell log₂(CPM+1) transformed expression. Despite the HDF5 field name being `sum`, it is a mean (MapMyCells normalises it internally). The resulting units are mean log₂(CPM+1) per cluster.
+
+**Two reference distributions** are computed per `find_candidates()` call from the loaded expression data:
+
+- **Sibling percentile** — fraction of nodes at the same rank sharing the same `parent_id` with lower expression. This captures local clade variation and is the primary score signal.
+- **Global percentile** — fraction of *all* nodes at the query rank with lower expression (atlas-wide). This provides an atlas-specificity bonus for truly rare-high genes.
+
+**Scoring table** (positive markers):
+
+| Sibling percentile | Global percentile | Points |
+|---|---|---|
+| ≥ 0.80 (top 20% among siblings) | ≥ 0.90 | +3 |
+| ≥ 0.80 | < 0.90 | +2 |
+| ≥ 0.50 (above sibling median) | ≥ 0.90 | +2 |
+| ≥ 0.50 | < 0.90 | +1 |
+| < 0.50 (below sibling median) | any | 0 |
+
+**Negative markers** are inverted: sibling_pct ≥ 0.80 → −2; ≥ 0.50 → −1; < 0.50 → +1 (low expression confirms marker absence).
+
+**Reliability floor.** Genes with mean expression < 0.1 log₂(CPM+1) (`MIN_DETECTABLE`) are flagged as unreliable (likely dropout or ambient RNA) and contribute 0 points regardless of percentile. This threshold is deliberately permissive — it excludes only near-zero values where the signal cannot be distinguished from noise.
+
+**Fallback.** When expression data is not loaded, scoring falls back to binary +1 per gene found in any of the four DB marker columns (defining, defining-scoped, TF, MERFISH). This preserves backward compatibility for workflows that run without the HDF5.
+
+**Per-gene output.** Each candidate returned by `find_candidates()` (when expression data is provided) includes `_expression_detail`: a dict keyed by gene symbol (or `-gene` for negative markers) containing `val`, `reliable`, `sibling_pct`, `global_pct`, and `score`. This lets downstream code and reports show exactly why each candidate scored as it did.
+
+---
+
 ## Aims and ambitions
 
 - **Transparency**: every mapping claim has a documented evidence trail. Absence of evidence and active conflicts are recorded, not hidden.
