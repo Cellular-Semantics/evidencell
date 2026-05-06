@@ -1,0 +1,69 @@
+id: at_run_20260506_harris_chamberland_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE99888"
+source_cluster_label: >
+  Two label sets scored against the same MapMyCells output:
+  (1) Harris 2018 published Class labels (~50 fine-grained subtypes);
+  (2) Chamberland 2024 subfamily labels derived in-silico from Harris
+  expression by applying Chamberland's gene-pair criteria (Sst+Tac1
+  expression-product>1; Sst+Nos1 expression-product>1; Sst+/Ndnf+
+  >1; Sst+/Chrna2+ >0). Higher-priority labels overwrite lower in
+  priority order Chrna2 > Ndnf > Sst_Nos1 > Sst_Tac1; remainder
+  marked 'unassigned'. Source DOI: 10.1371/journal.pbio.2006387.
+  Mirror: https://figshare.com/articles/dataset/Transcriptomic_analysis_of_CA1_inhibitory_interneurons/6198656.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells (cell_type_mapper v1.7.1, default parameters,
+  raw normalization, bootstrap_iteration=100). Run locally via
+  `cell_type_mapper.cli.from_specified_markers` against the
+  precomputed_stats_ABC_revision_230821.h5 stats file and
+  mouse_markers_230821.json marker set. F1 scoring with
+  bootstrap_threshold=0.8 default.
+tool_version: "cell_type_mapper v1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 3663
+n_cells_after_filter: 3663
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: "3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+
+output:
+  relpath: f1_matrix_chamberland_by_class.csv
+  format: csv
+
+figure:
+  relpath: figures/f1_heatmap_by_class.png
+  format: png
+
+caveats: >
+  Chamberland subfamily labels are derived in-silico from Harris
+  expression, not published per-cell labels. Two derivation methods
+  are reported: per-cell rules (subject to scRNA-seq dropout) and
+  per-cluster rules (dropout-robust, primary result). See README.md
+  Methods note for full discussion. Headline cluster-level findings
+  from per-cluster labels: Chrna2-OLM -> CLUS_0771 (F1 0.65, recall
+  0.81); Sst::Nos1-IN -> CLUS_0859 Sst Chodl Gaba_4 (F1 0.97,
+  cross-supertype to Sst Chodl, consistent with alveus-localised
+  long-range-projecting identity); Sst::Tac1-IN -> Pvalb subclass
+  (subclass-level recall 0.78, surfacing transcriptomic Sst-Pvalb
+  continuity for bistratified types); Ndnf::Nkx2-1-OLM not cleanly
+  resolved (single Harris Class qualified at the per-cluster Ndnf
+  threshold, cells did not concentrate at any single WMBv1 cluster).
+  Companion F1 matrices for Harris's own Class labels and per-cell
+  Chamberland labels available at f1_matrix_harris_class.csv and
+  f1_matrix_chamberland.csv respectively.
