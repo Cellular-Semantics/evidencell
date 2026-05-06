@@ -11,6 +11,8 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+import yaml
+
 # ── Constants ──────────────────────────────────────────────────────────────────
 
 # Snippet values that look like placeholders rather than real verbatim text
@@ -219,6 +221,57 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
                     "Add the reference through the validated ingest path first."
                 )
 
+    return errors
+
+
+# ── AT run_ref validation ──────────────────────────────────────────────────────
+
+def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]:
+    """Recursively collect all ``run_ref`` string values from a nested dict/list."""
+    if result is None:
+        result = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == "run_ref" and isinstance(v, str) and v:
+                result.append(v)
+            else:
+                _collect_run_refs(v, result)
+    elif isinstance(obj, list):
+        for item in obj:
+            _collect_run_refs(item, result)
+    return result
+
+
+def check_run_refs(doc: dict, index_path: Path) -> list[str]:
+    """Check that every ``run_ref`` value resolves to a registered AT run.
+
+    Reads ``index_path`` (``kb/annotation_transfer_runs/index.yaml``) and
+    verifies each ``run_ref`` in the document appears under ``runs:``.
+
+    Returns a list of error strings; empty = OK.
+    Skips silently when the index file does not exist (no AT runs registered yet).
+    """
+    run_refs = _collect_run_refs(doc)
+    if not run_refs:
+        return []
+
+    if not index_path.exists():
+        return []
+
+    try:
+        index = yaml.safe_load(index_path.read_text(encoding="utf-8")) or {}
+    except Exception as exc:
+        return [f"Could not read AT run index {index_path}: {exc}"]
+
+    known: set[str] = set((index.get("runs") or {}).keys())
+
+    errors: list[str] = []
+    for ref in run_refs:
+        if ref not in known:
+            errors.append(
+                f"run_ref '{ref}' not found in {index_path.name}. "
+                "Register the AT run with: just register-at-run"
+            )
     return errors
 
 

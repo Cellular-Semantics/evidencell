@@ -110,3 +110,13 @@ def taxonomy_meta_path(taxonomy_id: str) -> Path:
 def taxonomy_meta_input_path(taxonomy_id: str) -> Path:
     """Return the metadata input file path (provided by user before ingest)."""
     return repo_root() / "inputs" / "taxonomies" / f"{taxonomy_id}_meta.yaml"
+
+
+def at_runs_dir() -> Path:
+    """Return the annotation transfer runs directory."""
+    return repo_root() / "kb" / "annotation_transfer_runs"
+
+
+def at_run_index_path() -> Path:
+    """Return the AT run registry index path."""
+    return at_runs_dir() / "index.yaml"

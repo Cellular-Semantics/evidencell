@@ -36,10 +36,12 @@ from evidencell.validate import (  # noqa: E402
     structural_checks,
     check_quote_keys,
     check_ref_pmids,
+    check_run_refs,
     linkml_validate,
     parse_md_annotations,
     check_md_ids,
 )
+from evidencell.paths import at_run_index_path  # noqa: E402
 
 # ── Curation-mode gate ───────────────────────────────────────────────────────
 # Users whose writes bypass the curation-mode zone check. Non-trusted users
@@ -253,6 +255,15 @@ def main():
             if ref_errors:
                 print("Reference provenance errors:", file=sys.stderr)
                 for e in ref_errors:
+                    print(f"  - {e}", file=sys.stderr)
+                errors_found = True
+
+        # 3b. AT run_ref resolution (fast, local index.yaml lookup)
+        if isinstance(doc, dict):
+            run_ref_errors = check_run_refs(doc, at_run_index_path())
+            if run_ref_errors:
+                print("AT run_ref errors:", file=sys.stderr)
+                for e in run_ref_errors:
                     print(f"  - {e}", file=sys.stderr)
                 errors_found = True
 
