@@ -69,10 +69,10 @@ The per-cluster F1 figures reported above should still not be over-interpreted i
 
 ```bash
 # 1. Build h5ad + per-cell labels
-uv run python /tmp/build_harris_h5ad.py
+uv run python scripts/build_harris_h5ad.py
 
 # 2. Derive per-cluster Chamberland labels
-uv run python /tmp/relabel_by_harris_cluster.py
+uv run python scripts/relabel_by_harris_cluster.py
 
 # 3. Run MapMyCells locally (Python 3.12 required for cell_type_mapper v1.7.1)
 uv run --python 3.12 \
@@ -93,7 +93,7 @@ just at-score .../result_clean.csv .../labels_chamberland_subfamily.json .../f1_
 just at-score .../result_clean.csv .../labels_harris_class.json .../f1_harris_class.csv
 
 # 5. Heatmap
-uv run --with matplotlib --with pandas python /tmp/render_f1_heatmap.py
+uv run --with matplotlib --with pandas python scripts/render_f1_heatmap.py
 ```
 
 ## Caveats

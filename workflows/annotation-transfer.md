@@ -104,6 +104,17 @@ Step 6  Report regeneration
 - **Preflight gate**: Large datasets (>available RAM) require explicit human
   confirmation before loading. The preflight module estimates memory from
   HDF5 metadata without loading the matrix.
+- **Run records are self-contained**: every AT run record under
+  `kb/annotation_transfer_runs/{run_id}/` must reproduce its outputs from
+  inputs and tool versions captured in the manifest, **plus any bespoke
+  scripts retained in a `scripts/` subdirectory of the run record**. If
+  the recipe in the README references a script (label derivation,
+  preprocessing, custom figure rendering, ad-hoc analysis), the script
+  must live in `scripts/` not in `/tmp` or another transient location.
+  The principle generalises: any committed run record whose reproduction
+  recipe references custom scripts must vendor those scripts into the
+  run record, so that a future reader can reproduce the run from the
+  record alone without depending on session-local state.
 
 ---
 
