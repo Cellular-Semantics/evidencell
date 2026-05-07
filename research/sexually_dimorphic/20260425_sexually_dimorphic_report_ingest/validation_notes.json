@@ -1,0 +1,868 @@
+{
+  "_meta": {
+    "region": "sexually_dimorphic",
+    "ingest_date": "2026-04-25",
+    "ingest_run": "20260425_sexually_dimorphic_report_ingest",
+    "summary": {
+      "n_nodes": 14,
+      "n_property_supported_high": 62,
+      "n_partial_properties": 0,
+      "n_gaps": 9,
+      "n_issues": 17,
+      "n_contradictions": 1,
+      "n_ambiguities": 8,
+      "n_heterogeneity": 6,
+      "n_round2_targets": 11
+    }
+  },
+  "nodes": {
+    "avpv_kiss1_neuron": {
+      "name": "AVPV/PeN kisspeptin neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "nt_type",
+        "defining_markers",
+        "neuropeptides",
+        "morphology",
+        "sex_ratio",
+        "electrophysiology"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 6,
+          "n_moderate": 1,
+          "quote_keys": [
+            "1227024_3fcab8ab",
+            "1357086_85e3d032",
+            "4702847_ebd225e6"
+          ]
+        },
+        "nt_type": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "4702847_ebd225e6"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 5,
+          "n_moderate": 2,
+          "quote_keys": [
+            "1227024_3fcab8ab",
+            "1227024_6801ab8e",
+            "1357086_85e3d032"
+          ]
+        },
+        "neuropeptides": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "11330110_f135c1a8"
+          ]
+        },
+        "morphology": {
+          "n_high": 11,
+          "n_moderate": 2,
+          "quote_keys": [
+            "1227024_3fcab8ab",
+            "1357086_85e3d032",
+            "4702847_ebd225e6"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 5,
+          "n_moderate": 1,
+          "quote_keys": [
+            "1227024_3fcab8ab",
+            "1357086_85e3d032",
+            "14863067_fa51fcf7"
+          ]
+        },
+        "electrophysiology": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "11330110_f261b092",
+            "11330110_04c1f564"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [],
+      "issues": [
+        {
+          "type": "AMBIGUITY",
+          "property": "nt_type",
+          "description": "NT identity is dual GABAergic + dopaminergic \u2014 most AVPV/PeN Kiss1 cells co-express TH (the rate-limiting enzyme for dopamine), but the GABAergic identity itself is described in the report as a feature of the broader population, not directly cited in quotes for this node. NT inference partly inherited from the related avpv_th_neuron node."
+        },
+        {
+          "type": "HETEROGENEITY",
+          "property": "electrophysiology",
+          "description": "Two electrophysiological subtypes (type I irregular firing, type II quiescent) consistently described \u2014 may warrant splitting into sub-nodes."
+        }
+      ],
+      "round2_targets": []
+    },
+    "arc_kndy_neuron": {
+      "name": "Arcuate KNDy (kisspeptin/neurokinin B/dynorphin) neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "neuropeptides",
+        "morphology",
+        "sex_ratio",
+        "electrophysiology"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 3,
+          "n_moderate": 3,
+          "quote_keys": [
+            "1227024_3fcab8ab",
+            "1357086_85e3d032",
+            "247882232_5b52821f"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 3,
+          "n_moderate": 3,
+          "quote_keys": [
+            "1227024_6801ab8e",
+            "1357086_85e3d032",
+            "17692566_c0b97b71"
+          ]
+        },
+        "neuropeptides": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "164802066_0dfcbb3e",
+            "204460206_c55bedb4"
+          ]
+        },
+        "morphology": {
+          "n_high": 5,
+          "n_moderate": 3,
+          "quote_keys": [
+            "1227024_3fcab8ab",
+            "1357086_85e3d032",
+            "247882232_5b52821f"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "1227024_4974dba1",
+            "11330110_b026342a"
+          ]
+        },
+        "electrophysiology": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "11330110_f261b092",
+            "11330110_b026342a"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [],
+      "issues": [
+        {
+          "type": "AMBIGUITY",
+          "property": "nt_type",
+          "description": "NT type was 'not specified in report' in proposed_types \u2014 KNDy cells are GABAergic per CL:4023127 but no quote in this corpus directly attests this. nt_type left null."
+        }
+      ],
+      "round2_targets": []
+    },
+    "avpv_th_neuron": {
+      "name": "AVPV tyrosine hydroxylase (TH) neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "nt_type",
+        "defining_markers",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 5,
+          "n_moderate": 0,
+          "quote_keys": [
+            "214694216_9c6ba0ce",
+            "3481177_1dd3b718",
+            "4702847_ebd225e6"
+          ]
+        },
+        "nt_type": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "4702847_ebd225e6"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 7,
+          "n_moderate": 0,
+          "quote_keys": [
+            "214694216_9c6ba0ce",
+            "233446934_e19240c2",
+            "3481177_1dd3b718"
+          ]
+        },
+        "morphology": {
+          "n_high": 9,
+          "n_moderate": 1,
+          "quote_keys": [
+            "214694216_9c6ba0ce",
+            "3481177_1dd3b718",
+            "4702847_ebd225e6"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 4,
+          "n_moderate": 1,
+          "quote_keys": [
+            "214694216_9c6ba0ce",
+            "14863067_fa51fcf7",
+            "233446934_e19240c2"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [],
+      "issues": [
+        {
+          "type": "HETEROGENEITY",
+          "property": "defining_markers",
+          "description": "Substantial overlap with avpv_kiss1_neuron \u2014 most AVPV Kiss1 cells co-express TH. The boundary between avpv_th_neuron and avpv_kiss1_neuron is largely a functional/marker distinction, not a separate cell population."
+        }
+      ],
+      "round2_targets": []
+    },
+    "sdn_poa_calbindin_neuron": {
+      "name": "Sexually dimorphic nucleus of the preoptic area (SDN-POA) calbindin neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "negative_markers",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 3,
+          "n_moderate": 0,
+          "quote_keys": [
+            "14863067_fa51fcf7",
+            "3481177_d6c3a647",
+            "3481177_1098a86b"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "3481177_d6c3a647",
+            "3481177_17d4bd9d"
+          ]
+        },
+        "negative_markers": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "3481177_562d502e",
+            "3481177_17d4bd9d"
+          ]
+        },
+        "morphology": {
+          "n_high": 4,
+          "n_moderate": 0,
+          "quote_keys": [
+            "14863067_fa51fcf7",
+            "3481177_d6c3a647",
+            "3481177_1098a86b"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "14863067_fa51fcf7"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [],
+      "issues": [],
+      "round2_targets": []
+    },
+    "mpoa_esr1_neuron": {
+      "name": "MPOA estrogen receptor 1 (Esr1) neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "233446934_5d0fb07e"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 4,
+          "n_moderate": 0,
+          "quote_keys": [
+            "233446934_5d0fb07e",
+            "233446934_9f0f55ea",
+            "237425192_c17e0213"
+          ]
+        },
+        "morphology": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "233446934_5d0fb07e",
+            "233446934_5d0fb07e"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "233446934_5d0fb07e"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [],
+      "issues": [
+        {
+          "type": "HETEROGENEITY",
+          "property": "nt_type",
+          "description": "MPOA contains both GABAergic and glutamatergic neurons; Esr1+ cells span both NT classes. nt_type left null. Likely needs splitting into multiple sub-nodes per NT."
+        },
+        {
+          "type": "AMBIGUITY",
+          "property": "sex_ratio",
+          "description": "Source quotes (Zilkha 2021) describe MPOA as larger and containing more neurons in males, which suggests male-bias for the bulk MPOA Esr1+ population, but precise quantitative dimorphism for the Esr1+ subpopulation is not explicitly cited."
+        }
+      ],
+      "round2_targets": []
+    },
+    "mpoa_galanin_neuron": {
+      "name": "MPOA galanin neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "neuropeptides",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "defining_markers": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "233446934_eda764a3",
+            "237425192_c17e0213"
+          ]
+        },
+        "neuropeptides": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "233446934_eda764a3",
+            "237425192_c17e0213"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [
+        "anatomical_location",
+        "morphology",
+        "sex_ratio"
+      ],
+      "issues": [
+        {
+          "type": "GAP",
+          "property": "sex_ratio",
+          "description": "Quotes describe galanin neurons as 'sexually dimorphic' (Zilkha 2021, Hashikawa 2021) without quantitative direction (male-biased vs female-biased) for this population specifically. Requires primary verification."
+        }
+      ],
+      "round2_targets": [
+        "anatomical_location",
+        "morphology",
+        "sex_ratio"
+      ]
+    },
+    "vmhvl_esr1_pr_neuron": {
+      "name": "VMHvl estrogen-receptor alpha / progesterone receptor neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "neuropeptides",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "27794167_af52b501"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "233446934_8cb6b0bc",
+            "27794167_af52b501"
+          ]
+        },
+        "neuropeptides": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "27794167_af52b501"
+          ]
+        },
+        "morphology": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "27794167_af52b501"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [
+        "sex_ratio"
+      ],
+      "issues": [
+        {
+          "type": "HETEROGENEITY",
+          "property": "defining_markers",
+          "description": "Multiple molecularly defined sub-populations (Pgr+; Esr1+/Nkx2-1+/Tac1+; 17 transcriptomic types per Kim 2019). Should likely be split into sub-nodes in future iterations."
+        },
+        {
+          "type": "AMBIGUITY",
+          "property": "nt_type",
+          "description": "VMHvl is predominantly glutamatergic but the proposed type spans heterogeneous populations including GABAergic subsets; nt_type left null."
+        }
+      ],
+      "round2_targets": [
+        "sex_ratio"
+      ]
+    },
+    "pvn_crfr1_neuron": {
+      "name": "PVN corticotropin-releasing factor receptor 1 (CRFR1) neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "143424909_2b990710"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "143424909_2b990710"
+          ]
+        },
+        "morphology": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "143424909_2b990710",
+            "143424909_2b990710"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "143424909_2b990710"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [],
+      "issues": [
+        {
+          "type": "AMBIGUITY",
+          "property": "nt_type",
+          "description": "NT type not specified in source quotes; PVN CRFR1+ neurons are likely heterogeneous."
+        }
+      ],
+      "round2_targets": []
+    },
+    "bnst_crf_neuron": {
+      "name": "BNST (anterolateral) corticotropin-releasing factor (CRF) neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "negative_markers",
+        "neuropeptides",
+        "morphology",
+        "sex_ratio",
+        "electrophysiology"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "279874350_b2b4adba",
+            "14550592_292dccea"
+          ]
+        },
+        "neuropeptides": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "279874350_b2b4adba",
+            "14550592_292dccea"
+          ]
+        },
+        "morphology": {
+          "n_high": 3,
+          "n_moderate": 0,
+          "quote_keys": [
+            "279874350_b2b4adba",
+            "14550592_292dccea",
+            "279874350_b2b4adba"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "279874350_b2b4adba"
+          ]
+        },
+        "electrophysiology": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "14550592_292dccea"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [
+        "defining_markers",
+        "negative_markers"
+      ],
+      "issues": [
+        {
+          "type": "AMBIGUITY",
+          "property": "anatomical_location",
+          "description": "Multiple subdivisions cited (dlBNST, ovBNST, alBNST). All map to the same parent MBA term (Bed nuclei of the stria terminalis); subnuclei lack dedicated MBA terms."
+        },
+        {
+          "type": "CONTRADICTION",
+          "property": "sex_ratio",
+          "description": "RESOLVED: Older review (Choe 2021) describes BNST as generically 'sexually dimorphic' without polarity; primary literature (Uchida 2019; Kanaya 2025) consistently confirms female-biased dimorphism for CRF neurons in dlBNST. Resolved in favor of female-biased."
+        }
+      ],
+      "round2_targets": [
+        "defining_markers",
+        "negative_markers",
+        "negative_markers"
+      ]
+    },
+    "bnst_kiss1_neuron": {
+      "name": "BNST (principal nucleus) kisspeptin neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "neuropeptides",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 3,
+          "n_moderate": 0,
+          "quote_keys": [
+            "279874350_4ae46b4c",
+            "273148430_31f3c69b",
+            "273148430_e6688522"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "273148430_31f3c69b"
+          ]
+        },
+        "morphology": {
+          "n_high": 4,
+          "n_moderate": 0,
+          "quote_keys": [
+            "279874350_4ae46b4c",
+            "273148430_31f3c69b",
+            "273148430_e6688522"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "273148430_e6688522"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [
+        "neuropeptides"
+      ],
+      "issues": [
+        {
+          "type": "HETEROGENEITY",
+          "property": "anatomical_location",
+          "description": "Two distinct subpopulations (prBNST male-biased; aBNST not dimorphic) with different projection targets. May need splitting."
+        }
+      ],
+      "round2_targets": [
+        "neuropeptides"
+      ]
+    },
+    "lateral_septum_kiss1_neuron": {
+      "name": "Lateral septum (intermediate division) kisspeptin neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "neuropeptides",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "282319169_32f8ec9e",
+            "282319169_fd8ebee1"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "282319169_32f8ec9e"
+          ]
+        },
+        "morphology": {
+          "n_high": 3,
+          "n_moderate": 0,
+          "quote_keys": [
+            "282319169_32f8ec9e",
+            "282319169_fd8ebee1",
+            "282319169_fd8ebee1"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "282319169_fd8ebee1"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [
+        "neuropeptides"
+      ],
+      "issues": [
+        {
+          "type": "AMBIGUITY",
+          "property": "anatomical_location",
+          "description": "Conference abstract source (Zdon 2025) only \u2014 limited primary peer-reviewed support."
+        }
+      ],
+      "round2_targets": [
+        "neuropeptides"
+      ]
+    },
+    "arc_aromatase_neuron": {
+      "name": "Arcuate aromatase neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "237626479_5aec04ab"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "237626479_5aec04ab"
+          ]
+        },
+        "morphology": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "237626479_5aec04ab",
+            "237626479_5aec04ab"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "237626479_5aec04ab"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [],
+      "issues": [
+        {
+          "type": "GAP",
+          "property": "electrophysiology",
+          "description": "No ephys data in source quotes."
+        }
+      ],
+      "round2_targets": [
+        "electrophysiology"
+      ]
+    },
+    "poa_pacap_vip_neuron": {
+      "name": "POA PACAP/VIP hypophysiotropic neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "neuropeptides",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "236963220_47c26a7b",
+            "236963220_d885c41b"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "236963220_47c26a7b"
+          ]
+        },
+        "neuropeptides": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "236963220_47c26a7b",
+            "236963220_d885c41b"
+          ]
+        },
+        "morphology": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "236963220_47c26a7b",
+            "236963220_d885c41b"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [
+        "sex_ratio"
+      ],
+      "issues": [
+        {
+          "type": "AMBIGUITY",
+          "property": "anatomical_location",
+          "description": "All evidence from medaka (teleost). Mammalian homology assumed \u2014 CROSS_SPECIES_EXTRAPOLATION caveat applies."
+        }
+      ],
+      "round2_targets": [
+        "sex_ratio"
+      ]
+    },
+    "pmv_otr_neuron": {
+      "name": "Ventral premammillary nucleus (PMv) oxytocin receptor neuron",
+      "expected_properties": [
+        "anatomical_location",
+        "defining_markers",
+        "morphology",
+        "sex_ratio"
+      ],
+      "property_support": {
+        "anatomical_location": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "273240437_ed3a4faa",
+            "201207691_ff444c30"
+          ]
+        },
+        "defining_markers": {
+          "n_high": 2,
+          "n_moderate": 0,
+          "quote_keys": [
+            "273240437_af6642f9",
+            "201207691_ff444c30"
+          ]
+        },
+        "morphology": {
+          "n_high": 3,
+          "n_moderate": 0,
+          "quote_keys": [
+            "273240437_ed3a4faa",
+            "201207691_ff444c30",
+            "201207691_ff444c30"
+          ]
+        },
+        "sex_ratio": {
+          "n_high": 1,
+          "n_moderate": 0,
+          "quote_keys": [
+            "201207691_ff444c30"
+          ]
+        }
+      },
+      "partial_properties": [],
+      "gaps": [],
+      "issues": [
+        {
+          "type": "HETEROGENEITY",
+          "property": "defining_markers",
+          "description": "Multiple subpopulations (PMv-DAT, PMv-PACAP, PMv-OTR) reported with possibly non-overlapping membership. May need splitting."
+        }
+      ],
+      "round2_targets": []
+    }
+  }
+}

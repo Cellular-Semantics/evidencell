@@ -21,6 +21,7 @@ dependencies = [
   "uv>=0.11.6",
   "ipython>=9.12.0",
   "mygene>=3.2.2",
+  "matplotlib>=3.8",
 ]
 
 [project.optional-dependencies]
@@ -46,6 +47,9 @@ markers = [
 
 [tool.ruff]
 line-length = 100
+exclude = [
+    "kb/annotation_transfer_runs",
+]
 
 [tool.mypy]
 python_version = "3.12"

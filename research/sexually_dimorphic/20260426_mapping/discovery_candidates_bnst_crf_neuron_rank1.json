@@ -1,0 +1,70 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml bnst_crf_neuron CCN20230722 1 20
+Classical node: bnst_crf_neuron (BNST (anterolateral) corticotropin-releasing factor (CRF) neuron)
+  NT type: None
+  Markers: ['Crh']
+  Soma locations: ['MBA:174', 'MBA:174', 'MBA:174']
+  Query rank: 1
+  Taxonomy: CCN20230722
+{
+  "classical_node_id": "bnst_crf_neuron",
+  "classical_node_name": "BNST (anterolateral) corticotropin-releasing factor (CRF) neuron",
+  "taxonomy_id": "CCN20230722",
+  "rank": 1,
+  "n_candidates": 6,
+  "candidates": [
+    {
+      "node_id": "CS20230722_SUPT_0214",
+      "label": "0214 Sst Gaba_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "score": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_053"
+    },
+    {
+      "node_id": "CS20230722_SUPT_0225",
+      "label": "0225 Sst Gaba_12",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "score": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_053"
+    },
+    {
+      "node_id": "CS20230722_SUPT_0410",
+      "label": "0410 BST Tac2 Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "score": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_088"
+    },
+    {
+      "node_id": "CS20230722_SUPT_0397",
+      "label": "0397 SI-MPO-LPO Lhx8 Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "score": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_085"
+    },
+    {
+      "node_id": "CS20230722_SUPT_0393",
+      "label": "0393 CEA-BST Rai14 Pdyn Crh Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "score": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_083"
+    },
+    {
+      "node_id": "CS20230722_SUPT_0672",
+      "label": "0672 MG-POL-SGN Nts Glut_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "score": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_153"
+    }
+  ]
+}

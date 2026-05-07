@@ -194,8 +194,15 @@ def clean_taxonomy_json(path: Path) -> bytes:
 
     cleaned = bytes(out)
 
-    # Fix double-escaped quotes inside prose (\\" → \")
-    cleaned = cleaned.replace(b'\\\\"', b'\\"')
+    # Fix multi-escaped quotes inside prose. Two known variants:
+    #   4-byte triple-backslash + quote (\\\"  — current KG export from kg_query.py)
+    #   3-byte double-backslash + quote (\\"   — legacy wmbv1_full.json export)
+    # Both should normalise to the JSON-valid 2-byte form (\").
+    triple_bs_quote = b"\\" * 3 + b'"'
+    double_bs_quote = b"\\" * 2 + b'"'
+    valid_escaped_quote = b"\\" + b'"'
+    cleaned = cleaned.replace(triple_bs_quote, valid_escaped_quote)
+    cleaned = cleaned.replace(double_bs_quote, valid_escaped_quote)
 
     return cleaned
 
@@ -230,9 +237,26 @@ class TaxonomyNode:
     rationale: str | None = None
     rationale_dois: list[str] = field(default_factory=list)
     male_female_ratio: float | None = None  # Male/Female cell count ratio, 2 dp
+    n_cells: int | None = None  # 10x dataset per-node cell count (sum across regions)
     # class-level extras
     neuronal: bool | None = None
     glial: bool | None = None
+
+
+# DOI → human-readable method label for spatial (MERFISH) counts on
+# AnatomicalLocation.sources. Used during taxonomy ingest where the KG
+# carries only the bare DOI on each edge. Add new mappings here as
+# additional spatial datasets are ingested upstream.
+_SPATIAL_METHOD_BY_DOI: dict[str, str] = {
+    "https://doi.org/10.1038/s41586-023-06808-9": "MERFISH (Yao 2024)",
+    "https://doi.org/10.1038/s41586-023-06812-z": "MERFISH (Zhuang 2023)",
+}
+
+
+def _spatial_method_from_doi(doi: str | None) -> str:
+    if not doi:
+        return "MERFISH"
+    return _SPATIAL_METHOD_BY_DOI.get(doi, "MERFISH")
 
 
 def _extract_level(labels: list[str], taxonomy_id: str) -> str:
@@ -354,6 +378,21 @@ def _male_female_ratio(props: dict, fc: dict[str, list[str]]) -> float | None:
     return round(male / female, 2)
 
 
+def _n_cells(props: dict, fc: dict[str, list[str]]) -> int | None:
+    """Read the 10x per-node cell count from source props.
+
+    Source values may be a bare int or a single-element list (the KG returns
+    `[1452]`).  Returns int or None.
+    """
+    raw = _scalar(_first_prop(props, fc.get("n_cells", ["cell_count"])))
+    if raw is None:
+        return None
+    try:
+        return int(raw)
+    except (ValueError, TypeError):
+        return None
+
+
 def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> TaxonomyNode:
     """Extract a TaxonomyNode from a raw VFB graph export row.
 
@@ -365,10 +404,21 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
     field_mapping.json continue to work.
     """
     rk = fc.get("row_keys", {})
-    wmb = row[rk.get("node", "node")]
+    # Accept both canonical (post-2026-04 KG export) and legacy VFB graph export
+    # key names. Either may appear in the wild depending on which JSON file is
+    # being ingested.
+    wmb = (
+        row.get(rk.get("node", "node"))
+        or row.get("node")
+        or row.get("wmb")
+        or {}
+    )
     props = wmb.get("properties", {})
     labels = wmb.get("labels", [])
-    level = _extract_level(labels, taxonomy_id)
+    # Prefer explicit `level` from the cypher (post-2026-04 KG rebuild exposes it
+    # via has_labelset); fall back to legacy label-prefix extraction for cached
+    # JSON exports from older KG snapshots.
+    level = row.get(rk.get("level", "level")) or _extract_level(labels, taxonomy_id)
 
     cl_obj = row.get(rk.get("cl", "cl"))
     cl_props = cl_obj.get("properties", {}) if cl_obj else {}
@@ -385,18 +435,33 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
     dois_raw = props.get("rationale_dois")
     rationale_dois = dois_raw if isinstance(dois_raw, list) else []
 
-    # anat
+    # anat — KG returns one merged edge per (cluster, region) with parallel
+    # lists for cell_count, cell_ratio, and source (DOI). Order is aligned:
+    # index i is one source's contribution. Expand into one entry per source
+    # so each AnatomicalLocation in the output YAML has a single count and a
+    # single source DOI (option (a) per planning/dev_requests/
+    # 2026-04-30_zhuang-spatial-ingest.md). Legacy scalar fields (no list,
+    # no source) are still accepted for older fixtures and CAS imports.
     anat_entries = []
     for a in (row.get(rk.get("anat", "anat")) or []):
-        entry = {
-            "id": a.get("anat_id"),
-            "label": a.get("anat_label"),
-            "cell_count": a.get("cell_count"),
-            "cell_ratio": a.get("cell_ratio"),
-        }
-        if isinstance(entry["cell_count"], list):
-            entry["cell_count"] = entry["cell_count"][0] if entry["cell_count"] else None
-        anat_entries.append(entry)
+        anat_id = a.get("anat_id")
+        anat_label = a.get("anat_label")
+        counts = a.get("cell_count")
+        ratios = a.get("cell_ratio")
+        sources = a.get("source")
+        # Normalise to parallel lists. Treat scalar inputs (legacy) as length-1.
+        counts_list = counts if isinstance(counts, list) else [counts]
+        ratios_list = ratios if isinstance(ratios, list) else [ratios]
+        sources_list = sources if isinstance(sources, list) else [sources]
+        n = max(len(counts_list), len(ratios_list), len(sources_list), 1)
+        for i in range(n):
+            anat_entries.append({
+                "id": anat_id,
+                "label": anat_label,
+                "cell_count": counts_list[i] if i < len(counts_list) else None,
+                "cell_ratio": ratios_list[i] if i < len(ratios_list) else None,
+                "source": sources_list[i] if i < len(sources_list) else None,
+            })
 
     # Neuronal / Glial booleans (class level)
     neuronal = _scalar(_first_prop(props, fc.get("neuronal", ["Neuronal"])))
@@ -408,7 +473,11 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
         label=props.get("label", ""),
         taxonomy_id=taxonomy_id,
         taxonomy_level=level,
-        parent_id=row.get(rk.get("parent_curie", "parent_curie")),
+        parent_id=(
+            row.get(rk.get("parent_curie", "parent_curie"))
+            or row.get("parent_curie")
+            or row.get("wmb_parent.curie")
+        ),
         cl_id=cl_props.get("curie"),
         cl_label=cl_props.get("label"),
         cell_ontology_term=cot_raw if not cl_props.get("curie") else None,
@@ -446,6 +515,7 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
         rationale=rationale,
         rationale_dois=rationale_dois,
         male_female_ratio=_male_female_ratio(props, fc),
+        n_cells=_n_cells(props, fc),
         neuronal=neuronal,
         glial=glial,
     )
@@ -632,7 +702,13 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         }
         cl_mapping = {"cl_term": cl_term, "mapping_type": "EXACT"}
 
-    # Anatomical location (soma only)
+    # Anatomical location (soma only). One entry per (region, source DOI):
+    # the KG merges spatial sources onto a single edge with parallel lists,
+    # but the schema and KB keep them split so each count carries its own
+    # PropertySource. Atlas nodes normally leave sources empty (provenance
+    # implicit from atlas + cell_set_accession), but spatial counts are an
+    # explicit exception — multiple studies (Yao 2024 MERFISH, Zhuang 2023)
+    # contribute and must stay attributable.
     anat_locs: list[dict] = []
     for a in n.anat:
         anat_id = a.get("id")
@@ -646,6 +722,12 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         }
         if a.get("cell_count") is not None:
             loc["cell_count"] = a["cell_count"]
+        src_doi = a.get("source")
+        if src_doi:
+            loc["sources"] = [{
+                "ref": src_doi,
+                "method": _spatial_method_from_doi(src_doi),
+            }]
         anat_locs.append(loc)
 
     # Parent hierarchy (single immediate parent for atlas nodes)
@@ -692,6 +774,8 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         d["neighborhood"] = n.neighborhood
     if n.male_female_ratio is not None:
         d["male_female_ratio"] = n.male_female_ratio
+    if n.n_cells is not None:
+        d["n_cells"] = n.n_cells
     if species:
         d["species"] = species
     return d
@@ -1047,7 +1131,8 @@ CREATE TABLE IF NOT EXISTS nodes (
   circadian_ratio        REAL,
   rationale              TEXT,
   rationale_dois         TEXT,
-  male_female_ratio      REAL
+  male_female_ratio      REAL,
+  n_cells                INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS anat (
@@ -1090,6 +1175,103 @@ CREATE INDEX IF NOT EXISTS idx_closure_ancestor   ON anat_closure(ancestor_id);
 CREATE INDEX IF NOT EXISTS idx_closure_descendant ON anat_closure(descendant_id);
 CREATE INDEX IF NOT EXISTS idx_terms_uberon        ON anat_terms(uberon_id);
 """
+
+
+# Schema hash — recomputed each module load; written into _meta.schema_hash
+# at build time. Used by taxonomy_db_freshness() to detect mismatch when the
+# schema has gained a column (or other structural change) since the on-disk
+# DB was last built. Hash includes DDL only — index changes don't matter.
+def _compute_schema_hash() -> str:
+    import hashlib
+    return hashlib.sha256((_DDL + _CLOSURE_DDL).encode("utf-8")).hexdigest()[:16]
+
+
+_SCHEMA_HASH = _compute_schema_hash()
+
+
+def _freshness_at(db_path: Path, yaml_dir: Path) -> tuple[bool, list[str]]:
+    """Path-explicit freshness check (testable).
+
+    Returns (is_stale, reasons). See `taxonomy_db_freshness` for semantics.
+    """
+    if not db_path.exists():
+        return True, [f"DB not found at {db_path}"]
+
+    reasons: list[str] = []
+
+    # 1. Schema hash check
+    try:
+        con = sqlite3.connect(db_path)
+        try:
+            row = con.execute(
+                "SELECT value FROM _meta WHERE key = 'schema_hash'"
+            ).fetchone()
+            stored_hash = row[0] if row else None
+        finally:
+            con.close()
+    except sqlite3.Error as exc:
+        return True, [f"DB unreadable ({exc})"]
+
+    if stored_hash is None:
+        reasons.append(
+            "DB lacks _meta.schema_hash (built before staleness tracking landed)"
+        )
+    elif stored_hash != _SCHEMA_HASH:
+        reasons.append(
+            f"schema_hash mismatch (DB={stored_hash[:8]}, "
+            f"current={_SCHEMA_HASH[:8]}) — schema gained or changed columns"
+        )
+
+    # 2. Source-newer-than-DB check
+    try:
+        db_mtime = db_path.stat().st_mtime
+    except OSError:
+        return True, reasons + [f"DB mtime unreadable at {db_path}"]
+    yaml_files = list(yaml_dir.glob("*.yaml")) if yaml_dir.is_dir() else []
+    if yaml_files:
+        newest_yaml = max(p.stat().st_mtime for p in yaml_files)
+        if newest_yaml > db_mtime:
+            from datetime import datetime
+            from datetime import timezone
+            yaml_dt = datetime.fromtimestamp(newest_yaml, tz=timezone.utc).isoformat(timespec="seconds")
+            db_dt = datetime.fromtimestamp(db_mtime, tz=timezone.utc).isoformat(timespec="seconds")
+            reasons.append(
+                f"YAML newer than DB (newest YAML {yaml_dt}, DB {db_dt}) — "
+                "re-ingest happened after last build"
+            )
+
+    return (bool(reasons), reasons)
+
+
+def taxonomy_db_freshness(taxonomy_id: str) -> tuple[bool, list[str]]:
+    """Check whether the on-disk taxonomy DB is fresh relative to the schema
+    + the YAML source files.
+
+    Returns (is_stale, reasons). is_stale is True if any check fails;
+    reasons explain why. Empty reasons list when fresh.
+
+    Checks performed:
+      1. DB exists at kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db
+      2. _meta.schema_hash present and equal to current _SCHEMA_HASH
+      3. DB mtime ≥ newest YAML mtime under kb/taxonomy/{taxonomy_id}/
+
+    Failure mode 2 means the schema gained a column since the DB was built
+    (e.g. a new INTEGER field on `nodes`). Failure mode 3 means the YAML
+    source files have been edited since the DB was built (re-ingest may
+    have populated a new field, or a curator added enrichment).
+
+    Both modes call for `just build-taxonomy-db {taxonomy_id}` and a re-run
+    of any `gen-facts` command depending on the DB.
+    """
+    if not taxonomy_id:
+        return False, []
+    try:
+        from evidencell.paths import taxonomy_dir
+    except ImportError:
+        return False, []
+    tax_dir = taxonomy_dir(taxonomy_id)
+    db_path = tax_dir / f"{taxonomy_id}.db"
+    return _freshness_at(db_path, tax_dir)
 
 
 def _iri_to_curie(iri: str) -> str | None:
@@ -1185,6 +1367,131 @@ def _compute_closure(edges: list[tuple[str, str]]) -> list[tuple[str, str, int]]
     return closure
 
 
+# ── Quantitative expression scoring helpers ───────────────────────────────────
+
+# Minimum log₂(CPM+1) value below which expression is considered unreliable
+# (likely dropout or ambient RNA rather than real signal).
+MIN_DETECTABLE: float = 0.1
+
+
+def _expression_percentile(val: float, reference: list[float]) -> float:
+    """Fraction of reference values strictly less than val (0.0–1.0)."""
+    if not reference:
+        return 0.0
+    return sum(v < val for v in reference) / len(reference)
+
+
+def _score_from_percentiles(
+    sibling_pct: float,
+    global_pct: float,
+    is_negative: bool = False,
+) -> int:
+    """Convert sibling and global percentiles to an integer score contribution.
+
+    Positive markers (defining / neuropeptide):
+      sibling_pct ≥ 0.80  → +2  (top 20% among siblings — strong discriminator)
+      sibling_pct ≥ 0.50  → +1  (above-median among siblings)
+      sibling_pct < 0.50  →  0  (below-median; marker does not distinguish here)
+      global_pct  ≥ 0.90  → +1 additional (marker is atlas-globally specific)
+
+    Negative markers (inverted — high expression is bad):
+      sibling_pct ≥ 0.80  → −2
+      sibling_pct ≥ 0.50  → −1
+      sibling_pct < 0.50  → +1  (low expression confirms negative-marker expectation)
+    """
+    if is_negative:
+        if sibling_pct >= 0.80:
+            return -2
+        if sibling_pct >= 0.50:
+            return -1
+        return +1
+    else:
+        if sibling_pct >= 0.80:
+            score = 2
+        elif sibling_pct >= 0.50:
+            score = 1
+        else:
+            return 0  # below-median among siblings; global bonus does not apply
+        if global_pct >= 0.90:
+            score += 1
+        return score
+
+
+def _expression_score(mean_expr: float) -> int:
+    """Legacy absolute-threshold score — kept for backward compat with tests.
+
+    Prefer percentile-based scoring via _score_from_percentiles() for new code.
+    """
+    if mean_expr >= 5.0:
+        return 2
+    if mean_expr >= 1.0:
+        return 1
+    if mean_expr >= 0.1:
+        return 0
+    return -2
+
+
+def _neg_expression_score(mean_expr: float) -> int:
+    """Legacy inverted absolute-threshold score — kept for backward compat with tests."""
+    return -_expression_score(mean_expr)
+
+
+def load_expression_data(taxonomy_id: str, level: str) -> dict[str, dict[str, float]]:
+    """Load precomputed_expression from a taxonomy YAML level file.
+
+    Returns ``{cell_set_accession: {gene_symbol: mean_expression}}``.
+    Returns an empty dict if the YAML or precomputed_expression data is absent.
+    """
+    from evidencell.paths import taxonomy_yaml_path
+
+    yaml_path = taxonomy_yaml_path(taxonomy_id, level)
+    if not yaml_path.exists():
+        return {}
+
+    try:
+        data = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
+
+    result: dict[str, dict[str, float]] = {}
+    for node in data.get("nodes", []):
+        acc = node.get("cell_set_accession")
+        expr_block = node.get("precomputed_expression")
+        if not acc or not expr_block:
+            continue
+        genes = expr_block.get("genes", [])
+        if genes:
+            result[acc] = {
+                g["symbol"]: float(g.get("mean_expression", 0.0))
+                for g in genes
+                if isinstance(g, dict) and g.get("symbol")
+            }
+    return result
+
+
+# Registry of optional scoring criteria for find_candidates().
+# Each entry maps a criterion name to:
+#   column    — DB column on the nodes table
+#   max_rank  — highest rank at which the column has data (0 = clusters only)
+#   score     — points added on a match
+#   test      — callable(column_value, direction_str) → bool
+#
+# Extend this dict to add new criteria without changing find_candidates() signature.
+_OPTIONAL_CRITERIA_REGISTRY: dict[str, dict] = {
+    "sex_bias": {
+        "column": "male_female_ratio",
+        "max_rank": 0,
+        "score": 1,
+        "test": lambda mfr, direction: (
+            mfr is not None and mfr < 0.3 if direction == "female"
+            else mfr is not None and mfr > 3.0 if direction == "male"
+            else False
+        ),
+    },
+    # Future entries: "ephys_type": {...}, "morphology_class": {...}
+}
+
+
 class TaxonomyDB:
     """SQLite query index for a taxonomy, built from YAML reference files."""
 
@@ -1223,6 +1530,12 @@ class TaxonomyDB:
             con.execute(
                 "INSERT OR REPLACE INTO _meta VALUES ('taxonomy_built_at', ?)",
                 (datetime.now(tz=timezone.utc).isoformat(),),
+            )
+            # Pin the schema hash so taxonomy_db_freshness() can detect when
+            # the schema has gained or lost a column since this DB was built.
+            con.execute(
+                "INSERT OR REPLACE INTO _meta VALUES ('schema_hash', ?)",
+                (_SCHEMA_HASH,),
             )
             con.commit()
         finally:
@@ -1289,7 +1602,7 @@ class TaxonomyDB:
                :cell_ontology_term, :nt_type,
                :defining_markers_scoped, :defining_markers, :tf_markers,
                :merfish_markers, :np_markers, :neighborhood, :circadian_ratio,
-               :rationale, :rationale_dois, :male_female_ratio
+               :rationale, :rationale_dois, :male_female_ratio, :n_cells
             )""",
             {
                 "node_id": node_id,
@@ -1315,6 +1628,7 @@ class TaxonomyDB:
                 "rationale": None,        # not in CellTypeNode schema
                 "rationale_dois": None,   # not in CellTypeNode schema
                 "male_female_ratio": nd.get("male_female_ratio"),
+                "n_cells": nd.get("n_cells"),
             },
         )
         for a in nd.get("anatomical_location") or []:
@@ -1433,6 +1747,47 @@ class TaxonomyDB:
             ).fetchall()
         return [dict(r) for r in rows]
 
+    def get_node_by_accession(self, accession: str) -> dict | None:
+        """Look up a single node by its accession.
+
+        Accepts either bare short_form (`CS20230722_SUPT_0206`) or full CURIE
+        (`WMB:CS20230722_SUPT_0206`). Returns the row as a dict, or None if no
+        match.
+        """
+        if not accession:
+            return None
+        with self._connect() as con:
+            row = con.execute(
+                "SELECT * FROM nodes WHERE node_id = ? OR short_form = ? LIMIT 1",
+                (accession, accession),
+            ).fetchone()
+        return dict(row) if row else None
+
+    def get_parent_hierarchy(self, accession: str) -> list[dict]:
+        """Walk the parent_id chain and return ancestors from immediate parent up.
+
+        Each entry: `{level, name, cell_set_accession}`. Empty list if the node
+        is missing or has no parent. Cycles are guarded by a visited set.
+        """
+        chain: list[dict] = []
+        seen: set[str] = set()
+        cur = self.get_node_by_accession(accession)
+        while cur and cur.get("parent_id"):
+            parent_id = cur["parent_id"]
+            if parent_id in seen:
+                break
+            seen.add(parent_id)
+            parent = self.get_node_by_accession(parent_id)
+            if not parent:
+                break
+            chain.append({
+                "level": parent.get("taxonomy_level", ""),
+                "name": parent.get("label", ""),
+                "cell_set_accession": parent.get("short_form", ""),
+            })
+            cur = parent
+        return chain
+
     def build_anat_closure(self, mba_json: Path) -> None:
         """Populate anat_terms, anat_hierarchy, and anat_closure from an MBA OBO JSON file.
 
@@ -1530,10 +1885,13 @@ class TaxonomyDB:
         anat_root_ids: list[str] | None = None,
         nt_type: str | None = None,
         markers: list[str] | None = None,
+        negative_markers: list[str] | None = None,
         level: str | None = None,
         rank: int | None = None,
         marker_columns: list[str] | None = None,
         propagate_nt: bool = True,
+        optional_criteria: dict[str, str] | None = None,
+        expression_data: dict[str, dict[str, float]] | None = None,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -1541,21 +1899,41 @@ class TaxonomyDB:
         or ``level`` (legacy, taxonomy-specific name string).  ``rank`` takes precedence
         when both are provided.
 
-        anat_ids:       exact anat region IDs (leaf match)
-        anat_root_ids:  region IDs resolved transitively via closure tables
-        nt_type:        prefix match; propagated from clusters when propagate_nt=True
-                        (required for supertype/subclass in WMBv1 where nt_type is null)
-        markers:        gene symbols; each match adds 1 pt
-        marker_columns: which SQLite marker columns to score against; defaults to all four
-                        (defining_markers_scoped, defining_markers, tf_markers, merfish_markers).
-                        Pass ["defining_markers_scoped"] for scoped-only marker matching.
-        propagate_nt:   when True (default), fall back to cluster-aggregated NT when the
-                        node's own nt_type is null
-        rank:           integer rank (0 = leaf). Selects nodes by taxonomy_rank column.
-        level:          taxonomy level string (e.g. "cluster", "supertype"). Used when rank
-                        is not provided, for backward compatibility.
+        anat_ids:          exact anat region IDs (leaf match)
+        anat_root_ids:     region IDs resolved transitively via closure tables
+        nt_type:           prefix match; propagated from clusters when propagate_nt=True
+                           (required for supertype/subclass in WMBv1 where nt_type is null)
+        markers:           gene symbols; each match adds 1 pt
+        marker_columns:    which SQLite marker columns to score against; defaults to all four
+                           (defining_markers_scoped, defining_markers, tf_markers, merfish_markers).
+                           Pass ["defining_markers_scoped"] for scoped-only marker matching.
+        propagate_nt:      when True (default), fall back to cluster-aggregated NT when the
+                           node's own nt_type is null
+        rank:              integer rank (0 = leaf). Selects nodes by taxonomy_rank column.
+        level:             taxonomy level string (e.g. "cluster", "supertype"). Used when rank
+                           is not provided, for backward compatibility.
+        optional_criteria: dict mapping criterion name → expected direction string.
+                           Supported criteria are declared in _OPTIONAL_CRITERIA_REGISTRY.
+                           Each matching criterion adds its registered score bonus.
+                           Criteria whose max_rank < current rank are silently skipped.
+                           Unknown criteria emit a warning and are skipped.
+                           Example: {"sex_bias": "female"}
 
-        Scoring: region match = 2 pts, NT match = 2 pts, each marker match = 1 pt.
+        negative_markers: gene symbols expected to be absent; penalise candidates
+                           where these are expressed. Uses expression_data when available.
+        expression_data:  ``{cell_set_accession: {symbol: mean_expression}}`` from
+                          the taxonomy YAML (load with ``load_expression_data()``).
+                          When provided, marker scoring uses percentile-based scoring
+                          (see README § Expression scoring) instead of binary +1.
+                          Falls back to binary +1 for genes absent from expression_data.
+
+        Scoring: region match = 2 pts, NT match = 2 pts.
+        Marker scoring (with expression_data): sibling-percentile primary (+2/+1/0),
+        global-percentile specificity bonus (+1 if top 10% atlas-wide), negative markers
+        inverted. Without expression_data: binary +1 per marker found in DB columns.
+        Candidates with mean_expression < MIN_DETECTABLE for a queried gene are flagged
+        as unreliable and contribute 0 from that gene.
+        Optional criteria add their registered bonus (default 1 pt each).
         Results sorted descending by score.
         """
         if rank is None and level is None:
@@ -1583,6 +1961,26 @@ class TaxonomyDB:
                     child_level="cluster", parent_level=level,  # type: ignore[arg-type]
                 )
 
+        # Resolve current rank integer for optional_criteria rank gating
+        effective_rank: int | None = rank  # None only when level-based (legacy path)
+
+        # Validate optional_criteria keys against registry
+        _active_criteria: list[tuple[str, str, dict]] = []  # (name, direction, entry)
+        if optional_criteria:
+            for name, direction in optional_criteria.items():
+                entry = _OPTIONAL_CRITERIA_REGISTRY.get(name)
+                if entry is None:
+                    print(
+                        f"  WARNING: optional_criteria key {name!r} not in "
+                        "_OPTIONAL_CRITERIA_REGISTRY — skipped",
+                        file=sys.stderr,
+                    )
+                    continue
+                if effective_rank is not None and effective_rank > entry["max_rank"]:
+                    # Criterion not available at this rank (e.g. sex_bias only at rank 0)
+                    continue
+                _active_criteria.append((name, direction, entry))
+
         # Select nodes by rank (preferred) or level
         with self._connect() as con:
             if rank is not None:
@@ -1593,6 +1991,29 @@ class TaxonomyDB:
                 rows = con.execute(
                     "SELECT * FROM nodes WHERE taxonomy_level = ?", (level,)
                 ).fetchall()
+
+        # ── Pre-compute gene distribution references for percentile scoring ──────
+        # global_gene_vals: gene → all mean_expression values across every node
+        #   in expression_data (atlas-wide reference).
+        # sibling_gene_vals: parent_id → gene → values for nodes sharing that parent.
+        #   Siblings are nodes at the same rank that share a parent_id; this gives
+        #   a within-clade reference capturing local anatomical/type variation.
+        global_gene_vals: dict[str, list[float]] = defaultdict(list)
+        sibling_gene_vals: dict[str, dict[str, list[float]]] = defaultdict(
+            lambda: defaultdict(list)
+        )
+        if expression_data:
+            # Build a parent_id lookup from DB rows (rows already fetched above)
+            row_parent: dict[str, str | None] = {
+                dict(r)["node_id"]: dict(r).get("parent_id") for r in rows
+            }
+            for acc, gene_map in expression_data.items():
+                for sym, val in gene_map.items():
+                    global_gene_vals[sym].append(val)
+                pid = row_parent.get(acc)
+                if pid:
+                    for sym, val in expression_data[acc].items():
+                        sibling_gene_vals[pid][sym].append(val)
 
         results = []
         for row in rows:
@@ -1611,15 +2032,116 @@ class TaxonomyDB:
                     if nn.startswith(qt) or qt.startswith(nn):
                         score += 2
 
+            node_acc = nd.get("node_id", "")
+            node_expr = expression_data.get(node_acc, {}) if expression_data else {}
+            node_parent_id = nd.get("parent_id")
+
+            # ── Marker scoring ────────────────────────────────────────────────
+            # Positive markers — collect all gene symbols from DB marker columns.
+            # _marker_cols covers DEFINING/DEFINING_SCOPED/TF/MERFISH (JSON arrays).
+            # np_markers is a packed string ("Sst:9.2,Crh:4.4") that stores
+            # NEUROPEPTIDE-category markers; decode symbols and include in the
+            # fallback set so callers querying neuropeptide markers are not silently
+            # missed. Full presence-vs-discriminating scoring is tracked in #43.
+            node_markers: set[str] = set()
+            for col in _marker_cols:
+                raw = nd.get(col)
+                if raw:
+                    node_markers.update(json.loads(raw))
+            np_raw = nd.get("np_markers")
+            if np_raw:
+                for part in np_raw.split(","):
+                    sym = part.split(":")[0].strip()
+                    if sym:
+                        node_markers.add(sym)
+
+            expr_detail: dict[str, dict] = {}  # gene → {val, reliable, sibling_pct, global_pct, score}
+
             if markers:
-                node_markers: set[str] = set()
-                for col in _marker_cols:
-                    raw = nd.get(col)
-                    if raw:
-                        node_markers.update(json.loads(raw))
                 for m in markers:
-                    if m in node_markers:
-                        score += 1
+                    if m in node_expr:
+                        val = node_expr[m]
+                        reliable = val >= MIN_DETECTABLE
+                        if reliable and expression_data:
+                            g_ref = global_gene_vals.get(m, [])
+                            s_ref = (
+                                sibling_gene_vals[node_parent_id].get(m, [])
+                                if node_parent_id
+                                else []
+                            )
+                            g_pct = _expression_percentile(val, g_ref)
+                            s_pct = _expression_percentile(val, s_ref)
+                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=False)
+                            expr_detail[m] = {
+                                "val": val,
+                                "reliable": True,
+                                "sibling_pct": round(s_pct, 3),
+                                "global_pct": round(g_pct, 3),
+                                "score": delta,
+                            }
+                        elif not reliable:
+                            delta = 0
+                            expr_detail[m] = {
+                                "val": val,
+                                "reliable": False,
+                                "sibling_pct": None,
+                                "global_pct": None,
+                                "score": 0,
+                            }
+                        else:
+                            # expression_data not loaded — fallback binary
+                            delta = 1
+                        score += delta
+                    elif m in node_markers:
+                        score += 1  # fallback: gene in DB marker columns
+
+            # Negative markers
+            if negative_markers and node_expr:
+                for m in negative_markers:
+                    if m in node_expr:
+                        val = node_expr[m]
+                        reliable = val >= MIN_DETECTABLE
+                        if reliable and expression_data:
+                            g_ref = global_gene_vals.get(m, [])
+                            s_ref = (
+                                sibling_gene_vals[node_parent_id].get(m, [])
+                                if node_parent_id
+                                else []
+                            )
+                            g_pct = _expression_percentile(val, g_ref)
+                            s_pct = _expression_percentile(val, s_ref)
+                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=True)
+                            expr_detail[f"-{m}"] = {
+                                "val": val,
+                                "reliable": True,
+                                "sibling_pct": round(s_pct, 3),
+                                "global_pct": round(g_pct, 3),
+                                "score": delta,
+                            }
+                        elif not reliable:
+                            delta = 0
+                            expr_detail[f"-{m}"] = {
+                                "val": val,
+                                "reliable": False,
+                                "sibling_pct": None,
+                                "global_pct": None,
+                                "score": 0,
+                            }
+                        else:
+                            delta = 0  # no expression_data; can't penalise
+                        score += delta
+
+            if expr_detail:
+                nd["_expression_detail"] = expr_detail
+
+            criteria_applied: list[str] = []
+            for name, direction, entry in _active_criteria:
+                col_val = nd.get(entry["column"])
+                if entry["test"](col_val, direction):
+                    score += entry["score"]
+                    criteria_applied.append(f"{name}={direction}")
+            if criteria_applied:
+                nd["_criteria_applied"] = criteria_applied
 
             if score > 0:
                 nd["_score"] = score
@@ -1964,6 +2486,15 @@ def _cmd_find_candidates(
         )
         sys.exit(1)
 
+    # Preflight: warn (and abort) if DB is stale relative to YAML source
+    is_stale, stale_reasons = taxonomy_db_freshness(taxonomy_id)
+    if is_stale:
+        print("ERROR: taxonomy DB is stale — rebuild before find-candidates:", file=sys.stderr)
+        for r in stale_reasons:
+            print(f"  {r}", file=sys.stderr)
+        print(f"  Run: just build-taxonomy-db {taxonomy_id}", file=sys.stderr)
+        sys.exit(1)
+
     with graph_path.open(encoding="utf-8") as fh:
         doc = yaml.safe_load(fh)
 
@@ -1986,6 +2517,12 @@ def _cmd_find_candidates(
         if sym:
             markers.append(sym)
 
+    neg_markers: list[str] = []
+    for m in classical.get("negative_markers") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym:
+            neg_markers.append(sym)
+
     nt_obj = classical.get("nt_type")
     nt_type: str | None = None
     if isinstance(nt_obj, dict):
@@ -2006,6 +2543,25 @@ def _cmd_find_candidates(
             anat_ids.append(loc_id)
 
     db = TaxonomyDB(db_path)
+
+    # Load precomputed expression data from the taxonomy YAML at the target rank's level
+    with db._connect() as _con:
+        _level_row = _con.execute(
+            "SELECT taxonomy_level FROM nodes WHERE taxonomy_rank = ? LIMIT 1", (rank,)
+        ).fetchone()
+    _expr_level = _level_row[0] if _level_row else "cluster"
+    expression_data = load_expression_data(taxonomy_id, _expr_level)
+    if expression_data:
+        print(
+            f"  Loaded expression data: {len(expression_data)} nodes at {_expr_level} level",
+            file=sys.stderr,
+        )
+    else:
+        print(
+            f"  No precomputed_expression found for {taxonomy_id}/{_expr_level} "
+            "— falling back to binary marker scoring",
+            file=sys.stderr,
+        )
 
     # Resolve UBERON IDs to MBA IDs via anat_terms lookup, with name fallback
     mba_ids: list[str] = []
@@ -2063,24 +2619,42 @@ def _cmd_find_candidates(
                         file=sys.stderr,
                     )
 
+    # Extract optional criteria from the classical node
+    # sex_bias: MALE_BIASED → "male", FEMALE_BIASED → "female", NOT_DIMORPHIC / absent → skip
+    optional_criteria: dict[str, str] | None = None
+    sex_bias_raw = classical.get("sex_bias")
+    if sex_bias_raw and sex_bias_raw != "NOT_DIMORPHIC":
+        direction = sex_bias_raw.lower().split("_")[0]  # "male" or "female"
+        optional_criteria = {"sex_bias": direction}
+
     print(f"Classical node: {node_id} ({classical.get('name', '?')})", file=sys.stderr)
     print(f"  NT type: {nt_type}", file=sys.stderr)
     print(f"  Markers: {markers}", file=sys.stderr)
+    if neg_markers:
+        print(f"  Negative markers: {neg_markers}", file=sys.stderr)
     print(f"  Soma locations: {anat_ids}", file=sys.stderr)
     if mba_ids != anat_ids:
         print(f"  Resolved MBA IDs: {mba_ids}", file=sys.stderr)
     print(f"  Query rank: {rank}", file=sys.stderr)
     print(f"  Taxonomy: {taxonomy_id}", file=sys.stderr)
+    if optional_criteria:
+        print(f"  Optional criteria: {optional_criteria}", file=sys.stderr)
 
     # Try transitive anatomy matching (requires anat_closure table from MBA ontology).
     # Fall back to no anatomy matching if closure not built.
     query_anat = mba_ids if mba_ids else None
+    _fc_kwargs: dict = dict(
+        nt_type=nt_type,
+        markers=markers,
+        negative_markers=neg_markers or None,
+        rank=rank,
+        optional_criteria=optional_criteria,
+        expression_data=expression_data or None,
+    )
     try:
         candidates = db.find_candidates(
             anat_root_ids=query_anat,
-            nt_type=nt_type,
-            markers=markers,
-            rank=rank,
+            **_fc_kwargs,
         )
     except RuntimeError as exc:
         if "anat_closure" in str(exc):
@@ -2090,11 +2664,7 @@ def _cmd_find_candidates(
                 f"{taxonomy_id}",
                 file=sys.stderr,
             )
-            candidates = db.find_candidates(
-                nt_type=nt_type,
-                markers=markers,
-                rank=rank,
-            )
+            candidates = db.find_candidates(**_fc_kwargs)
         else:
             raise
 
@@ -2119,6 +2689,8 @@ def _cmd_find_candidates(
                 "parent_id": c.get("parent_id"),
                 **({"male_female_ratio": c["male_female_ratio"]}
                    if c.get("male_female_ratio") is not None else {}),
+                **({"criteria_applied": c["_criteria_applied"]}
+                   if c.get("_criteria_applied") else {}),
             }
             for c in candidates
         ],

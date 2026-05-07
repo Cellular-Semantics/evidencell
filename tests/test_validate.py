@@ -334,6 +334,30 @@ def test_linkml_validate_returns_false_on_failure(tmp_path: Path):
     assert "missing required field" in output
 
 
+def test_linkml_validate_dispatches_target_class_by_path(tmp_path: Path):
+    """target_class is selected by file_path location."""
+    from evidencell.validate import _target_class_for_kb_path
+
+    assert _target_class_for_kb_path(Path("kb/datasets/foo.yaml")) == "BulkDataset"
+    assert _target_class_for_kb_path(Path("kb/correlation_runs/run_x/manifest.yaml")) == "CorrelationRun"
+    assert _target_class_for_kb_path(Path("kb/correlation_runs/run_x/other.yaml")) is None
+    assert _target_class_for_kb_path(Path("kb/annotation_transfer_runs/at_run/manifest.yaml")) == "AnnotationTransferRun"
+    assert _target_class_for_kb_path(Path("kb/annotation_transfer_runs/at_run/other.yaml")) is None
+    assert _target_class_for_kb_path(Path("kb/draft/region/foo.yaml")) == "CellTypeMappingGraph"
+    assert _target_class_for_kb_path(Path("kb/mappings/region/foo.yaml")) == "CellTypeMappingGraph"
+    assert _target_class_for_kb_path(Path("kb/taxonomy/CCN20230722/cluster.yaml")) == "TaxonomyNodeList"
+    assert _target_class_for_kb_path(Path("kb/taxonomy/CCN20230722/taxonomy_meta.yaml")) is None
+
+
+def test_linkml_validate_skips_paths_with_no_schema_class(tmp_path: Path):
+    """If file_path resolves to None target_class, validation is skipped."""
+    schema = tmp_path / "schema.yaml"
+    schema.write_text("id: fake")
+    ok, msg = linkml_validate("anything: goes", schema, file_path=Path("kb/taxonomy/CCN20230722/taxonomy_meta.yaml"))
+    assert ok is True
+    assert "skipped" in msg.lower() or "no schema class" in msg.lower()
+
+
 # ── Provenance check fixtures ─────────────────────────────────────────────────
 
 
@@ -536,6 +560,62 @@ def test_parse_md_empty_document():
     assert result["curie_ids"] == []
     assert result["accessions"] == []
     assert result["pmids"] == []
+
+
+# ── parse_md_annotations: numbered-ref attribution path ───────────────────────
+
+
+_NUMBERED_REF_MD = """\
+# Test report
+
+## Mapping candidates
+
+> Some authored-prose evidence narrative (e.g. derived from a bulk-correlation analysis).
+> — Knoedler et al. 2022 · [3]
+
+> A LITERATURE quote with quote_key (existing path).
+> — Winterer et al. 2019 · [1] <!-- quote_key: 201041756_aabb1234 -->
+
+> Bogus-ref blockquote — [99] does not exist in the references table below.
+> — Nobody · [99]
+
+## References
+
+| # | Citation | PMID | Used for |
+|---|---|---|---|
+| [1] | Winterer et al. 2019 | [31420995](https://pubmed.ncbi.nlm.nih.gov/31420995/) | OLM markers |
+| [3] | Knoedler et al. 2022 | [35143761](https://pubmed.ncbi.nlm.nih.gov/35143761/) | Bulk correlation evidence |
+"""
+
+
+def test_parse_md_collects_ref_table_labels():
+    """References-table rows like `| [3] | ... |` populate ref_table_labels."""
+    result = parse_md_annotations(_NUMBERED_REF_MD)
+    assert result["ref_table_labels"] == {"1", "3"}
+
+
+def test_parse_md_blockquote_with_numbered_ref_passes():
+    """A blockquote attributed to `[N]` where N is in the references table is
+    NOT flagged as unannotated, even without a quote_key."""
+    result = parse_md_annotations(_NUMBERED_REF_MD)
+    # The Knoedler blockquote should NOT be in unannotated
+    for line in result["unannotated_blockquotes"]:
+        assert "Knoedler" not in line
+        assert "bulk-correlation" not in line
+
+
+def test_parse_md_blockquote_with_bogus_numbered_ref_fails():
+    """A blockquote attributed to a `[N]` not in the references table IS flagged."""
+    result = parse_md_annotations(_NUMBERED_REF_MD)
+    assert any("Bogus-ref" in line for line in result["unannotated_blockquotes"])
+
+
+def test_parse_md_quote_key_path_still_works():
+    """Existing quote_key-annotated blockquote is still extracted and not flagged."""
+    result = parse_md_annotations(_NUMBERED_REF_MD)
+    assert "201041756_aabb1234" in result["quote_keys"]
+    for line in result["unannotated_blockquotes"]:
+        assert "LITERATURE quote" not in line
 
 
 # ── check_md_ids ───────────────────────────────────────────────────────────────

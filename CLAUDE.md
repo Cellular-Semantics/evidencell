@@ -18,7 +18,8 @@ Writable zones in this session:
 - `references/**` — reference stores under ingest-path governance
 - `reports/**` — generated reports under pre-edit validation
 - `research/**` — research artifacts (field mappings, summaries, traversals)
-- `planning/dev_requests/**` — dev-request reports (see "Hitting a wall" below)
+- `planning/dev_requests/**` — historical dev-request reports (new requests go to GitHub issues; see "Hitting a wall" below)
+- `planning/content-notes/**` — KB YAML curation task notes (file-rename tasks, AT import checklists, etc.)
 
 Out of scope: `src/`, `schema/`, `justfile`, `.claude/`, and `workflows/`.
 The pre-edit hook rejects writes to these paths in curation mode. This is a deliberate barrier against
@@ -27,16 +28,23 @@ response to a validation error are a common and dangerous anti-pattern. Code
 and schema changes land through normal dev-mode sessions and PR review
 against `main`, not through curation workflows.
 
+Before starting curation work, check `planning/content-notes/` for any pending notes
+about the target region or workflow — these track KB file rename tasks, AT import
+checklists, and other curation-side TODOs that don't belong on the main ROADMAP.
+
 ### Hitting a wall
 
 When a workflow step needs functionality that doesn't yet exist in `src/`, or
 when a validation error reveals a real schema gap, do **not** attempt to fix
 code or schema directly. Instead:
 
-1. **File a dev-request report** at
-   `planning/dev_requests/{YYYY-MM-DD}_{short-slug}.md` describing: what
-   orchestrator step is blocked, what's missing, a proposed surface (what
-   would need to be added or changed and where), and what was tried.
+1. **File a dev-request GitHub issue** on `Cellular-Semantics/evidencell`
+   describing: what orchestrator step is blocked, what's missing, a
+   proposed surface (what would need to be added or changed and where),
+   and what was tried. Use the `$CELLSEM_GH_TOKEN` PAT pattern documented
+   in `CLAUDE_dev.md` § Dev request workflow. Legacy markdown reports
+   under `planning/dev_requests/` remain as historical record but are no
+   longer the filing path.
 2. **Or load `CLAUDE_dev.md`** explicitly when you're authorised to do dev
    work this session. Schema changes in particular MUST be discussed and
    reviewed before implementation — they are occasionally legitimate (new
@@ -173,7 +181,8 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; call as a skill for targeted follow-up, not primary discovery |
 | `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After survey or asta-report-ingest — writes PropertySource entries with quote_key to KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: queries taxonomy DB at multiple ranks (0=leaf, 1, 2…) for candidate atlas matches; hypothesis mode: tests curator's proposed mapping. Uses `just find-candidates` with rank parameter. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
-| `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook) |
+| `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook). Reports now open with an Introduction section surfacing `cl_mapping` + `proposed_cl_term`. |
+| `cl-term-request` | `workflows/cl-term-request.md` | Reporting | **Ready** | Draft a CL new term request for a node with BROAD/RELATED/null `cl_mapping`. Reads facts via `just gen-facts`, applies CL definition + relations guidelines (`docs/LLM_prompt_guidelines_for_CL_definitions.md`, `docs/relations_guide.md`), emits issue-ready markdown. Posting is gated: `just preview-cl-ntr` then `just post-cl-ntr`. |
 | `annotation-transfer` | `workflows/annotation-transfer.md` | Evidence transfer | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
 
 ---

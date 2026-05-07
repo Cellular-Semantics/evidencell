@@ -1,0 +1,412 @@
+{
+  "classical_node_id": "pvn_crfr1_neuron",
+  "classical_node_name": "PVN corticotropin-releasing factor receptor 1 (CRFR1) neuron",
+  "taxonomy_id": "CCN20230722",
+  "candidates_by_rank": {
+    "0": [
+      {
+        "cell_set_accession": "CS20230722_CLUS_2382",
+        "name": "2382 PVH-SO-PVa Otp Glut_5",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH (paraventricular hypothalamus = PVN in MBA nomenclature, MBA:38) is the correct location. Glutamatergic and expresses Otp (orthopedia homeobox), a cardinal transcription factor for hypothalamic neuroendocrine neurons including PVN populations. Male_female_ratio = 2.7 (strongly male-biased), which aligns with the male-biased dimorphism of pvn_crfr1_neuron. Parent SUPT_0589. Top rank-0 candidate on combined location + sex ratio grounds."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2331",
+        "name": "2331 LHA-AHN-PVH Otp Trh Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH label present in region descriptor (LHA-AHN-PVH); Otp+ and Trh+ (thyrotropin-releasing hormone is a marker for PVH neuroendocrine neurons); glutamatergic; male_female_ratio = 2.45 (male-biased, matching expected dimorphism). Trh co-expression overlaps with PVH neuroendocrine identity. Mixed region label (also includes LHA/AHN) reduces confidence — some cells in this cluster may be LHA or AHN rather than PVH. Plausible."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1912",
+        "name": "1912 PVpo-VMPO-MPN Hmx2 Gaba_5",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "WEAK",
+        "rationale": "PVpo (periventricular preoptic) is adjacent to but distinct from PVN proper (MBA:38). GABAergic NT type is inconsistent with expected CRFR1+ PVN profile (PVN principal neurons are predominantly glutamatergic/neuroendocrine). Male_female_ratio = 1.22 (slight male bias, weaker than expected dimorphism). Hmx2 TF identity is inconsistent with PVN Otp/Sim1 lineage. WEAK — wrong sub-region and wrong TF/NT profile."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1685",
+        "name": "1685 SBPV-PVa Six6 Satb2 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa (subparaventricular zone / periventricular anterior) — adjacent to PVN but not PVN proper. Extremely male-biased (ratio 32.33 — one of the highest ratios in the dataset), which is a notable signal but the region label does not match PVN (MBA:38). GABAergic and Six6/Satb2+ TF profile inconsistent with PVN Otp/Sim1 neuroendocrine neurons. WEAK on location and NT type despite striking sex ratio."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1549",
+        "name": "1549 BST-MPN Six3 Nrgn Gaba_4",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "BST-MPN (bed nucleus of stria terminalis / medial preoptic nucleus) — wrong region. GABAergic. No PVN label. Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1550",
+        "name": "1550 BST-MPN Six3 Nrgn Gaba_4",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "BST-MPN — wrong region. GABAergic. Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1545",
+        "name": "1545 BST-MPN Six3 Nrgn Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "BST-MPN — wrong region. GABAergic. Male_female_ratio = 3.0 is interesting but location is definitively wrong."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1546",
+        "name": "1546 BST-MPN Six3 Nrgn Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "BST-MPN — wrong region. Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1684",
+        "name": "1684 SBPV-PVa Six6 Satb2 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — adjacent to PVN, not PVN proper. GABAergic. Male_female_ratio = 2.03 (male-biased). Six6/Satb2 TF identity inconsistent with PVN Otp lineage. WEAK on location and TF profile."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1688",
+        "name": "1688 SBPV-PVa Six6 Satb2 Gaba_2",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — adjacent to PVN but not PVN proper. GABAergic. Male_female_ratio = 3.35 (male-biased, correct direction). WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1691",
+        "name": "1691 SBPV-PVa Six6 Satb2 Gaba_2",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — adjacent to PVN but not PVN proper. GABAergic. Male_female_ratio = 4.88. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1692",
+        "name": "1692 SBPV-PVa Six6 Satb2 Gaba_2",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — adjacent to PVN but not PVN proper. GABAergic. Male_female_ratio = 4.56. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1693",
+        "name": "1693 SBPV-PVa Six6 Satb2 Gaba_2",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — adjacent to PVN but not PVN proper. GABAergic. Male_female_ratio = 3.76. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1694",
+        "name": "1694 SBPV-PVa Six6 Satb2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — adjacent to PVN but not PVN proper. GABAergic. Male_female_ratio = 4.26. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1695",
+        "name": "1695 SBPV-PVa Six6 Satb2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — not PVN proper. GABAergic. Male_female_ratio = 3.17. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1696",
+        "name": "1696 SBPV-PVa Six6 Satb2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — not PVN proper. GABAergic. Male_female_ratio = 3.0. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1697",
+        "name": "1697 SBPV-PVa Six6 Satb2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — not PVN proper. GABAergic. Male_female_ratio = 3.0. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1699",
+        "name": "1699 AHN Onecut3 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "AHN (anterior hypothalamic nucleus) — adjacent region, not PVN. GABAergic. Male_female_ratio = 4.88 (strongly male-biased, correct direction) but location is not PVN proper. WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1767",
+        "name": "1767 ZI Pax6 Gaba_8",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "ZI (zona incerta) — wrong region, not PVN or adjacent. Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1773",
+        "name": "1773 ZI Pax6 Gaba_8",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "ZI — wrong region. Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1774",
+        "name": "1774 ZI Pax6 Gaba_8",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "ZI — wrong region. Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1904",
+        "name": "1904 PVpo-VMPO-MPN Hmx2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "PVpo-VMPO-MPN — preoptic area, not PVN proper. Dopaminergic/GABAergic. Male_female_ratio = 1.5 (slight male bias). Wrong region and wrong NT profile."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1906",
+        "name": "1906 PVpo-VMPO-MPN Hmx2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "PVpo-VMPO-MPN — preoptic, not PVN. GABAergic. Male_female_ratio = 1.56. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1907",
+        "name": "1907 PVpo-VMPO-MPN Hmx2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "PVpo-VMPO-MPN — preoptic, not PVN. Dopaminergic. Male_female_ratio = 2.7 (male-biased, correct direction) but location is wrong."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1287",
+        "name": "1287 MEA-BST Lhx6 Nfib Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "MEA-BST (medial amygdala / bed nucleus) — definitively wrong region. GABAergic. Male_female_ratio = 3.0 but location is completely incorrect."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0926",
+        "name": "0926 PAL-STR Gaba-Chol_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PAL-STR (pallidum/striatum) — wrong region and wrong brain division (telencephalon vs. hypothalamus). Definitively incorrect."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1484",
+        "name": "1484 MPN-MPO-LPO Lhx6 Zfhx3 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "MPN-MPO-LPO (medial preoptic nucleus / lateral preoptic area) — wrong region, preoptic not PVN. GABAergic. Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_4284",
+        "name": "4284 NTS Phox2b Glut_7",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "NTS (nucleus tractus solitarius) — brainstem nucleus, not hypothalamus. Definitively incorrect location and brain division."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_5144",
+        "name": "5144 SPVI-SPVC Sall3 Lhx1 Gly-Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "SPVI-SPVC (spinal trigeminal nucleus) — hindbrain/spinal, not hypothalamus. Definitively incorrect location and brain division."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2952",
+        "name": "2952 SPA-SPFm-SPFp-POL-PIL-PoT Sp9 Glut_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "Posterior thalamic nuclei complex (SPA/SPF/POL/PIL/PoT) — thalamus, not hypothalamus. Definitively incorrect location."
+      }
+    ],
+    "1": [
+      {
+        "cell_set_accession": "CS20230722_SUPT_0585",
+        "name": "0585 PVH-SO-PVa Otp Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 3,
+        "assessment": "STRONG",
+        "rationale": "Highest DB score at rank-1 (score 3). PVH (paraventricular hypothalamus = PVN) label in region descriptor; Otp (orthopedia) is a cardinal TF for the Otp/Sim1 lineage that defines PVN neuroendocrine neurons; glutamatergic (correct NT type for PVH principal neurons); parent subcategory SUBC_133 contains multiple PVH-SO-PVa supertypes. This is the best single rank-1 candidate: correct region, correct TF lineage, correct NT type. No male_female_ratio available at supertype level but the neuroendocrine PVH Otp Glut lineage is the biologically appropriate match for CRFR1+ PVN neurons."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0589",
+        "name": "0589 PVH-SO-PVa Otp Glut_5",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH location; Otp+; glutamatergic; score-2. Parent of rank-0 CLUS_2382 (ratio 2.7, male-biased, top rank-0 candidate). Same subclass (SUBC_133) as SUPT_0585. Plausible PVN candidate within the correct Otp Glut lineage."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0586",
+        "name": "0586 PVH-SO-PVa Otp Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH location; Otp+; glutamatergic; score-2. SUBC_133 member. Plausible PVN Otp Glut supertype."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0587",
+        "name": "0587 PVH-SO-PVa Otp Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH location; Otp+; glutamatergic; score-2. SUBC_133 member. Plausible PVN Otp Glut supertype."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0588",
+        "name": "0588 PVH-SO-PVa Otp Glut_4",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH location; Otp+; glutamatergic; score-2. SUBC_133 member. Plausible PVN Otp Glut supertype."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0590",
+        "name": "0590 PVH-SO-PVa Otp Glut_6",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH location; Otp+; glutamatergic; score-2. SUBC_133 member. Plausible PVN Otp Glut supertype."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0575",
+        "name": "0575 LHA-AHN-PVH Otp Trh Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH label included in mixed region descriptor (LHA-AHN-PVH); Otp+ and Trh+ (TRH is co-expressed in a subset of PVH neuroendocrine neurons including CRH neurons); glutamatergic; score-2. Parent of CLUS_2331 (ratio 2.45, male-biased). SUBC_131 (different subclass from SUBC_133). Plausible but mixed-region label reduces confidence — some cells may not be from PVH proper."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0577",
+        "name": "0577 LHA-AHN-PVH Otp Trh Glut_4",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVH label in mixed region descriptor (LHA-AHN-PVH); Otp+; Trh+; glutamatergic; score-2. SUBC_131 member. Same caveats as SUPT_0575 — mixed region reduces confidence."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0581",
+        "name": "0581 AHN-RCH-LHA Otp Fezf1 Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "AHN-RCH-LHA — does not include PVH label; anterior hypothalamic nucleus / retrochiasmatic area / lateral hypothalamic area. Adjacent to PVN territory but no direct PVH label. Glutamatergic and Otp+. WEAK — no PVH label but adjacent hypothalamic region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0453",
+        "name": "0453 SBPV-PVa Six6 Satb2 Gaba_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — subparaventricular zone adjacent to PVN but not PVN proper. GABAergic and Six6/Satb2 TF profile is inconsistent with PVN Otp/Sim1 neuroendocrine neurons. Contains CLUS_1684/1685 (dramatically male-biased clusters) but location and TF lineage are wrong for PVN CRFR1."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0454",
+        "name": "0454 SBPV-PVa Six6 Satb2 Gaba_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — not PVN proper. GABAergic. Six6/Satb2 TF inconsistent with PVN Otp lineage. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0455",
+        "name": "0455 SBPV-PVa Six6 Satb2 Gaba_3",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "SBPV-PVa — not PVN proper. GABAergic. WEAK on location."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0484",
+        "name": "0484 PVpo-VMPO-MPN Hmx2 Gaba_3",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "PVpo-VMPO-MPN — preoptic region, not PVN. GABAergic. Hmx2 TF is inconsistent with PVN Otp lineage. WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0423",
+        "name": "0423 BST-MPN Six3 Nrgn Gaba_4",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "BST-MPN — wrong region (bed nucleus / medial preoptic). GABAergic. Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0055",
+        "name": "0055 MEA Slc17a7 Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 1,
+        "assessment": "EXCLUDE",
+        "rationale": "MEA (medial amygdala) — wrong brain region. Score 1 (weak). Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0276",
+        "name": "0276 STR D2 Gaba_3",
+        "taxonomy_rank": 1,
+        "db_score": 1,
+        "assessment": "EXCLUDE",
+        "rationale": "STR (striatum) — telencephalon, wrong brain division. Score 1 (weak). Definitively incorrect location."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0182",
+        "name": "0182 Vip Gaba_10",
+        "taxonomy_rank": 1,
+        "db_score": 1,
+        "assessment": "EXCLUDE",
+        "rationale": "Vip Gaba — likely cortical/hippocampal interneuron context. Score 1 (weak). Definitively incorrect location and cell type identity."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0414",
+        "name": "0414 PVR Six3 Sox3 Gaba_4",
+        "taxonomy_rank": 1,
+        "db_score": 1,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR (periventricular region posterior?) — insufficient PVN specificity, GABAergic, Six3/Sox3 TF inconsistent with PVN Otp lineage. Score 1. EXCLUDE."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0449",
+        "name": "0449 AHN-SBPV-PVHd Pdrm12 Gaba_4",
+        "taxonomy_rank": 1,
+        "db_score": 1,
+        "assessment": "WEAK",
+        "rationale": "AHN-SBPV-PVHd — includes a PVH dorsal (PVHd) label, which is part of PVN. However, GABAergic and Pdrm12 TF are inconsistent with principal Otp+ neuroendocrine PVN neurons. Score 1. WEAK — partial location match but wrong NT type and TF for CRFR1+ neurons."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0486",
+        "name": "0486 PVpo-VMPO-MPN Hmx2 Gaba_5",
+        "taxonomy_rank": 1,
+        "db_score": 1,
+        "assessment": "WEAK",
+        "rationale": "PVpo-VMPO-MPN — preoptic, not PVN. GABAergic. Score 1. WEAK — wrong region."
+      }
+    ]
+  },
+  "non_candidates_summary": "The rank-0 DB query retrieved very few PVN (PVH) clusters — only CLUS_2331 and CLUS_2382 carry explicit PVH labels among the top candidates. This is a coverage limitation: the scoring function did not fully surface PVN-specific clusters likely because Crhr1, Esr1, and Ar are expressed across many hypothalamic regions. The two PVH-labeled rank-0 hits are the best candidates and both show appropriate male-biased sex ratios (2.45 and 2.7). The SBPV-PVa clusters (SUBT_0453-0455 and their children) show dramatically male-biased ratios (up to 32x in CLUS_1685) and are anatomically adjacent to PVN but are GABAergic with Six6/Satb2 TF identity — inconsistent with the Otp/Sim1 neuroendocrine PVN lineage expected for CRFR1+ neurons. At rank-1, SUPT_0585 (PVH-SO-PVa Otp Glut_1) is the clear top candidate: it is the only rank-1 entry with score 3, PVH label, and canonical Otp lineage. The broader SUBC_133 (PVH-SO-PVa Otp Glut supertypes) collectively spans the neuroendocrine PVH glutamatergic space and likely encompasses CRFR1-expressing neurons across multiple subtypes. BST-MPN, ZI, NTS, SPVI, STR, MEA, and thalamic clusters are all definitively excluded. NOTE: The immunohistochemistry-based PVN CRFR1 classification (Rosinger 2019) may encompass both GABAergic and glutamatergic PVN neurons — if CRFR1 is expressed on both compartments, some of the SBPV-adjacent GABAergic supertypes could be relevant as secondary candidates. Recommend curator confirm NT type from primary literature before excluding all GABAergic candidates."
+}

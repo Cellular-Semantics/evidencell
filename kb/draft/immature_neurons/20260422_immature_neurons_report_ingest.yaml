@@ -123,35 +123,6 @@ nodes:
     modifier: "absent in type-2/3 neuroblasts (distinguishes from type-1 RGL)"
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: >
-    Migratory precursor cells in the SGZ; they migrate only a few micrometers
-    from the subgranular zone toward the inner granule cell layer. The
-    lineage progresses through type-2a (Nestin+/Sox2+), type-2b (Nestin+/DCX+),
-    and type-3 (DCX+ only) stages; all are transit-amplifying progenitors
-    with progressively increasing neuronal commitment. Type-3 cells are
-    proliferative (Ki67+) and represent the last mitotic stage before
-    postmitotic differentiation. A transcription factor cascade
-    (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1) marks stage transitions.
-  morphology_sources:
-  - ref: "PMID:40519263"
-    method: "review (lineage stages)"
-    scope: "adult dentate gyrus neuroblast lineage"
-    quote_key: "279046466_b2e95c41"
-  - ref: "https://doi.org/10.2131/jts.44.357"
-    method: "review (type-3 progenitor differentiation)"
-    scope: "adult rat dentate gyrus"
-    quote_key: "233432690_f9d72c88"
-  electrophysiology_class: >
-    Not synaptically integrated. Precursor electrophysiological properties
-    (patch-clamp / intrinsic) are not characterized in detail in this
-    report; the proliferating type-3 stage precedes postmitotic maturation
-    and full synaptic integration.
-  ephys_sources: []
-  location_sources:
-  - ref: "PMID:28168008"
-    method: "review (neurogenesis)"
-    scope: "adult hippocampal SGZ"
-    quote_key: "148569364_529ba03c"
   colocated_types:
   - neighboring_type: "type-1 RGL stem cells"
     spatial_relationship: "ADJACENT"
@@ -258,57 +229,6 @@ nodes:
     modifier: "absent at immature stage; appears only at stage 6"
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: >
-    Postmitotic neurons (stage 5) that have migrated from the subgranular
-    zone into the inner granule cell layer. Distinct morphological stages
-    progress over weeks: axonal projections reach CA3 by 10–11 days after
-    viral infection, 5–6 days before the first dendritic spines appear.
-    Peak spine growth occurs during the first 3–4 weeks, but further
-    structural modifications continue for months. Newly generated immature
-    neurons move into the inner GCL and differentiate into dentate
-    granule cells.
-  morphology_sources:
-  - ref: "PMID:16399667"
-    method: "retrovirus-mediated gene transduction + confocal"
-    scope: "adult mouse dentate gyrus newborn granule neurons"
-    quote_key: "7440369_a91d2c33"
-  - ref: "PMID:40519263"
-    method: "review (stage 5 maturation)"
-    scope: "adult dentate gyrus"
-    quote_key: "279046466_b2e95c41"
-  - ref: "PMID:26880934"
-    method: "review (neural stem cell niche)"
-    scope: "adult hippocampus"
-    quote_key: "25925289_d7e23b55"
-  electrophysiology_class: >
-    Synaptically integrating. Receive glutamatergic input from entorhinal
-    cortex and begin to form projections to CA3 during morphological
-    maturation. Morphological maturation (and by extension functional
-    integration) is differentially affected by age and experience
-    (e.g., housing conditions); full synaptic integration extends over
-    weeks to months.
-  ephys_sources:
-  - ref: "PMID:26056581"
-    method: "review (adult neurogenesis connectivity)"
-    scope: "adult dentate gyrus newborn granule cells"
-    quote_key: "245432259_7c3e9a44"
-  - ref: "PMID:16399667"
-    method: "retrovirus-mediated gene transduction + confocal"
-    scope: "adult mouse dentate gyrus newborn granule neurons"
-    quote_key: "7440369_a91d2c33"
-  location_sources:
-  - ref: "PMID:28168008"
-    method: "review (neurogenesis)"
-    scope: "adult hippocampal inner GCL"
-    quote_key: "148569364_529ba03c"
-  - ref: "PMID:26880934"
-    method: "review (neural stem cell niche)"
-    scope: "adult hippocampus inner GCL"
-    quote_key: "25925289_d7e23b55"
-  - ref: "PMID:26056581"
-    method: "review (adult neurogenesis)"
-    scope: "adult dentate gyrus inner GCL"
-    quote_key: "245432259_7c3e9a44"
   colocated_types:
   - neighboring_type: "CA3 pyramidal cells"
     spatial_relationship: "DISTAL"
@@ -419,45 +339,6 @@ nodes:
     modifier: "downregulated at stage 6"
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: >
-    Terminally differentiated granule neurons (stage 6) populating the
-    granule cell layer with fully elaborated dendritic arbor and complete
-    mossy fiber axonal projections to CA3. The mature granule cell is the
-    terminal differentiation endpoint of the adult neurogenesis lineage
-    in the dentate gyrus.
-  morphology_sources:
-  - ref: "PMID:40519263"
-    method: "review (stage 6 terminal differentiation)"
-    scope: "adult dentate gyrus mature granule neurons"
-    quote_key: "279046466_b2e95c41"
-  - ref: "PMID:26056581"
-    method: "review (connectivity)"
-    scope: "adult dentate gyrus"
-    quote_key: "245432259_7c3e9a44"
-  electrophysiology_class: >
-    Fully synaptically integrated. Functionally mature with established
-    primary glutamatergic input from entorhinal cortex and mossy fiber
-    output to inhibitory interneurons and pyramidal cells of area CA3.
-    Tis21 expression decreases in mature granule cells compared to the
-    maturing stage.
-  ephys_sources:
-  - ref: "PMID:26056581"
-    method: "review (connectivity)"
-    scope: "adult dentate gyrus mature granule cells"
-    quote_key: "245432259_7c3e9a44"
-  - ref: "PMID:19482889"
-    method: "Tis21-GFP knock-in mouse + IHC (decrease in mature cells)"
-    scope: "adult mouse hippocampus mature granule neurons"
-    quote_key: "13799502_a8f3d219"
-  location_sources:
-  - ref: "PMID:40519263"
-    method: "review (terminal differentiation anatomy)"
-    scope: "adult dentate gyrus GCL"
-    quote_key: "279046466_b2e95c41"
-  - ref: "PMID:26056581"
-    method: "review"
-    scope: "adult dentate gyrus GCL"
-    quote_key: "245432259_7c3e9a44"
   colocated_types:
   - neighboring_type: "CA3 pyramidal cells"
     spatial_relationship: "DISTAL"
@@ -609,54 +490,6 @@ nodes:
     modifier: "no glial markers"
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: >
-    Immature neurons in layer II of the piriform cortex are classified by
-    morphology into (1) tangled cells: very small cells with very short and
-    intricate processes (least mature); (2) complex cells: more mature,
-    displaying axon initial segments (AIS) and typical apical dendrites
-    extending into layer I. Additional transitional forms include
-    semilunar-pyramidal transitional neurons and scarce cells resembling
-    semilunar, pyramidal, and fusiform neurons. Most cells lack synaptic
-    contacts and are covered by astroglial lamellae. They are generated
-    prenatally (primarily around E15.5 in rat) and persist in an immature
-    state into adulthood.
-  morphology_sources:
-  - ref: "PMID:18245040"
-    method: "IHC + morphology"
-    scope: "adult rat paleocortex layer II"
-    quote_key: "18166210_f74d2a66"
-  - ref: "PMID:34072166"
-    method: "review (PCX layer II subtypes)"
-    scope: "adult mouse piriform cortex"
-    quote_key: "15727849_e52b3f99"
-  electrophysiology_class: >
-    Cells fail to express cellular activity markers such as c-Fos or Arc, and
-    lack NMDA and glucocorticoid receptors, consistent with a prolonged
-    non-integrated immature state. Most lack synaptic contacts. A
-    subpopulation is associated with synaptic plasticity and progressively
-    resumes maturation into glutamatergic (TBR1+, CaMKII+) neurons.
-  ephys_sources:
-  - ref: "PMID:18245040"
-    method: "IHC (activity markers)"
-    scope: "adult rat paleocortex layer II"
-    quote_key: "18166210_f74d2a66"
-  - ref: "PMID:29688272"
-    method: "IHC + fate-mapping"
-    scope: "adult murine piriform cortex"
-    quote_key: "235300723_e71a4b88"
-  - ref: "PMID:23667508"
-    method: "review (plasticity)"
-    scope: "piriform cortex"
-    quote_key: "8479504_b31e7c55"
-  location_sources:
-  - ref: "PMID:29688272"
-    method: "IHC"
-    scope: "adult murine piriform cortex"
-    quote_key: "235300723_d93c1a55"
-  - ref: "PMID:18245040"
-    method: "IHC"
-    scope: "adult rat paleocortex layer II"
-    quote_key: "18166210_f74d2a66"
   colocated_types: []
   cl_mapping:
     cl_term:
@@ -758,49 +591,6 @@ nodes:
   - symbol: vimentin
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: >
-    Type A neuroblasts have the ultrastructure of migrating neuronal
-    precursors, arranged as chains parallel to the walls of the lateral
-    ventricle and ensheathed by two ultrastructurally distinct astrocytes
-    (Type B1 and B2). They migrate via chain migration through the RMS
-    (3–8 mm) to the olfactory bulb, then leave the RMS and migrate radially
-    toward the glomeruli where they differentiate into interneurons. In the
-    OB terminal fate splits into GABAergic granule neurons (granule cell
-    layer, majority) and GABAergic periglomerular neurons (glomerular
-    layer).
-  morphology_sources:
-  - ref: "PMID:9185542"
-    method: "EM + IHC"
-    scope: "adult mouse SVZ/RMS"
-    quote_key: "625292_d93a2b77"
-  - ref: "PMID:26880934"
-    method: "review (neural stem cell niche)"
-    scope: "adult RMS/OB"
-    quote_key: "25925289_3e8b7d21"
-  - ref: "PMID:37488837"
-    method: "review (adult neurogenesis)"
-    scope: "adult RMS/OB"
-    quote_key: "10712122_b12c9e55"
-  electrophysiology_class: >
-    Synaptic integration occurs around 21 days after neuroblast generation;
-    at 10 days immature neurons are not yet synaptically integrated.
-    Differentiated interneurons provide lateral inhibition: periglomerular
-    neurons inhibit between individual glomeruli, while granule cells
-    provide lateral inhibition between mitral and tufted cells.
-  ephys_sources:
-  - ref: "https://doi.org/10.3389/fnins.2015.00110"
-    method: "fate-mapping (TAM)"
-    scope: "adult olfactory bulb granule cells"
-    quote_key: "13752593_e66a0d99"
-  location_sources:
-  - ref: "PMID:9185542"
-    method: "EM + IHC"
-    scope: "adult mouse SVZ/RMS"
-    quote_key: "625292_d93a2b77"
-  - ref: "PMID:26880934"
-    method: "review (neural stem cell niche)"
-    scope: "adult SVZ/RMS/OB"
-    quote_key: "25925289_3e8b7d21"
   colocated_types:
   - neighboring_type: "Type B1/B2 astrocytes (SVZ)"
     spatial_relationship: "ADJACENT"
@@ -877,26 +667,6 @@ nodes:
       marker_type: PROTEIN
   negative_markers: []
   neuropeptides: []
-  morphology_notes: >
-    BrdU+/DCX+ cells are detected within the striatum, consistent with
-    migrating neuroblasts at various stages of migration and early
-    differentiation from the SVZ. No detailed morphological maturation
-    stages are described for this region in the report.
-  morphology_sources:
-  - ref: "PMID:15684031"
-    method: "BrdU pulse-chase + IHC"
-    scope: "adult mouse striatum"
-    quote_key: "14221248_f77b1e11"
-  electrophysiology_class: >
-    No electrophysiological characterization is described. Adult striatal
-    neurogenesis is described as quantitatively limited and controversial,
-    with few immature neurons successfully integrating.
-  ephys_sources: []
-  location_sources:
-  - ref: "PMID:15684031"
-    method: "BrdU + IHC"
-    scope: "adult mouse striatum"
-    quote_key: "14221248_f77b1e11"
   colocated_types: []
   cl_mapping:
     cl_term:
@@ -958,30 +728,6 @@ nodes:
   - symbol: NeuN
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: >
-    Where reported (e.g., in degu and guinea pig), DCX-labeled immature
-    neurons are predominantly located in layer II of neocortex, particularly
-    in limbic cortices. Cells do not co-stain with NeuN, confirming immature
-    status. No detailed dendritic/axonal maturation stages described.
-  morphology_sources:
-  - ref: "PMID:33994960"
-    method: "IHC"
-    scope: "adult degu neocortex"
-    quote_key: "14598082_caa4f166"
-  electrophysiology_class: >
-    No electrophysiological characterization described in the report;
-    presence and functional significance of cortical immature neurons
-    remains controversial and species-dependent.
-  ephys_sources: []
-  location_sources:
-  - ref: "PMID:33994960"
-    method: "IHC"
-    scope: "adult degu neocortex"
-    quote_key: "14598082_caa4f166"
-  - ref: "PMID:26321922"
-    method: "BrdU + IHC"
-    scope: "guinea pig neocortex layer II"
-    quote_key: "7393550_c82d5b11"
   colocated_types: []
   cl_mapping:
     cl_term:

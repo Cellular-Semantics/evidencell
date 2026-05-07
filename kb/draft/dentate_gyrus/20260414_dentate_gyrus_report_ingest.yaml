@@ -69,45 +69,6 @@ nodes:
   - symbol: GFAP
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: 'Migratory precursor cells in the SGZ; migrate only a few micrometers from SGZ toward the inner granule
-    cell layer. At the type-2b stage they co-express Nestin and DCX; at the type-3 stage they are DCX+ only. They are proliferative
-    (Ki67+) and represent the last mitotic stage before postmitotic differentiation.
-
-    '
-  morphology_sources:
-  - ref: PMID:28168008
-    method: review (neurogenesis)
-    scope: adult hippocampal SGZ
-    quote_key: 13752593_f176b6ad
-  - ref: https://doi.org/10.5772/29754
-    method: review (neural stem cells)
-    scope: adult dentate gyrus
-    quote_key: 10712122_246bd5c1
-  electrophysiology_class: 'Type-2 progenitor cells (neuroblast equivalent) receive direct GABAergic but not glutamatergic
-    synaptic inputs; GABA is depolarising due to elevated [Cl-]i driven by high NKCC1 and low KCC2 (Tozuka et al. 2005; Ge
-    et al. 2006). Synaptically silent for glutamatergic output. High input resistance (~4.3 GOhm) and small capacitance (~6.4
-    pF) at 1-7 dpi (Esposito et al. 2005). Tonic GABA activation from 3 dpi precedes phasic synaptic inputs (Ge et al. 2006).
-    Mouse patch-clamp data.
-
-    '
-  ephys_sources:
-  - ref: PMID:16157276
-    method: patch-clamp (nestin-GFP targeted type-2 cells, acute hippocampal slice)
-    scope: adult mouse dentate gyrus
-    quote_key: 3154810_ea1038a9
-  - ref: PMID:16341203
-    method: patch-clamp (retroviral GFP, DCX+ newborn DGCs)
-    scope: adult mouse dentate gyrus
-    quote_key: 4378008_2ac95c2e
-  location_sources:
-  - ref: PMID:28168008
-    method: review (neurogenesis)
-    scope: adult hippocampal SGZ
-    quote_key: 13752593_f176b6ad
-  - ref: PMID:18385329
-    method: Tbr2-GFP transgene + IHC
-    scope: adult mouse hippocampus
-    quote_key: 15727849_56e1c8ef
   cl_mapping:
     cl_term:
       id: CL:9900001
@@ -205,55 +166,6 @@ nodes:
   - symbol: Calbindin
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: 'Postmitotic neurons (stage 5) migrated from SGZ into the inner granule cell layer. Axonal projections
-    reach CA3 at 10-11 dpi, 5-6 days before first spines form (Zhao 2006). Dendrites reach the inner molecular layer at 10
-    dpi, middle molecular layer at ~14 dpi, and outer edge by 21 dpi. Spine density rises from 0.43 to 2.61 spines/um between
-    21-56 dpi. Extends dendrites toward molecular layer and mossy fiber axons through hilus to CA3. Mouse retroviral GFP data.
-
-    '
-  morphology_sources:
-  - ref: PMID:16399667
-    method: retrovirus-mediated GFP labelling + confocal
-    scope: adult mouse dentate gyrus
-    quote_key: 18166210_3e909cd4
-  - ref: PMID:16399667
-    method: retrovirus-mediated GFP labelling + confocal
-    scope: adult mouse dentate gyrus
-    quote_key: 18166210_aa19f3be
-  electrophysiology_class: 'Adult-born immature granule neurons follow a stereotyped synaptic maturation sequence: silent
-    (1-7 dpi; Vrest -50.6 mV, Rin 4.3 GOhm, Cm 6.4 pF) → slow GABAergic PSCs only (8-18 dpi; EGABA -26.9 to -44.5 mV, depolarising)
-    → glutamatergic PSCs acquired (>=14-18 dpi; Vrest -63.2 mV, Cm 24.6 pF) → fast perisomatic GABA last (~4 wk) (Esposito
-    et al. 2005; Ge et al. 2006). T-type Ca2+ channels confer enhanced LTP inducibility vs. mature granule cells (Schmidt-Hieber
-    et al. 2004). GABA depolarisation mechanistically required for dendritic arborisation (NKCC1-dependent; Ge et al. 2006).
-    All primary data from adult mouse (C57BL/6).
-
-    '
-  ephys_sources:
-  - ref: PMID:16267214
-    method: patch-clamp (retroviral GFP newborn DGCs)
-    scope: adult mouse dentate gyrus
-    quote_key: 38501311_d1c6a9f4
-  - ref: PMID:16341203
-    method: patch-clamp (retroviral GFP, DCX+ newborn DGCs)
-    scope: adult mouse dentate gyrus
-    quote_key: 4378008_7779b198
-  - ref: PMID:15107864
-    method: patch-clamp (adult-born vs mature granule cells)
-    scope: adult mouse dentate gyrus
-    quote_key: 4332735_15e36f48
-  - ref: PMID:11875571
-    method: patch-clamp (retroviral GFP newborn DGCs, 4-8 wk)
-    scope: adult mouse dentate gyrus
-    quote_key: 4403779_5755e11d
-  location_sources:
-  - ref: PMID:28168008
-    method: review (neurogenesis)
-    scope: adult hippocampal SGZ/GCL
-    quote_key: 13752593_f176b6ad
-  - ref: PMID:26880934
-    method: review (neural stem cell niche)
-    scope: adult hippocampus
-    quote_key: 14221248_1d8cf16a
   cl_mapping:
     cl_term:
       id: CL:9900002
@@ -339,41 +251,6 @@ nodes:
   - symbol: PSA-NCAM
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: 'Terminally differentiated granule neurons (stage 6) populating the granule cell layer. Fully elaborated
-    dendritic arbor and complete axonal projections to CA3. Receive primary glutamatergic afferents from entorhinal cortex
-    and project mossy fiber axons to inhibitory interneurons and pyramidal cells of area CA3.
-
-    '
-  morphology_sources:
-  - ref: PMID:26056581
-    method: review (adult neurogenesis)
-    scope: adult dentate gyrus
-    quote_key: 8479504_1542ed61
-  - ref: PMID:16399667
-    method: retrovirus-mediated gene transduction + confocal
-    scope: adult mouse dentate gyrus
-    quote_key: 18166210_b155d498
-  electrophysiology_class: 'Terminally differentiated granule neurons fire repetitive action potentials (plateau ~140 Hz;
-    Vth ~-39.6 to -45.8 mV). Membrane capacitance 99.2 pF, time constant 33.7 ms, resting potential -74.8 mV (van Praag et
-    al. 2002; adult mouse). Substantially larger Cm and longer tau_m than immature adult-born granule cells (Schmidt-Hieber
-    et al. 2004). Fully synaptically integrated by 4 weeks; receive perforant path afferents from entorhinal cortex and project
-    mossy fibers to CA3. Primary data from adult mouse (C57BL/6).
-
-    '
-  ephys_sources:
-  - ref: PMID:11875571
-    method: patch-clamp (retroviral GFP newborn DGCs vs mature granule cells)
-    scope: adult mouse dentate gyrus
-    quote_key: 4403779_5755e11d
-  - ref: PMID:15107864
-    method: patch-clamp (adult-born vs mature granule cells)
-    scope: adult mouse dentate gyrus
-    quote_key: 4332735_15e36f48
-  location_sources:
-  - ref: PMID:31068541
-    method: review (hippocampal neurogenesis)
-    scope: adult rat dentate gyrus
-    quote_key: 148569364_4e97a8b8
   cl_mapping:
     cl_term:
       id: CL:2000089
@@ -437,25 +314,6 @@ nodes:
   - symbol: GFAP
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: 'Non-radial, horizontally oriented intermediate progenitor in the SGZ. Morphologically distinct from the
-    type-1 radial glia-like stem cell; lacks the long radial process. Actively proliferating (Ki67+). Does not yet express
-    DCX, distinguishing it from the downstream type-2b stage.
-
-    '
-  morphology_sources:
-  - ref: PMID:40519263
-    method: review (marker classification)
-    scope: adult dentate gyrus
-    quote_key: 279046466_998847af
-  electrophysiology_class: 'Not characterised — progenitor stage without synaptic integration.
-
-    '
-  ephys_sources: []
-  location_sources:
-  - ref: PMID:40519263
-    method: review (marker classification)
-    scope: adult dentate gyrus
-    quote_key: 279046466_998847af
   cl_mapping:
     cl_term:
       id: CL:9900003
@@ -537,33 +395,6 @@ nodes:
   - symbol: Calbindin
     ncbi_gene_id:
   neuropeptides: []
-  morphology_notes: 'Transitional progenitor co-expressing Nestin and DCX at low levels. Tbr2/Eomes+ cells cluster in the
-    SGZ and are often found in close proximity to radial processes of type-1 cells. Short tangential processes typical of
-    type-2 morphology. Majority (64%) co-label with DCX at low expression levels (Hodge et al. 2008).
-
-    '
-  morphology_sources:
-  - ref: PMID:18385329
-    method: Tbr2-GFP transgene + IHC
-    scope: adult mouse hippocampus
-    quote_key: 15727849_21c476fd
-  - ref: PMID:18385329
-    method: Tbr2-GFP transgene + IHC
-    scope: adult mouse hippocampus
-    quote_key: 15727849_237d8f24
-  electrophysiology_class: 'Not characterised — progenitor stage without synaptic integration.
-
-    '
-  ephys_sources: []
-  location_sources:
-  - ref: PMID:18385329
-    method: Tbr2-GFP transgene + IHC
-    scope: adult mouse hippocampus
-    quote_key: 15727849_21c476fd
-  - ref: PMID:40519263
-    method: review (marker classification)
-    scope: adult dentate gyrus
-    quote_key: 279046466_998847af
   cl_mapping:
     cl_term:
       id: CL:9900004

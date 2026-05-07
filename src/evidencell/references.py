@@ -159,12 +159,31 @@ def _build_paper_entry(corpus_id: str, meta: dict) -> dict:
     }
 
 
-def _normalise_authors(authors: list) -> list[str]:
-    """Normalise authors list to list of name strings."""
-    result = []
+def _normalise_authors(authors) -> list[str]:
+    """Normalise an authors field to list[str] of full names.
+
+    Accepts list[str] (canonical), list[dict] (Semantic Scholar batch shape),
+    or a comma-joined string with an optional 'et al.' suffix (the historical
+    asta-report-ingest free-form-writer shape — see
+    planning/minirefs_author_rendering_fix.md).
+    """
+    if not authors:
+        return []
+    if isinstance(authors, str):
+        s = authors.strip()
+        if not s:
+            return []
+        for suffix in (", et al.", ", et al", " et al.", " et al"):
+            if s.endswith(suffix):
+                s = s[: -len(suffix)].rstrip(",").rstrip()
+                break
+        return [part.strip() for part in s.split(",") if part.strip()]
+    result: list[str] = []
     for a in authors:
         if isinstance(a, str):
             result.append(a)
         elif isinstance(a, dict):
-            result.append(a.get("name", ""))
+            name = a.get("name", "")
+            if name:
+                result.append(name)
     return result

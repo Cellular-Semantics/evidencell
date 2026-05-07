@@ -11,6 +11,8 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+import yaml
+
 # ── Constants ──────────────────────────────────────────────────────────────────
 
 # Snippet values that look like placeholders rather than real verbatim text
@@ -222,6 +224,62 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
     return errors
 
 
+# ── AT run_ref validation ──────────────────────────────────────────────────────
+
+def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]:
+    """Recursively collect all ``run_ref`` string values from a nested dict/list."""
+    if result is None:
+        result = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == "run_ref" and isinstance(v, str) and v:
+                result.append(v)
+            else:
+                _collect_run_refs(v, result)
+    elif isinstance(obj, list):
+        for item in obj:
+            _collect_run_refs(item, result)
+    return result
+
+
+def check_run_refs(doc: dict, index_path: Path) -> list[str]:
+    """Check that every ``run_ref`` value resolves to a registered AT run.
+
+    Reads ``index_path`` (``kb/annotation_transfer_runs/index.yaml``) and
+    verifies each ``run_ref`` in the document appears under ``runs:``.
+
+    Returns a list of error strings; empty = OK.
+    Skips silently when the index file does not exist (no AT runs registered yet).
+    """
+    run_refs = _collect_run_refs(doc)
+    if not run_refs:
+        return []
+
+    if not index_path.exists():
+        return []
+
+    try:
+        index = yaml.safe_load(index_path.read_text(encoding="utf-8")) or {}
+    except Exception as exc:
+        return [f"Could not read AT run index {index_path}: {exc}"]
+
+    runs = index.get("runs") or []
+    # Supports both list format (current: [{id: ...}, ...]) and legacy dict format
+    if isinstance(runs, dict):
+        known: set[str] = set(runs.keys())
+    else:
+        known: set[str] = {e["id"] for e in runs if isinstance(e, dict) and "id" in e}
+
+    errors: list[str] = []
+    for ref in run_refs:
+        if ref not in known:
+            errors.append(
+                f"run_ref '{ref}' not found in {index_path.name}. "
+                "Register the AT run with: just register-at-run"
+            )
+    return errors
+
+
 # ── Edit simulation ────────────────────────────────────────────────────────────
 
 def simulate_edit(tool_name: str, tool_input: dict, file_path: Path) -> str:
@@ -255,15 +313,63 @@ def simulate_edit(tool_name: str, tool_input: dict, file_path: Path) -> str:
 
 # ── LinkML schema validation (subprocess) ──────────────────────────────────────
 
-def linkml_validate(content: str, schema_path: Path, original_name: str = "input.yaml") -> tuple[bool, str]:
+def _target_class_for_kb_path(file_path: Path) -> str | None:
+    """
+    Pick the LinkML target_class for a KB YAML file by its location.
+
+    Returns None if the file is in a path with no schema class (validation skipped).
+    """
+    parts = file_path.parts
+    try:
+        kb_idx = parts.index("kb")
+    except ValueError:
+        return "CellTypeMappingGraph"
+
+    sub = parts[kb_idx + 1] if kb_idx + 1 < len(parts) else ""
+    name = file_path.name
+
+    if sub == "datasets":
+        return "BulkDataset"
+    if sub == "correlation_runs":
+        if name == "manifest.yaml":
+            return "CorrelationRun"
+        return None
+    if sub == "annotation_transfer_runs":
+        if name == "manifest.yaml":
+            return "AnnotationTransferRun"
+        return None
+    if sub == "taxonomy":
+        if name in {"cluster.yaml", "supertype.yaml", "subclass.yaml",
+                    "class.yaml", "neurotransmitter.yaml"}:
+            return "TaxonomyNodeList"
+        return None
+    return "CellTypeMappingGraph"
+
+
+def linkml_validate(
+    content: str,
+    schema_path: Path,
+    original_name: str = "input.yaml",
+    file_path: Path | None = None,
+) -> tuple[bool, str]:
     """
     Validate YAML content against a LinkML schema.
 
     Writes content to a temp file and runs linkml-validate as a subprocess.
+    The target_class is chosen by file_path location when provided; defaults
+    to CellTypeMappingGraph otherwise.
+
     Returns (passed: bool, output_text: str).
     """
     if not schema_path.exists():
         return True, f"(schema not found at {schema_path} — linkml-validate skipped)"
+
+    if file_path is not None:
+        target_class = _target_class_for_kb_path(file_path)
+        if target_class is None:
+            return True, f"(no schema class for {file_path} — linkml-validate skipped)"
+    else:
+        target_class = "CellTypeMappingGraph"
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir) / original_name
@@ -273,7 +379,7 @@ def linkml_validate(content: str, schema_path: Path, original_name: str = "input
             [
                 "uv", "run", "linkml-validate",
                 "--schema", str(schema_path),
-                "--target-class", "CellTypeMappingGraph",
+                "--target-class", target_class,
                 str(tmp),
             ],
             capture_output=True,
@@ -296,35 +402,59 @@ _MD_CURIE_RE = re.compile(r"\[([A-Z]+:\d+)\]")
 _MD_ACCESSION_RE = re.compile(r"\[(CS[A-Z0-9_]+)\]")
 # PMID from pubmed hyperlink in reference table: [digits](https://pubmed...)
 _MD_PMID_RE = re.compile(r"\[(\d{7,9})\]\(https://pubmed")
+# Numbered reference label at the start of a references-table row:
+# `| [3] | Author 2024 | ... |`
+_MD_REF_TABLE_LABEL_RE = re.compile(r"^\|\s*\[(\d+)\]\s*\|")
+# Numbered reference cite anywhere in text: `[3]`. Used to detect attributions
+# like `> — Knoedler et al. 2022 · [3]`. Distinct from CURIE and accession
+# patterns above.
+_MD_NUMBERED_REF_CITE_RE = re.compile(r"\[(\d+)\]")
 
 
 def parse_md_annotations(text: str) -> dict:
     """
     Parse machine-readable annotations embedded in a Markdown report.
 
+    A blockquote block is considered validly annotated if EITHER:
+      (a) it contains a `<!-- quote_key: X -->` annotation (verbatim-quote
+          path; X is validated against references.json), OR
+      (b) it carries an attribution line `> — ...` containing a numbered
+          reference cite `[N]` where N matches a row in the report's
+          References table (authored-prose path; trades text-content
+          validation for visible numbered-ref provenance).
+
+    Blocks meeting neither criterion are flagged in `unannotated_blockquotes`.
+
     Returns a dict with:
       quote_keys             — list of quote_key values from <!-- quote_key: X --> on > lines
-      unannotated_blockquotes— blockquote blocks with no <!-- quote_key --> annotation anywhere
-                               in the block (represented by first content line of each block)
+      unannotated_blockquotes— blockquote blocks with no acceptable attribution
+                               (represented by first content line of each block)
       curie_ids              — list of [PREFIX:digits] CURIEs found anywhere in text
       accessions             — list of [CS...] atlas accessions found anywhere
       pmids                  — list of PMIDs from PubMed hyperlinks in reference table
+      ref_table_labels       — set of numbered ref labels declared in the References table
     """
     quote_keys: list[str] = []
     unannotated_blockquotes: list[str] = []
     curie_ids: list[str] = []
     accessions: list[str] = []
     pmids: list[str] = []
+    ref_table_labels: set[str] = set()
 
     lines = text.splitlines()
 
-    # Pass 1: extract CURIEs, accessions, PMIDs from every line
+    # Pass 1a: extract CURIEs, accessions, PMIDs from every line; collect
+    # numbered ref labels from any `| [N] | ... |` table row (typically the
+    # References table at the bottom of the report).
     for line in lines:
         curie_ids.extend(_MD_CURIE_RE.findall(line))
         accessions.extend(_MD_ACCESSION_RE.findall(line))
         pmids.extend(_MD_PMID_RE.findall(line))
+        m = _MD_REF_TABLE_LABEL_RE.match(line)
+        if m:
+            ref_table_labels.add(m.group(1))
 
-    # Pass 2: blockquote blocks — check for quote_key annotation at block level
+    # Pass 2: blockquote blocks — check for an acceptable annotation
     i = 0
     while i < len(lines):
         stripped = lines[i].strip()
@@ -335,7 +465,7 @@ def parse_md_annotations(text: str) -> dict:
                 block_lines.append(lines[i].strip())
                 i += 1
 
-            # Extract all quote keys from the block
+            # Extract all quote keys from the block (path (a))
             block_has_key = False
             for bl in block_lines:
                 qk_match = _MD_QUOTE_KEY_RE.search(bl)
@@ -343,9 +473,20 @@ def parse_md_annotations(text: str) -> dict:
                     quote_keys.append(qk_match.group(1))
                     block_has_key = True
 
-            # Flag the whole block if it has no quote_key annotation
+            # If no quote_key, look for a numbered-ref cite on the
+            # attribution line(s) (path (b)).
+            block_has_numbered_ref = False
             if not block_has_key:
-                # Use first non-attribution content line as the representative
+                for bl in block_lines:
+                    if not _MD_ATTRIBUTION_RE.match(bl):
+                        continue
+                    nums = _MD_NUMBERED_REF_CITE_RE.findall(bl)
+                    if any(n in ref_table_labels for n in nums):
+                        block_has_numbered_ref = True
+                        break
+
+            # Flag if neither annotation form is present
+            if not block_has_key and not block_has_numbered_ref:
                 representative = next(
                     (bl for bl in block_lines if not _MD_ATTRIBUTION_RE.match(bl)),
                     block_lines[0],
@@ -360,6 +501,7 @@ def parse_md_annotations(text: str) -> dict:
         "curie_ids": curie_ids,
         "accessions": accessions,
         "pmids": pmids,
+        "ref_table_labels": ref_table_labels,
     }
 
 

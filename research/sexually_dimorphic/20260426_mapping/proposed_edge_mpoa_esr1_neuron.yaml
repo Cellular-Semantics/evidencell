@@ -1,0 +1,158 @@
+# Proposed MappingEdge — mpoa_esr1_neuron → CS20230722_SUPT_0486
+# Generated: 2026-04-26
+# Status: PROPOSED — awaiting curator review before KB write
+# Source KB: kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml
+# Discovery candidates: research/sexually_dimorphic/20260426_mapping/discovery_candidates_mpoa_esr1_neuron.json
+
+id: edge_mpoa_esr1_neuron_to_cs20230722_supt_0486
+type_a: mpoa_esr1_neuron
+type_b: CS20230722_SUPT_0486
+relationship: CROSS_CUTTING
+confidence: MODERATE
+
+# Atlas node summary (from KB taxonomy):
+#   name: 0486 PVpo-VMPO-MPN Hmx2 Gaba_5
+#   subclass: CS20230722_SUBC_106 (106 PVpo-VMPO-MPN Hmx2 Gaba)
+#   locations: MBA:133 (PVpo), MBA:1097 (Hypothalamus), MBA:515 (MPN), MBA:272 (AVPV)
+#   NT: GABAergic
+#   Esr1 mean_expr: 7.72 | Ar: 8.15 | Pgr: 6.80 | Kiss1: 0.62 | Tac1: 0.27 | Th: 2.72
+
+property_comparisons:
+
+  - property: nt_type
+    classical_value: "mixed (GABAergic + glutamatergic; both documented in MPOA)"
+    atlas_value: "GABAergic (Gaba subclass label)"
+    match: PARTIAL
+    notes: >
+      Classical node notes record that MPOA Esr1 neurons are heterogeneous — both
+      GABAergic and glutamatergic subtypes are present. SUPT_0486 is classified in a
+      GABAergic subclass (PVpo-VMPO-MPN Hmx2 Gaba), matching the dominant NT type of
+      MPOA neurons but not capturing the glutamatergic minority. GABAergic identity is
+      expected for most MPOA principal neurons; the glutamatergic fraction would map
+      to a different supertype (e.g., CS20230722_SUPT_0585 PVH-SO-PVa Otp Glut or a
+      preoptic glutamatergic lineage not captured here).
+
+  - property: anatomical_location
+    compartment: SOMA
+    classical_value: "MBA:464 (Medial preoptic nucleus / MPOA)"
+    atlas_value: "MBA:515 (MPN; n=37), MBA:133 (PVpo; n=64), MBA:272 (AVPV; n=16)"
+    match: CONSISTENT
+    notes: >
+      MBA:515 (Medial preoptic nucleus) is the same structure as MBA:464 in the
+      classical node annotation — the classical source uses 'MPOA' as the broader
+      name for the medial preoptic area, which encompasses MPN/MBA:515. PVpo
+      (periventricular preoptic, MBA:133) and VMPO (ventromedial preoptic) are
+      immediately adjacent preoptic subdivisions. AVPV (MBA:272) is a periventricular
+      extension of the preoptic area; some Esr1+ neurons are known to extend into
+      this region. Location match is strong.
+
+  - property: defining_marker
+    gene: Esr1
+    ncbi_gene_id: "NCBIGene:13982"
+    classical_evidence: "TRANSCRIPT (PMID:33910083, https://doi.org/10.1101/2021.09.02.458782)"
+    atlas_mean_expression: 7.72
+    atlas_category: DEFINING
+    match: STRONG
+    notes: >
+      Esr1 is both a defining marker of the classical node and listed as a DEFINING
+      marker in the atlas supertype. The atlas mean expression of 7.72 is high,
+      confirming strong Esr1 enrichment in this preoptic GABAergic supertype.
+
+  - property: defining_marker
+    gene: Ar
+    ncbi_gene_id: "NCBIGene:11835"
+    classical_evidence: "TRANSCRIPT (PMID:33910083, https://doi.org/10.1101/2021.09.02.458782)"
+    atlas_mean_expression: 8.15
+    match: STRONG
+    notes: >
+      Ar is a defining marker of the classical node. Atlas mean expression is 8.15
+      (the highest value among all queried genes in this supertype), confirming
+      strong androgen receptor expression in SUPT_0486.
+
+  - property: defining_marker
+    gene: Pgr
+    ncbi_gene_id: "NCBIGene:18667"
+    classical_evidence: "TRANSCRIPT (https://doi.org/10.1101/2021.09.02.458782)"
+    atlas_mean_expression: 6.80
+    match: STRONG
+    notes: >
+      Pgr is a defining marker of the classical node. Atlas mean expression is 6.80,
+      indicating robust progesterone receptor expression in SUPT_0486. The
+      Esr1/Ar/Pgr triad strongly co-localises in this preoptic GABAergic supertype,
+      consistent with the classical neurochemical definition.
+
+evidence:
+
+  - evidence_type: DB_QUERY
+    supports: SUPPORT
+    explanation: >
+      Rank-1 (supertype-level) DB query for mpoa_esr1_neuron returned
+      CS20230722_SUPT_0486 as the sole STRONG candidate with a DB score of 1.
+      The supertype name directly encodes the relevant anatomy (PVpo-VMPO-MPN)
+      and NT type (Gaba), matching the classical node's primary location (MBA:464/MPN)
+      and dominant NT type (GABAergic). All rank-0 (cluster-level) candidates were
+      excluded as anatomically incompatible (hindbrain, cortex, striatum), reflecting
+      that Esr1/Ar/Pgr markers are broadly expressed across many brain regions; the
+      anatomical constraint was not sufficient at cluster level.
+    db_score_rank1: 1
+    candidate_assessment: STRONG
+
+  - evidence_type: MARKER_COMPARISON
+    supports: SUPPORT
+    explanation: >
+      The three defining markers of mpoa_esr1_neuron (Esr1, Ar, Pgr) all show
+      high mean expression in SUPT_0486 (7.72, 8.15, 6.80 respectively).
+      Esr1 is also listed as a DEFINING marker in the atlas taxonomy for this
+      supertype. This three-way corroboration of steroid hormone receptor co-expression
+      in the same preoptic GABAergic supertype provides strong biochemical support
+      for the mapping.
+    markers_consistent:
+      - symbol: Esr1
+        atlas_mean_expr: 7.72
+        atlas_category: DEFINING
+      - symbol: Ar
+        atlas_mean_expr: 8.15
+        atlas_category: not_in_marker_list
+      - symbol: Pgr
+        atlas_mean_expr: 6.80
+        atlas_category: not_in_marker_list
+
+caveats:
+
+  - caveat_type: CROSS_CUTTING
+    description: >
+      MPOA Esr1 neurons are heterogeneous (GABAergic + glutamatergic; multiple
+      functional subtypes including parental behavior, male mating, female
+      socio-sexual behavior via overlapping Nts+). The classical node may span
+      multiple transcriptomic supertypes within the preoptic area. SUPT_0486 is
+      the best single-supertype candidate but is unlikely to be the only one.
+      Mapping should be interpreted as CROSS_CUTTING: the classical population
+      partially overlaps SUPT_0486 and likely also other preoptic supertypes
+      (e.g., glutamatergic supertypes in SUBC_133 or other Hmx2 Gaba supertypes).
+
+  - caveat_type: HETEROGENEOUS_CLASSICAL_TYPE
+    description: >
+      Classical node notes acknowledge that MPOA Esr1 neurons 'may be better
+      represented as multiple terms'. Until sub-typed into functionally distinct
+      sub-populations, any single supertype mapping will underrepresent the
+      full diversity of the classical node.
+
+  - caveat_type: NT_TYPE_PARTIAL_MATCH
+    description: >
+      SUPT_0486 is GABAergic; the glutamatergic fraction of MPOA Esr1 neurons is
+      not captured and would require identification of an appropriate preoptic
+      glutamatergic supertype (not yet mapped).
+
+unresolved_questions:
+  - >
+    Which specific clusters within SUPT_0486 carry the highest Esr1/Ar/Pgr
+    expression and the strongest preoptic anatomical signal? These would be the
+    best sub-resolution candidates.
+  - >
+    Does the Nts+ female socio-sexual subpopulation of MPOA Esr1 neurons map to
+    SUPT_0486 or to a separate supertype? Nts expression in SUPT_0486 clusters
+    should be checked.
+  - >
+    What is the sex ratio (male_female_ratio) within SUPT_0486 or its child
+    clusters? MPOA is larger in males (male > female); male-biased clusters
+    would be the primary mapping targets.

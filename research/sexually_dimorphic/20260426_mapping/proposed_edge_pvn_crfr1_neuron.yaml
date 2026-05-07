@@ -1,0 +1,216 @@
+# Proposed MappingEdge — pvn_crfr1_neuron → CS20230722_SUPT_0585
+# Generated: 2026-04-26
+# Status: PROPOSED — awaiting curator review before KB write
+# Source KB: kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml
+# Discovery candidates: research/sexually_dimorphic/20260426_mapping/discovery_candidates_pvn_crfr1_neuron.json
+
+id: edge_pvn_crfr1_neuron_to_cs20230722_supt_0585
+type_a: pvn_crfr1_neuron
+type_b: CS20230722_SUPT_0585
+relationship: PARTIAL_OVERLAP
+confidence: MODERATE
+
+# Atlas node summary (from KB taxonomy):
+#   name: 0585 PVH-SO-PVa Otp Glut_1
+#   subclass: CS20230722_SUBC_133 (133 PVH-SO-PVa Otp Glut)
+#   locations: MBA:1097 (Hypothalamus; n=54), MBA:38 (PVN; n=98)
+#   NT: Glutamatergic
+#   Otp-lineage TFs: Sim1, Nkx2-2, Npy2r, Sox5 (DEFINING markers)
+#   Esr1 atlas category: DEFINING_SCOPED
+#   Crhr1: 0.84 | Esr1: 3.65 | Ar: 4.95 | Crh: 2.5 | Pgr: 4.5 | Calb1: 4.62
+
+property_comparisons:
+
+  - property: nt_type
+    classical_value: "not stated; PVN principal neurons are predominantly glutamatergic"
+    atlas_value: "Glutamatergic (Glut subclass label; Otp-lineage neuroendocrine)"
+    match: CONSISTENT
+    notes: >
+      The classical node does not explicitly state NT type, but PVN neurons are
+      well-established as predominantly glutamatergic neuroendocrine neurons
+      (parvocellular and magnocellular PVN neurons are Slc17a6/Vglut2+). SUPT_0585
+      is classified as glutamatergic within the Otp lineage, consistent with
+      the expected PVN neuroendocrine identity.
+
+  - property: anatomical_location
+    compartment: SOMA
+    classical_value: "MBA:38 (Paraventricular hypothalamic nucleus / PVN)"
+    atlas_value: "MBA:38 (PVN; n=98), MBA:1097 (Hypothalamus; n=54)"
+    match: STRONG
+    notes: >
+      MBA:38 (Paraventricular hypothalamic nucleus) is the primary location of
+      both the classical node and SUPT_0585. 98 of the atlas cells in this supertype
+      are assigned to PVN (MBA:38), confirming anatomical concordance. The
+      'Hypothalamus' (MBA:1097) entries represent cells without sub-regional
+      assignment, some of which may be PVN neurons. Location match is strong.
+
+  - property: defining_marker
+    gene: Crhr1
+    ncbi_gene_id: "NCBIGene:12921"
+    classical_evidence: "TRANSCRIPT (PMID:31055007)"
+    atlas_mean_expression: 0.84
+    match: WEAK
+    notes: >
+      Crhr1 (CRF receptor 1 / CRFR1) is the primary defining marker of the
+      classical node. Atlas mean expression is only 0.84, which is low.
+      This is the central caveat for this mapping: CRFR1 expression is modest
+      in SUPT_0585 across the supertype, suggesting that CRFR1+ neurons may
+      represent only a subset of the cells in this supertype, or that Crhr1
+      is not a pan-supertype marker. PARTIAL_OVERLAP (not EQUIVALENT) is
+      therefore appropriate: CRFR1+ PVN neurons partially overlap SUPT_0585
+      but do not define it.
+
+  - property: defining_marker
+    gene: Esr1
+    ncbi_gene_id: "NCBIGene:13982"
+    classical_evidence: "TRANSCRIPT (PMID:31055007)"
+    atlas_mean_expression: 3.65
+    atlas_category: DEFINING_SCOPED
+    match: MODERATE
+    notes: >
+      Esr1 is a defining marker of the classical node (co-expressed with Crhr1
+      in the same PVN population). Atlas mean expression is 3.65 and Esr1 is
+      listed as a DEFINING_SCOPED marker in the atlas supertype, indicating
+      that Esr1 is enriched in a subset of cells within SUPT_0585. This is
+      consistent with PARTIAL_OVERLAP: Esr1+ neurons within SUPT_0585 are the
+      primary mapping targets, not the full supertype.
+
+  - property: defining_marker
+    gene: Ar
+    ncbi_gene_id: "NCBIGene:11835"
+    classical_evidence: "TRANSCRIPT (PMID:31055007)"
+    atlas_mean_expression: 4.95
+    match: MODERATE
+    notes: >
+      Ar (androgen receptor) is a defining marker of the classical node, with the
+      highest co-expression level among the three receptor-encoding markers
+      (classical source: Ar described as more strongly expressed than Esr1).
+      Atlas mean expression is 4.95, which is moderate-to-high, consistent with
+      substantial androgen receptor expression in PVN Otp Glut neurons. The
+      classical note that 'adult gonadectomy reduces CRFR1-immunoreactive cells
+      in males' aligns with androgen-dependent regulation in an Ar-expressing PVN
+      population.
+
+  - property: atlas_marker_additional
+    gene: Crh
+    ncbi_gene_id: "NCBIGene:12918"
+    classical_evidence: "not a defining marker of pvn_crfr1_neuron (CRFR1 receptor,
+      not CRH secretion)"
+    atlas_mean_expression: 2.5
+    match: INFORMATIVE
+    notes: >
+      Crh (corticotropin-releasing hormone) is not a defining marker of the
+      classical node — pvn_crfr1_neuron is defined by CRFR1 *receptor* expression,
+      not CRH *secretion* (see cl_mapping notes: RELATED to CL:4072021).
+      However, atlas mean expression of Crh is 2.5 in SUPT_0585, indicating that
+      a fraction of PVN cells in this supertype do produce CRH. This does not
+      contradict the mapping — CRFR1+ PVN neurons may co-express Crh, or the
+      supertype may contain both CRH-producing and CRFR1-expressing subsets.
+      The Crh expression serves as an anatomical landmark confirming PVN
+      neuroendocrine identity of SUPT_0585.
+
+evidence:
+
+  - evidence_type: DB_QUERY
+    supports: SUPPORT
+    explanation: >
+      Rank-1 (supertype-level) DB query for pvn_crfr1_neuron returned
+      CS20230722_SUPT_0585 as the top candidate with the highest DB score (3)
+      among all rank-1 candidates. The supertype name directly encodes the
+      relevant anatomy (PVH = PVN, SO = supraoptic, PVa = periventricular
+      anterior) and NT type (Glut). Esr1 is a DEFINING_SCOPED atlas marker for
+      this supertype. Rank-0 best candidate (CLUS_2382, parent SUPT_0589) has
+      male_female_ratio 2.7 — strongly male-biased — consistent with the
+      male-biased dimorphism of pvn_crfr1_neuron (males > females, emerging
+      during puberty, gonadectomy-sensitive in males).
+    db_score_rank1: 3
+    candidate_assessment: STRONG
+
+  - evidence_type: MARKER_COMPARISON
+    supports: PARTIAL
+    explanation: >
+      The two steroid receptor markers (Esr1=3.65, Ar=4.95) show moderate
+      expression supporting the mapping, and Esr1 is a DEFINING_SCOPED atlas
+      marker for SUPT_0585. The primary deficiency is Crhr1 (0.84), which is
+      low, motivating the PARTIAL_OVERLAP rather than EQUIVALENT relationship.
+      Crh expression (2.5) confirms PVN neuroendocrine identity. The Otp-lineage
+      TF markers (Sim1, Nkx2-2) are consistent with parvocellular PVN neuroendocrine
+      identity — the appropriate transcriptomic lineage for CRFR1+ PVN neurons.
+    markers_consistent:
+      - symbol: Esr1
+        atlas_mean_expr: 3.65
+        atlas_category: DEFINING_SCOPED
+      - symbol: Ar
+        atlas_mean_expr: 4.95
+      - symbol: Crh
+        atlas_mean_expr: 2.5
+        role: anatomical_landmark
+    markers_weak:
+      - symbol: Crhr1
+        atlas_mean_expr: 0.84
+        note: primary defining marker; low expression drives PARTIAL_OVERLAP
+
+  - evidence_type: LITERATURE
+    supports: PARTIAL
+    explanation: >
+      Rosinger 2019 (PMID:31055007) is the single primary source for pvn_crfr1_neuron
+      characterisation. The paper documents male-biased sexual dimorphism emerging
+      during puberty/early adulthood, Crhr1 immunoreactivity in PVN, co-expression
+      with Esr1 (moderate) and Ar (high), and gonadectomy sensitivity in males.
+      These properties are biologically consistent with PVN Otp Glut neurons
+      (SUPT_0585) that express Esr1 and Ar. The receptor-vs-secretion distinction
+      (CRFR1 receptor, not CRH secretion) limits the CL mapping to RELATED but
+      does not affect the atlas transcriptomic mapping, which is expression-based.
+    reference: "PMID:31055007"
+
+caveats:
+
+  - caveat_type: PARTIAL_OVERLAP
+    description: >
+      CRFR1 expression (atlas mean 0.84) is modest across SUPT_0585, indicating
+      CRFR1+ neurons represent a subset of this supertype rather than the full
+      population. A stronger mapping would require identification of a specific
+      cluster within SUBT_0585 (or its sibling supertypes SUPT_0586-0589) with
+      high Crhr1 expression and male-biased sex ratio. PARTIAL_OVERLAP is the
+      appropriate relationship: some cells in SUPT_0585 are pvn_crfr1_neuron,
+      but not all.
+
+  - caveat_type: SINGLE_SOURCE
+    description: >
+      The entire pvn_crfr1_neuron classical node characterisation rests on a single
+      primary source (Rosinger 2019, PMID:31055007). Secondary literature validation
+      of CRFR1 expression in PVN and its sexual dimorphism has not yet been
+      conducted in this pipeline. Confidence is capped at MODERATE pending additional
+      evidence.
+
+  - caveat_type: MALE_BIASED_DIMORPHISM
+    description: >
+      pvn_crfr1_neuron shows male-biased dimorphism (males > females, gonadectomy
+      reduces CRFR1+ cells in males). The atlas SUPT_0585 supertype does not have
+      a sex-ratio annotation at the supertype level. However, the rank-0 male-biased
+      cluster CLUS_2382 (ratio 2.7, parent SUPT_0589) and multiple SBPV-PVa
+      clusters with high male bias (ratio 3-32) indicate that the broader PVH-SO-PVa
+      Otp Glut subclass contains male-biased cell types. The male-biased dimorphism
+      of pvn_crfr1_neuron is consistent with this PVN Otp Glut lineage.
+
+  - caveat_type: RECEPTOR_VS_SECRETION_AMBIGUITY
+    description: >
+      pvn_crfr1_neuron is defined by CRFR1 *receptor* expression, not CRH secretion.
+      SUPT_0585 shows Crh expression (2.5), meaning some cells in this supertype
+      produce CRH. It is possible that some CRFR1+ PVN neurons also co-express
+      Crh (autocrine/paracrine signalling), but this has not been demonstrated for
+      this specific population. The Crh expression in the atlas supertype should not
+      be confused with defining evidence for the classical node.
+
+unresolved_questions:
+  - >
+    Which specific cluster(s) within the PVH-SO-PVa Otp Glut subclass (SUBC_133)
+    show the highest Crhr1 expression and male-biased sex ratio? Those clusters
+    would be the most specific mapping targets for pvn_crfr1_neuron.
+  - >
+    Is SUPT_0589 (parent of male-biased CLUS_2382, ratio 2.7) a better or
+    co-equal mapping target compared to SUPT_0585? The curator should assess
+    both supertypes.
+  - >
+    Can Crhr1 expression be validated at the cluster level within SUPT_0585
+    using the precomputed stats HDF5 or Allen Brain Cell Atlas data portal?

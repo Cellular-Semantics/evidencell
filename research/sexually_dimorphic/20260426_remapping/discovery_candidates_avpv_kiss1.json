@@ -1,0 +1,208 @@
+{
+  "classical_node_id": "avpv_kiss1_neuron",
+  "classical_node_name": "AVPV/PeN kisspeptin neuron",
+  "taxonomy_id": "CCN20230722",
+  "classical_node_summary": {
+    "defining_markers": ["Kiss1", "Th", "Esr1"],
+    "nt_type": ["GABAergic", "dopaminergic"],
+    "sex_bias": "FEMALE_BIASED",
+    "anatomical_location": ["MBA:272 (AVPV)", "MBA:341 (PeN)"],
+    "neuropeptides": ["Kiss1"],
+    "negative_markers": []
+  },
+  "candidates_by_rank": {
+    "1": [
+      {
+        "cell_set_accession": "CS20230722_SUPT_0486",
+        "name": "0486 PVpo-VMPO-MPN Hmx2 Gaba_5",
+        "taxonomy_rank": 1,
+        "db_score": 3,
+        "parent_subclass": "CS20230722_SUBC_106 (106 PVpo-VMPO-MPN Hmx2 Gaba)",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Esr1 is a DEFINING marker of SUPT_0486 (mean_expression=7.72), providing strong molecular overlap with the Esr1-positive classical node. Supertype-level precomputed_expression confirms Kiss1=0.62, Th=2.72, Esr1=7.72 — all three classical markers are detectable at the supertype mean. MBA:272 (AVPV) is present in the anatomy (16/~130 cells, 12%), falling below the 20% threshold — anatomy is partial. PeN (MBA:341) is not listed directly; however MBA:133 (PVpo), which is adjacent periventricular territory, accounts for 64 cells. No classical negative markers conflict with this supertype's defining markers (Apoc3, Insm2, Prok2, Esr1, Bmp3, Rarb, Lhx5, Slc18a2 — none are negative markers for avpv_kiss1_neuron). GABA nt_type is consistent with the classical GABAergic/dopaminergic identity. The DB score (3) is suppressed because Kiss1 and Th are not among the supertype-level defining_markers metadata columns — they appear only in precomputed_expression. Child-cluster analysis reveals that CLUS_1915 co-expresses all three classical markers at highest levels and is strongly female-biased.",
+        "negative_marker_conflicts": "NONE",
+        "neuropeptide_assessment": "Kiss1 present at supertype mean (0.62); CLUS_1915 shows highest Kiss1 expression (2.51) among children. No conflicting neuropeptides detected.",
+        "location_quality": "PARTIAL — MBA:272 (AVPV) present (16 cells, 12% of ~130 total), below 20% threshold. MBA:133 (PVpo, 64 cells) and MBA:515 (MPN, 37 cells) dominate. PeN (MBA:341) not listed. AVPV cells are concentrated in CLUS_1912 (n=8 per task notes) and MBA:1097 Hypothalamus catchall region.",
+        "target_region_fraction": "16/~130 (~12%) — flag; below 20% threshold",
+        "sex_ratio": "NOT_PROVIDED at supertype level; child cluster CLUS_1915 MFR=0.02 (strongly female-biased), CLUS_1916 MFR=0.08 (female-biased). Most other children are sex-neutral or male-enriched.",
+        "best_child_cluster": {
+          "accession": "CS20230722_CLUS_1915",
+          "label": "1915 PVpo-VMPO-MPN Hmx2 Gaba_5",
+          "expression": {
+            "Kiss1": 2.51,
+            "Th": 6.6,
+            "Esr1": 9.55,
+            "Calb1": 1.67,
+            "Tac1": 0.42,
+            "Cyp19a1": 0.06
+          },
+          "male_female_ratio": 0.02,
+          "primary_soma": "MBA:1097 Hypothalamus (n=3 per task notes)",
+          "rationale": "CLUS_1915 is the only child cluster with appreciable Kiss1 (2.51) AND high Th (6.6) — precisely the Kiss1+TH co-expression signature that defines the classical AVPV/PeN kisspeptin neuron. Esr1=9.55 (highest among children). MFR=0.02 is the most strongly female-biased cluster in the supertype, matching the FEMALE_BIASED sex_bias of the classical node. Despite the small n=3 cell count and MBA:1097 (Hypothalamus) catchall annotation, the molecular and sex-ratio profile is highly consistent. NOTE: CLUS_1915 was NOT in the top-30 DB rank-0 results because its defining_markers metadata columns do not include Kiss1/Th/Esr1 — these appear only in precomputed_expression. It was identified through manual child_cluster_expression inspection of SUPT_0486.",
+          "caveats": "Very small cell count (n=3). Primary soma listed as MBA:1097 (Hypothalamus, a broad catchall) rather than MBA:272 directly — spatial resolution at cluster level may be insufficient to resolve AVPV vs adjacent PVpo/PeN."
+        },
+        "child_cluster_summary": {
+          "CLUS_1912": {"Kiss1": 0.0, "Th": 2.51, "Esr1": 4.55, "MFR": 1.22, "primary_soma": "MBA:1097 Hypothalamus", "note": "No Kiss1; Th moderate; Esr1 low; sex-neutral. Likely AVPV TH+ but not Kiss1+."},
+          "CLUS_1913": {"Kiss1": 0.54, "Th": 2.59, "Esr1": 7.93, "MFR": 10.11, "primary_soma": "MBA:133 PVpo", "note": "Low Kiss1; Th moderate; Esr1 high; strongly MALE-biased (MFR=10.11). Does not match FEMALE_BIASED classical node."},
+          "CLUS_1914": {"Kiss1": 0.0, "Th": 1.22, "Esr1": 7.02, "MFR": 10.11, "primary_soma": "MBA:133 PVpo", "note": "No Kiss1; low Th; Esr1 high; strongly MALE-biased (MFR=10.11). Does not match."},
+          "CLUS_1915": {"Kiss1": 2.51, "Th": 6.6, "Esr1": 9.55, "MFR": 0.02, "primary_soma": "MBA:1097 Hypothalamus", "note": "BEST CHILD: highest Kiss1, highest Th, highest Esr1, most female-biased. Recommended cluster-level mapping target."},
+          "CLUS_1916": {"Kiss1": 0.04, "Th": 0.68, "Esr1": 9.56, "MFR": 0.08, "primary_soma": "MBA:133 PVpo", "note": "Very low Kiss1; low Th; high Esr1; female-biased (MFR=0.08). Possible Esr1+ but not Kiss1+TH+ phenotype."}
+        },
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0482",
+        "name": "0482 PVpo-VMPO-MPN Hmx2 Gaba_1",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_106 (106 PVpo-VMPO-MPN Hmx2 Gaba)",
+        "assessment": "UNLIKELY",
+        "rationale": "Same parent subclass as SUPT_0486 (SUBC_106, PVpo-VMPO-MPN Hmx2 Gaba) and has MBA:272 (AVPV) anatomy (166 cells — much higher count than SUPT_0486). However, defining markers are Csta2, Isl1, Nts, Zic1 — none of which match the classical Kiss1/Th/Esr1 signature. No precomputed_expression data retrieved for this supertype in this session; the defining marker mismatch alone is sufficient to deprioritise. The DB score of 4 likely reflects anatomical match and generic GABA nt_type match. Nts (neurotensin) co-expression is not a feature of the classical avpv_kiss1_neuron profile.",
+        "negative_marker_conflicts": "NONE (no classical negative markers defined), but defining markers Csta2/Isl1/Nts/Zic1 are orthogonal to the Kiss1/Th/Esr1 signature",
+        "neuropeptide_assessment": "Nts (neurotensin) is a defining marker — not a feature of the classical node. No Kiss1 in defining markers.",
+        "location_quality": "MBA:272 present (166 cells) — strong AVPV overlap. However this is likely the AVPV TH/neurotensin population, not the kisspeptin population.",
+        "sex_ratio": "NOT_PROVIDED",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0418",
+        "name": "0418 PVR Six3 Sox3 Gaba_8",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_089 (089 PVR Six3 Sox3 Gaba)",
+        "assessment": "UNLIKELY",
+        "rationale": "PVR (periventricular region) lineage, not PVpo-VMPO-MPN. Defining markers include Hmx2 and Pmaip1/Glp1r — no Kiss1, Th, or Esr1. Precomputed expression shows Kiss1=0.0, Th=0.2, Esr1=0.61 — all near-zero. MBA:272 is present (11 cells) but the molecular signature is entirely inconsistent with the classical node. The DB score=4 likely reflects anatomical proximity and Six3/Sox3 transcription factor lineage match. The PVR lineage in this taxonomy encompasses circumventricular organs and related ependymal-adjacent regions — a biologically distinct population from AVPV kisspeptin neurons.",
+        "negative_marker_conflicts": "NONE formally, but near-zero Kiss1/Th/Esr1 expression is functionally exclusionary",
+        "neuropeptide_assessment": "No neuropeptide markers consistent with Kiss1 neuropeptide phenotype",
+        "location_quality": "MBA:272 present but minor (11 cells). Primary locations are Median preoptic nucleus (MBA:452), choroid plexus (MBA:108), Subfornical organ (MBA:338) — circumventricular rather than AVPV.",
+        "sex_ratio": "NOT_PROVIDED",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0417",
+        "name": "0417 PVR Six3 Sox3 Gaba_7",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_089 (089 PVR Six3 Sox3 Gaba)",
+        "assessment": "UNLIKELY",
+        "rationale": "Same PVR Six3 Sox3 lineage as SUPT_0418. Circumventricular/ependymal-adjacent population, not AVPV kisspeptin. Molecular signature inconsistent with Kiss1/Th/Esr1 classical markers.",
+        "negative_marker_conflicts": "NONE formally; molecular signature inconsistent",
+        "location_quality": "MBA:272 status not confirmed in this session; PVR lineage primarily in circumventricular organs",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0415",
+        "name": "0415 PVR Six3 Sox3 Gaba_5",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_089 (089 PVR Six3 Sox3 Gaba)",
+        "assessment": "UNLIKELY",
+        "rationale": "Same PVR Six3 Sox3 lineage. Circumventricular population; molecular signature inconsistent with classical node.",
+        "negative_marker_conflicts": "NONE formally; molecular signature inconsistent",
+        "location_quality": "PVR lineage primarily in circumventricular organs, not AVPV",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0411",
+        "name": "0411 PVR Six3 Sox3 Gaba_1",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_089 (089 PVR Six3 Sox3 Gaba)",
+        "assessment": "UNLIKELY",
+        "rationale": "Same PVR Six3 Sox3 lineage. Circumventricular population; molecular signature inconsistent with classical node.",
+        "negative_marker_conflicts": "NONE formally; molecular signature inconsistent",
+        "location_quality": "PVR lineage primarily in circumventricular organs, not AVPV",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      }
+    ],
+    "0": [
+      {
+        "cell_set_accession": "CS20230722_CLUS_1301",
+        "name": "1301 MEA-BST Lhx6 Nfib Gaba_4",
+        "taxonomy_rank": 0,
+        "db_score": 6,
+        "parent_supertype": "CS20230722_SUPT_0360 (0360 MEA-BST Lhx6 Nfib Gaba_4)",
+        "parent_subclass": "CS20230722_SUBC_076 (076 MEA-BST Lhx6 Nfib Gaba)",
+        "assessment": "NOT_A_CANDIDATE",
+        "rationale": "DB rank 1 due to female-biased MFR=0.1 boosting score. However this cluster is in the MEA-BST (medial amygdala / bed nuclei of stria terminalis) lineage — wrong anatomical region entirely. Parent supertype SUPT_0360 maps to BST (MBA:351), MPN (MBA:515), DMH (MBA:830), and Posterodorsal preoptic nucleus — none of which are AVPV (MBA:272) or PeN (MBA:341). The sex_bias female boost inflated the score but the anatomical and molecular lineage is inconsistent with AVPV kisspeptin neurons. Defining markers Gldn/St18/Npas1/Lhx6 are MEA-BST markers, not AVPV markers.",
+        "male_female_ratio": 0.1,
+        "sex_bias_note": "Female-biased but anatomically MEA-BST, not AVPV/PeN — sex bias alone insufficient to support candidacy",
+        "location_quality": "WRONG REGION — MEA-BST lineage; no AVPV or PeN anatomy",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1891",
+        "name": "1891 PVpo-VMPO-MPN Hmx2 Gaba_2",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "parent_supertype": "CS20230722_SUPT_0483 (0483 PVpo-VMPO-MPN Hmx2 Gaba_2)",
+        "parent_subclass": "CS20230722_SUBC_106 (106 PVpo-VMPO-MPN Hmx2 Gaba)",
+        "assessment": "LOW_PRIORITY",
+        "rationale": "Same parent subclass (SUBC_106) as SUPT_0486 — correct regional lineage. MFR=0.1 (female-biased). Parent supertype SUPT_0483 defining markers are Csta2/Nts/Vxn/Dlx1. No Kiss1 or Th in parent defining markers. SUPT_0483 anatomy is dominated by MBA:515 (MPN, 557 cells), MBA:523 (MPO, 257 cells), MBA:1097 (Hypothalamus, 189 cells), MBA:576073699 (VMPO, 159 cells), MBA:133 (PVpo, 109 cells), MBA:351 (BST, 125 cells) — no MBA:272 (AVPV) in parent supertype. The Nts-defining signature suggests neurotensin interneurons, not kisspeptin neurons. Female bias is a positive but the molecular and fine anatomical match is weak.",
+        "male_female_ratio": 0.1,
+        "location_quality": "PVpo-VMPO-MPN lineage is correct regional context, but parent supertype lacks MBA:272; likely primarily MPN/VMPO",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1895",
+        "name": "1895 PVpo-VMPO-MPN Hmx2 Gaba_2",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "parent_supertype": "CS20230722_SUPT_0483 (0483 PVpo-VMPO-MPN Hmx2 Gaba_2)",
+        "parent_subclass": "CS20230722_SUBC_106 (106 PVpo-VMPO-MPN Hmx2 Gaba)",
+        "assessment": "LOW_PRIORITY",
+        "rationale": "Same parent supertype as CLUS_1891. MFR=0.06 — most strongly female-biased among the SUPT_0483 children. Correct regional lineage (SUBC_106). However same molecular lineage concerns as CLUS_1891: no Kiss1/Th in parent defining markers, Nts-based signature. The extreme female bias (MFR=0.06) is noteworthy but insufficient without molecular evidence for Kiss1/TH co-expression.",
+        "male_female_ratio": 0.06,
+        "location_quality": "PVpo-VMPO-MPN lineage correct but parent supertype lacks AVPV anatomy",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1876",
+        "name": "1876 PVpo-VMPO-MPN Hmx2 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "parent_supertype": "CS20230722_SUPT_0482 (0482 PVpo-VMPO-MPN Hmx2 Gaba_1)",
+        "parent_subclass": "CS20230722_SUBC_106 (106 PVpo-VMPO-MPN Hmx2 Gaba)",
+        "assessment": "UNLIKELY",
+        "rationale": "Parent supertype SUPT_0482 has strong AVPV anatomy (166 cells MBA:272) but defining markers Csta2/Isl1/Nts/Zic1 are inconsistent with Kiss1/TH phenotype. MFR=1.17 (sex-neutral). Despite correct regional lineage, neither sex bias nor molecular signature supports AVPV kisspeptin identity.",
+        "male_female_ratio": 1.17,
+        "location_quality": "Parent has MBA:272 (AVPV) but likely Isl1/Nts-positive neurotensin population",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1531",
+        "name": "1531 PVR Six3 Sox3 Gaba_9",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "parent_supertype": "CS20230722_SUPT_0419",
+        "parent_subclass": "CS20230722_SUBC_089 (089 PVR Six3 Sox3 Gaba)",
+        "assessment": "NOT_A_CANDIDATE",
+        "rationale": "PVR Six3 Sox3 lineage (circumventricular/ependymal-adjacent). MFR=1.13 (sex-neutral). No molecular match to Kiss1/Th/Esr1 classical signature. Wrong lineage.",
+        "male_female_ratio": 1.13,
+        "location_quality": "PVR lineage — not AVPV",
+        "annotation_transfer_f1": null,
+        "annotation_transfer_status": "NOT_ASSESSED"
+      }
+    ]
+  },
+  "recommended_mapping_target": {
+    "supertype": "CS20230722_SUPT_0486",
+    "cluster": "CS20230722_CLUS_1915",
+    "confidence": "PLAUSIBLE — pending annotation transfer and full expression validation",
+    "rationale_summary": "SUPT_0486 (0486 PVpo-VMPO-MPN Hmx2 Gaba_5) is the primary rank-1 candidate. Esr1 is a defining marker; supertype-level precomputed_expression confirms all three classical markers (Kiss1=0.62, Th=2.72, Esr1=7.72). MBA:272 (AVPV) is present in the anatomy (16 cells, 12%) — partial but the correct region. No classical negative marker conflicts. Child-cluster CLUS_1915 co-expresses Kiss1 (2.51), Th (6.6), and Esr1 (9.55) at the highest levels among all five children and has the most strongly female-biased sex ratio (MFR=0.02), directly matching the FEMALE_BIASED classical node. CLUS_1915 was not in the top-30 DB rank-0 results because its Kiss1/Th/Esr1 profile appears only in precomputed_expression, not in the defining_markers metadata columns used by the scoring function."
+  },
+  "non_candidates_summary": "The four PVR Six3 Sox3 supertypes (SUPT_0411/0415/0417/0418, db_score=4) are circumventricular/ependymal-adjacent populations with near-zero Kiss1/Th/Esr1 expression — wrong lineage despite proximity to AVPV in some cases. CLUS_1301 (MEA-BST, score=6 rank-0) is the highest-scoring rank-0 candidate but is anatomically in the amygdala/BST lineage; its high score is an artefact of the sex_bias=female boost applied to its MFR=0.1. MEA-BST populations are biologically unrelated to AVPV kisspeptin neurons. SUPT_0482/CLUS_1876 are in the correct SUBC_106 lineage and have strong MBA:272 anatomy, but define the AVPV Isl1/Nts/neurotensin population rather than the kisspeptin population — likely the avpv_th_neuron or a separate neurotensin subpopulation. The DTN-LDT-IPN, STR, Vip, Sst, LSX, CEA-AAA-BST, and MEA-BST supertypes (rank-1 scores 2-3) are in brainstem, striatum, or amygdala lineages with no AVPV anatomy — excluded.",
+  "db_scoring_limitation_note": "The rank-0 DB scoring was driven by sex_bias=female boosting (CLUS_1301 ranked first despite wrong anatomy) and failed to surface CLUS_1915 because its Kiss1/Th/Esr1 values are in precomputed_expression only, not in defining_markers metadata columns. Manual child_cluster_expression inspection of SUPT_0486 was essential to identify CLUS_1915 as the best biological match.",
+  "generated_by": "cell-type-mapping-refinement-agent",
+  "generated_date": "2026-04-26"
+}

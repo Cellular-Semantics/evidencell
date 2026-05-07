@@ -1,0 +1,169 @@
+# Proposed mapping edge — avpv_kiss1_neuron → CS20230722_SUPT_0486
+# Generated: 2026-04-26
+# Curator-approved at Step 1 GATE
+# Status: PROPOSED — pending expert review at Step 4 GATE
+
+- id: edge_avpv_kiss1_neuron_to_cs20230722_supt_0486
+  type_a: avpv_kiss1_neuron
+  type_b: WMB:CS20230722_SUPT_0486
+  relationship: PARTIAL_OVERLAP
+  confidence: MODERATE
+
+  # ── Atlas node summary ─────────────────────────────────────────────────────
+  # SUPT_0486: "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"
+  # Subclass: 106 PVpo-VMPO-MPN Hmx2 Gaba (CS20230722_SUBC_106)
+  # Soma locations: PVpo (MBA:133, n=64), Hypothalamus (MBA:1097, n=27),
+  #                 MPN (MBA:515, n=37), AVPV (MBA:272, n=16)
+  # SUPT_0486 has explicit AVPV cells (n=16) plus periventricular preoptic cells.
+  # Precomputed expression (mean log-normalised CPM):
+  #   Kiss1=0.62, Th=2.72, Esr1=7.72, Calb1=4.16, Ar=8.15, Pgr=6.8,
+  #   Cyp19a1=1.15, Tac1=0.27, Crhr1=1.66, Crh=0.11, Oxtr=0.07
+
+  property_comparisons:
+
+    # ── Neurotransmitter type ──────────────────────────────────────────────
+    - property: nt_type
+      classical_value: "GABAergic / dopaminergic (TH co-expression)"
+      atlas_value: "GABAergic (Gaba_5 supertype)"
+      comparison: PARTIAL_MATCH
+      notes: >
+        Classical node is defined as GABAergic with dopaminergic co-expression
+        (TH/Th). SUPT_0486 is classified as GABAergic in the atlas taxonomy;
+        Th mean expression is 2.72 (low-moderate), consistent with a subset
+        carrying dopaminergic identity. The GABAergic component is concordant;
+        the dopaminergic component is present at supertype level (Th=2.72) but
+        diluted across the mixed preoptic cell population.
+
+    # ── Soma location ─────────────────────────────────────────────────────
+    - property: soma_location
+      compartment: SOMA
+      classical_value: "MBA:272 (AVPV) and MBA:341 (PeN / periventricular posterior)"
+      atlas_value: >
+        MBA:133 (PVpo, n=64), MBA:515 (MPN, n=37), MBA:272 (AVPV, n=16),
+        MBA:1097 (Hypothalamus unspecified, n=27)
+      comparison: PARTIAL_MATCH
+      notes: >
+        SUPT_0486 includes MBA:272 (AVPV, n=16) — a direct location match for
+        the AVPV component of the classical node. The periventricular preoptic
+        (PVpo, MBA:133) location is adjacent to the classical PeN/periventricular
+        region (MBA:341). No exact MBA:341 cells appear in SUPT_0486, but PVpo
+        is the closest atlas analogue to the periventricular zone containing
+        AVPV/PeN. However, the supertype also spans MPN (MBA:515, n=37) — a
+        distinct preoptic region — indicating SUPT_0486 is broader than the
+        classical AVPV/PeN definition.
+
+    # ── Defining markers ──────────────────────────────────────────────────
+    - property: defining_marker
+      gene: Kiss1
+      ncbi_gene_id: "NCBIGene:280287"
+      classical_value: "POSITIVE (transcript; defining marker)"
+      atlas_value: "mean_expression=0.62"
+      comparison: WEAK_SUPPORT
+      notes: >
+        Kiss1 mean expression is 0.62 in SUPT_0486. Low-moderate — consistent
+        with Kiss1 being expressed in a subset of the supertype (the AVPV/PeN
+        Kiss1 neurons are a subset of the broader PVpo-VMPO-MPN population).
+        Expression is non-zero, providing positive weak support.
+
+    - property: defining_marker
+      gene: Th
+      ncbi_gene_id: "NCBIGene:21823"
+      classical_value: "POSITIVE (protein; co-expressed with Kiss1)"
+      atlas_value: "mean_expression=2.72"
+      comparison: SUPPORT
+      notes: >
+        Th mean expression is 2.72 in SUPT_0486 — low-moderate but clearly
+        expressed at the supertype level. Consistent with a fraction of cells
+        carrying dopaminergic (A14) identity, as expected given that most
+        AVPV/PeN Kiss1 neurons co-express TH.
+
+    - property: defining_marker
+      gene: Esr1
+      ncbi_gene_id: "NCBIGene:13982"
+      classical_value: "POSITIVE (transcript; defining marker)"
+      atlas_value: "mean_expression=7.72"
+      comparison: STRONG_SUPPORT
+      notes: >
+        Esr1 is a defining marker of the atlas supertype (listed as DEFINING in
+        SUPT_0486 markers block). Mean expression is 7.72 — high. This is a
+        strong concordance with the classical Esr1+ definition.
+
+    # ── Neuropeptide ──────────────────────────────────────────────────────
+    - property: neuropeptide
+      gene: Kiss1
+      ncbi_gene_id: "NCBIGene:280287"
+      classical_value: "POSITIVE (transcript; kisspeptin neuropeptide)"
+      atlas_value: "mean_expression=0.62"
+      comparison: WEAK_SUPPORT
+      notes: >
+        Same gene as defining marker — Kiss1 encodes kisspeptin. Low-moderate
+        expression at supertype level, consistent with Kiss1 being present in a
+        subset (AVPV Kiss1 neurons) within the broader supertype.
+
+  evidence:
+    - evidence_type: PROPERTY_COMPARISON
+      supports: PARTIAL
+      explanation: >
+        Esr1 (mean=7.72) is a defining marker of SUPT_0486 and a strong
+        concordant marker for the classical node. Th (mean=2.72) and Kiss1
+        (mean=0.62) are both expressed at the supertype level, consistent with
+        a subset carrying the AVPV Kiss1/TH identity. The AVPV soma location
+        (MBA:272, n=16) is present in SUPT_0486, supporting anatomical
+        overlap. Two independent property classes (location + 3 marker genes)
+        provide concordant evidence.
+
+    - evidence_type: DATABASE_CANDIDATE
+      supports: PARTIAL
+      explanation: >
+        SUPT_0486 received db_score=3 and assessment=WEAK in the rank-1
+        discovery candidates for avpv_kiss1_neuron (primarily a GABAergic node
+        search). However, for avpv_th_neuron (dopaminergic), SUPT_0486 was the
+        top-ranked rank-1 candidate (assessment=STRONG), parent of the
+        extreme-female-biased cluster CLUS_1915 (male_female_ratio=0.02). The
+        curator-approved mapping targets SUPT_0486 for both AVPV Kiss1 and AVPV
+        TH nodes on the basis of marker expression, AVPV spatial cells, and
+        child cluster sex-ratio evidence.
+
+  caveats:
+    - caveat_type: SUPERTYPE_HETEROGENEITY
+      description: >
+        SUPT_0486 spans the periventricular preoptic zone (PVpo-VMPO-MPN) and
+        contains at least three anatomically distinct preoptic cell populations
+        (PVpo, MPN, AVPV). The classical AVPV/PeN Kiss1 neurons are a subset
+        of this supertype. A cluster-level analysis within SUPT_0486 is needed
+        to identify which child cluster(s) carry peak Kiss1 + Th + Esr1
+        co-expression.
+
+    - caveat_type: SEX_RATIO_UNCONFIRMED
+      description: >
+        At rank-1 (supertype level), no sex-ratio data are available for
+        SUPT_0486 directly. The child cluster CLUS_1915 (male_female_ratio=0.02)
+        is strongly female-biased, consistent with the female-biased AVPV Kiss1
+        population, but this sex-ratio signal is diluted at supertype level.
+
+    - caveat_type: ATLAS_RESOLUTION_LIMIT
+      description: >
+        WMBv1 MERFISH atlas does not segment AVPV as a distinct spatial region;
+        the atlas labels AVPV cells within PVpo or generic Hypothalamus
+        partitions. The n=16 AVPV-labeled cells in SUPT_0486 may underrepresent
+        the true AVPV Kiss1 population (estimated >100 cells in female mice).
+
+  unresolved_questions:
+    - >
+      Which cluster(s) within SUPT_0486 carry peak Kiss1 + Th + Esr1
+      co-expression? Cluster-level inspection required.
+    - >
+      Do the PeN (periventricular posterior, MBA:341) Kiss1 neurons map to
+      SUPT_0486 or to a different PVR supertype (e.g. SUPT_0418/0415)?
+    - >
+      Is the female bias (greater cell number in females) reflected in
+      differential cluster abundance across sexes within SUPT_0486?
+
+  proposed_experiments:
+    - >
+      Query atlas at cluster level within SUPT_0486 lineage for Kiss1, Th,
+      Esr1 co-expression to identify AVPV Kiss1 candidate cluster(s).
+    - >
+      Annotate AVPV Kiss1 single-cell dataset (e.g. from Moffitt et al. 2018
+      or similar MERFISH studies) to WMBv1 using MapMyCells for F1-based
+      confirmation.

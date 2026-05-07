@@ -1,0 +1,191 @@
+# Proposed MappingEdge: bnst_crf_neuron → CS20230722_SUPT_0393
+# Generated: 2026-04-26
+# Curator-approved mapping from Step 1 GATE
+# Status: PROPOSED — not yet written to KB
+
+- id: edge_bnst_crf_neuron_to_cs20230722_supt_0393
+  type_a: bnst_crf_neuron
+  type_b: CS20230722_SUPT_0393
+  relationship: PARTIAL_OVERLAP
+  confidence: UNCERTAIN
+
+  # ── Atlas node summary ──────────────────────────────────────────
+  # CS20230722_SUPT_0393 "0393 CEA-BST Rai14 Pdyn Crh Gaba_2"
+  # Parent subclass: CS20230722_SUBC_083 (CEA-BST Rai14 Pdyn Crh Gaba)
+  # Taxonomy: CCN20230722 (WMBv1)
+  # Primary MERFISH locations: MBA:351 Bed nuclei of the stria terminalis (n=140),
+  #   MBA:477 Striatum (n=17), MBA:266 Lateral septal nucleus ventral (n=18)
+  # Atlas defining markers: Pgm5, Crh, Gad2
+
+  # ── Classical node summary ──────────────────────────────────────
+  # bnst_crf_neuron: BNST (anterolateral) corticotropin-releasing factor (CRF) neuron
+  # Locations: MBA:174 dlBNST / ovBNST / alBNST (all mapped to parent BNST term)
+  # Defining markers: Crh
+  # Negative markers: Calb1 (ABSENT)
+  # Neuropeptides: Crh
+  # NT type: not specified in classical definition (literature: GABAergic inferred
+  #   from dlBNST CRF neuron identity)
+
+  evidence:
+    - evidence_type: MARKER_OVERLAP
+      supports: SUPPORT
+      explanation: >
+        Crh is a defining marker of the classical bnst_crf_neuron and is present
+        in the atlas supertype label ("CEA-BST Rai14 Pdyn Crh Gaba_2") and listed
+        as a DEFINING_SCOPED atlas marker. Precomputed expression confirms Crh
+        mean_expression = 7.96 in SUPT_0393, indicating high expression at the
+        supertype level.
+
+    - evidence_type: ANATOMY
+      supports: SUPPORT
+      explanation: >
+        The atlas supertype label includes "BST" (bed nuclei of the stria terminalis).
+        MERFISH spatial data confirm MBA:351 (Bed nuclei of the stria terminalis) as
+        the primary location (n=140 cells). The classical type occupies dlBNST, ovBNST,
+        and alBNST (all sub-nuclei lacking dedicated Allen atlas terms, mapped to the
+        parent MBA:174 / MBA:351 BNST term). Location concordance is strong.
+
+    - evidence_type: NT_TYPE
+      supports: SUPPORT
+      explanation: >
+        SUPT_0393 carries Gad2 as a DEFINING atlas marker (GABAergic identity).
+        BNST CRF neurons in the dlBNST are classically described as GABAergic
+        interneurons. NT type concordance is supportive.
+
+    - evidence_type: MARKER_DISCORDANCE
+      supports: AGAINST
+      explanation: >
+        Calb1 is a NEGATIVE marker for bnst_crf_neuron (explicitly ABSENT from dlBNST
+        CRF neurons; literature distinguishes the dlBNST CRF population from the
+        calbindin-positive principal nucleus of BNST). However, SUPT_0393 shows
+        Calb1 mean_expression = 5.57 — substantial expression. This constitutes a
+        CRITICAL DISCORDANCE: the atlas supertype expresses a marker that the
+        classical type explicitly lacks. This discordance directly undermines the
+        confidence in the proposed match and is the primary driver of UNCERTAIN
+        confidence.
+
+  property_comparisons:
+
+    - property: nt_type
+      classical_value: "GABAergic (inferred; not formally specified)"
+      atlas_value: "GABAergic (Gad2 DEFINING marker; label encodes Gaba)"
+      concordance: CONCORDANT
+      notes: >
+        Classical bnst_crf_neuron does not have a formal nt_type field.
+        GABAergic identity is inferred from the literature context (dlBNST CRF
+        neurons are GABAergic). The atlas supertype label explicitly encodes Gaba
+        and lists Gad2 as a defining marker. Concordant.
+
+    - property: soma_location_MBA_174_BNST
+      classical_value: "MBA:174 (Bed nuclei of the stria terminalis) — dlBNST, ovBNST, alBNST"
+      atlas_value: "MBA:351 (Bed nuclei of the stria terminalis, primary; n=140)"
+      concordance: CONCORDANT
+      notes: >
+        MBA:174 and MBA:351 are both Allen atlas terms for BNST-level annotation.
+        The classical node uses MBA:174 (the top-level BNST parent term, applied
+        across three sub-nuclei lacking dedicated Allen terms). The atlas MERFISH
+        data use MBA:351. These resolve to the same anatomical structure. Location
+        is concordant at the BNST level. Sub-nucleus resolution (dlBNST vs ovBNST
+        vs alBNST) cannot be assessed from atlas MERFISH annotation alone.
+
+    - property: defining_marker_Crh
+      classical_value: "Crh — defining marker (transcript)"
+      atlas_value: "Crh mean_expression = 7.96 (DEFINING_SCOPED atlas marker)"
+      concordance: CONCORDANT
+      notes: >
+        Crh is highly expressed in SUPT_0393 (7.96) and is listed as a
+        DEFINING_SCOPED atlas marker and encoded in the supertype label
+        ("Crh Gaba_2"). Strong concordance on the primary defining marker.
+
+    - property: negative_marker_Calb1
+      classical_value: "Calb1 — ABSENT (negative marker; distinguishes dlBNST CRF neurons from calbindin+ principal nucleus)"
+      atlas_value: "Calb1 mean_expression = 5.57"
+      concordance: DISCORDANT
+      notes: >
+        CRITICAL DISCORDANCE. The classical type is explicitly defined in part by
+        the ABSENCE of Calb1 — the literature distinguishes dlBNST CRF neurons
+        from the Calb1+ Kiss1+ principal nucleus of BNST (which is male-biased and
+        distinct from the female-biased CRF population). SUPT_0393 shows
+        substantial Calb1 expression (5.57), inconsistent with the classical
+        negative marker assertion. Possible interpretations: (1) SUPT_0393
+        encompasses a mixed BNST population that includes both Calb1+ and Calb1-
+        neurons; (2) the atlas supertype boundary does not respect the Calb1+/Calb1-
+        distinction; (3) the classical negative-marker assertion is at the
+        sub-nucleus level not captured at supertype resolution. This discordance
+        is the primary reason for UNCERTAIN confidence and PARTIAL_OVERLAP
+        rather than a stronger relationship.
+
+    - property: neuropeptide_Crh
+      classical_value: "Crh — neuropeptide (transcript)"
+      atlas_value: "Crh mean_expression = 7.96"
+      concordance: CONCORDANT
+      notes: >
+        Crh neuropeptide expression is strongly supported in SUPT_0393.
+        Concordant with the classical neuropeptide annotation.
+
+  caveats:
+    - caveat_type: MARKER_DISCORDANCE
+      severity: HIGH
+      description: >
+        Calb1 is a critical negative marker for bnst_crf_neuron (ABSENT assertion),
+        used to distinguish the dlBNST CRF population from the calbindin+ Kiss1+
+        principal nucleus of BNST. SUPT_0393 shows Calb1 mean_expression = 5.57,
+        which directly contradicts this assertion. This strongly suggests SUPT_0393
+        spans multiple BNST GABAergic subtypes — potentially both the Calb1- CRF
+        population and the Calb1+ adjacent population — or that the atlas supertype
+        boundary aggregates neurons that the classical taxonomy distinguishes.
+        This caveat undermines confidence in the match and is the primary basis for
+        the UNCERTAIN confidence rating.
+
+    - caveat_type: TAXONOMY_LEVEL_RESOLUTION
+      severity: MODERATE
+      description: >
+        The classical type is defined at sub-nucleus resolution (dlBNST, ovBNST,
+        alBNST). The atlas MERFISH annotation uses the parent BNST term (MBA:351)
+        without sub-nucleus assignment. SUPT_0393 also includes cells in MBA:266
+        (lateral septal nucleus, n=18) and MBA:477 (striatum, n=17), indicating
+        some spatial spread beyond BNST proper. Sub-nucleus identity of the
+        matching cells cannot be confirmed from current atlas annotations.
+
+    - caveat_type: SUPERTYPE_HETEROGENEITY
+      severity: MODERATE
+      description: >
+        SUPT_0393 is a supertype-level match. Individual child clusters may show
+        variable Calb1 expression. It is possible that a child cluster with low
+        Calb1 represents a better match to the dlBNST Calb1- CRF population.
+        Curator should check cluster-level Calb1 expression under SUPT_0393 using
+        the taxonomy DB before finalizing this edge.
+
+  unresolved_questions:
+    - >
+      Do individual clusters under SUPT_0393 segregate into Calb1-high and
+      Calb1-low populations? A Calb1-low child cluster would be a stronger
+      candidate for bnst_crf_neuron and might support upgrading to MODERATE
+      confidence with a cluster-level edge.
+    - >
+      Does SUPT_0393 show sex-ratio enrichment consistent with the female-biased
+      dlBNST CRF population? Sex ratio data were not available from the current
+      DB scan for this supertype.
+
+  proposed_experiments:
+    - >
+      Query precomputed expression for Calb1 across all child clusters of
+      SUPT_0393 (just find-candidates at rank=0 with parent filter) to identify
+      any Calb1-low cluster that better matches the classical negative-marker profile.
+    - >
+      Check the male_female_ratio for SUPT_0393 and its children; female bias
+      would corroborate the sex-dimorphic phenotype of bnst_crf_neuron.
+    - >
+      Spatial inspection of SUPT_0393 MERFISH cells: confirm whether the
+      majority are in the dlBNST/ovBNST compartment vs the Calb1+ principal
+      nucleus territory.
+
+  discovery_evidence:
+    db_score: 1
+    rank_used: 1
+    candidate_assessment: STRONG
+    rationale_summary: >
+      CS20230722_SUPT_0393 was the only rank-1 (supertype-level) candidate with
+      BST location, Crh marker, and GABAergic NT all encoded in the supertype
+      label. No rank-0 (cluster-level) candidates were credible for bnst_crf_neuron.
+      The Calb1 discordance was identified during property comparison post-selection.

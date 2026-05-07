@@ -47,6 +47,7 @@ EVIDENCE_TYPE_LABELS = {
     "MORPHOLOGY": "Morphology",
     "MARKER_ANALYSIS": "Marker analysis",
     "ATLAS_QUERY": "Atlas query",
+    "BULK_CORRELATION": "Bulk correlation",
 }
 REL_LABELS = {
     "EQUIVALENT": "≡ EQUIVALENT",
@@ -136,9 +137,43 @@ def _find_corpus_by_doi(bare_doi: str, refs: dict) -> dict | None:
     return None
 
 
+def _coerce_authors(authors) -> list[str]:
+    """Coerce a references.json `authors` field to list[str].
+
+    Canonical shape is list[str]; defensive against the historical bug-class
+    documented in planning/minirefs_author_rendering_fix.md, where the
+    asta-report-ingest writer has shipped:
+      - list[str]                      → returned as-is
+      - list[dict] (S2 batch shape)    → extract `name` from each dict
+      - "First, Second, ... et al."    → split on commas, strip et-al suffix
+      - empty / None / whitespace      → []
+    """
+    if not authors:
+        return []
+    if isinstance(authors, str):
+        s = authors.strip()
+        if not s:
+            return []
+        # Drop a trailing 'et al.' / 'et al' token (with optional comma before)
+        for suffix in (", et al.", ", et al", " et al.", " et al"):
+            if s.endswith(suffix):
+                s = s[: -len(suffix)].rstrip(",").rstrip()
+                break
+        return [part.strip() for part in s.split(",") if part.strip()]
+    result: list[str] = []
+    for a in authors:
+        if isinstance(a, str):
+            result.append(a)
+        elif isinstance(a, dict):
+            name = a.get("name", "")
+            if name:
+                result.append(name)
+    return result
+
+
 def _format_citation_line(entry: dict) -> str:
     """Format a references.json entry as 'Author et al. YYYY · PMID:…'"""
-    authors = entry.get("authors", [])
+    authors = _coerce_authors(entry.get("authors"))
     year = entry.get("year", "")
     pmid = entry.get("pmid", "")
     doi = entry.get("doi", "")
@@ -156,6 +191,597 @@ def _format_citation_line(entry: dict) -> str:
     elif doi:
         parts.append(f"DOI:{doi}")
     return " · ".join(parts)
+
+
+# ── Run-ref → publication PMID resolver ───────────────────────────────────────
+#
+# Evidence types whose source is a CorrelationRun (BulkCorrelationEvidence,
+# future analogues) carry `run_ref: <run_id>`. The publication PMID lives
+# indirectly via:
+#   evidence.run_ref            → kb/correlation_runs/{run_id}/manifest.yaml
+#   manifest.dataset_ref        → kb/datasets/<file>.yaml (lookup by `id`)
+#   dataset.source_pmid         → "PMID:NNNN"
+#
+# Resolved PMIDs feed into build_reference_index() so cited papers appear
+# in the report's references table with a [n] label, and into the drilldown
+# blockquote rendering so non-LITERATURE evidence narratives carry attributions.
+
+_RUN_REF_PMID_CACHE: dict[str, str | None] = {}
+# Cache (run_ref → dataset descriptor dict) so build_reference_index can pull
+# authors/year/title for citation-line formatting without re-reading dataset YAMLs.
+_RUN_REF_DATASET_CACHE: dict[str, dict] = {}
+# Cache (run_ref → full manifest dict) so methods extraction and figure
+# generation can read run-level details (script, atlas SHA, contrasts,
+# code_version) without re-reading manifests.
+_RUN_REF_MANIFEST_CACHE: dict[str, dict] = {}
+# Cache (run_ref → run directory Path) for locating ranked output TSVs and
+# scripts during figure generation.
+_RUN_REF_DIR_CACHE: dict[str, Path | None] = {}
+
+
+def _resolve_run_ref_to_pmid(run_ref: str) -> str | None:
+    """Trace run_ref → manifest.yaml → dataset.yaml → source_pmid.
+
+    Returns "PMID:NNNN" or None if any step fails (file missing, malformed,
+    or no source_pmid). Failures are non-fatal — the evidence item still
+    flows through the renderer, just without a [n] ref label.
+
+    Side effect: populates `_RUN_REF_DATASET_CACHE[run_ref]` with the dataset
+    descriptor (authors, year, title, source_pmid, etc.) when the chain
+    resolves. Callers wanting the citation-formatting fields can read from
+    that cache directly via `_dataset_for_run_ref()`.
+
+    Cached for the lifetime of the module to avoid re-reading manifests
+    when multiple evidence items share a run_ref.
+    """
+    if run_ref in _RUN_REF_PMID_CACHE:
+        return _RUN_REF_PMID_CACHE[run_ref]
+
+    from evidencell.paths import repo_root  # local to avoid import cycles
+    try:
+        root = repo_root()
+    except RuntimeError:
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+
+    runs_dir = root / "kb" / "correlation_runs"
+    if not runs_dir.is_dir():
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+
+    # Run directories are typically named with a date prefix (e.g.
+    # 20260428_stephens_kiss1_wmbv1) while the manifest's `id` field carries
+    # the full identifier (corr_run_20260428_stephens_kiss1_wmbv1). Try the
+    # direct path first for cheapness, then scan + match by `id` if missing.
+    manifest = None
+    run_dir = None
+    direct = runs_dir / run_ref / "manifest.yaml"
+    if direct.exists():
+        try:
+            manifest = yaml.safe_load(direct.read_text(encoding="utf-8")) or {}
+            run_dir = direct.parent
+        except yaml.YAMLError:
+            manifest = None
+            run_dir = None
+    if not manifest or manifest.get("id") != run_ref:
+        manifest = None
+        run_dir = None
+        for run_subdir in runs_dir.iterdir():
+            if not run_subdir.is_dir():
+                continue
+            mp = run_subdir / "manifest.yaml"
+            if not mp.exists():
+                continue
+            try:
+                m = yaml.safe_load(mp.read_text(encoding="utf-8")) or {}
+            except yaml.YAMLError:
+                continue
+            if m.get("id") == run_ref:
+                manifest = m
+                run_dir = run_subdir
+                break
+    if not manifest:
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+    _RUN_REF_MANIFEST_CACHE[run_ref] = manifest
+    _RUN_REF_DIR_CACHE[run_ref] = run_dir
+
+    dataset_ref = manifest.get("dataset_ref")
+    if not dataset_ref:
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+
+    # kb/datasets/*.yaml are named by source identifier (PMID/GEO), not by
+    # the dataset id field. Scan and match by id.
+    datasets_dir = root / "kb" / "datasets"
+    if not datasets_dir.is_dir():
+        _RUN_REF_PMID_CACHE[run_ref] = None
+        return None
+    for yaml_path in datasets_dir.glob("*.yaml"):
+        try:
+            ds = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError:
+            continue
+        if ds.get("id") != dataset_ref:
+            continue
+        pmid = ds.get("source_pmid")
+        _RUN_REF_PMID_CACHE[run_ref] = pmid
+        _RUN_REF_DATASET_CACHE[run_ref] = ds
+        return pmid
+
+    _RUN_REF_PMID_CACHE[run_ref] = None
+    return None
+
+
+def _dataset_for_run_ref(run_ref: str) -> dict | None:
+    """Return the BulkDataset descriptor for a given run_ref, or None.
+
+    Triggers `_resolve_run_ref_to_pmid` to populate the cache lazily.
+    """
+    if run_ref not in _RUN_REF_DATASET_CACHE:
+        _resolve_run_ref_to_pmid(run_ref)
+    return _RUN_REF_DATASET_CACHE.get(run_ref)
+
+
+# ── AT run resolver (parallels _resolve_run_ref_to_pmid for CorrelationRun) ───
+
+_AT_RUN_MANIFEST_CACHE: dict[str, dict] = {}
+_AT_RUN_DIR_CACHE: dict[str, Path | None] = {}
+
+
+def _resolve_at_run_ref(run_ref: str) -> tuple[dict | None, Path | None]:
+    """Find an AnnotationTransferRun manifest by id under kb/annotation_transfer_runs/.
+
+    Returns (manifest_dict, run_dir). Either may be None if not found.
+    Caches the lookup for the lifetime of the module.
+
+    Run directories are typically named with a date prefix (e.g.
+    20260408_winterer_olm_mmc_wmbv1) while the manifest's `id` field carries
+    the full identifier. Try the direct path first, then scan + match by `id`.
+    """
+    if run_ref in _AT_RUN_MANIFEST_CACHE or run_ref in _AT_RUN_DIR_CACHE:
+        return _AT_RUN_MANIFEST_CACHE.get(run_ref), _AT_RUN_DIR_CACHE.get(run_ref)
+
+    from evidencell.paths import repo_root
+    try:
+        root = repo_root()
+    except RuntimeError:
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    runs_dir = root / "kb" / "annotation_transfer_runs"
+    if not runs_dir.is_dir():
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    manifest = None
+    run_dir = None
+    direct = runs_dir / run_ref / "manifest.yaml"
+    if direct.exists():
+        try:
+            manifest = yaml.safe_load(direct.read_text(encoding="utf-8")) or {}
+            run_dir = direct.parent
+        except yaml.YAMLError:
+            manifest = None
+            run_dir = None
+    if not manifest or manifest.get("id") != run_ref:
+        manifest = None
+        run_dir = None
+        for run_subdir in runs_dir.iterdir():
+            if not run_subdir.is_dir():
+                continue
+            mp = run_subdir / "manifest.yaml"
+            if not mp.exists():
+                continue
+            try:
+                m = yaml.safe_load(mp.read_text(encoding="utf-8")) or {}
+            except yaml.YAMLError:
+                continue
+            if m.get("id") == run_ref:
+                manifest = m
+                run_dir = run_subdir
+                break
+
+    if not manifest:
+        _AT_RUN_MANIFEST_CACHE[run_ref] = {}
+        _AT_RUN_DIR_CACHE[run_ref] = None
+        return None, None
+
+    _AT_RUN_MANIFEST_CACHE[run_ref] = manifest
+    _AT_RUN_DIR_CACHE[run_ref] = run_dir
+    return manifest, run_dir
+
+
+def _manifest_for_run_ref(run_ref: str) -> dict | None:
+    """Return the CorrelationRun manifest for a given run_ref, or None.
+
+    Triggers `_resolve_run_ref_to_pmid` to populate the cache lazily.
+    """
+    if run_ref not in _RUN_REF_MANIFEST_CACHE:
+        _resolve_run_ref_to_pmid(run_ref)
+    return _RUN_REF_MANIFEST_CACHE.get(run_ref)
+
+
+def _run_dir_for_run_ref(run_ref: str) -> Path | None:
+    """Return the on-disk directory for a given run_ref, or None."""
+    if run_ref not in _RUN_REF_DIR_CACHE:
+        _resolve_run_ref_to_pmid(run_ref)
+    return _RUN_REF_DIR_CACHE.get(run_ref)
+
+
+def _top_n_hits_for_contrast(
+    run_ref: str,
+    contrast_id: str,
+    target_accession: str | None = None,
+    n: int = 10,
+) -> list[dict]:
+    """Read the top-N rows from a CorrelationRun's ranked TSV for a contrast.
+
+    Returns a list of dicts (one per cluster row) with keys:
+      rank, cluster_id, label, parent_supertype, mfr, top_anat,
+      top_anat_n, delta, is_target.
+
+    `is_target` is True when cluster_id == target_accession (used by the
+    renderer/synthesis prompt to highlight the row in the report).
+
+    Returns an empty list if the run dir, the ranked output, or the
+    contrast can't be located. The contrast's δ column is identified by
+    convention: a column matching `delta_{contrast_id_short}` or, failing
+    that, the contrast id substring.
+
+    For the existing two runs (Stephens, Knoedler), the per-contrast TSVs
+    live at:
+      stephens: {run_dir}/delta_rp3v_specific.tsv etc. (ranked by delta)
+      knoedler: {run_dir}/ranked_contrasts/{contrast_name}.tsv
+
+    The function tolerates both layouts.
+    """
+    run_dir = _run_dir_for_run_ref(run_ref)
+    if run_dir is None or not run_dir.is_dir():
+        return []
+
+    # Resolve contrast → (pool_a, pool_b) via the manifest. The contrast id
+    # alone isn't enough to match a TSV filename: contrast ids use `_vs_`
+    # while ranked TSVs use `_minus_` or `_specific`.
+    manifest = _manifest_for_run_ref(run_ref) or {}
+    pool_a = pool_b = ""
+    for c in manifest.get("contrasts") or []:
+        if c.get("id") == contrast_id:
+            pool_a = c.get("pool_a", "")
+            pool_b = c.get("pool_b", "")
+            break
+
+    def _short(pool_id: str) -> str:
+        # pool ids are `{dataset}_{label}` (e.g. stephens_RP3V, knoedler_POA_FR);
+        # the filename uses just the label.
+        return pool_id.split("_", 1)[1] if "_" in pool_id else pool_id
+
+    a_short = _short(pool_a)
+    b_short = _short(pool_b)
+
+    # Generate candidate filename stems in priority order.
+    stems: list[str] = []
+    if a_short and b_short:
+        stems.extend([
+            f"delta_{a_short}_minus_{b_short}",
+            f"{a_short}_minus_{b_short}",
+        ])
+    if a_short:
+        stems.extend([
+            f"delta_{a_short}_specific",
+            f"{a_short}_specific",
+        ])
+    # Last-resort: substring of the raw contrast id.
+    short = contrast_id.removeprefix("corr_")
+    stems.append(short)
+
+    # Search both run_dir/ and run_dir/ranked_contrasts/ in priority order.
+    search_dirs: list[Path] = [run_dir]
+    nested = run_dir / "ranked_contrasts"
+    if nested.is_dir():
+        search_dirs.append(nested)
+
+    tsv_path: Path | None = None
+    for stem in stems:
+        for d in search_dirs:
+            for ci in (False, True):
+                p = d / f"{stem}.tsv"
+                if not p.exists() and ci:
+                    # Case-insensitive fallback
+                    matches = [q for q in d.glob("*.tsv") if q.stem.lower() == stem.lower()]
+                    if matches:
+                        p = matches[0]
+                if p.exists():
+                    tsv_path = p
+                    break
+            if tsv_path:
+                break
+        if tsv_path:
+            break
+    if tsv_path is None:
+        return []
+
+    try:
+        rows = []
+        with tsv_path.open(encoding="utf-8") as fh:
+            header = fh.readline().rstrip("\n").split("\t")
+            for line in fh:
+                cells = line.rstrip("\n").split("\t")
+                if len(cells) != len(header):
+                    continue
+                rows.append(dict(zip(header, cells)))
+    except OSError:
+        return []
+
+    # Identify the δ column matching this contrast. The contrast id uses `_vs_`
+    # (e.g. corr_VMH_FR_vs_BNST_FR) while column names use `_minus_`
+    # (e.g. delta_VMH_FR_minus_BNST_FR). Translate before matching.
+    delta_col: str | None = None
+    contrast_name = contrast_id.removeprefix("corr_")
+    contrast_minus = contrast_name.replace("_vs_", "_minus_")
+    for col in header:
+        if col.startswith("delta_") and contrast_minus in col:
+            delta_col = col
+            break
+    if delta_col is None:
+        # Fallback: first delta_* column (e.g. for runs that stash a single
+        # contrast per file with a less canonical naming).
+        for col in header:
+            if col.startswith("delta_"):
+                delta_col = col
+                break
+    if delta_col is None:
+        return []
+
+    # Sort rows by the chosen δ column (descending), then take top N.
+    def _f(row: dict, col: str) -> float:
+        v = row.get(col, "")
+        try:
+            return float(v)
+        except (TypeError, ValueError):
+            return float("-inf")
+
+    rows_sorted = sorted(rows, key=lambda r: _f(r, delta_col), reverse=True)
+    out: list[dict] = []
+    for rank, r in enumerate(rows_sorted[:n], start=1):
+        cid = r.get("cluster_id", "")
+        parent = r.get("parent_supertype", "")
+        # Target match: direct (cluster→cluster) or via parent (cluster→supertype).
+        is_target = bool(
+            target_accession is not None
+            and (cid == target_accession or parent == target_accession)
+        )
+        out.append({
+            "rank": rank,
+            "cluster_id": cid,
+            "label": r.get("label", ""),
+            "parent_supertype": parent,
+            "mfr": r.get("mfr", ""),
+            "top_anat": r.get("top_anat", ""),
+            "top_anat_n": r.get("top_anat_n", ""),
+            "delta": r.get(delta_col, ""),
+            "is_target": is_target,
+        })
+    return out
+
+
+# ── Methods summary (for paper-style Methods section) ─────────────────────────
+
+def _evidencell_commit() -> str:
+    """Return the current evidencell git short SHA (or empty string on failure).
+
+    Used by the renderer to stamp the report with the codebase version that
+    produced it — equivalent to a paper's "code availability" footer.
+    """
+    import subprocess
+    from evidencell.paths import repo_root
+    try:
+        root = repo_root()
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            capture_output=True, text=True, cwd=str(root), timeout=5,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    except (RuntimeError, OSError, subprocess.TimeoutExpired):
+        pass
+    return ""
+
+
+def extract_methods_summary(
+    graph: dict,
+    node_id: str,
+    graph_file: Path,
+) -> dict:
+    """Aggregate methods/provenance data across all edges for a classical node.
+
+    Returns a structured dict the synthesis subagent uses to build the Methods
+    section narrative. Deterministic — no prose generation here.
+
+    Keys:
+      evidence_type_counts: {EVIDENCE_TYPE: count} across all edges
+      bulk_correlation_runs: list of run summaries (run_ref, dataset citation,
+        statistic, parameters, script provenance, contrasts cited)
+      annotation_transfer_runs: list of AT method summaries
+      atlas_data_sources: list of {atlas, taxonomy_id, pseudobulk_sha}
+      bulk_data_sources: list of {dataset_id, source_pmid, geo_accession,
+        technique, n_pools, citation}
+      framework_version: evidencell git commit at extract time
+      gen_timestamp: ISO 8601 of the extract call
+      kb_graph_file: relative path to the KB YAML
+    """
+    from datetime import datetime, timezone
+
+    edges = [e for e in graph.get("edges", []) if e.get("type_a") == node_id]
+
+    evidence_type_counts: dict[str, int] = {}
+    bulk_runs: list[dict] = []
+    at_runs: list[dict] = []
+    atlas_sources_seen: dict[str, dict] = {}
+    bulk_dataset_sources_seen: dict[str, dict] = {}
+    seen_run_refs: set[str] = set()
+    seen_at_keys: set[tuple] = set()
+
+    for edge in edges:
+        for ev in edge.get("evidence", []):
+            et = ev.get("evidence_type", "")
+            if et:
+                evidence_type_counts[et] = evidence_type_counts.get(et, 0) + 1
+
+            run_ref = ev.get("run_ref")
+            if run_ref and run_ref not in seen_run_refs:
+                seen_run_refs.add(run_ref)
+                manifest = _manifest_for_run_ref(run_ref) or {}
+                dataset = _dataset_for_run_ref(run_ref) or {}
+                method = manifest.get("method") or {}
+                script = manifest.get("script") or {}
+                atlas = manifest.get("atlas") or {}
+
+                bulk_runs.append({
+                    "run_ref": run_ref,
+                    "dataset_ref": manifest.get("dataset_ref", ""),
+                    "statistic_kind": method.get("statistic_kind", ""),
+                    "parameters": method.get("parameters", ""),
+                    "atlas_taxonomy_id": atlas.get("taxonomy_id", ""),
+                    "atlas_pseudobulk_sha": atlas.get("sha256", ""),
+                    "script_relpath": script.get("relpath", ""),
+                    "script_python_version": script.get("python_version", ""),
+                    "script_packages": script.get("packages", []),
+                    "script_git_repo_url": script.get("git_repo_url", ""),
+                    "script_git_commit": script.get("git_commit", ""),
+                    "code_version": manifest.get("code_version", ""),
+                    "n_contrasts": len(manifest.get("contrasts") or []),
+                    "caveats": manifest.get("caveats", ""),
+                })
+
+                # Bulk data source (one per dataset across runs)
+                ds_id = dataset.get("id", "")
+                if ds_id and ds_id not in bulk_dataset_sources_seen:
+                    bulk_dataset_sources_seen[ds_id] = {
+                        "dataset_id": ds_id,
+                        "source_pmid": dataset.get("source_pmid", ""),
+                        "geo_accession": dataset.get("geo_accession", ""),
+                        "technique": dataset.get("technique", ""),
+                        "n_pools": len(dataset.get("pools") or []),
+                        "n_data_files": len(dataset.get("data_files") or []),
+                        "authors": dataset.get("authors") or [],
+                        "year": dataset.get("year"),
+                        "title": dataset.get("title", ""),
+                    }
+
+                # Atlas data source (deduped by sha)
+                atlas_key = atlas.get("sha256") or atlas.get("taxonomy_id", "")
+                if atlas_key and atlas_key not in atlas_sources_seen:
+                    atlas_sources_seen[atlas_key] = {
+                        "atlas": "WMBv1",
+                        "taxonomy_id": atlas.get("taxonomy_id", ""),
+                        "pseudobulk_source": atlas.get("pseudobulk_source", ""),
+                        "pseudobulk_sha256": atlas.get("sha256", ""),
+                    }
+
+            if et == "ANNOTATION_TRANSFER":
+                # If the evidence carries run_ref, the AnnotationTransferRun
+                # manifest is the canonical provenance source. Otherwise fall
+                # back to the inline fields (back-compat with evidence
+                # ingested before the run schema landed).
+                run_ref_at = ev.get("run_ref", "")
+                if run_ref_at:
+                    if run_ref_at not in seen_at_keys:
+                        seen_at_keys.add(run_ref_at)
+                        m, run_dir = _resolve_at_run_ref(run_ref_at)
+                        if m:
+                            atlas_at = m.get("atlas") or {}
+                            script_at = m.get("script") or {}
+                            output_at = m.get("output") or {}
+                            figure_at = m.get("figure") or {}
+                            at_runs.append({
+                                "run_ref": run_ref_at,
+                                "method": m.get("method", ""),
+                                "tool_version": m.get("tool_version", ""),
+                                "code_reference": m.get("code_reference", ""),
+                                "source_dataset_accession": m.get("source_dataset_accession", ""),
+                                "source_cluster_label": m.get("source_cluster_label", ""),
+                                "source_species": m.get("source_species", ""),
+                                "target_atlas": m.get("target_atlas", ""),
+                                "target_taxonomy_id": m.get("target_taxonomy_id", ""),
+                                "target_species": m.get("target_species", ""),
+                                "bootstrap_threshold": m.get("bootstrap_threshold"),
+                                "n_cells_total": m.get("n_cells_total"),
+                                "n_cells_after_filter": m.get("n_cells_after_filter"),
+                                "atlas_pseudobulk_sha": atlas_at.get("sha256", ""),
+                                "script_relpath": script_at.get("relpath", ""),
+                                "script_git_repo_url": script_at.get("git_repo_url", ""),
+                                "script_git_commit": script_at.get("git_commit", ""),
+                                "code_version": m.get("code_version", ""),
+                                "output_relpath": output_at.get("relpath", ""),
+                                "figure_relpath": figure_at.get("relpath", ""),
+                                "run_dir_name": run_dir.name if run_dir else "",
+                                "caveats": m.get("caveats", ""),
+                            })
+                else:
+                    # Back-compat path: evidence has inline fields, no run_ref.
+                    key = (
+                        ev.get("source_dataset_accession", ""),
+                        ev.get("method", ""),
+                        ev.get("target_atlas", ""),
+                    )
+                    if key not in seen_at_keys:
+                        seen_at_keys.add(key)
+                        at_runs.append({
+                            "method": ev.get("method", ""),
+                            "tool_version": ev.get("tool_version", ""),
+                            "code_reference": ev.get("code_reference", ""),
+                            "source_dataset_accession": ev.get("source_dataset_accession", ""),
+                            "source_species": ev.get("source_species", ""),
+                            "target_atlas": ev.get("target_atlas", ""),
+                            "target_species": ev.get("target_species", ""),
+                            "best_f1_score": ev.get("best_f1_score"),
+                            "best_mapping_level": ev.get("best_mapping_level", ""),
+                            "bootstrap_threshold": ev.get("bootstrap_threshold"),
+                            "n_cells_total": ev.get("n_cells_total"),
+                            "n_cells_after_filter": ev.get("n_cells_after_filter"),
+                        })
+
+    # Surface CL mapping at top of methods summary so the synthesis subagent
+    # can reuse it in the Discussion best-candidate block.
+    nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
+    classical = nodes_by_id.get(node_id, {})
+    cl = classical.get("cl_mapping") or {}
+    cl_term = cl.get("cl_term") or {}
+    cl_id = cl_term.get("id", "") if isinstance(cl_term, dict) else ""
+    cl_mapping_summary = {
+        "cl_term_id": cl_id,
+        "cl_term_label": cl_term.get("label", "") if isinstance(cl_term, dict) else "",
+        "cl_term_name_in_source": cl_term.get("name_in_source", "") if isinstance(cl_term, dict) else "",
+        "mapping_type": cl.get("mapping_type", ""),
+        "mapping_notes": cl.get("mapping_notes", ""),
+        "ols_url": (
+            f"https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id={cl_id}"
+            if cl_id.startswith("CL:") else ""
+        ),
+    }
+
+    # Render kb_graph_file as repo-relative when possible, so the report's
+    # reproducibility footer carries a portable path (not someone's $HOME).
+    try:
+        from evidencell.paths import repo_root
+        rel_graph = str(Path(graph_file).resolve().relative_to(repo_root().resolve()))
+    except (ValueError, RuntimeError):
+        rel_graph = str(graph_file)
+
+    return {
+        "evidence_type_counts": evidence_type_counts,
+        "cl_mapping": cl_mapping_summary,
+        "bulk_correlation_runs": bulk_runs,
+        "annotation_transfer_runs": at_runs,
+        "atlas_data_sources": list(atlas_sources_seen.values()),
+        "bulk_data_sources": list(bulk_dataset_sources_seen.values()),
+        "framework_version": _evidencell_commit(),
+        "gen_timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "kb_graph_file": rel_graph,
+    }
 
 
 # ── Reference index builder ───────────────────────────────────────────────────
@@ -257,6 +883,41 @@ def build_reference_index(
                         atlas=ev.get("atlas", ""),
                         filters=ev.get("filters_applied", ""),
                     )
+            else:
+                # Generic path: any evidence type carrying run_ref resolves
+                # to its source publication via manifest → dataset → source_pmid.
+                # If references.json doesn't have an entry for the resolved
+                # PMID, fall back to authors/year/title from the BulkDataset
+                # descriptor itself so the citation line renders properly.
+                run_ref = ev.get("run_ref", "")
+                if run_ref:
+                    pmid = _resolve_run_ref_to_pmid(run_ref)
+                    if pmid:
+                        label = _add_lit(pmid, (ev.get("explanation") or "")[:80].strip())
+                        ref_type, bare = _ref_identifier(pmid)
+                        key = f"{ref_type}:{bare}"
+                        existing = index.get(key)
+                        # If _add_lit fell back to the bare PMID (no
+                        # references.json hit), patch the citation_line from
+                        # the dataset descriptor.
+                        if existing and existing.citation_line == pmid:
+                            ds = _dataset_for_run_ref(run_ref)
+                            if ds:
+                                synthetic = {
+                                    "authors": ds.get("authors") or [],
+                                    "year": ds.get("year"),
+                                    "pmid": bare,
+                                    "doi": None,
+                                }
+                                citation_line = _format_citation_line(synthetic)
+                                if citation_line and citation_line != pmid:
+                                    index[key] = RefEntry(
+                                        label=label, pmid=existing.pmid,
+                                        doi=existing.doi, corpus_id=existing.corpus_id,
+                                        query_url=existing.query_url,
+                                        citation_line=citation_line,
+                                        used_for=existing.used_for,
+                                    )
 
     return index
 
@@ -271,6 +932,70 @@ def _location_note(graph: dict) -> str | None:
         if node.get("is_terminal") and node.get("anatomical_location"):
             return MERFISH_LOCATION_NOTE
     return None
+
+
+def _cl_introduction(cn: dict) -> list[str]:
+    """
+    Render the Introduction paragraph(s) describing this node's relationship
+    to the Cell Ontology. Pulls from cl_term / cl_id / cl_mapping_type /
+    cl_mapping_notes / proposed_cl_term on the classical_node facts dict.
+    Returns an empty list if no CL information is present.
+    """
+    cl_term = cn.get("cl_term") or ""
+    cl_id = cn.get("cl_id") or ""
+    mapping_type = cn.get("cl_mapping_type") or ""
+    notes = cn.get("cl_mapping_notes") or ""
+    proposed = cn.get("proposed_cl_term") or {}
+    name = cn.get("name") or "this cell type"
+
+    if not cl_term and not proposed and not mapping_type:
+        return []
+
+    out: list[str] = []
+    # cl_term is already formatted "label (id)" by _ot(); cl_id is exposed
+    # separately for downstream consumers (e.g. NTR drafting).
+    parent_str = f"**{cl_term}**" if cl_term else "—"
+
+    if mapping_type == "EXACT":
+        out.append(
+            f"{name} is mapped to {parent_str} as an **exact match** in the "
+            f"Cell Ontology (skos:exactMatch); the existing CL term covers this type."
+        )
+    elif mapping_type in ("BROAD", "RELATED"):
+        out.append(
+            f"{name} is a **{mapping_type.lower()} match** to {parent_str} in the "
+            f"Cell Ontology — i.e. {parent_str} is the closest existing CL term "
+            f"({'an ancestor' if mapping_type == 'BROAD' else 'a related concept'}) "
+            f"but does not fully cover this type. A new child term is a candidate "
+            f"for submission to CL."
+        )
+    elif cl_term or cl_id:
+        out.append(
+            f"{name} has a CL mapping to {parent_str} (mapping_type unspecified)."
+        )
+    else:
+        out.append(
+            f"No existing Cell Ontology term currently covers {name}. "
+            f"This type is a candidate for a new CL term."
+        )
+
+    if notes:
+        out.append("")
+        out.append(f"*Mapping notes:* {notes}")
+
+    if proposed:
+        plabel = proposed.get("label") or ""
+        pdef = (proposed.get("definition") or "").strip()
+        pstatus = proposed.get("status") or "DRAFT"
+        if plabel or pdef:
+            out.append("")
+            head = f"**Proposed CL term:** *{plabel}* ({pstatus})" if plabel else f"**Proposed CL term** ({pstatus})"
+            out.append(head)
+            if pdef:
+                out.append("")
+                out.append(f"> {pdef}")
+
+    return out
 
 
 def _candidate_verdict(edge: dict, nodes_by_id: dict) -> str:
@@ -344,16 +1069,102 @@ def _group_experiments(edges: list[dict]) -> list[dict]:
     return list(groups.values())
 
 
-def _node_b_info(edge: dict, nodes_by_id: dict) -> dict:
-    """Extract display info for the atlas (type_b) node of an edge."""
+# Track which taxonomies we've already emitted a staleness warning for, so a
+# single render call (which iterates many edges per node) doesn't spam stderr.
+_STALE_WARNED: set[str] = set()
+
+
+def _open_taxonomy_db(taxonomy_id: str) -> "object | None":
+    """Open the SQLite TaxonomyDB for a taxonomy_id, or None if unavailable.
+
+    Imported lazily to keep `render` usable in environments where the taxonomy
+    DB hasn't been built yet (e.g. CI fixtures, tests). Failures degrade
+    gracefully — render still emits a valid report, just without atlas-side
+    enrichment (n_cells, supertype).
+
+    Emits a single stderr WARNING per taxonomy_id per process when the DB is
+    stale relative to the schema or the YAML sources (see
+    `taxonomy_db.taxonomy_db_freshness`). The DB is still opened — staleness
+    means some columns may be missing/outdated, but partial data is more
+    useful than dropping the lookup entirely.
+    """
+    if not taxonomy_id:
+        return None
+    try:
+        from evidencell.paths import taxonomy_dir
+        from evidencell.taxonomy_db import TaxonomyDB, taxonomy_db_freshness
+    except Exception:
+        return None
+    db_path = taxonomy_dir(taxonomy_id) / f"{taxonomy_id}.db"
+    if not db_path.exists():
+        return None
+
+    # Freshness check (one warning per taxonomy_id per process)
+    if taxonomy_id not in _STALE_WARNED:
+        _STALE_WARNED.add(taxonomy_id)
+        try:
+            stale, reasons = taxonomy_db_freshness(taxonomy_id)
+            if stale:
+                print(
+                    f"WARNING: taxonomy DB for {taxonomy_id} appears stale; "
+                    f"derived facts (e.g. n_cells, parent supertype) may be "
+                    f"missing or outdated. Run: just build-taxonomy-db {taxonomy_id}",
+                    file=sys.stderr,
+                )
+                for reason in reasons:
+                    print(f"  - {reason}", file=sys.stderr)
+        except Exception:
+            # Freshness check is best-effort — never fail the render over it.
+            pass
+
+    return TaxonomyDB(db_path)
+
+
+def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) -> dict:
+    """Extract display info for the atlas (type_b) node of an edge.
+
+    `db_cache` is a per-render mutable dict keyed by taxonomy_id; if provided,
+    looks up atlas-only properties (n_cells, parent supertype) from the
+    TaxonomyDB by accession. Stubs in mapping-graph YAML carry minimal data
+    per the KB convention (taxonomy YAML is canonical for atlas properties),
+    so this lookup is what surfaces the per-node 10x cell count and the
+    nearest-supertype label in reports.
+    """
     b_id = edge.get("type_b", "")
     b_node = nodes_by_id.get(b_id, {})
+    accession = b_node.get("cell_set_accession", "")
+    n_cells = b_node.get("n_cells")
+    supertype = ""
+
+    if db_cache is not None and accession:
+        tax_id = b_node.get("taxonomy_id") or ""
+        if tax_id and tax_id not in db_cache:
+            db_cache[tax_id] = _open_taxonomy_db(tax_id)
+        db = db_cache.get(tax_id)
+        if db is not None:
+            try:
+                tax_node = db.get_node_by_accession(accession)
+                if tax_node:
+                    if n_cells is None:
+                        n_cells = tax_node.get("n_cells")
+                    parents = db.get_parent_hierarchy(accession)
+                    supt_entry = next(
+                        (p for p in parents
+                         if (p.get("level") or "").upper() == "SUPERTYPE"),
+                        None,
+                    )
+                    if supt_entry:
+                        supertype = supt_entry.get("name", "")
+            except Exception:
+                # DB lookup is best-effort — never block report rendering
+                pass
+
     return {
         "id": b_id,
         "name": b_node.get("name", b_id),
-        "accession": b_node.get("cell_set_accession", ""),
-        "supertype": "",  # filled from parent_hierarchy if present
-        "n_cells": b_node.get("n_cells"),
+        "accession": accession,
+        "supertype": supertype,
+        "n_cells": n_cells,
         "taxonomy_level": b_node.get("taxonomy_level", ""),
     }
 
@@ -483,14 +1294,23 @@ def extract_node_facts(
         if s.get("ref")
     ]
 
-    # Edges
+    # Edges. db_cache holds opened TaxonomyDBs keyed by taxonomy_id so we
+    # don't reconnect for every edge; lookups fill n_cells / supertype on
+    # b_info from the canonical taxonomy reference DB.
     edge_facts = []
+    db_cache: dict = {}
     for edge in node_edges:
-        b_info = _node_b_info(edge, nodes_by_id)
+        b_info = _node_b_info(edge, nodes_by_id, db_cache=db_cache)
         verdict = _candidate_verdict(edge, nodes_by_id)
 
-        # Evidence items with ref labels
+        # Evidence items — generic extraction.
+        # All EvidenceItem subclasses share evidence_type, supports, explanation
+        # (the abstract parent's required fields). Subclass-specific fields
+        # (snippet, run_ref, statistics, best_f1_score, ...) are preserved
+        # verbatim under `fields:` so the synthesis subagent can use any of
+        # them without per-type code paths in the renderer.
         ev_items = []
+        _BASE_KEYS = {"evidence_type", "supports", "explanation"}
         for ev in edge.get("evidence", []):
             et = ev.get("evidence_type", "")
             item: dict = {
@@ -498,32 +1318,104 @@ def extract_node_facts(
                 "supports": ev.get("supports", ""),
                 "explanation": (ev.get("explanation") or "").strip(),
             }
+            # Resolve a [n] ref label by the appropriate lookup for each
+            # evidence type. LITERATURE has a direct `reference`; ATLAS_QUERY
+            # uses `query_url` (gets a letter label); other types may carry a
+            # `run_ref` that resolves through the dataset chain to a PMID.
+            ref_label = ""
             if et == "LITERATURE":
                 ref = ev.get("reference", "")
-                item["ref_label"] = _ref_label(ref) if ref else ""
-                item["reference"] = ref
-                item["snippet"] = (ev.get("snippet") or "").strip()
-                item["study_type"] = ev.get("study_type", "")
+                if ref:
+                    ref_label = _ref_label(ref)
             elif et == "ATLAS_QUERY":
                 qurl = ev.get("query_url", "")
-                item["ref_label"] = _query_label(qurl) if qurl else ""
-                item["query_url"] = qurl
-                item["atlas"] = ev.get("atlas", "")
-                item["filters_applied"] = ev.get("filters_applied", "")
-                item["atlas_version"] = ev.get("atlas_version", "")
-            elif et == "ATLAS_METADATA":
-                item["atlas"] = ev.get("atlas", "")
-                item["cell_set_accession"] = ev.get("cell_set_accession", "")
-                item["metadata_url"] = ev.get("metadata_url", "")
-            elif et == "ANNOTATION_TRANSFER":
-                item["method"] = ev.get("method", "")
-                item["target_atlas"] = ev.get("target_atlas", "")
-                item["source_dataset_accession"] = ev.get("source_dataset_accession", "")
-                item["best_f1_score"] = ev.get("best_f1_score")
-                item["best_mapping_level"] = ev.get("best_mapping_level", "")
-                item["source_species"] = ev.get("source_species", "")
-                item["target_species"] = ev.get("target_species", "")
-                item["metrics_by_level"] = ev.get("metrics_by_level", [])
+                if qurl:
+                    ref_label = _query_label(qurl)
+            elif ev.get("run_ref"):
+                pmid = _resolve_run_ref_to_pmid(ev["run_ref"])
+                if pmid:
+                    ref_label = _ref_label(pmid)
+            item["ref_label"] = ref_label
+
+            # Preserve every other populated field verbatim under `fields:`.
+            extras = {
+                k: v for k, v in ev.items()
+                if k not in _BASE_KEYS and v not in (None, "", [], {})
+            }
+            # For evidence items pointing at a CorrelationRun, attach the top-N
+            # ranked hits for the named contrast. This lets the synthesis
+            # subagent emit a "show your work" table alongside the
+            # attributed-blockquote evidence narrative — addresses the
+            # 2026-04-29_bulk-correlation-show-top-hits.md feedback.
+            # AnnotationTransferEvidence with run_ref: pull the run-level
+            # figure (e.g. F1 heatmap) from the manifest. The figure is
+            # run-level (one PNG per AT run, covering all candidates) so
+            # it embeds once in the report — the synthesis subagent decides
+            # where (typically Results overview).
+            if et == "ANNOTATION_TRANSFER" and ev.get("run_ref"):
+                at_manifest, at_dir = _resolve_at_run_ref(ev["run_ref"])
+                if at_manifest and at_dir:
+                    fig = at_manifest.get("figure") or {}
+                    fig_relpath = fig.get("relpath", "")
+                    if fig_relpath:
+                        # Path the report references — relative to the report
+                        # dir (reports/{region}/), pointing into the run dir.
+                        # We use a path of the form:
+                        #   ../../kb/annotation_transfer_runs/{run_dir.name}/{fig_relpath}
+                        # Two ".." steps because reports/{region}/file.md sits two
+                        # levels below the repo root.
+                        extras["figure_relpath"] = (
+                            f"../../kb/annotation_transfer_runs/{at_dir.name}/{fig_relpath}"
+                        )
+                        extras["figure_caption"] = (
+                            f"Annotation transfer F1 heatmap "
+                            f"({at_manifest.get('source_dataset_accession', 'source')} "
+                            f"→ {at_manifest.get('target_atlas', 'target')})"
+                        )
+
+            run_ref = ev.get("run_ref")
+            contrast_ref = ev.get("contrast_ref")
+            if run_ref and contrast_ref:
+                hits = _top_n_hits_for_contrast(
+                    run_ref, contrast_ref,
+                    target_accession=ev.get("target_accession"),
+                    n=10,
+                )
+                if hits:
+                    extras["top_n_hits"] = hits
+                    # Render the matching δ ranked-bar figure alongside the
+                    # report. Filename is content-hashed; the report's
+                    # reference becomes a visibly broken link if the
+                    # underlying data changes (sync mechanism — see
+                    # planning/paper_style_reports_review_addendum.md §4).
+                    try:
+                        from evidencell.figures import render_top_n_hits_figure
+                        from evidencell.paths import reports_dir_for_region
+                        # Region is the parent directory of the graph file
+                        # (kb/draft/{region}/file.yaml or kb/mappings/{region}/file.yaml).
+                        region = graph_file.parent.name if graph_file else ""
+                        if region:
+                            figures_dir = reports_dir_for_region(region) / "figures"
+                            short_contrast = contrast_ref.removeprefix("corr_")
+                            caption = (
+                                f"Top {len(hits)} clusters by δ for {short_contrast} "
+                                f"({ev.get('target_accession', node_id)})"
+                            )
+                            png_path, _ = render_top_n_hits_figure(
+                                hits, figures_dir, node_id, contrast_ref,
+                                caption=caption,
+                                framework_version=_evidencell_commit(),
+                            )
+                            # Path relative to the report file (which lives
+                            # in reports/{region}/).
+                            extras["figure_relpath"] = f"figures/{png_path.name}"
+                            extras["figure_caption"] = caption
+                    except (ImportError, ValueError, OSError) as exc:
+                        # Figure rendering is best-effort — never fail facts
+                        # extraction over a plotting issue.
+                        print(f"WARNING: figure rendering failed for {run_ref} / {contrast_ref}: {exc}", file=sys.stderr)
+            if extras:
+                item["fields"] = extras
             ev_items.append(item)
 
         edge_facts.append({
@@ -567,6 +1459,8 @@ def extract_node_facts(
         for k, v in ref_index.items()
     }
 
+    methods_summary = extract_methods_summary(graph, node_id, graph_file)
+
     return {
         "graph_meta": {
             "name": graph.get("name", ""),
@@ -578,13 +1472,17 @@ def extract_node_facts(
             "graph_file": str(graph_file),
             "has_merfish_location": has_merfish,
         },
+        "methods_summary": methods_summary,
         "reference_index": ref_index_serial,
         "classical_nodes": [{
             "id": node_id,
             "name": node.get("name", ""),
             "definition_basis": node.get("definition_basis", ""),
             "cl_term": cl_term_str,
+            "cl_id": (cl.get("cl_term") or {}).get("id", "") if cl else "",
             "cl_mapping_type": cl.get("mapping_type", "") if cl else "",
+            "cl_mapping_notes": (cl.get("mapping_notes") or "").strip() if cl else "",
+            "proposed_cl_term": node.get("proposed_cl_term") or None,
             "nt": nt_obj.get("name_in_source", ""),
             "nt_refs": nt_sources_labels,
             "defining_markers": [
@@ -694,10 +1592,21 @@ def render_summary(
     lines.append("---")
     lines.append("")
 
-    # 4. Mapping candidates table
+    # 4. Cell Ontology mapping (closes Introduction; placed AFTER classical
+    #    type description so the reader has the biology in mind first).
+    intro_lines = _cl_introduction(cn)
+    if intro_lines:
+        lines.append("## Cell Ontology mapping")
+        lines.append("")
+        lines.extend(intro_lines)
+        lines.append("")
+        lines.append("---")
+        lines.append("")
+
+    # 5. Mapping candidates table
     lines.append("## Mapping candidates")
     lines.append("")
-    lines.append("| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |")
+    lines.append("| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |")
     lines.append("|---|---|---|---|---|---|")
     rank = 0
     for edge in edges:
@@ -710,7 +1619,7 @@ def render_summary(
         name = edge["node_b_name"]
         acc = edge.get("node_b_accession", "")
         cluster_label = f"{name} [{acc}]" if acc else name
-        n_cells = edge["n_cells"] if edge["n_cells"] is not None else "—"
+        n_cells = f"{edge['n_cells']:,}" if edge["n_cells"] is not None else "—"
         badge = _conf_badge(conf)
         verdict = edge["verdict"]
         lines.append(f"| {rank_str} | {cluster_label} | {edge['supertype']} | {n_cells} | {badge} | {verdict} |")
@@ -730,10 +1639,24 @@ def render_summary(
     for edge in confident_edges:
         conf = edge["confidence"]
         name = edge["node_b_name"]
-        n = edge["n_cells"] if edge["n_cells"] is not None else "?"
+        n = edge["n_cells"]
         badge = _conf_badge(conf)
         lines.append(f"## {name} · {badge}")
         lines.append("")
+
+        # One-line node summary: accession · 10x cell count · supertype
+        acc = edge.get("node_b_accession") or ""
+        supt = edge.get("supertype") or ""
+        summary_parts: list[str] = []
+        if acc:
+            summary_parts.append(f"`{acc}`")
+        if n is not None:
+            summary_parts.append(f"{n:,} cells (10x)")
+        if supt:
+            summary_parts.append(f"supertype: {supt}")
+        if summary_parts:
+            lines.append("*" + " · ".join(summary_parts) + "*")
+            lines.append("")
 
         support_items = [ev for ev in edge["evidence_items"] if ev["supports"] in ("SUPPORT", "PARTIAL")]
         refute_items = [ev for ev in edge["evidence_items"] if ev["supports"] == "REFUTE"]
@@ -808,7 +1731,7 @@ def render_summary(
             lines.append("")
         for edge in uncertain_edges:
             name = edge["node_b_name"]
-            n = edge["n_cells"] if edge["n_cells"] is not None else "?"
+            n = f"{edge['n_cells']:,}" if edge["n_cells"] is not None else "?"
             refutes = [
                 ev for ev in edge["evidence_items"] if ev["supports"] == "REFUTE"
             ]
@@ -929,7 +1852,7 @@ def render_drilldown(
         raise ValueError(f"PMID/corpus_id '{pmid_or_corpus}' not found in references.json")
 
     corpus_id = corpus_entry["corpus_id"]
-    authors = corpus_entry.get("authors", [])
+    authors = _coerce_authors(corpus_entry.get("authors"))
     year = corpus_entry.get("year", "")
     pmid = corpus_entry.get("pmid", "")
     doi = corpus_entry.get("doi", "")
@@ -948,15 +1871,26 @@ def render_drilldown(
     lines: list[str] = []
     lines.append(f"# Evidence Drill-down: {first_author_last} et al. {year}")
 
-    # Find edges citing this paper in edge evidence items
+    # Find edges citing this paper in edge evidence items.
+    # LITERATURE evidence has the cite directly in `reference`. Other evidence
+    # types (BULK_CORRELATION, ...) cite via run_ref → manifest → dataset →
+    # source_pmid; resolve and match.
     citing_edges = []
     for edge in node_edges:
         for ev in edge.get("evidence", []):
             ref = ev.get("reference", "")
             ref_type, bare = _ref_identifier(ref) if ref else ("", "")
-            if bare == pmid or bare == doi or bare == corpus_id:
+            if bare and (bare == pmid or bare == doi or bare == corpus_id):
                 citing_edges.append(edge)
                 break
+            run_ref = ev.get("run_ref", "")
+            if run_ref:
+                resolved = _resolve_run_ref_to_pmid(run_ref)
+                if resolved:
+                    _, resolved_bare = _ref_identifier(resolved)
+                    if resolved_bare == pmid:
+                        citing_edges.append(edge)
+                        break
 
     # Also scan node marker sources — papers cited there provide classical-type
     # evidence that informs all edges, even if not listed per-edge.
@@ -1316,7 +2250,7 @@ def _gen_single_drilldown(
     if corpus_entry is None:
         print(f"WARNING: PMID '{pmid}' not found in references.json; skipping", file=sys.stderr)
         return
-    authors = corpus_entry.get("authors", [])
+    authors = _coerce_authors(corpus_entry.get("authors"))
     year = corpus_entry.get("year", "")
     first_author_last = authors[0].split()[-1] if authors else "Unknown"
     filename = f"{node_id}_drilldown_{first_author_last}{year}.md"

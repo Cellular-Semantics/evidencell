@@ -1,0 +1,412 @@
+{
+  "classical_node_id": "avpv_th_neuron",
+  "classical_node_name": "AVPV tyrosine hydroxylase (TH) neuron",
+  "taxonomy_id": "CCN20230722",
+  "candidates_by_rank": {
+    "0": [
+      {
+        "cell_set_accession": "CS20230722_CLUS_1915",
+        "name": "1915 PVpo-VMPO-MPN Hmx2 Gaba_5",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "STRONG",
+        "rationale": "Dopaminergic NT type (nt_type=Dopa) — matches avpv_th_neuron's dopaminergic identity. Located in PVpo-VMPO-MPN (periventricular preoptic / ventromedial preoptic / medial preoptic nucleus), which is the closest WMB atlas label to AVPV (AVPV lies at the rostral tip of the periventricular zone within the preoptic region). Male_female_ratio=0.02 — the most extremely female-biased cluster in the entire candidate set; this is a very strong positive signal for a type with 2-4x more cells in females. Parent is SUPT_0486 (PVpo-VMPO-MPN Hmx2 Gaba_5), the top-ranked rank-1 supertype for this node. All three criteria — NT type, location, and sex ratio — align. Clear top candidate at rank 0."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1904",
+        "name": "1904 PVpo-VMPO-MPN Hmx2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "PLAUSIBLE",
+        "rationale": "Dopaminergic, PVpo-VMPO-MPN region — matches NT type and approximate location. Male_female_ratio=1.5, mildly male-biased. Location match is good; sex ratio is a weak counter-indicator for this female-biased type. Secondary candidate; requires marker-level verification."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1910",
+        "name": "1910 PVpo-VMPO-MPN Hmx2 Gaba_4",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "PLAUSIBLE",
+        "rationale": "Dopaminergic, PVpo-VMPO-MPN region, male_female_ratio=1.44 — mildly male-biased. Location matches; sex ratio is weaker than CLUS_1915 but not disqualifying."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1907",
+        "name": "1907 PVpo-VMPO-MPN Hmx2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "WEAK",
+        "rationale": "Dopaminergic, PVpo-VMPO-MPN region, but male_female_ratio=2.70 — male-biased. For a cell type with 2-4x more cells in females, a ratio >2.5 is a meaningful counter-indicator. Location is correct but sex bias argues against. Deprioritize."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1905",
+        "name": "1905 PVpo-VMPO-MPN Hmx2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "WEAK",
+        "rationale": "Dopaminergic, PVpo-VMPO-MPN, male_female_ratio=2.03 — male-biased. Same reasoning as CLUS_1907; sex ratio is a counter-indicator. Lower DB score."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1469",
+        "name": "1469 MPO-ADP Lhx8 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "WEAK",
+        "rationale": "Dopaminergic, MPO-ADP (medial preoptic nucleus / anterior dorsal preoptic) — adjacent to AVPV but less precise. Male_female_ratio=1.13, near-equal. NT type matches but location and sex ratio are both ambiguous."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1535",
+        "name": "1535 PVR Six3 Sox3 Gaba_9",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "WEAK",
+        "rationale": "PVR (periventricular region, matching MBA:341 somewhat), dopaminergic, male_female_ratio=0.92 — near-equal/slightly female. Periventricular location is correct but the dopaminergic PVR cluster — given the avpv_th_neuron is defined specifically from AVPV (MBA:272) not PeN — is less precise. The note in the KB states AVPV consists mainly of TH-positive neurons, so WMBv1 may have placed these within PVpo rather than PVR."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1572",
+        "name": "1572 ARH-PVi Six6 Dopa-Gaba_2",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "WEAK",
+        "rationale": "ARH-PVi (arcuate nucleus / periventricular intermediate) — different hypothalamic region (arcuate, not AVPV). Dopaminergic. Male_female_ratio=3.76, male-biased. Location mismatch and male bias both argue against. Likely represents arcuate dopaminergic neurons (A12), not AVPV A14."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_5066",
+        "name": "5066 MV Nr4a2 Gly-Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "MV (medial vestibular nucleus) — brainstem, very distant from AVPV. Male_female_ratio=0.25 (female-biased) is appealing but location mismatch is disqualifying."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0586",
+        "name": "0586 OB Dopa-Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "OB (olfactory bulb) — distant region. Olfactory bulb dopaminergic neurons are a distinct population. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1683",
+        "name": "1683 SBPV-PVa Six6 Satb2 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "SBPV-PVa (subparaventricular zone / anterior paraventricular) — different hypothalamic subdivision, not AVPV. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1729",
+        "name": "1729 ZI Pax6 Gaba_2",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "ZI (zona incerta) — distinct region. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1938",
+        "name": "1938 DMH Hmx2 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "DMH (dorsomedial hypothalamus) — different hypothalamic region, not AVPV. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_3852",
+        "name": "3852 SNc-VTA-RAmb Foxa1 Dopa_2",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "SNc-VTA (substantia nigra / ventral tegmental area) — midbrain dopaminergic neurons, very distant from AVPV. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2770",
+        "name": "2770 IF-RL-CLI-PAG Foxa1 Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "IF-RL-CLI-PAG (interfascicular / rostral linear / caudal linear / PAG) — midbrain, very distant. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_3346",
+        "name": "3346 CUN-PPN Evx2 Meis2 Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "CUN-PPN (cuneiform / pedunculopontine) — brainstem. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1301",
+        "name": "1301 MEA-BST Lhx6 Nfib Gaba_4",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "MEA-BST — distant region. Not dopaminergic (GABA). Location and NT type mismatch. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1876",
+        "name": "1876 PVpo-VMPO-MPN Hmx2 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 3,
+        "assessment": "WEAK",
+        "rationale": "PVpo-VMPO-MPN region, GABAergic (not dopaminergic), male_female_ratio=1.17. NT type mismatch — avpv_th_neuron is classified as dopaminergic. Location is adjacent. Weak candidate."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0582",
+        "name": "0582 OB Dopa-Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "OB (olfactory bulb) — distant. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0585",
+        "name": "0585 OB Dopa-Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "OB (olfactory bulb) — distant. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0589",
+        "name": "0589 OB Dopa-Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "OB (olfactory bulb) — distant. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1305",
+        "name": "1305 MEA-BST Lhx6 Nfib Gaba_5",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "MEA-BST, GABAergic, male_female_ratio=6.14. Distant region and strongly male-biased. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1309",
+        "name": "1309 MEA-BST Lhx6 Nfib Gaba_5",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "MEA-BST, GABAergic, male_female_ratio=1.56. Distant region. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1440",
+        "name": "1440 SI-MPO-LPO Lhx8 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "SI-MPO-LPO, GABAergic — not dopaminergic, adjacent but not AVPV. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1444",
+        "name": "1444 SI-MPO-LPO Lhx8 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "SI-MPO-LPO, GABAergic. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1445",
+        "name": "1445 SI-MPO-LPO Lhx8 Gaba_3",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "SI-MPO-LPO, GABAergic. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1503",
+        "name": "1503 PVR Six3 Sox3 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR, GABAergic — periventricular location is a partial match but NT type is not dopaminergic. At score 2, this is not a meaningful candidate for avpv_th_neuron. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1505",
+        "name": "1505 PVR Six3 Sox3 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR, GABAergic, score 2. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1507",
+        "name": "1507 PVR Six3 Sox3 Gaba_1",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR, GABAergic, score 2. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_1520",
+        "name": "1520 PVR Six3 Sox3 Gaba_5",
+        "taxonomy_rank": 0,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR, GABAergic, score 2. Exclude."
+      }
+    ],
+    "1": [
+      {
+        "cell_set_accession": "CS20230722_SUPT_0486",
+        "name": "0486 PVpo-VMPO-MPN Hmx2 Gaba_5",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "STRONG",
+        "rationale": "Parent supertype of CLUS_1915 (the extreme-female-biased, dopaminergic top rank-0 candidate, ratio=0.02). PVpo-VMPO-MPN region corresponds to the preoptic periventricular zone containing AVPV. Dopaminergic identity implied by its cluster children. This supertype is the best-supported rank-1 grouping for avpv_th_neuron. Note: all rank-1 candidates received DB score 2, reflecting the absence of explicit 'AVPV' labeling at supertype level — the quality distinction is driven by this agent's assessment, not the DB score."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0485",
+        "name": "0485 PVpo-VMPO-MPN Hmx2 Gaba_4",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVpo-VMPO-MPN, parent of CLUS_1910 (dopaminergic, ratio=1.44). Same preoptic region as SUPT_0486. Plausible secondary supertype if avpv_th_neuron spans multiple supertypes."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0484",
+        "name": "0484 PVpo-VMPO-MPN Hmx2 Gaba_3",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVpo-VMPO-MPN, parent of CLUS_1904 (dopaminergic, ratio=1.5) and CLUS_1907 (ratio=2.7). Mixed: one cluster is plausible, one is weak on sex ratio. Supertype-level assessment is plausible."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0482",
+        "name": "0482 PVpo-VMPO-MPN Hmx2 Gaba_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "PVpo-VMPO-MPN. Parent of CLUS_1876 (GABAergic, not dopaminergic, ratio=1.17). Less compelling than SUPT_0484-0486 because its clusters appear GABAergic rather than dopaminergic, but still preoptic region. Plausible if some children carry TH expression."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0519",
+        "name": "0519 AVPV-MEPO-SFO Tbr1 Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "AVPV-MEPO-SFO supertype — 'AVPV' is explicitly named in the atlas label, making this an important candidate on anatomical grounds. However, the Tbr1 Glut designation indicates glutamatergic identity, which conflicts with the dopaminergic NT type of avpv_th_neuron. The AVPV location label is a strong positive, but NT type mismatch makes this plausible rather than strong. May represent a glutamatergic subpopulation of AVPV that the Th marker score captured."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0520",
+        "name": "0520 AVPV-MEPO-SFO Tbr1 Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "AVPV-MEPO-SFO, glutamatergic. Same reasoning as SUPT_0519 — explicit AVPV label is compelling but NT type mismatch (Glut vs. dopaminergic) is a caveat. The atlas may have split AVPV neurons across Glut and Dopa supertypes."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0521",
+        "name": "0521 AVPV-MEPO-SFO Tbr1 Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "AVPV-MEPO-SFO, glutamatergic. Same reasoning as SUPT_0519-0520."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0522",
+        "name": "0522 AVPV-MEPO-SFO Tbr1 Glut_4",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "AVPV-MEPO-SFO, glutamatergic. Same reasoning."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0523",
+        "name": "0523 AVPV-MEPO-SFO Tbr1 Glut_5",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "PLAUSIBLE",
+        "rationale": "AVPV-MEPO-SFO, glutamatergic. Same reasoning. NOTE: the 5 AVPV-MEPO-SFO Glut supertypes represent an important anatomical match and should be evaluated alongside the PVpo dopaminergic supertypes. If the WMB atlas does not have a dedicated dopaminergic AVPV supertype, then avpv_th_neuron may be partially captured in these Glut supertypes or in PVpo-VMPO-MPN Dopa supertypes."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0548",
+        "name": "0548 MPN-MPO-PVpo Hmx2 Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "MPN-MPO-PVpo region, glutamatergic. Adjacent preoptic region; NT mismatch. Weak."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0547",
+        "name": "0547 MPN-MPO-PVpo Hmx2 Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "MPN-MPO-PVpo, glutamatergic. Adjacent preoptic; NT mismatch. Weak."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0428",
+        "name": "0428 ARH-PVi Six6 Dopa-Gaba_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "ARH-PVi (arcuate / periventricular intermediate) — dopaminergic but wrong region; arcuate dopaminergic neurons (A12) are distinct from AVPV A14 neurons. Location mismatch is meaningful."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0427",
+        "name": "0427 ARH-PVi Six6 Dopa-Gaba_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "ARH-PVi, dopaminergic. Same reasoning as SUPT_0428 — arcuate/periventricular intermediate, not AVPV."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0419",
+        "name": "0419 PVR Six3 Sox3 Gaba_9",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "WEAK",
+        "rationale": "PVR, GABAergic. Contains CLUS_1535 (dopaminergic, ratio=0.92) — the one dopaminergic PVR cluster in rank 0. Periventricular location is a partial match but this supertype is primarily GABAergic and not preoptic. Weak."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0418",
+        "name": "0418 PVR Six3 Sox3 Gaba_8",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR, GABAergic — periventricular region. All clusters under this supertype are GABAergic in rank 0 (for avpv_th_neuron, score 2 means they contributed only weakly). Not a meaningful candidate for a dopaminergic type."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0417",
+        "name": "0417 PVR Six3 Sox3 Gaba_7",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR, GABAergic. Same as SUPT_0418 — not relevant for dopaminergic avpv_th_neuron."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0415",
+        "name": "0415 PVR Six3 Sox3 Gaba_5",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR, GABAergic. Not relevant for dopaminergic avpv_th_neuron."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0411",
+        "name": "0411 PVR Six3 Sox3 Gaba_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "PVR, GABAergic. Not relevant for dopaminergic avpv_th_neuron."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1127",
+        "name": "1127 MV Nr4a2 Gly-Gaba_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "MV (medial vestibular nucleus) — brainstem, very distant. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1172",
+        "name": "1172 Tanycyte NN_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "Tanycyte supertype — non-neuronal cell type. Exclude."
+      }
+    ]
+  },
+  "non_candidates_summary": "The DB returned 30 rank-0 and 20 rank-1 candidates. The standout candidate is CLUS_1915 (PVpo-VMPO-MPN, dopaminergic, male_female_ratio=0.02) — this cluster's extreme female bias and dopaminergic identity is a near-perfect match for avpv_th_neuron. At rank 1, SUPT_0486 (its parent supertype) is the corresponding top candidate. A notable finding is that five AVPV-MEPO-SFO supertypes (SUPT_0519-0523) carry an explicit 'AVPV' location label in WMBv1 but are glutamatergic — these represent glutamatergic AVPV neurons that may co-exist with the TH/dopaminergic population. The classical avpv_th_neuron is defined as dopaminergic (TH+), so the PVpo-VMPO-MPN Dopa supertypes/clusters are the primary targets. The ARH-PVi dopaminergic supertypes (SUPT_0427-0428) likely represent A12 arcuate neurons, not AVPV A14 neurons — excluded on location grounds. Olfactory bulb, midbrain, brainstem, cerebellar, and striatal dopaminergic candidates are all excluded. NOTE: the substantial overlap between avpv_th_neuron and avpv_kiss1_neuron (most AVPV/PeN Kiss1 cells co-express TH) means these two classical types may map to the same or overlapping WMBv1 clusters; the dopaminergic identity distinguishes the atlas representation of avpv_th_neuron from the purely GABAergic PVR clusters that are the primary candidates for avpv_kiss1_neuron."
+}

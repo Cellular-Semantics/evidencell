@@ -185,7 +185,7 @@ ingest-report region pdf_file:
 # ── Taxonomy reference DB (M8) ─────────────────────────────────────────────────
 
 # Fetch taxonomy JSON from local brain_cell_KG via Cypher query
-# Requires: [kg] optional deps — run once: uv sync --group kg
+# Requires: [kg] optional deps — run once: uv sync --extra kg
 # Requires: local neo4j KG running at bolt://localhost:7687
 # Usage: just fetch-taxonomy-kg inputs/taxonomies/CCN20230722.cypher CCN20230722
 [group('workflows')]
@@ -315,6 +315,15 @@ gen-drilldown-pmid GRAPH_FILE NODE_ID PMID:
 gen-index REGION:
     uv run python -m evidencell.render index {{REGION}}
 
+# Generate a taxonomy-indexed contents page for mapping reports
+# Usage: just gen-toc CCN20230722
+#        just gen-toc CCN20230722 --root CS20230722_CLAS_07
+#        just gen-toc CCN20230722 --min-confidence HIGH
+# Output: reports/_toc/{taxonomy_id}[_{root}].md
+[group('reports')]
+gen-toc TAXONOMY_ID *ARGS:
+    uv run python -m evidencell.toc {{TAXONOMY_ID}} {{ARGS}}
+
 # Regenerate all reports + indices for canonical KB (programmatic mode, no LLM)
 [group('reports')]
 gen-report-all:
@@ -328,6 +337,8 @@ gen-report-all:
     for region in $(ls kb/mappings 2>/dev/null); do
         uv run python -m evidencell.render index "$region"
     done
+    # Combined taxonomy-indexed TOC (default MODERATE+).
+    uv run python -m evidencell.toc --all
 
 # Regenerate all reports + indices for draft KB (programmatic mode, no LLM)
 # Use this during active curation before content graduates to kb/mappings/
@@ -346,6 +357,21 @@ gen-report-draft REGION:
 [group('reports')]
 gen-drilldowns-draft GRAPH_FILE NODE_ID:
     uv run python -m evidencell.render drilldowns {{GRAPH_FILE}} --node {{NODE_ID}}
+
+# ── CL term requests ──────────────────────────────────────────────────────────
+
+# Preview a drafted CL new term request without posting (default — safe).
+# Output is rendered from workflows/cl-term-request.md.
+[group('reports')]
+preview-cl-ntr NTR_FILE:
+    uv run python -m evidencell.cl_post {{NTR_FILE}}
+
+# Post a drafted CL new term request as a GitHub issue against
+# obophenotype/cell-ontology. Requires CELLSEM_GH_TOKEN in the environment.
+# Always preview with `just preview-cl-ntr` first.
+[group('reports')]
+post-cl-ntr NTR_FILE:
+    uv run python -m evidencell.cl_post {{NTR_FILE}} --confirm
 
 # ── Annotation Transfer ───────────────────────────────────────────────────────
 
@@ -401,6 +427,12 @@ at-taxonomy-list:
 [group('annotation-transfer')]
 at-test:
     cd annotation_transfer && uv run pytest -v
+
+# Build/rebuild kb/annotation_transfer_runs/index.yaml from manifest files.
+# Run after adding a new AT run directory.
+[group('annotation-transfer')]
+register-at-run:
+    uv run python -m evidencell.taxonomy_ops build-at-index
 
 # ── Utilities ──────────────────────────────────────────────────────────────────
 

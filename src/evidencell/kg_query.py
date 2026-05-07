@@ -8,7 +8,7 @@ Usage (CLI):
       --bolt-url bolt://localhost:7687
 
 Requires the [kg] optional dependency group:
-  uv sync --group kg
+  uv sync --extra kg
 """
 
 from __future__ import annotations
@@ -32,12 +32,38 @@ def _check_neo4j() -> None:
             _neo4j_available = False
     if not _neo4j_available:
         raise ImportError(
-            "neo4j package not installed. Install with: uv sync --group kg"
+            "neo4j package not installed. Install with: uv sync --extra kg"
         )
 
 
 # Default bolt URL — can be overridden via env var or constructor argument
 DEFAULT_BOLT_URL = "bolt://localhost:7687"
+
+
+def _wrap_value(val: object) -> object:
+    """Wrap neo4j Node values in {identity, labels, properties, elementId} form.
+
+    Recurses into lists. Leaves scalars and dicts unchanged. The wrapped shape
+    matches what the original VFB graph export produced and what taxonomy_db
+    ingest code expects.
+    """
+    from neo4j.graph import Node
+
+    if isinstance(val, Node):
+        return {
+            "identity": val.element_id,
+            "labels": list(val.labels),
+            "properties": dict(val.items()),
+            "elementId": val.element_id,
+        }
+    if isinstance(val, list):
+        return [_wrap_value(v) for v in val]
+    return val
+
+
+def _record_to_dict(record: object) -> dict:
+    """Convert a neo4j Record to a plain dict, wrapping Node values."""
+    return {key: _wrap_value(record[key]) for key in record.keys()}
 
 
 class KGQueryClient:
@@ -85,12 +111,18 @@ class KGQueryClient:
     def run_query(
         self, cypher: str, parameters: dict | None = None
     ) -> list[dict]:
-        """Execute a Cypher statement and return all records as plain dicts."""
+        """Execute a Cypher statement and return all records as plain dicts.
+
+        Node values are wrapped in the canonical {identity, labels, properties,
+        elementId} shape rather than flattened to their property dicts. This
+        preserves the structure the taxonomy_db ingest expects and the original
+        VFB graph export used.
+        """
         if self._driver is None:
             self.connect()
         with self._driver.session() as session:  # type: ignore[union-attr]
             result = session.run(cypher, parameters or {})
-            return [record.data() for record in result]
+            return [_record_to_dict(record) for record in result]
 
     def close(self) -> None:
         if self._driver is not None:

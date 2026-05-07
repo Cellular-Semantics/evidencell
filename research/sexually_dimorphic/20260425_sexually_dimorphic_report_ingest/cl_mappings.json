@@ -1,0 +1,114 @@
+{
+  "avpv_kiss1_neuron": {
+    "cl_term_id": "CL:4023123",
+    "label": "hypothalamus kisspeptin neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MEDIUM",
+    "definition_references": ["PMID:30042117"],
+    "note": "CL:4023123 covers all hypothalamic kisspeptin neurons. The AVPV/PeN (RP3V) population is Kiss1-only (not obligately KNDy), so the more specific CL:4023128 (RP3V KNDy neuron) is inappropriate as it requires NKB and dynorphin co-expression. A dedicated CL term for the AVPV/RP3V Kiss1 non-KNDy subpopulation does not yet exist — potential CL contribution."
+  },
+  "arc_kndy_neuron": {
+    "cl_term_id": "CL:4023127",
+    "label": "arcuate nucleus of hypothalamus KNDy neuron",
+    "mapping_type": "EXACT",
+    "mapping_confidence": "HIGH",
+    "definition_references": ["PMID:30042117"],
+    "note": "CL:4023127 is defined as a KNDy neuron in the arcuate nucleus of the hypothalamus, matching the proposed node exactly. Parent term CL:4023125 (KNDy neuron) carries WikipediaVersioned xref only; CL:4023127 carries PMID:30042117."
+  },
+  "avpv_th_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for AVPV/RP3V TH-immunoreactive (dopaminergic) neurons. CL:4072009 (A12 dopaminergic neuron) is in the arcuate nucleus, not AVPV. CL:0000700 (dopaminergic neuron) is too broad. Potential CL contribution: a child of CL:0000700 or CL:4072009's sibling for AVPV/RP3V A14 dopaminergic neurons."
+  },
+  "sdn_poa_calbindin_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for the calbindin-D28K-immunoreactive SDN-POA neuron population. Searches for 'sexually dimorphic nucleus', 'calbindin preoptic', and 'SDN-POA' returned no relevant CL terms. Potential CL contribution."
+  },
+  "mpoa_esr1_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for Esr1+ MPOA neurons. Searches for 'estrogen receptor neuron preoptic' and 'medial preoptic area neuron' returned no CL matches. A heterogeneous population (includes both GABAergic and glutamatergic cells); may be better represented as multiple terms. Potential CL contribution."
+  },
+  "mpoa_galanin_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for galanin-expressing MPOA neurons. Search for 'galanin neuron' returned only the galanin protein (PR term) and generic neuron terms. Potential CL contribution."
+  },
+  "vmhvl_esr1_pr_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for VMHvl ERalpha/progesterone receptor neurons. Search for 'ventromedial hypothalamus neuron' returned only kisspeptin/KNDy and generic neurons. A molecularly heterogeneous population with multiple transcriptomic subtypes. Potential CL contribution."
+  },
+  "pvn_crfr1_neuron": {
+    "cl_term_id": "CL:4072021",
+    "label": "corticotropin-releasing neuron",
+    "mapping_type": "RELATED",
+    "mapping_confidence": "LOW",
+    "definition_references": ["PMID:21871477", "PMID:2785663", "PMID:28790896", "PMID:33158870", "PMID:9662138"],
+    "note": "CL:4072021 defines neurons by CRH *secretion*, whereas the proposed PVN CRFR1 node is defined by CRFR1 *receptor* expression. These are distinct populations: CRFR1+ PVN neurons receive CRH input, they do not necessarily secrete CRH. Mapping is RELATED only. No CL term for CRFR1-receptor-expressing neurons exists — potential CL contribution."
+  },
+  "bnst_crf_neuron": {
+    "cl_term_id": "CL:4072021",
+    "label": "corticotropin-releasing neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MEDIUM",
+    "definition_references": ["PMID:21871477", "PMID:2785663", "PMID:28790896", "PMID:33158870", "PMID:9662138"],
+    "note": "CL:4072021 covers all CRH-secreting neurons across brain regions (PVN, hippocampus, BNST, etc.). BNST CRF neurons do secrete CRH, making this a valid BROAD match. A BNST-specific child term does not yet exist — the female-biased dlBNST CRF population is a potential CL contribution."
+  },
+  "bnst_kiss1_neuron": {
+    "cl_term_id": "CL:4023130",
+    "label": "kisspeptin neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "LOW",
+    "definition_references": ["PMID:30042117"],
+    "note": "CL:4023130 covers all kisspeptin-expressing neurons. No BNST-specific kisspeptin term exists in CL. The prBNST Kiss1 population is male-biased and morphologically/functionally distinct from AVPV and ARC populations. Potential CL contribution."
+  },
+  "lateral_septum_kiss1_neuron": {
+    "cl_term_id": "CL:4023130",
+    "label": "kisspeptin neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "LOW",
+    "definition_references": ["PMID:30042117"],
+    "note": "CL:4023130 is the broadest kisspeptin neuron class. No lateral septum kisspeptin term exists in CL. The female-biased ILS Kiss1 population is novel and poorly characterised. Potential CL contribution."
+  },
+  "arc_aromatase_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for aromatase (Cyp19a1)-expressing neurons. Search for 'aromatase neuron' returned no CL hits. Sexually dimorphic arcuate aromatase cluster adjacent to Kiss1 neurons is a novel population. Potential CL contribution."
+  },
+  "poa_pacap_vip_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for POA PACAP/VIP hypophysiotropic neurons. Searches for 'PACAP VIP neuron', 'VIP neuron hypothalamus' returned only ganglion VIP neurons and cortical VIP interneurons — no hypothalamic hypophysiotropic VIP/PACAP cell type. Initially described in medaka (teleost) with sexually dimorphic neuropeptide expression. Potential CL contribution."
+  },
+  "pmv_otr_neuron": {
+    "cl_term_id": null,
+    "label": null,
+    "mapping_type": null,
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "No CL term for ventral premammillary nucleus (PMv) oxytocin receptor neurons. Search for 'oxytocin receptor neuron' returned only CL:4023122 (cortical OxtrINs, somatostatin+), which is unrelated. PMv-OTR is a male-biased sexually dimorphic hypothalamic population. Potential CL contribution."
+  }
+}

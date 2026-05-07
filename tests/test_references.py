@@ -3,7 +3,11 @@
 import json
 import pytest
 
-from evidencell.references import compute_quote_key, write_quote_to_refs
+from evidencell.references import (
+    _normalise_authors,
+    compute_quote_key,
+    write_quote_to_refs,
+)
 
 
 # ── compute_quote_key ────────────────────────────────────────────────────────
@@ -223,3 +227,43 @@ def test_write_quote_meta_updated(tmp_refs):
     data = json.loads(tmp_refs.read_text())
     assert data["_meta"]["last_updated_by"] == "my_extraction_run"
     assert data["_meta"]["last_updated"] != ""
+
+
+# ── _normalise_authors ────────────────────────────────────────────────────────
+#
+# Regression for the asta-report-ingest free-form-writer bug class:
+# subagents have written `authors` as a comma-joined string (sexually_dimorphic
+# pilot, 2026-04-25). _normalise_authors must coerce all observed shapes to
+# list[str].
+
+def test_normalise_authors_list_of_strings_passthrough():
+    assert _normalise_authors(["Iris Oren", "Wiebke Nissen"]) == [
+        "Iris Oren",
+        "Wiebke Nissen",
+    ]
+
+
+def test_normalise_authors_list_of_dicts():
+    assert _normalise_authors(
+        [{"authorId": "1", "name": "Jane Doe"}, {"authorId": "2", "name": "Bob Lee"}]
+    ) == ["Jane Doe", "Bob Lee"]
+
+
+def test_normalise_authors_comma_string_with_et_al():
+    """Regression: free-form writer flattened the list to a string.
+
+    See planning/minirefs_author_rendering_fix.md.
+    """
+    assert _normalise_authors(
+        "Shannon B. Z. Stephens, Melvin L. Rouse, K. Tolson et al."
+    ) == ["Shannon B. Z. Stephens", "Melvin L. Rouse", "K. Tolson"]
+
+
+def test_normalise_authors_comma_string_no_et_al():
+    assert _normalise_authors("Ha Na Choe, E. Jarvis") == ["Ha Na Choe", "E. Jarvis"]
+
+
+def test_normalise_authors_empty():
+    assert _normalise_authors([]) == []
+    assert _normalise_authors("") == []
+    assert _normalise_authors(None) == []

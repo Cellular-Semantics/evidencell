@@ -14,8 +14,10 @@ import pytest
 from evidencell.render import (
     _best_edge,
     _candidate_verdict,
+    _coerce_authors,
     _collect_quotes,
     _conf_badge,
+    _format_citation_line,
     _gen_all_drilldowns,
     _gen_single_drilldown,
     _group_experiments,
@@ -806,3 +808,428 @@ def test_cli_facts(tmp_path):
             main()
     facts_files = list(tmp_path.glob("reports/**/*_facts.json"))
     assert len(facts_files) == 1
+
+
+# ── _coerce_authors / _format_citation_line ───────────────────────────────────
+#
+# Regression for the asta-report-ingest free-form-writer bug class
+# (planning/minirefs_author_rendering_fix.md): references.json may carry
+# `authors` as list[str], list[dict] (Semantic Scholar shape), or — in
+# sexually_dimorphic ingest output — a single comma-joined string. The
+# renderer must produce a correct surname in all of these shapes.
+
+def test_coerce_authors_list_of_strings():
+    assert _coerce_authors(["Iris Oren", "Wiebke Nissen"]) == ["Iris Oren", "Wiebke Nissen"]
+
+
+def test_coerce_authors_list_of_dicts():
+    """Semantic Scholar batch shape: [{'authorId': '...', 'name': '...'}, ...]."""
+    assert _coerce_authors(
+        [{"authorId": "1", "name": "Jane Doe"}, {"authorId": "2", "name": "Bob Lee"}]
+    ) == ["Jane Doe", "Bob Lee"]
+
+
+def test_coerce_authors_comma_joined_string_with_et_al():
+    """sexually_dimorphic shape: 'First Author, Second Author, ... et al.'"""
+    result = _coerce_authors(
+        "Shannon B. Z. Stephens, Melvin L. Rouse, K. Tolson, R. Liaw et al."
+    )
+    assert result == [
+        "Shannon B. Z. Stephens",
+        "Melvin L. Rouse",
+        "K. Tolson",
+        "R. Liaw",
+    ]
+
+
+def test_coerce_authors_comma_joined_string_no_et_al():
+    assert _coerce_authors("Ha Na Choe, E. Jarvis") == ["Ha Na Choe", "E. Jarvis"]
+
+
+def test_coerce_authors_single_name_string():
+    assert _coerce_authors("Solo Author") == ["Solo Author"]
+
+
+def test_coerce_authors_empty_inputs():
+    assert _coerce_authors([]) == []
+    assert _coerce_authors(None) == []
+    assert _coerce_authors("") == []
+    assert _coerce_authors("   ") == []
+
+
+def test_format_citation_line_string_authors_regression():
+    """Regression: minirefs collapsed to 'S et al. 2017' when authors was a string.
+
+    See planning/minirefs_author_rendering_fix.md.
+    """
+    entry = {
+        "authors": "Shannon B. Z. Stephens, Melvin L. Rouse, K. Tolson et al.",
+        "year": 2017,
+        "pmid": "28660243",
+    }
+    line = _format_citation_line(entry)
+    assert line.startswith("Stephens et al. 2017"), (
+        f"Expected 'Stephens et al. 2017 ...', got: {line!r}"
+    )
+    assert "PMID:28660243" in line
+
+
+def test_format_citation_line_list_authors_unchanged():
+    """Canonical list[str] shape produces identical output as before the fix."""
+    entry = {
+        "authors": ["Iris Oren", "Wiebke Nissen", "D. Kullmann"],
+        "year": 2019,
+        "pmid": "31420995",
+    }
+    line = _format_citation_line(entry)
+    assert line == "Oren et al. 2019 · PMID:31420995"
+
+
+def test_format_citation_line_two_authors_string():
+    entry = {
+        "authors": "Ha Na Choe, E. Jarvis",
+        "year": 2021,
+        "pmid": "33895570",
+    }
+    line = _format_citation_line(entry)
+    assert "Choe & Jarvis 2021" in line
+
+
+def test_format_citation_line_single_author_string():
+    entry = {"authors": "Solo Author", "year": 2020, "pmid": "12345678"}
+    line = _format_citation_line(entry)
+    assert line == "Author 2020 · PMID:12345678"
+
+
+# ── Generic evidence extraction (any EvidenceItem subclass) ───────────────────
+
+def test_extract_node_facts_generic_evidence_fields_preserved():
+    """Non-LITERATURE evidence types (e.g. BULK_CORRELATION) round-trip
+    type-specific fields under `fields:` without per-type extraction code.
+    """
+    graph = {
+        "name": "Test region",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {
+                "id": "test_classical",
+                "name": "Test classical",
+                "definition_basis": "CLASSICAL_MULTIMODAL",
+                "is_terminal": False,
+            },
+            {
+                "id": "atlas_X",
+                "name": "Atlas X",
+                "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+                "is_terminal": True,
+                "atlas": "WMBv1",
+            },
+        ],
+        "edges": [
+            {
+                "id": "edge_test_to_X",
+                "type_a": "test_classical",
+                "type_b": "atlas_X",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "BULK_CORRELATION",
+                        "supports": "SUPPORT",
+                        "explanation": "Knoedler 2022 ... rank 1/5322.",
+                        "run_ref": "corr_run_xyz",
+                        "contrast_ref": "corr_A_vs_B",
+                        "target_accession": "CS_X",
+                        "statistics": "delta=0.090",
+                    }
+                ],
+            },
+        ],
+    }
+    facts = extract_node_facts(graph, {}, "test_classical", Path("test.yaml"))
+    ev_items = facts["edges"][0]["evidence_items"]
+    assert ev_items[0]["evidence_type"] == "BULK_CORRELATION"
+    # Required fields surfaced at top level
+    assert ev_items[0]["supports"] == "SUPPORT"
+    assert ev_items[0]["explanation"].startswith("Knoedler 2022")
+    # Type-specific fields preserved verbatim under `fields:`
+    assert ev_items[0]["fields"]["run_ref"] == "corr_run_xyz"
+    assert ev_items[0]["fields"]["contrast_ref"] == "corr_A_vs_B"
+    assert ev_items[0]["fields"]["target_accession"] == "CS_X"
+    assert ev_items[0]["fields"]["statistics"] == "delta=0.090"
+    # ref_label is empty when run_ref doesn't resolve to a PMID via filesystem
+    # (no manifest exists for this fake run_ref) — the evidence still flows.
+    assert ev_items[0]["ref_label"] == ""
+
+
+def test_extract_node_facts_evidence_type_label_includes_bulk_correlation():
+    """EVIDENCE_TYPE_LABELS dict covers BULK_CORRELATION."""
+    from evidencell.render import EVIDENCE_TYPE_LABELS
+    assert "BULK_CORRELATION" in EVIDENCE_TYPE_LABELS
+    assert EVIDENCE_TYPE_LABELS["BULK_CORRELATION"] == "Bulk correlation"
+
+
+def test_resolve_run_ref_to_pmid_returns_none_for_missing_run():
+    """Unknown run_ref returns None (graceful failure, not exception)."""
+    from evidencell.render import _resolve_run_ref_to_pmid
+    assert _resolve_run_ref_to_pmid("definitely_not_a_real_run_id_xyz") is None
+
+
+def test_resolve_run_ref_to_pmid_traverses_chain():
+    """Real run_ref → manifest → dataset chain resolves to source PMID.
+
+    Smoke test against the actual kb/correlation_runs and kb/datasets entries
+    from the sexually_dimorphic mapping work — verifies the renderer can reach
+    Stephens 2024 from corr_run_20260428_stephens_kiss1_wmbv1 and Knoedler 2022
+    from corr_run_20260428_knoedler_esr1_wmbv1.
+    """
+    from evidencell.render import _resolve_run_ref_to_pmid, _RUN_REF_PMID_CACHE
+    # Bypass cache for deterministic smoke
+    _RUN_REF_PMID_CACHE.clear()
+    pmid = _resolve_run_ref_to_pmid("corr_run_20260428_stephens_kiss1_wmbv1")
+    assert pmid == "PMID:37934722"
+    pmid = _resolve_run_ref_to_pmid("corr_run_20260428_knoedler_esr1_wmbv1")
+    assert pmid == "PMID:35143761"
+
+
+def test_build_reference_index_traverses_run_ref_for_bulk_correlation():
+    """build_reference_index registers a [n] label for BULK_CORRELATION evidence
+    whose run_ref resolves to a real PMID."""
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {"id": "cl", "name": "cl", "definition_basis": "CLASSICAL_MULTIMODAL", "is_terminal": False},
+            {"id": "ax", "name": "ax", "definition_basis": "ATLAS_TRANSCRIPTOMIC", "is_terminal": True, "atlas": "WMBv1"},
+        ],
+        "edges": [
+            {
+                "id": "e",
+                "type_a": "cl",
+                "type_b": "ax",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "BULK_CORRELATION",
+                        "supports": "SUPPORT",
+                        "explanation": "...",
+                        "run_ref": "corr_run_20260428_stephens_kiss1_wmbv1",
+                    },
+                ],
+            },
+        ],
+    }
+    idx = build_reference_index(graph, {}, "cl")
+    # Stephens 2024 (PMID:37934722) registered via run_ref traversal
+    pmids = {v.pmid for v in idx.values() if v.pmid}
+    assert "37934722" in pmids
+
+
+def test_top_n_hits_for_contrast_returns_ranked_rows():
+    """Reads a CorrelationRun's per-contrast TSV and returns ranked rows.
+
+    Smoke test against the actual Knoedler run — confirms VMH-FR vs BNST-FR
+    contrast surfaces SUPT_0563's child clusters at the top with is_target=True
+    when target_accession is the parent supertype.
+    """
+    from evidencell.render import _top_n_hits_for_contrast, _RUN_REF_PMID_CACHE
+    _RUN_REF_PMID_CACHE.clear()
+    hits = _top_n_hits_for_contrast(
+        "corr_run_20260428_knoedler_esr1_wmbv1",
+        "corr_VMH_FR_vs_BNST_FR",
+        target_accession="CS20230722_SUPT_0563",
+        n=5,
+    )
+    assert len(hits) == 5
+    assert hits[0]["cluster_id"] == "CS20230722_CLUS_2293"
+    assert hits[0]["is_target"] is True  # parent SUPT_0563 matches target
+    assert float(hits[0]["delta"]) > 0.015
+    # CLUS_2298 sits at rank 3, parent SUPT_0565 — NOT the target supertype
+    rank3 = hits[2]
+    assert rank3["cluster_id"] == "CS20230722_CLUS_2298"
+    assert rank3["is_target"] is False
+
+
+def test_top_n_hits_for_contrast_handles_missing_run():
+    from evidencell.render import _top_n_hits_for_contrast
+    hits = _top_n_hits_for_contrast("not_a_run_id", "not_a_contrast")
+    assert hits == []
+
+
+def test_methods_summary_aggregates_bulk_run_data():
+    """methods_summary surfaces bulk-correlation provenance for the Methods
+    section: dataset citation, atlas SHA, statistic, parameters, script
+    git provenance, code_version. Single run summary per run_ref."""
+    from evidencell.render import extract_methods_summary
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {"id": "cl", "name": "cl", "definition_basis": "CLASSICAL_MULTIMODAL", "is_terminal": False},
+            {"id": "ax", "name": "ax", "definition_basis": "ATLAS_TRANSCRIPTOMIC", "is_terminal": True, "atlas": "WMBv1"},
+        ],
+        "edges": [
+            {
+                "id": "e",
+                "type_a": "cl",
+                "type_b": "ax",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "BULK_CORRELATION",
+                        "supports": "SUPPORT",
+                        "explanation": "Stephens 2024 ...",
+                        "run_ref": "corr_run_20260428_stephens_kiss1_wmbv1",
+                    },
+                    {
+                        "evidence_type": "ATLAS_METADATA",
+                        "supports": "SUPPORT",
+                        "explanation": "Atlas markers align.",
+                    },
+                ],
+            },
+        ],
+    }
+    ms = extract_methods_summary(graph, "cl", Path("test.yaml"))
+    assert ms["evidence_type_counts"] == {"BULK_CORRELATION": 1, "ATLAS_METADATA": 1}
+    assert len(ms["bulk_correlation_runs"]) == 1
+    run = ms["bulk_correlation_runs"][0]
+    assert run["statistic_kind"] == "spearman_rho"
+    assert run["script_git_repo_url"] == "https://github.com/Cellular-Semantics/evidencell"
+    assert run["script_git_commit"] == "d7c4445"
+    assert run["code_version"] == "d7c4445"
+    assert len(ms["bulk_data_sources"]) == 1
+    ds = ms["bulk_data_sources"][0]
+    assert ds["source_pmid"] == "PMID:37934722"
+    assert ds["year"] == 2024
+    assert "Stephens" in ds["authors"][0]
+    assert len(ms["atlas_data_sources"]) == 1
+    assert ms["atlas_data_sources"][0]["taxonomy_id"] == "CCN20230722"
+
+
+def test_methods_summary_dedups_at_runs_by_method_dataset_target():
+    """Multiple AnnotationTransferEvidence items with the same
+    (method, source_dataset_accession, target_atlas) collapse to one entry —
+    the Methods section describes the AT run once, not per cluster."""
+    from evidencell.render import extract_methods_summary
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {"id": "cl", "name": "cl", "definition_basis": "CLASSICAL_MULTIMODAL", "is_terminal": False},
+            {"id": "ax", "name": "ax", "definition_basis": "ATLAS_TRANSCRIPTOMIC", "is_terminal": True, "atlas": "WMBv1"},
+        ],
+        "edges": [
+            {
+                "id": "e",
+                "type_a": "cl",
+                "type_b": "ax",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "ANNOTATION_TRANSFER",
+                        "supports": "SUPPORT",
+                        "explanation": "...",
+                        "method": "MapMyCells v1.7.1",
+                        "source_dataset_accession": "GEO:GSE124847",
+                        "target_atlas": "WMBv1",
+                        "best_f1_score": 0.62,
+                        "best_mapping_level": "SUPERTYPE",
+                    },
+                    {
+                        "evidence_type": "ANNOTATION_TRANSFER",
+                        "supports": "REFUTE",
+                        "explanation": "...",
+                        "method": "MapMyCells v1.7.1",
+                        "source_dataset_accession": "GEO:GSE124847",
+                        "target_atlas": "WMBv1",
+                        "best_f1_score": 0.0,
+                    },
+                ],
+            },
+        ],
+    }
+    ms = extract_methods_summary(graph, "cl", Path("test.yaml"))
+    assert len(ms["annotation_transfer_runs"]) == 1
+    assert ms["evidence_type_counts"]["ANNOTATION_TRANSFER"] == 2
+
+
+def test_methods_summary_cl_mapping_surfaced_with_ols_url():
+    """CL mapping flows through with id, label, mapping_type, and an OLS URL
+    for the front of the report and the Discussion best-candidate summary."""
+    from evidencell.render import extract_methods_summary
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {
+                "id": "cl",
+                "name": "cl",
+                "definition_basis": "CLASSICAL_MULTIMODAL",
+                "is_terminal": False,
+                "cl_mapping": {
+                    "cl_term": {
+                        "id": "CL:0000617",
+                        "label": "GABAergic neuron",
+                        "name_in_source": "GABAergic neuron",
+                    },
+                    "mapping_type": "BROAD",
+                    "mapping_notes": "Classical type maps broadly to GABAergic neuron.",
+                },
+            },
+        ],
+        "edges": [],
+    }
+    ms = extract_methods_summary(graph, "cl", Path("test.yaml"))
+    cl = ms["cl_mapping"]
+    assert cl["cl_term_id"] == "CL:0000617"
+    assert cl["cl_term_label"] == "GABAergic neuron"
+    assert cl["mapping_type"] == "BROAD"
+    assert cl["mapping_notes"].startswith("Classical type")
+    assert cl["ols_url"] == "https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0000617"
+
+
+def test_build_reference_index_uses_dataset_authors_year_for_citation_line():
+    """When references.json has no entry for a run_ref-resolved PMID, the
+    citation line is synthesised from the BulkDataset descriptor's
+    authors/year fields (rather than falling back to the bare PMID)."""
+    graph = {
+        "name": "Test",
+        "target_atlas": "WMBv1",
+        "creation_date": "2026-01-01",
+        "nodes": [
+            {"id": "cl", "name": "cl", "definition_basis": "CLASSICAL_MULTIMODAL", "is_terminal": False},
+            {"id": "ax", "name": "ax", "definition_basis": "ATLAS_TRANSCRIPTOMIC", "is_terminal": True, "atlas": "WMBv1"},
+        ],
+        "edges": [
+            {
+                "id": "e",
+                "type_a": "cl",
+                "type_b": "ax",
+                "relationship": "PARTIAL_OVERLAP",
+                "confidence": "MODERATE",
+                "evidence": [
+                    {
+                        "evidence_type": "BULK_CORRELATION",
+                        "supports": "SUPPORT",
+                        "explanation": "...",
+                        "run_ref": "corr_run_20260428_stephens_kiss1_wmbv1",
+                    },
+                ],
+            },
+        ],
+    }
+    # references.json is empty — citation line must come from the dataset YAML
+    idx = build_reference_index(graph, {}, "cl")
+    stephens = next((v for v in idx.values() if v.pmid == "37934722"), None)
+    assert stephens is not None
+    assert "Stephens" in stephens.citation_line
+    assert "2024" in stephens.citation_line

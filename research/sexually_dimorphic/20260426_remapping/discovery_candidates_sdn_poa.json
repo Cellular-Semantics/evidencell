@@ -1,0 +1,252 @@
+{
+  "classical_node_id": "sdn_poa_calbindin_neuron",
+  "classical_node_name": "Sexually dimorphic nucleus of the preoptic area (SDN-POA) calbindin neuron",
+  "taxonomy_id": "CCN20230722",
+  "generated_date": "2026-04-26",
+  "anatomy_note": "KB uses MBA:464 for SDN-POA anatomical location; MBA:464 resolves in the atlas to Paraventricular hypothalamic nucleus descending division, not MPN. The anatomically correct structure for SDN-POA is MBA:515 (Medial preoptic nucleus). Find-candidates queries used MBA:464, causing anatomy-match failures at rank-1 (all score=1, no anatomy hit). This discrepancy is flagged in the KB and does not affect the final recommendation because SUPT_0423 was identified via Calb1 marker match and confirmed by manual child-cluster analysis against MBA:515.",
+  "recommended_rank1_candidate": {
+    "node_id": "CS20230722_SUPT_0423",
+    "label": "0423 BST-MPN Six3 Nrgn Gaba_4",
+    "taxonomy_level": "supertype",
+    "taxonomy_rank": 1,
+    "db_score": 1,
+    "refined_assessment": "PLAUSIBLE",
+    "assessment_rationale": "SUPT_0423 is the only rank-1 candidate with MPN (MBA:515) cells and high Calb1 expression. Child-cluster analysis identifies CLUS_1550 as the best within-supertype match for SDN-POA identity. Th discordance is a concern but likely attributable to non-MPN components of this multi-region supertype.",
+    "nt_type": "GABA",
+    "parent_id": "CS20230722_SUBC_090",
+    "supertype_expression": {
+      "Calb1_mean": 6.42,
+      "Th_mean": 0.99,
+      "note": "Supertype-level Th=0.99 reflects mixed regional composition (BST, AHN, PVN, MPN). Th signal is unlikely to originate primarily from the MPN component."
+    },
+    "location_fraction_MPN": {
+      "MPN_primary_soma_cells_CLUS_1550": 22,
+      "MPN_cells_all_children": 46,
+      "note": "MPN cells across all SUPT_0423 children: CLUS_1548 contributes 10 MPN cells, CLUS_1549 contributes 14 MPN cells, CLUS_1550 contributes 22 MPN cells (primary soma). Total anatomy cell count across all children estimated at 242. MPN-primary fraction (CLUS_1550 only): 22/242 = 9.1%. Total MPN fraction (all children): 46/242 = 19.0%."
+    },
+    "best_child_cluster": {
+      "node_id": "CS20230722_CLUS_1550",
+      "label": "1550 BST-MPN Six3 Nrgn Gaba_4",
+      "primary_soma": "MBA:515 (Medial preoptic nucleus, n=22)",
+      "nt_type": "GABA",
+      "male_female_ratio": 3.35,
+      "precomputed_Calb1": 6.66,
+      "precomputed_Th": 2.75,
+      "markers_DEFINING": ["Fbxw21", "Sostdc1"],
+      "markers_DEFINING_SCOPED": ["Fbxw21", "Sostdc1"],
+      "markers_TF": ["Sp8", "Nr4a2", "Six3", "L3mbtl4", "Pou6f2"],
+      "markers_MERFISH": ["Sp8", "Kcnj5", "Nr4a2", "Cd24a"],
+      "neighborhood": "Subpallium-GABA;HY-EA-Glut-GABA",
+      "supporting_criteria": [
+        "Primary soma in MBA:515 (MPN) — anatomically correct for SDN-POA",
+        "Calb1=6.66 (high, consistent with SDN-POA calbindin-D28K defining marker)",
+        "MFR=3.35 (male-biased, consistent with MALE_BIASED classical node sex_bias)"
+      ],
+      "concerns": [
+        "Th=2.75 (non-zero; classical node asserts Th NEGATIVE — no TH cell bodies in SDN-POA)",
+        "CLUS_1550 has only 22 cells in MPN; additional cells in PVHap (n=4), PVH (n=9), Hypothalamus (n=9) — cluster is not MPN-restricted",
+        "DEFINING markers (Fbxw21, Sostdc1) are not SDN-POA-specific and are not in the classical marker set"
+      ],
+      "Th_discordance_interpretation": "Th=2.75 in CLUS_1550 is lower than CLUS_1547 context but non-trivial. Given CLUS_1550 cells are distributed across MPN, PVH, PVHap, and Hypothalamus, Th expression may originate from non-MPN cells within this cluster. Cannot exclude Th expression in the MPN component without single-cell spatial resolution. This remains an open concern."
+    },
+    "child_cluster_comparison": [
+      {
+        "node_id": "CS20230722_CLUS_1547",
+        "label": "1547 BST-MPN Six3 Nrgn Gaba_4",
+        "primary_soma": "MBA:351 (Bed nuclei of stria terminalis, n=13)",
+        "male_female_ratio": 1.7,
+        "precomputed_Calb1": 6.25,
+        "precomputed_Th": 0.0,
+        "assessment": "WRONG_REGION — BST primary, not MPN. Th=0.0 is consistent with SDN-POA but anatomy is disqualifying."
+      },
+      {
+        "node_id": "CS20230722_CLUS_1548",
+        "label": "1548 BST-MPN Six3 Nrgn Gaba_4",
+        "primary_soma": "MBA:88 (Anterior hypothalamic nucleus, n=46)",
+        "male_female_ratio": 2.03,
+        "precomputed_Calb1": 5.03,
+        "precomputed_Th": 0.42,
+        "assessment": "WRONG_REGION — AHN primary, not MPN. Also has 10 MPN cells but MPN is not the dominant location. Calb1 lower than CLUS_1550."
+      },
+      {
+        "node_id": "CS20230722_CLUS_1549",
+        "label": "1549 BST-MPN Six3 Nrgn Gaba_4",
+        "primary_soma": "MBA:38 (Paraventricular hypothalamic nucleus, n=20)",
+        "male_female_ratio": 3.35,
+        "precomputed_Calb1": 7.71,
+        "precomputed_Th": 0.77,
+        "assessment": "WRONG_REGION — PVN primary, not MPN. Highest Calb1 in supertype (7.71) and male-biased, but anatomically in PVN. Has 14 MPN cells as secondary location."
+      },
+      {
+        "node_id": "CS20230722_CLUS_1550",
+        "label": "1550 BST-MPN Six3 Nrgn Gaba_4",
+        "primary_soma": "MBA:515 (Medial preoptic nucleus, n=22)",
+        "male_female_ratio": 3.35,
+        "precomputed_Calb1": 6.66,
+        "precomputed_Th": 2.75,
+        "assessment": "BEST_CHILD — Only cluster with MPN as primary soma. Calb1=6.66 and MFR=3.35 both support SDN-POA identity. Th=2.75 is a concern (see above)."
+      }
+    ]
+  },
+  "rank0_top_candidates_assessment": [
+    {
+      "node_id": "CS20230722_CLUS_1588",
+      "label": "1588 RT-ZI Gnb3 Gaba_2",
+      "db_score": 2,
+      "db_score_criteria": ["marker_Calb1 (MERFISH panel)", "sex_bias=male (MFR=6.69)"],
+      "nt_type": "GABA",
+      "parent_supertype": "CS20230722_SUPT_0432 (0432 RT-ZI Gnb3 Gaba_2)",
+      "parent_subclass": "CS20230722_SUBC_093 (093 RT-ZI Gnb3 Gaba)",
+      "male_female_ratio": 6.69,
+      "primary_anatomy": "MBA:262 (Reticular nucleus of the thalamus, n=236)",
+      "defining_markers": ["A730046J19Rik", "Pvalb", "Npy", "Tacr3"],
+      "defining_scoped_markers": ["A730046J19Rik", "Pou3f2", "Npy", "G630016G05Rik"],
+      "tf_markers": ["Isl1", "Zeb2", "Pou6f2", "Pparg", "Rxrg", "Tox3"],
+      "neuropeptides": ["Sst (7.5)", "Npy (6.8)"],
+      "calb1_evidence": "Calb1 appears only in MERFISH panel (not DEFINING or DEFINING_SCOPED) — Calb1 is not a primary marker for this cluster",
+      "neighborhood": "HY-EA-Glut-GABA",
+      "refined_assessment": "DISCARD",
+      "assessment_rationale": "Primary soma in Reticular nucleus of thalamus (RT), which has no anatomical relationship to SDN-POA (MPN). The high MFR drove the score=2, but sex bias alone is insufficient in the absence of anatomical overlap. Calb1 is not a defining marker of this cluster. DISCARD — anatomy is disqualifying.",
+      "concerns": [
+        "No cells in MBA:515 (MPN) or any preoptic area region",
+        "Calb1 only in MERFISH panel, not defining marker",
+        "Pvalb, Npy, Sst expression profile does not match SDN-POA calbindin neuron",
+        "Thalamic reticular location is inconsistent with hypothalamic SDN-POA"
+      ]
+    },
+    {
+      "node_id": "CS20230722_CLUS_1689",
+      "label": "1689 SBPV-PVa Six6 Satb2 Gaba_2",
+      "db_score": 2,
+      "db_score_criteria": ["marker_Calb1 (DEFINING)", "sex_bias=male (MFR=8.09)"],
+      "nt_type": "GABA",
+      "parent_supertype": "CS20230722_SUPT_0454 (0454 SBPV-PVa Six6 Satb2 Gaba_2)",
+      "parent_subclass": "CS20230722_SUBC_099 (099 SBPV-PVa Six6 Satb2 Gaba)",
+      "male_female_ratio": 8.09,
+      "primary_anatomy": "MBA:88 (Anterior hypothalamic nucleus, n=13); MBA:30 (PVHap, n=5); MBA:63 (PVHd, n=2); MBA:1097 (Hypothalamus, n=10)",
+      "defining_markers": ["Six6", "Ptgs1", "Calb1"],
+      "defining_scoped_markers": ["Efemp1"],
+      "tf_markers": ["Six6", "Mkx", "Lhx1", "Bcl11b", "L3mbtl4", "Six3"],
+      "neuropeptides": ["Tac2 (3.1)"],
+      "merfish_markers": ["Six3", "Kcns3", "Angpt1", "Gpr83", "Calb1"],
+      "neighborhood": "HY-EA-Glut-GABA",
+      "refined_assessment": "UNLIKELY",
+      "assessment_rationale": "Calb1 is a DEFINING marker (stronger evidence than CLUS_1588) and MFR=8.09 is the highest of any rank-0 candidate. However, no cells in MBA:515 (MPN). Primary anatomy is AHN/SBPV/periventricular hypothalamus — adjacent to but distinct from the preoptic area. Six6 is the primary defining transcription factor; SDN-POA neurons have not been reported to express Six6. Tac2 neuropeptide expression is not documented for SDN-POA. UNLIKELY — Calb1 and sex bias are positive but anatomy does not match SDN-POA.",
+      "concerns": [
+        "No cells in MBA:515 (MPN) — all anatomy is in SBPV, AHN, PVH regions",
+        "Six6 as primary TF/defining marker — not reported for SDN-POA neurons",
+        "Tac2 neuropeptide — not a documented SDN-POA marker",
+        "SBPV (subparaventricular zone) is posterior/dorsal to preoptic area"
+      ]
+    }
+  ],
+  "rank1_full_candidate_list": [
+    {
+      "node_id": "CS20230722_SUPT_0423",
+      "label": "0423 BST-MPN Six3 Nrgn Gaba_4",
+      "db_score": 1,
+      "refined_assessment": "PLAUSIBLE",
+      "rationale_summary": "Only rank-1 candidate with MPN (MBA:515) cells. CLUS_1550 child cluster has MPN as primary soma, Calb1=6.66, MFR=3.35. Th discordance present but likely from non-MPN cells in multi-region supertype."
+    },
+    {
+      "node_id": "CS20230722_SUPT_1048",
+      "label": "1048 CS-PRNr-DR En1 Sox2 Gaba_2",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Pontine/raphe region (PRNr, DR) — no anatomical relationship to SDN-POA or preoptic area."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0227",
+      "label": "0227 Sst Gaba_14",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Sst-primary supertype — SDN-POA classical node is Sst-negative. Label prefix indicates Sst as primary defining marker, inconsistent with Calb1-primary SDN-POA identity."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0225",
+      "label": "0225 Sst Gaba_12",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Sst-primary supertype — same reasoning as SUPT_0227."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0288",
+      "label": "0288 STR-PAL Chst9 Gaba_4",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Striatal-pallidal region (STR-PAL) — no anatomical relationship to SDN-POA."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0143",
+      "label": "0143 OB Meis2 Thsd7b Gaba_1",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Olfactory bulb (OB) — no anatomical relationship to SDN-POA."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0496",
+      "label": "0496 LGv-ZI Otx2 Gaba_1",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Lateral geniculate/zona incerta — no anatomical relationship to SDN-POA."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0525",
+      "label": "0525 LHA Barhl2 Glut_2",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Glutamatergic lateral hypothalamic area — SDN-POA neurons are not documented as glutamatergic. Anatomy also wrong."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0704",
+      "label": "0704 PAG-MRN Pou3f1 Glut_1",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Periaqueductal gray / midbrain reticular nucleus — brainstem location, no relationship to SDN-POA."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0925",
+      "label": "0925 PCG-PRNr Vsx2 Nkx6-1 Glut_1",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Pontine reticular region — brainstem location, no relationship to SDN-POA."
+    },
+    {
+      "node_id": "CS20230722_SUPT_0906",
+      "label": "0906 LDT-PCG Vsx2 Lhx4 Glut_1",
+      "db_score": 1,
+      "refined_assessment": "DISCARD",
+      "rationale_summary": "Laterodorsal tegmental region — brainstem location, no relationship to SDN-POA."
+    }
+  ],
+  "annotation_transfer_evidence": {
+    "status": "NOT_ASSESSED",
+    "note": "No AnnotationTransferEvidence found in kb/draft/ for CS20230722_SUPT_0423 or child clusters CLUS_1547, CLUS_1548, CLUS_1549, CLUS_1550. AT pipeline has not been run for this classical node."
+  },
+  "summary": {
+    "recommended_supertype": "CS20230722_SUPT_0423",
+    "recommended_supertype_confidence": "LOW",
+    "recommended_cluster": "CS20230722_CLUS_1550",
+    "recommended_cluster_confidence": "LOW",
+    "key_supporting_evidence": [
+      "CLUS_1550 primary soma in MBA:515 (MPN, n=22) — anatomically correct for SDN-POA",
+      "Calb1=6.66 (high expression) — matches SDN-POA primary defining marker (IHC calbindin-D28K)",
+      "MFR=3.35 — consistent with MALE_BIASED sex_bias of classical node",
+      "GABA neurotransmitter type — consistent with GABAergic nature of hypothalamic interneurons"
+    ],
+    "key_concerns": [
+      "Th=2.75 in CLUS_1550 — discordant with classical Th NEGATIVE marker assertion; cannot exclude Th expression in MPN-component cells at current resolution",
+      "SUPT_0423 spans BST, AHN, PVN, and MPN — supertype-level mapping captures many non-SDN-POA cells; CLUS_1550 is the narrower, more specific match",
+      "CLUS_1550 defining markers (Fbxw21, Sostdc1) are not documented SDN-POA markers — correspondence relies on anatomy + Calb1 alone",
+      "SDN-POA is a histologically defined subnucleus within MPN not resolvable in WMBv1 MERFISH spatial data",
+      "MBA:464 vs MBA:515 discrepancy in KB — find-candidates queries missed anatomy match; manual curation required"
+    ],
+    "rank0_recommendation": "Neither CLUS_1588 nor CLUS_1689 improves on SUPT_0423 as a mapping candidate. CLUS_1588 is thalamic (RT) and anatomically disqualifying. CLUS_1689 has Calb1 as DEFINING and the highest MFR (8.09) but no MPN cells; anatomy is SBPV/AHN/periventricular. CLUS_1550 (child of SUPT_0423) remains the best available cluster-level match.",
+    "next_steps": [
+      "Correct MBA:464 annotation in classical node to MBA:515 to fix anatomy matching in future find-candidates runs",
+      "Run annotation transfer (annotation-transfer workflow) with an SDN-POA or MPN Calb1+ scRNA-seq dataset to assess F1 score against CLUS_1550",
+      "Inspect MERFISH spatial data for SUPT_0423 cells in MBA:515 to assess sub-regional clustering consistent with SDN-POA dorsomedial position",
+      "Check whether Th expression in CLUS_1550 is spatially restricted to non-MPN cells using MERFISH Th channel"
+    ]
+  }
+}

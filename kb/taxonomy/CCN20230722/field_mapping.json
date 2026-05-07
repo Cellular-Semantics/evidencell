@@ -6,11 +6,12 @@
   "confirmed": true,
   "anatomy_ontology": "MBA",
   "row_keys": {
-    "_note": "Maps canonical column names to actual keys in the exported JSON. The existing wmbv1_full.json uses 'wmb' and 'wmb_parent.curie'; new KG exports from CCN20230722.cypher use canonical 'node' and 'parent_curie'.",
-    "node": "wmb",
-    "parent_curie": "wmb_parent.curie",
+    "_note": "Maps canonical column names to actual keys in the exported JSON. The post-2026-04 KG export from CCN20230722.cypher (kg_query.py) uses 'node', 'parent_curie', 'level'. The legacy wmbv1_full.json (one-off VFB graph export) used 'wmb' and 'wmb_parent.curie' — no longer the source of record.",
+    "node": "node",
+    "parent_curie": "parent_curie",
     "cl": "cl",
-    "anat": "anat"
+    "anat": "anat",
+    "level": "level"
   },
   "structure": "Array of objects, one per node at any taxonomy level. Graph-oriented: each row represents one node with its CL mapping, parent pointer, and anatomy. All levels (class, subclass, supertype, cluster, neurotransmitter) in one file.",
   "top_level_keys": {
