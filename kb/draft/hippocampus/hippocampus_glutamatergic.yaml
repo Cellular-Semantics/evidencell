@@ -1859,24 +1859,66 @@ edges:
     node_a_value: defining marker Pcp4 (PCP4; shared with CA2 pyramidal cells)
     node_b_value: not listed in SUPT_0036 defining markers (Fermt1, Cxcl14)
     alignment: CONSISTENT
-    notes: Pcp4 mean_expression=10.57 in SUPT_0036 (precomputed_stats.h5, supertype level)
-  caveats:
-  - caveat_type: AMBIGUOUS_MAPPING
-    description: 'SUPT_0036 and SUPT_0037 together capture 99.0% of Yao 2021 L3 IT ENT cells. The classical ec_layer3_pyramidal_cell
-      (Pcp4+) may TYPE_A_SPLITS across these two supertypes. SUPT_0036 is the dominant target (F1=0.937); a secondary edge
-      to SUPT_0037 (F1=0.177, due to lower group purity) would complete the mapping.
+    notes: 'Pcp4 mean_expression=10.57 in SUPT_0036 (precomputed_stats.h5, supertype level). CA2
+      comparison (precomputed_stats.h5): SUPT_0100 (0100 CA2-FC-IG Glut_1) mean=11.26, SUPT_0101
+      (0101 CA2-FC-IG Glut_2) mean=9.99. SUPT_0037 (0037 L2/3 IT ENT Glut_5) mean=9.44. Values
+      are similar across EC layer III and CA2 supertypes (range 9.44-11.26) — Pcp4 is NOT a
+      discriminating marker between EC layer III and CA2 at the atlas supertype level.
 
       '
-  unresolved_questions:
-  - 'Does PCP4 expression pattern in WMBv1 distinguish SUPT_0036 (EC layer III) from SUPT_0100/0101 (CA2-FC-IG) supertypes?
-    This would confirm the PCP4 marker is not confounded across atlas types.
+  caveats:
+  - caveat_type: AMBIGUOUS_MAPPING
+    description: 'SUPT_0036 and SUPT_0037 together capture 99.0% of Yao 2021 L3 IT ENT cells
+      (TYPE_A_SPLITS). Secondary edge to SUPT_0037 (F1=0.177, 10.2% of L3 IT ENT cells) added
+      as edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037.
 
-    '
-  proposed_experiments:
-  - 'Add edge to SUPT_0037 (L2/3 IT ENT Glut_5) as secondary EC layer III mapping. Add-expression for Pcp4 in SUBC_008 (L2/3
-    IT ENT) supertypes.
+      '
+  unresolved_questions: []
+  proposed_experiments: []
+- id: edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037
+  type_a: ec_layer3_pyramidal_cell_hippocampus
+  type_b: CS20230722_SUPT_0037
+  relationship: PARTIAL_OVERLAP
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    explanation: 'Secondary target in Yao 2021 (GSE185862) SSv4 L3 IT ENT annotation transfer onto WMBv1 (CCN20230722)
+      via local MapMyCells. SUPT_0037 (0037 L2/3 IT ENT Glut_5) captures 10.2% of L3 IT ENT cells (n≈60/588)
+      with F1=0.177. Together with SUPT_0036 (F1=0.937, 88.8%), the two supertypes account for 99.0% of L3 IT
+      ENT cells. Low F1 reflects lower group_purity relative to SUPT_0036; target_purity is not separately
+      reported for this secondary target in the available AT artifact.
 
-    '
+      '
+    source_dataset_accession: GEO:GSE185862
+    source_cluster_label: L3 IT ENT (Yao 2021 subclass)
+    n_cells_total: 588
+    target_atlas: WMBv1 (CCN20230722)
+    method: MapMyCells local (precomputed_stats CCN20230722)
+    metrics_by_level:
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0037 L2/3 IT ENT Glut_5
+      f1_score: 0.177
+      n_cells_mapped: 60
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic
+    node_b_value: glutamatergic (SUBC_008 L2/3 IT ENT Glut)
+    alignment: CONSISTENT
+  - property: location
+    node_a_value: 'entorhinal cortex layer III (UBERON:0002728, compartment: SOMA)'
+    node_b_value: SUPT_0037 in L2/3 IT ENT subclass; same subclass as SUPT_0036
+    alignment: CONSISTENT
+    notes: Minor secondary population within the same L2/3 IT ENT subclass as SUPT_0036.
+  - property: marker_Pcp4
+    node_a_value: defining marker Pcp4 (PCP4)
+    node_b_value: not listed in SUPT_0037 defining markers
+    alignment: CONSISTENT
+    notes: Pcp4 mean_expression=9.44 in SUPT_0037 (precomputed_stats.h5, supertype level). Consistent
+      with the shared EC layer III Pcp4+ identity; value similar to SUPT_0036 (10.57).
+  caveats: []
+  unresolved_questions: []
+  proposed_experiments: []
 - id: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069
   type_a: hpc_glu_dopa_receptor_pyramidal_hippocampus
   type_b: CS20230722_SUPT_0069
