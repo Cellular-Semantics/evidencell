@@ -1,0 +1,1047 @@
+# Taxonomy: Allen Brain Cell Atlas — CCN202307220 (Dentate Gyrus)
+# Source: DG_taxonomy.xlsx
+# Ingested: 2026-04-16
+# Status: STUB — evidence lists empty; accession lookup, CL terms, and
+#         anatomical_location to be completed before graduation to kb/mappings/
+# SCHEMA_CANDIDATE fields preserved as comments — see field_mapping.json
+
+name: "Allen Brain Cell Atlas CCN202307220 — Dentate Gyrus (DG Glut)"
+target_atlas: "Allen Brain Cell Atlas CCN202307220"
+creation_date: "2026-04-16"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: Mus musculus
+edges: []
+
+nodes:
+
+  # ── Class ────────────────────────────────────────────────────
+
+  - id: CS20230722_CLAS_04
+    name: "DG-IMN Glut"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLAS_04
+    taxonomy_level: "class"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Slc17a7
+        ncbi_gene_id: null
+      - symbol: Prox1
+        ncbi_gene_id: null
+      - symbol: Igfbpl1
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG-IMN Glut"
+      mapping_type: BROAD
+      mapping_notes: >
+        Class node spanning both mature granule cells (DG Glut subclass) and
+        immature/neuroblast types (DG-PIR Ex IMN subclass). CL:2000089 covers
+        the mature terminal state but is too narrow for the class as a whole;
+        mapping is BROAD. The class name "DG-IMN Glut" indicates it includes
+        immature neurons not yet represented in CL.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # class_id: 4
+    # class_id_label: "04 DG-IMN Glut"
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Subclass: DG Glut ────────────────────────────────────────
+
+  - id: CS20230722_SUBC_037
+    name: "DG Glut"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUBC_037
+    parent_hierarchy:
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "subclass"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Slc17a7
+        ncbi_gene_id: null
+      - symbol: Prox1
+        ncbi_gene_id: null
+      - symbol: Glis3
+        ncbi_gene_id: null
+      - symbol: Neurod2
+        ncbi_gene_id: null
+      - symbol: St18
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # subclass_id: 37
+    # subclass_id_label: "037 DG Glut"
+
+  # ── Supertype: DG Glut_1 ─────────────────────────────────
+
+  - id: CS20230722_SUPT_0136
+    name: "DG Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUPT_0136
+    parent_hierarchy:
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "supertype"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Glis3
+        ncbi_gene_id: null
+      - symbol: Prox1
+        ncbi_gene_id: null
+      - symbol: Slc17a7
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # supertype_id: 136
+    # supertype_id_label: "0136 DG Glut_1"
+
+  # ── Cluster: 0502 DG Glut_1 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0502
+    name: "0502 DG Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0502
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_1", cell_set_accession: CS20230722_SUPT_0136}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides:
+      - symbol: Grp  # score: 6.4
+      - symbol: Cck  # score: 6.2
+    defining_markers:
+      - symbol: Dio3  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Tshz2  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Il33  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Thsd7b  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Ecm2  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Nell1  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Scn7a  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Glis3  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Kcnip1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Zfpm2  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Prox1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Neurod2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Rfx2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Lhx9  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 7.78
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG ve"
+    # anatomy_source: "DG ve"
+    # anatomy_source: "sAMY:0.74,NA:0.17  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 502
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "MEA:0.74,fiber tracts:0.1"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 246  v2.size: 50  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.18  M: 0.82  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.09  Light: 0.91  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1398  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=362 cluster_label=362_DG_1 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0503 DG Glut_1 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0503
+    name: "0503 DG Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0503
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_1", cell_set_accession: CS20230722_SUPT_0136}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides:
+      - symbol: Cck  # score: 7.2
+      - symbol: Grp  # score: 6.4
+    defining_markers:
+      - symbol: Dio3  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Ndst4  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Ntn5  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Prox1  # source: cluster_marker | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: St18  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Glis3  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Neurod2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Hey2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 8.74
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG ve"
+    # anatomy_source: "DG ve"
+    # anatomy_source: "HIP:0.93  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 503
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "CA3sp:0.18,DG-mo:0.17,DG-po:0.17,CA3sr:0.12,DG-sg:0.11,CA3slu:0.05"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 117  v2.size: 734  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.35  M: 0.65  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.08  Light: 0.92  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1399  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=362 cluster_label=362_DG_2 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0504 DG Glut_1 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0504
+    name: "0504 DG Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0504
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_1", cell_set_accession: CS20230722_SUPT_0136}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides:
+      - symbol: Grp  # score: 6.8
+      - symbol: Penk  # score: 6.4
+      - symbol: Cck  # score: 4.4
+      - symbol: Cartpt  # score: 3.3
+    defining_markers:
+      - symbol: Gcnt1  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Dcn  # source: cluster_marker | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Prox1  # source: cluster_marker | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Adamts19  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Cartpt  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Glis3  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Nr4a3  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Egr3  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Rorb  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 8.29
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG ve"
+    # anatomy_source: "DG ve"
+    # anatomy_source: "HIP:0.69,sAMY:0.2  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 504
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "MEA:0.2,DG-po:0.17,CA3sp:0.11,DG-mo:0.11,CA3slm:0.1,DG-sg:0.08,CA1slm:0.05"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 44  v2.size: 72  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.43  M: 0.57  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.1  Light: 0.9  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1400  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=362 cluster_label=362_DG_3 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Supertype: DG Glut_2 ─────────────────────────────────
+
+  - id: CS20230722_SUPT_0137
+    name: "DG Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUPT_0137
+    parent_hierarchy:
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "supertype"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Glis3
+        ncbi_gene_id: null
+      - symbol: Mkx
+        ncbi_gene_id: null
+      - symbol: Neurod2
+        ncbi_gene_id: null
+      - symbol: Npnt
+        ncbi_gene_id: null
+      - symbol: Slc17a7
+        ncbi_gene_id: null
+      - symbol: St18
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # supertype_id: 137
+    # supertype_id_label: "0137 DG Glut_2"
+
+  # ── Cluster: 0505 DG Glut_2 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0505
+    name: "0505 DG Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0505
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_2", cell_set_accession: CS20230722_SUPT_0137}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Serinc2  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass
+        ncbi_gene_id: null
+      - symbol: Plk5  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass
+        ncbi_gene_id: null
+      - symbol: Lct  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Cdh9  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Fbxo32  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Stxbp6  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Glis3  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: St18  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Smoc2  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Npnt  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Grm3  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Rasgrp1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Sorcs3  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Neurod2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Prdm5  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Zkscan16  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Mkx  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 8.47
+        ncbi_gene_id: null
+      - symbol: Gad1  # source: nt_marker  # score: 5.16
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG do"
+    # anatomy_source: "DG do"
+    # anatomy_source: "HIP:0.99  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 505
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "DG-mo:0.4,DG-sg:0.29,DG-po:0.16"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 4162  v2.size: 16341  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.38  M: 0.62  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.09  Light: 0.91  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1403  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=363 cluster_label=363_DG_2 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0506 DG Glut_2 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0506
+    name: "0506 DG Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0506
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_2", cell_set_accession: CS20230722_SUPT_0137}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides:
+      - symbol: Cck  # score: 3.6
+    defining_markers:
+      - symbol: Dsp  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Adamts17  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: C1ql2  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Smoc2  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: St18  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Glis3  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Prkd1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Mkx  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Chst9  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Npnt  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Neurod2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Prox1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Zeb2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 7.02
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG do"
+    # anatomy_source: "DG do"
+    # anatomy_source: "HIP:0.99  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 506
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "DG-mo:0.45,DG-sg:0.25,DG-po:0.19"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 117  v2.size: 12080  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.25  M: 0.75  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.0  Light: 1.0  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1404  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=363 cluster_label=363_DG_3 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0507 DG Glut_2 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0507
+    name: "0507 DG Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0507
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_2", cell_set_accession: CS20230722_SUPT_0137}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides:
+      - symbol: Cck  # score: 6.8
+      - symbol: Pdyn  # score: 3.7
+    defining_markers:
+      - symbol: Rflnb  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Rhbdl3  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Dsp  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Gm20754  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Glis3  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: St18  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Npnt  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Npy2r  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Syndig1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Ror1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: St3gal1  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Neurod2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Prdm5  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Foxo1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Mkx  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 8.7
+        ncbi_gene_id: null
+      - symbol: Gad1  # source: nt_marker  # score: 5.29
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG do"
+    # anatomy_source: "DG do"
+    # anatomy_source: "HIP:0.98  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 507
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "DG-mo:0.33,DG-sg:0.26,DG-po:0.19,CA3sr:0.06"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 6901  v2.size: 35349  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.3  M: 0.7  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.09  Light: 0.91  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1405  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=363 cluster_label=363_DG_4 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Supertype: DG Glut_3 ─────────────────────────────────
+
+  - id: CS20230722_SUPT_0138
+    name: "DG Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUPT_0138
+    parent_hierarchy:
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "supertype"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: Gad1
+        ncbi_gene_id: null
+      - symbol: Neurod2
+        ncbi_gene_id: null
+      - symbol: Slc17a7
+        ncbi_gene_id: null
+      - symbol: St18
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # supertype_id: 138
+    # supertype_id_label: "0138 DG Glut_3"
+
+  # ── Cluster: 0508 DG Glut_3 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0508
+    name: "0508 DG Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0508
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_3", cell_set_accession: CS20230722_SUPT_0138}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides:
+      - symbol: Cck  # score: 5.8
+      - symbol: Pdyn  # score: 4.8
+    defining_markers:
+      - symbol: Cenpa  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass
+        ncbi_gene_id: null
+      - symbol: Egr4  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Dsp  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Egr2  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: St18  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Npnt  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Prox1  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Neurod2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Mkx  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 8.46
+        ncbi_gene_id: null
+      - symbol: Gad1  # source: nt_marker  # score: 6.21
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG do"
+    # anatomy_source: "DG do"
+    # anatomy_source: "HIP:0.96  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 508
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "DG-mo:0.29,DG-sg:0.25,DG-po:0.14,CA3slm:0.11,CA3sr:0.07"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 29  v2.size: 136  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.3  M: 0.7  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.04  Light: 0.96  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1401  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=363 cluster_label=363_DG_1 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Cluster: 0509 DG Glut_3 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0509
+    name: "0509 DG Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0509
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_3", cell_set_accession: CS20230722_SUPT_0138}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides:
+      - symbol: Cck  # score: 5.3
+      - symbol: Pdyn  # score: 4.1
+      - symbol: Npy  # score: 4.1
+    defining_markers:
+      - symbol: Npy  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Lct  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Glis3  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: St18  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Drd5  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Nptx2  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Atf3  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Neurod2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Bhlhe41  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Cebpb  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 8.56
+        ncbi_gene_id: null
+      - symbol: Gad1  # source: nt_marker  # score: 5.36
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG do"
+    # anatomy_source: "DG do"
+    # anatomy_source: "HIP:0.96  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 509
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "DG-mo:0.31,DG-sg:0.28,DG-po:0.08,CA3sp:0.05,CA3sr:0.05,CA3slm:0.04"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 38  v2.size: 761  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.27  M: 0.73  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.02  Light: 0.98  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1402  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=361 cluster_label=361_DG supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC
+
+  # ── Supertype: DG Glut_4 ─────────────────────────────────
+
+  - id: CS20230722_SUPT_0139
+    name: "DG Glut_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_SUPT_0139
+    parent_hierarchy:
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "supertype"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides: []
+    defining_markers:
+      - symbol: C1ql2
+        ncbi_gene_id: null
+      - symbol: Clec1a
+        ncbi_gene_id: null
+      - symbol: Dsp
+        ncbi_gene_id: null
+      - symbol: Glis3
+        ncbi_gene_id: null
+      - symbol: Grp
+        ncbi_gene_id: null
+      - symbol: Lhx9
+        ncbi_gene_id: null
+      - symbol: Mkx
+        ncbi_gene_id: null
+      - symbol: Nr2f2
+        ncbi_gene_id: null
+      - symbol: Pde1a
+        ncbi_gene_id: null
+      - symbol: Scn9a
+        ncbi_gene_id: null
+      - symbol: Slc17a7
+        ncbi_gene_id: null
+      - symbol: Smoc2
+        ncbi_gene_id: null
+      - symbol: St18
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "dentate gyrus"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # supertype_id: 139
+    # supertype_id_label: "0139 DG Glut_4"
+
+  # ── Cluster: 0510 DG Glut_4 ──────────────────────────────────
+
+  - id: CS20230722_CLUS_0510
+    name: "0510 DG Glut_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: "Allen Brain Cell Atlas"
+    taxonomy_id: "CCN202307220"
+    cell_set_accession: CS20230722_CLUS_0510
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "DG Glut_4", cell_set_accession: CS20230722_SUPT_0139}
+      - {level: SUBCLASS, name: "DG Glut", cell_set_accession: CS20230722_SUBC_037}
+      - {level: CLASS, name: "DG-IMN Glut", cell_set_accession: CS20230722_CLAS_04}
+    taxonomy_level: "cluster"
+    nt_type:
+      name_in_source: "Glut"
+      cl_terms: []
+    neuropeptides:
+      - symbol: Cck  # score: 7.3
+      - symbol: Grp  # score: 4.5
+      - symbol: Pdyn  # score: 3
+    defining_markers:
+      - symbol: Clec1a  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass
+        ncbi_gene_id: null
+      - symbol: Smoc2  # source: scoped_within_subclass  # SCOPED: distinctive within parent subclass | source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: C1ql2  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Dsp  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Scn9a  # source: cluster_marker
+        ncbi_gene_id: null
+      - symbol: Glis3  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: St18  # source: merfish_marker  # spatially validated | source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Grp  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Pde1a  # source: merfish_marker  # spatially validated
+        ncbi_gene_id: null
+      - symbol: Lhx9  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Nr2f2  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Mkx  # source: tf_marker
+        ncbi_gene_id: null
+      - symbol: Slc17a7  # source: nt_marker  # score: 8.72
+        ncbi_gene_id: null
+      - symbol: Gad1  # source: nt_marker  # score: 5.5
+        ncbi_gene_id: null
+    negative_markers: []
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "DG po"
+    # anatomy_source: "DG po"
+    # anatomy_source: "HIP:0.99  # ccf_broad annotation"
+    definition_references: []
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "DG Glut"
+      mapping_type: EXACT
+      mapping_notes: >
+        Terminally differentiated glutamatergic granule cell with soma in the
+        dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3,
+        Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with
+        soma in the dentate gyrus cell layer with cone-shaped apical dendrites
+        and mossy fibre projections to CA3 — an exact structural and anatomical
+        match for all DG Glut clusters.
+    # --- source data preserved below ---
+    # taxonomy_id: CCN202307220
+    # cluster_id: 510
+    # nt_type_combo_label: Glut
+    # CCF_acronym.freq: "DG-po:0.31,DG-sg:0.17,DG-mo:0.15,CA3slm:0.14,CA3so:0.1"  # SCHEMA_CANDIDATE ccf_distribution — flag for schema discussion
+    # v3.size: 2640  v2.size: 2526  multiome.size: 0  # SCHEMA_CANDIDATE dataset_cell_counts
+    # F: 0.47  M: 0.53  # SCHEMA_CANDIDATE sex_composition — flag for schema discussion
+    # Dark: 0.26  Light: 0.74  # circadian phase composition (POTENTIAL_ENRICHMENT)
+    # cl: 1407  # UNCERTAIN — verify against CL ontology before use
+    # CTX_cross_ref: cluster_id=362 cluster_label=362_DG_4 supertype_id=5 supertype_label=Prox1 subclass_id=36 subclass_label=DG neighborhood_id=6 neighborhood_label=DG_SUB_CA
+    # neighborhood: Pallium-Glut;NN-IMN-GC

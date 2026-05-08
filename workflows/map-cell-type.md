@@ -40,6 +40,16 @@ PARAMS:
   model: "sonnet"
 ```
 
+**Precomputed stats**: Before starting, check whether a precomputed stats HDF5 is available
+for the target taxonomy:
+
+```bash
+just show-meta {taxonomy_id}   # check mapmycells.local_stats_path
+```
+
+If `local_stats_path` is set, Step 2.5 will run the stats cross-check automatically.
+If not, download with `just at-download-taxonomy {taxonomy_id}` first.
+
 ---
 
 ## Step 0: Candidate discovery

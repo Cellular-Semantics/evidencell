@@ -1,0 +1,343 @@
+{
+  "source_file": "/Users/ar38/Documents/GitHub/evidencell/inputs/taxonomies/DG_taxonomy.xlsx",
+  "format": "Excel",
+  "structure": "one row per cluster (denormalised) — 16 cluster rows, each carrying supertype/subclass/class hierarchy inline",
+  "target_level": "all",
+  "field_mappings": [
+    {
+      "source_field": "cell_set_accession.cluster",
+      "target_field": "node_id",
+      "confidence": "HIGH",
+      "notes": "CCN-style stable accession for the cluster level (e.g. CS20230722_CLUS_0502). Most granular ID; maps to node_id at cluster level."
+    },
+    {
+      "source_field": "cell_set_accession.supertype",
+      "target_field": "node_id (supertype level)",
+      "confidence": "HIGH",
+      "notes": "CCN-style accession for supertype (e.g. CS20230722_SUPT_0136). Use as node_id when constructing supertype-level KB nodes."
+    },
+    {
+      "source_field": "cell_set_accession.subclass",
+      "target_field": "node_id (subclass level)",
+      "confidence": "HIGH",
+      "notes": "CCN-style accession for subclass (e.g. CS20230722_SUBC_037). Use as node_id when constructing subclass-level KB nodes."
+    },
+    {
+      "source_field": "cell_set_accession.class",
+      "target_field": "node_id (class level)",
+      "confidence": "HIGH",
+      "notes": "CCN-style accession for class (e.g. CS20230722_CLAS_04). Use as node_id when constructing class-level KB nodes."
+    },
+    {
+      "source_field": "taxonomy_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Single value 'CCN202307220' across all rows — identifies the source taxonomy. Useful as a YAML comment or provenance field. Not a per-cell-type schema field."
+    },
+    {
+      "source_field": "cluster_id_label",
+      "target_field": "name",
+      "confidence": "HIGH",
+      "notes": "Human-readable cluster name including zero-padded numeric prefix and label (e.g. '0502 DG Glut_1'). This is the canonical display name for the cluster level."
+    },
+    {
+      "source_field": "supertype_label",
+      "target_field": "name (supertype level)",
+      "confidence": "HIGH",
+      "notes": "Human-readable label for supertype (e.g. 'DG Glut_1'). Maps to name when constructing supertype-level nodes."
+    },
+    {
+      "source_field": "subclass_label",
+      "target_field": "name (subclass level)",
+      "confidence": "HIGH",
+      "notes": "Human-readable label for subclass (e.g. 'DG Glut'). Maps to name at subclass level."
+    },
+    {
+      "source_field": "class_label",
+      "target_field": "name (class level)",
+      "confidence": "HIGH",
+      "notes": "Human-readable label for class (e.g. 'DG-IMN Glut'). Maps to name at class level."
+    },
+    {
+      "source_field": "cluster_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Numeric integer cluster ID (e.g. 502). Internal taxonomy counter. Useful as a cross-reference / sort key. Superseded by cell_set_accession.cluster for stable identification."
+    },
+    {
+      "source_field": "supertype_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Numeric integer supertype ID (e.g. 136). Internal counter; superseded by cell_set_accession.supertype."
+    },
+    {
+      "source_field": "subclass_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Numeric integer subclass ID (e.g. 37). Internal counter; superseded by cell_set_accession.subclass."
+    },
+    {
+      "source_field": "class_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Numeric integer class ID (e.g. 4). Internal counter; superseded by cell_set_accession.class."
+    },
+    {
+      "source_field": "supertype_id_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Zero-padded supertype ID concatenated with label (e.g. '0136 DG Glut_1'). Redundant with supertype_id + supertype_label; preserve as comment for display/cross-reference."
+    },
+    {
+      "source_field": "subclass_id_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Zero-padded subclass ID + label (e.g. '037 DG Glut'). Redundant with subclass_id + subclass_label."
+    },
+    {
+      "source_field": "class_id_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Zero-padded class ID + label (e.g. '04 DG-IMN Glut'). Redundant with class_id + class_label."
+    },
+    {
+      "source_field": "cl",
+      "target_field": "UNCERTAIN",
+      "confidence": "MODERATE",
+      "notes": "Contains numeric string values (e.g. '1398', '1339'). Column name 'cl' strongly suggests Cell Ontology, but values are bare integers without 'CL:' prefix or leading zeros. These could be internal cell-type row IDs in an upstream database, or truncated CL term IDs. Values are unique per cluster. Needs verification against CL ontology before mapping to cl_term. Do NOT assume CL: prefix — look up each value."
+    },
+    {
+      "source_field": "neighborhood",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Single value 'Pallium-Glut;NN-IMN-GC' for all 16 rows — coarse grouping level above class. Biologically meaningful (denotes broader transcriptomic neighborhood) but a constant in this slice; preserve as YAML comment."
+    },
+    {
+      "source_field": "anatomical_annotation",
+      "target_field": "anatomical_location",
+      "confidence": "HIGH",
+      "notes": "Curator-assigned anatomical annotation for the cluster (e.g. 'DG do', 'DG ve', 'DG po', 'PIR', 'EPd', 'DG STR'). Free-text abbreviations, not CCF proportional format. Maps directly to anatomical_location."
+    },
+    {
+      "source_field": "CCF_broad.freq",
+      "target_field": "anatomical_location",
+      "confidence": "MODERATE",
+      "notes": "CCF proportional format at broad region level (e.g. 'HIP:0.99', 'sAMY:0.74,NA:0.17'). Include as secondary anatomical_location entry alongside anatomical_annotation; annotate source as ccf_broad in YAML comment."
+    },
+    {
+      "source_field": "CCF_acronym.freq",
+      "target_field": "SCHEMA_CANDIDATE",
+      "confidence": "MODERATE",
+      "notes": "Fine-grained CCF proportional format (e.g. 'DG-mo:0.4,DG-sg:0.29,DG-po:0.16'). More granular than CCF_broad.freq; biologically valuable for spatial mapping. Could warrant a dedicated optional schema field (e.g. ccf_distribution). See schema_candidates."
+    },
+    {
+      "source_field": "notes",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Curator free-text notes on 7 of 16 rows (e.g. 'early neuroblast; Insm1, Sox6, Eomes', 'late neuroblast / immature granule cell', location rationale). Biologically rich but unstructured. Preserve verbatim as YAML comment on the node. Some notes contain marker gene names — do not separate these out automatically."
+    },
+    {
+      "source_field": "nt_type_label",
+      "target_field": "nt_type",
+      "confidence": "HIGH",
+      "notes": "Primary neurotransmitter phenotype label (values: 'Glut' for all 16 rows in this slice). Maps directly to nt_type."
+    },
+    {
+      "source_field": "nt_type_combo_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Identical to nt_type_label for all rows in this file ('Glut') — redundant. In other regions may encode dual-transmitter types. Demoted to POTENTIAL_ENRICHMENT; preserve as YAML comment."
+    },
+    {
+      "source_field": "nt.markers",
+      "target_field": "markers",
+      "confidence": "HIGH",
+      "notes": "Gene:score pairs for NT-defining markers (e.g. 'Slc17a7:7.78', 'Gad1:5.16'). Scores are log-scale expression levels. Map gene symbols to markers list; annotate as nt_marker source in YAML comment. These double as evidence for nt_type_label."
+    },
+    {
+      "source_field": "np.markers",
+      "target_field": "neuropeptides",
+      "confidence": "HIGH",
+      "notes": "Gene:score pairs for neuropeptide co-transmitters (e.g. 'Grp:6.4,Cck:6.2', 'Penk:6.4', 'Cartpt:3.3', 'Pdyn:3.7', 'Npy:4.1'). Gene symbols are canonical neuropeptide genes. Map gene names to neuropeptides field; scores provide expression evidence."
+    },
+    {
+      "source_field": "cluster.markers.combo",
+      "target_field": "markers",
+      "confidence": "HIGH",
+      "notes": "Comma-separated gene symbols that are top combination markers for the cluster (e.g. 'Il33,Thsd7b,Ecm2,Nell1'). No scores. Aggregate into markers list; note source as cluster_marker in YAML comment."
+    },
+    {
+      "source_field": "merfish.markers.combo",
+      "target_field": "markers",
+      "confidence": "HIGH",
+      "notes": "Combination markers validated in MERFISH spatial transcriptomics (e.g. 'Dio3,Scn7a,Glis3,Kcnip1,Zfpm2'). Spatially validated markers are especially valuable for mapping. Aggregate into markers list; note source as merfish_marker. Flag as spatially validated."
+    },
+    {
+      "source_field": "cluster.TF.markers.combo",
+      "target_field": "markers",
+      "confidence": "HIGH",
+      "notes": "Transcription factor markers for the cluster (e.g. 'Glis3,Prox1,Neurod2,Rfx2,Tshz2,Lhx9'). TF markers are biologically important for cell type identity. Aggregate into markers list; note source as tf_marker."
+    },
+    {
+      "source_field": "cluster.markers.combo (within subclass)",
+      "target_field": "markers",
+      "confidence": "HIGH",
+      "notes": "SCOPED markers: genes distinctive for this cluster within its parent subclass (e.g. 'Dio3,Tshz2', 'Gcnt1', 'Serinc2,Plk5'). These are the most discriminative markers for within-subclass mapping and are highest priority for cluster identification. Flag explicitly in YAML as scoped_within_subclass."
+    },
+    {
+      "source_field": "v3.size",
+      "target_field": "SCHEMA_CANDIDATE",
+      "confidence": "MODERATE",
+      "notes": "Cell count for this cluster in the v3 dataset (integer, e.g. 246, 4162). Biologically meaningful as a measure of cluster prevalence/confidence. Could map to a cell_count or dataset_size field. See schema_candidates."
+    },
+    {
+      "source_field": "v2.size",
+      "target_field": "SCHEMA_CANDIDATE",
+      "confidence": "MODERATE",
+      "notes": "Cell count in v2 dataset. Paired with v3.size and multiome.size to show dataset representation. See schema_candidates."
+    },
+    {
+      "source_field": "multiome.size",
+      "target_field": "SCHEMA_CANDIDATE",
+      "confidence": "MODERATE",
+      "notes": "Cell count in multiome dataset (all 0 in this slice — DG types may not have multiome representation). Paired with v2/v3 size. See schema_candidates."
+    },
+    {
+      "source_field": "F",
+      "target_field": "SCHEMA_CANDIDATE",
+      "confidence": "MODERATE",
+      "notes": "Fraction of cells in this cluster from female donors (e.g. 0.18, 0.35). Paired with M column. Could support a sex_composition field. sex.bias column is entirely null in this file, but F+M together carry the information. See schema_candidates."
+    },
+    {
+      "source_field": "M",
+      "target_field": "SCHEMA_CANDIDATE",
+      "confidence": "MODERATE",
+      "notes": "Fraction of cells from male donors. F+M sum to 1.0. Both columns together constitute sex composition data. See schema_candidates."
+    },
+    {
+      "source_field": "sex.bias",
+      "target_field": "TECHNICAL",
+      "confidence": "HIGH",
+      "notes": "Column entirely null in this 16-row file. Cannot assess. Likely a derived bias score. Skip unless populated in a fuller taxonomy extract."
+    },
+    {
+      "source_field": "Dark",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Fraction of cells from dark-cycle (nocturnal) time of sacrifice (Dark+Light always sums to 1.0). Circadian phase composition. Biologically interesting but not a standard mapping field; preserve as YAML comment."
+    },
+    {
+      "source_field": "Light",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Fraction of cells from light-cycle sacrifice. Complement of Dark. Preserve as YAML comment alongside Dark."
+    },
+    {
+      "source_field": "CTX.cluster_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Numeric cluster ID in the CTX (whole-cortex) reference taxonomy for the corresponding cluster. Cross-taxonomy homology link. Biologically valuable; preserve as YAML comment with label CTX_cross_ref."
+    },
+    {
+      "source_field": "CTX.cluster_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Label of the matching CTX cluster (e.g. '362_DG_1', '363_DG_2'). Paired with CTX.cluster_id. Preserve as YAML comment."
+    },
+    {
+      "source_field": "CTX.supertype_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Numeric supertype ID in CTX taxonomy (e.g. 5 for all rows — 'Prox1'). Cross-taxonomy reference. Preserve as YAML comment."
+    },
+    {
+      "source_field": "CTX.supertype_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "HIGH",
+      "notes": "Label for CTX supertype match (all rows: 'Prox1'). Cross-taxonomy reference. Preserve as YAML comment."
+    },
+    {
+      "source_field": "CTX.subclass_id (col 37, numeric)",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Numeric subclass ID in CTX taxonomy (all rows: 36). The Excel header 'CTX.subclass_id' is duplicated across columns 37 and 38 — col 37 contains the integer ID, col 38 contains the string label 'DG'. Treat as CTX_cross_ref subclass ID."
+    },
+    {
+      "source_field": "CTX.subclass_id (col 38, label)",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Despite sharing the header name 'CTX.subclass_id', column 38 contains the string label 'DG' — the CTX subclass name. This is a header collision in the source file; treat as CTX_cross_ref subclass label."
+    },
+    {
+      "source_field": "CTX.neighborhood_id",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Numeric neighborhood ID in CTX taxonomy (all rows: 6). Cross-taxonomy reference."
+    },
+    {
+      "source_field": "CTX.neighborhood_label",
+      "target_field": "POTENTIAL_ENRICHMENT",
+      "confidence": "MODERATE",
+      "notes": "Label for CTX neighborhood (all rows: 'DG_SUB_CA'). Cross-taxonomy reference. Preserve as YAML comment."
+    },
+    {
+      "source_field": "CTX.size",
+      "target_field": "TECHNICAL",
+      "confidence": "MODERATE",
+      "notes": "Cell count in the CTX reference taxonomy for the cross-mapped type. Pipeline metadata for the cross-taxonomy mapping; not directly interpretable as a property of the DG type itself."
+    }
+  ],
+  "schema_candidates": [
+    {
+      "source_field": "CCF_acronym.freq",
+      "candidate_field_name": "ccf_distribution",
+      "rationale": "Fine-grained Allen CCF region proportions (e.g. 'DG-mo:0.4,DG-sg:0.29,DG-po:0.16') encode quantitative spatial distribution at sub-DG resolution. More precise than a single anatomical_location string and not captured by the current schema. High value for spatial mapping analyses.",
+      "example_values": [
+        "DG-mo:0.4,DG-sg:0.29,DG-po:0.16",
+        "CA3sp:0.18,DG-mo:0.17,DG-po:0.17,CA3sr:0.12,DG-sg:0.11,CA3slu:0.05",
+        "MEA:0.74,fiber tracts:0.1"
+      ]
+    },
+    {
+      "source_field": "v3.size / v2.size / multiome.size",
+      "candidate_field_name": "dataset_cell_counts",
+      "rationale": "Per-dataset cell counts (v3, v2, multiome) provide evidence of cluster robustness and replication across data versions. A structured field (e.g. a map of dataset_id→count) would enable confidence scoring based on cluster size.",
+      "example_values": [
+        {"v3": 246, "v2": 50, "multiome": 0},
+        {"v3": 4162, "v2": 16341, "multiome": 0}
+      ]
+    },
+    {
+      "source_field": "F / M",
+      "candidate_field_name": "sex_composition",
+      "rationale": "Fraction of cells from female (F) and male (M) donors. Useful for detecting sex-biased clusters. sex.bias column is null in this file, but F+M together are always populated. A structured field {female: float, male: float} would preserve this without requiring a separate bias score.",
+      "example_values": [
+        {"F": 0.18, "M": 0.82},
+        {"F": 0.35, "M": 0.65},
+        {"F": 0.25, "M": 0.75}
+      ]
+    }
+  ],
+  "marker_aggregation": {
+    "primary_source": "cluster.markers.combo (within subclass)",
+    "additional_sources": [
+      "cluster.markers.combo",
+      "merfish.markers.combo",
+      "cluster.TF.markers.combo",
+      "nt.markers",
+      "np.markers"
+    ],
+    "scoped_sources": [
+      "cluster.markers.combo (within subclass)"
+    ],
+    "strategy": "Aggregate all marker columns into a single markers list; annotate each gene with its source column as a YAML comment (e.g. # source: merfish_marker). Scoped-within-subclass markers (cluster.markers.combo (within subclass)) are highest priority and should be flagged as scoped_within_subclass. np.markers genes (Grp, Cck, Penk, Cartpt, Pdyn, Npy) map to neuropeptides, not markers. nt.markers genes (Slc17a7, Slc17a6, Gad1, Gad2) map to markers with nt_marker annotation. Gene:score format in nt.markers and np.markers — strip scores for the markers list but optionally preserve scores as a YAML comment."
+  },
+  "confirmed": true,
+  "confirmation_decisions": {
+    "nt_type_combo_label": "demoted to POTENTIAL_ENRICHMENT — redundant with nt_type_label in this file",
+    "CCF_broad.freq": "include as secondary anatomical_location with ccf_broad annotation",
+    "schema_candidates": "all three (ccf_distribution, dataset_cell_counts, sex_composition) preserved as YAML comments; flagged for schema discussion",
+    "cl": "preserve raw values as YAML comments under UNCERTAIN — do not interpret as CL: prefix without manual verification"
+  },
+  "structure_notes": "16 rows, one per cluster (finest level). The file is fully denormalised: every row carries the complete hierarchy (class → subclass → supertype → cluster) as repeated column groups. Hierarchy levels present: class (1 unique value), subclass (2 unique values: 'DG Glut', 'DG-PIR Ex IMN'), supertype (7 unique values), cluster (16 unique values). All clusters belong to a single neighborhood ('Pallium-Glut;NN-IMN-GC') and a single class ('DG-IMN Glut'). CCN-style accessions (cell_set_accession.*) are available for all four hierarchy levels. The 'cl' column contains bare numeric strings (e.g. '1398') — the column name implies Cell Ontology but values lack the 'CL:' prefix; these require manual verification before use as cl_term. Columns 37 and 38 both have the header 'CTX.subclass_id' in the source file — this is a header collision; column 37 holds the integer ID (36) and column 38 holds the string label ('DG'). The CTX.* columns (33–41) collectively encode a cross-taxonomy mapping to the Allen whole-cortex (CTX) reference taxonomy and should be preserved as a cross_taxonomy_refs block in YAML."
+}

@@ -134,7 +134,7 @@ def compute_f1_matrix(
     if isinstance(mmc_csv, pd.DataFrame):
         df = mmc_csv.copy()
     else:
-        df = pd.read_csv(mmc_csv)
+        df = pd.read_csv(mmc_csv, comment="#")
 
     # Join source labels
     df["source_label"] = df["cell_id"].map(source_labels)
