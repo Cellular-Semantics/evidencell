@@ -61,10 +61,6 @@ REL_LABELS = {
     "UNCERTAIN": "? UNCERTAIN",
 }
 
-DRAFT_BANNER = (
-    "> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.\n"
-    "> All edges require expert review before use."
-)
 MERFISH_LOCATION_NOTE = (
     "> **Location note.** WMBv1 location data derives from MERFISH spatial\n"
     "> registration and records **soma position** only. Axonal and dendritic\n"
@@ -1248,9 +1244,6 @@ def extract_node_facts(
         key=lambda e: CONF_ORDER.get(e.get("confidence", "UNCERTAIN"), 99),
     )
 
-    # Detect draft vs canonical
-    status = "draft" if "draft" in str(graph_file) else "canonical"
-
     # Check for MERFISH location data
     has_merfish = any(
         n.get("is_terminal") and n.get("anatomical_location")
@@ -1392,7 +1385,7 @@ def extract_node_facts(
                         from evidencell.figures import render_top_n_hits_figure
                         from evidencell.paths import reports_dir_for_region
                         # Region is the parent directory of the graph file
-                        # (kb/draft/{region}/file.yaml or kb/mappings/{region}/file.yaml).
+                        # (kb/graphs/{region}/file.yaml).
                         region = graph_file.parent.name if graph_file else ""
                         if region:
                             figures_dir = reports_dir_for_region(region) / "figures"
@@ -1467,7 +1460,6 @@ def extract_node_facts(
             "target_atlas": graph.get("target_atlas", ""),
             "brain_region": _ot(graph.get("brain_region")),
             "species": _ot(graph.get("species")),
-            "status": status,
             "creation_date": str(graph.get("creation_date", "")),
             "graph_file": str(graph_file),
             "has_merfish_location": has_merfish,
@@ -1535,11 +1527,7 @@ def render_summary(
 
     # 1. Header
     lines.append(f"# {cn['name']} — {gm['target_atlas']} Mapping Report")
-    status_tag = f"*{gm['status'].capitalize()} · {gm['creation_date']} · Source: `{gm['graph_file']}`*"
-    lines.append(status_tag)
-    if gm["status"] == "draft":
-        lines.append("")
-        lines.append(DRAFT_BANNER)
+    lines.append(f"*{gm['creation_date']} · Source: `{gm['graph_file']}`*")
     lines.append("")
     lines.append("---")
     lines.append("")
@@ -2052,70 +2040,62 @@ def render_drilldown(
 
 def render_index(region: str, kb_root: Path, out_path: Path) -> None:
     """
-    Scan all *.yaml in kb/{draft|mappings}/{region}/.
+    Scan all *.yaml in kb/graphs/{region}/.
     For each non-terminal node: name, cl_mapping, best edge (highest confidence),
     edge count by tier. Write sorted index table.
     """
-    # Find region directory (draft takes precedence for display)
-    region_dirs = []
-    for base in (kb_root / "draft", kb_root / "mappings"):
-        rdir = base / region
-        if rdir.is_dir():
-            region_dirs.append((rdir, "draft" if "draft" in str(base) else "canonical"))
-
-    if not region_dirs:
-        raise FileNotFoundError(f"Region '{region}' not found under {kb_root}")
+    rdir = kb_root / "graphs" / region
+    if not rdir.is_dir():
+        raise FileNotFoundError(f"Region '{region}' not found under {kb_root}/graphs")
 
     rows = []
-    for rdir, status in region_dirs:
-        for yaml_file in sorted(rdir.glob("*.yaml")):
-            graph = yaml.safe_load(yaml_file.read_text(encoding="utf-8"))
-            if not graph:
+    for yaml_file in sorted(rdir.glob("*.yaml")):
+        graph = yaml.safe_load(yaml_file.read_text(encoding="utf-8"))
+        if not graph:
+            continue
+        nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
+        all_edges = graph.get("edges", [])
+        for node in graph.get("nodes", []):
+            if node.get("is_terminal"):
                 continue
-            nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
-            all_edges = graph.get("edges", [])
-            for node in graph.get("nodes", []):
-                if node.get("is_terminal"):
-                    continue
-                node_id = node["id"]
-                node_edges = [e for e in all_edges if e.get("type_a") == node_id]
-                best = _best_edge(all_edges, node_id)
-                best_conf = best["confidence"] if best else "—"
-                best_b = nodes_by_id.get(best["type_b"], {}).get("name", best["type_b"]) if best else "—"
+            node_id = node["id"]
+            node_edges = [e for e in all_edges if e.get("type_a") == node_id]
+            best = _best_edge(all_edges, node_id)
+            best_conf = best["confidence"] if best else "—"
+            best_b = nodes_by_id.get(best["type_b"], {}).get("name", best["type_b"]) if best else "—"
 
-                tier_counts = {c: 0 for c in ("HIGH", "MODERATE", "LOW", "UNCERTAIN")}
-                for e in node_edges:
-                    c = e.get("confidence", "")
-                    if c in tier_counts:
-                        tier_counts[c] += 1
+            tier_counts = {c: 0 for c in ("HIGH", "MODERATE", "LOW", "UNCERTAIN")}
+            for e in node_edges:
+                c = e.get("confidence", "")
+                if c in tier_counts:
+                    tier_counts[c] += 1
 
-                cl = node.get("cl_mapping") or {}
-                cl_str = _ot(cl.get("cl_term")) if cl else "—"
+            cl = node.get("cl_mapping") or {}
+            cl_str = _ot(cl.get("cl_term")) if cl else "—"
 
-                tier_summary = ", ".join(
-                    f"{v} {k}" for k, v in tier_counts.items() if v > 0
-                )
-                breakdown = f"{len(node_edges)} ({tier_summary})"
+            tier_summary = ", ".join(
+                f"{v} {k}" for k, v in tier_counts.items() if v > 0
+            )
+            breakdown = f"{len(node_edges)} ({tier_summary})"
 
-                rows.append({
-                    "name": node.get("name", node_id),
-                    "cl_term": cl_str,
-                    "best_atlas_hit": best_b,
-                    "best_conf": best_conf,
-                    "candidates": breakdown,
-                    "report_link": f"{node_id}_summary.md",
-                    "conf_order": CONF_ORDER.get(best_conf, 99),
-                })
+            rows.append({
+                "name": node.get("name", node_id),
+                "cl_term": cl_str,
+                "best_atlas_hit": best_b,
+                "best_conf": best_conf,
+                "candidates": breakdown,
+                "report_link": f"{node_id}_summary.md",
+                "conf_order": CONF_ORDER.get(best_conf, 99),
+            })
 
     rows.sort(key=lambda r: (r["conf_order"], r["name"]))
 
     today = date.today().isoformat()
     n_types = len(rows)
-    statuses = "/".join(dict.fromkeys(s for _, s in region_dirs))
 
     header_lines = [
         f"# {region.capitalize()} Cell Type Mapping Index",
-        f"*{n_types} classical types · {today} · {statuses}*",
+        f"*{n_types} classical types · {today}*",
         "",
     ]
 

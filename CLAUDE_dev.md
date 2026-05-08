@@ -91,8 +91,7 @@ evidencell is a LinkML-based knowledge base for cell type mapping evidence — l
 
 ```
 schema/                  # LinkML schema (source of truth for KB structure)
-kb/mappings/{region}/    # canonical, validated mapping graphs (YAML only)
-kb/draft/{region}/       # work-in-progress graphs (YAML only); graduate via just qc
+kb/graphs/{region}/      # cell-type mapping graphs (YAML only); just qc + PR review as quality gate
 references/{region}/     # references.json — shared quote store per region
 research/{region}/       # research artifacts: field_mapping, cite_traverse, evidence_extraction
 reports/{region}/        # human-readable summary + drill-down reports
@@ -143,7 +142,7 @@ Three test tiers keep runs cheap:
 - **New `src/evidencell/` module** → unit tests in `tests/test_<module>.py`. Test pure logic with in-process data; mock `subprocess.run` for any CLI calls.
 - **New external CLI invocation** (new tool added to justfile or `validate.py`) → add a `--help` probe to `tests/test_tool_interfaces.py` asserting the subcommand and key flags exist. This is what catches "wrong subcommand" bugs like the `linkml-term-validator` regression.
 - **New hook behaviour** → add a case to `tests/test_hook_integration.py` (valid YAML → exits 0, bad YAML → exits 2).
-- **New KB schema class or required field** → graduated files in `kb/mappings/` are the strict schema fixtures; `test_kb_examples.py` validates them on every `just test` run. Draft files in `kb/draft/` are only checked for YAML parseability — schema conformance for drafts is the job of `just qc-draft` and the pre-edit hook.
+- **New KB schema class or required field** → files in `kb/graphs/` are the schema fixtures; `test_kb_examples.py` runs strict linkml + structural checks on every `just test` run. Pre-edit hook also validates writes interactively.
 
 **What NOT to write tests for:**
 

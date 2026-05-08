@@ -2,8 +2,7 @@
 # Thin task runner — all non-trivial logic lives in src/evidencell/
 
 schema    := "schema/celltype_mapping.yaml"
-kb_dir    := "kb/mappings"   # canonical, validated entries only
-draft_dir := "kb/draft"      # work-in-progress; graduate to kb/mappings/ after just qc
+kb_dir    := "kb/graphs"     # all curated cell-type graphs
 
 # List all commands (default)
 _default:
@@ -62,7 +61,7 @@ validate-taxonomy-all TAXONOMY_ID:
     done
     [ $failed -eq 0 ] && echo "All taxonomy files valid." || { echo "Validation failed."; exit 1; }
 
-# Validate all canonical KB files (kb/mappings/)
+# Validate all KB graph files (kb/graphs/)
 [group('validation')]
 validate-all:
     #!/usr/bin/env bash
@@ -74,32 +73,13 @@ validate-all:
         echo "Validating $f..."
         uv run linkml-validate -s {{schema}} "$f" || failed=1
     done
-    [ $failed -eq 0 ] && echo "All canonical KB files valid." || { echo "Validation failed."; exit 1; }
+    [ $failed -eq 0 ] && echo "All KB files valid." || { echo "Validation failed."; exit 1; }
 
-# Validate all draft KB files (kb/draft/)
-[group('validation')]
-validate-draft:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    files=$(find {{draft_dir}} -name "*.yaml" 2>/dev/null)
-    if [ -z "$files" ]; then echo "No files in {{draft_dir}} yet."; exit 0; fi
-    failed=0
-    for f in $files; do
-        echo "Validating $f..."
-        uv run linkml-validate -s {{schema}} "$f" || failed=1
-    done
-    [ $failed -eq 0 ] && echo "All draft KB files valid." || { echo "One or more draft files failed validation."; exit 1; }
-
-# Validate ontology terms (CL, UBERON, NCBITaxon) in canonical KB files
+# Validate ontology terms (CL, UBERON, NCBITaxon) in all KB graph files
 # Requires OAK SQLite DBs (run just fetch-oak-dbs first)
 [group('validation')]
 validate-terms:
     uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{kb_dir}}
-
-# Validate ontology terms in draft KB files
-[group('validation')]
-validate-terms-draft:
-    uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{draft_dir}}
 
 # Validate ontology terms in a single file
 [group('validation')]
@@ -108,15 +88,10 @@ validate-terms-file FILE:
 
 # ── QC (full suite) ────────────────────────────────────────────────────────────
 
-# QC gate for canonical KB (kb/mappings/) — must pass before committing
+# QC gate for all KB graph files — must pass before committing
 [group('qc')]
 qc: validate-all validate-terms
     @echo "All QC checks passed."
-
-# QC run over draft files — informational; failures do not block commits
-[group('qc')]
-qc-draft: validate-draft validate-terms-draft
-    @echo "Draft QC complete."
 
 # ── Tests ──────────────────────────────────────────────────────────────────────
 
@@ -262,8 +237,8 @@ generate-gene-mapping stats_h5 output:
 # Find candidate atlas matches for a classical node by querying the taxonomy DB
 # Extracts the node's property signature (markers, NT, anatomy) and scores taxonomy entries
 # rank: 0 = leaf (cluster in WMBv1), 1 = supertype, 2 = subclass, 3 = class
-# Usage: just find-candidates kb/draft/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722
-#        just find-candidates kb/draft/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 30
+# Usage: just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722
+#        just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 30
 [group('workflows')]
 find-candidates graph_file node_id taxonomy_id rank="1" top_n="20":
     uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_n}}
@@ -324,39 +299,33 @@ gen-index REGION:
 gen-toc TAXONOMY_ID *ARGS:
     uv run python -m evidencell.toc {{TAXONOMY_ID}} {{ARGS}}
 
-# Regenerate all reports + indices for canonical KB (programmatic mode, no LLM)
+# Regenerate all reports + indices for the KB (programmatic mode, no LLM)
 [group('reports')]
 gen-report-all:
     #!/usr/bin/env bash
     set -euo pipefail
-    files=$(find kb/mappings -name "*.yaml" 2>/dev/null)
-    if [ -z "$files" ]; then echo "No files in kb/mappings yet."; exit 0; fi
+    files=$(find kb/graphs -name "*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No files in kb/graphs yet."; exit 0; fi
     for f in $files; do
         uv run python -m evidencell.render summary "$f"
     done
-    for region in $(ls kb/mappings 2>/dev/null); do
+    for region in $(ls kb/graphs 2>/dev/null); do
         uv run python -m evidencell.render index "$region"
     done
     # Combined taxonomy-indexed TOC (default MODERATE+).
     uv run python -m evidencell.toc --all
 
-# Regenerate all reports + indices for draft KB (programmatic mode, no LLM)
-# Use this during active curation before content graduates to kb/mappings/
+# Regenerate all reports + indices for one region (programmatic mode, no LLM)
 [group('reports')]
-gen-report-draft REGION:
+gen-report-region REGION:
     #!/usr/bin/env bash
     set -euo pipefail
-    files=$(find kb/draft/{{REGION}} -maxdepth 1 -name "*.yaml" 2>/dev/null)
-    if [ -z "$files" ]; then echo "No YAML files in kb/draft/{{REGION}}."; exit 0; fi
+    files=$(find kb/graphs/{{REGION}} -maxdepth 1 -name "*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No YAML files in kb/graphs/{{REGION}}."; exit 0; fi
     for f in $files; do
         uv run python -m evidencell.render summary "$f"
     done
     uv run python -m evidencell.render index {{REGION}}
-
-# Generate all drill-downs for a classical node in a draft graph
-[group('reports')]
-gen-drilldowns-draft GRAPH_FILE NODE_ID:
-    uv run python -m evidencell.render drilldowns {{GRAPH_FILE}} --node {{NODE_ID}}
 
 # ── CL term requests ──────────────────────────────────────────────────────────
 

@@ -238,8 +238,8 @@ These rules apply during any agentic curation or synthesis session:
 - Do not update the local ontology DB in the same session as KB writes. A mid-session
   update could change term labels and invalidate checks already performed.
 
-**`kb/mappings/` (canonical KB)**
-- Never write directly. Graduate from `kb/draft/` via `just qc` then curator approval.
+**`kb/graphs/` (canonical KB)**
+- Never write directly. Graduate from `kb/graphs/` via `just qc` then curator approval.
 
 ---
 

@@ -664,13 +664,13 @@ Present to the user for review and approval before writing to the canonical KB l
    >
    > Please review {output_dir}/proposed_kb_{region}.yaml.
    > Edit directly if needed (correct node names, adjust markers,
-   > add missing refs). Then confirm to write to kb/draft/{region}/."
+   > add missing refs). Then confirm to write to kb/graphs/{region}/."
 
 6. After confirmation, write the approved file:
    ```bash
-   mkdir -p kb/draft/{region}
+   mkdir -p kb/graphs/{region}
    cp {output_dir}/proposed_kb_{region}.yaml \
-      kb/draft/{region}/{YYYYMMDD}_{region}_report_ingest.yaml
+      kb/graphs/{region}/{YYYYMMDD}_{region}_report_ingest.yaml
    ```
    Pre-edit validation hook fires automatically on write.
 
@@ -684,7 +684,7 @@ After the draft KB is written, present the handoff options:
 INGEST COMPLETE
 ===============
 Region: {region}
-Draft KB: kb/draft/{region}/{kb_file}
+Draft KB: kb/graphs/{region}/{kb_file}
 Nodes written: {N}
 References: references/{region}/references.json ({R} papers, {Q} quotes)
 Output dir: {output_dir}/
@@ -739,7 +739,7 @@ Ask: "Which option would you like to proceed with?"
   no API calls. Round 2 (cite-traverse) goes to primary literature for
   ambiguities, contradictions, and gaps — expensive, targeted.
 - **One gate.** Review nodes + validation notes together.
-  Do not proceed to kb/draft/ without human confirmation.
+  Do not proceed to kb/graphs/ without human confirmation.
 - **Validation hook fires on write.** Fix any validation errors before confirming
   to the user that the file was written successfully.
 - **Subagent prompts are contracts.** Pass verbatim with variables filled in.

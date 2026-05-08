@@ -21,21 +21,21 @@ def test_repo_root_finds_schema():
     assert (root / "schema").is_dir()
 
 
-def test_region_from_graph_draft():
+def test_region_from_graph_hippocampus():
     root = repo_root()
-    gf = root / "kb" / "draft" / "hippocampus" / "test.yaml"
+    gf = root / "kb" / "graphs" / "hippocampus" / "test.yaml"
     assert region_from_graph(gf) == "hippocampus"
 
 
-def test_region_from_graph_mappings():
+def test_region_from_graph_BG():
     root = repo_root()
-    gf = root / "kb" / "mappings" / "BG" / "test.yaml"
+    gf = root / "kb" / "graphs" / "BG" / "test.yaml"
     assert region_from_graph(gf) == "BG"
 
 
 def test_region_from_graph_cerebellum():
     root = repo_root()
-    gf = root / "kb" / "draft" / "cerebellum" / "CB_MLI_types.yaml"
+    gf = root / "kb" / "graphs" / "cerebellum" / "CB_MLI_types.yaml"
     assert region_from_graph(gf) == "cerebellum"
 
 
@@ -46,7 +46,7 @@ def test_region_from_graph_invalid():
 
 def test_refs_path_for_graph():
     root = repo_root()
-    gf = root / "kb" / "draft" / "hippocampus" / "test.yaml"
+    gf = root / "kb" / "graphs" / "hippocampus" / "test.yaml"
     expected = root / "references" / "hippocampus" / "references.json"
     assert refs_path_for_graph(gf) == expected
 

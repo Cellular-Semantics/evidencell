@@ -60,22 +60,21 @@ workflows/map-cell-type.md               # propose MappingEdge + confidence
 # [GATE] review proposed edges
 ```
 
-Nothing is written to `kb/mappings/` without passing validation and your
+Nothing is written to `kb/graphs/` without passing validation and your
 sign-off. Claude does not proceed past a gate autonomously.
 
 ---
 
-## Graduating a draft entry to canonical
+## Quality gate for an entry
 
-An entry in `kb/draft/` graduates to `kb/mappings/` when:
+A KB entry in `kb/graphs/` is ready to merge when:
 
-1. Schema validation and OAK term checks pass
-2. Every `MappingEdge` has ≥1 `EvidenceItem`
-3. Every node has a `cell_ontology_term` (at minimum a broad CL mapping)
-4. Confidence assessments have been reviewed by a domain expert
+1. Schema validation and OAK term checks pass (`just qc`).
+2. Every `MappingEdge` has ≥1 `EvidenceItem`.
+3. Every node has a `cell_ontology_term` (at minimum a broad CL mapping).
+4. Confidence assessments have been reviewed by a domain expert.
 
-Ask Claude to graduate the entry: it will run the validators, fix any remaining
-issues, and move the file when all checks pass.
+Open a PR; review on the PR is the human sign-off.
 
 ---
 
@@ -83,7 +82,7 @@ issues, and move the file when all checks pass.
 
 ```bash
 git checkout -b add-{region}-{type}
-git add kb/mappings/{region}/{file}.yaml
+git add kb/graphs/{region}/{file}.yaml
 git commit -m "Add {cell type} mapping for {region}"
 git push origin add-{region}-{type}
 # open PR on GitHub

@@ -14,7 +14,7 @@ Dev work on `src/`, `schema/`, or the `justfile` is out of scope by default; see
 
 Writable zones in this session:
 
-- `kb/draft/**`, `kb/taxonomy/**` — KB YAML under pre-edit validation
+- `kb/graphs/**`, `kb/taxonomy/**` — KB YAML under pre-edit validation
 - `references/**` — reference stores under ingest-path governance
 - `reports/**` — generated reports under pre-edit validation
 - `research/**` — research artifacts (field mappings, summaries, traversals)
@@ -96,7 +96,7 @@ stubs carry only: `id`, `name`, `definition_basis`, `taxonomy_id`,
 `cell_set_accession`.
 
 **Known violation:** `precomputed_expression` blocks currently live on atlas
-stubs in `kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`.
+stubs in `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`.
 These should migrate to the taxonomy reference store using
 `just add-expression` (see below).
 

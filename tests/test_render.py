@@ -530,30 +530,6 @@ def test_render_summary_contains_confidence_badges():
         assert "⚪ UNCERTAIN" in content
 
 
-def test_render_summary_draft_banner():
-    """Draft status → draft banner present."""
-    with tempfile.TemporaryDirectory() as tmpdir:
-        out_path = Path(tmpdir) / "test_classical_summary.md"
-        render_summary(
-            MINIMAL_GRAPH, MINIMAL_REFS, "test_classical", out_path,
-            Path("kb/draft/test_region/test.yaml"),
-        )
-        content = out_path.read_text()
-        assert "⚠ Draft mappings" in content
-
-
-def test_render_summary_no_draft_banner_for_canonical():
-    """Canonical graph → no draft banner."""
-    with tempfile.TemporaryDirectory() as tmpdir:
-        out_path = Path(tmpdir) / "test_classical_summary.md"
-        render_summary(
-            MINIMAL_GRAPH, MINIMAL_REFS, "test_classical", out_path,
-            Path("kb/mappings/test_region/test.yaml"),
-        )
-        content = out_path.read_text()
-        assert "⚠ Draft mappings" not in content
-
-
 def test_render_summary_reference_table():
     """Reference table includes entries for all cited PMIDs."""
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -571,7 +547,7 @@ def test_render_index_creates_file():
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp_path = Path(tmpdir)
         # Set up minimal KB structure
-        region_dir = tmp_path / "draft" / "testregion"
+        region_dir = tmp_path / "graphs" / "testregion"
         region_dir.mkdir(parents=True)
         (region_dir / "test_graph.yaml").write_text(
             yaml.dump(MINIMAL_GRAPH), encoding="utf-8"
@@ -592,7 +568,7 @@ def test_render_drilldown_creates_file():
         out_path = Path(tmpdir) / "test_classical_drilldown_Smith2020.md"
         render_drilldown(
             MINIMAL_GRAPH, MINIMAL_REFS, "test_classical",
-            "PMID:12345678", out_path, Path("kb/draft/test/test.yaml"),
+            "PMID:12345678", out_path, Path("kb/graphs/test/test.yaml"),
         )
         assert out_path.exists()
         content = out_path.read_text()
@@ -723,7 +699,7 @@ def test_gen_all_drilldowns_deduplicates():
 def _write_kb_files(tmp_path: Path, region: str = "testregion") -> tuple[Path, Path]:
     """Write a minimal KB YAML + references.json with proper directory layout."""
     import json
-    kb_dir = tmp_path / "kb" / "draft" / region
+    kb_dir = tmp_path / "kb" / "graphs" / region
     kb_dir.mkdir(parents=True)
     refs_dir = tmp_path / "references" / region
     refs_dir.mkdir(parents=True)
@@ -785,7 +761,7 @@ def test_cli_drilldown_single_pmid(tmp_path):
 def test_cli_index(tmp_path):
     """CLI: `render index region` writes index from KB on disk."""
     # render_index resolves kb/ relative to cwd — set up the expected structure
-    kb_dir = tmp_path / "kb" / "draft" / "myregion"
+    kb_dir = tmp_path / "kb" / "graphs" / "myregion"
     kb_dir.mkdir(parents=True)
     (kb_dir / "test.yaml").write_text(yaml.dump(MINIMAL_GRAPH), encoding="utf-8")
     out_dir = tmp_path / "out"

@@ -95,15 +95,7 @@ readers don't need by default).
 
 ```
 # {classical_node.name} — {graph_meta.target_atlas} Mapping Report
-*{graph_meta.status} · {graph_meta.creation_date} · Source: `{graph_meta.graph_file}`*
-```
-
-If `graph_meta.status` is "draft", add the warning banner as bold inline
-text (NOT a blockquote — blockquote-based banners fail the hook because
-they have no `quote_key` and no `[n]` attribution to a references table):
-
-```markdown
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+*{graph_meta.creation_date} · Source: `{graph_meta.graph_file}`*
 ```
 
 ---

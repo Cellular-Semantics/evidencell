@@ -232,5 +232,5 @@ Report field coverage summary to the human.
 - **The field_mapping.json is the re-ingest recipe**: preserve it exactly as confirmed.
   On future source file updates, re-run from Step 3 with the same mapping.
 - **Stubs vs DB YAML are different**: this orchestrator writes the reference DB YAML
-  (`kb/taxonomy/`), not CellTypeNode stubs (`kb/draft/` or `kb/mappings/`). These serve
+  (`kb/taxonomy/`), not CellTypeNode stubs (`kb/graphs/` or `kb/graphs/`). These serve
   different purposes and are written to different locations.

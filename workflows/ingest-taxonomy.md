@@ -473,14 +473,14 @@ TASK:
 
 3. Group nodes by region/subregion where possible. Write one YAML file per
    region (or one file if region is unclear). File naming: {region_slug}.yaml.
-   Use the existing KB examples in kb/draft/ as structural reference.
+   Use the existing KB examples in kb/graphs/ as structural reference.
 
 4. At the top of each output file, add a header block:
    # Taxonomy: {title}
    # Source: {taxonomy_file basename}
    # Ingested: {today's date}
    # Status: STUB — evidence lists empty; accession lookup, CL terms, and
-   #         anatomical_location to be completed before graduation to kb/mappings/
+   #         anatomical_location to be completed
    # SCHEMA_CANDIDATE fields preserved as comments — see field_mapping.json
 
 5. Write files to {output_dir}/.
@@ -489,7 +489,7 @@ RETURN:
 "Stubs written: {list of files}. Nodes generated: N. SCHEMA_CANDIDATE fields
 preserved as comments: [list]. Fields skipped: [list]."
 
-DO NOT modify field_mapping.json. DO NOT write to kb/mappings/.
+DO NOT modify field_mapping.json. DO NOT write to kb/graphs/.
 DO NOT run linkml-validate (stubs will not yet pass — that is expected).
 ```
 
@@ -502,7 +502,7 @@ After generation:
 1. Report the files written and node count.
 2. Say:
    > "Stubs written to {output_dir}/. Please open and review before proceeding.
-   > When ready, run `just validate-draft` to see what the schema validator reports
+   > When ready, run `just validate-all` to see what the schema validator reports
    > (failures are expected at this stage — accessions, CL terms, and anatomy
    > are incomplete). When you are satisfied with the structure, reply 'proceed'
    > to build the taxonomy reference DB."
