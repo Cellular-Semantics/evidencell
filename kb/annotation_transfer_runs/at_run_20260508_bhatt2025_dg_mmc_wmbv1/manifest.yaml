@@ -1,0 +1,48 @@
+id: at_run_20260508_bhatt2025_dg_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE280167"
+source_cluster_label: >
+  DG Glut subclass assignment (CS20230722_SUBC_037) used as source group proxy.
+  No published per-cell cluster labels in GEO raw data. 4 VV condition samples
+  merged: GSM8643987, GSM8643988, GSM8643989, GSM8643990 (Bhatt 2025).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.1, default parameters,
+  raw normalization, 100 bootstrap iterations). Input h5ad built from
+  MTX GEX files with Ensembl IDs as var_names. QC filter: min_genes >= 200.
+  Supertype-level mapping proportions used as evidence (no F1 scoring
+  possible — Bhatt 2025 cluster annotations are not available in GEO raw data).
+tool_version: "cell_type_mapper v1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.0
+n_cells_total: 17354
+n_cells_after_filter: 11327
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.11"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "(see git log at run time)"
+
+output:
+  relpath: "../../../../research/hippocampus/glutamatergic/annotation_transfer/GSE280167_bhatt2025/mmc_output.csv"
+  format: csv
+
+caveats: >
+  F1 scores cannot be computed: Bhatt 2025 cluster annotations are not in GEO
+  raw data. mmc_output.csv provides supertype-level mapping proportions only.
+  11327 of 17354 cells assigned to DG Glut subclass (CS20230722_SUBC_037);
+  used as DG semilunar granule cell proxy. Of these, 67 map to SUPT_0138
+  (DG Glut_3), the proposed target for edge_dg_semilunar_granule_cell.

@@ -8,7 +8,7 @@ brain_region:
   id: UBERON:0002421
   label: hippocampal formation
   name_in_source: hippocampus
-species: null
+species:
 creation_date: '2026-04-09'
 notes: 'All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evidence is from rat and mouse; species must be
   confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup.
@@ -17,18 +17,18 @@ notes: 'All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evi
 annotation_transfer_datasets:
 - accession: GEO:GSE142546
   publication: PMID:33398060
-  description: Que et al. 2021 — patch-seq of 88 morphologically identified PV-INs (basket, axo-axonic, bistratified) in mouse
-    hippocampal CA1, P10–P77
+  description: Que et al. 2021 — patch-seq of 88 morphologically identified PV-INs (basket, axo-axonic, bistratified) in
+    mouse hippocampal CA1, P10–P77
   cell_types:
   - pv_basket_cell_hippocampus
   - axo_axonic_cell_hippocampus
   - bistratified_cell_hippocampus
-  status: pending_retrieval
+  status: complete
 nodes:
 - id: pv_basket_cell_hippocampus
   name: Parvalbumin-positive basket cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014548
     label: pyramidal layer of CA1
@@ -44,8 +44,8 @@ nodes:
       scope: rat CA1
       quote_key: 10664418_9acd7ec1
     - ref: PMID:25324774
-      snippet: basket cells extend their axonal arbor to the stratum pyramidale. In fact, pyramidal neuron somata are contacted
-        extensively by GABAergic synapses from these cells forming characteristic basket-like structures
+      snippet: basket cells extend their axonal arbor to the stratum pyramidale. In fact, pyramidal neuron somata are 
+        contacted extensively by GABAergic synapses from these cells forming characteristic basket-like structures
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:39401246
@@ -66,8 +66,8 @@ nodes:
       scope: rat CA1
       quote_key: 10664418_9acd7ec1
     - ref: PMID:25324774
-      snippet: basket cells extend their axonal arbor to the stratum pyramidale. In fact, pyramidal neuron somata are contacted
-        extensively by GABAergic synapses from these cells forming characteristic basket-like structures
+      snippet: basket cells extend their axonal arbor to the stratum pyramidale. In fact, pyramidal neuron somata are 
+        contacted extensively by GABAergic synapses from these cells forming characteristic basket-like structures
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:39401246
@@ -88,8 +88,8 @@ nodes:
       scope: rat CA1
       quote_key: 10664418_9acd7ec1
     - ref: PMID:25324774
-      snippet: basket cells extend their axonal arbor to the stratum pyramidale. In fact, pyramidal neuron somata are contacted
-        extensively by GABAergic synapses from these cells forming characteristic basket-like structures
+      snippet: basket cells extend their axonal arbor to the stratum pyramidale. In fact, pyramidal neuron somata are 
+        contacted extensively by GABAergic synapses from these cells forming characteristic basket-like structures
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:39401246
@@ -109,7 +109,7 @@ nodes:
       quote_key: 16859318_009e9f36
   defining_markers:
   - symbol: Pvalb
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:25018703
       marker_type: PROTEIN
@@ -117,8 +117,8 @@ nodes:
       scope: rat hippocampus
       quote_key: 10540334_bdfa426a
     - ref: PMID:33398060
-      snippet: we find high transcriptomic similarity among PV-INs, with few genes showing divergent expression between morphologically
-        different types
+      snippet: we find high transcriptomic similarity among PV-INs, with few genes showing divergent expression between 
+        morphologically different types
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: TRANSCRIPT
@@ -134,12 +134,12 @@ nodes:
       scope: hippocampus/cortex
       quote_key: 195584607_37a80af5
   - symbol: Gad1
-    ncbi_gene_id: null
+    ncbi_gene_id:
   - symbol: Gad2
-    ncbi_gene_id: null
+    ncbi_gene_id:
   negative_markers:
   - symbol: Cnr1
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:25018703
       marker_type: PROTEIN
@@ -213,8 +213,8 @@ nodes:
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:20463218
-      snippet: fast-spiking basket cells (BCs), control the spike initiation of principal neurons via axonal innervations
-        onto perisomatic areas
+      snippet: fast-spiking basket cells (BCs), control the spike initiation of principal neurons via axonal 
+        innervations onto perisomatic areas
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:37467748
@@ -224,7 +224,7 @@ nodes:
 - id: cck_basket_cell_hippocampus
   name: Cholecystokinin-positive basket cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014548
     label: pyramidal layer of CA1
@@ -236,18 +236,18 @@ nodes:
       scope: rat hippocampus
       quote_key: 10540334_418c51dd
     - ref: PMID:28559797
-      snippet: VGLUT3-immunogold puncta were present over synaptic vesicle clusters in axon terminals forming axo-somatic
-        symmetrical synapses
+      snippet: VGLUT3-immunogold puncta were present over synaptic vesicle clusters in axon terminals forming 
+        axo-somatic symmetrical synapses
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:26441554
-      snippet: PV-GABA cells were more abundant overall, CCK-GABA cells outnumbered PV-GABA cells in several subregions of
-        the hippocampus, medial prefrontal cortex and ventrolateral temporal cortex
+      snippet: PV-GABA cells were more abundant overall, CCK-GABA cells outnumbered PV-GABA cells in several subregions 
+        of the hippocampus, medial prefrontal cortex and ventrolateral temporal cortex
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:31297048
-      snippet: CCK positive basket cells target the soma and proximal dendrites of cortical and hippocampal pyramidal cells,
-        and do not appear to innervate the AIS
+      snippet: CCK positive basket cells target the soma and proximal dendrites of cortical and hippocampal pyramidal 
+        cells, and do not appear to innervate the AIS
       support: SUPPORT
       source: cite_traverse_2026_04_10
   nt_type:
@@ -263,7 +263,7 @@ nodes:
       quote_key: 16859318_009e9f36
   defining_markers:
   - symbol: Cck
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:10341254
       marker_type: PROTEIN
@@ -276,8 +276,8 @@ nodes:
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:31297048
-      snippet: Proportions of CCK basket cells express the ionotropic serotonin receptor (5-HT3) and the metabotropic Cannabinoid
-        receptor type 1 (CB1), which modulate GABA release from the presynaptic terminal
+      snippet: Proportions of CCK basket cells express the ionotropic serotonin receptor (5-HT3) and the metabotropic 
+        Cannabinoid receptor type 1 (CB1), which modulate GABA release from the presynaptic terminal
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
@@ -292,7 +292,7 @@ nodes:
       scope: mouse neocortex CCK+ interneurons
       quote_key: 7738817_f3d2a066
   - symbol: Cnr1
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:10341254
       marker_type: PROTEIN
@@ -300,10 +300,10 @@ nodes:
       scope: rat hippocampus
       quote_key: 480205_62cd73ae
   - symbol: Vglut3
-    ncbi_gene_id: null
+    ncbi_gene_id:
   negative_markers:
   - symbol: Pvalb
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:25018703
       marker_type: PROTEIN
@@ -312,7 +312,7 @@ nodes:
       quote_key: 10540334_418c51dd
   neuropeptides:
   - symbol: Cck
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:10341254
       marker_type: PROTEIN
@@ -386,19 +386,20 @@ nodes:
       scope: mouse CA1
       quote_key: 231732903_b97d2b7d
     - ref: PMID:32490811
-      snippet: Two firing phenotypes of CCK+INs in rat hippocampal CA3 area; either possessing a previously undetected membrane
-        potential-dependent firing or regular firing phenotype, due to different low-voltage-activated potassium currents
+      snippet: Two firing phenotypes of CCK+INs in rat hippocampal CA3 area; either possessing a previously undetected 
+        membrane potential-dependent firing or regular firing phenotype, due to different low-voltage-activated 
+        potassium currents
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:32490811
-      snippet: the firing phenotypes were correlated with the presence of distinct isoforms of Kv4 auxiliary subunits (KChIP1
-        vs. KChIP4e and DPP6S)
+      snippet: the firing phenotypes were correlated with the presence of distinct isoforms of Kv4 auxiliary subunits 
+        (KChIP1 vs. KChIP4e and DPP6S)
       support: SUPPORT
       source: cite_traverse_2026_04_10
 - id: axo_axonic_cell_hippocampus
   name: Axo-axonic (chandelier) cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014548
     label: pyramidal layer of CA1
@@ -422,7 +423,7 @@ nodes:
       quote_key: 38778375_462ec931
   defining_markers:
   - symbol: Pvalb
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:25018703
       marker_type: PROTEIN
@@ -430,14 +431,14 @@ nodes:
       scope: rat hippocampus
       quote_key: 10540334_bdfa426a
     - ref: PMID:33398060
-      snippet: while PV-INs differ in anatomy and in vivo activity, their continuous transcriptomic and homogenous biophysical
-        landscapes are not predictive of these distinct identities
+      snippet: while PV-INs differ in anatomy and in vivo activity, their continuous transcriptomic and homogenous 
+        biophysical landscapes are not predictive of these distinct identities
       support: PARTIAL
       source: cite_traverse_2026_04_10
       marker_type: TRANSCRIPT
     - ref: PMID:33398060
-      snippet: we find high transcriptomic similarity among PV-INs, with few genes showing divergent expression between morphologically
-        different types
+      snippet: we find high transcriptomic similarity among PV-INs, with few genes showing divergent expression between 
+        morphologically different types
       support: PARTIAL
       source: cite_traverse_2026_04_10
       marker_type: TRANSCRIPT
@@ -488,14 +489,14 @@ nodes:
       scope: hippocampus/neocortex
       quote_key: 38778375_462ec931
     - ref: PMID:37467748
-      snippet: Both display FS responses to depolarizing input and fire at high rates in vivo. In contrast, SOM cells typically
-        have lower firing rates despite their low firing threshold
+      snippet: Both display FS responses to depolarizing input and fire at high rates in vivo. In contrast, SOM cells 
+        typically have lower firing rates despite their low firing threshold
       support: SUPPORT
       source: cite_traverse_2026_04_10
 - id: bistratified_cell_hippocampus
   name: Bistratified cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014548
     label: pyramidal layer of CA1
@@ -561,7 +562,7 @@ nodes:
       quote_key: 38778375_462ec931
   defining_markers:
   - symbol: Pvalb
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:33150866
       marker_type: PROTEIN
@@ -569,8 +570,8 @@ nodes:
       scope: mouse hippocampus
       quote_key: 221276443_e917908b
     - ref: PMID:37162922
-      snippet: the Sst;;Tac1 intersection revealed a population of bistratified INs that preferentially synapsed onto fast-spiking
-        interneurons (FS-INs) and were both necessary and sufficient to interrupt their firing
+      snippet: the Sst;;Tac1 intersection revealed a population of bistratified INs that preferentially synapsed onto 
+        fast-spiking interneurons (FS-INs) and were both necessary and sufficient to interrupt their firing
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
@@ -585,7 +586,7 @@ nodes:
       scope: mouse CA1 hippocampus
       quote_key: 230508306_e8cc8c19
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:38640347
       marker_type: TRANSCRIPT
@@ -593,7 +594,7 @@ nodes:
       scope: mouse hippocampus
       quote_key: 269246896_c084d5c0
   - symbol: Tac1
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:38640347
       marker_type: TRANSCRIPT
@@ -603,7 +604,7 @@ nodes:
   negative_markers: []
   neuropeptides:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:38640347
       marker_type: TRANSCRIPT
@@ -651,8 +652,8 @@ nodes:
       scope: hippocampus
       quote_key: '8530661_92702482'
     - ref: PMID:38640347
-      snippet: Sst;;Tac1-INs strongly targeted strata oriens and radiatum, a bilaminar morphology reminiscent of classically
-        defined bistratified INs
+      snippet: Sst;;Tac1-INs strongly targeted strata oriens and radiatum, a bilaminar morphology reminiscent of 
+        classically defined bistratified INs
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:25324774
@@ -675,7 +676,7 @@ nodes:
 - id: olm_cell_ca1
   name: Oriens-Lacunosum Moleculare (O-LM) cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014552
     label: CA1 stratum oriens
@@ -695,9 +696,9 @@ nodes:
       scope: hippocampus
       quote_key: 4776309_dd48b1ec
     - ref: PMID:31420995
-      snippet: All cells had a fusiform cell soma residing in stratum oriens of hippocampal CA1 with horizontally spanning
-        dendritic branches. Their axon frequently originated from a primary dendrite and projected towards the stratum lacunosum
-        moleculare
+      snippet: All cells had a fusiform cell soma residing in stratum oriens of hippocampal CA1 with horizontally 
+        spanning dendritic branches. Their axon frequently originated from a primary dendrite and projected towards the 
+        stratum lacunosum moleculare
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:23042082
@@ -732,9 +733,9 @@ nodes:
       scope: hippocampus
       quote_key: 4776309_dd48b1ec
     - ref: PMID:31420995
-      snippet: All cells had a fusiform cell soma residing in stratum oriens of hippocampal CA1 with horizontally spanning
-        dendritic branches. Their axon frequently originated from a primary dendrite and projected towards the stratum lacunosum
-        moleculare
+      snippet: All cells had a fusiform cell soma residing in stratum oriens of hippocampal CA1 with horizontally 
+        spanning dendritic branches. Their axon frequently originated from a primary dendrite and projected towards the 
+        stratum lacunosum moleculare
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:23042082
@@ -764,7 +765,7 @@ nodes:
       quote_key: 201041756_1d024a35
   defining_markers:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:31420995
       marker_type: TRANSCRIPT
@@ -772,30 +773,31 @@ nodes:
       scope: mouse OLM
       quote_key: 201041756_2d5a5fb3
     - ref: PMID:37162922
-      snippet: the Ndnf;;Nkx2-1 intersection identified a population of oriens lacunosum-moleculare (OLM) INs that predominantly
-        targeted CA1 pyramidal neurons, avoiding FS-INs
+      snippet: the Ndnf;;Nkx2-1 intersection identified a population of oriens lacunosum-moleculare (OLM) INs that 
+        predominantly targeted CA1 pyramidal neurons, avoiding FS-INs
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:31420995
-      snippet: we found a surprisingly consistent expression of Npy in OLMs, which was previously not associated with the
-        identity of this type
+      snippet: we found a surprisingly consistent expression of Npy in OLMs, which was previously not associated with 
+        the identity of this type
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:23042082
-      snippet: the vast majority (95.1%, 214/225 cells) of Tomato+ cells were also som+ and comprised a subpopulation (35.2%,
-        214/608) of CA1 som+ interneurons
+      snippet: the vast majority (95.1%, 214/225 cells) of Tomato+ cells were also som+ and comprised a subpopulation 
+        (35.2%, 214/608) of CA1 som+ interneurons
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:29487503
-      snippet: the nicotinic acetylcholine receptor Chrna2 was identified as a specific genetic marker for CA1 OLM interneurons
+      snippet: the nicotinic acetylcholine receptor Chrna2 was identified as a specific genetic marker for CA1 OLM 
+        interneurons
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: TRANSCRIPT
   - symbol: Chrna2
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:29487503
       marker_type: TRANSCRIPT
@@ -808,7 +810,7 @@ nodes:
       scope: mouse OLM
       quote_key: 201041756_bd56f851
   - symbol: Reln
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:31420995
       marker_type: TRANSCRIPT
@@ -818,10 +820,10 @@ nodes:
   negative_markers:
   - symbol: Pvalb
     modifier: LOW
-    ncbi_gene_id: null
+    ncbi_gene_id:
   neuropeptides:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:31420995
       marker_type: TRANSCRIPT
@@ -829,7 +831,7 @@ nodes:
       scope: mouse OLM
       quote_key: 201041756_2d5a5fb3
   - symbol: Npy
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:31420995
       marker_type: TRANSCRIPT
@@ -837,14 +839,14 @@ nodes:
       scope: mouse OLM
       quote_key: 201041756_8d16e821
   - symbol: Pnoc
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:31420995
       marker_type: TRANSCRIPT
       method: single-cell RT-PCR
       scope: mouse OLM
       quote_key: 201041756_1d20426d
-  cl_mapping: null
+  cl_mapping:
   definition_references:
   - PMID:20421280
   - PMID:31420995
@@ -885,20 +887,20 @@ nodes:
       scope: rat CA1
       quote_key: 15101210_fb549732
     - ref: PMID:38470935
-      snippet: we estimated that an OLM cell receives about 8400, whereas an HS cell about 15600 synaptic inputs, about 16%
-        of which are GABAergic
+      snippet: we estimated that an OLM cell receives about 8400, whereas an HS cell about 15600 synaptic inputs, about 
+        16% of which are GABAergic
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:10777798
-      snippet: a noticeable feature of hippocampal EGFP-expressing interneurons in area CA1 of GIN mice was the localization
-        of their often oval-shaped somata to SO, with dendrites running parallel to the strata borders. Such morphology is
-        characteristic of O-LM cells
+      snippet: a noticeable feature of hippocampal EGFP-expressing interneurons in area CA1 of GIN mice was the 
+        localization of their often oval-shaped somata to SO, with dendrites running parallel to the strata borders. 
+        Such morphology is characteristic of O-LM cells
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:10804195
-      snippet: Type I interneurons had large horizontally oriented cell somata located at the border of stratum oriens and
-        the alveus, indicating that these cells were most likely identical with the previously described somatostatin-positive
-        oriens-lacunosum moleculare (O-LM) cells
+      snippet: Type I interneurons had large horizontally oriented cell somata located at the border of stratum oriens 
+        and the alveus, indicating that these cells were most likely identical with the previously described 
+        somatostatin-positive oriens-lacunosum moleculare (O-LM) cells
       support: SUPPORT
       source: cite_traverse_2026_04_10
   electrophysiology:
@@ -926,7 +928,7 @@ nodes:
 - id: hippocampo_septal_cell_ca1
   name: Hippocampo-septal (HS) cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014552
     label: CA1 stratum oriens
@@ -938,13 +940,13 @@ nodes:
       scope: mouse hippocampus
       quote_key: 132515344_fb36f967
     - ref: PMID:29250747
-      snippet: GABAergic neurons in the hippocampus, which project to the medial septum, are located in the stratum oriens
-        of the hippocampus
+      snippet: GABAergic neurons in the hippocampus, which project to the medial septum, are located in the stratum 
+        oriens of the hippocampus
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:33404500
-      snippet: The hippocampal cells they most resemble, Basket-bistratified, HS and OLM interneurons, have their somata in
-        the stratum pyramidale (sp) of the hippocampus
+      snippet: The hippocampal cells they most resemble, Basket-bistratified, HS and OLM interneurons, have their somata
+        in the stratum pyramidale (sp) of the hippocampus
       support: PARTIAL
       source: cite_traverse_2026_04_10
     - ref: PMID:19176803
@@ -959,7 +961,7 @@ nodes:
       name_in_source: GABAergic
   defining_markers:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: https://doi.org/10.1101/598599
       marker_type: PROTEIN
@@ -967,21 +969,21 @@ nodes:
       scope: mouse hippocampus
       quote_key: 132515344_fb36f967
     - ref: PMID:38470935
-      snippet: Two main types of SOM-containing cells in area CA1 of the hippocampus are oriens-lacunosum-moleculare (OLM)
-        cells and hippocampo-septal (HS) cells
+      snippet: Two main types of SOM-containing cells in area CA1 of the hippocampus are oriens-lacunosum-moleculare 
+        (OLM) cells and hippocampo-septal (HS) cells
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:27997999
-      snippet: In the rat hippocampal CA1 area, at least five distinct types of SOM-expressing GABAergic neuron have been
-        defined
+      snippet: In the rat hippocampal CA1 area, at least five distinct types of SOM-expressing GABAergic neuron have 
+        been defined
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
   negative_markers: []
   neuropeptides:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
   cl_mapping:
     cl_term:
       id: CL:4023121
@@ -1010,20 +1012,21 @@ nodes:
       scope: rat CA1
       quote_key: 4934764_093c71c6
     - ref: PMID:27997999
-      snippet: In addition to these exclusively locally terminating SOM-expressing interneurons, a diverse population of long-range
-        SOM-expressing GABAergic neurons send projections to the medial septum and/or retrohippocampal cortical areas
+      snippet: In addition to these exclusively locally terminating SOM-expressing interneurons, a diverse population of
+        long-range SOM-expressing GABAergic neurons send projections to the medial septum and/or retrohippocampal 
+        cortical areas
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:29250747
-      snippet: they form a reciprocal long-range GABAergic septo-hippocampal circuit. Many long-range GABAergic neurons simultaneously
-        form local synapses in CA1 and en passant synapses in several remote areas
+      snippet: they form a reciprocal long-range GABAergic septo-hippocampal circuit. Many long-range GABAergic neurons 
+        simultaneously form local synapses in CA1 and en passant synapses in several remote areas
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:38470935
-      snippet: Two main types of SOM-containing cells in area CA1 of the hippocampus are oriens-lacunosum-moleculare (OLM)
-        cells and hippocampo-septal (HS) cells. These cell types show many similarities in their soma-dendritic architecture,
-        but they have different axonal targets, display different activity patterns in vivo and are thought to have distinct
-        network functions.
+      snippet: Two main types of SOM-containing cells in area CA1 of the hippocampus are oriens-lacunosum-moleculare 
+        (OLM) cells and hippocampo-septal (HS) cells. These cell types show many similarities in their soma-dendritic 
+        architecture, but they have different axonal targets, display different activity patterns in vivo and are 
+        thought to have distinct network functions.
       support: SUPPORT
       source: cite_traverse_2026_04_10
   electrophysiology:
@@ -1031,7 +1034,7 @@ nodes:
 - id: neurogliaform_cell_hippocampus
   name: Neurogliaform cell (NGC)
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014557
     label: CA1 stratum lacunosum moleculare
@@ -1043,13 +1046,13 @@ nodes:
       scope: hippocampus
       quote_key: 2405079_042a449f
     - ref: PMID:41473287
-      snippet: mClover-GluN3A labeled cells co-expressed Sst in stratum oriens and neuronal nitric oxide synthase (nNOS) in
-        putative NGFCs that comprise the dominant interneuron subtype in stratum lacunosum moleculare
+      snippet: mClover-GluN3A labeled cells co-expressed Sst in stratum oriens and neuronal nitric oxide synthase (nNOS)
+        in putative NGFCs that comprise the dominant interneuron subtype in stratum lacunosum moleculare
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:33404500
-      snippet: their transcriptomes were closest to RLMb and Neuroglialform interneurons whose somata are located at the border
-        between the stratum radiatum (sr) and the slm and exhibit short dendrites
+      snippet: their transcriptomes were closest to RLMb and Neuroglialform interneurons whose somata are located at the
+        border between the stratum radiatum (sr) and the slm and exhibit short dendrites
       support: SUPPORT
       source: cite_traverse_2026_04_10
   nt_type:
@@ -1060,7 +1063,7 @@ nodes:
       name_in_source: GABAergic
   defining_markers:
   - symbol: Nos1
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1068,32 +1071,32 @@ nodes:
       scope: mouse hippocampus
       quote_key: 2405079_6850b924
     - ref: PMID:20147544
-      snippet: classically defined NGCs can be subdivided into two groups based on nNOS expression and lineage with nNOS+
-        NGCs being derived from the MGE and nNOS- NGCs arising from CGE progenitors
+      snippet: classically defined NGCs can be subdivided into two groups based on nNOS expression and lineage with 
+        nNOS+ NGCs being derived from the MGE and nNOS- NGCs arising from CGE progenitors
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:20147544
-      snippet: a subset of NGCs lacking nNOS arises from caudal ganglionic eminence (CGE) progenitors. Thus, while nNOS+ NGCs
-        and IvCs arise from MGE progenitors, a CGE origin distinguishes a discrete population of nNOS− NGCs
+      snippet: a subset of NGCs lacking nNOS arises from caudal ganglionic eminence (CGE) progenitors. Thus, while nNOS+
+        NGCs and IvCs arise from MGE progenitors, a CGE origin distinguishes a discrete population of nNOS− NGCs
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: TRANSCRIPT
     - ref: PMID:20147544
-      snippet: we found that the nNOS ϩ subset, hence MGE derived, represents the majority of all hippocampal NGCs with a
-        minor contribution from CGE-derived NGCs. This contrasts with findings in the neocortex in which fate-mapping evidence
-        supports a dominant CGE origin for NGCs
+      snippet: we found that the nNOS ϩ subset, hence MGE derived, represents the majority of all hippocampal NGCs with 
+        a minor contribution from CGE-derived NGCs. This contrasts with findings in the neocortex in which fate-mapping 
+        evidence supports a dominant CGE origin for NGCs
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:41473287
-      snippet: The Neurogliaform interneurons that are Lhx6 + /Lamp5 + /Id2 + are annotated as MGE-derived (NGFC.M); and those
-        that are Lhx6 - /Lamp5 + /Id2 + /Ndnf + are annotated as CGE-derived (NGFC.C)
+      snippet: The Neurogliaform interneurons that are Lhx6 + /Lamp5 + /Id2 + are annotated as MGE-derived (NGFC.M); and
+        those that are Lhx6 - /Lamp5 + /Id2 + /Ndnf + are annotated as CGE-derived (NGFC.C)
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
   - symbol: Npy
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1106,7 +1109,7 @@ nodes:
       scope: mouse CA1
       quote_key: 8617990_2d09820f
   - symbol: Lamp5
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:41473287
       marker_type: TRANSCRIPT
@@ -1119,7 +1122,7 @@ nodes:
       scope: hippocampus
       quote_key: 259953057_9718900f
   - symbol: Id2
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:41473287
       marker_type: TRANSCRIPT
@@ -1128,7 +1131,7 @@ nodes:
       quote_key: 282312227_bb365351
   negative_markers:
   - symbol: Pvalb
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1136,7 +1139,7 @@ nodes:
       scope: mouse hippocampus
       quote_key: 2405079_6850b924
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1144,7 +1147,7 @@ nodes:
       scope: mouse hippocampus
       quote_key: 2405079_6850b924
   - symbol: Calb2
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1153,7 +1156,7 @@ nodes:
       quote_key: 2405079_6850b924
   neuropeptides:
   - symbol: Npy
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1210,7 +1213,7 @@ nodes:
 - id: ivy_cell_hippocampus
   name: Ivy cell (IvC)
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014548
     label: pyramidal layer of CA1
@@ -1229,7 +1232,7 @@ nodes:
       name_in_source: GABAergic
   defining_markers:
   - symbol: Nos1
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1242,32 +1245,32 @@ nodes:
       scope: mouse CA1
       quote_key: 262127573_d140faf4
     - ref: PMID:37467748
-      snippet: Lamp5 interneurons include ivy and neurogliaform cells (NGFCs). The ivy cell is the most common interneuron
-        type in CA1; it has a distinct morphology with a relatively extensive axonal cloud extending over several hippocampal
-        layers and co-expresses neuronal nitric oxide synthase (nNOS)
+      snippet: Lamp5 interneurons include ivy and neurogliaform cells (NGFCs). The ivy cell is the most common 
+        interneuron type in CA1; it has a distinct morphology with a relatively extensive axonal cloud extending over 
+        several hippocampal layers and co-expresses neuronal nitric oxide synthase (nNOS)
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:41473287
-      snippet: Amongst NGFCs Grin3a is expressed in both Lamp5+/Lhx6+ MGE-derived subsets, also known as Ivy cells (IvyCs),
-        and Lamp5+/Lhx6- caudal ganglionic eminence (CGE)-derived subsets
+      snippet: Amongst NGFCs Grin3a is expressed in both Lamp5+/Lhx6+ MGE-derived subsets, also known as Ivy cells 
+        (IvyCs), and Lamp5+/Lhx6- caudal ganglionic eminence (CGE)-derived subsets
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:21209836
-      snippet: The labeled cell types correspond well to previously described NPY-positive multipolar cells, often referred
-        to as Ivy cells and neurogliaform cells
+      snippet: The labeled cell types correspond well to previously described NPY-positive multipolar cells, often 
+        referred to as Ivy cells and neurogliaform cells
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:20147544
-      snippet: nNOS strongly colocalizes with neuropeptide Y in both Ivy cells (IvCs) and a subset of neurogliaform cells
-        (NGCs)
+      snippet: nNOS strongly colocalizes with neuropeptide Y in both Ivy cells (IvCs) and a subset of neurogliaform 
+        cells (NGCs)
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
   - symbol: Npy
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1275,10 +1278,10 @@ nodes:
       scope: mouse hippocampus
       quote_key: 2405079_6850b924
   - symbol: Lamp5
-    ncbi_gene_id: null
+    ncbi_gene_id:
   negative_markers:
   - symbol: Pvalb
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1286,7 +1289,7 @@ nodes:
       scope: mouse hippocampus
       quote_key: 2405079_6850b924
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1294,7 +1297,7 @@ nodes:
       scope: mouse hippocampus
       quote_key: 2405079_6850b924
   - symbol: Calb2
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
@@ -1303,14 +1306,14 @@ nodes:
       quote_key: 2405079_6850b924
   neuropeptides:
   - symbol: Npy
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:20147544
       marker_type: PROTEIN
       method: immunohistochemistry
       scope: mouse hippocampus
       quote_key: 2405079_6850b924
-  cl_mapping: null
+  cl_mapping:
   definition_references:
   - PMID:20147544
   - PMID:39401246
@@ -1342,9 +1345,9 @@ nodes:
       scope: mouse hippocampus
       quote_key: 2405079_a85327b9
     - ref: PMID:28009257
-      snippet: As there were no data available for ivy and neurogliaform cells, we performed the necessary experiments in
-        our lab by filling ivy and neurogliaform cells in hippocampal CA1 slices from Wistar rats and then measuring their
-        somatic area and dendrites
+      snippet: As there were no data available for ivy and neurogliaform cells, we performed the necessary experiments 
+        in our lab by filling ivy and neurogliaform cells in hippocampal CA1 slices from Wistar rats and then measuring 
+        their somatic area and dendrites
       support: SUPPORT
       source: cite_traverse_2026_04_10
   electrophysiology:
@@ -1361,7 +1364,7 @@ nodes:
 - id: is_interneuron_hippocampus
   name: Interneuron-specific (IS) interneuron
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014552
     label: CA1 stratum oriens
@@ -1373,14 +1376,14 @@ nodes:
       scope: rat CA1
       quote_key: 23480858_1f4801fb
     - ref: PMID:24671999
-      snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These
-        cells innervated heavily the O/A border
+      snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. 
+        These cells innervated heavily the O/A border
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:24671999
-      snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their axons
-        to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic glutamate
-        receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
+      snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their 
+        axons to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic
+        glutamate receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
       support: SUPPORT
       source: cite_traverse_2026_04_10
   - id: UBERON:0014554
@@ -1393,14 +1396,14 @@ nodes:
       scope: rat CA1
       quote_key: 23480858_1f4801fb
     - ref: PMID:24671999
-      snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These
-        cells innervated heavily the O/A border
+      snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. 
+        These cells innervated heavily the O/A border
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:24671999
-      snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their axons
-        to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic glutamate
-        receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
+      snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their 
+        axons to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic
+        glutamate receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
       support: SUPPORT
       source: cite_traverse_2026_04_10
   - id: UBERON:0014557
@@ -1413,14 +1416,14 @@ nodes:
       scope: rat CA1
       quote_key: 23480858_1f4801fb
     - ref: PMID:24671999
-      snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These
-        cells innervated heavily the O/A border
+      snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. 
+        These cells innervated heavily the O/A border
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:24671999
-      snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their axons
-        to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic glutamate
-        receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
+      snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their 
+        axons to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic
+        glutamate receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
       support: SUPPORT
       source: cite_traverse_2026_04_10
   nt_type:
@@ -1431,7 +1434,7 @@ nodes:
       name_in_source: GABAergic
   defining_markers:
   - symbol: Calb2
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:37467748
       marker_type: PROTEIN
@@ -1439,32 +1442,32 @@ nodes:
       scope: hippocampus
       quote_key: 259953057_10f139f9
     - ref: PMID:24671999
-      snippet: although IS3 cells can be distinguished based on the coexpression of VIP and CR, VIP and CR alone are expressed
-        by several distinct types of hippocampal interneurons
+      snippet: although IS3 cells can be distinguished based on the coexpression of VIP and CR, VIP and CR alone are 
+        expressed by several distinct types of hippocampal interneurons
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: TRANSCRIPT
     - ref: PMID:23162426
-      snippet: a combination of immunohistochemistry and anatomical analysis identified three distinct subtypes of IS interneurons
-        in the rat hippocampus
+      snippet: a combination of immunohistochemistry and anatomical analysis identified three distinct subtypes of IS 
+        interneurons in the rat hippocampus
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:37467748
-      snippet: The majority of cells in the VIP subclass are interneuron-specific (IS), specifically targeting other interneurons
-        rather than PCs. Three types of IS interneurons have been described, mostly in the hippocampus
+      snippet: The majority of cells in the VIP subclass are interneuron-specific (IS), specifically targeting other 
+        interneurons rather than PCs. Three types of IS interneurons have been described, mostly in the hippocampus
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
     - ref: PMID:24671999
-      snippet: type 3 IS (IS3) cells that coexpress the vasoactive intestinal polypeptide (VIP) and calretinin contact several
-        distinct types of interneurons within the hippocampal CA1 stratum oriens/alveus (O/A), with preferential innervation
-        of oriens-lacunosum moleculare cells (OLMs) through dendritic synapses
+      snippet: type 3 IS (IS3) cells that coexpress the vasoactive intestinal polypeptide (VIP) and calretinin contact 
+        several distinct types of interneurons within the hippocampal CA1 stratum oriens/alveus (O/A), with preferential
+        innervation of oriens-lacunosum moleculare cells (OLMs) through dendritic synapses
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
   - symbol: Vip
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:37467748
       marker_type: PROTEIN
@@ -1479,7 +1482,7 @@ nodes:
   negative_markers: []
   neuropeptides:
   - symbol: Vip
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:37467748
       marker_type: PROTEIN
@@ -1523,32 +1526,32 @@ nodes:
       scope: hippocampus
       quote_key: 259953057_09a50fe2
     - ref: PMID:24671999
-      snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These
-        cells innervated heavily the O/A border, although occasional axonal branches were found in the RAD and PYR. Their
-        dendritic arbors were often unipolar (47% of cells), suggesting that these cells are preferentially recruited through
-        the activation of the Schaffer collaterals
+      snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. 
+        These cells innervated heavily the O/A border, although occasional axonal branches were found in the RAD and 
+        PYR. Their dendritic arbors were often unipolar (47% of cells), suggesting that these cells are preferentially 
+        recruited through the activation of the Schaffer collaterals
       support: SUPPORT
       source: cite_traverse_2026_04_10
     - ref: PMID:24671999
-      snippet: In several cases (n ϭ 5 slices/2 animals), the dendrites of 2-3 CR-positive cells of this subtype were found
-        to form dendro-dendritically connected clusters (Fig. 6C1, top inset), which is a hallmark of the type I interneuron-specific
-        (IS1) interneuron described previously in the rat CA1 hippocampus
+      snippet: In several cases (n ϭ 5 slices/2 animals), the dendrites of 2-3 CR-positive cells of this subtype were 
+        found to form dendro-dendritically connected clusters (Fig. 6C1, top inset), which is a hallmark of the type I 
+        interneuron-specific (IS1) interneuron described previously in the rat CA1 hippocampus
       support: SUPPORT
       source: cite_traverse_2026_04_10
   electrophysiology:
     description: Not extensively characterized in available reference set
     sources:
     - ref: PMID:24671999
-      snippet: This subtype of IS cells exhibited a remarkable anatomical diversity, with cell bodies that occupied different
-        layers and an axon that projected mostly within the RAD and PYR. Similar to IS3 cells, IS1 cells exhibited a high
-        input resistance but were more heterogeneous in terms of firing properties. Therefore, more than one subtype of putative
-        IS1 cells is likely to be found within this group of CR-positive interneurons.
+      snippet: This subtype of IS cells exhibited a remarkable anatomical diversity, with cell bodies that occupied 
+        different layers and an axon that projected mostly within the RAD and PYR. Similar to IS3 cells, IS1 cells 
+        exhibited a high input resistance but were more heterogeneous in terms of firing properties. Therefore, more 
+        than one subtype of putative IS1 cells is likely to be found within this group of CR-positive interneurons.
       support: SUPPORT
       source: cite_traverse_2026_04_10
 - id: oriens_oriens_cell_hippocampus
   name: Oriens-oriens (O-O) cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014552
     label: CA1 stratum oriens
@@ -1567,19 +1570,19 @@ nodes:
     sources: []
   defining_markers:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:38640347
-      snippet: the bistratified and oriens-oriens categories were disproportionately and almost exclusively represented by
-        Sst;;Tac1-INs (n = 13/25) and Sst;;Nos1-INs (n = 12/15), respectively
+      snippet: the bistratified and oriens-oriens categories were disproportionately and almost exclusively represented 
+        by Sst;;Tac1-INs (n = 13/25) and Sst;;Nos1-INs (n = 12/15), respectively
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
   - symbol: Nos1
-    ncbi_gene_id: null
+    ncbi_gene_id:
   negative_markers: []
   neuropeptides: []
-  cl_mapping: null
+  cl_mapping:
   definition_references:
   - PMID:39401246
   is_terminal: false
@@ -1598,7 +1601,7 @@ nodes:
 - id: trilaminar_cell_hippocampus
   name: Trilaminar cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014552
     label: CA1 stratum oriens
@@ -1606,8 +1609,8 @@ nodes:
     compartment: SOMA
     sources:
     - ref: PMID:27997999
-      snippet: The group of unlabeled interneurons recorded in stratum oriens may include O-LM cells, horizontal bistratified,
-        basket and axo-axonic cells and various long-range projecting GABAergic cell types
+      snippet: The group of unlabeled interneurons recorded in stratum oriens may include O-LM cells, horizontal 
+        bistratified, basket and axo-axonic cells and various long-range projecting GABAergic cell types
       support: SUPPORT
       source: cite_traverse_2026_04_10
   nt_type:
@@ -1619,14 +1622,14 @@ nodes:
     sources: []
   defining_markers:
   - symbol: Pvalb
-    ncbi_gene_id: null
+    ncbi_gene_id:
   - symbol: M2R
-    ncbi_gene_id: null
+    ncbi_gene_id:
   negative_markers:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
   neuropeptides: []
-  cl_mapping: null
+  cl_mapping:
   definition_references:
   - PMID:28646648
   is_terminal: false
@@ -1647,7 +1650,7 @@ nodes:
 - id: vip_basket_cell_hippocampus
   name: VIP-positive basket cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014548
     label: pyramidal layer of CA1
@@ -1662,10 +1665,10 @@ nodes:
     sources: []
   defining_markers:
   - symbol: Vip
-    ncbi_gene_id: null
+    ncbi_gene_id:
   negative_markers: []
   neuropeptides: []
-  cl_mapping: null
+  cl_mapping:
   definition_references:
   - PMID:24671999
   is_terminal: false
@@ -1692,7 +1695,7 @@ nodes:
 - id: r_lm_cell_hippocampus
   name: Radiatum-lacunosum moleculare (R-LM) cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014552
     label: CA1 stratum oriens
@@ -1712,17 +1715,17 @@ nodes:
     sources: []
   defining_markers:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:10777798
-      snippet: In area CA1, the vast majority of these interneurons were comprised of O-LM cells and two newly identified
-        interneuronal subtypes, R-LM and P-LM cells
+      snippet: In area CA1, the vast majority of these interneurons were comprised of O-LM cells and two newly 
+        identified interneuronal subtypes, R-LM and P-LM cells
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
   negative_markers: []
   neuropeptides: []
-  cl_mapping: null
+  cl_mapping:
   definition_references:
   - PMID:10818134
   is_terminal: false
@@ -1741,7 +1744,7 @@ nodes:
 - id: p_lm_cell_hippocampus
   name: Pyramidale-lacunosum moleculare (P-LM) cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014548
     label: pyramidal layer of CA1
@@ -1756,17 +1759,17 @@ nodes:
     sources: []
   defining_markers:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:10777798
-      snippet: In area CA1, the vast majority of these interneurons were comprised of O-LM cells and two newly identified
-        interneuronal subtypes, R-LM and P-LM cells
+      snippet: In area CA1, the vast majority of these interneurons were comprised of O-LM cells and two newly 
+        identified interneuronal subtypes, R-LM and P-LM cells
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
   negative_markers: []
   neuropeptides: []
-  cl_mapping: null
+  cl_mapping:
   definition_references:
   - PMID:10818134
   is_terminal: false
@@ -1784,7 +1787,7 @@ nodes:
 - id: lth_cell_hippocampus
   name: Low-threshold high-Ih (LTH) cell
   definition_basis: CLASSICAL_MULTIMODAL
-  species: null
+  species:
   anatomical_location:
   - id: UBERON:0014552
     label: CA1 stratum oriens
@@ -1792,8 +1795,8 @@ nodes:
     compartment: SOMA
     sources:
     - ref: PMID:33991454
-      snippet: While the cell body and dendrites of LTH neurons reside within stratum oriens, their role in the hippocampal
-        circuit remains unknown
+      snippet: While the cell body and dendrites of LTH neurons reside within stratum oriens, their role in the 
+        hippocampal circuit remains unknown
       support: SUPPORT
       source: cite_traverse_2026_04_10
   nt_type:
@@ -1805,17 +1808,17 @@ nodes:
     sources: []
   defining_markers:
   - symbol: Sst
-    ncbi_gene_id: null
+    ncbi_gene_id:
     sources:
     - ref: PMID:33991454
-      snippet: Strong and weak SFA cells were labeled in hippocampal slices from SST:cre Ai14 mice suggesting both cells express
-        somatostatin
+      snippet: Strong and weak SFA cells were labeled in hippocampal slices from SST:cre Ai14 mice suggesting both cells
+        express somatostatin
       support: SUPPORT
       source: cite_traverse_2026_04_10
       marker_type: PROTEIN
   negative_markers: []
   neuropeptides: []
-  cl_mapping: null
+  cl_mapping:
   definition_references:
   - PMID:34250732
   is_terminal: false
@@ -2588,7 +2591,7 @@ edges:
   type_a: pv_basket_cell_hippocampus
   type_b: CS20230722_SUPT_0206
   relationship: PARTIAL_OVERLAP
-  confidence: MODERATE
+  confidence: HIGH
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -2641,14 +2644,62 @@ edges:
       target_purity: 0.8
       f1_score: 0.324
       n_cells_mapped: 12
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 Pvalb subclass label
-      (n=66 HIP cells) onto WMBv1 (CCN20230722). At SUBCLASS level, Pvalb cells split equally between SUBC_051 (Pvalb chandelier,
-      F1=0.588, 25 cells) and SUBC_052 (Pvalb Gaba, F1=0.588, 25 cells). At SUPERTYPE level, SUPT_0204 chandelier (F1=0.612,
-      26 cells) is stronger than SUPT_0206 Pvalb Gaba_2 (F1=0.324, 12 cells). SUPT_0206 receives 12/66 Pvalb cells, with target_purity=0.800
-      (80% of mapped SUPT_0206 cells are Pvalb). PARTIAL because the SSv4 Pvalb label is a mixed population; chandelier/AAC
-      cells likely dominate the mapping, reflecting enrichment in the Yao dataset. Yao 2021 SSv4 'Pvalb' subclass label (n=66
-      HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically
-      identified PV-IN dataset.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 Pvalb subclass 
+      label (n=66 HIP cells) onto WMBv1 (CCN20230722). At SUBCLASS level, Pvalb cells split equally between SUBC_051 
+      (Pvalb chandelier, F1=0.588, 25 cells) and SUBC_052 (Pvalb Gaba, F1=0.588, 25 cells). At SUPERTYPE level, 
+      SUPT_0204 chandelier (F1=0.612, 26 cells) is stronger than SUPT_0206 Pvalb Gaba_2 (F1=0.324, 12 cells). SUPT_0206 
+      receives 12/66 Pvalb cells, with target_purity=0.800 (80% of mapped SUPT_0206 cells are Pvalb). PARTIAL because 
+      the SSv4 Pvalb label is a mixed population; chandelier/AAC cells likely dominate the mapping, reflecting 
+      enrichment in the Yao dataset. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, 
+      axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE142546
+    source_cluster_label: BC (hBC n=12 + vBC n=50 aggregated)
+    n_cells_total: 88
+    best_f1_score: 0.827
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      group_purity: 1.0
+      target_purity: 0.697368
+      f1_score: 0.821705
+      n_cells_mapped: 53
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      group_purity: 0.881356
+      target_purity: 0.693333
+      f1_score: 0.776119
+      n_cells_mapped: 52
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      group_purity: 0.898305
+      target_purity: 0.697368
+      f1_score: 0.785185
+      n_cells_mapped: 53
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0739 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0739
+      group_purity: 0.794872
+      target_purity: 0.861111
+      f1_score: 0.826667
+      n_cells_mapped: 31
+    explanation: 'MapMyCells local (cell_type_mapper v1.7.1) of Que 2021 (GSE142546) morphologically identified PV basket
+      cells (62 cells: hBC + vBC). 53/62 map to SUPT_0206 (Pvalb Gaba_2; group_purity=0.898, F1=0.785). Best cluster hit:
+      CLUS_0739 (F1=0.827, target_purity=0.861, 31 cells). Source cells are patch-seq with confirmed perisomatic basket morphology.
+      Gene symbols remapped to Ensembl IDs; 19788/35825 genes mapped. Second independent AT run after GSE185862 SSv4 Pvalb;
+      convergence from morphologically labelled cells supports HIGH confidence.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -2694,7 +2745,7 @@ edges:
   type_a: pv_basket_cell_hippocampus
   type_b: CS20230722_CLUS_0739
   relationship: PARTIAL_OVERLAP
-  confidence: MODERATE
+  confidence: HIGH
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
@@ -2738,11 +2789,60 @@ edges:
       target_purity: 1.0
       f1_score: 0.179
       n_cells_mapped: 5
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1.
-      At CLUSTER level, CLUS_0739 (Pvalb Gaba_2) receives 5/66 Pvalb cells (F1=0.179, target_purity=1.0), with CLUS_0732 (chandelier)
-      as the dominant cluster hit (F1=0.622, 23 cells). PARTIAL because the SSv4 Pvalb label is a mixed population; chandelier/AAC
-      cells are the dominant contributor. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic,
-      and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto 
+      WMBv1. At CLUSTER level, CLUS_0739 (Pvalb Gaba_2) receives 5/66 Pvalb cells (F1=0.179, target_purity=1.0), with 
+      CLUS_0732 (chandelier) as the dominant cluster hit (F1=0.622, 23 cells). PARTIAL because the SSv4 Pvalb label is a
+      mixed population; chandelier/AAC cells are the dominant contributor. Yao 2021 SSv4 'Pvalb' subclass label (n=66 
+      HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a 
+      morphologically identified PV-IN dataset.
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE142546
+    source_cluster_label: BC (hBC n=12 + vBC n=50 aggregated)
+    n_cells_total: 88
+    best_f1_score: 0.827
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      group_purity: 1.0
+      target_purity: 0.697368
+      f1_score: 0.821705
+      n_cells_mapped: 53
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      group_purity: 0.881356
+      target_purity: 0.693333
+      f1_score: 0.776119
+      n_cells_mapped: 52
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      group_purity: 0.898305
+      target_purity: 0.697368
+      f1_score: 0.785185
+      n_cells_mapped: 53
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0739 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0739
+      group_purity: 0.794872
+      target_purity: 0.861111
+      f1_score: 0.826667
+      n_cells_mapped: 31
+    explanation: 'MapMyCells local (Que 2021, GSE142546) PV basket cells (BC aggregate, n=62). CLUS_0739 is the top cluster
+      hit: F1=0.827, group_purity=0.795 (31 cells), target_purity=0.861. Distinct from BIC preference for CLUS_0737 (85%%
+      of bistratified cells); BC/BIC cluster separation within SUPT_0206 is a genuine transcriptomic subtype signal from morphologically
+      labelled cells. CLUS_0739 MERFISH markers include Pvalb (strongest Pvalb expression among SUPT_0206 clusters). Second
+      independent AT run; HIGH confidence warranted.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -2885,12 +2985,61 @@ edges:
       target_purity: 1.0
       f1_score: 0.612
       n_cells_mapped: 26
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1.
-      SUPT_0204 (Pvalb chandelier Gaba_1) is the top supertype hit for Pvalb cells (F1=0.612, 26/66 cells, target_purity=1.0).
-      The 'chandelier' label in WMBv1 corresponds to axo-axonic cells. PARTIAL because the SSv4 Pvalb label is a mixed population;
-      nevertheless, SUPT_0204/chandelier being the single strongest Pvalb target is consistent with the axo-axonic cell correspondence.
-      Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype
-      resolution requires a morphologically identified PV-IN dataset.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto 
+      WMBv1. SUPT_0204 (Pvalb chandelier Gaba_1) is the top supertype hit for Pvalb cells (F1=0.612, 26/66 cells, 
+      target_purity=1.0). The 'chandelier' label in WMBv1 corresponds to axo-axonic cells. PARTIAL because the SSv4 
+      Pvalb label is a mixed population; nevertheless, SUPT_0204/chandelier being the single strongest Pvalb target is 
+      consistent with the axo-axonic cell correspondence. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) 
+      encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically 
+      identified PV-IN dataset.
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE142546
+    source_cluster_label: AAC
+    n_cells_total: 88
+    best_f1_score: 0.238
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      group_purity: 1.0
+      target_purity: 0.078947
+      f1_score: 0.146341
+      n_cells_mapped: 6
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      group_purity: 0.833333
+      target_purity: 0.066667
+      f1_score: 0.123457
+      n_cells_mapped: 5
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      group_purity: 0.833333
+      target_purity: 0.065789
+      f1_score: 0.121951
+      n_cells_mapped: 5
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0739 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0739
+      group_purity: 0.833333
+      target_purity: 0.138889
+      f1_score: 0.238095
+      n_cells_mapped: 5
+    explanation: 'MapMyCells local (Que 2021, GSE142546) axo-axonic cells, n=6. AT result is uninformative due to small n:
+      only 1/6 AAC cells map to SUPT_0204 (Pvalb chandelier Gaba_1); 5/6 map to SUPT_0206/CLUS_0739 (basket-type). F1 at all
+      levels is very low (best=0.238 at cluster, CLUS_0739 not CLUS_0732). Does not support or refute axo-axonic to SUPT_0204.
+      May reflect genuine transcriptomic similarity between hippocampal AAC and basket cells (PMID:33398060), or noise from
+      n=6. Confidence remains LOW pending a dedicated AAC dataset.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -2960,12 +3109,58 @@ edges:
       target_purity: 1.0
       f1_score: 0.622
       n_cells_mapped: 23
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1.
-      CLUS_0732 (Pvalb chandelier Gaba_1) is the top cluster hit for Pvalb cells (F1=0.622, 23/66 cells, target_purity=1.0).
-      This is the strongest cluster-level hit among all Pvalb targets, consistent with the axo-axonic → chandelier supertype
-      correspondence. PARTIAL because the source label is a mixed Pvalb population. Yao 2021 SSv4 'Pvalb' subclass label (n=66
-      HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically
-      identified PV-IN dataset.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto 
+      WMBv1. CLUS_0732 (Pvalb chandelier Gaba_1) is the top cluster hit for Pvalb cells (F1=0.622, 23/66 cells, 
+      target_purity=1.0). This is the strongest cluster-level hit among all Pvalb targets, consistent with the 
+      axo-axonic → chandelier supertype correspondence. PARTIAL because the source label is a mixed Pvalb population. 
+      Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; 
+      subtype resolution requires a morphologically identified PV-IN dataset.
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE142546
+    source_cluster_label: AAC
+    n_cells_total: 88
+    best_f1_score: 0.238
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      group_purity: 1.0
+      target_purity: 0.078947
+      f1_score: 0.146341
+      n_cells_mapped: 6
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      group_purity: 0.833333
+      target_purity: 0.066667
+      f1_score: 0.123457
+      n_cells_mapped: 5
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      group_purity: 0.833333
+      target_purity: 0.065789
+      f1_score: 0.121951
+      n_cells_mapped: 5
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0739 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0739
+      group_purity: 0.833333
+      target_purity: 0.138889
+      f1_score: 0.238095
+      n_cells_mapped: 5
+    explanation: MapMyCells local (Que 2021, GSE142546) AAC cells, n=6. 0/6 cells map to CLUS_0732 (Pvalb chandelier 
+      Gaba_1) as top cluster; 5/6 map to CLUS_0739. F1 for CLUS_0732 absent from top results. Uninformative due to n=6. 
+      Confidence remains LOW.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3006,15 +3201,13 @@ edges:
   evidence:
   - evidence_type: ATLAS_METADATA
     supports: PARTIAL
-    explanation: 'Sst subclass and GABA NT type are consistent with bistratified cell co-expression of Pvalb and Sst. CA1
-      stratum oriens (818 cells) and prosubiculum (259 cells) and posterior amygdala (780 cells) present. Defining markers
-      include Reln (consistent with bistratified cells, which are Reln+) and Sp9 (not a canonical bistratified marker). Tac1
-      among DEFINING_SCOPED markers is directly consistent with bistratified cell identity (Chamberland et al. 2024 used Sst;;Tac1
-      intersection to target bistratified cells, PMID:38640347). Partial overlap declared because this supertype also contains
-      OLM cells (olm_cell_ca1 mapping, see separate edge) and HS cells — these classical types are not separable at supertype
-      level.
-
-      '
+    explanation: 'REFRAMED (Que 2021): this edge now represents the Sst-expressing bistratified subpopulation specifically,
+      not the full bistratified cell population. The canonical PV bistratified cell maps to SUPT_0206/CLUS_0737 (see separate
+      edge). SUPT_0216 assignment is supported by Sst/Tac1 component only: Chamberland et al. 2024 (PMID:38640347) used Sst;;Tac1
+      intersection to target bistratified cells, and SUPT_0216 carries Tac1 in DEFINING_SCOPED markers. Sst and Reln are expressed
+      in bistratified cells and consistent with SUPT_0216. PARTIAL: supertype also contains OLM and HS cells. Que 2021 patch-seq
+      BIC cells (20 cells) show zero mapping to any Sst supertype, mapping entirely to SUPT_0206 (Pvalb Gaba_2). This edge
+      therefore represents a potential Sst-dominant bistratified subpopulation, not the primary atlas target.'
   - evidence_type: ANNOTATION_TRANSFER
     supports: PARTIAL
     target_atlas: WMBv1
@@ -3044,6 +3237,55 @@ edges:
       (Sst Gaba_6, F1=0.759) is the dominant Sst target. This edge should be interpreted with LOW confidence. Yao 2021 SSv4
       ''Pvalb'' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution
       requires a morphologically identified PV-IN dataset.'
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE142546
+    source_cluster_label: BIC (hBIC n=11 + vBIC n=9 aggregated)
+    n_cells_total: 88
+    best_f1_score: 0.8
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      group_purity: 1.0
+      target_purity: 0.223684
+      f1_score: 0.365591
+      n_cells_mapped: 17
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      group_purity: 0.947368
+      target_purity: 0.24
+      f1_score: 0.382979
+      n_cells_mapped: 18
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      group_purity: 0.9
+      target_purity: 0.236842
+      f1_score: 0.375
+      n_cells_mapped: 18
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0737 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0737
+      group_purity: 0.941176
+      target_purity: 0.695652
+      f1_score: 0.8
+      n_cells_mapped: 16
+    explanation: 'MapMyCells local (Que 2021, GSE142546) morphologically identified PV bistratified cells (20 cells: hBIC
+      + vBIC). BIC cells show NO mapping to any Sst supertype: 18/20 map to SUPT_0206 (F1=0.375) and 16/20 concentrate at
+      CLUS_0737 (F1=0.800). SUPT_0216 (Sst Gaba_3) F1 is absent from BIC top results. This AT does not support SUPT_0216 as
+      the primary target for canonical PV bistratified cells. The evidence for this edge rests on Sst marker co-expression
+      and Chamberland 2024 Sst;;Tac1 genetics, which capture a Sst-dominant bistratified subpopulation. See edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206
+      and edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737 for the primary mapping.'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3053,7 +3295,8 @@ edges:
     node_a_value: CA1 stratum pyramidale (UBERON:0014548) — soma
     node_b_value: CA1 stratum oriens (MBA:399, 818 cells) — no pyramidal layer listed
     alignment: APPROXIMATE
-    notes: Dominant hippocampal signal in CA1 SO, not pyramidale. Bistratified cell soma classically in/near stratum pyramidale.
+    notes: Dominant hippocampal signal in CA1 SO, not pyramidale. Bistratified cell soma classically in/near stratum 
+      pyramidale.
   - property: marker_Pvalb
     node_a_value: Pvalb — defining marker (co-expressed with Sst)
     node_b_value: 'Sst subclass, not Pvalb; Pvalb not in supertype markers; precomputed stats mean: 1.48'
@@ -3088,6 +3331,183 @@ edges:
       may under-represent the PV component of bistratified cell identity.
 
       '
+- id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206
+  type_a: bistratified_cell_hippocampus
+  type_b: CS20230722_SUPT_0206
+  relationship: PARTIAL_OVERLAP
+  confidence: MODERATE
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: PARTIAL
+    explanation: 'SUPT_0206 (Pvalb Gaba_2) is the dominant hippocampal Pvalb supertype and primary atlas target for canonical
+      PV bistratified cells. Pvalb is the defining marker of bistratified cells; this supertype is Pvalb subclass. Child cluster
+      CLUS_0737 shows bilaminar anatomy (CA1 SO: 361 cells, CA1 SR: 72 cells) directly consistent with bistratified axon targets
+      (stratum oriens + radiatum). CLUS_0737 NP markers include Sst:4.4 and Tac1:7.3, both consistent with bistratified identity
+      (PMID:38640347). PARTIAL: supertype also contains PV basket cells (CLUS_0739); CLUS_0737 provides cluster-level resolution.'
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE142546
+    source_cluster_label: BIC (hBIC n=11 + vBIC n=9 aggregated)
+    n_cells_total: 88
+    best_f1_score: 0.8
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      group_purity: 1.0
+      target_purity: 0.223684
+      f1_score: 0.365591
+      n_cells_mapped: 17
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      group_purity: 0.947368
+      target_purity: 0.24
+      f1_score: 0.382979
+      n_cells_mapped: 18
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      group_purity: 0.9
+      target_purity: 0.236842
+      f1_score: 0.375
+      n_cells_mapped: 18
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0737 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0737
+      group_purity: 0.941176
+      target_purity: 0.695652
+      f1_score: 0.8
+      n_cells_mapped: 16
+    explanation: 'MapMyCells local (cell_type_mapper v1.7.1, Que 2021, GSE142546) PV bistratified cells (20 cells: hBIC +
+      vBIC). 18/20 cells map to SUPT_0206 (group_purity=0.900, F1=0.375). Best cluster hit: CLUS_0737 (F1=0.800, group_purity=0.941,
+      target_purity=0.696). BC cells preferentially map to CLUS_0739; BIC cells to CLUS_0737 — this BC/BIC cluster separation
+      is a genuine transcriptomic signal from morphologically labelled cells. Gene symbols remapped to Ensembl IDs; 19788/35825
+      genes mapped.'
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: marker_Pvalb
+    node_a_value: Pvalb — defining marker
+    node_b_value: 'Pvalb subclass; CLUS_0739 MERFISH: Pvalb present'
+    alignment: CONSISTENT
+  - property: location_CA1_SO_SR
+    node_a_value: Axon in CA1 stratum oriens (UBERON:0014552) + CA1 stratum radiatum (UBERON:0014554)
+    node_b_value: 'CLUS_0737: CA1 SO (361), CA1 SR (72), CA3 SO (72) — bilaminar axon pattern'
+    alignment: CONSISTENT
+    notes: Bilaminar axon territory of CLUS_0737 directly matches bistratified cell definition.
+  - property: marker_Sst
+    node_a_value: Sst co-expressed in bistratified cells
+    node_b_value: 'CLUS_0737 NP: Sst:4.4'
+    alignment: CONSISTENT
+  - property: marker_Tac1
+    node_a_value: Tac1 co-expressed
+    node_b_value: 'CLUS_0737 NP: Tac1:7.3'
+    alignment: CONSISTENT
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: SUPT_0206 contains both PV basket cells (CLUS_0739) and PV bistratified cells (CLUS_0737). Not 
+      separable at supertype level; see CLUS_0737 edge for cluster-level mapping.
+- id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737
+  type_a: bistratified_cell_hippocampus
+  type_b: CS20230722_CLUS_0737
+  relationship: PARTIAL_OVERLAP
+  confidence: MODERATE
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    explanation: 'CLUS_0737 (Pvalb Gaba_2, child of SUPT_0206). Top anatomy: CA1 SO (361), CA1 SR (72), CA3 SO (72). The bilaminar
+      CA1 SO + CA1 SR distribution directly matches the bistratified cell axon territory. MERFISH markers: Moxd1, Grpr, Syt2,
+      Nxph2, Prkg2. NP markers: Cort:8.0, Tac1:7.3, Npy:5.5, Cck:5.2, Sst:4.4 — Sst and Tac1 are directly consistent with
+      bistratified identity (PMID:38640347). Scoped marker: Ednra. SUPPORT: anatomy + marker profile converge on bistratified
+      identity.'
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+    source_dataset_accession: GEO:GSE142546
+    source_cluster_label: BIC (hBIC n=11 + vBIC n=9 aggregated)
+    n_cells_total: 88
+    best_f1_score: 0.8
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 07 CTX-MGE GABA
+      best_target_accession: CS20230722_CLAS_07
+      group_purity: 1.0
+      target_purity: 0.223684
+      f1_score: 0.365591
+      n_cells_mapped: 17
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      group_purity: 0.947368
+      target_purity: 0.24
+      f1_score: 0.382979
+      n_cells_mapped: 18
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      group_purity: 0.9
+      target_purity: 0.236842
+      f1_score: 0.375
+      n_cells_mapped: 18
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0737 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0737
+      group_purity: 0.941176
+      target_purity: 0.695652
+      f1_score: 0.8
+      n_cells_mapped: 16
+    explanation: 'MapMyCells local (Que 2021, GSE142546) PV bistratified cells (20 cells). CLUS_0737 is the primary cluster
+      hit: F1=0.800, group_purity=0.941, target_purity=0.696. BC cells (basket) preferentially map to sibling CLUS_0739 (F1=0.827)
+      — BC/BIC cluster separation within SUPT_0206 distinguishes basket from bistratified cells at cluster level. Strongest
+      AT signal for bistratified cell identity in WMBv1.'
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: marker_Pvalb
+    node_a_value: Pvalb — defining marker
+    node_b_value: Pvalb subclass; scoped marker Ednra (vs CLUS_0739 which has Pvalb in MERFISH)
+    alignment: CONSISTENT
+    notes: Pvalb not in CLUS_0737 MERFISH but present in parent subclass; bistratified Pvalb expression confirmed by 
+      patch-seq.
+  - property: location_CA1_SO_SR
+    node_a_value: 'Axon: CA1 stratum oriens (UBERON:0014552) + CA1 stratum radiatum (UBERON:0014554)'
+    node_b_value: 'CLUS_0737: CA1 SO (361), CA1 SR (72) — bilaminar'
+    alignment: CONSISTENT
+    notes: CLUS_0737 has highest CA1 SO cell count of any Pvalb cluster (361) with significant CA1 SR — bilaminar 
+      pattern is the anatomical definition of bistratified cells.
+  - property: marker_Sst
+    node_a_value: Sst co-expressed
+    node_b_value: 'CLUS_0737 NP: Sst:4.4'
+    alignment: CONSISTENT
+  - property: marker_Tac1
+    node_a_value: Tac1 co-expressed
+    node_b_value: 'CLUS_0737 NP: Tac1:7.3'
+    alignment: CONSISTENT
+  caveats:
+  - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+    description: Sst-expressing bistratified subpopulation may distribute toward SUPT_0216 (see 
+      edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0216). CLUS_0737 captures the PV-primary bistratified 
+      population.
 - id: edge_olm_cell_ca1_to_CS20230722_SUPT_0216
   type_a: olm_cell_ca1
   type_b: CS20230722_SUPT_0216
@@ -3350,12 +3770,13 @@ edges:
       target_purity: 1.0
       f1_score: 0.34
       n_cells_mapped: 76
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sncg subclass (n=384 HIP cells) onto WMBv1.
-      At SUBCLASS level, Sncg cells map to SUBC_048 (RHP-COA Ndnf Gaba, F1=0.759, 219/384 cells), consistent with Ndnf-expressing
-      neurogliaform cells. At SUPERTYPE level, Sncg cells distribute across multiple Ndnf supertypes; SUPT_0193 (RHP-COA Ndnf
-      Gaba_1) receives 76 cells (F1=0.340). PARTIAL because the Sncg population is heterogeneous and the 'RHP-COA' label in
-      SUPT_0193 suggests enrichment in retrohippocampal and cortical-amygdaloid areas rather than CA1. Hippocampal neurogliaform
-      cells have a Ndnf/Lamp5 Lhx6 transcriptomic profile; SUPT_0203 (via Lamp5 label) may be an equally valid target.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sncg subclass (n=384 HIP cells) onto 
+      WMBv1. At SUBCLASS level, Sncg cells map to SUBC_048 (RHP-COA Ndnf Gaba, F1=0.759, 219/384 cells), consistent with
+      Ndnf-expressing neurogliaform cells. At SUPERTYPE level, Sncg cells distribute across multiple Ndnf supertypes; 
+      SUPT_0193 (RHP-COA Ndnf Gaba_1) receives 76 cells (F1=0.340). PARTIAL because the Sncg population is heterogeneous
+      and the 'RHP-COA' label in SUPT_0193 suggests enrichment in retrohippocampal and cortical-amygdaloid areas rather 
+      than CA1. Hippocampal neurogliaform cells have a Ndnf/Lamp5 Lhx6 transcriptomic profile; SUPT_0203 (via Lamp5 
+      label) may be an equally valid target.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3467,11 +3888,12 @@ edges:
       target_purity: 0.989
       f1_score: 0.898
       n_cells_mapped: 711
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Lamp5 subclass (n=868 HIP cells) onto WMBv1.
-      SUPT_0203 (Lamp5 Lhx6 Gaba_1) is the dominant supertype target (F1=0.898, 711/868 cells). Neurogliaform cells in hippocampus
-      are Lamp5+Lhx6+ (Ndnf+) interneurons; SUPT_0203 being the top Lamp5 target supports this edge. PARTIAL because SUPT_0203
-      is shared with ivy cells (both are Lamp5 Lhx6+), and the AT cannot discriminate neurogliaform from ivy within the Lamp5
-      population. See edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203 for the same AT result interpreted for ivy cells.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Lamp5 subclass (n=868 HIP cells) onto
+      WMBv1. SUPT_0203 (Lamp5 Lhx6 Gaba_1) is the dominant supertype target (F1=0.898, 711/868 cells). Neurogliaform 
+      cells in hippocampus are Lamp5+Lhx6+ (Ndnf+) interneurons; SUPT_0203 being the top Lamp5 target supports this 
+      edge. PARTIAL because SUPT_0203 is shared with ivy cells (both are Lamp5 Lhx6+), and the AT cannot discriminate 
+      neurogliaform from ivy within the Lamp5 population. See edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203 for the 
+      same AT result interpreted for ivy cells.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3565,12 +3987,12 @@ edges:
       target_purity: 0.989
       f1_score: 0.898
       n_cells_mapped: 711
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Lamp5 subclass (n=868 HIP cells) onto WMBv1.
-      SUPT_0203 (Lamp5 Lhx6 Gaba_1) is overwhelmingly the top supertype target (F1=0.898, 711/868 cells, target_purity=0.989).
-      At SUBCLASS level, 710/868 Lamp5 HIP cells map to SUBC_050 (Lamp5 Lhx6 Gaba, F1=0.898), confirming Lamp5 Lhx6 identity.
-      Ivy cells are the predominant Lamp5+Lhx6+ hippocampal interneuron type; this strong and specific hit is consistent with
-      the ivy cell → SUPT_0203 assignment. The high target_purity (0.989) confirms SUPT_0203 is almost exclusively populated
-      by Lamp5 cells in this dataset.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Lamp5 subclass (n=868 HIP cells) onto
+      WMBv1. SUPT_0203 (Lamp5 Lhx6 Gaba_1) is overwhelmingly the top supertype target (F1=0.898, 711/868 cells, 
+      target_purity=0.989). At SUBCLASS level, 710/868 Lamp5 HIP cells map to SUBC_050 (Lamp5 Lhx6 Gaba, F1=0.898), 
+      confirming Lamp5 Lhx6 identity. Ivy cells are the predominant Lamp5+Lhx6+ hippocampal interneuron type; this 
+      strong and specific hit is consistent with the ivy cell → SUPT_0203 assignment. The high target_purity (0.989) 
+      confirms SUPT_0203 is almost exclusively populated by Lamp5 cells in this dataset.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3784,12 +4206,12 @@ edges:
       target_purity: 0.964
       f1_score: 0.759
       n_cells_mapped: 161
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1.
-      SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst cells (F1=0.759, 161/273 cells, target_purity=0.964),
-      consistent with the oriens-oriens cell correspondence to SUPT_0219. PARTIAL because the Sst SSv4 label is mixed; SUPT_0219
-      being the dominant target is supportive but not cell-type-specific. Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses
-      multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution
-      requires a dataset with morphologically identified Sst-IN labels.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto 
+      WMBv1. SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst cells (F1=0.759, 161/273 cells, 
+      target_purity=0.964), consistent with the oriens-oriens cell correspondence to SUPT_0219. PARTIAL because the Sst 
+      SSv4 label is mixed; SUPT_0219 being the dominant target is supportive but not cell-type-specific. Yao 2021 SSv4 
+      'Sst' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal,
+      oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3927,9 +4349,9 @@ edges:
 
       '
   - caveat_type: MARKER_NOT_SPECIFIC
-    description: Negative marker Sst shows low expression (2.72) in SUPT_0206. Classical trilaminar cells are defined as Sst-negative,
-      but low-level Sst co-expression in Pvalb types is known. Does not disqualify the mapping but reduces confidence in Sst
-      as a discriminating marker.
+    description: Negative marker Sst shows low expression (2.72) in SUPT_0206. Classical trilaminar cells are defined as
+      Sst-negative, but low-level Sst co-expression in Pvalb types is known. Does not disqualify the mapping but reduces
+      confidence in Sst as a discriminating marker.
 - id: edge_vip_basket_cell_hippocampus_to_CS20230722_SUPT_0179
   type_a: vip_basket_cell_hippocampus
   type_b: CS20230722_SUPT_0179
@@ -3974,13 +4396,13 @@ edges:
       target_purity: 0.97
       f1_score: 0.379
       n_cells_mapped: 96
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Vip subclass (n=476 HIP cells) onto WMBv1.
-      Vip cells map strongly to SUBC_046 (F1=0.969) at SUBCLASS level. At SUPERTYPE level, SUPT_0179 (Vip Gaba_7) is the second-strongest
-      target (F1=0.379, 96 cells, target_purity=0.970), alongside SUPT_0177 (Vip Gaba_5, F1=0.397). The Vip population is
-      distributed across many supertypes; SUPT_0179 being a prominent target is consistent with the VIP basket correspondence
-      but does not discriminate basket from IS cells. Yao 2021 SSv4 'Vip' subclass (n=476 HIP cells) encompasses VIP basket,
-      IS cells, and other VIP interneuron subtypes; subtype resolution requires a dataset with morphologically identified
-      VIP-IN labels.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Vip subclass (n=476 HIP cells) onto 
+      WMBv1. Vip cells map strongly to SUBC_046 (F1=0.969) at SUBCLASS level. At SUPERTYPE level, SUPT_0179 (Vip Gaba_7)
+      is the second-strongest target (F1=0.379, 96 cells, target_purity=0.970), alongside SUPT_0177 (Vip Gaba_5, 
+      F1=0.397). The Vip population is distributed across many supertypes; SUPT_0179 being a prominent target is 
+      consistent with the VIP basket correspondence but does not discriminate basket from IS cells. Yao 2021 SSv4 'Vip' 
+      subclass (n=476 HIP cells) encompasses VIP basket, IS cells, and other VIP interneuron subtypes; subtype 
+      resolution requires a dataset with morphologically identified VIP-IN labels.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -4048,12 +4470,13 @@ edges:
       target_purity: 1.0
       f1_score: 0.488
       n_cells_mapped: 83
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1.
-      SUPT_0216 (Sst Gaba_3) receives 83/273 Sst cells (F1=0.488, target_purity=1.0). R-LM (radiatum-lacunosum-moleculare)
-      cells are interneurons residing near the stratum radiatum/lacunosum boundary; if Sst+, SUPT_0216 is a plausible candidate.
-      PARTIAL because the Sst subclass label is mixed; SUPT_0219 (Sst Gaba_6) is the dominant Sst target (F1=0.759). Yao 2021
-      SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal,
-      oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto 
+      WMBv1. SUPT_0216 (Sst Gaba_3) receives 83/273 Sst cells (F1=0.488, target_purity=1.0). R-LM 
+      (radiatum-lacunosum-moleculare) cells are interneurons residing near the stratum radiatum/lacunosum boundary; if 
+      Sst+, SUPT_0216 is a plausible candidate. PARTIAL because the Sst subclass label is mixed; SUPT_0219 (Sst Gaba_6) 
+      is the dominant Sst target (F1=0.759). Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst 
+      interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a
+      dataset with morphologically identified Sst-IN labels.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -4120,12 +4543,12 @@ edges:
       target_purity: 0.964
       f1_score: 0.759
       n_cells_mapped: 161
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1.
-      SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst HIP cells (F1=0.759, 161/273 cells). P-LM cells are
-      Sst+ interneurons in stratum lacunosum-moleculare; SUPT_0219 being the dominant Sst target is consistent with this assignment,
-      but subtype resolution requires a P-LM-specific dataset. Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses
-      multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution
-      requires a dataset with morphologically identified Sst-IN labels.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto 
+      WMBv1. SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst HIP cells (F1=0.759, 161/273 cells). P-LM 
+      cells are Sst+ interneurons in stratum lacunosum-moleculare; SUPT_0219 being the dominant Sst target is consistent
+      with this assignment, but subtype resolution requires a P-LM-specific dataset. Yao 2021 SSv4 'Sst' subclass (n=273
+      HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and 
+      others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -4197,12 +4620,12 @@ edges:
       target_purity: 0.964
       f1_score: 0.759
       n_cells_mapped: 161
-    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1.
-      SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst HIP cells (F1=0.759, 161/273 cells). LTH (long-tailed
-      horizontal) cells are CA1 interneurons; if Sst+, SUPT_0219 is the most likely atlas correspondent based on this AT.
-      PARTIAL due to mixed Sst population in source. Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst
-      interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset
-      with morphologically identified Sst-IN labels.
+    explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto 
+      WMBv1. SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst HIP cells (F1=0.759, 161/273 cells). LTH 
+      (long-tailed horizontal) cells are CA1 interneurons; if Sst+, SUPT_0219 is the most likely atlas correspondent 
+      based on this AT. PARTIAL due to mixed Sst population in source. Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) 
+      encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); 
+      subtype resolution requires a dataset with morphologically identified Sst-IN labels.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
