@@ -1,7 +1,7 @@
 # Dev request: KB draft-tier removal — cleanup checklist
 
 **Date:** 2026-04-29
-**Status:** Planning — flagged in advance of the draft-tier removal so the cleanup is scoped.
+**Status:** Implemented on branch `reorg` (2026-05-08). `kb/draft/` renamed to `kb/graphs/`; `kb/mappings/` retired. All touchpoints below were updated in the same branch.
 **Severity:** Medium — touches several places that currently key on `kb/draft/` vs `kb/mappings/` or on `graph_meta.status == "draft"`.
 
 ---

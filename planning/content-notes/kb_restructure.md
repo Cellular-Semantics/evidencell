@@ -17,8 +17,7 @@ Note: update any orchestrator or skill that hardcodes current filenames after re
 
 ---
 
-## Flatten kb/ directory
+## ~~Flatten kb/ directory~~ — DONE
 
-Remove the `draft/` / `mappings/` split. Single `kb/` directory; `just qc` + human
-sign-off as the quality gate. See ROADMAP.md `#kb` section for the infrastructure
-side of this task.
+Implemented on branch `reorg`: cell-type graphs live in `kb/graphs/{region}/`;
+`just qc` + human PR review is the quality gate. ROADMAP `#kb` ticked.

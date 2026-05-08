@@ -147,7 +147,7 @@ TASK:
    LOCATION FRACTION. Compute: cells in classical soma region / total cells in
    supertype. If < 20%, note "supertype predominantly off-target".
 
-   AT EVIDENCE CHECK. Search kb/draft/ and kb/ for AnnotationTransferEvidence
+   AT EVIDENCE CHECK. Search kb/graphs/ and kb/ for AnnotationTransferEvidence
    entries where target_node_id matches the candidate accession. If found:
    - Report F1 score and source dataset_id — this is a primary confidence signal
    - F1 ≥ 0.5 strongly supports the mapping; F1 < 0.2 is a concern
@@ -328,7 +328,7 @@ TAXONOMY DIR: kb/taxonomy/{taxonomy_id}/
 RELATIONSHIP: {relationship_type}
 DISCOVERY DATA: {path to discovery_candidates.json, if available}
 
-REFERENCE: Read kb/draft/cerebellum/CB_PLI_types.yaml for structural reference —
+REFERENCE: Read kb/graphs/cerebellum/CB_PLI_types.yaml for structural reference —
 specifically the edges section (starts after the nodes). Match that format exactly.
 
 TASK:

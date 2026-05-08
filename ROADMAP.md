@@ -53,7 +53,7 @@ Milestones: `@Allen` (Allen Institute deliverable, date TBC) · `@BICAN` (BICAN 
 
 ## KB structure `#kb`
 
-- [ ] **Flatten kb/ — remove draft/mappings split**: single `kb/` directory; `just qc` + human sign-off as the quality gate `#kb`
+- [x] **Flatten kb/ — remove draft/mappings split**: cell-type graphs now live in `kb/graphs/{region}/`; `just qc` + human PR review as the quality gate `#kb`
 - [ ] Wire remaining orchestrators to `references/`, `research/`, `reports/` at repo root `#asta-ingest` `#gen-report` `#evidence-extraction`
 - [ ] Orchestrators write directly into region graph (read-merge-write); ephemera to `research/` `#asta-ingest` `#evidence-extraction`
 - [ ] Self-contained KB graphs — inline snippets, `PublicationReference` metadata, ingest provenance (see [planning/schema_self_contained_references.md](planning/schema_self_contained_references.md)) `#schema`
@@ -148,8 +148,7 @@ exists on every node row, so queries within a single atlas work unchanged.
 1. **Contract inventory**: a table in `CLAUDE.md` (curation guide) documenting every inter-workflow handover — what file is passed, what workflow produces it, what workflow consumes it, and whether it has a formal schema.
 2. **Schema coverage map**: for each handover, classify as: (a) LinkML-validated, (b) Pydantic-validated (from M2L), (c) prose-only, (d) unspecified. Target: zero (d), minimal (c).
 3. **Inter-workflow handover specs**: Pydantic or LinkML models for the key handover objects that aren't already covered — especially `initial_summaries` format, proposed evidence items, and atlas metadata input.
-4. **Graduation criteria**: formalise what it means to move content from `kb/draft/` to `kb/mappings/`. Currently "after just qc" — define precisely which checks must pass, whether intermediate workflow artifacts (cite_traverse/, evidence_extraction/) are retained or archived, and what the human review gate looks like.
-5. **User-facing terminology**: replace internal jargon at workflow gates. "Add stubs and continue research" → "Expand scope: add newly discovered types". "Proceed to extraction" → "Lock down: extract evidence for current types". "Graduate" → "Promote to validated KB".
+4. **User-facing terminology**: replace internal jargon at workflow gates. "Add stubs and continue research" → "Expand scope: add newly discovered types". "Proceed to extraction" → "Lock down: extract evidence for current types".
 
 ### Relationship to other milestones
 
