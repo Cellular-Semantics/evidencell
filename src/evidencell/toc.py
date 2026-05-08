@@ -66,15 +66,12 @@ class TaxonomyNode:
 
 
 def load_mappings(kb_root: Path | None = None) -> list[Edge]:
-    """Scan kb/draft and kb/mappings for MappingEdges. Graduated wins on duplicates."""
+    """Scan kb/graphs for MappingEdges."""
     root = kb_root or (repo_root() / "kb")
     by_classical_target: dict[tuple[str, str], Edge] = {}
-    # Process draft first, then mappings (graduated overwrites draft).
-    for sub in ("draft", "mappings"):
-        sub_dir = root / sub
-        if not sub_dir.exists():
-            continue
-        for yaml_file in sorted(sub_dir.rglob("*.yaml")):
+    graphs_dir = root / "graphs"
+    if graphs_dir.exists():
+        for yaml_file in sorted(graphs_dir.rglob("*.yaml")):
             try:
                 with yaml_file.open() as fh:
                     data = yaml.safe_load(fh)
@@ -107,7 +104,7 @@ def load_mappings(kb_root: Path | None = None) -> list[Edge]:
 def _region_from_path(yaml_file: Path) -> str:
     parts = yaml_file.resolve().parts
     for i, part in enumerate(parts):
-        if part == "kb" and i + 2 < len(parts):
+        if part == "kb" and i + 2 < len(parts) and parts[i + 1] == "graphs":
             return parts[i + 2]
     return "unknown"
 

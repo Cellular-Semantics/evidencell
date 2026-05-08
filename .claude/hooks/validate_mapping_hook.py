@@ -186,7 +186,7 @@ def main():
         inferred_root = _repo_root_from_path(file_path, "reports")
         refs_path = inferred_root / "references" / region / "references.json"
     else:
-        # kb/draft/{region}/*.yaml → references/{region}/references.json
+        # kb/graphs/{region}/*.yaml → references/{region}/references.json
         region = file_path.parent.name
         inferred_root = _repo_root_from_path(file_path, "kb")
         refs_path = inferred_root / "references" / region / "references.json"
@@ -195,23 +195,22 @@ def main():
         # ── Markdown report validation ─────────────────────────────────────
         annotations = parse_md_annotations(simulated)
 
-        # Collect known KB accessions from kb/draft/{region}/ and kb/mappings/{region}/
+        # Collect known KB accessions from kb/graphs/{region}/
         kb_nodes: dict | None = None
         try:
             kb_nodes = {}
-            for base in ("draft", "mappings"):
-                kb_region_dir = inferred_root / "kb" / base / region
-                if kb_region_dir.is_dir():
-                    for yf in kb_region_dir.glob("*.yaml"):
-                        try:
-                            import yaml as _yaml
-                            y = _yaml.safe_load(yf.read_text(encoding="utf-8"))
-                            for node in (y or {}).get("nodes", []):
-                                acc = node.get("cell_set_accession")
-                                if acc:
-                                    kb_nodes[acc] = node
-                        except Exception:
-                            pass
+            kb_region_dir = inferred_root / "kb" / "graphs" / region
+            if kb_region_dir.is_dir():
+                for yf in kb_region_dir.glob("*.yaml"):
+                    try:
+                        import yaml as _yaml
+                        y = _yaml.safe_load(yf.read_text(encoding="utf-8"))
+                        for node in (y or {}).get("nodes", []):
+                            acc = node.get("cell_set_accession")
+                            if acc:
+                                kb_nodes[acc] = node
+                    except Exception:
+                        pass
         except Exception:
             kb_nodes = None
 

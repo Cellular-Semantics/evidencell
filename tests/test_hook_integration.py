@@ -21,11 +21,11 @@ HOOK = (
 )
 SCHEMA = Path(__file__).parent.parent / "schema" / "celltype_mapping.yaml"
 VALID_KB_FIXTURE = (
-    Path(__file__).parent.parent / "kb" / "draft" / "BG" / "GPi_shell_neuron.yaml"
+    Path(__file__).parent.parent / "kb" / "graphs" / "BG" / "GPi_shell_neuron.yaml"
 )
 
 # A KB path the hook will intercept (must contain '/kb/' and end in '.yaml')
-_FAKE_KB_PATH = "/project/kb/draft/test_hook.yaml"
+_FAKE_KB_PATH = "/project/kb/graphs/test_hook.yaml"
 
 # Minimal structurally-valid KB YAML (passes structural_checks; not full schema)
 _MINIMAL_VALID_YAML = """\
@@ -86,7 +86,7 @@ def test_non_kb_path_passes_through():
 
 def test_non_yaml_path_passes_through():
     """Hook must exit 0 and skip validation for non-.yaml KB paths."""
-    payload = _write_payload("whatever", file_path="/project/kb/mappings/foo.json")
+    payload = _write_payload("whatever", file_path="/project/kb/graphs/foo.json")
     r = _run_hook(payload)
     assert r.returncode == 0, f"Expected 0, got {r.returncode}\n{r.stderr}"
 
@@ -173,9 +173,9 @@ def test_invalid_yaml_syntax_blocked():
 
 
 def _make_refs_and_yaml(tmp_path: Path, yaml_content: str) -> tuple[str, dict]:
-    """Create kb/draft/{region}/ with YAML + references/{region}/references.json."""
+    """Create kb/graphs/{region}/ with YAML + references/{region}/references.json."""
     region = "test_region"
-    kb_dir = tmp_path / "kb" / "draft" / region
+    kb_dir = tmp_path / "kb" / "graphs" / region
     kb_dir.mkdir(parents=True)
     refs_dir = tmp_path / "references" / region
     refs_dir.mkdir(parents=True)
@@ -276,7 +276,7 @@ def _make_refs_and_md(tmp_path: Path, md_content: str) -> dict:
 
 def test_md_non_report_path_passes(tmp_path: Path):
     """A .md file NOT in a reports/ subdir must pass through (exit 0)."""
-    md_path = tmp_path / "kb" / "draft" / "notes.md"
+    md_path = tmp_path / "kb" / "graphs" / "notes.md"
     md_path.parent.mkdir(parents=True)
     md_path.write_text("# Just some notes\n")
     payload = _write_payload("# Just some notes\n", file_path=str(md_path))

@@ -343,7 +343,9 @@ def _target_class_for_kb_path(file_path: Path) -> str | None:
                     "class.yaml", "neurotransmitter.yaml"}:
             return "TaxonomyNodeList"
         return None
-    return "CellTypeMappingGraph"
+    if sub == "graphs":
+        return "CellTypeMappingGraph"
+    return None
 
 
 def linkml_validate(

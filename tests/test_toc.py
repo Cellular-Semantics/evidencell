@@ -24,15 +24,14 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
         └── TX_SUBC_A2 (rank 2)  -- no edges; should prune
             └── TX_SUPT_A2a (rank 1)
 
-    Edges (in kb/draft/region1/graph.yaml):
+    Edges (in kb/graphs/region1/graph.yaml):
         classical_X → TX_CLUS_A1a1   HIGH
         classical_Y → TX_SUPT_A1b    LOW         (filtered out by MODERATE threshold)
         classical_Z → TX_SUBC_A1     MODERATE
     """
     repo = tmp_path / "repo"
     (repo / "schema").mkdir(parents=True)
-    (repo / "kb" / "draft" / "region1").mkdir(parents=True)
-    (repo / "kb" / "mappings").mkdir(parents=True)
+    (repo / "kb" / "graphs" / "region1").mkdir(parents=True)
     (repo / "reports" / "region1").mkdir(parents=True)
     (repo / "kb" / "taxonomy" / "TX").mkdir(parents=True)
 
@@ -51,7 +50,7 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
              "relationship": "TYPE_A_SPLITS"},
         ]
     }
-    (repo / "kb" / "draft" / "region1" / "graph.yaml").write_text(yaml.safe_dump(graph))
+    (repo / "kb" / "graphs" / "region1" / "graph.yaml").write_text(yaml.safe_dump(graph))
 
     # taxonomy_meta.yaml
     meta = {"taxonomy_id": "TX", "taxonomy_name": "Test Taxonomy", "species_label": "Mus musculus"}
