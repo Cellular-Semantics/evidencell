@@ -22,6 +22,8 @@ from evidencell.taxonomy_db import (
     iter_taxonomy_rows,
     read_taxonomy_meta,
     _SCHEMA_HASH,
+    _classical_negative_markers,
+    _classical_positive_markers,
     _expression_percentile,
     _expression_score,
     _neg_expression_score,
@@ -445,9 +447,19 @@ def test_score_from_percentiles_positive():
     # sibling_pct ≥ 0.50 → +1 base; global_pct ≥ 0.90 → +1 bonus
     assert _score_from_percentiles(0.60, 0.95) == 2
     assert _score_from_percentiles(0.60, 0.50) == 1
-    # sibling_pct < 0.50 → 0 regardless of global
-    assert _score_from_percentiles(0.30, 0.95) == 0
-    assert _score_from_percentiles(0.00, 0.00) == 0
+    # sibling_pct < 0.50 with no val supplied → +1 (presence credit, gap 1).
+    # No global bonus — non-discriminating presence stays below a single
+    # above-median sibling match.
+    assert _score_from_percentiles(0.30, 0.95) == 1
+    assert _score_from_percentiles(0.00, 0.00) == 1
+
+
+def test_score_from_percentiles_positive_absence_penalty():
+    # val < MIN_DETECTABLE → −1 (absence penalty for positive markers, gap 2).
+    assert _score_from_percentiles(0.0, 0.0, val=0.05) == -1
+    assert _score_from_percentiles(0.85, 0.95, val=0.0) == -1
+    # Boundary: val == MIN_DETECTABLE is reliable, so percentile path applies.
+    assert _score_from_percentiles(0.30, 0.95, val=MIN_DETECTABLE) == 1
 
 
 def test_score_from_percentiles_negative():
@@ -459,8 +471,53 @@ def test_score_from_percentiles_negative():
     assert _score_from_percentiles(0.30, 0.95, is_negative=True) == +1
 
 
+def test_score_from_percentiles_negative_below_threshold():
+    # val < MIN_DETECTABLE for negative markers → +1 (absence confirms expectation).
+    # Previously this case returned 0 in find_candidates; now it is consistent
+    # with the percentile-driven "below sibling median" branch.
+    assert _score_from_percentiles(0.0, 0.0, is_negative=True, val=0.05) == +1
+    assert _score_from_percentiles(0.85, 0.95, is_negative=True, val=0.0) == +1
+
+
 def test_min_detectable_constant():
     assert MIN_DETECTABLE == pytest.approx(0.1)
+
+
+def test_classical_positive_markers_includes_neuropeptides():
+    """Defining markers and neuropeptides are folded into one channel (gap 3)."""
+    classical = {
+        "defining_markers": [{"symbol": "Sst"}, {"symbol": "Calb1"}],
+        "neuropeptides": [{"symbol": "Npy"}, {"symbol": "Pnoc"}],
+    }
+    result = _classical_positive_markers(classical)
+    assert result == ["Sst", "Calb1", "Npy", "Pnoc"]
+
+
+def test_classical_positive_markers_dedup_defining_priority():
+    """A symbol present in both defining and neuropeptides appears once;
+    defining-marker order takes priority."""
+    classical = {
+        "defining_markers": [{"symbol": "Sst"}],
+        "neuropeptides": [{"symbol": "Sst"}, {"symbol": "Npy"}],
+    }
+    assert _classical_positive_markers(classical) == ["Sst", "Npy"]
+
+
+def test_classical_positive_markers_handles_missing_fields():
+    assert _classical_positive_markers({}) == []
+    assert _classical_positive_markers({"defining_markers": None, "neuropeptides": None}) == []
+
+
+def test_classical_positive_markers_handles_string_entries():
+    """Legacy form: bare strings instead of dicts. Should still extract."""
+    classical = {"defining_markers": ["Sst", "Calb1"]}
+    assert _classical_positive_markers(classical) == ["Sst", "Calb1"]
+
+
+def test_classical_negative_markers():
+    classical = {"negative_markers": [{"symbol": "Pvalb"}, {"symbol": "Vip"}]}
+    assert _classical_negative_markers(classical) == ["Pvalb", "Vip"]
+    assert _classical_negative_markers({}) == []
 
 
 def test_find_candidates_expression_detail_attached(populated_db):
@@ -497,7 +554,8 @@ def test_find_candidates_expression_detail_attached(populated_db):
 
 
 def test_find_candidates_unreliable_expr_flagged(populated_db):
-    """Values below MIN_DETECTABLE are flagged reliable=False and contribute 0 score."""
+    """Values below MIN_DETECTABLE are flagged reliable=False; positive markers
+    incur the absence penalty (-1, gap 2)."""
     db, _, _ = populated_db
 
     with sqlite3.connect(db.db_path) as con:
@@ -514,10 +572,12 @@ def test_find_candidates_unreliable_expr_flagged(populated_db):
     target = next((c for c in results if c["node_id"] == node_ids[0]), None)
 
     # Node may still appear if Sst is in DB marker columns (fallback binary).
-    # If it appears, the expression_detail must show reliable=False.
+    # The fallback path is only consulted when the gene is absent from
+    # node_expr; here Sst IS in node_expr (just at noise-floor) so the
+    # absence-penalty branch fires.
     if target and "_expression_detail" in target:
         assert target["_expression_detail"]["Sst"]["reliable"] is False
-        assert target["_expression_detail"]["Sst"]["score"] == 0
+        assert target["_expression_detail"]["Sst"]["score"] == -1
 
 
 def test_find_candidates_negative_marker_detail(populated_db):

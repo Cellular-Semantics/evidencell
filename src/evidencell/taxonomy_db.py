@@ -1385,20 +1385,34 @@ def _score_from_percentiles(
     sibling_pct: float,
     global_pct: float,
     is_negative: bool = False,
+    val: float | None = None,
 ) -> int:
     """Convert sibling and global percentiles to an integer score contribution.
 
+    When ``val`` is supplied and below ``MIN_DETECTABLE``, the gene is treated
+    as absent on the candidate; percentiles are not consulted because the
+    underlying value is at noise-floor and the percentile would be ill-defined.
+
     Positive markers (defining / neuropeptide):
-      sibling_pct ≥ 0.80  → +2  (top 20% among siblings — strong discriminator)
-      sibling_pct ≥ 0.50  → +1  (above-median among siblings)
-      sibling_pct < 0.50  →  0  (below-median; marker does not distinguish here)
-      global_pct  ≥ 0.90  → +1 additional (marker is atlas-globally specific)
+      val < MIN_DETECTABLE → −1  (absence penalty — defining marker not present)
+      val ≥ MIN_DETECTABLE:
+        sibling_pct ≥ 0.80  → +2  (top 20% among siblings — strong discriminator)
+        sibling_pct ≥ 0.50  → +1  (above-median among siblings)
+        sibling_pct < 0.50  → +1  (presence credit — gene is on, just non-discriminating)
+        global_pct  ≥ 0.90  → +1 additional (only on top of a sibling-passing score
+                                              ≥ 0.50; presence-only credit gets no
+                                              global bonus)
 
     Negative markers (inverted — high expression is bad):
-      sibling_pct ≥ 0.80  → −2
-      sibling_pct ≥ 0.50  → −1
-      sibling_pct < 0.50  → +1  (low expression confirms negative-marker expectation)
+      val < MIN_DETECTABLE → +1  (absence confirms negative-marker expectation)
+      val ≥ MIN_DETECTABLE:
+        sibling_pct ≥ 0.80  → −2
+        sibling_pct ≥ 0.50  → −1
+        sibling_pct < 0.50  → +1
     """
+    if val is not None and val < MIN_DETECTABLE:
+        return +1 if is_negative else -1
+
     if is_negative:
         if sibling_pct >= 0.80:
             return -2
@@ -1411,7 +1425,10 @@ def _score_from_percentiles(
         elif sibling_pct >= 0.50:
             score = 1
         else:
-            return 0  # below-median among siblings; global bonus does not apply
+            # Presence credit: gene is detectable but not a sibling discriminator.
+            # Global bonus does not apply here — non-discriminating presence stays
+            # below the score of even a single above-median match.
+            return 1
         if global_pct >= 0.90:
             score += 1
         return score
@@ -2062,7 +2079,7 @@ class TaxonomyDB:
                     if m in node_expr:
                         val = node_expr[m]
                         reliable = val >= MIN_DETECTABLE
-                        if reliable and expression_data:
+                        if reliable:
                             g_ref = global_gene_vals.get(m, [])
                             s_ref = (
                                 sibling_gene_vals[node_parent_id].get(m, [])
@@ -2071,7 +2088,9 @@ class TaxonomyDB:
                             )
                             g_pct = _expression_percentile(val, g_ref)
                             s_pct = _expression_percentile(val, s_ref)
-                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=False)
+                            delta = _score_from_percentiles(
+                                s_pct, g_pct, is_negative=False, val=val
+                            )
                             expr_detail[m] = {
                                 "val": val,
                                 "reliable": True,
@@ -2079,18 +2098,20 @@ class TaxonomyDB:
                                 "global_pct": round(g_pct, 3),
                                 "score": delta,
                             }
-                        elif not reliable:
-                            delta = 0
+                        else:
+                            # val below MIN_DETECTABLE: absence penalty for positive markers.
+                            # Percentiles are ill-defined at noise-floor; pass val so
+                            # _score_from_percentiles short-circuits to the absence rule.
+                            delta = _score_from_percentiles(
+                                0.0, 0.0, is_negative=False, val=val
+                            )
                             expr_detail[m] = {
                                 "val": val,
                                 "reliable": False,
                                 "sibling_pct": None,
                                 "global_pct": None,
-                                "score": 0,
+                                "score": delta,
                             }
-                        else:
-                            # expression_data not loaded — fallback binary
-                            delta = 1
                         score += delta
                     elif m in node_markers:
                         score += 1  # fallback: gene in DB marker columns
@@ -2101,7 +2122,7 @@ class TaxonomyDB:
                     if m in node_expr:
                         val = node_expr[m]
                         reliable = val >= MIN_DETECTABLE
-                        if reliable and expression_data:
+                        if reliable:
                             g_ref = global_gene_vals.get(m, [])
                             s_ref = (
                                 sibling_gene_vals[node_parent_id].get(m, [])
@@ -2110,7 +2131,9 @@ class TaxonomyDB:
                             )
                             g_pct = _expression_percentile(val, g_ref)
                             s_pct = _expression_percentile(val, s_ref)
-                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=True)
+                            delta = _score_from_percentiles(
+                                s_pct, g_pct, is_negative=True, val=val
+                            )
                             expr_detail[f"-{m}"] = {
                                 "val": val,
                                 "reliable": True,
@@ -2118,17 +2141,19 @@ class TaxonomyDB:
                                 "global_pct": round(g_pct, 3),
                                 "score": delta,
                             }
-                        elif not reliable:
-                            delta = 0
+                        else:
+                            # val below MIN_DETECTABLE: absence confirms negative-marker
+                            # expectation. _score_from_percentiles returns +1 for this case.
+                            delta = _score_from_percentiles(
+                                0.0, 0.0, is_negative=True, val=val
+                            )
                             expr_detail[f"-{m}"] = {
                                 "val": val,
                                 "reliable": False,
                                 "sibling_pct": None,
                                 "global_pct": None,
-                                "score": 0,
+                                "score": delta,
                             }
-                        else:
-                            delta = 0  # no expression_data; can't penalise
                         score += delta
 
             if expr_detail:
@@ -2169,6 +2194,36 @@ def _detect_cas_format(source: Path) -> bool:
         except json.JSONDecodeError:
             return False
     return _is_cas_format(data)
+
+
+def _classical_positive_markers(classical: dict) -> list[str]:
+    """Extract symbols for the positive-marker channel from a classical node.
+
+    Defining markers and neuropeptides are folded into a single list because
+    they feed the same Stage A scoring path; the scoring function does not
+    distinguish them. Order: defining markers first, then neuropeptides not
+    already present (de-duped, defining-priority).
+    """
+    out: list[str] = []
+    for m in classical.get("defining_markers") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym:
+            out.append(sym)
+    for m in classical.get("neuropeptides") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym and sym not in out:
+            out.append(sym)
+    return out
+
+
+def _classical_negative_markers(classical: dict) -> list[str]:
+    """Extract symbols for the negative-marker channel from a classical node."""
+    out: list[str] = []
+    for m in classical.get("negative_markers") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym:
+            out.append(sym)
+    return out
 
 
 def _cmd_ingest(source: str, taxonomy_id: str) -> None:
@@ -2510,18 +2565,10 @@ def _cmd_find_candidates(
         print(f"ERROR: node '{node_id}' not found in {graph_path}", file=sys.stderr)
         sys.exit(1)
 
-    # Extract property signature
-    markers: list[str] = []
-    for m in classical.get("defining_markers") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym:
-            markers.append(sym)
-
-    neg_markers: list[str] = []
-    for m in classical.get("negative_markers") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym:
-            neg_markers.append(sym)
+    # Extract property signature via the pure helpers below, so the symbol
+    # extraction is testable without a DB fixture.
+    markers = _classical_positive_markers(classical)
+    neg_markers = _classical_negative_markers(classical)
 
     nt_obj = classical.get("nt_type")
     nt_type: str | None = None
@@ -2629,7 +2676,7 @@ def _cmd_find_candidates(
 
     print(f"Classical node: {node_id} ({classical.get('name', '?')})", file=sys.stderr)
     print(f"  NT type: {nt_type}", file=sys.stderr)
-    print(f"  Markers: {markers}", file=sys.stderr)
+    print(f"  Markers (defining + neuropeptides): {markers}", file=sys.stderr)
     if neg_markers:
         print(f"  Negative markers: {neg_markers}", file=sys.stderr)
     print(f"  Soma locations: {anat_ids}", file=sys.stderr)
