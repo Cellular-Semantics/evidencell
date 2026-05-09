@@ -2144,10 +2144,23 @@ class TaxonomyDB:
                 # Filter: drop candidates with annotated regions but none in
                 # the queried region. Candidates with no anat data at all
                 # pass (don't disqualify on missing data).
+                #
+                # LLM adjacency adjudication (commit 9): instead of dropping
+                # immediately, mark the candidate as region-pending. After
+                # the loop we batch-adjudicate the pending set with a small
+                # Claude call ("are any of the candidate's annotated regions
+                # adjacent to the queried region?"). LLM-rejected candidates
+                # are then dropped; LLM-accepted candidates remain in
+                # results. Fail-permissive: missing API key or LLM error
+                # passes the candidate through.
                 if not bypassed and node_anat_rows and not (
                     node_anat_ids & effective_anat
                 ):
-                    continue
+                    nd["_region_pending"] = True
+                    nd["_anat_rows_for_llm"] = [
+                        {"id": r["anat_id"], "label": r.get("anat_label", "")}
+                        for r in node_anat_rows
+                    ]
 
             # NT filter: applies only when both classical and candidate carry
             # an NT call. Drop the filter if either side is unknown.
@@ -2362,6 +2375,46 @@ class TaxonomyDB:
             if score >= 0:
                 nd["_score"] = score
                 results.append(nd)
+
+        # ── LLM adjacency adjudication (commit 9) ─────────────────────────
+        # Candidates flagged region-pending in the main loop go through a
+        # batched LLM call to check whether their annotated regions are
+        # closely associated with the queried region (e.g. CA1 ↔ subiculum
+        # is closer than MBA siblings would suggest). Verdicts are cached.
+        # Fail-permissive: missing API key / LLM error → pass through.
+        pending = [r for r in results if r.get("_region_pending")]
+        if pending and effective_anat:
+            from evidencell.llm_adjacency import check_adjacency_batch
+
+            queried_region_id = next(iter(effective_anat))
+            llm_input = [
+                {
+                    "node_id": r["node_id"],
+                    "regions": r.get("_anat_rows_for_llm") or [],
+                }
+                for r in pending
+            ]
+            verdicts = check_adjacency_batch(
+                queried_region=queried_region_id,
+                candidates=llm_input,
+            )
+            kept_ids = {nid for nid, ok in verdicts.items() if ok}
+            results = [
+                r for r in results
+                if not r.get("_region_pending") or r["node_id"] in kept_ids
+            ]
+            for r in results:
+                if r.get("_region_pending") and r["node_id"] in kept_ids:
+                    r["_region_adjacent"] = True
+                # Strip the internal LLM input from public output
+                r.pop("_anat_rows_for_llm", None)
+                r.pop("_region_pending", None)
+        else:
+            # Drop any region-pending that survived without LLM (effective_anat
+            # was unset, which shouldn't happen, but be safe).
+            for r in results:
+                r.pop("_anat_rows_for_llm", None)
+                r.pop("_region_pending", None)
 
         results.sort(key=lambda x: x["_score"], reverse=True)
         return results

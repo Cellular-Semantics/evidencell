@@ -790,9 +790,14 @@ def test_find_candidates_nt_filter_passes_when_candidate_unassessed(populated_db
     )
 
 
-def test_find_candidates_region_filter_drops_with_anat_elsewhere(populated_db):
-    """Region filter: candidate with anat data only in non-queried regions
-    is dropped (no LLM adjacency check at this commit)."""
+def test_find_candidates_region_filter_drops_with_anat_elsewhere(
+    populated_db, monkeypatch
+):
+    """Region filter: a candidate whose annotated regions don't overlap the
+    queried region goes through LLM adjudication. With the LLM mocked to
+    return False (not adjacent), the candidate is dropped."""
+    from unittest.mock import patch
+
     db, _, _ = populated_db
 
     with sqlite3.connect(db.db_path) as con:
@@ -814,10 +819,17 @@ def test_find_candidates_region_filter_drops_with_anat_elsewhere(populated_db):
         )
         con.commit()
 
-    results = db.find_candidates(anat_ids=["MBA:888"], level="cluster")
+    # Enable the LLM path and mock it to reject all pending candidates.
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "fake-key")
+    with patch(
+        "evidencell.llm_adjacency._call_anthropic",
+        return_value={"verdicts": [{"candidate_id": node_id, "adjacent": False}]},
+    ):
+        results = db.find_candidates(anat_ids=["MBA:888"], level="cluster")
+
     result_ids = {c["node_id"] for c in results}
     assert node_id not in result_ids, (
-        "Region-mismatched candidate must be dropped by hard filter"
+        "Region-mismatched candidate must be dropped after LLM rejection"
     )
 
 
