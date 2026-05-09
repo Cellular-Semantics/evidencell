@@ -722,6 +722,208 @@ def test_find_candidates_np_markers_fallback(populated_db):
     assert found["_score"] >= 1
 
 
+# ── Phase 1 commit 3: hard prerequisite filters ─────────────────────────────
+
+
+def test_find_candidates_nt_filter_drops_mismatches(populated_db):
+    """NT filter: candidate with mismatching NT is dropped from results
+    (was previously just penalised by losing the +2 region bonus)."""
+    db, _, _ = populated_db
+
+    # Inject GABA on one node and Glut on another; query for GABA.
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
+            "ORDER BY node_id LIMIT 2"
+        ).fetchall()
+    if len(rows) < 2:
+        return
+
+    with sqlite3.connect(db.db_path) as con:
+        con.execute(
+            "UPDATE nodes SET nt_type = ? WHERE node_id = ?",
+            ("GABA", rows[0]["node_id"]),
+        )
+        con.execute(
+            "UPDATE nodes SET nt_type = ? WHERE node_id = ?",
+            ("Glut", rows[1]["node_id"]),
+        )
+        con.commit()
+
+    results = db.find_candidates(nt_type="GABA", level="cluster")
+    result_ids = {c["node_id"] for c in results}
+    assert rows[0]["node_id"] in result_ids, (
+        "GABA candidate must survive NT filter"
+    )
+    assert rows[1]["node_id"] not in result_ids, (
+        "Glut candidate must be dropped by NT filter (not just penalised)"
+    )
+
+
+def test_find_candidates_nt_filter_passes_when_candidate_unassessed(populated_db):
+    """NT filter: candidate with no NT call passes through (don't
+    disqualify on missing data)."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
+            "ORDER BY node_id LIMIT 1"
+        ).fetchall()
+    if not rows:
+        return
+
+    with sqlite3.connect(db.db_path) as con:
+        con.execute(
+            "UPDATE nodes SET nt_type = NULL WHERE node_id = ?",
+            (rows[0]["node_id"],),
+        )
+        con.commit()
+
+    results = db.find_candidates(nt_type="GABA", level="cluster", propagate_nt=False)
+    result_ids = {c["node_id"] for c in results}
+    assert rows[0]["node_id"] in result_ids, (
+        "Unassessed-NT candidate must pass through NT filter"
+    )
+
+
+def test_find_candidates_region_filter_drops_with_anat_elsewhere(populated_db):
+    """Region filter: candidate with anat data only in non-queried regions
+    is dropped (no LLM adjacency check at this commit)."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
+            "ORDER BY node_id LIMIT 1"
+        ).fetchall()
+    if not rows:
+        return
+
+    node_id = rows[0]["node_id"]
+    with sqlite3.connect(db.db_path) as con:
+        con.execute("DELETE FROM anat WHERE node_id = ?", (node_id,))
+        con.execute(
+            "INSERT INTO anat(node_id, anat_id, anat_label, cell_count, cell_ratio) "
+            "VALUES (?, ?, ?, ?, ?)",
+            (node_id, "MBA:777", "elsewhere", 100, 1.0),
+        )
+        con.commit()
+
+    results = db.find_candidates(anat_ids=["MBA:888"], level="cluster")
+    result_ids = {c["node_id"] for c in results}
+    assert node_id not in result_ids, (
+        "Region-mismatched candidate must be dropped by hard filter"
+    )
+
+
+def test_find_candidates_region_filter_passes_when_no_anat(populated_db):
+    """Region filter: candidate with no anat annotations at all passes
+    through (don't disqualify on missing data)."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
+            "ORDER BY node_id LIMIT 1"
+        ).fetchall()
+    if not rows:
+        return
+
+    node_id = rows[0]["node_id"]
+    with sqlite3.connect(db.db_path) as con:
+        con.execute("DELETE FROM anat WHERE node_id = ?", (node_id,))
+        con.commit()
+
+    results = db.find_candidates(anat_ids=["MBA:888"], level="cluster")
+    result_ids = {c["node_id"] for c in results}
+    assert node_id in result_ids, (
+        "No-anat-data candidate must pass through region filter"
+    )
+
+
+def test_find_candidates_region_fraction_emitted(populated_db):
+    """Region fraction (cells-in-queried / total) is computed and emitted
+    on candidates when region was queried."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
+            "ORDER BY node_id LIMIT 1"
+        ).fetchall()
+    if not rows:
+        return
+
+    node_id = rows[0]["node_id"]
+    with sqlite3.connect(db.db_path) as con:
+        con.execute("DELETE FROM anat WHERE node_id = ?", (node_id,))
+        # 30 cells in MBA:888, 70 cells elsewhere → fraction 0.30
+        con.execute(
+            "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+            (node_id, "MBA:888", "target", 30, 0.30),
+        )
+        con.execute(
+            "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+            (node_id, "MBA:777", "elsewhere", 70, 0.70),
+        )
+        con.commit()
+
+    results = db.find_candidates(anat_ids=["MBA:888"], level="cluster")
+    target = next((c for c in results if c["node_id"] == node_id), None)
+    assert target is not None
+    assert target["_region_fraction"] == pytest.approx(0.3, abs=0.01)
+
+
+def test_find_candidates_at_bypass_skips_filters(populated_db):
+    """AT bypass: a candidate listed in at_bypass survives both region
+    and NT filters even if it would otherwise fail."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
+            "ORDER BY node_id LIMIT 1"
+        ).fetchall()
+    if not rows:
+        return
+
+    node_id = rows[0]["node_id"]
+    # Make this node fail both filters: wrong region + wrong NT.
+    with sqlite3.connect(db.db_path) as con:
+        con.execute("DELETE FROM anat WHERE node_id = ?", (node_id,))
+        con.execute(
+            "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+            (node_id, "MBA:777", "elsewhere", 100, 1.0),
+        )
+        con.execute(
+            "UPDATE nodes SET nt_type = ? WHERE node_id = ?",
+            ("Glut", node_id),
+        )
+        con.commit()
+
+    # Without bypass: dropped.
+    results = db.find_candidates(
+        anat_ids=["MBA:888"], nt_type="GABA",
+        level="cluster", propagate_nt=False,
+    )
+    assert node_id not in {c["node_id"] for c in results}
+
+    # With bypass: kept.
+    results = db.find_candidates(
+        anat_ids=["MBA:888"], nt_type="GABA",
+        level="cluster", propagate_nt=False,
+        at_bypass={node_id},
+    )
+    assert node_id in {c["node_id"] for c in results}
+
+
 # ── TaxonomyMeta ──────────────────────────────────────────────────────────────
 
 def test_taxonomy_meta_round_trip(tmp_path):
@@ -845,10 +1047,14 @@ def test_full_wmbv1_ingest(tmp_path):
     assert len(lugaro) >= 1
     assert any("1145" in nd["label"] for nd in lugaro)
 
-    # Hippocampus GABA query
+    # Hippocampus GABA query. Phase 1: region/NT are hard prerequisite
+    # filters, not additive scoring contributions, so candidates that pass
+    # both filters but have no marker hits will land at _score == 0.
+    # Confirm filtering yields non-empty results and that no candidate has
+    # a negative score.
     hipp_gaba = db.find_candidates(anat_ids=["MBA:399"], nt_type="GABA", level="cluster")
     assert len(hipp_gaba) > 0
-    assert all(nd["_score"] > 0 for nd in hipp_gaba)
+    assert all(nd["_score"] >= 0 for nd in hipp_gaba)
 
     # male_female_ratio: most clusters should have values; check YAML + DB round-trip
     nodes_with_ratio = [n for n in cluster_yaml["nodes"] if n.get("male_female_ratio") is not None]

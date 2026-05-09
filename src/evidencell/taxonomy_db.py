@@ -1909,6 +1909,7 @@ class TaxonomyDB:
         propagate_nt: bool = True,
         optional_criteria: dict[str, str] | None = None,
         expression_data: dict[str, dict[str, float]] | None = None,
+        at_bypass: set[str] | None = None,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -2032,26 +2033,73 @@ class TaxonomyDB:
                     for sym, val in expression_data[acc].items():
                         sibling_gene_vals[pid][sym].append(val)
 
+        _at_bypass = at_bypass or set()
+
         results = []
         for row in rows:
             nd = dict(row)
             score = 0
+            node_acc = nd.get("node_id", "")
+            bypassed = node_acc in _at_bypass
 
+            # ── Hard prerequisite filters ─────────────────────────────────────
+            # Region and NT used to be additive scoring contributions (+2 each).
+            # Under Phase 1 they become prerequisite filters: candidates that
+            # fail are dropped from the pool, not penalised. This keeps the
+            # marker-driven score comparable across classical types of
+            # differing marker-list size and prevents unrelated candidates
+            # (e.g. cortical Pvalb interneurons against a hippocampal type)
+            # from competing on marker overlap alone.
+            #
+            # AT bypass: candidates with annotation-transfer evidence above
+            # the persistence floor (commit 4) are exempt from region/NT
+            # filters. Direct cell-assignment evidence overrides priors;
+            # the resulting edge may be refuted at Stage B, but it deserves
+            # to enter the pool.
+
+            # Region fraction (cells in queried region / total cells across
+            # all annotated regions) is always computed when region was
+            # queried, even when the bypass fires, so downstream consumers
+            # can see how on-target a candidate's anat profile is.
+            node_anat_rows = self._get_anat(node_acc) if effective_anat else []
+            region_fraction: float | None = None
             if effective_anat:
-                node_anat = {a["anat_id"] for a in self._get_anat(nd["node_id"])}
-                if node_anat & effective_anat:
-                    score += 2
+                node_anat_ids = {a["anat_id"] for a in node_anat_rows}
+                if node_anat_rows:
+                    total_cells = sum(
+                        (r.get("cell_count") or 0) for r in node_anat_rows
+                    )
+                    if total_cells > 0:
+                        matched_cells = sum(
+                            (r.get("cell_count") or 0)
+                            for r in node_anat_rows
+                            if r["anat_id"] in effective_anat
+                        )
+                        region_fraction = matched_cells / total_cells
 
-            if nt_type:
-                node_nt = nd.get("nt_type") or _nt_map.get(nd["node_id"])
+                # Filter: drop candidates with annotated regions but none in
+                # the queried region. Candidates with no anat data at all
+                # pass (don't disqualify on missing data).
+                if not bypassed and node_anat_rows and not (
+                    node_anat_ids & effective_anat
+                ):
+                    continue
+
+            # NT filter: applies only when both classical and candidate carry
+            # an NT call. Drop the filter if either side is unknown.
+            if nt_type and not bypassed:
+                node_nt = nd.get("nt_type") or _nt_map.get(node_acc)
                 if node_nt:
                     nn, qt = node_nt.lower(), nt_type.lower()
-                    if nn.startswith(qt) or qt.startswith(nn):
-                        score += 2
+                    if not (nn.startswith(qt) or qt.startswith(nn)):
+                        continue
+                # node_nt None → NT not assessed on candidate; pass.
 
-            node_acc = nd.get("node_id", "")
             node_expr = expression_data.get(node_acc, {}) if expression_data else {}
             node_parent_id = nd.get("parent_id")
+
+            if region_fraction is not None:
+                nd["_region_fraction"] = round(region_fraction, 3)
 
             # ── Marker scoring ────────────────────────────────────────────────
             # Positive markers — collect all gene symbols from DB marker columns.
@@ -2185,7 +2233,13 @@ class TaxonomyDB:
             if criteria_applied:
                 nd["_criteria_applied"] = criteria_applied
 
-            if score > 0:
+            # Phase 1: keep candidates with non-negative score. Hard
+            # prerequisite filters above already eliminate region/NT
+            # mismatches, so a surviving candidate with score == 0 still
+            # passed real criteria and deserves a ranking slot. Negative
+            # scores indicate net counter-evidence (e.g. multiple defining
+            # markers absent under expression data) — drop.
+            if score >= 0:
                 nd["_score"] = score
                 results.append(nd)
 
@@ -2761,6 +2815,14 @@ def _cmd_find_candidates(
                 # without re-deriving them.
                 **({"expression_detail": c["_expression_detail"]}
                    if c.get("_expression_detail") else {}),
+                # Region fraction (cells in queried region / total annotated
+                # cells). Recorded but not used for filtering or scoring at
+                # Phase 1 — see roadmap §3.3 note on "in region + distant"
+                # cases. Available for Phase 2 predicate selection
+                # (low fraction supports BROADER / PARTIAL_OVERLAP) and
+                # Phase 3 verdict-at-report-time.
+                **({"region_fraction": c["_region_fraction"]}
+                   if c.get("_region_fraction") is not None else {}),
             }
             for c in candidates
         ],
