@@ -1059,6 +1059,18 @@ def test_find_candidates_coverage_skips_negative_dampening(populated_db):
     assert "coverage" not in detail
 
 
+# ── Phase 1 commit 8: top-K cutoff ───────────────────────────────────────────
+
+
+def test_cmd_find_candidates_default_top_k_is_five():
+    """The CLI default for top_k is 5 (was 20 under top_n)."""
+    import inspect
+    from evidencell import taxonomy_db as tdb
+
+    sig = inspect.signature(tdb._cmd_find_candidates)
+    assert sig.parameters["top_k"].default == 5
+
+
 # ── Phase 1 commit 4: AT artifact consumer ──────────────────────────────────
 
 

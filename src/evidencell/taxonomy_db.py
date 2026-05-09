@@ -2774,7 +2774,7 @@ def _cmd_find_candidates(
     node_id: str,
     taxonomy_id: str,
     rank: int = 1,
-    top_n: int = 20,
+    top_k: int = 5,
 ) -> None:
     """Extract a classical node's property signature from a KB YAML file
     and query the taxonomy DB for candidate atlas matches at a given rank.
@@ -2991,8 +2991,11 @@ def _cmd_find_candidates(
         else:
             raise
 
-    # Trim to top_n
-    candidates = candidates[:top_n]
+    # Trim to top K. Phase 1: top_k replaces top_n. Conservative default
+    # (5) reflects the new gate-free flow — every above-cutoff candidate
+    # spawns a Stage B mapping subagent, so K bounds subagent count.
+    # If qualifying pool < K, all are emitted.
+    candidates = candidates[:top_k]
 
     # Output JSON
     output = {
@@ -3049,7 +3052,7 @@ if __name__ == "__main__":
         print("  python -m evidencell.taxonomy_db sync-mapmycells-paths <taxonomy_id>")
         print("  python -m evidencell.taxonomy_db fetch-mba <dest_path>")
         print("  python -m evidencell.taxonomy_db build-closure <taxonomy_id> <mba_json>")
-        print("  python -m evidencell.taxonomy_db find-candidates <graph_file> <node_id> <taxonomy_id> [rank] [top_n]")
+        print("  python -m evidencell.taxonomy_db find-candidates <graph_file> <node_id> <taxonomy_id> [rank] [top_k]")
         print("  python -m evidencell.taxonomy_db query-gene-expression <taxonomy_id> <accessions_csv> <genes_csv>")
         sys.exit(1)
 
@@ -3068,8 +3071,8 @@ if __name__ == "__main__":
         _cmd_build_closure(sys.argv[2], sys.argv[3])
     elif cmd == "find-candidates" and len(sys.argv) >= 5:
         _rank = int(sys.argv[5]) if len(sys.argv) > 5 else 1
-        _top_n = int(sys.argv[6]) if len(sys.argv) > 6 else 20
-        _cmd_find_candidates(sys.argv[2], sys.argv[3], sys.argv[4], _rank, _top_n)
+        _top_k = int(sys.argv[6]) if len(sys.argv) > 6 else 5
+        _cmd_find_candidates(sys.argv[2], sys.argv[3], sys.argv[4], _rank, _top_k)
     elif cmd == "query-gene-expression" and len(sys.argv) == 5:
         _accessions = [a.strip() for a in sys.argv[3].split(",") if a.strip()]
         _genes = [g.strip() for g in sys.argv[4].split(",") if g.strip()]

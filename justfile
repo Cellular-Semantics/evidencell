@@ -237,11 +237,12 @@ generate-gene-mapping stats_h5 output:
 # Find candidate atlas matches for a classical node by querying the taxonomy DB
 # Extracts the node's property signature (markers, NT, anatomy) and scores taxonomy entries
 # rank: 0 = leaf (cluster in WMBv1), 1 = supertype, 2 = subclass, 3 = class
+# top_k bounds the candidate pool sent to Stage B mapping subagents.
 # Usage: just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722
-#        just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 30
+#        just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 10
 [group('workflows')]
-find-candidates graph_file node_id taxonomy_id rank="1" top_n="20":
-    uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_n}}
+find-candidates graph_file node_id taxonomy_id rank="1" top_k="5":
+    uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}}
 
 # Extract per-(classical, taxonomy) F1 artifact from a MapMyCells run dir.
 # Reads {run_dir}/f1_matrix.csv + manifest.yaml, filters by source_label and
