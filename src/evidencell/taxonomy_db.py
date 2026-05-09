@@ -1910,6 +1910,7 @@ class TaxonomyDB:
         optional_criteria: dict[str, str] | None = None,
         expression_data: dict[str, dict[str, float]] | None = None,
         at_bypass: set[str] | None = None,
+        at_hits: dict[str, dict] | None = None,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -2224,6 +2225,33 @@ class TaxonomyDB:
             if expr_detail:
                 nd["_expression_detail"] = expr_detail
 
+            # ── Annotation transfer (Stage A signal) ──────────────────────────
+            # When MapMyCells F1 hits are available for this (classical,
+            # taxonomy) pair, candidates with an above-floor F1 hit get an
+            # additive bonus and are emitted with an `_at_hit` block.
+            # Bucketed scoring (rough first cut; review after live data):
+            #   F1 ≥ 0.5  → +3  (strong direct cell-assignment evidence)
+            #   F1 ≥ 0.3  → +2
+            #   F1 ≥ floor → +1
+            if at_hits:
+                hit = at_hits.get(node_acc)
+                if hit:
+                    f1 = float(hit.get("f1") or 0.0)
+                    if f1 >= 0.5:
+                        at_delta = 3
+                    elif f1 >= 0.3:
+                        at_delta = 2
+                    else:
+                        at_delta = 1
+                    score += at_delta
+                    nd["_at_hit"] = {
+                        "f1": f1,
+                        "n_cells": hit.get("n_cells"),
+                        "target_level": hit.get("target_level"),
+                        "target_name": hit.get("target_name"),
+                        "score": at_delta,
+                    }
+
             criteria_applied: list[str] = []
             for name, direction, entry in _active_criteria:
                 col_val = nd.get(entry["column"])
@@ -2265,6 +2293,70 @@ def _detect_cas_format(source: Path) -> bool:
         except json.JSONDecodeError:
             return False
     return _is_cas_format(data)
+
+
+# ── AT artifact loader ────────────────────────────────────────────────────────
+
+# Canonical artifact path: research/{region}/at/{classical_id}_{taxonomy_id}_f1.json
+# The artifact is produced by `just at-extract-f1` (commit 5) from a MapMyCells
+# run directory. Phase 1 consumer logic only — find_candidates reads it as
+# a Stage A scoring signal when present.
+
+AT_ARTIFACT_GLOB = "research/*/at/{classical_id}_{taxonomy_id}_f1.json"
+
+
+def _load_at_artifact(
+    classical_node_id: str, taxonomy_id: str
+) -> dict | None:
+    """Locate and load an AT F1 artifact for this (classical, taxonomy) pair.
+
+    Searches under ``research/*/at/`` for a matching artifact. Returns the
+    parsed JSON dict, or None if no artifact exists or loading fails.
+    A warning is logged to stderr on malformed JSON; the find-candidates
+    pipeline proceeds without AT scoring.
+
+    The (classical_node_id, taxonomy_id) tuple is treated as unique within
+    the KB. If multiple matches exist (unexpected), the first is used.
+    """
+    from evidencell.paths import repo_root
+
+    pattern = AT_ARTIFACT_GLOB.format(
+        classical_id=classical_node_id, taxonomy_id=taxonomy_id
+    )
+    candidates = sorted(repo_root().glob(pattern))
+    if not candidates:
+        return None
+    if len(candidates) > 1:
+        print(
+            f"  WARNING: multiple AT artifacts for ({classical_node_id}, "
+            f"{taxonomy_id}); using first: {candidates[0]}",
+            file=sys.stderr,
+        )
+    artifact_path = candidates[0]
+    try:
+        with artifact_path.open(encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, json.JSONDecodeError) as exc:
+        print(
+            f"  WARNING: failed to load AT artifact {artifact_path}: {exc}. "
+            "Proceeding without AT scoring.",
+            file=sys.stderr,
+        )
+        return None
+
+
+def _at_hits_from_artifact(artifact: dict) -> dict[str, dict]:
+    """Convert a loaded artifact's hits list into the (accession → hit) map
+    that find_candidates expects. Drops malformed entries silently."""
+    hits: dict[str, dict] = {}
+    for entry in artifact.get("hits") or []:
+        if not isinstance(entry, dict):
+            continue
+        acc = entry.get("target_accession")
+        if not isinstance(acc, str):
+            continue
+        hits[acc] = entry
+    return hits
 
 
 def _classical_positive_markers(classical: dict) -> list[str]:
@@ -2758,6 +2850,25 @@ def _cmd_find_candidates(
     if optional_criteria:
         print(f"  Optional criteria: {optional_criteria}", file=sys.stderr)
 
+    # AT artifact (commit 4 / gap 9): when MapMyCells F1 hits exist for this
+    # (classical, taxonomy) pair, hits above the persistence floor act as a
+    # Stage A scoring signal AND exempt their target candidates from region/NT
+    # filters (direct cell-assignment evidence overrides priors).
+    at_artifact = _load_at_artifact(node_id, taxonomy_id)
+    at_hits: dict[str, dict] | None = None
+    at_bypass: set[str] | None = None
+    if at_artifact:
+        at_hits = _at_hits_from_artifact(at_artifact)
+        at_bypass = set(at_hits.keys())
+        print(
+            f"  AT artifact: {len(at_hits)} hit(s) "
+            f"(run: {at_artifact.get('source_run_id', '?')}, "
+            f"floor: {at_artifact.get('f1_floor', '?')})",
+            file=sys.stderr,
+        )
+    else:
+        print("  AT artifact: not found (proceeding without AT scoring)", file=sys.stderr)
+
     # Try transitive anatomy matching (requires anat_closure table from MBA ontology).
     # Fall back to no anatomy matching if closure not built.
     query_anat = mba_ids if mba_ids else None
@@ -2768,6 +2879,8 @@ def _cmd_find_candidates(
         rank=rank,
         optional_criteria=optional_criteria,
         expression_data=expression_data or None,
+        at_hits=at_hits,
+        at_bypass=at_bypass,
     )
     try:
         candidates = db.find_candidates(
@@ -2823,6 +2936,11 @@ def _cmd_find_candidates(
                 # Phase 3 verdict-at-report-time.
                 **({"region_fraction": c["_region_fraction"]}
                    if c.get("_region_fraction") is not None else {}),
+                # Annotation-transfer hit (commit 4 / gap 9). Present when
+                # MapMyCells F1 hits were loaded for this (classical,
+                # taxonomy) pair and this candidate is among them.
+                **({"at_hit": c["_at_hit"]}
+                   if c.get("_at_hit") else {}),
             }
             for c in candidates
         ],

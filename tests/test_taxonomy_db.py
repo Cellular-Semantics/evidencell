@@ -924,6 +924,143 @@ def test_find_candidates_at_bypass_skips_filters(populated_db):
     assert node_id in {c["node_id"] for c in results}
 
 
+# ── Phase 1 commit 4: AT artifact consumer ──────────────────────────────────
+
+
+def test_find_candidates_at_hit_scoring_buckets(populated_db):
+    """AT F1 buckets contribute the right additive bonus:
+    F1 >= 0.5 → +3, F1 >= 0.3 → +2, otherwise → +1 (above floor)."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
+            "ORDER BY node_id LIMIT 3"
+        ).fetchall()
+    if len(rows) < 3:
+        return
+
+    at_hits = {
+        rows[0]["node_id"]: {"f1": 0.7, "n_cells": 50, "target_level": "cluster"},
+        rows[1]["node_id"]: {"f1": 0.4, "n_cells": 30, "target_level": "cluster"},
+        rows[2]["node_id"]: {"f1": 0.25, "n_cells": 10, "target_level": "cluster"},
+    }
+    results = db.find_candidates(level="cluster", at_hits=at_hits)
+    by_id = {c["node_id"]: c for c in results}
+
+    assert by_id[rows[0]["node_id"]]["_at_hit"]["score"] == 3
+    assert by_id[rows[1]["node_id"]]["_at_hit"]["score"] == 2
+    assert by_id[rows[2]["node_id"]]["_at_hit"]["score"] == 1
+
+
+def test_find_candidates_at_hit_bypasses_region_and_nt_filters(populated_db):
+    """An AT-matched candidate is exempt from region+NT filters even
+    when its anat/NT would otherwise fail."""
+    db, _, _ = populated_db
+
+    with sqlite3.connect(db.db_path) as con:
+        con.row_factory = sqlite3.Row
+        rows = con.execute(
+            "SELECT node_id FROM nodes WHERE taxonomy_level='cluster' "
+            "ORDER BY node_id LIMIT 1"
+        ).fetchall()
+    if not rows:
+        return
+
+    node_id = rows[0]["node_id"]
+    with sqlite3.connect(db.db_path) as con:
+        con.execute("DELETE FROM anat WHERE node_id = ?", (node_id,))
+        con.execute(
+            "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+            (node_id, "MBA:777", "elsewhere", 100, 1.0),
+        )
+        con.execute(
+            "UPDATE nodes SET nt_type = 'Glut' WHERE node_id = ?",
+            (node_id,),
+        )
+        con.commit()
+
+    at_hits = {node_id: {"f1": 0.6, "n_cells": 40, "target_level": "cluster"}}
+
+    # Without bypass via at_hits: dropped by both filters.
+    results_no_at = db.find_candidates(
+        anat_ids=["MBA:888"], nt_type="GABA",
+        level="cluster", propagate_nt=False,
+    )
+    assert node_id not in {c["node_id"] for c in results_no_at}
+
+    # With at_hits: passes both filters, gains +3 score.
+    results_at = db.find_candidates(
+        anat_ids=["MBA:888"], nt_type="GABA",
+        level="cluster", propagate_nt=False,
+        at_hits=at_hits, at_bypass=set(at_hits.keys()),
+    )
+    target = next((c for c in results_at if c["node_id"] == node_id), None)
+    assert target is not None
+    assert target["_at_hit"]["f1"] == pytest.approx(0.6)
+    assert target["_at_hit"]["score"] == 3
+
+
+def test_load_at_artifact_returns_none_when_missing(tmp_path, monkeypatch):
+    """When no artifact exists for the (classical, taxonomy) pair, the
+    loader returns None and find-candidates proceeds without AT scoring."""
+    import evidencell.paths as paths_mod
+    from evidencell.taxonomy_db import _load_at_artifact
+
+    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
+    assert _load_at_artifact("nonexistent", "TEST_TAX") is None
+
+
+def test_load_at_artifact_parses_valid_json(tmp_path, monkeypatch):
+    """Loader returns the parsed dict when the canonical path exists."""
+    import json as _json
+    import evidencell.paths as paths_mod
+    from evidencell.taxonomy_db import _at_hits_from_artifact, _load_at_artifact
+
+    art_dir = tmp_path / "research" / "hippocampus" / "at"
+    art_dir.mkdir(parents=True)
+    artifact = {
+        "classical_node_id": "olm_hippocampus",
+        "taxonomy_id": "CCN20230722",
+        "source_run_id": "at_run_test",
+        "f1_floor": 0.2,
+        "hits": [
+            {
+                "target_accession": "CS20230722_SUPT_0216",
+                "target_level": "supertype",
+                "target_name": "0216 Sst Gaba_3",
+                "f1": 0.67,
+                "n_cells": 43,
+            }
+        ],
+    }
+    art_path = art_dir / "olm_hippocampus_CCN20230722_f1.json"
+    art_path.write_text(_json.dumps(artifact))
+
+    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
+    loaded = _load_at_artifact("olm_hippocampus", "CCN20230722")
+    assert loaded == artifact
+
+    hits = _at_hits_from_artifact(loaded)
+    assert "CS20230722_SUPT_0216" in hits
+    assert hits["CS20230722_SUPT_0216"]["f1"] == pytest.approx(0.67)
+
+
+def test_load_at_artifact_handles_malformed_json(tmp_path, monkeypatch):
+    """Malformed JSON is logged and the loader returns None (fail-permissive)."""
+    import evidencell.paths as paths_mod
+    from evidencell.taxonomy_db import _load_at_artifact
+
+    art_dir = tmp_path / "research" / "hippocampus" / "at"
+    art_dir.mkdir(parents=True)
+    art_path = art_dir / "olm_hippocampus_CCN20230722_f1.json"
+    art_path.write_text("{ not valid json")
+
+    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
+    assert _load_at_artifact("olm_hippocampus", "CCN20230722") is None
+
+
 # ── TaxonomyMeta ──────────────────────────────────────────────────────────────
 
 def test_taxonomy_meta_round_trip(tmp_path):
