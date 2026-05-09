@@ -2117,7 +2117,7 @@ class TaxonomyDB:
                         score += 1  # fallback: gene in DB marker columns
 
             # Negative markers
-            if negative_markers and node_expr:
+            if negative_markers:
                 for m in negative_markers:
                     if m in node_expr:
                         val = node_expr[m]
@@ -2140,6 +2140,7 @@ class TaxonomyDB:
                                 "sibling_pct": round(s_pct, 3),
                                 "global_pct": round(g_pct, 3),
                                 "score": delta,
+                                "source": "expression",
                             }
                         else:
                             # val below MIN_DETECTABLE: absence confirms negative-marker
@@ -2153,7 +2154,23 @@ class TaxonomyDB:
                                 "sibling_pct": None,
                                 "global_pct": None,
                                 "score": delta,
+                                "source": "expression",
                             }
+                        score += delta
+                    elif m in node_markers:
+                        # Gap 4: metadata fallback. Gene is absent from
+                        # precomputed_expression but flagged as a defining /
+                        # MERFISH / TF / neuropeptide marker on the candidate.
+                        # This contradicts the negative-marker expectation.
+                        delta = -1
+                        expr_detail[f"-{m}"] = {
+                            "val": None,
+                            "reliable": None,
+                            "sibling_pct": None,
+                            "global_pct": None,
+                            "score": delta,
+                            "source": "metadata",
+                        }
                         score += delta
 
             if expr_detail:
@@ -2738,6 +2755,12 @@ def _cmd_find_candidates(
                    if c.get("male_female_ratio") is not None else {}),
                 **({"criteria_applied": c["_criteria_applied"]}
                    if c.get("_criteria_applied") else {}),
+                # Gap 7: emit per-gene scoring detail so downstream consumers
+                # (refinement subagent, mapping subagent, report generation)
+                # can see val / sibling_pct / global_pct / score per gene
+                # without re-deriving them.
+                **({"expression_detail": c["_expression_detail"]}
+                   if c.get("_expression_detail") else {}),
             }
             for c in candidates
         ],
