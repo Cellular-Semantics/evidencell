@@ -214,6 +214,18 @@ add-expression taxonomy_id stats_h5 gene_mapping +GENES:
 add-expression-all taxonomy_id stats_h5 gene_mapping +GENES:
     uv run python -m evidencell.taxonomy_ops add-expression {{taxonomy_id}} {{stats_h5}} {{gene_mapping}} {{GENES}} --supertype
 
+# Proactive enrichment: scan kb/graphs/**/*.yaml for non-atlas nodes, collect
+# the union of all (defining_markers + neuropeptides + negative_markers)
+# symbols, and enrich every taxonomy node at cluster + supertype levels with
+# precomputed_expression for that union.
+# Replaces the per-mapping Step 2b in workflows/map-cell-type.md so that
+# find-candidates always sees full quantitative data on candidates.
+# Re-run when classical nodes are added or their marker lists change.
+# Usage: just enrich-marker-union CCN20230722 conf/mapmycells/CCN20230722/precomputed_stats.h5 conf/gene_mapping_CCN20230722.tsv
+[group('workflows')]
+enrich-marker-union taxonomy_id stats_h5 gene_mapping:
+    uv run python -m evidencell.taxonomy_ops enrich-marker-union {{taxonomy_id}} {{stats_h5}} {{gene_mapping}}
+
 # Re-ingest taxonomy from source JSON, preserving enrichment fields
 # Usage: just reingest CCN20230722 inputs/taxonomies/wmbv1_full_v2.json
 [group('workflows')]

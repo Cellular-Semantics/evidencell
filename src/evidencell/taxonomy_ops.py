@@ -753,6 +753,126 @@ def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]
 
 # ── CLI ──────────────────────────────────────────────────────────────────────
 
+def collect_kb_marker_union() -> set[str]:
+    """Scan kb/graphs/**/*.yaml for non-atlas nodes and return the union of
+    all marker gene symbols mentioned across them.
+
+    Phase 1 commit 10: drives the proactive enrichment step that replaces
+    per-mapping Step 2b. The set covers every gene any classical/literature
+    node carries on its `defining_markers`, `neuropeptides`, or
+    `negative_markers` fields, so that find-candidates always sees full
+    quantitative data on candidates without a manual enrichment call.
+
+    Atlas nodes (`definition_basis: ATLAS_TRANSCRIPTOMIC`) are skipped —
+    their markers come from the taxonomy ingest itself, not from the KB
+    side. Files that fail to parse are logged and skipped.
+    """
+    from evidencell.paths import repo_root
+
+    root = repo_root()
+    graphs_dir = root / "kb" / "graphs"
+    if not graphs_dir.exists():
+        return set()
+
+    out: set[str] = set()
+    for yaml_path in sorted(graphs_dir.rglob("*.yaml")):
+        try:
+            doc = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Failed to parse %s: %s — skipping", yaml_path, exc)
+            continue
+        nodes = doc.get("nodes") or []
+        for nd in nodes:
+            if not isinstance(nd, dict):
+                continue
+            if nd.get("definition_basis") == "ATLAS_TRANSCRIPTOMIC":
+                continue
+            for field in ("defining_markers", "neuropeptides", "negative_markers"):
+                for m in nd.get(field) or []:
+                    sym = m.get("symbol") if isinstance(m, dict) else m
+                    if sym:
+                        out.add(sym)
+    return out
+
+
+def enrich_for_kb_marker_union(
+    taxonomy_id: str,
+    stats_path: str | Path,
+    gene_mapping_path: str | Path,
+    levels: list[str] | None = None,
+) -> dict[str, Any]:
+    """Batch-enrich every taxonomy node with `precomputed_expression` for
+    the union of all KB-mentioned marker genes.
+
+    Replaces the per-mapping Step 2b enrichment in workflows/map-cell-type.md
+    so that find-candidates always sees full quantitative data on candidates
+    without a manual call. Should be re-run when classical nodes are added
+    or their marker lists change.
+
+    Args:
+        taxonomy_id: target taxonomy (e.g. CCN20230722).
+        stats_path: path to the precomputed_stats HDF5 for this taxonomy.
+        gene_mapping_path: gene mapping TSV (symbol → Ensembl).
+        levels: list of taxonomy levels to enrich (default: ["cluster",
+            "supertype"]). The supertype level also gets the
+            `child_cluster_expression` block populated by add_expression_supertype.
+
+    Returns:
+        Summary dict with `taxonomy_id`, `n_genes`, `genes_used`,
+        `genes_missing` (TSV mapping had no Ensembl), and per-level update
+        counts.
+    """
+    if levels is None:
+        levels = ["cluster", "supertype"]
+
+    genes = sorted(collect_kb_marker_union())
+    if not genes:
+        return {
+            "taxonomy_id": taxonomy_id,
+            "n_genes": 0,
+            "genes_used": [],
+            "genes_missing": [],
+            "by_level": {},
+            "note": "No KB-mentioned marker genes found",
+        }
+
+    mapping = load_gene_mapping(gene_mapping_path)
+
+    by_level: dict[str, dict] = {}
+    for level in levels:
+        if level == "supertype":
+            res = add_expression_supertype(
+                taxonomy_id=taxonomy_id,
+                stats_path=stats_path,
+                genes=genes,
+                gene_mapping=mapping,
+                accessions=None,
+            )
+        else:
+            res = add_expression(
+                taxonomy_id=taxonomy_id,
+                stats_path=stats_path,
+                genes=genes,
+                gene_mapping=mapping,
+                level=level,
+                accessions=None,
+            )
+        by_level[level] = res
+
+    # Genes the mapping couldn't resolve — same across calls; pick from cluster
+    # path which always runs.
+    genes_missing = by_level.get("cluster", {}).get("genes_missing", [])
+    genes_used = [g for g in genes if g not in genes_missing]
+
+    return {
+        "taxonomy_id": taxonomy_id,
+        "n_genes": len(genes),
+        "genes_used": genes_used,
+        "genes_missing": genes_missing,
+        "by_level": by_level,
+    }
+
+
 def extract_at_f1_artifact(
     run_dir: str | Path,
     classical_node_id: str,
@@ -964,6 +1084,19 @@ def main() -> None:
         help="Build/rebuild kb/annotation_transfer_runs/index.yaml from manifest files",
     )
 
+    # enrich-marker-union: proactively enrich taxonomy with all KB-mentioned markers
+    p_emu = sub.add_parser(
+        "enrich-marker-union",
+        help="Batch-enrich taxonomy nodes with KB-wide marker gene union",
+    )
+    p_emu.add_argument("taxonomy_id", help="Target taxonomy ID")
+    p_emu.add_argument("stats_h5", help="Path to precomputed_stats HDF5")
+    p_emu.add_argument("gene_mapping", help="Path to gene mapping TSV")
+    p_emu.add_argument(
+        "--levels", nargs="*",
+        help="Taxonomy levels to enrich (default: cluster supertype)",
+    )
+
     # at-extract-f1: produce per-(classical, taxonomy) F1 artifact for find-candidates
     p_atf1 = sub.add_parser(
         "at-extract-f1",
@@ -1037,6 +1170,15 @@ def main() -> None:
 
     elif args.command == "build-at-index":
         result = build_at_index()
+        print(json.dumps(result, indent=2))
+
+    elif args.command == "enrich-marker-union":
+        result = enrich_for_kb_marker_union(
+            taxonomy_id=args.taxonomy_id,
+            stats_path=args.stats_h5,
+            gene_mapping_path=args.gene_mapping,
+            levels=args.levels,
+        )
         print(json.dumps(result, indent=2))
 
     elif args.command == "at-extract-f1":

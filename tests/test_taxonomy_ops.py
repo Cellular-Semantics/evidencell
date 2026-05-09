@@ -16,6 +16,7 @@ from evidencell.taxonomy_ops import (
     _index_nodes,
     _merge_nodes,
     add_expression,
+    collect_kb_marker_union,
     extract_at_f1_artifact,
     load_gene_mapping,
     load_taxonomy_level,
@@ -784,3 +785,92 @@ class TestAtExtractF1CLI:
         assert result.returncode == 0
         assert "source_cluster_label" in result.stdout
         assert "--floor" in result.stdout
+
+
+# ── Phase 1 commit 10: proactive enrichment driver ──────────────────────────
+
+
+def _make_kb_graphs(tmp_path: Path) -> Path:
+    """Create a synthetic kb/graphs/ tree with one classical and one atlas node."""
+    g_dir = tmp_path / "kb" / "graphs" / "test_region"
+    g_dir.mkdir(parents=True)
+
+    graph_yaml = {
+        "nodes": [
+            {
+                "id": "lit_alpha",
+                "name": "Alpha cell",
+                "definition_basis": "ARTIFICIAL",
+                "defining_markers": [{"symbol": "Sst"}, {"symbol": "Calb1"}],
+                "neuropeptides": [{"symbol": "Npy"}],
+                "negative_markers": [{"symbol": "Pvalb"}],
+            },
+            {
+                "id": "lit_beta",
+                "name": "Beta cell",
+                "definition_basis": "ARTIFICIAL",
+                "defining_markers": [{"symbol": "Sst"}, {"symbol": "Vip"}],
+                "neuropeptides": [],
+                "negative_markers": [],
+            },
+            {
+                "id": "atlas_node",
+                "name": "Atlas cluster",
+                "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+                "defining_markers": [{"symbol": "Foo"}],  # must be ignored
+                "neuropeptides": [{"symbol": "Bar"}],     # must be ignored
+            },
+        ]
+    }
+    (g_dir / "test.yaml").write_text(yaml.safe_dump(graph_yaml))
+    return tmp_path
+
+
+def test_collect_kb_marker_union_unions_lit_node_markers(tmp_path, monkeypatch):
+    """The union covers defining + neuropeptides + negative across all
+    non-atlas nodes; atlas-node markers are excluded."""
+    import evidencell.paths as paths_mod
+    _make_kb_graphs(tmp_path)
+    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
+
+    union = collect_kb_marker_union()
+    assert union == {"Sst", "Calb1", "Npy", "Pvalb", "Vip"}
+    assert "Foo" not in union  # atlas-node markers excluded
+    assert "Bar" not in union
+
+
+def test_collect_kb_marker_union_handles_no_kb_dir(tmp_path, monkeypatch):
+    """No kb/graphs directory → empty set, no error."""
+    import evidencell.paths as paths_mod
+    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
+    assert collect_kb_marker_union() == set()
+
+
+def test_collect_kb_marker_union_skips_unparseable(tmp_path, monkeypatch):
+    """Unparseable YAML files are logged and skipped, not fatal."""
+    import evidencell.paths as paths_mod
+    g_dir = tmp_path / "kb" / "graphs" / "broken"
+    g_dir.mkdir(parents=True)
+    (g_dir / "bad.yaml").write_text("this: is: not: valid: yaml: at: all:[")
+    (g_dir / "good.yaml").write_text(yaml.safe_dump({
+        "nodes": [{
+            "id": "x",
+            "definition_basis": "ARTIFICIAL",
+            "defining_markers": [{"symbol": "Sst"}],
+        }]
+    }))
+    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
+    union = collect_kb_marker_union()
+    assert "Sst" in union
+
+
+class TestEnrichMarkerUnionCLI:
+    def test_help(self):
+        import subprocess
+        result = subprocess.run(
+            ["uv", "run", "python", "-m", "evidencell.taxonomy_ops",
+             "enrich-marker-union", "--help"],
+            capture_output=True, text=True,
+        )
+        assert result.returncode == 0
+        assert "stats_h5" in result.stdout
