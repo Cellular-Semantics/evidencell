@@ -850,13 +850,15 @@ pipeline the call lives, what model to use, what to do on LLM-call
 failure (default permissive — pass — to avoid silently dropping
 candidates).
 
-**Anatomical-region propagation at higher ranks.** The "does the
-candidate have cells in the queried region" check needs to work at
-supertype/subclass rank, not just leaf. Currently `_get_anat` returns
-direct annotations from the anat table; need to confirm whether
-parent-rank nodes inherit anat from leaf clusters (analogous to the NT
-propagation already implemented). If not, propagation needs adding as
-part of this work.
+**Anatomical-region propagation at higher ranks.** Resolved (Phase 1
+implementation): on inspection, every rank in WMBv1 source taxonomy
+YAML already carries `anatomical_location` entries
+(class 31/34, subclass 326/338, supertype 1180/1201, plus all clusters),
+and `_insert_node` populates the `anat` SQLite table uniformly across
+ranks. `_get_anat` therefore returns rows at every rank without
+requiring programmatic propagation. If a future taxonomy ingest produces
+sparse parent-rank anat coverage, build-time aggregation from
+descendants is the natural fallback.
 
 **Defining vs neuropeptide weighting.** Should neuropeptides count
 identically to defining markers in positive-marker scoring, or be
