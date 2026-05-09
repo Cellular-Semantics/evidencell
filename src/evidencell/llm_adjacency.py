@@ -174,7 +174,7 @@ def _call_anthropic(
         messages=[{"role": "user", "content": prompt}],
     )
     text = "".join(
-        block.text for block in response.content
+        getattr(block, "text", "") for block in response.content
         if getattr(block, "type", None) == "text"
     )
     # The model is asked for STRICT JSON, but be defensive: locate first

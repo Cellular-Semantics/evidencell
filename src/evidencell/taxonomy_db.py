@@ -2083,6 +2083,8 @@ class TaxonomyDB:
             rank is not None and rank > 0 and expression_data is not None
         )
         if compute_coverage:
+            assert rank is not None  # for type-checker; guarded by compute_coverage
+            assert expression_data is not None
             with self._connect() as con:
                 child_rows = con.execute(
                     "SELECT node_id, parent_id FROM nodes WHERE taxonomy_rank = ?",
@@ -2238,7 +2240,7 @@ class TaxonomyDB:
                                 if n_with > 0:
                                     coverage = cov
                                     delta = delta * (cov ** 0.5)
-                            entry: dict = {
+                            marker_entry: dict = {
                                 "val": val,
                                 "reliable": True,
                                 "sibling_pct": round(s_pct, 3),
@@ -2250,8 +2252,8 @@ class TaxonomyDB:
                                 ),
                             }
                             if coverage is not None:
-                                entry["coverage"] = round(coverage, 3)
-                            expr_detail[m] = entry
+                                marker_entry["coverage"] = round(coverage, 3)
+                            expr_detail[m] = marker_entry
                         else:
                             # val below MIN_DETECTABLE: absence penalty for positive markers.
                             # Percentiles are ill-defined at noise-floor; pass val so

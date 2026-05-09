@@ -1,6 +1,5 @@
 """pytest configuration for evidencell tests."""
 
-import os
 
 import pytest
 
