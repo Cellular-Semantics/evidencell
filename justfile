@@ -243,6 +243,20 @@ generate-gene-mapping stats_h5 output:
 find-candidates graph_file node_id taxonomy_id rank="1" top_n="20":
     uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_n}}
 
+# Extract per-(classical, taxonomy) F1 artifact from a MapMyCells run dir.
+# Reads {run_dir}/f1_matrix.csv + manifest.yaml, filters by source_label and
+# F1 floor, resolves target labels to accessions via the taxonomy DB, writes
+# research/{region}/at/{classical_id}_{taxonomy_id}_f1.json.
+# The artifact is consumed by find-candidates as a Stage A scoring signal.
+# Usage: just at-extract-f1 \
+#          kb/annotation_transfer_runs/20260408_winterer_olm_mmc_wmbv1 \
+#          olm_hippocampus "Sst-OLM" hippocampus
+#        just at-extract-f1 ... --floor 0.3
+[group('workflows')]
+at-extract-f1 run_dir classical_id source_label region floor="0.2":
+    uv run python -m evidencell.taxonomy_ops at-extract-f1 \
+      {{run_dir}} {{classical_id}} "{{source_label}}" {{region}} --floor {{floor}}
+
 # Show taxonomy metadata (including mapmycells paths)
 # Usage: just show-meta CCN20230722
 [group('workflows')]
