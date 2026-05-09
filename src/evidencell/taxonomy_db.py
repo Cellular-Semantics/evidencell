@@ -1381,6 +1381,40 @@ def _expression_percentile(val: float, reference: list[float]) -> float:
     return sum(v < val for v in reference) / len(reference)
 
 
+def _coverage_for_gene(
+    child_accs: list[str],
+    gene: str,
+    child_expression_data: dict[str, dict[str, float]],
+) -> tuple[float, int]:
+    """Return (coverage, n_children_with_data) for ``gene`` across children.
+
+    Coverage = fraction of children with measured expression at-or-above
+    ``MIN_DETECTABLE``. Children without any expression data for this gene
+    are excluded from both numerator and denominator (no signal either way).
+
+    Used at rank ≥ 1 to detect supertype-level heterogeneity: a strong
+    parent mean with low child coverage indicates the marker is concentrated
+    in a subset of children and the parent is not a coherent marker target.
+    """
+    if not child_accs or not child_expression_data:
+        return 0.0, 0
+    n_with = 0
+    n_detected = 0
+    for ca in child_accs:
+        ce = child_expression_data.get(ca)
+        if ce is None:
+            continue
+        val = ce.get(gene)
+        if val is None:
+            continue
+        n_with += 1
+        if val >= MIN_DETECTABLE:
+            n_detected += 1
+    if n_with == 0:
+        return 0.0, 0
+    return n_detected / n_with, n_with
+
+
 def _score_from_percentiles(
     sibling_pct: float,
     global_pct: float,
@@ -2036,6 +2070,35 @@ class TaxonomyDB:
 
         _at_bypass = at_bypass or set()
 
+        # ── Heterogeneity coverage at rank ≥ 1 ────────────────────────────
+        # When the queried rank has children, coverage = fraction of children
+        # with detectable expression of a queried marker. Used to soft-dampen
+        # supertype-level positive-marker scores: a strong parent mean with
+        # low child coverage indicates concentration in a subset of children.
+        # Negative markers are not dampened in Phase 1 (different signal
+        # direction; revisit later).
+        parent_to_children: dict[str, list[str]] = {}
+        child_expression_data: dict[str, dict[str, float]] = {}
+        compute_coverage = (
+            rank is not None and rank > 0 and expression_data is not None
+        )
+        if compute_coverage:
+            with self._connect() as con:
+                child_rows = con.execute(
+                    "SELECT node_id, parent_id FROM nodes WHERE taxonomy_rank = ?",
+                    (rank - 1,),
+                ).fetchall()
+            for cr in child_rows:
+                cdict = dict(cr)
+                pid = cdict.get("parent_id")
+                if pid:
+                    parent_to_children.setdefault(pid, []).append(cdict["node_id"])
+            # Reuse the caller-supplied expression_data when it covers the
+            # child rank (typical when both ranks are enriched). For now we
+            # accept whatever subset is available; callers passing only
+            # parent-rank data simply get no coverage signal.
+            child_expression_data = expression_data  # same dict, child accessions just won't appear with parent-only data
+
         results = []
         for row in rows:
             nd = dict(row)
@@ -2124,6 +2187,11 @@ class TaxonomyDB:
             expr_detail: dict[str, dict] = {}  # gene → {val, reliable, sibling_pct, global_pct, score}
 
             if markers:
+                children = (
+                    parent_to_children.get(node_acc, [])
+                    if compute_coverage
+                    else []
+                )
                 for m in markers:
                     if m in node_expr:
                         val = node_expr[m]
@@ -2140,13 +2208,37 @@ class TaxonomyDB:
                             delta = _score_from_percentiles(
                                 s_pct, g_pct, is_negative=False, val=val
                             )
-                            expr_detail[m] = {
+                            # Coverage dampening at rank ≥ 1: a strong parent
+                            # mean with low child coverage indicates the
+                            # marker is concentrated in a subset of children;
+                            # the parent is not a coherent marker target.
+                            # Soft (sqrt) dampening preserves signal while
+                            # tempering over-confidence on heterogeneous
+                            # supertypes. Only positive deltas are dampened
+                            # in Phase 1; absence penalty (delta < 0)
+                            # propagates undampened.
+                            coverage: float | None = None
+                            if compute_coverage and delta > 0 and children:
+                                cov, n_with = _coverage_for_gene(
+                                    children, m, child_expression_data
+                                )
+                                if n_with > 0:
+                                    coverage = cov
+                                    delta = delta * (cov ** 0.5)
+                            entry: dict = {
                                 "val": val,
                                 "reliable": True,
                                 "sibling_pct": round(s_pct, 3),
                                 "global_pct": round(g_pct, 3),
-                                "score": delta,
+                                "score": (
+                                    round(delta, 3)
+                                    if isinstance(delta, float)
+                                    else delta
+                                ),
                             }
+                            if coverage is not None:
+                                entry["coverage"] = round(coverage, 3)
+                            expr_detail[m] = entry
                         else:
                             # val below MIN_DETECTABLE: absence penalty for positive markers.
                             # Percentiles are ill-defined at noise-floor; pass val so
