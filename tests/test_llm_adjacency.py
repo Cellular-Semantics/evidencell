@@ -149,64 +149,10 @@ def test_build_prompt_lists_candidates_and_queried_label():
     assert "X" in prompt
 
 
-def test_find_candidates_llm_drops_unrelated(monkeypatch, tmp_path):
-    """End-to-end via find_candidates: LLM rejects an unrelated region;
-    that candidate is dropped after the loop."""
-    import sqlite3
-    from evidencell.taxonomy_db import TaxonomyDB
-
-    monkeypatch.setenv("XDG_CACHE_HOME", str(tmp_path))
-    monkeypatch.setenv("ANTHROPIC_API_KEY", "fake-key")
-
-    # Build a tiny DB with two cluster rows in unrelated regions.
-    db_path = tmp_path / "tiny.db"
-    db = TaxonomyDB(db_path)
-    con = sqlite3.connect(db_path)
-    con.executescript(
-        "CREATE TABLE nodes (node_id TEXT PRIMARY KEY, short_form TEXT NOT NULL, "
-        "label TEXT NOT NULL, taxonomy_id TEXT NOT NULL, taxonomy_level TEXT NOT NULL, "
-        "taxonomy_rank INTEGER, parent_id TEXT, cl_id TEXT, cl_label TEXT, "
-        "cell_ontology_term TEXT, nt_type TEXT, defining_markers_scoped TEXT, "
-        "defining_markers TEXT, tf_markers TEXT, merfish_markers TEXT, "
-        "np_markers TEXT, neighborhood TEXT, circadian_ratio REAL, "
-        "rationale TEXT, rationale_dois TEXT, male_female_ratio REAL, "
-        "n_cells INTEGER); "
-        "CREATE TABLE anat (node_id TEXT, anat_id TEXT, anat_label TEXT, "
-        "cell_count INTEGER, cell_ratio REAL);"
-    )
-    con.executemany(
-        "INSERT INTO nodes(node_id, short_form, label, taxonomy_id, "
-        "taxonomy_level, taxonomy_rank) VALUES (?, ?, ?, ?, ?, ?)",
-        [
-            ("near", "near", "Near", "TINY", "cluster", 0),
-            ("far", "far", "Far", "TINY", "cluster", 0),
-        ],
-    )
-    con.executemany(
-        "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
-        [
-            ("near", "MBA:NearReg", "near region", 100, 1.0),
-            ("far", "MBA:FarReg", "far region", 100, 1.0),
-        ],
-    )
-    con.commit()
-    con.close()
-
-    # LLM says: near is adjacent to MBA:Q, far is not.
-    def fake_call(prompt, model, max_tokens=1024):
-        # Return id-based verdicts.
-        verdicts = []
-        if "near" in prompt:
-            verdicts.append({"candidate_id": "near", "adjacent": True})
-        if "far" in prompt:
-            verdicts.append({"candidate_id": "far", "adjacent": False})
-        return {"verdicts": verdicts}
-
-    with patch("evidencell.llm_adjacency._call_anthropic", side_effect=fake_call):
-        results = db.find_candidates(anat_ids=["MBA:Q"], level="cluster")
-
-    ids = {r["node_id"] for r in results}
-    assert "near" in ids
-    assert "far" not in ids
-    near = next(r for r in results if r["node_id"] == "near")
-    assert near.get("_region_adjacent") is True
+# NOTE: end-to-end test exercising LLM-drops-via-find_candidates removed
+# in the Phase 1 follow-up. The post-loop adjudication wiring in
+# find_candidates was reverted (region-mismatch is now a hard programmatic
+# drop). The unit tests above still verify the llm_adjacency module
+# itself, retained as dormant infrastructure for a possible Phase 2 use
+# case (characterising off-target expression as adjacent vs distant for
+# predicate selection).
