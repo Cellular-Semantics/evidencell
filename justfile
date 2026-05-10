@@ -253,7 +253,7 @@ generate-gene-mapping stats_h5 output:
 # Usage: just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722
 #        just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 10
 [group('workflows')]
-find-candidates graph_file node_id taxonomy_id rank="1" top_k="5":
+find-candidates graph_file node_id taxonomy_id rank="1" top_k="10":
     uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}}
 
 # Extract per-(classical, taxonomy) F1 artifact from a MapMyCells run dir.

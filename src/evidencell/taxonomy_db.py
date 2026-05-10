@@ -1571,7 +1571,11 @@ _OPTIONAL_CRITERIA_REGISTRY: dict[str, dict] = {
     "sex_bias": {
         "column": "male_female_ratio",
         "max_rank": 0,
-        "score": 1,
+        # Phase 1 follow-up D: bumped from +1 to +2. Sex_bias is a strong
+        # prior for sexually dimorphic classical types — a hypothalamic
+        # MALE_BIASED type matched against a cluster with male/female ratio
+        # > 3 is more diagnostic than a single +1 marker hit suggests.
+        "score": 2,
         "test": lambda mfr, direction: (
             mfr is not None and mfr < 0.3 if direction == "female"
             else mfr is not None and mfr > 3.0 if direction == "male"
@@ -2779,7 +2783,7 @@ def _cmd_find_candidates(
     node_id: str,
     taxonomy_id: str,
     rank: int = 1,
-    top_k: int = 5,
+    top_k: int = 10,
 ) -> None:
     """Extract a classical node's property signature from a KB YAML file
     and query the taxonomy DB for candidate atlas matches at a given rank.
@@ -3098,7 +3102,7 @@ if __name__ == "__main__":
         _cmd_build_closure(sys.argv[2], sys.argv[3])
     elif cmd == "find-candidates" and len(sys.argv) >= 5:
         _rank = int(sys.argv[5]) if len(sys.argv) > 5 else 1
-        _top_k = int(sys.argv[6]) if len(sys.argv) > 6 else 5
+        _top_k = int(sys.argv[6]) if len(sys.argv) > 6 else 10
         _cmd_find_candidates(sys.argv[2], sys.argv[3], sys.argv[4], _rank, _top_k)
     elif cmd == "query-gene-expression" and len(sys.argv) == 5:
         _accessions = [a.strip() for a in sys.argv[3].split(",") if a.strip()]
