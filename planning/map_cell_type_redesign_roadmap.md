@@ -347,7 +347,54 @@ refuted at Stage B / report time, but it deserves to enter the pool. AT
 match without supporting region/NT becomes part of what makes the
 mapping interesting.
 
-### 3.4 Soft scoring (per-criterion, revised)
+### 3.4 Soft scoring — REVISED (Phase 1 follow-up commit B)
+
+**Two-pass loop with cohort-relative scoring.** Pass 1 applies hard
+prerequisite filters (region, NT, AT bypass) and collects survivors.
+Pass 2 builds cohort percentile distributions from survivors, then
+scores each survivor.
+
+Cohort distribution for gene `g` = list of values across all survivors
+(candidates without a value contribute 0.0). `cohort_pct(val, g)` =
+fraction of cohort strictly less than `val`.
+
+**Positive markers (defining + neuropeptide):** three tiers, anchored on
+the absolute MIN_DETECTABLE noise floor and the cohort percentile:
+
+| Condition | Tier |
+|---|---|
+| `val < MIN_DETECTABLE` | **−1**  (absent / noise floor) |
+| `val ≥ MIN_DETECTABLE` AND `cohort_pct < 0.95` | **+1**  (present) |
+| `val ≥ MIN_DETECTABLE` AND `cohort_pct ≥ 0.95` | **+2**  (cohort-specific) |
+
+Coverage dampening at rank ≥ 1: positive tiers multiplied by
+`sqrt(coverage)` where coverage = fraction of rank-0 (leaf) descendants
+with detectable expression. Negative tiers (absence) propagate
+undampened.
+
+**Negative markers** (option A, symmetric to positives):
+
+| Condition | Tier |
+|---|---|
+| `val < MIN_DETECTABLE` | **+1**  (absence confirms expectation) |
+| `val ≥ MIN_DETECTABLE` AND `cohort_pct < 0.95` | **−1**  (present — contradicts) |
+| `val ≥ MIN_DETECTABLE` AND `cohort_pct ≥ 0.95` | **−2**  (aberrantly high) |
+
+**Metadata fallback** (existing gap-4 behaviour): when a gene is absent
+from `precomputed_expression` but flagged in the candidate's DB metadata
+marker columns (defining/MERFISH/TF/np), score `+1` for positive markers
+and `−1` for negatives.
+
+**LLM adjacency** (formerly part of region filter): reverted in
+Phase 1 follow-up A. Region mismatches now hard-drop programmatically.
+The `llm_adjacency` module is retained as dormant infrastructure for a
+future "characterise off-target expression" use case feeding Phase 2
+predicate selection.
+
+The previous atlas-global / sibling-pct scheme is documented below for
+historical reference but is no longer in use.
+
+### 3.4-legacy Soft scoring (per-criterion, original)
 
 Sex bias remains a soft additive bonus (rank-0 only, +1 for matching
 direction).
@@ -405,9 +452,10 @@ AT bypass.
 comparable across classical types — a 12-marker type can hit much
 higher totals than a 3-marker type. Top-K within the qualifying pool
 normalises across types and bounds Stage B subagent spawn count.
-Default K likely conservative (~5); may want to be rank-dependent
-(rank-0 leaves can produce many near-equivalent candidates and a
-slightly larger K there is reasonable).
+Default K = 10 (Phase 1 follow-up D bump from initial 5; with cohort-
+relative scoring producing simpler tier values and limited
+differentiation among presence-tier candidates, more headroom for
+Stage B is reasonable).
 
 If the qualifying pool is smaller than K, take the whole pool — under-K
 is honest signal that few atlas candidates exist for this classical
