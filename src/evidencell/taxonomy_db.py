@@ -1381,6 +1381,45 @@ def _expression_percentile(val: float, reference: list[float]) -> float:
     return sum(v < val for v in reference) / len(reference)
 
 
+# ── Marker tier scoring (Phase 1 follow-up: cohort-relative) ──────────────────
+
+# Cohort-percentile threshold above which a marker call gets the
+# "specificity" bonus (positive: +2 instead of +1; negative: −2 instead of −1).
+COHORT_SPECIFIC_PCT: float = 0.95
+
+
+def _score_marker_tier(
+    val: float, cohort_pct: float | None, is_negative: bool = False
+) -> int:
+    """Phase 1 follow-up scoring for a single marker on a single candidate.
+
+    Cohort-relative; replaces the atlas-global / sibling-percentile scheme
+    used by `_score_from_percentiles`. Three tiers per direction, anchored
+    on the absolute MIN_DETECTABLE noise floor and the cohort percentile
+    among surviving candidates.
+
+    Positive markers (defining + neuropeptide):
+      val < MIN_DETECTABLE                              → −1 (absent)
+      val ≥ MIN_DETECTABLE, cohort_pct < 0.95           → +1 (present)
+      val ≥ MIN_DETECTABLE, cohort_pct ≥ 0.95           → +2 (cohort-specific)
+
+    Negative markers (absence confirms expectation):
+      val < MIN_DETECTABLE                              → +1 (absent — confirms)
+      val ≥ MIN_DETECTABLE, cohort_pct < 0.95           → −1 (present — contradicts)
+      val ≥ MIN_DETECTABLE, cohort_pct ≥ 0.95           → −2 (aberrantly high)
+
+    A `cohort_pct` of None (no surviving cohort or gene not in cohort
+    distribution) collapses the +2 / −2 bonus to +1 / −1; the call still
+    distinguishes presence from absence via MIN_DETECTABLE.
+    """
+    if val < MIN_DETECTABLE:
+        return +1 if is_negative else -1
+    is_specific = cohort_pct is not None and cohort_pct >= COHORT_SPECIFIC_PCT
+    if is_negative:
+        return -2 if is_specific else -1
+    return +2 if is_specific else +1
+
+
 def _coverage_for_gene(
     child_accs: list[str],
     gene: str,
@@ -2045,29 +2084,6 @@ class TaxonomyDB:
                     "SELECT * FROM nodes WHERE taxonomy_level = ?", (level,)
                 ).fetchall()
 
-        # ── Pre-compute gene distribution references for percentile scoring ──────
-        # global_gene_vals: gene → all mean_expression values across every node
-        #   in expression_data (atlas-wide reference).
-        # sibling_gene_vals: parent_id → gene → values for nodes sharing that parent.
-        #   Siblings are nodes at the same rank that share a parent_id; this gives
-        #   a within-clade reference capturing local anatomical/type variation.
-        global_gene_vals: dict[str, list[float]] = defaultdict(list)
-        sibling_gene_vals: dict[str, dict[str, list[float]]] = defaultdict(
-            lambda: defaultdict(list)
-        )
-        if expression_data:
-            # Build a parent_id lookup from DB rows (rows already fetched above)
-            row_parent: dict[str, str | None] = {
-                dict(r)["node_id"]: dict(r).get("parent_id") for r in rows
-            }
-            for acc, gene_map in expression_data.items():
-                for sym, val in gene_map.items():
-                    global_gene_vals[sym].append(val)
-                pid = row_parent.get(acc)
-                if pid:
-                    for sym, val in expression_data[acc].items():
-                        sibling_gene_vals[pid][sym].append(val)
-
         _at_bypass = at_bypass or set()
 
         # ── Heterogeneity coverage at rank ≥ 1 ────────────────────────────
@@ -2101,32 +2117,19 @@ class TaxonomyDB:
             # parent-rank data simply get no coverage signal.
             child_expression_data = expression_data  # same dict, child accessions just won't appear with parent-only data
 
-        results = []
+        # ──────────────────────────────────────────────────────────────────
+        # Pass 1: hard filters. Apply region (programmatic only — LLM-adjacency
+        # wiring removed in Phase 1 follow-up A) and NT prerequisites, then
+        # collect survivors with the per-candidate state needed for scoring.
+        # AT-bypassed candidates skip the filters; their direct cell-assignment
+        # evidence overrides priors.
+        # ──────────────────────────────────────────────────────────────────
+        survivors: list[dict] = []
         for row in rows:
             nd = dict(row)
-            score = 0
             node_acc = nd.get("node_id", "")
             bypassed = node_acc in _at_bypass
 
-            # ── Hard prerequisite filters ─────────────────────────────────────
-            # Region and NT used to be additive scoring contributions (+2 each).
-            # Under Phase 1 they become prerequisite filters: candidates that
-            # fail are dropped from the pool, not penalised. This keeps the
-            # marker-driven score comparable across classical types of
-            # differing marker-list size and prevents unrelated candidates
-            # (e.g. cortical Pvalb interneurons against a hippocampal type)
-            # from competing on marker overlap alone.
-            #
-            # AT bypass: candidates with annotation-transfer evidence above
-            # the persistence floor (commit 4) are exempt from region/NT
-            # filters. Direct cell-assignment evidence overrides priors;
-            # the resulting edge may be refuted at Stage B, but it deserves
-            # to enter the pool.
-
-            # Region fraction (cells in queried region / total cells across
-            # all annotated regions) is always computed when region was
-            # queried, even when the bypass fires, so downstream consumers
-            # can see how on-target a candidate's anat profile is.
             node_anat_rows = self._get_anat(node_acc) if effective_anat else []
             region_fraction: float | None = None
             if effective_anat:
@@ -2142,200 +2145,163 @@ class TaxonomyDB:
                             if r["anat_id"] in effective_anat
                         )
                         region_fraction = matched_cells / total_cells
-
-                # Filter: drop candidates with annotated regions but none in
-                # the queried region. Candidates with no anat data at all
-                # pass (don't disqualify on missing data).
-                #
-                # Phase 1 followup: the LLM-adjacency post-loop adjudication
-                # introduced in commit 9 has been reverted. Sending hundreds
-                # of region-mismatched candidates through a Claude call per
-                # query was wasteful and the gain over a hard programmatic
-                # drop is small (most "pending" candidates are obviously
-                # off-target divisions, not interesting CA1↔subiculum
-                # boundary cases). The llm_adjacency module is retained as
-                # dormant infrastructure for a future "characterise off-
-                # target expression as adjacent vs distant" use case feeding
-                # Phase 2 predicate selection — but it is no longer wired
-                # into Stage A filtering.
                 if not bypassed and node_anat_rows and not (
                     node_anat_ids & effective_anat
                 ):
                     continue
 
-            # NT filter: applies only when both classical and candidate carry
-            # an NT call. Drop the filter if either side is unknown.
             if nt_type and not bypassed:
                 node_nt = nd.get("nt_type") or _nt_map.get(node_acc)
                 if node_nt:
                     nn, qt = node_nt.lower(), nt_type.lower()
                     if not (nn.startswith(qt) or qt.startswith(nn)):
                         continue
-                # node_nt None → NT not assessed on candidate; pass.
 
-            node_expr = expression_data.get(node_acc, {}) if expression_data else {}
-            node_parent_id = nd.get("parent_id")
-
-            if region_fraction is not None:
-                nd["_region_fraction"] = round(region_fraction, 3)
-
-            # ── Marker scoring ────────────────────────────────────────────────
-            # Positive markers — collect all gene symbols from DB marker columns.
-            # _marker_cols covers DEFINING/DEFINING_SCOPED/TF/MERFISH (JSON arrays).
-            # np_markers is a packed string ("Sst:9.2,Crh:4.4") that stores
-            # NEUROPEPTIDE-category markers; decode symbols and include in the
-            # fallback set so callers querying neuropeptide markers are not silently
-            # missed. Full presence-vs-discriminating scoring is tracked in #43.
-            node_markers: set[str] = set()
+            # Per-candidate metadata-marker set: used as fallback for genes
+            # absent from precomputed_expression. Covers four JSON-array
+            # marker columns plus parsed np_markers symbols.
+            cand_markers: set[str] = set()
             for col in _marker_cols:
                 raw = nd.get(col)
                 if raw:
-                    node_markers.update(json.loads(raw))
+                    cand_markers.update(json.loads(raw))
             np_raw = nd.get("np_markers")
             if np_raw:
                 for part in np_raw.split(","):
                     sym = part.split(":")[0].strip()
                     if sym:
-                        node_markers.add(sym)
+                        cand_markers.add(sym)
 
-            expr_detail: dict[str, dict] = {}  # gene → {val, reliable, sibling_pct, global_pct, score}
+            nd["_node_expr"] = (
+                expression_data.get(node_acc, {}) if expression_data else {}
+            )
+            nd["_node_markers"] = cand_markers
+            nd["_bypassed"] = bypassed
+            if region_fraction is not None:
+                nd["_region_fraction"] = round(region_fraction, 3)
+            survivors.append(nd)
 
+        # ──────────────────────────────────────────────────────────────────
+        # Cohort distributions: built from survivors after filtering. The
+        # cohort defines the relative-context for percentile scoring; once
+        # region+NT remove obvious off-targets, "specific within the cohort"
+        # is the meaningful question (not "specific atlas-wide"). Candidates
+        # without a value for a queried gene contribute 0.0 so the
+        # distribution covers the entire surviving pool.
+        # ──────────────────────────────────────────────────────────────────
+        queried_genes: set[str] = set(markers or []) | set(negative_markers or [])
+        cohort_gene_vals: dict[str, list[float]] = {
+            g: [s["_node_expr"].get(g, 0.0) for s in survivors]
+            for g in queried_genes
+        }
+
+        # ──────────────────────────────────────────────────────────────────
+        # Pass 2: score each survivor using the cohort distributions.
+        # ──────────────────────────────────────────────────────────────────
+        results = []
+        for nd in survivors:
+            score: float = 0
+            node_acc = nd["node_id"]
+            node_expr = nd.pop("_node_expr")
+            cand_markers = nd.pop("_node_markers")
+            nd.pop("_bypassed", None)
+            expr_detail: dict[str, dict] = {}
+            children = (
+                parent_to_children.get(node_acc, []) if compute_coverage else []
+            )
+
+            # Positive markers (defining + neuropeptide).
             if markers:
-                children = (
-                    parent_to_children.get(node_acc, [])
-                    if compute_coverage
-                    else []
-                )
                 for m in markers:
                     if m in node_expr:
                         val = node_expr[m]
                         reliable = val >= MIN_DETECTABLE
-                        if reliable:
-                            g_ref = global_gene_vals.get(m, [])
-                            s_ref = (
-                                sibling_gene_vals[node_parent_id].get(m, [])
-                                if node_parent_id
-                                else []
+                        cohort_pct = _expression_percentile(
+                            val, cohort_gene_vals.get(m, [])
+                        )
+                        tier = _score_marker_tier(
+                            val, cohort_pct, is_negative=False
+                        )
+                        # Coverage dampening at rank ≥ 1: positive marker
+                        # credit on a heterogeneous supertype is reduced by
+                        # sqrt(coverage). Negative-tier (absence) propagates
+                        # undampened — supertype-level absence stands on
+                        # its own.
+                        coverage: float | None = None
+                        delta: float = float(tier)
+                        if compute_coverage and tier > 0 and children:
+                            cov, n_with = _coverage_for_gene(
+                                children, m, child_expression_data
                             )
-                            g_pct = _expression_percentile(val, g_ref)
-                            s_pct = _expression_percentile(val, s_ref)
-                            delta = _score_from_percentiles(
-                                s_pct, g_pct, is_negative=False, val=val
-                            )
-                            # Coverage dampening at rank ≥ 1: a strong parent
-                            # mean with low child coverage indicates the
-                            # marker is concentrated in a subset of children;
-                            # the parent is not a coherent marker target.
-                            # Soft (sqrt) dampening preserves signal while
-                            # tempering over-confidence on heterogeneous
-                            # supertypes. Only positive deltas are dampened
-                            # in Phase 1; absence penalty (delta < 0)
-                            # propagates undampened.
-                            coverage: float | None = None
-                            if compute_coverage and delta > 0 and children:
-                                cov, n_with = _coverage_for_gene(
-                                    children, m, child_expression_data
-                                )
-                                if n_with > 0:
-                                    coverage = cov
-                                    delta = delta * (cov ** 0.5)
-                            marker_entry: dict = {
-                                "val": val,
-                                "reliable": True,
-                                "sibling_pct": round(s_pct, 3),
-                                "global_pct": round(g_pct, 3),
-                                "score": (
-                                    round(delta, 3)
-                                    if isinstance(delta, float)
-                                    else delta
-                                ),
-                            }
-                            if coverage is not None:
-                                marker_entry["coverage"] = round(coverage, 3)
-                            expr_detail[m] = marker_entry
-                        else:
-                            # val below MIN_DETECTABLE: absence penalty for positive markers.
-                            # Percentiles are ill-defined at noise-floor; pass val so
-                            # _score_from_percentiles short-circuits to the absence rule.
-                            delta = _score_from_percentiles(
-                                0.0, 0.0, is_negative=False, val=val
-                            )
-                            expr_detail[m] = {
-                                "val": val,
-                                "reliable": False,
-                                "sibling_pct": None,
-                                "global_pct": None,
-                                "score": delta,
-                            }
+                            if n_with > 0:
+                                coverage = cov
+                                delta = tier * (cov ** 0.5)
+                        entry: dict = {
+                            "val": val,
+                            "reliable": reliable,
+                            "cohort_pct": round(cohort_pct, 3),
+                            "score": (
+                                round(delta, 3)
+                                if isinstance(delta, float)
+                                else delta
+                            ),
+                            "source": "expression",
+                        }
+                        if coverage is not None:
+                            entry["coverage"] = round(coverage, 3)
+                        expr_detail[m] = entry
                         score += delta
-                    elif m in node_markers:
-                        score += 1  # fallback: gene in DB marker columns
+                    elif m in cand_markers:
+                        # Metadata fallback — gene flagged on candidate but
+                        # not in precomputed_expression. Binary +1; no cohort
+                        # context available.
+                        score += 1
+                        expr_detail[m] = {
+                            "val": None,
+                            "reliable": None,
+                            "cohort_pct": None,
+                            "score": 1,
+                            "source": "metadata",
+                        }
 
-            # Negative markers
+            # Negative markers (option A: cohort-relative tier).
             if negative_markers:
                 for m in negative_markers:
                     if m in node_expr:
                         val = node_expr[m]
                         reliable = val >= MIN_DETECTABLE
-                        if reliable:
-                            g_ref = global_gene_vals.get(m, [])
-                            s_ref = (
-                                sibling_gene_vals[node_parent_id].get(m, [])
-                                if node_parent_id
-                                else []
-                            )
-                            g_pct = _expression_percentile(val, g_ref)
-                            s_pct = _expression_percentile(val, s_ref)
-                            delta = _score_from_percentiles(
-                                s_pct, g_pct, is_negative=True, val=val
-                            )
-                            expr_detail[f"-{m}"] = {
-                                "val": val,
-                                "reliable": True,
-                                "sibling_pct": round(s_pct, 3),
-                                "global_pct": round(g_pct, 3),
-                                "score": delta,
-                                "source": "expression",
-                            }
-                        else:
-                            # val below MIN_DETECTABLE: absence confirms negative-marker
-                            # expectation. _score_from_percentiles returns +1 for this case.
-                            delta = _score_from_percentiles(
-                                0.0, 0.0, is_negative=True, val=val
-                            )
-                            expr_detail[f"-{m}"] = {
-                                "val": val,
-                                "reliable": False,
-                                "sibling_pct": None,
-                                "global_pct": None,
-                                "score": delta,
-                                "source": "expression",
-                            }
-                        score += delta
-                    elif m in node_markers:
-                        # Gap 4: metadata fallback. Gene is absent from
-                        # precomputed_expression but flagged as a defining /
-                        # MERFISH / TF / neuropeptide marker on the candidate.
-                        # This contradicts the negative-marker expectation.
-                        delta = -1
+                        cohort_pct = _expression_percentile(
+                            val, cohort_gene_vals.get(m, [])
+                        )
+                        tier = _score_marker_tier(
+                            val, cohort_pct, is_negative=True
+                        )
+                        expr_detail[f"-{m}"] = {
+                            "val": val,
+                            "reliable": reliable,
+                            "cohort_pct": round(cohort_pct, 3),
+                            "score": tier,
+                            "source": "expression",
+                        }
+                        score += tier
+                    elif m in cand_markers:
+                        # Gap-4 metadata fallback: gene absent from
+                        # precomputed_expression but flagged on candidate
+                        # → contradicts the negative-marker expectation.
                         expr_detail[f"-{m}"] = {
                             "val": None,
                             "reliable": None,
-                            "sibling_pct": None,
-                            "global_pct": None,
-                            "score": delta,
+                            "cohort_pct": None,
+                            "score": -1,
                             "source": "metadata",
                         }
-                        score += delta
+                        score += -1
 
             if expr_detail:
                 nd["_expression_detail"] = expr_detail
 
-            # ── Annotation transfer (Stage A signal) ──────────────────────────
-            # When MapMyCells F1 hits are available for this (classical,
-            # taxonomy) pair, candidates with an above-floor F1 hit get an
-            # additive bonus and are emitted with an `_at_hit` block.
-            # Bucketed scoring (rough first cut; review after live data):
+            # ── Annotation transfer (Stage A signal) ──────────────────────
+            # F1 buckets (rough first cut; review after live data):
             #   F1 ≥ 0.5  → +3  (strong direct cell-assignment evidence)
             #   F1 ≥ 0.3  → +2
             #   F1 ≥ floor → +1
@@ -2359,20 +2325,20 @@ class TaxonomyDB:
                     }
 
             criteria_applied: list[str] = []
-            for name, direction, entry in _active_criteria:
-                col_val = nd.get(entry["column"])
-                if entry["test"](col_val, direction):
-                    score += entry["score"]
+            for name, direction, entry_def in _active_criteria:
+                col_val = nd.get(entry_def["column"])
+                if entry_def["test"](col_val, direction):
+                    score += entry_def["score"]
                     criteria_applied.append(f"{name}={direction}")
             if criteria_applied:
                 nd["_criteria_applied"] = criteria_applied
 
-            # Phase 1: keep candidates with non-negative score. Hard
-            # prerequisite filters above already eliminate region/NT
-            # mismatches, so a surviving candidate with score == 0 still
-            # passed real criteria and deserves a ranking slot. Negative
-            # scores indicate net counter-evidence (e.g. multiple defining
-            # markers absent under expression data) — drop.
+            # Keep candidates with non-negative score. Hard filters above
+            # already eliminate region/NT mismatches; a surviving candidate
+            # with score == 0 still passed real criteria and deserves a
+            # ranking slot. Negative scores indicate net counter-evidence
+            # (multiple absent defining markers, off-target negative
+            # markers) — drop.
             if score >= 0:
                 nd["_score"] = score
                 results.append(nd)

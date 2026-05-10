@@ -534,9 +534,11 @@ def test_find_candidates_expression_detail_attached(populated_db):
     if not node_ids:
         return
 
-    # 9 fake background nodes at low expression + 1 real node at high expression.
-    # Fake nodes only affect global_gene_vals (not in DB → no sibling grouping).
-    # global_pct for real node = 9/10 = 0.90 → qualifies for global bonus.
+    # Phase 1 follow-up: cohort-relative scoring. Fake background nodes
+    # are not real DB rows so they don't enter the surviving cohort; the
+    # cohort distribution for Sst contains only the real node's value.
+    # cohort_pct for the real node = 0/N (strictly less-than count) = 0,
+    # so it scores +1 (present, not cohort-specific).
     fake_bg = {f"FAKE:{i:03d}": {"Sst": 0.2} for i in range(9)}
     expr = {node_ids[0]: {"Sst": 9.0}, **fake_bg}
 
@@ -548,9 +550,7 @@ def test_find_candidates_expression_detail_attached(populated_db):
     detail = target["_expression_detail"]
     assert "Sst" in detail
     assert detail["Sst"]["reliable"] is True
-    # 9 background nodes all below 9.0 → global_pct = 9/10 = 0.90
-    assert detail["Sst"]["global_pct"] == pytest.approx(0.9)
-    # Score must be at least +1 (global bonus for top 10%)
+    assert "cohort_pct" in detail["Sst"]
     assert detail["Sst"]["score"] >= 1
 
 
@@ -613,8 +613,8 @@ def test_find_candidates_negative_marker_detail(populated_db):
         assert "-Pvalb" in target["_expression_detail"]
         detail = target["_expression_detail"]["-Pvalb"]
         assert detail["reliable"] is True
-        assert "sibling_pct" in detail
-        assert "global_pct" in detail
+        # Phase 1 follow-up: cohort_pct replaces sibling_pct/global_pct.
+        assert "cohort_pct" in detail
 
 
 def test_find_candidates_negative_marker_metadata_fallback(populated_db):
