@@ -2087,35 +2087,60 @@ class TaxonomyDB:
         _at_bypass = at_bypass or set()
 
         # ── Heterogeneity coverage at rank ≥ 1 ────────────────────────────
-        # When the queried rank has children, coverage = fraction of children
-        # with detectable expression of a queried marker. Used to soft-dampen
-        # supertype-level positive-marker scores: a strong parent mean with
-        # low child coverage indicates concentration in a subset of children.
-        # Negative markers are not dampened in Phase 1 (different signal
-        # direction; revisit later).
-        parent_to_children: dict[str, list[str]] = {}
+        # Coverage = fraction of a candidate's rank-0 (leaf) descendants
+        # whose expression of a queried marker meets MIN_DETECTABLE. Used
+        # to soft-dampen positive-marker tier scores at non-leaf ranks: a
+        # strong parent mean with low leaf coverage indicates a marker
+        # concentrated in a subset of leaves rather than a coherent
+        # property of the candidate.
+        #
+        # Phase 1 follow-up C: descent target is rank 0 transitively, not
+        # just rank N−1. For a rank-2 (subclass) candidate this collects
+        # all leaf clusters under it across the supertype layer; for a
+        # rank-1 (supertype) candidate the rank-0 children coincide with
+        # its immediate children. Caller (find-candidates CLI) must load
+        # rank-0 expression alongside the queried-rank data when rank > 0.
+        parent_to_rank0: dict[str, list[str]] = {}
         child_expression_data: dict[str, dict[str, float]] = {}
         compute_coverage = (
             rank is not None and rank > 0 and expression_data is not None
         )
         if compute_coverage:
-            assert rank is not None  # for type-checker; guarded by compute_coverage
+            assert rank is not None
             assert expression_data is not None
+
+            # Build parent-id → immediate-children map across every rank,
+            # plus rank lookup, then descend each queried-rank candidate
+            # to its rank-0 leaves.
+            all_parent_to_children: dict[str, list[str]] = defaultdict(list)
+            node_rank_map: dict[str, int] = {}
             with self._connect() as con:
-                child_rows = con.execute(
-                    "SELECT node_id, parent_id FROM nodes WHERE taxonomy_rank = ?",
-                    (rank - 1,),
+                all_rows = con.execute(
+                    "SELECT node_id, parent_id, taxonomy_rank FROM nodes"
                 ).fetchall()
-            for cr in child_rows:
-                cdict = dict(cr)
-                pid = cdict.get("parent_id")
+            for r in all_rows:
+                rdict = dict(r)
+                pid = rdict.get("parent_id")
+                rk = rdict.get("taxonomy_rank")
+                nid = rdict["node_id"]
                 if pid:
-                    parent_to_children.setdefault(pid, []).append(cdict["node_id"])
-            # Reuse the caller-supplied expression_data when it covers the
-            # child rank (typical when both ranks are enriched). For now we
-            # accept whatever subset is available; callers passing only
-            # parent-rank data simply get no coverage signal.
-            child_expression_data = expression_data  # same dict, child accessions just won't appear with parent-only data
+                    all_parent_to_children[pid].append(nid)
+                if rk is not None:
+                    node_rank_map[nid] = rk
+
+            for row in rows:
+                nid = dict(row)["node_id"]
+                leaves: list[str] = []
+                stack = list(all_parent_to_children.get(nid, []))
+                while stack:
+                    n = stack.pop()
+                    if node_rank_map.get(n) == 0:
+                        leaves.append(n)
+                    else:
+                        stack.extend(all_parent_to_children.get(n, []))
+                parent_to_rank0[nid] = leaves
+
+            child_expression_data = expression_data
 
         # ──────────────────────────────────────────────────────────────────
         # Pass 1: hard filters. Apply region (programmatic only — LLM-adjacency
@@ -2207,7 +2232,7 @@ class TaxonomyDB:
             nd.pop("_bypassed", None)
             expr_detail: dict[str, dict] = {}
             children = (
-                parent_to_children.get(node_acc, []) if compute_coverage else []
+                parent_to_rank0.get(node_acc, []) if compute_coverage else []
             )
 
             # Positive markers (defining + neuropeptide).
@@ -2826,16 +2851,38 @@ def _cmd_find_candidates(
 
     db = TaxonomyDB(db_path)
 
-    # Load precomputed expression data from the taxonomy YAML at the target rank's level
+    # Load precomputed expression data from the taxonomy YAML at the target
+    # rank's level. When rank > 0, also load rank-0 expression so that the
+    # heterogeneity coverage calculation in find_candidates can see leaf
+    # values for descent-based dampening (Phase 1 follow-up C).
     with db._connect() as _con:
         _level_row = _con.execute(
             "SELECT taxonomy_level FROM nodes WHERE taxonomy_rank = ? LIMIT 1", (rank,)
         ).fetchone()
     _expr_level = _level_row[0] if _level_row else "cluster"
     expression_data = load_expression_data(taxonomy_id, _expr_level)
+    if rank > 0:
+        with db._connect() as _con:
+            _leaf_row = _con.execute(
+                "SELECT taxonomy_level FROM nodes WHERE taxonomy_rank = 0 LIMIT 1"
+            ).fetchone()
+        if _leaf_row:
+            leaf_level = _leaf_row[0]
+            leaf_expr = load_expression_data(taxonomy_id, leaf_level)
+            # Merge (queried rank takes precedence on key collisions, which
+            # shouldn't happen since accessions are unique across ranks).
+            for acc, gene_map in leaf_expr.items():
+                expression_data.setdefault(acc, gene_map)
+            if leaf_expr:
+                print(
+                    f"  Loaded leaf expression data: {len(leaf_expr)} nodes "
+                    f"at {leaf_level} level (for coverage computation)",
+                    file=sys.stderr,
+                )
     if expression_data:
         print(
-            f"  Loaded expression data: {len(expression_data)} nodes at {_expr_level} level",
+            f"  Loaded expression data: {len(expression_data)} nodes "
+            f"(merged across queried + leaf ranks where applicable)",
             file=sys.stderr,
         )
     else:
