@@ -1,0 +1,964 @@
+{
+  "classical_node_id": "ca1_radiatum_giant_cell",
+  "classical_node_name": "CA1 radiatum giant cell",
+  "taxonomy_id": "CCN20230722",
+  "assessment_notes": {
+    "no_defining_markers": "ca1_radiatum_giant_cell has no defining_markers and no negative_markers defined. The type is characterised by soma in CA1 stratum radiatum (UBERON:0005372) and glutamatergic NT only, based on a single primary citation (Kirson & Yaari 2000, PMID:10864941). All scoring reduces to region + NT match. Any mapping will be at UNCERTAIN or LOW confidence at best.",
+    "no_negative_markers": "No negative_markers defined. Negative marker cross-check is vacuously clean for all candidates — no penalties apply from this criterion.",
+    "overlap_with_ca1_pc_hippocampus": "SUPT_0069 (CA1-ProS Glut_1) is the mapped supertype for ca1_pyramidal_cell (ca1_pc_hippocampus). Its children CLUS_0261–0270 are all in the CA1-ProS Glut_1 lineage. The radiatum giant cell is described as 'distinct from CA1 pyramidal cells' (Kirson & Yaari 2000), so SUPT_0069 and its clusters are flagged as the primary CA1 pyramidal cell representatives. If any cluster within SUPT_0069 spans stratum radiatum cells, the radiatum giant cell could be a rare subpopulation not resolved at cluster level, or it may fall within a different supertype (Glut_2–Glut_6). Given the current evidence base (one 2000 rat electrophysiology paper), the atlas cannot resolve this ambiguity.",
+    "location_criterion": "Classical soma is in CA1 stratum radiatum (UBERON:0005372 = MBA:415). Candidates with MBA:415 soma cells are CONSISTENT. Candidates without any CA1 anatomy are DISTANT.",
+    "species_note": "Classical type was described in rat (Kirson & Yaari 2000). All atlas candidates are mouse (Mus musculus, NCBITaxon:10090). Cross-species homology is assumed plausible but unverified."
+  },
+  "candidates_by_rank": {
+    "1": [
+      {
+        "cell_set_accession": "CS20230722_SUPT_0069",
+        "name": "0069 CA1-ProS Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_016 (016 CA1-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 4162,
+        "defining_markers": ["Lefty1", "Fibcd1", "Pcp4l1", "Onecut2", "Kcnk2", "Akain1", "Rgs8"],
+        "key_expression": {
+          "Drd1": 0.09,
+          "Rgs14": 5.08,
+          "Wfs1": 3.97,
+          "Calb1": 4.9,
+          "Np65": 8.3,
+          "Cck": 9.35,
+          "Nos1": 5.64
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Largest CA1 stratum radiatum cell count (4162) of all CA1-ProS supertypes. Glutamatergic, correct subfield. However, SUPT_0069 is the mapped supertype for ca1_pyramidal_cell (ca1_pc_hippocampus). The radiatum giant cell is explicitly described as distinct from CA1 pyramidal cells, so this supertype likely already captures the dominant CA1 pyramidal population. Radiatum giant cells may be a rare subpopulation within the stratum radiatum fraction of SUPT_0069 or a distinct molecular entity not separable at supertype level. Rated PLAUSIBLE rather than STRONG because the classical type definition conflicts with straightforward identity to the most abundant CA1 Glut_1 cluster. No marker evidence to differentiate."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0072",
+        "name": "0072 CA1-ProS Glut_4",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_016 (016 CA1-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 1341,
+        "defining_markers": ["Lefty1", "Dio3", "Hs6st3", "Necab1", "Camk2d"],
+        "key_expression": {
+          "Drd1": 0.0,
+          "Nos1": 8.06,
+          "Rgs14": 4.59,
+          "Wfs1": 4.78,
+          "Calb1": 6.82,
+          "Np65": 9.34,
+          "Cck": 9.03
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Second-highest CA1 stratum radiatum cell count among CA1-ProS supertypes (1341 cells), comparable to SUPT_0069 but distinct molecular identity (Lefty1+, Dio3+, Hs6st3+). No overlap with SUPT_0069 marker set. Does not carry the Drd1 expression seen in SUPT_0074, consistent with an atypical CA1 excitatory neuron. High Nos1 expression (8.06) is a distinguishing feature. Could represent a distinct CA1 radiatum excitatory population, but the classical type definition is insufficient to discriminate this from SUPT_0069 or others without molecular markers."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0070",
+        "name": "0070 CA1-ProS Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_016 (016 CA1-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 1393,
+        "defining_markers": ["Dcn", "Pou3f1", "Slc2a9", "Serinc2", "Sorcs1", "Necab1", "Stac", "Nbl1"],
+        "key_expression": {
+          "Drd1": 0.04,
+          "Nos1": 2.64,
+          "Rgs14": 4.04,
+          "Wfs1": 3.84,
+          "Calb1": 5.31,
+          "Np65": 9.33,
+          "Cck": 8.34
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Third-highest CA1 stratum radiatum cell count (1393 cells). Dcn-positive identity suggests extracellular matrix interactions, potentially relevant to a morphologically unusual neuron. High Np65 (9.33) is consistent with glutamatergic CA1 excitatory neurons. No distinguishing features that specifically correlate with the giant cell phenotype. Cannot be elevated to STRONG without defining markers for the classical type."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0071",
+        "name": "0071 CA1-ProS Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_016 (016 CA1-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 292,
+        "defining_markers": ["Dcn", "Serpina3g", "Spink8", "Dlk1", "Tmem91", "Cdh13", "Dio3"],
+        "key_expression": {
+          "Drd1": 0.09,
+          "Nos1": 4.16,
+          "Rgs14": 3.13,
+          "Reln": 2.56,
+          "Wfs1": 2.3,
+          "Calb1": 5.03,
+          "Np65": 9.48,
+          "Cck": 7.06
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Moderate CA1 stratum radiatum representation (292 cells). The notably elevated Reln (2.56) expression distinguishes this supertype from Glut_1, Glut_2, and Glut_4. Reln-expressing excitatory neurons in stratum radiatum are a known heterogeneous population. High Np65 (9.48) is consistent with CA1 excitatory neuron identity. The smaller stratum radiatum cell count relative to Glut_1/Glut_2/Glut_4 lowers priority but does not exclude this as a candidate for a rare atypical excitatory neuron type."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0073",
+        "name": "0073 CA1-ProS Glut_5",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_016 (016 CA1-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 277,
+        "dominant_soma_region": "Posterior amygdalar nucleus (465 cells) — CA1 str. radiatum is secondary",
+        "defining_markers": ["Dcn", "Fbln1", "Gm26644", "AW551984", "Arhgap36", "Togaram2"],
+        "key_expression": {
+          "Drd1": 0.04,
+          "Drd2": 0.41,
+          "Nos1": 6.71,
+          "Reln": 1.52,
+          "Pcp4": 7.91,
+          "Wfs1": 2.41,
+          "Calb1": 1.4,
+          "Np65": 9.14,
+          "Cck": 8.03
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "Although 277 cells are assigned to CA1 stratum radiatum, the dominant soma region for this supertype is the posterior amygdalar nucleus (465 cells), not CA1. This suggests a population that is primarily amygdalar/hippocampal boundary rather than canonical CA1 radiatum. The radiatum giant cell is a CA1-specific type; a supertype whose primary regional identity is posterior amygdalar nucleus is not the best candidate. Elevated Drd2 (0.41) is also inconsistent with classical CA1 pyramidal-like identity. Downgraded to WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0074",
+        "name": "0074 CA1-ProS Glut_6",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_016 (016 CA1-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 296,
+        "dominant_soma_region": "Prosubiculum (270) / CA1 str. radiatum (296) approx equal; also Subiculum (39) and SLM (39)",
+        "defining_markers": ["Dcn", "Rtkn2", "Cdc14a", "Trpc6"],
+        "key_expression": {
+          "Drd1": 3.29,
+          "Nos1": 8.5,
+          "Reln": 1.76,
+          "Rgs14": 3.35,
+          "Wfs1": 6.79,
+          "Calb1": 4.57,
+          "Np65": 8.78,
+          "Cck": 8.9
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "High Drd1 expression (3.29) is inconsistent with CA1 radiatum giant cell identity. The classical type is not described as dopaminergic and the defining electrophysiology (NMDA-dependent burst firing) does not implicate D1R. Furthermore, the classical node for ca1_pyramidal_cell carries Drd1 as a negative_marker, and while this constraint is on the pyramidal cell node not the radiatum giant cell node, the elevated Drd1 is biologically puzzling for a CA1 excitatory neuron in stratum radiatum without dopaminergic context. The stratum radiatum cell count (296) is modest and spread across ProS/SUB. Downgraded to WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0098",
+        "name": "0098 SUB-ProS Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_023 (023 SUB-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 138,
+        "dominant_soma_region": "Prosubiculum (611) and Subiculum (160) — CA1 str. radiatum is minor (138 cells)",
+        "defining_markers": ["Gm6260", "Scn5a", "Epha6", "Sox2ot", "Glra3", "Kcnip1"],
+        "key_expression": {
+          "Drd1": 0.03,
+          "Nos1": 0.32,
+          "Reln": 4.02,
+          "Rgs14": 2.11,
+          "Wfs1": 2.65,
+          "Calb1": 2.2,
+          "Np65": 9.03,
+          "Cck": 5.84
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "Primary identity is SUB-ProS (subiculum/prosubiculum), not CA1. Only 138 cells overlap with CA1 stratum radiatum — a minor fraction of the total population. The radiatum giant cell is defined as a CA1 neuron; a type whose dominant soma location is subiculum/prosubiculum is a poor match. Additionally, Scn5a (Nav1.5) as a defining marker is unusual for a hippocampal principal cell and may indicate a distinct channel composition inconsistent with the electrophysiology described for giant cells. DISTANT location category for primary region; classified WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0097",
+        "name": "0097 SUB-ProS Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_023 (023 SUB-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 150,
+        "dominant_soma_region": "Prosubiculum (553), stratum oriens (1248), hippocampo-amygdalar transition (163), pyramidal layer (193) — CA1 str. radiatum is minor (150 cells)",
+        "defining_markers": ["Dcn", "Teddm3", "Lrrtm4", "Tafa2", "Wnt7b"],
+        "key_expression": {
+          "Drd1": 0.01,
+          "Nos1": 3.54,
+          "Reln": 3.97,
+          "Rgs14": 3.97,
+          "Wfs1": 3.25,
+          "Calb1": 3.9,
+          "Np65": 9.24,
+          "Cck": 6.68
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "Primary identity is stratum oriens and prosubiculum; only 150 cells in CA1 stratum radiatum. Lrrtm4 (leucine-rich repeat transmembrane neuronal 4) and Tafa2 markers do not map to known CA1 radiatum giant cell biology. Posterior amygdalar nucleus and hippocampo-amygdalar transition area cells are also present, further diluting the CA1-specific signal. Classified WEAK; DISTANT location category for primary region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0096",
+        "name": "0096 SUB-ProS Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "parent_subclass": "CS20230722_SUBC_023 (023 SUB-ProS Glut)",
+        "soma_in_CA1_stratum_radiatum": true,
+        "CA1_radiatum_cell_count": 215,
+        "dominant_soma_region": "Prosubiculum (1280) and Subiculum (1378) — CA1 str. radiatum is minor (215 cells)",
+        "defining_markers": ["Fn1", "Rxfp1", "Fyb2", "Trib2"],
+        "key_expression": {
+          "Drd1": 0.03,
+          "Nos1": 0.53,
+          "Reln": 0.41,
+          "Pvalb": 0.51,
+          "Rgs14": 2.72,
+          "Wfs1": 2.62,
+          "Calb1": 0.27,
+          "Np65": 8.6,
+          "Cck": 8.35
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "EXCLUDE",
+        "rationale": "Primary identity is subiculum/prosubiculum — only 215 of ~2870 total cells are in CA1 stratum radiatum. This is primarily a subicular type. Very low Reln (0.41), low Nos1 (0.53), and notably elevated Pvalb (0.51 — the highest of any CA1-ProS or SUB-ProS candidate here) makes this transcriptionally atypical for a CA1 radiatum excitatory projection neuron. The Pvalb level, though low in absolute terms, is anomalous for a glutamatergic principal cell type. Classified EXCLUDE for the radiatum giant cell mapping."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1154",
+        "name": "1154 CB Granule Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_314",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Cerebellar granule cell supertype. No CA1 anatomy. DISTANT location. Score of 2 reflects this; DB scoring correctly deprioritised. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1155",
+        "name": "1155 CB Granule Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_314",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Cerebellar granule cell supertype. No CA1 anatomy. DISTANT location. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1156",
+        "name": "1156 DCO UBC Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_315",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Dorsal cochlear nucleus unipolar brush cell. No CA1 anatomy. DISTANT location. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1185",
+        "name": "1185 OEC NN_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_328",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Olfactory ensheathing cell (non-neuronal). No CA1 anatomy. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1173",
+        "name": "1173 Tanycyte NN_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_322",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Tanycyte (non-neuronal). Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1178",
+        "name": "1178 CHOR NN_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_325",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Choroid plexus cell (non-neuronal). Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1161",
+        "name": "1161 Astro-TE NN_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_319",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Telencephalic astrocyte (non-neuronal). Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1030",
+        "name": "1030 Pineal Crx Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_262",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Pineal gland Crx+ glutamatergic neuron. No CA1 anatomy. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1020",
+        "name": "1020 SPVC Ccdc172 Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_257",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Spinal trigeminal nucleus cell. No CA1 anatomy. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1021",
+        "name": "1021 SPVC Nmu Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_258",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Spinal trigeminal nucleus cell. No CA1 anatomy. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1022",
+        "name": "1022 SPVC Nmu Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 2,
+        "parent_subclass": "CS20230722_SUBC_258",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Spinal trigeminal nucleus cell. No CA1 anatomy. Excluded."
+      }
+    ],
+    "0": [
+      {
+        "cell_set_accession": "CS20230722_CLUS_0261",
+        "name": "0261 CA1-ProS Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0069 (CA1-ProS Glut_1)",
+        "key_expression": {
+          "Nos1": 5.35,
+          "Drd1": 0.0,
+          "Rgs14": 5.59,
+          "Calb1": 7.85,
+          "Wfs1": 4.29,
+          "Cck": 9.87,
+          "Np65": 8.28
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child cluster of SUPT_0069. Calb1-high (7.85), Rgs14-moderate (5.59), Drd1-absent. Consistent with CA1 glutamatergic excitatory neuron in stratum radiatum. However, SUPT_0069 is already mapped to ca1_pyramidal_cell and this cluster inherits that assignment. If the radiatum giant cell is truly distinct from CA1 pyramidal cells, this cluster is less likely to represent it — unless the giant cell type is molecularly contained within the major CA1 Glut_1 cluster (impossible to resolve without giant cell-specific marker data)."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0262",
+        "name": "0262 CA1-ProS Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0069 (CA1-ProS Glut_1)",
+        "key_expression": {
+          "Nos1": 4.54,
+          "Drd1": 0.0,
+          "Rgs14": 5.26,
+          "Calb1": 4.65,
+          "Wfs1": 7.68,
+          "Cck": 9.7,
+          "Np65": 8.52
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0069. Wfs1-high (7.68), Calb1-moderate (4.65). The Wfs1-high profile is notable — Wfs1 is a ventral CA1 marker. However, no specific features distinguish this cluster as the radiatum giant cell. Same overlap-with-pyramidal-cell caveat as CLUS_0261."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0263",
+        "name": "0263 CA1-ProS Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0069 (CA1-ProS Glut_1)",
+        "key_expression": {
+          "Nos1": 0.72,
+          "Drd1": 0.0,
+          "Rgs14": 5.45,
+          "Calb1": 1.21,
+          "Wfs1": 7.75,
+          "Cck": 9.81,
+          "Np65": 8.39
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0069. Very low Nos1 (0.72), Wfs1-high (7.75), Calb1-low (1.21). Distinguishable from typical high-Calb1 CA1 pyramidal clusters; the low Calb1 profile could be relevant for identifying non-pyramidal CA1 excitatory neurons. Tentatively of interest but insufficient without giant cell markers."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0267",
+        "name": "0267 CA1-ProS Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0069 (CA1-ProS Glut_1)",
+        "key_expression": {
+          "Nos1": 6.65,
+          "Drd1": 0.17,
+          "Drd2": 0.0,
+          "Rgs14": 6.35,
+          "Calb1": 6.72,
+          "Wfs1": 3.32,
+          "Cck": 9.44,
+          "Np65": 8.75
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0069. Nos1-high (6.65), Rgs14-high (6.35), Calb1-moderate (6.72). The high Rgs14 and Nos1 combination could indicate an atypical subset of CA1 excitatory neurons. Drd1 is very low (0.17), consistent with dorsal CA1 pyramidal identity. Same pyramidal overlap caveat applies."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0268",
+        "name": "0268 CA1-ProS Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0069 (CA1-ProS Glut_1)",
+        "key_expression": {
+          "Nos1": 7.09,
+          "Drd1": 0.4,
+          "Drd2": 0.16,
+          "Rgs14": 3.35,
+          "Calb1": 1.02,
+          "M2R": 1.02,
+          "Reln": 0.97,
+          "Wfs1": 2.5,
+          "Cck": 8.47,
+          "Np65": 8.46
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "Child of SUPT_0069 but with the highest Drd1 (0.4) and Drd2 (0.16) expression within this parent supertype, plus M2R elevated (1.02). The ca1_pyramidal_cell classical node has Drd1 as a negative_marker; while this constraint applies to the pyramidal cell node and not directly to the radiatum giant cell node, the dopaminergic receptor expression profile is unexpected for a CA1 stratum radiatum excitatory projection neuron. Low Calb1 (1.02) is somewhat atypical but the dopaminergic signal is a concern. Downgraded to WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0271",
+        "name": "0271 CA1-ProS Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0070 (CA1-ProS Glut_2)",
+        "key_expression": {
+          "Nos1": 2.25,
+          "Drd1": 0.04,
+          "Rgs14": 3.66,
+          "Calb1": 5.47,
+          "M2R": 0.53,
+          "Wfs1": 3.34,
+          "Cck": 7.68,
+          "Np65": 9.61
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0070 (Glut_2), a separate molecular lineage from the pyramidal cell supertype SUPT_0069. Np65-high (9.61), consistent with CA1 excitatory neuron. Low Drd1 (0.04) is appropriate for CA1 radiatum excitatory neuron identity. Glut_2 lineage provides molecular differentiation from the pyramidal cell cluster, making this a candidate distinct from the SUPT_0069 assignment. Rated PLAUSIBLE as a non-pyramidal CA1 excitatory cluster candidate."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0272",
+        "name": "0272 CA1-ProS Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0070 (CA1-ProS Glut_2)",
+        "key_expression": {
+          "Nos1": 5.23,
+          "Drd1": 0.02,
+          "Rgs14": 4.47,
+          "Calb1": 7.58,
+          "Wfs1": 3.51,
+          "Cck": 8.24,
+          "Np65": 9.75
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0070. Highest Np65 (9.75) among all ranked clusters, Calb1-high (7.58), low Drd1. The molecular profile is consistent with a CA1 excitatory neuron in stratum radiatum. Belongs to Glut_2 lineage, molecularly distinct from the pyramidal cell assignment."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0273",
+        "name": "0273 CA1-ProS Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0070 (CA1-ProS Glut_2)",
+        "key_expression": {
+          "Nos1": 3.95,
+          "Drd1": 0.0,
+          "Rgs14": 5.53,
+          "Calb1": 5.03,
+          "Wfs1": 4.85,
+          "Cck": 8.45,
+          "Np65": 9.32
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0070. Balanced Rgs14/Calb1/Wfs1 profile; no Drd1. Clean CA1 excitatory identity, molecularly distinct from pyramidal cell lineage."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0274",
+        "name": "0274 CA1-ProS Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0070 (CA1-ProS Glut_2)",
+        "key_expression": {
+          "Nos1": 1.64,
+          "Drd1": 0.0,
+          "Reln": 0.74,
+          "Rgs14": 5.19,
+          "Calb1": 5.71,
+          "Wfs1": 4.85,
+          "Cck": 8.36,
+          "Np65": 9.34
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0070. No Drd1. Rgs14 moderate-high (5.19), Calb1-moderate (5.71). Part of the Glut_2 non-pyramidal CA1 lineage. PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0275",
+        "name": "0275 CA1-ProS Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0070 (CA1-ProS Glut_2)",
+        "key_expression": {
+          "Nos1": 0.59,
+          "Drd1": 0.0,
+          "Reln": 0.45,
+          "Rgs14": 5.75,
+          "Calb1": 1.84,
+          "Wfs1": 6.59,
+          "Cck": 9.08,
+          "Np65": 8.9
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0070. Wfs1-high (6.59), Calb1-low (1.84), Rgs14-moderate (5.75), very low Nos1 (0.59). The low Calb1/high Wfs1 profile may indicate a ventral CA1 layer. Low Nos1 is not specifically a concern for an atypical excitatory cell. Part of Glut_2 lineage."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0276",
+        "name": "0276 CA1-ProS Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0070 (CA1-ProS Glut_2)",
+        "key_expression": {
+          "Nos1": 0.76,
+          "Drd1": 0.0,
+          "Rgs14": 2.04,
+          "Calb1": 7.65,
+          "Wfs1": 2.21,
+          "Pcp4": 5.53,
+          "Cck": 7.54,
+          "Np65": 9.52
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0070. Np65-high (9.52), Calb1-high (7.65), Pcp4 elevated (5.53). Pcp4 is a CA1/deep-layer marker; not inconsistent with stratum radiatum neurons. Part of Glut_2 lineage."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0277",
+        "name": "0277 CA1-ProS Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0070 (CA1-ProS Glut_2)",
+        "key_expression": {
+          "Nos1": 4.1,
+          "Drd1": 0.21,
+          "Rgs14": 1.63,
+          "Calb1": 3.87,
+          "Wfs1": 1.55,
+          "M2R": 0.64,
+          "Gria4": 9.09,
+          "Cck": 9.01,
+          "Np65": 8.85
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "Child of SUPT_0070. Moderate Drd1 (0.21) and M2R (0.64) elevated, suggesting some dopaminergic and cholinergic receptor expression. Rgs14-low (1.63), Wfs1-low (1.55). The dopaminergic receptor signal is a mild concern as above (see CLUS_0268). Downgraded to WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0279",
+        "name": "0279 CA1-ProS Glut_3",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0071 (CA1-ProS Glut_3)",
+        "key_expression": {
+          "Nos1": 8.02,
+          "Drd1": 0.48,
+          "Reln": 0.17,
+          "Rgs14": 3.13,
+          "Calb1": 7.17,
+          "Amigo2": 1.17,
+          "Wfs1": 3.69,
+          "Cck": 8.48,
+          "Np65": 9.88
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "Child of SUPT_0071. Nos1-high (8.02), Amigo2 elevated (1.17), Drd1 moderate (0.48). The Drd1 level and the Amigo2 signal suggest this cluster may have a specific layer/projection identity inconsistent with the simple radiatum giant cell definition. Downgraded to WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0280",
+        "name": "0280 CA1-ProS Glut_3",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0071 (CA1-ProS Glut_3)",
+        "key_expression": {
+          "Nos1": 3.72,
+          "Drd1": 0.08,
+          "Drd2": 0.31,
+          "Reln": 2.08,
+          "Rgs14": 2.95,
+          "Calb1": 7.16,
+          "Pcp4": 8.86,
+          "Wfs1": 2.87,
+          "Cck": 7.92,
+          "Np65": 9.76
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0071. Elevated Reln (2.08) and Pcp4 (8.86); Reln-expressing excitatory neurons in CA1 stratum radiatum exist as a heterogeneous population that could include atypical cell types. Drd2 is very low (0.31) and Drd1 is negligible (0.08). Calb1-high (7.16), Np65-high (9.76). Part of Glut_3 lineage which is molecularly distinct from the pyramidal cell SUPT_0069. Rated PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0281",
+        "name": "0281 CA1-ProS Glut_3",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0071 (CA1-ProS Glut_3)",
+        "key_expression": {
+          "Nos1": 7.64,
+          "Drd1": 0.0,
+          "Reln": 0.73,
+          "Rgs14": 2.97,
+          "Calb1": 2.78,
+          "Wfs1": 2.96,
+          "Pcp4": 7.4,
+          "Cck": 8.51,
+          "Np65": 9.97
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0071. Nos1-high (7.64), Np65 highest among all reviewed clusters (9.97), Pcp4 elevated (7.4). No Drd1. Glut_3 lineage, molecularly distinct from pyramidal cells. The combination of very high Np65, high Nos1 and Pcp4 with low Calb1 may represent an atypical CA1 excitatory neuron. Rated PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0282",
+        "name": "0282 CA1-ProS Glut_3",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0071 (CA1-ProS Glut_3)",
+        "key_expression": {
+          "Nos1": 3.05,
+          "Drd1": 0.0,
+          "Drd2": 0.13,
+          "Reln": 1.76,
+          "Rgs14": 1.7,
+          "Calb1": 2.72,
+          "Pcp4": 6.82,
+          "Gria4": 9.44,
+          "Dkk3": 9.03,
+          "Np65": 8.82
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0071. High Gria4 (9.44) — GluA4 expression is notable for excitatory neurons with distinct synaptic properties. Reln moderate (1.76), Pcp4 elevated (6.82). No Drd1. Glut_3 lineage. PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0284",
+        "name": "0284 CA1-ProS Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0072 (CA1-ProS Glut_4)",
+        "key_expression": {
+          "Nos1": 8.64,
+          "Drd1": 0.0,
+          "Rgs14": 4.43,
+          "Calb1": 7.55,
+          "Lamp5": 4.66,
+          "Wfs1": 4.26,
+          "Cck": 9.03,
+          "Np65": 9.46
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0072. High Nos1 (8.64), no Drd1, Calb1-moderate (7.55), Lamp5 elevated (4.66). Glut_4 lineage is distinct from the CA1 pyramidal cell supertype. High Nos1 in a CA1 radiatum excitatory neuron could be consistent with an atypical cell with enhanced synaptic activity. Rated PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0285",
+        "name": "0285 CA1-ProS Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0072 (CA1-ProS Glut_4)",
+        "key_expression": {
+          "Nos1": 8.49,
+          "Drd1": 0.0,
+          "Reln": 0.67,
+          "Rgs14": 3.85,
+          "Calb1": 4.37,
+          "Lamp5": 5.15,
+          "Wfs1": 2.74,
+          "Cck": 9.36,
+          "Np65": 9.47
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0072. Nos1-high (8.49), Lamp5-high (5.15), no Drd1. Clean profile for a CA1 excitatory neuron not in the pyramidal cell lineage. Glut_4. PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0286",
+        "name": "0286 CA1-ProS Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0072 (CA1-ProS Glut_4)",
+        "key_expression": {
+          "Nos1": 7.44,
+          "Drd1": 0.0,
+          "Reln": 0.22,
+          "Rgs14": 5.36,
+          "Calb1": 5.34,
+          "Wfs1": 4.44,
+          "Cck": 9.18,
+          "Np65": 9.27
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0072. No Drd1, Nos1-high (7.44), Rgs14 moderate-high (5.36). Glut_4 lineage, not pyramidal cell assignment. PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0287",
+        "name": "0287 CA1-ProS Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0072 (CA1-ProS Glut_4)",
+        "key_expression": {
+          "Nos1": 8.13,
+          "Drd1": 0.01,
+          "Calb2": 1.18,
+          "Rgs14": 4.45,
+          "Calb1": 8.65,
+          "Amigo2": 0.5,
+          "C1ql2": 0.73,
+          "Wfs1": 6.32,
+          "Cck": 8.81,
+          "Np65": 9.37
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0072. Nos1-high (8.13), Calb1-high (8.65), Calb2 elevated (1.18), Wfs1-moderate (6.32). Calb2 expression may suggest a distinct excitatory subpopulation. Amigo2 present (0.5 — Amigo2 is used as a deep CA1 pyramidal layer marker but at moderate level here). Glut_4 lineage, not pyramidal cell assignment. PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0288",
+        "name": "0288 CA1-ProS Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0072 (CA1-ProS Glut_4)",
+        "key_expression": {
+          "Sst": 4.42,
+          "Nos1": 7.59,
+          "Drd1": 0.0,
+          "Rgs14": 2.96,
+          "Calb1": 3.16,
+          "Wfs1": 2.69,
+          "Cck": 8.76,
+          "Np65": 8.84
+        },
+        "negative_marker_conflicts": "Sst elevated at 4.42 — notable for a glutamatergic principal cell cluster",
+        "assessment": "WEAK",
+        "rationale": "Child of SUPT_0072. Sst expression (4.42) is unusually high for a principal glutamatergic neuron cluster. While Sst is not a formal negative_marker for the radiatum giant cell, high Sst in a 'Glut' atlas cluster may indicate transcriptomic contamination, a mixed cluster, or an unusual excitatory neuron with somatostatin co-expression. The classical radiatum giant cell is not described as Sst-positive. Downgraded to WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0289",
+        "name": "0289 CA1-ProS Glut_5",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0073 (CA1-ProS Glut_5)",
+        "key_expression": {
+          "Nos1": 8.02,
+          "Drd1": 0.0,
+          "Drd2": 0.1,
+          "Reln": 0.43,
+          "Rgs14": 3.64,
+          "Calb1": 2.55,
+          "Pcp4": 8.06,
+          "Wfs1": 2.94,
+          "Cck": 8.94,
+          "Np65": 8.85
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0073. Nos1-high (8.02), Pcp4-high (8.06), no Drd1. The parent supertype SUPT_0073 has dominant soma in posterior amygdalar nucleus, but this cluster is within the CA1 stratum radiatum fraction. Glut_5 lineage distinct from pyramidal cell assignment. PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0290",
+        "name": "0290 CA1-ProS Glut_5",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0073 (CA1-ProS Glut_5)",
+        "key_expression": {
+          "Nos1": 3.57,
+          "Drd1": 0.09,
+          "Drd2": 0.26,
+          "Reln": 2.95,
+          "Rgs14": 3.55,
+          "Calb1": 1.49,
+          "C1ql2": 0.7,
+          "Wfs1": 2.09,
+          "Cck": 6.57,
+          "Np65": 9.1
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "Child of SUPT_0073. Drd2 elevated (0.26), Reln moderate (2.95), Cck low (6.57). The Drd2 level and the amygdalar-biased parent are mild concerns. WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0291",
+        "name": "0291 CA1-ProS Glut_5",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0073 (CA1-ProS Glut_5)",
+        "key_expression": {
+          "Nos1": 8.29,
+          "Drd1": 0.05,
+          "Drd2": 0.89,
+          "Reln": 0.62,
+          "Rgs14": 1.81,
+          "Calb1": 0.81,
+          "Pcp4": 8.14,
+          "Wfs1": 1.81,
+          "Cck": 8.67,
+          "Np65": 9.12
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "WEAK",
+        "rationale": "Child of SUPT_0073. Drd2 notably elevated (0.89) — the highest Drd2 of any reviewed cluster. Rgs14-low (1.81), Calb1-low (0.81), Wfs1-low (1.81). The high Drd2 is inconsistent with a canonical CA1 dorsal excitatory neuron phenotype. Downgraded to WEAK."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0292",
+        "name": "0292 CA1-ProS Glut_5",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0073 (CA1-ProS Glut_5)",
+        "key_expression": {
+          "Nos1": 6.96,
+          "Drd1": 0.0,
+          "Reln": 0.41,
+          "Rgs14": 2.28,
+          "Calb1": 0.88,
+          "Wfs1": 2.07,
+          "Cck": 7.93,
+          "Np65": 9.14
+        },
+        "negative_marker_conflicts": "none",
+        "assessment": "PLAUSIBLE",
+        "rationale": "Child of SUPT_0073. Nos1-high (6.96), no Drd1/Drd2. Low Calb1 and Rgs14 suggest this cluster is transcriptomically distinct from the major CA1 pyramidal population. The amygdalar-biased parent is a concern but the cluster itself is within the CA1 radiatum fraction. PLAUSIBLE."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0293",
+        "name": "0293 CA1-ProS Glut_6",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0074 (CA1-ProS Glut_6)",
+        "key_expression": {
+          "Nos1": 8.88,
+          "Drd1": 4.01,
+          "Drd2": 0.09,
+          "Reln": 1.33,
+          "Rgs14": 3.73,
+          "Amigo2": 0.73,
+          "Wfs1": 6.75,
+          "Calb1": 5.77,
+          "Gria4": 9.71,
+          "Np65": 9.14
+        },
+        "negative_marker_conflicts": "Drd1 = 4.01 — the highest Drd1 of any reviewed cluster. Inconsistent with CA1 radiatum excitatory projection neuron identity.",
+        "assessment": "EXCLUDE",
+        "rationale": "Child of SUPT_0074. Extremely high Drd1 (4.01). The classical node for ca1_pyramidal_cell lists Drd1 as a negative_marker — the radiatum giant cell also shows no dopaminergic properties. A cluster with such pronounced Drd1 expression is more likely a ventral CA1 / subicular neuron with D1R-dependent signalling and is excluded from consideration for the radiatum giant cell."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0294",
+        "name": "0294 CA1-ProS Glut_6",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0074 (CA1-ProS Glut_6)",
+        "key_expression": {
+          "Nos1": 7.97,
+          "Drd1": 2.65,
+          "Drd2": 0.02,
+          "Reln": 3.28,
+          "Rgs14": 3.5,
+          "Wfs1": 6.21,
+          "Calb1": 2.11,
+          "Gria4": 9.98,
+          "Np65": 8.3
+        },
+        "negative_marker_conflicts": "Drd1 = 2.65 — high dopaminergic receptor expression.",
+        "assessment": "EXCLUDE",
+        "rationale": "Child of SUPT_0074. Drd1 = 2.65. Same reasoning as CLUS_0293. High Gria4 (9.98) is notable but the Drd1 signal dominates. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0295",
+        "name": "0295 CA1-ProS Glut_6",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0074 (CA1-ProS Glut_6)",
+        "key_expression": {
+          "Nos1": 8.64,
+          "Drd1": 3.23,
+          "Drd2": 0.0,
+          "Reln": 0.68,
+          "Rgs14": 2.82,
+          "Amigo2": 1.45,
+          "C1ql2": 1.43,
+          "Wfs1": 7.42,
+          "Calb1": 5.82,
+          "Np65": 8.89
+        },
+        "negative_marker_conflicts": "Drd1 = 3.23 — high.",
+        "assessment": "EXCLUDE",
+        "rationale": "Child of SUPT_0074. Drd1 = 3.23. Excluded for the same reason as CLUS_0293."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0253",
+        "name": "0253 ENTmv-PA-COAp Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0066",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Entorhinal/posterior amygdalar/cortical-amygdalar region glutamatergic neuron. No CA1 anatomy implied by name or parent lineage. DISTANT location. Excluded."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0254",
+        "name": "0254 ENTmv-PA-COAp Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "parent_supertype": "CS20230722_SUPT_0066",
+        "soma_in_CA1_stratum_radiatum": false,
+        "assessment": "EXCLUDE",
+        "rationale": "Entorhinal/posterior amygdalar/cortical-amygdalar region glutamatergic neuron. DISTANT location. Excluded."
+      }
+    ]
+  },
+  "rank_1_summary": {
+    "PLAUSIBLE": ["CS20230722_SUPT_0069", "CS20230722_SUPT_0072", "CS20230722_SUPT_0070", "CS20230722_SUPT_0071"],
+    "WEAK": ["CS20230722_SUPT_0073", "CS20230722_SUPT_0074", "CS20230722_SUPT_0098", "CS20230722_SUPT_0097"],
+    "EXCLUDE": ["CS20230722_SUPT_0096", "CS20230722_SUPT_1154", "CS20230722_SUPT_1155", "CS20230722_SUPT_1156", "CS20230722_SUPT_1185", "CS20230722_SUPT_1173", "CS20230722_SUPT_1178", "CS20230722_SUPT_1161", "CS20230722_SUPT_1030", "CS20230722_SUPT_1020", "CS20230722_SUPT_1021", "CS20230722_SUPT_1022"],
+    "top_rank1": "CS20230722_SUPT_0069 (PLAUSIBLE — largest CA1 str. radiatum cell count; note overlap with ca1_pc_hippocampus); CS20230722_SUPT_0072 (PLAUSIBLE — distinct Glut_4 lineage, no Drd1, high Nos1)"
+  },
+  "rank_0_summary": {
+    "PLAUSIBLE": [
+      "CS20230722_CLUS_0261", "CS20230722_CLUS_0262", "CS20230722_CLUS_0263", "CS20230722_CLUS_0267",
+      "CS20230722_CLUS_0271", "CS20230722_CLUS_0272", "CS20230722_CLUS_0273", "CS20230722_CLUS_0274",
+      "CS20230722_CLUS_0275", "CS20230722_CLUS_0276",
+      "CS20230722_CLUS_0280", "CS20230722_CLUS_0281", "CS20230722_CLUS_0282",
+      "CS20230722_CLUS_0284", "CS20230722_CLUS_0285", "CS20230722_CLUS_0286", "CS20230722_CLUS_0287",
+      "CS20230722_CLUS_0289", "CS20230722_CLUS_0292"
+    ],
+    "WEAK": [
+      "CS20230722_CLUS_0268", "CS20230722_CLUS_0277", "CS20230722_CLUS_0279",
+      "CS20230722_CLUS_0288", "CS20230722_CLUS_0290", "CS20230722_CLUS_0291"
+    ],
+    "EXCLUDE": [
+      "CS20230722_CLUS_0293", "CS20230722_CLUS_0294", "CS20230722_CLUS_0295",
+      "CS20230722_CLUS_0253", "CS20230722_CLUS_0254"
+    ],
+    "top_rank0_outside_pyramidal_lineage": "CS20230722_CLUS_0281 (PLAUSIBLE — SUPT_0071 lineage, Nos1-high 7.64, Np65 highest 9.97, no Drd1, Pcp4-high, distinct from pyramidal cell assignment)",
+    "top_rank0_note": "All PLAUSIBLE clusters within SUPT_0069 (CLUS_0261–0263, 0267) are already covered by the ca1_pc_hippocampus mapping. The most distinct PLAUSIBLE candidates independent of the pyramidal cell lineage are in SUPT_0070 (Glut_2), SUPT_0071 (Glut_3), and SUPT_0072 (Glut_4)."
+  },
+  "non_candidates_summary": "Score-2 non-neuronal candidates (SUPT_1161 Astro-TE, SUPT_1173 Tanycyte, SUPT_1178 CHOR) and non-hippocampal glutamatergic neurons (SUPT_1154/1155 CB Granule, SUPT_1156 DCO UBC, SUPT_1030 Pineal, SUPT_1020/1021/1022 SPVC) are all EXCLUDED. The SUBT_0066-lineage clusters (CLUS_0253/0254, ENTmv-PA-COAp) are EXCLUDED — entirely extra-CA1 anatomy. The SUPT_0074/Glut_6 cluster children (CLUS_0293/0294/0295) are EXCLUDED due to very high Drd1 expression. SUB-ProS supertypes (SUPT_0096/0097/0098) are WEAK or EXCLUDED — their primary soma distributions are in subiculum and prosubiculum, not CA1 stratum radiatum. The overall conclusion is that the CA1 radiatum giant cell cannot be assigned to any single cluster with confidence: the classical type has no defining molecular markers, is known from a single 2000 paper, and any mapping at cluster level remains UNCERTAIN or LOW confidence. Recommended mapping confidence ceiling: UNCERTAIN for the best rank-1 candidate (SUPT_0069, noting pyramidal cell overlap), or LOW for Glut_2/Glut_3/Glut_4 supertypes as independent CA1 excitatory populations."
+}

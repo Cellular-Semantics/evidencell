@@ -1,0 +1,507 @@
+{
+  "classical_node_id": "hpc_cajal_retzius_cell",
+  "classical_node_name": "hippocampal Cajal-Retzius cell",
+  "taxonomy_id": "CCN20230722",
+  "assessment_date": "2026-05-05",
+  "assessor": "claude-sonnet-4-6 (mapping-refinement-agent)",
+  "classical_node_summary": {
+    "defining_markers": ["Reln"],
+    "negative_markers": [],
+    "neuropeptides": [],
+    "nt_type": "glutamatergic",
+    "soma_locations": ["CA1 stratum lacunosum-moleculare (SLM)", "DG outer molecular layer (OML)"],
+    "key_notes": "Reln is the sole defining marker; this is the adult-persisting glutamatergic subpopulation (reelin+/calretinin+/VGluT3+). UBERON:0005403 has an incorrect cross-reference to MBA:493 (Striatum ventral region) — location scoring based on striatum is invalid. True soma locations are hippocampal: CA1 SLM and DG OML. No negative markers defined."
+  },
+  "location_warning": "UBERON:0005403 (hippocampus stratum lacunosum-moleculare) mapped to MBA:493 (Striatum ventral region) — a known incorrect cross-reference. Any DB location score based on this mapping is invalid. Candidates must be assessed against CA1 SLM (MBA:391) and DG molecular layer (MBA:10703) directly.",
+  "candidates_by_rank": {
+    "0": [
+      {
+        "cell_set_accession": "CS20230722_CLUS_0497",
+        "name": "0497 HPF CR Glut_1",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0135",
+        "db_score": 4,
+        "assessment": "STRONG",
+        "reln_mean_expression": 12.416,
+        "calb2_mean_expression": 4.879,
+        "rationale": "The label 'HPF CR' (hippocampal formation Cajal-Retzius) directly names this cell class. Soma distribution is precisely hippocampal: Dentate gyrus molecular layer (640 cells; DG OML) and Field CA1 stratum lacunosum-moleculare (139 cells) — matching both soma locations of hpc_cajal_retzius_cell exactly. Reln mean expression is 12.4 (highest of all hippocampal clusters by a wide margin; next highest is 4.9 in CLUS_0504). Defining markers include Trp73 (p73, canonical CR cell TF), Shisal2b, Creb5, Gdf5; MERFISH markers include Emx2, Ndnf, Eya2, Zic1, Gfra1 — all consistent with the CR cell transcriptomic signature. Calb2 (calretinin) mean expression 4.9, consistent with the calretinin+ subpopulation described classically. No neuropeptides recorded. No classical negative markers violated. This is the primary hippocampal CR cell cluster with correctly mapped anatomy and strongly elevated Reln."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0500",
+        "name": "0500 HPF CR Glut_1",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0135",
+        "db_score": 4,
+        "assessment": "WEAK",
+        "reln_mean_expression": 12.452,
+        "calb2_mean_expression": 8.165,
+        "rationale": "Also labeled 'HPF CR' with highest Reln mean expression (12.5) and high Calb2 (8.2) among the three HPF CR clusters. However, anatomy is entirely olfactory/amygdalar: Piriform area (8 cells), DG molecular layer (6 cells), Cortical amygdalar area (12 cells), Entorhinal area L1 (5 cells). The classical node soma is restricted to hippocampal SLM and DG OML; this cluster's soma distribution is predominantly in olfactory cortex and amygdala with minimal hippocampal representation. Despite the strong Reln and Calb2 expression, the location mismatch disqualifies this as a good match for the hippocampal CR cell. It represents a related CR-like population in olfactory cortex. Caveat: if the atlas captures a pan-cortical CR supertype, this could be a distant relative rather than the hippocampal type."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0499",
+        "name": "0499 HPF CR Glut_1",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0135",
+        "db_score": 4,
+        "assessment": "WEAK",
+        "reln_mean_expression": 11.905,
+        "calb2_mean_expression": 0.588,
+        "rationale": "Labeled 'HPF CR' with high Reln mean expression (11.9). Defining markers: Dsp, Plcz1, Eomes; TF markers include Eomes (Tbr2), Trp73, Bhlhe22. Eomes/Tbr2 is typically associated with immature granule cells or intermediate progenitors, not mature CR cells. Calb2 is very low (0.6), inconsistent with the calretinin+ classical CR cell signature. Anatomy is entirely olfactory bulb and olfactory cortex (no hippocampal cells). Neuropeptides: Npb and Adcyap1 at low levels — no classical match expected. This cluster appears to represent a CR-related population in the olfactory system with a distinct molecular identity from the hippocampal type."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0503",
+        "name": "0503 DG Glut_1",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0136",
+        "db_score": 4,
+        "assessment": "WEAK",
+        "reln_mean_expression": 3.194,
+        "calb2_mean_expression": 0.152,
+        "rationale": "Soma in DG molecular layer (424) and polymorph layer (466), with additional cells in CA3 pyramidal layer (441), CA3 stratum lucidum (158), and CA3 stratum radiatum (289). Reln expression 3.2 — elevated above most DG clusters but substantially below HPF CR clusters. Defining markers: Ntn5, Prox1, Dio3, Ndst4; Prox1 is a granule cell marker, placing this firmly in the DG lineage. This appears to be a DG mossy cell or granule cell subtype, not a Cajal-Retzius cell. The elevated Reln in DG Glut_1 may reflect the minor Reln+ mossy cell population noted in the classical node for dg_mossy_cell, not Cajal-Retzius identity."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0504",
+        "name": "0504 DG Glut_1",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0136",
+        "db_score": 4,
+        "assessment": "WEAK",
+        "reln_mean_expression": 4.857,
+        "calb2_mean_expression": 0.0,
+        "rationale": "Soma in DG polymorph (21) and molecular (14) layers plus CA3 pyramidal, CA3 SLM, CA3 radiatum, DG granule layer, and Medial amygdalar nucleus (27). Reln 4.9 is relatively elevated among DG clusters but far below HPF CR (12+). Defining markers: Dcn, Prox1, Gcnt1 — Prox1 and Dcn together suggest a granule cell or mossy cell rather than CR identity. Cartpt and Penk neuropeptides are inconsistent with CR cells. EXCLUDE from primary consideration; retain as distant alternative only."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0513",
+        "name": "0513 DG-PIR Ex IMN_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0141",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.749,
+        "calb2_mean_expression": 1.234,
+        "rationale": "Label 'DG-PIR Ex IMN' indicates a DG-piriform immature neuron type. Soma primarily in corpus callosum (23), CA3 stratum oriens (31), DG granule cell layer (47), DG molecular layer (16). Anatomy includes white matter (corpus callosum), which is inconsistent with hippocampal CR cells. Reln expression is very low (0.75). Defining markers: Neurod4, Mfap4; TF markers Neurod4, Nhlh1 — these suggest an early-stage neurogenic lineage, not a mature CR cell. MERFISH: Eomes, Igfbpl1, Zic5, Nrn1 — immature neuron signature. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0514",
+        "name": "0514 DG-PIR Ex IMN_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0141",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.268,
+        "calb2_mean_expression": 2.711,
+        "rationale": "Second cluster of the DG-PIR immature neuron supertype. Soma in DG granule cell layer (106), DG molecular layer (68), DG polymorph layer (47), CA3 stratum oriens (28). Reln very low (0.27). Defining markers: Draxin, Fam163a, Ntf3; TF: Emx2, Prox1, Tbr1, Rarb — Prox1 and Tbr1 together indicate DG granule cell or immature neuron lineage. Higher Calb2 (2.7) but anatomical and molecular profile does not match CR cells. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0294",
+        "name": "0294 CA1-ProS Glut_6",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0074",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 3.280,
+        "calb2_mean_expression": 0.050,
+        "rationale": "Soma predominantly in Prosubiculum (147) and CA1 stratum radiatum (64) with minor CA1 SLM (25). The CA1 SLM representation (25 cells) might trigger a weak location match but the primary soma location is prosubiculum/stratum radiatum, not SLM or DG OML. Reln 3.3 — moderate but well below HPF CR. Defining markers: Dcn, Fn1, Qrfpr, Dcc — these are extracellular matrix/axon guidance proteins inconsistent with CR identity. MERFISH markers include Slc17a7, Drd5, Pdzrn3, Ramp3. Cck neuropeptide at 9.4 — not expected in CR cells. This appears to be a CA1/ProS projection neuron. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0316",
+        "name": "0316 CA3 Glut_5",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0079",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.110,
+        "calb2_mean_expression": 9.603,
+        "rationale": "CA3 cluster with soma in CA3 stratum radiatum (129), CA3 stratum lucidum (97), CA3 pyramidal layer (99), DG polymorph layer (57), and Medial amygdalar nucleus (60). High Calb2 (9.6) but Reln very low (0.11). Defining markers: Naa11, Adgrg6; MERFISH: Smoc2, Tgfbr2, Lpl, Fam163a. Neuropeptides Cck (8.2) and Adcyap1 (6.7) are inconsistent with CR cells. This is a CA3 pyramidal cell subtype. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0317",
+        "name": "0317 CA3 Glut_5",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0079",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.207,
+        "calb2_mean_expression": 9.583,
+        "rationale": "CA3 cluster with soma primarily in CA3 pyramidal layer (195), CA3 stratum radiatum (132), DG polymorph (124), CA3 stratum oriens (116), DG granule layer (125). High Calb2 (9.6) but Reln very low (0.21). Defining markers Csf2rb2 and Smoc2; MERFISH includes Drd2 — inconsistent with CR identity. Neuropeptides Cck (10.0) and Adcyap1 (7.1). Not a CR cell. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0385",
+        "name": "0385 SUB-ProS Glut_1",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0096",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.573,
+        "calb2_mean_expression": 0.030,
+        "rationale": "Soma primarily in Subiculum (255), Presubiculum (72), DG molecular layer (56). Location is subicular/presubicular, not SLM or OML. Reln low (0.57), Calb2 negligible. Defining markers: Lipm, Gm30094. Neuropeptides Cck, Nts, Grp, Adcyap1 — none consistent with CR identity. This is a subiculum projection neuron. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0505",
+        "name": "0505 DG Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0137",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.202,
+        "calb2_mean_expression": 0.123,
+        "rationale": "DG Glut_2 cluster with soma in DG molecular layer (2662), DG granule cell layer (2937), DG polymorph layer (1022), CA3 pyramidal (417). Very low Reln (0.2) and Calb2 (0.1). Defining markers: Lct, Cdh9, Fbxo32, Stxbp6 — granule cell profile. No neuropeptides. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0506",
+        "name": "0506 DG Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0137",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.243,
+        "calb2_mean_expression": 0.000,
+        "rationale": "DG Glut_2 cluster with soma in DG granule layer (618), DG molecular layer (566), DG polymorph (234), CA3 pyramidal (159). Very low Reln (0.24), no Calb2. Defining markers: Dsp, C1ql2, Adamts17 — granule cell/DG profile. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0507",
+        "name": "0507 DG Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0137",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.208,
+        "calb2_mean_expression": 0.129,
+        "rationale": "DG Glut_2 cluster with soma across DG molecular layer (3408), DG granule cell layer (3644), DG polymorph (1811), CA3 pyramidal (953), CA3 stratum radiatum (814), CA3 oriens (699). Very low Reln (0.21). The very large cell counts and diverse CA3 locations place this as a mainstream DG/CA3 glutamatergic cluster. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0508",
+        "name": "0508 DG Glut_3",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0138",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.763,
+        "calb2_mean_expression": 0.000,
+        "rationale": "DG Glut_3 with soma in DG granule layer (130), DG molecular layer (86), DG polymorph (51), CA3 SLM (40), CA3 radiatum (32). Reln low (0.76), no Calb2. Defining markers: Dsp, Egr4. Neuropeptides Cck and Pdyn — inconsistent with CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0509",
+        "name": "0509 DG Glut_3",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0138",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.460,
+        "calb2_mean_expression": 0.297,
+        "rationale": "DG Glut_3 with soma in DG molecular layer (55), DG granule layer (91), DG polymorph (24), CA3 pyramidal (14). Reln low (0.46), modest Calb2 (0.30). Defining markers: Lct, Npy. Npy neuropeptide expression is unexpected in CR cells (Npy is typically GABAergic interneuron-associated). Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0510",
+        "name": "0510 DG Glut_4",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0139",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "reln_mean_expression": 0.269,
+        "calb2_mean_expression": 0.152,
+        "rationale": "DG Glut_4 with soma across DG molecular layer, CA3 SLM, CA3 radiatum, DG polymorph, DG granule layer, CA3 oriens — large cell counts distributed across many layers. Very low Reln (0.27). Defining markers: C1ql2, Dsp, Scn9a — granule cell profile. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0032",
+        "name": "0032 L5/6 IT TPE-ENT Glut_6",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0012",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Temporal pole/entorhinal cortex IT neuron. Soma in Dentate gyrus molecular layer (1 cell), Entorhinal area medial L6 (1), Parasubiculum (1), Presubiculum (7) — minimal hippocampal representation. Defining markers: Osr1, Esr2, Cpm, Col5a2 — cortical IT neuron signature. TF markers: Osr1, Esr2, Tshz2, Tox — no CR cell identity. Cck neuropeptide (9.2). Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0323",
+        "name": "0323 L2 IT PPP-APr Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0081",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Layer 2 IT neurons of the parahippocampal cortex (PPP-APr = parasubiculum/postsubiculum/presubiculum/anterior piriform). Soma in Presubiculum (275), Postsubiculum (269), DG molecular layer (168), Subiculum (60) — parahippocampal, not hippocampal SLM or OML. Defining markers: Ntn5, Cxcl14, Col25a1, Clrn1 — cortical L2 IT profile. Reln not elevated. Cck neuropeptide (8.9). Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0324",
+        "name": "0324 L2 IT PPP-APr Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0081",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Same parahippocampal cortex L2 IT supertype as CLUS_0323. Defining markers: Teddm3, Ctxn3, Nts, Tanc1. Nts neuropeptide (4.4) inconsistent with CR cells. No Reln elevation expected. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0325",
+        "name": "0325 L2 IT PPP-APr Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0081",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Same parahippocampal cortex L2 IT supertype. Defining markers: Ntn5, Esm1, Clrn1, Prlr. Cck neuropeptide (9.6). No CR identity markers. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0326",
+        "name": "0326 L2 IT PPP-APr Glut_3",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0082",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2 IT PPP-APr Glut_3 supertype. Soma in Presubiculum (61), DG molecular layer (153), Postsubiculum (72). DG molecular layer representation is incidental — this is a parahippocampal L2 neuron. Defining markers: Teddm3, Smoc2, Rmst, Galr1. No CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0327",
+        "name": "0327 L2 IT PPP-APr Glut_3",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0082",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Same L2 IT PPP-APr Glut_3 supertype as CLUS_0326. Defining markers: Gm6260, Cplx3, Cntn5, Cntnap3. Neuropeptides Cck (9.2) and Adcyap1 (5.4). No CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0333",
+        "name": "0333 L2/3 IT PPP Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0085",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT parahippocampal cortex (PPP = postsubiculum/presubiculum/parasubiculum). Soma in DG molecular layer (1236), Postsubiculum (3224), Presubiculum (1992), Subiculum (419). Anatomy is parahippocampal subicular complex, not hippocampal SLM. Defining marker Cck is also a Cck neuropeptide marker (9.5). No CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0335",
+        "name": "0335 L2/3 IT PPP Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0085",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Same PPP L2/3 IT supertype. Soma in DG molecular layer (1236 parent), primarily postsubiculum/presubiculum. Defining markers: Ddit4l, Atp10b, Vwc2l, Sv2c. Cck neuropeptide (9.5). No CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0336",
+        "name": "0336 L2/3 IT PPP Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0085",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Same PPP L2/3 IT supertype. Defining markers: Atp10b, Rspo2, Fbxl7. Neuropeptides Cck (9.5) and Grp (5.7). No CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2607",
+        "name": "2607 LH Pou4f1 Sox1 Glut_3",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0639",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Lateral hypothalamus cluster. No hippocampal anatomy. Defining markers: Syt15, Tafa3, Pmfbp1. Neuropeptides Cartpt (7.5), Adcyap1 (6.0), Tac1 (4.1) — hypothalamic neuropeptide profile. Distant region. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2659",
+        "name": "2659 TH Prkcd Grin2c Glut_6",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0659",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Thalamic cluster. No hippocampal anatomy. Defining markers: Adra2b, Tnc, Itgb8, Hs3st4 — thalamic profile. Neuropeptides Cck (8.5) and Adcyap1 (4.5). Distant structure. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2846",
+        "name": "2846 APN C1ql2 Glut_1",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0702",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Anterior pretectal nucleus (midbrain). No hippocampal anatomy. Defining markers: Esrrb, C1ql2, Sema3d, Tenm2 — midbrain profile. MERFISH includes Drd1 — inconsistent with CR cells. Distant structure. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2147",
+        "name": "2147 SI-MA-LPO-LHA Skor1 Glut_2",
+        "taxonomy_rank": 0,
+        "parent_supertype": "CS20230722_SUPT_0531",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Substantia innominata/magnocellular preoptic area cluster. No hippocampal anatomy. Defining markers: Rxfp2, Crh, Sostdc1. Neuropeptides Sst (6.4) and Crh (3.2) — hypothalamic/basal forebrain profile. Distant structure. Exclude."
+      }
+    ],
+    "1": [
+      {
+        "cell_set_accession": "CS20230722_SUPT_0135",
+        "name": "0135 HPF CR Glut_1",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_036",
+        "db_score": 4,
+        "assessment": "STRONG",
+        "rationale": "Supertype directly labeled 'HPF CR' (hippocampal formation Cajal-Retzius). Anatomy is the most focused hippocampal match: Dentate gyrus molecular layer (647 cells; DG OML) and Field CA1 stratum lacunosum-moleculare (140 cells) — matching both expected soma locations of hpc_cajal_retzius_cell precisely. Defining markers at supertype level: Trp73 (p73), Cd274. Trp73 is the canonical transcription factor for Cajal-Retzius cells, consistently cited as a defining CR marker. Cluster-level data confirm very high Reln mean expression (~12.4 across its member clusters CLUS_0497 and CLUS_0500). The 'HPF CR' label plus the dual soma match (CA1 SLM + DG OML) plus Trp73 expression together constitute the highest-confidence match at the supertype level. Caveat: SUPT_0135 contains three clusters (0497, 0499, 0500) of which 0497 is the primary hippocampal cluster and 0499/0500 are olfactory/piriform-predominant — the supertype spans pan-cortical CR cells, with the hippocampal subpopulation concentrated in CLUS_0497."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0141",
+        "name": "0141 DG-PIR Ex IMN_2",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_038",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "DG-piriform excitatory immature neuron supertype. Soma in DG granule cell layer (441), DG molecular layer (238), DG polymorph layer (162), CA3 stratum oriens (135), CA3 pyramidal (82). Anatomy is DG granule/polymorph layers (not SLM or OML). Defining markers: Draxin, Mndal — immature neuronal profile. Member clusters CLUS_0513 and CLUS_0514 have very low Reln (0.75 and 0.27). This is a DG immature/newborn neuron type, not a Cajal-Retzius cell. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0136",
+        "name": "0136 DG Glut_1",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_037",
+        "db_score": 4,
+        "assessment": "WEAK",
+        "rationale": "DG Glut_1 supertype. Anatomy: CA3 pyramidal (479), DG polymorph (487), DG molecular (441), Medial amygdalar nucleus (299), CA3 stratum lucidum (172), DG granule (307), CA3 radiatum (300). DG molecular layer representation (441 cells) is compatible with DG OML soma location of CR cells; however, the dominant locations are DG polymorph and CA3 pyramidal — inconsistent with CR identity. Defining markers: Il33, Lrfn5, Cntn6. Cluster-level Reln expression in CLUS_0503 (3.2) and CLUS_0504 (4.9) is elevated above background but well below HPF CR clusters. The Prox1-expressing member clusters confirm granule/mossy cell identity. This supertype likely includes the Reln+ mossy cell population described in the dg_mossy_cell node, not Cajal-Retzius cells."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0079",
+        "name": "0079 CA3 Glut_5",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_017",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "CA3 pyramidal cell supertype. Soma distributed across CA3 pyramidal layer (294), CA3 stratum radiatum (261), CA3 stratum lucidum (175), DG polymorph (181), DG granule layer (147), CA3 stratum oriens (121). No CA1 SLM or DG OML representation. Defining markers: Rcn3, Csf2rb2. Cluster-level Reln extremely low (<0.21). High Calb2 (~9.6) in member clusters but that reflects CA3-specific expression, not CR identity. Neuropeptides Cck (8-10) and Adcyap1 (6-7) — CA3 pyramidal profile. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0081",
+        "name": "0081 L2 IT PPP-APr Glut_2",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_018",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Parahippocampal cortex (parasubiculum/postsubiculum/presubiculum) L2 IT neuron supertype. Soma primarily in Presubiculum (275), Postsubiculum (269), DG molecular layer (168), Subiculum (60). Anatomy is parahippocampal, not hippocampal SLM. Defining markers: Teddm3, Otof, Gucy2g, Dab1, Zfp385b — cortical L2 IT profile. Dab1 is interesting (associated with Reelin signaling pathway, receiving Reln signal), not producing Reln. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0082",
+        "name": "0082 L2 IT PPP-APr Glut_3",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_018",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Same parahippocampal L2 IT subclass as SUPT_0081. Soma in Presubiculum (61), DG molecular layer (153), Postsubiculum (72). Defining markers: Teddm3, Phgdh. No CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0085",
+        "name": "0085 L2/3 IT PPP Glut_2",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_019",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Parahippocampal L2/3 IT neuron. Soma in DG molecular layer (1236), Postsubiculum (3224), Presubiculum (1992), Subiculum (419). Anatomy predominantly subicular complex, not hippocampal SLM. Defining markers: Dsc3, Npsr1, Gpc6. No CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0012",
+        "name": "0012 L5/6 IT TPE-ENT Glut_6",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_003",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Temporal pole/entorhinal cortex L5/6 IT neuron. Soma in DG molecular layer (1 cell), Entorhinal medial L6 (1), Parasubiculum (1), Presubiculum (7) — minimal. Defining markers: Osr1, S100a1, Grin2b — cortical deep layer profile. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0137",
+        "name": "0137 DG Glut_2",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_037",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "DG Glut_2 supertype. Soma primarily in DG molecular layer (6636), DG granule layer (7199), DG polymorph (3067), CA3 pyramidal (1529). Very large cell numbers — mainstream DG granule cell supertype. Defining markers: Dsp, Kcnh3, Syndig1. Cluster-level Reln very low (<0.25). No CR identity. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0138",
+        "name": "0138 DG Glut_3",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_037",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "DG Glut_3 supertype. Soma across DG polymorph, molecular, granule layers plus CA3 SLM and radiatum. Defining markers: Lct, Atf3. Cluster-level Reln 0.46-0.76 — low. Neuropeptides Cck, Pdyn. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0139",
+        "name": "0139 DG Glut_4",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_037",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "DG Glut_4 supertype. Very large numbers of cells across DG granule layer (1570), DG polymorph (2386), DG molecular (1128), CA3 oriens (1402), CA3 SLM (1191), CA3 radiatum (945). This is a large, distributed DG/CA3 cluster. Defining markers: Vwa3b, Ntn5 — DG granule profile. Reln very low (0.27). Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0537",
+        "name": "0537 SI-MA-LPO-LHA Skor1 Glut_8",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_119",
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Substantia innominata/magnocellular preoptic area. Distant hypothalamic/basal forebrain region. Defining markers: Tgfbi, Cnga3, Lama1. No hippocampal anatomy, no Reln. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0046",
+        "name": "0046 IT AON-TT-DP Glut_1",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_010",
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "Anterior olfactory nucleus / taenia tecta / dorsal peduncular area. Soma primarily in taenia tecta, dorsal peduncular area, anterior olfactory nucleus, piriform area — olfactory structures. Defining markers: Ccdc3, Zic1, Cntnap5a, Stard8. No hippocampal anatomy, no Reln. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0531",
+        "name": "0531 SI-MA-LPO-LHA Skor1 Glut_2",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_119",
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "Substantia innominata/hypothalamic area. Distant structure. Defining markers: Dmrta2, Piezo2, Sntg2. No hippocampal anatomy. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0570",
+        "name": "0570 VMH Nr5a1 Glut_5",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_129",
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "Ventromedial hypothalamus. Defining markers: Nr5a1, Reln, Dscaml1. Although Reln appears in the defining markers, this is a hypothalamic population (VMH; anatomy: Ventromedial hypothalamic nucleus 184 cells, Hypothalamus 93, Periventricular hypothalamic nucleus 80). The CR cell soma location is hippocampal SLM and DG OML. This is a distant region — Reln is expressed in many brain regions; presence in VMH defining markers reflects VMH-specific context. Exclude due to wrong anatomy. Note: the Reln defining marker entry here provides an interesting parallel but does not constitute a hippocampal CR cell match."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0717",
+        "name": "0717 PRC-PAG Tcf7l2 Irx2 Glut_5",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_167",
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "Midbrain (precommissural nucleus, lateral habenula, nucleus of posterior commissure, anterior pretectal nucleus). Defining markers include Reln but also Tfap2d, Irx2, Nr2f2, Ngb, D030068K23Rik, Galnt18 — midbrain transcription factor signature entirely inconsistent with hippocampal CR cells. Distant structure. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0977",
+        "name": "0977 PGRN-PARN-MDRN Hoxb5 Glut_5",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_243",
+        "db_score": 3,
+        "assessment": "EXCLUDE",
+        "rationale": "Pontine/medullary reticular formation (PGRN-PARN-MDRN). Hindbrain cluster. Defining markers: Abcc9, Pou4f1, Meis2. Distant structure. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1154",
+        "name": "1154 CB Granule Glut_1",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_314",
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "Cerebellar granule cell. Defining markers: Gabra6, Lmx1a — canonical cerebellar granule cell markers. Distant structure, completely inconsistent with hippocampal CR cells. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1155",
+        "name": "1155 CB Granule Glut_2",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_314",
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "Cerebellar granule cell. Defining markers: Gabra6, Gap43, Rab37 — cerebellar identity. Distant structure. Exclude."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_1156",
+        "name": "1156 DCO UBC Glut_1",
+        "taxonomy_rank": 1,
+        "parent_subclass": "CS20230722_SUBC_315",
+        "db_score": 2,
+        "assessment": "EXCLUDE",
+        "rationale": "Dorsal cochlear nucleus unipolar brush cell. Defining markers: Sln, Lmx1a. Distant structure. Exclude."
+      }
+    ]
+  },
+  "non_candidates_summary": "Of 30 rank-0 candidates, only 3 (CLUS_0497, CLUS_0500, CLUS_0499 — all HPF CR Glut_1) carry any CR relevance based on Reln expression (mean 12.4, 12.5, 11.9 respectively), Trp73 TF expression, and the 'HPF CR' label. CLUS_0497 is the primary hippocampal match (anatomy: DG molecular layer 640 + CA1 SLM 139 cells). CLUS_0500 and CLUS_0499 represent olfactory/piriform CR-like populations in the same supertype. All other 27 rank-0 candidates lack Reln elevation and have anatomical locations in CA3, DG granule layer, parahippocampal cortex, or distant brain regions (hypothalamus, thalamus, midbrain, cerebellum). Of 20 rank-1 candidates, only SUPT_0135 (HPF CR Glut_1) is a genuine match — it is the parent supertype of CLUS_0497 and captures the same CA1 SLM + DG OML anatomy. Two supertypes (SUPT_0570 VMH and SUPT_0717 midbrain) carry Reln in their defining markers but are disqualified by distant anatomy (hypothalamus and midbrain respectively). The DB scoring function assigned score 4 to 11 supertypes and score 3 to 6 more, largely due to the erroneous UBERON:0005403 → MBA:493 (Striatum) mapping and general glutamatergic NT matching — these scores are uninformative for distinguishing CR cells from the large field of hippocampal glutamatergic neurons."
+}

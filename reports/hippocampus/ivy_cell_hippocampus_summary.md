@@ -1,7 +1,5 @@
 # Ivy cell (IvC) — WMBv1 (CCN20230722) Mapping Report
-*draft · 2026-04-09 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
-
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+*2026-04-09 · Source: `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
 
 ---
 
@@ -37,6 +35,7 @@
 - **Precomputed stats marker cross-check.** All three Ivy cell defining markers are confirmed at high expression levels in SUPT_0203: Nos1 (mean 7.79), Npy (mean 4.62), Lamp5 (mean 4.40). All three negative markers are at low levels: Pvalb (0.43), Sst (1.52), Calb2 (0.37). The complete negative-marker panel is consistent with the Ivy cell profile.
 - **GABA neurotransmitter** confirmed (GABA subclass in atlas; GABAergic classical type): CONSISTENT.
 - **Annotation transfer (GEO:GSE185862).** MapMyCells local annotation transfer of Yao 2021 SSv4 Lamp5 hippocampal cells (n=868) onto WMBv1: SUPT_0203 (Lamp5 Lhx6 Gaba_1) [CS20230722_SUPT_0203] is overwhelmingly the top supertype target (711/868 cells, F1=0.898, target_purity=0.989). At SUBCLASS level, 710/868 cells map to 050 Lamp5 Lhx6 Gaba (F1=0.898, target_purity=0.992). Ivy cells are the predominant Lamp5+/Lhx6+ hippocampal interneuron type; this strong, specific hit is consistent with the Ivy cell → SUPT_0203 assignment. The near-perfect target purity (0.989) confirms SUPT_0203 is almost exclusively populated by Lamp5 cells in this dataset.
+- **Annotation transfer (GEO:GSE99888) — independent corroboration.** Harris 2018 Class Cacna2d1.Lhx6.Reln (Lamp5+/Lhx6+/Reln+ CA1 inhibitory cluster, n=3,663 total dataset) maps predominantly to Lamp5 Lhx6 Gaba subclass (F1=0.825, group_purity=0.935, 245 cells) and to SUPT_0203 Lamp5 Lhx6 Gaba_1 [CS20230722_SUPT_0203] at supertype level (F1=0.812, group_purity=0.914, 246 cells). This is an independent dataset (STRT-seq, 3,663 CA1 inhibitory neurons) using a different source label — the convergence on the same supertype target as GSE185862 provides cross-dataset corroboration and strengthens the Ivy cell → SUPT_0203 assignment. The Reln co-expression in the Cacna2d1.Lhx6.Reln label is consistent with OLM-type Lamp5 cells; Cacna2d1 and Reln co-expression marks MGE-derived inhibitory neurons in CA1.
 - Bocchio et al. 2024 [1] names NOS-expressing ivy cells as among the most representative CA1 pyramidal layer interneuron subtypes:
 
 > This mouse line allows for a large sampling from diverse interneuron subtypes in the CA1 pyramidal layer, including the most representative ones (Bezaire et al., 2013), the PV-expressing basket and bistratified cells (Klausberger et al., 2008), the NOS- expressing ivy cells (14381729) and two types of interneuron-selective interneurons (ISI 1 and 3) that express calretinin (Klausberger et al., 2008)(Topolnik et al., 2022)
@@ -96,6 +95,7 @@ MapMyCells annotation transfer has been performed at SUPERTYPE level (GEO:GSE185
 | edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203 | ATLAS_METADATA — supertype marker and anatomy comparison | PARTIAL |
 | edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203 | ATLAS_METADATA — precomputed stats marker cross-check | SUPPORT |
 | edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203 | ANNOTATION_TRANSFER — MapMyCells (GEO:GSE185862, SUPERTYPE, F1=0.898) | SUPPORT |
+| edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203 | ANNOTATION_TRANSFER — MapMyCells local (GEO:GSE99888, SUBCLASS, F1=0.825; SUPERTYPE F1=0.812) | SUPPORT |
 
 ---
 

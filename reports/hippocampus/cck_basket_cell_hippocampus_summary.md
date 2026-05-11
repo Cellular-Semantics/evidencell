@@ -1,7 +1,5 @@
 # Cholecystokinin-positive basket cell — WMBv1 (CCN20230722) Mapping Report
-*draft · 2026-04-09 · Source: `kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
-
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+*2026-04-09 · Source: `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
 
 ---
 
@@ -33,9 +31,29 @@
 
 | Rank | WMBv1 cluster / supertype | Cells | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|
-| — | 0179 Vip Gaba_7 [CS20230722_SUPT_0179] | — | ⚪ UNCERTAIN | NT CONSISTENT; Cck/Cnr1 absent from supertype markers | Eliminated |
+| 1 | 0187 Sncg Gaba_3 [CS20230722_SUPT_0187] | 1,723 | 🟠 LOW | CGE-derived; Cck.Cxcl14.Vip AT F1=0.768, gp=0.951 (PARTIAL); Cck/Cnr1 absent from supertype markers | Best current candidate |
+| — | 0179 Vip Gaba_7 [CS20230722_SUPT_0179] | — | ⚪ UNCERTAIN | NT CONSISTENT; Cck/Cnr1 absent from supertype markers; contradicted by SUPT_0187 AT | Eliminated |
 
-Total: 1 edge · relationship type: UNCERTAIN.
+Total: 2 edges.
+
+---
+
+## 0187 Sncg Gaba_3 [CS20230722_SUPT_0187] · 🟠 LOW
+
+### Supporting evidence
+
+- **Annotation transfer (GEO:GSE99888, Cck.Cxcl14.Vip — PARTIAL).** Harris 2018 Class Cck.Cxcl14.Vip (CCK+/Cxcl14+/Vip+ CA1 inhibitory cluster, n=72 cells in the 3,663-cell dataset) maps to [CS20230722_SUPT_0187] Sncg Gaba_3 with F1=0.768 and group_purity=0.951 at SUPERTYPE level. Group_purity=0.951 means 95.1% of the Cck.Cxcl14.Vip Harris cells concentrate at a single supertype — a strong directional signal. This is the CCK-expressing Harris cluster with the strongest directional signal to any single WMBv1 supertype. Consistent with Fuzik et al. 2015 (PMID:26689544) and Saunders et al. 2024 (PMID:38840081) classifying CCK+ cells within the Sncg transcriptomic class.
+
+**Concerns and caveats:**
+
+- **Source label not morphologically confirmed.** Cck.Cxcl14.Vip is a Harris 2018 Class label (n=72 cells), not labelled by basket cell morphology or electrophysiology. The mapping reflects the transcriptomic destination of Cck+/Cxcl14+/Vip+ CA1 cells in an unbiased CA1 interneuron dataset. Whether these cells are CCK basket cells specifically (versus other Cck+ interneuron morphotypes) is not established by this AT run alone.
+- **Marker discordance at supertype.** Cck and Cnr1 (canonical CCK basket cell markers) are not listed as defining markers of SUPT_0187 in atlas metadata. This limits confidence in the mapping from atlas-metadata evidence alone; the AT evidence is the primary support.
+- **Sncg vs. Vip contradiction.** The existing UNCERTAIN edge (to Vip Gaba_7) was based on atlas metadata from a location+GABA match with Cnr1 signal. The Harris AT data redirects to the Sncg class instead — consistent with CCK interneurons being classified within the Sncg transcriptomic clade in recent atlas analyses. The SUPT_0179 edge should be considered superseded by this AT-supported result, but the Vip Gaba_7 edge is retained pending expert review.
+
+**What would upgrade confidence:**
+
+- Patch-seq or multiplexed single-cell RNA-seq of morphologically confirmed CCK basket cells in CA1, with explicit mapping onto WMBv1. Target: F1 ≥ 0.70 at CLUSTER level within SUPT_0187 or a child cluster. Would distinguish basket cell morphotype from other Cck+ CGE interneuron types.
+- Cluster-level AT using a Cck-Cre or Cnr1-Cre CA1 dataset to resolve which SUPT_0187 child clusters carry CCK basket cell identity.
 
 ---
 
@@ -109,7 +127,8 @@ This candidate was identified by location overlap in CA1 and GABA neurotransmitt
 
 | Edge ID | Evidence type | Supports | Notes |
 |---|---|---|---|
-| edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179 | ATLAS_METADATA | PARTIAL | NT consistent; Cck/Cnr1/Vglut3 all absent from supertype markers; Vip subclass identity unexpected |
+| edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187 | ANNOTATION_TRANSFER (GEO:GSE99888, Cck.Cxcl14.Vip, SUPERTYPE F1=0.768, gp=0.951) | PARTIAL | Strong directional signal; source label not morphologically confirmed |
+| edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179 | ATLAS_METADATA | PARTIAL | NT consistent; Cck/Cnr1/Vglut3 all absent from supertype markers; Vip subclass identity unexpected; superseded by SUPT_0187 AT |
 
 ---
 

@@ -557,6 +557,7 @@ edges:
       f1_score: 0.528
       n_cells_mapped: 445
       median_bootstrap: 0.94
+      taxonomy_rank: 3
     - taxonomy_level: SUBCLASS
       best_target_name: 038 DG-PIR Ex IMN
       best_target_accession: CS20230722_SUBC_038
@@ -565,6 +566,7 @@ edges:
       f1_score: 0.798
       n_cells_mapped: 664
       median_bootstrap: 1.0
+      taxonomy_rank: 2
     - taxonomy_level: SUPERTYPE
       best_target_name: 0141 DG-PIR Ex IMN_2
       best_target_accession: CS20230722_SUPT_0141
@@ -573,6 +575,7 @@ edges:
       f1_score: 0.805
       n_cells_mapped: 670
       median_bootstrap: 1.0
+      taxonomy_rank: 1
     - taxonomy_level: CLUSTER
       best_target_name: 0512 DG-PIR Ex IMN_2
       best_target_accession: CS20230722_CLUS_0512
@@ -581,8 +584,10 @@ edges:
       f1_score: 0.609
       n_cells_mapped: 103
       median_bootstrap: 0.96
+      taxonomy_rank: 0
     best_f1_score: 0.805
     best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   - evidence_type: ANNOTATION_TRANSFER
     supports: PARTIAL
     explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_1 cells (n=97; GSE95315) to WMBv1. Best cluster is 
@@ -605,6 +610,7 @@ edges:
       f1_score: 0.101
       n_cells_mapped: 66
       median_bootstrap: 0.92
+      taxonomy_rank: 3
     - taxonomy_level: SUBCLASS
       best_target_name: 038 DG-PIR Ex IMN
       best_target_accession: CS20230722_SUBC_038
@@ -613,6 +619,7 @@ edges:
       f1_score: 0.184
       n_cells_mapped: 93
       median_bootstrap: 1.0
+      taxonomy_rank: 2
     - taxonomy_level: SUPERTYPE
       best_target_name: 0141 DG-PIR Ex IMN_2
       best_target_accession: CS20230722_SUPT_0141
@@ -621,6 +628,7 @@ edges:
       f1_score: 0.179
       n_cells_mapped: 93
       median_bootstrap: 1.0
+      taxonomy_rank: 1
     - taxonomy_level: CLUSTER
       best_target_name: 0513 DG-PIR Ex IMN_2
       best_target_accession: CS20230722_CLUS_0513
@@ -629,8 +637,10 @@ edges:
       f1_score: 0.788
       n_cells_mapped: 39
       median_bootstrap: 1.0
+      taxonomy_rank: 0
     best_f1_score: 0.788
     best_mapping_level: CLUSTER
+    best_mapping_rank: 0
   caveats:
   - &id001
     caveat_type: MARKER_NOT_SPECIFIC
@@ -756,6 +766,7 @@ edges:
       f1_score: 0.496
       n_cells_mapped: 411
       median_bootstrap: 0.89
+      taxonomy_rank: 3
     - taxonomy_level: SUBCLASS
       best_target_name: 037 DG Glut
       best_target_accession: CS20230722_SUBC_037
@@ -764,6 +775,7 @@ edges:
       f1_score: 0.566
       n_cells_mapped: 889
       median_bootstrap: 1.0
+      taxonomy_rank: 2
     - taxonomy_level: SUPERTYPE
       best_target_name: 0137 DG Glut_2
       best_target_accession: CS20230722_SUPT_0137
@@ -772,6 +784,7 @@ edges:
       f1_score: 0.573
       n_cells_mapped: 728
       median_bootstrap: 0.98
+      taxonomy_rank: 1
     - taxonomy_level: CLUSTER
       best_target_name: 0507 DG Glut_2
       best_target_accession: CS20230722_CLUS_0507
@@ -780,8 +793,10 @@ edges:
       f1_score: 0.51
       n_cells_mapped: 66
       median_bootstrap: 0.915
+      taxonomy_rank: 0
     best_f1_score: 0.566
     best_mapping_level: SUBCLASS
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -868,8 +883,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 1051
-    best_f1_score: 0.0
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.566
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.983
+      target_purity: 0.332
+      f1_score: 0.496
+      n_cells_mapped: 411
+      median_bootstrap: 0.89
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.846
+      target_purity: 0.426
+      f1_score: 0.566
+      n_cells_mapped: 889
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.469
+      f1_score: 0.573
+      n_cells_mapped: 728
+      median_bootstrap: 0.98
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0507 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0507
+      group_purity: 0.357
+      target_purity: 0.892
+      f1_score: 0.51
+      n_cells_mapped: 66
+      median_bootstrap: 0.915
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -967,6 +1020,7 @@ edges:
       f1_score: 0.387
       n_cells_mapped: 303
       median_bootstrap: 0.88
+      taxonomy_rank: 3
     - taxonomy_level: SUBCLASS
       best_target_name: 037 DG Glut
       best_target_accession: CS20230722_SUBC_037
@@ -975,6 +1029,7 @@ edges:
       f1_score: 0.711
       n_cells_mapped: 1166
       median_bootstrap: 1.0
+      taxonomy_rank: 2
     - taxonomy_level: SUPERTYPE
       best_target_name: 0137 DG Glut_2
       best_target_accession: CS20230722_SUPT_0137
@@ -983,6 +1038,7 @@ edges:
       f1_score: 0.611
       n_cells_mapped: 812
       median_bootstrap: 0.97
+      taxonomy_rank: 1
     - taxonomy_level: CLUSTER
       best_target_name: 0506 DG Glut_2
       best_target_accession: CS20230722_CLUS_0506
@@ -991,8 +1047,10 @@ edges:
       f1_score: 0.665
       n_cells_mapped: 110
       median_bootstrap: 0.95
+      taxonomy_rank: 0
     best_f1_score: 0.711
     best_mapping_level: SUBCLASS
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1077,8 +1135,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 132
-    best_f1_score: 0.0
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1163,8 +1259,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 132
-    best_f1_score: 0.068
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1250,8 +1384,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 132
-    best_f1_score: 0.0
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1340,8 +1512,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 132
-    best_f1_score: 0.0
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1426,8 +1636,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 132
-    best_f1_score: 0.0
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1513,8 +1761,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 132
-    best_f1_score: 0.0
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1603,8 +1889,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 132
-    best_f1_score: 0.0
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1689,8 +2013,46 @@ edges:
     method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
     bootstrap_threshold: 0.8
     n_cells_after_filter: 132
-    best_f1_score: 0.167
-    best_mapping_level: CLUSTER
+    best_f1_score: 0.711
+    best_mapping_level: SUBCLASS
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      best_target_name: 04 DG-IMN Glut
+      best_target_accession: CS20230722_CLAS_04
+      group_purity: 0.924
+      target_purity: 0.245
+      f1_score: 0.387
+      n_cells_mapped: 303
+      median_bootstrap: 0.88
+      taxonomy_rank: 3
+    - taxonomy_level: SUBCLASS
+      best_target_name: 037 DG Glut
+      best_target_accession: CS20230722_SUBC_037
+      group_purity: 0.98
+      target_purity: 0.558
+      f1_score: 0.711
+      n_cells_mapped: 1166
+      median_bootstrap: 1.0
+      taxonomy_rank: 2
+    - taxonomy_level: SUPERTYPE
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.735
+      target_purity: 0.524
+      f1_score: 0.611
+      n_cells_mapped: 812
+      median_bootstrap: 0.97
+      taxonomy_rank: 1
+    - taxonomy_level: CLUSTER
+      best_target_name: 0506 DG Glut_2
+      best_target_accession: CS20230722_CLUS_0506
+      group_purity: 0.833
+      target_purity: 0.553
+      f1_score: 0.665
+      n_cells_mapped: 110
+      median_bootstrap: 0.95
+      taxonomy_rank: 0
+    best_mapping_rank: 2
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1801,6 +2163,7 @@ edges:
       f1_score: 0.488
       n_cells_mapped: 10
       median_bootstrap: 0.9
+      taxonomy_rank: 3
     - taxonomy_level: SUBCLASS
       best_target_name: 045 OB-STR-CTX Inh IMN
       best_target_accession: CS20230722_SUBC_045
@@ -1809,6 +2172,7 @@ edges:
       f1_score: 0.276
       n_cells_mapped: 30
       median_bootstrap: 1.0
+      taxonomy_rank: 2
     - taxonomy_level: SUPERTYPE
       best_target_name: 0166 OB-STR-CTX Inh IMN_1
       best_target_accession: CS20230722_SUPT_0166
@@ -1817,6 +2181,7 @@ edges:
       f1_score: 0.508
       n_cells_mapped: 30
       median_bootstrap: 1.0
+      taxonomy_rank: 1
     - taxonomy_level: CLUSTER
       best_target_name: 0513 DG-PIR Ex IMN_2
       best_target_accession: CS20230722_CLUS_0513
@@ -1825,8 +2190,10 @@ edges:
       f1_score: 0.225
       n_cells_mapped: 8
       median_bootstrap: 1.0
+      taxonomy_rank: 0
     best_f1_score: 0.225
     best_mapping_level: CLUSTER
+    best_mapping_rank: 0
   caveats:
   - *id001
   - caveat_type: OTHER
