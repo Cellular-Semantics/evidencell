@@ -863,6 +863,27 @@ discussion.
 
 ## 7. Open questions
 
+**UBERON↔MBA xref coverage as an upstream concern.** The Phase 1
+audit (`research/validation/methods_audits/at_blind`) surfaced the
+case where UBERON:0005371 has no MBA xref, requiring a label-based
+fallback in `_resolve_mba_by_name`. Maintaining a per-region synonym
+table indefinitely is not sustainable. Two upstream options worth
+considering rather than continuing to grow the fallback table:
+
+  1. *Agentic mapping at taxonomy-ingest time.* When a taxonomy
+     ingest encounters an MBA term whose UBERON xref is missing, run
+     an agentic step combining OLS lookup with context + latent
+     knowledge to propose a UBERON ID, write it back to the taxonomy
+     reference store flagged as agentic for curator review. Inside
+     evidencell scope; lives in the ingest workflow.
+  2. *Agentic extension of the MBA itself.* Build (outside
+     evidencell) an agentic pipeline that proposes MBA → UBERON xref
+     additions and contributes them upstream to the MBA release or
+     maintains them as an importable supplement. Higher leverage;
+     benefits any consumer of MBA, not just evidencell.
+
+  Tracked as [issue #50](https://github.com/Cellular-Semantics/evidencell/issues/50).
+
 **Metadata vs precomputed disagreement.** When a gene is flagged in the
 taxonomy metadata marker columns but `precomputed_expression` shows it
 absent (or vice versa), default behaviour: record both, flag as a

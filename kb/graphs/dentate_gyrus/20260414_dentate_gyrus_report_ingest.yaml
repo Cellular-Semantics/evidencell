@@ -581,8 +581,8 @@ edges:
       f1_score: 0.609
       n_cells_mapped: 103
       median_bootstrap: 0.96
-    best_f1_score: 0.805
-    best_mapping_level: SUPERTYPE
+    best_f1_score:
+    best_mapping_level: "CLUSTER"
   - evidence_type: ANNOTATION_TRANSFER
     supports: PARTIAL
     explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_1 cells (n=97; GSE95315) to WMBv1. Best cluster is 
@@ -780,8 +780,8 @@ edges:
       f1_score: 0.51
       n_cells_mapped: 66
       median_bootstrap: 0.915
-    best_f1_score: 0.566
-    best_mapping_level: SUBCLASS
+    best_f1_score:
+    best_mapping_level: "CLUSTER"
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -991,8 +991,8 @@ edges:
       f1_score: 0.665
       n_cells_mapped: 110
       median_bootstrap: 0.95
-    best_f1_score: 0.711
-    best_mapping_level: SUBCLASS
+    best_f1_score:
+    best_mapping_level: "CLUSTER"
   caveats:
   - *id001
   - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS

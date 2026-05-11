@@ -184,6 +184,23 @@ evidence the marker pipeline is doing real work there.
   preflight `uberon_resolution_coverage` check, but the operator
   needs to either extend the synonym table or accept the skip
   explicitly via `--force-preflight`.
+
+  Two upstream options worth considering rather than maintaining the
+  synonym table indefinitely in `_resolve_mba_by_name`:
+
+  1. **Agentic mapping at taxonomy-ingest time.** When a taxonomy
+     ingest encounters an MBA term whose UBERON xref is missing,
+     run an agentic step that combines OLS lookup with context +
+     latent knowledge to propose a UBERON ID, write it back to the
+     taxonomy reference store flagged as agentic so a curator can
+     review. Scope: inside evidencell, in the ingest workflow.
+  2. **Agentic extension of the MBA itself.** Build (probably
+     outside evidencell) an agentic pipeline that proposes MBA →
+     UBERON xref additions, contributes them upstream to the MBA
+     release or maintains them as an importable supplement. Higher
+     leverage; benefits any consumer of MBA, not just evidencell.
+
+  Tracked as [issue #50](https://github.com/Cellular-Semantics/evidencell/issues/50).
 - **Single-target lookup.** The audit asks "is this exact accession
   in top-K?" If the marker pipeline ranks a *sibling* cluster of the
   AT target highly, we currently call that a miss even when the

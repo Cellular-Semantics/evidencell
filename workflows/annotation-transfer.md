@@ -79,6 +79,25 @@ Step 3  Parse results (PENDING — not yet automated)
 Step 4  Append to KB
         AnnotationTransferEvidence appended to relevant MappingEdge.
 
+        F1 attribution rule (enforced by pre-edit hook
+        validate_mapping_hook.py → check_at_f1_attribution):
+
+          best_f1_score MUST refer to the (source_label, target,
+          target_level) triple matching the edge — i.e.
+          best_mapping_level MUST agree with the target accession's
+          level (CLUSTER for CS20230722_CLUS_*, SUPERTYPE for
+          CS20230722_SUPT_*, etc.).
+
+          If MapMyCells gives a meaningful F1 only at a coarser level
+          than the edge target, attach the AT evidence to an edge whose
+          target IS at that level. Don't put the parent's F1 on a child
+          edge — the audit treats best_f1_score at face value, and the
+          attribution drives downstream confidence-from-F1 logic.
+
+          Existing misattributions in the corpus were corrected by
+          `just validate-at-f1 --apply` (audit log at
+          research/validation/methods_audits/at_f1_attribution/log.json).
+
 Step 5  Confidence re-assessment
         Re-evaluate MappingConfidence per decision guide given new experimental
         evidence. Flag edges where confidence may upgrade.
