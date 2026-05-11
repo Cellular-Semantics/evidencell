@@ -86,6 +86,22 @@ validate-terms:
 validate-terms-file FILE:
     uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{FILE}}
 
+# ── Methods audits / validation ────────────────────────────────────────────────
+# Runnable audits live in `src/evidencell/validation/` with results landing under
+# `research/validation/methods_audits/<audit_id>/runs/`. Workflow docs in
+# `workflows/validation/<audit_id>.md` describe when and how to run each audit.
+# See `research/validation/methods_audits/README.md` for the audit index.
+
+# AT-blind audit: would marker+region+NT alone surface candidates that
+# annotation transfer has identified? Ground truth from kb/graphs/ AT-evidenced
+# edges. Used to decide region-expansion default + measure marker scoring
+# coverage versus the AT signal.
+# Usage: just validate-at-blind
+#        just validate-at-blind --top-k 20 --f1-floor 0.3
+[group('validation')]
+validate-at-blind *ARGS:
+    uv run python -m evidencell.validation at-blind {{ARGS}}
+
 # ── QC (full suite) ────────────────────────────────────────────────────────────
 
 # QC gate for all KB graph files — must pass before committing

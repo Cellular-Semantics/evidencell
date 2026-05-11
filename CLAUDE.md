@@ -185,6 +185,29 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | `cl-term-request` | `workflows/cl-term-request.md` | Reporting | **Ready** | Draft a CL new term request for a node with BROAD/RELATED/null `cl_mapping`. Reads facts via `just gen-facts`, applies CL definition + relations guidelines (`docs/LLM_prompt_guidelines_for_CL_definitions.md`, `docs/relations_guide.md`), emits issue-ready markdown. Posting is gated: `just preview-cl-ntr` then `just post-cl-ntr`. |
 | `annotation-transfer` | `workflows/annotation-transfer.md` | Evidence transfer | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
 
+### Validation / methods audits
+
+Method-validation audits compare pipeline behaviour against oracle
+ground truth (curator-supplied AT evidence, prior published mappings,
+etc.). Each audit is a runnable driver with preflight invariants,
+raw-evidence preservation, and reproducibility metadata.
+
+| Layer | Location |
+|---|---|
+| Workflow docs | `workflows/validation/<audit_id>.md` (and `workflows/validation/README.md` index) |
+| Driver code | `src/evidencell/validation/` |
+| Run artifacts + findings | `research/validation/methods_audits/<audit_id>/` |
+| Recipes | `just validate-<audit_id>` |
+
+Current audits:
+
+| Audit | Purpose |
+|---|---|
+| [`at_blind`](workflows/validation/at_blind.md) | Measure marker+region+NT coverage against curated AT evidence; informed region-expansion default and cohort-relative scoring sanity. |
+
+When adding a new audit follow the checklist in
+[`research/validation/methods_audits/README.md`](research/validation/methods_audits/README.md).
+
 ---
 
 ## Anti-hallucination infrastructure
