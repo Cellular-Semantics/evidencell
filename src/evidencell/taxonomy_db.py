@@ -1945,6 +1945,18 @@ class TaxonomyDB:
                 )
         return [r[0] for r in rows]
 
+    def get_anat_parents(self, anat_id: str) -> list[str]:
+        """Return immediate-parent MBA IDs of ``anat_id`` from anat_hierarchy."""
+        with self._connect() as con:
+            try:
+                rows = con.execute(
+                    "SELECT parent_id FROM anat_hierarchy WHERE child_id = ?",
+                    (anat_id,),
+                ).fetchall()
+            except sqlite3.OperationalError:
+                return []
+        return [r[0] for r in rows]
+
     _ALL_MARKER_COLS: tuple[str, ...] = (
         "defining_markers_scoped", "defining_markers", "tf_markers", "merfish_markers"
     )
@@ -1988,6 +2000,7 @@ class TaxonomyDB:
         expression_data: dict[str, dict[str, float]] | None = None,
         at_bypass: set[str] | None = None,
         at_hits: dict[str, dict] | None = None,
+        region_expand_levels: int = 1,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -2037,11 +2050,43 @@ class TaxonomyDB:
 
         _marker_cols = tuple(marker_columns) if marker_columns else self._ALL_MARKER_COLS
 
-        # Resolve anat_root_ids to full descendant sets via closure
+        # Resolve anat_root_ids to full descendant sets via closure.
+        # `effective_anat` is the strict / exact query closure used for the
+        # exact-match bonus. `expanded_anat` widens it by walking up the MBA
+        # hierarchy `region_expand_levels` times and including those parents'
+        # descendants — rescues sibling-sublayer hits (e.g. CA1 pyramidal
+        # ↔ CA1 stratum oriens, both under MBA:382 Field CA1) without
+        # requiring the curator to enumerate every sublayer manually. The
+        # filter uses `expanded_anat`; the +1 region-exact bonus uses
+        # `effective_anat`.
         effective_anat: set[str] = set(anat_ids or [])
         if anat_root_ids:
             for root in anat_root_ids:
                 effective_anat.update(self.get_descendants(root, include_self=True))
+
+        expanded_anat: set[str] = set(effective_anat)
+        if region_expand_levels > 0 and (anat_ids or anat_root_ids):
+            seed_ids: list[str] = list(anat_ids or []) + list(anat_root_ids or [])
+            parents: set[str] = set()
+            frontier = list(seed_ids)
+            for _ in range(region_expand_levels):
+                next_frontier: list[str] = []
+                for nid in frontier:
+                    for p in self.get_anat_parents(nid):
+                        if p not in parents:
+                            parents.add(p)
+                            next_frontier.append(p)
+                frontier = next_frontier
+                if not frontier:
+                    break
+            for p in parents:
+                try:
+                    expanded_anat.update(
+                        self.get_descendants(p, include_self=True)
+                    )
+                except RuntimeError:
+                    # anat_closure not built — skip expansion silently
+                    break
 
         # Determine whether we're at leaf rank (rank 0) for NT propagation
         is_leaf = rank == 0 if rank is not None else (level == "cluster")
@@ -2161,6 +2206,7 @@ class TaxonomyDB:
 
             node_anat_rows = self._get_anat(node_acc) if effective_anat else []
             region_fraction: float | None = None
+            region_exact_match: bool = False
             if effective_anat:
                 node_anat_ids = {a["anat_id"] for a in node_anat_rows}
                 if node_anat_rows:
@@ -2168,14 +2214,21 @@ class TaxonomyDB:
                         (r.get("cell_count") or 0) for r in node_anat_rows
                     )
                     if total_cells > 0:
+                        # region_fraction is calculated against the EXACT
+                        # closure so it reflects how on-target the candidate
+                        # really is, regardless of expansion.
                         matched_cells = sum(
                             (r.get("cell_count") or 0)
                             for r in node_anat_rows
                             if r["anat_id"] in effective_anat
                         )
                         region_fraction = matched_cells / total_cells
+                region_exact_match = bool(node_anat_ids & effective_anat)
+                # Filter uses expanded closure so sibling-sublayer hits
+                # survive. Drop only when neither the exact closure NOR
+                # the expansion catches the target's anat.
                 if not bypassed and node_anat_rows and not (
-                    node_anat_ids & effective_anat
+                    node_anat_ids & expanded_anat
                 ):
                     continue
 
@@ -2208,6 +2261,8 @@ class TaxonomyDB:
             nd["_bypassed"] = bypassed
             if region_fraction is not None:
                 nd["_region_fraction"] = round(region_fraction, 3)
+            if effective_anat:
+                nd["_region_exact_match"] = region_exact_match
             survivors.append(nd)
 
         # ──────────────────────────────────────────────────────────────────
@@ -2352,6 +2407,15 @@ class TaxonomyDB:
                         "target_name": hit.get("target_name"),
                         "score": at_delta,
                     }
+
+            # Region exact-match bonus (Phase 1 follow-up E): when the
+            # candidate has cells in the strict queried-region closure (not
+            # only the expanded closure used for filtering), add +1. This
+            # preserves discrimination between candidates annotated to the
+            # precise queried sublayer and those rescued only by expansion
+            # to the parent region.
+            if nd.pop("_region_exact_match", False):
+                score += 1
 
             criteria_applied: list[str] = []
             for name, direction, entry_def in _active_criteria:
