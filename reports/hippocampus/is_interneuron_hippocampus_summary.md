@@ -1,7 +1,5 @@
 # Interneuron-specific (IS) interneuron — WMBv1 (CCN20230722) Mapping Report
-*draft · 2026-04-09 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
-
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+*2026-04-09 · Source: `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
 
 ---
 
@@ -33,7 +31,8 @@
 
 ### Supporting evidence
 
-- **VIP-family identity confirmed at SUBCLASS level (annotation transfer).** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) SSv4 Vip subclass (n=476 HIP cells) onto WMBv1 mapped 463/476 cells to subclass 046 Vip Gaba (F1=0.969, group_purity=0.985, target_purity=0.953), confirming the Vip SSv4 population sits squarely within the WMBv1 Vip Gaba clade. At SUPERTYPE level, 0179 Vip Gaba_7 [CS20230722_SUPT_0179] received 96/476 cells (F1=0.379, target_purity=0.970), ranking second to 0177 Vip Gaba_5 (101 cells, F1=0.397). Vip cells distribute broadly across 10+ Vip supertypes, consistent with IS population heterogeneity. PARTIAL: the SSv4 'Vip' label cannot discriminate IS cells from VIP basket or other VIP interneuron subtypes; IS-specific resolution requires a dataset with morphologically identified VIP-IN labels.
+- **VIP-family identity confirmed at SUBCLASS level (annotation transfer, GEO:GSE185862).** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) SSv4 Vip subclass (n=476 HIP cells) onto WMBv1 mapped 463/476 cells to subclass 046 Vip Gaba (F1=0.969, group_purity=0.985, target_purity=0.953), confirming the Vip SSv4 population sits squarely within the WMBv1 Vip Gaba clade. At SUPERTYPE level, 0179 Vip Gaba_7 [CS20230722_SUPT_0179] received 96/476 cells (F1=0.379, target_purity=0.970), ranking second to 0177 Vip Gaba_5 (101 cells, F1=0.397). Vip cells distribute broadly across 10+ Vip supertypes, consistent with IS population heterogeneity. PARTIAL: the SSv4 'Vip' label cannot discriminate IS cells from VIP basket or other VIP interneuron subtypes; IS-specific resolution requires a dataset with morphologically identified VIP-IN labels.
+- **Annotation transfer (GEO:GSE99888) — partial corroboration from Harris 2018.** Harris 2018 Class Calb2.Vip.Igfbp4 (Calb2+/Vip+/Igfbp4+ CA1 interneurons, n=98 cells in the 3,663-cell dataset) maps entirely to Vip Gaba subclass (group_purity=1.0, 98/98 cells) and 57.8% to [CS20230722_SUPT_0179] Vip Gaba_7 (F1=0.612, group_purity=0.578, 26 cells). The complete recall at SUBCLASS (100%) confirms Vip family assignment. The modest SUPERTYPE F1 (0.612) and dispersal across Vip supertypes reflects IS subtype heterogeneity — IS-1 is VIP−, while IS-2 and IS-3 are VIP+. The Calb2.Vip.Igfbp4 Harris cluster is not specifically IS-labelled; this evidence provides additional PARTIAL corroboration that Calb2+/Vip+ cells from an unbiased CA1 dataset preferentially map to SUPT_0179.
 - **Multi-laminar CA1 anatomy is consistent.** Atlas metadata records SUPT_0179 [CS20230722_SUPT_0179] cells in CA1 stratum oriens (24 cells; CONSISTENT with location_stratum_oriens) and CA1 stratum radiatum (26 cells; CONSISTENT with location_stratum_radiatum). Additional CA3 representation (CA3 SO 25, CA3 SR 17) and CA1/CA3 pyramidal layer cells (11 and 23 respectively) are present. The multi-laminar CA1 distribution matches the classical IS soma locations cited by Tyan et al. 2014 [1].
 - **Both defining markers confirmed by precomputed stats.** Precomputed statistics for SUPT_0179 [CS20230722_SUPT_0179] show Vip mean=6.82 (DEFINING marker, CONSISTENT) and Calb2 mean=6.78 (CONSISTENT). NT type: GABAergic (CONSISTENT with GABA atlas). Vip neuropeptide confirmed (precomputed mean=6.82, CONSISTENT).
 - Tyan et al. 2014 [1] characterised IS cells using direct ultrastructural evidence in CA1, confirming selective interneuron targeting:
@@ -106,6 +105,7 @@
 | edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179 | ATLAS_METADATA — Vip Gaba_7 supertype marker + anatomy review | PARTIAL |
 | edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179 | ATLAS_METADATA — precomputed stats cross-check (Calb2=6.78, Vip=6.82) | SUPPORT |
 | edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179 | ANNOTATION_TRANSFER — MapMyCells · GEO:GSE185862 · Vip subclass n=476 HIP cells | PARTIAL |
+| edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179 | ANNOTATION_TRANSFER — MapMyCells local · GEO:GSE99888 · Calb2.Vip.Igfbp4 · SUPT_0179 F1=0.612 (SUPERTYPE) | PARTIAL |
 
 ---
 

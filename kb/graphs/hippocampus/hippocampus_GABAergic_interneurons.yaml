@@ -24,6 +24,20 @@ annotation_transfer_datasets:
   - axo_axonic_cell_hippocampus
   - bistratified_cell_hippocampus
   status: complete
+- accession: GEO:GSE99888
+  publication: PMID:29912866
+  description: Harris et al. 2018 — 3663 mouse CA1 inhibitory neurons (STRT-seq), 49 clusters.
+    Two label sets scored against WMBv1 MapMyCells output. (1) Harris published Class labels
+    (50 subtypes); (2) Chamberland 2024 subfamily labels (Chrna2, Sst_Tac1, Sst_Nos1, Ndnf)
+    derived from cluster-mean gene-pair rules (dropout-robust). AT run
+    at_run_20260506_harris_chamberland_mmc_wmbv1.
+  cell_types:
+  - cck_basket_cell_hippocampus
+  - ivy_cell_hippocampus
+  - olm_cell_ca1
+  - bistratified_cell_hippocampus
+  - is_interneuron_hippocampus
+  status: complete
 nodes:
 - id: pv_basket_cell_hippocampus
   name: Parvalbumin-positive basket cell
@@ -1958,6 +1972,11 @@ nodes:
     - symbol: Vip
       ensembl_id: ENSMUSG00000019772
       mean_expression: 0.33
+- id: CS20230722_CLUS_0737
+  name: 0737 Pvalb Gaba_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_0737
 - id: CS20230722_SUPT_0179
   name: 0179 Vip Gaba_7
   definition_basis: ATLAS_TRANSCRIPTOMIC
@@ -2037,6 +2056,11 @@ nodes:
       expression: '{"Calb2": 6.9, "Cck": 1.59, "Chrna2": 2.51, "Cnr1": 11.12, "Gad1": 9.44, "Gad2": 9.93, "Id2": 3.71, "Lamp5":
         7.87, "Chrm2": 0.51, "Nos1": 9.01, "Npy": 1.52, "Pnoc": 2.98, "Pvalb": 0.05, "Reln": 4.07, "Sst": 0.7, "Tac1": 0.15,
         "Slc17a8": 1.13, "Vip": 6.45}'
+- id: CS20230722_SUPT_0187
+  name: 0187 Sncg Gaba_3
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0187
 - id: CS20230722_SUPT_0193
   name: 0193 RHP-COA Ndnf Gaba_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
@@ -2947,6 +2971,70 @@ edges:
       metadata. The candidate is based on location match and CGE origin inference only.
 
       '
+- id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187
+  type_a: cck_basket_cell_hippocampus
+  type_b: CS20230722_SUPT_0187
+  relationship: PARTIAL_OVERLAP
+  confidence: LOW
+  evidence:
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization,
+      bootstrap_iteration=100)
+    source_dataset_accession: GEO:GSE99888
+    source_cluster_label: Cck.Cxcl14.Vip
+    n_cells_total: 3663
+    best_f1_score: 0.768
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
+    metrics_by_level:
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 047 Sncg Gaba
+      best_target_accession: CS20230722_SUBC_047
+      group_purity: 0.970
+      target_purity: 0.115
+      f1_score: 0.206
+      n_cells_mapped: 64
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0187 Sncg Gaba_3
+      best_target_accession: CS20230722_SUPT_0187
+      group_purity: 0.951
+      target_purity: 0.644
+      f1_score: 0.768
+      n_cells_mapped: 58
+    explanation: Harris 2018 Class Cck.Cxcl14.Vip (CCK+/Cxcl14+/Vip+ CA1 inhibitory cluster,
+      n=72 cells) maps to SUPT_0187 Sncg Gaba_3 with F1=0.768 and group_purity=0.951. CCK basket
+      cells are CGE-derived; the Sncg subclass is CGE-derived and consistent with CCK interneuron
+      identity. Harris AT provides stronger transcriptomic evidence for SUPT_0187 than the existing
+      SUPT_0179 (Vip Gaba_7) edge, which has no AT support and was based on atlas metadata only.
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: subclass_origin
+    node_a_value: CGE-derived (CCK+, Cnr1+)
+    node_b_value: Sncg subclass (CGE-derived)
+    alignment: CONSISTENT
+    notes: Both CCK basket cells and the Sncg subclass are CGE-derived GABAergic interneurons.
+  caveats:
+  - caveat_type: OTHER
+    description: 'Cck.Cxcl14.Vip is a Harris 2018 Class label, not morphologically confirmed as
+      CCK basket cells. This is the Harris CCK-expressing cluster with the strongest Sncg mapping
+      signal. Requires validation with morphologically identified CCK basket cells (e.g., patch-seq
+      of Cnr1-Cre+ cells).
+
+      '
+  - caveat_type: OTHER
+    description: 'The existing edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179 (Vip
+      Gaba_7) was based on atlas metadata only (UNCERTAIN confidence, no AT evidence). Harris AT
+      data does not support SUPT_0179 for CCK basket cells. Both edges retained pending expert
+      review; SUPT_0187 is the AT-supported transcriptomic candidate.
+
+      '
 - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0204
   type_a: axo_axonic_cell_hippocampus
   type_b: CS20230722_SUPT_0204
@@ -3478,6 +3566,49 @@ edges:
       hit: F1=0.800, group_purity=0.941, target_purity=0.696. BC cells (basket) preferentially map to sibling CLUS_0739 (F1=0.827)
       — BC/BIC cluster separation within SUPT_0206 distinguishes basket from bistratified cells at cluster level. Strongest
       AT signal for bistratified cell identity in WMBv1.'
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization,
+      bootstrap_iteration=100)
+    source_dataset_accession: GEO:GSE99888
+    source_cluster_label: Sst_Tac1 (Chamberland per-cluster subfamily label)
+    n_cells_total: 3663
+    best_f1_score: 0.578
+    best_mapping_level: SUBCLASS
+    best_mapping_rank: 2
+    metrics_by_level:
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 052 Pvalb Gaba
+      best_target_accession: CS20230722_SUBC_052
+      group_purity: 0.783
+      target_purity: 0.458
+      f1_score: 0.578
+      n_cells_mapped: 126
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0206 Pvalb Gaba_2
+      best_target_accession: CS20230722_SUPT_0206
+      group_purity: 0.437
+      target_purity: 0.802
+      f1_score: 0.566
+      n_cells_mapped: 69
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0737 Pvalb Gaba_2
+      best_target_accession: CS20230722_CLUS_0737
+      group_purity: 0.310
+      target_purity: 0.939
+      f1_score: 0.467
+      n_cells_mapped: 31
+    explanation: Harris 2018 cells labelled Sst_Tac1 by Chamberland per-cluster rules (bistratified
+      proxy, n=168 total) map to Pvalb Gaba subclass (F1=0.578, recall=0.783) and specifically to
+      CLUS_0737 Pvalb Gaba_2 (target_purity=0.939 at cluster level). High target_purity confirms
+      CLUS_0737 as the specific landing site within the Pvalb tree. Consistent with Chamberland 2024
+      (PMID:38640347) Fig 6 Sst-Pvalb transcriptomic continuum for bistratified cells. PARTIAL
+      — Sst_Tac1 label is in-silico derived from Harris cluster-mean expression, not morphologically
+      confirmed. See at_run_20260506_harris_chamberland_mmc_wmbv1 README Caveats.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3572,6 +3703,63 @@ edges:
       Sst hit raises uncertainty about whether OLM cells preferentially occupy SUPT_0216 or SUPT_0219. Yao 2021 SSv4 ''Sst''
       subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens,
       and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.'
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization,
+      bootstrap_iteration=100)
+    source_dataset_accession: GEO:GSE99888
+    source_cluster_label: Sst.Pnoc.Calb1.Igfbp5
+    n_cells_total: 3663
+    best_f1_score: 0.514
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
+    metrics_by_level:
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0216 Sst Gaba_3
+      best_target_accession: CS20230722_SUPT_0216
+      group_purity: 0.965
+      target_purity: 0.350
+      f1_score: 0.514
+      n_cells_mapped: 222
+    explanation: Harris 2018 Class Sst.Pnoc.Calb1.Igfbp5 (SST+/Pnoc+/Calb1+/Igfbp5+ OLM-type
+      cluster, n=254 total) maps with group_purity=0.965 to SUPT_0216 Sst Gaba_3. High recall
+      confirms this Harris cluster concentrates in Sst Gaba_3. Low target_purity reflects that
+      SUPT_0216 contains multiple Sst types. Independent corroboration of GSE185862 OLM evidence.
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization,
+      bootstrap_iteration=100)
+    source_dataset_accession: GEO:GSE99888
+    source_cluster_label: Chrna2 (Chamberland per-cluster subfamily label)
+    n_cells_total: 3663
+    best_f1_score: 0.649
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    metrics_by_level:
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0216 Sst Gaba_3
+      best_target_accession: CS20230722_SUPT_0216
+      group_purity: 0.947
+      target_purity: 0.199
+      f1_score: 0.329
+      n_cells_mapped: 126
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0771 Sst Gaba_3
+      best_target_accession: CS20230722_CLUS_0771
+      group_purity: 0.813
+      target_purity: 0.540
+      f1_score: 0.649
+      n_cells_mapped: 74
+    explanation: Harris 2018 cells labelled Chrna2-OLM by Chamberland per-cluster rules (n=153
+      total, propagated from Sst.Pnoc.Calb1.Pvalb and related Harris Classes) map to CLUS_0771
+      (Sst Gaba_3 child cluster) with F1=0.649 and group_purity=0.813. Sub-resolves the Chrna2-OLM
+      subset within SUPT_0216. Per-cluster labels are dropout-robust (Harris cluster-mean gene-pair
+      rules; see at_run_20260506_harris_chamberland_mmc_wmbv1 README Methods note).
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -3993,6 +4181,39 @@ edges:
       confirming Lamp5 Lhx6 identity. Ivy cells are the predominant Lamp5+Lhx6+ hippocampal interneuron type; this 
       strong and specific hit is consistent with the ivy cell → SUPT_0203 assignment. The high target_purity (0.989) 
       confirms SUPT_0203 is almost exclusively populated by Lamp5 cells in this dataset.
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization,
+      bootstrap_iteration=100)
+    source_dataset_accession: GEO:GSE99888
+    source_cluster_label: Cacna2d1.Lhx6.Reln
+    n_cells_total: 3663
+    best_f1_score: 0.825
+    best_mapping_level: SUBCLASS
+    best_mapping_rank: 2
+    metrics_by_level:
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 050 Lamp5 Lhx6 Gaba
+      best_target_accession: CS20230722_SUBC_050
+      group_purity: 0.935
+      target_purity: 0.738
+      f1_score: 0.825
+      n_cells_mapped: 245
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0203 Lamp5 Lhx6 Gaba_1
+      best_target_accession: CS20230722_SUPT_0203
+      group_purity: 0.914
+      target_purity: 0.730
+      f1_score: 0.812
+      n_cells_mapped: 246
+    explanation: Harris 2018 (GSE99888) Class Cacna2d1.Lhx6.Reln (Lamp5+/Lhx6+/Reln+ CA1
+      inhibitory cluster) maps predominantly to Lamp5 Lhx6 Gaba subclass (F1=0.825) and
+      SUPT_0203 Lamp5 Lhx6 Gaba_1 (supertype F1=0.812). Independent second-dataset
+      corroboration of GSE185862 ivy cell evidence. Consistent with ivy cell as
+      Lhx6+/Lamp5+ MGE-derived type.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -4118,6 +4339,39 @@ edges:
       interneuron population. PARTIAL: the Vip SSv4 label cannot discriminate IS cells from VIP basket or other VIP subtypes.
       Yao 2021 SSv4 ''Vip'' subclass (n=476 HIP cells) encompasses VIP basket, IS cells, and other VIP interneuron subtypes;
       subtype resolution requires a dataset with morphologically identified VIP-IN labels.'
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: PARTIAL
+    target_atlas: WMBv1
+    method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization,
+      bootstrap_iteration=100)
+    source_dataset_accession: GEO:GSE99888
+    source_cluster_label: Calb2.Vip.Igfbp4
+    n_cells_total: 3663
+    best_f1_score: 0.612
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
+    metrics_by_level:
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 046 Vip Gaba
+      best_target_accession: CS20230722_SUBC_046
+      group_purity: 1.0
+      target_purity: 0.208
+      f1_score: 0.344
+      n_cells_mapped: 98
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0179 Vip Gaba_7
+      best_target_accession: CS20230722_SUPT_0179
+      group_purity: 0.578
+      target_purity: 0.650
+      f1_score: 0.612
+      n_cells_mapped: 26
+    explanation: Harris 2018 Class Calb2.Vip.Igfbp4 (Calb2+/Vip+/Igfbp4+ CA1 interneurons,
+      n=98 total) maps entirely to Vip Gaba subclass (100% recall) and 57.8% to SUPT_0179 Vip
+      Gaba_7 (F1=0.612). PARTIAL AT corroboration for IS-IN → SUPT_0179 edge. Dispersal across
+      Vip supertypes reflects IS subtype heterogeneity (IS-1 is VIP-, IS-2/IS-3 are VIP+).
+      Calb2.Vip.Igfbp4 is a broad Harris Vip cluster, not specifically IS-IN labelled.
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic

@@ -1,7 +1,5 @@
 # Oriens-Lacunosum Moleculare (O-LM) cell — WMBv1 (CCN20230722) Mapping Report
-*draft · 2026-04-09 · Source: `kb/draft/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
-
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+*2026-04-09 · Source: `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
 
 ---
 
@@ -70,7 +68,9 @@ Total: 1 edge · relationship type: PARTIAL_OVERLAP.
 > "we detected Pnoc in both Htr3aCre‐OLM (14/23) and SstCre‐OLM (13/23)"
 > — Winterer et al. 2019, Results 3.3 · [4] <!-- quote_key: 201041756_1d20426d -->
 
-- **Annotation transfer (PARTIAL)**: MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. At SUBCLASS level, Sst cells map strongly to Sst Gaba subclass (CS20230722_SUBC_053, F1=0.983, 265 cells). At SUPERTYPE level, the Sst population splits between 0219 Sst Gaba_6 [CS20230722_SUPT_0219] (F1=0.759, 161 cells) and 0216 Sst Gaba_3 [CS20230722_SUPT_0216] (F1=0.488, 83 cells; target_purity=1.0). The Yao 2021 SSv4 Sst subclass is a mixed population encompassing OLM, bistratified, hippocampo-septal, oriens-oriens, and other Sst types; OLM-specific resolution cannot be achieved from this source dataset alone.
+- **Annotation transfer (GEO:GSE185862 — PARTIAL)**: MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. At SUBCLASS level, Sst cells map strongly to Sst Gaba subclass (CS20230722_SUBC_053, F1=0.983, 265 cells). At SUPERTYPE level, the Sst population splits between 0219 Sst Gaba_6 [CS20230722_SUPT_0219] (F1=0.759, 161 cells) and 0216 Sst Gaba_3 [CS20230722_SUPT_0216] (F1=0.488, 83 cells; target_purity=1.0). The Yao 2021 SSv4 Sst subclass is a mixed population encompassing OLM, bistratified, hippocampo-septal, oriens-oriens, and other Sst types; OLM-specific resolution cannot be achieved from this source dataset alone.
+- **Annotation transfer (GEO:GSE99888, Sst.Pnoc.Calb1.Igfbp5 — SUPPORT)**: Harris 2018 Class Sst.Pnoc.Calb1.Igfbp5 (SST+/Pnoc+/Calb1+/Igfbp5+ CA1 inhibitory cluster, n=254 cells in the 3,663-cell dataset) maps with group_purity=0.965 to [CS20230722_SUPT_0216] Sst Gaba_3 at SUPERTYPE level (F1=0.514, 222 cells). The very high group_purity (0.965) means 96.5% of this Harris cluster concentrates in Sst Gaba_3 — a strong directional signal confirming that SST+/Pnoc+/Calb1+/Igfbp5+ OLM-type cells are enriched in this supertype. The low F1 reflects mixed target content rather than poor assignment. This is independent corroboration of the GSE185862 OLM evidence from a distinct CA1 inhibitory dataset. Sst.Pnoc.Calb1.Igfbp5 co-expression (Sst, Pnoc, Calb1, Igfbp5) is consistent with known OLM neuropeptide and marker profile.
+- **Annotation transfer (GEO:GSE99888, Chamberland Chrna2 subfamily — SUPPORT)**: Harris 2018 cells labelled Chrna2-OLM by Chamberland 2024 per-cluster rules (n=153 cells, dropout-robust cluster-mean gene-pair labelling) map to CLUS_0771 (Sst Gaba_3 child cluster) at cluster level with F1=0.649 and group_purity=0.813. This sub-resolves the Chrna2-OLM subset within [CS20230722_SUPT_0216]: 81% of Chrna2-labelled Harris cells concentrate at a single WMBv1 cluster within the Sst Gaba_3 supertype, providing the first cluster-level AT support for OLM cell identity. Per-cluster labels are dropout-robust (cluster-mean gene-pair rules; see Harris 2018 AT run README).
 
 ### Marker evidence provenance
 
@@ -96,7 +96,7 @@ Total: 1 edge · relationship type: PARTIAL_OVERLAP.
 - **Chrna2 APPROXIMATE**: Chrna2 is a defining marker for OLM cells but shows only scattered expression in the Sst Gaba_3 supertype (precomputed mean = 1.53; not a defining supertype marker). *(note: this likely reflects that OLM cells are a subpopulation within this supertype and Chrna2 expression marks those cells specifically but is diluted across the mixed supertype — a biological inference consistent with the DISTRIBUTED_ACROSS_CLUSTERS caveat.)*
 - **DISTRIBUTED_ACROSS_CLUSTERS**: Sst Gaba_3 supertype contains at least three classical hippocampal cell types: OLM cells, bistratified cells, and HS (hippocampo-septal) cells. These are not separable at supertype level.
 - **Non-hippocampal cells in supertype**: Prosubiculum (259 cells) and posterior amygdala (780 cells) are prominent in this supertype. *(note: posterior amygdala is anatomically distant from CA1 stratum oriens — stronger counter-evidence; the classical OLM type may still correspond to a subtype of this T-type but the posterior amygdala population is not the CA1 OLM population specifically.)*
-- **Annotation transfer ambiguity**: The dominant Sst supertype in the MapMyCells transfer is 0219 Sst Gaba_6 [CS20230722_SUPT_0219] (F1=0.759, 161 cells), not 0216 Sst Gaba_3 [CS20230722_SUPT_0216] (F1=0.488, 83 cells). This raises uncertainty about whether OLM cells preferentially occupy SUPT_0216 or SUPT_0219. The Yao 2021 SSv4 Sst subclass is a mixed population, so the supertype split reflects cell-type heterogeneity rather than a direct OLM signal.
+- **Annotation transfer ambiguity (GSE185862)**: The dominant Sst supertype in the GSE185862 MapMyCells transfer is 0219 Sst Gaba_6 [CS20230722_SUPT_0219] (F1=0.759, 161 cells), not 0216 Sst Gaba_3 [CS20230722_SUPT_0216] (F1=0.488, 83 cells). This raises uncertainty about whether OLM cells preferentially occupy SUPT_0216 or SUPT_0219. The Yao 2021 SSv4 Sst subclass is a mixed population, so the supertype split reflects cell-type heterogeneity rather than a direct OLM signal. The GSE99888 Harris AT evidence (Sst.Pnoc.Calb1.Igfbp5: group_purity=0.965 at SUPT_0216; Chrna2: F1=0.649 at CLUS_0771 within SUPT_0216) partially resolves this ambiguity in favour of SUPT_0216 as the OLM-type supertype.
 - **Sparse Pvalb expression**: Winterer et al. 2019 [4] reports sparse (not absent) Pvalb expression across OLM neurons. The known PV+ OLM subpopulation means Pvalb negativity is not absolute.
 
 ### What would upgrade confidence
@@ -112,7 +112,7 @@ Total: 1 edge · relationship type: PARTIAL_OVERLAP.
 
 ### Annotation transfer — OLM-specific source dataset
 
-*Status note:* A MapMyCells transfer using Yao 2021 SSv4 Sst subclass (GEO:GSE185862, n=273 HIP cells) has been performed and is recorded as evidence (SUPT_0216: F1=0.488, 83 cells; Sst Gaba subclass: F1=0.983, 265 cells). This used a mixed Sst population and does not resolve OLM-cell specificity. A refined experiment must use an OLM-enriched source.
+*Status note:* Three AT runs have been performed. (1) GSE185862 — mixed Sst subclass (n=273 HIP cells); SUPT_0216: F1=0.488 (83 cells); Sst Gaba subclass: F1=0.983 (265 cells). Does not resolve OLM-cell specificity. (2) GSE99888 — Harris Sst.Pnoc.Calb1.Igfbp5 cluster: group_purity=0.965 at SUPT_0216 (SUPPORT). (3) GSE99888 — Chamberland Chrna2 per-cluster: CLUS_0771 F1=0.649 (SUPPORT, cluster level). Runs 2 and 3 partially resolve OLM identity within SUPT_0216, but a fully labelled OLM source dataset at cluster resolution is still needed.
 
 - **What**: MapMyCells annotation transfer using a source dataset with morphologically or genetically identified OLM cells (Chrna2-Cre or Ndnf::Nkx2-1 labelled Sst+ cells)
 - **Target**: F1 ≥ 0.80 at CLUSTER level against WMBv1 (CCN20230722)
@@ -151,6 +151,8 @@ Total: 1 edge · relationship type: PARTIAL_OVERLAP.
 | edge_olm_cell_ca1_to_CS20230722_SUPT_0216 | ATLAS_METADATA (Sst subclass, GABA NT, CA1 SO 818 cells, Reln defining) | PARTIAL | Mixed supertype; OLM, bistratified, HS co-occupy; non-hippocampal cells present |
 | edge_olm_cell_ca1_to_CS20230722_SUPT_0216 | ATLAS_METADATA (precomputed stats: Sst=11.44, Reln=7.90, Chrna2=1.53, Pvalb=1.48, Npy=5.07, Pnoc=3.69) | SUPPORT | All markers consistent; Chrna2 low but present |
 | edge_olm_cell_ca1_to_CS20230722_SUPT_0216 | ANNOTATION_TRANSFER (MapMyCells, GEO:GSE185862, SSv4 Sst subclass, n=273) | PARTIAL | Sst Gaba SUBC F1=0.983; SUPT_0216 F1=0.488 (83 cells); SUPT_0219 dominant (F1=0.759) |
+| edge_olm_cell_ca1_to_CS20230722_SUPT_0216 | ANNOTATION_TRANSFER (MapMyCells local, GEO:GSE99888, Sst.Pnoc.Calb1.Igfbp5, SUPERTYPE F1=0.514, gp=0.965) | SUPPORT | High recall confirms OLM-type cluster concentrates in Sst Gaba_3 |
+| edge_olm_cell_ca1_to_CS20230722_SUPT_0216 | ANNOTATION_TRANSFER (MapMyCells local, GEO:GSE99888, Chamberland Chrna2, CLUSTER F1=0.649 at CLUS_0771) | SUPPORT | Chrna2-OLM sub-resolves to cluster level within SUPT_0216 |
 
 ---
 
