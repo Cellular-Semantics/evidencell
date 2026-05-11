@@ -232,17 +232,44 @@ class ATBlindAudit(AuditDriver):
                             target_level = lvl
                             break
                 target_rank = _LEVEL_TO_RANK.get(target_level, 0)
+
+                # The F1 is informative AT THE LEVEL where it was
+                # computed (best_mapping_level), which can legitimately
+                # differ from the edge's target accession level — e.g.
+                # a curator records `best_mapping_level: SUPERTYPE` on
+                # a cluster-target edge to mean "the AT signal lives at
+                # the parent supertype". The audit must route this case
+                # to test at the supertype rank against the supertype
+                # ancestor, not at the cluster rank against the cluster.
+                # Build the effective (target_accession, rank) pair
+                # accordingly.
+                at_bml = (at_items[0].get("best_mapping_level") or "").lower()
+                if at_bml and at_bml != target_level:
+                    effective_acc, effective_rank = self._ancestor_at_level(
+                        target_acc, at_bml
+                    )
+                    if effective_acc is None:
+                        # Can't walk to that level; skip rather than
+                        # produce a misrouted test case.
+                        continue
+                    effective_level = at_bml
+                else:
+                    effective_acc = target_acc
+                    effective_level = target_level
+                    effective_rank = target_rank
+
                 out.append({
-                    "test_id": f"{type_a}|{target_acc}",
+                    "test_id": f"{type_a}|{effective_acc}",
                     "graph_file": str(
                         yaml_path.relative_to(repo_root())
                     ),
                     "classical_id": type_a,
                     "classical_node": classical,
                     "target_id": type_b,
-                    "target_accession": target_acc,
-                    "target_level": target_level,
-                    "target_rank": target_rank,
+                    "target_accession": effective_acc,
+                    "edge_target_accession": target_acc,  # for traceability
+                    "target_level": effective_level,
+                    "target_rank": effective_rank,
                     "best_f1": best_f1,
                     "best_mapping_level": at_items[0].get("best_mapping_level"),
                     "edge_relationship": edge.get("relationship"),
@@ -365,6 +392,40 @@ class ATBlindAudit(AuditDriver):
         )
 
     # ── Helpers ───────────────────────────────────────────────────────
+
+    def _ancestor_at_level(
+        self, accession: str, target_level: str
+    ) -> tuple[str | None, int | None]:
+        """Walk up the taxonomy from ``accession`` until we hit a node
+        at ``target_level``. Returns ``(ancestor_accession, ancestor_rank)``
+        or ``(None, None)`` if no ancestor at that level exists.
+
+        Used by the audit when an AT evidence's ``best_mapping_level``
+        differs from the edge target's level: we test the AT signal at
+        the level it was computed (the ancestor), not at the edge's
+        target level.
+        """
+        target_level = (target_level or "").lower()
+        if target_level not in _LEVEL_TO_RANK:
+            return None, None
+        target_rank = _LEVEL_TO_RANK[target_level]
+        db = self._get_db()
+        with db._connect() as con:
+            cur_acc = accession
+            for _ in range(8):  # safety bound
+                row = con.execute(
+                    "SELECT parent_id, taxonomy_rank FROM nodes WHERE node_id = ?",
+                    (cur_acc,),
+                ).fetchone()
+                if not row:
+                    return None, None
+                parent_id, rank = row
+                if rank == target_rank:
+                    return cur_acc, rank
+                if not parent_id:
+                    return None, None
+                cur_acc = parent_id
+        return None, None
 
     def _get_db(self) -> TaxonomyDB:
         if self._db is None:

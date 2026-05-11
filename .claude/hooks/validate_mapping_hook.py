@@ -37,7 +37,6 @@ from evidencell.validate import (  # noqa: E402
     check_quote_keys,
     check_ref_pmids,
     check_run_refs,
-    check_at_f1_attribution,
     linkml_validate,
     parse_md_annotations,
     check_md_ids,
@@ -264,18 +263,6 @@ def main():
             if run_ref_errors:
                 print("AT run_ref errors:", file=sys.stderr)
                 for e in run_ref_errors:
-                    print(f"  - {e}", file=sys.stderr)
-                errors_found = True
-
-        # 3c. AT F1 attribution: best_mapping_level must match target's
-        # accession-derived level. Prevents the misattribution pattern
-        # (parent supertype's F1 on a cluster edge) that was cleaned up
-        # by evidencell.at_f1_attribution. See workflows/annotation-transfer.md.
-        if isinstance(doc, dict):
-            f1_errors = check_at_f1_attribution(doc)
-            if f1_errors:
-                print("AT F1 attribution errors:", file=sys.stderr)
-                for e in f1_errors:
                     print(f"  - {e}", file=sys.stderr)
                 errors_found = True
 
