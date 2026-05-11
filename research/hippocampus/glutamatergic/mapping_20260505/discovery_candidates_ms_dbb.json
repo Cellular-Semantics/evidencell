@@ -1,0 +1,552 @@
+{
+  "classical_node_id": "ms_dbb_glutamatergic_neuron",
+  "classical_node_name": "medial septal / diagonal band of Broca glutamatergic neuron",
+  "taxonomy_id": "CCN20230722",
+  "search_note": "Classical node soma is extrahippocampal (medial septum/diagonal band of Broca). The UBERON:0002421 fallback location caused the DB to search hippocampal/entorhinal regions — anatomically wrong. Correct candidates are in WMBv1 subclass 115 MS-SF Bsx Glut (CS20230722_SUBC_115), supertype 0518 MS-SF Bsx Glut_1 (CS20230722_SUPT_0518), and clusters CLUS_2054 through CLUS_2072 (19 clusters). These nodes have soma at Medial septal nucleus (MBA:564) and Diagonal band nucleus (MBA:596), matching the classical type.",
+  "candidates_by_rank": {
+    "0": [
+      {
+        "cell_set_accession": "CS20230722_CLUS_0122",
+        "name": "0122 L2/3 IT ENT Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "Layer 2/3 intratelencephalic neuron of the entorhinal cortex (ENT). Cortical/hippocampal region, not septal. Anatomically incompatible with the MS-DBB."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0132",
+        "name": "0132 L2/3 IT ENT Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal cortex cluster. Cortical/hippocampal region; soma not in medial septum or diagonal band."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0133",
+        "name": "0133 L2/3 IT ENT Glut_5",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal cortex cluster. Same reasoning as above; wrong anatomical region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0134",
+        "name": "0134 L2/3 IT ENT Glut_5",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal cortex cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0135",
+        "name": "0135 L2/3 IT ENT Glut_5",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal cortex cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0139",
+        "name": "0139 L2/3 IT PIR-ENTl Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "Piriform-lateral entorhinal cortex cluster. Olfactory/cortical origin; anatomically incompatible."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0158",
+        "name": "0158 L2/3 IT PIR-ENTl Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "Piriform-lateral entorhinal cortex cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0275",
+        "name": "0275 CA1-ProS Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "CA1/prosubiculum hippocampal cluster. MS-DBB glutamatergic neurons have their soma in the medial septum, not CA1. No overlap in anatomy or marker profile (CA1 pyramidal cells lack Slc17a6/VGluT2; MS-DBB neurons lack CA1 markers Wfs1, Amigo2, Rgs14)."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0294",
+        "name": "0294 CA1-ProS Glut_6",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "CA1/prosubiculum hippocampal cluster. Anatomically and molecularly incompatible."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0301",
+        "name": "0301 CA3 Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "CA3 hippocampal cluster. Wrong region; soma in CA3 stratum pyramidale."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0330",
+        "name": "0330 L2/3 IT PPP Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "Postpiriform plateau (PPP) cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0331",
+        "name": "0331 L2/3 IT PPP Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "PPP cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0334",
+        "name": "0334 L2/3 IT PPP Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "PPP cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0340",
+        "name": "0340 L2/3 IT PPP Glut_3",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "PPP cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0341",
+        "name": "0341 L2/3 IT PPP Glut_3",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "PPP cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0401",
+        "name": "0401 CA2-FC-IG Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "CA2/fasciola cinerea/indusium griseum hippocampal cluster. Wrong region; no septal anatomy."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0481",
+        "name": "0481 NP SUB Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 5,
+        "assessment": "EXCLUDE",
+        "rationale": "Near-projecting subiculum cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0013",
+        "name": "0013 IT EP-CLA Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Endopiriform nucleus/claustrum cluster. Cortical/pallial; wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0014",
+        "name": "0014 IT EP-CLA Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "EP-CLA cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0015",
+        "name": "0015 IT EP-CLA Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "EP-CLA cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0023",
+        "name": "0023 L5/6 IT TPE-ENT Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT temporal pole/entorhinal cortex cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0024",
+        "name": "0024 L5/6 IT TPE-ENT Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT TPE-ENT cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0025",
+        "name": "0025 L5/6 IT TPE-ENT Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT TPE-ENT cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0027",
+        "name": "0027 L5/6 IT TPE-ENT Glut_2",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT TPE-ENT cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0030",
+        "name": "0030 L5/6 IT TPE-ENT Glut_4",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT TPE-ENT cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0032",
+        "name": "0032 L5/6 IT TPE-ENT Glut_6",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT TPE-ENT cortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0037",
+        "name": "0037 L6 IT CTX Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Layer 6 IT neocortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0102",
+        "name": "0102 L4/5 IT CTX Glut_6",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L4/5 IT neocortical cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0121",
+        "name": "0121 L2/3 IT ENT Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal cortex cluster. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_0123",
+        "name": "0123 L2/3 IT ENT Glut_1",
+        "taxonomy_rank": 0,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal cortex cluster. Wrong region."
+      }
+    ],
+    "1": [
+      {
+        "cell_set_accession": "CS20230722_SUPT_0008",
+        "name": "0008 L5/6 IT TPE-ENT Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT temporal pole/entorhinal supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0007",
+        "name": "0007 L5/6 IT TPE-ENT Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT TPE-ENT supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0004",
+        "name": "0004 IT EP-CLA Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Endopiriform nucleus/claustrum supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0012",
+        "name": "0012 L5/6 IT TPE-ENT Glut_6",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT TPE-ENT supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0010",
+        "name": "0010 L5/6 IT TPE-ENT Glut_4",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L5/6 IT TPE-ENT supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0068",
+        "name": "0068 ENTmv-PA-COAp Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Medioventral entorhinal / posterior cortical amygdaloid area supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0067",
+        "name": "0067 ENTmv-PA-COAp Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "ENTmv-PA-COAp supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0066",
+        "name": "0066 ENTmv-PA-COAp Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "ENTmv-PA-COAp supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0060",
+        "name": "0060 LA-BLA-BMA-PA Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Lateral/basolateral amygdala supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0054",
+        "name": "0054 L2 IT ENT-po Glut_4",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2 IT posterior-oblongata entorhinal supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0053",
+        "name": "0053 L2 IT ENT-po Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2 IT ENT-po supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0052",
+        "name": "0052 L2 IT ENT-po Glut_2",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2 IT ENT-po supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0051",
+        "name": "0051 L2 IT ENT-po Glut_1",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2 IT ENT-po supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0038",
+        "name": "0038 L2/3 IT ENT Glut_6",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0037",
+        "name": "0037 L2/3 IT ENT Glut_5",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0036",
+        "name": "0036 L2/3 IT ENT Glut_4",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0044",
+        "name": "0044 L2/3 IT PIR-ENTl Glut_6",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "Piriform-lateral entorhinal supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0043",
+        "name": "0043 L2/3 IT PIR-ENTl Glut_5",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "PIR-ENTl supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0042",
+        "name": "0042 L2/3 IT PIR-ENTl Glut_4",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "PIR-ENTl supertype. Wrong region."
+      },
+      {
+        "cell_set_accession": "CS20230722_SUPT_0035",
+        "name": "0035 L2/3 IT ENT Glut_3",
+        "taxonomy_rank": 1,
+        "db_score": 4,
+        "assessment": "EXCLUDE",
+        "rationale": "L2/3 IT entorhinal supertype. Wrong region."
+      }
+    ]
+  },
+  "correct_candidates": {
+    "note": "Correct atlas candidates found by direct taxonomy search. These are NOT in the DB candidate lists because the DB query searched the wrong region (hippocampal formation fallback). Candidates below are CANDIDATE status — full property comparison pending map-cell-type workflow.",
+    "subclass": {
+      "cell_set_accession": "CS20230722_SUBC_115",
+      "name": "115 MS-SF Bsx Glut",
+      "taxonomy_rank": 2,
+      "nt_type": "Glut",
+      "parent_class": "13 CNU-HYa Glut",
+      "anatomy": [
+        {"label": "Medial septal nucleus", "mba_id": "MBA:564", "cell_count": 271},
+        {"label": "Diagonal band nucleus", "mba_id": "MBA:596", "cell_count": 59},
+        {"label": "Lateral septal nucleus, rostral (rostroventral) part", "mba_id": "MBA:258", "cell_count": 229},
+        {"label": "Lateral septal nucleus, ventral part", "mba_id": "MBA:266", "cell_count": 123},
+        {"label": "Septofimbrial nucleus", "mba_id": "MBA:310", "cell_count": 111},
+        {"label": "Striatum", "mba_id": "MBA:477", "cell_count": 67}
+      ],
+      "markers": ["Bmp7 (DEFINING)", "Isl1 (DEFINING)", "Onecut3 (TF)", "Zic1 (TF)"],
+      "assessment": "CANDIDATE",
+      "rationale": "Soma in medial septal nucleus (271 cells) and diagonal band nucleus (59 cells) — direct anatomical match to the classical MS-DBB node. Classified Glut by WMBv1. Neighborhood HY-EA-Glut-GABA is consistent with septal glutamatergic identity. Slc17a7/Slc17a6 not in the precomputed panel but the atlas Glut classification is genome-wide; Chat-negative and Gad1-low expected from marker list (no cholinergic or GABAergic markers listed). The precomputed panel shows Gad2=9.39 at the supertype level but this is an artefact of the hippocampus-focused marker panel applied to a non-hippocampal node — the atlas-wide Glut classification takes precedence. The MS-DBB classical node specifies Slc17a7+/Slc17a6+ (VGluT1/VGluT2), Chat−, Gad1−, which matches the expected profile for WMBv1 septal Glut neurons. Four electrophysiological subtypes of the classical node (fast-spiking, cluster-firing, burst-firing, slow-firing) likely distribute across the 19 clusters within this subclass.",
+      "confidence_signal": "HIGH — direct anatomical concordance; only glutamatergic subclass with soma explicitly in medial septal nucleus + diagonal band nucleus in WMBv1"
+    },
+    "supertype": {
+      "cell_set_accession": "CS20230722_SUPT_0518",
+      "name": "0518 MS-SF Bsx Glut_1",
+      "taxonomy_rank": 1,
+      "parent_subclass": "CS20230722_SUBC_115",
+      "anatomy": [
+        {"label": "Medial septal nucleus", "mba_id": "MBA:564", "cell_count": 271},
+        {"label": "Lateral septal nucleus, ventral part", "mba_id": "MBA:266", "cell_count": 123},
+        {"label": "Diagonal band nucleus", "mba_id": "MBA:596", "cell_count": 59},
+        {"label": "Lateral septal nucleus, rostral (rostroventral) part", "mba_id": "MBA:258", "cell_count": 229},
+        {"label": "Septofimbrial nucleus", "mba_id": "MBA:310", "cell_count": 111},
+        {"label": "Striatum", "mba_id": "MBA:477", "cell_count": 67}
+      ],
+      "markers": ["Bsx (DEFINING)", "Onecut1 (DEFINING)", "Galntl6 (DEFINING)", "Isl1 (DEFINING_SCOPED)"],
+      "assessment": "CANDIDATE",
+      "rationale": "Only supertype within the MS-SF Bsx Glut subclass. Soma distribution mirrors the subclass — medial septal nucleus dominant, diagonal band present. The defining markers (Bsx, Onecut1) are transcription factors expected in septal glutamatergic neurons, not hippocampal projection neurons. This is the correct rank-1 candidate for the ms_dbb_glutamatergic_neuron classical node. Note: it is the sole supertype for this subclass, so it represents the full diversity of the 19 underlying clusters including potential correlates of the four electrophysiological subtypes.",
+      "confidence_signal": "HIGH — single supertype under the correct subclass; anatomy confirmed at Medial septal nucleus + Diagonal band nucleus"
+    },
+    "clusters": [
+      {
+        "cell_set_accession": "CS20230722_CLUS_2054",
+        "name": "2054 MS-SF Bsx Glut_1",
+        "anatomy_note": "Small cluster (n_cells=1 in precomputed expression profile; small sample); soma in medial septal nucleus and lateral septal areas based on parent anatomy",
+        "assessment": "CANDIDATE — requires individual anatomy confirmation"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2055",
+        "name": "2055 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2056",
+        "name": "2056 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2057",
+        "name": "2057 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2058",
+        "name": "2058 MS-SF Bsx Glut_1",
+        "anatomy_note": "Medial septal nucleus (57 cells), Lateral septal nucleus ventral (11 cells) — confirmed MS soma",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2059",
+        "name": "2059 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2060",
+        "name": "2060 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2061",
+        "name": "2061 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2062",
+        "name": "2062 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2063",
+        "name": "2063 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2064",
+        "name": "2064 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2065",
+        "name": "2065 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2066",
+        "name": "2066 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2067",
+        "name": "2067 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2068",
+        "name": "2068 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2069",
+        "name": "2069 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2070",
+        "name": "2070 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2071",
+        "name": "2071 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      },
+      {
+        "cell_set_accession": "CS20230722_CLUS_2072",
+        "name": "2072 MS-SF Bsx Glut_1",
+        "assessment": "CANDIDATE"
+      }
+    ]
+  },
+  "non_candidates_summary": "All 30 DB-returned rank-0 clusters and all 20 DB-returned rank-1 supertypes are EXCLUDED. The root cause is that the DB query used UBERON:0002421 (hippocampal formation) as the soma location — a documented fallback because no UBERON term for the medial septum was entered at ingest time. This caused the search to return hippocampal and parahippocampal glutamatergic neurons: CA1-ProS clusters (0275, 0294), CA3 cluster (0301), CA2-FC-IG cluster (0401), NP SUB cluster (0481), L2/3-L6 IT entorhinal/parahippocampal cortex clusters (0122-0158, 0330-0341), EP-CLA clusters (0013-0015), and TPE-ENT cortical clusters (0023-0037). None have soma in the medial septum or diagonal band of Broca. The correct atlas counterpart is WMBv1 subclass 115 MS-SF Bsx Glut (CS20230722_SUBC_115, under class 13 CNU-HYa Glut), the sole glutamatergic subclass with documented soma in the medial septal nucleus (MBA:564, 271 cells) and diagonal band nucleus (MBA:596, 59 cells). It has one supertype (CS20230722_SUPT_0518, 0518 MS-SF Bsx Glut_1) and 19 clusters (CS20230722_CLUS_2054 through CLUS_2072), all labelled MS-SF Bsx Glut. The four electrophysiological subtypes of the classical node (fast-spiking, cluster-firing, burst-firing, slow-firing VGluT2+ cells) likely correspond to subsets of these 19 clusters. Recommendation: run map-cell-type workflow against CS20230722_SUBC_115 / CS20230722_SUPT_0518 with VGluT1/VGluT2, Chat-negative, Gad1-negative constraints."
+}

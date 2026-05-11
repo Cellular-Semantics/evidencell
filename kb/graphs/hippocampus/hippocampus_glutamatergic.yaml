@@ -15,7 +15,7 @@ brain_region:
   id: UBERON:0002421
   label: hippocampal formation
   name_in_source: hippocampus
-species: null
+species:
 creation_date: '2026-04-27'
 notes: 'Species: core evidence is from mouse (Mus musculus) and rat; confirm per-node from
 
@@ -105,9 +105,9 @@ nodes:
       quote_key: 34872919_d652553e
       marker_type: PROTEIN
   electrophysiology:
-    description: CA1 pyramidal cells receive entorhinal cortical inputs producing somatic EPSPs that are 5-6 fold smaller
-      than CA2 pyramidal neurons; perforant-path input alone is insufficient to drive action potential output. AMPA receptors
-      mediate excitatory synaptic transmission at CA1 pyramidal cell synapses.
+    description: CA1 pyramidal cells receive entorhinal cortical inputs producing somatic EPSPs that are 5-6 fold 
+      smaller than CA2 pyramidal neurons; perforant-path input alone is insufficient to drive action potential output. 
+      AMPA receptors mediate excitatory synaptic transmission at CA1 pyramidal cell synapses.
     sources:
     - ref: PMID:28213444
       method: patch-clamp (slice)
@@ -118,8 +118,8 @@ nodes:
       scope: APP/PS1 mouse model, CA1 hippocampal region
       quote_key: '222135486_47019332'
   morphology:
-    description: CA1 pyramidal cells have the smallest soma size compared to CA2 and CA3 in mouse hippocampus; fewer primary
-      apical branches and more distant branching points compared to CA3 cells.
+    description: CA1 pyramidal cells have the smallest soma size compared to CA2 and CA3 in mouse hippocampus; fewer 
+      primary apical branches and more distant branching points compared to CA3 cells.
     sources:
     - ref: PMID:24166578
       method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
@@ -183,10 +183,10 @@ nodes:
       quote_key: 20853920_44ab38bb
       marker_type: TRANSCRIPT
   electrophysiology:
-    description: CA2 pyramidal cells exhibit more efficient dendritic propagation than CA1, with entorhinal cortical inputs
-      producing 5-6 fold larger somatic EPSPs sufficient to drive action potential output. Schaffer collateral inputs to CA2
-      are atypically resistant to canonical activity-dependent LTP. CA2 neurons are enriched for mitochondrial protein-encoding
-      genes compared to CA1, consistent with higher metabolic demand.
+    description: CA2 pyramidal cells exhibit more efficient dendritic propagation than CA1, with entorhinal cortical 
+      inputs producing 5-6 fold larger somatic EPSPs sufficient to drive action potential output. Schaffer collateral 
+      inputs to CA2 are atypically resistant to canonical activity-dependent LTP. CA2 neurons are enriched for 
+      mitochondrial protein-encoding genes compared to CA1, consistent with higher metabolic demand.
     sources:
     - ref: PMID:28213444
       method: patch-clamp (slice)
@@ -201,8 +201,8 @@ nodes:
       scope: mouse CA1 vs CA2 hippocampus
       quote_key: 284018783_0507bb17
   morphology:
-    description: CA2 pyramidal cells bear dense dendritic spines but lack the thorny excrescences of CA3; soma size is intermediate
-      between CA1 and CA3; apical dendrites show distinct branching patterns.
+    description: CA2 pyramidal cells bear dense dendritic spines but lack the thorny excrescences of CA3; soma size is 
+      intermediate between CA1 and CA3; apical dendrites show distinct branching patterns.
     sources:
     - ref: PMID:24166578
       method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
@@ -242,17 +242,18 @@ nodes:
       quote_key: 2281033_5b9805ff
   defining_markers: []
   electrophysiology:
-    description: In adult CA3, single pyramidal neurons can act as hub neurons capable of triggering network bursts when fast
-      GABAergic transmission is blocked, reflecting the high recurrent excitatory connectivity of the CA3 pyramidal cell network.
+    description: In adult CA3, single pyramidal neurons can act as hub neurons capable of triggering network bursts when
+      fast GABAergic transmission is blocked, reflecting the high recurrent excitatory connectivity of the CA3 pyramidal
+      cell network.
     sources:
     - ref: PMID:23271650
       method: patch-clamp + multineuron Ca2+ imaging
       scope: juvenile and adult mouse hippocampal CA3
       quote_key: 3153294_53089f6d
   morphology:
-    description: CA3 pyramidal cells bear thorny excrescences on their proximal apical dendrites that are postsynaptic targets
-      of dentate granule cell mossy fiber terminals, forming primarily glutamatergic mixed electrical-chemical synapses (gap
-      junctions plus glutamatergic chemical synapses, coupled by Connexin-36).
+    description: CA3 pyramidal cells bear thorny excrescences on their proximal apical dendrites that are postsynaptic 
+      targets of dentate granule cell mossy fiber terminals, forming primarily glutamatergic mixed electrical-chemical 
+      synapses (gap junctions plus glutamatergic chemical synapses, coupled by Connexin-36).
     sources:
     - ref: https://doi.org/10.3389/fnana.2012.00013
       method: electron microscopy + immunohistochemistry
@@ -373,8 +374,8 @@ nodes:
   - symbol: Dkk3
     ncbi_gene_id: NCBIGene:50781
   morphology:
-    description: Large multipolar neurons with hilar location; extensive thorny excrescences on proximal dendrites and commissural/associational
-      projections
+    description: Large multipolar neurons with hilar location; extensive thorny excrescences on proximal dendrites and 
+      commissural/associational projections
     sources:
     - ref: PMID:28451637
       method: narrative review
@@ -465,7 +466,8 @@ nodes:
       scope: rat dentate gyrus
       quote_key: 30068647_874c8023
   morphology:
-    description: Semilunar soma in outer granule cell layer; apical dendrite extending into molecular layer; no basal dendrites
+    description: Semilunar soma in outer granule cell layer; apical dendrite extending into molecular layer; no basal 
+      dendrites
     sources:
     - ref: PMID:18077687
       method: patch-clamp + biocytin fill (rat slice)
@@ -487,7 +489,7 @@ nodes:
     - ref: PMID:41693678
       method: whole-cell patch-clamp + morphological reconstruction
       scope: rodent subiculum, pyramidal neurons (sub2)
-      quote_key: 285611647_01e75429
+      quote_key: 285611647_ae8e7717
     - ref: PMID:27150503
       method: review (anatomical tracing)
       scope: rodent subiculum, pyramidal cell projections to CA1
@@ -560,16 +562,16 @@ nodes:
       method: whole-cell patch-clamp (acute slice)
       scope: mouse subiculum, adult
       quote_key: 285611647_6a173ab1
-    description: Regular-spiking firing pattern with spike-frequency adaptation; recorded by whole-cell patch-clamp in acute
-      mouse brain slices (PMID:41693678).
+    description: Regular-spiking firing pattern with spike-frequency adaptation; recorded by whole-cell patch-clamp in 
+      acute mouse brain slices (PMID:41693678).
   morphology:
     sources:
     - ref: PMID:41693678
       method: biocytin fill + confocal
       scope: mouse subiculum, adult
       quote_key: 285611647_7c1687fe
-    description: Pyramidal morphology with prominent apical and basal dendritic arbor; visualized by biocytin fill and confocal
-      microscopy (PMID:41693678).
+    description: Pyramidal morphology with prominent apical and basal dendritic arbor; visualized by biocytin fill and 
+      confocal microscopy (PMID:41693678).
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0002728
@@ -643,8 +645,8 @@ nodes:
     label: Mus musculus
     name_in_source: Mus musculus
   morphology:
-    description: Star-shaped multipolar soma with multiple primary dendrites; principal neuron of layer II medial entorhinal
-      cortex
+    description: Star-shaped multipolar soma with multiple primary dendrites; principal neuron of layer II medial 
+      entorhinal cortex
     sources:
     - ref: PMID:26223342
       method: morphological classification
@@ -827,7 +829,8 @@ nodes:
       method: synthesis (ASTA report)
       scope: mouse hippocampus
       quote_key: 2565845_2453978e
-    description: Hippocampal calretinin-positive glutamatergic neuron with local axonal projections within hippocampal formation.
+    description: Hippocampal calretinin-positive glutamatergic neuron with local axonal projections within hippocampal 
+      formation.
 - anatomical_location:
   - compartment: SOMA
     id: UBERON:0002421
@@ -895,8 +898,8 @@ nodes:
     label: Mus musculus
     name_in_source: Mus musculus
   electrophysiology:
-    description: D2-expressing pyramidal neurons hyperpolarize with D2 agonist quinpirole; D1-expressing pyramidal neurons
-      show subtle response to D1 agonist
+    description: D2-expressing pyramidal neurons hyperpolarize with D2 agonist quinpirole; D1-expressing pyramidal 
+      neurons show subtle response to D1 agonist
     sources:
     - ref: PMID:37546856
       method: patch-clamp current-clamp (mouse vCA1/vSub slice)
@@ -992,6 +995,35 @@ edges:
     source_cluster_label: CA1-ProS
     target_atlas: WMBv1
     method: MapMyCells (default parameters)
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 01 IT-ET Glut
+      best_target_accession: CS20230722_CLAS_01
+      group_purity: 1.0
+      target_purity: 0.8075
+      f1_score: 0.8935
+      n_cells_mapped: 1590
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 016 CA1-ProS Glut
+      best_target_accession: CS20230722_SUBC_016
+      group_purity: 0.9937
+      target_purity: 0.9962
+      f1_score: 0.9949
+      n_cells_mapped: 1574
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0069 CA1-ProS Glut_1
+      best_target_accession: CS20230722_SUPT_0069
+      group_purity: 0.6535
+      target_purity: 0.999
+      f1_score: 0.7902
+      n_cells_mapped: 979
+    n_cells_total: 1590
+    best_f1_score: 0.9949
+    best_mapping_level: SUBCLASS
+    best_mapping_rank: 2
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1172,6 +1204,35 @@ edges:
     source_cluster_label: CA3
     target_atlas: WMBv1
     method: MapMyCells (default parameters)
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 01 IT-ET Glut
+      best_target_accession: CS20230722_CLAS_01
+      group_purity: 1.0
+      target_purity: 0.1635
+      f1_score: 0.2811
+      n_cells_mapped: 322
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 017 CA3 Glut
+      best_target_accession: CS20230722_SUBC_017
+      group_purity: 0.9938
+      target_purity: 0.9938
+      f1_score: 0.9938
+      n_cells_mapped: 320
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0078 CA3 Glut_4
+      best_target_accession: CS20230722_SUPT_0078
+      group_purity: 0.6326
+      target_purity: 1.0
+      f1_score: 0.775
+      n_cells_mapped: 198
+    n_cells_total: 322
+    best_f1_score: 0.9938
+    best_mapping_level: SUBCLASS
+    best_mapping_rank: 2
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1236,12 +1297,19 @@ edges:
       target_purity: 0.546
       f1_score: 0.703
       n_cells_mapped: 716
+      taxonomy_rank: 2
+      best_target_accession: CS20230722_SUBC_037
     - taxonomy_level: SUPERTYPE
       best_target_name: 0137 DG Glut_2
       group_purity: 0.711
       target_purity: 0.495
       f1_score: 0.584
       n_cells_mapped: 433
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0137
+    best_f1_score: 0.703
+    best_mapping_level: SUBCLASS
+    best_mapping_rank: 2
   - evidence_type: ATLAS_METADATA
     supports: SUPPORT
     explanation: 'SUPT_0137 has 7199 cells in Dentate gyrus, granule cell layer (MBA:632), 6636 in molecular layer, and 3067
@@ -1333,12 +1401,19 @@ edges:
       target_purity: 0.522
       f1_score: 0.686
       n_cells_mapped: 35
+      taxonomy_rank: 2
+      best_target_accession: CS20230722_SUBC_017
     - taxonomy_level: SUPERTYPE
       best_target_name: 0078 CA3 Glut_4
       group_purity: 0.971
       target_purity: 0.917
       f1_score: 0.943
       n_cells_mapped: 33
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0078
+    best_f1_score: 0.943
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1414,12 +1489,19 @@ edges:
       target_purity: 0.403
       f1_score: 0.562
       n_cells_mapped: 27
+      taxonomy_rank: 2
+      best_target_accession: CS20230722_SUBC_017
     - taxonomy_level: SUPERTYPE
       best_target_name: 0079 CA3 Glut_5
       group_purity: 0.741
       target_purity: 0.952
       f1_score: 0.833
       n_cells_mapped: 20
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0079
+    best_f1_score: 0.833
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1499,6 +1581,11 @@ edges:
       target_purity: 1.0
       f1_score: 0.935
       n_cells_mapped: 2172
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0137
+    best_f1_score: 0.935
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1558,16 +1645,45 @@ edges:
       '
     source_dataset_accession: GEO:GSE280167
     source_cluster_label: DG Glut (Bhatt 2025 snRNA-seq, VV wild-type)
-    n_cells_total: 11601
+    n_cells_total: 11327
     target_atlas: WMBv1 (CCN20230722)
     method: MapMyCells local (precomputed_stats CCN20230722)
     metrics_by_level:
     - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0137 DG Glut_2
+      best_target_accession: CS20230722_SUPT_0137
+      group_purity: 0.979
+      target_purity:
+      f1_score:
+      n_cells_mapped: 11083
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
       best_target_name: 0138 DG Glut_3
-      group_purity: null
-      target_purity: null
-      f1_score: null
-      n_cells_mapped: 82
+      best_target_accession: CS20230722_SUPT_0138
+      group_purity: 0.0059
+      target_purity:
+      f1_score:
+      n_cells_mapped: 67
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0139 DG Glut_4
+      best_target_accession: CS20230722_SUPT_0139
+      group_purity: 0.0116
+      target_purity:
+      f1_score:
+      n_cells_mapped: 131
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0136 DG Glut_1
+      best_target_accession: CS20230722_SUPT_0136
+      group_purity: 0.0041
+      target_purity:
+      f1_score:
+      n_cells_mapped: 46
+    best_f1_score:
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1644,6 +1760,11 @@ edges:
       target_purity: 1.0
       f1_score: 0.798
       n_cells_mapped: 313
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0096
+    best_f1_score: 0.798
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1710,6 +1831,11 @@ edges:
       target_purity: 0.972
       f1_score: 0.964
       n_cells_mapped: 172
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0042
+    best_f1_score: 0.964
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1779,6 +1905,11 @@ edges:
       target_purity: 0.833
       f1_score: 0.694
       n_cells_mapped: 25
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0052
+    best_f1_score: 0.694
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1841,6 +1972,11 @@ edges:
       target_purity: 0.992
       f1_score: 0.937
       n_cells_mapped: 522
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0036
+    best_f1_score: 0.937
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1859,18 +1995,16 @@ edges:
     node_a_value: defining marker Pcp4 (PCP4; shared with CA2 pyramidal cells)
     node_b_value: not listed in SUPT_0036 defining markers (Fermt1, Cxcl14)
     alignment: CONSISTENT
-    notes: 'Pcp4 mean_expression=10.57 in SUPT_0036 (precomputed_stats.h5, supertype level). CA2
-      comparison (precomputed_stats.h5): SUPT_0100 (0100 CA2-FC-IG Glut_1) mean=11.26, SUPT_0101
-      (0101 CA2-FC-IG Glut_2) mean=9.99. SUPT_0037 (0037 L2/3 IT ENT Glut_5) mean=9.44. Values
-      are similar across EC layer III and CA2 supertypes (range 9.44-11.26) — Pcp4 is NOT a
-      discriminating marker between EC layer III and CA2 at the atlas supertype level.
+    notes: 'Pcp4 mean_expression=10.57 in SUPT_0036 (precomputed_stats.h5, supertype level). CA2 comparison (precomputed_stats.h5):
+      SUPT_0100 (0100 CA2-FC-IG Glut_1) mean=11.26, SUPT_0101 (0101 CA2-FC-IG Glut_2) mean=9.99. SUPT_0037 (0037 L2/3 IT ENT
+      Glut_5) mean=9.44. Values are similar across EC layer III and CA2 supertypes (range 9.44-11.26) — Pcp4 is NOT a discriminating
+      marker between EC layer III and CA2 at the atlas supertype level.
 
       '
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: 'SUPT_0036 and SUPT_0037 together capture 99.0% of Yao 2021 L3 IT ENT cells
-      (TYPE_A_SPLITS). Secondary edge to SUPT_0037 (F1=0.177, 10.2% of L3 IT ENT cells) added
-      as edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037.
+    description: 'SUPT_0036 and SUPT_0037 together capture 99.0% of Yao 2021 L3 IT ENT cells (TYPE_A_SPLITS). Secondary edge
+      to SUPT_0037 (F1=0.177, 10.2% of L3 IT ENT cells) added as edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037.
 
       '
   unresolved_questions: []
@@ -1883,11 +2017,10 @@ edges:
   evidence:
   - evidence_type: ANNOTATION_TRANSFER
     supports: PARTIAL
-    explanation: 'Secondary target in Yao 2021 (GSE185862) SSv4 L3 IT ENT annotation transfer onto WMBv1 (CCN20230722)
-      via local MapMyCells. SUPT_0037 (0037 L2/3 IT ENT Glut_5) captures 10.2% of L3 IT ENT cells (n≈60/588)
-      with F1=0.177. Together with SUPT_0036 (F1=0.937, 88.8%), the two supertypes account for 99.0% of L3 IT
-      ENT cells. Low F1 reflects lower group_purity relative to SUPT_0036; target_purity is not separately
-      reported for this secondary target in the available AT artifact.
+    explanation: 'Secondary target in Yao 2021 (GSE185862) SSv4 L3 IT ENT annotation transfer onto WMBv1 (CCN20230722) via
+      local MapMyCells. SUPT_0037 (0037 L2/3 IT ENT Glut_5) captures 10.2% of L3 IT ENT cells (n≈60/588) with F1=0.177. Together
+      with SUPT_0036 (F1=0.937, 88.8%), the two supertypes account for 99.0% of L3 IT ENT cells. Low F1 reflects lower group_purity
+      relative to SUPT_0036; target_purity is not separately reported for this secondary target in the available AT artifact.
 
       '
     source_dataset_accession: GEO:GSE185862
@@ -1900,6 +2033,11 @@ edges:
       best_target_name: 0037 L2/3 IT ENT Glut_5
       f1_score: 0.177
       n_cells_mapped: 60
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0037
+    best_f1_score: 0.177
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -1914,8 +2052,8 @@ edges:
     node_a_value: defining marker Pcp4 (PCP4)
     node_b_value: not listed in SUPT_0037 defining markers
     alignment: CONSISTENT
-    notes: Pcp4 mean_expression=9.44 in SUPT_0037 (precomputed_stats.h5, supertype level). Consistent
-      with the shared EC layer III Pcp4+ identity; value similar to SUPT_0036 (10.57).
+    notes: Pcp4 mean_expression=9.44 in SUPT_0037 (precomputed_stats.h5, supertype level). Consistent with the shared EC
+      layer III Pcp4+ identity; value similar to SUPT_0036 (10.57).
   caveats: []
   unresolved_questions: []
   proposed_experiments: []
@@ -1947,6 +2085,11 @@ edges:
       target_purity: 0.999
       f1_score: 0.744
       n_cells_mapped: 1011
+      taxonomy_rank: 1
+      best_target_accession: CS20230722_SUPT_0069
+    best_f1_score: 0.744
+    best_mapping_level: SUPERTYPE
+    best_mapping_rank: 1
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -2013,6 +2156,55 @@ edges:
       population described in the hippocampal literature.'
     target_atlas: WMBv1 (CCN20230722)
     method: Precomputed stats expression analysis (WMBv1 reference cells)
+  - evidence_type: ANNOTATION_TRANSFER
+    supports: SUPPORT
+    explanation: 'MapMyCells annotation transfer of Hochgerner 2018 (GSE95315) mouse hippocampal formation scRNA-seq onto
+      WMBv1 (CCN20230722). The "Cajal-Retzius" source cluster (n=33 cells) maps with high confidence exclusively to the HPF
+      CR Glut lineage: F1=0.985 at subclass 036 HPF CR Glut and supertype SUPT_0135 (HPF CR Glut_1), with F1=1.0 at the cluster
+      level (CLUS_0497). Group purity = 1.0 at all levels confirms all Cajal-Retzius cells map within the HPF CR Glut subtree.
+      This provides independent transcriptomic evidence that SUPT_0135 corresponds to the classical Cajal-Retzius cell type
+      (calretinin+, Reln+) in the hippocampal formation.'
+    source_dataset_accession: GEO:GSE95315
+    source_cluster_label: Cajal-Retzius
+    n_cells_total: 33
+    best_f1_score: 1.0
+    best_mapping_level: CLUSTER
+    best_mapping_rank: 0
+    target_atlas: WMBv1 (CCN20230722)
+    method: MapMyCells local (cell_type_mapper, precomputed_stats CCN20230722)
+    metrics_by_level:
+    - taxonomy_level: CLASS
+      taxonomy_rank: 3
+      best_target_name: 03 OB-CR Glut
+      best_target_accession: CS20230722_CLAS_03
+      group_purity: 1.0
+      target_purity: 1.0
+      f1_score: 1.0
+      n_cells_mapped: 15
+    - taxonomy_level: SUBCLASS
+      taxonomy_rank: 2
+      best_target_name: 036 HPF CR Glut
+      best_target_accession: CS20230722_SUBC_036
+      group_purity: 1.0
+      target_purity: 0.9706
+      f1_score: 0.9851
+      n_cells_mapped: 33
+    - taxonomy_level: SUPERTYPE
+      taxonomy_rank: 1
+      best_target_name: 0135 HPF CR Glut_1
+      best_target_accession: CS20230722_SUPT_0135
+      group_purity: 1.0
+      target_purity: 0.9706
+      f1_score: 0.9851
+      n_cells_mapped: 33
+    - taxonomy_level: CLUSTER
+      taxonomy_rank: 0
+      best_target_name: 0497 HPF CR Glut_1
+      best_target_accession: CS20230722_CLUS_0497
+      group_purity: 1.0
+      target_purity: 1.0
+      f1_score: 1.0
+      n_cells_mapped: 13
   property_comparisons:
   - property: nt_type
     node_a_value: glutamatergic
@@ -2022,31 +2214,32 @@ edges:
     node_a_value: 'stratum lacunosum-moleculare / outer molecular layer (UBERON:0002421, compartment: SOMA)'
     node_b_value: HPF CR Glut_1 — only HPF Glut supertype outside DG/CA/SUB subclasses; MERFISH anatomy not assessed
     alignment: APPROXIMATE
-    notes: SUPT_0135 is the only WMBv1 glutamatergic supertype in the HPF that falls outside the DG, CA1-ProS, CA2-FC-IG,
-      CA3, and SUB-ProS subclasses. The SLM/OML location of the classical node is consistent with the HPF CR designation,
-      though precise MERFISH soma assignments have not been assessed.
+    notes: SUPT_0135 is the only WMBv1 glutamatergic supertype in the HPF that falls outside the DG, CA1-ProS, 
+      CA2-FC-IG, CA3, and SUB-ProS subclasses. The SLM/OML location of the classical node is consistent with the HPF CR 
+      designation, though precise MERFISH soma assignments have not been assessed.
   - property: marker_Calb2
     node_a_value: defining marker Calb2 (calretinin; SLM/OML glutamatergic cell marker)
-    node_b_value: HIGH expression in SUPT_0135 reference cells (mean 4.5-8.2 UMIs/cell, n=5 clusters) — highest Calb2 among
-      all HPF Glut supertypes
+    node_b_value: HIGH expression in SUPT_0135 reference cells (mean 4.5-8.2 UMIs/cell, n=5 clusters) — highest Calb2 
+      among all HPF Glut supertypes
     alignment: CONSISTENT
-    notes: Calb2 (calretinin) expression in SUPT_0135 is 30-100x higher than in DG Glut supertypes (0.08-0.16 UMIs). This
-      is the primary positive evidence for this mapping.
+    notes: Calb2 (calretinin) expression in SUPT_0135 is 30-100x higher than in DG Glut supertypes (0.08-0.16 UMIs). 
+      This is the primary positive evidence for this mapping.
   caveats:
   - caveat_type: AMBIGUOUS_MAPPING
-    description: SUPT_0135 reference cells strongly express Reln and Trp73 (both Cajal-Retzius cell markers) alongside Calb2.
-      Classical Cajal-Retzius cells are developmentally transient (largely absent in adult rodent hippocampus) and may not
-      correspond to the Calb2+/Slc17a8+ glutamatergic neurons described in adult SLM/OML. The SUPT_0135 supertype has n=5
-      reference cells total (1 per cluster), which is the smallest representation of any HPF Glut supertype in WMBv1, consistent
-      with either extreme rarity or a poorly sampled cell type. The 'CR' designation in WMBv1 may specifically label Cajal-Retzius
-      remnants captured during adult brain profiling.
+    description: SUPT_0135 reference cells strongly express Reln and Trp73 (both Cajal-Retzius cell markers) alongside 
+      Calb2. Classical Cajal-Retzius cells are developmentally transient (largely absent in adult rodent hippocampus) 
+      and may not correspond to the Calb2+/Slc17a8+ glutamatergic neurons described in adult SLM/OML. The SUPT_0135 
+      supertype has n=5 reference cells total (1 per cluster), which is the smallest representation of any HPF Glut 
+      supertype in WMBv1, consistent with either extreme rarity or a poorly sampled cell type. The 'CR' designation in 
+      WMBv1 may specifically label Cajal-Retzius remnants captured during adult brain profiling.
   unresolved_questions:
-  - Is SUPT_0135 a Cajal-Retzius remnant population or does it represent the adult SLM/OML Calb2+/Slc17a8+ glutamatergic neurons
-    described in the literature? ISH validation of Trp73 and Calb2 co-expression in adult SLM/OML would resolve this.
-  - Why is Slc17a8 (VGluT3) absent from SUPT_0135 given that SLM glutamatergic neurons are described as VGluT3+? Is VGluT3
-    expression limited to a subset of Calb2+ SLM cells, or is the classical node definition too broad?
+  - Is SUPT_0135 a Cajal-Retzius remnant population or does it represent the adult SLM/OML Calb2+/Slc17a8+ glutamatergic
+    neurons described in the literature? ISH validation of Trp73 and Calb2 co-expression in adult SLM/OML would resolve 
+    this.
+  - Why is Slc17a8 (VGluT3) absent from SUPT_0135 given that SLM glutamatergic neurons are described as VGluT3+? Is 
+    VGluT3 expression limited to a subset of Calb2+ SLM cells, or is the classical node definition too broad?
   proposed_experiments:
-  - Run annotation transfer from a dataset with validated Calb2+/Slc17a8+ SLM cells onto WMBv1 to confirm whether these cells
-    map to SUPT_0135 or to other supertypes.
-  - Check MERFISH soma locations for SUPT_0135 cells in WMBv1 (via atlas browser or MERFISH cell type distribution data) to
-    confirm SLM/OML placement.
+  - Run annotation transfer from a dataset with validated Calb2+/Slc17a8+ SLM cells onto WMBv1 to confirm whether these 
+    cells map to SUPT_0135 or to other supertypes.
+  - Check MERFISH soma locations for SUPT_0135 cells in WMBv1 (via atlas browser or MERFISH cell type distribution data)
+    to confirm SLM/OML placement.

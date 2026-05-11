@@ -1,0 +1,56 @@
+id: at_run_20260508_que2021_pvin_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE142546"
+source_cluster_label: >
+  Que 2021 (GSE142546) mouse hippocampus patch-seq PV interneuron morphological types:
+  hBC (horizontal basket cell, n=12), vBC (vertical basket cell, n=50),
+  hBIC (horizontal bistratified cell, n=11), vBIC (vertical bistratified cell, n=9),
+  AAC (axo-axonic cell, n=6). Aggregated as BC (basket, n=62), BIC (bistratified, n=20),
+  AAC (n=6) for F1 scoring. 88 QC-passed cells from 128 total.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization,
+  100 bootstrap iterations). Gene symbols remapped to Ensembl IDs using
+  conf/gene_mapping_CCN20230722.tsv (19788/35825 genes mapped). Input expression
+  matrix is TPM (Kallisto gene-level); rounded to integer pseudo-counts (TPM per
+  cell sums to ~1e6 ≈ CPM; normalization step is effectively a no-op). Age range:
+  P10–P77 (mean ~P30); morphological types confirmed by patch-clamp morphology.
+  F1 scored with both fine-grained (hBC/vBC/hBIC/vBIC/AAC) and aggregated
+  (BC/BIC/AAC) labels; aggregated results used in KB.
+tool_version: "cell_type_mapper v1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.0
+n_cells_total: 88
+n_cells_after_filter: 88
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.11"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "(see git log at run time)"
+
+output:
+  relpath: f1_scores_aggregated_best.csv
+  format: csv
+
+caveats: >
+  Patch-seq dataset with morphologically confirmed PV subtypes. TPM input used as
+  pseudo-counts (standard for patch-seq where raw counts not available). Age range
+  P10-P77; most cells are juvenile (mean P30) rather than adult; WMBv1 is from
+  adult mice. Que et al. found high transcriptomic similarity of morphological types
+  across ages. AAC n=6 is insufficient for reliable F1 scoring; AAC results should
+  be treated as uninformative. Key finding: BC and BIC cells separate cleanly within
+  SUPT_0206 (Pvalb Gaba_2) at cluster level — BC to CLUS_0739 (F1=0.827), BIC to
+  CLUS_0737 (F1=0.800).

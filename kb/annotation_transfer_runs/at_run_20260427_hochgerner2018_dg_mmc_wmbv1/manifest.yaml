@@ -1,0 +1,41 @@
+id: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE95315"
+source_cluster_label: >
+  Hochgerner 2018 (GSE95315) mouse DG scRNA-seq cell type labels:
+  Granule-mature, Granule-immature, Mossy-Cyp26b1, Mossy-Adcyap1,
+  Mossy-Klk8, Neuroblast 1, Neuroblast 2, Cajal-Retzius,
+  GABA-Cnr1, GABA-Lhx6, Astrocytes.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.1, default parameters,
+  raw normalization, 100 bootstrap iterations). 2 genes unmapped.
+  Per-cell labels aggregated by source_cluster_label and target
+  taxonomy level for F1 scoring.
+tool_version: "cell_type_mapper v1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.0
+n_cells_total: 2934
+n_cells_after_filter: 2934
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.11"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "(see git log at run time)"
+
+output:
+  relpath: f1_scores_best.csv
+  format: csv
