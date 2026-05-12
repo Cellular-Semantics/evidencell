@@ -101,6 +101,11 @@ prefixes:
   # WMB = Whole Mouse Brain atlas (Allen Brain Cell Atlas CCN taxonomy)
   # Placeholder URL pending official Allen CURIE registration.
   WMB:       https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/metadata/WMB-taxonomy/20231215/cell_set_information.csv#
+  # Mapping vocabulary prefixes (Phase 2 schema overhaul, 2026-05-12).
+  # See planning/phase_2_decisions_2026-05-12.md.
+  skos:       http://www.w3.org/2004/02/skos/core#
+  semapv:     https://w3id.org/semapv/vocab/
+  evidencell: https://w3id.org/evidencell/
 
 imports:
   - linkml:types
@@ -249,72 +254,194 @@ enums:
   #   container files and in taxonomy_meta.yaml level_hierarchy.
 
   # ── Mapping relationship types ──────────────────────────────────
+  #
+  # Direction convention: relationships are directional, read from the
+  # lit_type (subject) to the taxonomy_type (object). SKOS predicates
+  # are used where they apply; custom evidencell: predicates for cases
+  # SKOS does not cover. See docs/mapping_schema_2026-05-12.md for the
+  # glossary preamble and worked examples.
+  #
+  # SKOS broadMatch / narrowMatch are counter-intuitive: the match goes
+  # *to* the broader / narrower thing, not *from* it. Enum value
+  # descriptions below restate the direction in plain English.
+  #
+  # Phase 2 schema overhaul, 2026-05-12. Old values (EQUIVALENT,
+  # PARTIAL_OVERLAP, CROSS_CUTTING, TYPE_A_SPLITS, TYPE_A_MERGES,
+  # SUBSET, SUPERSET, NO_CORRESPONDENCE, UNCERTAIN, CANDIDATE_SYNONYM,
+  # OVERLAPS) removed; KB sweep migrates existing edges in PR2.
   MappingRelationship:
     description: >
-      The nature of the correspondence between type_a and type_b in this edge.
-      Relationships are directional: from type_a to type_b.
+      The nature of the correspondence between lit_type and taxonomy_type
+      in this edge. Relationships are directional, from lit_type to
+      taxonomy_type. Permissible-value identifiers are CURIEs binding
+      to SKOS predicates where applicable; custom evidencell: predicates
+      otherwise.
     permissible_values:
+      skos:exactMatch:
+        description: >
+          The lit_type and taxonomy_type describe the same cell population
+          (one-to-one identity). Clean 1:1 correspondence backed by
+          convergent multi-source evidence (e.g. F1 >= 0.8 AT + matching
+          markers + matching anatomy). E.g. Lugaro → WMBv1 supertype 1145
+          (F1=0.96).
+      skos:closeMatch:
+        description: >
+          The lit_type and taxonomy_type are judged to describe the same
+          cell population under partial information (typically F1
+          ~0.65–0.8, or non-AT evidence that converges but does not yet
+          rise to exactMatch). Conservative default for candidate-
+          synonym-style cases per #30 amendment 1 — pair with
+          mapping_justification: semapv:UnreviewedManualMapping when the
+          evidence has not been curator-confirmed.
+      skos:broadMatch:
+        description: >
+          The lit_type is **narrower** than the taxonomy_type; the
+          match goes *to* the broader thing. Read
+          `lit_OLM --skos:broadMatch--> Sst_Gaba_3_supertype` as
+          "OLM has a broad match — the supertype is the broader thing."
+          Pair with `mapping_cardinality: 1:1` when a specific cluster
+          is suspected to equal the lit_type but cannot yet be
+          identified (hidden 1:1); with `1:n` when the lit_type
+          genuinely subsumes multiple taxonomy_types within the
+          broader node (split case).
+      skos:narrowMatch:
+        description: >
+          The lit_type is **broader** than the taxonomy_type; the
+          match goes *to* the narrower thing. Read
+          `lit_classical_basket --skos:narrowMatch--> mli2_cluster` as
+          "classical basket has a narrow match — this specific cluster
+          is the narrower thing." Pair with
+          `mapping_cardinality: n:1` for merge cases where multiple
+          lit_types collapse onto one taxonomy_type.
+      evidencell:PartialOverlapMatch:
+        description: >
+          Genuinely incomplete overlap between lit_type and
+          taxonomy_type. Precision OR recall below ~0.65, or
+          partial-set semantics that cannot be expressed as a clean
+          subset / superset relation. No SKOS equivalent — distinguished
+          from skos:closeMatch (which asserts same-type-under-partial-
+          information) by the explicit non-equivalence claim. E.g.
+          Globular (PLI2) → cluster 5177 (precision 83%, recall 93%,
+          also distributed across other clusters).
+      evidencell:CrossCuttingMatch:
+        description: >
+          The taxonomy_type cross-cuts the boundary of the lit_type
+          (and usually at least one other lit_type). The transcriptomic
+          type captures cells that the classical taxonomy would assign
+          to multiple distinct types. E.g. MLI1 cuts across classical
+          basket and stellate cells. No SKOS equivalent.
+      evidencell:NoCorrespondence:
+        description: >
+          No corresponding type exists in the target taxonomy.
+          Use to explicitly document failures of correspondence
+          (e.g. a curated literature type that the atlas does not
+          resolve at any rank). No SKOS equivalent.
+
+      # ── DEPRECATED (Phase 2 transition, 2026-05-12) ────────────────
+      # These values are retained for the PR1 → PR2 window so existing
+      # KB YAML continues to validate. The PR2 KB sweep rewrites every
+      # edge using these values to the corresponding new CURIE; this
+      # block is deleted from the schema after the sweep completes.
+      # Migration table is in planning/phase_2_schema_overhaul_plan.md
+      # and planning/phase_2_decisions_2026-05-12.md.
       EQUIVALENT:
         description: >
-          type_a and type_b describe the same cell population.
-          Clean 1:1 correspondence. E.g. Lugaro → WMBv1 supertype 1145 (F1=0.96).
+          DEPRECATED — use `skos:exactMatch`. Migrated by the PR2 KB sweep.
       PARTIAL_OVERLAP:
         description: >
-          Some cells from type_a map to type_b, but the mapping is incomplete in
-          precision, recall, or both. E.g. Globular (PLI2) → cluster 5177 (precision 83%,
-          recall 93%: high precision, limited recall — also distributed across other clusters).
+          DEPRECATED — use `evidencell:PartialOverlapMatch`. Migrated by
+          the PR2 KB sweep.
       CROSS_CUTTING:
         description: >
-          type_b cross-cuts the boundary of type_a (and usually at least one other node).
-          The transcriptomic type captures cells that the classical taxonomy would assign
-          to multiple distinct types. E.g. MLI1 cuts across classical basket and stellate cells.
+          DEPRECATED — use `evidencell:CrossCuttingMatch`. Migrated by
+          the PR2 KB sweep.
       TYPE_A_SPLITS:
         description: >
-          type_a (typically classical) corresponds to multiple type_b nodes.
-          Use one edge per split, all with TYPE_A_SPLITS relationship.
-          E.g. one classical interneuron type splits into MLI1 + MLI2 in transcriptomics.
+          DEPRECATED — use `skos:broadMatch` with
+          `mapping_cardinality: 1:n`. Migrated by the PR2 KB sweep.
       TYPE_A_MERGES:
         description: >
-          Multiple type_a nodes (typically classical) all map to the same type_b.
-          Use one edge per merge source, all with TYPE_A_MERGES relationship.
+          DEPRECATED — use `skos:narrowMatch` with
+          `mapping_cardinality: n:1`. Migrated by the PR2 KB sweep.
       SUBSET:
         description: >
-          type_a is a proper subset of type_b. All type_a cells are in type_b,
-          but type_b contains additional cells. E.g. a specific projection subtype
-          is a subset of a broader transcriptomic subclass.
+          DEPRECATED — use `skos:broadMatch` with
+          `mapping_cardinality: 1:1`. Migrated by the PR2 KB sweep.
       SUPERSET:
         description: >
-          type_a is a proper superset of type_b. type_b cells are all in type_a,
-          but type_a also contains additional cells.
+          DEPRECATED — use `skos:narrowMatch` with
+          `mapping_cardinality: n:1`. Migrated by the PR2 KB sweep.
       NO_CORRESPONDENCE:
         description: >
-          No corresponding type exists in type_b's taxonomy.
-          Use to explicitly document failures of correspondence.
+          DEPRECATED — use `evidencell:NoCorrespondence`. Migrated by
+          the PR2 KB sweep.
       UNCERTAIN:
         description: >
-          Evidence is insufficient or contradictory to determine relationship type.
+          DEPRECATED — relationship-level UNCERTAIN is removed in
+          Phase 2. The PR2 KB sweep drops the relationship and sets
+          `mapping_justification: semapv:UnspecifiedMatching` instead.
+          (The UNCERTAIN value on MappingConfidence is a separate slot
+          and remains.)
       CANDIDATE_SYNONYM:
         description: >
-          The two nodes may refer to the same cell type but this has not been
-          confirmed by a curator. Used by extraction agents when two names or
-          descriptions appear to overlap but the evidence is insufficient to merge.
-
-          This is a provisional relationship: extraction agents should prefer
-          creating two nodes + CANDIDATE_SYNONYM over collapsing to one node
-          (split-first principle — merging is easier than splitting).
-
-          Resolution: a curator either confirms (→ migrate evidence to one node,
-          mark the other deprecated, or record as EQUIVALENT) or rejects
-          (→ document the distinguishing feature in caveats; change to a more
-          specific relationship type such as PARTIAL_OVERLAP or UNCERTAIN).
-
-          Queryable: "show all unresolved CANDIDATE_SYNONYM edges" surfaces
-          pending curation decisions without blocking KB construction.
+          DEPRECATED — use `skos:closeMatch` with
+          `mapping_justification: semapv:UnreviewedManualMapping`. No
+          KB rows currently use this value; included for completeness.
       OVERLAPS:
         description: >
-          Cross-taxonomy correspondence where a cell set in one taxonomy has
-          partial overlap with a cell set in another. Used for cross-taxonomy
-          annotation transfer edges where 1:1 equivalence cannot be assumed.
+          DEPRECATED — cross-taxonomy partial-overlap edges fold into
+          `skos:closeMatch`. Migrated by the PR2 KB sweep.
+
+  # ── Mapping cardinality ─────────────────────────────────────────
+  #
+  # Phase 2: split predicate from cardinality. SSSOM convention; values
+  # are literal strings (no upstream ontology).
+  MappingCardinality:
+    description: >
+      Cardinality of the mapping considered as a set relation. Used
+      together with skos:broadMatch / skos:narrowMatch to distinguish
+      hidden-1:1 (specific match suspected but not yet identifiable)
+      from genuine-1:n (splits / merges).
+    permissible_values:
+      "1:1":
+        description: One lit_type maps to one taxonomy_type.
+      "1:n":
+        description: One lit_type splits across multiple taxonomy_types.
+      "n:1":
+        description: Multiple lit_types collapse onto one taxonomy_type.
+
+  # ── Mapping justification (semapv subset) ───────────────────────
+  #
+  # Phase 2: track the provenance of the mapping decision. Values bound
+  # to the semapv vocabulary (https://w3id.org/semapv/vocab/).
+  MappingJustification:
+    description: >
+      Provenance of the mapping decision. Bound to the semapv mapping
+      provenance vocabulary; SSSOM-compatible.
+    permissible_values:
+      semapv:ManualMappingCuration:
+        description: Mapping reviewed and approved by a human curator.
+      semapv:UnreviewedManualMapping:
+        description: >
+          Manually proposed (typically agent-emitted from extraction or
+          synthesis) but not yet reviewed by a curator. The default
+          state for new edges in this KB.
+      semapv:LexicalMatching:
+        description: >
+          Mapping derived from name / synonym lexical match. Lowest
+          confidence among manual-class justifications.
+      semapv:CompositeMatching:
+        description: >
+          Mapping derived from multi-source evidence integration
+          (e.g. anatomy + markers + AT F1 all converging).
+      semapv:LogicalReasoning:
+        description: >
+          Mapping derived by logical reasoning over schema-encoded
+          relations.
+      semapv:UnspecifiedMatching:
+        description: >
+          Provenance not recorded. Use sparingly; prefer one of the
+          other values when known.
 
   # ── Mapping confidence ──────────────────────────────────────────
   MappingConfidence:
@@ -1783,40 +1910,105 @@ classes:
   MappingEdge:
     description: >
       An evidenced mapping assertion between two CellTypeNodes.
-      Edges are directional (type_a → type_b) but the relationship field
-      describes the nature of the correspondence, not a hierarchy.
+      Edges are directional (lit_type → taxonomy_type) but the
+      relationship field describes the nature of the correspondence,
+      not a hierarchy.
 
       Transitivity: edges can be chained. E.g.:
-        classical_lugaro --[EQUIVALENT, Osorno 2022]--> pli3_osorno
-        pli3_osorno --[EQUIVALENT, MapMyCells]--> wmb_supertype_1145
+        classical_lugaro --[skos:exactMatch, Osorno 2022]--> pli3_osorno
+        pli3_osorno --[skos:exactMatch, MapMyCells]--> wmb_supertype_1145
 
-      Cross-cutting: use multiple edges, all pointing at the same type_b:
-        classical_basket --[CROSS_CUTTING, Kozareva 2021]--> mli1_kozareva
-        classical_stellate --[PARTIAL_OVERLAP, Kozareva 2021]--> mli1_kozareva
+      Cross-cutting: use multiple edges, all pointing at the same taxonomy_type:
+        classical_basket   --[evidencell:CrossCuttingMatch]--> mli1_kozareva
+        classical_stellate --[evidencell:PartialOverlapMatch]--> mli1_kozareva
+
+      Splits / merges: use one edge per pair, all with
+      skos:broadMatch (split) or skos:narrowMatch (merge), each carrying
+      mapping_cardinality 1:n or n:1.
+
+      Phase 2 schema overhaul (2026-05-12): type_a → lit_type, type_b →
+      taxonomy_type. The old slot names are retained as deprecated
+      aliases for the PR1 → PR2 transition window; drop after KB sweep
+      completes.
     attributes:
       id:
         required: true
         identifier: true
         description: Unique edge ID, e.g. "edge_lugaro_to_pli3"
-      type_a:
-        required: true
-        range: CellTypeNode
-        description: ID of the source node (reference to CellTypeNode.id)
-      type_b:
-        required: true
+      lit_type:
         range: CellTypeNode
         description: >
-          ID of the target node (reference to CellTypeNode.id).
-          For atlas/taxonomy nodes, use the cell_set_accession as the id
-          (e.g. CS20230722_SUPT_0179). The node must be declared in the
-          graph's nodes list — a minimal stub (id, name, definition_basis,
-          taxonomy_id, cell_set_accession) suffices for taxonomy references.
+          ID of the source node (reference to CellTypeNode.id). Typically
+          a curated literature / classical type. Replaces type_a in
+          Phase 2; required once the KB sweep completes.
+      taxonomy_type:
+        range: CellTypeNode
+        description: >
+          ID of the target node (reference to CellTypeNode.id). Typically
+          an atlas / transcriptomic taxonomy node. For atlas/taxonomy
+          nodes, use the cell_set_accession as the id (e.g.
+          CS20230722_SUPT_0179). The node must be declared in the graph's
+          nodes list — a minimal stub (id, name, definition_basis,
+          taxonomy_id, cell_set_accession) suffices for taxonomy
+          references. Replaces type_b in Phase 2; required once the KB
+          sweep completes.
+      type_a:
+        deprecated: >
+          Renamed to lit_type in the Phase 2 schema overhaul (2026-05-12).
+          Retained as an alias for the duration of the PR1 → PR2
+          migration window so existing KB YAML continues to validate.
+          Remove from KB graphs during the PR2 sweep; this slot is
+          deleted from the schema thereafter.
+        range: CellTypeNode
+      type_b:
+        deprecated: >
+          Renamed to taxonomy_type in the Phase 2 schema overhaul
+          (2026-05-12). Retained as an alias for the duration of the
+          PR1 → PR2 migration window. Remove from KB graphs during the
+          PR2 sweep.
+        range: CellTypeNode
       relationship:
         required: true
         range: MappingRelationship
+      mapping_cardinality:
+        range: MappingCardinality
+        description: >
+          Cardinality of the mapping as a set relation. Required when
+          relationship is skos:broadMatch or skos:narrowMatch;
+          recommended on skos:exactMatch / skos:closeMatch (typically
+          1:1). Phase 2 schema overhaul (2026-05-12).
+      mapping_justification:
+        range: MappingJustification
+        description: >
+          Provenance of the mapping decision. Default for new edges:
+          semapv:UnreviewedManualMapping. Promote to
+          semapv:ManualMappingCuration on curator review. Phase 2
+          schema overhaul (2026-05-12).
       confidence:
         required: true
         range: MappingConfidence
+      confidence_score:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+        description: >
+          Optional numeric confidence (0-1). Agent-emitted; not
+          curator-derived. Per planning/phase_2_decisions_2026-05-12.md
+          there is no ordinal → numeric fallback. SSSOM-compatible.
+          Phase 3 may extend this slot's write semantics. Phase 2
+          schema overhaul (2026-05-12).
+      reconciliation_note:
+        description: >
+          Curator's synthesis when parallel evidence sources disagree
+          (e.g. divergent F1 from two AT runs on different datasets,
+          or marker evidence pointing one way while anatomy points
+          another). Distinct from per-property notes / rationale
+          fields. Phase 2 schema overhaul (2026-05-12).
+      reviewed_by:
+        description: >
+          Name or ORCID of the human reviewer who confirmed this edge,
+          distinct from the curator who created or last edited the
+          record. Phase 2 schema overhaul (2026-05-12).
       evidence:
         required: true
         multivalued: true
@@ -1828,10 +2020,11 @@ classes:
         inlined_as_list: true
         range: PropertyComparison
         description: >
-          Structured property-by-property comparison between type_a and type_b.
-          Makes the basis for the confidence judgment machine-readable and
-          surfaceable in reports. Populate at minimum: nt_type, location,
-          and all defining markers. Use NOT_ASSESSED where data is unavailable.
+          Structured property-by-property comparison between lit_type and
+          taxonomy_type. Makes the basis for the confidence judgment
+          machine-readable and surfaceable in reports. Populate at
+          minimum: nt_type, location, and all defining markers. Use
+          NOT_ASSESSED where data is unavailable.
       caveats:
         multivalued: true
         inlined_as_list: true

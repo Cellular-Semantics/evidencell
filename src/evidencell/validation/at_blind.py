@@ -27,6 +27,7 @@ from typing import Callable
 
 import yaml
 
+from evidencell import _mapping_compat
 from evidencell.paths import repo_root, taxonomy_db_path
 from evidencell.taxonomy_db import (
     TaxonomyDB,
@@ -259,8 +260,8 @@ class ATBlindAudit(AuditDriver):
                 ]
                 if not at_items:
                     continue
-                type_a = edge.get("type_a")
-                type_b = edge.get("type_b")
+                type_a = _mapping_compat.lit_type(edge)
+                type_b = _mapping_compat.taxonomy_type(edge)
                 if not (type_a and type_b):
                     continue
                 classical = nodes_by_id.get(type_a)

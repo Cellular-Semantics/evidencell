@@ -322,7 +322,21 @@ TASK:
 
 6. Add unresolved_questions and proposed_experiments where relevant.
 
-7. Produce the MappingEdge YAML block. Edge id format: "edge_{type_a_id}_to_{type_b_id}".
+7. Produce the MappingEdge YAML block. Edge id format:
+   `edge_{lit_type_id}_to_{taxonomy_type_id}`. The edge MUST set
+   both `lit_type` and `taxonomy_type` (Phase 2 schema overhaul,
+   2026-05-12 — `type_a` / `type_b` are deprecated aliases retained
+   only for the transition window). Set `relationship` to one of the
+   CURIE values: `skos:exactMatch`, `skos:closeMatch`,
+   `skos:broadMatch`, `skos:narrowMatch`,
+   `evidencell:PartialOverlapMatch`, `evidencell:CrossCuttingMatch`,
+   `evidencell:NoCorrespondence`. When using `skos:broadMatch` or
+   `skos:narrowMatch`, set `mapping_cardinality` to `1:1` (suspected
+   hidden one-to-one), `1:n` (genuine split), or `n:1` (merge). Set
+   `mapping_justification: semapv:UnreviewedManualMapping` by default
+   (agent-emitted); curators promote to `semapv:ManualMappingCuration`
+   on review. See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md)
+   for the SKOS direction convention and worked examples.
 
 RETURN the complete MappingEdge YAML block as a code fence. Do not write files.
 ```
@@ -372,8 +386,8 @@ For approved edges:
    `taxonomy_id`, `cell_set_accession`. Full node data lives in the taxonomy
    reference store at `kb/taxonomy/{taxonomy_id}/`.
 
-2. Append approved edges to the `edges:` section of the target file. Edge `type_b`
-   should use the `cell_set_accession` (e.g. `CS20230722_CLUS_0769`).
+2. Append approved edges to the `edges:` section of the target file. Edge
+   `taxonomy_type` should use the `cell_set_accession` (e.g. `CS20230722_CLUS_0769`).
 
 3. Update `target_atlas` on the graph if it was null (as for ASTA report ingests
    that started without an atlas target).
