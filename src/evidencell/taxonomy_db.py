@@ -1381,24 +1381,111 @@ def _expression_percentile(val: float, reference: list[float]) -> float:
     return sum(v < val for v in reference) / len(reference)
 
 
+# ── Marker tier scoring (Phase 1 follow-up: cohort-relative) ──────────────────
+
+# Cohort-percentile threshold above which a marker call gets the
+# "specificity" bonus (positive: +2 instead of +1; negative: −2 instead of −1).
+COHORT_SPECIFIC_PCT: float = 0.95
+
+
+def _score_marker_tier(
+    val: float, cohort_pct: float | None, is_negative: bool = False
+) -> int:
+    """Phase 1 follow-up scoring for a single marker on a single candidate.
+
+    Cohort-relative; replaces the atlas-global / sibling-percentile scheme
+    used by `_score_from_percentiles`. Three tiers per direction, anchored
+    on the absolute MIN_DETECTABLE noise floor and the cohort percentile
+    among surviving candidates.
+
+    Positive markers (defining + neuropeptide):
+      val < MIN_DETECTABLE                              → −1 (absent)
+      val ≥ MIN_DETECTABLE, cohort_pct < 0.95           → +1 (present)
+      val ≥ MIN_DETECTABLE, cohort_pct ≥ 0.95           → +2 (cohort-specific)
+
+    Negative markers (absence confirms expectation):
+      val < MIN_DETECTABLE                              → +1 (absent — confirms)
+      val ≥ MIN_DETECTABLE, cohort_pct < 0.95           → −1 (present — contradicts)
+      val ≥ MIN_DETECTABLE, cohort_pct ≥ 0.95           → −2 (aberrantly high)
+
+    A `cohort_pct` of None (no surviving cohort or gene not in cohort
+    distribution) collapses the +2 / −2 bonus to +1 / −1; the call still
+    distinguishes presence from absence via MIN_DETECTABLE.
+    """
+    if val < MIN_DETECTABLE:
+        return +1 if is_negative else -1
+    is_specific = cohort_pct is not None and cohort_pct >= COHORT_SPECIFIC_PCT
+    if is_negative:
+        return -2 if is_specific else -1
+    return +2 if is_specific else +1
+
+
+def _coverage_for_gene(
+    child_accs: list[str],
+    gene: str,
+    child_expression_data: dict[str, dict[str, float]],
+) -> tuple[float, int]:
+    """Return (coverage, n_children_with_data) for ``gene`` across children.
+
+    Coverage = fraction of children with measured expression at-or-above
+    ``MIN_DETECTABLE``. Children without any expression data for this gene
+    are excluded from both numerator and denominator (no signal either way).
+
+    Used at rank ≥ 1 to detect supertype-level heterogeneity: a strong
+    parent mean with low child coverage indicates the marker is concentrated
+    in a subset of children and the parent is not a coherent marker target.
+    """
+    if not child_accs or not child_expression_data:
+        return 0.0, 0
+    n_with = 0
+    n_detected = 0
+    for ca in child_accs:
+        ce = child_expression_data.get(ca)
+        if ce is None:
+            continue
+        val = ce.get(gene)
+        if val is None:
+            continue
+        n_with += 1
+        if val >= MIN_DETECTABLE:
+            n_detected += 1
+    if n_with == 0:
+        return 0.0, 0
+    return n_detected / n_with, n_with
+
+
 def _score_from_percentiles(
     sibling_pct: float,
     global_pct: float,
     is_negative: bool = False,
+    val: float | None = None,
 ) -> int:
     """Convert sibling and global percentiles to an integer score contribution.
 
+    When ``val`` is supplied and below ``MIN_DETECTABLE``, the gene is treated
+    as absent on the candidate; percentiles are not consulted because the
+    underlying value is at noise-floor and the percentile would be ill-defined.
+
     Positive markers (defining / neuropeptide):
-      sibling_pct ≥ 0.80  → +2  (top 20% among siblings — strong discriminator)
-      sibling_pct ≥ 0.50  → +1  (above-median among siblings)
-      sibling_pct < 0.50  →  0  (below-median; marker does not distinguish here)
-      global_pct  ≥ 0.90  → +1 additional (marker is atlas-globally specific)
+      val < MIN_DETECTABLE → −1  (absence penalty — defining marker not present)
+      val ≥ MIN_DETECTABLE:
+        sibling_pct ≥ 0.80  → +2  (top 20% among siblings — strong discriminator)
+        sibling_pct ≥ 0.50  → +1  (above-median among siblings)
+        sibling_pct < 0.50  → +1  (presence credit — gene is on, just non-discriminating)
+        global_pct  ≥ 0.90  → +1 additional (only on top of a sibling-passing score
+                                              ≥ 0.50; presence-only credit gets no
+                                              global bonus)
 
     Negative markers (inverted — high expression is bad):
-      sibling_pct ≥ 0.80  → −2
-      sibling_pct ≥ 0.50  → −1
-      sibling_pct < 0.50  → +1  (low expression confirms negative-marker expectation)
+      val < MIN_DETECTABLE → +1  (absence confirms negative-marker expectation)
+      val ≥ MIN_DETECTABLE:
+        sibling_pct ≥ 0.80  → −2
+        sibling_pct ≥ 0.50  → −1
+        sibling_pct < 0.50  → +1
     """
+    if val is not None and val < MIN_DETECTABLE:
+        return +1 if is_negative else -1
+
     if is_negative:
         if sibling_pct >= 0.80:
             return -2
@@ -1411,7 +1498,10 @@ def _score_from_percentiles(
         elif sibling_pct >= 0.50:
             score = 1
         else:
-            return 0  # below-median among siblings; global bonus does not apply
+            # Presence credit: gene is detectable but not a sibling discriminator.
+            # Global bonus does not apply here — non-discriminating presence stays
+            # below the score of even a single above-median match.
+            return 1
         if global_pct >= 0.90:
             score += 1
         return score
@@ -1481,7 +1571,11 @@ _OPTIONAL_CRITERIA_REGISTRY: dict[str, dict] = {
     "sex_bias": {
         "column": "male_female_ratio",
         "max_rank": 0,
-        "score": 1,
+        # Phase 1 follow-up D: bumped from +1 to +2. Sex_bias is a strong
+        # prior for sexually dimorphic classical types — a hypothalamic
+        # MALE_BIASED type matched against a cluster with male/female ratio
+        # > 3 is more diagnostic than a single +1 marker hit suggests.
+        "score": 2,
         "test": lambda mfr, direction: (
             mfr is not None and mfr < 0.3 if direction == "female"
             else mfr is not None and mfr > 3.0 if direction == "male"
@@ -1851,6 +1945,18 @@ class TaxonomyDB:
                 )
         return [r[0] for r in rows]
 
+    def get_anat_parents(self, anat_id: str) -> list[str]:
+        """Return immediate-parent MBA IDs of ``anat_id`` from anat_hierarchy."""
+        with self._connect() as con:
+            try:
+                rows = con.execute(
+                    "SELECT parent_id FROM anat_hierarchy WHERE child_id = ?",
+                    (anat_id,),
+                ).fetchall()
+            except sqlite3.OperationalError:
+                return []
+        return [r[0] for r in rows]
+
     _ALL_MARKER_COLS: tuple[str, ...] = (
         "defining_markers_scoped", "defining_markers", "tf_markers", "merfish_markers"
     )
@@ -1892,6 +1998,9 @@ class TaxonomyDB:
         propagate_nt: bool = True,
         optional_criteria: dict[str, str] | None = None,
         expression_data: dict[str, dict[str, float]] | None = None,
+        at_bypass: set[str] | None = None,
+        at_hits: dict[str, dict] | None = None,
+        region_expand_levels: int = 1,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -1941,11 +2050,43 @@ class TaxonomyDB:
 
         _marker_cols = tuple(marker_columns) if marker_columns else self._ALL_MARKER_COLS
 
-        # Resolve anat_root_ids to full descendant sets via closure
+        # Resolve anat_root_ids to full descendant sets via closure.
+        # `effective_anat` is the strict / exact query closure used for the
+        # exact-match bonus. `expanded_anat` widens it by walking up the MBA
+        # hierarchy `region_expand_levels` times and including those parents'
+        # descendants — rescues sibling-sublayer hits (e.g. CA1 pyramidal
+        # ↔ CA1 stratum oriens, both under MBA:382 Field CA1) without
+        # requiring the curator to enumerate every sublayer manually. The
+        # filter uses `expanded_anat`; the +1 region-exact bonus uses
+        # `effective_anat`.
         effective_anat: set[str] = set(anat_ids or [])
         if anat_root_ids:
             for root in anat_root_ids:
                 effective_anat.update(self.get_descendants(root, include_self=True))
+
+        expanded_anat: set[str] = set(effective_anat)
+        if region_expand_levels > 0 and (anat_ids or anat_root_ids):
+            seed_ids: list[str] = list(anat_ids or []) + list(anat_root_ids or [])
+            parents: set[str] = set()
+            frontier = list(seed_ids)
+            for _ in range(region_expand_levels):
+                next_frontier: list[str] = []
+                for nid in frontier:
+                    for p in self.get_anat_parents(nid):
+                        if p not in parents:
+                            parents.add(p)
+                            next_frontier.append(p)
+                frontier = next_frontier
+                if not frontier:
+                    break
+            for p in parents:
+                try:
+                    expanded_anat.update(
+                        self.get_descendants(p, include_self=True)
+                    )
+                except RuntimeError:
+                    # anat_closure not built — skip expansion silently
+                    break
 
         # Determine whether we're at leaf rank (rank 0) for NT propagation
         is_leaf = rank == 0 if rank is not None else (level == "cluster")
@@ -1992,158 +2133,346 @@ class TaxonomyDB:
                     "SELECT * FROM nodes WHERE taxonomy_level = ?", (level,)
                 ).fetchall()
 
-        # ── Pre-compute gene distribution references for percentile scoring ──────
-        # global_gene_vals: gene → all mean_expression values across every node
-        #   in expression_data (atlas-wide reference).
-        # sibling_gene_vals: parent_id → gene → values for nodes sharing that parent.
-        #   Siblings are nodes at the same rank that share a parent_id; this gives
-        #   a within-clade reference capturing local anatomical/type variation.
-        global_gene_vals: dict[str, list[float]] = defaultdict(list)
-        sibling_gene_vals: dict[str, dict[str, list[float]]] = defaultdict(
-            lambda: defaultdict(list)
-        )
-        if expression_data:
-            # Build a parent_id lookup from DB rows (rows already fetched above)
-            row_parent: dict[str, str | None] = {
-                dict(r)["node_id"]: dict(r).get("parent_id") for r in rows
-            }
-            for acc, gene_map in expression_data.items():
-                for sym, val in gene_map.items():
-                    global_gene_vals[sym].append(val)
-                pid = row_parent.get(acc)
-                if pid:
-                    for sym, val in expression_data[acc].items():
-                        sibling_gene_vals[pid][sym].append(val)
+        _at_bypass = at_bypass or set()
 
-        results = []
+        # ── Heterogeneity coverage at rank ≥ 1 ────────────────────────────
+        # Coverage = fraction of a candidate's rank-0 (leaf) descendants
+        # whose expression of a queried marker meets MIN_DETECTABLE. Used
+        # to soft-dampen positive-marker tier scores at non-leaf ranks: a
+        # strong parent mean with low leaf coverage indicates a marker
+        # concentrated in a subset of leaves rather than a coherent
+        # property of the candidate.
+        #
+        # Phase 1 follow-up C: descent target is rank 0 transitively, not
+        # just rank N−1. For a rank-2 (subclass) candidate this collects
+        # all leaf clusters under it across the supertype layer; for a
+        # rank-1 (supertype) candidate the rank-0 children coincide with
+        # its immediate children. Caller (find-candidates CLI) must load
+        # rank-0 expression alongside the queried-rank data when rank > 0.
+        parent_to_rank0: dict[str, list[str]] = {}
+        child_expression_data: dict[str, dict[str, float]] = {}
+        compute_coverage = (
+            rank is not None and rank > 0 and expression_data is not None
+        )
+        # parent_to_rank0 (the leaf descendant map) is needed both for
+        # heterogeneity coverage scoring AND for the region-filter
+        # rank-0-descendant fallback below (the BCKG workaround). Build
+        # it unconditionally at rank ≥ 1 — same code, two consumers.
+        build_descendant_map = rank is not None and rank > 0
+        if build_descendant_map:
+            assert rank is not None
+            all_parent_to_children: dict[str, list[str]] = defaultdict(list)
+            node_rank_map: dict[str, int] = {}
+            with self._connect() as con:
+                all_rows = con.execute(
+                    "SELECT node_id, parent_id, taxonomy_rank FROM nodes"
+                ).fetchall()
+            for r in all_rows:
+                rdict = dict(r)
+                pid = rdict.get("parent_id")
+                rk = rdict.get("taxonomy_rank")
+                nid = rdict["node_id"]
+                if pid:
+                    all_parent_to_children[pid].append(nid)
+                if rk is not None:
+                    node_rank_map[nid] = rk
+
+            for row in rows:
+                nid = dict(row)["node_id"]
+                leaves: list[str] = []
+                stack = list(all_parent_to_children.get(nid, []))
+                while stack:
+                    n = stack.pop()
+                    if node_rank_map.get(n) == 0:
+                        leaves.append(n)
+                    else:
+                        stack.extend(all_parent_to_children.get(n, []))
+                parent_to_rank0[nid] = leaves
+
+        if compute_coverage:
+            assert expression_data is not None
+            child_expression_data = expression_data
+
+        # ──────────────────────────────────────────────────────────────────
+        # Pass 1: hard filters. Apply region (programmatic only — LLM-adjacency
+        # wiring removed in Phase 1 follow-up A) and NT prerequisites, then
+        # collect survivors with the per-candidate state needed for scoring.
+        # AT-bypassed candidates skip the filters; their direct cell-assignment
+        # evidence overrides priors.
+        # ──────────────────────────────────────────────────────────────────
+        survivors: list[dict] = []
         for row in rows:
             nd = dict(row)
-            score = 0
+            node_acc = nd.get("node_id", "")
+            bypassed = node_acc in _at_bypass
 
+            node_anat_rows = self._get_anat(node_acc) if effective_anat else []
+            region_fraction: float | None = None
+            region_exact_match: bool = False
+            region_evidence: str | None = None
             if effective_anat:
-                node_anat = {a["anat_id"] for a in self._get_anat(nd["node_id"])}
-                if node_anat & effective_anat:
-                    score += 2
+                node_anat_ids = {a["anat_id"] for a in node_anat_rows}
+                if node_anat_rows:
+                    total_cells = sum(
+                        (r.get("cell_count") or 0) for r in node_anat_rows
+                    )
+                    if total_cells > 0:
+                        # region_fraction is calculated against the EXACT
+                        # closure so it reflects how on-target the candidate
+                        # really is, regardless of expansion.
+                        matched_cells = sum(
+                            (r.get("cell_count") or 0)
+                            for r in node_anat_rows
+                            if r["anat_id"] in effective_anat
+                        )
+                        region_fraction = matched_cells / total_cells
+                region_exact_match = bool(node_anat_ids & effective_anat)
+                if node_anat_rows:
+                    region_evidence = (
+                        "self" if (node_anat_ids & expanded_anat) else None
+                    )
+                # Filter uses expanded closure so sibling-sublayer hits
+                # survive. Drop only when neither the exact closure NOR
+                # the expansion catches the target's anat.
+                #
+                # ─── BCKG over-strip workaround ─────────────────────────
+                # At rank ≥ 1, subclass / supertype `anat` rows in the
+                # taxonomy DB are sometimes over-stripped (an upstream
+                # percent-of-cells cutoff in Brain Cell KG drops non-
+                # dominant regions). Rank-0 (cluster) anat is unaffected,
+                # since it comes from the source cluster-cell-anat table.
+                # When a rank ≥ 1 candidate fails the region intersection
+                # on its own anat, fall back to the union of its rank-0
+                # descendants' anat before declaring a region drop.
+                # Surviving via fallback is tagged
+                # _region_evidence='descendant_only' so callers (audit,
+                # reports) can attribute the rescue and downweight if
+                # desired.
+                #
+                # NOTE: remove this fallback once BCKG ships the upstream
+                # anat-rollup fix so non-leaf nodes carry a complete
+                # rollup of their descendants' regions. See
+                # planning/at_blind_region_drop_findings_2026-05-12.md §a.
+                if not bypassed and node_anat_rows and not (
+                    node_anat_ids & expanded_anat
+                ):
+                    descendant_anat_hit = False
+                    if build_descendant_map:
+                        leaves = parent_to_rank0.get(node_acc, [])
+                        if leaves:
+                            desc_anat_ids: set[str] = set()
+                            for leaf in leaves:
+                                for lar in self._get_anat(leaf):
+                                    desc_anat_ids.add(lar["anat_id"])
+                            if desc_anat_ids & expanded_anat:
+                                descendant_anat_hit = True
+                    if not descendant_anat_hit:
+                        continue
+                    region_evidence = "descendant_only"
 
-            if nt_type:
-                node_nt = nd.get("nt_type") or _nt_map.get(nd["node_id"])
+            if nt_type and not bypassed:
+                node_nt = nd.get("nt_type") or _nt_map.get(node_acc)
                 if node_nt:
                     nn, qt = node_nt.lower(), nt_type.lower()
-                    if nn.startswith(qt) or qt.startswith(nn):
-                        score += 2
+                    if not (nn.startswith(qt) or qt.startswith(nn)):
+                        continue
 
-            node_acc = nd.get("node_id", "")
-            node_expr = expression_data.get(node_acc, {}) if expression_data else {}
-            node_parent_id = nd.get("parent_id")
-
-            # ── Marker scoring ────────────────────────────────────────────────
-            # Positive markers — collect all gene symbols from DB marker columns.
-            # _marker_cols covers DEFINING/DEFINING_SCOPED/TF/MERFISH (JSON arrays).
-            # np_markers is a packed string ("Sst:9.2,Crh:4.4") that stores
-            # NEUROPEPTIDE-category markers; decode symbols and include in the
-            # fallback set so callers querying neuropeptide markers are not silently
-            # missed. Full presence-vs-discriminating scoring is tracked in #43.
-            node_markers: set[str] = set()
+            # Per-candidate metadata-marker set: used as fallback for genes
+            # absent from precomputed_expression. Covers four JSON-array
+            # marker columns plus parsed np_markers symbols.
+            cand_markers: set[str] = set()
             for col in _marker_cols:
                 raw = nd.get(col)
                 if raw:
-                    node_markers.update(json.loads(raw))
+                    cand_markers.update(json.loads(raw))
             np_raw = nd.get("np_markers")
             if np_raw:
                 for part in np_raw.split(","):
                     sym = part.split(":")[0].strip()
                     if sym:
-                        node_markers.add(sym)
+                        cand_markers.add(sym)
 
-            expr_detail: dict[str, dict] = {}  # gene → {val, reliable, sibling_pct, global_pct, score}
+            nd["_node_expr"] = (
+                expression_data.get(node_acc, {}) if expression_data else {}
+            )
+            nd["_node_markers"] = cand_markers
+            nd["_bypassed"] = bypassed
+            if region_fraction is not None:
+                nd["_region_fraction"] = round(region_fraction, 3)
+            if effective_anat:
+                nd["_region_exact_match"] = region_exact_match
+                if region_evidence is not None:
+                    nd["_region_evidence"] = region_evidence
+            survivors.append(nd)
 
+        # ──────────────────────────────────────────────────────────────────
+        # Cohort distributions: built from survivors after filtering. The
+        # cohort defines the relative-context for percentile scoring; once
+        # region+NT remove obvious off-targets, "specific within the cohort"
+        # is the meaningful question (not "specific atlas-wide"). Candidates
+        # without a value for a queried gene contribute 0.0 so the
+        # distribution covers the entire surviving pool.
+        # ──────────────────────────────────────────────────────────────────
+        queried_genes: set[str] = set(markers or []) | set(negative_markers or [])
+        cohort_gene_vals: dict[str, list[float]] = {
+            g: [s["_node_expr"].get(g, 0.0) for s in survivors]
+            for g in queried_genes
+        }
+
+        # ──────────────────────────────────────────────────────────────────
+        # Pass 2: score each survivor using the cohort distributions.
+        # ──────────────────────────────────────────────────────────────────
+        results = []
+        for nd in survivors:
+            score: float = 0
+            node_acc = nd["node_id"]
+            node_expr = nd.pop("_node_expr")
+            cand_markers = nd.pop("_node_markers")
+            nd.pop("_bypassed", None)
+            expr_detail: dict[str, dict] = {}
+            children = (
+                parent_to_rank0.get(node_acc, []) if compute_coverage else []
+            )
+
+            # Positive markers (defining + neuropeptide).
             if markers:
                 for m in markers:
                     if m in node_expr:
                         val = node_expr[m]
                         reliable = val >= MIN_DETECTABLE
-                        if reliable and expression_data:
-                            g_ref = global_gene_vals.get(m, [])
-                            s_ref = (
-                                sibling_gene_vals[node_parent_id].get(m, [])
-                                if node_parent_id
-                                else []
+                        cohort_pct = _expression_percentile(
+                            val, cohort_gene_vals.get(m, [])
+                        )
+                        tier = _score_marker_tier(
+                            val, cohort_pct, is_negative=False
+                        )
+                        # Coverage dampening at rank ≥ 1: positive marker
+                        # credit on a heterogeneous supertype is reduced by
+                        # sqrt(coverage). Negative-tier (absence) propagates
+                        # undampened — supertype-level absence stands on
+                        # its own.
+                        coverage: float | None = None
+                        delta: float = float(tier)
+                        if compute_coverage and tier > 0 and children:
+                            cov, n_with = _coverage_for_gene(
+                                children, m, child_expression_data
                             )
-                            g_pct = _expression_percentile(val, g_ref)
-                            s_pct = _expression_percentile(val, s_ref)
-                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=False)
-                            expr_detail[m] = {
-                                "val": val,
-                                "reliable": True,
-                                "sibling_pct": round(s_pct, 3),
-                                "global_pct": round(g_pct, 3),
-                                "score": delta,
-                            }
-                        elif not reliable:
-                            delta = 0
-                            expr_detail[m] = {
-                                "val": val,
-                                "reliable": False,
-                                "sibling_pct": None,
-                                "global_pct": None,
-                                "score": 0,
-                            }
-                        else:
-                            # expression_data not loaded — fallback binary
-                            delta = 1
+                            if n_with > 0:
+                                coverage = cov
+                                delta = tier * (cov ** 0.5)
+                        entry: dict = {
+                            "val": val,
+                            "reliable": reliable,
+                            "cohort_pct": round(cohort_pct, 3),
+                            "score": (
+                                round(delta, 3)
+                                if isinstance(delta, float)
+                                else delta
+                            ),
+                            "source": "expression",
+                        }
+                        if coverage is not None:
+                            entry["coverage"] = round(coverage, 3)
+                        expr_detail[m] = entry
                         score += delta
-                    elif m in node_markers:
-                        score += 1  # fallback: gene in DB marker columns
+                    elif m in cand_markers:
+                        # Metadata fallback — gene flagged on candidate but
+                        # not in precomputed_expression. Binary +1; no cohort
+                        # context available.
+                        score += 1
+                        expr_detail[m] = {
+                            "val": None,
+                            "reliable": None,
+                            "cohort_pct": None,
+                            "score": 1,
+                            "source": "metadata",
+                        }
 
-            # Negative markers
-            if negative_markers and node_expr:
+            # Negative markers (option A: cohort-relative tier).
+            if negative_markers:
                 for m in negative_markers:
                     if m in node_expr:
                         val = node_expr[m]
                         reliable = val >= MIN_DETECTABLE
-                        if reliable and expression_data:
-                            g_ref = global_gene_vals.get(m, [])
-                            s_ref = (
-                                sibling_gene_vals[node_parent_id].get(m, [])
-                                if node_parent_id
-                                else []
-                            )
-                            g_pct = _expression_percentile(val, g_ref)
-                            s_pct = _expression_percentile(val, s_ref)
-                            delta = _score_from_percentiles(s_pct, g_pct, is_negative=True)
-                            expr_detail[f"-{m}"] = {
-                                "val": val,
-                                "reliable": True,
-                                "sibling_pct": round(s_pct, 3),
-                                "global_pct": round(g_pct, 3),
-                                "score": delta,
-                            }
-                        elif not reliable:
-                            delta = 0
-                            expr_detail[f"-{m}"] = {
-                                "val": val,
-                                "reliable": False,
-                                "sibling_pct": None,
-                                "global_pct": None,
-                                "score": 0,
-                            }
-                        else:
-                            delta = 0  # no expression_data; can't penalise
-                        score += delta
+                        cohort_pct = _expression_percentile(
+                            val, cohort_gene_vals.get(m, [])
+                        )
+                        tier = _score_marker_tier(
+                            val, cohort_pct, is_negative=True
+                        )
+                        expr_detail[f"-{m}"] = {
+                            "val": val,
+                            "reliable": reliable,
+                            "cohort_pct": round(cohort_pct, 3),
+                            "score": tier,
+                            "source": "expression",
+                        }
+                        score += tier
+                    elif m in cand_markers:
+                        # Gap-4 metadata fallback: gene absent from
+                        # precomputed_expression but flagged on candidate
+                        # → contradicts the negative-marker expectation.
+                        expr_detail[f"-{m}"] = {
+                            "val": None,
+                            "reliable": None,
+                            "cohort_pct": None,
+                            "score": -1,
+                            "source": "metadata",
+                        }
+                        score += -1
 
             if expr_detail:
                 nd["_expression_detail"] = expr_detail
 
+            # ── Annotation transfer (Stage A signal) ──────────────────────
+            # F1 buckets (rough first cut; review after live data):
+            #   F1 ≥ 0.5  → +3  (strong direct cell-assignment evidence)
+            #   F1 ≥ 0.3  → +2
+            #   F1 ≥ floor → +1
+            if at_hits:
+                hit = at_hits.get(node_acc)
+                if hit:
+                    f1 = float(hit.get("f1") or 0.0)
+                    if f1 >= 0.5:
+                        at_delta = 3
+                    elif f1 >= 0.3:
+                        at_delta = 2
+                    else:
+                        at_delta = 1
+                    score += at_delta
+                    nd["_at_hit"] = {
+                        "f1": f1,
+                        "n_cells": hit.get("n_cells"),
+                        "target_level": hit.get("target_level"),
+                        "target_name": hit.get("target_name"),
+                        "score": at_delta,
+                    }
+
+            # Region exact-match bonus (Phase 1 follow-up E): when the
+            # candidate has cells in the strict queried-region closure (not
+            # only the expanded closure used for filtering), add +1. This
+            # preserves discrimination between candidates annotated to the
+            # precise queried sublayer and those rescued only by expansion
+            # to the parent region.
+            if nd.pop("_region_exact_match", False):
+                score += 1
+
             criteria_applied: list[str] = []
-            for name, direction, entry in _active_criteria:
-                col_val = nd.get(entry["column"])
-                if entry["test"](col_val, direction):
-                    score += entry["score"]
+            for name, direction, entry_def in _active_criteria:
+                col_val = nd.get(entry_def["column"])
+                if entry_def["test"](col_val, direction):
+                    score += entry_def["score"]
                     criteria_applied.append(f"{name}={direction}")
             if criteria_applied:
                 nd["_criteria_applied"] = criteria_applied
 
-            if score > 0:
+            # Keep candidates with non-negative score. Hard filters above
+            # already eliminate region/NT mismatches; a surviving candidate
+            # with score == 0 still passed real criteria and deserves a
+            # ranking slot. Negative scores indicate net counter-evidence
+            # (multiple absent defining markers, off-target negative
+            # markers) — drop.
+            if score >= 0:
                 nd["_score"] = score
                 results.append(nd)
 
@@ -2169,6 +2498,100 @@ def _detect_cas_format(source: Path) -> bool:
         except json.JSONDecodeError:
             return False
     return _is_cas_format(data)
+
+
+# ── AT artifact loader ────────────────────────────────────────────────────────
+
+# Canonical artifact path: research/{region}/at/{classical_id}_{taxonomy_id}_f1.json
+# The artifact is produced by `just at-extract-f1` (commit 5) from a MapMyCells
+# run directory. Phase 1 consumer logic only — find_candidates reads it as
+# a Stage A scoring signal when present.
+
+AT_ARTIFACT_GLOB = "research/*/at/{classical_id}_{taxonomy_id}_f1.json"
+
+
+def _load_at_artifact(
+    classical_node_id: str, taxonomy_id: str
+) -> dict | None:
+    """Locate and load an AT F1 artifact for this (classical, taxonomy) pair.
+
+    Searches under ``research/*/at/`` for a matching artifact. Returns the
+    parsed JSON dict, or None if no artifact exists or loading fails.
+    A warning is logged to stderr on malformed JSON; the find-candidates
+    pipeline proceeds without AT scoring.
+
+    The (classical_node_id, taxonomy_id) tuple is treated as unique within
+    the KB. If multiple matches exist (unexpected), the first is used.
+    """
+    from evidencell.paths import repo_root
+
+    pattern = AT_ARTIFACT_GLOB.format(
+        classical_id=classical_node_id, taxonomy_id=taxonomy_id
+    )
+    candidates = sorted(repo_root().glob(pattern))
+    if not candidates:
+        return None
+    if len(candidates) > 1:
+        print(
+            f"  WARNING: multiple AT artifacts for ({classical_node_id}, "
+            f"{taxonomy_id}); using first: {candidates[0]}",
+            file=sys.stderr,
+        )
+    artifact_path = candidates[0]
+    try:
+        with artifact_path.open(encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, json.JSONDecodeError) as exc:
+        print(
+            f"  WARNING: failed to load AT artifact {artifact_path}: {exc}. "
+            "Proceeding without AT scoring.",
+            file=sys.stderr,
+        )
+        return None
+
+
+def _at_hits_from_artifact(artifact: dict) -> dict[str, dict]:
+    """Convert a loaded artifact's hits list into the (accession → hit) map
+    that find_candidates expects. Drops malformed entries silently."""
+    hits: dict[str, dict] = {}
+    for entry in artifact.get("hits") or []:
+        if not isinstance(entry, dict):
+            continue
+        acc = entry.get("target_accession")
+        if not isinstance(acc, str):
+            continue
+        hits[acc] = entry
+    return hits
+
+
+def _classical_positive_markers(classical: dict) -> list[str]:
+    """Extract symbols for the positive-marker channel from a classical node.
+
+    Defining markers and neuropeptides are folded into a single list because
+    they feed the same Stage A scoring path; the scoring function does not
+    distinguish them. Order: defining markers first, then neuropeptides not
+    already present (de-duped, defining-priority).
+    """
+    out: list[str] = []
+    for m in classical.get("defining_markers") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym:
+            out.append(sym)
+    for m in classical.get("neuropeptides") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym and sym not in out:
+            out.append(sym)
+    return out
+
+
+def _classical_negative_markers(classical: dict) -> list[str]:
+    """Extract symbols for the negative-marker channel from a classical node."""
+    out: list[str] = []
+    for m in classical.get("negative_markers") or []:
+        sym = m.get("symbol") if isinstance(m, dict) else m
+        if sym:
+            out.append(sym)
+    return out
 
 
 def _cmd_ingest(source: str, taxonomy_id: str) -> None:
@@ -2464,7 +2887,7 @@ def _cmd_find_candidates(
     node_id: str,
     taxonomy_id: str,
     rank: int = 1,
-    top_n: int = 20,
+    top_k: int = 10,
 ) -> None:
     """Extract a classical node's property signature from a KB YAML file
     and query the taxonomy DB for candidate atlas matches at a given rank.
@@ -2510,18 +2933,10 @@ def _cmd_find_candidates(
         print(f"ERROR: node '{node_id}' not found in {graph_path}", file=sys.stderr)
         sys.exit(1)
 
-    # Extract property signature
-    markers: list[str] = []
-    for m in classical.get("defining_markers") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym:
-            markers.append(sym)
-
-    neg_markers: list[str] = []
-    for m in classical.get("negative_markers") or []:
-        sym = m.get("symbol") if isinstance(m, dict) else m
-        if sym:
-            neg_markers.append(sym)
+    # Extract property signature via the pure helpers below, so the symbol
+    # extraction is testable without a DB fixture.
+    markers = _classical_positive_markers(classical)
+    neg_markers = _classical_negative_markers(classical)
 
     nt_obj = classical.get("nt_type")
     nt_type: str | None = None
@@ -2544,16 +2959,38 @@ def _cmd_find_candidates(
 
     db = TaxonomyDB(db_path)
 
-    # Load precomputed expression data from the taxonomy YAML at the target rank's level
+    # Load precomputed expression data from the taxonomy YAML at the target
+    # rank's level. When rank > 0, also load rank-0 expression so that the
+    # heterogeneity coverage calculation in find_candidates can see leaf
+    # values for descent-based dampening (Phase 1 follow-up C).
     with db._connect() as _con:
         _level_row = _con.execute(
             "SELECT taxonomy_level FROM nodes WHERE taxonomy_rank = ? LIMIT 1", (rank,)
         ).fetchone()
     _expr_level = _level_row[0] if _level_row else "cluster"
     expression_data = load_expression_data(taxonomy_id, _expr_level)
+    if rank > 0:
+        with db._connect() as _con:
+            _leaf_row = _con.execute(
+                "SELECT taxonomy_level FROM nodes WHERE taxonomy_rank = 0 LIMIT 1"
+            ).fetchone()
+        if _leaf_row:
+            leaf_level = _leaf_row[0]
+            leaf_expr = load_expression_data(taxonomy_id, leaf_level)
+            # Merge (queried rank takes precedence on key collisions, which
+            # shouldn't happen since accessions are unique across ranks).
+            for acc, gene_map in leaf_expr.items():
+                expression_data.setdefault(acc, gene_map)
+            if leaf_expr:
+                print(
+                    f"  Loaded leaf expression data: {len(leaf_expr)} nodes "
+                    f"at {leaf_level} level (for coverage computation)",
+                    file=sys.stderr,
+                )
     if expression_data:
         print(
-            f"  Loaded expression data: {len(expression_data)} nodes at {_expr_level} level",
+            f"  Loaded expression data: {len(expression_data)} nodes "
+            f"(merged across queried + leaf ranks where applicable)",
             file=sys.stderr,
         )
     else:
@@ -2629,7 +3066,7 @@ def _cmd_find_candidates(
 
     print(f"Classical node: {node_id} ({classical.get('name', '?')})", file=sys.stderr)
     print(f"  NT type: {nt_type}", file=sys.stderr)
-    print(f"  Markers: {markers}", file=sys.stderr)
+    print(f"  Markers (defining + neuropeptides): {markers}", file=sys.stderr)
     if neg_markers:
         print(f"  Negative markers: {neg_markers}", file=sys.stderr)
     print(f"  Soma locations: {anat_ids}", file=sys.stderr)
@@ -2639,6 +3076,25 @@ def _cmd_find_candidates(
     print(f"  Taxonomy: {taxonomy_id}", file=sys.stderr)
     if optional_criteria:
         print(f"  Optional criteria: {optional_criteria}", file=sys.stderr)
+
+    # AT artifact (commit 4 / gap 9): when MapMyCells F1 hits exist for this
+    # (classical, taxonomy) pair, hits above the persistence floor act as a
+    # Stage A scoring signal AND exempt their target candidates from region/NT
+    # filters (direct cell-assignment evidence overrides priors).
+    at_artifact = _load_at_artifact(node_id, taxonomy_id)
+    at_hits: dict[str, dict] | None = None
+    at_bypass: set[str] | None = None
+    if at_artifact:
+        at_hits = _at_hits_from_artifact(at_artifact)
+        at_bypass = set(at_hits.keys())
+        print(
+            f"  AT artifact: {len(at_hits)} hit(s) "
+            f"(run: {at_artifact.get('source_run_id', '?')}, "
+            f"floor: {at_artifact.get('f1_floor', '?')})",
+            file=sys.stderr,
+        )
+    else:
+        print("  AT artifact: not found (proceeding without AT scoring)", file=sys.stderr)
 
     # Try transitive anatomy matching (requires anat_closure table from MBA ontology).
     # Fall back to no anatomy matching if closure not built.
@@ -2650,6 +3106,8 @@ def _cmd_find_candidates(
         rank=rank,
         optional_criteria=optional_criteria,
         expression_data=expression_data or None,
+        at_hits=at_hits,
+        at_bypass=at_bypass,
     )
     try:
         candidates = db.find_candidates(
@@ -2668,8 +3126,11 @@ def _cmd_find_candidates(
         else:
             raise
 
-    # Trim to top_n
-    candidates = candidates[:top_n]
+    # Trim to top K. Phase 1: top_k replaces top_n. Conservative default
+    # (5) reflects the new gate-free flow — every above-cutoff candidate
+    # spawns a Stage B mapping subagent, so K bounds subagent count.
+    # If qualifying pool < K, all are emitted.
+    candidates = candidates[:top_k]
 
     # Output JSON
     output = {
@@ -2691,6 +3152,31 @@ def _cmd_find_candidates(
                    if c.get("male_female_ratio") is not None else {}),
                 **({"criteria_applied": c["_criteria_applied"]}
                    if c.get("_criteria_applied") else {}),
+                # Gap 7: emit per-gene scoring detail so downstream consumers
+                # (refinement subagent, mapping subagent, report generation)
+                # can see val / sibling_pct / global_pct / score per gene
+                # without re-deriving them.
+                **({"expression_detail": c["_expression_detail"]}
+                   if c.get("_expression_detail") else {}),
+                # Region fraction (cells in queried region / total annotated
+                # cells). Recorded but not used for filtering or scoring at
+                # Phase 1 — see roadmap §3.3 note on "in region + distant"
+                # cases. Available for Phase 2 predicate selection
+                # (low fraction supports BROADER / PARTIAL_OVERLAP) and
+                # Phase 3 verdict-at-report-time.
+                **({"region_fraction": c["_region_fraction"]}
+                   if c.get("_region_fraction") is not None else {}),
+                # `region_evidence == "descendant_only"` flags candidates
+                # rescued by the rank-0-descendant anat fallback (BCKG
+                # workaround). Surface so callers can downweight or
+                # report the rescue origin.
+                **({"region_evidence": c["_region_evidence"]}
+                   if c.get("_region_evidence") else {}),
+                # Annotation-transfer hit (commit 4 / gap 9). Present when
+                # MapMyCells F1 hits were loaded for this (classical,
+                # taxonomy) pair and this candidate is among them.
+                **({"at_hit": c["_at_hit"]}
+                   if c.get("_at_hit") else {}),
             }
             for c in candidates
         ],
@@ -2707,7 +3193,7 @@ if __name__ == "__main__":
         print("  python -m evidencell.taxonomy_db sync-mapmycells-paths <taxonomy_id>")
         print("  python -m evidencell.taxonomy_db fetch-mba <dest_path>")
         print("  python -m evidencell.taxonomy_db build-closure <taxonomy_id> <mba_json>")
-        print("  python -m evidencell.taxonomy_db find-candidates <graph_file> <node_id> <taxonomy_id> [rank] [top_n]")
+        print("  python -m evidencell.taxonomy_db find-candidates <graph_file> <node_id> <taxonomy_id> [rank] [top_k]")
         print("  python -m evidencell.taxonomy_db query-gene-expression <taxonomy_id> <accessions_csv> <genes_csv>")
         sys.exit(1)
 
@@ -2726,8 +3212,8 @@ if __name__ == "__main__":
         _cmd_build_closure(sys.argv[2], sys.argv[3])
     elif cmd == "find-candidates" and len(sys.argv) >= 5:
         _rank = int(sys.argv[5]) if len(sys.argv) > 5 else 1
-        _top_n = int(sys.argv[6]) if len(sys.argv) > 6 else 20
-        _cmd_find_candidates(sys.argv[2], sys.argv[3], sys.argv[4], _rank, _top_n)
+        _top_k = int(sys.argv[6]) if len(sys.argv) > 6 else 10
+        _cmd_find_candidates(sys.argv[2], sys.argv[3], sys.argv[4], _rank, _top_k)
     elif cmd == "query-gene-expression" and len(sys.argv) == 5:
         _accessions = [a.strip() for a in sys.argv[3].split(",") if a.strip()]
         _genes = [g.strip() for g in sys.argv[4].split(",") if g.strip()]

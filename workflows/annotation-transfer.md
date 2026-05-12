@@ -90,6 +90,43 @@ Step 6  Report regeneration
 
 ---
 
+## Source-label purity
+
+When registering an `AnnotationTransferRun`, **document whether the
+source cluster label is morphologically/biologically pure or known to
+be mixed**. The distinction shapes how the resulting F1 metrics should
+be interpreted in mapping edges and reports.
+
+- **Pure source labels** (patch-seq with morphological confirmation,
+  cluster labels from datasets with deep marker validation): expect
+  F1 to *rise* with finer atlas resolution. Cluster-level F1 is the
+  most informative summary. Example: Que 2021 PV patch-seq
+  (`at_run_20260508_que2021_pvin_mmc_wmbv1`) — BIC's F1 rises from
+  0.38 at subclass → 0.80 at cluster (`CLUS_0737`).
+- **Mixed source labels** (coarse scRNA-seq subclass labels covering
+  multiple biological types): expect F1 to *fall* with finer
+  resolution. Precision (`target_purity`) at deep levels is the
+  honest summary; F1 understates the cells' specificity. Example:
+  Yao 2021 SSv4 `Sst` subclass (272 hippocampal cells containing
+  OLM, bistratified, HS, oriens-oriens, …) — F1 falls from 0.98 at
+  subclass → 0.23 at cluster. The audit tags such cases with
+  `at_f1_monotonicity: falls_with_resolution` — read precision over
+  F1 when consuming.
+
+**Anti-pattern — do not bundle AT + relabel in one run.** When you
+want to score the same MapMyCells output under two label schemes (raw
+published labels vs derived/relabel scheme like Chamberland 2024
+gene-pair subfamilies on top of Harris 2018 Classes), create **two
+separate `AnnotationTransferRun` records** that reference the same
+`mmc_results.csv` via `output.relpath`. The schema allows shared
+outputs (no uniqueness constraint on `relpath`). Bundling makes the
+"drop unassigned" decision ambiguous and prevents downstream KB edges
+from citing the relevant scoring slice unambiguously. See
+[`planning/at_blind_region_drop_findings_2026-05-12.md`](../planning/at_blind_region_drop_findings_2026-05-12.md)
+§ h for the worked example.
+
+---
+
 ## Key design decisions (from ROADMAP)
 
 - **Source and target species are explicit**: `source_species` and

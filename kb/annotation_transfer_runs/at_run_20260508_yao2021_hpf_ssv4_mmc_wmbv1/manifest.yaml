@@ -1,0 +1,40 @@
+id: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE185862"
+source_cluster_label: >
+  Yao 2021 (GSE185862) mouse hippocampal formation SMART-Seq v4 cell type
+  labels (Allen Institute taxonomy): Astro, CA1-ProS, CA2-IG-FC, CA3, DG,
+  L2/3 IT ENTl, L2/3 IT RHP, L6 CT CTX, L6b CTX, Lamp5, Micro-PVM,
+  NP SUB, Oligo, Pvalb, SUB-ProS, Sncg, Sst, Sst Chodl, Vip.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper, default parameters, raw normalization,
+  100 bootstrap iterations). Per-cell labels aggregated by source_cluster_label
+  and target taxonomy level for F1 scoring. Inputs and intermediate outputs
+  live under research/hippocampus/glutamatergic/annotation_transfer/GSE185862_SSv4/.
+tool_version: "cell_type_mapper"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.0
+n_cells_total: 6398
+n_cells_after_filter: 6398
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+
+script:
+  relpath: README.md
+  python_version: ">=3.11"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "(see git log at run time)"
+
+output:
+  relpath: f1_scores_best.csv
+  format: csv

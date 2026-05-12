@@ -586,6 +586,47 @@ def _evidencell_commit() -> str:
     return ""
 
 
+def _at_evidence_display_summary(ev: dict) -> dict:
+    """Return ``{"best_f1_score": <float|None>, "best_mapping_level": <str>}``
+    for display in report methods summaries.
+
+    Derived from ``metrics_by_level`` (canonical) — picks the row with
+    the highest ``f1_score`` and returns its level. The per-evidence
+    ``best_*`` summary fields were dropped in B4
+    (planning/at_blind_region_drop_findings_2026-05-12.md §§ b, h) as
+    undocumented agent judgement calls; this function reconstructs the
+    same presentation deterministically.
+
+    Used for the methods summary in ``extract_methods_summary``. Not a
+    routing signal — downstream audits read ``metrics_by_level``
+    directly.
+    """
+    metrics = ev.get("metrics_by_level") or []
+    if not isinstance(metrics, list) or not metrics:
+        return {"best_f1_score": None, "best_mapping_level": ""}
+    best = None
+    best_f1 = -1.0
+    for m in metrics:
+        if not isinstance(m, dict):
+            continue
+        f1 = m.get("f1_score")
+        try:
+            f1f = float(f1) if f1 is not None else None
+        except (TypeError, ValueError):
+            f1f = None
+        if f1f is None:
+            continue
+        if f1f > best_f1:
+            best_f1 = f1f
+            best = m
+    if best is None:
+        return {"best_f1_score": None, "best_mapping_level": ""}
+    return {
+        "best_f1_score": best_f1,
+        "best_mapping_level": (best.get("taxonomy_level") or "").upper(),
+    }
+
+
 def extract_methods_summary(
     graph: dict,
     node_id: str,
@@ -733,8 +774,15 @@ def extract_methods_summary(
                             "source_species": ev.get("source_species", ""),
                             "target_atlas": ev.get("target_atlas", ""),
                             "target_species": ev.get("target_species", ""),
-                            "best_f1_score": ev.get("best_f1_score"),
-                            "best_mapping_level": ev.get("best_mapping_level", ""),
+                            # Derive display-only summary from
+                            # metrics_by_level (no more best_* on
+                            # ANNOTATION_TRANSFER evidence; see
+                            # planning/at_blind_region_drop_findings_2026-05-12.md
+                            # §§ b, h). Pick the highest-F1 row across
+                            # levels for the methods-summary headline;
+                            # this is presentation only, not a routing
+                            # signal.
+                            **_at_evidence_display_summary(ev),
                             "bootstrap_threshold": ev.get("bootstrap_threshold"),
                             "n_cells_total": ev.get("n_cells_total"),
                             "n_cells_after_filter": ev.get("n_cells_after_filter"),

@@ -753,6 +753,269 @@ def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]
 
 # ── CLI ──────────────────────────────────────────────────────────────────────
 
+def collect_kb_marker_union() -> set[str]:
+    """Scan kb/graphs/**/*.yaml for non-atlas nodes and return the union of
+    all marker gene symbols mentioned across them.
+
+    Phase 1 commit 10: drives the proactive enrichment step that replaces
+    per-mapping Step 2b. The set covers every gene any classical/literature
+    node carries on its `defining_markers`, `neuropeptides`, or
+    `negative_markers` fields, so that find-candidates always sees full
+    quantitative data on candidates without a manual enrichment call.
+
+    Atlas nodes (`definition_basis: ATLAS_TRANSCRIPTOMIC`) are skipped —
+    their markers come from the taxonomy ingest itself, not from the KB
+    side. Files that fail to parse are logged and skipped.
+    """
+    from evidencell.paths import repo_root
+
+    root = repo_root()
+    graphs_dir = root / "kb" / "graphs"
+    if not graphs_dir.exists():
+        return set()
+
+    out: set[str] = set()
+    for yaml_path in sorted(graphs_dir.rglob("*.yaml")):
+        try:
+            doc = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
+        except Exception as exc:  # noqa: BLE001
+            log.warning("Failed to parse %s: %s — skipping", yaml_path, exc)
+            continue
+        nodes = doc.get("nodes") or []
+        for nd in nodes:
+            if not isinstance(nd, dict):
+                continue
+            if nd.get("definition_basis") == "ATLAS_TRANSCRIPTOMIC":
+                continue
+            for field in ("defining_markers", "neuropeptides", "negative_markers"):
+                for m in nd.get(field) or []:
+                    sym = m.get("symbol") if isinstance(m, dict) else m
+                    if sym:
+                        out.add(sym)
+    return out
+
+
+def enrich_for_kb_marker_union(
+    taxonomy_id: str,
+    stats_path: str | Path,
+    gene_mapping_path: str | Path,
+    levels: list[str] | None = None,
+) -> dict[str, Any]:
+    """Batch-enrich every taxonomy node with `precomputed_expression` for
+    the union of all KB-mentioned marker genes.
+
+    Replaces the per-mapping Step 2b enrichment in workflows/map-cell-type.md
+    so that find-candidates always sees full quantitative data on candidates
+    without a manual call. Should be re-run when classical nodes are added
+    or their marker lists change.
+
+    Args:
+        taxonomy_id: target taxonomy (e.g. CCN20230722).
+        stats_path: path to the precomputed_stats HDF5 for this taxonomy.
+        gene_mapping_path: gene mapping TSV (symbol → Ensembl).
+        levels: list of taxonomy levels to enrich (default: ["cluster",
+            "supertype"]). The supertype level also gets the
+            `child_cluster_expression` block populated by add_expression_supertype.
+
+    Returns:
+        Summary dict with `taxonomy_id`, `n_genes`, `genes_used`,
+        `genes_missing` (TSV mapping had no Ensembl), and per-level update
+        counts.
+    """
+    if levels is None:
+        levels = ["cluster", "supertype"]
+
+    genes = sorted(collect_kb_marker_union())
+    if not genes:
+        return {
+            "taxonomy_id": taxonomy_id,
+            "n_genes": 0,
+            "genes_used": [],
+            "genes_missing": [],
+            "by_level": {},
+            "note": "No KB-mentioned marker genes found",
+        }
+
+    mapping = load_gene_mapping(gene_mapping_path)
+
+    by_level: dict[str, dict] = {}
+    for level in levels:
+        if level == "supertype":
+            res = add_expression_supertype(
+                taxonomy_id=taxonomy_id,
+                stats_path=stats_path,
+                genes=genes,
+                gene_mapping=mapping,
+                accessions=None,
+            )
+        else:
+            res = add_expression(
+                taxonomy_id=taxonomy_id,
+                stats_path=stats_path,
+                genes=genes,
+                gene_mapping=mapping,
+                level=level,
+                accessions=None,
+            )
+        by_level[level] = res
+
+    # Genes the mapping couldn't resolve — same across calls; pick from cluster
+    # path which always runs.
+    genes_missing = by_level.get("cluster", {}).get("genes_missing", [])
+    genes_used = [g for g in genes if g not in genes_missing]
+
+    return {
+        "taxonomy_id": taxonomy_id,
+        "n_genes": len(genes),
+        "genes_used": genes_used,
+        "genes_missing": genes_missing,
+        "by_level": by_level,
+    }
+
+
+def extract_at_f1_artifact(
+    run_dir: str | Path,
+    classical_node_id: str,
+    source_cluster_label: str,
+    region: str,
+    f1_floor: float = 0.2,
+    target_levels: list[str] | None = None,
+) -> dict[str, Any]:
+    """Extract a per-(classical, taxonomy) F1 artifact from a MapMyCells run dir.
+
+    Reads ``{run_dir}/f1_matrix.csv`` (produced by ``annotation_transfer score``)
+    and ``{run_dir}/manifest.yaml``, filters rows by source_label and F1 floor,
+    resolves target labels to cell_set_accessions via the taxonomy DB, and writes
+
+      research/{region}/at/{classical_node_id}_{taxonomy_id}_f1.json
+
+    where the taxonomy_id is read from the manifest's ``target_taxonomy_id``.
+
+    Args:
+        run_dir: Path to ``kb/annotation_transfer_runs/{run_id}/``.
+        classical_node_id: Classical node ID this artifact is keyed against.
+        source_cluster_label: Filter the f1_matrix to rows whose ``source_label``
+            equals this. Curator-supplied; the (source_label → classical_id)
+            join is implicit at Phase 1.
+        region: Region name for the output path.
+        f1_floor: Minimum F1 to include (default 0.2).
+        target_levels: Optional list of levels to include (e.g. ["cluster",
+            "supertype"]). When None, all levels in f1_matrix are included.
+
+    Returns:
+        Summary dict with ``artifact_path``, ``hits`` count, ``run_id``,
+        ``taxonomy_id``, and ``unresolved`` (list of target_names that
+        could not be resolved to an accession).
+    """
+    from evidencell.paths import repo_root, taxonomy_db_path
+    from evidencell.taxonomy_db import TaxonomyDB
+
+    run_dir = Path(run_dir)
+    f1_csv = run_dir / "f1_matrix.csv"
+    manifest_path = run_dir / "manifest.yaml"
+    if not f1_csv.exists():
+        raise FileNotFoundError(f"f1_matrix.csv not found in {run_dir}")
+    if not manifest_path.exists():
+        raise FileNotFoundError(f"manifest.yaml not found in {run_dir}")
+
+    manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or {}
+    taxonomy_id = manifest.get("target_taxonomy_id")
+    if not taxonomy_id:
+        raise ValueError(
+            f"manifest at {manifest_path} missing 'target_taxonomy_id'"
+        )
+    run_id = manifest.get("id") or run_dir.name
+
+    # Read f1_matrix.csv with the stdlib (no pandas dep at this layer).
+    import csv as _csv
+    rows: list[dict[str, Any]] = []
+    with f1_csv.open(encoding="utf-8") as fh:
+        reader = _csv.DictReader(fh)
+        for r in reader:
+            try:
+                f1 = float(r.get("f1") or 0.0)
+            except ValueError:
+                continue
+            if r.get("source_label") != source_cluster_label:
+                continue
+            if f1 < f1_floor:
+                continue
+            level = r.get("level") or ""
+            if target_levels and level not in target_levels:
+                continue
+            try:
+                n_cells = int(r.get("n_cells") or 0)
+            except ValueError:
+                n_cells = 0
+            rows.append(
+                {
+                    "level": level,
+                    "target_name": r.get("target_name") or "",
+                    "f1": f1,
+                    "n_cells": n_cells,
+                    "group_purity": float(r.get("group_purity") or 0.0),
+                    "target_purity": float(r.get("target_purity") or 0.0),
+                }
+            )
+
+    # Resolve target_name → cell_set_accession via taxonomy DB.
+    db_path = taxonomy_db_path(taxonomy_id)
+    if not db_path.exists():
+        raise FileNotFoundError(
+            f"Taxonomy DB not found at {db_path}. Run: just build-taxonomy-db {taxonomy_id}"
+        )
+    db = TaxonomyDB(db_path)
+
+    hits: list[dict[str, Any]] = []
+    unresolved: list[str] = []
+    with db._connect() as con:
+        for r in rows:
+            cur = con.execute(
+                "SELECT node_id FROM nodes "
+                "WHERE label = ? AND taxonomy_level = ? LIMIT 1",
+                (r["target_name"], r["level"]),
+            )
+            match = cur.fetchone()
+            if match is None:
+                unresolved.append(f"{r['level']}: {r['target_name']}")
+                continue
+            hits.append(
+                {
+                    "target_accession": match[0],
+                    "target_level": r["level"],
+                    "target_name": r["target_name"],
+                    "f1": r["f1"],
+                    "n_cells": r["n_cells"],
+                    "group_purity": r["group_purity"],
+                    "target_purity": r["target_purity"],
+                }
+            )
+
+    artifact = {
+        "classical_node_id": classical_node_id,
+        "taxonomy_id": taxonomy_id,
+        "source_run_id": run_id,
+        "source_cluster_label": source_cluster_label,
+        "f1_floor": f1_floor,
+        "hits": hits,
+    }
+
+    out_dir = repo_root() / "research" / region / "at"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / f"{classical_node_id}_{taxonomy_id}_f1.json"
+    with out_path.open("w", encoding="utf-8") as fh:
+        json.dump(artifact, fh, indent=2)
+        fh.write("\n")
+
+    return {
+        "artifact_path": str(out_path.relative_to(repo_root())),
+        "taxonomy_id": taxonomy_id,
+        "run_id": run_id,
+        "hits": len(hits),
+        "unresolved": unresolved,
+    }
+
+
 def main() -> None:
     """CLI entry point for taxonomy update operations."""
     import argparse
@@ -821,6 +1084,46 @@ def main() -> None:
         help="Build/rebuild kb/annotation_transfer_runs/index.yaml from manifest files",
     )
 
+    # enrich-marker-union: proactively enrich taxonomy with all KB-mentioned markers
+    p_emu = sub.add_parser(
+        "enrich-marker-union",
+        help="Batch-enrich taxonomy nodes with KB-wide marker gene union",
+    )
+    p_emu.add_argument("taxonomy_id", help="Target taxonomy ID")
+    p_emu.add_argument("stats_h5", help="Path to precomputed_stats HDF5")
+    p_emu.add_argument("gene_mapping", help="Path to gene mapping TSV")
+    p_emu.add_argument(
+        "--levels", nargs="*",
+        help="Taxonomy levels to enrich (default: cluster supertype)",
+    )
+
+    # at-extract-f1: produce per-(classical, taxonomy) F1 artifact for find-candidates
+    p_atf1 = sub.add_parser(
+        "at-extract-f1",
+        help="Extract F1 hits from a MapMyCells run dir into a per-classical artifact",
+    )
+    p_atf1.add_argument(
+        "run_dir", help="Path to kb/annotation_transfer_runs/{run_id}/"
+    )
+    p_atf1.add_argument(
+        "classical_id", help="Classical node ID this artifact is keyed against"
+    )
+    p_atf1.add_argument(
+        "source_cluster_label",
+        help="Source label in f1_matrix.csv to filter on (e.g. 'Sst-OLM')",
+    )
+    p_atf1.add_argument(
+        "region", help="Region (used in output path: research/{region}/at/...)"
+    )
+    p_atf1.add_argument(
+        "--floor", type=float, default=0.2,
+        help="Minimum F1 to include (default 0.2)",
+    )
+    p_atf1.add_argument(
+        "--levels", nargs="*",
+        help="Restrict to these target levels (default: all in f1_matrix)",
+    )
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -867,6 +1170,26 @@ def main() -> None:
 
     elif args.command == "build-at-index":
         result = build_at_index()
+        print(json.dumps(result, indent=2))
+
+    elif args.command == "enrich-marker-union":
+        result = enrich_for_kb_marker_union(
+            taxonomy_id=args.taxonomy_id,
+            stats_path=args.stats_h5,
+            gene_mapping_path=args.gene_mapping,
+            levels=args.levels,
+        )
+        print(json.dumps(result, indent=2))
+
+    elif args.command == "at-extract-f1":
+        result = extract_at_f1_artifact(
+            run_dir=args.run_dir,
+            classical_node_id=args.classical_id,
+            source_cluster_label=args.source_cluster_label,
+            region=args.region,
+            f1_floor=args.floor,
+            target_levels=args.levels,
+        )
         print(json.dumps(result, indent=2))
 
 

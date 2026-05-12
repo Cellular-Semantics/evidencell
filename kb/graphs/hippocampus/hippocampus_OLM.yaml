@@ -37,7 +37,7 @@ nodes:
   - id: olm_hippocampus
     name: "Oriens-Lacunosum Moleculare (O-LM) interneuron"
     definition_basis: CLASSICAL_MULTIMODAL
-    species: null  # described in rat (Rattus norvegicus) and mouse (Mus musculus); species-specific nodes pending
+    species:       # described in rat (Rattus norvegicus) and mouse (Mus musculus); species-specific nodes pending
     anatomical_location:
       - id: UBERON:0005371
         label: "hippocampus stratum oriens"
@@ -82,7 +82,7 @@ nodes:
           quote_key: "13398453_9154fc23"
     defining_markers:
       - symbol: Sst
-        ncbi_gene_id: null
+        ncbi_gene_id:
         sources:
           - marker_type: PROTEIN
             ref: "PMID:10804195"
@@ -100,7 +100,7 @@ nodes:
             scope: "mouse hippocampus OLM cells"
             notes: "Detected in 46/46 cells (100%); mean counts 305273. Universally expressed in both Sst-OLM and Htr3a-OLM subtypes."
       - symbol: Chrna2
-        ncbi_gene_id: null
+        ncbi_gene_id:
         sources:
           - marker_type: TRANSCRIPT
             ref: "PMID:29487503"
@@ -118,7 +118,7 @@ nodes:
             scope: "mouse hippocampus OLM cells"
             notes: "Detected in 16/46 cells (35%); sparse expression. Htr3a-OLM 43% vs Sst-OLM 26%. Consistent with scattered Chrna2 at Sst Gaba_3 supertype level in WMBv1."
       - symbol: mGluR1
-        ncbi_gene_id: null
+        ncbi_gene_id:
         sources:
           - marker_type: PROTEIN
             ref: "PMID:10804195"
@@ -133,24 +133,24 @@ nodes:
     negative_markers:
       - symbol: PV
         modifier: ABSENT
-        ncbi_gene_id: null
+        ncbi_gene_id:
       - symbol: CB
         modifier: ABSENT
-        ncbi_gene_id: null
+        ncbi_gene_id:
       - symbol: CR
         modifier: ABSENT
-        ncbi_gene_id: null
+        ncbi_gene_id:
       - symbol: NOS
         modifier: ABSENT
-        ncbi_gene_id: null
+        ncbi_gene_id:
       - symbol: VIP
         modifier: ABSENT
-        ncbi_gene_id: null
+        ncbi_gene_id:
         # All negative markers from Katona et al. 2017 (PMID:27997999), quote_key: 4934764_4f190450
         # Note: PV overlap reported in a subpopulation (Zhang et al. 2025; Hernandez-Frausto 2023)
     neuropeptides:
       - symbol: Sst
-        ncbi_gene_id: null
+        ncbi_gene_id:
         sources:
           - marker_type: TRANSCRIPT
             ref: "PMID:31420995"
@@ -158,7 +158,7 @@ nodes:
             scope: "mouse hippocampus OLM cells"
             notes: "Detected in 46/46 cells (100%); see defining_markers.Sst for full detail."
       - symbol: Npy
-        ncbi_gene_id: null
+        ncbi_gene_id:
         sources:
           - marker_type: TRANSCRIPT
             ref: "PMID:31420995"
@@ -171,7 +171,7 @@ nodes:
             scope: "mouse hippocampus OLM cells"
             notes: "Detected in 37/46 cells (80%); mean counts 18709. Present in both subtypes (Sst-OLM 70%, Htr3a-OLM 91%)."
       - symbol: Pnoc
-        ncbi_gene_id: null
+        ncbi_gene_id:
         sources:
           - marker_type: TRANSCRIPT
             ref: "PMID:40757734"
@@ -222,7 +222,7 @@ nodes:
           method: "whole-cell patch-clamp"
           scope: "mouse CA1"
           quote_key: "234597703_fda66a57"
-    cl_mapping: null
+    cl_mapping:
     # No CL term found. Candidate for CL contribution.
     # Closest: CL:1001569 'hippocampal interneuron' (BROAD), CL:4023017 'sst GABAergic interneuron' (neocortex-defined)
     is_terminal: false
@@ -314,8 +314,6 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        best_f1_score: 0.0
-        best_mapping_level: "SUBCLASS"
         n_cells_total: 46
         n_cells_after_filter: 0
         bootstrap_threshold: 0.8
@@ -409,8 +407,6 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        best_f1_score: 0.0
-        best_mapping_level: "SUPERTYPE"
         n_cells_total: 46
         n_cells_after_filter: 0
         bootstrap_threshold: 0.8
@@ -495,8 +491,6 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        best_f1_score: 0.67
-        best_mapping_level: "SUPERTYPE"
         n_cells_total: 46
         n_cells_after_filter: 42
         bootstrap_threshold: 0.8
@@ -631,8 +625,6 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        best_f1_score: 0.0
-        best_mapping_level: "SUPERTYPE"
         n_cells_total: 46
         n_cells_after_filter: 0
         bootstrap_threshold: 0.8
@@ -726,8 +718,6 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        best_f1_score: 0.0
-        best_mapping_level: "SUPERTYPE"
         n_cells_total: 46
         n_cells_after_filter: 0
         bootstrap_threshold: 0.8
