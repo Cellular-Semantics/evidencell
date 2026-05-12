@@ -82,6 +82,19 @@ specification):
   cases like CA1 ↔ subiculum); NT match (only when both classical and
   candidate carry NT). Annotation-transfer-matched candidates bypass
   both filters.
+  - **Rank ≥ 1 descendant-anat fallback** (BCKG workaround): when a
+    rank ≥ 1 candidate's own `anat` rows fail to intersect the expanded
+    query closure, find_candidates retries against the *union of its
+    rank-0 descendants' anat*. If that intersects, the candidate
+    survives and the result carries `region_evidence: descendant_only`.
+    Rationale: upstream Brain Cell KG strips non-dominant regions from
+    non-leaf taxonomy nodes via a percent-of-cells cutoff, so the
+    subclass `anat` row is unreliable; rank-0 (cluster) anat comes
+    from the source cluster-cell-anat table and is intact. **This
+    fallback should be removed once BCKG ships an upstream
+    anat-rollup fix.** See
+    [planning/at_blind_region_drop_findings_2026-05-12.md](../planning/at_blind_region_drop_findings_2026-05-12.md)
+    § a, § B2.
 - **Soft scoring** within the surviving pool: per-marker presence/absence
   credit and percentile-based discrimination (defining markers +
   neuropeptides + negative markers, equal-weight); annotation-transfer

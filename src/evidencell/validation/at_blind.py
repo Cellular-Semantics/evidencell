@@ -50,6 +50,51 @@ _ACCESSION_PREFIX_TO_LEVEL = {
 _LEVEL_TO_RANK = {"cluster": 0, "supertype": 1, "subclass": 2, "class": 3}
 
 
+def _at_f1_monotonicity(ev_item: dict) -> str:
+    """Classify F1 monotonicity across an AT evidence item's
+    ``metrics_by_level``, ordered finest → coarsest (rank ascending).
+
+    Returns one of ``rises_with_resolution`` (F1 strictly increases as
+    we move to finer levels), ``falls_with_resolution`` (strictly
+    decreases), ``flat`` (all equal), ``mixed`` (non-monotonic), or
+    ``insufficient`` (fewer than two scored levels).
+
+    Used as a diagnostic flag on each audit outcome.
+    ``rises_with_resolution`` is the patch-seq pattern (Que 2021 BIC)
+    — the source label is morphologically/biologically pure and the
+    right WMBv1 target is at cluster level. ``falls_with_resolution``
+    is the mixed-source pattern (Yao Sst subclass) — F1 collapses at
+    finer levels because the source legitimately fragments.
+    """
+    metrics = ev_item.get("metrics_by_level") or []
+    if not isinstance(metrics, list):
+        return "insufficient"
+    pairs: list[tuple[int, float]] = []
+    for m in metrics:
+        if not isinstance(m, dict):
+            continue
+        level = (m.get("taxonomy_level") or "").lower()
+        rank = _LEVEL_TO_RANK.get(level)
+        f1 = m.get("f1_score")
+        if rank is None or f1 is None:
+            continue
+        try:
+            pairs.append((rank, float(f1)))
+        except (TypeError, ValueError):
+            continue
+    if len(pairs) < 2:
+        return "insufficient"
+    pairs.sort(key=lambda p: p[0])  # finest first (rank 0 → cluster)
+    f1s = [p[1] for p in pairs]
+    if all(abs(a - b) < 1e-9 for a, b in zip(f1s, f1s[1:])):
+        return "flat"
+    if all(a > b + 1e-9 for a, b in zip(f1s, f1s[1:])):
+        return "rises_with_resolution"
+    if all(a + 1e-9 < b for a, b in zip(f1s, f1s[1:])):
+        return "falls_with_resolution"
+    return "mixed"
+
+
 class ATBlindAudit(AuditDriver):
     """Audit driver implementing the AT-blind methodology described in
     the module docstring."""
@@ -60,7 +105,7 @@ class ATBlindAudit(AuditDriver):
         self,
         taxonomy_id: str = "CCN20230722",
         top_k: int = 10,
-        f1_floor: float = 0.2,
+        f1_floor: float = 0.5,
         limit: int | None = None,
         graphs_root: Path | None = None,
         **base_kwargs,
@@ -177,14 +222,26 @@ class ATBlindAudit(AuditDriver):
 
     def _extract_at_targets(self) -> list[dict]:
         """Walk ``kb/graphs/**/*.yaml`` for edges with
-        ``AnnotationTransferEvidence`` pointing at the audited taxonomy.
+        ``AnnotationTransferEvidence`` pointing at the audited taxonomy
+        and emit one test case per (level, target_accession) entry in
+        the AT evidence's ``metrics_by_level`` that meets ``f1_floor``.
 
-        Each returned dict carries the classical node, the target stub,
-        the AT F1 score, the graph file path, and the inferred target
-        rank. Stored on the instance for reuse by preflight + run."""
+        This is intentionally multi-case-per-edge: F1 monotonicity flips
+        with source-label purity (Que 2021 BIC rises with resolution;
+        Yao Sst falls). Picking one "best" level via
+        ``best_mapping_level`` was an undocumented agent judgement call
+        that misled the audit at the subclass level where the BCKG
+        upstream anatomy-rollup bug also bites. Reporting each level
+        independently gives the curator the data they need to interpret
+        purity.
+
+        Cases are deduplicated by (classical_id, level, target_accession),
+        keeping the highest F1 across multiple evidence items / runs.
+        """
         if hasattr(self, "_cases_cache"):
             return self._cases_cache  # type: ignore[attr-defined]
-        out: list[dict] = []
+        # cases_by_key: (classical_id, level, target_accession) → case
+        cases_by_key: dict[tuple[str, str, str], dict] = {}
         for yaml_path in sorted(self.graphs_root.rglob("*.yaml")):
             try:
                 doc = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
@@ -207,77 +264,102 @@ class ATBlindAudit(AuditDriver):
                 if not (type_a and type_b):
                     continue
                 classical = nodes_by_id.get(type_a)
-                target = nodes_by_id.get(type_b)
-                if not classical or not target:
+                if not classical:
                     continue
                 if classical.get("definition_basis") == "ATLAS_TRANSCRIPTOMIC":
                     continue
-                if target.get("definition_basis") != "ATLAS_TRANSCRIPTOMIC":
-                    continue
-                if target.get("taxonomy_id") != self.taxonomy_id:
-                    continue
-                target_acc = target.get("cell_set_accession")
-                if not target_acc:
-                    continue
-                best_f1 = max(
-                    (float(e.get("best_f1_score") or 0.0) for e in at_items),
-                    default=0.0,
-                )
-                if best_f1 < self.f1_floor:
-                    continue
-                target_level = (target.get("taxonomy_level") or "").lower()
-                if not target_level:
-                    for prefix, lvl in _ACCESSION_PREFIX_TO_LEVEL.items():
-                        if prefix in target_acc:
-                            target_level = lvl
-                            break
-                target_rank = _LEVEL_TO_RANK.get(target_level, 0)
 
-                # The F1 is informative AT THE LEVEL where it was
-                # computed (best_mapping_level), which can legitimately
-                # differ from the edge's target accession level — e.g.
-                # a curator records `best_mapping_level: SUPERTYPE` on
-                # a cluster-target edge to mean "the AT signal lives at
-                # the parent supertype". The audit must route this case
-                # to test at the supertype rank against the supertype
-                # ancestor, not at the cluster rank against the cluster.
-                # Build the effective (target_accession, rank) pair
-                # accordingly.
-                at_bml = (at_items[0].get("best_mapping_level") or "").lower()
-                if at_bml and at_bml != target_level:
-                    effective_acc, effective_rank = self._ancestor_at_level(
-                        target_acc, at_bml
-                    )
-                    if effective_acc is None:
-                        # Can't walk to that level; skip rather than
-                        # produce a misrouted test case.
-                        continue
-                    effective_level = at_bml
-                else:
-                    effective_acc = target_acc
-                    effective_level = target_level
-                    effective_rank = target_rank
+                graph_rel = str(yaml_path.relative_to(repo_root()))
+                edge_rel = edge.get("relationship")
 
-                out.append({
-                    "test_id": f"{type_a}|{effective_acc}",
-                    "graph_file": str(
-                        yaml_path.relative_to(repo_root())
-                    ),
-                    "classical_id": type_a,
-                    "classical_node": classical,
-                    "target_id": type_b,
-                    "target_accession": effective_acc,
-                    "edge_target_accession": target_acc,  # for traceability
-                    "target_level": effective_level,
-                    "target_rank": effective_rank,
-                    "best_f1": best_f1,
-                    "best_mapping_level": at_items[0].get("best_mapping_level"),
-                    "edge_relationship": edge.get("relationship"),
-                })
+                for ev_item in at_items:
+                    monotonicity = _at_f1_monotonicity(ev_item)
+                    rows = self._iter_metric_rows(ev_item, type_b)
+                    for level, target_acc, f1 in rows:
+                        if f1 < self.f1_floor:
+                            continue
+                        rank = _LEVEL_TO_RANK.get(level)
+                        if rank is None:
+                            continue
+                        if not self._target_exists_in_taxonomy(target_acc):
+                            continue
+                        key = (type_a, level, target_acc)
+                        existing = cases_by_key.get(key)
+                        if existing and existing["best_f1"] >= f1:
+                            continue
+                        cases_by_key[key] = {
+                            "test_id": f"{type_a}|{level}|{target_acc}",
+                            "graph_file": graph_rel,
+                            "classical_id": type_a,
+                            "classical_node": classical,
+                            "target_id": type_b,
+                            "target_accession": target_acc,
+                            "edge_target_accession": type_b,
+                            "target_level": level,
+                            "target_rank": rank,
+                            "best_f1": f1,
+                            "at_f1_monotonicity": monotonicity,
+                            "edge_relationship": edge_rel,
+                        }
+
+        out = list(cases_by_key.values())
+        out.sort(key=lambda c: c["test_id"])
         if self.limit:
             out = out[: self.limit]
         self._cases_cache = out
         return out
+
+    def _iter_metric_rows(
+        self, ev_item: dict, edge_target_acc: str
+    ) -> list[tuple[str, str, float]]:
+        """Yield ``(level, target_accession, f1)`` from a single
+        ANNOTATION_TRANSFER evidence item.
+
+        Prefers the ``metrics_by_level`` array (the unambiguous source
+        of truth). Falls back to the legacy ``best_mapping_level`` /
+        ``best_target_accession`` / ``best_f1_score`` summary fields
+        when ``metrics_by_level`` is missing, so audit doesn't silently
+        drop legacy evidence during the B4 sweep.
+        """
+        rows: list[tuple[str, str, float]] = []
+        metrics = ev_item.get("metrics_by_level") or []
+        if isinstance(metrics, list) and metrics:
+            for m in metrics:
+                if not isinstance(m, dict):
+                    continue
+                level = (m.get("taxonomy_level") or "").lower()
+                acc = m.get("best_target_accession")
+                f1 = m.get("f1_score")
+                if not (level and acc and f1 is not None):
+                    continue
+                try:
+                    rows.append((level, acc, float(f1)))
+                except (TypeError, ValueError):
+                    continue
+            return rows
+
+        # Legacy fallback: synthesise a single row from best_* fields.
+        level = (ev_item.get("best_mapping_level") or "").lower()
+        acc = ev_item.get("best_target_accession") or edge_target_acc
+        f1 = ev_item.get("best_f1_score")
+        if level and acc and f1 is not None:
+            try:
+                rows.append((level, acc, float(f1)))
+            except (TypeError, ValueError):
+                pass
+        return rows
+
+    def _target_exists_in_taxonomy(self, accession: str) -> bool:
+        """Verify ``accession`` resolves to a node in the audited
+        taxonomy DB. Filters out malformed entries early so missing
+        nodes show up as preflight failures, not silent skips."""
+        db = self._get_db()
+        with db._connect() as con:
+            row = con.execute(
+                "SELECT 1 FROM nodes WHERE node_id = ? AND taxonomy_id = ?",
+                (accession, self.taxonomy_id),
+            ).fetchone()
+        return row is not None
 
     def collect_ground_truth(self) -> list[dict]:
         return self._extract_at_targets()
@@ -329,6 +411,7 @@ class ATBlindAudit(AuditDriver):
                 candidate_detail = {
                     "score": score,
                     "region_fraction": c.get("_region_fraction"),
+                    "region_evidence": c.get("_region_evidence"),
                     "expression_detail": c.get("_expression_detail"),
                 }
                 break
@@ -336,8 +419,10 @@ class ATBlindAudit(AuditDriver):
         expected = {
             "target_accession": target_acc,
             "target_rank": rank,
+            "target_level": case["target_level"],
             "best_f1": case["best_f1"],
             "edge_relationship": case["edge_relationship"],
+            "at_f1_monotonicity": case.get("at_f1_monotonicity"),
         }
 
         if rank_in_results is None:
@@ -345,6 +430,7 @@ class ATBlindAudit(AuditDriver):
             miss_reason = self._categorise_miss(
                 db=db,
                 target_acc=target_acc,
+                target_rank=rank,
                 queried_mba_ids=mba_ids,
                 nt_type=nt_type,
             )
@@ -393,39 +479,74 @@ class ATBlindAudit(AuditDriver):
 
     # ── Helpers ───────────────────────────────────────────────────────
 
-    def _ancestor_at_level(
-        self, accession: str, target_level: str
-    ) -> tuple[str | None, int | None]:
-        """Walk up the taxonomy from ``accession`` until we hit a node
-        at ``target_level``. Returns ``(ancestor_accession, ancestor_rank)``
-        or ``(None, None)`` if no ancestor at that level exists.
-
-        Used by the audit when an AT evidence's ``best_mapping_level``
-        differs from the edge target's level: we test the AT signal at
-        the level it was computed (the ancestor), not at the edge's
-        target level.
+    def _summarise(self, run) -> dict:
+        """Extend base summary with per-AT-level and per-monotonicity
+        breakdowns. Also tally how many results survived the region
+        filter via the rank-0-descendant fallback (the BCKG workaround;
+        see :func:`evidencell.taxonomy_db.find_candidates`).
         """
-        target_level = (target_level or "").lower()
-        if target_level not in _LEVEL_TO_RANK:
-            return None, None
-        target_rank = _LEVEL_TO_RANK[target_level]
-        db = self._get_db()
+        base = super()._summarise(run)
+        by_level: dict[str, dict[str, int]] = {}
+        by_mono: dict[str, dict[str, int]] = {}
+        region_fb_hits = 0
+        for o in run.outcomes:
+            level = (o.expected.get("target_level") or "unknown")
+            bl = by_level.setdefault(level, {"n": 0, "pass_count": 0})
+            bl["n"] += 1
+            if o.passed:
+                bl["pass_count"] += 1
+            mono = o.expected.get("at_f1_monotonicity") or "unknown"
+            bm = by_mono.setdefault(mono, {"n": 0, "pass_count": 0})
+            bm["n"] += 1
+            if o.passed:
+                bm["pass_count"] += 1
+            det = (o.actual or {}).get("candidate_detail") or {}
+            if det.get("region_evidence") == "descendant_only":
+                region_fb_hits += 1
+        base["by_level"] = by_level
+        base["by_monotonicity"] = by_mono
+        base["region_descendant_fallback_hits"] = region_fb_hits
+        return base
+
+    def _descendant_anat(self, db: TaxonomyDB, node_acc: str) -> set[str]:
+        """Union of `anat.anat_id` rows across all rank-0 descendants of
+        ``node_acc``. Used by the audit's miss-categoriser to mirror the
+        region-filter fallback in :meth:`TaxonomyDB.find_candidates`.
+        Returns an empty set if ``node_acc`` has no rank-0 descendants
+        (e.g. when called on a rank-0 node itself).
+        """
         with db._connect() as con:
-            cur_acc = accession
-            for _ in range(8):  # safety bound
-                row = con.execute(
-                    "SELECT parent_id, taxonomy_rank FROM nodes WHERE node_id = ?",
-                    (cur_acc,),
-                ).fetchone()
-                if not row:
-                    return None, None
-                parent_id, rank = row
-                if rank == target_rank:
-                    return cur_acc, rank
-                if not parent_id:
-                    return None, None
-                cur_acc = parent_id
-        return None, None
+            # Walk down the parent_id pointers to rank-0 leaves.
+            all_rows = con.execute(
+                "SELECT node_id, parent_id, taxonomy_rank FROM nodes"
+            ).fetchall()
+        children: dict[str, list[str]] = {}
+        rank_of: dict[str, int] = {}
+        for r in all_rows:
+            d = dict(r)
+            pid = d.get("parent_id")
+            nid = d["node_id"]
+            rk = d.get("taxonomy_rank")
+            if pid:
+                children.setdefault(pid, []).append(nid)
+            if rk is not None:
+                rank_of[nid] = rk
+        leaves: list[str] = []
+        stack = list(children.get(node_acc, []))
+        while stack:
+            n = stack.pop()
+            if rank_of.get(n) == 0:
+                leaves.append(n)
+            else:
+                stack.extend(children.get(n, []))
+        out: set[str] = set()
+        with db._connect() as con:
+            for leaf in leaves:
+                for row in con.execute(
+                    "SELECT anat_id FROM anat WHERE node_id = ?", (leaf,)
+                ).fetchall():
+                    out.add(row[0])
+        return out
 
     def _get_db(self) -> TaxonomyDB:
         if self._db is None:
@@ -491,11 +612,18 @@ class ATBlindAudit(AuditDriver):
         self,
         db: TaxonomyDB,
         target_acc: str,
+        target_rank: int,
         queried_mba_ids: list[str],
         nt_type: str | None,
     ) -> str:
         """When a target isn't in find-candidates results, identify which
-        filter dropped it (or whether it scored negatively)."""
+        filter dropped it (or whether it scored negatively).
+
+        Region check mirrors the find_candidates logic exactly,
+        including the rank-0-descendant fallback (BCKG workaround) at
+        rank ≥ 1, so the reason returned here is consistent with the
+        candidate-side filter.
+        """
 
         # Region check: did target lose to the region filter?
         if queried_mba_ids:
@@ -519,7 +647,16 @@ class ATBlindAudit(AuditDriver):
                 ).fetchall()
             target_anat = {r[0] for r in target_anat_rows}
             if expanded and target_anat and not (target_anat & expanded):
-                return "region_drop"
+                # Mirror find_candidates' rank-0-descendant fallback at
+                # rank ≥ 1 (BCKG workaround). Only conclude region_drop
+                # when descendants also fail.
+                descendant_hit = False
+                if target_rank >= 1:
+                    descendant_anat = self._descendant_anat(db, target_acc)
+                    if descendant_anat & expanded:
+                        descendant_hit = True
+                if not descendant_hit:
+                    return "region_drop"
 
         # NT check
         if nt_type:

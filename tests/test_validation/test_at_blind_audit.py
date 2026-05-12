@@ -215,12 +215,26 @@ def _build_yaml_files(repo: Path) -> None:
     edges = [
         {"id": "edge_lit_to_target", "type_a": "lit_test", "type_b": "wmb_target",
          "relationship": "EQUIVALENT",
-         "evidence": [{"evidence_type": "ANNOTATION_TRANSFER",
-                       "best_f1_score": 0.9}]},
+         "evidence": [{
+             "evidence_type": "ANNOTATION_TRANSFER",
+             "metrics_by_level": [{
+                 "taxonomy_level": "CLUSTER",
+                 "taxonomy_rank": 0,
+                 "best_target_accession": "CLUS_TARGET",
+                 "f1_score": 0.9,
+             }],
+         }]},
         {"id": "edge_lit_to_distant", "type_a": "lit_test", "type_b": "wmb_distant",
          "relationship": "PARTIAL_OVERLAP",
-         "evidence": [{"evidence_type": "ANNOTATION_TRANSFER",
-                       "best_f1_score": 0.5}]},
+         "evidence": [{
+             "evidence_type": "ANNOTATION_TRANSFER",
+             "metrics_by_level": [{
+                 "taxonomy_level": "CLUSTER",
+                 "taxonomy_rank": 0,
+                 "best_target_accession": "CLUS_DISTANT",
+                 "f1_score": 0.5,
+             }],
+         }]},
     ]
     (repo / "kb" / "graphs" / "test_region" / "test.yaml").write_text(
         yaml.safe_dump({
@@ -250,7 +264,7 @@ def test_audit_finds_target_in_topk(synthetic_corpus):
     audit = ATBlindAudit(taxonomy_id="MINI001", top_k=10, f1_floor=0.0)
     run = audit.run()
     outcomes = {o.test_id: o for o in run.outcomes}
-    target_outcome = outcomes["lit_test|CLUS_TARGET"]
+    target_outcome = outcomes["lit_test|cluster|CLUS_TARGET"]
     assert target_outcome.passed
     assert target_outcome.reason == "found"
     assert target_outcome.actual["in_results"] is True
@@ -267,7 +281,7 @@ def test_audit_region_drop_for_distant_target(synthetic_corpus):
     audit = ATBlindAudit(taxonomy_id="MINI001", top_k=10, f1_floor=0.0)
     run = audit.run()
     outcomes = {o.test_id: o for o in run.outcomes}
-    distant_outcome = outcomes["lit_test|CLUS_DISTANT"]
+    distant_outcome = outcomes["lit_test|cluster|CLUS_DISTANT"]
     assert not distant_outcome.passed
     assert distant_outcome.reason == "region_drop"
     assert distant_outcome.actual["in_results"] is False

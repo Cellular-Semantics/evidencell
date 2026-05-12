@@ -1,0 +1,1249 @@
+{
+  "audit_id": "at_blind",
+  "started_at": "2026-05-11T16:36:35.269924+00:00",
+  "finished_at": "2026-05-11T16:37:22.411954+00:00",
+  "commit": "bbff3374e238364124f3c462f667ae4ce5460768",
+  "config": {
+    "taxonomy_id": "CCN20230722",
+    "top_k": 10,
+    "f1_floor": 0.2,
+    "limit": null,
+    "n_cases": 32
+  },
+  "preflight_assertions": [
+    {
+      "name": "taxonomy_db_exists",
+      "status": "pass"
+    },
+    {
+      "name": "taxonomy_db_fresh",
+      "status": "pass"
+    },
+    {
+      "name": "anat_closure_built",
+      "status": "pass"
+    },
+    {
+      "name": "uberon_resolution_coverage",
+      "status": "pass"
+    }
+  ],
+  "outcomes": [
+    {
+      "test_id": "pv_basket_cell_hippocampus|CS20230722_SUBC_052",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_052",
+        "target_rank": 2,
+        "best_f1": 0.827,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:407",
+          "MBA:495",
+          "MBA:632"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_052 not in 14 survivors (queried MBA: ['MBA:407', 'MBA:495', 'MBA:632'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "pv_basket_cell_hippocampus|CS20230722_CLUS_0739",
+      "expected": {
+        "target_accession": "CS20230722_CLUS_0739",
+        "target_rank": 0,
+        "best_f1": 0.827,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 3,
+        "score": 4.0,
+        "n_results": 136,
+        "queried_mba": [
+          "MBA:407",
+          "MBA:495",
+          "MBA:632"
+        ],
+        "candidate_detail": {
+          "score": 4.0,
+          "region_fraction": 0.283,
+          "expression_detail": {
+            "Pvalb": {
+              "val": 10.63,
+              "reliable": true,
+              "cohort_pct": 0.985,
+              "score": 2.0,
+              "source": "expression"
+            },
+            "Gad1": {
+              "val": 10.52,
+              "reliable": true,
+              "cohort_pct": 0.919,
+              "score": 1.0,
+              "source": "expression"
+            },
+            "Gad2": {
+              "val": 8.43,
+              "reliable": true,
+              "cohort_pct": 0.36,
+              "score": 1.0,
+              "source": "expression"
+            },
+            "-Cnr1": {
+              "val": 1.68,
+              "reliable": true,
+              "cohort_pct": 0.404,
+              "score": -1,
+              "source": "expression"
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_CLUS_0739 at rank 3/136 (score=4.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "cck_basket_cell_hippocampus|CS20230722_SUPT_0187",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0187",
+        "target_rank": 1,
+        "best_f1": 0.768,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 24,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUPT_0187 not in 24 survivors (queried MBA: ['MBA:407'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "axo_axonic_cell_hippocampus|CS20230722_SUPT_0204",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0204",
+        "target_rank": 1,
+        "best_f1": 0.612,
+        "edge_relationship": "EQUIVALENT"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 23,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUPT_0204 not in 23 survivors (queried MBA: ['MBA:407'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "axo_axonic_cell_hippocampus|CS20230722_CLUS_0732",
+      "expected": {
+        "target_accession": "CS20230722_CLUS_0732",
+        "target_rank": 0,
+        "best_f1": 0.622,
+        "edge_relationship": "EQUIVALENT"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 2,
+        "score": 3.0,
+        "n_results": 74,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "candidate_detail": {
+          "score": 3.0,
+          "region_fraction": 0.112,
+          "expression_detail": {
+            "Pvalb": {
+              "val": 8.56,
+              "reliable": true,
+              "cohort_pct": 0.969,
+              "score": 2.0,
+              "source": "expression"
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_CLUS_0732 at rank 2/74 (score=3.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "bistratified_cell_hippocampus|CS20230722_SUPT_0216",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0216",
+        "target_rank": 1,
+        "best_f1": 0.8,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 2,
+        "score": 3.75930562250979,
+        "n_results": 25,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "candidate_detail": {
+          "score": 3.75930562250979,
+          "region_fraction": 0.0,
+          "expression_detail": {
+            "Pvalb": {
+              "val": 1.48,
+              "reliable": true,
+              "cohort_pct": 0.741,
+              "score": 0.943,
+              "source": "expression",
+              "coverage": 0.889
+            },
+            "Sst": {
+              "val": 11.44,
+              "reliable": true,
+              "cohort_pct": 0.963,
+              "score": 2.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Tac1": {
+              "val": 0.55,
+              "reliable": true,
+              "cohort_pct": 0.778,
+              "score": 0.816,
+              "source": "expression",
+              "coverage": 0.667
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUPT_0216 at rank 2/25 (score=3.75930562250979)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "bistratified_cell_hippocampus|CS20230722_CLUS_0737",
+      "expected": {
+        "target_accession": "CS20230722_CLUS_0737",
+        "target_rank": 0,
+        "best_f1": 0.8,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 2,
+        "score": 6.0,
+        "n_results": 86,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "candidate_detail": {
+          "score": 6.0,
+          "region_fraction": 0.051,
+          "expression_detail": {
+            "Pvalb": {
+              "val": 8.27,
+              "reliable": true,
+              "cohort_pct": 0.959,
+              "score": 2.0,
+              "source": "expression"
+            },
+            "Sst": {
+              "val": 4.39,
+              "reliable": true,
+              "cohort_pct": 0.847,
+              "score": 1.0,
+              "source": "expression"
+            },
+            "Tac1": {
+              "val": 7.26,
+              "reliable": true,
+              "cohort_pct": 0.98,
+              "score": 2.0,
+              "source": "expression"
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_CLUS_0737 at rank 2/86 (score=6.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "olm_cell_ca1|CS20230722_SUBC_053",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_053",
+        "target_rank": 2,
+        "best_f1": 0.983,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:399"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_053 not in 14 survivors (queried MBA: ['MBA:399'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "hippocampo_septal_cell_ca1|CS20230722_SUBC_053",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_053",
+        "target_rank": 2,
+        "best_f1": 0.983,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:399"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_053 not in 14 survivors (queried MBA: ['MBA:399'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "neurogliaform_cell_hippocampus|CS20230722_SUBC_048",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_048",
+        "target_rank": 2,
+        "best_f1": 0.759,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 1,
+        "score": 1.0,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:391"
+        ],
+        "candidate_detail": {
+          "score": 1.0,
+          "region_fraction": 0.186,
+          "expression_detail": null
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUBC_048 at rank 1/14 (score=1.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "neurogliaform_cell_hippocampus|CS20230722_SUPT_0203",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0203",
+        "target_rank": 1,
+        "best_f1": 0.898,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 1,
+        "score": 4.0,
+        "n_results": 23,
+        "queried_mba": [
+          "MBA:391"
+        ],
+        "candidate_detail": {
+          "score": 4.0,
+          "region_fraction": 0.0,
+          "expression_detail": {
+            "Nos1": {
+              "val": 7.78,
+              "reliable": true,
+              "cohort_pct": 0.963,
+              "score": 2.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Npy": {
+              "val": 4.62,
+              "reliable": true,
+              "cohort_pct": 0.815,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Lamp5": {
+              "val": 6.73,
+              "reliable": true,
+              "cohort_pct": 0.963,
+              "score": 2.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Id2": {
+              "val": 9.36,
+              "reliable": true,
+              "cohort_pct": 0.963,
+              "score": 2.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "-Pvalb": {
+              "val": 0.43,
+              "reliable": true,
+              "cohort_pct": 0.63,
+              "score": -1,
+              "source": "expression"
+            },
+            "-Sst": {
+              "val": 1.52,
+              "reliable": true,
+              "cohort_pct": 0.778,
+              "score": -1,
+              "source": "expression"
+            },
+            "-Calb2": {
+              "val": 0.37,
+              "reliable": true,
+              "cohort_pct": 0.593,
+              "score": -1,
+              "source": "expression"
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUPT_0203 at rank 1/23 (score=4.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "ivy_cell_hippocampus|CS20230722_SUPT_0203",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0203",
+        "target_rank": 1,
+        "best_f1": 0.898,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 2,
+        "score": 2.0,
+        "n_results": 16,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "candidate_detail": {
+          "score": 2.0,
+          "region_fraction": 0.0,
+          "expression_detail": {
+            "Nos1": {
+              "val": 7.78,
+              "reliable": true,
+              "cohort_pct": 0.963,
+              "score": 2.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Npy": {
+              "val": 4.62,
+              "reliable": true,
+              "cohort_pct": 0.815,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Lamp5": {
+              "val": 6.73,
+              "reliable": true,
+              "cohort_pct": 0.963,
+              "score": 2.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "-Pvalb": {
+              "val": 0.43,
+              "reliable": true,
+              "cohort_pct": 0.63,
+              "score": -1,
+              "source": "expression"
+            },
+            "-Sst": {
+              "val": 1.52,
+              "reliable": true,
+              "cohort_pct": 0.778,
+              "score": -1,
+              "source": "expression"
+            },
+            "-Calb2": {
+              "val": 0.37,
+              "reliable": true,
+              "cohort_pct": 0.593,
+              "score": -1,
+              "source": "expression"
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUPT_0203 at rank 2/16 (score=2.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "is_interneuron_hippocampus|CS20230722_SUBC_046",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_046",
+        "target_rank": 2,
+        "best_f1": 0.969,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:399",
+          "MBA:415",
+          "MBA:391"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_046 not in 14 survivors (queried MBA: ['MBA:399', 'MBA:415', 'MBA:391'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "oriens_oriens_cell_hippocampus|CS20230722_SUBC_053",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_053",
+        "target_rank": 2,
+        "best_f1": 0.983,
+        "edge_relationship": "UNCERTAIN"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:399"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_053 not in 14 survivors (queried MBA: ['MBA:399'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "trilaminar_cell_hippocampus|CS20230722_SUPT_0206",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0206",
+        "target_rank": 1,
+        "best_f1": 0.612,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 4,
+        "score": 2.0,
+        "n_results": 21,
+        "queried_mba": [
+          "MBA:399"
+        ],
+        "candidate_detail": {
+          "score": 2.0,
+          "region_fraction": 0.601,
+          "expression_detail": {
+            "Pvalb": {
+              "val": 8.74,
+              "reliable": true,
+              "cohort_pct": 0.852,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "M2R": {
+              "val": 4.52,
+              "reliable": true,
+              "cohort_pct": 0.889,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "-Sst": {
+              "val": 2.72,
+              "reliable": true,
+              "cohort_pct": 0.852,
+              "score": -1,
+              "source": "expression"
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUPT_0206 at rank 4/21 (score=2.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "vip_basket_cell_hippocampus|CS20230722_SUBC_046",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_046",
+        "target_rank": 2,
+        "best_f1": 0.969,
+        "edge_relationship": "UNCERTAIN"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_046 not in 14 survivors (queried MBA: ['MBA:407'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "r_lm_cell_hippocampus|CS20230722_SUBC_053",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_053",
+        "target_rank": 2,
+        "best_f1": 0.983,
+        "edge_relationship": "UNCERTAIN"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:399"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_053 not in 14 survivors (queried MBA: ['MBA:399'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "p_lm_cell_hippocampus|CS20230722_SUBC_053",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_053",
+        "target_rank": 2,
+        "best_f1": 0.983,
+        "edge_relationship": "UNCERTAIN"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_053 not in 14 survivors (queried MBA: ['MBA:407'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "lth_cell_hippocampus|CS20230722_SUBC_053",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_053",
+        "target_rank": 2,
+        "best_f1": 0.983,
+        "edge_relationship": "UNCERTAIN"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:399"
+        ],
+        "miss_reason": "region_drop"
+      },
+      "passed": false,
+      "reason": "region_drop",
+      "notes": "Target CS20230722_SUBC_053 not in 14 survivors (queried MBA: ['MBA:399'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+      }
+    },
+    {
+      "test_id": "olm_hippocampus|CS20230722_SUPT_0216",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0216",
+        "target_rank": 1,
+        "best_f1": 0.67,
+        "edge_relationship": "TYPE_A_SPLITS"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 1,
+        "score": 6.575802203437516,
+        "n_results": 24,
+        "queried_mba": [
+          "MBA:399"
+        ],
+        "candidate_detail": {
+          "score": 6.575802203437516,
+          "region_fraction": 0.584,
+          "expression_detail": {
+            "Sst": {
+              "val": 11.44,
+              "reliable": true,
+              "cohort_pct": 0.963,
+              "score": 2.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Chrna2": {
+              "val": 0.61,
+              "reliable": true,
+              "cohort_pct": 0.963,
+              "score": 1.633,
+              "source": "expression",
+              "coverage": 0.667
+            },
+            "Npy": {
+              "val": 5.07,
+              "reliable": true,
+              "cohort_pct": 0.926,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Pnoc": {
+              "val": 3.69,
+              "reliable": true,
+              "cohort_pct": 0.667,
+              "score": 0.943,
+              "source": "expression",
+              "coverage": 0.889
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUPT_0216 at rank 1/24 (score=6.575802203437516)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_OLM.yaml"
+      }
+    },
+    {
+      "test_id": "ca1_pc_hippocampus|CS20230722_SUBC_016",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_016",
+        "target_rank": 2,
+        "best_f1": 0.9949,
+        "edge_relationship": "TYPE_A_SPLITS"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 2,
+        "score": 1.0,
+        "n_results": 13,
+        "queried_mba": [
+          "MBA:407"
+        ],
+        "candidate_detail": {
+          "score": 1.0,
+          "region_fraction": 0.318,
+          "expression_detail": null
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUBC_016 at rank 2/13 (score=1.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "ca2_pc_hippocampus|CS20230722_SUBC_025",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_025",
+        "target_rank": 2,
+        "best_f1": 0.973,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 1,
+        "score": 1.0,
+        "n_results": 9,
+        "queried_mba": [
+          "MBA:446"
+        ],
+        "candidate_detail": {
+          "score": 1.0,
+          "region_fraction": 0.089,
+          "expression_detail": null
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUBC_025 at rank 1/9 (score=1.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "ca3_pc_hippocampus|CS20230722_SUBC_017",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_017",
+        "target_rank": 2,
+        "best_f1": 0.9938,
+        "edge_relationship": "TYPE_A_SPLITS"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 3,
+        "score": 1.0,
+        "n_results": 12,
+        "queried_mba": [
+          "MBA:495"
+        ],
+        "candidate_detail": {
+          "score": 1.0,
+          "region_fraction": 0.395,
+          "expression_detail": null
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUBC_017 at rank 3/12 (score=1.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "dg_granule_cell_hippocampus|CS20230722_SUBC_037",
+      "expected": {
+        "target_accession": "CS20230722_SUBC_037",
+        "target_rank": 2,
+        "best_f1": 0.703,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 1,
+        "score": 2.0,
+        "n_results": 14,
+        "queried_mba": [
+          "MBA:632"
+        ],
+        "candidate_detail": {
+          "score": 2.0,
+          "region_fraction": 0.62,
+          "expression_detail": {
+            "Prox1": {
+              "val": null,
+              "reliable": null,
+              "cohort_pct": null,
+              "score": 1,
+              "source": "metadata"
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUBC_037 at rank 1/14 (score=2.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "hilar_mossy_cell_hippocampus|CS20230722_SUPT_0078",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0078",
+        "target_rank": 1,
+        "best_f1": 0.943,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 32,
+        "score": 3.0,
+        "n_results": 655,
+        "queried_mba": [
+          "MBA:726"
+        ],
+        "candidate_detail": {
+          "score": 3.0,
+          "region_fraction": 0.0,
+          "expression_detail": {
+            "Gria4": {
+              "val": 5.37,
+              "reliable": true,
+              "cohort_pct": 0.069,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Dkk3": {
+              "val": 8.71,
+              "reliable": true,
+              "cohort_pct": 0.982,
+              "score": 2.0,
+              "source": "expression",
+              "coverage": 1.0
+            }
+          }
+        }
+      },
+      "passed": false,
+      "reason": "below_topk",
+      "notes": "Target CS20230722_SUPT_0078 at rank 32/655 (score=3.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "hilar_mossy_cell_hippocampus|CS20230722_SUPT_0079",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0079",
+        "target_rank": 1,
+        "best_f1": 0.833,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 31,
+        "score": 3.0,
+        "n_results": 655,
+        "queried_mba": [
+          "MBA:726"
+        ],
+        "candidate_detail": {
+          "score": 3.0,
+          "region_fraction": 0.539,
+          "expression_detail": {
+            "Gria4": {
+              "val": 8.05,
+              "reliable": true,
+              "cohort_pct": 0.165,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            },
+            "Dkk3": {
+              "val": 5.32,
+              "reliable": true,
+              "cohort_pct": 0.837,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            }
+          }
+        }
+      },
+      "passed": false,
+      "reason": "below_topk",
+      "notes": "Target CS20230722_SUPT_0079 at rank 31/655 (score=3.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "dg_semilunar_granule_cell_hippocampus|CS20230722_SUPT_0137",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0137",
+        "target_rank": 1,
+        "best_f1": 0.935,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 4,
+        "score": 1.0,
+        "n_results": 27,
+        "queried_mba": [
+          "MBA:632"
+        ],
+        "candidate_detail": {
+          "score": 1.0,
+          "region_fraction": 0.711,
+          "expression_detail": null
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUPT_0137 at rank 4/27 (score=1.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "subicular_pyramidal_cell_hippocampus|CS20230722_SUPT_0096",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0096",
+        "target_rank": 1,
+        "best_f1": 0.798,
+        "edge_relationship": "TYPE_A_SPLITS"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 10,
+        "score": 2.0,
+        "n_results": 655,
+        "queried_mba": [
+          "MBA:502"
+        ],
+        "candidate_detail": {
+          "score": 2.0,
+          "region_fraction": 0.684,
+          "expression_detail": {
+            "Np65": {
+              "val": 8.6,
+              "reliable": true,
+              "cohort_pct": 0.162,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            }
+          }
+        }
+      },
+      "passed": true,
+      "reason": "found",
+      "notes": "Target CS20230722_SUPT_0096 at rank 10/655 (score=2.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "ec_layer2_stellate_cell_hippocampus|CS20230722_SUPT_0042",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0042",
+        "target_rank": 1,
+        "best_f1": 0.964,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 22,
+        "score": 2.0,
+        "n_results": 66,
+        "queried_mba": [
+          "MBA:909"
+        ],
+        "candidate_detail": {
+          "score": 2.0,
+          "region_fraction": 0.193,
+          "expression_detail": {
+            "Reln": {
+              "val": 8.17,
+              "reliable": true,
+              "cohort_pct": 0.882,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            }
+          }
+        }
+      },
+      "passed": false,
+      "reason": "below_topk",
+      "notes": "Target CS20230722_SUPT_0042 at rank 22/66 (score=2.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "ec_layer2_pyramidal_cell_hippocampus|CS20230722_SUPT_0052",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0052",
+        "target_rank": 1,
+        "best_f1": 0.694,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 14,
+        "score": 2.0,
+        "n_results": 68,
+        "queried_mba": [
+          "MBA:909"
+        ],
+        "candidate_detail": {
+          "score": 2.0,
+          "region_fraction": 0.965,
+          "expression_detail": {
+            "Calb1": {
+              "val": 7.14,
+              "reliable": true,
+              "cohort_pct": 0.912,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            }
+          }
+        }
+      },
+      "passed": false,
+      "reason": "below_topk",
+      "notes": "Target CS20230722_SUPT_0052 at rank 14/68 (score=2.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "ec_layer3_pyramidal_cell_hippocampus|CS20230722_SUPT_0036",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0036",
+        "target_rank": 1,
+        "best_f1": 0.937,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": true,
+        "rank_in_results": 20,
+        "score": 2.0,
+        "n_results": 68,
+        "queried_mba": [
+          "MBA:909"
+        ],
+        "candidate_detail": {
+          "score": 2.0,
+          "region_fraction": 1.0,
+          "expression_detail": {
+            "Pcp4": {
+              "val": 10.57,
+              "reliable": true,
+              "cohort_pct": 0.912,
+              "score": 1.0,
+              "source": "expression",
+              "coverage": 1.0
+            }
+          }
+        }
+      },
+      "passed": false,
+      "reason": "below_topk",
+      "notes": "Target CS20230722_SUPT_0036 at rank 20/68 (score=2.0)",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    },
+    {
+      "test_id": "hpc_glu_dopa_receptor_pyramidal_hippocampus|CS20230722_SUPT_0069",
+      "expected": {
+        "target_accession": "CS20230722_SUPT_0069",
+        "target_rank": 1,
+        "best_f1": 0.744,
+        "edge_relationship": "PARTIAL_OVERLAP"
+      },
+      "actual": {
+        "in_results": false,
+        "rank_in_results": null,
+        "score": null,
+        "n_results": 457,
+        "queried_mba": [
+          "MBA:1089"
+        ],
+        "miss_reason": "negative_score_or_other"
+      },
+      "passed": false,
+      "reason": "negative_score_or_other",
+      "notes": "Target CS20230722_SUPT_0069 not in 457 survivors (queried MBA: ['MBA:1089'])",
+      "metadata": {
+        "graph_file": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+      }
+    }
+  ],
+  "summary_stats": {
+    "n_cases": 32,
+    "pass_count": 15,
+    "pass_rate": 0.46875,
+    "by_reason": {
+      "region_drop": 11,
+      "found": 15,
+      "below_topk": 5,
+      "negative_score_or_other": 1
+    }
+  }
+}

@@ -43,14 +43,14 @@ error if any are missing.
 just validate-at-blind
 ```
 
-Defaults: `top_k=10`, `f1_floor=0.2`, `taxonomy=CCN20230722`.
+Defaults: `top_k=10`, `f1_floor=0.5`, `taxonomy=CCN20230722`.
 
 Options:
 
 | Flag | Meaning |
 |---|---|
 | `--top-k N` | Pass threshold (default 10) |
-| `--f1-floor X` | Minimum AT F1 to include in ground truth (default 0.2) |
+| `--f1-floor X` | Minimum AT F1 *per `metrics_by_level` entry* to include in ground truth (default 0.5 — "candidates worth investigating") |
 | `--taxonomy ID` | Target taxonomy (default CCN20230722) |
 | `--limit N` | Run only the first N cases (debugging) |
 | `--force-preflight` | Skip past a failed invariant. Use only with documented reason. |
@@ -68,8 +68,27 @@ The run artifact contains:
 - `audit_id`, `commit`, `started_at`, `finished_at`, `config`
 - `preflight_assertions`: list of invariant outcomes
 - `outcomes`: per-case dicts with `test_id`, `expected`, `actual`,
-  `passed`, `reason`, `notes`, `metadata`
-- `summary_stats`: aggregated pass count and by-reason breakdown
+  `passed`, `reason`, `notes`, `metadata`. ``test_id`` is
+  `{classical}|{level}|{target_accession}` — **one case per AT
+  metrics_by_level entry**, not per edge.
+- `summary_stats`: aggregated `pass_count`, `pass_rate`,
+  `by_reason`, plus:
+  - `by_level` — pass rates split by AT level
+    (`cluster`/`supertype`/`subclass`/`class`). Cluster vs subclass
+    pass rates diagnose whether the audit is finding fine vs coarse
+    matches.
+  - `by_monotonicity` — pass rates split by F1 monotonicity tag
+    (`rises_with_resolution`, `falls_with_resolution`, `flat`,
+    `mixed`, `insufficient`). `falls_with_resolution` means the
+    source label is biologically mixed (Yao Sst case): prefer
+    precision (`target_purity`) over F1 when interpreting weakening
+    cluster-level hits. `rises_with_resolution` means the source is
+    morphologically/biologically pure (Que 2021 patch-seq case);
+    cluster-level F1 is the right summary.
+  - `region_descendant_fallback_hits` — count of candidates rescued
+    from `region_drop` by the rank-0-descendant anat fallback in
+    `find_candidates` (workaround for the upstream BCKG anat
+    over-strip; see [the findings doc](../../planning/at_blind_region_drop_findings_2026-05-12.md) § a).
 
 ## After the run
 

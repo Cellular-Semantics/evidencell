@@ -102,18 +102,6 @@ validate-terms-file FILE:
 validate-at-blind *ARGS:
     uv run python -m evidencell.validation at-blind {{ARGS}}
 
-# Audit AT evidence whose best_mapping_level disagrees with the edge target's
-# accession-derived level (e.g. supertype-level F1 attached to a cluster edge).
-# Dry-run by default; pass --apply to rewrite the affected YAMLs in place
-# (surgical 2-line edits + audit log to
-# research/validation/methods_audits/at_f1_attribution/log.json).
-# A pre-edit hook check prevents new misattributions from being added.
-# Usage: just validate-at-f1
-#        just validate-at-f1 --apply
-[group('validation')]
-validate-at-f1 *ARGS:
-    uv run python -m evidencell.at_f1_attribution {{ARGS}}
-
 # ── QC (full suite) ────────────────────────────────────────────────────────────
 
 # QC gate for all KB graph files — must pass before committing

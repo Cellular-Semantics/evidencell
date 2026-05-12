@@ -32,6 +32,26 @@ def _print_summary(run, top_k: int) -> None:
     ):
         pct = 100 * count / n if n else 0
         print(f"    {reason:30s}  {count:4d}  ({pct:5.1f}%)")
+    by_level = stats.get("by_level")
+    if by_level:
+        print("  Outcomes by AT level:")
+        for level, subcounts in sorted(by_level.items()):
+            ln = subcounts.get("n", 0)
+            lp = subcounts.get("pass_count", 0)
+            lpr = (100 * lp / ln) if ln else 0
+            print(f"    {level:30s}  n={ln:4d}  pass={lp:4d}  ({lpr:5.1f}%)")
+    by_mono = stats.get("by_monotonicity")
+    if by_mono:
+        print("  Outcomes by AT F1 monotonicity (source-label purity diagnostic):")
+        for tag, subcounts in sorted(by_mono.items()):
+            ln = subcounts.get("n", 0)
+            lp = subcounts.get("pass_count", 0)
+            lpr = (100 * lp / ln) if ln else 0
+            print(f"    {tag:30s}  n={ln:4d}  pass={lp:4d}  ({lpr:5.1f}%)")
+    region_fb = stats.get("region_descendant_fallback_hits")
+    if region_fb is not None:
+        print(f"  Region filter: {region_fb} candidate(s) survived via "
+              f"rank-0-descendant anat fallback (BCKG workaround).")
 
 
 def main() -> int:
@@ -50,8 +70,10 @@ def main() -> int:
     p_atb.add_argument("--taxonomy", default="CCN20230722")
     p_atb.add_argument("--top-k", type=int, default=10)
     p_atb.add_argument(
-        "--f1-floor", type=float, default=0.2,
-        help="Only include AT-evidenced edges with best_f1_score ≥ this",
+        "--f1-floor", type=float, default=0.5,
+        help="Only emit (level × target) test cases whose AT F1 ≥ this. "
+             "Default 0.5 — candidates worth investigating. Lower it to "
+             "audit weaker mappings.",
     )
     p_atb.add_argument("--limit", type=int, default=None)
     p_atb.add_argument(

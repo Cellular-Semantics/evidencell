@@ -2154,13 +2154,13 @@ class TaxonomyDB:
         compute_coverage = (
             rank is not None and rank > 0 and expression_data is not None
         )
-        if compute_coverage:
+        # parent_to_rank0 (the leaf descendant map) is needed both for
+        # heterogeneity coverage scoring AND for the region-filter
+        # rank-0-descendant fallback below (the BCKG workaround). Build
+        # it unconditionally at rank ≥ 1 — same code, two consumers.
+        build_descendant_map = rank is not None and rank > 0
+        if build_descendant_map:
             assert rank is not None
-            assert expression_data is not None
-
-            # Build parent-id → immediate-children map across every rank,
-            # plus rank lookup, then descend each queried-rank candidate
-            # to its rank-0 leaves.
             all_parent_to_children: dict[str, list[str]] = defaultdict(list)
             node_rank_map: dict[str, int] = {}
             with self._connect() as con:
@@ -2189,6 +2189,8 @@ class TaxonomyDB:
                         stack.extend(all_parent_to_children.get(n, []))
                 parent_to_rank0[nid] = leaves
 
+        if compute_coverage:
+            assert expression_data is not None
             child_expression_data = expression_data
 
         # ──────────────────────────────────────────────────────────────────
@@ -2207,6 +2209,7 @@ class TaxonomyDB:
             node_anat_rows = self._get_anat(node_acc) if effective_anat else []
             region_fraction: float | None = None
             region_exact_match: bool = False
+            region_evidence: str | None = None
             if effective_anat:
                 node_anat_ids = {a["anat_id"] for a in node_anat_rows}
                 if node_anat_rows:
@@ -2224,13 +2227,48 @@ class TaxonomyDB:
                         )
                         region_fraction = matched_cells / total_cells
                 region_exact_match = bool(node_anat_ids & effective_anat)
+                if node_anat_rows:
+                    region_evidence = (
+                        "self" if (node_anat_ids & expanded_anat) else None
+                    )
                 # Filter uses expanded closure so sibling-sublayer hits
                 # survive. Drop only when neither the exact closure NOR
                 # the expansion catches the target's anat.
+                #
+                # ─── BCKG over-strip workaround ─────────────────────────
+                # At rank ≥ 1, subclass / supertype `anat` rows in the
+                # taxonomy DB are sometimes over-stripped (an upstream
+                # percent-of-cells cutoff in Brain Cell KG drops non-
+                # dominant regions). Rank-0 (cluster) anat is unaffected,
+                # since it comes from the source cluster-cell-anat table.
+                # When a rank ≥ 1 candidate fails the region intersection
+                # on its own anat, fall back to the union of its rank-0
+                # descendants' anat before declaring a region drop.
+                # Surviving via fallback is tagged
+                # _region_evidence='descendant_only' so callers (audit,
+                # reports) can attribute the rescue and downweight if
+                # desired.
+                #
+                # NOTE: remove this fallback once BCKG ships the upstream
+                # anat-rollup fix so non-leaf nodes carry a complete
+                # rollup of their descendants' regions. See
+                # planning/at_blind_region_drop_findings_2026-05-12.md §a.
                 if not bypassed and node_anat_rows and not (
                     node_anat_ids & expanded_anat
                 ):
-                    continue
+                    descendant_anat_hit = False
+                    if build_descendant_map:
+                        leaves = parent_to_rank0.get(node_acc, [])
+                        if leaves:
+                            desc_anat_ids: set[str] = set()
+                            for leaf in leaves:
+                                for lar in self._get_anat(leaf):
+                                    desc_anat_ids.add(lar["anat_id"])
+                            if desc_anat_ids & expanded_anat:
+                                descendant_anat_hit = True
+                    if not descendant_anat_hit:
+                        continue
+                    region_evidence = "descendant_only"
 
             if nt_type and not bypassed:
                 node_nt = nd.get("nt_type") or _nt_map.get(node_acc)
@@ -2263,6 +2301,8 @@ class TaxonomyDB:
                 nd["_region_fraction"] = round(region_fraction, 3)
             if effective_anat:
                 nd["_region_exact_match"] = region_exact_match
+                if region_evidence is not None:
+                    nd["_region_evidence"] = region_evidence
             survivors.append(nd)
 
         # ──────────────────────────────────────────────────────────────────
@@ -3126,6 +3166,12 @@ def _cmd_find_candidates(
                 # Phase 3 verdict-at-report-time.
                 **({"region_fraction": c["_region_fraction"]}
                    if c.get("_region_fraction") is not None else {}),
+                # `region_evidence == "descendant_only"` flags candidates
+                # rescued by the rank-0-descendant anat fallback (BCKG
+                # workaround). Surface so callers can downweight or
+                # report the rescue origin.
+                **({"region_evidence": c["_region_evidence"]}
+                   if c.get("_region_evidence") else {}),
                 # Annotation-transfer hit (commit 4 / gap 9). Present when
                 # MapMyCells F1 hits were loaded for this (classical,
                 # taxonomy) pair and this candidate is among them.
