@@ -336,61 +336,14 @@ enums:
           Use to explicitly document failures of correspondence
           (e.g. a curated literature type that the atlas does not
           resolve at any rank). No SKOS equivalent.
-
-      # ── DEPRECATED (Phase 2 transition, 2026-05-12) ────────────────
-      # These values are retained for the PR1 → PR2 window so existing
-      # KB YAML continues to validate. The PR2 KB sweep rewrites every
-      # edge using these values to the corresponding new CURIE; this
-      # block is deleted from the schema after the sweep completes.
-      # Migration table is in planning/phase_2_schema_overhaul_plan.md
-      # and planning/phase_2_decisions_2026-05-12.md.
-      EQUIVALENT:
+      evidencell:UncertainRelationship:
         description: >
-          DEPRECATED — use `skos:exactMatch`. Migrated by the PR2 KB sweep.
-      PARTIAL_OVERLAP:
-        description: >
-          DEPRECATED — use `evidencell:PartialOverlapMatch`. Migrated by
-          the PR2 KB sweep.
-      CROSS_CUTTING:
-        description: >
-          DEPRECATED — use `evidencell:CrossCuttingMatch`. Migrated by
-          the PR2 KB sweep.
-      TYPE_A_SPLITS:
-        description: >
-          DEPRECATED — use `skos:broadMatch` with
-          `mapping_cardinality: 1:n`. Migrated by the PR2 KB sweep.
-      TYPE_A_MERGES:
-        description: >
-          DEPRECATED — use `skos:narrowMatch` with
-          `mapping_cardinality: n:1`. Migrated by the PR2 KB sweep.
-      SUBSET:
-        description: >
-          DEPRECATED — use `skos:broadMatch` with
-          `mapping_cardinality: 1:1`. Migrated by the PR2 KB sweep.
-      SUPERSET:
-        description: >
-          DEPRECATED — use `skos:narrowMatch` with
-          `mapping_cardinality: n:1`. Migrated by the PR2 KB sweep.
-      NO_CORRESPONDENCE:
-        description: >
-          DEPRECATED — use `evidencell:NoCorrespondence`. Migrated by
-          the PR2 KB sweep.
-      UNCERTAIN:
-        description: >
-          DEPRECATED — relationship-level UNCERTAIN is removed in
-          Phase 2. The PR2 KB sweep drops the relationship and sets
-          `mapping_justification: semapv:UnspecifiedMatching` instead.
-          (The UNCERTAIN value on MappingConfidence is a separate slot
-          and remains.)
-      CANDIDATE_SYNONYM:
-        description: >
-          DEPRECATED — use `skos:closeMatch` with
-          `mapping_justification: semapv:UnreviewedManualMapping`. No
-          KB rows currently use this value; included for completeness.
-      OVERLAPS:
-        description: >
-          DEPRECATED — cross-taxonomy partial-overlap edges fold into
-          `skos:closeMatch`. Migrated by the PR2 KB sweep.
+          The kind of correspondence is not yet determinable from
+          available evidence. Distinct from `evidencell:NoCorrespondence`
+          (which asserts no mapping exists). Pair with
+          `mapping_justification: semapv:UnspecifiedMatching` and a
+          `reconciliation_note` describing what additional evidence
+          would resolve the question. No SKOS equivalent.
 
   # ── Mapping cardinality ─────────────────────────────────────────
   #
@@ -1936,12 +1889,14 @@ classes:
         identifier: true
         description: Unique edge ID, e.g. "edge_lugaro_to_pli3"
       lit_type:
+        required: true
         range: CellTypeNode
         description: >
           ID of the source node (reference to CellTypeNode.id). Typically
-          a curated literature / classical type. Replaces type_a in
-          Phase 2; required once the KB sweep completes.
+          a curated literature / classical type. Renamed from `type_a`
+          in the Phase 2 schema overhaul (PR2 KB sweep, 2026-05-12).
       taxonomy_type:
+        required: true
         range: CellTypeNode
         description: >
           ID of the target node (reference to CellTypeNode.id). Typically
@@ -1950,23 +1905,8 @@ classes:
           CS20230722_SUPT_0179). The node must be declared in the graph's
           nodes list — a minimal stub (id, name, definition_basis,
           taxonomy_id, cell_set_accession) suffices for taxonomy
-          references. Replaces type_b in Phase 2; required once the KB
-          sweep completes.
-      type_a:
-        deprecated: >
-          Renamed to lit_type in the Phase 2 schema overhaul (2026-05-12).
-          Retained as an alias for the duration of the PR1 → PR2
-          migration window so existing KB YAML continues to validate.
-          Remove from KB graphs during the PR2 sweep; this slot is
-          deleted from the schema thereafter.
-        range: CellTypeNode
-      type_b:
-        deprecated: >
-          Renamed to taxonomy_type in the Phase 2 schema overhaul
-          (2026-05-12). Retained as an alias for the duration of the
-          PR1 → PR2 migration window. Remove from KB graphs during the
-          PR2 sweep.
-        range: CellTypeNode
+          references. Renamed from `type_b` in the Phase 2 schema
+          overhaul (PR2 KB sweep, 2026-05-12).
       relationship:
         required: true
         range: MappingRelationship

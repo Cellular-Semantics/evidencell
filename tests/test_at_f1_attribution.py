@@ -53,8 +53,8 @@ def graph_with_mismatched_evidence(tmp_path):
         "edges": [
             {
                 "id": "edge_mismatch",
-                "type_a": "lit_thing",
-                "type_b": "atlas_thing",
+                "lit_type": "lit_thing",
+                "taxonomy_type": "atlas_thing",
                 "relationship": "EQUIVALENT",
                 "evidence": [{
                     "evidence_type": "ANNOTATION_TRANSFER",
@@ -99,7 +99,7 @@ def test_find_mismatches_passes_through_when_levels_agree(tmp_path):
              "taxonomy_id": "CCN20230722"},
         ],
         "edges": [{
-            "id": "edge_ok", "type_a": "lit", "type_b": "atlas",
+            "id": "edge_ok", "lit_type": "lit", "taxonomy_type": "atlas",
             "evidence": [{
                 "evidence_type": "ANNOTATION_TRANSFER",
                 "best_f1_score": 0.5,

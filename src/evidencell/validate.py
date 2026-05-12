@@ -29,8 +29,7 @@ def structural_checks(doc: dict) -> list[str]:
 
     Checks:
     - No duplicate node IDs
-    - Edge lit_type / taxonomy_type (or deprecated type_a / type_b
-      during the Phase 2 transition) reference existing node IDs
+    - Edge lit_type / taxonomy_type reference existing node IDs
     - Each edge has at least one evidence item
     - No empty or placeholder snippet values in LiteratureEvidence
     - Terminal nodes (is_terminal=true) have cell_set_accession populated
@@ -55,14 +54,9 @@ def structural_checks(doc: dict) -> list[str]:
     for edge in edges:
         eid = edge.get("id", "<unnamed edge>")
 
-        # Endpoint references — accept new (lit_type / taxonomy_type)
-        # and deprecated (type_a / type_b) field names during the
-        # Phase 2 transition window.
-        for ref_field, candidate_keys in (
-            ("lit_type", ("lit_type", "type_a")),
-            ("taxonomy_type", ("taxonomy_type", "type_b")),
-        ):
-            ref = next((edge[k] for k in candidate_keys if edge.get(k)), None)
+        # Endpoint references
+        for ref_field in ("lit_type", "taxonomy_type"):
+            ref = edge.get(ref_field)
             if ref and ref not in node_ids:
                 errors.append(
                     f"Edge '{eid}': {ref_field}='{ref}' does not match any node id. "

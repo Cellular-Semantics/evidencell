@@ -1,165 +1,169 @@
-"""Phase 2 schema-overhaul back-compat shim tests.
+"""Phase 2 PR2 — post-cutover assertions.
 
-Exercises ``src/evidencell/_mapping_compat.py`` — the read-path shim
-that lets PR1 code work against both old (``type_a`` / ``type_b`` /
-``EQUIVALENT`` / ``TYPE_A_SPLITS`` / ...) and new (``lit_type`` /
-``taxonomy_type`` / ``skos:exactMatch`` / ``skos:broadMatch`` /
-``mapping_cardinality``) MappingEdge shapes.
+PR1 introduced a back-compat shim (``src/evidencell/_mapping_compat.py``)
+that read both old (``type_a``/``type_b``/ALL_CAPS-relationship-values)
+and new (``lit_type``/``taxonomy_type``/CURIE-relationship-values)
+MappingEdge shapes. PR2 sweeps every KB edge into the new shape and
+deletes the shim. These tests guarantee that nothing in ``src/``
+still imports the shim and that the schema's deprecated entries are
+gone — the post-cutover state is locked in.
 
-When PR2 lands and the KB sweep migrates every edge to the new shape,
-this file inverts its assertions: old field names + old enum values
-must no longer be accepted (and the shim module is deleted). The
-existence of this test file is the canary for that PR2 chore.
+If a future curator regresses any of these invariants, this file is
+the first failing test.
 """
 
 from __future__ import annotations
 
-import warnings
+from pathlib import Path
 
-import pytest
+import yaml
 
-from evidencell import _mapping_compat
-
-
-@pytest.fixture(autouse=True)
-def _clear_warn_cache():
-    """The shim deduplicates DeprecationWarnings by message string
-    across the process. Tests that assert the warning fires need a
-    clean cache, otherwise an earlier test in the suite shadows them."""
-    _mapping_compat._warned_field_names.clear()
-    yield
-    _mapping_compat._warned_field_names.clear()
+from evidencell.paths import repo_root
 
 
 # ──────────────────────────────────────────────────────────────────
-# Field-name shim
+# Shim is gone
 # ──────────────────────────────────────────────────────────────────
 
 
-def test_lit_type_prefers_new_name():
-    edge = {"lit_type": "olm_cell_ca1", "type_a": "should_be_ignored"}
-    assert _mapping_compat.lit_type(edge) == "olm_cell_ca1"
-
-
-def test_lit_type_falls_back_to_old_name():
-    edge = {"type_a": "olm_cell_ca1"}
-    with warnings.catch_warnings(record=True) as caught:
-        warnings.simplefilter("always")
-        result = _mapping_compat.lit_type(edge)
-    assert result == "olm_cell_ca1"
-    assert any(
-        issubclass(w.category, DeprecationWarning) and "type_a" in str(w.message)
-        for w in caught
+def test_mapping_compat_module_deleted():
+    """The PR1 back-compat shim no longer exists in src/."""
+    path = repo_root() / "src" / "evidencell" / "_mapping_compat.py"
+    assert not path.exists(), (
+        "src/evidencell/_mapping_compat.py should have been deleted in PR2 "
+        "(KB sweep + back-compat removal)."
     )
 
 
-def test_lit_type_returns_none_when_neither_present():
-    edge = {"id": "e1"}
-    assert _mapping_compat.lit_type(edge) is None
-
-
-def test_taxonomy_type_prefers_new_name():
-    edge = {"taxonomy_type": "CS20230722_SUPT_0216", "type_b": "ignored"}
-    assert _mapping_compat.taxonomy_type(edge) == "CS20230722_SUPT_0216"
-
-
-def test_taxonomy_type_falls_back_to_old_name():
-    edge = {"type_b": "CS20230722_SUPT_0216"}
-    with warnings.catch_warnings(record=True) as caught:
-        warnings.simplefilter("always")
-        result = _mapping_compat.taxonomy_type(edge)
-    assert result == "CS20230722_SUPT_0216"
-    assert any(
-        issubclass(w.category, DeprecationWarning) and "type_b" in str(w.message)
-        for w in caught
+def test_no_src_imports_of_mapping_compat():
+    """No production module imports the deleted shim."""
+    src_root = repo_root() / "src" / "evidencell"
+    offenders: list[str] = []
+    for py in src_root.rglob("*.py"):
+        text = py.read_text(encoding="utf-8")
+        if "_mapping_compat" in text:
+            offenders.append(str(py.relative_to(repo_root())))
+    assert not offenders, (
+        "Found stale references to the deleted compat shim in: "
+        + ", ".join(offenders)
     )
 
 
 # ──────────────────────────────────────────────────────────────────
-# Relationship-value shim
+# Schema has shed its deprecated entries
 # ──────────────────────────────────────────────────────────────────
 
 
-@pytest.mark.parametrize(
-    "old_value, expected_curie, expected_cardinality",
-    [
-        ("EQUIVALENT",        "skos:exactMatch",                    None),
-        ("PARTIAL_OVERLAP",   "evidencell:PartialOverlapMatch",     None),
-        ("CROSS_CUTTING",     "evidencell:CrossCuttingMatch",       None),
-        ("NO_CORRESPONDENCE", "evidencell:NoCorrespondence",        None),
-        ("TYPE_A_SPLITS",     "skos:broadMatch",                    "1:n"),
-        ("TYPE_A_MERGES",     "skos:narrowMatch",                   "n:1"),
-        ("SUBSET",            "skos:broadMatch",                    "1:1"),
-        ("SUPERSET",          "skos:narrowMatch",                   "n:1"),
-        ("OVERLAPS",          "skos:closeMatch",                    None),
-        ("CANDIDATE_SYNONYM", "skos:closeMatch",                    None),
-    ],
-)
-def test_normalise_relationship_remaps_deprecated(
-    old_value, expected_curie, expected_cardinality,
-):
-    edge = {"relationship": old_value}
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        rel, cardinality = _mapping_compat.normalise_relationship(edge)
-    assert rel == expected_curie
-    assert cardinality == expected_cardinality
+def _load_schema() -> dict:
+    schema_path = repo_root() / "schema" / "celltype_mapping.yaml"
+    with schema_path.open() as fh:
+        return yaml.safe_load(fh)
 
 
-def test_normalise_relationship_uncertain_blanks_out():
-    edge = {"relationship": "UNCERTAIN"}
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        rel, cardinality = _mapping_compat.normalise_relationship(edge)
-    assert rel == ""
-    assert cardinality is None
+def test_mapping_edge_drops_deprecated_aliases():
+    """MappingEdge no longer carries the deprecated `type_a` / `type_b`
+    slot aliases. The new `lit_type` / `taxonomy_type` slots are
+    required."""
+    schema = _load_schema()
+    attrs = schema["classes"]["MappingEdge"]["attributes"]
+    assert "type_a" not in attrs, "Deprecated `type_a` slot still present."
+    assert "type_b" not in attrs, "Deprecated `type_b` slot still present."
+    assert attrs["lit_type"].get("required") is True
+    assert attrs["taxonomy_type"].get("required") is True
 
 
-def test_normalise_relationship_passes_curie_unchanged():
-    edge = {
-        "relationship": "skos:broadMatch",
-        "mapping_cardinality": "1:n",
+def test_mapping_relationship_drops_deprecated_values():
+    """MappingRelationship enum no longer carries the deprecated
+    ALL_CAPS values (EQUIVALENT, TYPE_A_SPLITS, …). Only the CURIE
+    values survive."""
+    schema = _load_schema()
+    perms = schema["enums"]["MappingRelationship"]["permissible_values"]
+    deprecated = {
+        "EQUIVALENT", "PARTIAL_OVERLAP", "CROSS_CUTTING",
+        "TYPE_A_SPLITS", "TYPE_A_MERGES", "SUBSET", "SUPERSET",
+        "NO_CORRESPONDENCE", "UNCERTAIN", "CANDIDATE_SYNONYM",
+        "OVERLAPS",
     }
-    rel, cardinality = _mapping_compat.normalise_relationship(edge)
-    assert rel == "skos:broadMatch"
-    assert cardinality == "1:n"
+    still_present = deprecated & set(perms.keys())
+    assert not still_present, (
+        f"Deprecated MappingRelationship values still in schema: "
+        f"{sorted(still_present)}"
+    )
 
-
-def test_normalise_relationship_explicit_cardinality_wins_over_implied():
-    # If a KB edge writes both a deprecated value AND an explicit
-    # cardinality, prefer the explicit one over the value-implied one.
-    edge = {"relationship": "TYPE_A_SPLITS", "mapping_cardinality": "1:1"}
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        rel, cardinality = _mapping_compat.normalise_relationship(edge)
-    assert rel == "skos:broadMatch"
-    assert cardinality == "1:1"
-
-
-def test_normalise_relationship_returns_none_when_absent():
-    edge = {"id": "e1"}
-    rel, cardinality = _mapping_compat.normalise_relationship(edge)
-    assert rel is None
-    assert cardinality is None
+    # Sanity check: the canonical CURIE values are present.
+    expected = {
+        "skos:exactMatch", "skos:closeMatch",
+        "skos:broadMatch", "skos:narrowMatch",
+        "evidencell:PartialOverlapMatch", "evidencell:CrossCuttingMatch",
+        "evidencell:NoCorrespondence", "evidencell:UncertainRelationship",
+    }
+    missing = expected - set(perms.keys())
+    assert not missing, (
+        f"Expected MappingRelationship values absent from schema: "
+        f"{sorted(missing)}"
+    )
 
 
 # ──────────────────────────────────────────────────────────────────
-# Display helpers
+# KB graphs use only the new shape
 # ──────────────────────────────────────────────────────────────────
 
 
-def test_display_relationship_with_cardinality():
-    assert _mapping_compat.display_relationship(
-        "skos:broadMatch", "1:n",
-    ) == "skos:broadMatch (1:n)"
+def _iter_edges():
+    graphs = repo_root() / "kb" / "graphs"
+    for path in sorted(graphs.rglob("*.yaml")):
+        try:
+            doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        except Exception:
+            continue
+        for edge in doc.get("edges") or []:
+            if isinstance(edge, dict):
+                yield path, edge
 
 
-def test_display_relationship_without_cardinality():
-    assert _mapping_compat.display_relationship(
-        "skos:exactMatch",
-    ) == "skos:exactMatch"
+def test_no_kb_edge_uses_old_field_names():
+    offenders: list[str] = []
+    for path, edge in _iter_edges():
+        if "type_a" in edge or "type_b" in edge:
+            offenders.append(
+                f"{path.relative_to(repo_root())}::{edge.get('id', '<unnamed>')}"
+            )
+    assert not offenders, (
+        f"{len(offenders)} KB edges still use deprecated `type_a` / `type_b`:"
+        f" {offenders[:5]}{'…' if len(offenders) > 5 else ''}"
+    )
 
 
-def test_display_relationship_handles_missing():
-    assert _mapping_compat.display_relationship(None) == "(no relationship)"
-    assert _mapping_compat.display_relationship("") == "(no relationship)"
+def test_no_kb_edge_uses_old_relationship_values():
+    deprecated = {
+        "EQUIVALENT", "PARTIAL_OVERLAP", "CROSS_CUTTING",
+        "TYPE_A_SPLITS", "TYPE_A_MERGES", "SUBSET", "SUPERSET",
+        "NO_CORRESPONDENCE", "UNCERTAIN", "CANDIDATE_SYNONYM",
+        "OVERLAPS",
+    }
+    offenders: list[str] = []
+    for path, edge in _iter_edges():
+        rel = edge.get("relationship")
+        if rel in deprecated:
+            offenders.append(
+                f"{path.relative_to(repo_root())}::{edge.get('id', '<unnamed>')}={rel}"
+            )
+    assert not offenders, (
+        f"{len(offenders)} KB edges still use deprecated relationship "
+        f"values: {offenders[:5]}{'…' if len(offenders) > 5 else ''}"
+    )
+
+
+def test_every_kb_edge_has_mapping_justification():
+    """Phase 2 PR2 sweep populated `mapping_justification` on every
+    edge. New edges going forward must continue to set it."""
+    missing: list[str] = []
+    for path, edge in _iter_edges():
+        if not edge.get("mapping_justification"):
+            missing.append(
+                f"{path.relative_to(repo_root())}::{edge.get('id', '<unnamed>')}"
+            )
+    assert not missing, (
+        f"{len(missing)} KB edges lack mapping_justification: "
+        f"{missing[:5]}{'…' if len(missing) > 5 else ''}"
+    )

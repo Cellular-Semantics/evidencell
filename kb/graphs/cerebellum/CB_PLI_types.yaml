@@ -450,9 +450,9 @@ edges:
   # ── Step 1: Classical → Prior T-type (Osorno 2022) ─────────────
 
   - id: edge_candelabrum_to_pli1
-    type_a: classical_candelabrum
-    type_b: pli1_osorno
-    relationship: EQUIVALENT
+    lit_type: classical_candelabrum
+    taxonomy_type: pli1_osorno
+    relationship: skos:exactMatch
     confidence: HIGH
     evidence:
       - evidence_type: LITERATURE
@@ -490,10 +490,11 @@ edges:
           question distinguishing CC axon targeting from basket cell targeting.
         study_type: REVIEW
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_globular_to_pli2
-    type_a: classical_globular
-    type_b: pli2_osorno
-    relationship: EQUIVALENT
+    lit_type: classical_globular
+    taxonomy_type: pli2_osorno
+    relationship: skos:exactMatch
     confidence: MODERATE
     evidence:
       - evidence_type: LITERATURE
@@ -514,10 +515,11 @@ edges:
         own contribution — prior classical literature may not have this type
         explicitly named.
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_lugaro_to_pli3
-    type_a: classical_lugaro
-    type_b: pli3_osorno
-    relationship: EQUIVALENT
+    lit_type: classical_lugaro
+    taxonomy_type: pli3_osorno
+    relationship: skos:exactMatch
     confidence: HIGH
     evidence:
       - evidence_type: LITERATURE
@@ -535,10 +537,11 @@ edges:
 
   # ── Step 2: Prior T-type → WMBv1 (MapMyCells annotation transfer) ─
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_pli1_to_wmb5178
-    type_a: pli1_osorno
-    type_b: wmb_cluster_5178
-    relationship: EQUIVALENT
+    lit_type: pli1_osorno
+    taxonomy_type: wmb_cluster_5178
+    relationship: skos:exactMatch
     confidence: HIGH
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -589,10 +592,11 @@ edges:
             median_bootstrap: 1.0
         code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_pli2_to_wmb5177
-    type_a: pli2_osorno
-    type_b: wmb_cluster_5177
-    relationship: PARTIAL_OVERLAP
+    lit_type: pli2_osorno
+    taxonomy_type: wmb_cluster_5177
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -660,10 +664,11 @@ edges:
         Re-analyse PLI2 cells from SCP795 at higher resolution to determine
         if the cluster-level heterogeneity reflects a biologically meaningful split.
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_pli3_to_wmb1145
-    type_a: pli3_osorno
-    type_b: wmb_supertype_1145
-    relationship: EQUIVALENT
+    lit_type: pli3_osorno
+    taxonomy_type: wmb_supertype_1145
+    relationship: skos:exactMatch
     confidence: HIGH
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -727,3 +732,4 @@ edges:
         Sub-cluster analysis of supertype 1145 with additional markers (particularly
         MERFISH-compatible probes) to determine if the intra-supertype variation
         corresponds to identifiable biological differences in Lugaro cells.
+    mapping_justification: semapv:UnreviewedManualMapping

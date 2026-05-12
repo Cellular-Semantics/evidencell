@@ -23,7 +23,6 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
-from evidencell import _mapping_compat
 
 import yaml
 
@@ -61,7 +60,6 @@ REL_LABELS = {
     "evidencell:CrossCuttingMatch":     "✕ cross-cutting",
     "evidencell:NoCorrespondence":      "∅ no correspondence",
     # Deprecated ALL_CAPS values — retained for back-compat reads via
-    # _mapping_compat during the PR1 → PR2 window. Drop from this map
     # when PR2 KB sweep completes.
     "EQUIVALENT":         "≡ exactMatch",
     "PARTIAL_OVERLAP":    "~ partial overlap",
@@ -666,7 +664,7 @@ def extract_methods_summary(
     """
     from datetime import datetime, timezone
 
-    edges = [e for e in graph.get("edges", []) if _mapping_compat.lit_type(e) == node_id]
+    edges = [e for e in graph.get("edges", []) if e.get("lit_type") == node_id]
 
     evidence_type_counts: dict[str, int] = {}
     bulk_runs: list[dict] = []
@@ -859,7 +857,7 @@ def build_reference_index(
     """
     nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
     all_edges = graph.get("edges", [])
-    edges = [e for e in all_edges if _mapping_compat.lit_type(e) == node_id] if node_id else all_edges
+    edges = [e for e in all_edges if e.get("lit_type") == node_id] if node_id else all_edges
 
     lit_n = [0]    # running counter for [1]..[N]
     qry_n = [0]    # running counter for [A]..[Z]
@@ -1081,7 +1079,7 @@ def _candidate_verdict(edge: dict, nodes_by_id: dict) -> str:
 
 def _best_edge(edges: list[dict], node_id: str) -> dict | None:
     """Return highest-confidence edge where lit_type == node_id."""
-    candidates = [e for e in edges if _mapping_compat.lit_type(e) == node_id]
+    candidates = [e for e in edges if e.get("lit_type") == node_id]
     if not candidates:
         return None
     return min(candidates, key=lambda e: CONF_ORDER.get(e.get("confidence", "REFUTED"), 99))
@@ -1189,7 +1187,7 @@ def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) ->
     so this lookup is what surfaces the per-node 10x cell count and the
     nearest-supertype label in reports.
     """
-    b_id = _mapping_compat.taxonomy_type(edge) or ""
+    b_id = edge.get("taxonomy_type", "")
     b_node = nodes_by_id.get(b_id, {})
     accession = b_node.get("cell_set_accession", "")
     n_cells = b_node.get("n_cells")
@@ -1273,7 +1271,7 @@ def _collect_quotes(graph: dict, refs: dict, node_id: str) -> dict:
 
     # Edge evidence
     for edge in graph.get("edges", []):
-        if _mapping_compat.lit_type(edge) != node_id:
+        if edge.get("lit_type") != node_id:
             continue
         for ev in edge.get("evidence", []):
             _add_quote(ev.get("quote_key", ""))
@@ -1303,7 +1301,7 @@ def extract_node_facts(
 
     all_edges = graph.get("edges", [])
     node_edges = sorted(
-        [e for e in all_edges if _mapping_compat.lit_type(e) == node_id],
+        [e for e in all_edges if e.get("lit_type") == node_id],
         key=lambda e: CONF_ORDER.get(e.get("confidence", "UNCERTAIN"), 99),
     )
 
@@ -1800,7 +1798,7 @@ def render_summary(
         lines.append("")
 
     # 6. Proposed experiments
-    all_node_edges_raw = [e_raw for e_raw in graph.get("edges", []) if _mapping_compat.lit_type(e_raw) == node_id]
+    all_node_edges_raw = [e_raw for e_raw in graph.get("edges", []) if e_raw.get("lit_type") == node_id]
     exp_groups = _group_experiments(all_node_edges_raw)
     if exp_groups:
         lines.append("## Proposed experiments")
@@ -1894,7 +1892,7 @@ def render_drilldown(
     All quotes come verbatim from references.json — raises KeyError if quote_key missing.
     """
     nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
-    node_edges = [e for e in graph.get("edges", []) if _mapping_compat.lit_type(e) == node_id]
+    node_edges = [e for e in graph.get("edges", []) if e.get("lit_type") == node_id]
 
     # Resolve corpus entry
     bare_pmid = pmid_or_corpus.removeprefix("PMID:")
@@ -1972,7 +1970,7 @@ def render_drilldown(
         citing_edges = list(node_edges)
 
     edge_desc = "; ".join(
-        f"{_mapping_compat.lit_type(e) or ''} → {nodes_by_id.get(_mapping_compat.taxonomy_type(e) or '', {}).get('name', _mapping_compat.taxonomy_type(e) or '')}"
+        f"{e.get("lit_type") or ''} → {nodes_by_id.get(e.get("taxonomy_type") or '', {}).get('name', e.get("taxonomy_type") or '')}"
         for e in citing_edges
     )
     if citing_edges:
@@ -2122,12 +2120,12 @@ def render_index(region: str, kb_root: Path, out_path: Path) -> None:
             if node.get("is_terminal"):
                 continue
             node_id = node["id"]
-            node_edges = [e for e in all_edges if _mapping_compat.lit_type(e) == node_id]
+            node_edges = [e for e in all_edges if e.get("lit_type") == node_id]
             best = _best_edge(all_edges, node_id)
             best_conf = best["confidence"] if best else "—"
             best_b = (
-                nodes_by_id.get(_mapping_compat.taxonomy_type(best) or "", {}).get(
-                    "name", _mapping_compat.taxonomy_type(best) or ""
+                nodes_by_id.get(best.get("taxonomy_type", ""), {}).get(
+                    "name", best.get("taxonomy_type", "")
                 )
                 if best
                 else "—"
@@ -2312,7 +2310,7 @@ def _gen_all_drilldowns(
     graph: dict, refs: dict, node_id: str, out_dir: Path, graph_file: Path
 ) -> None:
     """Generate drill-downs for all papers cited in the node's edges."""
-    node_edges = [e for e in graph.get("edges", []) if _mapping_compat.lit_type(e) == node_id]
+    node_edges = [e for e in graph.get("edges", []) if e.get("lit_type") == node_id]
     seen_pmids: set = set()
     for edge in node_edges:
         for ev in edge.get("evidence", []):

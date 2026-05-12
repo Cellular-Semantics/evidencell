@@ -935,9 +935,9 @@ nodes:
     cell_set_accession: CS20230722_SUPT_0135
 edges:
   - id: edge_ca1_pc_hippocampus_to_supt_0069
-    type_a: ca1_pc_hippocampus
-    type_b: CS20230722_SUPT_0069
-    relationship: TYPE_A_SPLITS
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0069
+    relationship: skos:broadMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -1012,10 +1012,12 @@ edges:
       - 'Run MapMyCells annotation transfer of Cembrowski 2016 or Zeisel 2018 dorsal CA1 pyramidal cell labels onto WMBv1 to resolve SUPT_0069-0072 correspondence.
 
         '
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_ca2_pc_hippocampus_to_supt_0100
-    type_a: ca2_pc_hippocampus
-    type_b: CS20230722_SUPT_0100
-    relationship: PARTIAL_OVERLAP
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0100
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -1097,10 +1099,11 @@ edges:
       - 'Run annotation transfer from a CA2-specific dataset (not a CA2-IG-FC mixed label) to distinguish SUPT_0100 vs SUPT_0101 correspondence for CA2 pyramidal cells proper.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_ca3_pc_hippocampus_to_supt_0078
-    type_a: ca3_pc_hippocampus
-    type_b: CS20230722_SUPT_0078
-    relationship: TYPE_A_SPLITS
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0078
+    relationship: skos:broadMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -1170,10 +1173,12 @@ edges:
       - 'Run annotation transfer from a CA3 sublayer-resolved dataset to map CA3a/b/c correspondence among SUBT_0075-0077 and clarify the role of SUPT_0078 vs 0075-0077 in the sublayer organisation.
 
         '
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_granule_cell_hippocampus_to_supt_0137
-    type_a: dg_granule_cell_hippocampus
-    type_b: CS20230722_SUPT_0137
-    relationship: PARTIAL_OVERLAP
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0137
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1255,10 +1260,11 @@ edges:
       - 'Perform annotation transfer from a mouse granule cell dataset (e.g. Artimovich 2020 or Shin 2015) to cross-validate the SUPT_0137 mapping in the same species as WMBv1.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_hilar_mossy_cell_hippocampus_to_supt_0078
-    type_a: hilar_mossy_cell_hippocampus
-    type_b: CS20230722_SUPT_0078
-    relationship: PARTIAL_OVERLAP
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0078
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1325,10 +1331,11 @@ edges:
       - 'smFISH or MERFISH spot validation of SUPT_0078 defining markers (Homer3, Cldn22) in dentate hilus to test whether soma positions span the CA3c/hilus boundary.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_hilar_mossy_cell_hippocampus_to_supt_0079
-    type_a: hilar_mossy_cell_hippocampus
-    type_b: CS20230722_SUPT_0079
-    relationship: PARTIAL_OVERLAP
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0079
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1398,10 +1405,11 @@ edges:
       - 'Run AT from a full Hochgerner 2018 mouse replication to confirm species-generality of the SUPT_0078/0079 mossy cell split.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_semilunar_granule_cell_hippocampus_to_supt_0137
-    type_a: dg_semilunar_granule_cell_hippocampus
-    type_b: CS20230722_SUPT_0137
-    relationship: PARTIAL_OVERLAP
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0137
+    relationship: evidencell:PartialOverlapMatch
     confidence: LOW
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1457,10 +1465,11 @@ edges:
       - 'Run add-expression for Sorcs3 and Nptx2 in DG Glut supertypes (SUBT_037) via CCN20230722 precomputed stats to validate the SUPT_0138 enrichment signal seen in GSE280167 cells.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_semilunar_granule_cell_hippocampus_to_supt_0138
-    type_a: dg_semilunar_granule_cell_hippocampus
-    type_b: CS20230722_SUPT_0138
-    relationship: PARTIAL_OVERLAP
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0138
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1547,10 +1556,11 @@ edges:
       - 'Obtain the Bhatt 2025 published cluster annotations for GSE280167 to formally identify Cluster 18 (SGC) and confirm SUPT_0138 correspondence.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_subicular_pyramidal_cell_hippocampus_to_supt_0096
-    type_a: subicular_pyramidal_cell_hippocampus
-    type_b: CS20230722_SUPT_0096
-    relationship: TYPE_A_SPLITS
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0096
+    relationship: skos:broadMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1603,10 +1613,12 @@ edges:
       - 'Add edges to SUPT_0097 (F1=0.253) and SUPT_0098 (F1=0.305) to complete the subicular pyramidal cell mapping.
 
         '
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_ec_layer2_stellate_cell_hippocampus_to_supt_0042
-    type_a: ec_layer2_stellate_cell_hippocampus
-    type_b: CS20230722_SUPT_0042
-    relationship: PARTIAL_OVERLAP
+    lit_type: ec_layer2_stellate_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0042
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1663,10 +1675,11 @@ edges:
       - 'Run add-expression for Reln and Calb1 on CCN20230722 to distinguish SUPT_0042 (Reln+, stellate) from SUPT_0052 (potentially Calb1+, pyramidal) at the atlas level.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_ec_layer2_pyramidal_cell_hippocampus_to_supt_0052
-    type_a: ec_layer2_pyramidal_cell_hippocampus
-    type_b: CS20230722_SUPT_0052
-    relationship: PARTIAL_OVERLAP
+    lit_type: ec_layer2_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0052
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1720,10 +1733,11 @@ edges:
       - 'Obtain more medial EC layer II cells (larger HPF dataset with EC) to improve statistical confidence for L2 IT ENTm→SUPT_0052 mapping.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0036
-    type_a: ec_layer3_pyramidal_cell_hippocampus
-    type_b: CS20230722_SUPT_0036
-    relationship: PARTIAL_OVERLAP
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0036
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1773,10 +1787,11 @@ edges:
           '
     unresolved_questions: []
     proposed_experiments: []
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037
-    type_a: ec_layer3_pyramidal_cell_hippocampus
-    type_b: CS20230722_SUPT_0037
-    relationship: PARTIAL_OVERLAP
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0037
+    relationship: evidencell:PartialOverlapMatch
     confidence: LOW
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1816,10 +1831,11 @@ edges:
     caveats: []
     unresolved_questions: []
     proposed_experiments: []
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069
-    type_a: hpc_glu_dopa_receptor_pyramidal_hippocampus
-    type_b: CS20230722_SUPT_0069
-    relationship: PARTIAL_OVERLAP
+    lit_type: hpc_glu_dopa_receptor_pyramidal_hippocampus
+    taxonomy_type: CS20230722_SUPT_0069
+    relationship: evidencell:PartialOverlapMatch
     confidence: LOW
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -1881,10 +1897,11 @@ edges:
       - 'Run add-expression for Drd1 and Drd2 in SUPT_0069-0074 (CA1-ProS supertypes) to identify any ventral-enriched supertype.
 
         '
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_supt_0135
-    type_a: hpc_calretinin_glu_neuron_hippocampus
-    type_b: CS20230722_SUPT_0135
-    relationship: PARTIAL_OVERLAP
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0135
+    relationship: evidencell:PartialOverlapMatch
     confidence: LOW
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -1959,3 +1976,4 @@ edges:
     proposed_experiments:
       - Run annotation transfer from a dataset with validated Calb2+/Slc17a8+ SLM cells onto WMBv1 to confirm whether these cells map to SUPT_0135 or to other supertypes.
       - Check MERFISH soma locations for SUPT_0135 cells in WMBv1 (via atlas browser or MERFISH cell type distribution data) to confirm SLM/OML placement.
+    mapping_justification: semapv:UnreviewedManualMapping

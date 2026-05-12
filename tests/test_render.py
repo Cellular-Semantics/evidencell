@@ -86,8 +86,8 @@ MINIMAL_GRAPH = {
     "edges": [
         {
             "id": "edge_test_to_001",
-            "type_a": "test_classical",
-            "type_b": "atlas_clus_001",
+            "lit_type": "test_classical",
+            "taxonomy_type": "atlas_clus_001",
             "relationship": "TYPE_A_SPLITS",
             "confidence": "MODERATE",
             "evidence": [
@@ -126,8 +126,8 @@ MINIMAL_GRAPH = {
         },
         {
             "id": "edge_test_to_002",
-            "type_a": "test_classical",
-            "type_b": "atlas_clus_002",
+            "lit_type": "test_classical",
+            "taxonomy_type": "atlas_clus_002",
             "relationship": "TYPE_A_SPLITS",
             "confidence": "UNCERTAIN",
             "evidence": [
@@ -204,8 +204,8 @@ GRAPH_WITH_LITERATURE_EDGE = {
     "edges": MINIMAL_GRAPH["edges"] + [
         {
             "id": "edge_test_lit",
-            "type_a": "test_classical",
-            "type_b": "atlas_clus_001",
+            "lit_type": "test_classical",
+            "taxonomy_type": "atlas_clus_001",
             "relationship": "EQUIVALENT",
             "confidence": "HIGH",
             "evidence": [
@@ -380,9 +380,9 @@ def test_candidate_verdict_uncertain_no_discordant():
 def test_best_edge_ordering():
     """HIGH beats MODERATE beats LOW."""
     edges = [
-        {"id": "e1", "type_a": "node_x", "type_b": "b1", "confidence": "LOW"},
-        {"id": "e2", "type_a": "node_x", "type_b": "b2", "confidence": "HIGH"},
-        {"id": "e3", "type_a": "node_x", "type_b": "b3", "confidence": "MODERATE"},
+        {"id": "e1", "lit_type": "node_x", "taxonomy_type": "b1", "confidence": "LOW"},
+        {"id": "e2", "lit_type": "node_x", "taxonomy_type": "b2", "confidence": "HIGH"},
+        {"id": "e3", "lit_type": "node_x", "taxonomy_type": "b3", "confidence": "MODERATE"},
     ]
     best = _best_edge(edges, "node_x")
     assert best["id"] == "e2"
@@ -393,7 +393,7 @@ def test_best_edge_no_edges():
 
 
 def test_best_edge_wrong_node():
-    edges = [{"id": "e1", "type_a": "other_node", "confidence": "HIGH"}]
+    edges = [{"id": "e1", "lit_type": "other_node", "confidence": "HIGH"}]
     assert _best_edge(edges, "node_x") is None
 
 
@@ -671,7 +671,7 @@ def test_gen_all_drilldowns_deduplicates():
         **MINIMAL_GRAPH,
         "edges": [
             {
-                "id": "e1", "type_a": "test_classical", "type_b": "atlas_clus_001",
+                "id": "e1", "lit_type": "test_classical", "taxonomy_type": "atlas_clus_001",
                 "relationship": "EQUIVALENT", "confidence": "HIGH",
                 "evidence": [{"evidence_type": "LITERATURE", "reference": "PMID:99999999",
                               "supports": "SUPPORT", "explanation": "x"}],
@@ -679,7 +679,7 @@ def test_gen_all_drilldowns_deduplicates():
                 "unresolved_questions": [], "proposed_experiments": [],
             },
             {
-                "id": "e2", "type_a": "test_classical", "type_b": "atlas_clus_002",
+                "id": "e2", "lit_type": "test_classical", "taxonomy_type": "atlas_clus_002",
                 "relationship": "EQUIVALENT", "confidence": "MODERATE",
                 "evidence": [{"evidence_type": "LITERATURE", "reference": "PMID:99999999",
                               "supports": "SUPPORT", "explanation": "y"}],
@@ -905,8 +905,8 @@ def test_extract_node_facts_generic_evidence_fields_preserved():
         "edges": [
             {
                 "id": "edge_test_to_X",
-                "type_a": "test_classical",
-                "type_b": "atlas_X",
+                "lit_type": "test_classical",
+                "taxonomy_type": "atlas_X",
                 "relationship": "PARTIAL_OVERLAP",
                 "confidence": "MODERATE",
                 "evidence": [
@@ -983,8 +983,8 @@ def test_build_reference_index_traverses_run_ref_for_bulk_correlation():
         "edges": [
             {
                 "id": "e",
-                "type_a": "cl",
-                "type_b": "ax",
+                "lit_type": "cl",
+                "taxonomy_type": "ax",
                 "relationship": "PARTIAL_OVERLAP",
                 "confidence": "MODERATE",
                 "evidence": [
@@ -1051,8 +1051,8 @@ def test_methods_summary_aggregates_bulk_run_data():
         "edges": [
             {
                 "id": "e",
-                "type_a": "cl",
-                "type_b": "ax",
+                "lit_type": "cl",
+                "taxonomy_type": "ax",
                 "relationship": "PARTIAL_OVERLAP",
                 "confidence": "MODERATE",
                 "evidence": [
@@ -1104,8 +1104,8 @@ def test_methods_summary_dedups_at_runs_by_method_dataset_target():
         "edges": [
             {
                 "id": "e",
-                "type_a": "cl",
-                "type_b": "ax",
+                "lit_type": "cl",
+                "taxonomy_type": "ax",
                 "relationship": "PARTIAL_OVERLAP",
                 "confidence": "MODERATE",
                 "evidence": [
@@ -1188,8 +1188,8 @@ def test_build_reference_index_uses_dataset_authors_year_for_citation_line():
         "edges": [
             {
                 "id": "e",
-                "type_a": "cl",
-                "type_b": "ax",
+                "lit_type": "cl",
+                "taxonomy_type": "ax",
                 "relationship": "PARTIAL_OVERLAP",
                 "confidence": "MODERATE",
                 "evidence": [

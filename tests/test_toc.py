@@ -42,11 +42,11 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
     # KB graph.
     graph = {
         "edges": [
-            {"type_a": "classical_X", "type_b": "TX_CLUS_A1a1", "confidence": "HIGH",
+            {"lit_type": "classical_X", "taxonomy_type": "TX_CLUS_A1a1", "confidence": "HIGH",
              "relationship": "EQUIVALENT"},
-            {"type_a": "classical_Y", "type_b": "TX_SUPT_A1b", "confidence": "LOW",
+            {"lit_type": "classical_Y", "taxonomy_type": "TX_SUPT_A1b", "confidence": "LOW",
              "relationship": "PARTIAL_OVERLAP"},
-            {"type_a": "classical_Z", "type_b": "TX_SUBC_A1", "confidence": "MODERATE",
+            {"lit_type": "classical_Z", "taxonomy_type": "TX_SUBC_A1", "confidence": "MODERATE",
              "relationship": "TYPE_A_SPLITS"},
         ]
     }

@@ -25,7 +25,6 @@ from typing import Iterable
 
 import yaml
 
-from evidencell import _mapping_compat
 
 from evidencell.paths import (
     repo_root,
@@ -86,8 +85,8 @@ def load_mappings(kb_root: Path | None = None) -> list[Edge]:
             for edge in edges:
                 if not isinstance(edge, dict):
                     continue
-                a = _mapping_compat.lit_type(edge)
-                b = _mapping_compat.taxonomy_type(edge)
+                a = edge.get("lit_type")
+                b = edge.get("taxonomy_type")
                 conf = edge.get("confidence")
                 if not (a and b and conf):
                     continue

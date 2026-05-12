@@ -455,9 +455,9 @@ nodes:
     cell_set_accession: CS20230722_CLUS_0510
 edges:
   - id: edge_dg_neuroblast_to_CS20230722_CLUS_0511
-    type_a: dg_neuroblast
-    type_b: CS20230722_CLUS_0511
-    relationship: PARTIAL_OVERLAP
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_CLUS_0511
+    relationship: evidencell:PartialOverlapMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -613,10 +613,11 @@ edges:
     proposed_experiments:
       - Triple-label smFISH combining Dcx, Eomes, and Sox6 transcripts with Ki67 IHC in adult mouse DG to directly test co-localisation of atlas cluster 0511 signature with classical DCX+/Ki67+ neuroblasts in the SGZ.
       - DCX-GFP sorted cells from adult DG followed by snRNA-seq and MapMyCells projection onto CCN202307220 to assign protein-defined neuroblasts to specific atlas clusters.
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0514
-    type_a: dg_immature_granule_neuron
-    type_b: CS20230722_CLUS_0514
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0514
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -737,10 +738,12 @@ edges:
     proposed_experiments:
       - Anti-DCX and anti-Tbr1 co-stain on adult mouse DG to confirm Tbr1+ inner-GCL cells are also DCX+/NeuN+ at protein level, bridging atlas TF and classical profiles.
       - Query full Allen Brain Cell Atlas CCN202307220 feature matrix for Dcx, Rbfox3, Btg2 in clusters 0514/0515 to check expression below the marker ranking threshold.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0515
-    type_a: dg_immature_granule_neuron
-    type_b: CS20230722_CLUS_0515
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0515
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -842,10 +845,12 @@ edges:
     proposed_experiments:
       - RNA velocity or pseudotime analysis on the DG-PIR Ex IMN_2 supertype (clusters 0512–0515) to determine cluster ordering along the neuroblast-to-immature-GN axis.
       - Targeted smFISH for Tbr1, Rarb, Bcl11b, and Dcx in adult DG to characterise whether Rarb+/Bcl11b+ cells form a distinct subpopulation within the inner GCL.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0506
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0506
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0506
+    relationship: skos:broadMatch
     confidence: MODERATE
     property_comparisons:
       - property: nt_type
@@ -949,10 +954,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0506.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0503
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0503
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0503
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -1056,10 +1063,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0503.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0507
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0507
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0507
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -1163,10 +1172,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0507.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0502
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0502
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0502
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -1272,10 +1283,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0502.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0505
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0505
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0505
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -1379,10 +1392,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0505.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0508
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0508
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0508
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -1486,10 +1501,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0508.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0504
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0504
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0504
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -1595,10 +1612,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0504.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG ve (ventral GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0510
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0510
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0510
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -1702,10 +1721,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0510.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG po (posterior GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0509
-    type_a: dg_mature_granule_neuron
-    type_b: CS20230722_CLUS_0509
-    relationship: TYPE_A_SPLITS
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0509
+    relationship: skos:broadMatch
     confidence: LOW
     property_comparisons:
       - property: nt_type
@@ -1809,10 +1830,12 @@ edges:
     proposed_experiments:
       - MERFISH or smFISH co-labelling for Calb1, Glis3, and Glis3 in adult mouse DG to confirm Calb1 expression within cells mapping to CS20230722_CLUS_0509.
       - IHC co-labelling of Calbindin protein with MERFISH-validated markers for the DG do (dorsal outer GCL) region to confirm spatial overlap.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0511
-    type_a: dg_type2b_progenitor
-    type_b: CS20230722_CLUS_0511
-    relationship: PARTIAL_OVERLAP
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_CLUS_0511
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     property_comparisons:
       - property: nt_type
@@ -1928,3 +1951,4 @@ edges:
     proposed_experiments:
       - Triple-label smFISH combining Eomes, Sox6, and Nes transcripts with Tbr2 IHC to confirm co-localisation of cluster 0511 signature with classical Tbr2+/Nestin+ type-2b cells in adult mouse SGZ.
       - Tbr2-CreERT2 fate-mapping with snRNA-seq from sorted Tbr2+ cells followed by MapMyCells projection onto CCN202307220 to assign IHC-defined type-2b cells to specific atlas clusters.
+    mapping_justification: semapv:UnreviewedManualMapping

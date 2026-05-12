@@ -249,9 +249,9 @@ edges:
   # These edges establish the CROSS-CUTTING relationship.
 
   - id: edge_basket_to_mli1
-    type_a: classical_basket
-    type_b: mli1_kozareva
-    relationship: CROSS_CUTTING
+    lit_type: classical_basket
+    taxonomy_type: mli1_kozareva
+    relationship: evidencell:CrossCuttingMatch
     confidence: HIGH
     evidence:
       - evidence_type: LITERATURE
@@ -282,10 +282,11 @@ edges:
           subset of MLI1, not a distinct transcriptomic entity.
         study_type: MULTIMODAL
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_stellate_to_mli1
-    type_a: classical_stellate
-    type_b: mli1_kozareva
-    relationship: PARTIAL_OVERLAP
+    lit_type: classical_stellate
+    taxonomy_type: mli1_kozareva
+    relationship: evidencell:PartialOverlapMatch
     confidence: HIGH
     evidence:
       - evidence_type: LITERATURE
@@ -308,10 +309,11 @@ edges:
           quantified by Kozareva 2021 — the split is described qualitatively as
           location-dependent. Quantitative spatial analysis needed.
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_stellate_to_mli2
-    type_a: classical_stellate
-    type_b: mli2_kozareva
-    relationship: PARTIAL_OVERLAP
+    lit_type: classical_stellate
+    taxonomy_type: mli2_kozareva
+    relationship: evidencell:PartialOverlapMatch
     confidence: HIGH
     evidence:
       - evidence_type: LITERATURE
@@ -332,10 +334,11 @@ edges:
   # ── Step 2: MLI1/MLI2 → WMBv1 (MapMyCells annotation transfer) ─
   # These edges are clean 1:1, showing T-type → atlas correspondence.
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_mli1_to_wmb5188
-    type_a: mli1_kozareva
-    type_b: wmb_cluster_5188
-    relationship: EQUIVALENT
+    lit_type: mli1_kozareva
+    taxonomy_type: wmb_cluster_5188
+    relationship: skos:exactMatch
     confidence: HIGH
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -382,10 +385,11 @@ edges:
             median_bootstrap: 1.0
         code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_mli2_to_wmb5192
-    type_a: mli2_kozareva
-    type_b: wmb_cluster_5192
-    relationship: EQUIVALENT
+    lit_type: mli2_kozareva
+    taxonomy_type: wmb_cluster_5192
+    relationship: skos:exactMatch
     confidence: HIGH
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -431,3 +435,4 @@ edges:
             n_cells_mapped: 9875
             median_bootstrap: 1.0
         code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
+    mapping_justification: semapv:UnreviewedManualMapping
