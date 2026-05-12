@@ -1,0 +1,33 @@
+{
+  "audit_id": "at_blind",
+  "started_at": "2026-05-12T12:31:51.651071+00:00",
+  "finished_at": "2026-05-12T12:31:52.171528+00:00",
+  "commit": "21502ad2760d725dbd4590fe40b77b41b16a249c",
+  "config": {
+    "taxonomy_id": "CCN20230722",
+    "top_k": 10,
+    "f1_floor": 0.5,
+    "limit": null
+  },
+  "preflight_assertions": [
+    {
+      "name": "taxonomy_db_exists",
+      "status": "pass"
+    },
+    {
+      "name": "taxonomy_db_fresh",
+      "status": "pass"
+    },
+    {
+      "name": "anat_closure_built",
+      "status": "pass"
+    },
+    {
+      "name": "uberon_resolution_coverage",
+      "status": "fail",
+      "note": "3 classical nodes have UBERON IDs that resolve to no MBA term (neither xref nor name fallback) \u2014 region filtering would silently skip for these. Fix in YAML or extend name-fallback synonyms. Affected: chrna2_olm_subfamily_chamberland, sst_nos1_subfamily_chamberland, sst_tac1_subfamily_chamberland"
+    }
+  ],
+  "outcomes": [],
+  "summary_stats": {}
+}
