@@ -35,6 +35,7 @@ from pathlib import Path
 
 import yaml
 
+from evidencell import _mapping_compat
 from evidencell.paths import repo_root
 
 # Accession-prefix → taxonomy-level (UPPERCASE — same convention as
@@ -115,11 +116,11 @@ def find_mismatches(graphs_root: Path | None = None) -> list[AttributionFinding]
             n["id"]: n for n in (doc.get("nodes") or []) if n.get("id")
         }
         for edge in doc.get("edges") or []:
-            target_node = nodes_by_id.get(edge.get("type_b") or "", {})
+            type_b = _mapping_compat.taxonomy_type(edge) or ""
+            target_node = nodes_by_id.get(type_b, {})
             target_acc = (
                 target_node.get("cell_set_accession")
-                or edge.get("type_b")
-                or ""
+                or type_b
             )
             target_level = target_level_from_accession(target_acc)
             if not target_level:
@@ -137,7 +138,7 @@ def find_mismatches(graphs_root: Path | None = None) -> list[AttributionFinding]
                 findings.append(AttributionFinding(
                     graph_file=path,
                     edge_id=edge.get("id") or "<unnamed>",
-                    type_a=edge.get("type_a") or "",
+                    type_a=_mapping_compat.lit_type(edge) or "",
                     target_accession=target_acc,
                     target_level=target_level,
                     best_mapping_level=bml,

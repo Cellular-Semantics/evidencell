@@ -77,22 +77,26 @@ def test_duplicate_node_id():
 
 # ── Edge endpoint references ──────────────────────────────────────────────────
 
-def test_edge_type_a_missing_node():
+def test_edge_lit_type_missing_node():
+    # Fixture still uses deprecated `type_a` to exercise the back-compat
+    # shim during the Phase 2 PR1 -> PR2 window. Error message uses the
+    # new field name `lit_type`.
     doc = {
         "nodes": [_node("B")],
         "edges": [_edge("e1", "NONEXISTENT", "B")],
     }
     errors = structural_checks(doc)
-    assert any("type_a" in e and "NONEXISTENT" in e for e in errors)
+    assert any("lit_type" in e and "NONEXISTENT" in e for e in errors)
 
 
-def test_edge_type_b_missing_node():
+def test_edge_taxonomy_type_missing_node():
+    # As above — deprecated field name on input, new in output.
     doc = {
         "nodes": [_node("A")],
         "edges": [_edge("e1", "A", "NONEXISTENT")],
     }
     errors = structural_checks(doc)
-    assert any("type_b" in e and "NONEXISTENT" in e for e in errors)
+    assert any("taxonomy_type" in e and "NONEXISTENT" in e for e in errors)
 
 
 def test_edge_both_endpoints_valid():
