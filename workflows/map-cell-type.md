@@ -296,16 +296,17 @@ TASK:
      distant cells are present — the mapping is weakened but not disproven.
    - NOT_ASSESSED: classical location not representable from atlas metadata
 
-3. Determine confidence using the decision guide:
-   - HIGH: ≥2 independent convergent evidence types, at least one experimental
-     (annotation transfer, electrophysiology, morphological reconstruction).
-     NOT achievable from literature alone.
-   - MODERATE: ≥2 independent evidence items with consistent support
-   - LOW: single evidence item or consistent but weak/indirect evidence
-   - UNCERTAIN: evidence contradictory, ambiguous, or minimal
-
-   If evidence is thin (stubs only, no lit review yet), default to LOW or UNCERTAIN.
-   Be explicit about what would upgrade the confidence.
+3. **Do NOT set `confidence`, `confidence_score`, or `rationale`.**
+   Phase 3 (2026-05-13) moved authority for the holistic verdict +
+   rationale to the report-time agent (`workflows/gen-report.md`
+   Step 3). Stage B emits structured data only — the report-gen agent
+   reads it back, synthesises the verdict against the full evidence
+   picture (including the AT pool-candidate pre-pass and cross-edge
+   indistinguishability), writes `confidence` + `confidence_score` +
+   `rationale` + `rationale_source_hash` + `report_path` +
+   `rationale_generated_at` back to the edge. The schema makes
+   `confidence` optional for exactly this reason. See #64 for the
+   design.
 
 4. Assemble evidence items. Each item needs:
    - evidence_type (LITERATURE / ATLAS_METADATA / ANNOTATION_TRANSFER / etc.)
@@ -351,7 +352,10 @@ Present each proposed edge to the curator:
 PROPOSED EDGE: {classical_name} → {atlas_name}
 ════════════════════════════════════════════════
 Relationship: {RELATIONSHIP}
-Confidence:   {CONFIDENCE} — {rationale summary}
+Cardinality:  {CARDINALITY}
+Justification: {JUSTIFICATION}
+
+Verdict + rationale: (pending — written by gen-report)
 
 Property comparisons:
   nt_type:              {alignment} — {node_a} vs {node_b}
@@ -366,13 +370,15 @@ Caveats: {count}
 Unresolved questions: {list}
 Proposed experiments: {list}
 
-What would upgrade confidence: {specific gaps}
+What would let gen-report reach a confident verdict: {specific gaps}
 ```
 
 Ask:
-> "Review this edge. Approve, modify (relationship/confidence/caveats), or reject.
-> If you want to proceed to lit review before committing, say 'defer' — the edge
-> will be saved as a draft proposal."
+> "Review this edge. Approve, modify (relationship/cardinality/caveats), or reject.
+> The verdict (`confidence` / `confidence_score` / `rationale`) is not set at
+> Stage B — gen-report will synthesise and write it back. If you want to proceed
+> to lit review before committing, say 'defer' — the edge will be saved as a
+> draft proposal."
 
 ---
 
