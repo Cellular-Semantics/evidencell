@@ -14,8 +14,6 @@ the first failing test.
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import yaml
 
 from evidencell.paths import repo_root
