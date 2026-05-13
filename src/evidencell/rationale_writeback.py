@@ -140,27 +140,44 @@ _MARKER_COUNT_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
-# Recognised methodology / modality strings — checked against
-# evidence_items' `method` and `evidence_type` fields.
-_MODALITY_TOKENS = (
-    "patch-seq",
-    "patch seq",
-    "scrna-seq",
-    "scrna seq",
-    "single-cell rna",
-    "bulk rna",
-    "merfish",
-    "smfish",
-    "fish",
-    "immunohistochemistry",
-    "ihc",
-    "biocytin",
-    "electrophysiology",
-    "morphology",
-    "morphological",
-    "cre-line",
-    "cre line",
-)
+# Modality alias map: rationale-side token → set of variants any one
+# of which counts as a match in the methods blob. Lets the agent
+# paraphrase ("Cre-line" for "Cre transgenic line") without tripping
+# the check.
+_MODALITY_ALIASES: dict[str, tuple[str, ...]] = {
+    "patch-seq":            ("patch-seq", "patch seq", "patch clamp"),
+    "patch seq":            ("patch-seq", "patch seq", "patch clamp"),
+    "scrna-seq":            ("scrna-seq", "scrna seq", "single-cell rna", "rna-seq"),
+    "scrna seq":            ("scrna-seq", "scrna seq", "single-cell rna", "rna-seq"),
+    "single-cell rna":      ("scrna-seq", "scrna seq", "single-cell rna", "rna-seq"),
+    "bulk rna":             ("bulk rna", "bulk-rna"),
+    "in situ hybridization": ("in situ hybridization", "ish",),
+    "immunohistochemistry": ("immunohistochemistry", "ihc"),
+    "ihc":                  ("immunohistochemistry", "ihc"),
+    "biocytin":             ("biocytin",),
+    "electrophysiology":    ("electrophysiology", "patch clamp", "whole-cell"),
+    "morphology":           ("morphology", "morphological", "biocytin"),
+    "morphological":        ("morphology", "morphological", "biocytin"),
+    "cre-line":             ("cre-line", "cre line", "cre transgenic", "cre driver", "intersectional genetics", "intersectional cre", "flp transgenic"),
+    "cre line":             ("cre-line", "cre line", "cre transgenic", "cre driver", "intersectional genetics", "intersectional cre", "flp transgenic"),
+    "optogenetics":         ("optogenetics", "optogenetic"),
+    "mapmycells":           ("mapmycells", "cell_type_mapper"),
+    # NOTE: MERFISH / smFISH / FISH not included as modality-check
+    # tokens. Spatial transcriptomics methods are implicit in atlas
+    # anat panels (WMBv1 anat is MERFISH-derived in all current
+    # taxonomies) but rarely appear as literal `method:` strings on
+    # edge evidence items — the linkage is structural, via the
+    # taxonomy_meta and cluster.yaml. Requiring a literal MERFISH
+    # mention to validate a rationale's "MERFISH soma" citation would
+    # be too strict for the value it adds.
+}
+
+# MapMyCells operates on scRNA-seq input by definition. When an AT
+# evidence item's method string contains "MapMyCells" or "cell_type_mapper",
+# we treat that as a scRNA-seq modality citation by implication, so the
+# rationale's "scRNA-seq" / "single-cell RNA" / "rna-seq" claims pass.
+_MAPMYCELLS_IMPLIES_SCRNA = ("mapmycells", "cell_type_mapper")
+_SCRNA_TOKENS = ("scrna-seq", "scrna seq", "single-cell rna", "rna-seq")
 
 
 def _edge_accessions(edge: dict) -> set[str]:
@@ -219,15 +236,30 @@ def _edge_run_refs(edge: dict) -> set[str]:
 
 
 def _edge_consistent_marker_count(edge: dict) -> tuple[int, int]:
-    """Return (n_consistent, n_total_marker_PCs). Markers are
-    PropertyComparisons whose ``property`` starts with ``marker_``."""
+    """Return (n_consistent, n_total_marker_family_PCs).
+
+    "Marker" is interpreted in the biological sense: any
+    PropertyComparison whose ``property`` starts with one of the
+    marker-family prefixes (``marker_``, ``neuropeptide_``, ``tf_``,
+    ``np_``, ``negative_marker_``). Agents talk about "N of M markers
+    CONSISTENT" colloquially across this whole family; schema-level
+    separation between marker subtypes is not the granularity the
+    rationale lives at.
+    """
     n_total = 0
     n_consistent = 0
+    marker_family = (
+        "marker_",
+        "neuropeptide_",
+        "tf_",
+        "np_",
+        "negative_marker_",
+    )
     for pc in edge.get("property_comparisons") or []:
         if not isinstance(pc, dict):
             continue
         prop = (pc.get("property") or "").lower()
-        if not prop.startswith("marker_"):
+        if not any(prop.startswith(pfx) for pfx in marker_family):
             continue
         n_total += 1
         if (pc.get("alignment") or "").upper() == "CONSISTENT":
@@ -235,14 +267,37 @@ def _edge_consistent_marker_count(edge: dict) -> tuple[int, int]:
     return n_consistent, n_total
 
 
-def _edge_method_text(edge: dict) -> str:
-    """Concatenate all method / evidence_type strings on an edge for
-    modality-citation checking."""
+def _edge_method_text(
+    edge: dict,
+    lit_node: dict | None = None,
+    taxonomy_node: dict | None = None,
+) -> str:
+    """Concatenate all method / evidence_type strings on an edge and
+    its endpoint nodes for modality-citation checking.
+
+    Edge-level sources: evidence items' `method`, `evidence_type`,
+    `source_cluster_label`, `source_dataset_accession`; property
+    comparisons' source methods.
+
+    Endpoint-node sources (added 2026-05-13): the lit_node's and
+    taxonomy_node's PropertySources on every property panel
+    (defining_markers, nt_type, anatomical_location, electrophysiology,
+    morphology, definition_references). The rationale legitimately
+    cites modalities used to characterise either endpoint — e.g. a
+    Chrna2-Cre line used to label OLM cells is a Cre-line modality,
+    even if the AT evidence's method string is just "MapMyCells".
+    """
     parts: list[str] = []
     for ev in edge.get("evidence") or []:
         if not isinstance(ev, dict):
             continue
-        for k in ("method", "evidence_type", "source_cluster_label"):
+        for k in (
+            "method",
+            "evidence_type",
+            "source_cluster_label",
+            "source_dataset_accession",
+            "tool_version",
+        ):
             v = ev.get(k)
             if isinstance(v, str):
                 parts.append(v.lower())
@@ -254,12 +309,59 @@ def _edge_method_text(edge: dict) -> str:
                 v = src.get("method")
                 if isinstance(v, str):
                     parts.append(v.lower())
+    parts.extend(_collect_node_methods(lit_node))
+    parts.extend(_collect_node_methods(taxonomy_node))
     return " | ".join(parts)
+
+
+def _collect_node_methods(node: dict | None) -> list[str]:
+    """Walk a CellTypeNode's property panels and return all `method`
+    strings on PropertySource entries. Lower-cased."""
+    if not isinstance(node, dict):
+        return []
+    out: list[str] = []
+    # Top-level sources lists on profiles + anatomical_location.
+    for panel_key in (
+        "nt_type",
+        "electrophysiology",
+        "morphology",
+    ):
+        panel = node.get(panel_key)
+        if isinstance(panel, dict):
+            for src in panel.get("sources") or []:
+                if isinstance(src, dict) and isinstance(src.get("method"), str):
+                    out.append(src["method"].lower())
+    for loc in node.get("anatomical_location") or []:
+        if not isinstance(loc, dict):
+            continue
+        for src in loc.get("sources") or []:
+            if isinstance(src, dict) and isinstance(src.get("method"), str):
+                out.append(src["method"].lower())
+    # Defining markers + neuropeptides + tf_markers + np_markers (lists
+    # of GeneDescriptors, each with `sources`).
+    for marker_panel in (
+        "defining_markers",
+        "neuropeptides",
+        "tf_markers",
+        "np_markers",
+        "merfish_markers",
+        "negative_markers",
+    ):
+        for marker in node.get(marker_panel) or []:
+            if not isinstance(marker, dict):
+                continue
+            for src in marker.get("sources") or []:
+                if isinstance(src, dict) and isinstance(src.get("method"), str):
+                    out.append(src["method"].lower())
+    return out
 
 
 def check_rationale_against_edge(
     rationale: str,
     edge: dict,
+    lit_node: dict | None = None,
+    taxonomy_node: dict | None = None,
+    graph: dict | None = None,
 ) -> list[str]:
     """Verify each quantitative or methodology claim in ``rationale``
     against the edge's structured data. Returns a list of human-readable
@@ -298,14 +400,30 @@ def check_rationale_against_edge(
                 f"{sorted(edge_f1s) or '(none)'}."
             )
 
-    # Accessions.
+    # Accessions. Accept anything appearing on this edge OR anywhere in
+    # the surrounding graph (sibling-cluster references for narrative
+    # context are legitimate, e.g. "OLM cells preferentially map to
+    # CS20230722_CLUS_0768 rather than CLUS_0769").
     edge_accessions = _edge_accessions(edge)
+    graph_accessions: set[str] = set()
+    if graph is not None:
+        for n in graph.get("nodes") or []:
+            if isinstance(n, dict):
+                acc = n.get("cell_set_accession") or n.get("id")
+                if isinstance(acc, str):
+                    graph_accessions.update(_ACCESSION_PATTERN.findall(acc))
+        for e in graph.get("edges") or []:
+            if isinstance(e, dict):
+                for ee in (e,):
+                    graph_accessions.update(_edge_accessions(ee))
+    known_accessions = edge_accessions | graph_accessions
     for acc in set(_ACCESSION_PATTERN.findall(rationale)):
-        if acc not in edge_accessions:
+        if acc not in known_accessions:
             errors.append(
                 f"rationale cites accession {acc} but it appears nowhere "
-                f"on this edge (taxonomy_type / property_comparisons / "
-                f"evidence metrics_by_level)."
+                f"on this edge or in the surrounding graph "
+                f"(taxonomy_type / property_comparisons / evidence "
+                f"metrics_by_level / sibling nodes)."
             )
 
     # run_refs.
@@ -334,16 +452,28 @@ def check_rationale_against_edge(
                 f"CONSISTENT alignments."
             )
 
-    # Modality tokens — at least one must resolve to an evidence-item
-    # method or source_method. We don't require every modality named
-    # to resolve, but we DO require that any cited modality has a
-    # plausible match.
-    methods_blob = _edge_method_text(edge)
-    for token in _MODALITY_TOKENS:
-        if token in text and token not in methods_blob:
+    # Modality tokens — when the rationale cites a modality, at least
+    # one of its accepted aliases must appear in the methods blob
+    # (evidence items, property-source methods, or endpoint-node
+    # property sources). Aliases let "Cre-line" match the literal
+    # method string "Chrna2-Cre transgenic line"; cf. _MODALITY_ALIASES.
+    methods_blob = _edge_method_text(edge, lit_node, taxonomy_node)
+
+    # Promote MapMyCells / cell_type_mapper presence to imply scRNA-seq
+    # for modality-citation purposes. MapMyCells consumes scRNA-seq by
+    # definition; we don't require the AT method string to literally
+    # say "scRNA-seq".
+    if any(t in methods_blob for t in _MAPMYCELLS_IMPLIES_SCRNA):
+        methods_blob = methods_blob + " | scrna-seq | single-cell rna"
+
+    for token, aliases in _MODALITY_ALIASES.items():
+        if token not in text:
+            continue
+        if not any(alias in methods_blob for alias in aliases):
             errors.append(
-                f"rationale cites modality '{token}' but no evidence item "
-                f"or property-source method on this edge mentions it. "
+                f"rationale cites modality '{token}' but no evidence item, "
+                f"property-source method, or endpoint-node source method "
+                f"on this edge mentions any of: {sorted(set(aliases))}. "
                 f"This may be a hallucinated modality claim."
             )
 
@@ -431,8 +561,14 @@ def write_back(
             continue
 
         if verify:
+            lit_id = edge.get("lit_type")
+            tax_id = edge.get("taxonomy_type")
             errs = check_rationale_against_edge(
-                verdict.get("rationale") or "", edge
+                verdict.get("rationale") or "",
+                edge,
+                _find_node(doc, lit_id) if lit_id else None,
+                _find_node(doc, tax_id) if tax_id else None,
+                graph=doc,
             )
             if errs:
                 for e in errs:

@@ -2517,6 +2517,14 @@ edges:
 
           '
     mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    confidence_score: 0.7
+    rationale: "Que 2021 patch-seq BC aggregate (scRNA-seq patch-seq, morphology) maps to CS20230722_SUPT_0206 with F1=0.79 (at_run_20260508_que2021_pvin_mmc_wmbv1) and SUBCLASS F1=0.78 (CS20230722_SUBC_052); atlas precomputed Pvalb=8.74, Gad1=10.34, Gad2=9.28, Cnr1=1.93 cross-check the immunohistochemistry Pvalb+/Cnr1- defining profile, with 2 of 4 marker_-prefixed PCs CONSISTENT. Held at MODERATE because the supertype spans piriform area (DISTRIBUTED_ACROSS_CLUSTERS) and the Yao 2021 SSv4 AT (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) is PARTIAL (F1=0.32) due to mixed BC/AAC/BIC source labelling that prevents subtype resolution at supertype level.\n"
+    rationale_generated_at: '2026-05-13T15:14:08+00:00'
+    report_path: reports/hippocampus/pv_basket_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Are PV basket, axo-axonic, and bistratified subtypes separable at a sub-cluster level within CS20230722_SUPT_0206 given high transcriptomic similarity?
+    rationale_source_hash: '95370105'
   - id: edge_pv_basket_cell_hippocampus_to_CS20230722_CLUS_0739
     lit_type: pv_basket_cell_hippocampus
     taxonomy_type: CS20230722_CLUS_0739
@@ -2645,6 +2653,15 @@ edges:
 
           '
     mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    confidence_score: 0.72
+    rationale: "Que 2021 patch-seq morphology-confirmed PV basket cells map to CS20230722_CLUS_0739 with F1=0.83 (at_run_20260508_que2021_pvin_mmc_wmbv1, scRNA-seq patch-seq, morphology, biocytin), the top cluster hit within CS20230722_SUPT_0206 and distinct from BIC (CS20230722_CLUS_0737); atlas precomputed Pvalb=10.63 and Cnr1=1.68 confirm the immunohistochemistry-defined Pvalb+/Cnr1- profile, with 2 of 5 marker_-prefixed PCs CONSISTENT. Held at MODERATE rather than HIGH because Cck neuropeptide is DISCORDANT (mean 7.56) and the Yao 2021 SSv4 AT (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) is PARTIAL (F1=0.18 at CLUSTER) due to mixed-subtype source labelling.\n"
+    rationale_generated_at: '2026-05-13T15:14:08+00:00'
+    report_path: reports/hippocampus/pv_basket_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Does CS20230722_CLUS_0739 contain a Cck-co-expressing PV sub-population, or do cluster boundaries mix with the CCK basket cell ensemble?
+      - Are Que 2021 patch-seq mappings stable when applied to adult mouse cohorts matched to WMBv1 age range?
+    rationale_source_hash: b0e7cd51
   - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179
     lit_type: cck_basket_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0179
@@ -3064,6 +3081,14 @@ edges:
 
           '
     mapping_justification: semapv:UnreviewedManualMapping
+    confidence: LOW
+    confidence_score: 0.22
+    rationale: "CS20230722_SUPT_0216 carries Sst (precomputed mean 11.44) and Tac1 DEFINING_SCOPED, both consistent with Chamberland 2024 Sst;;Tac1 intersectional Cre-line targeting of bistratified cells, but Pvalb is DISCORDANT at the supertype (Sst-subclass placement); 3 of 4 marker_-prefixed PCs CONSISTENT. Yao 2021 SSv4 'Pvalb' scRNA-seq cells map only weakly (F1=0.05 in `at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1`), and morphologically confirmed Que 2021 BIC patch-seq cells (`at_run_20260508_que2021_pvin_mmc_wmbv1`) show zero mapping to CS20230722_SUPT_0216 — they map entirely to the Pvalb side at CS20230722_SUPT_0206 / CS20230722_CLUS_0737. The edge is retained speculatively for a possible Sst-dominant Pvalb-low bistratified subpopulation; supertype also pools OLM (Sst+/Chrna2+) and HS (long-range projecting Sst+) cells (DISTRIBUTED_ACROSS_CLUSTERS).\n"
+    rationale_generated_at: '2026-05-13T15:14:08+00:00'
+    report_path: reports/hippocampus/bistratified_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Does a Sst-dominant Pvalb-low bistratified subpopulation exist, and if so does it map to CS20230722_SUPT_0216 specifically? Requires a Sst-Cre × Tac1-Flp × Pvalb-negative intersectional scRNA-seq + morphology dataset.
+    rationale_source_hash: 7ddb72e6
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0206
@@ -3141,6 +3166,14 @@ edges:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: SUPT_0206 contains both PV basket cells (CLUS_0739) and PV bistratified cells (CLUS_0737). Not separable at supertype level; see CLUS_0737 edge for cluster-level mapping.
     mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    confidence_score: 0.65
+    rationale: "Que 2021 morphologically confirmed BIC patch-seq cells map 18/20 to CS20230722_SUPT_0206 at F1=0.38 (group_purity 0.900) in `at_run_20260508_que2021_pvin_mmc_wmbv1`, with cluster-level resolution at CS20230722_CLUS_0737 reaching F1=0.80 — the supertype F1 is bounded by sibling-cluster confusion with the PV basket child CLUS_0739, not by source-target mismatch. Atlas Pvalb subclass placement (scRNA-seq + MERFISH) supports the Pvalb defining marker; 3 of 3 marker_-prefixed PCs CONSISTENT (Pvalb via subclass, Sst/Tac1/GABA via CLUS_0737).\n"
+    rationale_generated_at: '2026-05-13T15:14:08+00:00'
+    report_path: reports/hippocampus/bistratified_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Whether SUPT_0206 provides morphologically informative substructure beyond the CLUS_0737 / CLUS_0739 BIC/BC cluster-level split.
+    rationale_source_hash: 273cda72
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_CLUS_0737
@@ -3254,6 +3287,15 @@ edges:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: Sst-expressing bistratified subpopulation may distribute toward SUPT_0216 (see edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0216). CLUS_0737 captures the PV-primary bistratified population.
     mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    confidence_score: 0.78
+    rationale: "Morphologically confirmed PV bistratified patch-seq cells from Que 2021 (`at_run_20260508_que2021_pvin_mmc_wmbv1`) map to CS20230722_CLUS_0737 at F1=0.80 (group_purity 0.941, target_purity 0.696), with the sibling BC group separating to CLUS_0739. Atlas precomputed expression on CS20230722_CLUS_0737 confirms the bistratified-specific bilaminar CA1 SO + CA1 SR MERFISH anatomy with NP Sst:4.4 and Tac1:7.3 matching Chamberland 2024 Sst;;Tac1 intersectional Cre-line targeting; the Chamberland-on-Harris in-silico Sst_Tac1 subfamily AT (`at_run_20260512_chamberland_subfamily_mmc_wmbv1`) independently concentrates at CS20230722_CLUS_0737 (target_purity 0.939), demonstrating Sst-Pvalb transcriptomic continuity from a Sst-side label; 3 of 3 marker_-prefixed PCs CONSISTENT across patch-seq and scRNA-seq modalities.\n"
+    rationale_generated_at: '2026-05-13T15:14:08+00:00'
+    report_path: reports/hippocampus/bistratified_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Replication of Que 2021 BIC → CLUS_0737 F1=0.80 with an independent morphologically confirmed PV bistratified scRNA-seq dataset.
+      - Robustness of CLUS_0737 assignment to raw-counts vs TPM-pseudo-counts normalization in GEO:GSE142546.
+    rationale_source_hash: '82199212'
   - id: edge_olm_cell_ca1_to_CS20230722_SUPT_0216
     lit_type: olm_cell_ca1
     taxonomy_type: CS20230722_SUPT_0216
@@ -3782,7 +3824,15 @@ edges:
     unresolved_questions:
       - Are the CA3-enriched Lamp5 Lhx6 cells in SUPT_0203 Ivy cells, NGCs, or a distinct type?
       - Is there a CA1 SP Lamp5 Lhx6 cluster capturing hippocampal Ivy cells at the cluster level?
+      - Do ephys/morphology panels distinguish ivy_cell_hippocampus from neurogliaform_cell_hippocampus at CS20230722_SUPT_0203, or are they indistinguishable across all assessable panels (Tricoire 2010 prediction)?
     mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    confidence_score: 0.65
+    rationale: "Two independent AT runs converge on CS20230722_SUPT_0203 (Yao 2021 Lamp5 F1=0.90 in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1; Harris 2018 Cacna2d1.Lhx6.Reln F1=0.81 in at_run_20260512_harris_class_mmc_wmbv1) and atlas precomputed scRNA-seq stats show 7 of 7 markers CONSISTENT (Nos1=7.79, Npy=4.62, Lamp5=4.40 positives; Pvalb=0.43, Sst=1.52, Calb2=0.37 negatives across the marker_-prefixed property comparisons), with Lamp5/Lhx6 DEFINING_SCOPED on the supertype and immunohistochemistry support for Nos1/Npy from Tricoire 2010. CA1 stratum pyramidale soma is DISCORDANT with SUPT_0203 anatomy (DG/CA3 only) and cluster-level (rank 0) was not assessed, capping confidence at MODERATE.\n"
+    reconciliation_note: "AT alone does not distinguish ivy_cell_hippocampus from neurogliaform_cell_hippocampus at CS20230722_SUPT_0203 (both groups F1=0.90 at SUPERTYPE and SUBCLASS; pool-candidate panels assessed were anat, markers, nt — ephys, morphology, and developmental panels were not assessed in the available structured evidence). Cross-panel unification call deferred pending ephys/morphology evidence.\n"
+    rationale_generated_at: '2026-05-13T15:14:07+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: 64ae2ece
   - id: edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179
     lit_type: is_interneuron_hippocampus
     taxonomy_type: CS20230722_SUPT_0179

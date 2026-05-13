@@ -312,3 +312,89 @@ The Winterer 2019 OLM scRNA-seq → MapMyCells AT (covered in the Methods table 
 | [8] | Leão et al. 2012 | [23042082](https://pubmed.ncbi.nlm.nih.gov/23042082) | Chrna2 marker |
 | [9] | Thulin et al. 2025 | [40757734](https://pubmed.ncbi.nlm.nih.gov/40757734) | Pnoc neuropeptide |
 | [A] | ABC Atlas | — | [view](https://tinyurl.com/a4f3kd4v) — anatomy=HPF; NT=GABA; expression=Chrna2 |
+
+<!-- verdict-block-start: edge_olm_to_wmb_clus_0769 -->
+```yaml
+verdict:
+  confidence: MODERATE
+  confidence_score: 0.6
+  rationale: >
+    Pooled OLM annotation transfer (at_run_20260408_winterer_olm_mmc_wmbv1; MapMyCells
+    scRNA-seq) localises Winterer 2019 OLM cells to the Sst Gaba_3 supertype at F1=0.67
+    (SUPERTYPE) and F1=0.68 (SUBCLASS), but disperses at cluster rank (CS20230722_CLUS_0769
+    best-child F1=0.47), with sibling CS20230722_CLUS_0768 capturing more cells than
+    CS20230722_CLUS_0769 itself; 1 of 3 markers CONSISTENT (Sst CONSISTENT; Chrna2
+    APPROXIMATE via Cre-line evidence; Grm1 NOT_ASSESSED at atlas).
+    The CA1 stratum oriens concentration and full Sst/Npy/Pnoc neuropeptide triad support
+    a supertype-rank mapping, while prosubiculum + posterior amygdala admixture in
+    CS20230722_CLUS_0769 prevents a HIGH call.
+  unresolved_questions:
+    - Why do OLM cells preferentially map to CS20230722_CLUS_0768 rather than CS20230722_CLUS_0769 within Sst Gaba_3?
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_olm_to_wmb_clus_0727 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    MapMyCells scRNA-seq annotation transfer (at_run_20260408_winterer_olm_mmc_wmbv1)
+    sent 0/46 Winterer 2019 OLM cells to the Lamp5 Lhx6 subclass containing
+    CS20230722_CLUS_0727 (REFUTE); 0 of 3 markers CONSISTENT (Sst present as neuropeptide
+    only — not as defining marker; Chrna2 NOT_ASSESSED; Grm1 NOT_ASSESSED) and Npy DISCORDANT. The CGE-derived
+    Lamp5 Lhx6 subclass assignment is biologically incongruent with canonical MGE-derived
+    Sst+ OLM identity; CA3 SO/SLM localisation is anatomically plausible but insufficient
+    to overcome the subclass-level discordance.
+  unresolved_questions:
+    - Do any OLM-morphology cells fall into CS20230722_CLUS_0727 despite the Lamp5 Lhx6 subclass mismatch?
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_olm_to_wmb_clus_0785 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: >
+    Chrna2 DISCORDANT at parent supertype 0219 Sst Gaba_6 (ABC Atlas HPF/GABA/Chrna2
+    filter [A] eliminates the supertype); MapMyCells scRNA-seq annotation transfer
+    (at_run_20260408_winterer_olm_mmc_wmbv1) mapped 0/46 OLM cells to Sst Gaba_6
+    containing CS20230722_CLUS_0785 (REFUTE); Pnoc DISCORDANT and CA3-enriched location
+    (CA3 SO/SLM) further argue against CA1-centric OLM identity. 1 of 3 markers
+    CONSISTENT (Sst only).
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_olm_to_wmb_clus_0788 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: >
+    Chrna2 DISCORDANT — parent supertype 0219 Sst Gaba_6 is eliminated by ABC Atlas
+    HPF/GABA/Chrna2 filter [A]; MapMyCells scRNA-seq annotation transfer
+    (at_run_20260408_winterer_olm_mmc_wmbv1) mapped 0/46 Winterer 2019 OLM cells to the
+    Sst Gaba_6 supertype containing CS20230722_CLUS_0788 (REFUTE). 1 of 3 markers
+    CONSISTENT (Sst only; Chrna2 DISCORDANT; Grm1 NOT_ASSESSED); only 21 SO cells total
+    with no SLM cells and a LOW_CELL_COUNT caveat (50 cells; possible corpus callosum
+    contamination).
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_olm_to_wmb_clus_0789 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: >
+    Chrna2 DISCORDANT at parent supertype 0219 Sst Gaba_6 (ABC Atlas HPF/GABA/Chrna2
+    filter [A]); MapMyCells scRNA-seq annotation transfer (at_run_20260408_winterer_olm_mmc_wmbv1)
+    mapped 0/46 OLM cells to Sst Gaba_6 containing CS20230722_CLUS_0789 (REFUTE).
+    1 of 3 markers CONSISTENT (Sst only). The cluster is not hippocampus-specific —
+    ~28% of cells localise to medial/posterior amygdala (anatomically distant from
+    hippocampal stratum oriens), with only 25 CA3 SO cells and no CA1 representation.
+  unresolved_questions:
+    - What is the amygdala population dominating CS20230722_CLUS_0789?
+```
+<!-- verdict-block-end -->

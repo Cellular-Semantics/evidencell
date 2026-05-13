@@ -1007,12 +1007,19 @@ edges:
       - 'Which CA1-ProS supertypes (0069-0072) correspond to deep vs. superficial CA1 pyramidal cell sublayers? Wfs1 marks deep-layer CA1 PCs in the literature; checking which supertype carries Wfs1 in the atlas would resolve the sublayer correspondence.
 
         '
+      - Run MapMyCells annotation transfer of a sublayer-resolved CA1 PC source dataset (Cembrowski 2016 or Zeisel 2018) onto WMBv1 to resolve deep- vs. superficial-CA1 correspondence across CS20230722_SUPT_0069 through CS20230722_SUPT_0072.
     proposed_experiments:
       - 'Run MapMyCells annotation transfer of Cembrowski 2016 or Zeisel 2018 dorsal CA1 pyramidal cell labels onto WMBv1 to resolve SUPT_0069-0072 correspondence.
 
         '
     mapping_cardinality: 1:n
     mapping_justification: semapv:UnreviewedManualMapping
+    confidence: MODERATE
+    confidence_score: 0.7
+    rationale: "Yao 2021 SSv4 scRNA-seq annotation transfer (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) anchors CA1 pyramidal cells to the 016 CA1-ProS Glut subclass (F1=0.99) and supertype CS20230722_SUPT_0069 (F1=0.79), with MERFISH soma in Field CA1 pyramidal layer concordant with the classical CA1 stratum pyramidale assignment; 1 of 1 markers CONSISTENT (Wfs1 mean_expression=3.97 at SUPT_0069). Confidence is held at MODERATE because the classical CA1 PC population splits across sibling supertypes (0070-0072) within the 016 CA1-ProS Glut subclass, making this a broadMatch rather than an exclusive supertype assignment.\n"
+    rationale_generated_at: '2026-05-13T15:14:08+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: 170ddf63
   - id: edge_ca2_pc_hippocampus_to_supt_0100
     lit_type: ca2_pc_hippocampus
     taxonomy_type: CS20230722_SUPT_0100
