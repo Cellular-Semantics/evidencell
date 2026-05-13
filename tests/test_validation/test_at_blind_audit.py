@@ -213,7 +213,7 @@ def _build_yaml_files(repo: Path) -> None:
         "taxonomy_level": "cluster",
     }
     edges = [
-        {"id": "edge_lit_to_target", "type_a": "lit_test", "type_b": "wmb_target",
+        {"id": "edge_lit_to_target", "lit_type": "lit_test", "taxonomy_type": "wmb_target",
          "relationship": "EQUIVALENT",
          "evidence": [{
              "evidence_type": "ANNOTATION_TRANSFER",
@@ -224,7 +224,7 @@ def _build_yaml_files(repo: Path) -> None:
                  "f1_score": 0.9,
              }],
          }]},
-        {"id": "edge_lit_to_distant", "type_a": "lit_test", "type_b": "wmb_distant",
+        {"id": "edge_lit_to_distant", "lit_type": "lit_test", "taxonomy_type": "wmb_distant",
          "relationship": "PARTIAL_OVERLAP",
          "evidence": [{
              "evidence_type": "ANNOTATION_TRANSFER",

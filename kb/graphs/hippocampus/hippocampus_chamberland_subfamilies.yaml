@@ -348,9 +348,9 @@ nodes:
 edges:
 
   - id: edge_chrna2_olm_to_CS20230722_CLUS_0771
-    type_a: chrna2_olm_subfamily_chamberland
-    type_b: CS20230722_CLUS_0771
-    relationship: PARTIAL_OVERLAP
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0771
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -401,10 +401,11 @@ edges:
         alignment: APPROXIMATE
         notes: "Chrna2 expression is sparse but enriched in CLUS_0771 relative to siblings."
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_sst_nos1_to_CS20230722_CLUS_0859
-    type_a: sst_nos1_subfamily_chamberland
-    type_b: CS20230722_CLUS_0859
-    relationship: EQUIVALENT
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0859
+    relationship: skos:exactMatch
     confidence: HIGH
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -466,10 +467,11 @@ edges:
         node_b_value: "Sst Chodl long-range identity"
         alignment: CONSISTENT
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_sst_tac1_to_CS20230722_SUBC_052
-    type_a: sst_tac1_subfamily_chamberland
-    type_b: CS20230722_SUBC_052
-    relationship: PARTIAL_OVERLAP
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUBC_052
+    relationship: evidencell:PartialOverlapMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -529,10 +531,11 @@ edges:
         alignment: APPROXIMATE
         notes: "Functional target (Pvalb-INs per Chamberland 2024) and transcriptomic placement (Pvalb cluster) are independently consistent but not strictly equivalent."
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_ndnf_nkx2_1_olm_to_CS20230722_SUPT_0216
-    type_a: ndnf_nkx2_1_olm_subfamily_chamberland
-    type_b: CS20230722_SUPT_0216
-    relationship: UNCERTAIN
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0216
+    relationship: evidencell:UncertainRelationship
     confidence: LOW
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
@@ -585,3 +588,4 @@ edges:
           F1 < 0.1 each. Mapping at any single level is uninformative. Better
           source-side evidence (e.g. Chamberland 2024's published per-cell
           Ndnf::Nkx2-1 scRNA-seq if available) needed to firm this up.
+    mapping_justification: semapv:UnspecifiedMatching

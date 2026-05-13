@@ -198,9 +198,9 @@ nodes:
 edges:
 
   - id: edge_gpi_shell_mmus_to_wmb_0504
-    type_a: classical_gpi_shell_mmus
-    type_b: wmb_supt_0504
-    relationship: EQUIVALENT
+    lit_type: classical_gpi_shell_mmus
+    taxonomy_type: wmb_supt_0504
+    relationship: skos:exactMatch
     confidence: MODERATE
     evidence:
 
@@ -292,3 +292,4 @@ edges:
         Explore WMBv1 cluster-level data within Supertype:0504 to characterise
         fine-grained heterogeneity; compare with the primate GPi Shell group at
         equivalent resolution.
+    mapping_justification: semapv:UnreviewedManualMapping

@@ -289,9 +289,9 @@ edges:
   # SURPRISING CANDIDATE: Lamp5 Lhx6 subclass, not Sst
 
   - id: edge_olm_to_wmb_clus_0727
-    type_a: olm_hippocampus
-    type_b: CS20230722_CLUS_0727
-    relationship: TYPE_A_SPLITS
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0727
+    relationship: skos:broadMatch
     confidence: LOW
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -370,10 +370,12 @@ edges:
 
   # ── Edge 2: OLM → wmb_clus_0785 (Sst Gaba_6) ─────────────────
 
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_olm_to_wmb_clus_0785
-    type_a: olm_hippocampus
-    type_b: CS20230722_CLUS_0785
-    relationship: TYPE_A_SPLITS
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0785
+    relationship: skos:broadMatch
     confidence: UNCERTAIN
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -462,10 +464,12 @@ edges:
 
   # ── Edge 3: OLM → wmb_clus_0769 (Sst Gaba_3) ─────────────────
 
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_olm_to_wmb_clus_0769
-    type_a: olm_hippocampus
-    type_b: CS20230722_CLUS_0769
-    relationship: TYPE_A_SPLITS
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0769
+    relationship: skos:broadMatch
     confidence: MODERATE
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -589,10 +593,12 @@ edges:
 
   # ── Edge 4: OLM → wmb_clus_0788 (Sst Gaba_6) ─────────────────
 
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_olm_to_wmb_clus_0788
-    type_a: olm_hippocampus
-    type_b: CS20230722_CLUS_0788
-    relationship: TYPE_A_SPLITS
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0788
+    relationship: skos:broadMatch
     confidence: UNCERTAIN
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -681,10 +687,12 @@ edges:
 
   # ── Edge 5: OLM → wmb_clus_0789 (Sst Gaba_6) ─────────────────
 
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_olm_to_wmb_clus_0789
-    type_a: olm_hippocampus
-    type_b: CS20230722_CLUS_0789
-    relationship: TYPE_A_SPLITS
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0789
+    relationship: skos:broadMatch
     confidence: UNCERTAIN
     evidence:
       - evidence_type: ATLAS_METADATA
@@ -771,3 +779,5 @@ edges:
     proposed_experiments:
       - "Chrna2-Cre + MapMyCells."
       - "Region-specific dissection of CA3 SO vs amygdala cells in this cluster."
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
