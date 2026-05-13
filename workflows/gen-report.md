@@ -198,26 +198,54 @@ Open with one summary sentence: how many candidates were assessed and what the
 primary verdict is (e.g. "Three candidate atlas clusters were assessed; CLUS_1915
 in SUPT_0486 is the primary mapping at MODERATE confidence").
 
-**Annotation-transfer overview figure (run-level)**
+**Annotation-transfer overview figure (run-level, filtered)**
 
 If `methods_summary.annotation_transfer_runs[*].figure_relpath` is non-empty
 for any run, embed each run's figure once near the top of Results (after the
 opening summary sentence, before the candidates table). The figure is
-run-level — it covers all candidates at all taxonomy levels — so it does NOT
-go in any specific candidate paragraph.
+run-level so it does NOT go in any specific candidate paragraph.
 
-The renderer also attaches `fields.figure_relpath` and `fields.figure_caption`
-to each AT evidence item; pick any one of those (they all point at the same
-run figure) to compose the embed:
+**Filter to relevant source groups before embedding.** The canonical figure
+on disk (`figures/f1_tree.png` or `figures/f1_heatmap.png`) usually shows
+*every* source group in the AT run, including ones irrelevant to the
+classical type being reported. For each cited AT run:
 
-```markdown
-![{fields.figure_caption}]({fields.figure_relpath})
+1. Collect the set of `source_cluster_label` values that appear on
+   `evidence_items[*].fields.source_cluster_label` for AT evidence items
+   on edges of this node. That set defines the relevant source groups.
+2. Run the figure renderer with `--source` to produce a node-scoped
+   variant. Output filename must be node-specific so reports don't
+   clobber each other:
 
-*F1 across taxonomy levels. Each row is a source-cell group; columns are top
-target classes/subclasses/supertypes/clusters. F1 ≥ 0.5 indicates a clean
-mapping at that level; the spread across columns reveals where the source
-cells split among atlas siblings.*
-```
+   ```bash
+   just gen-at-figure {run_id} \
+     --source {comma_separated_source_labels} \
+     [--f1 {non-standard CSV relpath if needed}] \
+     --output figures/f1_for_{node_id}.png
+   ```
+
+   Use `--pool A,B:NAME` when the source groups are transcriptomically
+   indistinguishable and the report's reading is to merge them (e.g. the
+   OLM Sst-OLM + Htr3a-OLM case; see [[feedback_at_no_distinction_judgement]]).
+3. Embed the filtered figure using its relative path from the report:
+
+   ```markdown
+   ![Filtered AT figure for {classical_node_name}]({relative_path_to_filtered_png})
+
+   *F1 across taxonomy levels for the {N} source group(s) relevant to
+   {classical_node_name}. Each panel row is a source-cell group; nodes are
+   coloured by F1 with precision (P) and recall (R) shown inline. F1 ≥ 0.5
+   at a level indicates a clean mapping at that resolution.*
+   ```
+
+   If you also want to show the full multi-source figure as supporting
+   context (e.g. to justify a pooling decision), generate a *second*
+   figure without `--source` and reference it as a follow-up — but the
+   filtered figure is the primary embed.
+
+4. The pre-existing canonical `figure_relpath` on the manifest is left
+   untouched; reports generate per-node variants on demand and reference
+   those.
 
 Use a short interpretive line below the figure (≤2 sentences) drawing on
 `methods_summary.annotation_transfer_runs[*].caveats` if relevant.

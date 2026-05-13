@@ -9,11 +9,13 @@ Minimum mapping confidence: **MODERATE**
 ### Mapping relationship
 
 - **CROSS_CUTTING** — type_b cross-cuts the boundary of type_a (and usually at least one other node). The transcriptomic type captures cells that the classical taxonomy would assign to multiple distinct types. E.g. MLI1 cuts across classical basket and stellate cells.
+- **EQUIVALENT** — type_a and type_b describe the same cell population. Clean 1:1 correspondence. E.g. Lugaro → WMBv1 supertype 1145 (F1=0.96).
 - **PARTIAL_OVERLAP** — Some cells from type_a map to type_b, but the mapping is incomplete in precision, recall, or both. E.g. Globular (PLI2) → cluster 5177 (precision 83%, recall 93%: high precision, limited recall — also distributed across other clusters).
 - **TYPE_A_SPLITS** — type_a (typically classical) corresponds to multiple type_b nodes. Use one edge per split, all with TYPE_A_SPLITS relationship. E.g. one classical interneuron type splits into MLI1 + MLI2 in transcriptomics.
 
 ### Mapping confidence
 
+- **HIGH** — Multiple independent convergent evidence types; at least one experimental
 - **MODERATE** — Two or more independent evidence items with consistent support
 
 ## Class — 01 IT-ET Glut
@@ -113,13 +115,20 @@ Minimum mapping confidence: **MODERATE**
 
 ### Subclass — 052 Pvalb Gaba
 
+- sst_tac1_subfamily_chamberland — PARTIAL_OVERLAP · MODERATE _(no report file)_
+
 #### Supertype — 0206 Pvalb Gaba_2
 
-- [pv_basket_cell_hippocampus](../hippocampus/pv_basket_cell_hippocampus_summary.md) — PARTIAL_OVERLAP · MODERATE
+- [bistratified_cell_hippocampus](../hippocampus/bistratified_cell_hippocampus_summary.md) — PARTIAL_OVERLAP · MODERATE
+- [pv_basket_cell_hippocampus](../hippocampus/pv_basket_cell_hippocampus_summary.md) — PARTIAL_OVERLAP · HIGH
+
+##### Cluster — 0737 Pvalb Gaba_2
+
+- [bistratified_cell_hippocampus](../hippocampus/bistratified_cell_hippocampus_summary.md) — PARTIAL_OVERLAP · MODERATE
 
 ##### Cluster — 0739 Pvalb Gaba_2
 
-- [pv_basket_cell_hippocampus](../hippocampus/pv_basket_cell_hippocampus_summary.md) — PARTIAL_OVERLAP · MODERATE
+- [pv_basket_cell_hippocampus](../hippocampus/pv_basket_cell_hippocampus_summary.md) — PARTIAL_OVERLAP · HIGH
 
 ### Subclass — 053 Sst Gaba
 
@@ -130,6 +139,20 @@ Minimum mapping confidence: **MODERATE**
 ##### Cluster — 0769 Sst Gaba_3
 
 - [olm_hippocampus](../hippocampus/olm_hippocampus_summary.md) — TYPE_A_SPLITS · MODERATE
+
+##### Cluster — 0771 Sst Gaba_3
+
+- chrna2_olm_subfamily_chamberland — PARTIAL_OVERLAP · MODERATE _(no report file)_
+
+## Class — 08 CNU-MGE GABA
+
+### Subclass — 056 Sst Chodl Gaba
+
+#### Supertype — 0241 Sst Chodl Gaba_4
+
+##### Cluster — 0859 Sst Chodl Gaba_4
+
+- sst_nos1_subfamily_chamberland — EQUIVALENT · HIGH _(no report file)_
 
 ## Class — 12 HY GABA
 
