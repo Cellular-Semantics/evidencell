@@ -1,35 +1,136 @@
 # Dentate Gyrus Type-2a Neural Progenitor — Allen Brain Cell Atlas CCN202307220 Mapping Report
-*Draft · 2026-04-14 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml`*
-
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+*2026-04-14 · Source: `/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml`*
 
 ---
 
-## Classical type
+## Introduction
+
+The type-2a neural progenitor is the first transit-amplifying stage of adult
+hippocampal neurogenesis in the dentate gyrus subgranular zone (SGZ), defined
+by Nestin and Sox2 co-expression in the absence of doublecortin (DCX). It
+sits between the quiescent type-1 radial glia-like stem cell (GFAP+/Sox2+/Nestin+)
+and the downstream Nestin+/DCX+ type-2b stage. Resolving where — or whether —
+this transient amplifying population appears in the Allen Brain Cell Atlas
+WMBv1 DG taxonomy is important for assessing how completely a whole-brain
+adult atlas captures the early steps of the postnatal neurogenic lineage.
+
+### Classical type table
 
 | Property | Value | References |
 |---|---|---|
-| CL term | dentate gyrus type-2a neural progenitor (CL:9900003) | |
-| Soma location | subgranular zone (SGZ) [UBERON:0009952] | [1] |
-| NT | glutamatergic (lineage committed, not yet functional) |  |
-| Markers | Nestin+, Sox2+ | [1] |
-| Negative | DCX−, GFAP− | |
+| Soma location | Dentate gyrus subgranular zone (UBERON:0009952) | — |
+| NT | Glutamatergic (lineage committed, not yet functional) | — |
+| Defining markers | Nestin, Sox2 | [1] |
+| Negative markers | DCX, GFAP | — |
+| Definition basis | CLASSICAL_NEUROCHEMICAL | — |
+| Cell Ontology term | dentate gyrus type-2a neural progenitor (CL:9900003) | — |
+
+<details>
+<summary>Details — source evidence for classical type properties</summary>
+
+- **Defining markers (Nestin, Sox2):** literature · adult mouse dentate gyrus neurogenic lineage staging · [1]
+  > Neural stem cells (NSCs) progressively develop into proliferating neural progenitor cells (NPCs), designated as type-2a (Nestin + / Sox2 + ), type-2b cells (expressing Nestin and doublecortin: Nestin + /DCX + ) and neuroblasts (type-3, DCX + ) (Filippov et al., 2003) (Fukuda et al., 2003)(Kronenberg et al., 2003)(Steiner et al., 2006). Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN (Brandt et al., 2003)Steiner et al., 2004).
+  > — Micheli 2025, Dentate Gyrus Immature Neurons · [1] <!-- quote_key: 279046466_998847af -->
+
+</details>
+
+### Cell Ontology mapping
+
+Cell Ontology mapping: dentate gyrus type-2a neural progenitor [[CL:9900003](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:9900003)] (EXACT).
 
 ---
 
-## Mapping candidates
+## Results
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
-|---|---|---|---|---|---|
-
+No mapping edges were written for this node: the type-2a stage is not resolved
+as a distinct cluster in the Allen Brain Cell Atlas DG taxonomy. The earliest
+atlas cluster in the DG neurogenic lineage (CLUS_0511, DG-PIR Ex IMN_1) already
+expresses Eomes/Tbr2, a type-2b marker, so atlas resolution begins downstream
+of type-2a. This is recorded as a known atlas coverage gap on the classical
+node; the type-2b progenitor mapping (see
+`edge_dg_type2b_progenitor_to_CS20230722_CLUS_0511`) marks the earliest
+atlas-resolvable stage of the same lineage.
 
 ---
 
-## Evidence base
+### Methods
 
-| Edge | Evidence types | Supports |
-|---|---|---|
+<details>
+<summary>Data sources, analyses, and reproducibility receipts</summary>
+
+**Classical type definition.** The type-2a neural progenitor is defined here
+on a CLASSICAL_NEUROCHEMICAL basis: Nestin+/Sox2+/DCX−/GFAP− amplifying
+progenitor in the dentate gyrus subgranular zone (UBERON:0009952), with
+lineage-committed but not yet functional glutamatergic identity. Defining
+markers (Nestin, Sox2) cite Micheli 2025 [1], which reviews the canonical
+Filippov/Fukuda/Kronenberg/Steiner staging of adult dentate gyrus neurogenesis.
+
+**Atlas mapping query.** No candidate atlas cluster was retrieved for this
+node: the type-2a stage falls upstream of the earliest atlas-resolved cluster
+(CLUS_0511, DG-PIR Ex IMN_1) in the CCN202307220 dentate gyrus lineage. No
+property comparisons were performed and no mapping edges were written.
+
+**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature
+quotes in this report are validated against the evidencell knowledge base
+at write time. Authored-prose evidence narratives are validated against
+their source `evidence_items[*].explanation` fields. The pre-write hook
+rejects any unresolvable identifier or unattributed blockquote. Specific
+mapping limitations and caveats are documented per-candidate in the
+Discussion section.
+
+*Generated by evidencell `01f89d6` at 2026-05-13T15:46:12+00:00 from [kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml](kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml).*
+
+</details>
+
+---
+
+## Discussion
+
+**Primary mapping:** None. No atlas cluster in CCN202307220 confidently
+resolves the type-2a (Nestin+/Sox2+/DCX−) stage. The earliest DG neurogenic
+cluster (CLUS_0511, DG-PIR Ex IMN_1) already carries a type-2b marker
+signature (Eomes/Tbr2), so type-2a lies upstream of atlas resolution and
+no mapping edge is written.
+
+This classical type maps directly to the Cell Ontology term dentate gyrus
+type-2a neural progenitor [[CL:9900003](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:9900003)].
+CL:9900003 (child of CL:0011020 neural progenitor cell) is an exact match —
+defined as the Nestin+/Sox2+/DCX− amplifying progenitor in the SGZ prior to
+doublecortin expression. No atlas cluster confidently resolves this stage; it
+precedes the earliest DG-PIR Ex IMN clusters (0511–0513) in the neurogenesis
+lineage.
+
+### Proposed experiments and follow-ups
+
+- **What:** Targeted sub-clustering of CLUS_0511–0513 (DG-PIR Ex IMN_1–3) and
+  any upstream radial-glia / astrocyte-adjacent clusters in the WMBv1 DG
+  taxonomy, scoring for Nestin+/Sox2+/DCX− cells.
+  **Target:** Identify a subset (≥ small but distinct population) of
+  Nestin+/Sox2+/DCX−/GFAP− cells with SGZ MERFISH soma location.
+  **Expected output:** Either a new atlas-resolvable cluster stub matching
+  type-2a (would write a MappingEdge with at least LOW confidence), or
+  confirmation that the type-2a stage is below current atlas resolution.
+  **Resolves:** Open question 1.
+
+- **What:** Cross-atlas check against neurogenesis-focused single-cell
+  datasets (e.g. adult mouse SGZ neurogenic lineage scRNA-seq) to confirm
+  whether type-2a is recoverable at finer resolution.
+  **Target:** Recover a Nestin+/Sox2+/DCX− cluster transcriptomically distinct
+  from both quiescent type-1 (GFAP+) and type-2b (Nestin+/DCX+).
+  **Expected output:** External-dataset mapping evidence supporting (or
+  refuting) the existence of a discrete type-2a transcriptomic state, which
+  would feed back as BulkCorrelationEvidence or AnnotationTransferEvidence on
+  any candidate WMBv1 cluster identified above.
+  **Resolves:** Open question 1, 2.
+
+### Open questions
+
+1. Is the type-2a (Nestin+/Sox2+/DCX−) stage present as a minor sub-population
+   within CLUS_0511 (or an adjacent astrocyte/RGL cluster) in CCN202307220, or
+   is it genuinely below the resolution of the WMBv1 DG taxonomy?
+2. Does a neurogenesis-focused single-cell reference (outside WMBv1) recover a
+   transcriptomically discrete type-2a state that could anchor a future
+   mapping edge?
 
 ---
 
@@ -37,4 +138,4 @@
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | PMID:40519263 | [40519263](https://pubmed.ncbi.nlm.nih.gov/40519263/) | soma location |
+| [1] | Micheli 2025 · PMID:40519263 | [40519263](https://pubmed.ncbi.nlm.nih.gov/40519263/) | Nestin marker |

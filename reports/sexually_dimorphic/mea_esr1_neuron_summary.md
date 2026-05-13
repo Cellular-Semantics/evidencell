@@ -1,142 +1,140 @@
 # Medial amygdala estrogen-receptor alpha neuron — WMBv1 Mapping Report
-*draft · 2026-04-25 · Source: `kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml`*
-
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+*2026-04-25 · Source: `/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml`*
 
 ---
 
 ## Introduction
 
-### Classical type
+The medial amygdalar nucleus (MeA) Esr1+ population is a sexually dimorphic
+glutamatergic neuron group classically implicated in male-typical
+reproductive behaviour (mating, aggression). This report documents a
+candidate mapping of `mea_esr1_neuron` to the WMBv1 taxonomy on the basis
+of Knoedler 2022 [1] TRAP-seq bulk-correlation evidence; the classical
+node itself is currently a stub awaiting full literature ingest.
 
-**Medial amygdala estrogen-receptor alpha neuron** is a **CANDIDATE classical-node
-stub** proposed on the back of bulk-correlation evidence from Knoedler 2022
-(PMID:35143761) [1]. The sexually dimorphic Esr1+ population of the medial
-amygdalar nucleus is well-described in the classical literature as a key node of
-the male-typical reproductive behaviour circuit (mating, aggression), but this
-classical type was not included in the original sexually-dimorphic
-asta-report-ingest cycle. It is recorded here so that the bulk-correlation
-evidence can land as an edge. Full classical literature ingest (e.g. Choi 2005,
-Unger 2015, Yamaguchi 2020) is **pending** — until that ingest is complete the
-single mapping edge is held at LOW confidence, reflecting single-dataset support.
+### Classical type table
 
 | Property | Value | References |
 |---|---|---|
 | Soma location | Medial amygdalar nucleus [MBA:403] | — |
-| Defining markers | Esr1 (transcript / receptor) | — |
+| Defining markers | Esr1 | — |
+| Definition basis | PRIOR_TRANSCRIPTOMIC | — |
 
-*(Stub status: NT type, neuropeptides, negative markers, CL term, and per-marker
-literature citations are not yet populated. They will be filled in by the
-pending classical literature ingest.)*
+*(Stub status: NT type, neuropeptides, negative markers, CL term, and
+per-property literature citations are not yet populated. They will be
+filled in by the pending classical literature ingest.)*
+
+No Cell Ontology term currently covers this type — candidate for a new CL term.
 
 ---
 
 ## Results
 
-### Mapping candidates
+A single candidate atlas supertype was assessed: **SUPT_0055 (0055 MEA
+Slc17a7 Glut_1)** at LOW confidence, driven by Knoedler 2022 [1] TRAP-seq
+bulk-correlation evidence.
 
-A single mapping edge is recorded for mea_esr1_neuron: a supertype-level edge to
-SUPT_0055 (0055 MEA Slc17a7 Glut_1) at LOW confidence. The edge is supported by
-a single piece of evidence — the Knoedler 2022 Esr1+ TRAP-seq bulk correlation [1]
-— and by node-level metadata alignment. LOW confidence reflects the
-single-dataset support and the stub status of the classical node.
+### Mapping candidates table
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|---|
-| 1 | 0055 MEA Slc17a7 Glut_1 [CS20230722_SUPT_0055] | (self) | 3249 | 🔴 LOW | Location CONSISTENT; NT CONSISTENT; Esr1 CONSISTENT; sex ratio CONSISTENT (CLUS_0197 MFR=10.11) | Speculative |
-1 edge total. Relationship type: PARTIAL_OVERLAP.
+|---|---|---|---:|---|---|---|
+| 1 | — | 0055 MEA Slc17a7 Glut_1 (CS20230722_SUPT_0055) | 3249 | 🔴 LOW | MeA location CONSISTENT · Glut NT CONSISTENT · Esr1 CONSISTENT · male-bias CONSISTENT | Speculative |
 
-### Property alignment — primary candidate (SUPT_0055)
+Total edges: 1. Relationship: PARTIAL_OVERLAP.
 
-**Table 1 — Property comparison.**
+### 0055 MEA Slc17a7 Glut_1 · 🔴 LOW
+
+**Table 1 — Property comparison**
 
 | Property | Classical | Supertype | Best cluster | Alignment |
 |---|---|---|---|---|
-| Soma location | Medial amygdalar nucleus [MBA:403] | Medial amygdalar nucleus (primary soma across child clusters) | not assessed (best child cluster CLUS_0197 lies within MEA-Slc17a7 Glut_1 supertype) | CONSISTENT |
-| NT type | Glutamatergic (MeA principal neurons predominantly glutamatergic) | Glutamatergic (Slc17a7 Glut_1) | not assessed | CONSISTENT |
-| Esr1 expression | POSITIVE (primary defining marker) | Esr1+ by experimental design (TRAP-Cre line) | not assessed | CONSISTENT |
-| Sex ratio | male-biased (MeA Esr1+ population larger in males) | not available at supertype level | MFR=10.11 (CLUS_0197) — extreme male bias | CONSISTENT |
+| Soma location | MBA:403 (Medial amygdalar nucleus) | Medial amygdalar nucleus (primary soma across child clusters) | CLUS_0197 primary soma: Medial amygdalar nucleus | CONSISTENT |
+| NT type | Glutamatergic (MeA principal neurons predominantly glutamatergic) | Glutamatergic (Slc17a7 Glut_1) | Glutamatergic | CONSISTENT |
+| Esr1 expression | POSITIVE (primary defining marker) | Esr1+ by experimental design (TRAP-Cre line) | Esr1+ by TRAP-Cre design | CONSISTENT |
+| Sex ratio | male-biased (MeA Esr1+ population larger in males) | not available | MFR=10.11 (CLUS_0197) — extreme male bias | CONSISTENT |
 
-**Table 2 — Evidence support.**
+*(3 of the top-6 δ hits in Knoedler 2022 (CLUS_0197, CLUS_0198, CLUS_0194) are SUPT_0055 child clusters with MeA-primary soma and male-biased MFR; CLUS_0197 is the best match by both δ rank (3/5322) and MFR (10.11). A sister supertype SUPT_0057 also places in the top 6.)*
+
+**Table 2 — Evidence support**
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| Knoedler 2022 Esr1+ TRAP-seq MeA-FR vs VMH-FR | Bulk transcriptomic correlation | SUPPORT | δ=0.0519 (rank 3/5322; highest absolute δ in entire run); CLUS_0197 MFR=10.11 | [1] |
+| Knoedler 2022 TRAP-seq (MeA_FR vs VMH_FR) | Bulk transcriptomic correlation | SUPPORT | best_child_cluster=CLUS_0197 (rank 3, δ=0.0519, MFR=10.11) | [1] |
 
-> Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled MeA female-receptive vs VMH female-receptive identifies SUPT_0055 (MEA Slc17a7 Glut_1) as the dominant MeA-specific signal. Child cluster CLUS_0197 ranks #3 of 5,322 by δ = ρ(MeA_FR) − ρ(VMH_FR), with δ=0.0519 (the highest absolute δ value in the entire run) and MFR=10.11 (strongly male-biased — consistent with the well-known sexually dimorphic male-typical MeA Esr1+ population). Multiple sister clusters from SUPT_0055 (CLUS_0194, CLUS_0198) and the related SUPT_0057 also rank in the top 6. Anatomically clean signal. Confidence held at LOW because mea_esr1_neuron is a candidate classical node — full literature ingest has not yet been performed.
-> — Knoedler et al. 2022 · [1]
+**Supporting evidence**
 
-*(Child-cluster breakdown not assessed — see proposed experiments. Knoedler 2022
-[1] reports CLUS_0197 (rank 3, δ=0.0519, MFR=10.11), CLUS_0194 (rank 6, δ=0.0508,
-MFR=2.70), and CLUS_0198 (rank 4, δ=0.0515) as the top SUPT_0055 child-cluster
-hits, with sister supertype SUPT_0057 also placing in the top 6.)*
+- Knoedler 2022 [1] Esr1+ TRAP-seq pooled MeA female-receptive vs VMH
+  female-receptive identifies SUPT_0055 (MEA Slc17a7 Glut_1) as the
+  dominant MeA-specific signal. Child cluster CLUS_0197 ranks #3 of 5,322
+  by δ = ρ(MeA_FR) − ρ(VMH_FR), with δ=0.0519 (the highest absolute δ
+  value in the entire run) and MFR=10.11 — strongly male-biased,
+  consistent with the well-known sexually dimorphic male-typical MeA
+  Esr1+ population.
+- Multiple sister clusters from SUPT_0055 (CLUS_0194, CLUS_0198) and the
+  related SUPT_0057 (CLUS_0214, CLUS_0213) also rank in the top 7, all
+  with MeA, posterior amygdalar, or posterior cortical amygdalar primary
+  soma — an anatomically clean signal [1].
+- The supertype-level encoding ("MEA Slc17a7 Glut_1") directly matches
+  the classical glutamatergic identity of MeA principal neurons.
 
----
+![Top 10 clusters by δ for MeA_FR_vs_VMH_FR (CS20230722_SUPT_0055)](figures/mea_esr1_neuron_MeA_FR_vs_VMH_FR_5eaf1d0e.png)
 
+| Rank | Cluster | Supertype | δ | MFR | Top anatomy |
+|---:|---|---|---:|---:|---|
+| 1 | CLUS_0163 | SUPT_0044 | 0.0529 | 0.79 | Piriform area |
+| 2 | CLUS_0219 | SUPT_0059 | 0.0525 | 0.75 | Cortical amygdalar area, posterior part, medial zone |
+| **3** | **CLUS_0197** | **SUPT_0055** | **0.0519** | **10.11** | **Medial amygdalar nucleus** |
+| **4** | **CLUS_0198** | **SUPT_0055** | 0.0515 | 1.13 | Cortical amygdalar area, posterior part, medial zone |
+| 5 | CLUS_0214 | SUPT_0057 | 0.0510 | 2.33 | Medial amygdalar nucleus |
+| **6** | **CLUS_0194** | **SUPT_0055** | 0.0508 | 2.70 | Posterior amygdalar nucleus |
+| 7 | CLUS_0213 | SUPT_0057 | 0.0507 | 1.56 | Cortical amygdalar area, posterior part, lateral zone |
+| 8 | CLUS_0215 | SUPT_0058 | 0.0506 | 1.44 | Cortical amygdalar area, posterior part, lateral zone |
+| 9 | CLUS_0117 | SUPT_0032 | 0.0503 | 1.13 | Agranular insular area, dorsal part, layer 2/3 |
+| 10 | CLUS_0162 | SUPT_0044 | 0.0502 | 1.08 | Postpiriform transition area |
 
+**Marker evidence provenance**
 
-### 0055 MEA Slc17a7 Glut_1 [CS20230722_SUPT_0055] · 🔴 LOW
+- **Esr1 (defining marker)** — listed without a primary citation on the
+  classical node (`refs: []`). Source-side Esr1+ identity is guaranteed
+  by the Knoedler 2022 [1] TRAP-Cre experimental design rather than by a
+  precomputed expression cross-check on this atlas; target-side
+  per-cluster Esr1 expression has not been pulled into this edge as a
+  quantitative comparison. A targeted cite-traverse on the classical MeA
+  Esr1+ literature (Choi 2005, Unger 2015, Yamaguchi 2020) is needed to
+  anchor Esr1 as a defining marker on this node.
 
-### Supporting evidence
+**Concerns**
 
-- **Anatomical concordance.** SUPT_0055 (MEA Slc17a7 Glut_1) has primary soma in
-  Medial amygdalar nucleus across child clusters, directly matching the classical
-  soma location MBA:403 (Medial amygdalar nucleus).
-- **NT type concordance.** The supertype label encodes Slc17a7-positive
-  glutamatergic identity, consistent with the predominantly glutamatergic
-  identity of MeA principal neurons.
-- **Esr1 marker concordance by experimental design.** The Knoedler 2022 [1]
-  source dataset is by construction Esr1+ (TRAP-Cre line), and the supertype is
-  identified as the dominant MeA-specific signal in that pool, confirming Esr1
-  expression at the population the supertype represents.
-- **Sex ratio concordance at child-cluster level.** CLUS_0197 (a child cluster
-  of SUPT_0055) shows MFR=10.11 — extreme male bias — directly matching the
-  well-known male-biased sexually dimorphic MeA Esr1+ population.
-- **Bulk-correlation evidence is anatomically clean and rank-leading [1].**
-  > Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled MeA female-receptive vs VMH female-receptive identifies SUPT_0055 (MEA Slc17a7 Glut_1) as the dominant MeA-specific signal. Child cluster CLUS_0197 ranks #3 of 5,322 by δ = ρ(MeA_FR) − ρ(VMH_FR), with δ=0.0519 (the highest absolute δ value in the entire run) and MFR=10.11 (strongly male-biased — consistent with the well-known sexually dimorphic male-typical MeA Esr1+ population). Multiple sister clusters from SUPT_0055 (CLUS_0194, CLUS_0198) and the related SUPT_0057 also rank in the top 6. Anatomically clean signal. Confidence held at LOW because mea_esr1_neuron is a candidate classical node — full literature ingest has not yet been performed.
-  > — Knoedler et al. 2022 · [1]
-
-### Marker evidence provenance
-
-- **Esr1** — listed as the primary defining marker on the classical stub but
-  with no per-marker literature citation populated yet (the stub awaits classical
-  literature ingest). Source-side evidence is by experimental design (TRAP-Cre on
-  Esr1) [1]; target-side per-cluster Esr1 expression has not been pulled into
-  this edge as a quantitative comparison. *(note: the classical stub's Esr1
-  attribution will be cite-supported once asta-report-ingest or cite-traverse is
-  run on Choi 2005, Unger 2015, Yamaguchi 2020 — see Proposed experiments.)*
-
-### Concerns
-
-- **Single-dataset support.** All supporting evidence on this edge is from
+- *(SINGLE_DATASET)* All supporting evidence on this edge is from
   Knoedler 2022 [1]. There is no independent literature replication, no
-  annotation transfer, and no atlas-metadata cross-check yet recorded.
-- **Classical node is a stub (PRIOR_MAPPING_ASSUMED caveat).** mea_esr1_neuron
-  was not part of the original asta-report-ingest cycle. The biological
-  identity of the population is well-established in the classical literature,
-  but no curated literature has yet been ingested to support the per-marker /
-  per-property assertions on this node. Confidence is therefore capped at LOW
-  until ingest is complete.
-- **Internal heterogeneity not yet resolved.** CLUS_0197 (MFR=10.11) and
-  CLUS_0194 (MFR=2.70) within SUPT_0055 differ substantially in male bias,
-  raising the open question of whether they represent functionally distinct
-  male-biased subpopulations (e.g. aggression-active vs neutral) or a graded
-  signal across one population.
+  annotation transfer, and no atlas-metadata Esr1 cross-check yet recorded.
+- *(PRIOR_MAPPING_ASSUMED)* The MeA Esr1+ population is well-described in
+  classical literature but was not included in the original
+  sexually-dimorphic asta-report-ingest cycle. This edge is added on
+  bulk-correlation evidence while the classical node itself awaits proper
+  ingest — confidence is capped at LOW until that is complete.
+- **Internal heterogeneity unresolved.** CLUS_0197 (MFR=10.11) and
+  CLUS_0194 (MFR=2.70) within SUPT_0055 differ substantially in male bias.
+  Mapping at the supertype unit may conflate functionally distinct
+  male-biased subpopulations (e.g. aggression-typical vs neutral).
 
-### What would upgrade confidence
+**What would upgrade confidence**
 
-- **Run asta-report-ingest or cite-traverse on MeA Esr1+ classical literature**
-  (Choi 2005 PMID:16267094, Unger 2015 PMID:26119027, Yamaguchi 2020 PMID:31831664)
-  to upgrade mea_esr1_neuron from stub to fully ingested classical node, populating
-  per-marker, NT, and neuropeptide citations. Expected output: additional
-  `LiteratureEvidence` items and a populated classical-node property set.
-- **MapMyCells annotation transfer** of published MeA Esr1+ scRNA-seq data to
-  WMBv1, providing direct cell-level AT evidence alongside the existing bulk
-  correlation. Target: F1 ≥ 0.50 at SUPT_0055 level. Expected output:
-  `AnnotationTransferEvidence`.
-- **Independent bulk-correlation replication** using a second Esr1+ MeA pool
-  (different lab / different sex-behavioural contrast) to confirm the rank-3 /
-  δ=0.0519 placement of SUPT_0055/CLUS_0197 is not dataset-specific. Expected
+- Run `asta-report-ingest` or `cite-traverse` on MeA Esr1+ classical
+  literature (Choi 2005, Unger 2015, Yamaguchi 2020) to upgrade
+  `mea_esr1_neuron` from stub to a fully ingested classical node with
+  defining-marker citations, NT-type citation, and sex-bias direction
+  anchored in primary studies. Expected output: `LiteratureEvidence`
+  items on this edge; lifts the LOW-confidence ceiling imposed by
+  PRIOR_MAPPING_ASSUMED.
+- MapMyCells annotation transfer of published MeA Esr1+ scRNA-seq data
+  to WMBv1 (target F1 ≥ 0.80 at SUPERTYPE for SUPT_0055; per-cluster F1
+  to test whether CLUS_0197 vs CLUS_0194 are functionally separable).
+  Expected output: `AnnotationTransferEvidence` complementing the
+  bulk-correlation evidence.
+- Independent bulk-correlation replication using a second Esr1+ MeA pool
+  from an independent dataset, to confirm the rank-3 / δ=0.0519
+  placement of SUPT_0055 / CLUS_0197 is not dataset-specific. Expected
   output: an additional `BulkCorrelationEvidence` entry.
 
 ---
@@ -146,17 +144,58 @@ hits, with sister supertype SUPT_0057 also placing in the top 6.)*
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** See classical type table in Introduction; defining_basis on the classical node and per-property literature support are listed there. The KB-side definition lives at the source graph file linked in the reproducibility footer.
+**Classical type definition.** `mea_esr1_neuron` is a candidate classical
+node (definition_basis: PRIOR_TRANSCRIPTOMIC) with Esr1 as a single
+defining marker and MBA:403 (Medial amygdalar nucleus) as soma location.
+No literature citations are attached to defining markers, NT type, or
+soma location on this stub — the node was added so that bulk-correlation
+evidence from Knoedler 2022 [1] could land as an edge.
 
-**Atlas mapping query.** Candidate atlas clusters were retrieved from CCN20230722 at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match, NT type, defining markers, sex bias). Full scoring rules: `workflows/map-cell-type.md`.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the
+WMBv1 taxonomy (CCN20230722) at ranks 0 (cluster) and 1 (supertype) using
+metadata-based scoring (region match, NT type, defining markers, sex bias
+when applicable). Full scoring rules: `workflows/map-cell-type.md`.
 
-**Property alignment.** Each defining property was compared to the corresponding atlas-side value via the `property_comparisons` schema; alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
+**Property alignment.** Each defining property of the classical type was
+compared to the corresponding atlas-side value via the `property_comparisons`
+schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT /
+NOT_ASSESSED. Atlas-side numerical values came from precomputed expression
+on the cluster (cluster.yaml in the taxonomy reference store) and from
+MERFISH spatial registration for soma location.
 
-**Bulk transcriptomic correlation.** Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq MeA female-receptive vs VMH female-receptive. SUPT_0055 child cluster CLUS_0197 highest δ in run (0.0519). Run record: [`kb/correlation_runs/20260428_knoedler_esr1_wmbv1/manifest.yaml`](../../kb/correlation_runs/20260428_knoedler_esr1_wmbv1/manifest.yaml). Script: [`correlate.py`](https://github.com/Cellular-Semantics/evidencell/blob/4e67d6b/kb/correlation_runs/20260428_knoedler_esr1_wmbv1/correlate.py)
+**Bulk transcriptomic correlation.**
 
-**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote.
+| Field | Value |
+|---|---|
+| Source publication | Knoedler et al. 2022 · PMID:35143761 [1] |
+| GEO accession | GSE183092 |
+| Technique | TRAP-seq |
+| n pools | 12 |
+| Atlas | CCN20230722 (SHA-256: b21ca985) |
+| Statistic | spearman_rho |
+| Parameters | pseudobulk_transform=log1p(sum/n_cells); pool_transform=log1p(replicate_mean(DESeq2_normalised_counts)); gene_id_space=ensembl_mouse_via_symbol_lookup (conf/gene_mapping_CCN20230722.tsv); gene_intersection=intersection_across_4_regions∩atlas_col_names; n_replicates_per_pool=3. |
+| Script | [correlate.py](https://github.com/Cellular-Semantics/evidencell/blob/4e67d6b/kb/correlation_runs/corr_run_20260428_knoedler_esr1_wmbv1/correlate.py) |
+| Code version | 4e67d6b |
+| Caveats | Cross-sex within-region δ contrasts (Male vs FR or Male vs FNR) are artefactual: across all three regions tested (POA, VMH, BNST) the top hits are hindbrain Calcb cholinergic motor neurons — a global male-vs-female expression bias that swamps region-specific signals. METHODOLOGICAL RULE: paired-bulk δ requires the two pools to differ in cell population (region/marker/state) holding sex constant. TRAP-seq vs scRNA-seq pseudobulk: polysome-bound mRNA shifts absolute ρ values lower than FACS-bulk, but Spearman rank-based statistics handle the magnitude offset; δ rankings are comparable across run types. |
 
-*Generated by evidencell `0c97cfa` from [`kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml`](../../kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml).*
+**Atlas data sources.**
+- WMBv1 / CCN20230722 / `conf/mapmycells/CCN20230722/precomputed_stats.h5` / SHA-256: `b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b`.
+
+**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs,
+and verbatim literature quotes in this report are validated against the
+evidencell knowledge base at write time. Authored-prose evidence
+narratives are validated against their source `evidence_items[*].explanation`
+fields. The pre-write hook rejects any unresolvable identifier or
+unattributed blockquote. Specific mapping limitations and caveats are
+documented per-candidate in the Discussion section.
+
+*Generated by evidencell `01f89d6` at 2026-05-13T15:46:18+00:00 from [kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml](kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml).*
+
+**Evidence base table**
+
+| Edge ID | Evidence types | Supports | Source |
+| --- | --- | --- | --- |
+| edge_mea_esr1_neuron_to_cs20230722_supt_0055 | BULK_CORRELATION | SUPPORT | [1] |
 
 </details>
 
@@ -164,72 +203,62 @@ hits, with sister supertype SUPT_0057 also placing in the top 6.)*
 
 ## Discussion
 
-**Primary mapping:** → 0055 MEA Slc17a7 Glut_1 [CS20230722_SUPT_0055] at LOW confidence. Key support: BULK_CORRELATION (Knoedler 2022 [3]; CLUS_0197 MFR=10.11 male-biased, highest δ in entire run at 0.0519). Key caveats: `SINGLE_DATASET` (Knoedler only); `PRIOR_MAPPING_ASSUMED` (mea_esr1_neuron classical-node stub — literature ingest pending).
+**Primary mapping:** Medial amygdala estrogen-receptor alpha neuron → 0055
+MEA Slc17a7 Glut_1 [CS20230722_SUPT_0055] at LOW confidence. Key support:
+bulk-correlation δ with extreme male-biased MFR at the best child cluster
+(CLUS_0197 δ=0.0519, MFR=10.11) [1]. Key caveats: SINGLE_DATASET and
+PRIOR_MAPPING_ASSUMED — the classical node remains a stub pending
+literature ingest, and the supertype is internally heterogeneous in
+sex bias.
 
-No Cell Ontology term currently assigned for this classical type.
+No Cell Ontology term currently assigned. Candidate for CL contribution
+once the classical node is fully ingested.
 
 ### Proposed experiments and follow-ups
 
-### 1. Classical literature ingest for mea_esr1_neuron
+**1. Classical literature ingest on MeA Esr1+ population**
 
-**What:** Run asta-report-ingest or cite-traverse on the canonical MeA Esr1+
-literature (Choi 2005 PMID:16267094, Unger 2015 PMID:26119027, Yamaguchi 2020
-PMID:31831664) to convert the stub to a fully ingested classical node with
-per-marker citations, NT-type citation, and neuropeptide list.
+- **What**: Run `asta-report-ingest` (or targeted `cite-traverse`) on the
+  canonical MeA Esr1+ literature (Choi 2005, Unger 2015, Yamaguchi 2020).
+- **Target**: Attach primary citations to Esr1 as a defining marker;
+  document sex-bias direction; capture any subpopulation distinctions
+  (aggression-typical vs neutral).
+- **Expected output**: `LiteratureEvidence` items on
+  `edge_mea_esr1_neuron_to_cs20230722_supt_0055`; an upgraded
+  classical-node property set with `defining_markers[*].refs`,
+  `nt_refs`, and `location_refs` populated.
+- **Resolves**: caveats SINGLE_DATASET and PRIOR_MAPPING_ASSUMED;
+  open question 1.
 
-**Target:** Populated `defining_markers[*].refs`, `nt`/`nt_refs`, `neuropeptides`,
-and `location_refs` on the mea_esr1_neuron node.
+**2. MapMyCells annotation transfer of MeA Esr1+ scRNA-seq**
 
-**Expected output:** `LiteratureEvidence` items on the edge; populated
-classical-node property set.
+- **What**: MapMyCells AT of a published MeA Esr1+ single-cell dataset
+  onto WMBv1 (CCN20230722).
+- **Target**: F1 ≥ 0.80 at SUPERTYPE for SUPT_0055; per-cluster F1 for
+  CLUS_0197 vs CLUS_0194 to test whether the two male-biased clusters
+  represent distinct subpopulations.
+- **Expected output**: `AnnotationTransferEvidence` complementing the
+  current bulk-correlation evidence.
+- **Resolves**: open question 2; provides a second independent line of
+  evidence to upgrade the edge past LOW.
 
-**Resolves:** Open question 1; lifts the LOW-confidence ceiling imposed by
-PRIOR_MAPPING_ASSUMED.
+**3. Independent bulk-correlation replication**
 
-### 2. MapMyCells annotation transfer of published MeA Esr1+ scRNA-seq against WMBv1
-
-**What:** Retrieve a published MeA Esr1+ scRNA-seq dataset (e.g. Esr1-Cre or
-Esr1-TRAP sorted preparations) and run MapMyCells against WMBv1 at supertype
-and cluster resolution.
-
-**Target:** F1 ≥ 0.50 at SUPT_0055 level; child-cluster F1 distribution
-to test whether CLUS_0197 vs CLUS_0194 are functionally separable.
-
-**Expected output:** `AnnotationTransferEvidence` on this edge. Atlas: WMBv1.
-Tool: MapMyCells. Output format: F1 matrix per cluster.
-
-**Resolves:** Open question 2; addresses the AT NOT_ASSESSED gap.
-
-### 3. Independent bulk-correlation replication
-
-**What:** Repeat the δ = ρ(MeA_FR) − ρ(VMH_FR) (or analogous MeA-vs-VMH
-contrast) computation against WMBv1 using a second Esr1+ MeA pool from an
-independent dataset.
-
-**Target:** SUPT_0055 / CLUS_0197 retains a top-3 ranking of 5,322 clusters
-by δ.
-
-**Expected output:** An additional `BulkCorrelationEvidence` entry on the edge.
-
-**Resolves:** Robustness check on the primary external evidence [1].
-
----
+- **What**: Repeat the δ = ρ(MeA_FR) − ρ(VMH_FR) contrast against WMBv1
+  using a second Esr1+ MeA pool from an independent dataset.
+- **Target**: SUPT_0055 / CLUS_0197 retains a top-3 ranking of 5,322
+  clusters by δ.
+- **Expected output**: An additional `BulkCorrelationEvidence` entry.
+- **Resolves**: robustness check on the primary external evidence [1].
 
 ### Open questions
 
-1. Does the existing classical literature support a single MeA Esr1+ classical
-   type, or multiple subpopulations (e.g. male-typical aggression vs neutral)?
-2. Are CLUS_0197 (MFR=10.11) and CLUS_0194 (MFR=2.70) functionally distinct
-   male-biased subpopulations of SUPT_0055, or a graded signal across one
-   population?
-
----
-
-### Evidence base
-
-| Edge ID | Evidence type | Supports |
-|---|---|---|
-| edge_mea_esr1_neuron_to_cs20230722_supt_0055 | BULK_CORRELATION ([1] Knoedler 2022) | SUPPORT — δ=0.0519 (rank 3/5322; highest absolute δ in run); CLUS_0197 MFR=10.11; SUPT_0055 identified as dominant MeA-specific signal |
+1. Does the existing classical literature support a single MeA Esr1+
+   classical type, or multiple subpopulations (e.g. male-typical
+   aggression vs neutral)?
+2. Are CLUS_0197 (MFR=10.11) and CLUS_0194 (MFR=2.70) functionally
+   distinct male-biased subpopulations within SUPT_0055, or a graded
+   signal across one population?
 
 ---
 
@@ -237,4 +266,4 @@ by δ.
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Knoedler et al. 2022 | [PMID:35143761](https://pubmed.ncbi.nlm.nih.gov/35143761/) | Esr1+ TRAP-seq pooled MeA female-receptive vs VMH female-receptive bulk correlation against WMBv1 — ranks SUPT_0055 / CLUS_0197 in top 6 of 5,322 by δ |
+| [1] | Knoedler et al. 2022 | [PMID:35143761](https://pubmed.ncbi.nlm.nih.gov/35143761/) | Esr1+ TRAP-seq pooled MeA female-receptive vs VMH female-receptive bulk-correlation evidence ranking SUPT_0055 / CLUS_0197 in the top 6 of 5,322 by δ |
