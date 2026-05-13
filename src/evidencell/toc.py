@@ -49,7 +49,7 @@ def _confidence_rank(value: str | None) -> int:
 class Edge:
     classical_id: str
     taxonomy_node_id: str
-    confidence: str
+    confidence: str | None  # Phase 3: optional — set at report time, not Stage B
     region: str
     source_file: Path
     relationship: str | None = None
@@ -87,8 +87,9 @@ def load_mappings(kb_root: Path | None = None) -> list[Edge]:
                     continue
                 a = edge.get("lit_type")
                 b = edge.get("taxonomy_type")
-                conf = edge.get("confidence")
-                if not (a and b and conf):
+                conf = edge.get("confidence")  # may be None (Phase 3:
+                                               # report-time-owned slot)
+                if not (a and b):
                     continue
                 key = (a, b)
                 by_classical_target[key] = Edge(
@@ -254,8 +255,32 @@ def _load_enum_descriptions(enum_name: str) -> dict[str, str]:
     return out
 
 
+def _load_slot_description(class_name: str, slot_name: str) -> str:
+    """Read a slot's description from a class's `attributes:` block in the
+    schema. Returns "" if the schema is missing or the slot is undefined
+    (e.g. test fixtures with a monkeypatched repo_root).
+    """
+    schema_path = repo_root() / "schema" / "celltype_mapping.yaml"
+    if not schema_path.exists():
+        return ""
+    try:
+        data = yaml.safe_load(schema_path.read_text())
+    except Exception:
+        return ""
+    cls = (data.get("classes") or {}).get(class_name) or {}
+    slot = (cls.get("attributes") or {}).get(slot_name) or {}
+    desc = slot.get("description") or ""
+    return " ".join(desc.split())
+
+
 def _collect_used_terms(roots: list[TaxonomyNode]) -> tuple[set[str], set[str]]:
-    """Walk surviving tree; return (relationships_used, confidences_used)."""
+    """Walk surviving tree; return (relationships_used, confidences_used).
+
+    Edges without a `confidence` value (Phase 3: report-time-owned slot
+    that may be null on edges that have not been through gen-report) are
+    not counted in the confidence-used set — they appear in the TOC with
+    a "(verdict pending)" tag rendered elsewhere.
+    """
     rels: set[str] = set()
     confs: set[str] = set()
     stack = list(roots)
@@ -264,9 +289,41 @@ def _collect_used_terms(roots: list[TaxonomyNode]) -> tuple[set[str], set[str]]:
         for edge in node.edges:
             if edge.relationship:
                 rels.add(edge.relationship)
-            confs.add(edge.confidence)
+            if edge.confidence:
+                confs.add(edge.confidence)
         stack.extend(node.children)
     return rels, confs
+
+
+# Field-vocabulary entries surfaced in the auto-generated glossary
+# (closes #58 — adds lit_type / taxonomy_type / cardinality / justification
+# / the Phase 3 rationale-suite slots). Descriptions are pulled from the
+# schema at render time so there is one source of truth.
+_FIELD_VOCABULARY: list[tuple[str, str]] = [
+    ("MappingEdge", "lit_type"),
+    ("MappingEdge", "taxonomy_type"),
+    ("MappingEdge", "mapping_cardinality"),
+    ("MappingEdge", "mapping_justification"),
+    ("MappingEdge", "confidence"),
+    ("MappingEdge", "confidence_score"),
+    ("MappingEdge", "rationale"),
+    ("MappingEdge", "report_path"),
+    ("MappingEdge", "rationale_generated_at"),
+    ("MappingEdge", "rationale_source_hash"),
+    ("MappingEdge", "reconciliation_note"),
+    ("MappingEdge", "reviewed_by"),
+]
+
+
+_SKOS_DIRECTION_PREAMBLE = (
+    "**Direction convention.** Mapping relationships are read from the "
+    "`lit_type` (subject) to the `taxonomy_type` (object). "
+    "`skos:broadMatch` and `skos:narrowMatch` describe the *match target*, "
+    "not the subject — e.g. `skos:broadMatch` means the taxonomy_type is "
+    "broader than the lit_type. See "
+    "[`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) "
+    "for worked examples and cardinality interaction."
+)
 
 
 def _render_glossary(
@@ -275,25 +332,40 @@ def _render_glossary(
     *,
     heading_offset: int = 0,
 ) -> list[str]:
-    """Emit a glossary section for the relationship + confidence terms in use."""
+    """Emit a glossary section covering the relationship + confidence terms
+    in use, plus a field-vocabulary section (lit_type / taxonomy_type /
+    cardinality / justification / Phase 3 rationale-suite slots).
+    """
     if not rels_used and not confs_used:
         return []
     rel_descs = _load_enum_descriptions("MappingRelationship")
     conf_descs = _load_enum_descriptions("MappingConfidence")
     h = "#" * (2 + heading_offset)
     sub = "#" * (3 + heading_offset)
-    lines = [f"{h} Glossary", ""]
+    lines = [f"{h} Glossary", "", _SKOS_DIRECTION_PREAMBLE, ""]
     if rels_used:
         lines += [f"{sub} Mapping relationship", ""]
         for term in sorted(rels_used):
             desc = rel_descs.get(term, "")
-            lines.append(f"- **{term}** — {desc}" if desc else f"- **{term}**")
+            lines.append(f"- **`{term}`** — {desc}" if desc else f"- **`{term}`**")
         lines.append("")
     if confs_used:
         lines += [f"{sub} Mapping confidence", ""]
         for term in sorted(confs_used, key=lambda c: -CONFIDENCE_ORDER.index(c) if c in CONFIDENCE_ORDER else 0):
             desc = conf_descs.get(term, "")
             lines.append(f"- **{term}** — {desc}" if desc else f"- **{term}**")
+        lines.append("")
+    # Field-vocabulary section (#58). Pull descriptions from the schema so
+    # there's one source of truth.
+    field_entries: list[tuple[str, str]] = []
+    for class_name, slot_name in _FIELD_VOCABULARY:
+        desc = _load_slot_description(class_name, slot_name)
+        if desc:
+            field_entries.append((slot_name, desc))
+    if field_entries:
+        lines += [f"{sub} MappingEdge fields", ""]
+        for slot, desc in field_entries:
+            lines.append(f"- **`{slot}`** — {desc}")
         lines.append("")
     return lines
 

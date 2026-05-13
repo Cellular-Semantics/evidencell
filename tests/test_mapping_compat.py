@@ -70,6 +70,28 @@ def test_mapping_edge_drops_deprecated_aliases():
     assert attrs["taxonomy_type"].get("required") is True
 
 
+def test_mapping_edge_has_phase3_slots():
+    """Phase 3 (2026-05-13) adds four new slots to MappingEdge and flips
+    `confidence` from required to optional. This locks the shape in."""
+    schema = _load_schema()
+    attrs = schema["classes"]["MappingEdge"]["attributes"]
+    expected_new_slots = {
+        "rationale",
+        "report_path",
+        "rationale_generated_at",
+        "rationale_source_hash",
+    }
+    missing = expected_new_slots - set(attrs.keys())
+    assert not missing, (
+        f"Phase 3 slots missing from MappingEdge: {sorted(missing)}"
+    )
+    # confidence must be optional (no `required: true`)
+    assert attrs["confidence"].get("required") is not True, (
+        "Phase 3: `confidence` must be optional (required: false or absent). "
+        "Authority for this slot moved from Stage B to the report-time agent."
+    )
+
+
 def test_mapping_relationship_drops_deprecated_values():
     """MappingRelationship enum no longer carries the deprecated
     ALL_CAPS values (EQUIVALENT, TYPE_A_SPLITS, …). Only the CURIE

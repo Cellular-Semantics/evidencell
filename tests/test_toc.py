@@ -43,11 +43,11 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
     graph = {
         "edges": [
             {"lit_type": "classical_X", "taxonomy_type": "TX_CLUS_A1a1", "confidence": "HIGH",
-             "relationship": "EQUIVALENT"},
+             "relationship": "skos:exactMatch"},
             {"lit_type": "classical_Y", "taxonomy_type": "TX_SUPT_A1b", "confidence": "LOW",
-             "relationship": "PARTIAL_OVERLAP"},
+             "relationship": "evidencell:PartialOverlapMatch"},
             {"lit_type": "classical_Z", "taxonomy_type": "TX_SUBC_A1", "confidence": "MODERATE",
-             "relationship": "TYPE_A_SPLITS"},
+             "relationship": "skos:broadMatch"},
         ]
     }
     (repo / "kb" / "graphs" / "region1" / "graph.yaml").write_text(yaml.safe_dump(graph))
@@ -178,8 +178,8 @@ def test_generate_all_combines_taxonomies_with_offset(fake_taxonomy):
 def test_relationship_appears_on_edge_lines(fake_taxonomy):
     md = toc.generate(fake_taxonomy, min_confidence="MODERATE")
     # Each surviving edge line carries its relationship + confidence.
-    assert "EQUIVALENT · HIGH" in md
-    assert "TYPE_A_SPLITS · MODERATE" in md
+    assert "skos:exactMatch · HIGH" in md
+    assert "skos:broadMatch · MODERATE" in md
 
 
 def test_glossary_lists_only_used_terms(fake_taxonomy):
@@ -187,15 +187,22 @@ def test_glossary_lists_only_used_terms(fake_taxonomy):
     assert "## Glossary" in md
     assert "### Mapping relationship" in md
     assert "### Mapping confidence" in md
-    # Used terms appear.
-    assert "**EQUIVALENT**" in md
-    assert "**TYPE_A_SPLITS**" in md
+    # Used terms appear (now wrapped in backticks for the CURIE-style names).
+    assert "`skos:exactMatch`" in md
+    assert "`skos:broadMatch`" in md
     assert "**HIGH**" in md
     assert "**MODERATE**" in md
     # Unused terms (from the LOW-filtered Y edge or never-used enum values) absent.
-    assert "**PARTIAL_OVERLAP**" not in md
+    assert "`evidencell:PartialOverlapMatch`" not in md
     assert "**LOW**" not in md
     assert "**REFUTED**" not in md
+    # Phase 3: SKOS direction preamble appears (unconditional).
+    # The field-vocabulary section (### MappingEdge fields) depends on a
+    # real schema/celltype_mapping.yaml being reachable from `repo_root()`;
+    # this test runs with `tmp_path` as repo_root, so the schema is
+    # absent and the section is correctly skipped. Verified end-to-end
+    # by running `just gen-toc` against the real repo.
+    assert "Direction convention" in md
 
 
 def test_generate_all_empty(monkeypatch, tmp_path):

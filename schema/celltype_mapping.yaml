@@ -1925,25 +1925,76 @@ classes:
           semapv:ManualMappingCuration on curator review. Phase 2
           schema overhaul (2026-05-12).
       confidence:
-        required: true
         range: MappingConfidence
+        description: >
+          Ordinal mapping verdict. Phase 3 (2026-05-13): authority for
+          this slot moved from Stage B (map-cell-type Step 3 synthesis)
+          to report time (gen-report synthesis). Set by the report-gen
+          agent alongside `confidence_score`, `rationale`, and the
+          `rationale_*` provenance fields. Optional (`required: false`)
+          because edges that have not been through report generation
+          carry no headline verdict — honest state, not a regression.
+          Pre-Phase-3 edges were swept clear of `confidence` in the
+          Phase 3 invalidation migration; they regain it on the first
+          gen-report pass. Spreadsheet / CAP exports should render
+          edges with no confidence as "(verdict pending)".
       confidence_score:
         range: float
         minimum_value: 0.0
         maximum_value: 1.0
         description: >
-          Optional numeric confidence (0-1). Agent-emitted; not
-          curator-derived. Per planning/phase_2_decisions_2026-05-12.md
-          there is no ordinal → numeric fallback. SSSOM-compatible.
-          Phase 3 may extend this slot's write semantics. Phase 2
-          schema overhaul (2026-05-12).
+          Numeric confidence (0-1). Phase 3 (2026-05-13): written by
+          the report-time agent alongside the ordinal `confidence`;
+          the two agree by construction. Not curator-derived; no
+          ordinal → numeric fallback. SSSOM-compatible.
+      rationale:
+        description: >
+          Short prose verdict distilled from the full report by the
+          report-time agent. Phase 3 (2026-05-13). Format constraint:
+          must cite specific structured fields (F1 values, accessions,
+          marker counts) rather than free-form claims; an automated
+          post-write check parses these citations and verifies them
+          against the edge's structured data and references. The agent
+          MUST NOT read prior `rationale` / `confidence` /
+          `confidence_score` as input when regenerating — inputs are
+          structured data + evidence + property_comparisons + the
+          pool-candidates pre-pass.
+      report_path:
+        description: >
+          Relative path or URL to the full report that backs the
+          `rationale`. Phase 3 (2026-05-13). Written by the report-gen
+          orchestrator at write-back time.
+      rationale_generated_at:
+        range: datetime
+        description: >
+          Timestamp at which the report-time agent wrote `rationale`.
+          Phase 3 (2026-05-13).
+      rationale_source_hash:
+        description: >
+          SHA256 8-char digest over the canonical edge + endpoint-node
+          payload at rationale-generation time (excluding the
+          rationale-suite fields themselves). On every read and on
+          `just qc`, the hash is recomputed from current state and
+          compared; mismatch marks the rationale stale (still shown,
+          flagged for regeneration). Whole-edge granularity — any
+          change in the hashed inputs invalidates the whole rationale.
+          Phase 3 (2026-05-13).
       reconciliation_note:
         description: >
-          Curator's synthesis when parallel evidence sources disagree
-          (e.g. divergent F1 from two AT runs on different datasets,
-          or marker evidence pointing one way while anatomy points
-          another). Distinct from per-property notes / rationale
-          fields. Phase 2 schema overhaul (2026-05-12).
+          Structured cross-edge note. Two uses:
+          (1) Phase 2 framing — curator's synthesis when parallel
+          evidence sources DISAGREE (e.g. divergent F1 from two AT
+          runs on different datasets, or marker evidence pointing one
+          way while anatomy points another); distinct from per-property
+          notes / rationale fields.
+          (2) Phase 3 (2026-05-13) extension — agent-side cross-edge
+          indistinguishability note. When the report-time agent calls
+          two source groups indistinguishable across available property
+          panels (the Winterer Sst-OLM / Htr3a-OLM pattern; see #61,
+          #62), the structured cross-reference goes here while the
+          per-edge narrative goes in `rationale`. Paired with a
+          lit-to-lit `skos:closeMatch` edge when the indistinguishability
+          spans all available panels (not just AT).
       reviewed_by:
         description: >
           Name or ORCID of the human reviewer who confirmed this edge,
