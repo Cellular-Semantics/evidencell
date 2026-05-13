@@ -242,6 +242,20 @@ add-expression-all taxonomy_id stats_h5 gene_mapping +GENES:
 enrich-marker-union taxonomy_id stats_h5 gene_mapping:
     uv run python -m evidencell.taxonomy_ops enrich-marker-union {{taxonomy_id}} {{stats_h5}} {{gene_mapping}}
 
+# Refresh stale atlas-side expression on marker-family PropertyComparisons.
+# Sweeps MappingEdge.property_comparisons entries whose node_b_value is
+# "not resolvable from atlas metadata" (or similar) and rewrites them with
+# the current mean_expression value from kb/taxonomy/{id}/{level}.yaml.
+# Usage: just refresh-expression kb/graphs/region/file.yaml
+#        just refresh-expression-all
+[group('workflows')]
+refresh-expression graph_file *FLAGS:
+    uv run python -m evidencell.refresh_expression_pcs {{graph_file}} {{FLAGS}}
+
+[group('workflows')]
+refresh-expression-all *FLAGS:
+    uv run python -m evidencell.refresh_expression_pcs --all {{FLAGS}}
+
 # Re-ingest taxonomy from source JSON, preserving enrichment fields
 # Usage: just reingest CCN20230722 inputs/taxonomies/wmbv1_full_v2.json
 [group('workflows')]
