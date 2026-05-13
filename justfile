@@ -342,6 +342,13 @@ gen-index REGION:
 gen-toc TAXONOMY_ID *ARGS:
     uv run python -m evidencell.toc {{TAXONOMY_ID}} {{ARGS}}
 
+# Render tree-style F1 figure for an annotation-transfer run.
+# Usage: just gen-at-figure 20260408_winterer_olm_mmc_wmbv1
+#        just gen-at-figure {RUN_ID} --pool Sst-OLM,Htr3a-OLM:OLM --output figures/f1_merged.png
+[group('reports')]
+gen-at-figure RUN_ID *ARGS:
+    uv run python -m evidencell.at_figures {{RUN_ID}} {{ARGS}}
+
 # Regenerate all reports + indices for the KB (programmatic mode, no LLM)
 [group('reports')]
 gen-report-all:

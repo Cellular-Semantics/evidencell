@@ -1,259 +1,219 @@
 # Parvalbumin-positive basket cell — WMBv1 (CCN20230722) Mapping Report
-*2026-04-09 · Source: `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
+*2026-04-09 · Source: `/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
 
 ---
 
 ## Introduction
 
-The hippocampal parvalbumin-positive (PV+) basket cell is a perisomatic-targeting GABAergic interneuron defined by expression of the calcium-binding protein parvalbumin (*Pvalb*) and by axon collaterals confined to the pyramidal layer of CA1 and CA3, where they contact the soma and proximal dendrites of hundreds of principal cells [2]. Mapping this cell type onto the Allen Brain Cell Atlas (WMBv1/CCN20230722) is of particular importance because PV basket cells are among the most powerful inhibitory regulators of hippocampal network oscillations, yet multiple PV+ morphological subtypes (basket, axo-axonic, bistratified) share high transcriptomic similarity that may limit resolution at coarse atlas levels [6].
+Parvalbumin-positive (PV+) basket cells are fast-spiking GABAergic interneurons of the hippocampal formation whose axons innervate the somata and proximal axons of pyramidal cells, providing the perisomatic inhibition that paces network oscillations [1][2]. Mapping this classical type to a Whole Mouse Brain v1 (WMBv1) transcriptomic cluster matters because PV+ interneurons in the hippocampus comprise several morphological subtypes (basket, axo-axonic, bistratified) with high transcriptomic similarity, and establishing which atlas type contains the basket population — versus chandelier or bistratified cells — is a prerequisite for any downstream PV-IN circuit work.
 
-> "Parvalbumin + cells were specifically localized in the granular and polymorphic cell layers of the dentate gyrus and the strata oriens and pyramidale in CA1/3 fields of the rat hippocampus (Kosaka et al., 1987). They have been considered a subpopulation of GABAergic interneurons, including basket and axo-axonic cell types, which innervate the somata and proximal axons of pyramidal cells, respectively (Soriano et al., 1990)"
-> — Rivera et al. 2014, Classical Functional and Morphological Interneuron Types · [1] <!-- quote_key: 10540334_bdfa426a -->
-
-**Cell Ontology mapping.** CL:0000118 (basket cell) is BROAD — the term covers perisomatic-targeting GABAergic interneurons broadly but does not capture PV-specific identity. No hippocampus-specific PV basket cell term currently exists in the Cell Ontology. This type is a candidate for a new CL term request.
-
----
-
-### Classical type definition
+### Classical type table
 
 | Property | Value | References |
 |---|---|---|
-| Soma location | Pyramidal layer of CA1 [UBERON:0014548]; pyramidal layer of CA3 [UBERON:0014550]; dentate gyrus granule cell layer [UBERON:0005381] | [1] [2] [3] [4] |
+| Soma location | pyramidal layer of CA1 [UBERON:0014548]; pyramidal layer of CA3 [UBERON:0014550]; dentate gyrus granule cell layer [UBERON:0005381] | [1][2][3][4] |
 | Neurotransmitter | GABAergic | [5] |
-| Defining markers | Pvalb, Gad1, Gad2 | Pvalb: [1][6][7][8]; Gad1, Gad2: (GABA identity) |
+| Defining markers | Pvalb [1][6][7][8]; Gad1; Gad2 | [1][6][7][8] |
 | Negative markers | Cnr1 | — |
-| Neuropeptides | — | — |
+| Definition basis | CLASSICAL_MULTIMODAL | — |
+| CL term | basket cell [CL:0000118] (BROAD) | — |
 
 <details>
-<summary>Per-property literature support</summary>
+<summary>Details — source evidence for classical type properties</summary>
 
-**Soma location** [1][2][3][4]. Four independent studies confirm soma placement in the pyramidal layer of CA1 [UBERON:0014548], pyramidal layer of CA3 [UBERON:0014550], and dentate gyrus granule cell layer [UBERON:0005381]. Sik et al. 1995 [2] provided the foundational morphological characterisation:
-
-> "Fast spiking interneurons in the CA1 area of the dorsal hippocampus were recorded from and filled with biocytin in anesthetized rats. The full extent of their dendrites and axonal arborizations as well as their calcium binding protein content were examined. Based on the spatial extent of axon collaterals, local circuit cells (basket and O- LM neurons) and long-range cells (bistratified, trilaminar, and backprojection neurons) could be distinguished. Basket cells were immunoreactive for parvalbumin and their axon collaterals were confined to the pyramidal layer. A single basket cell contacted more than 1500 pyramidal neurons and 60 other parvalbumin-positive interneurons. Commissural stimulation directly discharged basket cells, followed by an early and late IPSPs, indicating interneuronal inhibition of basket cells. The dendrites of another local circuit neuron (O-LM) were confined to stratum oriens and it had a small but high-density axonal terminal field in stratum lacunosum-moleculare. The fastest firing cell of all interneurons was a calbindin-immunoreactive bistratified neuron with axonal targets in stratum oriens and radiatum. Two neurons with their cell bodies in the alveus innervated the CA3 region (backprojection cells), in addition to rich axon collaterals in the CA1 region. The trilaminar interneuron had axon collaterals in strata radiatum, oriens and pyramidale with its dendrites confined to stratum oriens. Commissural stimulation evoked an early EPSP-IPSP-late depolarizing potential sequence in this cell. All interneurons formed symmetric synapses with their targets at the electron microscopic level. These findings indicate that interneurons with distinct axonal targets have differential functions in shaping the physiological patterns of the CA1 network."
-> — Sik et al. 1995, Anatomical Location and Morphology · [2] <!-- quote_key: 10664418_9acd7ec1 -->
-
-**Pvalb** [1][6][7][8]. Pvalb is the canonical marker of the PV basket cell, confirmed at protein (immunohistochemistry) and transcript level across multiple species and preparations. Rivera et al. 2014 [1] localises PV+ cells to stratum oriens and pyramidale across CA1/CA3. Que et al. 2021 [6] contributed patch-seq data from morphologically confirmed basket cells (hBC + vBC), providing direct transcriptomic validation. Perrenoud et al. 2022 [7] and Contreras et al. 2019 [8] independently confirm Pvalb marker status.
-
-**GABAergic neurotransmitter** [5]. PV basket cells are GABAergic by canonical classification [5]. Gad1 and Gad2 are GABAergic synthesis genes consistent with GABA identity; precomputed atlas stats confirm strong expression of both in SUPT_0206 (Gad1=10.34, Gad2=9.28) and CLUS_0739 (Gad1=10.52, Gad2=8.43).
-
-**Negative marker — Cnr1** [5][8]. Cnr1 (cannabinoid receptor 1 / CB1R) is absent in PV basket cells, distinguishing them from CCK basket cells. Whissell et al. 2015 [5] and Contreras et al. 2019 [8] describe the CCK/PV bistratification of perisomatic inhibition:
-
-> "Cholecystokinin (CCK)- and parvalbumin (PV)-expressing neurons constitute the two major populations of perisomatic GABAergic neurons in the cortex and the hippocampus. As CCK- and PV-GABA neurons differ in an array of morphological, biochemical and electrophysiological features, it has been proposed that they form distinct inhibitory ensembles which differentially contribute to network oscillations and behavior. However, the relationship and balance between CCK- and PV-GABA neurons in the inhibitory networks of the brain is currently unclear as the distribution of these cells has never been compared on a large scale. Here, we systemically investigated the distribution of CCK- and PV-GABA cells across a wide number of discrete forebrain regions using an intersectional genetic approach. Our analysis revealed several novel trends in the distribution of these cells. While PV-GABA cells were more abundant overall, CCK-GABA cells outnumbered PV-GABA cells in several subregions of the hippocampus, medial prefrontal cortex and ventrolateral temporal cortex. Interestingly, CCK-GABA cells were relatively more abundant in secondary/ association areas of the cortex (V2, S2, M2, and AudD/AudV) than they were in corresponding primary areas (V1, S1, M1, and Aud1). The reverse trend was observed for PV-GABA cells. Our findings suggest that the balance between CCK- and PV-GABA cells in a given cortical region is related to the type of processing that area performs; inhibitory networks in the secondary cortex tend to favor the inclusion of CCK-GABA cells more than networks in the primary cortex. The intersectional genetic labeling approach employed in the current study expands upon the ability to study molecularly defined subsets of GABAergic neurons. This technique can be applied to the investigation of neuropathologies which involve disruptions to the GABAergic system, including schizophrenia, stress, maternal immune activation and autism."
-> — Whissell et al. 2015, Classification Schemes and Methodological Approaches · [5] <!-- quote_key: 16859318_009e9f36 -->
-
-Precomputed atlas stats confirm Cnr1 low/absent in both SUPT_0206 (mean: 1.93) and CLUS_0739 (mean: 1.68).
-
-**Node notes.** Four morphological subtypes within PV+ hippocampal interneurons: basket, axo-axonic, bistratified, radiatum-targeting (Bocchio et al. 2024 [4]). Activity of PV basket cells is inversely coupled with CCK basket cell activity. The most representative PV+ subtypes in hippocampus are the basket and bistratified cells [4]:
-
-> "the most representative ones, the PV-expressing basket and bistratified cells, the NOS-expressing ivy cells and 2 types of interneuron-selective interneurons (ISI 1 and 3) that express calretinin"
-> — Bocchio et al. 2024, Results · [4] <!-- quote_key: 262127573_ba6d02e9 -->
-
-Contreras et al. 2019 [8] also note:
-
-> "the majority of interneurons in these regions express either the neuropeptide cholecystokinin or the calcium binding protein parvalbumin"
-> — Contreras et al. 2019, SOMA AND AXON TARGETING INTERNEURONS · [8] <!-- quote_key: 195584607_37a80af5 -->
+- **Soma location / morphology:** classical anatomical and electrophysiological description (rat hippocampus, biocytin fills + immunohistochemistry) · [2]
+  > Fast spiking interneurons in the CA1 area of the dorsal hippocampus were recorded from and filled with biocytin in anesthetized rats. The full extent of their dendrites and axonal arborizations as well as their calcium binding protein content were examined. Based on the spatial extent of axon collaterals, local circuit cells (basket and O- LM neurons) and long-range cells (bistratified, trilaminar, and backprojection neurons) could be distinguished. Basket cells were immunoreactive for parvalbumin and their axon collaterals were confined to the pyramidal layer. A single basket cell contacted more than 1500 pyramidal neurons and 60 other parvalbumin-positive interneurons. Commissural stimulation directly discharged basket cells, followed by an early and late IPSPs, indicating interneuronal inhibition of basket cells. The dendrites of another local circuit neuron (O-LM) were confined to stratum oriens and it had a small but high-density axonal terminal field in stratum lacunosum-moleculare. The fastest firing cell of all interneurons was a calbindin-immunoreactive bistratified neuron with axonal targets in stratum oriens and radiatum. Two neurons with their cell bodies in the alveus innervated the CA3 region (backprojection cells), in addition to rich axon collaterals in the CA1 region. The trilaminar interneuron had axon collaterals in strata radiatum, oriens and pyramidale with its dendrites confined to stratum oriens. Commissural stimulation evoked an early EPSP-IPSP-late depolarizing potential sequence in this cell. All interneurons formed symmetric synapses with their targets at the electron microscopic level. These findings indicate that interneurons with distinct axonal targets have differential functions in shaping the physiological patterns of the CA1 network.
+  > — Sik et al. 1995, Anatomical Location and Morphology · [2] <!-- quote_key: 10664418_9acd7ec1 -->
+- **Anatomical distribution / Pvalb marker:** rat hippocampus immunolocalisation · [1]
+  > Parvalbumin + cells were specifically localized in the granular and polymorphic cell layers of the dentate gyrus and the strata oriens and pyramidale in CA1/3 fields of the rat hippocampus (Kosaka et al., 1987). They have been considered a subpopulation of GABAergic interneurons, including basket and axo-axonic cell types, which innervate the somata and proximal axons of pyramidal cells, respectively (Soriano et al., 1990)
+  > — Rivera et al. 2014, Classical Functional and Morphological Interneuron Types · [1] <!-- quote_key: 10540334_bdfa426a -->
+- **GABAergic identity / PV–CCK relationship:** intersectional genetic mapping of CCK- and PV-GABA cells across forebrain · [5]
+  > Cholecystokinin (CCK)- and parvalbumin (PV)-expressing neurons constitute the two major populations of perisomatic GABAergic neurons in the cortex and the hippocampus. As CCK- and PV-GABA neurons differ in an array of morphological, biochemical and electrophysiological features, it has been proposed that they form distinct inhibitory ensembles which differentially contribute to network oscillations and behavior. However, the relationship and balance between CCK- and PV-GABA neurons in the inhibitory networks of the brain is currently unclear as the distribution of these cells has never been compared on a large scale. Here, we systemically investigated the distribution of CCK- and PV-GABA cells across a wide number of discrete forebrain regions using an intersectional genetic approach. Our analysis revealed several novel trends in the distribution of these cells. While PV-GABA cells were more abundant overall, CCK-GABA cells outnumbered PV-GABA cells in several subregions of the hippocampus, medial prefrontal cortex and ventrolateral temporal cortex. Interestingly, CCK-GABA cells were relatively more abundant in secondary/ association areas of the cortex (V2, S2, M2, and AudD/AudV) than they were in corresponding primary areas (V1, S1, M1, and Aud1). The reverse trend was observed for PV-GABA cells. Our findings suggest that the balance between CCK- and PV-GABA cells in a given cortical region is related to the type of processing that area performs; inhibitory networks in the secondary cortex tend to favor the inclusion of CCK-GABA cells more than networks in the primary cortex. The intersectional genetic labeling approach employed in the current study expands upon the ability to study molecularly defined subsets of GABAergic neurons. This technique can be applied to the investigation of neuropathologies which involve disruptions to the GABAergic system, including schizophrenia, stress, maternal immune activation and autism.
+  > — Whissell et al. 2015, Classification Schemes and Methodological Approaches · [5] <!-- quote_key: 16859318_009e9f36 -->
+- **Pvalb perisomatic-interneuron framing:** [8]
+  > the majority of interneurons in these regions express either the neuropeptide cholecystokinin or the calcium binding protein parvalbumin
+  > — Contreras et al. 2019, SOMA AND AXON TARGETING INTERNEURONS · [8] <!-- quote_key: 195584607_37a80af5 -->
+- **Representativeness of PV basket within hippocampal IN repertoire:** [4]
+  > the most representative ones, the PV-expressing basket and bistratified cells, the NOS-expressing ivy cells and 2 types of interneuron-selective interneurons (ISI 1 and 3) that express calretinin
+  > — Bocchio et al. 2024, Results · [4] <!-- quote_key: 262127573_ba6d02e9 -->
 
 </details>
+
+Cell Ontology mapping: basket cell [[CL:0000118](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0000118)] (BROAD). CL:0000118 covers perisomatic-targeting GABAergic interneurons but does not capture PV-specific identity; no hippocampus-specific PV basket cell term exists in CL.
 
 ---
 
 ## Results
 
-Two candidates were assessed, both at HIGH confidence: a supertype-level edge to 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] and a cluster-level edge to 0739 Pvalb Gaba_2 [CS20230722_CLUS_0739]. HIGH confidence was reached through convergent evidence from two independent annotation transfer runs (GSE185862 Yao 2021 SSv4 and GSE142546 Que 2021 patch-seq) combined with strong atlas metadata support. The Que 2021 patch-seq run — using morphologically confirmed basket cells — is the decisive evidence: 31 basket cells mapped to CLUS_0739 at cluster level (F1=0.827), and basket cells were clearly distinguished from bistratified cells (which prefer sibling cluster CLUS_0737).
+Two candidate atlas entries were assessed (supertype SUPT_0206 and its child cluster CLUS_0739), both at HIGH confidence with PARTIAL_OVERLAP relationship: SUPT_0206 contains the PV+ Gaba_2 population and CLUS_0739 is the basket-preferring cluster within that supertype, distinct from the bistratified-preferring CLUS_0737.
 
-### 4a. Candidate overview table
+**Annotation-transfer overview (node-scoped, filtered).**
+
+![Filtered AT figure (Que 2021 PV basket cells, BC source group)](../../kb/annotation_transfer_runs/at_run_20260508_que2021_pvin_mmc_wmbv1/figures/f1_for_pv_basket_cell_hippocampus.png)
+
+*F1 across taxonomy levels for the BC (basket cell) source group relevant to the PV basket cell mapping. The BC row aggregates Que et al. 2021 patch-seq morphology-confirmed hippocampal basket cells (horizontal + vertical BC, n=62) — morphology was verified by patch-clamp + biocytin fill, so this row is the strongest single AT signal for the basket subtype. F1 ≥ 0.5 at a level indicates a clean mapping; SUPT_0206 (Pvalb Gaba_2) reaches F1=0.785 and CLUS_0739 reaches F1=0.827.*
+
+![Filtered AT figure (Yao 2021 Pvalb subclass)](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/figures/f1_for_pv_basket_cell_hippocampus.png)
+
+*F1 across taxonomy levels for the Yao 2021 SSv4 Pvalb subclass source group (n=66 hippocampal Pvalb cells). The SSv4 Pvalb label aggregates basket, axo-axonic and bistratified PV cells, so the signal splits between Pvalb chandelier (SUPT_0204, F1=0.612) and Pvalb Gaba_2 (SUPT_0206, F1=0.324) — chandelier dominance reflects population composition of the source label, not contradictory evidence against PV-basket → SUPT_0206. The Que 2021 morphology-confirmed BC run resolves this ambiguity.*
+
+### Mapping candidates
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | — | 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] | 2,860 | 🟢 HIGH | NT CONSISTENT · Pvalb CONSISTENT · Cnr1 absent CONSISTENT · Gad1/Gad2 APPROXIMATE · Location APPROXIMATE | Best candidate |
-| 2 | 0739 Pvalb Gaba_2 [CS20230722_CLUS_0739] | (child of SUPT_0206) | 490 | 🟢 HIGH | NT CONSISTENT · Pvalb CONSISTENT · Cnr1 absent CONSISTENT · Gad1/Gad2 APPROXIMATE · Location APPROXIMATE · Cck DISCORDANT | Best candidate |
+| 1 | 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] | — (supertype) | 2860 | 🟢 HIGH | Pvalb CONSISTENT · location APPROXIMATE | Best candidate |
+| 2 | 0739 Pvalb Gaba_2 [CS20230722_CLUS_0739] | 0206 Pvalb Gaba_2 | 490 | 🟢 HIGH | Pvalb CONSISTENT · Cck DISCORDANT | Best candidate (child cluster) |
 
-2 edges total · both PARTIAL_OVERLAP.
+Total: 2 edges; relationship type PARTIAL_OVERLAP on both.
 
----
+#### Property alignment — primary candidate SUPT_0206 (0206 Pvalb Gaba_2)
 
-### 4b. Property alignment — HIGH candidates
+**Table 1 — Property comparison**
 
-#### 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206]
-
-**Table 1. Property comparison — classical vs atlas**
-
-| Property | Classical value | Atlas value | Alignment | Notes |
+| Property | Classical | Supertype | Best cluster | Alignment |
 |---|---|---|---|---|
-| NT type | GABAergic | GABA | CONSISTENT | |
-| Location CA1 | Pyramidal layer of CA1 [UBERON:0014548] — soma | CA1 stratum oriens (818 cells); CA1 pyramidal layer not listed at supertype level | APPROXIMATE | Both are perisomatic layers; discrepancy may reflect soma-on-SO-border cells or atlas MERFISH resolution limits |
-| Pvalb | Defining marker (IHC + transcript) | Pvalb subclass; Pvalb prominent in child cluster CLUS_0739 MERFISH; precomputed mean: 8.74 | CONSISTENT | |
-| Gad1 | Defining marker | Not in supertype defining_markers; GABA NT consistent; precomputed mean: 10.34 | APPROXIMATE | |
-| Gad2 | Defining marker | Not in supertype defining_markers; GABA NT consistent; precomputed mean: 9.28 | APPROXIMATE | |
-| Cnr1 (negative) | Absent | Not in supertype markers; precomputed mean: 1.93 | CONSISTENT | Cnr1 low/absent confirms PV (not CCK) basket identity |
+| NT type | GABAergic | GABA | GABA (CLUS_0739) | CONSISTENT |
+| Soma location | CA1 stratum pyramidale [UBERON:0014548] | CA1 stratum oriens (818 cells); CA1 pyramidal layer not listed | CA1 pyramidal layer (26 cells); CA1 SO (124 cells) (CLUS_0739) | APPROXIMATE |
+| Pvalb expression | defining marker | Pvalb subclass; precomputed mean 8.74 | Pvalb in MERFISH markers; precomputed mean 10.63 (CLUS_0739) | CONSISTENT |
+| Gad1 expression | defining marker | not in supertype defining_markers; precomputed mean 10.34 | precomputed mean 10.52 (CLUS_0739) | APPROXIMATE |
+| Gad2 expression | defining marker | not in supertype defining_markers; precomputed mean 9.28 | precomputed mean 8.43 (CLUS_0739) | APPROXIMATE |
+| Cnr1 (negative) | absent | not in supertype markers; precomputed mean 1.93 | not in cluster markers; precomputed mean 1.68 (CLUS_0739) | CONSISTENT |
+| Sex ratio | not documented | not available | not available | NOT_ASSESSED |
 
-**Table 2. Evidence support**
+**Table 2 — Evidence support**
 
-| Evidence type | Source | Supports | Key metric | Notes |
+| Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| ATLAS_METADATA | WMBv1 CCN20230722 | PARTIAL | Pvalb subclass; GABA NT; CA1 SO 818 cells | Supertype spans hippocampus + piriform area; multiple PV+ subtypes co-populate at supertype level |
-| ATLAS_METADATA | WMBv1 precomputed stats | SUPPORT | Pvalb=8.74, Gad1=10.34, Gad2=9.28, Cnr1=1.93 | All 3 defining markers confirmed; negative marker Cnr1 absent |
-| ANNOTATION_TRANSFER | GEO:GSE185862 (Yao 2021 SSv4 Pvalb, n=66 HIP) | PARTIAL | F1=0.324 at SUPERTYPE; 12/66 cells to SUPT_0206; target_purity=0.800 | Mixed Pvalb source population; chandelier/AAC cells dominate mapping |
-| ANNOTATION_TRANSFER | GEO:GSE142546 (Que 2021 patch-seq BC, n=62) | SUPPORT | 53/62 BC cells to SUPT_0206; group_purity=0.898; F1=0.785 | Morphologically confirmed basket cells; BC/BIC supertype convergence; second independent AT run |
+| Atlas supertype metadata (SUPT_0206) | Atlas metadata | PARTIAL | Pvalb subclass; CA1 SO (818) + CA3 SO (152) + piriform (959 cells) | atlas-internal |
+| Atlas precomputed expression (SUPT_0206) | Atlas metadata | SUPPORT | Pvalb=8.74; Gad1=10.34; Gad2=9.28; Cnr1=1.93 | atlas-internal |
+| Yao 2021 SSv4 Pvalb → WMBv1 | Annotation transfer | PARTIAL | SUPT_0206 F1=0.324 (12 cells); SUPT_0204 chandelier F1=0.612 | atlas-internal |
+| Que 2021 patch-seq BC → WMBv1 | Annotation transfer | SUPPORT | SUPT_0206 F1=0.785 (53/62 cells, group_purity=0.898) | atlas-internal |
 
-**Subcluster concordance.** Within SUPT_0206, PV basket cells (BC) preferentially map to child cluster CLUS_0739, while PV bistratified cells (BIC) concentrate at sibling cluster CLUS_0737. This cluster-level separation of PV morphological subtypes within the same supertype is a genuine transcriptomic signal from morphologically labelled patch-seq data [6].
+*(2 of the SUPT_0206 child clusters carry PV basket vs. PV bistratified signal: CLUS_0739 is the BC-preferring cluster (Que 2021 F1=0.827) and CLUS_0737 is the BIC-preferring cluster; the remainder of SUPT_0206 children are not separately assessed. Best match: CLUS_0739.)*
 
----
+#### Property alignment — secondary candidate CLUS_0739 (0739 Pvalb Gaba_2)
 
-#### 0739 Pvalb Gaba_2 [CS20230722_CLUS_0739]
+**Table 1 — Property comparison**
 
-**Table 1. Property comparison — classical vs atlas**
-
-| Property | Classical value | Atlas value | Alignment | Notes |
+| Property | Classical | Supertype | Best cluster | Alignment |
 |---|---|---|---|---|
-| NT type | GABAergic | GABA | CONSISTENT | |
-| Location CA1 | Pyramidal layer of CA1 [UBERON:0014548] — soma | CA1 pyramidal layer (26 cells); CA1 stratum oriens (124 cells) | APPROXIMATE | Small CA1 pyramidal layer count; dominant hippocampal signal in stratum oriens; consistent with perisomatic layer ambiguity |
-| Pvalb | Defining marker | Pvalb in MERFISH markers; strongest Pvalb expression among SUPT_0206 child clusters; precomputed mean: 10.63 | CONSISTENT | |
-| Gad1 | Defining marker | Not in cluster defining_markers; GABA NT consistent; precomputed mean: 10.52 | APPROXIMATE | |
-| Gad2 | Defining marker | Not in cluster defining_markers; GABA NT consistent; precomputed mean: 8.43 | APPROXIMATE | |
-| Cnr1 (negative) | Absent | Not in cluster markers; precomputed mean: 1.68 | CONSISTENT | Cnr1 low/absent in atlas type; PV (not CCK) basket identity confirmed |
-| Cck neuropeptide | Not expected (Cnr1-negative PV cells) | Cck present (expression score 7.6); precomputed mean: 7.56 | DISCORDANT | Unexpected for a PV basket cell; may indicate mixed cluster content or low-level Cck co-expression in a subset of PV neurons |
+| NT type | GABAergic | GABA | GABA | CONSISTENT |
+| Soma location | CA1 stratum pyramidale [UBERON:0014548] | CA1 SO dominant | CA1 pyramidal layer (26 cells); CA1 SO (124 cells); CA3 SO (80); CA1 SR (45) | APPROXIMATE |
+| Pvalb expression | defining marker | precomputed mean 8.74 | Pvalb in MERFISH markers; precomputed mean 10.63 | CONSISTENT |
+| Gad1 expression | defining marker | precomputed mean 10.34 | precomputed mean 10.52 | APPROXIMATE |
+| Gad2 expression | defining marker | precomputed mean 9.28 | precomputed mean 8.43 | APPROXIMATE |
+| Cnr1 (negative) | absent | precomputed mean 1.93 | precomputed mean 1.68 | CONSISTENT |
+| Cck (neuropeptide) | not expected (Cnr1-negative PV cells) | not assessed at supertype | Cck score 7.6; precomputed mean 7.56 | DISCORDANT |
+| Sex ratio | not documented | not available | not available | NOT_ASSESSED |
 
-**Table 2. Evidence support**
+**Table 2 — Evidence support**
 
-| Evidence type | Source | Supports | Key metric | Notes |
+| Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| ATLAS_METADATA | WMBv1 CCN20230722 | PARTIAL | CA1 SP 26 cells, CA1 SO 124 cells; GABA NT; Pvalb in MERFISH | Cck neuropeptide discordant; cluster likely contains multiple PV+ morphological subtypes |
-| ATLAS_METADATA | WMBv1 precomputed stats | SUPPORT | Pvalb=10.63, Gad1=10.52, Gad2=8.43, Cnr1=1.68 | Strongest Pvalb expression among SUPT_0206 child clusters; all defining markers confirmed |
-| ANNOTATION_TRANSFER | GEO:GSE185862 (Yao 2021 SSv4 Pvalb, n=66 HIP) | PARTIAL | F1=0.179 at CLUSTER; 5/66 Pvalb cells to CLUS_0739; target_purity=1.0 | Mixed source population; chandelier/AAC cells dominant (CLUS_0732 F1=0.622); CLUS_0739 signal minor |
-| ANNOTATION_TRANSFER | GEO:GSE142546 (Que 2021 patch-seq BC, n=62) | SUPPORT | F1=0.827; group_purity=0.795; target_purity=0.861; 31 cells to CLUS_0739 | Morphologically confirmed basket cells; strongest cluster-level AT signal; BC/BIC cluster separation confirmed |
+| Atlas cluster metadata (CLUS_0739) | Atlas metadata | PARTIAL | CA1 SO (124) + CA3 SO (80) + CA1 PYR (26); Pvalb MERFISH; Cck neuropeptide score 7.6 | atlas-internal |
+| Atlas precomputed expression (CLUS_0739) | Atlas metadata | SUPPORT | Pvalb=10.63; Gad1=10.52; Gad2=8.43; Cnr1=1.68 | atlas-internal |
+| Yao 2021 SSv4 Pvalb → WMBv1 | Annotation transfer | PARTIAL | CLUS_0739 F1=0.179 (5 cells); CLUS_0732 chandelier F1=0.622 | atlas-internal |
+| Que 2021 patch-seq BC → WMBv1 | Annotation transfer | SUPPORT | CLUS_0739 F1=0.827 (31 cells, target_purity=0.861) | atlas-internal |
 
-**Subcluster concordance.** CLUS_0739 is itself a leaf cluster. The BC/BIC separation within SUPT_0206 is directly reflected in cluster assignments: BC cells map to CLUS_0739 (F1=0.827) and BIC cells to sibling CLUS_0737 (F1=0.800), demonstrating that PV basket and bistratified cells are transcriptomically distinguishable at the finest WMBv1 resolution [6].
+*(Within SUPT_0206, the Que 2021 morphology-confirmed BC cells preferentially map to CLUS_0739 while morphology-confirmed BIC cells map to CLUS_0737 — a genuine BC/BIC cluster-level separation. Best match for PV basket: CLUS_0739.)*
 
----
-
-### 5. Candidate sections
-
-#### 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] · 🟢 HIGH
+### 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] · 🟢 HIGH
 
 **Supporting evidence**
+- Pvalb subclass identity and GABA neurotransmitter type are consistent with PV basket cell identity; CA1 stratum oriens (818 cells) and CA3 stratum oriens (152 cells) are appropriate perisomatic interneuron locations.
+- Precomputed expression cross-check: all 3 defining markers confirmed (Pvalb=8.74, Gad1=10.34, Gad2=9.28) and negative marker Cnr1 absent (1.93).
+- Que 2021 morphology-confirmed PV basket cells (n=62, hBC + vBC aggregated) map to SUPT_0206 with F1=0.785, group_purity=0.898 (53/62 cells). Second independent AT run — convergence from morphologically labelled patch-seq cells justifies HIGH confidence.
+- Yao 2021 SSv4 Pvalb subclass (n=66 HIP cells) splits between PV chandelier (SUPT_0204, F1=0.612) and PV basket/bistratified (SUPT_0206, F1=0.324); SUPT_0206 hits have target_purity=0.800. The split reflects the mixed-population SSv4 label rather than a transcriptomic conflict.
 
-- **NT type — CONSISTENT.** SUPT_0206 belongs to the GABA NT class, fully consistent with the GABAergic identity of PV basket cells [5].
-- **Pvalb — CONSISTENT.** SUPT_0206 is an explicitly Pvalb-defined supertype ("Pvalb Gaba_2"). Precomputed stats confirm mean Pvalb expression 8.74 across the supertype. Child cluster CLUS_0739 shows the strongest Pvalb expression (mean 10.63) among SUPT_0206 clusters, and Pvalb is present in CLUS_0739 MERFISH markers [1][6][7][8].
-- **Cnr1 absent — CONSISTENT.** Precomputed Cnr1 mean of 1.93 at supertype level confirms absence of the CCK basket cell marker, consistent with PV basket cell identity [5][8].
-- **Annotation transfer (GEO:GSE142546, Que 2021, BC n=62) — SUPPORT.** MapMyCells local (cell_type_mapper v1.7.1) using morphologically confirmed PV basket cells (hBC n=12 + vBC n=50 aggregated). 53/62 basket cells map to SUPT_0206 (group_purity=0.898, F1=0.785 at supertype). BC cells prefer child cluster CLUS_0739 (F1=0.827, 31 cells) while BIC cells prefer sibling CLUS_0737 — cluster separation from morphologically labelled cells [6].
-- **Annotation transfer (GEO:GSE185862, Yao 2021, Pvalb n=66 HIP) — PARTIAL.** 12/66 Pvalb SSv4 cells map to SUPT_0206 (target_purity=0.800). Chandelier/AAC cells dominate the mapping (SUBC_051 / SUPT_0204), reflecting enrichment in the Yao dataset; SUPT_0206 signal is the basket/bistratified component.
+**Marker evidence provenance**
+- **Pvalb (defining):** transcript- and protein-level evidence with multiple primary citations [1][6][7][8]; rat IHC [1] plus morphologically reconstructed/patch-seq mouse studies. Atlas precomputed mean 8.74 at supertype and 10.63 at CLUS_0739 strongly support presence. No discrepancy.
+- **Gad1, Gad2 (defining):** no specific citations attached on the classical node; supported indirectly by the GABAergic NT assignment [5]. Atlas precomputed means (10.34 / 9.28 at supertype) are high and consistent. Listing a primary citation establishing Gad1/Gad2 in PV basket cells specifically would strengthen the evidence chain.
+- **Cnr1 (negative):** no specific citation attached on the classical node. Atlas precomputed mean 1.93 (supertype) confirms low/absent expression; the literature framing relies on the established Cnr1-positive identity of CCK basket cells as the contrasting class [5][8].
 
 **Concerns**
-
-- **DISTRIBUTED_ACROSS_CLUSTERS.** SUPT_0206 spans hippocampus (CA1 stratum oriens, CA3 stratum oriens) and piriform area (959 cells); it is not hippocampus-specific. Multiple PV+ morphological subtypes (basket, axo-axonic, bistratified) co-populate the Pvalb Gaba subclass and are not separable at supertype level.
-- **Cnr1 negative marker status** is not directly verifiable from supertype metadata; confirmation rests on precomputed stats alone.
-- **Yao 2021 SSv4 source limitation.** The GSE185862 Pvalb subclass label (n=66 HIP cells) is a mixed population encompassing PV basket, axo-axonic, and bistratified cells; subtype resolution requires morphologically labelled datasets.
+- Soma location APPROXIMATE: classical CA1 stratum pyramidale, atlas dominant CA1 stratum oriens *(adjacent region — could reflect registration boundary error; weak counter-evidence)*. SO and SP are immediately adjacent and PV basket cell somata at the SP/SO border are well documented.
+- Supertype is not hippocampus-specific: includes 959 piriform area cells alongside CA1 SO (818) and CA3 SO (152). The mapping is PARTIAL_OVERLAP rather than EXACT.
+- DISTRIBUTED_ACROSS_CLUSTERS caveat: PV+ morphological subtypes (basket, axo-axonic, bistratified) share high transcriptomic similarity and are not cleanly separated at supertype level. The supertype contains multiple classical PV subtypes including the chandelier-leaning fraction.
+- Yao 2021 SSv4 'Pvalb' label is a mixed PV population; chandelier/AAC cells likely dominate the SSv4 mapping (PARTIAL). Morphology-resolved data (Que 2021) is needed to confirm — and does so.
 
 **What would upgrade confidence**
+- A within-supertype refinement using Que 2021 BC vs BIC vs AAC cell labels mapped at cluster level (already partially achieved — see CLUS_0739 below) to formally separate the PV basket fraction from PV bistratified and axo-axonic fractions.
+- Targeted literature search for primary citations establishing Gad1 / Gad2 / Cnr1 in morphology-confirmed hippocampal PV basket cells (currently unsourced on the classical node).
 
-- Both available AT runs have been completed. The mapping is already HIGH confidence. Additional morphologically labelled PV basket cell datasets would further increase quantitative precision of group_purity and target_purity estimates.
-- Resolution of the CA1 pyramidal layer soma location discrepancy (soma classically in SP vs. atlas predominance in SO) via MERFISH spot-level examination at the SP/SO border.
-
----
-
-#### 0739 Pvalb Gaba_2 [CS20230722_CLUS_0739] · 🟢 HIGH
+### 0739 Pvalb Gaba_2 [CS20230722_CLUS_0739] · 🟢 HIGH
 
 **Supporting evidence**
+- Hippocampal enrichment: CA1 SO (124 cells), CA3 SO (80 cells), CA1 pyramidal layer (26 cells), CA1 SR (45 cells). GABA NT consistent.
+- Precomputed expression: Pvalb=10.63 (strongest among SUPT_0206 child clusters), Gad1=10.52, Gad2=8.43, Cnr1=1.68 (absent).
+- Que 2021 patch-seq BC (morphologically confirmed basket cells, n=62) — CLUS_0739 is the top cluster hit: F1=0.827, group_purity=0.795 (31 cells map here), target_purity=0.861. Bistratified cells (BIC) preferentially map to CLUS_0737 instead, demonstrating a genuine within-supertype BC/BIC transcriptomic distinction at cluster level from morphologically labelled cells.
 
-- **Pvalb — CONSISTENT.** CLUS_0739 has the strongest Pvalb expression (mean 10.63) among SUPT_0206 child clusters, and Pvalb is present in CLUS_0739 MERFISH markers — direct marker consistency at the finest resolution [1][6][7][8].
-- **Cnr1 absent — CONSISTENT.** Precomputed Cnr1 mean 1.68, confirming PV (not CCK) basket identity.
-- **NT type — CONSISTENT.** GABA class, consistent with GABAergic basket cell identity [5].
-- **Annotation transfer (GEO:GSE142546, Que 2021, BC n=62) — SUPPORT.** CLUS_0739 is the primary cluster hit for morphologically confirmed PV basket cells (hBC + vBC): F1=0.827, group_purity=0.795, target_purity=0.861; 31 cells mapped at cluster level. Basket cell (BC) preference for CLUS_0739 versus bistratified cell (BIC) preference for sibling CLUS_0737 (F1=0.800) is the strongest transcriptomic subtype separation signal currently available [6].
-- **Annotation transfer (GEO:GSE185862, Yao 2021, Pvalb n=66 HIP) — PARTIAL.** 5/66 Pvalb SSv4 cells map to CLUS_0739 at cluster level (F1=0.179, target_purity=1.0); chandelier/AAC cells dominate the cluster-level signal. Partial because source is a mixed Pvalb population.
+**Marker evidence provenance**
+- **Pvalb (defining):** atlas MERFISH markers list Pvalb and precomputed mean is 10.63; concordant with classical literature [1][6][7][8].
+- **Cck (neuropeptide — discordant atlas signal):** Cck is *not* a classical marker for PV basket cells (which are Cnr1-negative and distinct from CCK basket cells per Whissell et al. [5] and Contreras et al. [8]), yet CLUS_0739 carries a Cck neuropeptide expression score of 7.6 and precomputed mean 7.56. Flag for investigation: this may reflect cluster boundaries that do not align cleanly to classical types, or genuine Cck transcript co-expression in a subset of PV basket cells at a level below the threshold for the classical Cnr1/CB1R-positive CCK basket identity.
 
 **Concerns**
-
-- **Cck neuropeptide discordant.** CLUS_0739 shows high Cck expression score (7.6; precomputed mean 7.56), which is unexpected for PV basket cells (Cnr1-negative). This may indicate: (a) cluster boundaries do not align cleanly with classical PV basket cell identity, (b) a subset of PV neurons co-express Cck at low level, or (c) the cluster contains a small Cck-co-expressing PV subpopulation. *(note: Cnr1 low/absent suggests this is not classical CCK basket cell contamination, but the Cck signal remains unresolved)*
-- **DISTRIBUTED_ACROSS_CLUSTERS.** PV+ hippocampal interneurons (basket, axo-axonic, bistratified) have high transcriptomic similarity [6] and CLUS_0739 likely contains multiple classical PV subtypes, not only basket cells. Target purity 0.861 at cluster level indicates that approximately 14% of mapped cells fall outside basket cell identity in the Que 2021 transfer.
-- **Location APPROXIMATE.** CLUS_0739 has only 26 cells in CA1 pyramidal layer vs. 124 cells in CA1 stratum oriens; classical soma location is stratum pyramidale [UBERON:0014548]. Discrepancy likely reflects perisomatic layer border ambiguity in MERFISH spatial registration.
+- Cck DISCORDANT: high Cck neuropeptide expression at this cluster is unexpected for PV basket cells. May indicate mixed cluster content or low-level Cck transcript co-expression in PV cells. The classical PV-vs-CCK perisomatic dichotomy [5][8] is at the protein/CB1R level and does not strictly rule out Cck transcript in PV cells, but the magnitude here warrants follow-up.
+- Soma location APPROXIMATE: classical CA1 SP vs cluster signal mostly in CA1 SO with only 26 CA1 SP cells *(adjacent region — could reflect registration boundary error; weak counter-evidence)*.
+- DISTRIBUTED_ACROSS_CLUSTERS caveat: PV+ hippocampal interneurons (basket, axo-axonic, bistratified) have high transcriptomic similarity [6]; CLUS_0739 is BC-enriched but likely contains residual non-basket PV cells.
+- Yao 2021 SSv4 Pvalb → CLUS_0739 F1=0.179 is low (PARTIAL); this is consistent with the SSv4 Pvalb label being mixed and chandelier-dominated (CLUS_0732 F1=0.622) rather than counter-evidence.
 
 **What would upgrade confidence**
-
-- Both available AT runs have been completed; this mapping is already HIGH confidence. Resolving the Cck discordance is the key remaining biological question: smFISH co-staining for Pvalb, Cnr1, and Cck in CLUS_0739-predicted cells would determine whether the Cck signal reflects contamination or genuine peptide co-expression.
-- Larger morphologically labelled basket cell datasets would improve target purity estimates beyond the current n=31 mapped cells.
-
----
+- A Cre-driver-targeted single-cell dataset of morphology-confirmed PV basket cells (separating BC from AAC and BIC in vivo) mapped at F1 ≥ 0.85 at CLUSTER level — partially achieved by Que 2021 (F1=0.827); a larger morphology-confirmed cohort or a complementary technique (e.g. retro-PV-Cre + scRNA-seq) would push the result over the F1 ≥ 0.85 line.
+- Resolution of the Cck discrepancy: protein-level validation (Cck IHC in CLUS_0739-mapped Pvalb cells) or co-expression analysis from the underlying 10x dataset.
+- Targeted literature search for Cnr1-negative status of hippocampal PV basket cells (primary citation, not review).
 
 ### Methods
 
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-#### Classical type definition
+**Classical type definition.** The PV basket cell is defined here on a CLASSICAL_MULTIMODAL basis — converging immunohistochemistry, single-cell morphology + electrophysiology, and intersectional genetic mapping. Defining markers Pvalb [1][6][7][8], Gad1, Gad2; negative marker Cnr1; soma in pyramidal layers of CA1 [UBERON:0014548], CA3 [UBERON:0014550], and dentate gyrus granule cell layer [UBERON:0005381] [1][2][3][4]; GABAergic neurotransmission [5].
 
-The PV basket cell classical node (`pv_basket_cell_hippocampus`) is defined at CLASSICAL_MULTIMODAL basis from eight primary references spanning IHC, transcript-level, and patch-seq methods [1]–[8]. The node was created through the `asta-report-ingest` workflow. Defining markers: Pvalb [1][6][7][8], Gad1, Gad2; negative marker: Cnr1; soma locations: pyramidal layer of CA1 [UBERON:0014548], pyramidal layer of CA3 [UBERON:0014550], dentate gyrus granule cell layer [UBERON:0005381] [1][2][3][4]; neurotransmitter: GABAergic [5]. No neuropeptides are asserted on this node.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the WMBv1 (CCN20230722) taxonomy at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match, NT type, defining markers, sex bias when applicable). Full scoring rules: `workflows/map-cell-type.md`.
 
-#### Atlas mapping query
+**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
 
-Atlas candidates were identified by querying the WMBv1 (CCN20230722) taxonomy SQLite index using `just find-candidates` (multi-rank scan: class, subclass, supertype, cluster). Primary search terms: "Pvalb", "basket", "Gaba". The Pvalb Gaba supertype family was identified as the candidate target. Two edges were written:
-- `edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206` (supertype, HIGH)
-- `edge_pv_basket_cell_hippocampus_to_CS20230722_CLUS_0739` (cluster, HIGH)
+**Annotation transfer — Yao 2021 SSv4 (GSE185862).**
 
-#### Property alignment
+| Field | Value |
+|---|---|
+| Source dataset | GEO:GSE185862 (Yao 2021 (GSE185862) mouse hippocampal formation SMART-Seq v4 cell type labels — Pvalb subclass used here) |
+| Source species | NCBITaxon:10090 |
+| Target atlas | WMBv1 (CCN20230722) |
+| Method | MapMyCells local (cell_type_mapper, default parameters, raw normalization, 100 bootstrap iterations) |
+| Tool version | cell_type_mapper |
+| n cells | 6398 (filtered to 6398) |
+| Run record | [`kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml) |
+| Script (external) | README.md |
+| Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
+| F1 matrix | [`f1_scores_best.csv`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/f1_scores_best.csv) |
 
-Property comparisons were assessed for NT type, Pvalb, Gad1, Gad2, negative marker Cnr1, and neuropeptide Cck (cluster-level) against WMBv1 atlas metadata (MERFISH, NP markers, precomputed expression stats from CCN20230722 HDF5 stats). CONSISTENT, APPROXIMATE, and DISCORDANT verdicts follow the standard evidencell alignment rubric.
+**Annotation transfer — Que 2021 patch-seq (GSE142546).**
 
-#### Annotation transfer — Run 1: GEO:GSE185862 (Yao 2021 SSv4)
+| Field | Value |
+|---|---|
+| Source dataset | GEO:GSE142546 (Que 2021 patch-seq PV interneuron morphological types: hBC, vBC, hBIC, vBIC, AAC; aggregated to BC, BIC, AAC for F1 scoring) |
+| Source species | NCBITaxon:10090 |
+| Target atlas | WMBv1 (CCN20230722; SHA-256: b21ca985) |
+| Method | MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization, 100 bootstrap iterations). Gene symbols remapped to Ensembl IDs (19788/35825 mapped). Input TPM treated as pseudo-counts. |
+| Tool version | cell_type_mapper v1.7.1 |
+| n cells | 88 (filtered to 88) |
+| Run record | [`kb/annotation_transfer_runs/at_run_20260508_que2021_pvin_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260508_que2021_pvin_mmc_wmbv1/manifest.yaml) |
+| Script (external) | README.md |
+| Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
+| F1 matrix | [`f1_scores_aggregated_best.csv`](../../kb/annotation_transfer_runs/at_run_20260508_que2021_pvin_mmc_wmbv1/f1_scores_aggregated_best.csv) |
+| Caveats | Patch-seq dataset with morphologically confirmed PV subtypes. TPM input used as pseudo-counts. Age range P10–P77 (mean P30) vs adult WMBv1; Que et al. found high transcriptomic similarity of morphological types across ages. AAC n=6 is insufficient for reliable F1 (treated as uninformative). Key finding: BC and BIC cells separate cleanly within SUPT_0206 (Pvalb Gaba_2) at cluster level — BC to CLUS_0739 (F1=0.827), BIC to CLUS_0737 (F1=0.800). |
 
-- **Method:** MapMyCells (default parameters)
-- **Source:** GEO:GSE185862 (Yao 2021 SSv4), Pvalb subclass hippocampal cells (n=66 HIP cells)
-- **Target atlas:** WMBv1 (CCN20230722)
-- **Best F1 (SUPT_0206 edge):** 0.588 at SUBCLASS level; 0.324 at SUPERTYPE for SUPT_0206 specifically
-- **Best F1 (CLUS_0739 edge):** 0.622 at CLUSTER level (CLUS_0732 chandelier); CLUS_0739 F1=0.179 (5 cells)
-- **Limitation:** Yao 2021 SSv4 Pvalb subclass label encompasses PV basket, axo-axonic, and bistratified cells without morphological resolution; chandelier/AAC cells dominate the mapping.
-- **Hierarchy of results (SUPT_0206 edge):**
+**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
 
-| Level | Rank | Best target | Accession | F1 | group_purity | target_purity | n cells |
-|---|---|---|---|---|---|---|---|
-| SUBCLASS | 2 | 051 Pvalb chandelier Gaba | CS20230722_SUBC_051 | 0.588 | 0.417 | 1.000 | 25 |
-| SUPERTYPE | 1 | 0204 Pvalb chandelier Gaba_1 | CS20230722_SUPT_0204 | 0.612 | 0.441 | 1.000 | 26 |
-| SUPERTYPE | 1 | 0206 Pvalb Gaba_2 | CS20230722_SUPT_0206 | 0.324 | 0.203 | 0.800 | 12 |
+*Generated by evidencell `bb9feaf` at 2026-05-13T10:38:59+00:00 from [kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml](kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml).*
 
-#### Annotation transfer — Run 2: GEO:GSE142546 (Que 2021 morphologically labelled patch-seq)
+**Evidence base table**
 
-- **Method:** MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
-- **Source:** GEO:GSE142546 (Que 2021), morphologically labelled PV basket cells (BC: hBC n=12 + vBC n=50 aggregated; n=62 BC cells; full dataset n=88 cells including BIC)
-- **Target atlas:** WMBv1 (CCN20230722)
-- **Best F1:** 0.827 at CLUSTER level (CLUS_0739)
-- **Gene mapping:** Gene symbols remapped to Ensembl IDs; 19788/35825 genes mapped.
-- **Hierarchy of results:**
-
-| Level | Rank | Best target | Accession | F1 | group_purity | target_purity | n cells |
-|---|---|---|---|---|---|---|---|
-| CLASS | 3 | 07 CTX-MGE GABA | CS20230722_CLAS_07 | 0.822 | 1.000 | 0.697 | 53 |
-| SUBCLASS | 2 | 052 Pvalb Gaba | CS20230722_SUBC_052 | 0.776 | 0.881 | 0.693 | 52 |
-| SUPERTYPE | 1 | 0206 Pvalb Gaba_2 | CS20230722_SUPT_0206 | 0.785 | 0.898 | 0.697 | 53 |
-| CLUSTER | 0 | 0739 Pvalb Gaba_2 | CS20230722_CLUS_0739 | 0.827 | 0.795 | 0.861 | 31 |
-
-#### Atlas data sources
-
-- WMBv1 taxonomy: CCN20230722 (Allen Brain Cell Atlas). Taxonomy reference YAML in `kb/taxonomy/CCN20230722/`.
-- Precomputed expression statistics from local HDF5 stats file (CCN20230722).
-- MERFISH spatial data (WMBv1): soma position registration; axonal/dendritic projections are not reflected in atlas cluster location fields.
-
-#### Anti-hallucination
-
-All KB YAML writes validated by the pre-write hook (`.claude/hooks/validate_mapping_hook.py`): YAML parse, structural integrity, `quote_key` and PMID presence in `references.json`, LinkML schema conformance. All blockquotes in this report carry `<!-- quote_key: ... -->` attribution to entries in `references.json`.
-
-#### Reproducibility footer
-
-- Framework version: 950c14b
-- Report generated: 2026-05-08T14:31:25+00:00
-- KB graph: `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`
-
-#### Evidence base table
-
-| Edge ID | Evidence type | Supports | Notes |
+| Edge ID | Evidence types | Supports | Source |
 |---|---|---|---|
-| edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206 | ATLAS_METADATA | PARTIAL | Pvalb subclass + GABA NT consistent; piriform area co-presence; multiple PV subtypes at supertype level |
-| edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206 | ATLAS_METADATA (precomputed stats) | SUPPORT | Pvalb=8.74, Gad1=10.34, Gad2=9.28, Cnr1=1.93; all defining markers confirmed |
-| edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206 | ANNOTATION_TRANSFER (GEO:GSE185862, Yao 2021 SSv4, n=66) | PARTIAL | 12/66 Pvalb cells to SUPT_0206; F1=0.324; chandelier/AAC cells dominant |
-| edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206 | ANNOTATION_TRANSFER (GEO:GSE142546, Que 2021, n=62 BC) | SUPPORT | 53/62 BC to SUPT_0206; group_purity=0.898; F1=0.785; BC/BIC cluster separation confirmed |
-| edge_pv_basket_cell_hippocampus_to_CS20230722_CLUS_0739 | ATLAS_METADATA | PARTIAL | CA1 SO 124 cells, CA1 SP 26 cells; GABA NT; Pvalb in MERFISH; Cck NP discordant |
-| edge_pv_basket_cell_hippocampus_to_CS20230722_CLUS_0739 | ATLAS_METADATA (precomputed stats) | SUPPORT | Pvalb=10.63, Gad1=10.52, Gad2=8.43, Cnr1=1.68; strongest Pvalb in SUPT_0206 |
-| edge_pv_basket_cell_hippocampus_to_CS20230722_CLUS_0739 | ANNOTATION_TRANSFER (GEO:GSE185862, Yao 2021 SSv4, n=66) | PARTIAL | 5/66 Pvalb cells to CLUS_0739; F1=0.179; CLUS_0732 chandelier dominant |
-| edge_pv_basket_cell_hippocampus_to_CS20230722_CLUS_0739 | ANNOTATION_TRANSFER (GEO:GSE142546, Que 2021, n=62 BC) | SUPPORT | F1=0.827; group_purity=0.795; target_purity=0.861; 31 cells; primary cluster hit |
+| edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206 | ATLAS_METADATA ×2; ANNOTATION_TRANSFER ×2 | PARTIAL ×2, SUPPORT ×2 | atlas-internal |
+| edge_pv_basket_cell_hippocampus_to_CS20230722_CLUS_0739 | ATLAS_METADATA ×2; ANNOTATION_TRANSFER ×2 | PARTIAL ×2, SUPPORT ×2 | atlas-internal |
 
 </details>
 
@@ -261,39 +221,26 @@ All KB YAML writes validated by the pre-write hook (`.claude/hooks/validate_mapp
 
 ## Discussion
 
-### 6. Best candidate and caveats summary
+**Primary mapping:** Parvalbumin-positive basket cell → 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] at HIGH confidence, with the basket-preferring child cluster 0739 Pvalb Gaba_2 [CS20230722_CLUS_0739] at HIGH confidence within that supertype. Key support: convergent annotation transfer from morphologically labelled patch-seq PV basket cells (Que 2021, BC F1=0.785 at supertype, 0.827 at cluster) plus quantitative atlas precomputed expression (Pvalb high, Cnr1 absent). Key caveats: DISTRIBUTED_ACROSS_CLUSTERS (PV basket / axo-axonic / bistratified share the Pvalb Gaba subclass with high transcriptomic similarity per [6]) and MARKER_NOT_SPECIFIC (Cnr1 negative status not directly verifiable from atlas metadata; unexpected high Cck neuropeptide score at CLUS_0739).
 
-**Primary mapping:** pv_basket_cell_hippocampus → 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] and 0739 Pvalb Gaba_2 [CS20230722_CLUS_0739] at HIGH confidence.
+The Cell Ontology has no specific term for hippocampal PV basket cells; basket cell [[CL:0000118](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0000118)] is the closest ancestor (BROAD). CL:0000118 covers perisomatic-targeting GABAergic interneurons but does not capture PV-specific identity. No hippocampus-specific PV basket cell term exists in CL — this is a candidate for a CL new-term request.
 
-HIGH confidence was achieved through two independent annotation transfer runs (GSE185862 and GSE142546) providing two independent experimental evidence types alongside consistent atlas metadata. The decisive evidence is from Que et al. 2021 [6] patch-seq data (GEO:GSE142546): morphologically confirmed basket cells (hBC n=12 + vBC n=50; 53/62 cells to SUPT_0206, group_purity=0.898; best cluster CLUS_0739 with F1=0.827, target_purity=0.861, 31 cells at cluster level). The convergence of this morphologically grounded result with consistent atlas marker data (Pvalb=10.63, Cnr1=1.68/absent, GABA NT) establishes a high-quality mapping at both supertype and cluster levels.
+### Proposed experiments and follow-ups
 
-The Yao 2021 SSv4 run (GEO:GSE185862) provides independent experimental corroboration despite its lower discriminative power: the Pvalb SSv4 source population is a mixture of PV subtypes, and chandelier/AAC cells dominate the mapping, but 12/66 Pvalb cells reach SUPT_0206 with target_purity=0.800, confirming that basket cells in the SSv4 dataset do contribute to the SUPT_0206 / CLUS_0739 signal.
+The two AT runs already substantially address the standard "run MapMyCells from a hippocampal PV-IN dataset" experiment. What was done:
+- **Yao 2021 SSv4 Pvalb subclass → WMBv1 (GSE185862, n=66 HIP cells):** subclass-level mapping; results PARTIAL because the SSv4 label aggregates basket + axo-axonic + bistratified cells.
+- **Que 2021 patch-seq morphology-confirmed BC / BIC / AAC → WMBv1 (GSE142546, n=88 cells):** morphology-resolved labels; BC to SUPT_0206 F1=0.785 and CLUS_0739 F1=0.827; BC vs BIC cluster-level separation confirmed (BIC → CLUS_0737).
 
-**Biological heterogeneity within SUPT_0206.** The PV basket cell shares SUPT_0206 with the PV bistratified cell — both are PV+/GABA+ interneurons with high transcriptomic similarity. Their separation at cluster level (BC→CLUS_0739, BIC→CLUS_0737) is the strongest evidence that atlas resolution is sufficient to distinguish these two subtypes, but the clusters are not pure: CLUS_0739 target purity is 0.861, and a small bistratified cell fraction likely remains in the basket cell cluster (and vice versa). This is consistent with the continuous PV interneuron transcriptomic landscape described by Que et al. 2021 [6].
+Refinements that would still add value:
+- **What:** Larger morphology-confirmed PV-IN cohort (Cre-driver or retro-tagged) mapped at cluster level. **Target:** F1 ≥ 0.85 at CLUSTER, n ≥ 200 BC cells. **Expected output:** AnnotationTransferEvidence with tighter group_purity and target_purity bounds. **Resolves:** DISTRIBUTED_ACROSS_CLUSTERS caveat for the BC fraction specifically.
+- **What:** Cck transcript and protein co-expression analysis in CLUS_0739-mapped PV cells (re-analysis of underlying 10x dataset; or Cck IHC in Pvalb-Cre × reporter sections). **Target:** quantify fraction of PV+ CLUS_0739-mapped cells with detectable Cck and CB1R/Cnr1. **Expected output:** MarkerAnalysisEvidence + LiteratureEvidence (if existing primary literature is found). **Resolves:** Cck DISCORDANT property comparison at CLUS_0739.
+- **What:** Targeted cite-traverse for primary citations supporting Gad1 / Gad2 expression and Cnr1 negativity in morphology-confirmed hippocampal PV basket cells (currently unsourced on the classical node). **Expected output:** additional LiteratureEvidence entries; updated `defining_markers[*].refs` and negative-marker citations.
 
-**Key remaining caveat — Cck discordance in CLUS_0739.** A high Cck neuropeptide score (7.6; precomputed mean 7.56) in CLUS_0739 is unexpected for PV basket cells, which are canonical Cnr1-negative neurons. Given that Cnr1 is confirmed low/absent (mean 1.68), this is unlikely to reflect simple CCK basket cell contamination, but the biological significance of high Cck in a Cnr1-low cluster is unresolved.
+### Open questions
 
-### 7. Proposed experiments and follow-ups
-
-**Status of completed AT runs:**
-- GEO:GSE185862 (Yao 2021 SSv4, mixed Pvalb subclass, n=66 HIP Pvalb cells): completed at SUBCLASS/SUPERTYPE level. Provides partial support for SUPT_0206; insufficient for clean basket-cell-specific cluster assignment due to mixed source population.
-- GEO:GSE142546 (Que 2021 patch-seq, morphologically labelled PV basket cells, n=62 BC cells): completed at CLUSTER level. This is the definitive morphologically grounded result: F1=0.827 at CLUS_0739, BC/BIC cluster separation confirmed.
-
-**Proposed experiment 1 — Cck discordance resolution.**
-SmFISH co-staining for Pvalb, Cnr1, and Cck in CA1 sections, focused on CLUS_0739-predicted cells, would determine whether the high Cck score in CLUS_0739 reflects: (a) a minor Cck-co-expressing PV cell subpopulation, (b) MERFISH/precomputed stats noise, or (c) incomplete cluster boundary between PV and CCK basket cell populations. This is the highest-priority unresolved question for the cluster-level mapping.
-
-**Proposed experiment 2 — larger morphologically labelled basket cell dataset.**
-The Que 2021 patch-seq dataset has n=62 BC cells (n=31 mapped to CLUS_0739). A larger dataset — especially one with well-controlled morphological confirmation of perisomatic basket morphology — would improve the precision of group_purity and target_purity estimates and allow sub-cluster resolution within CLUS_0739.
-
-**Proposed experiment 3 — new CL term request for hippocampal PV basket cell.**
-CL:0000118 (basket cell) is a BROAD mapping. The hippocampal PV basket cell has a well-characterised multimodal phenotype (Pvalb+, Cnr1−, GABA, perisomatic axon targeting) and HIGH-confidence atlas mapping — it is a strong candidate for a dedicated CL term via the `cl-term-request` workflow.
-
-### 8. Open questions
-
-1. What is the biological explanation for the high Cck neuropeptide score (mean 7.56) in CLUS_0739, given that Cnr1 is low/absent (mean 1.68)? Is this a genuine PV/Cck co-expressing subpopulation, or a cluster boundary artefact?
-2. Can the CA1 pyramidal layer soma location discrepancy be resolved? Classical basket cells are described as soma-in-stratum-pyramidale [UBERON:0014548], but CLUS_0739 shows only 26 CA1 pyramidal layer cells vs. 124 CA1 stratum oriens cells — is this a MERFISH spatial registration issue at the SP/SO border, or does it reflect genuine soma placement in stratum oriens?
-3. Can PV basket, axo-axonic, and bistratified cells be completely resolved at WMBv1 cluster level, or does the continuous PV transcriptomic landscape [6] impose a resolution ceiling below which these morphological subtypes cannot be separated?
-4. Do hBC (horizontal basket cells, n=12) and vBC (vertical basket cells, n=50) in the Que 2021 dataset show differential cluster preferences within SUPT_0206, or do they converge on the same cluster CLUS_0739?
+1. To what extent does the Pvalb Gaba subclass (SUBC_052) and supertype SUPT_0206 cleanly separate PV basket from PV axo-axonic and PV bistratified at single-cell resolution in the WMBv1 10x data? Que 2021 evidence supports cluster-level separation of BC vs BIC within SUPT_0206 (CLUS_0739 vs CLUS_0737); AAC was underpowered (n=6).
+2. What is the biological basis for the high Cck neuropeptide score at CLUS_0739 (precomputed mean 7.56) given that PV basket cells are classically Cnr1/CB1R-negative and distinct from CCK basket cells? Mixed cluster content vs low-level Cck transcript co-expression in PV cells.
+3. Is the piriform area component of SUPT_0206 (959 cells) transcriptomically distinguishable from the hippocampal CA1 SO + CA3 SO component, or does Pvalb Gaba_2 represent a genuinely shared cortical-hippocampal PV cell state?
 
 ---
 
@@ -301,11 +248,11 @@ CL:0000118 (basket cell) is a BROAD mapping. The hippocampal PV basket cell has 
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Rivera et al. 2014 | [25018703](https://pubmed.ncbi.nlm.nih.gov/25018703/) | Soma location; Pvalb marker |
-| [2] | Sik et al. 1995 | [7472426](https://pubmed.ncbi.nlm.nih.gov/7472426/) | Soma location; morphology |
-| [3] | Müller & Remy 2014 | [25324774](https://pubmed.ncbi.nlm.nih.gov/25324774/) | Soma location |
-| [4] | Bocchio et al. 2024 | [39401246](https://pubmed.ncbi.nlm.nih.gov/39401246/) | Soma location; PV+ subtype overview |
-| [5] | Whissell et al. 2015 | [26441554](https://pubmed.ncbi.nlm.nih.gov/26441554/) | Neurotransmitter type; CCK/PV perisomatic distinction |
-| [6] | Que et al. 2021 | [33398060](https://pubmed.ncbi.nlm.nih.gov/33398060/) | Pvalb marker; annotation transfer source (GSE142546) |
-| [7] | Perrenoud et al. 2022 | [35802727](https://pubmed.ncbi.nlm.nih.gov/35802727/) | Pvalb marker |
-| [8] | Contreras et al. 2019 | [31297048](https://pubmed.ncbi.nlm.nih.gov/31297048/) | Pvalb marker; Cnr1 negative marker; CCK/PV perisomatic distinction |
+| [1] | Rivera et al. 2014 | [25018703](https://pubmed.ncbi.nlm.nih.gov/25018703) | soma location; Pvalb marker |
+| [2] | Sik et al. 1995 | [7472426](https://pubmed.ncbi.nlm.nih.gov/7472426) | soma location; morphology |
+| [3] | Müller & Remy 2014 | [25324774](https://pubmed.ncbi.nlm.nih.gov/25324774) | soma location |
+| [4] | Bocchio et al. 2024 | [39401246](https://pubmed.ncbi.nlm.nih.gov/39401246) | soma location; classical type representativeness |
+| [5] | Whissell et al. 2015 | [26441554](https://pubmed.ncbi.nlm.nih.gov/26441554) | neurotransmitter type; PV/CCK distinction |
+| [6] | Que et al. 2021 | [33398060](https://pubmed.ncbi.nlm.nih.gov/33398060) | Pvalb marker; PV subtype transcriptomic similarity |
+| [7] | Perrenoud et al. 2022 | [35802727](https://pubmed.ncbi.nlm.nih.gov/35802727) | Pvalb marker |
+| [8] | Contreras et al. 2019 | [31297048](https://pubmed.ncbi.nlm.nih.gov/31297048) | Pvalb marker; perisomatic interneuron framing |
