@@ -349,6 +349,22 @@ gen-toc TAXONOMY_ID *ARGS:
 gen-at-figure RUN_ID *ARGS:
     uv run python -m evidencell.at_figures {{RUN_ID}} {{ARGS}}
 
+# Surface candidate source-group pools from a KB graph (Phase 3 gen-report pre-pass).
+# Emits JSON on stdout. Use --node to restrict to candidates involving a given lit_type.
+# Usage: just pool-candidates kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml
+#        just pool-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml --node olm_hippocampus
+[group('reports')]
+pool-candidates GRAPH_FILE *ARGS:
+    uv run python -m evidencell.pool_candidates {{GRAPH_FILE}} {{ARGS}}
+
+# Parse Phase 3 verdict blocks from a report and write the holistic
+# verdict + currency hash back to the matching MappingEdge YAML.
+# Pass --dry-run to verify without editing the YAML.
+# Usage: just rationale-writeback reports/hippocampus/olm_hippocampus_summary.md kb/graphs/hippocampus/hippocampus_OLM.yaml
+[group('reports')]
+rationale-writeback REPORT_FILE GRAPH_FILE *ARGS:
+    uv run python -m evidencell.rationale_writeback {{REPORT_FILE}} {{GRAPH_FILE}} {{ARGS}}
+
 # Regenerate all reports + indices for the KB (programmatic mode, no LLM)
 [group('reports')]
 gen-report-all:

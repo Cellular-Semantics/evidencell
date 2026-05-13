@@ -1480,6 +1480,14 @@ def extract_node_facts(
             "supertype": b_info["supertype"],
             "n_cells": b_info["n_cells"],
             "taxonomy_level": b_info["taxonomy_level"],
+            # Phase 3 (2026-05-13): `confidence` is included so the
+            # programmatic-render path can still display the mapping
+            # table, BUT the synthesis subagent prompt (see
+            # workflows/gen-report.md Step 3) explicitly instructs the
+            # agent to NOT read this field as input when emitting its
+            # verdict block — loop avoidance is prompt-enforced, not
+            # data-layer-enforced, because the field has legitimate
+            # readers in the programmatic render path.
             "confidence": edge.get("confidence", ""),
             "relationship": edge.get("relationship", ""),
             "verdict": verdict,
