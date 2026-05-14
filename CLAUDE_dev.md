@@ -90,23 +90,53 @@ evidencell is a LinkML-based knowledge base for cell type mapping evidence — l
 ## Repo structure
 
 ```
-schema/                  # LinkML schema (source of truth for KB structure)
-kb/graphs/{region}/      # cell-type mapping graphs (YAML only); just qc + PR review as quality gate
-references/{region}/     # references.json — shared quote store per region
-research/{region}/       # research artifacts: field_mapping, cite_traverse, evidence_extraction
-reports/{region}/        # human-readable summary + drill-down reports
-inputs/deepsearch/       # ASTA deep research PDFs used as literature discovery input
-inputs/taxonomies/       # taxonomy table slices (CSV/TSV) used for ingest-taxonomy
-src/evidencell/          # all Python logic (validation, rendering, compliance, fetching)
-workflows/               # multi-step curation orchestrators (see below)
-.claude/hooks/           # pre-edit validation hook (runs before KB writes)
-.claude/skills/          # bounded single-focus tasks, called interactively
-.claude/agents/          # shared subagent personas (reserved; populate if needed)
-references_cache/        # cached ASTA reference text for snippet provenance
-justfile                 # thin task runner — all logic lives in src/evidencell/
-CLAUDE.md                # curation-mode default guide: which orchestrator to run, when, and with what inputs
-CLAUDE_dev.md            # this file — dev-mode companion guide
+schema/                                       # LinkML schema (source of truth for KB structure)
+kb/graphs/{region}/                           # cell-type mapping graphs (YAML only); just qc + PR review as quality gate
+references/{region}/                          # references.json — shared quote store per region
+research/{region}/                            # research artifacts: field_mapping, cite_traverse, evidence_extraction
+research/validation/methods_audits/{audit}/   # validation/audit run artifacts + per-audit findings READMEs
+reports/{region}/                             # human-readable summary + drill-down reports
+inputs/deepsearch/                            # ASTA deep research PDFs used as literature discovery input
+inputs/taxonomies/                            # taxonomy table slices (CSV/TSV) used for ingest-taxonomy
+src/evidencell/                               # all Python logic (validation, rendering, compliance, fetching)
+src/evidencell/validation/                    # audit/validation drivers (AuditDriver + concrete subclasses)
+workflows/                                    # multi-step curation orchestrators (see below)
+workflows/validation/                         # validation/audit orchestrator docs
+.claude/hooks/                                # pre-edit validation hook (runs before KB writes)
+.claude/skills/                               # bounded single-focus tasks, called interactively
+.claude/agents/                               # shared subagent personas (reserved; populate if needed)
+references_cache/                             # cached ASTA reference text for snippet provenance
+justfile                                      # thin task runner — all logic lives in src/evidencell/
+CLAUDE.md                                     # curation-mode default guide: which orchestrator to run, when, and with what inputs
+CLAUDE_dev.md                                 # this file — dev-mode companion guide
 ```
+
+## Validation / methods audits
+
+Method-validation audits are runnable drivers that compare evidencell's
+current behaviour against an oracle ground truth (e.g. curated AT
+evidence). They live alongside the workflow code and follow a
+deliberate four-piece layout (code, recipe, orchestrator doc, findings
+doc) intended to combat the "agent inference replaces data lookup"
+failure mode.
+
+| Layer | Location |
+|---|---|
+| Driver code | `src/evidencell/validation/` (concrete subclasses of `AuditDriver`) |
+| CLI dispatch | `python -m evidencell.validation <audit-id>` |
+| `just` recipe | `just validate-<audit-id>` |
+| Workflow doc | `workflows/validation/<audit-id>.md` |
+| Run artifacts + findings | `research/validation/methods_audits/<audit-id>/` |
+| End-to-end tests | `tests/test_validation/` |
+
+The framework enforces:
+- Preflight invariants (fail loud rather than silently skip).
+- Raw `expected` / `actual` dicts on every outcome (claims must be
+  data extractions, not summaries).
+- Reproducibility metadata on every run (git commit, config, timestamps).
+
+Add an audit by following the checklist in
+[`research/validation/methods_audits/README.md`](research/validation/methods_audits/README.md).
 
 ## Orchestrators vs skills
 

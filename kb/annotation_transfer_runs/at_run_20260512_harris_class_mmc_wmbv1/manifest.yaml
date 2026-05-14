@@ -1,0 +1,59 @@
+id: at_run_20260512_harris_class_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE99888"
+source_cluster_label: >
+  Harris 2018 published Class labels for 3663 mouse CA1 inhibitory neurons
+  (49 fine-grained subtypes). Per-cell labels in labels_harris_class.json
+  (mirrored from the original bundled run record). Source DOI:
+  10.1371/journal.pbio.2006387. Mirror:
+  https://figshare.com/articles/dataset/Transcriptomic_analysis_of_CA1_inhibitory_interneurons/6198656.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization,
+  bootstrap_iteration=100). Run locally via
+  `cell_type_mapper.cli.from_specified_markers` against the
+  precomputed_stats_ABC_revision_230821.h5 stats file and
+  mouse_markers_230821.json marker set. F1 scoring with
+  bootstrap_threshold=0.8 default.
+tool_version: "cell_type_mapper v1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 3663
+n_cells_after_filter: 3663
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../at_run_20260506_harris_chamberland_mmc_wmbv1/README.md
+  python_version: "3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+
+output:
+  relpath: f1_matrix_harris_class.csv
+  format: csv
+
+caveats: >
+  This run record scores Harris 2018's *published Class labels* against
+  WMBv1. It is one of two run records that share the same MapMyCells
+  output (mmc_results.csv lives in the original bundled run dir at
+  ../at_run_20260506_harris_chamberland_mmc_wmbv1/). The companion
+  `at_run_20260512_chamberland_subfamily_mmc_wmbv1` scores the same
+  MMC output under Chamberland 2024 in-silico gene-pair subfamily
+  labels. Splitting the two AT analyses into separate AnnotationTransferRun
+  records makes citation, F1 interpretation, and the "drop unassigned"
+  decision unambiguous — see
+  planning/at_blind_region_drop_findings_2026-05-12.md § h.
+
+figure:
+  relpath: figures/f1_tree.png
+  format: png

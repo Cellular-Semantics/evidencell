@@ -51,6 +51,15 @@ figure:
   format: png
 
 caveats: >
+  DEPRECATED 2026-05-12: bundled AT (Harris -> WMBv1) + relabel (Harris
+  Class -> Chamberland subfamily) in one record is an anti-pattern (see
+  planning/at_blind_region_drop_findings_2026-05-12.md § h). Use the two
+  successor records instead:
+  at_run_20260512_harris_class_mmc_wmbv1 (Harris published Class labels)
+  and at_run_20260512_chamberland_subfamily_mmc_wmbv1 (Chamberland
+  derived subfamilies). This record is retained for traceability and
+  hosts the shared mmc_results.csv referenced by both successors.
+
   Chamberland subfamily labels are derived in-silico from Harris
   expression, not published per-cell labels. Two derivation methods
   are reported: per-cell rules (subject to scRNA-seq dropout) and

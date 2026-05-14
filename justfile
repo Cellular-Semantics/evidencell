@@ -86,6 +86,22 @@ validate-terms:
 validate-terms-file FILE:
     uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{FILE}}
 
+# ── Methods audits / validation ────────────────────────────────────────────────
+# Runnable audits live in `src/evidencell/validation/` with results landing under
+# `research/validation/methods_audits/<audit_id>/runs/`. Workflow docs in
+# `workflows/validation/<audit_id>.md` describe when and how to run each audit.
+# See `research/validation/methods_audits/README.md` for the audit index.
+
+# AT-blind audit: would marker+region+NT alone surface candidates that
+# annotation transfer has identified? Ground truth from kb/graphs/ AT-evidenced
+# edges. Used to decide region-expansion default + measure marker scoring
+# coverage versus the AT signal.
+# Usage: just validate-at-blind
+#        just validate-at-blind --top-k 20 --f1-floor 0.3
+[group('validation')]
+validate-at-blind *ARGS:
+    uv run python -m evidencell.validation at-blind {{ARGS}}
+
 # ── QC (full suite) ────────────────────────────────────────────────────────────
 
 # QC gate for all KB graph files — must pass before committing
@@ -214,6 +230,18 @@ add-expression taxonomy_id stats_h5 gene_mapping +GENES:
 add-expression-all taxonomy_id stats_h5 gene_mapping +GENES:
     uv run python -m evidencell.taxonomy_ops add-expression {{taxonomy_id}} {{stats_h5}} {{gene_mapping}} {{GENES}} --supertype
 
+# Proactive enrichment: scan kb/graphs/**/*.yaml for non-atlas nodes, collect
+# the union of all (defining_markers + neuropeptides + negative_markers)
+# symbols, and enrich every taxonomy node at cluster + supertype levels with
+# precomputed_expression for that union.
+# Replaces the per-mapping Step 2b in workflows/map-cell-type.md so that
+# find-candidates always sees full quantitative data on candidates.
+# Re-run when classical nodes are added or their marker lists change.
+# Usage: just enrich-marker-union CCN20230722 conf/mapmycells/CCN20230722/precomputed_stats.h5 conf/gene_mapping_CCN20230722.tsv
+[group('workflows')]
+enrich-marker-union taxonomy_id stats_h5 gene_mapping:
+    uv run python -m evidencell.taxonomy_ops enrich-marker-union {{taxonomy_id}} {{stats_h5}} {{gene_mapping}}
+
 # Re-ingest taxonomy from source JSON, preserving enrichment fields
 # Usage: just reingest CCN20230722 inputs/taxonomies/wmbv1_full_v2.json
 [group('workflows')]
@@ -237,11 +265,26 @@ generate-gene-mapping stats_h5 output:
 # Find candidate atlas matches for a classical node by querying the taxonomy DB
 # Extracts the node's property signature (markers, NT, anatomy) and scores taxonomy entries
 # rank: 0 = leaf (cluster in WMBv1), 1 = supertype, 2 = subclass, 3 = class
+# top_k bounds the candidate pool sent to Stage B mapping subagents.
 # Usage: just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722
-#        just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 30
+#        just find-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 10
 [group('workflows')]
-find-candidates graph_file node_id taxonomy_id rank="1" top_n="20":
-    uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_n}}
+find-candidates graph_file node_id taxonomy_id rank="1" top_k="10":
+    uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}}
+
+# Extract per-(classical, taxonomy) F1 artifact from a MapMyCells run dir.
+# Reads {run_dir}/f1_matrix.csv + manifest.yaml, filters by source_label and
+# F1 floor, resolves target labels to accessions via the taxonomy DB, writes
+# research/{region}/at/{classical_id}_{taxonomy_id}_f1.json.
+# The artifact is consumed by find-candidates as a Stage A scoring signal.
+# Usage: just at-extract-f1 \
+#          kb/annotation_transfer_runs/20260408_winterer_olm_mmc_wmbv1 \
+#          olm_hippocampus "Sst-OLM" hippocampus
+#        just at-extract-f1 ... --floor 0.3
+[group('workflows')]
+at-extract-f1 run_dir classical_id source_label region floor="0.2":
+    uv run python -m evidencell.taxonomy_ops at-extract-f1 \
+      {{run_dir}} {{classical_id}} "{{source_label}}" {{region}} --floor {{floor}}
 
 # Show taxonomy metadata (including mapmycells paths)
 # Usage: just show-meta CCN20230722
@@ -298,6 +341,13 @@ gen-index REGION:
 [group('reports')]
 gen-toc TAXONOMY_ID *ARGS:
     uv run python -m evidencell.toc {{TAXONOMY_ID}} {{ARGS}}
+
+# Render tree-style F1 figure for an annotation-transfer run.
+# Usage: just gen-at-figure 20260408_winterer_olm_mmc_wmbv1
+#        just gen-at-figure {RUN_ID} --pool Sst-OLM,Htr3a-OLM:OLM --output figures/f1_merged.png
+[group('reports')]
+gen-at-figure RUN_ID *ARGS:
+    uv run python -m evidencell.at_figures {{RUN_ID}} {{ARGS}}
 
 # Regenerate all reports + indices for the KB (programmatic mode, no LLM)
 [group('reports')]

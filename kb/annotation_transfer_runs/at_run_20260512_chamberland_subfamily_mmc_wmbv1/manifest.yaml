@@ -1,0 +1,84 @@
+id: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE99888"
+source_cluster_label: >
+  Chamberland 2024 in-silico functional subfamily labels derived from
+  Harris 2018 expression by applying Chamberland's gene-pair criteria
+  (Sst+Tac1 expression-product > 1; Sst+Nos1 expression-product > 1;
+  Sst+/Ndnf+ > threshold; Sst+/Chrna2+ > 0). Higher-priority labels
+  overwrite lower in priority order Chrna2 > Ndnf > Sst_Nos1 > Sst_Tac1;
+  remainder marked 'unassigned'. Two derivation modes are reported:
+  per-cell rules (subject to scRNA-seq dropout) and per-cluster rules
+  (dropout-robust, primary result). Class-to-subfamily map in
+  class_to_subfamily.tsv. Per-cell labels in
+  labels_chamberland_subfamily.json; per-cluster labels in
+  labels_chamberland_by_class.json. Chamberland 2024 reference:
+  DOI:10.1038/s41593-023-01497-z.
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization,
+  bootstrap_iteration=100). Same MapMyCells run as
+  at_run_20260512_harris_class_mmc_wmbv1; this record re-aggregates the
+  shared mmc_results.csv under the Chamberland subfamily label scheme
+  via class_to_subfamily.tsv. F1 scoring with bootstrap_threshold=0.8
+  default.
+tool_version: "cell_type_mapper v1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.8
+n_cells_total: 3663
+n_cells_after_filter: 3663
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: ../at_run_20260506_harris_chamberland_mmc_wmbv1/README.md
+  python_version: "3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+
+output:
+  relpath: f1_matrix_chamberland_by_class.csv
+  format: csv
+
+caveats: >
+  Per-cluster derivation (f1_matrix_chamberland_by_class.csv) is the
+  primary result: gene-pair rules applied to Harris cluster-mean
+  expression, dropout-robust. Per-cell derivation
+  (f1_matrix_chamberland.csv) is also retained but is subject to
+  scRNA-seq dropout on the gene-pair markers.
+
+  "Dropping unassigned cells" is justified ONLY for cells whose Harris
+  Class is the parent / ambiguous Class of the target Chamberland
+  subfamily (legitimate dropout-affected candidates); it is NOT
+  justified for cells whose Harris Class is a clearly distinct subtype
+  (real precision contaminants). The per-cluster matrix encodes this
+  nuance via Sst_other / non_Sst bucketing instead of a flat
+  unassigned label. See
+  planning/at_blind_region_drop_findings_2026-05-12.md § g for the
+  full rationale.
+
+  Headline cluster-level findings from per-cluster labels:
+  Chrna2-OLM -> CLUS_0771 (F1 0.65, recall 0.81);
+  Sst::Nos1-IN -> CLUS_0859 Sst Chodl Gaba_4 (F1 0.97, cross-supertype
+  to Sst Chodl, consistent with alveus-localised long-range-projecting
+  identity); Sst::Tac1-IN -> Pvalb subclass (subclass-level recall
+  0.78, surfacing transcriptomic Sst-Pvalb continuity for bistratified
+  types); Ndnf::Nkx2-1-OLM not cleanly resolved (single Harris Class
+  qualified at the per-cluster Ndnf threshold).
+
+  Companion run record `at_run_20260512_harris_class_mmc_wmbv1`
+  scores the same MMC output under Harris's own published Class
+  labels.
+
+figure:
+  relpath: figures/f1_tree.png
+  format: png
