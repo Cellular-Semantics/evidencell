@@ -1701,6 +1701,65 @@ classes:
         description: >
           URL or accession of the notebook/script that produced these results.
           E.g. https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+      source_groups:
+        range: SourceGroup
+        multivalued: true
+        description: >
+          Optional. When this evidence's metrics were computed by pooling
+          multiple raw source clusters into one pseudo-source, record the
+          composition here. Absence means per-source metrics keyed by
+          source_cluster_label.
+
+  SourceGroup:
+    description: >
+      Composition of a pooled pseudo-source used to compute an
+      AnnotationTransferEvidence's metrics. `label` is the pseudo-source
+      name (also the `--pool ...:NAME` argument fed to at_figures);
+      `members` is the list of raw source_label values (as they appear
+      in the f1_matrix.csv source_label column) that were combined.
+      Optional `rationale` records justification that the pool reading
+      is defensible across the available property panels; absence means
+      no such justification is on file.
+    attributes:
+      label:
+        required: true
+        description: >
+          Pseudo-source name. Must match the `--pool ...:NAME` argument
+          and the source_label key in the figure-rendering sidecar from
+          `at_figures --emit-metrics`, so stored metrics and rendered
+          figure are joinable on a shared key.
+      members:
+        multivalued: true
+        required: true
+        description: >
+          Raw source_label values (from f1_matrix.csv) combined into the
+          pseudo-source.
+      rationale:
+        description: >
+          Optional. Justification that the pool reading is defensible
+          across the available property panels. May be supplied by a
+          human curator or by a synthesis agent. Multiple independent
+          lines of evidence are encouraged — record each as its own
+          sentence or bullet, with citations to the underlying evidence
+          (AT run id, paper PMID/DOI, edge id, etc.) where applicable.
+          Example justifications (combine where multiple apply):
+            - "Annotation transfer to the target taxonomy is
+              indistinguishable between the pooled types: both source
+              cohorts map to the same target cluster set with comparable
+              F1 distributions (cite run_id)."
+            - "Literature reports no distinguishing electrophysiology,
+              morphology, or connectivity between the pooled types
+              (cite paper)."
+            - "Pooled types share defining markers and neurotransmitter
+              type; no differential expression of canonical
+              subtype-discriminating genes is reported."
+            - "Pool reflects the originating cohort's own grouping
+              convention (e.g. shared sample-collection criterion);
+              no further cross-panel check has been performed."
+          Absence is not a gate — it just means no justification is on
+          file. A future workflow run may populate or extend the
+          rationale; existing entries should not be overwritten without
+          curator review.
 
   SpatialColocationEvidence:
     is_a: EvidenceItem

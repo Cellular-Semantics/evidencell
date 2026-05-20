@@ -280,6 +280,29 @@ classical type being reported. For each cited AT run:
    `metrics_by_level`, because those may have been computed under a
    different grouping than the figure. The sidecar and the PNG are
    produced from the same in-memory rows so they are guaranteed in sync.
+
+   **Pool composition (mandatory when `--pool` is used).** When the cited
+   AT evidence carries `source_groups` (the structural record of which
+   raw source labels were pooled into the pseudo-source), the report
+   caption MUST spell out the pool composition inline — e.g.
+   "F1=0.97 across the pooled OLM cohort (Sst-OLM + Htr3a-OLM, n=45)" —
+   sourced from the structured `source_groups[*].label` and
+   `source_groups[*].members`, not parsed out of free-text labels.
+   This makes the pooling transparent to readers without requiring them
+   to cross-reference the YAML.
+
+   **Pool rationale (optional write).** If `source_groups[*].rationale`
+   is empty on a pooled AT evidence item and the report-time synthesis
+   has now established the pool's defensibility across available
+   property panels (AT-side indistinguishability + lit-side
+   no-distinguishing-property reading), the report-gen agent MAY
+   populate it as part of the write-back step. Follow the example
+   forms in the `SourceGroup.rationale` schema description: one or
+   more independent lines of evidence, each citing the supporting
+   AT run / paper / edge id. If no such cross-panel check has been
+   done, leave it blank — absence is not a gate, and a future workflow
+   run can populate it. Never overwrite an existing rationale without
+   curator review.
 3. Embed the filtered figure using its relative path from the report:
 
    ```markdown
