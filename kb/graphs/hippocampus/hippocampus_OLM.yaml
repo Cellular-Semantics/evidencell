@@ -313,6 +313,9 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        source_groups:
+          - label: OLM-pooled
+            members: [Sst-OLM, Htr3a-OLM]
         n_cells_total: 46
         n_cells_after_filter: 0
         bootstrap_threshold: 0.8
@@ -376,9 +379,9 @@ edges:
     confidence: LOW
     confidence_score: 0.15
     rationale: "CS20230722_CLUS_0727 (Lamp5 Lhx6 Gaba_1) is refuted as an OLM target by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq): 0/46 OLM cells map to the Lamp5 Lhx6 subclass and all 45 classified cells map instead to CS20230722_SUPT_0216 (Sst Gaba_3). Npy is DISCORDANT, Sst is APPROXIMATE only (in neuropeptide annotations, not defining_markers), cluster Grm1 mean_expression=5.85 is the lowest among candidates, and Chrna2 is absent. 2 of 6 markers CONSISTENT (Sst-NP, Pnoc-NP) against a Lamp5 Lhx6 (CGE-derived) vs Sst (MGE-derived) subclass and developmental-lineage mismatch; CA3 SO + SLM anatomy (morphology-relevant) is suggestive but not sufficient.\n"
-    rationale_generated_at: '2026-05-14T09:29:59+00:00'
+    rationale_generated_at: '2026-05-20T12:34:37+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 76544ee1
+    rationale_source_hash: ca71f180
   - id: edge_olm_to_wmb_clus_0785
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0785
@@ -415,6 +418,9 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        source_groups:
+          - label: OLM-pooled
+            members: [Sst-OLM, Htr3a-OLM]
         n_cells_total: 46
         n_cells_after_filter: 0
         bootstrap_threshold: 0.8
@@ -476,9 +482,9 @@ edges:
     confidence: REFUTED
     confidence_score: 0.05
     rationale: "CS20230722_CLUS_0785 (Sst Gaba_6) is refuted by two independent signals: (1) ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminates the entire Sst Gaba_6 supertype, and (2) MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq) maps 0/46 OLM cells to Sst Gaba_6, with all 45 classified cells going to CS20230722_SUPT_0216 instead. Chrna2 DISCORDANT and Pnoc DISCORDANT; 3 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP) but the Chrna2 elimination is decisive. CA3-enriched anatomy further weakens the candidate. Cluster Grm1 mean_expression=10.30 does not rescue the Chrna2 elimination.\n"
-    rationale_generated_at: '2026-05-14T09:29:59+00:00'
+    rationale_generated_at: '2026-05-20T12:34:37+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 4bf0af9d
+    rationale_source_hash: 24f1a883
   - id: edge_olm_to_wmb_clus_0769
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0769
@@ -512,6 +518,22 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        source_groups:
+          - label: OLM-pooled
+            members: [Sst-OLM, Htr3a-OLM]
+            rationale: >
+              Sst-OLM and Htr3a-OLM map indistinguishably to the same
+              target cluster set under run_ref
+              at_run_20260408_winterer_olm_mmc_wmbv1: all 45 classified
+              cells from both source cohorts converge on
+              CS20230722_SUPT_0216 (Sst Gaba_3) with pooled F1=0.97 at
+              SUPERTYPE level, and the per-cluster scatter within
+              Sst Gaba_3 does not differentiate by source cohort
+              (see figures/f1_for_olm_pooled.png). This is an AT-side
+              observation; cross-panel literature confirmation
+              (ephys / morphology / connectivity) of OLM-subtype
+              equivalence has not been audited and remains optional
+              follow-up.
         n_cells_total: 46
         n_cells_after_filter: 42
         bootstrap_threshold: 0.8
@@ -621,9 +643,9 @@ edges:
     confidence: MODERATE
     confidence_score: 0.6
     rationale: "Primary mapping to CS20230722_CLUS_0769 within CS20230722_SUPT_0216 (Sst Gaba_3) is anchored by atlas metadata (CA1 SO presence, full Sst/Npy/Pnoc neuropeptide triad, Sst subclass) and by MapMyCells annotation transfer of Winterer 2019 OLM cells (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq with MERFISH spatial registration on the target side) reaching pooled F1=0.99 at CLASS/SUBCLASS, pooled F1=0.97 at the SUPERTYPE level (CS20230722_SUPT_0216), and pooled F1=0.65 at the best child cluster CS20230722_CLUS_0768; cluster Grm1 mean_expression=8.29 is qualitatively concordant with mGluR1 being a defining OLM marker by electrophysiology and scRNA-seq. 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) with Chrna2 APPROXIMATE and mGluR1 NOT_ASSESSED at the atlas defining-markers panel.\n"
-    rationale_generated_at: '2026-05-14T09:29:59+00:00'
+    rationale_generated_at: '2026-05-20T12:34:37+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: e51f7fc3
+    rationale_source_hash: 3d3f7d04
   - id: edge_olm_to_wmb_clus_0788
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0788
@@ -659,6 +681,9 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        source_groups:
+          - label: OLM-pooled
+            members: [Sst-OLM, Htr3a-OLM]
         n_cells_total: 46
         n_cells_after_filter: 0
         bootstrap_threshold: 0.8
@@ -721,9 +746,9 @@ edges:
     confidence: REFUTED
     confidence_score: 0.05
     rationale: "CS20230722_CLUS_0788 (Sst Gaba_6) is refuted by ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminating the Sst Gaba_6 supertype and by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq; 0/46 OLM cells to Sst Gaba_6). Chrna2 DISCORDANT; 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) but the Chrna2 elimination is decisive. Cluster is small (50 cells total) with CA1 SO (8) plus CA3 SO (13) and no SLM; cluster Grm1 mean_expression=9.08 does not rescue the Chrna2 elimination.\n"
-    rationale_generated_at: '2026-05-14T09:29:59+00:00'
+    rationale_generated_at: '2026-05-20T12:34:37+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 4e73f4fc
+    rationale_source_hash: 56fab4c2
   - id: edge_olm_to_wmb_clus_0789
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0789
@@ -760,6 +785,9 @@ edges:
         target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
         source_dataset_accession: "GEO:GSE124847"
         source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
+        source_groups:
+          - label: OLM-pooled
+            members: [Sst-OLM, Htr3a-OLM]
         n_cells_total: 46
         n_cells_after_filter: 0
         bootstrap_threshold: 0.8
@@ -820,6 +848,6 @@ edges:
     confidence: REFUTED
     confidence_score: 0.05
     rationale: "CS20230722_CLUS_0789 (Sst Gaba_6) is refuted by ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminating the Sst Gaba_6 supertype and by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq; 0/46 OLM cells to Sst Gaba_6). Chrna2 DISCORDANT; cluster is amygdala-dominated (28% amygdala cells; CA3 SO 25; no CA1; no SLM). 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) but Chrna2 elimination plus extra-hippocampal (morphology/region) location are decisive. Cluster Grm1 mean_expression=8.00 does not rescue.\n"
-    rationale_generated_at: '2026-05-14T09:29:59+00:00'
+    rationale_generated_at: '2026-05-20T12:34:37+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 8da7f918
+    rationale_source_hash: f53b0321
