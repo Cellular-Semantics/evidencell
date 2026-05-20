@@ -262,22 +262,43 @@ classical type being reported. For each cited AT run:
    just gen-at-figure {run_id} \
      --source {comma_separated_source_labels} \
      [--f1 {non-standard CSV relpath if needed}] \
-     --output figures/f1_for_{node_id}.png
+     --output figures/f1_for_{node_id}.png \
+     --emit-metrics figures/f1_for_{node_id}_metrics.json
    ```
 
    Use `--pool A,B:NAME` when the source groups are transcriptomically
    indistinguishable and the report's reading is to merge them (e.g. the
    OLM Sst-OLM + Htr3a-OLM case; see [[feedback_at_no_distinction_judgement]]).
+
+   **Caption grounding (mandatory).** `--emit-metrics` writes a JSON
+   sidecar with the per-(source, level, target) F1/precision/recall rows
+   that the figure actually rendered (after `--pool` and `--source` are
+   applied). Captions and any inline figure-supporting statistics in the
+   report MUST be derived from this sidecar — read it, pick the rows you
+   want to cite, and quote the numbers verbatim. Never re-derive F1
+   numbers from the raw `f1_matrix.csv` or copy them from the edge YAML's
+   `metrics_by_level`, because those may have been computed under a
+   different grouping than the figure. The sidecar and the PNG are
+   produced from the same in-memory rows so they are guaranteed in sync.
 3. Embed the filtered figure using its relative path from the report:
 
    ```markdown
    ![Filtered AT figure for {classical_node_name}]({relative_path_to_filtered_png})
 
    *F1 across taxonomy levels for the {N} source group(s) relevant to
-   {classical_node_name}. Each panel row is a source-cell group; nodes are
-   coloured by F1 with precision (P) and recall (R) shown inline. F1 ≥ 0.5
-   at a level indicates a clean mapping at that resolution.*
+   {classical_node_name}. Each panel row is a source-cell group; nodes
+   are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown
+   inline. Coverage = fraction of source-group cells landing on this
+   target; Purity = fraction of this target's cells coming from the
+   source group. With multiple source groups in the figure, Purity
+   differentiates them; with a single pooled source, Purity is 1.0 at
+   every target and only Coverage discriminates. F1 ≥ 0.5 at a level
+   indicates a clean mapping at that resolution.*
    ```
+
+   Emit the **Purity / Coverage gloss only on the FIRST AT figure** in
+   the report (subsequent figures can use a one-liner: *"As before, Pur
+   = target purity; Cov = source coverage."*).
 
    If you also want to show the full multi-source figure as supporting
    context (e.g. to justify a pooling decision), generate a *second*

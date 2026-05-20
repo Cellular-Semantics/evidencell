@@ -44,6 +44,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import sqlite3
 import sys
 from collections import defaultdict
@@ -499,7 +500,7 @@ def render_tree(
                     label = (
                         f"{name}{n_str}\n"
                         f"F1={row['f1']:.2f}  "
-                        f"(P={pval:.2f}, R={rval:.2f})"
+                        f"(Pur={pval:.2f}, Cov={rval:.2f})"
                     )
                     text_color = (
                         "white" if row["f1"] > 0.55 else "black"
@@ -597,6 +598,18 @@ def main(argv: list[str] | None = None) -> int:
     )
     p.add_argument("--title", default=None)
     p.add_argument(
+        "--emit-metrics",
+        default=None,
+        metavar="PATH",
+        help=(
+            "Write a JSON sidecar of the per-(source, level, target) F1/P/R "
+            "rows used to render the figure (i.e. after --pool and --source "
+            "filters). Captions in downstream reports should be grounded "
+            "against this sidecar, never re-derived. Path is relative to "
+            "the run dir; if it has no extension, '.json' is appended."
+        ),
+    )
+    p.add_argument(
         "--f1",
         default=None,
         help=(
@@ -673,6 +686,45 @@ def main(argv: list[str] | None = None) -> int:
         f"·  fill = F1 ({args.cmap})  ·  leaf cutoff "
         f"{int(args.cutoff * 100)}%"
     )
+
+    if args.emit_metrics:
+        sidecar_relpath = args.emit_metrics
+        if not Path(sidecar_relpath).suffix:
+            sidecar_relpath += ".json"
+        sidecar_path = run_dir / sidecar_relpath
+        sidecar_path.parent.mkdir(parents=True, exist_ok=True)
+        by_source: dict[str, dict[str, list[dict]]] = {}
+        for r in rows:
+            by_source.setdefault(r["source_label"], {}).setdefault(
+                r["level"], []
+            ).append(
+                {
+                    "target_name": r["target_name"],
+                    "node_id": r.get("node_id"),
+                    "n_cells": r["n_cells"],
+                    "f1": round(r["f1"], 4),
+                    "precision": round(r["target_purity"], 4),
+                    "recall": round(r["group_purity"], 4),
+                }
+            )
+        for src in by_source:
+            for lvl in by_source[src]:
+                by_source[src][lvl].sort(key=lambda x: -x["f1"])
+        sidecar = {
+            "run_id": args.run_id,
+            "taxonomy_id": taxonomy_id,
+            "f1_matrix_relpath": f1_relpath,
+            "pool_spec": pool_spec or None,
+            "source_filter": (
+                sorted({s.strip() for s in args.source.split(",") if s.strip()})
+                if args.source
+                else None
+            ),
+            "level_order": levels,
+            "rows_by_source_level": by_source,
+        }
+        sidecar_path.write_text(json.dumps(sidecar, indent=2))
+        print(f"Wrote metrics sidecar: {sidecar_path}")
 
     out_path = run_dir / args.output
     written = render_tree(
