@@ -139,9 +139,29 @@ systematic problem:
 
 ## Action proposed for this session
 
-- ✅ OLM edge fixed.
-- ✅ `--emit-metrics` landed.
+- ✅ OLM edge fixed (Bucket A; commit 2704993).
+- ✅ `--emit-metrics` landed (commit e8b883a).
 - ✅ Survey done (this doc).
+- ✅ Schema landed for `source_groups` on AnnotationTransferEvidence
+  (commit fdf7dd9). Optional `SourceGroup.rationale` records
+  cross-panel defensibility justification; left blank when no
+  justification is on file.
+- ✅ OLM edges backfilled with `source_groups` (commit 914b0c3); the
+  supporting Sst Gaba_3 edge carries an AT-side rationale citing
+  pooled F1=0.97 + per-cluster scatter not separating by source
+  cohort.
+- ✅ Bucket B resolved (commit d3e6ab1; KB file
+  `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`).
+  Renamed `source_cluster_label` from the free-text aggregate to the
+  bare CSV label (`BC`, `BIC`) and attached `source_groups` with the
+  upstream-aggregation composition (`BC`: `[hBC, vBC]`; `BIC`:
+  `[hBIC, vBIC]`) on 3 BIC + 2 BC affected evidence items. Stored
+  metrics matched the CSV row-for-row at all four taxonomy levels in
+  every case, so no metric recomputation was needed. `rationale`
+  left blank — the aggregation reflects the Que 2021 AT run author's
+  convention (per manifest) with no cross-panel check on file.
+  rationale_source_hash refreshed on all affected edges via
+  writeback against existing reports; verdict prose unchanged.
 - ⏭ Broader fix-up (Buckets C / D / E and the cerebellum NO-CSV rows)
   deferred to a follow-up — each will need its CSV interpreted carefully,
   some will require re-running the AT pipeline against the original
