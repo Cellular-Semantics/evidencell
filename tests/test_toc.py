@@ -84,6 +84,31 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
     conn.commit()
     conn.close()
 
+    # Minimal schema with the two enums the glossary loader reads.
+    schema_stub = {
+        "enums": {
+            "MappingRelationship": {
+                "permissible_values": {
+                    "skos:exactMatch": {"description": "Equivalent mapping."},
+                    "skos:closeMatch": {"description": "Close mapping."},
+                    "skos:broadMatch": {"description": "Broader-target mapping."},
+                    "skos:narrowMatch": {"description": "Narrower-target mapping."},
+                    "evidencell:PartialOverlapMatch": {"description": "Partial overlap."},
+                },
+            },
+            "MappingConfidence": {
+                "permissible_values": {
+                    "HIGH": {"description": "Strong convergent evidence."},
+                    "MODERATE": {"description": "Multiple consistent items."},
+                    "LOW": {"description": "Single or weak item."},
+                    "UNCERTAIN": {"description": "Contradictory or minimal."},
+                    "REFUTED": {"description": "Refuted by direct evidence."},
+                },
+            },
+        }
+    }
+    (repo / "schema" / "celltype_mapping.yaml").write_text(yaml.safe_dump(schema_stub))
+
     monkeypatch.setattr(toc, "repo_root", lambda: repo)
     monkeypatch.setattr(toc, "taxonomy_db_path", lambda tid: repo / "kb" / "taxonomy" / tid / f"{tid}.db")
     monkeypatch.setattr(toc, "taxonomy_meta_path", lambda tid: repo / "kb" / "taxonomy" / tid / "taxonomy_meta.yaml")
@@ -182,26 +207,21 @@ def test_relationship_appears_on_edge_lines(fake_taxonomy):
     assert "skos:broadMatch · MODERATE" in md
 
 
-def test_glossary_lists_only_used_terms(fake_taxonomy):
+def test_glossary_lists_full_enum_vocabulary(fake_taxonomy):
     md = toc.generate(fake_taxonomy, min_confidence="MODERATE")
     assert "## Glossary" in md
     assert "### Mapping relationship" in md
     assert "### Mapping confidence" in md
-    # Used terms appear (now wrapped in backticks for the CURIE-style names).
+    # Full vocabulary listed — readers see what could have been chosen,
+    # not just what was. Includes terms never used by edges in this TOC.
     assert "`skos:exactMatch`" in md
     assert "`skos:broadMatch`" in md
+    assert "`evidencell:PartialOverlapMatch`" in md
     assert "**HIGH**" in md
     assert "**MODERATE**" in md
-    # Unused terms (from the LOW-filtered Y edge or never-used enum values) absent.
-    assert "`evidencell:PartialOverlapMatch`" not in md
-    assert "**LOW**" not in md
-    assert "**REFUTED**" not in md
-    # Phase 3: SKOS direction preamble appears (unconditional).
-    # The field-vocabulary section (### MappingEdge fields) depends on a
-    # real schema/celltype_mapping.yaml being reachable from `repo_root()`;
-    # this test runs with `tmp_path` as repo_root, so the schema is
-    # absent and the section is correctly skipped. Verified end-to-end
-    # by running `just gen-toc` against the real repo.
+    assert "**LOW**" in md
+    assert "**REFUTED**" in md
+    # SKOS direction preamble appears (unconditional).
     assert "Direction convention" in md
 
 
