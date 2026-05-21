@@ -122,6 +122,13 @@ nodes:
           method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
           scope: adult mouse hippocampus, P15-P18
           quote_key: 18746823_fd8665d7
+    cl_mapping:
+      cl_term:
+        id: CL:1001571
+        label: hippocampal pyramidal neuron
+        name_in_source: CA1 pyramidal cell
+      mapping_notes: 'CA1 pyramidal cells are a subpopulation of hippocampal pyramidal neurons; CL:1001571 covers all hippocampal pyramidal neurons and is therefore a BROAD match. No CA1-specific CL term currently exists.'
+      mapping_type: BROAD
   - id: ca2_pc_hippocampus
     name: CA2 pyramidal cell
     definition_basis: CLASSICAL_MULTIMODAL

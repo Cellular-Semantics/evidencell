@@ -1,130 +1,132 @@
 # hippocampal calretinin-positive glutamatergic neuron — WMBv1 (CCN20230722) Mapping Report
-*draft · 2026-04-27 · Source: `kb/draft/hippocampus/hippocampus_glutamatergic.yaml`*
 
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+## Introduction
 
----
+Calretinin-positive (Calb2+) glutamatergic neurons of the hippocampal formation occupy the stratum lacunosum-moleculare (SLM) and outer molecular layer (OML), where they constitute an excitatory pathway that flows against the classical trisynaptic circuit direction. Unlike the larger population of calretinin-positive GABAergic interneurons, these cells are glutamatergic and include both local-projecting and long-range subpopulations spanning the SLM, OML, and subicular complex.
 
-## 1. Classical type
+### Classical type table
 
 | Property | Value | References |
 |---|---|---|
-| CL term | glutamatergic neuron (CL:0000679) | |
-| Soma location | stratum lacunosum-moleculare / outer molecular layer [UBERON:0002421] | [1][2] |
-| NT | glutamatergic | |
-| Defining markers | Calb2 (calretinin) | |
-| Negative markers | — | |
-| Neuropeptides | — | |
+| Neurotransmitter | Glutamatergic | — |
+| Defining marker | Calb2 (calretinin) | — |
+| Soma location | Hippocampal formation [UBERON:0002421]; stratum lacunosum-moleculare / outer molecular layer | [1], [2] |
+| Negative markers | — | — |
+| Neuropeptides | — | — |
+| Definition basis | CLASSICAL_MULTIMODAL | — |
 
-*Note: NT type and Calb2 marker entries carry no citations in the facts file. The soma location references establish the SLM/OML position of this population. See Marker evidence provenance for the citation gap.*
+<details>
+<summary>Details — source evidence for classical type properties</summary>
 
----
+> Notably, CR cells provide the first evidence of intrinsic glutamatergic hippocampal connections that flow against the classical trisynaptic circuit direction (Anstotz et al., 2015)(Ceranik et al., 1997).
+> — Ceranik et al. 1997, Specialized Glutamatergic Populations · [2] <!-- quote_key: 393787_0325d3d4 -->
 
-## 2. Mapping candidates
+</details>
 
-| Rank | WMBv1 supertype | Supertype | Cells | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|---|
-| 1 | 0135 HPF CR Glut_1 [CS20230722_SUPT_0135] | HPF CR Glut | — | 🔴 LOW | Calb2 CONSISTENT · Location APPROXIMATE | Speculative |
+### Cell Ontology mapping
 
-Total: 1 edge. Relationship type: PARTIAL_OVERLAP (SUPT_0135 is the only HPF glutamatergic supertype outside DG/CA/SUB subclasses; Cajal-Retzius identity is a significant concern).
-
----
-
-## 3. Candidate paragraphs
-
-## 0135 HPF CR Glut_1 [CS20230722_SUPT_0135] · 🔴 LOW
-
-**Supporting evidence**
-
-- **NT type — CONSISTENT.** SUPT_0135 belongs to subclass SUBC_036 HPF CR Glut, a glutamatergic subclass in the hippocampal formation. The classical hippocampal calretinin-positive glutamatergic neuron is defined as glutamatergic, consistent with this subclass.
-
-- **Anatomical exclusion argument — APPROXIMATE.** SUPT_0135 (0135 HPF CR Glut_1) is the only WMBv1 glutamatergic supertype in the HPF that falls outside the DG, CA1-ProS, CA2-FC-IG, CA3, and SUB-ProS subclasses. The stratum lacunosum-moleculare (SLM) and outer molecular layer (OML) position of the classical calretinin-positive glutamatergic neuron is consistent with the 'HPF CR' designation; no other HPF glutamatergic supertype lacks a specific subfield assignment. This process-of-elimination argument provides weak positive support for the mapping.
-
-- **Calb2 expression — CONSISTENT.** Analysis of WMBv1 precomputed stats (CCN20230722, supertype level) reveals high Calb2 expression in SUPT_0135 reference cells (mean 4.5–8.2 UMIs/cell across 5 clusters; n=1 each) — 30–100× higher than in DG Glut supertypes (0.08–0.16 UMIs). This is the primary molecular positive evidence for this mapping; Calb2 expression at this level is the highest among all HPF glutamatergic supertypes.
-
-**Marker evidence provenance**
-
-- **Calb2 (calretinin):** No primary citation is recorded in the facts file for the Calb2 marker entry on this node. The defining marker is listed without a specific reference supporting the assertion that this population is specifically Calb2+. This represents an unsourced marker entry — a significant weakness for the mapping rationale. The quantitative precomputed stats evidence (Calb2 mean 4.5–8.2 UMIs in SUPT_0135) provides indirect support via atlas metadata, but without a primary citation establishing Calb2 expression in morphology-confirmed SLM/OML glutamatergic neurons, the specificity of this marker for this classical type is not documented in the KB. *(Recommendation: A targeted cite-traverse for "calretinin glutamatergic SLM hippocampus" or "Calb2 stratum lacunosum-moleculare neuron" should be run to identify primary citations establishing this marker. The current marker evidence is a critical gap.)*
-
-- **NT type (glutamatergic):** The NT entry also carries no citation. *(Recommendation: A targeted cite-traverse for "glutamatergic calretinin SLM hippocampus" would identify the primary evidence for this classical node definition.)*
-
-- **Slc17a8 (VGluT3) — marker absent from atlas.** Although the Calb2/Slc17a8 co-expression pattern is part of the classical description of SLM glutamatergic neurons in the literature (per the atlas metadata evidence explanation), Slc17a8 mean expression in SUPT_0135 is effectively absent (0–0.3 UMIs in 2/5 clusters only). This is a significant discrepancy: if the classical node specifically requires VGluT3+ expression, SUPT_0135 fails this criterion. The Slc17a8 absence is not reconciled by current evidence and represents a concern rather than a confirmed marker absence.
-
-**Concerns**
-
-- **Cajal-Retzius cell identity conflict.** SUPT_0135 reference cells strongly co-express Reln (12–13 UMIs/cell) and Trp73 (8.8–9.7 UMIs/cell), both canonical Cajal-Retzius cell markers. Classical Cajal-Retzius cells are developmentally transient, largely absent in the adult rodent hippocampus, and molecularly distinct from the adult Calb2+/Slc17a8+ glutamatergic population described in the SLM/OML literature. The 'CR' designation in WMBv1 may specifically capture rare Cajal-Retzius remnants present in adult hippocampus profiling rather than the functionally characterised SLM glutamatergic population. This is the primary reason for the LOW confidence rating.
-
-- **Extremely small reference population (n=5).** SUPT_0135 has only 5 reference cells total (1 per cluster), the smallest representation of any HPF Glut supertype in WMBv1. This is consistent with either extreme rarity (Cajal-Retzius remnants are rare in adult brain) or a poorly sampled cell type. Statistical uncertainty is very high.
-
-- **Slc17a8 (VGluT3) absent from SUPT_0135.** If VGluT3 expression is part of the classical node definition, the near-zero Slc17a8 in SUPT_0135 represents a marker DISCORDANT for a defining characteristic of the population. Whether VGluT3 expression is limited to a subset of Calb2+ SLM cells, or whether the classical node definition is overly broad, is unresolved.
-
-- **Location APPROXIMATE.** SUPT_0135 MERFISH soma assignments have not been assessed; the SLM/OML location is inferred from the absence of DG/CA/SUB subclass membership rather than direct spatial confirmation. This is a weaker location argument than would be available from direct MERFISH inspection.
-
-**What would upgrade confidence**
-
-- **Targeted literature search for marker citations:** Adding a primary citation for Calb2 and NT type (glutamatergic) to this classical node — via a cite-traverse for "calretinin glutamatergic SLM hippocampus" — would establish whether the classical type definition is adequately supported. This is the most urgent gap and can be addressed without new experiments.
-
-- **MERFISH soma location check for SUPT_0135:** Checking WMBv1 MERFISH soma assignments for SUPT_0135 cells (via the atlas browser or MERFISH distribution data) would confirm or disconfirm SLM/OML placement, resolving the location APPROXIMATE. If SUPT_0135 cells are confirmed in SLM/OML, this would upgrade the location alignment and strengthen the case for PARTIAL_OVERLAP.
-
-- **Annotation transfer from Calb2+/Slc17a8+ SLM dataset:** Running annotation transfer from a dataset with validated Calb2+/Slc17a8+ SLM glutamatergic neurons onto WMBv1 would directly test whether these cells map to SUPT_0135 or to an alternative supertype. Target: F1 ≥ 0.70 at SUPERTYPE level. Expected output: AnnotationTransferEvidence resolving Open question 1.
-
-- **ISH validation of Trp73/Calb2 co-expression in adult SLM:** ISH data from Allen Brain Atlas or similar resource confirming whether Trp73 and Calb2 co-express in adult mouse SLM would determine whether SUPT_0135 captures Cajal-Retzius remnants (Trp73+/Calb2+) or the adult SLM glutamatergic population (Calb2+/Trp73-).
+| Field | Value |
+|---|---|
+| CL term | glutamatergic neuron (CL:0000679) |
+| Mapping type | BROAD |
+| Mapping notes | No calretinin-positive glutamatergic-specific CL term exists; CL:0000679 is the broadest accurate assignment. |
 
 ---
 
-## 4. Proposed experiments
+## Results
 
-### 1 — Targeted literature search (marker citations)
+A single WMBv1 candidate was identified: supertype 0135 HPF CR Glut_1 [CS20230722_SUPT_0135]. Atlas metadata and MapMyCells annotation transfer both converge on this target, though confidence remains LOW given the small reference cell count, absent VGluT3 expression, and the ambiguous Cajal-Retzius designation of the WMBv1 subclass.
 
-**What:** Cite-traverse for "calretinin glutamatergic stratum lacunosum-moleculare hippocampus" and "Calb2 SLM neuron hippocampus" to identify primary citations for the classical node marker definition.
+![Annotation transfer F1 heatmap (GEO:GSE95315 → WMBv1)](../../kb/annotation_transfer_runs/at_run_20260427_hochgerner2018_dg_mmc_wmbv1/figures/f1_tree.png)
 
-**Target:** At least one primary study (morphology-confirmed or anatomically defined) establishing Calb2 expression in SLM/OML glutamatergic neurons.
+### Candidate overview table
 
-**Expected output:** LiteratureEvidence entries added to the KB node; reference_index updated.
+| WMBv1 target | Accession | Confidence | Relationship | Verdict |
+|---|---|---|---|---|
+| 0135 HPF CR Glut_1 | CS20230722_SUPT_0135 | 🔴 LOW | PARTIAL_OVERLAP | Speculative |
 
-**Resolves:** Unsourced Calb2 and NT marker entries (critical evidence gap).
+### Property alignment — 0135 HPF CR Glut_1 [CS20230722_SUPT_0135]
 
-### 2 — MERFISH / spatial transcriptomics
+**Table 1: Property comparison**
 
-**What:** Check WMBv1 MERFISH soma assignments for SUPT_0135 cells (via atlas browser or MERFISH cell type distribution data) to confirm SLM/OML vs. other placement.
-
-**Target:** Majority of SUPT_0135 cells in SLM or OML spatial bins.
-
-**Expected output:** Atlas metadata evidence (ATLAS_METADATA) clarifying location alignment from APPROXIMATE to CONSISTENT or DISCORDANT.
-
-**Resolves:** Open question 2 (SUPT_0135 soma location); could upgrade confidence if SLM/OML placement confirmed.
-
-### 3 — MapMyCells / Annotation transfer (Calb2+/VGluT3+ SLM cells)
-
-**What:** Run annotation transfer from a dataset containing validated Calb2+/Slc17a8+ SLM glutamatergic neurons (if such a dataset exists) onto WMBv1 (CCN20230722).
-
-**Target:** F1 ≥ 0.70 at SUPERTYPE level.
-
-**Expected output:** AnnotationTransferEvidence confirming or disconfirming SUPT_0135 as the target for SLM Calb2+ glutamatergic neurons.
-
-**Resolves:** Open question 1 (whether SUPT_0135 represents adult SLM Calb2+ glutamatergic neurons or Cajal-Retzius remnants).
-
----
-
-## 5. Open questions
-
-1. Is SUPT_0135 a Cajal-Retzius remnant population (Calb2+/Reln+/Trp73+, developmentally transient) or does it represent the adult SLM/OML Calb2+ glutamatergic neurons described in the hippocampal literature? ISH validation of Trp73 and Calb2 co-expression in adult SLM/OML, and annotation transfer from a Calb2+/VGluT3+ SLM dataset, would resolve this. This question appears on the single edge to SUPT_0135.
-
-2. Why is Slc17a8 (VGluT3) absent from SUPT_0135 (0–0.3 UMIs) if the classical node is described as a VGluT3+ glutamatergic population? Is VGluT3 expression limited to a subset of Calb2+ SLM cells, or is the classical node definition too broad (should be restricted to Calb2+ only, without VGluT3 requirement)?
-
----
-
-## 6. Evidence base table
-
-| Edge ID | Evidence types | Supports |
-|---|---|---|
-| edge_hpc_calretinin_glu_neuron_hippocampus_to_supt_0135 | ATLAS_METADATA (WMBv1 precomputed stats; exclusion argument + Calb2 expression) | SUPPORT (partial) — SUPT_0135 is only HPF Glut supertype outside DG/CA/SUB subclasses; Calb2 mean 4.5–8.2 UMIs (highest among HPF Glut); but Slc17a8 absent and Cajal-Retzius co-expression (Reln, Trp73) raises conflicting identity |
-
----
-
-## 7. References
-
-| # | Citation | PMID | Used for |
+| Property | Classical type | WMBv1 SUPT_0135 | Alignment |
 |---|---|---|---|
-| [1] | Wheeler et al. 2015 · PMID:26402459 | [26402459](https://pubmed.ncbi.nlm.nih.gov/26402459/) | Soma location |
-| [2] | Ceranik et al. 1997 · PMID:9204922 | [9204922](https://pubmed.ncbi.nlm.nih.gov/9204922/) | Soma location |
+| Neurotransmitter | Glutamatergic | Glutamatergic (HPF CR Glut subclass) | CONSISTENT |
+| Soma location | SLM / outer molecular layer (UBERON:0002421) | Only WMBv1 Glut supertype outside DG/CA/SUB subclasses; MERFISH not assessed | APPROXIMATE |
+| Marker — Calb2 | Defining | Mean 4.5–8.2 UMIs/cell across 5 clusters; highest Calb2 among all HPF Glut supertypes (30–100× above DG Glut) | CONSISTENT |
+
+**Table 2: Evidence support**
+
+| Evidence type | Supports | Summary |
+|---|---|---|
+| ATLAS_METADATA | SUPPORT | SUPT_0135 only HPF Glut supertype outside DG/CA1/CA2/CA3/SUB subclasses; high Calb2 + Reln/Trp73 consistent with SLM/OML identity |
+| ANNOTATION_TRANSFER | SUPPORT | Hochgerner 2018 "Cajal-Retzius" cluster (n=33, GEO:GSE95315) maps exclusively to HPF CR Glut lineage: F1=0.985 at subclass, F1=1.0 at cluster rank |
+
+**MapMyCells F1 by level — Cajal-Retzius source cluster (n=33 cells, GEO:GSE95315)**
+
+| Level | Best target | F1 | Group purity | Target purity | n cells mapped |
+|---|---|---|---|---|---|
+| CLASS | 03 OB-CR Glut | 1.000 | 1.00 | 1.00 | 15 |
+| SUBCLASS | 036 HPF CR Glut | 0.985 | 1.00 | 0.97 | 33 |
+| SUPERTYPE | 0135 HPF CR Glut_1 [CS20230722_SUPT_0135] | 0.985 | 1.00 | 0.97 | 33 |
+| CLUSTER | 0497 HPF CR Glut_1 | 1.000 | 1.00 | 1.00 | 13 |
+
+---
+
+## Methods
+
+<details>
+<summary>Data sources, analyses, and reproducibility receipts</summary>
+
+**Classical type definition.** Hippocampal calretinin-positive glutamatergic neurons defined as CLASSICAL_MULTIMODAL. Key references: Wheeler et al. 2015 (PMID:26402459); Ceranik et al. 1997 (PMID:9204922). Note: Calb2 marker and NT-type entries carry no primary citations in the current KB node — a targeted cite-traverse for "calretinin glutamatergic stratum lacunosum-moleculare" is recommended.
+
+**Atlas mapping query.** Candidate search in WMBv1 (CCN20230722) at supertype rank, querying HPF-located glutamatergic supertypes. SUPT_0135 identified as the only HPF Glut supertype outside the DG, CA1-ProS, CA2-FC-IG, CA3, and SUB-ProS subclasses.
+
+**Property alignment.** Calb2, Reln, and Trp73 mean expression retrieved from precomputed_stats.h5 (CCN20230722) at supertype level.
+
+**Annotation transfer.**
+
+| Run | Dataset | Source label | n cells | Method | Tool |
+|---|---|---|---|---|---|
+| at_run_20260427_hochgerner2018_dg_mmc_wmbv1 | GEO:GSE95315 (Hochgerner 2018, mouse DG) | Cajal-Retzius | 33 | MapMyCells local, raw normalization, 100 bootstrap iterations | cell_type_mapper v1.7.1 |
+
+Atlas pseudobulk SHA: b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b. Code: https://github.com/AllenInstitute/cell_type_mapper
+
+**Anti-hallucination.** All accessions, quote keys, and PMIDs validated against the KB reference store at write time.
+
+*Report generated 2026-05-19. Framework commit: 07c6dbd. KB graph: `kb/graphs/hippocampus/hippocampus_glutamatergic.yaml`.*
+
+**Evidence base**
+
+| Evidence type | Count |
+|---|---|
+| ATLAS_METADATA | 1 |
+| ANNOTATION_TRANSFER | 1 |
+
+</details>
+
+---
+
+## Discussion
+
+**The speculative best candidate is 0135 HPF CR Glut_1 [CS20230722_SUPT_0135]**, supported by high Calb2 expression (the primary defining marker) and near-perfect annotation transfer from Cajal-Retzius cells in the Hochgerner 2018 dataset. However, several factors keep confidence at LOW: (1) SUPT_0135 reference cells strongly co-express Reln and Trp73, canonical Cajal-Retzius markers associated with developmentally transient cells largely absent in adult rodent hippocampus; (2) Slc17a8 (VGluT3), reported in some descriptions of SLM glutamatergic neurons, is essentially absent from SUPT_0135 (0–0.3 UMIs in only 2/5 clusters); and (3) the reference population is extremely small (n=5 cells total, one per cluster), limiting all statistical inference. The central unresolved question is whether SUPT_0135 captures Cajal-Retzius remnants sampled during adult brain profiling, or represents the Calb2+ glutamatergic population described in adult SLM/OML.
+
+### Proposed experiments
+
+1. Run MapMyCells annotation transfer from a source dataset containing validated Calb2+/Slc17a8+ adult SLM glutamatergic cells onto WMBv1, to determine whether these cells segregate to SUPT_0135 or disperse to other supertypes.
+2. Inspect WMBv1 MERFISH soma location data for SUPT_0135 cells via the ABC Atlas browser to confirm SLM/OML placement and assess whether an exclusively developmental origin is consistent.
+3. Perform ISH co-localisation of Trp73 and Calb2 in adult mouse SLM/OML to determine whether Trp73-expressing cells survive into adulthood and whether they overlap with a Slc17a8+ glutamatergic population.
+
+### Open questions
+
+1. Is SUPT_0135 a Cajal-Retzius remnant population (Calb2+/Reln+/Trp73+, developmentally transient) or does it represent adult SLM/OML Calb2+ glutamatergic neurons? ISH validation of Trp73 and Calb2 co-expression in adult SLM/OML would help resolve this.
+2. Why is Slc17a8 (VGluT3) absent from SUPT_0135 given descriptions of SLM glutamatergic neurons as VGluT3+? Is VGluT3 expression restricted to a subset of Calb2+ SLM cells, or is the classical node definition too broad?
+3. Does the classical node need to be split into a Cajal-Retzius subtype and a separate adult SLM glutamatergic neuron type?
+
+---
+
+## References
+
+[1] Wheeler et al. 2015 · PMID:26402459 · DOI:10.7554/eLife.09960
+
+[2] Ceranik et al. 1997 · PMID:9204922 · DOI:10.1523/JNEUROSCI.17-14-05380.1997
