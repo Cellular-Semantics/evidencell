@@ -2,13 +2,13 @@
 
 ## Introduction
 
-Hilar mossy cells are the prominent glutamatergic cell type of the dentate gyrus hilus, distinguished from the numerically dominant granule cells by their soma in the dentate gyrus polymorph layer [UBERON:0001885] and an associational axon that projects primarily to the inner and middle molecular layers of the dentate gyrus [1, 3, 4, 5]. They form an excitatory loop that recurrently gates granule cell output, and their selective vulnerability in temporal lobe epilepsy has made them a focus of sustained investigation [4].
+Hilar mossy cells are the prominent glutamatergic cell type of the dentate gyrus hilus, distinguished from the numerically dominant granule cells by their soma in the dentate gyrus polymorph layer [UBERON:0002928] and an associational axon that projects primarily to the inner molecular layer of the dentate gyrus, with dorsal mossy cells additionally targeting the middle molecular layer [1, 3, 4, 5]. They form an excitatory loop that recurrently gates granule cell output, and their selective vulnerability in temporal lobe epilepsy has made them a focus of sustained investigation [4].
 
 | Property | Value | References |
 |---|---|---|
 | Neurotransmitter | Glutamatergic | [3], [4], [5] |
 | Defining markers | Gria4, Dkk3 | — |
-| Soma location | Dentate gyrus of hippocampal formation [UBERON:0001885] (polymorph layer / hilus) | [1], [2] |
+| Soma location | Dentate gyrus polymorphic layer [UBERON:0002928] (polymorph layer / hilus) | [1], [2], [4] |
 
 <details>
 <summary>Per-property source evidence</summary>
@@ -18,10 +18,10 @@ Hilar mossy cells are the prominent glutamatergic cell type of the dentate gyrus
   > Hilar mossy cells are the prominent glutamatergic cell type in the dentate hilus of the dentate gyrus (DG)
   > — Sun et al. 2017, Mossy Cells: Specialized Glutamatergic Neurons · [3] <!-- quote_key: 3583187_ea3794f5 -->
 
-- **Neurotransmitter (glutamatergic)** — Scharfman & Myers 2013 [4]:
+- **Neurotransmitter (glutamatergic)** — Scharfman & Myers 2012 [4]:
 
   > there are two glutamatergic principal cells instead of one: granule cells, which are the vast majority of the cells in the DG, and the so-called "mossy cells."
-  > — Scharfman & Myers 2013, abstract · [4] <!-- quote_key: 11290620_27f933af -->
+  > — Scharfman & Myers 2012, abstract · [4] <!-- quote_key: 11290620_27f933af -->
 
 - **Neurotransmitter (glutamatergic)** — Scharfman & Bernstein 2015 [5]:
 
@@ -32,6 +32,11 @@ Hilar mossy cells are the prominent glutamatergic cell type of the dentate gyrus
 
   > Glutamatergic hilar mossy cells (MCs) have axons that terminate both near and far from their cell body but stay within the DG, making synapses primarily in the molecular layer
   > — Botterill et al. 2021, abstract · [1] <!-- quote_key: 231953329_3a0a57e1 -->
+
+- **Soma location (dentate gyrus polymorph layer)** — Scharfman & Myers 2012 [4]:
+
+  > A cell body in the hilus, defined as zone 4 of Amaral (1978). Glutamate as the primary transmitter (other markers are less valuable, as discussed below). An axon that innervates the inner molecular layer.
+  > — Scharfman & Myers 2012, WHAT IS A MOSSY CELL? A PRACTICAL DEFINITION · [4] <!-- quote_key: 11290620_d7c0cc69 -->
 
 </details>
 
@@ -65,7 +70,7 @@ Annotation transfer from Hochgerner 2018 (GEO:GSE95315) mouse dentate gyrus scRN
 | Property | Classical type | WMBv1 0078 CA3 Glut_4 | Alignment |
 |---|---|---|---|
 | Neurotransmitter | Glutamatergic | Glutamatergic (SUBC_017 CA3 Glut, CS20230722_SUPT_0078) | CONSISTENT |
-| Soma location | Dentate gyrus polymorph layer / hilus [UBERON:0001885] | Field CA3, pyramidal layer [MBA:495]: 1467 cells; Field CA3, stratum oriens [MBA:486]: 1381 cells; Field CA3, stratum radiatum [MBA:504]: 945 cells; Field CA3, stratum lucidum [MBA:479]: 868 cells; Field CA3, stratum lacunosum-moleculare [MBA:471]: 437 cells | DISCORDANT |
+| Soma location | Dentate gyrus polymorph layer / hilus [UBERON:0002928] | Field CA3, pyramidal layer [MBA:495]: 1467 cells; Field CA3, stratum oriens [MBA:486]: 1381 cells; Field CA3, stratum radiatum [MBA:504]: 945 cells; Field CA3, stratum lucidum [MBA:479]: 868 cells; Field CA3, stratum lacunosum-moleculare [MBA:471]: 437 cells | DISCORDANT |
 | Marker: Gria4 | Defining marker | Not in SUPT_0078 top markers (Homer3, Cldn22); mean_expression = 5.37 | CONSISTENT |
 | Marker: Dkk3 | Defining marker | Not in SUPT_0078 top markers; mean_expression = 8.71 | CONSISTENT |
 
@@ -86,7 +91,7 @@ The Mossy-Cyp26b1 source group maps with exceptional fidelity to [CS20230722_SUP
 | Property | Classical type | WMBv1 0079 CA3 Glut_5 | Alignment |
 |---|---|---|---|
 | Neurotransmitter | Glutamatergic | Glutamatergic (SUBC_017 CA3 Glut, CS20230722_SUPT_0079) | CONSISTENT |
-| Soma location | Dentate gyrus polymorph layer / hilus [UBERON:0001885] | Dentate gyrus, polymorph layer [MBA:10704]: 181 cells; Dentate gyrus, granule cell layer [MBA:632]: 147 cells; Field CA3, pyramidal layer [MBA:495]: 294 cells; Field CA3, stratum oriens [MBA:486]: 121 cells; Field CA3, stratum lucidum [MBA:479]: 175 cells; Field CA3, stratum radiatum [MBA:504]: 261 cells | APPROXIMATE |
+| Soma location | Dentate gyrus polymorph layer / hilus [UBERON:0002928] | Dentate gyrus, polymorph layer [MBA:10704]: 181 cells; Dentate gyrus, granule cell layer [MBA:632]: 147 cells; Field CA3, pyramidal layer [MBA:495]: 294 cells; Field CA3, stratum oriens [MBA:486]: 121 cells; Field CA3, stratum lucidum [MBA:479]: 175 cells; Field CA3, stratum radiatum [MBA:504]: 261 cells | APPROXIMATE |
 | Marker: Gria4 | Defining marker | Not in SUPT_0079 top markers (Rcn3, Csf2rb2); mean_expression = 8.05 | CONSISTENT |
 | Marker: Dkk3 | Defining marker | Not in SUPT_0079 top markers; mean_expression = 5.32 | CONSISTENT |
 
@@ -106,7 +111,7 @@ Together, SUPT_0078 and SUPT_0079 represent a molecular subdivision of the singl
 
 ### Classical type definition
 
-The hilar mossy cell was defined on a multimodal basis (CLASSICAL_MULTIMODAL). Glutamatergic neurotransmitter identity is established by Sun et al. 2017 [3], Scharfman & Myers 2013 [4], and Scharfman & Bernstein 2015 [5]. Soma location in the dentate gyrus of hippocampal formation [UBERON:0001885], specifically the polymorph layer (hilus), is supported by Botterill et al. 2021 [1] and Fredes & Shigemoto 2021 [2]. Defining markers (Gria4, Dkk3) were assigned without a primary literature citation on file (symbol-only annotation).
+The hilar mossy cell was defined on a multimodal basis (CLASSICAL_MULTIMODAL). Glutamatergic neurotransmitter identity is established by Sun et al. 2017 [3], Scharfman & Myers 2012 [4], and Scharfman & Bernstein 2015 [5]. Soma location in the dentate gyrus polymorphic layer [UBERON:0002928], specifically the polymorph layer (hilus), is supported by Botterill et al. 2021 [1], Fredes & Shigemoto 2021 [2], and Scharfman & Myers 2012 [4], whose practical definition of mossy cells explicitly requires a cell body in the hilus. Defining markers (Gria4, Dkk3) were assigned without a primary literature citation on file (symbol-only annotation).
 
 ### Atlas mapping query
 
@@ -181,6 +186,6 @@ All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes
 
 [3] Sun et al. 2017 · PMID:28451637 · DOI:10.1523/ENEURO.0097-17.2017
 
-[4] Scharfman & Myers 2013 · PMID:23420672 · DOI:10.3389/fncir.2012.00106
+[4] Scharfman & Myers 2012 · PMID:23420672 · DOI:10.3389/fncir.2012.00106
 
 [5] Scharfman & Bernstein 2015 · PMID:26347618 · DOI:10.3389/fnsys.2015.00112

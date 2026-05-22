@@ -1,0 +1,45 @@
+[
+  {
+    "step": "fetch_depth_0",
+    "asta_snippets_returned": 20,
+    "asta_snippets_filtered_title": 1,
+    "asta_snippets_filtered_peer_review": 0,
+    "asta_snippets_used": 19,
+    "gap_papers_count": 1,
+    "fallback_attempted": 1,
+    "fallback_success": 0,
+    "fallback_details": {
+      "CorpusId:502543": "fetch_failed",
+      "pmcid_found": "PMC6772264",
+      "note": "extract_asta_refs reported gap due to format mismatch; ASTA snippet search did return 20 snippets for this paper. PMC full text fetch returned empty on both PMC6772264 and PMID:10864941. No additional passages extracted via PMC fallback."
+    },
+    "report_summaries_merged": 1,
+    "total_summaries": 20,
+    "paper_ids_queried": 1
+  },
+  {
+    "step": "selection_depth_0",
+    "candidates_evaluated": 1,
+    "selected": 1,
+    "deselected": 0
+  },
+  {
+    "step": "synthesis",
+    "summaries_read": 20,
+    "papers_in_catalogue": 1,
+    "themes_identified": [
+      "Identity as a novel CA1 excitatory projection neuron",
+      "Morphology and anatomical location",
+      "NMDA receptor-dependent burst firing \u2014 defining electrophysiology",
+      "NMDA receptor biophysics: reduced Mg2+ block and slow kinetics",
+      "Candidate molecular basis: NR2D subunit"
+    ],
+    "papers_cited_in_report": 1,
+    "quotes_used_in_report": 21,
+    "schema_gaps": [
+      "defining_markers",
+      "nt_type"
+    ],
+    "new_types_encountered": []
+  }
+]

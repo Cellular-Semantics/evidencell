@@ -776,6 +776,28 @@ nodes:
       method: patch-clamp recording in slice
       scope: rat CA1
       quote_key: 502543_4f78ac74
+    - ref: PMID:30943417
+      method: whole-cell patch-clamp + biocytin fill
+      scope: adult mouse CA1 acute slice
+      quote_key: 92998057_f1083461
+  - id: UBERON:0014557
+    label: CA1 stratum lacunosum moleculare
+    name_in_source: CA1 stratum lacunosum-moleculare (apical dendritic arborization)
+    compartment: DENDRITE
+    sources:
+    - ref: PMID:10864941
+      method: biocytin fill + confocal reconstruction
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_01caddaa
+  - id: UBERON:0002191
+    label: subiculum
+    name_in_source: subiculum (axon projection target)
+    compartment: AXON_TARGET
+    sources:
+    - ref: PMID:10864941
+      method: biocytin fill + confocal reconstruction
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_651f2f6e
   nt_type:
     name_in_source: glutamatergic
     cl_terms:
@@ -791,17 +813,46 @@ nodes:
   negative_markers: []
   neuropeptides: []
   morphology:
-    description: Specialised glutamatergic projection neuron in CA1 stratum radiatum, distinct from CA1 pyramidal cells. First
-      described by Kirson et al. (2000); rare and not extensively characterised.
+    description: Large triangular soma in upper CA1 stratum radiatum; one to two prominent thick apical dendrites bifurcating
+      close to the soma and ascending to stratum lacunosum-moleculare, arborizing extensively with spiny second-order dendrites;
+      myelinated axon. Axon arises vertically, traverses stratum pyramidale and bifurcates in stratum oriens — one branch
+      toward subiculum, one toward fimbria (projecting ultimately to olfactory cortex). Axon collaterals in stratum oriens form
+      asymmetric (excitatory) synapses. Three morphological subtypes — symmetrical two-dendrite form; one main dendrite plus
+      shorter parallel dendrite; pyramidal-like single bifurcating apical dendrite. Soma and dendrites readily identified by
+      DIC optics in living tissue (Christie et al. 2000). Morphology confirmed in adult mouse with same inverted triangular
+      soma and two thick apical dendrites (Nasrallah et al. 2019).
     sources:
     - ref: PMID:10864941
-      method: patch-clamp recording in slice
-      scope: rat CA1
-      quote_key: 502543_4f78ac74
+      method: biocytin fill + confocal reconstruction, patch-clamp recording in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_01caddaa
+    - ref: PMID:10864941
+      method: biocytin fill + confocal reconstruction
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_651f2f6e
+    - ref: PMID:10864941
+      method: biocytin fill + confocal reconstruction
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_7b22eb75
+    - ref: PMID:11153713
+      method: DIC optics + biocytin fill
+      scope: adult rat CA1 acute slice
+      quote_key: 16689152_6f562856
+    - ref: PMID:30943417
+      method: whole-cell patch-clamp + biocytin fill
+      scope: adult mouse CA1 acute slice
+      quote_key: 92998057_50a6488b
   electrophysiology:
-    description: Glutamatergic synaptic activation fires an NMDA receptor-dependent burst of action potentials even after
-      blocking non-NMDA receptors — a unique property distinguishing radiatum giant cells from typical CA1 pyramidal cells.
-      Enhanced synaptic excitability attributed to unique properties of synaptic NMDA receptors.
+    description: NMDA receptor-dependent burst firing in response to glutamatergic synaptic activation even after non-NMDA
+      receptor blockade (CNQX-insensitive, APV-sensitive burst). EPSCs at least threefold larger than in CA1 pyramidal cells.
+      Prominent spike afterdepolarization (ADP) and spike frequency accommodation (common but not universal). Lacks the
+      pronounced fast afterhyperpolarization (fAHP) that characterises stratum radiatum interneurons. NMDA receptors active
+      at resting membrane potential — Mg2+ block Kd ~0.42 mM at -60 mV (vs ~0.15 mM in CA1 PCs), less voltage-dependent
+      (delta 0.80 vs 0.95 in PCs). NMDA EPSC decay slower (Af/As ~2.25 vs ~6.2 in PCs); rise times faster (9.6 +/- 0.7 ms
+      vs 11.7 +/- 0.6 ms). NMDA-dependent LTP induced by 100-Hz stimulation (magnitude ~51% +/- 18%; blocked by APV;
+      requires postsynaptic Ca2+ influx); 200-Hz stimuli do not induce LTP. Reversed HCN channel expression gradient vs other
+      CA1 PNs (Bullis et al. 2007, via Nasrallah et al. 2019). NR2D (GRIN2D) subunit proposed as contributor to biophysical
+      signature (Discussion-level inference).
     sources:
     - ref: PMID:10864941
       method: patch-clamp recording in slice
@@ -811,13 +862,222 @@ nodes:
       method: patch-clamp recording in slice
       scope: rat CA1
       quote_key: 502543_10e7f921
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_3d8cdf8d
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_89f231a8
+    - ref: PMID:11153713
+      method: whole-cell patch-clamp in slice, biocytin fill
+      scope: adult rat CA1 acute slice
+      quote_key: 16689152_399c08ed
+    - ref: PMID:11153713
+      method: whole-cell patch-clamp in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 16689152_9c3d2f1e
+    - ref: PMID:11153713
+      method: whole-cell patch-clamp in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 16689152_d0088250
   definition_references:
   - PMID:10864941
+  - PMID:11153713
+  - PMID:30943417
   is_terminal: false
-  notes: 'GAP: defined essentially from a single primary citation (Kirson & Yaari 2000); markers absent in source material.
-    Properties await replication and modern molecular characterisation.
+  notes: 'Morphology and LTP properties independently replicated in Christie et al. (2000, PMID:11153713); RGC identity
+    confirmed in mouse and CA2 pyramidal neurons identified as a strong presynaptic input by Nasrallah et al. (2019, PMID:30943417).
+    GAP: defining molecular markers absent; reversed HCN channel expression gradient reported (Bullis et al. 2007) but not yet
+    entered as a source. Modern transcriptomic characterisation needed.
 
 
     CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum
     radiatum first described by Kirson et al. (2000); potential CL contribution.'
-edges: []
+edges:
+  - id: edge_ca1_radiatum_giant_cell_to_clus_0261
+    type_a: ca1_radiatum_giant_cell
+    type_b: CS20230722_CLUS_0261
+    relationship: PARTIAL_OVERLAP
+    confidence: LOW
+    evidence:
+    - evidence_type: ATLAS_METADATA
+      supports: PARTIAL
+      explanation: 'CLUS_0261 (0261 CA1-ProS Glut_1) has the correct NT type (Glut) and includes cells in CA1 stratum radiatum
+        (MBA:415, n=71 across Yao 2024 and Zhuang 2023 MERFISH). However stratum radiatum is not the dominant soma location
+        — most cells fall in CA1 stratum oriens (MBA:399, n=284) and pyramidal layer (MBA:407, n=136). The cluster spans CA1,
+        ProS, and some CA2/CA3, indicating a broad CA1-proximal glutamatergic population rather than the radiatum-restricted
+        RGC specifically. No marker overlap can be assessed (classical node has no defined molecular markers).
+
+
+        '
+      cell_set_accession: CS20230722_CLUS_0261
+      taxonomy_level: CLUSTER
+      target_atlas: WMBv1 (CCN20230722)
+      n_cells: 529
+    - evidence_type: LITERATURE
+      supports: PARTIAL
+      reference: PMID:10864941
+      explanation: 'Kirson & Yaari (2000) define the RGC by its exclusively radiatum soma, myelinated axon, and NMDA-dependent
+        burst firing. The MERFISH data for CLUS_0261 shows a subset of cells in stratum radiatum consistent with the classical
+        location, but the cluster spans multiple laminae and subfields, suggesting the RGC is at most a minor component of this
+        broad cluster.
+
+
+        '
+      study_type: EXPERIMENTAL
+    - evidence_type: LITERATURE
+      supports: PARTIAL
+      reference: PMID:30943417
+      explanation: 'Nasrallah et al. (2019) confirm the mouse RGC morphology and identify CA2 pyramidal neurons as a strong
+        presynaptic input. CLUS_0261 includes cells in CA2 subfields, which may reflect CA2-adjacent glutamatergic neurons grouped
+        with the RGC in this broad cluster.
+
+
+        '
+      study_type: EXPERIMENTAL
+    property_comparisons:
+    - property: nt_type
+      node_a_value: glutamatergic
+      node_b_value: Glut (WMBv1 classification; parent subclass SUBC_016 CA1-ProS Glut)
+      alignment: CONSISTENT
+    - property: location
+      node_a_value: SOMA in CA1 stratum radiatum (UBERON:0005372 / MBA:415)
+      node_b_value: MBA:415 present (n=71 across Yao 2024 + Zhuang 2023 MERFISH) but minority; dominant locations are MBA:399
+        CA1 stratum oriens (n=284) and MBA:407 CA1 pyramidal layer (n=136). region_fraction=0.104 for MBA:415.
+      alignment: APPROXIMATE
+      notes: 'CA1 stratum radiatum soma is the defining RGC feature. The cluster includes radiatum cells but is not radiatum-selective
+        — the RGC may be a minority subpopulation of this broader glutamatergic cluster.
+
+
+        '
+    caveats:
+    - caveat_type: NO_MOLECULAR_MARKERS
+      description: The classical node has no defining, negative, or neuropeptide markers. All marker property comparisons are
+        NOT_ASSESSED. Confidence cannot exceed LOW until molecular markers are identified for the RGC.
+    - caveat_type: BROAD_ATLAS_CLUSTER
+      description: CLUS_0261 (n=529) spans multiple CA1 laminae and extends into CA2/CA3. The RGC is described as a rare specialised
+        neuron; it is unlikely to constitute more than a small fraction of this cluster.
+    - caveat_type: SPECIES_UNCERTAINTY
+      description: Primary classical evidence is from rat (Kirson & Yaari 2000; Christie et al. 2000). Atlas is mouse. Cross-species
+        extrapolation is plausible given Nasrallah et al. (2019) mouse replication but not confirmed at the molecular level.
+    unresolved_questions:
+    - 'What are the defining molecular markers of the CA1 radiatum giant cell? Modern single-cell transcriptomics is needed
+      to determine whether the RGC falls within CLUS_0261 or a neighbouring cluster.
+
+
+      '
+    - 'Is the minority population of CLUS_0261 cells in CA1 stratum radiatum enriched for RGC-like morphology and electrophysiology,
+      or do those cells represent another radiatum-soma type (e.g. displaced CA1 pyramidal cells)?
+
+
+      '
+    - 'Does CLUS_0261 show differential Grin2d or Hcn1/Hcn4 expression relative to adjacent CA1 clusters, consistent with the
+      RGC biophysical signature?
+
+
+      '
+    proposed_experiments:
+    - 'Patch-seq on morphologically identified CA1 radiatum giant cells (DIC optics, as per Christie et al. 2000) to link the
+      distinctive RGC electrophysiology to a transcriptomic cluster within CCN20230722 SUBC_016.
+
+
+      '
+    - 'MERFISH/STARmap with probes for GRIN2D, HCN1, HCN4, and LEFTY1 in CA1 stratum radiatum to identify the molecular signature
+      of radiatum-soma glutamatergic neurons.
+
+
+      '
+  - id: edge_ca1_radiatum_giant_cell_to_supt_0069
+    type_a: ca1_radiatum_giant_cell
+    type_b: CS20230722_SUPT_0069
+    relationship: PARTIAL_OVERLAP
+    confidence: LOW
+    evidence:
+    - evidence_type: ATLAS_METADATA
+      supports: PARTIAL
+      explanation: 'CS20230722_SUPT_0069 (0069 CA1-ProS Glut_1) is the highest region-fraction supertype candidate for MBA:415
+        (CA1 stratum radiatum, region_fraction=0.276). MERFISH confirms cells in stratum radiatum (4162 cells by Zhuang 2023;
+        6573 by Yao 2024), but the supertype also spans the pyramidal layer and stratum oriens broadly (13,245 cells total),
+        indicating it captures the major CA1 principal cell population rather than the radiatum-restricted RGC specifically.
+
+
+        '
+      cell_set_accession: CS20230722_SUPT_0069
+      taxonomy_level: SUPERTYPE
+      target_atlas: WMBv1 (CCN20230722)
+      n_cells: 13245
+    - evidence_type: LITERATURE
+      supports: PARTIAL
+      reference: PMID:10864941
+      explanation: 'The classical RGC is defined by its exclusively radiatum soma and distinctive NMDA-dependent burst firing.
+        SUPT_0069 encompasses the broad CA1-ProS Glut_1 supertype (n=13245) corresponding to the major CA1 principal cell population
+        — the RGC is a rare subpopulation within this supertype rather than its defining member.
+
+
+        '
+      study_type: EXPERIMENTAL
+    - evidence_type: LITERATURE
+      supports: PARTIAL
+      reference: PMID:30943417
+      explanation: 'Nasrallah et al. (2019) confirm the RGC in adult mouse with the same inverted triangular soma and identify
+        CA2 as a strong presynaptic partner. The stratum radiatum component of SUPT_0069 (by MERFISH) is consistent with the
+        Nasrallah observation, supporting this supertype as the most plausible atlas-level home for the RGC.
+
+
+        '
+      study_type: EXPERIMENTAL
+    property_comparisons:
+    - property: nt_type
+      node_a_value: glutamatergic
+      node_b_value: glutamatergic (inferred from parent subclass CS20230722_SUBC_016 CA1-ProS Glut; nt_type field null at supertype
+        level)
+      alignment: CONSISTENT
+    - property: location
+      node_a_value: SOMA in CA1 stratum radiatum (UBERON:0005372 / MBA:415)
+      node_b_value: MBA:415 present (4162 cells Zhuang 2023; 6573 cells Yao 2024 MERFISH); also broadly in CA1 pyramidal layer
+        MBA:407 and stratum oriens MBA:399. region_fraction=0.276 for MBA:415.
+      alignment: APPROXIMATE
+      notes: 'The atlas supertype has a substantial CA1 stratum radiatum component, consistent with the classical RGC soma location,
+        but is not radiatum-selective. At 13,245 cells, the supertype corresponds to a major CA1 principal cell population of
+        which the RGC is likely a minor sub-type.
+
+
+        '
+    caveats:
+    - caveat_type: NO_MOLECULAR_MARKERS
+      description: The classical node has no defining molecular markers. All marker property comparisons are NOT_ASSESSED. Confidence
+        cannot exceed LOW until molecular markers are identified for the RGC. The supertype defining markers (Lefty1, Fibcd1,
+        Pcp4l1, Onecut2, Kcnk2, Akain1, Rgs8) have not been tested on the classical type.
+    - caveat_type: SIZE_MISMATCH
+      description: The RGC is described as a rare specialised neuron. SUPT_0069 contains 13,245 cells, consistent with a major
+        principal cell population. If the RGC is truly rare, it constitutes a minor subpopulation of this supertype, and a cluster-level
+        node may be more appropriate once molecular markers are established.
+    unresolved_questions:
+    - 'Is the CA1 radiatum giant cell captured in one specific cluster within CS20230722_SUBC_016 at resolution finer than supertype
+      0069? Cluster-level candidates should be explored once molecular markers are available.
+
+
+      '
+    - 'Does SUPT_0069 or one of its child clusters show enrichment for GRIN2D or differential Hcn1/Hcn4 expression, consistent
+      with the NR2D hypothesis and reversed HCN gradient described for the RGC?
+
+
+      '
+    proposed_experiments:
+    - 'Patch-seq on DIC-identified radiatum giant cells to identify their transcriptomic cluster within SUBC_016 and test whether
+      SUPT_0069 supertype markers (Lefty1, Fibcd1) are expressed.
+
+
+      '
+    - 'Grin2d immunohistochemistry on CA1 stratum radiatum sections to test the NR2D hypothesis and check co-localisation with
+      the large-soma RGC morphology.
+
+
+      '
+    - 'Re-analysis of the Yao 2021 HPF snRNA-seq dataset (GSE185862) for a rare Lefty1+/Fibcd1+ cluster with CA1 stratum radiatum
+      localisation, to identify an RGC-compatible sub-cluster within SUPT_0069.
+
+
+      '
