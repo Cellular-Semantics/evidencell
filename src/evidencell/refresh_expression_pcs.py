@@ -38,14 +38,12 @@ fallback is the property suffix taken literally.
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import sys
 from pathlib import Path
 from typing import Any
 
 from ruamel.yaml import YAML
-from ruamel.yaml.scalarstring import LiteralScalarString
 
 from .paths import repo_root
 
