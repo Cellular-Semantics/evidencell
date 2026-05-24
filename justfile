@@ -242,6 +242,20 @@ add-expression-all taxonomy_id stats_h5 gene_mapping +GENES:
 enrich-marker-union taxonomy_id stats_h5 gene_mapping:
     uv run python -m evidencell.taxonomy_ops enrich-marker-union {{taxonomy_id}} {{stats_h5}} {{gene_mapping}}
 
+# Refresh stale atlas-side expression on marker-family PropertyComparisons.
+# Sweeps MappingEdge.property_comparisons entries whose node_b_value is
+# "not resolvable from atlas metadata" (or similar) and rewrites them with
+# the current mean_expression value from kb/taxonomy/{id}/{level}.yaml.
+# Usage: just refresh-expression kb/graphs/region/file.yaml
+#        just refresh-expression-all
+[group('workflows')]
+refresh-expression graph_file *FLAGS:
+    uv run python -m evidencell.refresh_expression_pcs {{graph_file}} {{FLAGS}}
+
+[group('workflows')]
+refresh-expression-all *FLAGS:
+    uv run python -m evidencell.refresh_expression_pcs --all {{FLAGS}}
+
 # Re-ingest taxonomy from source JSON, preserving enrichment fields
 # Usage: just reingest CCN20230722 inputs/taxonomies/wmbv1_full_v2.json
 [group('workflows')]
@@ -341,6 +355,29 @@ gen-index REGION:
 [group('reports')]
 gen-toc TAXONOMY_ID *ARGS:
     uv run python -m evidencell.toc {{TAXONOMY_ID}} {{ARGS}}
+
+# Render tree-style F1 figure for an annotation-transfer run.
+# Usage: just gen-at-figure 20260408_winterer_olm_mmc_wmbv1
+#        just gen-at-figure {RUN_ID} --pool Sst-OLM,Htr3a-OLM:OLM --output figures/f1_merged.png
+[group('reports')]
+gen-at-figure RUN_ID *ARGS:
+    uv run python -m evidencell.at_figures {{RUN_ID}} {{ARGS}}
+
+# Surface candidate source-group pools from a KB graph (Phase 3 gen-report pre-pass).
+# Emits JSON on stdout. Use --node to restrict to candidates involving a given lit_type.
+# Usage: just pool-candidates kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml
+#        just pool-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml --node olm_hippocampus
+[group('reports')]
+pool-candidates GRAPH_FILE *ARGS:
+    uv run python -m evidencell.pool_candidates {{GRAPH_FILE}} {{ARGS}}
+
+# Parse Phase 3 verdict blocks from a report and write the holistic
+# verdict + currency hash back to the matching MappingEdge YAML.
+# Pass --dry-run to verify without editing the YAML.
+# Usage: just rationale-writeback reports/hippocampus/olm_hippocampus_summary.md kb/graphs/hippocampus/hippocampus_OLM.yaml
+[group('reports')]
+rationale-writeback REPORT_FILE GRAPH_FILE *ARGS:
+    uv run python -m evidencell.rationale_writeback {{REPORT_FILE}} {{GRAPH_FILE}} {{ARGS}}
 
 # Regenerate all reports + indices for the KB (programmatic mode, no LLM)
 [group('reports')]

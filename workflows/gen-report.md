@@ -63,23 +63,64 @@ This calls `python -m evidencell.render facts {graph_file} --node {node_id}` and
 If the command exits non-zero, print the error and stop. Do not attempt to reconstruct
 facts manually from YAML — the Python extractor enforces provenance labelling.
 
-Confirm the facts file exists and is valid JSON before proceeding to Step 3.
+Confirm the facts file exists and is valid JSON before proceeding to Step 2b.
+
+**Phase 3 note (2026-05-13).** The facts extractor is responsible for stripping
+report-time output fields (`rationale`, `confidence`, `confidence_score`,
+`rationale_generated_at`, `rationale_source_hash`, `report_path`) from each
+edge before serialising — these are the synthesis subagent's outputs and
+must not be visible as inputs (loop-avoidance, design issue #64).
+
+---
+
+## Step 2b — Pool-candidate discovery (Phase 3)
+
+For each `node_id`, surface candidate source-group pools for the synthesis
+subagent to judge:
+
+```bash
+just pool-candidates {graph_file} --node {node_id} \
+  > reports/{region}/{node_id}_pool_candidates.json
+```
+
+This is a deterministic pre-pass that compares pairs of distinct `lit_type`s
+in the graph whose AT-evidence `metrics_by_level` rows are within tolerance
+(~5% F1 / precision / recall) across their shared atlas targets. Each
+candidate entry names the source groups, the shared targets, and the
+property panels assessed (markers, anat, NT, ephys, morphology, dev).
+
+The output is **surfacing only** — the synthesis subagent reads it and
+decides whether to act (writing a "no transcriptomic distinction" call into
+`rationale` + `reconciliation_note` + a lit-to-lit `skos:closeMatch` edge
+per the prompt instructions in Step 3). See #61 for the worked Winterer
+Sst-OLM / Htr3a-OLM case and #62 for the related ingest-side prevention.
 
 ---
 
 ## Step 3 — Synthesis subagent
 
 Spawn a **synthesis subagent** with this exact prompt (substitute values for
-`{node_id}`, `{facts_file}`, `{summary_file}`, `{region}`, `{graph_file}`):
+`{node_id}`, `{facts_file}`, `{pool_candidates_file}`, `{summary_file}`,
+`{region}`, `{graph_file}`):
 
 ```
 You are a cell type mapping report writer. Write a high-quality, biologist-readable
-summary report from structured evidence facts.
+summary report from structured evidence facts, AND emit a structured verdict
+block for write-back to the MappingEdge YAML.
 
-FACTS FILE: {facts_file}
+INPUTS YOU READ:
+- FACTS FILE: {facts_file}
+- POOL CANDIDATES: {pool_candidates_file} (may be empty)
+- References corpus: references/{region}/references.json (for quote_keys)
+
+INPUTS YOU MUST NOT READ (Phase 3 loop avoidance):
+- The edge's existing `rationale`, `confidence`, `confidence_score`,
+  `rationale_generated_at`, `rationale_source_hash`, or `report_path`. The
+  facts extractor strips these from {facts_file} so you cannot see them.
+
 OUTPUT FILE: {summary_file}
 
-First, read the facts file completely. Then write the Markdown report below.
+First, read all inputs completely. Then write the Markdown report below.
 
 ---
 
@@ -198,26 +239,98 @@ Open with one summary sentence: how many candidates were assessed and what the
 primary verdict is (e.g. "Three candidate atlas clusters were assessed; CLUS_1915
 in SUPT_0486 is the primary mapping at MODERATE confidence").
 
-**Annotation-transfer overview figure (run-level)**
+**Annotation-transfer overview figure (run-level, filtered)**
 
 If `methods_summary.annotation_transfer_runs[*].figure_relpath` is non-empty
 for any run, embed each run's figure once near the top of Results (after the
 opening summary sentence, before the candidates table). The figure is
-run-level — it covers all candidates at all taxonomy levels — so it does NOT
-go in any specific candidate paragraph.
+run-level so it does NOT go in any specific candidate paragraph.
 
-The renderer also attaches `fields.figure_relpath` and `fields.figure_caption`
-to each AT evidence item; pick any one of those (they all point at the same
-run figure) to compose the embed:
+**Filter to relevant source groups before embedding.** The canonical figure
+on disk (`figures/f1_tree.png` or `figures/f1_heatmap.png`) usually shows
+*every* source group in the AT run, including ones irrelevant to the
+classical type being reported. For each cited AT run:
 
-```markdown
-![{fields.figure_caption}]({fields.figure_relpath})
+1. Collect the set of `source_cluster_label` values that appear on
+   `evidence_items[*].fields.source_cluster_label` for AT evidence items
+   on edges of this node. That set defines the relevant source groups.
+2. Run the figure renderer with `--source` to produce a node-scoped
+   variant. Output filename must be node-specific so reports don't
+   clobber each other:
 
-*F1 across taxonomy levels. Each row is a source-cell group; columns are top
-target classes/subclasses/supertypes/clusters. F1 ≥ 0.5 indicates a clean
-mapping at that level; the spread across columns reveals where the source
-cells split among atlas siblings.*
-```
+   ```bash
+   just gen-at-figure {run_id} \
+     --source {comma_separated_source_labels} \
+     [--f1 {non-standard CSV relpath if needed}] \
+     --output figures/f1_for_{node_id}.png \
+     --emit-metrics figures/f1_for_{node_id}_metrics.json
+   ```
+
+   Use `--pool A,B:NAME` when the source groups are transcriptomically
+   indistinguishable and the report's reading is to merge them (e.g. the
+   OLM Sst-OLM + Htr3a-OLM case; see [[feedback_at_no_distinction_judgement]]).
+
+   **Caption grounding (mandatory).** `--emit-metrics` writes a JSON
+   sidecar with the per-(source, level, target) F1/precision/recall rows
+   that the figure actually rendered (after `--pool` and `--source` are
+   applied). Captions and any inline figure-supporting statistics in the
+   report MUST be derived from this sidecar — read it, pick the rows you
+   want to cite, and quote the numbers verbatim. Never re-derive F1
+   numbers from the raw `f1_matrix.csv` or copy them from the edge YAML's
+   `metrics_by_level`, because those may have been computed under a
+   different grouping than the figure. The sidecar and the PNG are
+   produced from the same in-memory rows so they are guaranteed in sync.
+
+   **Pool composition (mandatory when `--pool` is used).** When the cited
+   AT evidence carries `source_groups` (the structural record of which
+   raw source labels were pooled into the pseudo-source), the report
+   caption MUST spell out the pool composition inline — e.g.
+   "F1=0.97 across the pooled OLM cohort (Sst-OLM + Htr3a-OLM, n=45)" —
+   sourced from the structured `source_groups[*].label` and
+   `source_groups[*].members`, not parsed out of free-text labels.
+   This makes the pooling transparent to readers without requiring them
+   to cross-reference the YAML.
+
+   **Pool rationale (optional write).** If `source_groups[*].rationale`
+   is empty on a pooled AT evidence item and the report-time synthesis
+   has now established the pool's defensibility across available
+   property panels (AT-side indistinguishability + lit-side
+   no-distinguishing-property reading), the report-gen agent MAY
+   populate it as part of the write-back step. Follow the example
+   forms in the `SourceGroup.rationale` schema description: one or
+   more independent lines of evidence, each citing the supporting
+   AT run / paper / edge id. If no such cross-panel check has been
+   done, leave it blank — absence is not a gate, and a future workflow
+   run can populate it. Never overwrite an existing rationale without
+   curator review.
+3. Embed the filtered figure using its relative path from the report:
+
+   ```markdown
+   ![Filtered AT figure for {classical_node_name}]({relative_path_to_filtered_png})
+
+   *F1 across taxonomy levels for the {N} source group(s) relevant to
+   {classical_node_name}. Each panel row is a source-cell group; nodes
+   are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown
+   inline. Coverage = fraction of source-group cells landing on this
+   target; Purity = fraction of this target's cells coming from the
+   source group. With multiple source groups in the figure, Purity
+   differentiates them; with a single pooled source, Purity is 1.0 at
+   every target and only Coverage discriminates. F1 ≥ 0.5 at a level
+   indicates a clean mapping at that resolution.*
+   ```
+
+   Emit the **Purity / Coverage gloss only on the FIRST AT figure** in
+   the report (subsequent figures can use a one-liner: *"As before, Pur
+   = target purity; Cov = source coverage."*).
+
+   If you also want to show the full multi-source figure as supporting
+   context (e.g. to justify a pooling decision), generate a *second*
+   figure without `--source` and reference it as a follow-up — but the
+   filtered figure is the primary embed.
+
+4. The pre-existing canonical `figure_relpath` on the manifest is left
+   untouched; reports generate per-node variants on demand and reference
+   those.
 
 Use a short interpretive line below the figure (≤2 sentences) drawing on
 `methods_summary.annotation_transfer_runs[*].caveats` if relevant.
@@ -719,6 +832,125 @@ Do not invent PMIDs or query URLs.
    `Cluster name [accession]`
    using the `node_b_accession` field from `facts.edges`. Do not invent accessions.
 
+## Phase 3 — Verdict block (emit at the end of the report)
+
+After the References section, emit one fenced YAML `verdict:` block per
+edge you covered in the report. Each block is wrapped in HTML comment
+delimiters identifying the edge by id:
+
+```
+<!-- verdict-block-start: {edge_id} -->
+` ` `yaml
+verdict:
+  confidence: HIGH | MODERATE | LOW | UNCERTAIN | REFUTED
+  confidence_score: <float, 0.0–1.0>
+  rationale: >
+    <one or two sentences; format constraints below>
+  reconciliation_note: >
+    <optional; cross-edge note when calling indistinguishability>
+  lit_to_lit_edges:
+    - lit_a: <node_id>
+      lit_b: <node_id>
+      mapping_justification: semapv:CompositeMatching
+  unresolved_questions:
+    - <string; APPENDED to existing list, not overwriting>
+` ` `
+<!-- verdict-block-end -->
+```
+
+(Replace the spaced backticks `` ` ` ` `` with actual fence backticks; the
+spacing here is only to keep the example readable inside this synthesis
+prompt.)
+
+The orchestrator runs an anti-hallucination post-write check
+(`python -m evidencell.rationale_writeback`) that parses each block and
+verifies every quantitative claim in `rationale` against the edge's
+structured data. **Any verification failure blocks write-back of all
+blocks atomically.** Format your rationale accordingly.
+
+## Rationale format constraints (enforced by the post-write check)
+
+The rationale prose MUST cite specific structured-field references. The
+check parses each of the following patterns and verifies them:
+
+- **F1 values** — pattern `F1=0.NN`. Must match an
+  `evidence_items[*].metrics_by_level[*].f1_score` rounded to 2 decimals
+  on at least one ANNOTATION_TRANSFER evidence item.
+- **Accessions** — pattern `CS\w+_(CLUS|SUPT|SUBC|CLAS)_\d+`. Must appear
+  on the edge's `taxonomy_type`, in a `property_comparison.node_a_value` /
+  `node_b_value`, or in an AT evidence item's `metrics_by_level`.
+- **`run_ref` strings** — pattern `at_run_*`. Must appear on an evidence
+  item.
+- **Marker counts** — pattern `N of M markers CONSISTENT`. Must reconcile
+  against the edge's `marker_`-prefixed PropertyComparisons (count them
+  yourself before writing).
+- **Modality tokens** — `patch-seq`, `scRNA-seq`, `bulk RNA`, `MERFISH`,
+  `smFISH`, `immunohistochemistry`, `biocytin`, `electrophysiology`,
+  `morphology`, `Cre-line` etc. Must appear in some evidence item's
+  `method` / `evidence_type` field, or in a PropertySource's `method`.
+  Phase 3 requires modality-aware citations: when claiming convergence
+  across techniques (e.g. "AT and morphology agree"), name both modalities
+  explicitly so they're checkable.
+
+**Example rationale (good):**
+
+> Reln (F1=0.95 in `at_run_20260408_winterer_olm_mmc_wmbv1`) and Chrna2
+> (`marker_Chrna2` CONSISTENT; supported by immunohistochemistry and
+> scRNA-seq) anchor the close match to CS20230722_CLUS_0768; 2 of 3
+> markers CONSISTENT. `region_fraction` = 0.31 is borderline (caveat).
+
+**Example rationale (bad — no traceable citations):**
+
+> "Strong agreement across multiple lines of evidence."
+
+## When to cite `region_fraction`
+
+Cite `region_fraction` explicitly when it is in the **boundary band**
+(roughly 0.3–0.7) and explain whether it drove the relationship choice.
+Skip the citation when very high (>0.7) or very low (<0.3) — the
+relationship choice implies the value.
+
+## Indistinguishability across source groups (Phase 3 — the #61 pattern)
+
+Read `{pool_candidates_file}`. For each candidate pool, decide whether to
+call the source groups indistinguishable:
+
+**CASE A — INDISTINGUISHABLE ACROSS ALL AVAILABLE PANELS** (e.g. Winterer
+2019 Sst-OLM / Htr3a-OLM: morphology, ephys, MGE markers, dev markers,
+AT all show no distinction):
+
+1. In EACH affected edge's `rationale`, state the broader-call
+   indistinguishability and name the panels examined, citing per-panel
+   evidence (modality-aware).
+2. Set `reconciliation_note` on EACH edge with a structured cross-edge
+   reference (e.g. *"indistinguishable from `{sibling_edge_id}` across
+   panels [markers, anat, ephys, AT]; see report"*).
+3. Emit a `lit_to_lit_edges` entry with the two lit_types and
+   `mapping_justification: semapv:CompositeMatching`. The orchestrator
+   creates a new MappingEdge with `relationship: skos:closeMatch` and
+   `mapping_cardinality: 1:1`.
+4. Append `unresolved_questions[]`: *"Consider unifying `{lit_A}` and
+   `{lit_B}`; no available data distinguishes them. See #62."*
+   (Destructive topology changes — node merge, parent-type creation —
+   stay curator-decided.)
+5. If applicable, render the merged figure via:
+   ```
+   just gen-at-figure {run_id} --pool {label_A},{label_B}:{merged_name} \
+     --source {label_A},{label_B} \
+     --output reports/{region}/figures/f1_for_{merged_name}.png
+   ```
+   and embed it in the Methods section.
+
+**CASE B — INDISTINGUISHABLE ON AT ONLY** (the other panels are not
+assessed in the available evidence):
+
+1. State the AT-only indistinguishability in `rationale`, naming
+   explicitly which panels were NOT assessed.
+2. Set `reconciliation_note` as in Case A.
+3. **Do NOT** emit a `lit_to_lit_edges` entry — insufficient evidence
+   for a cross-panel call.
+4. **Do NOT** append the "consider unifying" question.
+
 Write the report now.
 ```
 
@@ -796,17 +1028,66 @@ VERDICT: PASS | FAIL
 
 ---
 
-## Step 5 — Accept or reject
+## Step 4b — Verdict-block anti-hallucination check (Phase 3)
 
-### If validation verdict is PASS:
+After Step 4 (the LLM validation subagent) PASSes, run the deterministic
+post-write check on the verdict blocks:
 
-The `{summary_file}` is the accepted report. Print:
+```bash
+just rationale-writeback {summary_file} {graph_file} --dry-run
+```
+
+This:
+1. Parses each `verdict:` YAML block from the report.
+2. Verifies the rationale's quantitative claims (F1, accessions, run_refs,
+   marker counts, modality tokens) against the edge's structured data.
+3. Reports what would be written; does not edit the graph.
+
+If verification fails on any block, treat as a synthesis failure (re-run
+Step 3 with the failure list in the prompt, capped at 1 retry). The check
+is atomic: a single failure blocks write-back of all blocks.
+
+---
+
+## Step 5 — Accept and write back
+
+### If both Step 4 (LLM) and Step 4b (verdict check) PASS:
+
+Run the write-back to commit the verdict + currency hash to the
+MappingEdge YAML:
+
+```bash
+just rationale-writeback {summary_file} {graph_file}
+```
+
+This writes back to each covered edge:
+
+- `rationale`, `confidence`, `confidence_score` from the verdict block.
+- `reconciliation_note` if set.
+- `rationale_generated_at` (now, UTC ISO).
+- `report_path` (relative to repo root).
+- `rationale_source_hash` — SHA256 8-char digest over the canonical
+  edge + endpoint-node payload (excluding the rationale-suite output
+  fields themselves). On subsequent reads / `just qc`, the hash is
+  recomputed and compared; mismatch flags the rationale as stale.
+
+When the verdict block carries `lit_to_lit_edges`, the writer creates
+new `MappingEdge`s with `relationship: skos:closeMatch`,
+`mapping_cardinality: "1:1"`, and the supplied justification.
+
+Pre-edit hook fires on the write and runs structural + LinkML schema
+validation. Hook rejection blocks the write atomically.
+
+Print:
 ```
 Report accepted: {summary_file}
 Validation: PASS — {N} references, {M} blockquotes, {K} accessions verified.
+Write-back: {n_edges} verdict(s) written, {n_lit_to_lit} lit-to-lit edge(s) created.
+  Hash(es): {edge_id} → {8-char hash}
 ```
 
-Delete the `{node_id}_facts.json` intermediate file.
+Delete the `{node_id}_facts.json` and `{node_id}_pool_candidates.json`
+intermediate files.
 
 Print the full path of the generated report for the curator.
 

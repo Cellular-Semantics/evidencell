@@ -296,16 +296,17 @@ TASK:
      distant cells are present — the mapping is weakened but not disproven.
    - NOT_ASSESSED: classical location not representable from atlas metadata
 
-3. Determine confidence using the decision guide:
-   - HIGH: ≥2 independent convergent evidence types, at least one experimental
-     (annotation transfer, electrophysiology, morphological reconstruction).
-     NOT achievable from literature alone.
-   - MODERATE: ≥2 independent evidence items with consistent support
-   - LOW: single evidence item or consistent but weak/indirect evidence
-   - UNCERTAIN: evidence contradictory, ambiguous, or minimal
-
-   If evidence is thin (stubs only, no lit review yet), default to LOW or UNCERTAIN.
-   Be explicit about what would upgrade the confidence.
+3. **Do NOT set `confidence`, `confidence_score`, or `rationale`.**
+   Phase 3 (2026-05-13) moved authority for the holistic verdict +
+   rationale to the report-time agent (`workflows/gen-report.md`
+   Step 3). Stage B emits structured data only — the report-gen agent
+   reads it back, synthesises the verdict against the full evidence
+   picture (including the AT pool-candidate pre-pass and cross-edge
+   indistinguishability), writes `confidence` + `confidence_score` +
+   `rationale` + `rationale_source_hash` + `report_path` +
+   `rationale_generated_at` back to the edge. The schema makes
+   `confidence` optional for exactly this reason. See #64 for the
+   design.
 
 4. Assemble evidence items. Each item needs:
    - evidence_type (LITERATURE / ATLAS_METADATA / ANNOTATION_TRANSFER / etc.)
@@ -316,6 +317,36 @@ TASK:
    For stub-stage mappings with no primary literature on the edge itself,
    use ATLAS_METADATA evidence (the atlas node's own properties as evidence
    for the mapping). This is valid LOW-confidence evidence.
+
+   **Pooled AnnotationTransferEvidence.** When the `metrics_by_level` /
+   `best_f1_score` on an AT evidence item were computed by pooling
+   multiple raw source clusters into one pseudo-source (the
+   `at_figures --pool A,B:NAME --emit-metrics` workflow), record the
+   pool composition in `source_groups`:
+
+   ```yaml
+   source_groups:
+     - label: {pseudo_source_name}         # matches --pool ...:NAME
+       members: [{raw_label_1}, {raw_label_2}, ...]
+       # rationale: optional — see below
+   ```
+
+   `label` must match the source_label key in the figure-rendering
+   sidecar (`figures/f1_for_*_metrics.json`) so stored metrics and
+   rendered figure are joinable. `members` are the bare source_label
+   strings from `f1_matrix.csv`.
+
+   **You MAY seed `source_groups[*].rationale`** when the
+   `property_comparisons` you just built already establish that the
+   pooled cohorts map indistinguishably to the same target cluster set
+   (an AT-side-only observation). Phrase the rationale per the example
+   forms in `SourceGroup.rationale` (schema), cite the AT run id, and
+   keep to one or two sentences. **Leave it blank** when (a) the AT
+   matrix shows scatter within the pool (different members go to
+   different targets), or (b) you have not done a cross-cohort
+   comparison — the report-time agent has full literature in scope
+   and can extend the rationale later. Never overwrite an existing
+   rationale; if you find one already present, leave it alone.
 
 5. Add caveats for any DISCORDANT or APPROXIMATE property comparisons, and for
    any known heterogeneity in the classical type.
@@ -351,7 +382,10 @@ Present each proposed edge to the curator:
 PROPOSED EDGE: {classical_name} → {atlas_name}
 ════════════════════════════════════════════════
 Relationship: {RELATIONSHIP}
-Confidence:   {CONFIDENCE} — {rationale summary}
+Cardinality:  {CARDINALITY}
+Justification: {JUSTIFICATION}
+
+Verdict + rationale: (pending — written by gen-report)
 
 Property comparisons:
   nt_type:              {alignment} — {node_a} vs {node_b}
@@ -366,13 +400,15 @@ Caveats: {count}
 Unresolved questions: {list}
 Proposed experiments: {list}
 
-What would upgrade confidence: {specific gaps}
+What would let gen-report reach a confident verdict: {specific gaps}
 ```
 
 Ask:
-> "Review this edge. Approve, modify (relationship/confidence/caveats), or reject.
-> If you want to proceed to lit review before committing, say 'defer' — the edge
-> will be saved as a draft proposal."
+> "Review this edge. Approve, modify (relationship/cardinality/caveats), or reject.
+> The verdict (`confidence` / `confidence_score` / `rationale`) is not set at
+> Stage B — gen-report will synthesise and write it back. If you want to proceed
+> to lit review before committing, say 'defer' — the edge will be saved as a
+> draft proposal."
 
 ---
 

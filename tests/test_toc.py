@@ -43,11 +43,11 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
     graph = {
         "edges": [
             {"lit_type": "classical_X", "taxonomy_type": "TX_CLUS_A1a1", "confidence": "HIGH",
-             "relationship": "EQUIVALENT"},
+             "relationship": "skos:exactMatch"},
             {"lit_type": "classical_Y", "taxonomy_type": "TX_SUPT_A1b", "confidence": "LOW",
-             "relationship": "PARTIAL_OVERLAP"},
+             "relationship": "evidencell:PartialOverlapMatch"},
             {"lit_type": "classical_Z", "taxonomy_type": "TX_SUBC_A1", "confidence": "MODERATE",
-             "relationship": "TYPE_A_SPLITS"},
+             "relationship": "skos:broadMatch"},
         ]
     }
     (repo / "kb" / "graphs" / "region1" / "graph.yaml").write_text(yaml.safe_dump(graph))
@@ -83,6 +83,31 @@ def fake_taxonomy(tmp_path, monkeypatch) -> str:
     conn.executemany("INSERT INTO nodes VALUES (?,?,?,?,?,?,?)", rows)
     conn.commit()
     conn.close()
+
+    # Minimal schema with the two enums the glossary loader reads.
+    schema_stub = {
+        "enums": {
+            "MappingRelationship": {
+                "permissible_values": {
+                    "skos:exactMatch": {"description": "Equivalent mapping."},
+                    "skos:closeMatch": {"description": "Close mapping."},
+                    "skos:broadMatch": {"description": "Broader-target mapping."},
+                    "skos:narrowMatch": {"description": "Narrower-target mapping."},
+                    "evidencell:PartialOverlapMatch": {"description": "Partial overlap."},
+                },
+            },
+            "MappingConfidence": {
+                "permissible_values": {
+                    "HIGH": {"description": "Strong convergent evidence."},
+                    "MODERATE": {"description": "Multiple consistent items."},
+                    "LOW": {"description": "Single or weak item."},
+                    "UNCERTAIN": {"description": "Contradictory or minimal."},
+                    "REFUTED": {"description": "Refuted by direct evidence."},
+                },
+            },
+        }
+    }
+    (repo / "schema" / "celltype_mapping.yaml").write_text(yaml.safe_dump(schema_stub))
 
     monkeypatch.setattr(toc, "repo_root", lambda: repo)
     monkeypatch.setattr(toc, "taxonomy_db_path", lambda tid: repo / "kb" / "taxonomy" / tid / f"{tid}.db")
@@ -178,24 +203,26 @@ def test_generate_all_combines_taxonomies_with_offset(fake_taxonomy):
 def test_relationship_appears_on_edge_lines(fake_taxonomy):
     md = toc.generate(fake_taxonomy, min_confidence="MODERATE")
     # Each surviving edge line carries its relationship + confidence.
-    assert "EQUIVALENT · HIGH" in md
-    assert "TYPE_A_SPLITS · MODERATE" in md
+    assert "skos:exactMatch · HIGH" in md
+    assert "skos:broadMatch · MODERATE" in md
 
 
-def test_glossary_lists_only_used_terms(fake_taxonomy):
+def test_glossary_lists_full_enum_vocabulary(fake_taxonomy):
     md = toc.generate(fake_taxonomy, min_confidence="MODERATE")
     assert "## Glossary" in md
     assert "### Mapping relationship" in md
     assert "### Mapping confidence" in md
-    # Used terms appear.
-    assert "**EQUIVALENT**" in md
-    assert "**TYPE_A_SPLITS**" in md
+    # Full vocabulary listed — readers see what could have been chosen,
+    # not just what was. Includes terms never used by edges in this TOC.
+    assert "`skos:exactMatch`" in md
+    assert "`skos:broadMatch`" in md
+    assert "`evidencell:PartialOverlapMatch`" in md
     assert "**HIGH**" in md
     assert "**MODERATE**" in md
-    # Unused terms (from the LOW-filtered Y edge or never-used enum values) absent.
-    assert "**PARTIAL_OVERLAP**" not in md
-    assert "**LOW**" not in md
-    assert "**REFUTED**" not in md
+    assert "**LOW**" in md
+    assert "**REFUTED**" in md
+    # SKOS direction preamble appears (unconditional).
+    assert "Direction convention" in md
 
 
 def test_generate_all_empty(monkeypatch, tmp_path):
