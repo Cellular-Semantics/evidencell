@@ -79,7 +79,16 @@ validate-all:
 # Requires OAK SQLite DBs (run just fetch-oak-dbs first)
 [group('validation')]
 validate-terms:
-    uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{kb_dir}}
+    #!/usr/bin/env bash
+    set -euo pipefail
+    files=$(find {{kb_dir}} -name "*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No files in {{kb_dir}} yet."; exit 0; fi
+    failed=0
+    for f in $files; do
+        echo "Validating terms in $f..."
+        uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} "$f" || failed=1
+    done
+    [ $failed -eq 0 ] && echo "All KB term references valid." || { echo "Term validation failed."; exit 1; }
 
 # Validate ontology terms in a single file
 [group('validation')]
