@@ -282,8 +282,12 @@ _SKOS_DIRECTION_PREAMBLE = (
     "`lit_type` (subject) to the `taxonomy_type` (object). "
     "`skos:broadMatch` and `skos:narrowMatch` describe the *match target*, "
     "not the subject — e.g. `skos:broadMatch` means the taxonomy_type is "
-    "broader than the lit_type. See "
-    "[`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) "
+    "broader than the lit_type.\n\n"
+    "**Worked example.** `OLM --skos:broadMatch--> Sst Gaba_3 supertype` "
+    "reads as *\"OLM has a broad match — the supertype is the broader "
+    "thing\"*. OLM is one of several types within the supertype; "
+    "cardinality is `1:n`.\n\n"
+    "See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) "
     "for worked examples and cardinality interaction."
 )
 

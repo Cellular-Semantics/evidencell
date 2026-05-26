@@ -207,32 +207,32 @@ class MappingRelationship(str, Enum):
     """
     skosCOLONexactMatch = "skos:exactMatch"
     """
-    The lit_type and taxonomy_type describe the same cell population (one-to-one identity). Clean 1:1 correspondence backed by convergent multi-source evidence (e.g. F1 >= 0.8 AT + matching markers + matching anatomy). E.g. Lugaro → WMBv1 supertype 1145 (F1=0.96).
+    The lit_type and taxonomy_type describe the same cell population (one-to-one identity). Required: cardinality 1:1; location consistent (classical region + adjacent only, not distant); AT supports 1:1 (F1 > 0.75) when AT is present; no major contradictions. AT-absent cases may still be exactMatch on converging location + markers + literature, but confidence ceiling drops to MODERATE. Numeric AT gate lives in the report-time prompt + rationale, not in this description.
 
     """
     skosCOLONcloseMatch = "skos:closeMatch"
     """
-    The lit_type and taxonomy_type are judged to describe the same cell population under partial information (typically F1 ~0.65–0.8, or non-AT evidence that converges but does not yet rise to exactMatch). Conservative default for candidate- synonym-style cases per #30 amendment 1 — pair with mapping_justification: semapv:UnreviewedManualMapping when the evidence has not been curator-confirmed.
+    Same 1:1-style correspondence as exactMatch but with one or more contradictions: marker mismatch with no resolving heterogeneity in the lit, soft AT (F1 in a borderline band or coverage/purity asymmetry), location edge case, or other partial-information caveat. Pair with mapping_justification: semapv:UnreviewedManualMapping when not curator-confirmed.
 
     """
     skosCOLONbroadMatch = "skos:broadMatch"
     """
-    The lit_type is **narrower** than the taxonomy_type; the match goes *to* the broader thing. Read `lit_OLM --skos:broadMatch--> Sst_Gaba_3_supertype` as "OLM has a broad match — the supertype is the broader thing." Pair with `mapping_cardinality: 1:1` when a specific cluster is suspected to equal the lit_type but cannot yet be identified (hidden 1:1); with `1:n` when the lit_type genuinely subsumes multiple taxonomy_types within the broader node (split case).
+    The lit_type is **narrower** than the taxonomy_type; the match goes *to* the broader thing. Read `lit_OLM --skos:broadMatch--> Sst_Gaba_3_supertype` as "OLM has a broad match — the supertype is the broader thing." Apply when: the taxonomy_type is located in regions distant from the classical region + adjacent set; or the relationship is cross-cutting at rank N but collapses to a clean broader relation at rank N+1 (pick the higher rank); or multiple lit_types map to a single taxonomy_type at this rank. AT must be consistent with the broader reading when present. Always paired with `mapping_cardinality: 1:n` (the hidden-1:1 case collapses: if the specific sub-cluster is TBD, map at the next rank up).
 
     """
     skosCOLONnarrowMatch = "skos:narrowMatch"
     """
-    The lit_type is **broader** than the taxonomy_type; the match goes *to* the narrower thing. Read `lit_classical_basket --skos:narrowMatch--> mli2_cluster` as "classical basket has a narrow match — this specific cluster is the narrower thing." Pair with `mapping_cardinality: n:1` for merge cases where multiple lit_types collapse onto one taxonomy_type.
+    The lit_type is **broader** than the taxonomy_type; the match goes *to* the narrower thing. Read `lit_classical_basket --skos:narrowMatch--> mli2_cluster` as "classical basket has a narrow match — this specific cluster is the narrower thing." Symmetric inverse of broadMatch. Always paired with `mapping_cardinality: n:1`.
 
     """
     evidencellCOLONPartialOverlapMatch = "evidencell:PartialOverlapMatch"
     """
-    Genuinely incomplete overlap between lit_type and taxonomy_type. Precision OR recall below ~0.65, or partial-set semantics that cannot be expressed as a clean subset / superset relation. No SKOS equivalent — distinguished from skos:closeMatch (which asserts same-type-under-partial- information) by the explicit non-equivalence claim. E.g. Globular (PLI2) → cluster 5177 (precision 83%, recall 93%, also distributed across other clusters).
+    DEPRECATED (2026-05-26). Absorbed into closeMatch (1:1-ish with contradictions) + broadMatch / narrowMatch / CrossCuttingMatch per the new predicate rubric. Retained transitionally so the KB validates against the deprecated value during migration; the re-run will re-predicate the existing 42 edges. Do not emit on new edges. Will be removed after migration.
 
     """
     evidencellCOLONCrossCuttingMatch = "evidencell:CrossCuttingMatch"
     """
-    The taxonomy_type cross-cuts the boundary of the lit_type (and usually at least one other lit_type). The transcriptomic type captures cells that the classical taxonomy would assign to multiple distinct types. E.g. MLI1 cuts across classical basket and stellate cells. No SKOS equivalent.
+    The taxonomy_type cross-cuts the boundary of the lit_type (and usually at least one other lit_type). The transcriptomic type captures cells that the classical taxonomy would assign to multiple distinct types. E.g. MLI1 cuts across classical basket and stellate cells. Apply only when no higher rank rescues the relationship to a clean broadMatch — if cross-cutting at rank N collapses to a single broader type at rank N+1, prefer broadMatch at N+1. No SKOS equivalent.
 
     """
     evidencellCOLONNoCorrespondence = "evidencell:NoCorrespondence"
@@ -249,7 +249,7 @@ class MappingRelationship(str, Enum):
 
 class MappingCardinality(str, Enum):
     """
-    Cardinality of the mapping considered as a set relation. Used together with skos:broadMatch / skos:narrowMatch to distinguish hidden-1:1 (specific match suspected but not yet identifiable) from genuine-1:n (splits / merges).
+    Cardinality of the mapping considered as a set relation. Required with skos:broadMatch (always 1:n) and skos:narrowMatch (always n:1); recommended with skos:exactMatch (always 1:1). The former hidden-1:1 broadMatch case collapses: if the specific sub-cluster is not yet identifiable, map at the next rank up where the relationship is cleanly 1:n.
 
     """
     number_1COLON1 = "1:1"
@@ -305,7 +305,8 @@ class MappingJustification(str, Enum):
 class MappingConfidence(str, Enum):
     HIGH = "HIGH"
     """
-    Multiple independent convergent evidence types; at least one experimental
+    Strong experimental anchor with no major contradictions. Two standard paths: (a) patch-seq annotation-transfer F1 > 0.75 with marker confirmation; (b) bridging or bulk RNA-seq with strong structure/function convergence at similar strength. Default for a clean exactMatch where AT is present and supportive.
+
     """
     MODERATE = "MODERATE"
     """
@@ -579,6 +580,67 @@ class CaveatType(str, Enum):
     OTHER = "OTHER"
 
 
+class DiscoveryContextKind(str, Enum):
+    """
+    Semantic class of a percentile context recorded on MappingEdge.discovery_score. Today only SURVIVAL_COHORT is emitted by Stage A; the other values reserve slots for future universal / anatomical / sibling context emission so that downstream agents can reason about contexts uniformly without parsing free-text descriptions.
+
+    """
+    SURVIVAL_COHORT = "SURVIVAL_COHORT"
+    """
+    Candidates surviving the discovery pass's filters (region, NT, sex bias, etc.) at the queried rank. CURRENTLY THE ONLY KIND EMITTED BY STAGE A. Cohort membership is dynamic — it depends on the query filters, so two queries against the same taxonomy can yield different cohorts.
+
+    """
+    ATLAS_UNIVERSAL = "ATLAS_UNIVERSAL"
+    """
+    All clusters in the taxonomy at the queried rank, with no filters. Stable across queries against the same taxonomy. Emission currently dormant; reserved for revival of the legacy `_score_from_percentiles` path.
+
+    """
+    ANATOMICAL_RESTRICTION = "ANATOMICAL_RESTRICTION"
+    """
+    All clusters annotated to a specified anatomical region closure, with no other filters. Anticipates future anatomy-context scoring; not yet emitted by Stage A.
+
+    """
+    SIBLINGS_UNDER_PARENT = "SIBLINGS_UNDER_PARENT"
+    """
+    Direct children of a common parent at the queried rank. Legacy notion from the pre-2026 sibling/global scoring scheme; reserved in case it is revived.
+
+    """
+
+
+class GeneDiscoverySource(str, Enum):
+    """
+    Where the per-gene `val` recorded on a GeneDiscoveryDetail came from. Determines which of val / reliable / percentiles / coverage are populated.
+
+    """
+    EXPRESSION = "EXPRESSION"
+    """
+    Value read from the candidate's precomputed_stats HDF5. val / reliable / percentiles populated; coverage populated at rank ≥ 1.
+
+    """
+    METADATA = "METADATA"
+    """
+    Gene flagged as a marker in the taxonomy YAML but absent from precomputed_stats. val / reliable / percentiles all null; raw_tier = +1 (a weak presence assertion based on metadata, not measurement).
+
+    """
+
+
+class DiscoveryRegionEvidence(str, Enum):
+    """
+    How Stage A established that a candidate is "in region" for the queried anatomy.
+
+    """
+    SELF = "SELF"
+    """
+    The candidate's own anatomical annotation places it in the queried region closure.
+
+    """
+    DESCENDANT_ONLY = "DESCENDANT_ONLY"
+    """
+    The candidate (rank ≥ 1) was rescued because its rank-0 descendants annotate to the region, even though the candidate's own anatomical metadata is incomplete (BCKG workaround for sparse mid-rank annotation).
+
+    """
+
+
 
 class OntologyTerm(ConfiguredBaseModel):
     """
@@ -590,6 +652,7 @@ class OntologyTerm(ConfiguredBaseModel):
     id: str = Field(default=..., description="""Ontology CURIE from a recognised namespace. Pattern enforces a known prefix — add new prefixes here when new ontologies are adopted (e.g. HOMBA when released). Examples: CL:0000540, UBERON:0001950, NCBITaxon:10090, MBA:1031, HBA:12898, DHBA:10344.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -646,6 +709,7 @@ class AnatomicalLocation(OntologyTerm):
     id: str = Field(default=..., description="""Ontology CURIE from a recognised namespace. Pattern enforces a known prefix — add new prefixes here when new ontologies are adopted (e.g. HOMBA when released). Examples: CL:0000540, UBERON:0001950, NCBITaxon:10090, MBA:1031, HBA:12898, DHBA:10344.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -825,7 +889,9 @@ class PropertySource(ConfiguredBaseModel):
     support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Set by cite-traverse and evidence-extraction workflows. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     source: Optional[str] = Field(default=None, description="""Workflow provenance tag identifying when/how this source was added. E.g. \"cite_traverse_2026_04_10\", \"asta_survey_2026_03\". Machine-set; not for human editing.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'PrecomputedExpression']} })
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+                       'GeneDiscoveryDetail',
+                       'PrecomputedExpression']} })
     added_by: Optional[str] = Field(default=None, description="""Identifier of the agent or workflow run that wrote this entry. E.g. \"evidence_extraction_olm_cell_ca1_2026-04-22\". Machine-set; not for human editing.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
 
@@ -910,7 +976,9 @@ class MarkerSource(PropertySource, HasMarkerType):
     support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Set by cite-traverse and evidence-extraction workflows. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
     source: Optional[str] = Field(default=None, description="""Workflow provenance tag identifying when/how this source was added. E.g. \"cite_traverse_2026_04_10\", \"asta_survey_2026_03\". Machine-set; not for human editing.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'PrecomputedExpression']} })
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+                       'GeneDiscoveryDetail',
+                       'PrecomputedExpression']} })
     added_by: Optional[str] = Field(default=None, description="""Identifier of the agent or workflow run that wrote this entry. E.g. \"evidence_extraction_olm_cell_ca1_2026-04-22\". Machine-set; not for human editing.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
 
@@ -939,6 +1007,7 @@ class ElectrophysiologyProfile(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyProfile',
                        'MorphologyProfile',
                        'Caveat',
+                       'DiscoveryContext',
                        'CellTypeMappingGraph',
                        'AnnotationTransferDataset',
                        'BulkDataset']} })
@@ -962,6 +1031,7 @@ class MorphologyProfile(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyProfile',
                        'MorphologyProfile',
                        'Caveat',
+                       'DiscoveryContext',
                        'CellTypeMappingGraph',
                        'AnnotationTransferDataset',
                        'BulkDataset']} })
@@ -1073,6 +1143,7 @@ class CellTypeNode(ConfiguredBaseModel):
     id: str = Field(default=..., description="""Locally unique ID within this graph. Suggested format: lowercase_underscored, e.g. \"lugaro\", \"pli3_osorno\", \"wmb_1145\"
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -1137,6 +1208,7 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
     n_cells: Optional[int] = Field(default=None, description="""Number of cells of this type in the 10x dataset, summed across all regions. Populated from the atlas taxonomy source (e.g. WMBv1 KG node `cell_count` property). Distinct from `anatomical_location[].cell_count`, which is the per-region MerFish count. Leave absent for non-atlas nodes.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode',
                        'AnnotationTransferMetricRow',
+                       'DiscoveryAtSignal',
                        'ChildClusterExpression']} })
     merfish_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""MERFISH panel markers distinguishing this type (merfish.markers.combo)""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Unified marker list for atlas taxonomy nodes. Replaces the separate defining_markers / neuropeptides / merfish_markers fields for atlas nodes; use GeneDescriptor.category to distinguish marker roles (DEFINING, DEFINING_SCOPED, TF, NEUROPEPTIDE, NT_MARKER, MERFISH). Negative markers use modifier: ABSENT. The legacy separate fields are retained for backward compatibility with existing draft KB YAML.
@@ -1329,7 +1401,9 @@ class AnnotationTransferLevelResult(ConfiguredBaseModel):
     best_target_name: str = Field(default=..., description="""Name of the best-matching target at this level""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult']} })
     best_target_accession: Optional[str] = Field(default=None, description="""CCN accession of the best-matching target""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult']} })
     coverage: Optional[float] = Field(default=None, description="""Fraction of source cells mapping to this target. High coverage = the source type is concentrated on this target. Equivalent to recall in standard ML terms. Surfaced as `Cov` in figure annotations and `coverage` in `at_figures --emit-metrics` JSON sidecars. Renamed from `group_purity` in the 2026-05-25 nomenclature standardisation (hard cutover).
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult',
+                       'AnnotationTransferMetricRow',
+                       'GeneDiscoveryDetail']} })
     purity: Optional[float] = Field(default=None, description="""Fraction of cells in the target that come from this source. High purity = the target is specifically populated by this source type. Equivalent to precision in standard ML terms. Surfaced as `Pur` in figure annotations and `purity` in `at_figures --emit-metrics` JSON sidecars. Renamed from `target_purity` in the 2026-05-25 nomenclature standardisation (hard cutover).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
     f1_score: Optional[float] = Field(default=None, description="""Harmonic mean of coverage and purity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult']} })
@@ -1354,16 +1428,19 @@ class AnnotationTransferMetricRow(ConfiguredBaseModel):
                        'AnnotationTransferLevelResult',
                        'AnnotationTransferMetricRow',
                        'TaxonomyNodeList']} })
-    target_name: Optional[str] = Field(default=None, description="""Name of the target at this level (e.g. \"0206 Pvalb Gaba_2\").""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow']} })
+    target_name: Optional[str] = Field(default=None, description="""Name of the target at this level (e.g. \"0206 Pvalb Gaba_2\").""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow', 'DiscoveryAtSignal']} })
     target_accession: str = Field(default=..., description="""CCN accession of the target (e.g. CS20230722_SUPT_0206).""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow', 'BulkCorrelationEvidence']} })
     n_cells: Optional[int] = Field(default=None, description="""Number of source cells mapping to this target at this level.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode',
                        'AnnotationTransferMetricRow',
+                       'DiscoveryAtSignal',
                        'ChildClusterExpression']} })
     coverage: Optional[float] = Field(default=None, description="""Fraction of source cells mapping to this target (= recall in standard ML terms). Same semantic as `AnnotationTransferLevelResult.coverage`. Surfaced as `Cov` in figure annotations and `coverage` in `--emit-metrics` JSON sidecars.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult',
+                       'AnnotationTransferMetricRow',
+                       'GeneDiscoveryDetail']} })
     purity: Optional[float] = Field(default=None, description="""Fraction of cells in the target coming from this source (= precision in standard ML terms). Same semantic as `AnnotationTransferLevelResult.purity`. Surfaced as `Pur` in figure annotations and `purity` in `--emit-metrics` JSON sidecars.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
-    f1: Optional[float] = Field(default=None, description="""Harmonic mean of coverage and purity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow']} })
+    f1: Optional[float] = Field(default=None, description="""Harmonic mean of coverage and purity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow', 'DiscoveryAtSignal']} })
     median_bootstrap: Optional[float] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
     mean_bootstrap: Optional[float] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow']} })
 
@@ -1717,9 +1794,130 @@ class Caveat(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyProfile',
                        'MorphologyProfile',
                        'Caveat',
+                       'DiscoveryContext',
                        'CellTypeMappingGraph',
                        'AnnotationTransferDataset',
                        'BulkDataset']} })
+
+
+class DiscoveryContext(ConfiguredBaseModel):
+    """
+    A named percentile context referenced by DiscoveryScore.expression_detail[*].percentiles[*].context_id. Each context describes the population of candidates that defines \"100th percentile\" for that comparison. Critical for downstream readers — \"0.94 of 142 survivors\" is not the same claim as \"0.94 of 5322 atlas-wide clusters\". Without an explicit context registry, percentile values are ambiguous and cannot be interpreted by the report-time agent.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    id: str = Field(default=..., description="""Local identifier (e.g. 'cohort', 'universal', 'anat_hippocampus') referenced by GenePercentile.context_id. Stable within one discovery_score block; not a global ID.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
+                       'CellTypeNode',
+                       'DiscoveryContext',
+                       'MappingEdge',
+                       'BulkDataset',
+                       'BulkPool',
+                       'CorrelationRun',
+                       'CorrelationContrast',
+                       'AnnotationTransferRunSummary',
+                       'AnnotationTransferRun']} })
+    kind: DiscoveryContextKind = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryContext']} })
+    rank: Optional[int] = Field(default=None, description="""Taxonomy rank at which the context is defined (0 = leaf cluster, 1 = supertype, …). For SURVIVAL_COHORT must match the parent DiscoveryScore.rank.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryContext', 'DiscoveryScore']} })
+    n_members: int = Field(default=..., description="""Number of candidates in this context. Required for interpreting any percentile — 0.95 of 12 is much weaker discriminator than 0.95 of 500.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryContext']} })
+    filters: Optional[list[str]] = Field(default=None, description="""For SURVIVAL_COHORT — the filters that defined survival (e.g. ['region=hippocampal_formation', 'nt_type=Gaba']). Empty for ATLAS_UNIVERSAL. Format is free-text key=value intended for agent consumption, not for programmatic parsing.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryContext']} })
+    description: Optional[str] = Field(default=None, description="""Optional human-readable expansion (e.g. 'GABAergic clusters annotated to hippocampal formation closure'). For agent consumption when the structured fields above are insufficient.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyProfile',
+                       'MorphologyProfile',
+                       'Caveat',
+                       'DiscoveryContext',
+                       'CellTypeMappingGraph',
+                       'AnnotationTransferDataset',
+                       'BulkDataset']} })
+
+
+class GenePercentile(ConfiguredBaseModel):
+    """
+    A single gene's specificity within one named context.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    context_id: str = Field(default=..., description="""References DiscoveryScore.contexts[*].id.""", json_schema_extra = { "linkml_meta": {'domain_of': ['GenePercentile']} })
+    pct: Optional[float] = Field(default=None, description="""Percentile of val within the context's members (0–1). Interpret with the context's n_members — 0.95 of 12 is a much weaker discriminator than 0.95 of 500. Null when val is null (i.e. source=metadata).
+""", ge=0.0, le=1.0, json_schema_extra = { "linkml_meta": {'domain_of': ['GenePercentile']} })
+
+
+class GeneDiscoveryDetail(ConfiguredBaseModel):
+    """
+    Stage A's per-gene observation for one queried gene against one candidate. Six fields capture orthogonal aspects: measurement (val, reliable, source), specificity within context(s) (percentiles[]), score contribution before and after modifiers (raw_tier, applied_score), and rank ≥ 1 distribution (coverage). Read all six together; any one in isolation can mislead.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    gene: str = Field(default=..., description="""Gene symbol. A leading '-' marks a NEGATIVE marker — i.e. the cell type was specified to NOT express this gene, and credit is awarded for absence. The prefix survives every downstream surface so the reading polarity is never ambiguous.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDiscoveryDetail']} })
+    val: Optional[float] = Field(default=None, description="""Precomputed mean expression (log scale) for this gene on this candidate. Null when the gene is not in the precomputed_stats HDF5 (source=metadata).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDiscoveryDetail']} })
+    reliable: Optional[bool] = Field(default=None, description="""True iff val ≥ MIN_DETECTABLE (currently 1.0). False means the value is at noise floor — for positive markers, treat as 'not actually expressed'; for negative markers, confirms absence.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDiscoveryDetail']} })
+    raw_tier: Optional[int] = Field(default=None, description="""Integer tier from the cohort-relative scoring table BEFORE any modifiers. Positive markers: +2 (reliable & cohort_pct ≥ 0.95), +1 (reliable, cohort_pct < 0.95), 0 (not reliable). Negative markers: +1 (correctly absent), −1 (present, cohort_pct < 0.95 — contradicts but unsurprising), −2 (cohort_pct ≥ 0.95 — aberrantly high). +1 for metadata-only marker assertions.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDiscoveryDetail']} })
+    applied_score: Optional[float] = Field(default=None, description="""Score actually contributed to DiscoveryScore.score after modifiers. At rank ≥ 1 the rank-0 coverage dampener (sqrt(coverage)) shrinks raw_tier proportionally, so applied_score = raw_tier × sqrt(coverage) when coverage is populated. At rank 0, applied_score == raw_tier. When applied_score differs from raw_tier, the gap is the modifier signal — investigate `coverage` next.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDiscoveryDetail']} })
+    source: GeneDiscoverySource = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+                       'GeneDiscoveryDetail',
+                       'PrecomputedExpression']} })
+    coverage: Optional[float] = Field(default=None, description="""AT RANK ≥ 1 ONLY (null at rank 0). Fraction of this candidate's rank-0 descendants that express the gene at ≥ MIN_DETECTABLE. Reveals whether a supertype-mean is broadly supported (coverage ≈ 0.75 — most children carry the signal) or driven by a minority (coverage ≈ 0.25 — the supertype-mean is misleading; the signal probably belongs to one child cluster). Low coverage at rank ≥ 1 is a HIDDEN-1:1 signal — see §1.2 of the confidence review.
+""", ge=0.0, le=1.0, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult',
+                       'AnnotationTransferMetricRow',
+                       'GeneDiscoveryDetail']} })
+    percentiles: Optional[list[GenePercentile]] = Field(default=None, description="""Per-context specificity records. Today exactly one entry per gene (context_id='cohort'); the list shape is forward-compatible with universal / anatomical context emission.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['GeneDiscoveryDetail']} })
+
+
+class DiscoveryAtSignal(ConfiguredBaseModel):
+    """
+    Cohort-scoring view of the AT hit that contributed to DiscoveryScore.score. The AUTHORITATIVE AT record lives in MappingEdge.evidence[] as AnnotationTransferEvidence; this block exists only to make the cohort-ranking reasoning auditable — i.e. \"+3 of the discovery score came from an AT F1 ≥ 0.5 hit\".
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    f1: Optional[float] = Field(default=None, ge=0.0, le=1.0, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow', 'DiscoveryAtSignal']} })
+    n_cells: Optional[int] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode',
+                       'AnnotationTransferMetricRow',
+                       'DiscoveryAtSignal',
+                       'ChildClusterExpression']} })
+    target_level: Optional[str] = Field(default=None, description="""Taxonomy level of the AT target (cluster, supertype, …).""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryAtSignal']} })
+    target_name: Optional[str] = Field(default=None, description="""Name of the AT target the source mapped to.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow', 'DiscoveryAtSignal']} })
+    score: Optional[int] = Field(default=None, description="""AT bucket contribution to DiscoveryScore.score (+1 / +2 / +3 at F1 thresholds ≥ floor / 0.3 / 0.5).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryAtSignal', 'DiscoveryScore']} })
+
+
+class DiscoveryScore(ConfiguredBaseModel):
+    """
+    Stage A find_candidates output recorded on the MappingEdge it produced. A SINGLE SIGNAL AMONG MANY — does NOT re-state overall confidence. Stage A scores cohort-relative gene overlap; it does NOT see AT-pooling caveats, cluster-level region scatter, literature, or morphology. Report-time agents must treat `score` as one input, weighed against marker comparisons, AT metrics, and literature evidence — never as a confidence value. See workflows/gen-report.md \"How to read discovery_score\" for the reader's guide.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    score: Optional[int] = Field(default=None, description="""Composite Stage A score for this candidate. Sum of contributions from: region match (+2), NT match (+2), per-gene marker tiers (see GeneDiscoveryDetail.applied_score), AT-F1 bucket (+1/+2/+3 at thresholds F1 ≥ floor / 0.3 / 0.5), region-exact bonus (+1), optional criteria. Cohort-relative ranking matters more than the absolute number; compare against `next_best_score` and `cohort_size`.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryAtSignal', 'DiscoveryScore']} })
+    rank_in_cohort: Optional[int] = Field(default=None, description="""1-based rank of this candidate in the discovery cohort (1 = top scorer). Combined with `cohort_size` and `next_best_score`, lets the report-time agent reason about cohort dominance.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    cohort_size: Optional[int] = Field(default=None, description="""Total number of candidates returned by this discovery pass — i.e. members of the SURVIVAL_COHORT context (see contexts[]). Required to interpret `rank_in_cohort` and any `cohort` percentile.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    next_best_score: Optional[int] = Field(default=None, description="""Score of the cohort runner-up. A large gap (e.g. 8 vs 3) indicates the top candidate dominated the cohort; a small gap signals ambiguity between near-tied candidates.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    rank: Optional[int] = Field(default=None, description="""Taxonomy rank queried at Stage A (0 = leaf cluster, 1 = supertype, 2 = subclass, …). Determines whether GeneDiscoveryDetail.coverage is populated (only at rank ≥ 1).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryContext', 'DiscoveryScore']} })
+    region_fraction: Optional[float] = Field(default=None, description="""cells-in-queried-region / total annotated cells at this candidate. 1.0 = candidate sits entirely inside the queried region. Low values may push the predicate toward PartialOverlapMatch (see §1.7 of the confidence review).
+""", ge=0.0, le=1.0, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    region_evidence: Optional[DiscoveryRegionEvidence] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    contexts: Optional[list[DiscoveryContext]] = Field(default=None, description="""Registry of percentile contexts referenced by expression_detail[*].percentiles[*].context_id. Today only SURVIVAL_COHORT (id='cohort') is emitted; future passes may add ATLAS_UNIVERSAL or ANATOMICAL_RESTRICTION. Each context captures the cohort definition so a reader can interpret a percentile correctly.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    expression_detail: Optional[list[GeneDiscoveryDetail]] = Field(default=None, description="""Per-gene record of what Stage A saw for the genes the curator queried. Negative markers are keyed with a '-' prefix on `gene` (e.g. '-Slc17a7') and earn credit for being ABSENT.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    at_signal: Optional[DiscoveryAtSignal] = Field(default=None, description="""Optional. Annotation-transfer hit that contributed to `score`. Cohort-scoring provenance only — the authoritative AT record lives in MappingEdge.evidence[] as AnnotationTransferEvidence.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
 
 
 class MappingEdge(ConfiguredBaseModel):
@@ -1741,6 +1939,7 @@ class MappingEdge(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Unique edge ID, e.g. \"edge_lugaro_to_pli3\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -1773,6 +1972,8 @@ class MappingEdge(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge']} })
     reviewed_by: Optional[str] = Field(default=None, description="""Name or ORCID of the human reviewer who confirmed this edge, distinct from the curator who created or last edited the record. Phase 2 schema overhaul (2026-05-12).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge']} })
+    discovery_score: Optional[DiscoveryScore] = Field(default=None, description="""Stage A find_candidates output for this candidate, recorded verbatim on the edge that consumed it. A single signal among many — NOT a re-statement of overall confidence. See the DiscoveryScore class description and the gen-report \"How to read discovery_score\" prompt for reader guidance. Populated by Stage B at edge creation (workflows/map-cell-type.md Step 3) or by backfill from on-disk discovery JSONs (just backfill-discovery-score). Optional — edges that predate the discovery JSON convention will have no value.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge']} })
     evidence: list[EvidenceItem] = Field(default=..., description="""All evidence items directly supporting this specific edge (min 1)""", json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge']} })
     property_comparisons: Optional[list[PropertyComparison]] = Field(default=None, description="""Structured property-by-property comparison between lit_type and taxonomy_type. Makes the basis for the confidence judgment machine-readable and surfaceable in reports. Populate at minimum: nt_type, location, and all defining markers. Use NOT_ASSESSED where data is unavailable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge']} })
@@ -1796,6 +1997,7 @@ class CellTypeMappingGraph(ConfiguredBaseModel):
     description: Optional[str] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyProfile',
                        'MorphologyProfile',
                        'Caveat',
+                       'DiscoveryContext',
                        'CellTypeMappingGraph',
                        'AnnotationTransferDataset',
                        'BulkDataset']} })
@@ -1834,6 +2036,7 @@ class AnnotationTransferDataset(ConfiguredBaseModel):
     description: Optional[str] = Field(default=None, description="""Free-text description of the dataset and its relevance""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyProfile',
                        'MorphologyProfile',
                        'Caveat',
+                       'DiscoveryContext',
                        'CellTypeMappingGraph',
                        'AnnotationTransferDataset',
                        'BulkDataset']} })
@@ -1864,7 +2067,9 @@ class PrecomputedExpression(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
     source: str = Field(default=..., description="""Source file or dataset for the precomputed stats. E.g. \"precomputed_stats_ABC_revision_230821.h5\"
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource', 'PrecomputedExpression']} })
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
+                       'GeneDiscoveryDetail',
+                       'PrecomputedExpression']} })
     level: Optional[str] = Field(default=None, description="""Taxonomy level these stats correspond to. E.g. \"cluster\", \"supertype\"
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['HierarchyNode', 'PrecomputedExpression']} })
     genes: Optional[list[GeneExpression]] = Field(default=None, description="""Per-gene expression statistics for this node.
@@ -1883,6 +2088,7 @@ class ChildClusterExpression(ConfiguredBaseModel):
     cluster_accession: str = Field(default=..., description="""Cell set accession of the child cluster""", json_schema_extra = { "linkml_meta": {'domain_of': ['ChildClusterExpression']} })
     n_cells: Optional[int] = Field(default=None, description="""Number of cells in this cluster""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode',
                        'AnnotationTransferMetricRow',
+                       'DiscoveryAtSignal',
                        'ChildClusterExpression']} })
     expression: Optional[str] = Field(default=None, description="""Gene symbol → mean expression mapping. Stored as a flat dict; keys are gene symbols, values are floats.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['ChildClusterExpression']} })
@@ -1933,6 +2139,7 @@ class BulkDataset(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Stable dataset identifier, e.g. dataset_GSE183092""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -1954,6 +2161,7 @@ class BulkDataset(ConfiguredBaseModel):
     description: Optional[str] = Field(default=None, description="""Free-text description of the experimental design and what was profiled""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyProfile',
                        'MorphologyProfile',
                        'Caveat',
+                       'DiscoveryContext',
                        'CellTypeMappingGraph',
                        'AnnotationTransferDataset',
                        'BulkDataset']} })
@@ -2013,6 +2221,7 @@ class BulkPool(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Stable pool identifier, e.g. knoedler_VMH_FR""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -2042,6 +2251,7 @@ class CorrelationRun(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Stable run identifier, e.g. corr_run_20260428_knoedler_wmbv1""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -2111,6 +2321,7 @@ class CorrelationContrast(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Stable contrast identifier, e.g. corr_VMH_FR_vs_BNST_FR""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -2170,6 +2381,7 @@ class AnnotationTransferRunSummary(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Run identifier — matches AnnotationTransferRun.id""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -2206,6 +2418,7 @@ class AnnotationTransferRun(ConfiguredBaseModel):
 
     id: str = Field(default=..., description="""Stable run identifier, e.g. at_run_20260408_winterer_olm_mmc_wmbv1""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
+                       'DiscoveryContext',
                        'MappingEdge',
                        'BulkDataset',
                        'BulkPool',
@@ -2291,6 +2504,11 @@ MorphologyEvidence.model_rebuild()
 MarkerAnalysisEvidence.model_rebuild()
 BulkCorrelationEvidence.model_rebuild()
 Caveat.model_rebuild()
+DiscoveryContext.model_rebuild()
+GenePercentile.model_rebuild()
+GeneDiscoveryDetail.model_rebuild()
+DiscoveryAtSignal.model_rebuild()
+DiscoveryScore.model_rebuild()
 MappingEdge.model_rebuild()
 CellTypeMappingGraph.model_rebuild()
 AnnotationTransferDataset.model_rebuild()

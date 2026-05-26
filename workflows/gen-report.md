@@ -869,6 +869,82 @@ verifies every quantitative claim in `rationale` against the edge's
 structured data. **Any verification failure blocks write-back of all
 blocks atomically.** Format your rationale accordingly.
 
+## Predicate + confidence rubric (2026-05-26 refresh)
+
+The verdict is a **TOC signal telling reviewers where to look**.
+Reviewers drill into the report for fine detail. Pick `confidence`
+deterministically against the evidence on the edge; the predicate
+itself was selected by Stage B against the same rubric (see
+`workflows/map-cell-type.md` Step 3 #7) — if the inherited predicate
+is inconsistent with the evidence under the rubric below, flag it in
+`reconciliation_note` and let the curator-review pass correct it
+(do not silently revise the predicate from the verdict block).
+
+### Predicate rubric (reference)
+
+Stage B picks `relationship` from a decision tree on cardinality →
+location → AT support → marker consistency:
+
+- **`skos:exactMatch`** — clean 1:1; location is classical region +
+  adjacent only; AT (if present) F1 > 0.75; no major contradictions.
+- **`skos:closeMatch`** — same 1:1 shape but with contradictions
+  (marker mismatch, soft AT, location edge case).
+- **`skos:broadMatch` (+ `1:n`)** — taxonomy_type is broader: distant
+  region, cross-cutting at rank N collapsing to broader at N+1, or
+  many lit_types → one taxonomy_type.
+- **`skos:narrowMatch` (+ `n:1`)** — symmetric inverse.
+- **`evidencell:CrossCuttingMatch`** — many lit_types share this
+  taxonomy_type at this rank with no higher rank that rescues.
+- **`evidencell:UncertainRelationship`** — insufficient evidence.
+
+`evidencell:PartialOverlapMatch` is **deprecated**. If you encounter
+it on an inherited edge, propose a migration in `reconciliation_note`
+(e.g. *"deprecated PartialOverlapMatch; migrate to closeMatch under
+2026-05-26 rubric — soft AT F1=0.66 + 1 of 3 markers DISCORDANT"*).
+
+### Confidence rubric
+
+- **HIGH** — Patch-seq annotation-transfer with F1 > 0.75 and
+  marker confirmation, with no major contradiction. Also: bridging
+  or bulk RNA-seq with strong structure/function convergence at
+  similar strength. Default for a clean `skos:exactMatch` where AT
+  is present and supportive.
+- **MODERATE** — Either (a) `skos:exactMatch` with AT absent (the
+  predicate is allowed; the ceiling drops because the experimental
+  anchor is missing), or (b) `skos:closeMatch` with at least one
+  strong evidence type and contradictions that are documented
+  rather than unresolved.
+- **LOW** — single evidence item, indirect convergence, or
+  significant unresolved contradictions.
+- **UNCERTAIN** — contradictory, ambiguous, or minimal evidence;
+  pair with `evidencell:UncertainRelationship` or with a
+  `reconciliation_note` describing what would resolve it.
+- **REFUTED** — preponderance of evidence argues against the
+  mapping.
+
+### Marker contradiction protocol (orthogonal to predicate)
+
+When a marker is inconsistent (a defining_marker scored DISCORDANT,
+or a negative_marker present at ≥ MIN_DETECTABLE):
+
+1. **Check the literature already gathered** (LiteratureEvidence
+   items on the classical node, references.json snippets) for any
+   record of marker heterogeneity within the classical type.
+2. **If heterogeneity is documented** — cite the snippet in
+   `rationale`; the contradiction is a known biological feature
+   and does not by itself force a demotion.
+3. **If not documented in gathered lit** — flag a follow-up lit
+   trawl as an `unresolved_questions` entry, e.g. *"Trawl
+   literature for Pvalb heterogeneity within the OLM type — the
+   atlas-side absence may be a real subpopulation signal not yet
+   captured in the synthesised evidence."* If the contradiction is
+   cross-edge (the same marker is inconsistent across multiple
+   sibling edges), surface it in `reconciliation_note` instead.
+
+This protocol is the report-time agent's behaviour, not a predicate
+rule — the predicate is fixed by Stage B. The protocol shapes the
+rationale and the follow-up surface in the verdict block.
+
 ## Rationale format constraints (enforced by the post-write check)
 
 The rationale prose MUST cite specific structured-field references. The
@@ -910,6 +986,67 @@ Cite `region_fraction` explicitly when it is in the **boundary band**
 (roughly 0.3–0.7) and explain whether it drove the relationship choice.
 Skip the citation when very high (>0.7) or very low (<0.3) — the
 relationship choice implies the value.
+
+## How to read `discovery_score`
+
+When `discovery_score` is present on a facts edge, treat it as Stage A's
+cohort-ranking view of the candidate. It is **meta-signal about
+candidate generation** — a single signal among many — and is **NOT a
+confidence value**. Stage A scores cohort-relative gene overlap; it
+does not see AT-pooling caveats, cluster-level region scatter,
+literature, or morphology. Weigh it against marker comparisons, AT
+metrics, and literature.
+
+Reading rules:
+
+- **`score` is composite.** Sum of region (+2), NT (+2), per-gene
+  marker tiers (see `expression_detail[*].applied_score`), AT-F1
+  bucket (+1/+2/+3), region-exact bonus (+1), optional criteria.
+  Never quote `score` as a confidence value.
+- **Dominance.** Compare `score`, `next_best_score`, `cohort_size`,
+  and `rank_in_cohort`. Score 8 vs next-best 3 in a cohort of 142 is
+  strong dominance; 5 vs 4 in a cohort of 8 is near-tied.
+- **Per-gene reading.** For each `expression_detail` entry:
+  - `gene` with a leading `-` is a **negative marker** — credit was
+    awarded for absence. Presence inverts the reading.
+  - `val` × `reliable` says whether the gene was actually expressed
+    (≥ MIN_DETECTABLE).
+  - `percentiles[].pct` says how specific. ALWAYS interpret with the
+    referenced context's `n_members` — 0.95 of 12 is much weaker
+    than 0.95 of 500. Join `context_id` → `contexts[]`.
+  - `source: EXPRESSION` means real precomputed-stats measurement;
+    `source: METADATA` means taxonomy-YAML marker flag only (a
+    weaker presence assertion, `raw_tier = 1`).
+  - **Modifier signal.** `applied_score < raw_tier` means the
+    rank-≥-1 coverage dampener fired. Inspect `coverage`. Low
+    coverage (< 0.5) at rank ≥ 1 is a **HIDDEN-1:1 signal**: the
+    supertype-mean is driven by a minority of children; consider
+    drilling to a child cluster, or qualify the broadMatch in
+    `rationale`.
+- **Percentile contexts.** `contexts[].kind` tells the percentile's
+  flavour. Today only `SURVIVAL_COHORT` (dynamic, filter-dependent —
+  read `filters[]` to see what defined survival) is emitted. Future
+  passes may add `ATLAS_UNIVERSAL` (stable) or
+  `ANATOMICAL_RESTRICTION`.
+- **Region.** `region_fraction` and `region_evidence` mirror the
+  edge-level region story; cite them per the "When to cite
+  `region_fraction`" rule above.
+  `region_evidence: DESCENDANT_ONLY` flags a rank-≥-1 candidate
+  rescued only because its children are in region — a known weak
+  signal, cite in `rationale` but do not override marker reasoning.
+- **AT.** `at_signal` is the **cohort-ranking provenance only** —
+  the authoritative AT record lives in `evidence_items[]` as
+  `ANNOTATION_TRANSFER`. Cite AT F1 from the evidence item, not
+  from `at_signal`. Use `at_signal.score` to explain why the
+  composite `score` is what it is, not to make AT claims.
+
+When citing `discovery_score` in `rationale`, name the specific
+sub-field and quote the supporting numbers: e.g. *"Stage A discovery
+dominated its 142-member GABAergic-hippocampal cohort (score 8 vs
+next-best 3)"* or *"Pvalb contributed `applied_score: 2.0` from
+cohort-pct 0.94 of 142"*. Avoid bare references to `score` without
+the cohort context — they are unverifiable and easy to misread as
+confidence.
 
 ## Indistinguishability across source groups (Phase 3 — the #61 pattern)
 
