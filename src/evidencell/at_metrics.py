@@ -55,6 +55,59 @@ from ._models import (
 )
 from .paths import repo_root
 
+# ─── Taxonomy ancestry lookup (lineage-aware mode) ────────────────────
+
+
+def _taxonomy_db_path(taxonomy_id: str) -> Path:
+    return repo_root() / "kb" / "taxonomy" / taxonomy_id / f"{taxonomy_id}.db"
+
+
+def ancestor_accession_by_level(
+    edge_target: str, taxonomy_id: str
+) -> dict[str, str]:
+    """For a node's accession, return ``{taxonomy_level: ancestor_accession}``
+    walking parent_ids in the taxonomy SQLite DB. The result includes the
+    node itself (at its own level) plus every ancestor up to the root.
+
+    Levels below the node's own (e.g. CLUSTER level for an edge to a
+    supertype) are absent — clusters are descendants, not ancestors.
+
+    Used by lineage-aware `compute_edge_metrics` to fill `metrics_by_level`
+    with F1 of (source, ancestor) at each rank.
+    """
+    import sqlite3
+
+    db_path = _taxonomy_db_path(taxonomy_id)
+    if not db_path.is_file():
+        return {}
+    conn = sqlite3.connect(str(db_path))
+    try:
+        out: dict[str, str] = {}
+        # The taxonomy DB keys nodes by either `node_id` (CURIE-style)
+        # or `short_form` (bare accession). Edge targets in KB graphs
+        # use the bare accession (e.g. CS20230722_SUPT_0216), so try
+        # short_form first.
+        cur = edge_target
+        seen: set[str] = set()
+        while cur and cur not in seen:
+            seen.add(cur)
+            row = conn.execute(
+                "SELECT short_form, taxonomy_level, parent_id "
+                "FROM nodes WHERE short_form = ? OR node_id = ?",
+                (cur, cur),
+            ).fetchone()
+            if not row:
+                break
+            sf, level, parent = row
+            if level:
+                out[str(level).upper()] = sf
+            if not parent:
+                break
+            cur = parent
+        return out
+    finally:
+        conn.close()
+
 # ─── Level / rank conventions ─────────────────────────────────────────
 
 _LEVEL_TO_INFIX: dict[str, str] = {
@@ -601,44 +654,79 @@ def compute_edge_metrics(
     variant: str | None = None,
     noise_floor: float = NOISE_FLOOR_F1,
     runs_root: Path | None = None,
+    lineage_aware: bool = True,
 ) -> dict:
     """Build the AT-payload subset to write onto a MappingEdge's AT
     evidence item.
 
-    Returns a dict with keys:
-      ``metrics_by_level``      — list of AnnotationTransferLevelResult dicts,
-                                  one per level where (source, edge_target)
-                                  was observed. Empty list when the AT run
-                                  only saved source-best rows and edge_target
-                                  isn't one of them.
-      ``best_mapping_rank``     — taxonomy_rank of the level where
-                                  (source, edge_target) had highest F1.
-                                  None when metrics_by_level is empty.
-      ``best_f1_score``         — best F1 for (source, edge_target) across
-                                  levels, or None.
-      ``f1_source_relpath``     — filename of the at_results YAML used
-                                  (relative to the run dir).
-      ``supports_default``      — suggested ``supports`` value:
-                                    'SUPPORT'    if best_f1 >= 0.6
-                                    'PARTIAL'    if best_f1 >= noise_floor
-                                    'NO_EVIDENCE' otherwise (incl. empty)
-      ``source_best_summary``   — dict[level → {target_accession, f1}]:
-                                  context the agent can cite when
-                                  edge_target wasn't the source's best.
+    Default mode is **lineage-aware**: for each taxonomy level L from
+    CLASS down to ``edge_target``'s own level, look up F1 for
+    ``(source, ancestor_of_edge_target_at_L)`` in the AT result set.
+    A row at level L tells the reader whether the source converged
+    toward the edge target's lineage at that level. Missing rows
+    above ``edge_target``'s own level are themselves signal —
+    the source did not reach the right lineage at L. See
+    ``docs/at_data_flow.md`` § "Decision record: lineage-aware".
 
-    The function is read-only — it doesn't write to the edge. Callers
-    (Stage B writeback, ``refresh_at_metrics`` sweep) merge the returned
-    dict into the existing evidence item with their own merge policy.
+    Set ``lineage_aware=False`` for the strict semantic (only rows
+    where ``(source, edge_target)`` matches exactly).
+
+    Returns a dict with keys:
+      ``metrics_by_level``      — list of AnnotationTransferLevelResult dicts.
+                                  Under lineage-aware: one row per
+                                  ancestor of ``edge_target`` that has
+                                  AT data for ``source_label``. Under
+                                  strict: at most one row.
+      ``best_mapping_rank``     — taxonomy_rank of the row with highest F1.
+      ``best_f1_score``         — best F1 across emitted rows.
+      ``f1_source_relpath``     — filename of the at_results YAML used.
+      ``supports_default``      — suggested ``supports``: SUPPORT if
+                                  best_f1 >= 0.6, PARTIAL if >= noise_floor,
+                                  NO_EVIDENCE otherwise.
+      ``source_best_summary``   — dict[level → {target_accession, f1,
+                                  is_edge_target_lineage}]: where the
+                                  source actually went at each level, with
+                                  a flag for whether the source's best at
+                                  that level is in edge_target's lineage.
+      ``lineage_aware``         — True / False, the mode used.
+
+    The function is read-only — it doesn't write to the edge.
     """
     rs = load_result_set(run_ref, variant=variant, runs_root=runs_root)
-    matches = lookup_metrics(rs, source_label, edge_target)
+
+    target_per_level: dict[str, str]
+    if lineage_aware:
+        ancestors = ancestor_accession_by_level(
+            edge_target, rs.taxonomy_id
+        )
+        if ancestors:
+            target_per_level = ancestors
+        else:
+            # Taxonomy DB missing — fall back to strict (lookup
+            # edge_target itself at whichever level it appears).
+            target_per_level = {
+                row.taxonomy_level: edge_target
+                for row in rs.rows
+                if row.target_accession == edge_target
+            }
+    else:
+        # Strict: only the row where target == edge_target.
+        target_per_level = {
+            row.taxonomy_level: edge_target
+            for row in rs.rows
+            if row.target_accession == edge_target
+        }
 
     metrics_by_level: list[AnnotationTransferLevelResult] = []
     best_f1 = None
     best_rank = None
     # Emit in canonical rank order (root → leaf) for stable diffs.
     for level in ("CLASS", "SUBCLASS", "SUPERTYPE", "CLUSTER"):
-        row = matches.get(level)
+        wanted_target = target_per_level.get(level)
+        if not wanted_target:
+            continue
+        rows = lookup_metrics(rs, source_label, wanted_target)
+        row = rows.get(level)
         if row is None:
             continue
         metrics_by_level.append(_row_to_level_result(row))
@@ -657,12 +745,22 @@ def compute_edge_metrics(
         supports_default = "NO_EVIDENCE"
 
     source_best = source_best_at_each_level(rs, source_label)
+    lineage = (
+        ancestor_accession_by_level(edge_target, rs.taxonomy_id)
+        if lineage_aware
+        else {}
+    )
     source_best_summary = {
         lvl: {
             "target_accession": r.target_accession,
             "target_name": r.target_name,
             "f1": r.f1,
             "is_edge_target": r.target_accession == edge_target,
+            "is_edge_target_lineage": (
+                r.target_accession == lineage.get(lvl)
+                if lineage_aware
+                else (r.target_accession == edge_target)
+            ),
         }
         for lvl, r in source_best.items()
     }
@@ -676,6 +774,7 @@ def compute_edge_metrics(
         "f1_source_relpath": _yaml_relpath_for(rs),
         "supports_default": supports_default,
         "source_best_summary": source_best_summary,
+        "lineage_aware": lineage_aware,
     }
 
 

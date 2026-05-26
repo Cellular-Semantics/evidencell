@@ -244,16 +244,17 @@ def test_source_best_at_each_level(migrated_shape_a, tmp_path):
 # ─── compute_edge_metrics ─────────────────────────────────────────────
 
 
-def test_compute_edge_metrics_match_returns_populated(
+def test_compute_edge_metrics_strict_match_returns_populated(
     migrated_shape_b, tmp_path
 ):
-    """OLM Sst-OLM → SUPT_0216: edge target IS source best at supertype.
-    Should populate metrics_by_level + supports=SUPPORT (F1=0.67 ≥ 0.6)."""
+    """OLM Sst-OLM → SUPT_0216, **strict** mode: edge target IS source
+    best at supertype. Returns exactly one row, supports=SUPPORT."""
     payload = at_metrics.compute_edge_metrics(
         run_ref=migrated_shape_b.name,
         source_label="Sst-OLM",
         edge_target="CS20230722_SUPT_0216",
         runs_root=tmp_path,
+        lineage_aware=False,
     )
     assert len(payload["metrics_by_level"]) == 1  # SUPERTYPE row only
     assert payload["best_mapping_rank"] == 1
@@ -261,21 +262,49 @@ def test_compute_edge_metrics_match_returns_populated(
     assert payload["supports_default"] == "SUPPORT"
     assert payload["f1_source_relpath"] == "at_results.yaml"
     assert payload["source_best_summary"]["SUPERTYPE"]["is_edge_target"] is True
+    assert payload["lineage_aware"] is False
 
 
-def test_compute_edge_metrics_off_target_empty(migrated_shape_a, tmp_path):
-    """AAC → SUPT_0204 (chandelier, not in any AAC row):
-    metrics_by_level = []; supports_default = NO_EVIDENCE."""
+def test_compute_edge_metrics_lineage_aware_uses_real_taxonomy_db(
+    migrated_shape_b, tmp_path
+):
+    """Lineage-aware default: walks parent_ids in the real taxonomy DB
+    (the test fixture's tmp_path has no DB, so the lookup hits the
+    actual `kb/taxonomy/CCN20230722/CCN20230722.db` in the repo).
+
+    For Sst-OLM → SUPT_0216 with the fixture's three Sst-OLM rows
+    (CLAS_07, SUBC_053, SUPT_0216), all three are ancestors of the
+    edge target — lineage-aware should populate all three rows.
+    """
+    payload = at_metrics.compute_edge_metrics(
+        run_ref=migrated_shape_b.name,
+        source_label="Sst-OLM",
+        edge_target="CS20230722_SUPT_0216",
+        runs_root=tmp_path,
+        lineage_aware=True,
+    )
+    levels = [r["taxonomy_level"] for r in payload["metrics_by_level"]]
+    assert levels == ["CLASS", "SUBCLASS", "SUPERTYPE"]
+    assert payload["supports_default"] == "SUPPORT"
+    assert payload["lineage_aware"] is True
+
+
+def test_compute_edge_metrics_strict_off_target_empty(
+    migrated_shape_a, tmp_path
+):
+    """AAC → SUPT_0204 (chandelier) in **strict** mode:
+    metrics_by_level = [] (AAC has no row for SUPT_0204);
+    supports_default = NO_EVIDENCE."""
     payload = at_metrics.compute_edge_metrics(
         run_ref=migrated_shape_a.name,
         source_label="AAC",
         edge_target="CS20230722_SUPT_0204",
         runs_root=tmp_path,
+        lineage_aware=False,
     )
     assert payload["metrics_by_level"] == []
     assert payload["best_f1_score"] is None
     assert payload["supports_default"] == "NO_EVIDENCE"
-    # source_best_summary lets the agent cite what AAC actually mapped to.
     assert payload["source_best_summary"]["SUPERTYPE"]["target_accession"] == (
         "CS20230722_SUPT_0206"
     )
@@ -285,16 +314,47 @@ def test_compute_edge_metrics_off_target_empty(migrated_shape_a, tmp_path):
     )
 
 
+def test_compute_edge_metrics_lineage_aware_diverges_at_subclass(
+    migrated_shape_a, tmp_path
+):
+    """AAC → SUPT_0204 (chandelier) in **lineage-aware** mode:
+    SUPT_0204's lineage is CLAS_07 / SUBC_051 / SUPT_0204. AAC has
+    rows for CLAS_07 (yes) but its subclass best is SUBC_052 (basket),
+    NOT SUBC_051 (chandelier). So lineage-aware finds AAC at CLASS
+    only — one row at CLASS, no rows at SUBCLASS/SUPERTYPE.
+
+    This is the Bucket-C structural finding: the present-at-CLASS +
+    absent-below pattern IS the evidence that the mapping is unsupported.
+    """
+    payload = at_metrics.compute_edge_metrics(
+        run_ref=migrated_shape_a.name,
+        source_label="AAC",
+        edge_target="CS20230722_SUPT_0204",
+        runs_root=tmp_path,
+        lineage_aware=True,
+    )
+    levels = [r["taxonomy_level"] for r in payload["metrics_by_level"]]
+    assert levels == ["CLASS"]
+    # F1=0.146 → PARTIAL band (above 0.10 noise floor, below 0.6).
+    assert payload["supports_default"] == "PARTIAL"
+    # source_best_summary still shows where AAC actually went.
+    assert payload["source_best_summary"]["SUPERTYPE"]["target_accession"] == (
+        "CS20230722_SUPT_0206"
+    )
+    assert payload["source_best_summary"]["SUPERTYPE"]["is_edge_target_lineage"] is False
+
+
 def test_compute_edge_metrics_noise_floor_demotes_partial_to_no_evidence(
     migrated_shape_b, tmp_path
 ):
     """Sst-OLM → SUPT_0219 has F1=0.03 (well below 0.10 noise floor).
-    Even though the row exists, supports_default = NO_EVIDENCE."""
+    Strict mode: the SUPT_0219 row exists, F1=0.03, NO_EVIDENCE."""
     payload = at_metrics.compute_edge_metrics(
         run_ref=migrated_shape_b.name,
         source_label="Sst-OLM",
         edge_target="CS20230722_SUPT_0219",
         runs_root=tmp_path,
+        lineage_aware=False,
     )
     assert len(payload["metrics_by_level"]) == 1
     assert payload["best_f1_score"] == pytest.approx(0.03)
@@ -450,9 +510,16 @@ def test_refresh_kb_apply_rewrites_metrics(
     reloaded = yaml.safe_load(graph_path.read_text())
     ev = reloaded["edges"][0]["evidence"][0]
     levels = ev["metrics_by_level"]
-    assert len(levels) == 1
-    assert levels[0]["best_target_accession"] == "CS20230722_SUPT_0216"
-    assert levels[0]["f1_score"] == pytest.approx(0.67)
+    # Lineage-aware default: SUPT_0216's ancestors are CLAS_07,
+    # SUBC_053, SUPT_0216. The fixture has all three rows for Sst-OLM,
+    # so we expect 3 rows in metrics_by_level.
+    assert len(levels) == 3
+    accessions = [r["best_target_accession"] for r in levels]
+    assert accessions == [
+        "CS20230722_CLAS_07",
+        "CS20230722_SUBC_053",
+        "CS20230722_SUPT_0216",
+    ]
     # f1_source_relpath now recorded
     assert ev["f1_source_relpath"] == "at_results.yaml"
 
