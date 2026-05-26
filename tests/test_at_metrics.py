@@ -21,6 +21,75 @@ def _write(path: Path, content: str) -> None:
 
 
 @pytest.fixture
+def fake_taxonomy_db(tmp_path: Path, monkeypatch) -> Path:
+    """Build a minimal CCN20230722 taxonomy SQLite DB at tmp_path and
+    monkeypatch ``at_metrics._taxonomy_db_path`` to return it.
+
+    Covers the lineage relationships needed by the AT-metric tests
+    (OLM Sst-OLM ancestry, AAC chandelier-vs-basket divergence, BIC
+    Pvalb-vs-Sst supertypes). Self-contained — runs on any environment
+    including fresh clones / CI without the real KB taxonomy DB on
+    disk. The schema mirrors ``kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db``
+    sufficiently for ``ancestor_accession_by_level`` to walk parent_ids.
+    """
+    import sqlite3
+
+    db_path = tmp_path / "CCN20230722.db"
+    conn = sqlite3.connect(str(db_path))
+    try:
+        conn.execute(
+            "CREATE TABLE nodes ("
+            " node_id TEXT PRIMARY KEY,"
+            " short_form TEXT,"
+            " label TEXT,"
+            " taxonomy_id TEXT,"
+            " taxonomy_level TEXT,"
+            " taxonomy_rank INTEGER,"
+            " parent_id TEXT"
+            ")"
+        )
+        # (short_form, label, taxonomy_level, taxonomy_rank, parent_short)
+        rows = [
+            # Class
+            ("CS20230722_CLAS_07", "07 CTX-MGE GABA",     "CLASS",     3, None),
+            ("CS20230722_CLAS_03", "03 OB-CR Glut",        "CLASS",     3, None),
+            ("CS20230722_CLAS_04", "04 DG-IMN Glut",       "CLASS",     3, None),
+            # Subclasses (parents = class)
+            ("CS20230722_SUBC_051", "051 Pvalb chandelier", "SUBCLASS", 2, "CS20230722_CLAS_07"),
+            ("CS20230722_SUBC_052", "052 Pvalb Gaba",       "SUBCLASS", 2, "CS20230722_CLAS_07"),
+            ("CS20230722_SUBC_053", "053 Sst Gaba",         "SUBCLASS", 2, "CS20230722_CLAS_07"),
+            ("CS20230722_SUBC_036", "036 HPF CR Glut",      "SUBCLASS", 2, "CS20230722_CLAS_03"),
+            # Supertypes (parents = subclass)
+            ("CS20230722_SUPT_0204", "0204 Pvalb chandelier Gaba_1", "SUPERTYPE", 1, "CS20230722_SUBC_051"),
+            ("CS20230722_SUPT_0206", "0206 Pvalb Gaba_2",            "SUPERTYPE", 1, "CS20230722_SUBC_052"),
+            ("CS20230722_SUPT_0216", "0216 Sst Gaba_3",              "SUPERTYPE", 1, "CS20230722_SUBC_053"),
+            ("CS20230722_SUPT_0219", "0219 Sst Gaba_6",              "SUPERTYPE", 1, "CS20230722_SUBC_053"),
+            ("CS20230722_SUPT_0135", "0135 HPF CR Glut_1",           "SUPERTYPE", 1, "CS20230722_SUBC_036"),
+            # Clusters (parents = supertype)
+            ("CS20230722_CLUS_0732", "0732 Pvalb chandelier Gaba_1", "CLUSTER", 0, "CS20230722_SUPT_0204"),
+            ("CS20230722_CLUS_0737", "0737 Pvalb Gaba_2",            "CLUSTER", 0, "CS20230722_SUPT_0206"),
+            ("CS20230722_CLUS_0739", "0739 Pvalb Gaba_2",            "CLUSTER", 0, "CS20230722_SUPT_0206"),
+            ("CS20230722_CLUS_0768", "0768 Sst Gaba_3",              "CLUSTER", 0, "CS20230722_SUPT_0216"),
+        ]
+        conn.executemany(
+            "INSERT INTO nodes (node_id, short_form, label, taxonomy_id, "
+            "taxonomy_level, taxonomy_rank, parent_id) "
+            "VALUES (?, ?, ?, 'CCN20230722', ?, ?, ?)",
+            [
+                # node_id, short_form, label, taxonomy_level, taxonomy_rank, parent_id
+                (sf, sf, label, level, rank, parent)
+                for sf, label, level, rank, parent in rows
+            ],
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    monkeypatch.setattr(at_metrics, "_taxonomy_db_path", lambda tid: db_path)
+    return db_path
+
+
+@pytest.fixture
 def shape_a_run(tmp_path: Path) -> Path:
     """Shape A: f1_scores_best.csv (one row per (source, level), best
     target only). Mimics Que 2021 / Hochgerner DG runs."""
@@ -265,12 +334,13 @@ def test_compute_edge_metrics_strict_match_returns_populated(
     assert payload["lineage_aware"] is False
 
 
-def test_compute_edge_metrics_lineage_aware_uses_real_taxonomy_db(
-    migrated_shape_b, tmp_path
+def test_compute_edge_metrics_lineage_aware_walks_ancestors(
+    migrated_shape_b, fake_taxonomy_db, tmp_path
 ):
-    """Lineage-aware default: walks parent_ids in the real taxonomy DB
-    (the test fixture's tmp_path has no DB, so the lookup hits the
-    actual `kb/taxonomy/CCN20230722/CCN20230722.db` in the repo).
+    """Lineage-aware default: walks parent_ids in the taxonomy DB.
+    Uses a self-contained fake taxonomy DB (built by the fixture) so
+    the test runs on fresh clones / CI without depending on the real
+    `kb/taxonomy/CCN20230722/CCN20230722.db` being on disk.
 
     For Sst-OLM → SUPT_0216 with the fixture's three Sst-OLM rows
     (CLAS_07, SUBC_053, SUPT_0216), all three are ancestors of the
@@ -315,7 +385,7 @@ def test_compute_edge_metrics_strict_off_target_empty(
 
 
 def test_compute_edge_metrics_lineage_aware_diverges_at_subclass(
-    migrated_shape_a, tmp_path
+    migrated_shape_a, fake_taxonomy_db, tmp_path
 ):
     """AAC → SUPT_0204 (chandelier) in **lineage-aware** mode:
     SUPT_0204's lineage is CLAS_07 / SUBC_051 / SUPT_0204. AAC has
@@ -470,7 +540,7 @@ def test_refresh_kb_dry_run_does_not_write(
 
 
 def test_refresh_kb_apply_rewrites_metrics(
-    tmp_path, shape_b_run
+    tmp_path, shape_b_run, fake_taxonomy_db
 ):
     """With dry_run=False, refresh writes the new metrics back."""
     at_metrics.migrate_run(shape_b_run)
