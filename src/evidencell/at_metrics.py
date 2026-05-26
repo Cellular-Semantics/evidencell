@@ -48,7 +48,11 @@ from pathlib import Path
 
 import yaml
 
-from ._models import AnnotationTransferMetricRow, AnnotationTransferResultSet
+from ._models import (
+    AnnotationTransferLevelResult,
+    AnnotationTransferMetricRow,
+    AnnotationTransferResultSet,
+)
 from .paths import repo_root
 
 # ─── Level / rank conventions ─────────────────────────────────────────
@@ -307,6 +311,216 @@ def migrate_all(
             continue
         out[run_dir.name] = written
     return out
+
+
+# ─── Lookup + edge-payload writers ────────────────────────────────────
+
+# F1 noise floor below which an AT evidence item should not assert
+# positive support — `supports: NO_EVIDENCE` rather than PARTIAL/SUPPORT.
+# The compute_edge_metrics() helper applies this when callers don't
+# override. Chosen conservatively: 0.10 corresponds to roughly 10%
+# F1 — well below anything we'd want to cite as positive evidence.
+NOISE_FLOOR_F1: float = 0.10
+
+
+def load_result_set(
+    run_ref: str,
+    *,
+    variant: str | None = None,
+    runs_root: Path | None = None,
+) -> AnnotationTransferResultSet:
+    """Load the at_results YAML for ``run_ref``.
+
+    ``variant`` selects between sibling files (e.g. ``"by_class"`` for
+    Chamberland's within-class-normalised result set). ``None`` loads
+    the canonical ``at_results.yaml`` if present, else the *first*
+    ``at_results_*.yaml`` found alphabetically (with a warning) — but
+    callers should pass an explicit ``variant`` whenever a run has
+    multiple files to avoid silent variant-pick.
+    """
+    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
+    run_dir = runs_root / run_ref
+    if not run_dir.is_dir():
+        raise FileNotFoundError(f"AT run dir not found: {run_dir}")
+
+    candidates = sorted(run_dir.glob("at_results*.yaml"))
+    if not candidates:
+        raise FileNotFoundError(
+            f"No at_results YAML in {run_dir} — run "
+            f"`uv run python -m evidencell.at_metrics migrate {run_dir}` first."
+        )
+
+    if variant is None:
+        canonical = run_dir / "at_results.yaml"
+        chosen = canonical if canonical.is_file() else candidates[0]
+        if chosen != canonical and len(candidates) > 1:
+            print(
+                f"WARNING: {run_dir.name} has multiple at_results files; "
+                f"defaulting to {chosen.name}. Pass variant= to disambiguate.",
+                file=sys.stderr,
+            )
+    else:
+        wanted = run_dir / f"at_results_{variant}.yaml"
+        if not wanted.is_file():
+            raise FileNotFoundError(
+                f"No at_results variant {variant!r} in {run_dir} — "
+                f"available: {[p.name for p in candidates]}"
+            )
+        chosen = wanted
+
+    doc = yaml.safe_load(chosen.read_text(encoding="utf-8"))
+    return AnnotationTransferResultSet(**doc)
+
+
+def lookup_metrics(
+    result_set: AnnotationTransferResultSet,
+    source_label: str,
+    target_accession: str,
+) -> dict[str, AnnotationTransferMetricRow]:
+    """Return the metric row for each level where ``source_label`` has
+    a recorded mapping to ``target_accession``.
+
+    Keyed by ``taxonomy_level``. Empty dict if the (source, target)
+    pair never appears in the set — typical when the AT run only
+    persisted source-best rows (Shape A) and ``target_accession`` is
+    not the source's best at any level.
+    """
+    out: dict[str, AnnotationTransferMetricRow] = {}
+    for row in result_set.rows:
+        if row.source_label == source_label and row.target_accession == target_accession:
+            out[row.taxonomy_level] = row
+    return out
+
+
+def source_best_at_each_level(
+    result_set: AnnotationTransferResultSet, source_label: str
+) -> dict[str, AnnotationTransferMetricRow]:
+    """Return the source's highest-F1 row at each taxonomy level.
+
+    Useful when ``lookup_metrics(... edge_target)`` is empty — surfaces
+    where the source *did* map, so the report-time agent has context
+    about what the AT signal actually says.
+    """
+    by_level: dict[str, AnnotationTransferMetricRow] = {}
+    for row in result_set.rows:
+        if row.source_label != source_label:
+            continue
+        existing = by_level.get(row.taxonomy_level)
+        if existing is None or (row.f1 or 0) > (existing.f1 or 0):
+            by_level[row.taxonomy_level] = row
+    return by_level
+
+
+def _row_to_level_result(
+    row: AnnotationTransferMetricRow,
+) -> AnnotationTransferLevelResult:
+    """Project a MetricRow → LevelResult (the slot type on
+    AnnotationTransferEvidence.metrics_by_level).
+    """
+    return AnnotationTransferLevelResult(
+        taxonomy_level=row.taxonomy_level,
+        taxonomy_rank=row.taxonomy_rank,
+        best_target_name=row.target_name or "",
+        best_target_accession=row.target_accession,
+        group_purity=row.group_purity,
+        target_purity=row.target_purity,
+        f1_score=row.f1,
+        n_cells_mapped=row.n_cells,
+        median_bootstrap=row.median_bootstrap,
+    )
+
+
+def compute_edge_metrics(
+    run_ref: str,
+    source_label: str,
+    edge_target: str,
+    *,
+    variant: str | None = None,
+    noise_floor: float = NOISE_FLOOR_F1,
+    runs_root: Path | None = None,
+) -> dict:
+    """Build the AT-payload subset to write onto a MappingEdge's AT
+    evidence item.
+
+    Returns a dict with keys:
+      ``metrics_by_level``      — list of AnnotationTransferLevelResult dicts,
+                                  one per level where (source, edge_target)
+                                  was observed. Empty list when the AT run
+                                  only saved source-best rows and edge_target
+                                  isn't one of them.
+      ``best_mapping_rank``     — taxonomy_rank of the level where
+                                  (source, edge_target) had highest F1.
+                                  None when metrics_by_level is empty.
+      ``best_f1_score``         — best F1 for (source, edge_target) across
+                                  levels, or None.
+      ``f1_source_relpath``     — filename of the at_results YAML used
+                                  (relative to the run dir).
+      ``supports_default``      — suggested ``supports`` value:
+                                    'SUPPORT'    if best_f1 >= 0.6
+                                    'PARTIAL'    if best_f1 >= noise_floor
+                                    'NO_EVIDENCE' otherwise (incl. empty)
+      ``source_best_summary``   — dict[level → {target_accession, f1}]:
+                                  context the agent can cite when
+                                  edge_target wasn't the source's best.
+
+    The function is read-only — it doesn't write to the edge. Callers
+    (Stage B writeback, ``refresh_at_metrics`` sweep) merge the returned
+    dict into the existing evidence item with their own merge policy.
+    """
+    rs = load_result_set(run_ref, variant=variant, runs_root=runs_root)
+    matches = lookup_metrics(rs, source_label, edge_target)
+
+    metrics_by_level: list[AnnotationTransferLevelResult] = []
+    best_f1 = None
+    best_rank = None
+    # Emit in canonical rank order (root → leaf) for stable diffs.
+    for level in ("CLASS", "SUBCLASS", "SUPERTYPE", "CLUSTER"):
+        row = matches.get(level)
+        if row is None:
+            continue
+        metrics_by_level.append(_row_to_level_result(row))
+        f1 = row.f1 or 0
+        if best_f1 is None or f1 > best_f1:
+            best_f1 = f1
+            best_rank = row.taxonomy_rank
+
+    if best_f1 is None:
+        supports_default = "NO_EVIDENCE"
+    elif best_f1 >= 0.6:
+        supports_default = "SUPPORT"
+    elif best_f1 >= noise_floor:
+        supports_default = "PARTIAL"
+    else:
+        supports_default = "NO_EVIDENCE"
+
+    source_best = source_best_at_each_level(rs, source_label)
+    source_best_summary = {
+        lvl: {
+            "target_accession": r.target_accession,
+            "target_name": r.target_name,
+            "f1": r.f1,
+            "is_edge_target": r.target_accession == edge_target,
+        }
+        for lvl, r in source_best.items()
+    }
+
+    return {
+        "metrics_by_level": [
+            m.model_dump(exclude_none=True) for m in metrics_by_level
+        ],
+        "best_mapping_rank": best_rank,
+        "best_f1_score": best_f1,
+        "f1_source_relpath": _yaml_relpath_for(rs),
+        "supports_default": supports_default,
+        "source_best_summary": source_best_summary,
+    }
+
+
+def _yaml_relpath_for(rs: AnnotationTransferResultSet) -> str:
+    """Reconstruct the at_results filename from a loaded result set."""
+    if rs.normalisation:
+        return f"at_results_{rs.normalisation}.yaml"
+    return "at_results.yaml"
 
 
 # ─── CLI ──────────────────────────────────────────────────────────────
