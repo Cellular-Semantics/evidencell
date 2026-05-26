@@ -318,6 +318,40 @@ TASK:
    use ATLAS_METADATA evidence (the atlas node's own properties as evidence
    for the mapping). This is valid LOW-confidence evidence.
 
+   **ANNOTATION_TRANSFER evidence: metrics_by_level is populated
+   programmatically — DO NOT transcribe F1 numbers.** When you create
+   an ANNOTATION_TRANSFER evidence item, supply only:
+
+   ```yaml
+   - evidence_type: ANNOTATION_TRANSFER
+     run_ref: at_run_<id>                    # matches a dir under kb/annotation_transfer_runs/
+     source_cluster_label: <bare CSV label>  # matches source_label in at_results.yaml
+     supports: <leave unset>                 # post-process sets this from noise floor
+     target_atlas: ...                       # human-readable
+     method: ...                             # for back-compat; otherwise run_ref carries it
+     source_dataset_accession: ...
+     # DO NOT write metrics_by_level, best_f1_score, best_mapping_level,
+     # best_mapping_rank, n_cells_mapped, group_purity, target_purity,
+     # f1_score — these are written programmatically from
+     # kb/annotation_transfer_runs/{run_ref}/at_results.yaml using
+     # (run_ref, source_cluster_label, edge.taxonomy_type) by
+     # src/evidencell/at_metrics.py::compute_edge_metrics().
+     # Run `just refresh-at-metrics --apply` after writing edges to
+     # populate them.
+     explanation: |
+       Qualitative read of the AT result for this edge. Cite cell
+       counts, regional pattern, source-vs-edge-target relationship
+       where relevant. NOT the F1 number itself — that's in
+       metrics_by_level after the programmatic populate.
+   ```
+
+   `source_cluster_label` MUST be the bare label exactly as it appears
+   in the AT run's `at_results.yaml` `source_label` field — not a
+   free-text aggregate like `"BIC (hBIC n=11 + vBIC n=9 aggregated)"`
+   (which doesn't join). If the AT run pools upstream (e.g. Que 2021
+   aggregates hBC+vBC as `BC`), use the pooled name; record the
+   composition in the `source_groups` slot below.
+
    **Pooled AnnotationTransferEvidence.** When the `metrics_by_level` /
    `best_f1_score` on an AT evidence item were computed by pooling
    multiple raw source clusters into one pseudo-source (the
