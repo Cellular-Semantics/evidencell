@@ -112,8 +112,8 @@ def _at_metrics_index(
     edge: dict,
 ) -> dict[tuple[str, str], dict[str, float]]:
     """Index an edge's ANNOTATION_TRANSFER evidence by
-    ``(taxonomy_level, best_target_accession)`` → {f1, group_purity,
-    target_purity}. Multiple metrics_by_level rows can share a key
+    ``(taxonomy_level, best_target_accession)`` → {f1, coverage,
+    purity}. Multiple metrics_by_level rows can share a key
     (one edge per AT evidence item); keep the highest-F1 row.
     """
     out: dict[tuple[str, str], dict[str, float]] = {}
@@ -132,8 +132,8 @@ def _at_metrics_index(
                 continue
             row = {
                 "f1": float(f1),
-                "group_purity": float(m.get("group_purity") or 0.0),
-                "target_purity": float(m.get("target_purity") or 0.0),
+                "coverage": float(m.get("coverage") or 0.0),
+                "purity": float(m.get("purity") or 0.0),
             }
             key = (level, acc)
             existing = out.get(key)
@@ -212,11 +212,11 @@ def find_pool_candidates(
                 (metrics_a[k]["f1"], metrics_b[k]["f1"]) for k in shared
             ]
             gp_pairs = [
-                (metrics_a[k]["group_purity"], metrics_b[k]["group_purity"])
+                (metrics_a[k]["coverage"], metrics_b[k]["coverage"])
                 for k in shared
             ]
             tp_pairs = [
-                (metrics_a[k]["target_purity"], metrics_b[k]["target_purity"])
+                (metrics_a[k]["purity"], metrics_b[k]["purity"])
                 for k in shared
             ]
             if not _all_within(f1_pairs, f1_tolerance):
@@ -249,17 +249,17 @@ def find_pool_candidates(
                             "target_accession": acc,
                             "f1_a": round(metrics_a[(level, acc)]["f1"], 4),
                             "f1_b": round(metrics_b[(level, acc)]["f1"], 4),
-                            "group_purity_a": round(
-                                metrics_a[(level, acc)]["group_purity"], 4
+                            "coverage_a": round(
+                                metrics_a[(level, acc)]["coverage"], 4
                             ),
-                            "group_purity_b": round(
-                                metrics_b[(level, acc)]["group_purity"], 4
+                            "coverage_b": round(
+                                metrics_b[(level, acc)]["coverage"], 4
                             ),
-                            "target_purity_a": round(
-                                metrics_a[(level, acc)]["target_purity"], 4
+                            "purity_a": round(
+                                metrics_a[(level, acc)]["purity"], 4
                             ),
-                            "target_purity_b": round(
-                                metrics_b[(level, acc)]["target_purity"], 4
+                            "purity_b": round(
+                                metrics_b[(level, acc)]["purity"], 4
                             ),
                         }
                         for (level, acc) in shared

@@ -104,7 +104,7 @@ Total: 1 edge (PARTIAL_OVERLAP).
 
 - Atlas metadata: Lamp5 and Lhx6 are listed as DEFINING_SCOPED markers of SUPT_0203, consistent with the classical Ivy cell profile (Lamp5+/Lhx6+ MGE-derived GABAergic interneuron).
 - Atlas precomputed expression (scRNA-seq) confirms all three defining markers (Nos1=7.79, Npy=4.62, Lamp5=4.40) and all three negative markers absent (Pvalb=0.43, Sst=1.52, Calb2=0.37) — a strong quantitative match for the Ivy cell marker signature.
-- Yao 2021 (GEO:GSE185862) SSv4 Lamp5 subclass (n=868 hippocampal cells) maps overwhelmingly onto SUPT_0203 at supertype level (F1=0.90; 711/868 cells; target_purity=0.989), and onto SUBC_050 Lamp5 Lhx6 Gaba at subclass level (F1=0.90). Ivy cells are the predominant Lamp5+/Lhx6+ hippocampal interneuron type, making this a specific hit.
+- Yao 2021 (GEO:GSE185862) SSv4 Lamp5 subclass (n=868 hippocampal cells) maps overwhelmingly onto SUPT_0203 at supertype level (F1=0.90; 711/868 cells; purity=0.989), and onto SUBC_050 Lamp5 Lhx6 Gaba at subclass level (F1=0.90). Ivy cells are the predominant Lamp5+/Lhx6+ hippocampal interneuron type, making this a specific hit.
 - Harris 2018 (GEO:GSE99888) Class Cacna2d1.Lhx6.Reln (Lamp5+/Lhx6+/Reln+ CA1 inhibitory cluster) maps predominantly to Lamp5 Lhx6 Gaba subclass (F1=0.83) and SUPT_0203 at supertype level (F1=0.81) — independent second-dataset corroboration.
 
 **Marker evidence provenance**

@@ -44,8 +44,8 @@ The dropout-robust translation of Chamberland's framework is to apply the gene-p
 
 The per-cluster F1 figures reported above should still not be over-interpreted in isolation. Specifically:
 
-- **Recall (group_purity)** is the more interpretable single metric: of the cells assigned to a Chamberland subfamily, where do they go? Chrna2 → 81% to CLUS_0771 is a strong same-direction signal even allowing for label-set noise. Recall is robust to dropout in the *target* (atlas) side because MapMyCells uses the full transcriptome for assignment, not single-marker tests.
-- **Precision (target_purity)** is a relative measure dependent on how many *other* labelled cells land at the target cluster. With multiple source labels in play, precision values cannot be compared directly across runs with different label sets.
+- **Recall (coverage)** is the more interpretable single metric: of the cells assigned to a Chamberland subfamily, where do they go? Chrna2 → 81% to CLUS_0771 is a strong same-direction signal even allowing for label-set noise. Recall is robust to dropout in the *target* (atlas) side because MapMyCells uses the full transcriptome for assignment, not single-marker tests.
+- **Precision (purity)** is a relative measure dependent on how many *other* labelled cells land at the target cluster. With multiple source labels in play, precision values cannot be compared directly across runs with different label sets.
 - **Per-cluster cell counts (n)** are small for some subfamilies (Ndnf=27 source cells, Sst_Tac1=31 mapped). Small-n F1s carry wide confidence intervals; a difference of 5–10 cells in destination would change F1 substantially.
 - **Within-supertype preference ratios** (e.g. of all Chrna2-source cells landing in Sst Gaba_3 child clusters, what fraction goes to CLUS_0771 vs CLUS_0768?) are the most robust comparisons because dropout in source labelling tends to distribute approximately uniformly across destination clusters when destinations are siblings of similar size.
 
@@ -55,7 +55,7 @@ The per-cluster F1 figures reported above should still not be over-interpreted i
 |---|---|
 | `manifest.yaml` | `AnnotationTransferRun` record (provenance + run params) |
 | `class_to_subfamily.tsv` | Per-Harris-Class subfamily assignment table from cluster-mean rules (50 rows) |
-| `f1_matrix_chamberland_by_class.csv` | **Primary result.** F1 / group_purity / target_purity per (Chamberland_subfamily × level × target), labels propagated from Harris Class assignments |
+| `f1_matrix_chamberland_by_class.csv` | **Primary result.** F1 / coverage / purity per (Chamberland_subfamily × level × target), labels propagated from Harris Class assignments |
 | `f1_matrix_chamberland.csv` | Per-cell-rule version (subject to dropout, retained for transparency) |
 | `f1_matrix_harris_class.csv` | F1 matrix for Harris's own published Class labels (50 source labels) |
 | `labels_chamberland_by_class.json` | 3663 cell barcodes → Chamberland subfamily, derived per-Class |

@@ -480,6 +480,150 @@ def check_rationale_against_edge(
     return errors
 
 
+def check_rationale_against_edge_structured(
+    rationale: str,
+    edge: dict,
+    lit_node: dict | None = None,
+    taxonomy_node: dict | None = None,
+    graph: dict | None = None,
+) -> list[dict]:
+    """Structured form of :func:`check_rationale_against_edge` — same
+    checks, returns ``list[dict]`` for programmatic consumption (e.g.
+    feeding a focused-correction subagent in workflows/gen-report.md
+    Step 4b).
+
+    Each dict has shape::
+
+        {
+          "check": "f1_value" | "accession" | "run_ref" | "marker_count"
+                   | "modality",
+          "claimed": str | int | tuple,    # what the rationale said
+          "expected": str | int | tuple,   # what the structured data says
+          "structured_truth": {...},       # the raw edge data the
+                                           # claim should match
+          "message": str,                  # the human-readable string
+                                           # (same as the legacy API)
+        }
+
+    Empty list = all claims verifiable.
+    """
+    if not rationale:
+        return []
+    out: list[dict] = []
+
+    edge_f1s = _edge_f1_values(edge)
+    for m in _F1_PATTERN.finditer(rationale):
+        value = m.group("value")
+        if value not in edge_f1s and f"0{value}" not in edge_f1s:
+            out.append({
+                "check": "f1_value",
+                "claimed": value,
+                "expected": sorted(edge_f1s) if edge_f1s else None,
+                "structured_truth": {"edge_f1_values": sorted(edge_f1s)},
+                "message": (
+                    f"rationale cites F1={value} but no AT "
+                    f"metrics_by_level entry on this edge carries that "
+                    f"value (rounded to 2dp). Edge F1s: "
+                    f"{sorted(edge_f1s) or '(none)'}."
+                ),
+            })
+
+    edge_accessions = _edge_accessions(edge)
+    graph_accessions: set[str] = set()
+    if graph is not None:
+        for n in graph.get("nodes") or []:
+            if isinstance(n, dict):
+                acc = n.get("cell_set_accession") or n.get("id")
+                if isinstance(acc, str):
+                    graph_accessions.update(_ACCESSION_PATTERN.findall(acc))
+        for e in graph.get("edges") or []:
+            if isinstance(e, dict):
+                graph_accessions.update(_edge_accessions(e))
+    known_accessions = edge_accessions | graph_accessions
+    for acc in set(_ACCESSION_PATTERN.findall(rationale)):
+        if acc not in known_accessions:
+            out.append({
+                "check": "accession",
+                "claimed": acc,
+                "expected": None,
+                "structured_truth": {
+                    "edge_accessions": sorted(edge_accessions),
+                    "graph_accessions_sample": sorted(graph_accessions)[:10],
+                },
+                "message": (
+                    f"rationale cites accession {acc} but it appears "
+                    f"nowhere on this edge or in the surrounding graph."
+                ),
+            })
+
+    edge_run_refs = _edge_run_refs(edge)
+    for run_ref in set(_RUN_REF_PATTERN.findall(rationale)):
+        if run_ref not in edge_run_refs:
+            out.append({
+                "check": "run_ref",
+                "claimed": run_ref,
+                "expected": sorted(edge_run_refs) if edge_run_refs else None,
+                "structured_truth": {"edge_run_refs": sorted(edge_run_refs)},
+                "message": (
+                    f"rationale cites run_ref {run_ref} but no evidence "
+                    f"item on this edge carries it. Edge run_refs: "
+                    f"{sorted(edge_run_refs) or '(none)'}."
+                ),
+            })
+
+    for m in _MARKER_COUNT_PATTERN.finditer(rationale):
+        claimed_consistent = int(m.group("m"))
+        claimed_total = int(m.group("n"))
+        actual_consistent, actual_total = _edge_consistent_marker_count(edge)
+        if (claimed_consistent, claimed_total) != (
+            actual_consistent,
+            actual_total,
+        ):
+            out.append({
+                "check": "marker_count",
+                "claimed": f"{claimed_consistent} of {claimed_total}",
+                "expected": f"{actual_consistent} of {actual_total}",
+                "structured_truth": {
+                    "marker_prefixed_total": actual_total,
+                    "marker_prefixed_consistent": actual_consistent,
+                },
+                "message": (
+                    f"rationale claims {claimed_consistent} of "
+                    f"{claimed_total} markers CONSISTENT but "
+                    f"PropertyComparisons on this edge show "
+                    f"{actual_consistent} of {actual_total} marker_-"
+                    f"prefixed CONSISTENT alignments."
+                ),
+            })
+
+    methods_blob = _edge_method_text(edge, lit_node, taxonomy_node)
+    if any(t in methods_blob for t in _MAPMYCELLS_IMPLIES_SCRNA):
+        methods_blob = methods_blob + " | scrna-seq | single-cell rna"
+    text = rationale.lower()
+    for token, aliases in _MODALITY_ALIASES.items():
+        if token not in text:
+            continue
+        if not any(alias in methods_blob for alias in aliases):
+            out.append({
+                "check": "modality",
+                "claimed": token,
+                "expected": None,
+                "structured_truth": {
+                    "accepted_aliases": sorted(set(aliases)),
+                    "methods_blob_excerpt": methods_blob[:200],
+                },
+                "message": (
+                    f"rationale cites modality '{token}' but no evidence "
+                    f"item, property-source method, or endpoint-node "
+                    f"source method on this edge mentions any of: "
+                    f"{sorted(set(aliases))}. This may be a hallucinated "
+                    f"modality claim."
+                ),
+            })
+
+    return out
+
+
 # ─── Write-back ─────────────────────────────────────────────────────────────
 
 
@@ -694,14 +838,87 @@ def main(argv: list[str] | None = None) -> int:
             "Q5 quality gate)."
         ),
     )
+    parser.add_argument(
+        "--correction-mode",
+        action="store_true",
+        help=(
+            "Emit a structured JSON failure report instead of the default "
+            "summary, suitable as input to a focused-correction subagent "
+            "in workflows/gen-report.md Step 4b. Forces --dry-run "
+            "(never writes). Exit code 0 (success — payload is the "
+            "machine-readable failure list); read stdout."
+        ),
+    )
     args = parser.parse_args(argv)
+    import json as _json
+
+    if args.correction_mode:
+        # Structured failure report. Re-parse the report's verdict
+        # blocks, find each edge, run the structured check, and emit
+        # a JSON payload that a correction subagent can read directly.
+        report_text = args.report_file.read_text(encoding="utf-8")
+        verdicts = parse_verdict_blocks(report_text)
+        _yaml_rt, doc = _load_yaml_rt(args.graph_file)
+
+        per_edge: list[dict] = []
+        for vb in verdicts:
+            edge_id = vb["edge_id"]
+            verdict = vb["verdict"]
+            edge = _find_edge(doc, edge_id)
+            if edge is None:
+                per_edge.append({
+                    "edge_id": edge_id,
+                    "status": "missing_edge",
+                    "rationale_excerpt": None,
+                    "errors": [{
+                        "check": "edge_lookup",
+                        "claimed": edge_id,
+                        "expected": None,
+                        "message": (
+                            f"verdict block names edge_id={edge_id!r} "
+                            f"but no such edge in {args.graph_file.name}."
+                        ),
+                    }],
+                })
+                continue
+            lit_id = edge.get("lit_type")
+            tax_id = edge.get("taxonomy_type")
+            errs = check_rationale_against_edge_structured(
+                verdict.get("rationale") or "",
+                edge,
+                _find_node(doc, lit_id) if lit_id else None,
+                _find_node(doc, tax_id) if tax_id else None,
+                graph=doc,
+            )
+            per_edge.append({
+                "edge_id": edge_id,
+                "status": "verified" if not errs else "failed",
+                "rationale_excerpt": (verdict.get("rationale") or "")[:400],
+                "errors": errs,
+            })
+
+        payload = {
+            "report": str(args.report_file),
+            "graph": str(args.graph_file),
+            "verdict_blocks_parsed": len(verdicts),
+            "verdict_blocks_verified": sum(
+                1 for r in per_edge if r["status"] == "verified"
+            ),
+            "verdict_blocks_failed": sum(
+                1 for r in per_edge if r["status"] == "failed"
+            ),
+            "per_edge": per_edge,
+        }
+        _json.dump(payload, sys.stdout, indent=2, default=str)
+        sys.stdout.write("\n")
+        return 0
+
     summary = write_back(
         args.report_file,
         args.graph_file,
         dry_run=args.dry_run,
         verify=not args.skip_verify,
     )
-    import json as _json
     _json.dump(summary, sys.stdout, indent=2, default=str)
     sys.stdout.write("\n")
     return 0 if not summary["errors"] else 2

@@ -504,7 +504,7 @@ edges:
         supports: PARTIAL
         explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_2 cells (n=777; GSE95315) to WMBv1. Subclass 038 DG-PIR Ex IMN (F1=0.798) and supertype 0141 DG-PIR Ex IMN_2 (F1=0.805) are strongly supported, confirming the DG-PIR Ex IMN lineage. At cluster level the best match is 0512 DG-PIR Ex IMN_2 (F1=0.609); cluster 0511 received no cells. Neuroblast_2 may represent a slightly later transitional stage (0512/0515) rather than the 0511 sub-stage. PARTIAL support for the lineage; cluster assignment uncertain.
         source_dataset_accession: GEO:GSE95315
-        source_cluster_label: Neuroblast_2
+        source_cluster_label: Neuroblast 2
         n_cells_total: 777
         target_atlas: WMBv1
         method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
@@ -512,48 +512,31 @@ edges:
         n_cells_after_filter: 717
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.996
-            target_purity: 0.359
-            f1_score: 0.528
-            n_cells_mapped: 445
-            median_bootstrap: 0.94
-            taxonomy_rank: 3
+            f1_score: 0.4522968197879858
+            n_cells_mapped: 192
+            median_bootstrap: 0.93
+            coverage: 0.9948186528497409
+            purity: 0.2926829268292683
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 038 DG-PIR Ex IMN
             best_target_accession: CS20230722_SUBC_038
-            group_purity: 0.883
-            target_purity: 0.728
-            f1_score: 0.798
-            n_cells_mapped: 664
+            f1_score: 0.8020698576972833
+            n_cells_mapped: 310
             median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0141 DG-PIR Ex IMN_2
-            best_target_accession: CS20230722_SUPT_0141
-            group_purity: 0.934
-            target_purity: 0.707
-            f1_score: 0.805
-            n_cells_mapped: 670
-            median_bootstrap: 1.0
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0512 DG-PIR Ex IMN_2
-            best_target_accession: CS20230722_CLUS_0512
-            group_purity: 0.468
-            target_purity: 0.873
-            f1_score: 0.609
-            n_cells_mapped: 103
-            median_bootstrap: 0.96
-            taxonomy_rank: 0
+            coverage: 0.8683473389355743
+            purity: 0.7451923076923077
         best_mapping_rank: 1
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
         supports: PARTIAL
-        explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_1 cells (n=97; GSE95315) to WMBv1. Best cluster is 0513 DG-PIR Ex IMN_2 (F1=0.788, group_purity=0.75, target_purity=0.83). Cluster 0511 received no cells. Combined with Neuroblast_2 mapping to 0512, the transfer resolves Hochgerner neuroblasts primarily to clusters 0512 and 0513. PARTIAL support at the DG-PIR Ex IMN lineage level.
+        explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_1 cells (n=97; GSE95315) to WMBv1. Best cluster is 0513 DG-PIR Ex IMN_2 (F1=0.788, coverage=0.75, purity=0.83). Cluster 0511 received no cells. Combined with Neuroblast_2 mapping to 0512, the transfer resolves Hochgerner neuroblasts primarily to clusters 0512 and 0513. PARTIAL support at the DG-PIR Ex IMN lineage level.
         source_dataset_accession: GEO:GSE95315
-        source_cluster_label: Neuroblast_1
+        source_cluster_label: Neuroblast 1
         n_cells_total: 97
         target_atlas: WMBv1
         method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
@@ -561,42 +544,25 @@ edges:
         n_cells_after_filter: 93
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 1.0
-            target_purity: 0.053
-            f1_score: 0.101
-            n_cells_mapped: 66
-            median_bootstrap: 0.92
-            taxonomy_rank: 3
+            f1_score: 0.050445103857566766
+            n_cells_mapped: 17
+            median_bootstrap: 0.88
+            coverage: 0.9444444444444444
+            purity: 0.025914634146341462
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 038 DG-PIR Ex IMN
             best_target_accession: CS20230722_SUBC_038
-            group_purity: 0.959
-            target_purity: 0.102
-            f1_score: 0.184
-            n_cells_mapped: 93
+            f1_score: 0.15418502202643172
+            n_cells_mapped: 35
             median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0141 DG-PIR Ex IMN_2
-            best_target_accession: CS20230722_SUPT_0141
-            group_purity: 1.0
-            target_purity: 0.098
-            f1_score: 0.179
-            n_cells_mapped: 93
-            median_bootstrap: 1.0
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0513 DG-PIR Ex IMN_2
-            best_target_accession: CS20230722_CLUS_0513
-            group_purity: 0.75
-            target_purity: 0.83
-            f1_score: 0.788
-            n_cells_mapped: 39
-            median_bootstrap: 1.0
-            taxonomy_rank: 0
+            coverage: 0.9210526315789473
+            purity: 0.08413461538461539
         best_mapping_rank: 0
+        f1_source_relpath: at_results.yaml
     caveats:
       - &id001
         caveat_type: MARKER_NOT_SPECIFIC
@@ -687,42 +653,16 @@ edges:
         n_cells_after_filter: 1051
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.983
-            target_purity: 0.332
-            f1_score: 0.496
-            n_cells_mapped: 411
-            median_bootstrap: 0.89
-            taxonomy_rank: 3
-          - taxonomy_level: SUBCLASS
-            best_target_name: 037 DG Glut
-            best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.846
-            target_purity: 0.426
-            f1_score: 0.566
-            n_cells_mapped: 889
-            median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0137 DG Glut_2
-            best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.469
-            f1_score: 0.573
-            n_cells_mapped: 728
-            median_bootstrap: 0.98
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0507 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0507
-            group_purity: 0.357
-            target_purity: 0.892
-            f1_score: 0.51
-            n_cells_mapped: 66
-            median_bootstrap: 0.915
-            taxonomy_rank: 0
+            f1_score: 0.5683297180043384
+            n_cells_mapped: 262
+            median_bootstrap: 0.9
+            coverage: 0.9849624060150376
+            purity: 0.39939024390243905
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -784,7 +724,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
         supports: NO_EVIDENCE
-        explanation: MapMyCells transfer of Hochgerner 2018 Granule-immature cells (n=1333; GSE95315) to WMBv1. Cluster 0515 DG-PIR Ex IMN_2 receives no Granule-immature cells (F1=0.0). Instead, 0515 is preferentially occupied by Hochgerner Neuroblast_2 (F1=0.483, target_purity=1.0 — all 0515-mapped cells derive from Neuroblast_2), suggesting 0515 represents a later neuroblast stage rather than immature granule neurons. Transfer does not support Granule-immature as the source for this cluster.
+        explanation: MapMyCells transfer of Hochgerner 2018 Granule-immature cells (n=1333; GSE95315) to WMBv1. Cluster 0515 DG-PIR Ex IMN_2 receives no Granule-immature cells (F1=0.0). Instead, 0515 is preferentially occupied by Hochgerner Neuroblast_2 (F1=0.483, purity=1.0 — all 0515-mapped cells derive from Neuroblast_2), suggesting 0515 represents a later neuroblast stage rather than immature granule neurons. Transfer does not support Granule-immature as the source for this cluster.
         source_dataset_accession: GEO:GSE95315
         source_cluster_label: Granule-immature
         n_cells_total: 1333
@@ -794,42 +734,16 @@ edges:
         n_cells_after_filter: 1051
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.983
-            target_purity: 0.332
-            f1_score: 0.496
-            n_cells_mapped: 411
-            median_bootstrap: 0.89
-            taxonomy_rank: 3
-          - taxonomy_level: SUBCLASS
-            best_target_name: 037 DG Glut
-            best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.846
-            target_purity: 0.426
-            f1_score: 0.566
-            n_cells_mapped: 889
-            median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0137 DG Glut_2
-            best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.469
-            f1_score: 0.573
-            n_cells_mapped: 728
-            median_bootstrap: 0.98
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0507 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0507
-            group_purity: 0.357
-            target_purity: 0.892
-            f1_score: 0.51
-            n_cells_mapped: 66
-            median_bootstrap: 0.915
-            taxonomy_rank: 0
+            f1_score: 0.5683297180043384
+            n_cells_mapped: 262
+            median_bootstrap: 0.9
+            coverage: 0.9849624060150376
+            purity: 0.39939024390243905
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -894,7 +808,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
         supports: SUPPORT
-        explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0506 DG Glut_2 is the best cluster match (F1=0.665, group_purity=0.833, target_purity=0.553). Subclass 037 DG Glut achieves F1=0.711 (group_purity=0.980). High group purity (83% of confident cluster-level cells map to 0506) confirms this as the primary atlas correlate of mature granule neurons in Hochgerner 2018.
+        explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0506 DG Glut_2 is the best cluster match (F1=0.665, coverage=0.833, purity=0.553). Subclass 037 DG Glut achieves F1=0.711 (coverage=0.980). High group purity (83% of confident cluster-level cells map to 0506) confirms this as the primary atlas correlate of mature granule neurons in Hochgerner 2018.
         source_dataset_accession: GEO:GSE95315
         source_cluster_label: Granule-mature
         n_cells_total: 1712
@@ -904,42 +818,43 @@ edges:
         n_cells_after_filter: 1190
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
           - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
             best_target_name: 0137 DG Glut_2
             best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
+            f1_score: 0.5835579514824798
+            n_cells_mapped: 433
+            median_bootstrap: 0.95
+            coverage: 0.7110016420361248
+            purity: 0.4948571428571429
           - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
             best_target_name: 0506 DG Glut_2
             best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
-            median_bootstrap: 0.95
-            taxonomy_rank: 0
+            f1_score: 0.6901408450704225
+            n_cells_mapped: 49
+            median_bootstrap: 0.9
+            coverage: 0.8305084745762712
+            purity: 0.5903614457831325
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1012,42 +927,25 @@ edges:
         n_cells_after_filter: 132
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0137 DG Glut_2
-            best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0506 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
-            median_bootstrap: 0.95
-            taxonomy_rank: 0
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1110,7 +1008,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
         supports: PARTIAL
-        explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0507 DG Glut_2 receives 7 cells from Granule-mature (F1=0.068, group_purity=0.053). Very weak PARTIAL support; dominant mapping is to 0506 (F1=0.665).
+        explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0507 DG Glut_2 receives 7 cells from Granule-mature (F1=0.068, coverage=0.053). Very weak PARTIAL support; dominant mapping is to 0506 (F1=0.665).
         source_dataset_accession: GEO:GSE95315
         source_cluster_label: Granule-mature
         n_cells_total: 1712
@@ -1120,42 +1018,34 @@ edges:
         n_cells_after_filter: 132
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
           - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
             best_target_name: 0137 DG Glut_2
             best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0506 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
+            f1_score: 0.5835579514824798
+            n_cells_mapped: 433
             median_bootstrap: 0.95
-            taxonomy_rank: 0
+            coverage: 0.7110016420361248
+            purity: 0.4948571428571429
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1228,42 +1118,25 @@ edges:
         n_cells_after_filter: 132
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0137 DG Glut_2
-            best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0506 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
-            median_bootstrap: 0.95
-            taxonomy_rank: 0
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1338,42 +1211,34 @@ edges:
         n_cells_after_filter: 132
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
           - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
             best_target_name: 0137 DG Glut_2
             best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0506 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
+            f1_score: 0.5835579514824798
+            n_cells_mapped: 433
             median_bootstrap: 0.95
-            taxonomy_rank: 0
+            coverage: 0.7110016420361248
+            purity: 0.4948571428571429
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1446,42 +1311,25 @@ edges:
         n_cells_after_filter: 132
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0137 DG Glut_2
-            best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0506 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
-            median_bootstrap: 0.95
-            taxonomy_rank: 0
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1554,42 +1402,25 @@ edges:
         n_cells_after_filter: 132
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0137 DG Glut_2
-            best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0506 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
-            median_bootstrap: 0.95
-            taxonomy_rank: 0
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1664,42 +1495,25 @@ edges:
         n_cells_after_filter: 132
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0137 DG Glut_2
-            best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0506 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
-            median_bootstrap: 0.95
-            taxonomy_rank: 0
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1762,7 +1576,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
         supports: PARTIAL
-        explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0509 DG Glut_3 receives 12 cells from Granule-mature (F1=0.167, group_purity=0.091, target_purity=1.0). Low group purity; 0509 is not a dominant target. Weak PARTIAL support.
+        explanation: MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0509 DG Glut_3 receives 12 cells from Granule-mature (F1=0.167, coverage=0.091, purity=1.0). Low group purity; 0509 is not a dominant target. Weak PARTIAL support.
         source_dataset_accession: GEO:GSE95315
         source_cluster_label: Granule-mature
         n_cells_total: 1712
@@ -1772,42 +1586,25 @@ edges:
         n_cells_after_filter: 132
         metrics_by_level:
           - taxonomy_level: CLASS
+            taxonomy_rank: 3
             best_target_name: 04 DG-IMN Glut
             best_target_accession: CS20230722_CLAS_04
-            group_purity: 0.924
-            target_purity: 0.245
-            f1_score: 0.387
-            n_cells_mapped: 303
+            f1_score: 0.42424242424242425
+            n_cells_mapped: 182
             median_bootstrap: 0.88
-            taxonomy_rank: 3
+            coverage: 0.900990099009901
+            purity: 0.2774390243902439
           - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
             best_target_name: 037 DG Glut
             best_target_accession: CS20230722_SUBC_037
-            group_purity: 0.98
-            target_purity: 0.558
-            f1_score: 0.711
-            n_cells_mapped: 1166
+            f1_score: 0.7029945999018163
+            n_cells_mapped: 716
             median_bootstrap: 1.0
-            taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0137 DG Glut_2
-            best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.735
-            target_purity: 0.524
-            f1_score: 0.611
-            n_cells_mapped: 812
-            median_bootstrap: 0.97
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0506 DG Glut_2
-            best_target_accession: CS20230722_CLUS_0506
-            group_purity: 0.833
-            target_purity: 0.553
-            f1_score: 0.665
-            n_cells_mapped: 110
-            median_bootstrap: 0.95
-            taxonomy_rank: 0
+            coverage: 0.9875862068965517
+            purity: 0.5457317073170732
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
@@ -1890,42 +1687,25 @@ edges:
         n_cells_after_filter: 83
         metrics_by_level:
           - taxonomy_level: CLASS
-            best_target_name: 05 OB-IMN GABA
-            best_target_accession: CS20230722_CLAS_05
-            group_purity: 0.345
-            target_purity: 0.833
-            f1_score: 0.488
-            n_cells_mapped: 10
-            median_bootstrap: 0.9
             taxonomy_rank: 3
+            best_target_name: 04 DG-IMN Glut
+            best_target_accession: CS20230722_CLAS_04
+            f1_score: 0.00906344410876133
+            n_cells_mapped: 3
+            median_bootstrap: 0.84
+            coverage: 0.5
+            purity: 0.004573170731707317
           - taxonomy_level: SUBCLASS
-            best_target_name: 045 OB-STR-CTX Inh IMN
-            best_target_accession: CS20230722_SUBC_045
-            group_purity: 0.349
-            target_purity: 0.229
-            f1_score: 0.276
-            n_cells_mapped: 30
-            median_bootstrap: 1.0
             taxonomy_rank: 2
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0166 OB-STR-CTX Inh IMN_1
-            best_target_accession: CS20230722_SUPT_0166
-            group_purity: 0.361
-            target_purity: 0.857
-            f1_score: 0.508
-            n_cells_mapped: 30
+            best_target_name: 038 DG-PIR Ex IMN
+            best_target_accession: CS20230722_SUBC_038
+            f1_score: 0.05895691609977324
+            n_cells_mapped: 13
             median_bootstrap: 1.0
-            taxonomy_rank: 1
-          - taxonomy_level: CLUSTER
-            best_target_name: 0513 DG-PIR Ex IMN_2
-            best_target_accession: CS20230722_CLUS_0513
-            group_purity: 0.333
-            target_purity: 0.17
-            f1_score: 0.225
-            n_cells_mapped: 8
-            median_bootstrap: 1.0
-            taxonomy_rank: 0
+            coverage: 0.52
+            purity: 0.03125
         best_mapping_rank: 0
+        f1_source_relpath: at_results.yaml
     caveats:
       - *id001
       - caveat_type: OTHER

@@ -38,7 +38,7 @@ The primary disqualifying signal is the inability to discriminate VIP basket cel
 - NT type: GABAergic (Vip Gaba subclass in atlas): CONSISTENT.
 - Vip is a DEFINING marker of SUPT_0179 [CS20230722_SUPT_0179] (precomputed stats mean 6.82), matching the sole defining marker of the classical type: CONSISTENT.
 - Atlas metadata records 11 cells in the CA1 pyramidal layer and 24 cells in CA1 stratum oriens for SUPT_0179 [CS20230722_SUPT_0179], providing partial anatomical overlap with the stratum pyramidale [UBERON:0005401] soma location of the classical type (alignment: APPROXIMATE).
-- Annotation transfer (MapMyCells; Yao 2021 SSv4 Vip subclass, GEO:GSE185862, n=476 HIP cells): 046 Vip Gaba subclass receives 463/476 cells (F1=0.969, target_purity=0.953), confirming robust hippocampal representation in the Vip Gaba clade. At supertype level, SUPT_0179 [CS20230722_SUPT_0179] is the second-strongest target (F1=0.379, 96 cells, target_purity=0.970), alongside 0177 Vip Gaba_5 (F1=0.397, 101 cells).
+- Annotation transfer (MapMyCells; Yao 2021 SSv4 Vip subclass, GEO:GSE185862, n=476 HIP cells): 046 Vip Gaba subclass receives 463/476 cells (F1=0.969, purity=0.953), confirming robust hippocampal representation in the Vip Gaba clade. At supertype level, SUPT_0179 [CS20230722_SUPT_0179] is the second-strongest target (F1=0.379, 96 cells, purity=0.970), alongside 0177 Vip Gaba_5 (F1=0.397, 101 cells).
 
 **Marker evidence provenance**
 

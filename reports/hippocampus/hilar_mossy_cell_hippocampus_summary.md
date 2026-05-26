@@ -34,7 +34,7 @@ Total: 2 edges. Relationship type: PARTIAL_OVERLAP for both edges.
 
 - **NT type — CONSISTENT.** SUPT_0078 belongs to subclass CS20230722_SUBC_017 (017 CA3 Glut), a glutamatergic subclass. The classical hilar mossy cell is glutamatergic [3][4][5], and SUBC_017 is exclusively glutamatergic.
 
-- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Hochgerner 2018 (GEO:GSE95315) Mossy-Cyp26b1 label onto WMBv1 (CCN20230722). 33 of 34 Mossy-Cyp26b1 cells map to SUPT_0078 (0078 CA3 Glut_4) at the supertype level (F1=0.943; group_purity=0.971, target_purity=0.917). At cluster level, the best cluster is 0315 CA3 Glut_4 (n=20, F1=0.833) followed by 0314 CA3 Glut_4 (n=7). The high F1 indicates that Mossy-Cyp26b1 cells are a near-complete subset of SUPT_0078.
+- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Hochgerner 2018 (GEO:GSE95315) Mossy-Cyp26b1 label onto WMBv1 (CCN20230722). 33 of 34 Mossy-Cyp26b1 cells map to SUPT_0078 (0078 CA3 Glut_4) at the supertype level (F1=0.943; coverage=0.971, purity=0.917). At cluster level, the best cluster is 0315 CA3 Glut_4 (n=20, F1=0.833) followed by 0314 CA3 Glut_4 (n=7). The high F1 indicates that Mossy-Cyp26b1 cells are a near-complete subset of SUPT_0078.
 
 - **Marker Gria4 — CONSISTENT.** Gria4 is listed as a defining marker of the hilar mossy cell (no citation in KB). Precomputed expression stats (precomputed_stats.h5, supertype level) confirm Gria4 mean expression = 5.37 in SUPT_0078, consistent with Gria4 marking this supertype.
 
@@ -68,7 +68,7 @@ Total: 2 edges. Relationship type: PARTIAL_OVERLAP for both edges.
 
 - **NT type — CONSISTENT.** SUPT_0079 belongs to subclass CS20230722_SUBC_017 (017 CA3 Glut), a glutamatergic subclass. The classical hilar mossy cell is glutamatergic [3][4][5].
 
-- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Hochgerner 2018 (GEO:GSE95315) Mossy-Adcyap1 label onto WMBv1 (CCN20230722). 20 of 27 Mossy-Adcyap1 cells map to SUPT_0079 (0079 CA3 Glut_5) at the supertype level (F1=0.833; group_purity=0.741, target_purity=0.952). The high target_purity (0.952) indicates that Mossy-Adcyap1 cells account for the majority of SUPT_0079 cells captured by AT — suggesting this supertype may be specific to the Adcyap1+ mossy cell subtype.
+- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Hochgerner 2018 (GEO:GSE95315) Mossy-Adcyap1 label onto WMBv1 (CCN20230722). 20 of 27 Mossy-Adcyap1 cells map to SUPT_0079 (0079 CA3 Glut_5) at the supertype level (F1=0.833; coverage=0.741, purity=0.952). The high purity (0.952) indicates that Mossy-Adcyap1 cells account for the majority of SUPT_0079 cells captured by AT — suggesting this supertype may be specific to the Adcyap1+ mossy cell subtype.
 
 - **Soma location — APPROXIMATE (supporting).** SUPT_0079 is the only WMBv1 CA3 Glut supertype with cells assigned to the dentate gyrus polymorph layer (MBA:10704; 181 cells), which is the hilus — the classical mossy cell soma location [UBERON:0001885]. This is a positive anatomical correspondence distinguishing SUPT_0079 from other CA3 Glut supertypes.
 
@@ -133,8 +133,8 @@ Total: 2 edges. Relationship type: PARTIAL_OVERLAP for both edges.
 
 | Edge ID | Evidence types | Supports |
 |---|---|---|
-| edge_hilar_mossy_cell_hippocampus_to_supt_0078 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE95315; Mossy-Cyp26b1) | SUPPORT — F1=0.943; group_purity=0.971, target_purity=0.917; 33/34 Mossy-Cyp26b1 cells map to SUPT_0078 |
-| edge_hilar_mossy_cell_hippocampus_to_supt_0079 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE95315; Mossy-Adcyap1) | SUPPORT — F1=0.833; group_purity=0.741, target_purity=0.952; 20/27 Mossy-Adcyap1 cells map to SUPT_0079 |
+| edge_hilar_mossy_cell_hippocampus_to_supt_0078 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE95315; Mossy-Cyp26b1) | SUPPORT — F1=0.943; coverage=0.971, purity=0.917; 33/34 Mossy-Cyp26b1 cells map to SUPT_0078 |
+| edge_hilar_mossy_cell_hippocampus_to_supt_0079 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE95315; Mossy-Adcyap1) | SUPPORT — F1=0.833; coverage=0.741, purity=0.952; 20/27 Mossy-Adcyap1 cells map to SUPT_0079 |
 
 ---
 

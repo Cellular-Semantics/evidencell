@@ -69,7 +69,7 @@ Total: 2 edges. Relationship type: PARTIAL_OVERLAP for both edges.
 
 - **NT type — CONSISTENT.** SUPT_0137 belongs to subclass CS20230722_SUBC_037 (037 DG Glut), a glutamatergic subclass, consistent with the glutamatergic identity of the semilunar granule cell [2].
 
-- **Annotation transfer — PARTIAL.** Annotation transfer of Yao 2021 (GEO:GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 DG subclass cells (n=2473) map to SUPT_0137 with group_purity=0.878 and F1=0.935, confirming SUPT_0137 as the dominant DG glutamatergic supertype. SUPT_0137 is shared between dg_granule_cell_hippocampus and this node; the semilunar granule cell is a morpho-physiologically distinct DG subpopulation for which no transcriptome-specific markers are available in this dataset. PARTIAL support reflects that this edge targets the same atlas node as the regular granule cell.
+- **Annotation transfer — PARTIAL.** Annotation transfer of Yao 2021 (GEO:GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 DG subclass cells (n=2473) map to SUPT_0137 with coverage=0.878 and F1=0.935, confirming SUPT_0137 as the dominant DG glutamatergic supertype. SUPT_0137 is shared between dg_granule_cell_hippocampus and this node; the semilunar granule cell is a morpho-physiologically distinct DG subpopulation for which no transcriptome-specific markers are available in this dataset. PARTIAL support reflects that this edge targets the same atlas node as the regular granule cell.
 
 - **Location — APPROXIMATE.** Semilunar granule cells are found at the inner/outer border of the stratum granulosum; the MERFISH assignment for SUPT_0137 covers the granule cell layer broadly (MBA:632).
 
@@ -95,7 +95,7 @@ Total: 2 edges. Relationship type: PARTIAL_OVERLAP for both edges.
 
 ## Proposed experiments
 
-*Note on existing AT evidence:* The Yao 2021 (GEO:GSE185862) AT establishes SUPT_0137 as the dominant DG Glut supertype (F1=0.935, group_purity=0.878). The Bhatt 2025 (GEO:GSE280167) AT identifies SUPT_0138 as Sorcs3/Nptx2-enriched. A refined experiment obtaining the Bhatt 2025 published SGC cluster annotations would formally resolve which supertype corresponds to classical SGCs.
+*Note on existing AT evidence:* The Yao 2021 (GEO:GSE185862) AT establishes SUPT_0137 as the dominant DG Glut supertype (F1=0.935, coverage=0.878). The Bhatt 2025 (GEO:GSE280167) AT identifies SUPT_0138 as Sorcs3/Nptx2-enriched. A refined experiment obtaining the Bhatt 2025 published SGC cluster annotations would formally resolve which supertype corresponds to classical SGCs.
 
 ### Add-expression (Sorcs3 and Nptx2 in DG Glut supertypes)
 

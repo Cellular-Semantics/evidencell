@@ -1,9 +1,9 @@
 """Tree-style annotation transfer figures.
 
 Renders an F1 tree figure for a MapMyCells (or other AT) run: parent
-chain on the left (one lane per taxonomy rank), F1 bar plus precision /
-recall as text on each node, vertical layout one panel per source group
-(or pooled group).
+chain on the left (one lane per taxonomy rank), F1 bar plus purity (Pur)
+and coverage (Cov) as text on each node, vertical layout one panel per
+source group (or pooled group).
 
 Design points:
 
@@ -15,12 +15,12 @@ Design points:
 * **Leaf cutoff.** Drops rank-0 targets with ``n_cells / source_total <
   cutoff_pct`` (default 5%). Internal ancestors that lose all kept
   descendants are pruned too.
-* **Redundant-ancestor pruning.** An internal node whose precision and
-  recall match its single rendered child within ``PRUNE_TOL`` is
+* **Redundant-ancestor pruning.** An internal node whose purity and
+  coverage match its single rendered child within ``PRUNE_TOL`` is
   collapsed away — it carries no new information.
 * **Source pooling.** ``--pool srcA,srcB,...:new_name`` (repeatable)
   combines multiple source labels into one synthetic source group with
-  recomputed P / R / F1.
+  recomputed Pur / Cov / F1.
 
 CLI::
 
@@ -89,8 +89,15 @@ def load_f1_matrix(run_dir: Path, csv_relpath: str = "f1_matrix.csv") -> list[di
         # (full matrix). Normalise to `target_name`.
         if "target_name" not in r and "best_target" in r:
             r["target_name"] = r["best_target"]
+        # CSVs produced before the 2026-05-25 nomenclature rename used
+        # `group_purity` / `target_purity`. Promote to the new names so
+        # the rest of this module only needs to know `coverage`/`purity`.
+        if "coverage" not in r and "group_purity" in r:
+            r["coverage"] = r.pop("group_purity")
+        if "purity" not in r and "target_purity" in r:
+            r["purity"] = r.pop("target_purity")
         r["n_cells"] = int(r["n_cells"])
-        for k in ("group_purity", "target_purity", "f1"):
+        for k in ("coverage", "purity", "f1"):
             r[k] = float(r[k])
     return rows
 
@@ -198,7 +205,7 @@ def pool_sources(
 
     ``pool_spec`` maps original source label → new pooled name. Returns a
     new list of rows with pooled groups carrying recomputed
-    group_purity / target_purity / f1. Non-pooled rows pass through
+    coverage / purity / f1. Non-pooled rows pass through
     unchanged.
     """
     if not pool_spec:
@@ -213,12 +220,12 @@ def pool_sources(
     finest = max(levels_in_csv, key=lambda L: sum(1 for r in rows if r["level"] == L))
 
     # Reconstruct target totals from any contributing row (target_total =
-    # n_cells / target_purity when target_purity > 0).
+    # n_cells / purity when purity > 0).
     target_totals: dict[tuple[str, str], float] = {}
     for r in rows:
-        if r["target_purity"] > 0:
+        if r["purity"] > 0:
             key = (r["level"], r["target_name"])
-            target_totals.setdefault(key, r["n_cells"] / r["target_purity"])
+            target_totals.setdefault(key, r["n_cells"] / r["purity"])
 
     # New source-group totals: sum of n_cells at finest level across pooled inputs
     pooled_src_totals: dict[str, int] = defaultdict(int)
@@ -253,14 +260,14 @@ def pool_sources(
     for (src, lvl, name), agg in pool_acc.items():
         src_total = pooled_src_totals[src] or 1
         t_total = target_totals.get((lvl, name)) or agg["n_cells"]
-        rec = agg["n_cells"] / src_total
-        prec = agg["n_cells"] / t_total if t_total else 0
-        f1 = 2 * prec * rec / (prec + rec) if (prec + rec) > 0 else 0
+        cov = agg["n_cells"] / src_total
+        pur = agg["n_cells"] / t_total if t_total else 0
+        f1 = 2 * pur * cov / (pur + cov) if (pur + cov) > 0 else 0
         keep.append(
             {
                 **agg,
-                "group_purity": rec,
-                "target_purity": prec,
+                "coverage": cov,
+                "purity": pur,
                 "f1": f1,
                 "mean_boot": 0.0,
                 "median_boot": 0.0,
@@ -331,7 +338,7 @@ def render_tree(
                 lvl = rank_to_level.get(rank)
                 if not lvl or lvl == finest:
                     continue
-                # Pull the rendered F1/P/R for that ancestor from the CSV
+                # Pull the rendered F1 / Pur / Cov for that ancestor from the CSV
                 # rows at this level + label, if present.
                 hits = [
                     r
@@ -352,9 +359,9 @@ def render_tree(
                 if p is None or c is None:
                     continue
                 if _approx_equal(
-                    p["target_purity"], c["target_purity"]
+                    p["purity"], c["purity"]
                 ) and _approx_equal(
-                    p["group_purity"], c["group_purity"]
+                    p["coverage"], c["coverage"]
                 ):
                     inactive[i].add(parent_lvl)
 
@@ -492,15 +499,15 @@ def render_tree(
                     max_chars = int(w * 14)
                     if len(name) > max_chars:
                         name = name[: max_chars - 1] + "…"
-                    pval = row["target_purity"]
-                    rval = row["group_purity"]
+                    pur_val = row["purity"]
+                    cov_val = row["coverage"]
                     n_str = (
                         f"  n={row['n_cells']}" if lvl == finest else ""
                     )
                     label = (
                         f"{name}{n_str}\n"
                         f"F1={row['f1']:.2f}  "
-                        f"(Pur={pval:.2f}, Cov={rval:.2f})"
+                        f"(Pur={pur_val:.2f}, Cov={cov_val:.2f})"
                     )
                     text_color = (
                         "white" if row["f1"] > 0.55 else "black"
@@ -602,7 +609,7 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         metavar="PATH",
         help=(
-            "Write a JSON sidecar of the per-(source, level, target) F1/P/R "
+            "Write a JSON sidecar of the per-(source, level, target) F1/purity/coverage "
             "rows used to render the figure (i.e. after --pool and --source "
             "filters). Captions in downstream reports should be grounded "
             "against this sidecar, never re-derived. Path is relative to "
@@ -703,8 +710,8 @@ def main(argv: list[str] | None = None) -> int:
                     "node_id": r.get("node_id"),
                     "n_cells": r["n_cells"],
                     "f1": round(r["f1"], 4),
-                    "precision": round(r["target_purity"], 4),
-                    "recall": round(r["group_purity"], 4),
+                    "purity": round(r["purity"], 4),
+                    "coverage": round(r["coverage"], 4),
                 }
             )
         for src in by_source:

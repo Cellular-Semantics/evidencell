@@ -61,6 +61,58 @@ validate-taxonomy-all TAXONOMY_ID:
     done
     [ $failed -eq 0 ] && echo "All taxonomy files valid." || { echo "Validation failed."; exit 1; }
 
+# Migrate every AT run's CSV(s) to schema-compliant at_results.yaml
+[group('at_metrics')]
+migrate-at-metrics:
+    uv run python -m evidencell.at_metrics migrate-all
+
+# Recompute MappingEdge.evidence[].metrics_by_level from at_results.yaml
+# (dry-run by default — pass --apply to write)
+[group('at_metrics')]
+refresh-at-metrics *ARGS:
+    uv run python -m evidencell.at_metrics refresh {{ARGS}}
+
+# Regenerate src/evidencell/_models.py (Pydantic classes from LinkML schema)
+[group('schema')]
+gen-models:
+    uv run gen-pydantic {{schema}} > src/evidencell/_models.py
+    @echo "Regenerated src/evidencell/_models.py from {{schema}}"
+
+# Check src/evidencell/_models.py is up to date with the schema; fails if drift
+[group('schema')]
+check-models:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    tmpfile=$(mktemp)
+    uv run gen-pydantic {{schema}} > "$tmpfile"
+    if diff -q "$tmpfile" src/evidencell/_models.py >/dev/null; then
+        echo "src/evidencell/_models.py is up to date."
+    else
+        echo "ERROR: src/evidencell/_models.py is out of sync with {{schema}}."
+        echo "Run 'just gen-models' and commit the result."
+        diff "$tmpfile" src/evidencell/_models.py | head -40
+        exit 1
+    fi
+
+# Validate an AT results YAML (AnnotationTransferResultSet root class)
+[group('validation')]
+validate-at-results FILE:
+    uv run linkml-validate -s {{schema}} -C AnnotationTransferResultSet {{FILE}}
+
+# Validate all at_results*.yaml files under kb/annotation_transfer_runs/
+[group('validation')]
+validate-at-results-all:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    files=$(find kb/annotation_transfer_runs -name "at_results*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No at_results YAML files yet."; exit 0; fi
+    failed=0
+    for f in $files; do
+        echo "Validating $f..."
+        uv run linkml-validate -s {{schema}} -C AnnotationTransferResultSet "$f" || failed=1
+    done
+    [ $failed -eq 0 ] && echo "All AT result files valid." || { echo "Validation failed."; exit 1; }
+
 # Validate all KB graph files (kb/graphs/)
 [group('validation')]
 validate-all:
@@ -79,7 +131,16 @@ validate-all:
 # Requires OAK SQLite DBs (run just fetch-oak-dbs first)
 [group('validation')]
 validate-terms:
-    uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{kb_dir}}
+    #!/usr/bin/env bash
+    set -euo pipefail
+    files=$(find {{kb_dir}} -name "*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No files in {{kb_dir}} yet."; exit 0; fi
+    failed=0
+    for f in $files; do
+        echo "Validating terms in $f..."
+        uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} "$f" || failed=1
+    done
+    [ $failed -eq 0 ] && echo "All KB term references valid." || { echo "Term validation failed."; exit 1; }
 
 # Validate ontology terms in a single file
 [group('validation')]
@@ -321,16 +382,21 @@ query-gene-expression taxonomy_id accessions genes:
 gen-facts GRAPH_FILE NODE_ID:
     uv run python -m evidencell.render facts {{GRAPH_FILE}} --node {{NODE_ID}}
 
-# Generate summary report for all classical nodes in one graph file (programmatic mode)
-# For LLM-assisted synthesis with hallucination guard, use: workflows/gen-report.md
+# Deterministic structural-only render for fresh stub reports (no Introduction
+# prose, no figure embeds, no verdict blocks). Refuses to overwrite any report
+# file already containing paper-style content from the gen-report LLM
+# orchestrator. Pass `--force` (forwarded to the renderer) to bypass.
+#
+# For paper-style synthesis, use `workflows/gen-report.md` (LLM orchestrator).
 [group('reports')]
-gen-report GRAPH_FILE:
-    uv run python -m evidencell.render summary {{GRAPH_FILE}}
+gen-report GRAPH_FILE *ARGS:
+    uv run python -m evidencell.render summary {{GRAPH_FILE}} {{ARGS}}
 
-# Generate summary report for one classical node by id
+# Deterministic structural-only render for one classical node. Refuses to
+# overwrite paper-style reports — see `just gen-report` for context.
 [group('reports')]
-gen-report-node GRAPH_FILE NODE_ID:
-    uv run python -m evidencell.render summary {{GRAPH_FILE}} --node {{NODE_ID}}
+gen-report-node GRAPH_FILE NODE_ID *ARGS:
+    uv run python -m evidencell.render summary {{GRAPH_FILE}} --node {{NODE_ID}} {{ARGS}}
 
 # Generate all drill-downs for a classical node
 [group('reports')]
@@ -379,15 +445,21 @@ pool-candidates GRAPH_FILE *ARGS:
 rationale-writeback REPORT_FILE GRAPH_FILE *ARGS:
     uv run python -m evidencell.rationale_writeback {{REPORT_FILE}} {{GRAPH_FILE}} {{ARGS}}
 
-# Regenerate all reports + indices for the KB (programmatic mode, no LLM)
+# Deterministic structural-only render across every classical node in the KB.
+# Per-file guard (in `render summary`) protects paper-style reports from
+# being overwritten — they're skipped with a REFUSED message. Pass --force
+# to override (rare; mostly for new-stub bulk seeding).
+#
+# For LLM-driven regen at scale, run the gen-report orchestrator per node
+# (see workflows/gen-report.md).
 [group('reports')]
-gen-report-all:
+gen-report-all *ARGS:
     #!/usr/bin/env bash
     set -euo pipefail
     files=$(find kb/graphs -name "*.yaml" 2>/dev/null)
     if [ -z "$files" ]; then echo "No files in kb/graphs yet."; exit 0; fi
     for f in $files; do
-        uv run python -m evidencell.render summary "$f"
+        uv run python -m evidencell.render summary "$f" {{ARGS}}
     done
     for region in $(ls kb/graphs 2>/dev/null); do
         uv run python -m evidencell.render index "$region"
@@ -395,15 +467,16 @@ gen-report-all:
     # Combined taxonomy-indexed TOC (default MODERATE+).
     uv run python -m evidencell.toc --all
 
-# Regenerate all reports + indices for one region (programmatic mode, no LLM)
+# Deterministic structural-only render across one region. Per-file guard
+# protects paper-style reports — see `just gen-report-all` for details.
 [group('reports')]
-gen-report-region REGION:
+gen-report-region REGION *ARGS:
     #!/usr/bin/env bash
     set -euo pipefail
     files=$(find kb/graphs/{{REGION}} -maxdepth 1 -name "*.yaml" 2>/dev/null)
     if [ -z "$files" ]; then echo "No YAML files in kb/graphs/{{REGION}}."; exit 0; fi
     for f in $files; do
-        uv run python -m evidencell.render summary "$f"
+        uv run python -m evidencell.render summary "$f" {{ARGS}}
     done
     uv run python -m evidencell.render index {{REGION}}
 

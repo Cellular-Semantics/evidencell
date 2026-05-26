@@ -953,8 +953,14 @@ def extract_at_f1_artifact(
                     "target_name": r.get("target_name") or "",
                     "f1": f1,
                     "n_cells": n_cells,
-                    "group_purity": float(r.get("group_purity") or 0.0),
-                    "target_purity": float(r.get("target_purity") or 0.0),
+                    # Accept both new (coverage/purity) and legacy
+                    # (group_purity/target_purity) CSV column names.
+                    "coverage": float(
+                        r.get("coverage") or r.get("group_purity") or 0.0
+                    ),
+                    "purity": float(
+                        r.get("purity") or r.get("target_purity") or 0.0
+                    ),
                 }
             )
 
@@ -986,8 +992,8 @@ def extract_at_f1_artifact(
                     "target_name": r["target_name"],
                     "f1": r["f1"],
                     "n_cells": r["n_cells"],
-                    "group_purity": r["group_purity"],
-                    "target_purity": r["target_purity"],
+                    "coverage": r["coverage"],
+                    "purity": r["purity"],
                 }
             )
 

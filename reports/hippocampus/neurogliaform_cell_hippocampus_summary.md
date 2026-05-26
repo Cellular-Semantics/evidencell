@@ -88,7 +88,7 @@ Total: 2 edges · relationship type: PARTIAL_OVERLAP for both.
 
 - **MGE-lineage marker consistency**: SUPT_0203 is MGE-derived (Lhx6+ DEFINING_SCOPED) and Lamp5+ (DEFINING_SCOPED). Classical NGCs include an MGE-derived subpopulation (NGFC.M: Lhx6+/Lamp5+/Id2+/Nos1+). Marker alignments for Lamp5, Id2, Npy, and all negative markers are CONSISTENT, with precomputed means: Nos1=7.79, Npy=4.62, Lamp5=4.40, Id2=9.35.
 - **Strong Nos1 expression**: Precomputed Nos1 mean=7.79 in SUPT_0203 (vs 2.26 in SUPT_0193) is consistent with the MGE-derived nNOS+ NGC identity predicted for NGFC.M. This evidence upgraded this edge from UNCERTAIN.
-- **Annotation transfer (PARTIAL, shared with Ivy cell)**: MapMyCells annotation transfer of Yao 2021 SSv4 Lamp5 subclass (GEO:GSE185862; n=868 HIP cells) shows SUPT_0203 is the dominant supertype target (F1=0.898, 711/868 cells; target_purity=0.989). At SUBCLASS level, 710/868 cells map to subclass Lamp5 Lhx6 Gaba (F1=0.898). This strongly supports the Lamp5 Lhx6 identity but does not discriminate between NGC and Ivy cell (both share SUPT_0203; see edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203).
+- **Annotation transfer (PARTIAL, shared with Ivy cell)**: MapMyCells annotation transfer of Yao 2021 SSv4 Lamp5 subclass (GEO:GSE185862; n=868 HIP cells) shows SUPT_0203 is the dominant supertype target (F1=0.898, 711/868 cells; purity=0.989). At SUBCLASS level, 710/868 cells map to subclass Lamp5 Lhx6 Gaba (F1=0.898). This strongly supports the Lamp5 Lhx6 identity but does not discriminate between NGC and Ivy cell (both share SUPT_0203; see edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203).
 
 **Marker evidence provenance**
 

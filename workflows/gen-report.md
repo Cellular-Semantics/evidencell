@@ -85,7 +85,7 @@ just pool-candidates {graph_file} --node {node_id} \
 
 This is a deterministic pre-pass that compares pairs of distinct `lit_type`s
 in the graph whose AT-evidence `metrics_by_level` rows are within tolerance
-(~5% F1 / precision / recall) across their shared atlas targets. Each
+(~5% F1 / purity / coverage) across their shared atlas targets. Each
 candidate entry names the source groups, the shared targets, and the
 property panels assessed (markers, anat, NT, ephys, morphology, dev).
 
@@ -271,7 +271,7 @@ classical type being reported. For each cited AT run:
    OLM Sst-OLM + Htr3a-OLM case; see [[feedback_at_no_distinction_judgement]]).
 
    **Caption grounding (mandatory).** `--emit-metrics` writes a JSON
-   sidecar with the per-(source, level, target) F1/precision/recall rows
+   sidecar with the per-(source, level, target) F1/purity/coverage rows
    that the figure actually rendered (after `--pool` and `--source` are
    applied). Captions and any inline figure-supporting statistics in the
    report MUST be derived from this sidecar — read it, pick the rows you
@@ -321,7 +321,8 @@ classical type being reported. For each cited AT run:
 
    Emit the **Purity / Coverage gloss only on the FIRST AT figure** in
    the report (subsequent figures can use a one-liner: *"As before, Pur
-   = target purity; Cov = source coverage."*).
+   = Purity (fraction of target cells from this source); Cov =
+   Coverage (fraction of source cells on this target)."*).
 
    If you also want to show the full multi-source figure as supporting
    context (e.g. to justify a pooling decision), generate a *second*
@@ -1043,9 +1044,79 @@ This:
    marker counts, modality tokens) against the edge's structured data.
 3. Reports what would be written; does not edit the graph.
 
-If verification fails on any block, treat as a synthesis failure (re-run
-Step 3 with the failure list in the prompt, capped at 1 retry). The check
-is atomic: a single failure blocks write-back of all blocks.
+If verification fails on any block, **do not re-run Step 3 in full** —
+Step 4 has already passed, so the report body is fine; the localised
+issue is in one or more `rationale` strings. Run a focused-correction
+loop instead:
+
+### Failure → focused correction loop
+
+1. **Generate a structured failure report** (one CLI call):
+
+   ```bash
+   just rationale-writeback {summary_file} {graph_file} --correction-mode \
+     > {summary_file}.corrections.json
+   ```
+
+   `--correction-mode` runs the same checks as `--dry-run` but emits a
+   machine-readable JSON payload to stdout (`per_edge[*].errors[*]` —
+   each error has `check`, `claimed`, `expected`, `structured_truth`,
+   and a `message` field). See
+   [`src/evidencell/rationale_writeback.py::check_rationale_against_edge_structured`](../src/evidencell/rationale_writeback.py).
+
+2. **Spawn a correction subagent** with this prompt template (substitute
+   `{corrections_file}`):
+
+   ```
+   You are a focused-correction subagent for workflows/gen-report.md
+   Step 4b. The deterministic anti-hallucination check found
+   factual errors in one or more verdict-block rationales.
+
+   FAILURE REPORT (JSON, structured): {corrections_file}
+   FACTS FILE: {facts_file}
+   REPORT FILE: {summary_file}  (edit in place)
+
+   For each entry in per_edge[*].errors:
+     - Locate the named edge_id's verdict block in {summary_file}.
+     - Fix only the cited factual error in the `rationale` string.
+       Use `structured_truth` as the source of truth — that's the
+       edge's actual structured data (e.g. marker_prefixed_consistent /
+       marker_prefixed_total for marker_count checks).
+     - If the same wrong number also appears in narrative paragraphs
+       in the report body for this edge's section, fix it there too.
+       Otherwise DO NOT TOUCH the body — Step 4 (LLM validation) has
+       already passed and we don't want to introduce new validation
+       failures.
+     - Do not edit other verdict blocks. Do not regenerate sections.
+     - Do not change `confidence` / `confidence_score` /
+       `rationale_generated_at` values — only the rationale prose.
+
+   When done, print "DONE" and stop.
+   ```
+
+3. **Re-run Step 4b** (the `--dry-run` form). If it now PASSes, proceed
+   to Step 5.
+
+4. **Retry policy.** Up to 2 focused-correction rounds. If verification
+   is still failing after 2 rounds, fall back to a full Step 3 re-run
+   with the latest failure list in the synthesis prompt. If THAT still
+   fails: escalate to curator review — there's likely a structural
+   issue (e.g. the rationale is asserting something that genuinely
+   doesn't exist in the structured data, in which case the synthesis
+   prompt or the facts file needs investigation, not another retry).
+
+### Why not just re-run Step 3?
+
+A full Step 3 re-synthesis costs another paper-style report generation
+(minutes of LLM time + cache miss + a fresh Step 4 LLM-validation pass)
+to fix what is usually a copy-edit. The 2026-05-26 bistratified regen
+hit 4 marker-count / F1 errors in Step 4b; the focused-correction
+subagent fixed 3 of 4 in one ~60-second round, with one manual
+one-line follow-up.
+
+The check is **atomic**: a single failing rationale blocks write-back
+of *all* verdict blocks. The correction loop, by contrast, is
+non-atomic — fix the failing blocks, leave the others as-is.
 
 ---
 

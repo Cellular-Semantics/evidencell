@@ -169,3 +169,82 @@ systematic problem:
 
 File the architecture issue ("Property persistence audit") and attach
 this doc as the AT-specific evidence.
+
+---
+
+## Follow-up: programmatic AT metrics infrastructure (branch `feat/programmatic-at-metrics`)
+
+The investigation into Buckets C / D / E during the
+`review/confidence-and-predicates` branch produced a sharper
+diagnosis than the original audit: the issue is not numeric
+divergence between stored values and CSV rows, but a **schema-
+semantic mismatch** in `AnnotationTransferEvidence.metrics_by_level`.
+Across hippocampus + sexually_dimorphic + dentate_gyrus, **29 AT
+evidence items** store metrics for the source's best target at a
+level when the edge's target at that level is different (e.g.
+`edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0204` stores
+`best_target_accession: CS20230722_SUPT_0206` — the chandelier edge
+records F1 for the basket supertype). The agent transcribed the
+right CSV row for the source's best; it just wasn't the row for the
+edge's target. Honest CSV reads, dishonest framing.
+
+The structural fix (committed under
+`feat/programmatic-at-metrics`):
+
+- **Schema (commit `0521e74`).** `AnnotationTransferMetricRow` +
+  `AnnotationTransferResultSet` classes. The latter is the
+  schema-compliant successor to the implicit "CSV columns are the
+  contract" convention. `f1_source_relpath` slot on
+  `AnnotationTransferEvidence` for variant disambiguation
+  (Chamberland's by-class vs base).
+- **Pydantic models (commit `76603f9`).** `just gen-models` runs
+  `linkml gen-pydantic` → `src/evidencell/_models.py`.
+  `just check-models` is the CI drift guard. Programmatic writers
+  instantiate the models — invalid output is impossible by
+  construction.
+- **CSV → YAML migration (commit `abe79c3`).** `src/evidencell/at_metrics.py`
+  `migrate-all` subcommand converted all 7 known runs' CSVs into
+  10 `at_results*.yaml` files. Two CSV shapes handled (Shape A:
+  best-per-source-level only, e.g. Que 2021 / Hochgerner DG;
+  Shape B: full matrix, e.g. Winterer / Chamberland). Accession
+  derivation handles the CCN20230722 → CS20230722 prefix
+  convention.
+- **`compute_edge_metrics()` (commit `bb152bc`).** Read-side that
+  returns metrics_by_level keyed on (run_ref, source_label,
+  edge.taxonomy_type) — never on source-best. Empty list when the
+  AT run only saved best-per-source rows and edge target isn't
+  one of them (the Bucket-C case). Noise-floor default for
+  `supports`: NO_EVIDENCE below F1=0.10, PARTIAL below 0.60,
+  SUPPORT otherwise. Returns `source_best_summary` so the agent
+  can still cite where the source went, with `is_edge_target`
+  flags per level.
+- **Sweep tool (commit `632f7a7`).** `just refresh-at-metrics`
+  walks the KB; dry-run by default. Initial sweep on the full
+  KB surfaces 68 AT evidence items across 5 files; ~half would
+  go from N levels → 0 levels under the strict semantic
+  (`(source, edge_target)` only) — paused on a policy decision
+  about whether to also persist `source_best_summary` on the
+  evidence item to preserve ancestor-level context.
+- **Stage B prompt update (commit `900372d`).** Mapping subagent
+  no longer transcribes F1 numbers — supplies only `run_ref` +
+  `source_cluster_label`; metrics_by_level + supports populated
+  by `just refresh-at-metrics --apply`.
+- **Tests (commit `9063257`).** 23 tests covering accession
+  derivation, both CSV shapes, lookup hit/miss cases, noise
+  floor bands, variant selection, dry-run vs apply behaviour.
+  Test suite: 516 passed.
+
+**Still deferred from this branch:**
+
+- **Strict-vs-lineage policy for `metrics_by_level` semantics.**
+  Strict: only rows for (source, edge_target) — honest, but loses
+  ancestor context that the old data carried implicitly. Lineage-
+  aware: walk the taxonomy tree, lookup F1 for the ancestor of
+  edge_target at each level, include alongside the source-best.
+  Needs a curator-side review of dry-run output before deciding.
+- **Applying the sweep** to write new metrics across the KB.
+  Sweep code is dry-run-clean; --apply ready when policy lands.
+- **Buckets C / D / E content-level review.** Once the sweep is
+  applied with the chosen policy, AAC / DG-mature / Chamberland
+  edges may also need verdict revisits (the rationales were
+  partially built on the misleading metrics).

@@ -36,7 +36,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (the classical EC layer II cal
 
 - **NT type — CONSISTENT.** SUPT_0052 belongs to subclass SUBC_011 L2 IT ENT-po Glut, a glutamatergic layer II intratelencephalic subclass grouping medial entorhinal cortex and postrhinal cortex neurons. The classical EC layer II calbindin-positive pyramidal cell is glutamatergic [4], consistent with this subclass.
 
-- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq data onto WMBv1 (CCN20230722): of 42 Yao 2021 'L2 IT ENTm' subclass cells (representing medial entorhinal cortex layer II IT neurons, principally calbindin-positive pyramidal cells), 25 (59.5%) map to SUPT_0052 at the supertype level. F1 = 0.694, group_purity = 0.595, target_purity = 0.833. SUPT_0054 (L2 IT ENT-po Glut_4) accounts for a further 33.3% of L2 IT ENTm cells. Together SUPT_0052 and SUPT_0054 cover 92.8% of L2 IT ENTm cells. Note: n=42 is a small sample; results should be interpreted with appropriate caution.
+- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq data onto WMBv1 (CCN20230722): of 42 Yao 2021 'L2 IT ENTm' subclass cells (representing medial entorhinal cortex layer II IT neurons, principally calbindin-positive pyramidal cells), 25 (59.5%) map to SUPT_0052 at the supertype level. F1 = 0.694, coverage = 0.595, purity = 0.833. SUPT_0054 (L2 IT ENT-po Glut_4) accounts for a further 33.3% of L2 IT ENTm cells. Together SUPT_0052 and SUPT_0054 cover 92.8% of L2 IT ENTm cells. Note: n=42 is a small sample; results should be interpreted with appropriate caution.
 
 - **Marker Calb1 — CONSISTENT.** Calb1 is listed as the defining identity marker of EC layer II calbindin-positive pyramidal cells [4][5]. Precomputed expression stats (precomputed_stats.h5, supertype level) confirm Calb1 mean expression = 7.14 in SUPT_0052. Although Calb1 does not appear among the defining discriminating markers for SUPT_0052 in the atlas (Ush2a, Dcn), the quantitative expression value is consistent with calbindin expression in this population.
 
@@ -48,7 +48,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (the classical EC layer II cal
 
 **Concerns**
 
-- **Small sample size (n=42).** The L2 IT ENTm subclass in Yao 2021 (GEO:GSE185862) contains only 42 cells, limiting the statistical reliability of the F1 = 0.694 estimate. The moderate F1 and lower group_purity (0.595) are consistent with either biological heterogeneity within medial EC layer II or sampling noise from the small n. Additional medial EC layer II cells from a larger HPF dataset would improve confidence.
+- **Small sample size (n=42).** The L2 IT ENTm subclass in Yao 2021 (GEO:GSE185862) contains only 42 cells, limiting the statistical reliability of the F1 = 0.694 estimate. The moderate F1 and lower coverage (0.595) are consistent with either biological heterogeneity within medial EC layer II or sampling noise from the small n. Additional medial EC layer II cells from a larger HPF dataset would improve confidence.
 
 - **Location APPROXIMATE — postrhinal cortex component.** The 'ENT-po' subclass spans medial EC and postrhinal cortex; classical EC layer II pyramidal cells are restricted to medial EC. Any postrhinal component in SUPT_0052 would represent a different population sharing a transcriptomic signature. *(note: medial EC and postrhinal cortex are adjacent — this is weak rather than strong counter-evidence.)*
 
@@ -98,7 +98,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (the classical EC layer II cal
 
 | Edge ID | Evidence types | Supports |
 |---|---|---|
-| edge_ec_layer2_pyramidal_cell_hippocampus_to_supt_0052 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.694; group_purity=0.595; target_purity=0.833; 59.5% of L2 IT ENTm cells map to SUPT_0052; n=42 (small sample) |
+| edge_ec_layer2_pyramidal_cell_hippocampus_to_supt_0052 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.694; coverage=0.595; purity=0.833; 59.5% of L2 IT ENTm cells map to SUPT_0052; n=42 (small sample) |
 
 ---
 

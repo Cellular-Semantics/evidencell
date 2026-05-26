@@ -586,7 +586,7 @@ enums:
       LOW_CELL_COUNT:
         description: Fewer than ~50 cells used in this analysis; results may not be robust
       DISTRIBUTED_ACROSS_CLUSTERS:
-        description: Source type cells are spread across multiple target clusters (low target_purity/recall)
+        description: Source type cells are spread across multiple target clusters (low coverage at finest level)
       TAXONOMY_LEVEL_MISMATCH:
         description: Best mapping is at a coarser taxonomy level than desired (e.g. supertype not cluster)
       MARKER_NOT_SPECIFIC:
@@ -1567,25 +1567,131 @@ classes:
         description: Name of the best-matching target at this level
       best_target_accession:
         description: CCN accession of the best-matching target
-      group_purity:
+      coverage:
         range: float
         description: >
-          Precision: fraction of source cells mapping to this target.
-          High group_purity = the source type is concentrated in this target.
-      target_purity:
+          Fraction of source cells mapping to this target. High
+          coverage = the source type is concentrated on this target.
+          Equivalent to recall in standard ML terms. Surfaced as
+          `Cov` in figure annotations and `coverage` in
+          `at_figures --emit-metrics` JSON sidecars. Renamed from
+          `group_purity` in the 2026-05-25 nomenclature standardisation
+          (hard cutover).
+      purity:
         range: float
         description: >
-          Recall: fraction of all cells in the target that come from this source.
-          High target_purity = the target is specific to this source type.
+          Fraction of cells in the target that come from this source.
+          High purity = the target is specifically populated by this
+          source type. Equivalent to precision in standard ML terms.
+          Surfaced as `Pur` in figure annotations and `purity` in
+          `at_figures --emit-metrics` JSON sidecars. Renamed from
+          `target_purity` in the 2026-05-25 nomenclature standardisation
+          (hard cutover).
       f1_score:
         range: float
-        description: Harmonic mean of group_purity and target_purity
+        description: Harmonic mean of coverage and purity.
       n_cells_mapped:
         range: integer
         description: Number of source cells mapped to this target at this level (after bootstrap filter)
       median_bootstrap:
         range: float
         description: Median bootstrap confidence score for cells mapped to this target
+
+  AnnotationTransferMetricRow:
+    description: >
+      One row of (source_label, taxonomy_level, target_accession) → metrics
+      from an annotation-transfer run. Uniquely keyed on
+      (source_label, taxonomy_level, target_accession). Container for
+      the canonical per-(source, target) F1/precision/recall values that
+      `AnnotationTransferResultSet` stores. Distinct from
+      `AnnotationTransferLevelResult`: the latter records the source's
+      best target at each level (one row per (source, level)); this class
+      records every (source, level, target) triple seen by the AT run.
+    attributes:
+      source_label:
+        required: true
+        description: Source cluster / cohort label as it appears in the AT run input.
+      taxonomy_level:
+        required: true
+        description: Taxonomy level (CLASS / SUBCLASS / SUPERTYPE / CLUSTER).
+      taxonomy_rank:
+        range: integer
+        description: >
+          Integer rank of this level. 0 = most specific (leaf), incrementing
+          toward root.
+      target_name:
+        description: Name of the target at this level (e.g. "0206 Pvalb Gaba_2").
+      target_accession:
+        required: true
+        description: CCN accession of the target (e.g. CS20230722_SUPT_0206).
+      n_cells:
+        range: integer
+        description: Number of source cells mapping to this target at this level.
+      coverage:
+        range: float
+        description: >
+          Fraction of source cells mapping to this target (= recall in
+          standard ML terms). Same semantic as
+          `AnnotationTransferLevelResult.coverage`. Surfaced as `Cov`
+          in figure annotations and `coverage` in `--emit-metrics`
+          JSON sidecars.
+      purity:
+        range: float
+        description: >
+          Fraction of cells in the target coming from this source
+          (= precision in standard ML terms). Same semantic as
+          `AnnotationTransferLevelResult.purity`. Surfaced as `Pur` in
+          figure annotations and `purity` in `--emit-metrics` JSON
+          sidecars.
+      f1:
+        range: float
+        description: Harmonic mean of coverage and purity.
+      median_bootstrap:
+        range: float
+      mean_bootstrap:
+        range: float
+
+  AnnotationTransferResultSet:
+    description: >
+      The complete set of per-(source, level, target) F1/precision/recall
+      metrics for one annotation-transfer run. Schema-compliant successor
+      to the implicit "CSV columns are the contract" convention used by
+      `f1_matrix*.csv` / `f1_scores_*.csv` files. Lives alongside the
+      run's `manifest.yaml` as `at_results.yaml` (canonical source of
+      truth) — or `at_results_<variant>.yaml` for variant normalisations
+      (e.g. `at_results_by_class.yaml` for Chamberland-style within-class
+      dropout-robust scoring). `MappingEdge.evidence[].metrics_by_level`
+      is populated by `src/evidencell/at_metrics.py` reading this set
+      with (run_ref, source_label, edge.taxonomy_type) — never by an
+      LLM agent. Raw CSVs are retained as audit trail under `raw/` but
+      are not the contract.
+    attributes:
+      run_id:
+        required: true
+        description: AnnotationTransferRun.id this result set belongs to.
+      taxonomy_id:
+        required: true
+        description: Target taxonomy (e.g. CCN20230722).
+      normalisation:
+        description: >
+          Variant tag when the same run emits multiple normalisations
+          (e.g. "by_class" for within-class dropout-robust scoring;
+          null or "base" for standard F1 over the full dataset).
+      source_csv_relpath:
+        description: >
+          Path (relative to the run dir) of the raw CSV this YAML was
+          derived from, for audit. Optional once the YAML is the
+          canonical source of truth.
+      generated_at:
+        description: ISO8601 timestamp when this result set was written.
+      generator:
+        description: >
+          Script / tool that produced this YAML
+          (e.g. "src/evidencell/at_metrics.py::migrate_csv").
+      rows:
+        range: AnnotationTransferMetricRow
+        multivalued: true
+        required: true
 
   AnnotationTransferEvidence:
     is_a: EvidenceItem
@@ -1683,8 +1789,27 @@ classes:
         range: AnnotationTransferLevelResult
         multivalued: true
         description: >
-          Full per-level metrics (optional). Include when multi-level analysis is relevant;
-          omit when best_f1_score suffices. Record the best target at each level.
+          Full per-level metrics (optional). Include when multi-level
+          analysis is relevant; omit when best_f1_score suffices.
+          Populated programmatically by `src/evidencell/at_metrics.py`
+          from `kb/annotation_transfer_runs/{run_ref}/at_results.yaml`
+          using (run_ref, source_cluster_label, edge.taxonomy_type).
+          MUST NOT be transcribed by an LLM agent — see the schema
+          description of `AnnotationTransferResultSet` for the rationale.
+          For each level, records the best target the source mapped to;
+          when the edge's taxonomy_type matches the source's best at
+          some level, `best_target_accession` at that level equals
+          `edge.taxonomy_type` (the typical pattern). When it doesn't,
+          the row is informational — the supporting agent should also
+          look up F1 for (source, edge.taxonomy_type) specifically and
+          surface that in the explanation.
+      f1_source_relpath:
+        description: >
+          Path (relative to the AT run dir) of the
+          `AnnotationTransferResultSet` YAML that fed `metrics_by_level`
+          for this evidence item. Defaults to `at_results.yaml` (the
+          canonical base file); used to disambiguate when a run emits
+          multiple variant normalisations (e.g. `at_results_by_class.yaml`).
       nt_consistent_with_classical:
         range: boolean
         description: >

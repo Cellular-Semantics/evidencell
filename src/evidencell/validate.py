@@ -428,6 +428,110 @@ def linkml_validate(
         return result.returncode == 0, output
 
 
+# ── Term-reference validation (linkml-term-validator + OAK) ────────────────────
+
+_SQLITE_OBO_PREFIX = "sqlite:obo:"
+
+
+def _semsql_db_path(adapter_name: str) -> Path:
+    """Return the on-disk path of an OAK semsql sqlite DB for `adapter_name`.
+
+    OAK uses pystow to cache semsql DBs under `~/.data/semsql/sqlite/{name}.db`
+    (overridable via PYSTOW_HOME). Returning the path without checking
+    existence; callers test `.exists()`.
+    """
+    try:
+        import pystow  # local import — pystow is an oaklib dependency
+        return pystow.join("semsql", "sqlite", name=f"{adapter_name}.db")
+    except ImportError:
+        # Fallback for environments without pystow on the import path
+        return Path.home() / ".data" / "semsql" / "sqlite" / f"{adapter_name}.db"
+
+
+def oak_dbs_available(oak_config_path: Path) -> tuple[bool, list[str]]:
+    """Return (all_present, missing_db_names).
+
+    Reads `conf/oak_config.yaml`, collects adapter strings of the form
+    `sqlite:obo:<name>` (skipping entries whose value is empty), and checks
+    whether the corresponding semsql DB file exists for each.
+
+    Adapters whose value does not start with `sqlite:obo:` are ignored — we
+    cannot offline-check them.
+    """
+    if not oak_config_path.exists():
+        # No config means no terms to validate — report as available.
+        return True, []
+    try:
+        cfg = yaml.safe_load(oak_config_path.read_text(encoding="utf-8")) or {}
+    except yaml.YAMLError:
+        return True, []
+
+    adapters = (cfg.get("ontology_adapters") or {})
+    missing: list[str] = []
+    for prefix, adapter in adapters.items():
+        if not isinstance(adapter, str) or not adapter.startswith(_SQLITE_OBO_PREFIX):
+            continue
+        name = adapter[len(_SQLITE_OBO_PREFIX):]
+        if not _semsql_db_path(name).exists():
+            missing.append(name)
+    return (not missing), missing
+
+
+def validate_terms(
+    content: str,
+    schema_path: Path,
+    original_name: str = "input.yaml",
+    file_path: Path | None = None,
+) -> tuple[bool, str]:
+    """
+    Validate ontology-term CURIEs in YAML content via linkml-term-validator.
+
+    Subprocess-based, mirroring `linkml_validate`. Writes the simulated
+    post-edit content to a tempfile, then invokes the `validate` subcommand of
+    linkml-term-validator with the project's `conf/oak_config.yaml`.
+
+    Soft-skip behaviour: if `conf/oak_config.yaml` is missing, or if any
+    required OAK semsql DB is not yet cached, returns
+    `(True, "[skipped: …]")` so the hook does not block fresh-clone writes.
+    Curators see the message in stderr and can run `just fetch-oak-dbs`.
+
+    Returns (passed: bool, output_text: str).
+    """
+    project_root = schema_path.parent.parent
+    oak_config_path = project_root / "conf" / "oak_config.yaml"
+
+    if not oak_config_path.exists():
+        return True, f"(oak_config not found at {oak_config_path} — term check skipped)"
+
+    available, missing = oak_dbs_available(oak_config_path)
+    if not available:
+        joined = ", ".join(sorted(missing))
+        return (
+            True,
+            f"[term check skipped: OAK semsql DB missing for {joined}; "
+            f"run `just fetch-oak-dbs` to enable]",
+        )
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir) / original_name
+        tmp.write_text(content, encoding="utf-8")
+
+        result = subprocess.run(
+            [
+                "uv", "run", "linkml-term-validator",
+                "validate",
+                "--config", str(oak_config_path),
+                "--schema", str(schema_path),
+                str(tmp),
+            ],
+            capture_output=True,
+            text=True,
+            cwd=project_root,
+        )
+        output = (result.stdout + result.stderr).strip()
+        return result.returncode == 0, output
+
+
 # ── Markdown annotation parsing ────────────────────────────────────────────────
 
 # Blockquote attribution line: starts with `> —` (em-dash)

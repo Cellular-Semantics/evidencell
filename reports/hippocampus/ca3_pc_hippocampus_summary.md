@@ -35,7 +35,7 @@ Total: 1 edge. Relationship type: TYPE_A_SPLITS (classical CA3 pyramidal cell en
 
 - **Soma location — CONSISTENT.** SUPT_0078 MERFISH anatomy is entirely CA3: pyramidal layer (MBA:495; 1467 cells), stratum oriens (MBA:486; 1381 cells), stratum radiatum (MBA:504; 945 cells), stratum lucidum (MBA:479; 868 cells), and stratum lacunosum-moleculare (MBA:471; 437 cells). All cells are within CA3 strata. No artefactual off-target regions such as lateral ventricle or alveus appear. Pyramidal layer (1467 cells) and stratum oriens (1381 cells) are the dominant compartments; MERFISH soma assignment routinely places CA3 PC soma in adjacent oriens.
 
-- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq CA3 subclass label onto WMBv1 (CCN20230722). Of 322 CA3 cells, 203 (63.0%) map to SUPT_0078 at the supertype level. F1 score = 0.773 (group_purity = 0.630, target_purity = 1.0). Target_purity = 1.0 confirms SUPT_0078 receives only CA3 cells in this dataset. The remaining CA3 cells distribute across SUPT_0075 (16.8%), SUPT_0077 (11.5%), SUPT_0076 (6.5%), and SUPT_0079 (1.6%), consistent with TYPE_A_SPLITS: the classical CA3 pyramidal cell spans all SUBC_017 supertypes, with SUPT_0078 as the dominant correspondence.
+- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq CA3 subclass label onto WMBv1 (CCN20230722). Of 322 CA3 cells, 203 (63.0%) map to SUPT_0078 at the supertype level. F1 score = 0.773 (coverage = 0.630, purity = 1.0). Target_purity = 1.0 confirms SUPT_0078 receives only CA3 cells in this dataset. The remaining CA3 cells distribute across SUPT_0075 (16.8%), SUPT_0077 (11.5%), SUPT_0076 (6.5%), and SUPT_0079 (1.6%), consistent with TYPE_A_SPLITS: the classical CA3 pyramidal cell spans all SUBC_017 supertypes, with SUPT_0078 as the dominant correspondence.
 
 - **Atlas metadata context.** The previous primary candidate SUPT_0075 received only 16.8% of Yao 2021 CA3 cells (F1=0.288); SUPT_0078 received 63.0% (F1=0.773), indicating it is the dominant CA3 PC supertype in the atlas. SUPT_0078 defining markers are Homer3 and Cldn22. The former claim that SUPT_0078–0079 represent mossy cell populations is not supported — SUPT_0078 anatomy is exclusively CA3 pyramidal/oriens/radiatum/lucidum/SLM strata with no hilar representation.
 
@@ -79,7 +79,7 @@ Total: 1 edge. Relationship type: TYPE_A_SPLITS (classical CA3 pyramidal cell en
 | Edge ID | Evidence types | Supports |
 |---|---|---|
 | edge_ca3_pc_hippocampus_to_supt_0078 | ATLAS_METADATA | SUPPORT — SUPT_0078 in dedicated CA3 Glut subclass; NT CONSISTENT, all MERFISH cells in CA3 strata (1467 in pyramidal layer MBA:495) |
-| edge_ca3_pc_hippocampus_to_supt_0078 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.773; target_purity=1.0; 63.0% of Yao 2021 CA3 cells map to SUPT_0078 |
+| edge_ca3_pc_hippocampus_to_supt_0078 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.773; purity=1.0; 63.0% of Yao 2021 CA3 cells map to SUPT_0078 |
 
 ---
 

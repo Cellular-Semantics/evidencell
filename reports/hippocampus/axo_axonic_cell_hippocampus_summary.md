@@ -43,7 +43,7 @@
 
 - Supertype name "Pvalb chandelier Gaba_1" directly identifies the chandelier (= axo-axonic) cell type. Pvalb subclass and GABA NT type are fully consistent. The CL mapping (CL:4023036 pvalb chandelier GABAergic interneuron) is EXACT and the atlas supertype name makes the chandelier identity explicit. EQUIVALENT relationship declared because the supertype is named for and defined by the chandelier/axo-axonic cell type.
 - Pvalb is present in DEFINING_SCOPED markers; precomputed stats mean = 7.47, confirming PV+ identity. CONSISTENT.
-- Annotation transfer (MapMyCells, Yao 2021 GEO:GSE185862, n=66 HIP Pvalb cells): SUPT_0204 is the top supertype hit for Pvalb cells (F1=0.612, 26/66 cells, target_purity=1.0). The chandelier label in WMBv1 corresponds directly to axo-axonic cells. PARTIAL because the SSv4 Pvalb subclass label is a mixed population (PV basket + axo-axonic + bistratified cells); the strength of the chandelier supertype signal is nonetheless consistent with the axo-axonic cell correspondence.
+- Annotation transfer (MapMyCells, Yao 2021 GEO:GSE185862, n=66 HIP Pvalb cells): SUPT_0204 is the top supertype hit for Pvalb cells (F1=0.612, 26/66 cells, purity=1.0). The chandelier label in WMBv1 corresponds directly to axo-axonic cells. PARTIAL because the SSv4 Pvalb subclass label is a mixed population (PV basket + axo-axonic + bistratified cells); the strength of the chandelier supertype signal is nonetheless consistent with the axo-axonic cell correspondence.
 
 **Marker evidence provenance**
 
@@ -68,7 +68,7 @@
 **Supporting evidence**
 
 - Child of SUPT_0204 (Pvalb chandelier Gaba_1). Hippocampal locations: CA1 SO (38 cells), CA1 SR (23 cells), CA3 SO (33 cells), CA3 pyramidal layer (23 cells), CA3 SR (15 cells), dentate gyrus granule cell layer (15 cells). Pvalb in MERFISH markers confirms PV+ identity (precomputed stats mean: 8.56). Cluster name "0732 Pvalb chandelier Gaba_1" explicitly identifies it as a hippocampal chandelier cell cluster. GABA NT type consistent.
-- Annotation transfer (MapMyCells, Yao 2021 GEO:GSE185862, n=66 HIP Pvalb cells): CLUS_0732 is the top cluster hit for Pvalb cells (F1=0.622, 23/66 cells, target_purity=1.0) — the strongest cluster-level hit among all Pvalb targets, consistent with the axo-axonic → chandelier correspondence. PARTIAL because the source label is a mixed Pvalb population.
+- Annotation transfer (MapMyCells, Yao 2021 GEO:GSE185862, n=66 HIP Pvalb cells): CLUS_0732 is the top cluster hit for Pvalb cells (F1=0.622, 23/66 cells, purity=1.0) — the strongest cluster-level hit among all Pvalb targets, consistent with the axo-axonic → chandelier correspondence. PARTIAL because the source label is a mixed Pvalb population.
 
 **Marker evidence provenance**
 

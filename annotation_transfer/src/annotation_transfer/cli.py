@@ -117,7 +117,7 @@ def cmd_score(args: argparse.Namespace) -> None:
         print(f"\n== {label} ==")
         subset = best[best["source_label"] == label]
         print(
-            subset[["level", "best_target", "group_purity", "target_purity", "f1", "n_cells"]]
+            subset[["level", "best_target", "coverage", "purity", "f1", "n_cells"]]
             .to_string(index=False)
         )
 

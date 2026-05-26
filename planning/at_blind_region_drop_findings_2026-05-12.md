@@ -182,7 +182,7 @@ Dropping unassigned cells wouldn't help **here** — there are none.
 Raising `bootstrap_threshold` would create an unassigned pile and lift
 recall on the confidently-assigned remainder, but the OLM-cluster
 recall loss is source heterogeneity, not low-confidence noise. The
-proper response is **prefer precision (target_purity) over F1** when
+proper response is **prefer precision (purity) over F1** when
 the source label is known mixed.
 
 ### e. "Dropping unassigned cells" — is it justified per the source paper?
@@ -265,7 +265,7 @@ Sst's F1 collapsed at finer levels because the source was mixed.
 - Morphologically pure source label → F1 *rises* with finer
   aggregation. Cluster-level F1 is the right summary.
 - Coarse scRNA-seq source label (e.g. Yao subclass) → F1 *falls*
-  with finer aggregation. Precision (target_purity) is the more
+  with finer aggregation. Precision (purity) is the more
   honest summary at deep levels.
 - A flat F1 ≥ 0.5 cutoff across levels correctly handles both:
   BC cluster (0.83), BIC cluster (0.80), Sst subclass (0.98), Sst
