@@ -1,5 +1,8 @@
 # Dentate Gyrus Mature Granule Neuron — Allen Brain Cell Atlas CCN202307220 Mapping Report
-*2026-04-14 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml`*
+*Draft · 2026-04-14 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml`*
+
+> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
+> All edges require expert review before use.
 
 ---
 
@@ -8,48 +11,38 @@
 | Property | Value | References |
 |---|---|---|
 | CL term | dentate gyrus granule cell (CL:2000089) | |
-| Soma location | granule cell layer (GCL) [UBERON:0001885] |  |
-| NT | glutamatergic | [1] [2] |
-| Markers | Calbindin+, NeuN+, Tbr1+ | [3] [4] |
+| Soma location | granule cell layer (GCL) [UBERON:0001885] | [1] |
+| NT | glutamatergic | [2] [3] |
+| Markers | Calbindin+, NeuN+, Tbr1+ | [4] [5] |
 | Negative | DCX−, Nestin−, PSA-NCAM− | |
-
----
-
-## Cell Ontology mapping
-
-Dentate Gyrus Mature Granule Neuron is mapped to **dentate gyrus granule cell (CL:2000089)** as an **exact match** in the Cell Ontology (skos:exactMatch); the existing CL term covers this type.
-
-*Mapping notes:* CL:2000089 (dentate gyrus granule cell) is an exact match — defined as a granule cell with soma in the dentate gyrus cell layer, with characteristic cone-shaped tree of spiny apical dendrites projecting to CA3. PMID:17765709 is cited in the CL definition.
 
 ---
 
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
 |---|---|---|---|---|---|
-| — | 0506 DG Glut_2 [CS20230722_CLUS_0506] |  | — |  |  |
-| — | 0503 DG Glut_1 [CS20230722_CLUS_0503] |  | — |  |  |
-| — | 0507 DG Glut_2 [CS20230722_CLUS_0507] |  | — |  |  |
-| — | 0502 DG Glut_1 [CS20230722_CLUS_0502] |  | — |  |  |
-| — | 0505 DG Glut_2 [CS20230722_CLUS_0505] |  | — |  |  |
-| — | 0508 DG Glut_3 [CS20230722_CLUS_0508] |  | — |  |  |
-| — | 0504 DG Glut_1 [CS20230722_CLUS_0504] |  | — |  |  |
-| — | 0510 DG Glut_4 [CS20230722_CLUS_0510] |  | — |  |  |
-| — | 0509 DG Glut_3 [CS20230722_CLUS_0509] |  | — |  |  |
+| 1 | 0506 DG Glut_2 [CS20230722_CLUS_0506] |  | — | 🟡 MODERATE | Best candidate |
+| 2 | 0503 DG Glut_1 [CS20230722_CLUS_0503] |  | — | 🔴 LOW | Speculative |
+| 3 | 0507 DG Glut_2 [CS20230722_CLUS_0507] |  | — | 🔴 LOW | Speculative |
+| 4 | 0502 DG Glut_1 [CS20230722_CLUS_0502] |  | — | 🔴 LOW | Speculative |
+| 5 | 0505 DG Glut_2 [CS20230722_CLUS_0505] |  | — | 🔴 LOW | Speculative |
+| 6 | 0508 DG Glut_3 [CS20230722_CLUS_0508] |  | — | 🔴 LOW | Speculative |
+| 7 | 0504 DG Glut_1 [CS20230722_CLUS_0504] |  | — | 🔴 LOW | Speculative |
+| 8 | 0510 DG Glut_4 [CS20230722_CLUS_0510] |  | — | 🔴 LOW | Speculative |
+| 9 | 0509 DG Glut_3 [CS20230722_CLUS_0509] |  | — | 🔴 LOW | Speculative |
 
-All edges: `skos:broadMatch`
+All edges: `TYPE_A_SPLITS`
 
 ---
 
-## 0506 DG Glut_2 · 
-
-*`CS20230722_CLUS_0506`*
+## 0506 DG Glut_2 · 🟡 MODERATE
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0506 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.69. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, St18. Neuropeptides: Cck. Soma: DG do (dorsal outer GCL) (HIP:0.99). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 - MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0506 DG Glut_2 is the best cluster match (F1=0.665, coverage=0.833, purity=0.553). Subclass 037 DG Glut achieves F1=0.711 (coverage=0.980). High group purity (83% of confident cluster-level cells map to 0506) confirms this as the primary atlas correlate of mature granule neurons in Hochgerner 2018. [Annotation transfer]
 
 **Concerns:**
@@ -67,15 +60,13 @@ All edges: `skos:broadMatch`
 
 ---
 
-## 0503 DG Glut_1 · 
-
-*`CS20230722_CLUS_0503`*
+## 0503 DG Glut_1 · 🔴 LOW
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0503 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.68. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, Hey2. Neuropeptides: Cck, Grp. Soma: DG ve (ventral GCL) (HIP:0.93). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 
 **Concerns:**
 
@@ -92,15 +83,13 @@ All edges: `skos:broadMatch`
 
 ---
 
-## 0507 DG Glut_2 · 
-
-*`CS20230722_CLUS_0507`*
+## 0507 DG Glut_2 · 🔴 LOW
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0507 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.67. Core TF/MERFISH markers: Glis3, Neurod2, St18. Neuropeptides: Cck, Pdyn. Soma: DG do (dorsal outer GCL) (HIP:0.98). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 - MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0507 DG Glut_2 receives 7 cells from Granule-mature (F1=0.068, coverage=0.053). Very weak PARTIAL support; dominant mapping is to 0506 (F1=0.665). [Annotation transfer]
 
 **Concerns:**
@@ -118,15 +107,13 @@ All edges: `skos:broadMatch`
 
 ---
 
-## 0502 DG Glut_1 · 
-
-*`CS20230722_CLUS_0502`*
+## 0502 DG Glut_1 · 🔴 LOW
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0502 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.64. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, Rfx2, Lhx9. Neuropeptides: Grp, Cck. Soma: DG ve (ventral GCL) (HIP:0.74). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 
 **Concerns:**
 
@@ -144,15 +131,13 @@ All edges: `skos:broadMatch`
 
 ---
 
-## 0505 DG Glut_2 · 
-
-*`CS20230722_CLUS_0505`*
+## 0505 DG Glut_2 · 🔴 LOW
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0505 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.63. Core TF/MERFISH markers: Glis3, Neurod2, St18. Neuropeptides: none. Soma: DG do (dorsal outer GCL) (HIP:0.99). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 
 **Concerns:**
 
@@ -169,15 +154,13 @@ All edges: `skos:broadMatch`
 
 ---
 
-## 0508 DG Glut_3 · 
-
-*`CS20230722_CLUS_0508`*
+## 0508 DG Glut_3 · 🔴 LOW
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0508 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.63. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, Egr2, Egr4. Neuropeptides: Cck, Pdyn. Soma: DG do (dorsal outer GCL) (HIP:0.96). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 
 **Concerns:**
 
@@ -194,15 +177,13 @@ All edges: `skos:broadMatch`
 
 ---
 
-## 0504 DG Glut_1 · 
-
-*`CS20230722_CLUS_0504`*
+## 0504 DG Glut_1 · 🔴 LOW
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0504 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.62. Core TF/MERFISH markers: Glis3, Prox1, Nr4a3, Egr3, Rorb. Neuropeptides: Grp, Penk, Cck, Cartpt. Soma: DG ve (ventral GCL) (HIP:0.69). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 
 **Concerns:**
 
@@ -220,15 +201,13 @@ All edges: `skos:broadMatch`
 
 ---
 
-## 0510 DG Glut_4 · 
-
-*`CS20230722_CLUS_0510`*
+## 0510 DG Glut_4 · 🔴 LOW
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0510 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.62. Core TF/MERFISH markers: Glis3, St18, Lhx9, Nr2f2. Neuropeptides: Cck, Grp, Pdyn. Soma: DG po (posterior GCL) (HIP:0.99). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 
 **Concerns:**
 
@@ -245,15 +224,13 @@ All edges: `skos:broadMatch`
 
 ---
 
-## 0509 DG Glut_3 · 
-
-*`CS20230722_CLUS_0509`*
+## 0509 DG Glut_3 · 🔴 LOW
 
 **Supporting evidence:**
 
 - Cluster CS20230722_CLUS_0509 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.59. Core TF/MERFISH markers: Glis3, Neurod2, Atf3, Bhlhe41, Cebpb. Neuropeptides: Cck, Pdyn, Npy. Soma: DG do (dorsal outer GCL) (HIP:0.96). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
-- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [3]
-- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [4]
+- Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
+- Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
 - MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0509 DG Glut_3 receives 12 cells from Granule-mature (F1=0.167, coverage=0.091, purity=1.0). Low group purity; 0509 is not a dominant target. Weak PARTIAL support. [Annotation transfer]
 
 **Concerns:**
@@ -309,40 +286,40 @@ All edges: `skos:broadMatch`
 | Edge | Evidence types | Supports |
 |---|---|---|
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0506 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0506 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0506 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0506 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0506 | Annotation transfer | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0503 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0503 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0503 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0503 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0503 | Annotation transfer | NO_EVIDENCE |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0507 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0507 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0507 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0507 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0507 | Annotation transfer | PARTIAL |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0502 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0502 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0502 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0502 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0502 | Annotation transfer | NO_EVIDENCE |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0505 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0505 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0505 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0505 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0505 | Annotation transfer | NO_EVIDENCE |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0508 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0508 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0508 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0508 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0508 | Annotation transfer | NO_EVIDENCE |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0504 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0504 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0504 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0504 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0504 | Annotation transfer | NO_EVIDENCE |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0510 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0510 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0510 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0510 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0510 | Annotation transfer | NO_EVIDENCE |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0509 | Atlas metadata | SUPPORT |
-| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0509 | Literature [3] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0509 | Literature [4] | SUPPORT |
+| edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0509 | Literature [5] | SUPPORT |
 | edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0509 | Annotation transfer | PARTIAL |
 
 ---
@@ -351,7 +328,8 @@ All edges: `skos:broadMatch`
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Stoll 2014 · PMID:26056581 | [26056581](https://pubmed.ncbi.nlm.nih.gov/26056581/) | neurotransmitter type |
-| [2] | Vangeneugden 2015 · PMID:25954142 | [25954142](https://pubmed.ncbi.nlm.nih.gov/25954142/) | neurotransmitter type |
-| [3] | Micheli 2025 · PMID:40519263 | [40519263](https://pubmed.ncbi.nlm.nih.gov/40519263/) | Calbindin marker |
-| [4] | Hodge 2008 · PMID:18385329 | [18385329](https://pubmed.ncbi.nlm.nih.gov/18385329/) | Tbr1 marker |
+| [1] | PMID:31068541 | [31068541](https://pubmed.ncbi.nlm.nih.gov/31068541/) | soma location |
+| [2] | PMID:26056581 | [26056581](https://pubmed.ncbi.nlm.nih.gov/26056581/) | neurotransmitter type |
+| [3] | PMID:25954142 | [25954142](https://pubmed.ncbi.nlm.nih.gov/25954142/) | neurotransmitter type |
+| [4] | PMID:40519263 | [40519263](https://pubmed.ncbi.nlm.nih.gov/40519263/) | Calbindin marker |
+| [5] | PMID:18385329 | [18385329](https://pubmed.ncbi.nlm.nih.gov/18385329/) | Tbr1 marker |
