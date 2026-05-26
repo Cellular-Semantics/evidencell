@@ -2137,7 +2137,7 @@ def render_index(region: str, kb_root: Path, out_path: Path) -> None:
             node_id = node["id"]
             node_edges = [e for e in all_edges if e.get("lit_type") == node_id]
             best = _best_edge(all_edges, node_id)
-            best_conf = best["confidence"] if best else "—"
+            best_conf = (best.get("confidence") or "—") if best else "—"
             best_b = (
                 nodes_by_id.get(best.get("taxonomy_type", ""), {}).get(
                     "name", best.get("taxonomy_type", "")

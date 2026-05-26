@@ -1,8 +1,5 @@
 # dentate gyrus granule cell — WMBv1 (CCN20230722) Mapping Report
-*Draft · 2026-04-27 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
-
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+*2026-04-27 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
 
 ---
 
@@ -11,15 +8,23 @@
 | Property | Value | References |
 |---|---|---|
 | CL term | dentate gyrus granule cell (CL:2000089) | |
-| Soma location | dentate gyrus stratum granulosum (granule cell layer) [UBERON:0001885]; CA3 stratum lucidum (mossy fiber projection target) [UBERON:0014550] | [1] [2] [3] [1] |
+| Soma location | dentate gyrus stratum granulosum (granule cell layer) [UBERON:0005381]; CA3 stratum lucidum (mossy fiber projection target) [UBERON:0014550] | [1] [2] [3] [1] |
 | NT | glutamatergic | [3] [1] [2] |
 | Markers | Slc17a7+, Gria1+, Gria2+, Grm1+, Nptn+ | [4] [5] [6] [7] |
 
 ---
 
+## Cell Ontology mapping
+
+dentate gyrus granule cell is mapped to **dentate gyrus granule cell (CL:2000089)** as an **exact match** in the Cell Ontology (skos:exactMatch); the existing CL term covers this type.
+
+*Mapping notes:* Exact label match to CL:2000089.
+
+---
+
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 

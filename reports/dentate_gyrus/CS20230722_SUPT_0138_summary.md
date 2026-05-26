@@ -1,8 +1,5 @@
 # DG Glut_3 — Allen Brain Cell Atlas CCN202307220 Mapping Report
-*Draft · 2026-04-16 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/dg_glut.yaml`*
-
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+*2026-04-16 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/dentate_gyrus/dg_glut.yaml`*
 
 ---
 
@@ -17,9 +14,17 @@
 
 ---
 
+## Cell Ontology mapping
+
+DG Glut_3 is mapped to **dentate gyrus granule cell (CL:2000089)** as an **exact match** in the Cell Ontology (skos:exactMatch); the existing CL term covers this type.
+
+*Mapping notes:* Terminally differentiated glutamatergic granule cell with soma in the dentate gyrus granule cell layer; expresses Prox1, Neurod2, Glis3, Slc17a7, and calbindin. CL:2000089 is defined as a granule cell with soma in the dentate gyrus cell layer with cone-shaped apical dendrites and mossy fibre projections to CA3 — an exact structural and anatomical match for all DG Glut clusters.
+
+---
+
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 

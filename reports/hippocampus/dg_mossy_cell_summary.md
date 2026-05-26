@@ -1,8 +1,5 @@
 # hilar mossy cell — WMBv1 (CCN20230722) Mapping Report
-*Draft · 2026-04-27 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
-
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+*2026-04-27 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
 
 ---
 
@@ -11,7 +8,7 @@
 | Property | Value | References |
 |---|---|---|
 | CL term | — | |
-| Soma location | dentate hilus (polymorph layer of dentate gyrus) [UBERON:0001885]; dentate gyrus inner molecular layer (IML; ipsilateral and contralateral commissural projection) [UBERON:0001885]; dentate gyrus middle molecular layer (MML; dorsal mossy cells only) [UBERON:0001885] | [1] [2] [3] [1] [1] [1] [1] |
+| Soma location | dentate hilus (polymorph layer of dentate gyrus) [UBERON:0001885]; dentate gyrus inner molecular layer (IML; ipsilateral and contralateral commissural projection) [UBERON:0022347]; dentate gyrus middle molecular layer (MML; dorsal mossy cells only) [UBERON:0022346] | [1] [2] [3] [1] [1] [1] [1] |
 | NT | glutamatergic | [4] [4] [1] |
 | Markers | Slc17a7+, Drd2+, Calcrl+, Reln+ | [5] [1] [6] [7] |
 | Negative | Gad1− | |
@@ -20,7 +17,7 @@
 
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 

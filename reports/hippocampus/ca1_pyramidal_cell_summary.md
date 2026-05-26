@@ -1,8 +1,5 @@
 # CA1 pyramidal cell — WMBv1 (CCN20230722) Mapping Report
-*Draft · 2026-04-27 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
-
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+*2026-04-27 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
 
 ---
 
@@ -18,9 +15,17 @@
 
 ---
 
+## Cell Ontology mapping
+
+CA1 pyramidal cell is a **broad match** to **hippocampal pyramidal neuron (CL:1001571)** in the Cell Ontology — i.e. **hippocampal pyramidal neuron (CL:1001571)** is the closest existing CL term (an ancestor) but does not fully cover this type. A new child term is a candidate for submission to CL.
+
+*Mapping notes:* CA1-specific term absent from CL. Same BROAD mapping to CL:1001571 as CA3.
+
+---
+
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 

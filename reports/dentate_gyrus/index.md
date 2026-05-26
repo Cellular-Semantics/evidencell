@@ -1,12 +1,8 @@
 # Dentate_gyrus Cell Type Mapping Index
-*43 classical types · 2026-04-24 · draft*
+*43 classical types · 2026-05-26*
 
 | Classical type | CL term | Best atlas hit | Best confidence | Candidates | Link |
 |---|---|---|---|---|---|
-| Dentate Gyrus Mature Granule Neuron | dentate gyrus granule cell (CL:2000089) | 0506 DG Glut_2 | 🟡 MODERATE | 9 (1 MODERATE, 8 LOW) | [report](dg_mature_granule_neuron_summary.md) |
-| Dentate Gyrus Type-2b Neural Progenitor | dentate gyrus type-2b neural progenitor (CL:9900004) | 0511 DG-PIR Ex IMN_1 | 🟡 MODERATE | 1 (1 MODERATE) | [report](dg_type2b_progenitor_summary.md) |
-| Dentate Gyrus Immature Granule Neuron | immature dentate gyrus granule neuron (CL:9900002) | 0514 DG-PIR Ex IMN_2 | 🔴 LOW | 2 (2 LOW) | [report](dg_immature_granule_neuron_summary.md) |
-| Dentate Gyrus Neuroblast (Type-3 Progenitor) | dentate gyrus neuroblast (CL:9900001) | 0511 DG-PIR Ex IMN_1 | 🔴 LOW | 1 (1 LOW) | [report](dg_neuroblast_summary.md) |
 | 0502 DG Glut_1 | — | — | — | 0 () | [report](CS20230722_CLUS_0502_summary.md) |
 | 0502 DG Glut_1 | dentate gyrus granule cell (CL:2000089) | — | — | 0 () | [report](CS20230722_CLUS_0502_summary.md) |
 | 0503 DG Glut_1 | — | — | — | 0 () | [report](CS20230722_CLUS_0503_summary.md) |
@@ -45,4 +41,8 @@
 | DG-PIR Ex IMN_1 | dentate gyrus neuroblast (CL:9900001) | — | — | 0 () | [report](CS20230722_SUPT_0140_summary.md) |
 | DG-PIR Ex IMN_2 | dentate gyrus neuroblast (CL:9900001) | — | — | 0 () | [report](CS20230722_SUPT_0141_summary.md) |
 | DG-PIR Ex IMN_3 | immature neuron (CL:4042028) | — | — | 0 () | [report](CS20230722_SUPT_0142_summary.md) |
+| Dentate Gyrus Immature Granule Neuron | immature dentate gyrus granule neuron (CL:9900002) | 0514 DG-PIR Ex IMN_2 | — | 2 () | [report](dg_immature_granule_neuron_summary.md) |
+| Dentate Gyrus Mature Granule Neuron | dentate gyrus granule cell (CL:2000089) | 0506 DG Glut_2 | — | 9 () | [report](dg_mature_granule_neuron_summary.md) |
+| Dentate Gyrus Neuroblast (Type-3 Progenitor) | dentate gyrus neuroblast (CL:9900001) | 0511 DG-PIR Ex IMN_1 | — | 1 () | [report](dg_neuroblast_summary.md) |
 | Dentate Gyrus Type-2a Neural Progenitor | dentate gyrus type-2a neural progenitor (CL:9900003) | — | — | 0 () | [report](dg_type2a_progenitor_summary.md) |
+| Dentate Gyrus Type-2b Neural Progenitor | dentate gyrus type-2b neural progenitor (CL:9900004) | 0511 DG-PIR Ex IMN_1 | — | 1 () | [report](dg_type2b_progenitor_summary.md) |
