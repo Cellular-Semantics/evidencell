@@ -869,6 +869,82 @@ verifies every quantitative claim in `rationale` against the edge's
 structured data. **Any verification failure blocks write-back of all
 blocks atomically.** Format your rationale accordingly.
 
+## Predicate + confidence rubric (2026-05-26 refresh)
+
+The verdict is a **TOC signal telling reviewers where to look**.
+Reviewers drill into the report for fine detail. Pick `confidence`
+deterministically against the evidence on the edge; the predicate
+itself was selected by Stage B against the same rubric (see
+`workflows/map-cell-type.md` Step 3 #7) — if the inherited predicate
+is inconsistent with the evidence under the rubric below, flag it in
+`reconciliation_note` and let the curator-review pass correct it
+(do not silently revise the predicate from the verdict block).
+
+### Predicate rubric (reference)
+
+Stage B picks `relationship` from a decision tree on cardinality →
+location → AT support → marker consistency:
+
+- **`skos:exactMatch`** — clean 1:1; location is classical region +
+  adjacent only; AT (if present) F1 > 0.75; no major contradictions.
+- **`skos:closeMatch`** — same 1:1 shape but with contradictions
+  (marker mismatch, soft AT, location edge case).
+- **`skos:broadMatch` (+ `1:n`)** — taxonomy_type is broader: distant
+  region, cross-cutting at rank N collapsing to broader at N+1, or
+  many lit_types → one taxonomy_type.
+- **`skos:narrowMatch` (+ `n:1`)** — symmetric inverse.
+- **`evidencell:CrossCuttingMatch`** — many lit_types share this
+  taxonomy_type at this rank with no higher rank that rescues.
+- **`evidencell:UncertainRelationship`** — insufficient evidence.
+
+`evidencell:PartialOverlapMatch` is **deprecated**. If you encounter
+it on an inherited edge, propose a migration in `reconciliation_note`
+(e.g. *"deprecated PartialOverlapMatch; migrate to closeMatch under
+2026-05-26 rubric — soft AT F1=0.66 + 1 of 3 markers DISCORDANT"*).
+
+### Confidence rubric
+
+- **HIGH** — Patch-seq annotation-transfer with F1 > 0.75 and
+  marker confirmation, with no major contradiction. Also: bridging
+  or bulk RNA-seq with strong structure/function convergence at
+  similar strength. Default for a clean `skos:exactMatch` where AT
+  is present and supportive.
+- **MODERATE** — Either (a) `skos:exactMatch` with AT absent (the
+  predicate is allowed; the ceiling drops because the experimental
+  anchor is missing), or (b) `skos:closeMatch` with at least one
+  strong evidence type and contradictions that are documented
+  rather than unresolved.
+- **LOW** — single evidence item, indirect convergence, or
+  significant unresolved contradictions.
+- **UNCERTAIN** — contradictory, ambiguous, or minimal evidence;
+  pair with `evidencell:UncertainRelationship` or with a
+  `reconciliation_note` describing what would resolve it.
+- **REFUTED** — preponderance of evidence argues against the
+  mapping.
+
+### Marker contradiction protocol (orthogonal to predicate)
+
+When a marker is inconsistent (a defining_marker scored DISCORDANT,
+or a negative_marker present at ≥ MIN_DETECTABLE):
+
+1. **Check the literature already gathered** (LiteratureEvidence
+   items on the classical node, references.json snippets) for any
+   record of marker heterogeneity within the classical type.
+2. **If heterogeneity is documented** — cite the snippet in
+   `rationale`; the contradiction is a known biological feature
+   and does not by itself force a demotion.
+3. **If not documented in gathered lit** — flag a follow-up lit
+   trawl as an `unresolved_questions` entry, e.g. *"Trawl
+   literature for Pvalb heterogeneity within the OLM type — the
+   atlas-side absence may be a real subpopulation signal not yet
+   captured in the synthesised evidence."* If the contradiction is
+   cross-edge (the same marker is inconsistent across multiple
+   sibling edges), surface it in `reconciliation_note` instead.
+
+This protocol is the report-time agent's behaviour, not a predicate
+rule — the predicate is fixed by Stage B. The protocol shapes the
+rationale and the follow-up surface in the verdict block.
+
 ## Rationale format constraints (enforced by the post-write check)
 
 The rationale prose MUST cite specific structured-field references. The
