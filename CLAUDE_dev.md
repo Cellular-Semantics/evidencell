@@ -83,6 +83,68 @@ schema. If discussion concludes that a schema change is warranted, it lands in
 its own PR with an explicit rationale; it does not ride along in a
 content-focused commit.
 
+## Consistency over scope economy
+
+When proposing a fix or refactor that touches naming, conventions, or
+data shapes, default to **end-to-end consistency** — even when the small
+scope feels tempting. Any lack of consistency between adjacent surfaces
+(schema / code / data / docs / reports) is a real source of confusion
+that will bite a later session. The maintainer's standing preference is
+"the bigger PR with full alignment, not the smaller one with a known
+mismatch left behind."
+
+Practical implications when scoping:
+
+- **Do** propose the smaller and larger versions side by side with
+  honest time + risk estimates. Don't slip into recommending the
+  smaller one to save effort.
+- **Do** push the rename / convention change through every surface
+  it touches in one commit / PR: schema, generated Pydantic, every
+  consumer in `src/`, every KB YAML file, every test fixture, every
+  doc, every report, every sidecar / artefact file.
+- **Do** add a back-compat *read* path for legacy on-disk artefacts
+  (e.g. `at_metrics.migrate_csv` accepts both old and new CSV column
+  names) — that's how a hard cutover stays robust against pre-cutover
+  data still being out in the wild.
+- **Don't** keep aliases in the schema. The Phase 2 precedent is hard
+  cutover (e.g. `type_a` → `lit_type` removed the old name entirely);
+  follow it.
+- **Don't** invent a third name to bridge old + new. Pick one
+  canonical name, document the rename, move on.
+
+Worked example: the 2026-05-25 purity/coverage standardisation
+(commit `fcdf68d`) renamed `group_purity` → `coverage` and
+`target_purity` → `purity` across 70 files in one commit — schema,
+Pydantic models, scoring CSV emitter, all consumers, all KB YAMLs,
+all `at_results*.yaml`, all sidecars, every test, every report. The
+smaller alternative ("rename everything except the schema field
+identifiers, since those are in hundreds of YAML files") was rejected
+on this principle: leaving the slot names mismatched with sidecars +
+figures + reports would have preserved exactly the confusion we were
+fixing.
+
+## AT metric nomenclature (canonical)
+
+The two annotation-transfer per-(source, target) quantities have a
+single canonical name across every surface of the codebase. Standard
+ML terms are retained in parens for cross-reference only. Use the
+canonical names in all new code, docs, and reports.
+
+| Canonical | Definition | Schema field | CSV column | Sidecar JSON | Figure |
+|---|---|---|---|---|---|
+| **Coverage** (= recall) | Fraction of source cells on this target | `coverage` | `coverage` | `coverage` | `Cov` |
+| **Purity** (= precision) | Fraction of target cells from this source | `purity` | `purity` | `purity` | `Pur` |
+
+F1 is the harmonic mean of coverage and purity. See
+[`docs/at_data_flow.md`](docs/at_data_flow.md) § "Purity and coverage —
+naming reference" for full provenance.
+
+Legacy CSVs produced before the 2026-05-25 standardisation used
+`group_purity` / `target_purity`; the read path in
+`src/evidencell/at_metrics.py::migrate_csv` and
+`src/evidencell/at_figures.py::load_f1_matrix` accepts both and
+normalises on load. Do not emit the old names in new code.
+
 ## Project
 
 evidencell is a LinkML-based knowledge base for cell type mapping evidence — linking classical cell types to modern transcriptomic atlas clusters. It combines a structured schema, a curated KB of mapping YAML files, Python tooling, and an ASTA-powered literature review workflow.
