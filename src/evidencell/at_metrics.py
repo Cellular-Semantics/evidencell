@@ -640,7 +640,11 @@ def refresh_kb(
                     ev["f1_source_relpath"] = payload["f1_source_relpath"]
                     changed = True
         if rows:
-            out[str(path.relative_to(repo_root()))] = rows
+            try:
+                key = str(path.relative_to(repo_root()))
+            except ValueError:
+                key = str(path)
+            out[key] = rows
         if changed and not dry_run:
             path.write_text(
                 yaml.safe_dump(doc, sort_keys=False, allow_unicode=True),
