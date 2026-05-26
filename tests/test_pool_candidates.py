@@ -23,8 +23,8 @@ def _at_evidence(target_acc: str, level: str, f1: float, gp: float = None, tp: f
                 "taxonomy_level": level,
                 "best_target_accession": target_acc,
                 "f1_score": f1,
-                "group_purity": gp,
-                "target_purity": tp,
+                "coverage": gp,
+                "purity": tp,
             }
         ],
     }

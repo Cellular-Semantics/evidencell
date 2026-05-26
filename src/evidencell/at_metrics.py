@@ -21,20 +21,23 @@ migration.
 CSV shape notes (two variants in use across the 7 known runs):
 
   Shape A — "best per (source, level)":
-    columns: source_label, level, best_target, n_cells, group_purity,
-             target_purity, f1, median_boot
+    columns: source_label, level, best_target, n_cells, coverage,
+             purity, f1, median_boot
     files: ``f1_scores_best.csv``, ``f1_scores_aggregated_best.csv``
     one row per (source_label, level), describing the source's
     single best target.
 
   Shape B — "full matrix":
-    columns: source_label, level, target_name, n_cells, group_purity,
-             target_purity, f1, mean_boot, median_boot
+    columns: source_label, level, target_name, n_cells, coverage,
+             purity, f1, mean_boot, median_boot
     files: ``f1_matrix*.csv``
     many rows per (source_label, level), one per observed target.
 
 Both map onto ``AnnotationTransferMetricRow``; Shape A simply yields
-fewer rows. The migration preserves every row as-is.
+fewer rows. The migration preserves every row as-is. CSVs produced
+before the 2026-05-25 nomenclature standardisation used the old
+column names ``group_purity`` / ``target_purity``; the migration
+reader accepts either pair (new names take precedence).
 """
 
 from __future__ import annotations
@@ -223,23 +226,26 @@ def _row_to_metric_row(
         taxonomy_id, level, target_name
     )
 
-    def _float(key: str) -> float | None:
-        v = raw.get(key)
-        if v is None or v == "":
-            return None
-        try:
-            return float(v)
-        except (TypeError, ValueError):
-            return None
+    def _float(*keys: str) -> float | None:
+        """Read the first present key as float; tolerates old column names."""
+        for key in keys:
+            v = raw.get(key)
+            if v not in (None, ""):
+                try:
+                    return float(v)
+                except (TypeError, ValueError):
+                    return None
+        return None
 
-    def _int(key: str) -> int | None:
-        v = raw.get(key)
-        if v is None or v == "":
-            return None
-        try:
-            return int(float(v))
-        except (TypeError, ValueError):
-            return None
+    def _int(*keys: str) -> int | None:
+        for key in keys:
+            v = raw.get(key)
+            if v not in (None, ""):
+                try:
+                    return int(float(v))
+                except (TypeError, ValueError):
+                    return None
+        return None
 
     return AnnotationTransferMetricRow(
         source_label=raw["source_label"],
@@ -248,8 +254,11 @@ def _row_to_metric_row(
         target_name=str(target_name),
         target_accession=target_accession,
         n_cells=_int("n_cells"),
-        group_purity=_float("group_purity"),
-        target_purity=_float("target_purity"),
+        # CSV column names: prefer the new (coverage / purity); fall
+        # back to the pre-2026-05-25 names (group_purity / target_purity)
+        # so legacy f1_*.csv files still migrate cleanly.
+        coverage=_float("coverage", "group_purity"),
+        purity=_float("purity", "target_purity"),
         f1=_float("f1"),
         median_bootstrap=_float("median_boot"),
         mean_bootstrap=_float("mean_boot"),
@@ -395,9 +404,9 @@ def derive_proportions_from_mmc(
     proportions.
 
     For each level, counts cells per target_label and emits a row with
-    ``group_purity = count / total`` (precision-side mass on this
-    target), ``n_cells = count``, and ``f1 / target_purity = None``
-    (no source-side cluster labels = no recall side).
+    ``coverage = count / total`` (fraction of source cells landing on
+    this target), ``n_cells = count``, and ``purity / f1 = None`` (no
+    source-side cluster labels = no purity / F1 to compute).
     """
     total = len(mmc_rows)
     if total == 0:
@@ -424,8 +433,8 @@ def derive_proportions_from_mmc(
                     target_name=name,
                     target_accession=accn,
                     n_cells=n,
-                    group_purity=n / total,
-                    target_purity=None,
+                    coverage=n / total,
+                    purity=None,
                     f1=None,
                 )
             )
@@ -638,8 +647,8 @@ def _row_to_level_result(
         taxonomy_rank=row.taxonomy_rank,
         best_target_name=row.target_name or "",
         best_target_accession=row.target_accession,
-        group_purity=row.group_purity,
-        target_purity=row.target_purity,
+        coverage=row.coverage,
+        purity=row.purity,
         f1_score=row.f1,
         n_cells_mapped=row.n_cells,
         median_bootstrap=row.median_bootstrap,
@@ -808,7 +817,7 @@ def regen_at_hits_file(
           "source_run_id": ..., "source_cluster_label": ...,
           "f1_floor": ..., "hits": [{target_accession, target_level,
                                      target_name, f1, n_cells,
-                                     group_purity, target_purity}]
+                                     coverage, purity}]
         }
 
     The regenerated file is guaranteed to match at_results.yaml row-for-row
@@ -836,8 +845,8 @@ def regen_at_hits_file(
             "target_name": row.target_name,
             "f1": row.f1,
             "n_cells": row.n_cells,
-            "group_purity": row.group_purity,
-            "target_purity": row.target_purity,
+            "coverage": row.coverage,
+            "purity": row.purity,
         })
     payload = {
         "classical_node_id": classical_node_id,

@@ -96,7 +96,7 @@ Two candidate atlas nodes were assessed: the supertype CS20230722_SUPT_0206 (020
 ### 0739 Pvalb Gaba_2 · 🟡 MODERATE
 
 **Supporting evidence:**
-- Que 2021 patch-seq AT (`at_run_20260508_que2021_pvin_mmc_wmbv1`): morphologically identified PV basket cells (BC, n=62; hBC+vBC aggregated) map to CLUS_0739 with F1=0.83, group_purity=0.795 (31 cells), target_purity=0.861 — the top cluster hit. BC/BIC cluster separation within SUPT_0206 (BIC preferring CLUS_0737) is a genuine transcriptomic subtype signal from patch-seq morphology-labelled cells.
+- Que 2021 patch-seq AT (`at_run_20260508_que2021_pvin_mmc_wmbv1`): morphologically identified PV basket cells (BC, n=62; hBC+vBC aggregated) map to CLUS_0739 with F1=0.83, coverage=0.795 (31 cells), purity=0.861 — the top cluster hit. BC/BIC cluster separation within SUPT_0206 (BIC preferring CLUS_0737) is a genuine transcriptomic subtype signal from patch-seq morphology-labelled cells.
 - Atlas precomputed expression: Pvalb=10.63 (strongest among SUPT_0206 child clusters), Gad1=10.52, Gad2=8.43, Cnr1=1.68 (absent), confirming PV+ GABAergic identity with the expected Cnr1-negative profile.
 - Atlas metadata: hippocampal enrichment with CA1 SO (124 cells), CA3 SO (80 cells), CA1 pyramidal layer (26 cells), CA1 SR (45 cells) — appropriate perisomatic-targeting interneuron distribution.
 
@@ -118,7 +118,7 @@ Two candidate atlas nodes were assessed: the supertype CS20230722_SUPT_0206 (020
 ### 0206 Pvalb Gaba_2 · 🟡 MODERATE
 
 **Supporting evidence:**
-- Que 2021 patch-seq AT (`at_run_20260508_que2021_pvin_mmc_wmbv1`): 53/62 BC cells map to SUPT_0206 with F1=0.79, group_purity=0.898, target_purity=0.697; SUBCLASS-level F1=0.78 (052 Pvalb Gaba). Morphology-confirmed BC cells converge on the Pvalb Gaba supertype.
+- Que 2021 patch-seq AT (`at_run_20260508_que2021_pvin_mmc_wmbv1`): 53/62 BC cells map to SUPT_0206 with F1=0.79, coverage=0.898, purity=0.697; SUBCLASS-level F1=0.78 (052 Pvalb Gaba). Morphology-confirmed BC cells converge on the Pvalb Gaba supertype.
 - Atlas precomputed expression: Pvalb=8.74, Gad1=10.34, Gad2=9.28, Cnr1=1.93 — all 3 defining markers confirmed and negative marker absent.
 - Atlas metadata: CA1 SO (818 cells), CA3 SO (152 cells) include appropriate perisomatic interneuron locations.
 

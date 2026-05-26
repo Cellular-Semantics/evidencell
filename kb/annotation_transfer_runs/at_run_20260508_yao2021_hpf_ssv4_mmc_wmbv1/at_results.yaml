@@ -1,7 +1,7 @@
 run_id: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
 taxonomy_id: CCN20230722
 source_csv_relpath: f1_scores_best.csv
-generated_at: '2026-05-26T09:46:48+00:00'
+generated_at: '2026-05-26T11:07:30+00:00'
 generator: src/evidencell/at_metrics.py::migrate_csv
 rows:
 - source_label: Astro
@@ -10,8 +10,8 @@ rows:
   target_name: 30 Astro-Epen
   target_accession: CS20230722_CLAS_30
   n_cells: 17
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: Astro
@@ -20,8 +20,8 @@ rows:
   target_name: 321 Astroependymal NN
   target_accession: CS20230722_SUBC_321
   n_cells: 12
-  group_purity: 0.8
-  target_purity: 1.0
+  coverage: 0.8
+  purity: 1.0
   f1: 0.888888888888889
   median_bootstrap: 1.0
 - source_label: Astro
@@ -30,8 +30,8 @@ rows:
   target_name: 1169 Astroependymal NN_1
   target_accession: CS20230722_SUPT_1169
   n_cells: 14
-  group_purity: 0.875
-  target_purity: 1.0
+  coverage: 0.875
+  purity: 1.0
   f1: 0.9333333333333333
   median_bootstrap: 1.0
 - source_label: Astro
@@ -40,8 +40,8 @@ rows:
   target_name: 5238 Astroependymal NN_1
   target_accession: CS20230722_CLUS_5238
   n_cells: 8
-  group_purity: 0.7272727272727273
-  target_purity: 1.0
+  coverage: 0.7272727272727273
+  purity: 1.0
   f1: 0.8421052631578948
   median_bootstrap: 1.0
 - source_label: CA1-ProS
@@ -50,8 +50,8 @@ rows:
   target_name: 01 IT-ET Glut
   target_accession: CS20230722_CLAS_01
   n_cells: 1590
-  group_purity: 1.0
-  target_purity: 0.8075165058405281
+  coverage: 1.0
+  purity: 0.8075165058405281
   f1: 0.8935094127563922
   median_bootstrap: 1.0
 - source_label: CA1-ProS
@@ -60,8 +60,8 @@ rows:
   target_name: 016 CA1-ProS Glut
   target_accession: CS20230722_SUBC_016
   n_cells: 1574
-  group_purity: 0.9936868686868687
-  target_purity: 0.9962025316455696
+  coverage: 0.9936868686868687
+  purity: 0.9962025316455696
   f1: 0.9949431099873578
   median_bootstrap: 1.0
 - source_label: CA1-ProS
@@ -70,8 +70,8 @@ rows:
   target_name: 0069 CA1-ProS Glut_1
   target_accession: CS20230722_SUPT_0069
   n_cells: 979
-  group_purity: 0.6535380507343124
-  target_purity: 0.9989795918367347
+  coverage: 0.6535380507343124
+  purity: 0.9989795918367347
   f1: 0.7901533494753834
   median_bootstrap: 1.0
 - source_label: CA1-ProS
@@ -80,8 +80,8 @@ rows:
   target_name: 0262 CA1-ProS Glut_1
   target_accession: CS20230722_CLUS_0262
   n_cells: 382
-  group_purity: 0.28233555062823357
-  target_purity: 1.0
+  coverage: 0.28233555062823357
+  purity: 1.0
   f1: 0.4403458213256485
   median_bootstrap: 1.0
 - source_label: CA2-IG-FC
@@ -90,8 +90,8 @@ rows:
   target_name: 01 IT-ET Glut
   target_accession: CS20230722_CLAS_01
   n_cells: 19
-  group_purity: 1.0
-  target_purity: 0.009649568308786187
+  coverage: 1.0
+  purity: 0.009649568308786187
   f1: 0.019114688128772636
   median_bootstrap: 1.0
 - source_label: CA2-IG-FC
@@ -100,8 +100,8 @@ rows:
   target_name: 025 CA2-FC-IG Glut
   target_accession: CS20230722_SUBC_025
   n_cells: 18
-  group_purity: 1.0
-  target_purity: 0.9473684210526315
+  coverage: 1.0
+  purity: 0.9473684210526315
   f1: 0.972972972972973
   median_bootstrap: 1.0
 - source_label: CA2-IG-FC
@@ -110,8 +110,8 @@ rows:
   target_name: 0101 CA2-FC-IG Glut_2
   target_accession: CS20230722_SUPT_0101
   n_cells: 18
-  group_purity: 0.9473684210526315
-  target_purity: 0.9473684210526315
+  coverage: 0.9473684210526315
+  purity: 0.9473684210526315
   f1: 0.9473684210526315
   median_bootstrap: 1.0
 - source_label: CA2-IG-FC
@@ -120,8 +120,8 @@ rows:
   target_name: 0401 CA2-FC-IG Glut_2
   target_accession: CS20230722_CLUS_0401
   n_cells: 11
-  group_purity: 0.7857142857142857
-  target_purity: 1.0
+  coverage: 0.7857142857142857
+  purity: 1.0
   f1: 0.88
   median_bootstrap: 1.0
 - source_label: CA3
@@ -130,8 +130,8 @@ rows:
   target_name: 01 IT-ET Glut
   target_accession: CS20230722_CLAS_01
   n_cells: 322
-  group_purity: 1.0
-  target_purity: 0.16353478923311326
+  coverage: 1.0
+  purity: 0.16353478923311326
   f1: 0.28109995635093843
   median_bootstrap: 1.0
 - source_label: CA3
@@ -140,8 +140,8 @@ rows:
   target_name: 017 CA3 Glut
   target_accession: CS20230722_SUBC_017
   n_cells: 320
-  group_purity: 0.9937888198757764
-  target_purity: 0.9937888198757764
+  coverage: 0.9937888198757764
+  purity: 0.9937888198757764
   f1: 0.9937888198757764
   median_bootstrap: 1.0
 - source_label: CA3
@@ -150,8 +150,8 @@ rows:
   target_name: 0078 CA3 Glut_4
   target_accession: CS20230722_SUPT_0078
   n_cells: 198
-  group_purity: 0.6325878594249201
-  target_purity: 1.0
+  coverage: 0.6325878594249201
+  purity: 1.0
   f1: 0.7749510763209393
   median_bootstrap: 1.0
 - source_label: CA3
@@ -160,8 +160,8 @@ rows:
   target_name: 0315 CA3 Glut_4
   target_accession: CS20230722_CLUS_0315
   n_cells: 157
-  group_purity: 0.5358361774744027
-  target_purity: 1.0
+  coverage: 0.5358361774744027
+  purity: 1.0
   f1: 0.6977777777777777
   median_bootstrap: 1.0
 - source_label: DG
@@ -170,8 +170,8 @@ rows:
   target_name: 04 DG-IMN Glut
   target_accession: CS20230722_CLAS_04
   n_cells: 2473
-  group_purity: 1.0
-  target_purity: 0.9991919191919192
+  coverage: 1.0
+  purity: 0.9991919191919192
   f1: 0.9995957962813258
   median_bootstrap: 1.0
 - source_label: DG
@@ -180,8 +180,8 @@ rows:
   target_name: 037 DG Glut
   target_accession: CS20230722_SUBC_037
   n_cells: 2473
-  group_purity: 1.0
-  target_purity: 0.9991919191919192
+  coverage: 1.0
+  purity: 0.9991919191919192
   f1: 0.9995957962813258
   median_bootstrap: 1.0
 - source_label: DG
@@ -190,8 +190,8 @@ rows:
   target_name: 0137 DG Glut_2
   target_accession: CS20230722_SUPT_0137
   n_cells: 2109
-  group_purity: 0.8978288633461047
-  target_purity: 1.0
+  coverage: 0.8978288633461047
+  purity: 1.0
   f1: 0.946164199192463
   median_bootstrap: 1.0
 - source_label: DG
@@ -200,8 +200,8 @@ rows:
   target_name: 0507 DG Glut_2
   target_accession: CS20230722_CLUS_0507
   n_cells: 1020
-  group_purity: 0.5238828967642527
-  target_purity: 1.0
+  coverage: 0.5238828967642527
+  purity: 1.0
   f1: 0.6875631951466128
   median_bootstrap: 1.0
 - source_label: L2/3 IT ENTl
@@ -210,8 +210,8 @@ rows:
   target_name: 04 DG-IMN Glut
   target_accession: CS20230722_CLAS_04
   n_cells: 2
-  group_purity: 1.0
-  target_purity: 0.0008080808080808081
+  coverage: 1.0
+  purity: 0.0008080808080808081
   f1: 0.0016148566814695195
   median_bootstrap: 1.0
 - source_label: L2/3 IT ENTl
@@ -220,8 +220,8 @@ rows:
   target_name: 037 DG Glut
   target_accession: CS20230722_SUBC_037
   n_cells: 2
-  group_purity: 1.0
-  target_purity: 0.0008080808080808081
+  coverage: 1.0
+  purity: 0.0008080808080808081
   f1: 0.0016148566814695195
   median_bootstrap: 1.0
 - source_label: L2/3 IT ENTl
@@ -230,8 +230,8 @@ rows:
   target_name: 0136 DG Glut_1
   target_accession: CS20230722_SUPT_0136
   n_cells: 2
-  group_purity: 1.0
-  target_purity: 0.045454545454545456
+  coverage: 1.0
+  purity: 0.045454545454545456
   f1: 0.08695652173913045
   median_bootstrap: 1.0
 - source_label: L2/3 IT ENTl
@@ -240,8 +240,8 @@ rows:
   target_name: 0504 DG Glut_1
   target_accession: CS20230722_CLUS_0504
   n_cells: 2
-  group_purity: 1.0
-  target_purity: 0.5
+  coverage: 1.0
+  purity: 0.5
   f1: 0.6666666666666666
   median_bootstrap: 1.0
 - source_label: L2/3 IT RHP
@@ -250,8 +250,8 @@ rows:
   target_name: 01 IT-ET Glut
   target_accession: CS20230722_CLAS_01
   n_cells: 5
-  group_purity: 1.0
-  target_purity: 0.0025393600812595226
+  coverage: 1.0
+  purity: 0.0025393600812595226
   f1: 0.005065856129685917
   median_bootstrap: 1.0
 - source_label: L2/3 IT RHP
@@ -260,8 +260,8 @@ rows:
   target_name: 016 CA1-ProS Glut
   target_accession: CS20230722_SUBC_016
   n_cells: 5
-  group_purity: 1.0
-  target_purity: 0.0031645569620253164
+  coverage: 1.0
+  purity: 0.0031645569620253164
   f1: 0.006309148264984227
   median_bootstrap: 1.0
 - source_label: L2/3 IT RHP
@@ -270,8 +270,8 @@ rows:
   target_name: 0074 CA1-ProS Glut_6
   target_accession: CS20230722_SUPT_0074
   n_cells: 5
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: L2/3 IT RHP
@@ -280,8 +280,8 @@ rows:
   target_name: 0293 CA1-ProS Glut_6
   target_accession: CS20230722_CLUS_0293
   n_cells: 3
-  group_purity: 0.6
-  target_purity: 1.0
+  coverage: 0.6
+  purity: 1.0
   f1: 0.7499999999999999
   median_bootstrap: 1.0
 - source_label: L6 CT CTX
@@ -290,8 +290,8 @@ rows:
   target_name: 02 NP-CT-L6b Glut
   target_accession: CS20230722_CLAS_02
   n_cells: 2
-  group_purity: 1.0
-  target_purity: 0.16666666666666666
+  coverage: 1.0
+  purity: 0.16666666666666666
   f1: 0.2857142857142857
   median_bootstrap: 1.0
 - source_label: L6 CT CTX
@@ -300,8 +300,8 @@ rows:
   target_name: 030 L6 CT CTX Glut
   target_accession: CS20230722_SUBC_030
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: L6 CT CTX
@@ -310,8 +310,8 @@ rows:
   target_name: 0108 L6b/CT ENT Glut_3
   target_accession: CS20230722_SUPT_0108
   n_cells: 1
-  group_purity: 0.5
-  target_purity: 1.0
+  coverage: 0.5
+  purity: 1.0
   f1: 0.6666666666666666
   median_bootstrap: 1.0
 - source_label: L6 CT CTX
@@ -320,8 +320,8 @@ rows:
   target_name: 0445 L6 CT CTX Glut_3
   target_accession: CS20230722_CLUS_0445
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: L6b CTX
@@ -330,8 +330,8 @@ rows:
   target_name: 02 NP-CT-L6b Glut
   target_accession: CS20230722_CLAS_02
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 0.08333333333333333
+  coverage: 1.0
+  purity: 0.08333333333333333
   f1: 0.15384615384615385
   median_bootstrap: 1.0
 - source_label: L6b CTX
@@ -340,8 +340,8 @@ rows:
   target_name: 028 L6b/CT ENT Glut
   target_accession: CS20230722_SUBC_028
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: L6b CTX
@@ -350,8 +350,8 @@ rows:
   target_name: 0107 L6b/CT ENT Glut_2
   target_accession: CS20230722_SUPT_0107
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: L6b CTX
@@ -360,8 +360,8 @@ rows:
   target_name: 0415 L6b/CT ENT Glut_2
   target_accession: CS20230722_CLUS_0415
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 0.91
 - source_label: Lamp5
@@ -370,8 +370,8 @@ rows:
   target_name: 07 CTX-MGE GABA
   target_accession: CS20230722_CLAS_07
   n_cells: 705
-  group_purity: 0.818815331010453
-  target_purity: 0.675934803451582
+  coverage: 0.818815331010453
+  purity: 0.675934803451582
   f1: 0.7405462184873949
   median_bootstrap: 1.0
 - source_label: Lamp5
@@ -380,8 +380,8 @@ rows:
   target_name: 050 Lamp5 Lhx6 Gaba
   target_accession: CS20230722_SUBC_050
   n_cells: 710
-  group_purity: 0.8198614318706697
-  target_purity: 0.9916201117318436
+  coverage: 0.8198614318706697
+  purity: 0.9916201117318436
   f1: 0.8975979772439949
   median_bootstrap: 1.0
 - source_label: Lamp5
@@ -390,8 +390,8 @@ rows:
   target_name: 0203 Lamp5 Lhx6 Gaba_1
   target_accession: CS20230722_SUPT_0203
   n_cells: 711
-  group_purity: 0.8229166666666666
-  target_purity: 0.9888734353268428
+  coverage: 0.8229166666666666
+  purity: 0.9888734353268428
   f1: 0.8982943777637397
   median_bootstrap: 1.0
 - source_label: Lamp5
@@ -400,8 +400,8 @@ rows:
   target_name: 0726 Lamp5 Lhx6 Gaba_1
   target_accession: CS20230722_CLUS_0726
   n_cells: 260
-  group_purity: 0.3641456582633053
-  target_purity: 1.0
+  coverage: 0.3641456582633053
+  purity: 1.0
   f1: 0.5338809034907597
   median_bootstrap: 1.0
 - source_label: Micro-PVM
@@ -410,8 +410,8 @@ rows:
   target_name: 34 Immune
   target_accession: CS20230722_CLAS_34
   n_cells: 20
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: Micro-PVM
@@ -420,8 +420,8 @@ rows:
   target_name: 335 BAM NN
   target_accession: CS20230722_SUBC_335
   n_cells: 19
-  group_purity: 0.95
-  target_purity: 1.0
+  coverage: 0.95
+  purity: 1.0
   f1: 0.9743589743589743
   median_bootstrap: 1.0
 - source_label: Micro-PVM
@@ -430,8 +430,8 @@ rows:
   target_name: 1195 BAM NN_1
   target_accession: CS20230722_SUPT_1195
   n_cells: 19
-  group_purity: 0.95
-  target_purity: 1.0
+  coverage: 0.95
+  purity: 1.0
   f1: 0.9743589743589743
   median_bootstrap: 1.0
 - source_label: Micro-PVM
@@ -440,8 +440,8 @@ rows:
   target_name: 5314 BAM NN_1
   target_accession: CS20230722_CLUS_5314
   n_cells: 11
-  group_purity: 0.7333333333333333
-  target_purity: 1.0
+  coverage: 0.7333333333333333
+  purity: 1.0
   f1: 0.846153846153846
   median_bootstrap: 1.0
 - source_label: NP SUB
@@ -450,8 +450,8 @@ rows:
   target_name: 02 NP-CT-L6b Glut
   target_accession: CS20230722_CLAS_02
   n_cells: 9
-  group_purity: 1.0
-  target_purity: 0.75
+  coverage: 1.0
+  purity: 0.75
   f1: 0.8571428571428571
   median_bootstrap: 1.0
 - source_label: NP SUB
@@ -460,8 +460,8 @@ rows:
   target_name: 033 NP SUB Glut
   target_accession: CS20230722_SUBC_033
   n_cells: 9
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: NP SUB
@@ -470,8 +470,8 @@ rows:
   target_name: 0127 NP SUB Glut_1
   target_accession: CS20230722_SUPT_0127
   n_cells: 8
-  group_purity: 0.8888888888888888
-  target_purity: 1.0
+  coverage: 0.8888888888888888
+  purity: 1.0
   f1: 0.9411764705882353
   median_bootstrap: 1.0
 - source_label: NP SUB
@@ -480,8 +480,8 @@ rows:
   target_name: 0477 NP SUB Glut_1
   target_accession: CS20230722_CLUS_0477
   n_cells: 8
-  group_purity: 0.8888888888888888
-  target_purity: 1.0
+  coverage: 0.8888888888888888
+  purity: 1.0
   f1: 0.9411764705882353
   median_bootstrap: 1.0
 - source_label: Oligo
@@ -490,8 +490,8 @@ rows:
   target_name: 31 OPC-Oligo
   target_accession: CS20230722_CLAS_31
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: Oligo
@@ -500,8 +500,8 @@ rows:
   target_name: 327 Oligo NN
   target_accession: CS20230722_SUBC_327
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: Oligo
@@ -510,8 +510,8 @@ rows:
   target_name: 1181 COP NN_1
   target_accession: CS20230722_SUPT_1181
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: Oligo
@@ -520,8 +520,8 @@ rows:
   target_name: 5274 COP NN_1
   target_accession: CS20230722_CLUS_5274
   n_cells: 1
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: Pvalb
@@ -530,8 +530,8 @@ rows:
   target_name: 07 CTX-MGE GABA
   target_accession: CS20230722_CLAS_07
   n_cells: 66
-  group_purity: 1.0
-  target_purity: 0.06327900287631831
+  coverage: 1.0
+  purity: 0.06327900287631831
   f1: 0.11902614968440035
   median_bootstrap: 1.0
 - source_label: Pvalb
@@ -540,8 +540,8 @@ rows:
   target_name: 051 Pvalb chandelier Gaba
   target_accession: CS20230722_SUBC_051
   n_cells: 25
-  group_purity: 0.4166666666666667
-  target_purity: 1.0
+  coverage: 0.4166666666666667
+  purity: 1.0
   f1: 0.5882352941176471
   median_bootstrap: 1.0
 - source_label: Pvalb
@@ -550,8 +550,8 @@ rows:
   target_name: 0204 Pvalb chandelier Gaba_1
   target_accession: CS20230722_SUPT_0204
   n_cells: 26
-  group_purity: 0.4406779661016949
-  target_purity: 1.0
+  coverage: 0.4406779661016949
+  purity: 1.0
   f1: 0.611764705882353
   median_bootstrap: 1.0
 - source_label: Pvalb
@@ -560,8 +560,8 @@ rows:
   target_name: 0732 Pvalb chandelier Gaba_1
   target_accession: CS20230722_CLUS_0732
   n_cells: 23
-  group_purity: 0.45098039215686275
-  target_purity: 1.0
+  coverage: 0.45098039215686275
+  purity: 1.0
   f1: 0.6216216216216216
   median_bootstrap: 1.0
 - source_label: SUB-ProS
@@ -570,8 +570,8 @@ rows:
   target_name: 01 IT-ET Glut
   target_accession: CS20230722_CLAS_01
   n_cells: 33
-  group_purity: 1.0
-  target_purity: 0.01675977653631285
+  coverage: 1.0
+  purity: 0.01675977653631285
   f1: 0.03296703296703297
   median_bootstrap: 1.0
 - source_label: SUB-ProS
@@ -580,8 +580,8 @@ rows:
   target_name: 023 SUB-ProS Glut
   target_accession: CS20230722_SUBC_023
   n_cells: 33
-  group_purity: 1.0
-  target_purity: 0.868421052631579
+  coverage: 1.0
+  purity: 0.868421052631579
   f1: 0.9295774647887324
   median_bootstrap: 1.0
 - source_label: SUB-ProS
@@ -590,8 +590,8 @@ rows:
   target_name: 0098 SUB-ProS Glut_3
   target_accession: CS20230722_SUPT_0098
   n_cells: 13
-  group_purity: 0.40625
-  target_purity: 1.0
+  coverage: 0.40625
+  purity: 1.0
   f1: 0.5777777777777777
   median_bootstrap: 1.0
 - source_label: SUB-ProS
@@ -600,8 +600,8 @@ rows:
   target_name: 0388 SUB-ProS Glut_2
   target_accession: CS20230722_CLUS_0388
   n_cells: 8
-  group_purity: 0.25806451612903225
-  target_purity: 0.6153846153846154
+  coverage: 0.25806451612903225
+  purity: 0.6153846153846154
   f1: 0.36363636363636365
   median_bootstrap: 1.0
 - source_label: Sncg
@@ -610,8 +610,8 @@ rows:
   target_name: 06 CTX-CGE GABA
   target_accession: CS20230722_CLAS_06
   n_cells: 383
-  group_purity: 0.9973958333333334
-  target_purity: 0.3777120315581854
+  coverage: 0.9973958333333334
+  purity: 0.3777120315581854
   f1: 0.547925608011445
   median_bootstrap: 1.0
 - source_label: Sncg
@@ -620,8 +620,8 @@ rows:
   target_name: 048 RHP-COA Ndnf Gaba
   target_accession: CS20230722_SUBC_048
   n_cells: 219
-  group_purity: 0.6134453781512605
-  target_purity: 0.9954545454545455
+  coverage: 0.6134453781512605
+  purity: 0.9954545454545455
   f1: 0.7590987868284229
   median_bootstrap: 1.0
 - source_label: Sncg
@@ -630,8 +630,8 @@ rows:
   target_name: 0197 RHP-COA Ndnf Gaba_5
   target_accession: CS20230722_SUPT_0197
   n_cells: 82
-  group_purity: 0.2210242587601078
-  target_purity: 0.9879518072289156
+  coverage: 0.2210242587601078
+  purity: 0.9879518072289156
   f1: 0.36123348017621143
   median_bootstrap: 1.0
 - source_label: Sncg
@@ -640,8 +640,8 @@ rows:
   target_name: 0701 RHP-COA Ndnf Gaba_5
   target_accession: CS20230722_CLUS_0701
   n_cells: 28
-  group_purity: 0.0875
-  target_purity: 0.9655172413793104
+  coverage: 0.0875
+  purity: 0.9655172413793104
   f1: 0.16045845272206302
   median_bootstrap: 1.0
 - source_label: Sst
@@ -650,8 +650,8 @@ rows:
   target_name: 07 CTX-MGE GABA
   target_accession: CS20230722_CLAS_07
   n_cells: 272
-  group_purity: 0.9963369963369964
-  target_purity: 0.2607861936720997
+  coverage: 0.9963369963369964
+  purity: 0.2607861936720997
   f1: 0.4133738601823709
   median_bootstrap: 1.0
 - source_label: Sst
@@ -660,8 +660,8 @@ rows:
   target_name: 053 Sst Gaba
   target_accession: CS20230722_SUBC_053
   n_cells: 265
-  group_purity: 0.9888059701492538
-  target_purity: 0.977859778597786
+  coverage: 0.9888059701492538
+  purity: 0.977859778597786
   f1: 0.9833024118738404
   median_bootstrap: 1.0
 - source_label: Sst
@@ -670,8 +670,8 @@ rows:
   target_name: 0219 Sst Gaba_6
   target_accession: CS20230722_SUPT_0219
   n_cells: 161
-  group_purity: 0.6264591439688716
-  target_purity: 0.9640718562874252
+  coverage: 0.6264591439688716
+  purity: 0.9640718562874252
   f1: 0.759433962264151
   median_bootstrap: 1.0
 - source_label: Sst
@@ -680,8 +680,8 @@ rows:
   target_name: 0786 Sst Gaba_6
   target_accession: CS20230722_CLUS_0786
   n_cells: 28
-  group_purity: 0.13023255813953488
-  target_purity: 1.0
+  coverage: 0.13023255813953488
+  purity: 1.0
   f1: 0.23045267489711932
   median_bootstrap: 1.0
 - source_label: Sst Chodl
@@ -690,8 +690,8 @@ rows:
   target_name: 08 CNU-MGE GABA
   target_accession: CS20230722_CLAS_08
   n_cells: 3
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: Sst Chodl
@@ -700,8 +700,8 @@ rows:
   target_name: 056 Sst Chodl Gaba
   target_accession: CS20230722_SUBC_056
   n_cells: 3
-  group_purity: 1.0
-  target_purity: 1.0
+  coverage: 1.0
+  purity: 1.0
   f1: 1.0
   median_bootstrap: 1.0
 - source_label: Sst Chodl
@@ -710,8 +710,8 @@ rows:
   target_name: 0241 Sst Chodl Gaba_4
   target_accession: CS20230722_SUPT_0241
   n_cells: 2
-  group_purity: 0.6666666666666666
-  target_purity: 1.0
+  coverage: 0.6666666666666666
+  purity: 1.0
   f1: 0.8
   median_bootstrap: 1.0
 - source_label: Sst Chodl
@@ -720,8 +720,8 @@ rows:
   target_name: 0859 Sst Chodl Gaba_4
   target_accession: CS20230722_CLUS_0859
   n_cells: 2
-  group_purity: 0.6666666666666666
-  target_purity: 1.0
+  coverage: 0.6666666666666666
+  purity: 1.0
   f1: 0.8
   median_bootstrap: 1.0
 - source_label: Vip
@@ -730,8 +730,8 @@ rows:
   target_name: 06 CTX-CGE GABA
   target_accession: CS20230722_CLAS_06
   n_cells: 475
-  group_purity: 1.0
-  target_purity: 0.46844181459566075
+  coverage: 1.0
+  purity: 0.46844181459566075
   f1: 0.6380120886501007
   median_bootstrap: 1.0
 - source_label: Vip
@@ -740,8 +740,8 @@ rows:
   target_name: 046 Vip Gaba
   target_accession: CS20230722_SUBC_046
   n_cells: 463
-  group_purity: 0.9851063829787234
-  target_purity: 0.9526748971193416
+  coverage: 0.9851063829787234
+  purity: 0.9526748971193416
   f1: 0.9686192468619248
   median_bootstrap: 1.0
 - source_label: Vip
@@ -750,8 +750,8 @@ rows:
   target_name: 0177 Vip Gaba_5
   target_accession: CS20230722_SUPT_0177
   n_cells: 101
-  group_purity: 0.24754901960784315
-  target_purity: 1.0
+  coverage: 0.24754901960784315
+  purity: 1.0
   f1: 0.39685658153241654
   median_bootstrap: 1.0
 - source_label: Vip
@@ -760,7 +760,7 @@ rows:
   target_name: 0644 Vip Gaba_5
   target_accession: CS20230722_CLUS_0644
   n_cells: 54
-  group_purity: 0.15561959654178675
-  target_purity: 1.0
+  coverage: 0.15561959654178675
+  purity: 1.0
   f1: 0.26932668329177056
   median_bootstrap: 1.0

@@ -37,7 +37,7 @@ The primary disqualifying signal is that SUPT_0219 [CS20230722_SUPT_0219] is CA3
 
 - NT type consistent: LTH cell is GABAergic; SUPT_0219 belongs to the 053 Sst Gaba subclass, confirming GABAergic identity.
 - Sst marker consistent: LTH cells are SST-Cre labelled; SUPT_0219 [CS20230722_SUPT_0219] carries Sst as a defining marker (precomputed mean 10.17).
-- Annotation transfer (Yao 2021, GEO:GSE185862, n=273 SSv4 Sst HIP cells): subclass-level correspondence strongly confirmed (265/273 cells to Sst Gaba subclass; F1=0.983). At supertype level, SUPT_0219 was the dominant target (161/273 cells, F1=0.759, target_purity=0.964).
+- Annotation transfer (Yao 2021, GEO:GSE185862, n=273 SSv4 Sst HIP cells): subclass-level correspondence strongly confirmed (265/273 cells to Sst Gaba subclass; F1=0.983). At supertype level, SUPT_0219 was the dominant target (161/273 cells, F1=0.759, purity=0.964).
 
 **Marker evidence provenance**
 

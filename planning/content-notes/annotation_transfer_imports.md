@@ -21,7 +21,7 @@ Curation tasks: run `annotation-transfer` orchestrator then write resulting
 - Evidence added:
   - ivy_cell → SUPT_0203: Harris Class `Cacna2d1.Lhx6.Reln` (SUPPORT, F1=0.825)
   - olm_cell → SUPT_0216: Harris `Sst.Pnoc.Calb1.Igfbp5` (SUPPORT, recall=0.965) + Chamberland Chrna2 → CLUS_0771 (SUPPORT, F1=0.649)
-  - bistratified → CLUS_0737: Chamberland `Sst_Tac1` (PARTIAL, subclass F1=0.578, cluster target_purity=0.939)
+  - bistratified → CLUS_0737: Chamberland `Sst_Tac1` (PARTIAL, subclass F1=0.578, cluster purity=0.939)
   - is_interneuron → SUPT_0179: Harris `Calb2.Vip.Igfbp4` (PARTIAL, F1=0.612)
   - NEW edge cck_basket → SUPT_0187 Sncg Gaba_3: Harris `Cck.Cxcl14.Vip` (PARTIAL, F1=0.768, recall=0.951)
 - Tags: `#annotation-transfer`

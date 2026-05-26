@@ -32,7 +32,7 @@ def shape_a_run(tmp_path: Path) -> Path:
     )
     _write(
         run / "f1_scores_best.csv",
-        "source_label,level,best_target,n_cells,group_purity,target_purity,f1,median_boot\n"
+        "source_label,level,best_target,n_cells,coverage,purity,f1,median_boot\n"
         # AAC: best at supertype is 0206 (Pvalb basket), NOT a chandelier target.
         "AAC,class,07 CTX-MGE GABA,6,1.0,0.078,0.146,1.0\n"
         "AAC,subclass,052 Pvalb Gaba,5,0.833,0.066,0.122,1.0\n"
@@ -58,7 +58,7 @@ def shape_b_run(tmp_path: Path) -> Path:
     )
     _write(
         run / "f1_matrix.csv",
-        "source_label,level,target_name,n_cells,group_purity,target_purity,f1,mean_boot,median_boot\n"
+        "source_label,level,target_name,n_cells,coverage,purity,f1,mean_boot,median_boot\n"
         "Sst-OLM,class,07 CTX-MGE GABA,23,1.0,0.34,0.51,0.98,1.0\n"
         "Sst-OLM,subclass,053 Sst Gaba,23,1.0,0.51,0.68,0.98,1.0\n"
         "Sst-OLM,supertype,0216 Sst Gaba_3,22,0.96,0.51,0.67,0.99,1.0\n"
@@ -78,12 +78,12 @@ def shape_b_run_variants(tmp_path: Path) -> Path:
     )
     _write(
         run / "f1_matrix_chamberland.csv",
-        "source_label,level,target_name,n_cells,group_purity,target_purity,f1,mean_boot,median_boot\n"
+        "source_label,level,target_name,n_cells,coverage,purity,f1,mean_boot,median_boot\n"
         "Chrna2,supertype,0216 Sst Gaba_3,74,0.90,0.12,0.21,0.98,1.0\n",
     )
     _write(
         run / "f1_matrix_chamberland_by_class.csv",
-        "source_label,level,target_name,n_cells,group_purity,target_purity,f1,mean_boot,median_boot\n"
+        "source_label,level,target_name,n_cells,coverage,purity,f1,mean_boot,median_boot\n"
         "Chrna2,supertype,0216 Sst Gaba_3,126,0.95,0.20,0.33,0.98,1.0\n",
     )
     return run
@@ -186,7 +186,7 @@ def test_migrate_requires_taxonomy_id(tmp_path):
     run = tmp_path / "no_manifest"
     _write(
         run / "f1_matrix.csv",
-        "source_label,level,target_name,n_cells,group_purity,target_purity,f1,mean_boot,median_boot\n"
+        "source_label,level,target_name,n_cells,coverage,purity,f1,mean_boot,median_boot\n"
         "X,class,07 CTX-MGE GABA,10,1.0,0.5,0.7,0.9,1.0\n",
     )
     with pytest.raises(ValueError, match="taxonomy_id"):

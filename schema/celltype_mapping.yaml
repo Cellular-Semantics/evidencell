@@ -586,7 +586,7 @@ enums:
       LOW_CELL_COUNT:
         description: Fewer than ~50 cells used in this analysis; results may not be robust
       DISTRIBUTED_ACROSS_CLUSTERS:
-        description: Source type cells are spread across multiple target clusters (low target_purity/recall)
+        description: Source type cells are spread across multiple target clusters (low coverage at finest level)
       TAXONOMY_LEVEL_MISMATCH:
         description: Best mapping is at a coarser taxonomy level than desired (e.g. supertype not cluster)
       MARKER_NOT_SPECIFIC:
@@ -1567,27 +1567,29 @@ classes:
         description: Name of the best-matching target at this level
       best_target_accession:
         description: CCN accession of the best-matching target
-      group_purity:
+      coverage:
         range: float
         description: >
-          **Recall** in standard ML terms: fraction of source cells
-          mapping to this target. High group_purity = the source type
-          is concentrated in this target. Surfaced as `recall` in
-          `at_figures --emit-metrics` JSON sidecars and as `Coverage`
-          (Cov) in figure annotations.
-      target_purity:
+          Fraction of source cells mapping to this target. High
+          coverage = the source type is concentrated on this target.
+          Equivalent to recall in standard ML terms. Surfaced as
+          `Cov` in figure annotations and `coverage` in
+          `at_figures --emit-metrics` JSON sidecars. Renamed from
+          `group_purity` in the 2026-05-25 nomenclature standardisation
+          (hard cutover).
+      purity:
         range: float
         description: >
-          **Precision** in standard ML terms: fraction of cells in the
-          target that come from this source. High target_purity = the
-          target is specific to this source type. Surfaced as
-          `precision` in `at_figures --emit-metrics` JSON sidecars and
-          as `Purity` (Pur) in figure annotations.
+          Fraction of cells in the target that come from this source.
+          High purity = the target is specifically populated by this
+          source type. Equivalent to precision in standard ML terms.
+          Surfaced as `Pur` in figure annotations and `purity` in
+          `at_figures --emit-metrics` JSON sidecars. Renamed from
+          `target_purity` in the 2026-05-25 nomenclature standardisation
+          (hard cutover).
       f1_score:
         range: float
-        description: >
-          Harmonic mean of group_purity (recall) and target_purity
-          (precision).
+        description: Harmonic mean of coverage and purity.
       n_cells_mapped:
         range: integer
         description: Number of source cells mapped to this target at this level (after bootstrap filter)
@@ -1625,23 +1627,25 @@ classes:
       n_cells:
         range: integer
         description: Number of source cells mapping to this target at this level.
-      group_purity:
+      coverage:
         range: float
         description: >
-          **Recall** — fraction of source cells mapping to this target.
-          Surfaced as `recall` in `--emit-metrics` JSON sidecars and as
-          `Coverage` (Cov) in figure annotations. Same semantic as
-          `AnnotationTransferLevelResult.group_purity`.
-      target_purity:
+          Fraction of source cells mapping to this target (= recall in
+          standard ML terms). Same semantic as
+          `AnnotationTransferLevelResult.coverage`. Surfaced as `Cov`
+          in figure annotations and `coverage` in `--emit-metrics`
+          JSON sidecars.
+      purity:
         range: float
         description: >
-          **Precision** — fraction of cells in the target coming from
-          this source. Surfaced as `precision` in `--emit-metrics`
-          JSON sidecars and as `Purity` (Pur) in figure annotations.
-          Same semantic as `AnnotationTransferLevelResult.target_purity`.
+          Fraction of cells in the target coming from this source
+          (= precision in standard ML terms). Same semantic as
+          `AnnotationTransferLevelResult.purity`. Surfaced as `Pur` in
+          figure annotations and `purity` in `--emit-metrics` JSON
+          sidecars.
       f1:
         range: float
-        description: Harmonic mean of group_purity (recall) and target_purity (precision).
+        description: Harmonic mean of coverage and purity.
       median_bootstrap:
         range: float
       mean_bootstrap:

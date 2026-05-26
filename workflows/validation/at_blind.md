@@ -81,7 +81,7 @@ The run artifact contains:
     (`rises_with_resolution`, `falls_with_resolution`, `flat`,
     `mixed`, `insufficient`). `falls_with_resolution` means the
     source label is biologically mixed (Yao Sst case): prefer
-    precision (`target_purity`) over F1 when interpreting weakening
+    precision (`purity`) over F1 when interpreting weakening
     cluster-level hits. `rises_with_resolution` means the source is
     morphologically/biologically pure (Que 2021 patch-seq case);
     cluster-level F1 is the right summary.

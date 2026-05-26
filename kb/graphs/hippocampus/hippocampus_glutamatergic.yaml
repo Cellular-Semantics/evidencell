@@ -947,7 +947,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
         supports: SUPPORT
-        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 scRNA-seq CA1-ProS subclass label onto WMBv1 (CCN20230722). Of 1704 CA1-ProS cells, 1011 (59.3%) map to SUPT_0069 at the supertype level. F1 score = 0.745 (group_purity=0.593, target_purity=1.0). Target_purity=1.0 confirms SUPT_0069 is exclusively populated by CA1-ProS cells in this dataset. The remaining CA1-ProS cells distribute across SUPT_0070 (20.1%), SUPT_0072 (13.3%), SUPT_0071 (3.5%), and SUPT_0073 (2.8%), consistent with the TYPE_A_SPLITS relationship: the classical CA1 pyramidal cell encompasses all CA1-ProS Glut supertypes, with SUPT_0069 as the primary correspondence.
+        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 scRNA-seq CA1-ProS subclass label onto WMBv1 (CCN20230722). Of 1704 CA1-ProS cells, 1011 (59.3%) map to SUPT_0069 at the supertype level. F1 score = 0.745 (coverage=0.593, purity=1.0). Target_purity=1.0 confirms SUPT_0069 is exclusively populated by CA1-ProS cells in this dataset. The remaining CA1-ProS cells distribute across SUPT_0070 (20.1%), SUPT_0072 (13.3%), SUPT_0071 (3.5%), and SUPT_0073 (2.8%), consistent with the TYPE_A_SPLITS relationship: the classical CA1 pyramidal cell encompasses all CA1-ProS Glut supertypes, with SUPT_0069 as the primary correspondence.
 
           '
         source_dataset_accession: GEO:GSE185862
@@ -959,29 +959,29 @@ edges:
             taxonomy_rank: 3
             best_target_name: 01 IT-ET Glut
             best_target_accession: CS20230722_CLAS_01
-            group_purity: 1.0
-            target_purity: 0.8075165058405281
             f1_score: 0.8935094127563922
             n_cells_mapped: 1590
             median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.8075165058405281
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 016 CA1-ProS Glut
             best_target_accession: CS20230722_SUBC_016
-            group_purity: 0.9936868686868687
-            target_purity: 0.9962025316455696
             f1_score: 0.9949431099873578
             n_cells_mapped: 1574
             median_bootstrap: 1.0
+            coverage: 0.9936868686868687
+            purity: 0.9962025316455696
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0069 CA1-ProS Glut_1
             best_target_accession: CS20230722_SUPT_0069
-            group_purity: 0.6535380507343124
-            target_purity: 0.9989795918367347
             f1_score: 0.7901533494753834
             n_cells_mapped: 979
             median_bootstrap: 1.0
+            coverage: 0.6535380507343124
+            purity: 0.9989795918367347
         n_cells_total: 1590
         best_mapping_rank: 2
         f1_source_relpath: at_results.yaml
@@ -1048,21 +1048,21 @@ edges:
             taxonomy_rank: 3
             best_target_name: 01 IT-ET Glut
             best_target_accession: CS20230722_CLAS_01
-            group_purity: 1.0
-            target_purity: 0.009649568308786187
             f1_score: 0.019114688128772636
             n_cells_mapped: 19
             median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.009649568308786187
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 025 CA2-FC-IG Glut
             best_target_accession: CS20230722_SUBC_025
-            group_purity: 1.0
-            target_purity: 0.9473684210526315
             f1_score: 0.972972972972973
             n_cells_mapped: 18
             median_bootstrap: 1.0
-        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 CA2-IG-FC subclass label (n=19) onto WMBv1 (CCN20230722). At SUBCLASS level: 18/19 cells (94.7%) map to SUBC_025 CA2-FC-IG Glut (F1=0.973, group_purity=1.0, target_purity=0.947). At SUPERTYPE level: 18/19 cells (94.7%) map to SUPT_0101 (CA2-FC-IG Glut_2, F1=0.947) and only 1/19 (5.3%) to SUPT_0100 (CA2-FC-IG Glut_1, F1=0.1). This result is PARTIAL because the subclass-level assignment strongly supports SUBC_025 membership, but supertype-level mapping to SUPT_0101 rather than SUPT_0100 reflects FC/IG contamination in Yao''s mixed CA2-IG-FC label: SUPT_0101 is enriched for fasciola cinerea and induseum griseum cells (MERFISH data: 0 CA2 pyramidal layer cells in SUPT_0101 vs 446 in SUPT_0100). SUPT_0100 remains the correct supertype candidate for CA2 pyramidal cells based on MERFISH anatomy.'
+            coverage: 1.0
+            purity: 0.9473684210526315
+        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 CA2-IG-FC subclass label (n=19) onto WMBv1 (CCN20230722). At SUBCLASS level: 18/19 cells (94.7%) map to SUBC_025 CA2-FC-IG Glut (F1=0.973, coverage=1.0, purity=0.947). At SUPERTYPE level: 18/19 cells (94.7%) map to SUPT_0101 (CA2-FC-IG Glut_2, F1=0.947) and only 1/19 (5.3%) to SUPT_0100 (CA2-FC-IG Glut_1, F1=0.1). This result is PARTIAL because the subclass-level assignment strongly supports SUBC_025 membership, but supertype-level mapping to SUPT_0101 rather than SUPT_0100 reflects FC/IG contamination in Yao''s mixed CA2-IG-FC label: SUPT_0101 is enriched for fasciola cinerea and induseum griseum cells (MERFISH data: 0 CA2 pyramidal layer cells in SUPT_0101 vs 446 in SUPT_0100). SUPT_0100 remains the correct supertype candidate for CA2 pyramidal cells based on MERFISH anatomy.'
         f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
@@ -1125,7 +1125,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
         supports: SUPPORT
-        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 scRNA-seq CA3 subclass label onto WMBv1 (CCN20230722). Of 322 CA3 cells, 203 (63.0%) map to SUPT_0078 at the supertype level. F1 score = 0.773 (group_purity=0.630, target_purity=1.0). Target_purity=1.0 confirms SUPT_0078 receives only CA3 cells in this dataset. The remaining cells distribute across SUPT_0075 (16.8%), SUPT_0077 (11.5%), SUPT_0076 (6.5%), and SUPT_0079 (1.6%), consistent with TYPE_A_SPLITS: the classical CA3 pyramidal cell spans all SUBC_017 supertypes, with SUPT_0078 as the dominant correspondence.
+        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 scRNA-seq CA3 subclass label onto WMBv1 (CCN20230722). Of 322 CA3 cells, 203 (63.0%) map to SUPT_0078 at the supertype level. F1 score = 0.773 (coverage=0.630, purity=1.0). Target_purity=1.0 confirms SUPT_0078 receives only CA3 cells in this dataset. The remaining cells distribute across SUPT_0075 (16.8%), SUPT_0077 (11.5%), SUPT_0076 (6.5%), and SUPT_0079 (1.6%), consistent with TYPE_A_SPLITS: the classical CA3 pyramidal cell spans all SUBC_017 supertypes, with SUPT_0078 as the dominant correspondence.
 
           '
         source_dataset_accession: GEO:GSE185862
@@ -1137,29 +1137,29 @@ edges:
             taxonomy_rank: 3
             best_target_name: 01 IT-ET Glut
             best_target_accession: CS20230722_CLAS_01
-            group_purity: 1.0
-            target_purity: 0.16353478923311326
             f1_score: 0.28109995635093843
             n_cells_mapped: 322
             median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.16353478923311326
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 017 CA3 Glut
             best_target_accession: CS20230722_SUBC_017
-            group_purity: 0.9937888198757764
-            target_purity: 0.9937888198757764
             f1_score: 0.9937888198757764
             n_cells_mapped: 320
             median_bootstrap: 1.0
+            coverage: 0.9937888198757764
+            purity: 0.9937888198757764
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0078 CA3 Glut_4
             best_target_accession: CS20230722_SUPT_0078
-            group_purity: 0.6325878594249201
-            target_purity: 1.0
             f1_score: 0.7749510763209393
             n_cells_mapped: 198
             median_bootstrap: 1.0
+            coverage: 0.6325878594249201
+            purity: 1.0
         n_cells_total: 322
         best_mapping_rank: 2
         f1_source_relpath: at_results.yaml
@@ -1198,7 +1198,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
         supports: SUPPORT
-        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) mouse hippocampus scRNA-seq Granule-mature and Granule-immature labels onto WMBv1 (CCN20230722). Both mature and immature granule cell populations map primarily to SUPT_0137 (0137 DG Glut_2) at the supertype level. F1 scores of 0.584 (Granule-mature, 433/609 cells) and 0.601 (Granule-immature, 437/581 cells) indicate robust but partial overlap; a minority of granule cells map to adjacent DG Glut supertypes (SUPT_0136, SUPT_0138) and to CA3/CA2 clusters, suggesting either genuine DG transcriptomic heterogeneity or minor contamination. At subclass level, group_purity for DG Glut subclass (037) is 0.988 (Granule-mature) and 0.888 (Granule-immature), confirming DG Glut as the dominant classification.
+        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) mouse hippocampus scRNA-seq Granule-mature and Granule-immature labels onto WMBv1 (CCN20230722). Both mature and immature granule cell populations map primarily to SUPT_0137 (0137 DG Glut_2) at the supertype level. F1 scores of 0.584 (Granule-mature, 433/609 cells) and 0.601 (Granule-immature, 437/581 cells) indicate robust but partial overlap; a minority of granule cells map to adjacent DG Glut supertypes (SUPT_0136, SUPT_0138) and to CA3/CA2 clusters, suggesting either genuine DG transcriptomic heterogeneity or minor contamination. At subclass level, coverage for DG Glut subclass (037) is 0.988 (Granule-mature) and 0.888 (Granule-immature), confirming DG Glut as the dominant classification.
 
           '
         source_dataset_accession: GEO:GSE95315
@@ -1209,20 +1209,20 @@ edges:
         metrics_by_level:
           - taxonomy_level: SUBCLASS
             best_target_name: 037 DG Glut
-            group_purity: 0.988
-            target_purity: 0.546
             f1_score: 0.703
             n_cells_mapped: 716
             taxonomy_rank: 2
             best_target_accession: CS20230722_SUBC_037
+            coverage: 0.988
+            purity: 0.546
           - taxonomy_level: SUPERTYPE
             best_target_name: 0137 DG Glut_2
-            group_purity: 0.711
-            target_purity: 0.495
             f1_score: 0.584
             n_cells_mapped: 433
             taxonomy_rank: 1
             best_target_accession: CS20230722_SUPT_0137
+            coverage: 0.711
+            purity: 0.495
         best_mapping_rank: 2
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
@@ -1283,7 +1283,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
         supports: SUPPORT
-        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Cyp26b1 label onto WMBv1 (CCN20230722). 33 of 34 Mossy-Cyp26b1 cells map to SUPT_0078 (0078 CA3 Glut_4) at the supertype level (F1=0.943; group_purity=0.971, target_purity=0.917). At cluster level, the best cluster is 0315 CA3 Glut_4 (n=20, F1=0.833) followed by 0314 CA3 Glut_4 (n=7). The high F1 indicates that Mossy-Cyp26b1 cells are a near-complete subset of SUPT_0078. The PARTIAL_OVERLAP relationship is used because SUPT_0078 MERFISH cells are distributed across CA3 strata rather than the dentate hilus, suggesting this supertype captures mossy cells resident at the CA3c/hilus border or includes CA3 pyramidal cells sharing the Cyp26b1 transcriptomic profile.
+        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Cyp26b1 label onto WMBv1 (CCN20230722). 33 of 34 Mossy-Cyp26b1 cells map to SUPT_0078 (0078 CA3 Glut_4) at the supertype level (F1=0.943; coverage=0.971, purity=0.917). At cluster level, the best cluster is 0315 CA3 Glut_4 (n=20, F1=0.833) followed by 0314 CA3 Glut_4 (n=7). The high F1 indicates that Mossy-Cyp26b1 cells are a near-complete subset of SUPT_0078. The PARTIAL_OVERLAP relationship is used because SUPT_0078 MERFISH cells are distributed across CA3 strata rather than the dentate hilus, suggesting this supertype captures mossy cells resident at the CA3c/hilus border or includes CA3 pyramidal cells sharing the Cyp26b1 transcriptomic profile.
 
           '
         source_dataset_accession: GEO:GSE95315
@@ -1296,29 +1296,29 @@ edges:
             taxonomy_rank: 3
             best_target_name: 01 IT-ET Glut
             best_target_accession: CS20230722_CLAS_01
-            group_purity: 1.0
-            target_purity: 0.3142857142857143
             f1_score: 0.4782608695652174
             n_cells_mapped: 33
             median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.3142857142857143
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 017 CA3 Glut
             best_target_accession: CS20230722_SUBC_017
-            group_purity: 1.0
-            target_purity: 0.5223880597014925
             f1_score: 0.6862745098039216
             n_cells_mapped: 35
             median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.5223880597014925
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0078 CA3 Glut_4
             best_target_accession: CS20230722_SUPT_0078
-            group_purity: 0.9705882352941176
-            target_purity: 0.9166666666666666
             f1_score: 0.9428571428571428
             n_cells_mapped: 33
             median_bootstrap: 1.0
+            coverage: 0.9705882352941176
+            purity: 0.9166666666666666
         best_mapping_rank: 1
         f1_source_relpath: at_results.yaml
     property_comparisons:
@@ -1365,7 +1365,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
         supports: SUPPORT
-        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Adcyap1 label onto WMBv1 (CCN20230722). 20 of 27 Mossy-Adcyap1 cells map to SUPT_0079 (0079 CA3 Glut_5) at the supertype level (F1=0.833; group_purity=0.741, target_purity=0.952). The high target_purity (0.952) indicates Mossy-Adcyap1 cells account for the majority of SUPT_0079 cells captured by AT — suggesting this supertype may be specific to the Adcyap1+ mossy cell subtype. SUPT_0079 uniquely has 181 cells in Dentate gyrus, polymorph layer (MBA:10704, the hilus), consistent with the hilar soma location of classical mossy cells. The PARTIAL_OVERLAP relationship is used because SUPT_0079 also has substantial cells in CA3 strata, indicating a broader supertype than the hilar-restricted classical mossy cell.
+        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Adcyap1 label onto WMBv1 (CCN20230722). 20 of 27 Mossy-Adcyap1 cells map to SUPT_0079 (0079 CA3 Glut_5) at the supertype level (F1=0.833; coverage=0.741, purity=0.952). The high purity (0.952) indicates Mossy-Adcyap1 cells account for the majority of SUPT_0079 cells captured by AT — suggesting this supertype may be specific to the Adcyap1+ mossy cell subtype. SUPT_0079 uniquely has 181 cells in Dentate gyrus, polymorph layer (MBA:10704, the hilus), consistent with the hilar soma location of classical mossy cells. The PARTIAL_OVERLAP relationship is used because SUPT_0079 also has substantial cells in CA3 strata, indicating a broader supertype than the hilar-restricted classical mossy cell.
 
           '
         source_dataset_accession: GEO:GSE95315
@@ -1378,29 +1378,29 @@ edges:
             taxonomy_rank: 3
             best_target_name: 01 IT-ET Glut
             best_target_accession: CS20230722_CLAS_01
-            group_purity: 1.0
-            target_purity: 0.26666666666666666
             f1_score: 0.4210526315789474
             n_cells_mapped: 28
             median_bootstrap: 0.99
+            coverage: 1.0
+            purity: 0.26666666666666666
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 017 CA3 Glut
             best_target_accession: CS20230722_SUBC_017
-            group_purity: 0.9310344827586207
-            target_purity: 0.40298507462686567
             f1_score: 0.5625
             n_cells_mapped: 27
             median_bootstrap: 1.0
+            coverage: 0.9310344827586207
+            purity: 0.40298507462686567
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0079 CA3 Glut_5
             best_target_accession: CS20230722_SUPT_0079
-            group_purity: 0.7407407407407407
-            target_purity: 0.9523809523809523
             f1_score: 0.8333333333333334
             n_cells_mapped: 20
             median_bootstrap: 1.0
+            coverage: 0.7407407407407407
+            purity: 0.9523809523809523
         best_mapping_rank: 1
         f1_source_relpath: at_results.yaml
     property_comparisons:
@@ -1450,7 +1450,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
         supports: PARTIAL
-        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 DG subclass cells (n=2473) map to SUPT_0137 with group_purity=0.878 and F1=0.935, confirming SUPT_0137 as the dominant DG glutamatergic supertype. SUPT_0137 is shared between dg_granule_cell_hippocampus and this node (dg_semilunar_granule_cell_hippocampus); the semilunar granule cell is a morpho-physiologically distinct DG subpopulation for which no transcriptome-specific markers are available in this dataset. PARTIAL_SUPPORT reflects that this edge targets the same atlas node as the regular granule cell — a more specific sub-supertype mapping requires either molecular markers (see gaps in validation_notes.json) or the Bhatt 2025 (GSE280167) SGC snRNA-seq data.
+        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 DG subclass cells (n=2473) map to SUPT_0137 with coverage=0.878 and F1=0.935, confirming SUPT_0137 as the dominant DG glutamatergic supertype. SUPT_0137 is shared between dg_granule_cell_hippocampus and this node (dg_semilunar_granule_cell_hippocampus); the semilunar granule cell is a morpho-physiologically distinct DG subpopulation for which no transcriptome-specific markers are available in this dataset. PARTIAL_SUPPORT reflects that this edge targets the same atlas node as the regular granule cell — a more specific sub-supertype mapping requires either molecular markers (see gaps in validation_notes.json) or the Bhatt 2025 (GSE280167) SGC snRNA-seq data.
 
           '
         source_dataset_accession: GEO:GSE185862
@@ -1461,12 +1461,12 @@ edges:
         metrics_by_level:
           - taxonomy_level: SUPERTYPE
             best_target_name: 0137 DG Glut_2
-            group_purity: 0.878
-            target_purity: 1.0
             f1_score: 0.935
             n_cells_mapped: 2172
             taxonomy_rank: 1
             best_target_accession: CS20230722_SUPT_0137
+            coverage: 0.878
+            purity: 1.0
         best_mapping_rank: 1
     property_comparisons:
       - property: nt_type
@@ -1522,34 +1522,34 @@ edges:
             taxonomy_rank: 1
             best_target_name: 0137 DG Glut_2
             best_target_accession: CS20230722_SUPT_0137
-            group_purity: 0.979
-            target_purity:
             f1_score:
             n_cells_mapped: 11083
+            coverage: 0.979
+            purity:
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0138 DG Glut_3
             best_target_accession: CS20230722_SUPT_0138
-            group_purity: 0.0059
-            target_purity:
             f1_score:
             n_cells_mapped: 67
+            coverage: 0.0059
+            purity:
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0139 DG Glut_4
             best_target_accession: CS20230722_SUPT_0139
-            group_purity: 0.0116
-            target_purity:
             f1_score:
             n_cells_mapped: 131
+            coverage: 0.0116
+            purity:
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0136 DG Glut_1
             best_target_accession: CS20230722_SUPT_0136
-            group_purity: 0.0041
-            target_purity:
             f1_score:
             n_cells_mapped: 46
+            coverage: 0.0041
+            purity:
         best_mapping_rank: 1
     property_comparisons:
       - property: nt_type
@@ -1610,12 +1610,12 @@ edges:
         metrics_by_level:
           - taxonomy_level: SUPERTYPE
             best_target_name: 0096 SUB-ProS Glut_1
-            group_purity: 0.665
-            target_purity: 1.0
             f1_score: 0.798
             n_cells_mapped: 313
             taxonomy_rank: 1
             best_target_accession: CS20230722_SUPT_0096
+            coverage: 0.665
+            purity: 1.0
         best_mapping_rank: 1
     property_comparisons:
       - property: nt_type
@@ -1656,7 +1656,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
         supports: SUPPORT
-        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L2 IT ENTl'' subclass cells (n=180), representing lateral entorhinal cortex layer II IT neurons, map to SUPT_0042 (L2/3 IT PIR-ENTl Glut_4) with group_purity=0.956 and F1=0.964. The near-perfect F1 indicates SUPT_0042 is a highly specific match for lateral EC layer II cells. The Yao 2021 ''L2 IT ENTl'' subclass corresponds to the population containing reelin-positive stellate cells — the dominant excitatory neuron type in lateral EC layer II. The ''PIR-ENTl'' designation in the supertype name reflects the shared transcriptomic signature between piriform cortex and lateral entorhinal cortex layer II populations.
+        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L2 IT ENTl'' subclass cells (n=180), representing lateral entorhinal cortex layer II IT neurons, map to SUPT_0042 (L2/3 IT PIR-ENTl Glut_4) with coverage=0.956 and F1=0.964. The near-perfect F1 indicates SUPT_0042 is a highly specific match for lateral EC layer II cells. The Yao 2021 ''L2 IT ENTl'' subclass corresponds to the population containing reelin-positive stellate cells — the dominant excitatory neuron type in lateral EC layer II. The ''PIR-ENTl'' designation in the supertype name reflects the shared transcriptomic signature between piriform cortex and lateral entorhinal cortex layer II populations.
 
           '
         source_dataset_accession: GEO:GSE185862
@@ -1667,12 +1667,12 @@ edges:
         metrics_by_level:
           - taxonomy_level: SUPERTYPE
             best_target_name: 0042 L2/3 IT PIR-ENTl Glut_4
-            group_purity: 0.956
-            target_purity: 0.972
             f1_score: 0.964
             n_cells_mapped: 172
             taxonomy_rank: 1
             best_target_accession: CS20230722_SUPT_0042
+            coverage: 0.956
+            purity: 0.972
         best_mapping_rank: 1
     property_comparisons:
       - property: nt_type
@@ -1716,7 +1716,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
         supports: SUPPORT
-        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L2 IT ENTm'' subclass cells (n=42), representing medial entorhinal cortex layer II IT neurons (principally calbindin-positive pyramidal cells), map to SUPT_0052 (L2 IT ENT-po Glut_2) with group_purity=0.595 and F1=0.694. SUPT_0054 (L2 IT ENT-po Glut_4) accounts for a further 33.3% of L2 IT ENTm cells. Together SUPT_0052 and SUPT_0054 cover 92.8% of L2 IT ENTm cells. Note: n=42 is a small sample; results should be interpreted with appropriate caution. The ''ENT-po'' designation (entorhinal postrhinal) encompasses medial EC and postrhinal cortex layer II populations.
+        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L2 IT ENTm'' subclass cells (n=42), representing medial entorhinal cortex layer II IT neurons (principally calbindin-positive pyramidal cells), map to SUPT_0052 (L2 IT ENT-po Glut_2) with coverage=0.595 and F1=0.694. SUPT_0054 (L2 IT ENT-po Glut_4) accounts for a further 33.3% of L2 IT ENTm cells. Together SUPT_0052 and SUPT_0054 cover 92.8% of L2 IT ENTm cells. Note: n=42 is a small sample; results should be interpreted with appropriate caution. The ''ENT-po'' designation (entorhinal postrhinal) encompasses medial EC and postrhinal cortex layer II populations.
 
           '
         source_dataset_accession: GEO:GSE185862
@@ -1727,12 +1727,12 @@ edges:
         metrics_by_level:
           - taxonomy_level: SUPERTYPE
             best_target_name: 0052 L2 IT ENT-po Glut_2
-            group_purity: 0.595
-            target_purity: 0.833
             f1_score: 0.694
             n_cells_mapped: 25
             taxonomy_rank: 1
             best_target_accession: CS20230722_SUPT_0052
+            coverage: 0.595
+            purity: 0.833
         best_mapping_rank: 1
     property_comparisons:
       - property: nt_type
@@ -1773,7 +1773,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
         supports: SUPPORT
-        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L3 IT ENT'' subclass cells (n=588), representing entorhinal cortex layer III IT projection neurons (including PCP4+ pyramidal cells projecting to CA1 and subiculum via the temporoammonic pathway), map to SUPT_0036 (L2/3 IT ENT Glut_4) with group_purity=0.888 and F1=0.937. This is a strong, high-purity mapping. SUPT_0037 (L2/3 IT ENT Glut_5) accounts for a further 10.2% of L3 IT ENT cells. Together SUPT_0036+0037 cover 99.0% of L3 IT ENT cells.
+        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L3 IT ENT'' subclass cells (n=588), representing entorhinal cortex layer III IT projection neurons (including PCP4+ pyramidal cells projecting to CA1 and subiculum via the temporoammonic pathway), map to SUPT_0036 (L2/3 IT ENT Glut_4) with coverage=0.888 and F1=0.937. This is a strong, high-purity mapping. SUPT_0037 (L2/3 IT ENT Glut_5) accounts for a further 10.2% of L3 IT ENT cells. Together SUPT_0036+0037 cover 99.0% of L3 IT ENT cells.
 
           '
         source_dataset_accession: GEO:GSE185862
@@ -1784,12 +1784,12 @@ edges:
         metrics_by_level:
           - taxonomy_level: SUPERTYPE
             best_target_name: 0036 L2/3 IT ENT Glut_4
-            group_purity: 0.888
-            target_purity: 0.992
             f1_score: 0.937
             n_cells_mapped: 522
             taxonomy_rank: 1
             best_target_accession: CS20230722_SUPT_0036
+            coverage: 0.888
+            purity: 0.992
         best_mapping_rank: 1
     property_comparisons:
       - property: nt_type
@@ -1826,7 +1826,7 @@ edges:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
         supports: PARTIAL
-        explanation: 'Secondary target in Yao 2021 (GSE185862) SSv4 L3 IT ENT annotation transfer onto WMBv1 (CCN20230722) via local MapMyCells. SUPT_0037 (0037 L2/3 IT ENT Glut_5) captures 10.2% of L3 IT ENT cells (n≈60/588) with F1=0.177. Together with SUPT_0036 (F1=0.937, 88.8%), the two supertypes account for 99.0% of L3 IT ENT cells. Low F1 reflects lower group_purity relative to SUPT_0036; target_purity is not separately reported for this secondary target in the available AT artifact.
+        explanation: 'Secondary target in Yao 2021 (GSE185862) SSv4 L3 IT ENT annotation transfer onto WMBv1 (CCN20230722) via local MapMyCells. SUPT_0037 (0037 L2/3 IT ENT Glut_5) captures 10.2% of L3 IT ENT cells (n≈60/588) with F1=0.177. Together with SUPT_0036 (F1=0.937, 88.8%), the two supertypes account for 99.0% of L3 IT ENT cells. Low F1 reflects lower coverage relative to SUPT_0036; purity is not separately reported for this secondary target in the available AT artifact.
 
           '
         source_dataset_accession: GEO:GSE185862
@@ -1880,12 +1880,12 @@ edges:
         metrics_by_level:
           - taxonomy_level: SUPERTYPE
             best_target_name: 0069 CA1-ProS Glut_1
-            group_purity: 0.593
-            target_purity: 0.999
             f1_score: 0.744
             n_cells_mapped: 1011
             taxonomy_rank: 1
             best_target_accession: CS20230722_SUPT_0069
+            coverage: 0.593
+            purity: 0.999
         best_mapping_rank: 1
     property_comparisons:
       - property: nt_type
@@ -1951,29 +1951,29 @@ edges:
             taxonomy_rank: 3
             best_target_name: 03 OB-CR Glut
             best_target_accession: CS20230722_CLAS_03
-            group_purity: 1.0
-            target_purity: 1.0
             f1_score: 1.0
             n_cells_mapped: 15
             median_bootstrap: 0.89
+            coverage: 1.0
+            purity: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 036 HPF CR Glut
             best_target_accession: CS20230722_SUBC_036
-            group_purity: 1.0
-            target_purity: 0.9705882352941176
             f1_score: 0.9850746268656716
             n_cells_mapped: 33
             median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.9705882352941176
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0135 HPF CR Glut_1
             best_target_accession: CS20230722_SUPT_0135
-            group_purity: 1.0
-            target_purity: 0.9705882352941176
             f1_score: 0.9850746268656716
             n_cells_mapped: 33
             median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.9705882352941176
         f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type

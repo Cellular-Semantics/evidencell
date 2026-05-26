@@ -2,8 +2,10 @@
 
 The core logic follows the analysis in the MLI-PLI annotation notebooks
 (build_all_combined pattern): for each taxonomy level, compute
-group_purity (precision) and target_purity (recall), then F1 as the
-harmonic mean.
+``coverage`` (fraction of source cells landing on this target;
+equivalent to recall in standard ML terms) and ``purity`` (fraction of
+cells on the target that came from this source; equivalent to
+precision), then F1 as the harmonic mean.
 
 MapMyCells CSV columns (expected):
     cell_id,
@@ -41,7 +43,7 @@ def _build_level_stats(
     """Compute per-(source_label, target) statistics for one taxonomy level.
 
     Filters by bootstrap > threshold, groups by (source_label, target_name),
-    computes n_cells, group_purity, target_purity, and bootstrap stats.
+    computes n_cells, coverage, purity, and bootstrap stats.
     """
     dfl = df[df[prob_col] > threshold].copy()
     if dfl.empty:
@@ -58,8 +60,8 @@ def _build_level_stats(
         .rename(columns={name_col: "target_name"})
     )
     g["level"] = level
-    g["group_purity"] = g["n_cells"] / g.groupby("source_label")["n_cells"].transform("sum")
-    g["target_purity"] = g["n_cells"] / g.groupby("target_name")["n_cells"].transform("sum")
+    g["coverage"] = g["n_cells"] / g.groupby("source_label")["n_cells"].transform("sum")
+    g["purity"] = g["n_cells"] / g.groupby("target_name")["n_cells"].transform("sum")
 
     return g
 
@@ -97,8 +99,8 @@ def _build_cluster_with_hierarchy_gate(
         .rename(columns={name_col: "target_name"})
     )
     g["level"] = "cluster"
-    g["group_purity"] = g["n_cells"] / g.groupby("source_label")["n_cells"].transform("sum")
-    g["target_purity"] = g["n_cells"] / g.groupby("target_name")["n_cells"].transform("sum")
+    g["coverage"] = g["n_cells"] / g.groupby("source_label")["n_cells"].transform("sum")
+    g["purity"] = g["n_cells"] / g.groupby("target_name")["n_cells"].transform("sum")
 
     return g
 
@@ -126,7 +128,7 @@ def compute_f1_matrix(
     Returns
     -------
     DataFrame with columns: source_label, level, target_name, n_cells,
-    group_purity, target_purity, f1, mean_boot, median_boot.
+    coverage, purity, f1, mean_boot, median_boot.
     """
     if levels is None:
         levels = DEFAULT_LEVELS
@@ -144,7 +146,7 @@ def compute_f1_matrix(
         return pd.DataFrame(
             columns=[
                 "source_label", "level", "target_name", "n_cells",
-                "group_purity", "target_purity", "f1", "mean_boot", "median_boot",
+                "coverage", "purity", "f1", "mean_boot", "median_boot",
             ]
         )
 
@@ -173,50 +175,50 @@ def compute_f1_matrix(
         return pd.DataFrame(
             columns=[
                 "source_label", "level", "target_name", "n_cells",
-                "group_purity", "target_purity", "f1", "mean_boot", "median_boot",
+                "coverage", "purity", "f1", "mean_boot", "median_boot",
             ]
         )
 
     combined = pd.concat(frames, ignore_index=True)
 
-    # F1 = harmonic mean of group_purity and target_purity
-    denom = combined["group_purity"] + combined["target_purity"]
+    # F1 = harmonic mean of coverage and purity
+    denom = combined["coverage"] + combined["purity"]
     combined["f1"] = (
-        (2 * combined["group_purity"] * combined["target_purity"])
+        (2 * combined["coverage"] * combined["purity"])
         / denom.replace(0, np.nan)
     ).fillna(0.0)
 
     return combined[
         [
             "source_label", "level", "target_name", "n_cells",
-            "group_purity", "target_purity", "f1", "mean_boot", "median_boot",
+            "coverage", "purity", "f1", "mean_boot", "median_boot",
         ]
     ]
 
 
 def best_mappings(f1_df: pd.DataFrame) -> pd.DataFrame:
-    """Extract the best target per (source_label, level) by highest group_purity.
+    """Extract the best target per (source_label, level) by highest coverage.
 
     Returns
     -------
     DataFrame with columns: source_label, level, best_target,
-    group_purity, target_purity, f1, n_cells, median_boot.
+    coverage, purity, f1, n_cells, median_boot.
     """
     if f1_df.empty:
         return pd.DataFrame(
             columns=[
                 "source_label", "level", "best_target",
-                "group_purity", "target_purity", "f1", "n_cells", "median_boot",
+                "coverage", "purity", "f1", "n_cells", "median_boot",
             ]
         )
 
-    idx = f1_df.groupby(["level", "source_label"])["group_purity"].idxmax()
+    idx = f1_df.groupby(["level", "source_label"])["coverage"].idxmax()
     best = (
         f1_df.loc[
             idx,
             [
                 "source_label", "level", "target_name", "n_cells",
-                "group_purity", "target_purity", "f1", "median_boot",
+                "coverage", "purity", "f1", "median_boot",
             ],
         ]
         .rename(columns={"target_name": "best_target"})

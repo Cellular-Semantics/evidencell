@@ -80,7 +80,7 @@ in-silico subfamily runs provide supporting context.
 *F1 across taxonomy levels for the BIC (bistratified, n=20) source group from
 Que 2021 patch-seq morphological labels. BIC cells map cleanly to
 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] at cluster level
-(F1=0.80, group_purity=0.941, target_purity=0.696) within supertype
+(F1=0.80, coverage=0.941, purity=0.696) within supertype
 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206]. The sibling BC group maps
 preferentially to CLUS_0739, providing clean basket-vs-bistratified
 separation at cluster resolution.*
@@ -101,7 +101,7 @@ Harris 2018 cluster-mean expression using Chamberland 2024 in-silico
 gene-pair rules. The Sst_Tac1 group lands cross-subclass on
 052 Pvalb Gaba (F1=0.58, recall=0.78) and concentrates at
 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] at cluster level
-(target_purity=0.939) — independent in-silico support for the Sst-Pvalb
+(purity=0.939) — independent in-silico support for the Sst-Pvalb
 transcriptomic continuity of bistratified cells described by Chamberland
 2024 [9].*
 
@@ -133,8 +133,8 @@ Total edges: 3 (2 MODERATE, 1 LOW); relationship `evidencell:PartialOverlapMatch
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
 | Atlas precomputed expression + MERFISH (CLUS_0737) | Atlas metadata | SUPPORT | CA1 SO 361 · CA1 SR 72 · NP Sst:4.4 Tac1:7.3 | atlas-internal |
-| Que 2021 MapMyCells (morphologically confirmed BIC, n=20) | Annotation transfer | SUPPORT | F1=0.80 at CLUS_0737 (group_purity 0.941, target_purity 0.696) | atlas-internal |
-| Chamberland per-cluster Sst_Tac1 (Harris 2018, n=168) | Annotation transfer | PARTIAL | target_purity 0.939 at CLUS_0737; subclass F1=0.58, recall 0.78 | atlas-internal |
+| Que 2021 MapMyCells (morphologically confirmed BIC, n=20) | Annotation transfer | SUPPORT | F1=0.80 at CLUS_0737 (coverage 0.941, purity 0.696) | atlas-internal |
+| Chamberland per-cluster Sst_Tac1 (Harris 2018, n=168) | Annotation transfer | PARTIAL | purity 0.939 at CLUS_0737; subclass F1=0.58, recall 0.78 | atlas-internal |
 
 *(Of the SUPT_0206 child clusters, CLUS_0737 carries the bistratified-specific
 bilaminar CA1 SO + CA1 SR anatomy and the Sst+Tac1 NP profile; the sibling
@@ -159,7 +159,7 @@ patch-seq. Best match: CLUS_0737.)*
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
 | Atlas precomputed expression (SUPT_0206 + CLUS_0737) | Atlas metadata | PARTIAL | dominant hippocampal Pvalb supertype; bistratified-specific child CLUS_0737 | atlas-internal |
-| Que 2021 MapMyCells (BIC, n=20) | Annotation transfer | SUPPORT | SUPT_0206 F1=0.38 (group_purity 0.900); CLUS_0737 F1=0.80 | atlas-internal |
+| Que 2021 MapMyCells (BIC, n=20) | Annotation transfer | SUPPORT | SUPT_0206 F1=0.38 (coverage 0.900); CLUS_0737 F1=0.80 | atlas-internal |
 
 *(At supertype level SUPT_0206 contains both PV basket (CLUS_0739) and
 PV bistratified (CLUS_0737) populations; the supertype is therefore not
@@ -170,8 +170,8 @@ CLUS_0737 is required. Best match: CLUS_0737.)*
 
 **Supporting evidence**
 - Atlas precomputed expression + MERFISH for CLUS_0737 give CA1 SO 361, CA1 SR 72, CA3 SO 72 — the bilaminar CA1 SO + CA1 SR distribution directly matches the bistratified axon territory described in classical morphology [1][2][3]. NP markers: Cort:8.0, Tac1:7.3, Npy:5.5, Cck:5.2, Sst:4.4 — Sst and Tac1 are the two markers used by Chamberland 2024 Sst;;Tac1 intersectional genetics to label bistratified cells [9].
-- Que 2021 (GEO:GSE142546) MapMyCells local annotation transfer of morphologically confirmed PV bistratified patch-seq cells (hBIC + vBIC, n=20) places 16/20 at CLUS_0737 (F1=0.80, group_purity=0.941, target_purity=0.696). The sibling CLUS_0739 receives the BC cells (F1=0.83), demonstrating clean cluster-level basket-vs-bistratified separation within SUPT_0206 despite the continuous transcriptomic landscape PV-INs occupy [8].
-- Chamberland per-cluster Sst_Tac1 in-silico labels applied to Harris 2018 scRNA-seq (n=168) provide independent support: target_purity=0.939 at CLUS_0737 at cluster level, with subclass-level F1=0.58 and recall=0.78 to 052 Pvalb Gaba subclass — a cross-subclass Sst → Pvalb landing consistent with the Chamberland 2024 Sst-Pvalb transcriptomic continuity reading for bistratified cells [9].
+- Que 2021 (GEO:GSE142546) MapMyCells local annotation transfer of morphologically confirmed PV bistratified patch-seq cells (hBIC + vBIC, n=20) places 16/20 at CLUS_0737 (F1=0.80, coverage=0.941, purity=0.696). The sibling CLUS_0739 receives the BC cells (F1=0.83), demonstrating clean cluster-level basket-vs-bistratified separation within SUPT_0206 despite the continuous transcriptomic landscape PV-INs occupy [8].
+- Chamberland per-cluster Sst_Tac1 in-silico labels applied to Harris 2018 scRNA-seq (n=168) provide independent support: purity=0.939 at CLUS_0737 at cluster level, with subclass-level F1=0.58 and recall=0.78 to 052 Pvalb Gaba subclass — a cross-subclass Sst → Pvalb landing consistent with the Chamberland 2024 Sst-Pvalb transcriptomic continuity reading for bistratified cells [9].
 
 **Marker evidence provenance**
 - **Pvalb (defining):** transcript-level support via Pvalb subclass placement in WMBv1 and scRNA-seq + patch-seq evidence from Que 2021 [8]; protein-level support from PV-IN heterogeneity studies [4][5]. Pvalb is not in CLUS_0737 MERFISH genes (it is in sibling CLUS_0739 MERFISH) but is present at the subclass level and is the canonical PV marker for bistratified identity.
@@ -189,7 +189,7 @@ CLUS_0737 is required. Best match: CLUS_0737.)*
 
 **Supporting evidence**
 - SUPT_0206 is the dominant hippocampal Pvalb supertype and sits within the Pvalb subclass 052 Pvalb Gaba [CS20230722_SUBC_052]; Pvalb is the defining marker of bistratified cells. Child cluster CLUS_0737 shows bilaminar anatomy (CA1 SO 361, CA1 SR 72) directly consistent with the bistratified axon target lamination, with NP markers Sst:4.4 and Tac1:7.3 consistent with bistratified identity (Sst;;Tac1 intersection labels bistratified cells per Chamberland 2024 [9]).
-- Que 2021 patch-seq morphologically confirmed BIC cells (n=20) map 18/20 to SUPT_0206 (group_purity=0.900, F1=0.38 at supertype level). The lower supertype F1 vs. cluster F1 reflects that SUPT_0206 is the parent of both BIC (CLUS_0737) and BC (CLUS_0739) target clusters; the supertype hit is purity-rich but mixed with the sibling BC population. *(note: supertype F1 is bounded by sibling-cluster confusion; the cluster-level F1=0.80 is the relevant headline.)*
+- Que 2021 patch-seq morphologically confirmed BIC cells (n=20) map 18/20 to SUPT_0206 (coverage=0.900, F1=0.38 at supertype level). The lower supertype F1 vs. cluster F1 reflects that SUPT_0206 is the parent of both BIC (CLUS_0737) and BC (CLUS_0739) target clusters; the supertype hit is purity-rich but mixed with the sibling BC population. *(note: supertype F1 is bounded by sibling-cluster confusion; the cluster-level F1=0.80 is the relevant headline.)*
 
 **Concerns**
 - DISTRIBUTED_ACROSS_CLUSTERS: SUPT_0206 contains both PV basket cells (CLUS_0739) and PV bistratified cells (CLUS_0737). The supertype is not separable for these two morphologically and functionally distinct PV-IN types; cluster-level resolution at CLUS_0737 is required.
@@ -201,7 +201,7 @@ CLUS_0737 is required. Best match: CLUS_0737.)*
 
 **Supporting evidence**
 - SUPT_0216 carries Tac1 in DEFINING_SCOPED markers and is a Sst supertype with Sst precomputed mean 11.44 — both Sst and Tac1 co-expression are consistent with Chamberland 2024 Sst;;Tac1 intersectional-genetic targeting of bistratified cells [9]. This edge represents a possible Sst-dominant bistratified subpopulation, not the canonical PV-primary bistratified population.
-- Yao 2021 (GEO:GSE185862) SSv4 'Pvalb'-labelled hippocampal cells map weakly to SUPT_0216 (6/66 cells, F1=0.05, target_purity=0.036). The weak signal is consistent with a fraction of Pvalb-labelled cells distributing onto the Sst side of the Sst-Pvalb continuity rather than evidence that SUPT_0216 is a primary bistratified target.
+- Yao 2021 (GEO:GSE185862) SSv4 'Pvalb'-labelled hippocampal cells map weakly to SUPT_0216 (6/66 cells, F1=0.05, purity=0.036). The weak signal is consistent with a fraction of Pvalb-labelled cells distributing onto the Sst side of the Sst-Pvalb continuity rather than evidence that SUPT_0216 is a primary bistratified target.
 
 **Marker evidence provenance**
 - **Pvalb (DISCORDANT here):** SUPT_0216 sits in the Sst subclass with Pvalb supertype-mean precomputed expression = 1.48, below atlas marker thresholds; the Pvalb component of bistratified identity is not captured at this supertype.
@@ -294,7 +294,7 @@ Run 3 — Harris 2018 + Chamberland 2024 in-silico subfamily labels → WMBv1 (i
 | Script (external) | ../at_run_20260506_harris_chamberland_mmc_wmbv1/README.md |
 | Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
 | F1 matrix | [`f1_matrix_chamberland_by_class.csv`](../../kb/annotation_transfer_runs/at_run_20260512_chamberland_subfamily_mmc_wmbv1/f1_matrix_chamberland_by_class.csv) |
-| Caveats | Per-cluster derivation primary. Sst_Tac1 → Pvalb subclass (recall=0.78) surfaces Sst-Pvalb transcriptomic continuity for bistratified types. Sst_Tac1 cluster-level F1 at CLUS_0737 = 0.47 but target_purity = 0.939 — supports CLUS_0737 as landing site within the Pvalb subclass. |
+| Caveats | Per-cluster derivation primary. Sst_Tac1 → Pvalb subclass (recall=0.78) surfaces Sst-Pvalb transcriptomic continuity for bistratified types. Sst_Tac1 cluster-level F1 at CLUS_0737 = 0.47 but purity = 0.939 — supports CLUS_0737 as landing site within the Pvalb subclass. |
 
 **Anti-hallucination.** All citations, atlas accessions, ontology CURIEs,
 and verbatim literature quotes in this report are validated against the
@@ -325,7 +325,7 @@ documented per-candidate in the Discussion section.
 [CS20230722_CLUS_0737] at MODERATE confidence (with parent supertype
 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] also MODERATE). Key support:
 morphologically confirmed PV bistratified patch-seq cells from Que 2021
-reach F1=0.80 at CLUS_0737 (group_purity 0.941, target_purity 0.696), and
+reach F1=0.80 at CLUS_0737 (coverage 0.941, purity 0.696), and
 CLUS_0737 carries the bistratified-specific bilaminar CA1 SO + CA1 SR
 anatomy with Sst:4.4 / Tac1:7.3 NP profile consistent with the Sst;;Tac1
 intersectional-genetic labelling of Chamberland 2024 [9]. Key caveats:
@@ -338,7 +338,7 @@ canonical PV bistratified cells map to CLUS_0737 in the Pvalb subclass via
 Que 2021 patch-seq, while Chamberland 2024 Sst;;Tac1 intersectional
 genetics label the same morphological population from the Sst side [9]. The
 Chamberland-on-Harris in-silico Sst_Tac1 subfamily AT independently lands
-at CLUS_0737 (target_purity=0.939) from a Sst-side starting label,
+at CLUS_0737 (purity=0.939) from a Sst-side starting label,
 recapitulating this continuity. A separate LOW-confidence edge to
 0216 Sst Gaba_3 [CS20230722_SUPT_0216] retains the possibility of a
 Sst-dominant Pvalb-low bistratified subpopulation, but the morphologically
@@ -357,7 +357,7 @@ for a new CL term request.
 **Cross-check with existing AT evidence.** The primary mapping is already
 supported by a morphologically confirmed PV bistratified patch-seq run
 (Que 2021, F1=0.80 at CLUS_0737) and an independent in-silico Sst_Tac1
-subfamily labelling (Chamberland-on-Harris, target_purity 0.939 at
+subfamily labelling (Chamberland-on-Harris, purity 0.939 at
 CLUS_0737). A naive "run MapMyCells on bistratified cells" experiment is
 therefore already done; remaining gaps concern (a) independent replication
 and (b) testing the speculative Sst-dominant subpopulation.
@@ -418,14 +418,14 @@ verdict:
   rationale: >
     Morphologically confirmed PV bistratified patch-seq cells from Que 2021
     (`at_run_20260508_que2021_pvin_mmc_wmbv1`) map to
-    CS20230722_CLUS_0737 at F1=0.80 (group_purity 0.941, target_purity
+    CS20230722_CLUS_0737 at F1=0.80 (coverage 0.941, purity
     0.696), with the sibling BC group separating to CLUS_0739. Atlas
     precomputed expression on CS20230722_CLUS_0737 confirms the
     bistratified-specific bilaminar CA1 SO + CA1 SR MERFISH anatomy with
     NP Sst:4.4 and Tac1:7.3 matching Chamberland 2024 Sst;;Tac1
     intersectional Cre-line targeting; the Chamberland-on-Harris in-silico
     Sst_Tac1 subfamily AT (`at_run_20260512_chamberland_subfamily_mmc_wmbv1`)
-    independently concentrates at CS20230722_CLUS_0737 (target_purity
+    independently concentrates at CS20230722_CLUS_0737 (purity
     0.939), demonstrating Sst-Pvalb transcriptomic continuity from a
     Sst-side label; 3 of 3 marker_-prefixed PCs CONSISTENT across
     patch-seq and scRNA-seq modalities.
@@ -444,7 +444,7 @@ verdict:
   confidence_score: 0.65
   rationale: >
     Que 2021 morphologically confirmed BIC patch-seq cells map 18/20 to
-    CS20230722_SUPT_0206 at F1=0.38 (group_purity 0.900) in
+    CS20230722_SUPT_0206 at F1=0.38 (coverage 0.900) in
     `at_run_20260508_que2021_pvin_mmc_wmbv1`, with cluster-level resolution
     at CS20230722_CLUS_0737 reaching F1=0.80 — the supertype F1 is bounded
     by sibling-cluster confusion with the PV basket child CLUS_0739, not

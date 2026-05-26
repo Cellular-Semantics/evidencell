@@ -36,7 +36,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (the classical EC layer II ste
 
 - **NT type — CONSISTENT.** SUPT_0042 belongs to subclass SUBC_009 L2/3 IT PIR-ENTl Glut, a glutamatergic subclass grouping lateral entorhinal cortex and piriform cortex layer II/III intratelencephalic (IT) neurons. The classical EC layer II stellate cell is glutamatergic [4], consistent with this subclass identity.
 
-- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq data onto WMBv1 (CCN20230722): of 180 Yao 2021 'L2 IT ENTl' subclass cells (representing lateral entorhinal cortex layer II IT neurons — the population containing reelin-positive stellate cells as the dominant excitatory type), 172 (95.6%) map to SUPT_0042 at the supertype level. F1 = 0.964, group_purity = 0.956, target_purity = 0.972. This is an exceptionally high F1, indicating SUPT_0042 is a highly specific and sensitive match for lateral EC layer II cells. This is the strongest quantitative evidence for this mapping.
+- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq data onto WMBv1 (CCN20230722): of 180 Yao 2021 'L2 IT ENTl' subclass cells (representing lateral entorhinal cortex layer II IT neurons — the population containing reelin-positive stellate cells as the dominant excitatory type), 172 (95.6%) map to SUPT_0042 at the supertype level. F1 = 0.964, coverage = 0.956, purity = 0.972. This is an exceptionally high F1, indicating SUPT_0042 is a highly specific and sensitive match for lateral EC layer II cells. This is the strongest quantitative evidence for this mapping.
 
 - **Marker Reln — CONSISTENT.** Reln is listed as the defining identity marker of EC layer II stellate cells [1]. Precomputed expression stats (precomputed_stats.h5, supertype level) confirm Reln mean expression = 8.17 in SUPT_0042. Although Reln does not appear among the defining discriminating markers listed for SUPT_0042 in the atlas (Igfn1, Endou, Bcl11b, Boc), the high precomputed Reln expression confirms that stellate cell-level Reln expression is present in this supertype, consistent with stellate cell identity.
 
@@ -96,7 +96,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (the classical EC layer II ste
 
 | Edge ID | Evidence types | Supports |
 |---|---|---|
-| edge_ec_layer2_stellate_cell_hippocampus_to_supt_0042 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.964; group_purity=0.956; target_purity=0.972; 95.6% of L2 IT ENTl cells map to SUPT_0042 |
+| edge_ec_layer2_stellate_cell_hippocampus_to_supt_0042 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.964; coverage=0.956; purity=0.972; 95.6% of L2 IT ENTl cells map to SUPT_0042 |
 
 ---
 

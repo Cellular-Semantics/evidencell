@@ -105,12 +105,12 @@ be interpreted in mapping edges and reports.
   0.38 at subclass → 0.80 at cluster (`CLUS_0737`).
 - **Mixed source labels** (coarse scRNA-seq subclass labels covering
   multiple biological types): expect F1 to *fall* with finer
-  resolution. Precision (`target_purity`) at deep levels is the
-  honest summary; F1 understates the cells' specificity. Example:
-  Yao 2021 SSv4 `Sst` subclass (272 hippocampal cells containing
-  OLM, bistratified, HS, oriens-oriens, …) — F1 falls from 0.98 at
-  subclass → 0.23 at cluster. The audit tags such cases with
-  `at_f1_monotonicity: falls_with_resolution` — read precision over
+  resolution. Purity (`purity`) at deep levels is the honest summary;
+  F1 understates the cells' specificity. Example: Yao 2021 SSv4
+  `Sst` subclass (272 hippocampal cells containing OLM, bistratified,
+  HS, oriens-oriens, …) — F1 falls from 0.98 at subclass → 0.23 at
+  cluster. The audit tags such cases with
+  `at_f1_monotonicity: falls_with_resolution` — read purity over
   F1 when consuming.
 
 **Anti-pattern — do not bundle AT + relabel in one run.** When you

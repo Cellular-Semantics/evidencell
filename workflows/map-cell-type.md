@@ -331,8 +331,8 @@ TASK:
      method: ...                             # for back-compat; otherwise run_ref carries it
      source_dataset_accession: ...
      # DO NOT write metrics_by_level, best_f1_score, best_mapping_level,
-     # best_mapping_rank, n_cells_mapped, group_purity, target_purity,
-     # f1_score — these are written programmatically from
+     # best_mapping_rank, n_cells_mapped, coverage, purity, f1_score
+     # — these are written programmatically from
      # kb/annotation_transfer_runs/{run_ref}/at_results.yaml using
      # (run_ref, source_cluster_label, edge.taxonomy_type) by
      # src/evidencell/at_metrics.py::compute_edge_metrics().

@@ -85,7 +85,7 @@ just pool-candidates {graph_file} --node {node_id} \
 
 This is a deterministic pre-pass that compares pairs of distinct `lit_type`s
 in the graph whose AT-evidence `metrics_by_level` rows are within tolerance
-(~5% F1 / precision / recall) across their shared atlas targets. Each
+(~5% F1 / purity / coverage) across their shared atlas targets. Each
 candidate entry names the source groups, the shared targets, and the
 property panels assessed (markers, anat, NT, ephys, morphology, dev).
 
@@ -271,7 +271,7 @@ classical type being reported. For each cited AT run:
    OLM Sst-OLM + Htr3a-OLM case; see [[feedback_at_no_distinction_judgement]]).
 
    **Caption grounding (mandatory).** `--emit-metrics` writes a JSON
-   sidecar with the per-(source, level, target) F1/precision/recall rows
+   sidecar with the per-(source, level, target) F1/purity/coverage rows
    that the figure actually rendered (after `--pool` and `--source` are
    applied). Captions and any inline figure-supporting statistics in the
    report MUST be derived from this sidecar — read it, pick the rows you
@@ -321,7 +321,8 @@ classical type being reported. For each cited AT run:
 
    Emit the **Purity / Coverage gloss only on the FIRST AT figure** in
    the report (subsequent figures can use a one-liner: *"As before, Pur
-   = target purity; Cov = source coverage."*).
+   = Purity (fraction of target cells from this source); Cov =
+   Coverage (fraction of source cells on this target)."*).
 
    If you also want to show the full multi-source figure as supporting
    context (e.g. to justify a pooling decision), generate a *second*

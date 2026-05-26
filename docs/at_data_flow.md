@@ -53,7 +53,7 @@ path.
 | File | Status | Purpose |
 |---|---|---|
 | `manifest.yaml` | **canonical** | Pipeline metadata: tool version, source dataset accession, target taxonomy, MMC bootstrap settings, source_cell_labels reference, code reference. Validates against `AnnotationTransferRun`. Hand-written when the run is registered. |
-| `at_results.yaml` (or `at_results_<variant>.yaml`) | **canonical (from this branch)** | Schema-compliant store of every `(source_label, taxonomy_level, target_accession) → F1 + precision + recall + n_cells` row. Validates against `AnnotationTransferResultSet`. The file the rest of the codebase reads. |
+| `at_results.yaml` (or `at_results_<variant>.yaml`) | **canonical (from this branch)** | Schema-compliant store of every `(source_label, taxonomy_level, target_accession) → F1 + purity + coverage + n_cells` row. Validates against `AnnotationTransferResultSet`. The file the rest of the codebase reads. |
 | `f1_*.csv` (e.g. `f1_matrix.csv`, `f1_scores_best.csv`) | **raw / audit** | Direct CSV output from the AT pipeline. Two shapes in use: "best-per-(source, level)" (one row per source, only the best target at each level — Que 2021, Hochgerner DG) and "full matrix" (every observed `(source, level, target)` triple — Winterer OLM, Chamberland). `at_results.yaml` is derived from these. **Retained for audit; not the contract.** |
 | `mmc_results.csv` | raw | Per-cell cluster assignments + bootstrap scores. Source of `f1_*.csv` when re-derivation is needed. |
 | `source_cell_labels.json` | raw | Source-cohort label assignments per cell. |
@@ -135,25 +135,30 @@ Use this table when a consumer doesn't know which file to trust.
 
 ---
 
-## Precision / recall / purity / coverage — naming reference
+## Purity and coverage — naming reference
 
-The same two quantities go by **four** names across this codebase. They
-all refer to the same numbers; the differences are stylistic.
+The two quantities have a single canonical name across every surface
+of the codebase. Standard ML terms (precision / recall) are kept in
+parens for cross-reference only.
 
-| Standard ML term | Schema slot (`AnnotationTransfer{LevelResult,MetricRow}`) | `--emit-metrics` JSON key | Figure annotation |
-|---|---|---|---|
-| **Recall** — fraction of *source* cells that landed on this target | `group_purity` | `recall` | `Coverage` (Cov) |
-| **Precision** — fraction of *target* cells that came from this source | `target_purity` | `precision` | `Purity` (Pur) |
+| Term | Definition | Schema field | Sidecar JSON key | Figure annotation | CSV column |
+|---|---|---|---|---|---|
+| **Coverage** | Fraction of *source* cells that landed on this target | `coverage` | `coverage` | `Cov` | `coverage` |
+| **Purity** | Fraction of *target* cells that came from this source | `purity` | `purity` | `Pur` | `purity` |
 
-When in doubt: `group_purity` describes the *source group*'s distribution
-(how concentrated was it on this target?). `target_purity` describes the
-*target*'s composition (how purely is it populated by cells from this
-source?).
+In standard ML terms: coverage = recall, purity = precision. F1 is the
+harmonic mean of the two.
 
-The schema description labels were inverted in earlier revisions
-("Precision: fraction of source cells…" — that's actually recall);
-fixed 2026-05-25 in commit [TBD] to match standard ML conventions
-across all surfaces.
+**Naming history.** Earlier revisions used `group_purity` / `target_purity`
+as the schema field names (and `--emit-metrics` sidecars emitted
+`precision` / `recall` for the same values). The 2026-05-25 nomenclature
+standardisation hard-cutover-renamed every surface to the canonical
+`coverage` / `purity` pair. The migration covered: schema fields,
+Pydantic models, sidecar keys, CSV column names emitted by
+`annotation_transfer.score`, all KB graph YAMLs, all `at_results*.yaml`
+files, and all tests. Legacy CSVs produced before the cutover are still
+read transparently by `at_metrics.migrate_csv` and `at_figures.load_f1_matrix`
+(both accept the old column names and normalise on load).
 
 ## Per-source vs pooled F1
 

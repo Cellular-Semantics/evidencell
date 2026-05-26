@@ -1,7 +1,7 @@
 run_id: at_run_20260408_winterer_olm_mmc_wmbv1
 taxonomy_id: CCN20230722
 source_csv_relpath: f1_matrix.csv
-generated_at: '2026-05-26T09:46:47+00:00'
+generated_at: '2026-05-26T11:07:29+00:00'
 generator: src/evidencell/at_metrics.py::migrate_csv
 rows:
 - source_label: Htr3a-OLM
@@ -10,8 +10,8 @@ rows:
   target_name: 07 CTX-MGE GABA
   target_accession: CS20230722_CLAS_07
   n_cells: 22
-  group_purity: 0.9565217391304348
-  target_purity: 0.4888888888888889
+  coverage: 0.9565217391304348
+  purity: 0.4888888888888889
   f1: 0.6470588235294117
   median_bootstrap: 1.0
   mean_bootstrap: 0.9904545454545454
@@ -21,8 +21,8 @@ rows:
   target_name: 19 MB Glut
   target_accession: CS20230722_CLAS_19
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.3
   mean_bootstrap: 0.3
@@ -32,8 +32,8 @@ rows:
   target_name: 07 CTX-MGE GABA
   target_accession: CS20230722_CLAS_07
   n_cells: 23
-  group_purity: 1.0
-  target_purity: 0.5111111111111111
+  coverage: 1.0
+  purity: 0.5111111111111111
   f1: 0.676470588235294
   median_bootstrap: 1.0
   mean_bootstrap: 1.0
@@ -43,8 +43,8 @@ rows:
   target_name: 053 Sst Gaba
   target_accession: CS20230722_SUBC_053
   n_cells: 22
-  group_purity: 0.9565217391304348
-  target_purity: 0.4888888888888889
+  coverage: 0.9565217391304348
+  purity: 0.4888888888888889
   f1: 0.6470588235294117
   median_bootstrap: 1.0
   mean_bootstrap: 0.9995454545454545
@@ -54,8 +54,8 @@ rows:
   target_name: 168 SPA-SPFm-SPFp-POL-PIL-PoT Sp9 Glut
   target_accession: CS20230722_SUBC_168
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.75
   mean_bootstrap: 0.75
@@ -65,8 +65,8 @@ rows:
   target_name: 053 Sst Gaba
   target_accession: CS20230722_SUBC_053
   n_cells: 23
-  group_purity: 1.0
-  target_purity: 0.5111111111111111
+  coverage: 1.0
+  purity: 0.5111111111111111
   f1: 0.676470588235294
   median_bootstrap: 1.0
   mean_bootstrap: 0.9991304347826088
@@ -76,8 +76,8 @@ rows:
   target_name: 0216 Sst Gaba_3
   target_accession: CS20230722_SUPT_0216
   n_cells: 21
-  group_purity: 0.9130434782608695
-  target_purity: 0.4883720930232558
+  coverage: 0.9130434782608695
+  purity: 0.4883720930232558
   f1: 0.6363636363636364
   median_bootstrap: 1.0
   mean_bootstrap: 0.9842857142857143
@@ -87,8 +87,8 @@ rows:
   target_name: 0226 Sst Gaba_13
   target_accession: CS20230722_SUPT_0226
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.56
   mean_bootstrap: 0.56
@@ -98,8 +98,8 @@ rows:
   target_name: 0722 SPA-SPFm-SPFp-POL-PIL-PoT Sp9 Glut_5
   target_accession: CS20230722_SUPT_0722
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.64
   mean_bootstrap: 0.64
@@ -109,8 +109,8 @@ rows:
   target_name: 0216 Sst Gaba_3
   target_accession: CS20230722_SUPT_0216
   n_cells: 22
-  group_purity: 0.9565217391304348
-  target_purity: 0.5116279069767442
+  coverage: 0.9565217391304348
+  purity: 0.5116279069767442
   f1: 0.6666666666666667
   median_bootstrap: 1.0
   mean_bootstrap: 0.9868181818181818
@@ -120,8 +120,8 @@ rows:
   target_name: 0223 Sst Gaba_10
   target_accession: CS20230722_SUPT_0223
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.64
   mean_bootstrap: 0.64
@@ -131,8 +131,8 @@ rows:
   target_name: 0767 Sst Gaba_3
   target_accession: CS20230722_CLUS_0767
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 0.2
+  coverage: 0.043478260869565216
+  purity: 0.2
   f1: 0.07142857142857142
   median_bootstrap: 0.8
   mean_bootstrap: 0.8
@@ -142,8 +142,8 @@ rows:
   target_name: 0768 Sst Gaba_3
   target_accession: CS20230722_CLUS_0768
   n_cells: 12
-  group_purity: 0.5217391304347826
-  target_purity: 0.5454545454545454
+  coverage: 0.5217391304347826
+  purity: 0.5454545454545454
   f1: 0.5333333333333332
   median_bootstrap: 0.915
   mean_bootstrap: 0.8491666666666666
@@ -153,8 +153,8 @@ rows:
   target_name: 0771 Sst Gaba_3
   target_accession: CS20230722_CLUS_0771
   n_cells: 2
-  group_purity: 0.08695652173913043
-  target_purity: 0.5
+  coverage: 0.08695652173913043
+  purity: 0.5
   f1: 0.14814814814814817
   median_bootstrap: 0.8600000000000001
   mean_bootstrap: 0.8600000000000001
@@ -164,8 +164,8 @@ rows:
   target_name: 0772 Sst Gaba_3
   target_accession: CS20230722_CLUS_0772
   n_cells: 3
-  group_purity: 0.13043478260869565
-  target_purity: 0.42857142857142855
+  coverage: 0.13043478260869565
+  purity: 0.42857142857142855
   f1: 0.2
   median_bootstrap: 0.98
   mean_bootstrap: 0.8566666666666666
@@ -175,8 +175,8 @@ rows:
   target_name: 0773 Sst Gaba_3
   target_accession: CS20230722_CLUS_0773
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.61
   mean_bootstrap: 0.61
@@ -186,8 +186,8 @@ rows:
   target_name: 0774 Sst Gaba_3
   target_accession: CS20230722_CLUS_0774
   n_cells: 2
-  group_purity: 0.08695652173913043
-  target_purity: 0.5
+  coverage: 0.08695652173913043
+  purity: 0.5
   f1: 0.14814814814814817
   median_bootstrap: 0.9099999999999999
   mean_bootstrap: 0.9099999999999999
@@ -197,8 +197,8 @@ rows:
   target_name: 0810 Sst Gaba_13
   target_accession: CS20230722_CLUS_0810
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.56
   mean_bootstrap: 0.56
@@ -208,8 +208,8 @@ rows:
   target_name: 2966 SPA-SPFm-SPFp-POL-PIL-PoT Sp9 Glut_5
   target_accession: CS20230722_CLUS_2966
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.63
   mean_bootstrap: 0.63
@@ -219,8 +219,8 @@ rows:
   target_name: 0767 Sst Gaba_3
   target_accession: CS20230722_CLUS_0767
   n_cells: 4
-  group_purity: 0.17391304347826086
-  target_purity: 0.8
+  coverage: 0.17391304347826086
+  purity: 0.8
   f1: 0.2857142857142857
   median_bootstrap: 0.99
   mean_bootstrap: 0.9875
@@ -230,8 +230,8 @@ rows:
   target_name: 0768 Sst Gaba_3
   target_accession: CS20230722_CLUS_0768
   n_cells: 10
-  group_purity: 0.43478260869565216
-  target_purity: 0.45454545454545453
+  coverage: 0.43478260869565216
+  purity: 0.45454545454545453
   f1: 0.4444444444444445
   median_bootstrap: 1.0
   mean_bootstrap: 0.875
@@ -241,8 +241,8 @@ rows:
   target_name: 0771 Sst Gaba_3
   target_accession: CS20230722_CLUS_0771
   n_cells: 2
-  group_purity: 0.08695652173913043
-  target_purity: 0.5
+  coverage: 0.08695652173913043
+  purity: 0.5
   f1: 0.14814814814814817
   median_bootstrap: 0.775
   mean_bootstrap: 0.775
@@ -252,8 +252,8 @@ rows:
   target_name: 0772 Sst Gaba_3
   target_accession: CS20230722_CLUS_0772
   n_cells: 4
-  group_purity: 0.17391304347826086
-  target_purity: 0.5714285714285714
+  coverage: 0.17391304347826086
+  purity: 0.5714285714285714
   f1: 0.26666666666666666
   median_bootstrap: 0.735
   mean_bootstrap: 0.75
@@ -263,8 +263,8 @@ rows:
   target_name: 0774 Sst Gaba_3
   target_accession: CS20230722_CLUS_0774
   n_cells: 2
-  group_purity: 0.08695652173913043
-  target_purity: 0.5
+  coverage: 0.08695652173913043
+  purity: 0.5
   f1: 0.14814814814814817
   median_bootstrap: 0.87
   mean_bootstrap: 0.87
@@ -274,8 +274,8 @@ rows:
   target_name: 0802 Sst Gaba_10
   target_accession: CS20230722_CLUS_0802
   n_cells: 1
-  group_purity: 0.043478260869565216
-  target_purity: 1.0
+  coverage: 0.043478260869565216
+  purity: 1.0
   f1: 0.08333333333333333
   median_bootstrap: 0.62
   mean_bootstrap: 0.62

@@ -603,7 +603,7 @@ def _make_run_dir(tmp_path: Path, taxonomy_id: str = "TESTTX") -> Path:
     run_dir = tmp_path / "run_dir"
     run_dir.mkdir()
     (run_dir / "f1_matrix.csv").write_text(
-        "source_label,level,target_name,n_cells,group_purity,target_purity,f1,mean_boot,median_boot\n"
+        "source_label,level,target_name,n_cells,coverage,purity,f1,mean_boot,median_boot\n"
         "Sst-OLM,supertype,0216 Sst Gaba_3,43,0.93,0.52,0.67,0.95,0.95\n"
         "Sst-OLM,cluster,0769 Sst Gaba_3,30,0.85,0.40,0.55,0.90,0.90\n"
         "Sst-OLM,cluster,low_hit,3,0.10,0.05,0.07,0.10,0.10\n"
