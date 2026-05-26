@@ -38,6 +38,7 @@ from evidencell.validate import (  # noqa: E402
     check_ref_pmids,
     check_run_refs,
     linkml_validate,
+    validate_terms,
     parse_md_annotations,
     check_md_ids,
 )
@@ -272,6 +273,20 @@ def main():
             print(output.strip(), file=sys.stderr)
         if not ok:
             errors_found = True
+
+        # 5. Ontology-term reference validation (linkml-term-validator + OAK).
+        # Soft-skips when OAK DBs aren't cached yet (fresh-clone case);
+        # explicit bypass via EVIDENCELL_SKIP_TERM_CHECK=1.
+        if os.environ.get("EVIDENCELL_SKIP_TERM_CHECK"):
+            print("Term check bypassed via EVIDENCELL_SKIP_TERM_CHECK=1", file=sys.stderr)
+        else:
+            ok_terms, term_output = validate_terms(
+                simulated, schema_path, file_path.name, file_path=file_path
+            )
+            if term_output.strip():
+                print(term_output.strip(), file=sys.stderr)
+            if not ok_terms:
+                errors_found = True
 
     if errors_found:
         print("=" * 60, file=sys.stderr)

@@ -57,10 +57,19 @@ name_in_source: "oriens layer of hippocampus CA1"   # verbatim from source docum
 - `name_in_source` is a known label or synonym for `id` — catches substitution of a
   plausible-sounding name for a different concept.
 
-**Verification source:** OAK local DB snapshots (`~/.data/oaklib/`).
+**Verification source:** OAK semsql DB snapshots (`~/.data/semsql/sqlite/`,
+managed by pystow).
 
-**Status:** `name_in_source` storage is implemented in schema. OAK lookup in hook —
-*not yet implemented*; currently checked interactively via `just qc` (linkml-term-validator).
+**Status:** Implemented. The pre-edit hook calls
+`evidencell.validate.validate_terms`, which subprocess-invokes
+`linkml-term-validator validate` against `conf/oak_config.yaml`. Fresh clones
+without OAK DBs are soft-skipped — the hook prints `[term check skipped: OAK
+semsql DB missing for {names}; run `just fetch-oak-dbs` to enable]` and lets
+the write through. Set `EVIDENCELL_SKIP_TERM_CHECK=1` for an explicit
+emergency bypass (e.g. mid-session OAK corruption); the bypass logs to
+stderr so it's visible in transcripts. CI runs the same check via the
+`kb-validate` job in `.github/workflows/ci.yml` with the OAK cache restored
+from a `actions/cache@v4` step keyed on `conf/oak_config.yaml`.
 
 ---
 

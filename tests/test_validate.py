@@ -14,9 +14,11 @@ from evidencell.validate import (
     check_quote_keys,
     check_ref_pmids,
     linkml_validate,
+    oak_dbs_available,
     parse_md_annotations,
     simulate_edit,
     structural_checks,
+    validate_terms,
 )
 
 
@@ -703,3 +705,146 @@ def test_check_md_no_caches_no_errors():
     }
     errors = check_md_ids(annotations, Path("/nonexistent/references.json"), kb_nodes=None)
     assert errors == []
+
+
+# ── oak_dbs_available + validate_terms ─────────────────────────────────────────
+
+
+def _write_oak_config(tmp_path: Path, adapters: dict[str, str]) -> Path:
+    """Write a minimal conf/oak_config.yaml under tmp_path/conf/."""
+    cfg_dir = tmp_path / "conf"
+    cfg_dir.mkdir(parents=True, exist_ok=True)
+    cfg_path = cfg_dir / "oak_config.yaml"
+    body = "ontology_adapters:\n"
+    for k, v in adapters.items():
+        body += f"  {k}: \"{v}\"\n" if v else f"  {k}: \"\"\n"
+    cfg_path.write_text(body, encoding="utf-8")
+    return cfg_path
+
+
+def test_oak_dbs_available_missing_config_returns_true(tmp_path: Path):
+    """Missing oak_config.yaml means nothing to validate → all-present."""
+    ok, missing = oak_dbs_available(tmp_path / "no_config.yaml")
+    assert ok is True
+    assert missing == []
+
+
+def test_oak_dbs_available_skips_empty_adapters(tmp_path: Path):
+    """Adapters with empty-string value are ignored (linkml/schema/xsd/rdf/etc)."""
+    cfg = _write_oak_config(
+        tmp_path,
+        {"linkml": "", "schema": "", "MYAPP": "http://example.org"},
+    )
+    # No sqlite:obo:* adapters → no DBs required → all-present.
+    ok, missing = oak_dbs_available(cfg)
+    assert ok is True
+    assert missing == []
+
+
+def test_oak_dbs_available_reports_missing(tmp_path: Path):
+    """sqlite:obo:<name> adapters without a corresponding DB file are flagged."""
+    cfg = _write_oak_config(
+        tmp_path,
+        {"CL": "sqlite:obo:cl", "UBERON": "sqlite:obo:uberon"},
+    )
+    # Point pystow at an empty tmp dir so no DB files exist.
+    fake_semsql = tmp_path / "semsql_home"
+    fake_semsql.mkdir()
+    with patch(
+        "evidencell.validate._semsql_db_path",
+        side_effect=lambda name: fake_semsql / f"{name}.db",
+    ):
+        ok, missing = oak_dbs_available(cfg)
+    assert ok is False
+    assert sorted(missing) == ["cl", "uberon"]
+
+
+def test_oak_dbs_available_all_present(tmp_path: Path):
+    """When DB files exist on disk, returns (True, [])."""
+    cfg = _write_oak_config(tmp_path, {"CL": "sqlite:obo:cl"})
+    fake_semsql = tmp_path / "semsql_home"
+    fake_semsql.mkdir()
+    (fake_semsql / "cl.db").write_bytes(b"")  # marker file
+    with patch(
+        "evidencell.validate._semsql_db_path",
+        side_effect=lambda name: fake_semsql / f"{name}.db",
+    ):
+        ok, missing = oak_dbs_available(cfg)
+    assert ok is True
+    assert missing == []
+
+
+def test_validate_terms_skips_when_config_missing(tmp_path: Path):
+    """If conf/oak_config.yaml is missing, term check returns soft-success."""
+    # schema_path.parent.parent is the project root; oak_config lives at
+    # project_root/conf/oak_config.yaml. Don't create it.
+    schema = tmp_path / "schema" / "celltype_mapping.yaml"
+    schema.parent.mkdir(parents=True)
+    schema.write_text("id: fake")
+    ok, msg = validate_terms("id: x", schema)
+    assert ok is True
+    assert "term check skipped" in msg.lower() or "oak_config not found" in msg.lower()
+
+
+def test_validate_terms_skips_when_oak_dbs_missing(tmp_path: Path):
+    """If oak_config exists but DB files are absent, soft-skip with informative msg."""
+    schema = tmp_path / "schema" / "celltype_mapping.yaml"
+    schema.parent.mkdir(parents=True)
+    schema.write_text("id: fake")
+    _write_oak_config(tmp_path, {"CL": "sqlite:obo:cl"})
+    fake_semsql = tmp_path / "semsql_home"
+    fake_semsql.mkdir()
+    with patch(
+        "evidencell.validate._semsql_db_path",
+        side_effect=lambda name: fake_semsql / f"{name}.db",
+    ):
+        ok, msg = validate_terms("id: x", schema)
+    assert ok is True
+    assert "term check skipped" in msg.lower()
+    assert "cl" in msg.lower()
+    assert "just fetch-oak-dbs" in msg
+
+
+def test_validate_terms_returns_true_on_success(tmp_path: Path):
+    """When subprocess returns 0, validate_terms reports (True, output)."""
+    schema = tmp_path / "schema" / "celltype_mapping.yaml"
+    schema.parent.mkdir(parents=True)
+    schema.write_text("id: fake")
+    _write_oak_config(tmp_path, {"CL": "sqlite:obo:cl"})
+    # Pretend the OAK DB is present
+    fake_semsql = tmp_path / "semsql_home"
+    fake_semsql.mkdir()
+    (fake_semsql / "cl.db").write_bytes(b"")
+    mock_result = MagicMock()
+    mock_result.returncode = 0
+    mock_result.stdout = "All terms resolved"
+    mock_result.stderr = ""
+    with patch(
+        "evidencell.validate._semsql_db_path",
+        side_effect=lambda name: fake_semsql / f"{name}.db",
+    ), patch("evidencell.validate.subprocess.run", return_value=mock_result):
+        ok, output = validate_terms("nodes: []", schema)
+    assert ok is True
+    assert "All terms resolved" in output
+
+
+def test_validate_terms_returns_false_on_failure(tmp_path: Path):
+    """When subprocess returns non-zero, validate_terms reports (False, output)."""
+    schema = tmp_path / "schema" / "celltype_mapping.yaml"
+    schema.parent.mkdir(parents=True)
+    schema.write_text("id: fake")
+    _write_oak_config(tmp_path, {"CL": "sqlite:obo:cl"})
+    fake_semsql = tmp_path / "semsql_home"
+    fake_semsql.mkdir()
+    (fake_semsql / "cl.db").write_bytes(b"")
+    mock_result = MagicMock()
+    mock_result.returncode = 1
+    mock_result.stdout = ""
+    mock_result.stderr = "ERROR: unresolved term CL:9999999999"
+    with patch(
+        "evidencell.validate._semsql_db_path",
+        side_effect=lambda name: fake_semsql / f"{name}.db",
+    ), patch("evidencell.validate.subprocess.run", return_value=mock_result):
+        ok, output = validate_terms("nodes: [{id: x, cl_term: CL:9999999999}]", schema)
+    assert ok is False
+    assert "CL:9999999999" in output
