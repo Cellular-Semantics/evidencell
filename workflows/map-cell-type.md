@@ -391,16 +391,67 @@ TASK:
    `edge_{lit_type_id}_to_{taxonomy_type_id}`. The edge MUST set
    both `lit_type` and `taxonomy_type` (Phase 2 schema overhaul,
    2026-05-12 — `type_a` / `type_b` are deprecated aliases retained
-   only for the transition window). Set `relationship` to one of the
-   CURIE values: `skos:exactMatch`, `skos:closeMatch`,
-   `skos:broadMatch`, `skos:narrowMatch`,
-   `evidencell:PartialOverlapMatch`, `evidencell:CrossCuttingMatch`,
-   `evidencell:NoCorrespondence`. When using `skos:broadMatch` or
-   `skos:narrowMatch`, set `mapping_cardinality` to `1:1` (suspected
-   hidden one-to-one), `1:n` (genuine split), or `n:1` (merge). Set
-   `mapping_justification: semapv:UnreviewedManualMapping` by default
-   (agent-emitted); curators promote to `semapv:ManualMappingCuration`
-   on review. See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md)
+   only for the transition window).
+
+   **Predicate selection rubric (2026-05-26 refresh).** Apply the
+   following decision tree against the property_comparisons you
+   just built. The report-time agent (gen-report Stage C) uses the
+   same rubric — your initial pick should match what gen-report
+   would land on.
+
+   Step (i) — **Cardinality at this rank.** Count how many lit_types
+   plausibly map to this taxonomy_type and vice versa **at the
+   atlas-side rank you are working**.
+     - Multiple lit_types → one taxonomy_type ⇒ `skos:broadMatch` +
+       `mapping_cardinality: 1:n`.
+     - One lit_type → multiple taxonomy_types at this rank,
+       collapsing to one type at rank N+1 ⇒ prefer `skos:broadMatch`
+       at rank N+1.
+     - One lit_type → multiple taxonomy_types at this rank, with no
+       higher rank that rescues to a single broader type ⇒
+       `evidencell:CrossCuttingMatch`.
+     - Multiple lit_types → one taxonomy_type with the lit-side being
+       narrower per-instance ⇒ `skos:narrowMatch` + `mapping_cardinality: n:1`.
+     - Otherwise — clean 1:1 candidate — proceed.
+
+   Step (ii) — **Location gate (for clean 1:1 candidates).**
+     - taxonomy_type located in classical region + adjacent only ⇒
+       proceed to step (iii).
+     - taxonomy_type located in regions distant from classical
+       region + adjacent ⇒ `skos:broadMatch` + `mapping_cardinality: 1:n`
+       (the taxonomy_type is broader by location).
+
+   Step (iii) — **AT gate (when AT evidence is present).**
+     - F1 > 0.75 at the working rank with no major contradiction ⇒
+       `skos:exactMatch` + `mapping_cardinality: 1:1`.
+     - F1 in a borderline band or coverage/purity asymmetry, OR
+       marker / location contradictions present ⇒ `skos:closeMatch`.
+
+   Step (iv) — **AT absent.** A clean 1:1 candidate with consistent
+   location + markers + literature may still be `skos:exactMatch`,
+   but flag in `caveats` that AT is missing — the report-time agent
+   will cap confidence at MODERATE. Any unresolved contradiction
+   demotes to `skos:closeMatch`.
+
+   Step (v) — **Unresolvable.** If evidence is insufficient to pick
+   between any of the above ⇒ `evidencell:UncertainRelationship` +
+   `mapping_justification: semapv:UnspecifiedMatching` +
+   `reconciliation_note` describing what additional evidence would
+   resolve it.
+
+   The hidden-1:1 broadMatch case (broadMatch + 1:1) is **removed**
+   — if the specific sub-cluster is TBD, map at the next rank up
+   where the relationship is cleanly 1:n.
+
+   `evidencell:PartialOverlapMatch` is **deprecated** as of
+   2026-05-26 — do not emit on new edges. The new rubric absorbs
+   its cases into `skos:closeMatch` (1:1-ish with contradictions)
+   or one of the broad/narrow/cross-cutting predicates.
+
+   Set `mapping_justification: semapv:UnreviewedManualMapping` by
+   default (agent-emitted); curators promote to
+   `semapv:ManualMappingCuration` on review. See
+   [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md)
    for the SKOS direction convention and worked examples.
 
 8. **Copy the candidate's `discovery_score` block onto the edge
