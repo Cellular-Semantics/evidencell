@@ -523,6 +523,79 @@ def _yaml_relpath_for(rs: AnnotationTransferResultSet) -> str:
     return "at_results.yaml"
 
 
+# ─── research/{region}/at/{classical}_{taxonomy}_f1.json regen ────────
+
+
+def regen_at_hits_file(
+    *,
+    classical_node_id: str,
+    region: str,
+    taxonomy_id: str,
+    run_ref: str,
+    source_label: str,
+    f1_floor: float = 0.2,
+    out_path: Path | None = None,
+    runs_root: Path | None = None,
+) -> Path:
+    """Regenerate the legacy `research/{region}/at/{classical}_{taxonomy}_f1.json`
+    discovery-hint file from the canonical at_results.yaml.
+
+    The file format (consumed by ``find_candidates`` Stage A scoring) is:
+        {
+          "classical_node_id": ..., "taxonomy_id": ...,
+          "source_run_id": ..., "source_cluster_label": ...,
+          "f1_floor": ..., "hits": [{target_accession, target_level,
+                                     target_name, f1, n_cells,
+                                     group_purity, target_purity}]
+        }
+
+    The regenerated file is guaranteed to match at_results.yaml row-for-row
+    (filtered to F1 >= f1_floor for source_label across all levels).
+    Replaces any existing file at the destination path.
+    """
+    import json
+
+    rs = load_result_set(run_ref, runs_root=runs_root)
+    level_to_str = {
+        "CLASS": "class",
+        "SUBCLASS": "subclass",
+        "SUPERTYPE": "supertype",
+        "CLUSTER": "cluster",
+    }
+    hits = []
+    for row in rs.rows:
+        if row.source_label != source_label:
+            continue
+        if (row.f1 or 0) < f1_floor:
+            continue
+        hits.append({
+            "target_accession": row.target_accession,
+            "target_level": level_to_str.get(row.taxonomy_level, row.taxonomy_level.lower()),
+            "target_name": row.target_name,
+            "f1": row.f1,
+            "n_cells": row.n_cells,
+            "group_purity": row.group_purity,
+            "target_purity": row.target_purity,
+        })
+    payload = {
+        "classical_node_id": classical_node_id,
+        "taxonomy_id": taxonomy_id,
+        "source_run_id": run_ref,
+        "source_cluster_label": source_label,
+        "f1_floor": f1_floor,
+        "hits": hits,
+    }
+    if out_path is None:
+        out_path = (
+            (runs_root.parent.parent if runs_root else repo_root())
+            / "research" / region / "at"
+            / f"{classical_node_id}_{taxonomy_id}_f1.json"
+        )
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return out_path
+
+
 # ─── KB sweep / refresh ───────────────────────────────────────────────
 
 
