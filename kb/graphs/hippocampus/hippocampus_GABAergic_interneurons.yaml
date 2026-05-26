@@ -2389,7 +2389,7 @@ edges:
   - id: edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206
     lit_type: pv_basket_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0206
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -2500,6 +2500,8 @@ edges:
         description: 'Cnr1 negative marker status unverifiable from atlas supertype metadata.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: MODERATE
     confidence_score: 0.7
@@ -2509,10 +2511,11 @@ edges:
     unresolved_questions:
       - Are PV basket, axo-axonic, and bistratified subtypes separable at a sub-cluster level within CS20230722_SUPT_0206 given high transcriptomic similarity?
     rationale_source_hash: 'eefb245a'
+    mapping_cardinality: "1:1"
   - id: edge_pv_basket_cell_hippocampus_to_CS20230722_CLUS_0739
     lit_type: pv_basket_cell_hippocampus
     taxonomy_type: CS20230722_CLUS_0739
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -2637,6 +2640,8 @@ edges:
         description: 'PV+ hippocampal interneurons (basket, axo-axonic, bistratified) have high transcriptomic similarity and are not cleanly separated at cluster level (PMID:33398060). This cluster likely contains multiple classical PV subtypes.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: MODERATE
     confidence_score: 0.72
@@ -2647,6 +2652,7 @@ edges:
       - Does CS20230722_CLUS_0739 contain a Cck-co-expressing PV sub-population, or do cluster boundaries mix with the CCK basket cell ensemble?
       - Are Que 2021 patch-seq mappings stable when applied to adult mouse cohorts matched to WMBv1 age range?
     rationale_source_hash: f52c75c0
+    mapping_cardinality: "1:1"
   - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179
     lit_type: cck_basket_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0179
@@ -2699,7 +2705,7 @@ edges:
   - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187
     lit_type: cck_basket_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0187
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_harris_class_mmc_wmbv1
@@ -2759,7 +2765,10 @@ edges:
         description: 'The existing edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179 (Vip Gaba_7) was based on atlas metadata only (UNCERTAIN confidence, no AT evidence). Harris AT data does not support SUPT_0179 for CCK basket cells. Both edges retained pending expert review; SUPT_0187 is the AT-supported transcriptomic candidate.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0204
     lit_type: axo_axonic_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0204
@@ -2973,7 +2982,7 @@ edges:
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0216
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0216
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -3062,6 +3071,8 @@ edges:
         description: 'Pvalb co-expression (defining for bistratified) is not captured at the supertype level — Sst subclass placement may under-represent the PV component of bistratified cell identity.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.366 ≤ 0.75, DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
     confidence_score: 0.22
@@ -3071,10 +3082,11 @@ edges:
     unresolved_questions:
       - Does a Sst-dominant Pvalb-low bistratified subpopulation exist, and if so does it map to CS20230722_SUPT_0216 specifically? Requires a Sst-Cre × Tac1-Flp × Pvalb-negative intersectional scRNA-seq + morphology dataset.
     rationale_source_hash: 52a58fa9
+    mapping_cardinality: "1:1"
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0206
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -3146,6 +3158,8 @@ edges:
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: SUPT_0206 contains both PV basket cells (CLUS_0739) and PV bistratified cells (CLUS_0737). Not separable at supertype level; see CLUS_0737 edge for cluster-level mapping.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.375 ≤ 0.75, existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: MODERATE
     confidence_score: 0.62
@@ -3156,10 +3170,11 @@ edges:
       - Whether SUPT_0206 provides morphologically informative substructure beyond the CLUS_0737 / CLUS_0739 BIC/BC cluster-level split.
       - Whether CS20230722_SUPT_0206 provides morphologically informative substructure beyond the CS20230722_CLUS_0737 / CLUS_0739 BIC/BC cluster-level split.
     rationale_source_hash: 8c722d22
+    mapping_cardinality: "1:1"
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_CLUS_0737
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
@@ -3276,6 +3291,8 @@ edges:
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: Sst-expressing bistratified subpopulation may distribute toward SUPT_0216 (see edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0216). CLUS_0737 captures the PV-primary bistratified population.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: MODERATE
     confidence_score: 0.72
@@ -3288,10 +3305,11 @@ edges:
       - Replication of Que 2021 BIC → CS20230722_CLUS_0737 F1=0.80 with an independent morphologically confirmed PV bistratified scRNA-seq dataset.
       - Robustness of CS20230722_CLUS_0737 assignment to raw-counts vs TPM-pseudo-counts normalization in GEO:GSE142546.
     rationale_source_hash: '65ac6f7a'
+    mapping_cardinality: "1:1"
   - id: edge_olm_cell_ca1_to_CS20230722_SUPT_0216
     lit_type: olm_cell_ca1
     taxonomy_type: CS20230722_SUPT_0216
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -3439,11 +3457,14 @@ edges:
         description: 'Prosubiculum (259 cells) and posterior amygdala (780 cells) are prominent in this supertype; classical OLM characterisation is primarily in CA1. The non-hippocampal cells in this supertype likely include non-OLM Sst interneurons.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.514 ≤ 0.75, existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_hippocampo_septal_cell_ca1_to_CS20230722_SUPT_0216
     lit_type: hippocampo_septal_cell_ca1
     taxonomy_type: CS20230722_SUPT_0216
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -3517,14 +3538,17 @@ edges:
         description: 'The Reln defining marker of SUPT_0216 is an OLM marker, not an HS marker. This may indicate the supertype predominantly captures OLM rather than HS cells.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - Does SUPT_0216 contain any long-range projecting Sst+ neurons or is it exclusively local-circuit (OLM)?
       - Is there a more appropriate HS candidate outside the Sst Gaba_3 supertype (e.g. Chodl+ class)?
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0193
     lit_type: neurogliaform_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0193
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -3620,11 +3644,14 @@ edges:
         description: 'The classical NGC node has Nos1 as a defining marker representing the majority MGE-derived NGC population. This edge specifically represents the CGE-derived nNOS- NGC subtype only. The heterogeneous classical node partially overlaps this supertype.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203
     lit_type: neurogliaform_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0203
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -3721,11 +3748,14 @@ edges:
         description: 'This edge represents the MGE-derived (nNOS+, Lhx6+) NGC subtype only. Even within that subset, the SLM location discordance makes this assignment uncertain. Consider Ivy cell (edge 3) as the primary Lamp5 Lhx6 candidate; hippocampal NGC→Lamp5 Lhx6 may require targeted patch-seq to resolve.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203
     lit_type: ivy_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0203
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -3866,6 +3896,8 @@ edges:
         description: 'No CA1 stratum pyramidale cells in SUPT_0203 despite Ivy cell soma being canonically in CA1 SP. Atlas may undersample CA1 SP Lamp5 Lhx6 cells, or the Ivy cell CA1 population is split across additional supertypes.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - Are the CA3-enriched Lamp5 Lhx6 cells in SUPT_0203 Ivy cells, NGCs, or a distinct type?
       - Is there a CA1 SP Lamp5 Lhx6 cluster capturing hippocampal Ivy cells at the cluster level?
@@ -3878,10 +3910,11 @@ edges:
     rationale_generated_at: '2026-05-13T15:14:07+00:00'
     report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
     rationale_source_hash: 64ae2ece
+    mapping_cardinality: "1:1"
   - id: edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179
     lit_type: is_interneuron_hippocampus
     taxonomy_type: CS20230722_SUPT_0179
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -4002,7 +4035,10 @@ edges:
         description: 'VIP GABAergic interneurons in hippocampus include VIP basket cells (vip_basket_cell_hippocampus) in addition to IS cells. The supertype may encompass both perisomatic VIP basket cells and disinhibitory IS cells; the interneuron-specific targeting feature of IS cells is not resolvable from transcriptomic metadata alone.
 
           '
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.612 ≤ 0.75, existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_oriens_oriens_cell_hippocampus_to_CS20230722_SUPT_0219
     lit_type: oriens_oriens_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0219
@@ -4103,7 +4139,7 @@ edges:
   - id: edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0206
     lit_type: trilaminar_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0206
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -4171,7 +4207,10 @@ edges:
           '
       - caveat_type: MARKER_NOT_SPECIFIC
         description: Negative marker Sst shows low expression (2.72) in SUPT_0206. Classical trilaminar cells are defined as Sst-negative, but low-level Sst co-expression in Pvalb types is known. Does not disqualify the mapping but reduces confidence in Sst as a discriminating marker.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.119 ≤ 0.75, existing caveats → closeMatch. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_vip_basket_cell_hippocampus_to_CS20230722_SUPT_0179
     lit_type: vip_basket_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0179
