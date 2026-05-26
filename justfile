@@ -61,6 +61,25 @@ validate-taxonomy-all TAXONOMY_ID:
     done
     [ $failed -eq 0 ] && echo "All taxonomy files valid." || { echo "Validation failed."; exit 1; }
 
+# Validate an AT results YAML (AnnotationTransferResultSet root class)
+[group('validation')]
+validate-at-results FILE:
+    uv run linkml-validate -s {{schema}} -C AnnotationTransferResultSet {{FILE}}
+
+# Validate all at_results*.yaml files under kb/annotation_transfer_runs/
+[group('validation')]
+validate-at-results-all:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    files=$(find kb/annotation_transfer_runs -name "at_results*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No at_results YAML files yet."; exit 0; fi
+    failed=0
+    for f in $files; do
+        echo "Validating $f..."
+        uv run linkml-validate -s {{schema}} -C AnnotationTransferResultSet "$f" || failed=1
+    done
+    [ $failed -eq 0 ] && echo "All AT result files valid." || { echo "Validation failed."; exit 1; }
+
 # Validate all KB graph files (kb/graphs/)
 [group('validation')]
 validate-all:
