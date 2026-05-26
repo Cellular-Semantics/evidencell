@@ -3065,12 +3065,12 @@ edges:
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
     confidence_score: 0.22
-    rationale: "CS20230722_SUPT_0216 carries Sst (precomputed mean 11.44) and Tac1 DEFINING_SCOPED, both consistent with Chamberland 2024 Sst;;Tac1 intersectional Cre-line targeting of bistratified cells, but Pvalb is DISCORDANT at the supertype (Sst-subclass placement); 3 of 4 marker_-prefixed PCs CONSISTENT. Yao 2021 SSv4 'Pvalb' scRNA-seq cells map only weakly (F1=0.05 in `at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1`), and morphologically confirmed Que 2021 BIC patch-seq cells (`at_run_20260508_que2021_pvin_mmc_wmbv1`) show zero mapping to CS20230722_SUPT_0216 — they map entirely to the Pvalb side at CS20230722_SUPT_0206 / CS20230722_CLUS_0737. The edge is retained speculatively for a possible Sst-dominant Pvalb-low bistratified subpopulation; supertype also pools OLM (Sst+/Chrna2+) and HS (long-range projecting Sst+) cells (DISTRIBUTED_ACROSS_CLUSTERS).\n"
-    rationale_generated_at: '2026-05-20T12:42:35+00:00'
+    rationale: "Morphologically confirmed Que 2021 BIC patch-seq shows zero mapping to any Sst supertype in at_run_20260508_que2021_pvin_mmc_wmbv1 — 18/20 cells land on CS20230722_SUPT_0206 and 16/17 cluster-resolved cells on CS20230722_CLUS_0737. Yao 2021 SSv4 Pvalb-subclass cells map only 6/66 to CS20230722_SUPT_0216 in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1. 3 of 4 markers CONSISTENT (Sst, Tac1, Gad1 by scRNA-seq); Pvalb DISCORDANT (Sst subclass, atlas Pvalb mean 1.48); location APPROXIMATE (CA1 SO, not stratum pyramidale). Edge retained as placeholder for a hypothetical Sst-dominant, Pvalb-low bistratified subpopulation not yet observed in any morphology-confirmed dataset.\n"
+    rationale_generated_at: '2026-05-26T12:15:14+00:00'
     report_path: reports/hippocampus/bistratified_cell_hippocampus_summary.md
     unresolved_questions:
       - Does a Sst-dominant Pvalb-low bistratified subpopulation exist, and if so does it map to CS20230722_SUPT_0216 specifically? Requires a Sst-Cre × Tac1-Flp × Pvalb-negative intersectional scRNA-seq + morphology dataset.
-    rationale_source_hash: 4aeeab16
+    rationale_source_hash: 52a58fa9
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0206
@@ -3148,13 +3148,14 @@ edges:
         description: SUPT_0206 contains both PV basket cells (CLUS_0739) and PV bistratified cells (CLUS_0737). Not separable at supertype level; see CLUS_0737 edge for cluster-level mapping.
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: MODERATE
-    confidence_score: 0.65
-    rationale: "Que 2021 morphologically confirmed BIC patch-seq cells map 18/20 to CS20230722_SUPT_0206 at F1=0.38 (coverage 0.900) in `at_run_20260508_que2021_pvin_mmc_wmbv1`, with cluster-level resolution at CS20230722_CLUS_0737 reaching F1=0.80 — the supertype F1 is bounded by sibling-cluster confusion with the PV basket child CLUS_0739, not by source-target mismatch. Atlas Pvalb subclass placement (scRNA-seq + MERFISH) supports the Pvalb defining marker; 3 of 3 marker_-prefixed PCs CONSISTENT (Pvalb via subclass, Sst/Tac1/GABA via CLUS_0737).\n"
-    rationale_generated_at: '2026-05-20T12:42:35+00:00'
+    confidence_score: 0.62
+    rationale: "Que 2021 patch-seq BIC maps to CS20230722_SUPT_0206 at F1=0.38 with coverage 0.90 (18/20 cells) in at_run_20260508_que2021_pvin_mmc_wmbv1; the low supertype F1 reflects pooling of BC and BIC morphologies within SUPT_0206 rather than a weakness of the assignment — cluster-level resolution at CS20230722_CLUS_0737 recovers the BIC landing site cleanly. 3 of 3 markers CONSISTENT (Pvalb, Sst, Tac1) supported by scRNA-seq and immunohistochemistry; NT and Pvalb subclass also CONSISTENT.\n"
+    rationale_generated_at: '2026-05-26T12:15:14+00:00'
     report_path: reports/hippocampus/bistratified_cell_hippocampus_summary.md
     unresolved_questions:
       - Whether SUPT_0206 provides morphologically informative substructure beyond the CLUS_0737 / CLUS_0739 BIC/BC cluster-level split.
-    rationale_source_hash: ce258318
+      - Whether CS20230722_SUPT_0206 provides morphologically informative substructure beyond the CS20230722_CLUS_0737 / CLUS_0739 BIC/BC cluster-level split.
+    rationale_source_hash: 8c722d22
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_CLUS_0737
@@ -3277,14 +3278,16 @@ edges:
         description: Sst-expressing bistratified subpopulation may distribute toward SUPT_0216 (see edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0216). CLUS_0737 captures the PV-primary bistratified population.
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: MODERATE
-    confidence_score: 0.78
-    rationale: "Morphologically confirmed PV bistratified patch-seq cells from Que 2021 (`at_run_20260508_que2021_pvin_mmc_wmbv1`) map to CS20230722_CLUS_0737 at F1=0.80 (coverage 0.941, purity 0.696), with the sibling BC group separating to CLUS_0739. Atlas precomputed expression on CS20230722_CLUS_0737 confirms the bistratified-specific bilaminar CA1 SO + CA1 SR MERFISH anatomy with NP Sst:4.4 and Tac1:7.3 matching Chamberland 2024 Sst;;Tac1 intersectional Cre-line targeting; the Chamberland-on-Harris in-silico Sst_Tac1 subfamily AT (`at_run_20260512_chamberland_subfamily_mmc_wmbv1`) independently concentrates at CS20230722_CLUS_0737 (purity 0.939), demonstrating Sst-Pvalb transcriptomic continuity from a Sst-side label; 3 of 3 marker_-prefixed PCs CONSISTENT across patch-seq and scRNA-seq modalities.\n"
-    rationale_generated_at: '2026-05-20T12:42:35+00:00'
+    confidence_score: 0.72
+    rationale: "Que 2021 patch-seq BIC (hBIC + vBIC, n=20) lands on CS20230722_CLUS_0737 at F1=0.80 in at_run_20260508_que2021_pvin_mmc_wmbv1, the strongest cluster-level signal in WMBv1, supported independently by Chamberland Sst_Tac1 in-silico AT in at_run_20260512_chamberland_subfamily_mmc_wmbv1 (CS20230722_CLUS_0737 cluster Pur=0.94). 3 of 3 markers CONSISTENT (Pvalb, Sst, Tac1) anchored in patch-seq, MERFISH and scRNA-seq modalities, alongside CONSISTENT NT and bilaminar CA1 SO+SR location. Replication and a raw-counts re-run remain caveats.\n"
+    rationale_generated_at: '2026-05-26T12:15:14+00:00'
     report_path: reports/hippocampus/bistratified_cell_hippocampus_summary.md
     unresolved_questions:
       - Replication of Que 2021 BIC → CLUS_0737 F1=0.80 with an independent morphologically confirmed PV bistratified scRNA-seq dataset.
       - Robustness of CLUS_0737 assignment to raw-counts vs TPM-pseudo-counts normalization in GEO:GSE142546.
-    rationale_source_hash: '32ff99ed'
+      - Replication of Que 2021 BIC → CS20230722_CLUS_0737 F1=0.80 with an independent morphologically confirmed PV bistratified scRNA-seq dataset.
+      - Robustness of CS20230722_CLUS_0737 assignment to raw-counts vs TPM-pseudo-counts normalization in GEO:GSE142546.
+    rationale_source_hash: '65ac6f7a'
   - id: edge_olm_cell_ca1_to_CS20230722_SUPT_0216
     lit_type: olm_cell_ca1
     taxonomy_type: CS20230722_SUPT_0216
