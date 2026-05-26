@@ -7,6 +7,26 @@ Archive of prior roadmap with full milestone write-ups: [planning/ROADMAP_archiv
 
 ---
 
+## Table of Contents
+
+- [Tag glossary](#tag-glossary)
+- [Schema `#schema`](#schema-schema)
+- [KB structure `#kb`](#kb-structure-kb)
+- [Precomputed stats HDF5 — download and file structure `#map-cell-type` `#annotation-transfer`](#precomputed-stats-hdf5-download-and-file-structure-map-cell-type-annotation-transfer)
+- [Taxonomy DB queries `#ingest-taxonomy` `#map-cell-type`](#taxonomy-db-queries-ingest-taxonomy-map-cell-type)
+- [Multi-taxonomy DB `#ingest-taxonomy` `#schema` `#map-cell-type`](#multi-taxonomy-db-ingest-taxonomy-schema-map-cell-type)
+- [Literature curation `#lit`](#literature-curation-lit)
+- [Annotation transfer `#at`](#annotation-transfer-at)
+- [Workflow design `#workflow-design`](#workflow-design-workflow-design)
+  - [Deliverables](#deliverables)
+  - [Relationship to other milestones](#relationship-to-other-milestones)
+- [Reports `#gen-report`](#reports-gen-report)
+- [Community feedback `#community`](#community-feedback-community)
+- [Infrastructure `#infrastructure`](#infrastructure-infrastructure)
+- [Recently completed](#recently-completed)
+
+---
+
 ## Tag glossary
 
 | Tag | Scope |
