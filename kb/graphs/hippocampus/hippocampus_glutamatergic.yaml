@@ -960,27 +960,31 @@ edges:
             best_target_name: 01 IT-ET Glut
             best_target_accession: CS20230722_CLAS_01
             group_purity: 1.0
-            target_purity: 0.8075
-            f1_score: 0.8935
+            target_purity: 0.8075165058405281
+            f1_score: 0.8935094127563922
             n_cells_mapped: 1590
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 016 CA1-ProS Glut
             best_target_accession: CS20230722_SUBC_016
-            group_purity: 0.9937
-            target_purity: 0.9962
-            f1_score: 0.9949
+            group_purity: 0.9936868686868687
+            target_purity: 0.9962025316455696
+            f1_score: 0.9949431099873578
             n_cells_mapped: 1574
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0069 CA1-ProS Glut_1
             best_target_accession: CS20230722_SUPT_0069
-            group_purity: 0.6535
-            target_purity: 0.999
-            f1_score: 0.7902
+            group_purity: 0.6535380507343124
+            target_purity: 0.9989795918367347
+            f1_score: 0.7901533494753834
             n_cells_mapped: 979
+            median_bootstrap: 1.0
         n_cells_total: 1590
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: glutamatergic
@@ -1040,23 +1044,26 @@ edges:
         n_cells_total: 19
         best_mapping_rank: 2
         metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
+            group_purity: 1.0
+            target_purity: 0.009649568308786187
+            f1_score: 0.019114688128772636
+            n_cells_mapped: 19
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 025 CA2-FC-IG Glut
             best_target_accession: CS20230722_SUBC_025
             group_purity: 1.0
-            target_purity: 0.947
-            f1_score: 0.973
+            target_purity: 0.9473684210526315
+            f1_score: 0.972972972972973
             n_cells_mapped: 18
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0101 CA2-FC-IG Glut_2
-            best_target_accession: CS20230722_SUPT_0101
-            group_purity: 0.947
-            target_purity: 0.947
-            f1_score: 0.947
-            n_cells_mapped: 18
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 CA2-IG-FC subclass label (n=19) onto WMBv1 (CCN20230722). At SUBCLASS level: 18/19 cells (94.7%) map to SUBC_025 CA2-FC-IG Glut (F1=0.973, group_purity=1.0, target_purity=0.947). At SUPERTYPE level: 18/19 cells (94.7%) map to SUPT_0101 (CA2-FC-IG Glut_2, F1=0.947) and only 1/19 (5.3%) to SUPT_0100 (CA2-FC-IG Glut_1, F1=0.1). This result is PARTIAL because the subclass-level assignment strongly supports SUBC_025 membership, but supertype-level mapping to SUPT_0101 rather than SUPT_0100 reflects FC/IG contamination in Yao''s mixed CA2-IG-FC label: SUPT_0101 is enriched for fasciola cinerea and induseum griseum cells (MERFISH data: 0 CA2 pyramidal layer cells in SUPT_0101 vs 446 in SUPT_0100). SUPT_0100 remains the correct supertype candidate for CA2 pyramidal cells based on MERFISH anatomy.'
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: glutamatergic
@@ -1131,27 +1138,31 @@ edges:
             best_target_name: 01 IT-ET Glut
             best_target_accession: CS20230722_CLAS_01
             group_purity: 1.0
-            target_purity: 0.1635
-            f1_score: 0.2811
+            target_purity: 0.16353478923311326
+            f1_score: 0.28109995635093843
             n_cells_mapped: 322
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 017 CA3 Glut
             best_target_accession: CS20230722_SUBC_017
-            group_purity: 0.9938
-            target_purity: 0.9938
-            f1_score: 0.9938
+            group_purity: 0.9937888198757764
+            target_purity: 0.9937888198757764
+            f1_score: 0.9937888198757764
             n_cells_mapped: 320
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0078 CA3 Glut_4
             best_target_accession: CS20230722_SUPT_0078
-            group_purity: 0.6326
+            group_purity: 0.6325878594249201
             target_purity: 1.0
-            f1_score: 0.775
+            f1_score: 0.7749510763209393
             n_cells_mapped: 198
+            median_bootstrap: 1.0
         n_cells_total: 322
         best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: glutamatergic
@@ -1281,23 +1292,35 @@ edges:
         target_atlas: WMBv1 (CCN20230722)
         method: MapMyCells local (precomputed_stats CCN20230722)
         metrics_by_level:
-          - taxonomy_level: SUBCLASS
-            best_target_name: 017 CA3 Glut
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
             group_purity: 1.0
-            target_purity: 0.522
-            f1_score: 0.686
-            n_cells_mapped: 35
-            taxonomy_rank: 2
-            best_target_accession: CS20230722_SUBC_017
-          - taxonomy_level: SUPERTYPE
-            best_target_name: 0078 CA3 Glut_4
-            group_purity: 0.971
-            target_purity: 0.917
-            f1_score: 0.943
+            target_purity: 0.3142857142857143
+            f1_score: 0.4782608695652174
             n_cells_mapped: 33
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 017 CA3 Glut
+            best_target_accession: CS20230722_SUBC_017
+            group_purity: 1.0
+            target_purity: 0.5223880597014925
+            f1_score: 0.6862745098039216
+            n_cells_mapped: 35
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
+            best_target_name: 0078 CA3 Glut_4
             best_target_accession: CS20230722_SUPT_0078
+            group_purity: 0.9705882352941176
+            target_purity: 0.9166666666666666
+            f1_score: 0.9428571428571428
+            n_cells_mapped: 33
+            median_bootstrap: 1.0
         best_mapping_rank: 1
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: glutamatergic
@@ -1351,23 +1374,35 @@ edges:
         target_atlas: WMBv1 (CCN20230722)
         method: MapMyCells local (precomputed_stats CCN20230722)
         metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
+            group_purity: 1.0
+            target_purity: 0.26666666666666666
+            f1_score: 0.4210526315789474
+            n_cells_mapped: 28
+            median_bootstrap: 0.99
           - taxonomy_level: SUBCLASS
-            best_target_name: 017 CA3 Glut
-            group_purity: 0.931
-            target_purity: 0.403
-            f1_score: 0.562
-            n_cells_mapped: 27
             taxonomy_rank: 2
+            best_target_name: 017 CA3 Glut
             best_target_accession: CS20230722_SUBC_017
+            group_purity: 0.9310344827586207
+            target_purity: 0.40298507462686567
+            f1_score: 0.5625
+            n_cells_mapped: 27
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
-            best_target_name: 0079 CA3 Glut_5
-            group_purity: 0.741
-            target_purity: 0.952
-            f1_score: 0.833
-            n_cells_mapped: 20
             taxonomy_rank: 1
+            best_target_name: 0079 CA3 Glut_5
             best_target_accession: CS20230722_SUPT_0079
+            group_purity: 0.7407407407407407
+            target_purity: 0.9523809523809523
+            f1_score: 0.8333333333333334
+            n_cells_mapped: 20
+            median_bootstrap: 1.0
         best_mapping_rank: 1
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: glutamatergic
@@ -1920,30 +1955,26 @@ edges:
             target_purity: 1.0
             f1_score: 1.0
             n_cells_mapped: 15
+            median_bootstrap: 0.89
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 036 HPF CR Glut
             best_target_accession: CS20230722_SUBC_036
             group_purity: 1.0
-            target_purity: 0.9706
-            f1_score: 0.9851
+            target_purity: 0.9705882352941176
+            f1_score: 0.9850746268656716
             n_cells_mapped: 33
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0135 HPF CR Glut_1
             best_target_accession: CS20230722_SUPT_0135
             group_purity: 1.0
-            target_purity: 0.9706
-            f1_score: 0.9851
+            target_purity: 0.9705882352941176
+            f1_score: 0.9850746268656716
             n_cells_mapped: 33
-          - taxonomy_level: CLUSTER
-            taxonomy_rank: 0
-            best_target_name: 0497 HPF CR Glut_1
-            best_target_accession: CS20230722_CLUS_0497
-            group_purity: 1.0
-            target_purity: 1.0
-            f1_score: 1.0
-            n_cells_mapped: 13
+            median_bootstrap: 1.0
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: glutamatergic

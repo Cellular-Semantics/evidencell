@@ -895,17 +895,34 @@ def refresh_kb(
     diff against what's stored.
 
     With ``dry_run=False`` writes the recomputed metrics_by_level back
-    to the edge YAML (preserving everything else). The ``supports``
-    field is **not** automatically overwritten — that's a curator
-    call; we surface the suggested ``supports_default`` in the diff
-    output instead.
+    to the edge YAML (preserving everything else, including comments
+    and block-scalar styles, via a ruamel.yaml round-trip). The
+    ``supports`` field is **not** automatically overwritten — that's
+    a curator call; we surface the suggested ``supports_default`` in
+    the diff output instead.
 
     Returns a summary dict ``{file: [{edge_id, evidence_index, diff,
     old_supports, suggested_supports}]}``.
     """
+    from ruamel.yaml import YAML
+
+    def _load_rt(p: Path):
+        y = YAML(typ="rt")
+        y.preserve_quotes = True
+        y.width = 4096
+        y.indent(mapping=2, sequence=4, offset=2)
+        with p.open("r", encoding="utf-8") as fh:
+            return y, y.load(fh)
+
+    def _dump_rt(y, doc, p: Path) -> None:
+        with p.open("w", encoding="utf-8") as fh:
+            y.dump(doc, fh)
+
     out: dict[str, list[dict]] = {}
     for path in _kb_graph_files(kb_root):
-        doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        yaml_rt, doc = _load_rt(path)
+        if doc is None:
+            continue
         rows: list[dict] = []
         changed = False
         for edge in doc.get("edges") or []:
@@ -938,12 +955,7 @@ def refresh_kb(
                     )
                     continue
                 try:
-                    payload = compute_edge_metrics(
-                        run_ref=run_ref,
-                        source_label=src,
-                        edge_target=edge_target,
-                        runs_root=runs_root,
-                    )
+                    rs_check = load_result_set(run_ref, runs_root=runs_root)
                 except (FileNotFoundError, ValueError) as exc:
                     rows.append(
                         {
@@ -954,6 +966,34 @@ def refresh_kb(
                         }
                     )
                     continue
+                # If the source_label is not present in the result set
+                # at all (typical of pooled cohorts whose metrics live
+                # in a figure-render sidecar, not at_results.yaml —
+                # e.g. "OLM-pooled" combining Sst-OLM + Htr3a-OLM),
+                # leave the stored metrics alone. The pool-aware sweep
+                # path is a deferred follow-up.
+                if not any(r.source_label == src for r in rs_check.rows):
+                    rows.append(
+                        {
+                            "edge_id": edge.get("id"),
+                            "evidence_index": idx,
+                            "source_label": src,
+                            "edge_target": edge_target,
+                            "status": "skipped:source_label_not_in_results",
+                            "detail": (
+                                f"source_label {src!r} absent from "
+                                f"{run_ref}/at_results.yaml — likely a "
+                                "pooled cohort; metrics preserved."
+                            ),
+                        }
+                    )
+                    continue
+                payload = compute_edge_metrics(
+                    run_ref=run_ref,
+                    source_label=src,
+                    edge_target=edge_target,
+                    runs_root=runs_root,
+                )
                 old_levels = ev.get("metrics_by_level") or []
                 new_levels = payload["metrics_by_level"]
                 old_supports = ev.get("supports")
@@ -981,10 +1021,7 @@ def refresh_kb(
                 key = str(path)
             out[key] = rows
         if changed and not dry_run:
-            path.write_text(
-                yaml.safe_dump(doc, sort_keys=False, allow_unicode=True),
-                encoding="utf-8",
-            )
+            _dump_rt(yaml_rt, doc, path)
     return out
 
 

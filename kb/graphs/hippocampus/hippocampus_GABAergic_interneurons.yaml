@@ -2409,32 +2409,17 @@ edges:
         n_cells_total: 66
         best_mapping_rank: 2
         metrics_by_level:
-          - &id001
-            taxonomy_level: SUBCLASS
-            taxonomy_rank: 2
-            best_target_name: 051 Pvalb chandelier Gaba
-            best_target_accession: CS20230722_SUBC_051
-            group_purity: 0.417
-            target_purity: 1.0
-            f1_score: 0.588
-            n_cells_mapped: 25
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0204 Pvalb chandelier Gaba_1
-            best_target_accession: CS20230722_SUPT_0204
-            group_purity: 0.441
-            target_purity: 1.0
-            f1_score: 0.612
-            n_cells_mapped: 26
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0206 Pvalb Gaba_2
-            best_target_accession: CS20230722_SUPT_0206
-            group_purity: 0.203
-            target_purity: 0.8
-            f1_score: 0.324
-            n_cells_mapped: 12
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 1.0
+            target_purity: 0.06327900287631831
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 Pvalb subclass label (n=66 HIP cells) onto WMBv1 (CCN20230722). At SUBCLASS level, Pvalb cells split equally between SUBC_051 (Pvalb chandelier, F1=0.588, 25 cells) and SUBC_052 (Pvalb Gaba, F1=0.588, 25 cells). At SUPERTYPE level, SUPT_0204 chandelier (F1=0.612, 26 cells) is stronger than SUPT_0206 Pvalb Gaba_2 (F1=0.324, 12 cells). SUPT_0206 receives 12/66 Pvalb cells, with target_purity=0.800 (80% of mapped SUPT_0206 cells are Pvalb). PARTIAL because the SSv4 Pvalb label is a mixed population; chandelier/AAC cells likely dominate the mapping, reflecting enrichment in the Yao dataset. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_que2021_pvin_mmc_wmbv1
         supports: SUPPORT
@@ -2453,34 +2438,30 @@ edges:
             best_target_name: 07 CTX-MGE GABA
             best_target_accession: CS20230722_CLAS_07
             group_purity: 1.0
-            target_purity: 0.697368
-            f1_score: 0.821705
+            target_purity: 0.6973684210526315
+            f1_score: 0.8217054263565892
             n_cells_mapped: 53
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 052 Pvalb Gaba
             best_target_accession: CS20230722_SUBC_052
-            group_purity: 0.881356
-            target_purity: 0.693333
-            f1_score: 0.776119
+            group_purity: 0.8813559322033898
+            target_purity: 0.6933333333333334
+            f1_score: 0.7761194029850748
             n_cells_mapped: 52
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0206 Pvalb Gaba_2
             best_target_accession: CS20230722_SUPT_0206
-            group_purity: 0.898305
-            target_purity: 0.697368
-            f1_score: 0.785185
+            group_purity: 0.8983050847457628
+            target_purity: 0.6973684210526315
+            f1_score: 0.7851851851851851
             n_cells_mapped: 53
-          - taxonomy_level: CLUSTER
-            taxonomy_rank: 0
-            best_target_name: 0739 Pvalb Gaba_2
-            best_target_accession: CS20230722_CLUS_0739
-            group_purity: 0.794872
-            target_purity: 0.861111
-            f1_score: 0.826667
-            n_cells_mapped: 31
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local (cell_type_mapper v1.7.1) of Que 2021 (GSE142546) morphologically identified PV basket cells (62 cells: hBC + vBC). 53/62 map to SUPT_0206 (Pvalb Gaba_2; group_purity=0.898, F1=0.785). Best cluster hit: CLUS_0739 (F1=0.827, target_purity=0.861, 31 cells). Source cells are patch-seq with confirmed perisomatic basket morphology. Gene symbols remapped to Ensembl IDs; 19788/35825 genes mapped. Second independent AT run after GSE185862 SSv4 Pvalb; convergence from morphologically labelled cells supports HIGH confidence.'
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -2551,24 +2532,17 @@ edges:
         n_cells_total: 66
         best_mapping_rank: 0
         metrics_by_level:
-          - *id001
-          - taxonomy_level: CLUSTER
-            taxonomy_rank: 0
-            best_target_name: 0732 Pvalb chandelier Gaba_1
-            best_target_accession: CS20230722_CLUS_0732
-            group_purity: 0.451
-            target_purity: 1.0
-            f1_score: 0.622
-            n_cells_mapped: 23
-          - taxonomy_level: CLUSTER
-            taxonomy_rank: 0
-            best_target_name: 0739 Pvalb Gaba_2
-            best_target_accession: CS20230722_CLUS_0739
-            group_purity: 0.098
-            target_purity: 1.0
-            f1_score: 0.179
-            n_cells_mapped: 5
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 1.0
+            target_purity: 0.06327900287631831
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1. At CLUSTER level, CLUS_0739 (Pvalb Gaba_2) receives 5/66 Pvalb cells (F1=0.179, target_purity=1.0), with CLUS_0732 (chandelier) as the dominant cluster hit (F1=0.622, 23 cells). PARTIAL because the SSv4 Pvalb label is a mixed population; chandelier/AAC cells are the dominant contributor. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_que2021_pvin_mmc_wmbv1
         supports: SUPPORT
@@ -2587,34 +2561,39 @@ edges:
             best_target_name: 07 CTX-MGE GABA
             best_target_accession: CS20230722_CLAS_07
             group_purity: 1.0
-            target_purity: 0.697368
-            f1_score: 0.821705
+            target_purity: 0.6973684210526315
+            f1_score: 0.8217054263565892
             n_cells_mapped: 53
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 052 Pvalb Gaba
             best_target_accession: CS20230722_SUBC_052
-            group_purity: 0.881356
-            target_purity: 0.693333
-            f1_score: 0.776119
+            group_purity: 0.8813559322033898
+            target_purity: 0.6933333333333334
+            f1_score: 0.7761194029850748
             n_cells_mapped: 52
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0206 Pvalb Gaba_2
             best_target_accession: CS20230722_SUPT_0206
-            group_purity: 0.898305
-            target_purity: 0.697368
-            f1_score: 0.785185
+            group_purity: 0.8983050847457628
+            target_purity: 0.6973684210526315
+            f1_score: 0.7851851851851851
             n_cells_mapped: 53
+            median_bootstrap: 1.0
           - taxonomy_level: CLUSTER
             taxonomy_rank: 0
             best_target_name: 0739 Pvalb Gaba_2
             best_target_accession: CS20230722_CLUS_0739
-            group_purity: 0.794872
-            target_purity: 0.861111
-            f1_score: 0.826667
+            group_purity: 0.7948717948717948
+            target_purity: 0.8611111111111112
+            f1_score: 0.8266666666666667
             n_cells_mapped: 31
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local (Que 2021, GSE142546) PV basket cells (BC aggregate, n=62). CLUS_0739 is the top cluster hit: F1=0.827, group_purity=0.795 (31 cells), target_purity=0.861. Distinct from BIC preference for CLUS_0737 (85%% of bistratified cells); BC/BIC cluster separation within SUPT_0206 is a genuine transcriptomic subtype signal from morphologically labelled cells. CLUS_0739 MERFISH markers include Pvalb (strongest Pvalb expression among SUPT_0206 clusters). Second independent AT run; HIGH confidence warranted.'
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -2732,23 +2711,35 @@ edges:
         n_cells_total: 3663
         best_mapping_rank: 1
         metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            group_purity: 1.0
+            target_purity: 0.04142692750287687
+            f1_score: 0.07955801104972375
+            n_cells_mapped: 72
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 047 Sncg Gaba
             best_target_accession: CS20230722_SUBC_047
-            group_purity: 0.970
-            target_purity: 0.115
-            f1_score: 0.206
+            group_purity: 0.9696969696969697
+            target_purity: 0.11552346570397112
+            f1_score: 0.2064516129032258
             n_cells_mapped: 64
+            median_bootstrap: 0.995
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0187 Sncg Gaba_3
             best_target_accession: CS20230722_SUPT_0187
-            group_purity: 0.951
-            target_purity: 0.644
-            f1_score: 0.768
+            group_purity: 0.9508196721311475
+            target_purity: 0.6444444444444445
+            f1_score: 0.7682119205298014
             n_cells_mapped: 58
+            median_bootstrap: 1.0
         explanation: Harris 2018 Class Cck.Cxcl14.Vip (CCK+/Cxcl14+/Vip+ CA1 inhibitory cluster, n=72 cells) maps to SUPT_0187 Sncg Gaba_3 with F1=0.768 and group_purity=0.951. CCK basket cells are CGE-derived; the Sncg subclass is CGE-derived and consistent with CCK interneuron identity. Harris AT provides stronger transcriptomic evidence for SUPT_0187 than the existing SUPT_0179 (Vip Gaba_7) edge, which has no AT support and was based on atlas metadata only.
+        f1_source_relpath: at_results_harris_class.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -2789,16 +2780,35 @@ edges:
         n_cells_total: 66
         best_mapping_rank: 1
         metrics_by_level:
-          - *id001
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 1.0
+            target_purity: 0.06327900287631831
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 051 Pvalb chandelier Gaba
+            best_target_accession: CS20230722_SUBC_051
+            group_purity: 0.4166666666666667
+            target_purity: 1.0
+            f1_score: 0.5882352941176471
+            n_cells_mapped: 25
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0204 Pvalb chandelier Gaba_1
             best_target_accession: CS20230722_SUPT_0204
-            group_purity: 0.441
+            group_purity: 0.4406779661016949
             target_purity: 1.0
-            f1_score: 0.612
+            f1_score: 0.611764705882353
             n_cells_mapped: 26
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1. SUPT_0204 (Pvalb chandelier Gaba_1) is the top supertype hit for Pvalb cells (F1=0.612, 26/66 cells, target_purity=1.0). The 'chandelier' label in WMBv1 corresponds to axo-axonic cells. PARTIAL because the SSv4 Pvalb label is a mixed population; nevertheless, SUPT_0204/chandelier being the single strongest Pvalb target is consistent with the axo-axonic cell correspondence. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_que2021_pvin_mmc_wmbv1
         supports: PARTIAL
@@ -2814,34 +2824,12 @@ edges:
             best_target_name: 07 CTX-MGE GABA
             best_target_accession: CS20230722_CLAS_07
             group_purity: 1.0
-            target_purity: 0.078947
-            f1_score: 0.146341
+            target_purity: 0.07894736842105263
+            f1_score: 0.14634146341463414
             n_cells_mapped: 6
-          - taxonomy_level: SUBCLASS
-            taxonomy_rank: 2
-            best_target_name: 052 Pvalb Gaba
-            best_target_accession: CS20230722_SUBC_052
-            group_purity: 0.833333
-            target_purity: 0.066667
-            f1_score: 0.123457
-            n_cells_mapped: 5
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0206 Pvalb Gaba_2
-            best_target_accession: CS20230722_SUPT_0206
-            group_purity: 0.833333
-            target_purity: 0.065789
-            f1_score: 0.121951
-            n_cells_mapped: 5
-          - taxonomy_level: CLUSTER
-            taxonomy_rank: 0
-            best_target_name: 0739 Pvalb Gaba_2
-            best_target_accession: CS20230722_CLUS_0739
-            group_purity: 0.833333
-            target_purity: 0.138889
-            f1_score: 0.238095
-            n_cells_mapped: 5
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local (Que 2021, GSE142546) axo-axonic cells, n=6. AT result is uninformative due to small n: only 1/6 AAC cells map to SUPT_0204 (Pvalb chandelier Gaba_1); 5/6 map to SUPT_0206/CLUS_0739 (basket-type). F1 at all levels is very low (best=0.238 at cluster, CLUS_0739 not CLUS_0732). Does not support or refute axo-axonic to SUPT_0204. May reflect genuine transcriptomic similarity between hippocampal AAC and basket cells (PMID:33398060), or noise from n=6. Confidence remains LOW pending a dedicated AAC dataset.'
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -2893,16 +2881,44 @@ edges:
         n_cells_total: 66
         best_mapping_rank: 0
         metrics_by_level:
-          - *id001
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 1.0
+            target_purity: 0.06327900287631831
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 051 Pvalb chandelier Gaba
+            best_target_accession: CS20230722_SUBC_051
+            group_purity: 0.4166666666666667
+            target_purity: 1.0
+            f1_score: 0.5882352941176471
+            n_cells_mapped: 25
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0204 Pvalb chandelier Gaba_1
+            best_target_accession: CS20230722_SUPT_0204
+            group_purity: 0.4406779661016949
+            target_purity: 1.0
+            f1_score: 0.611764705882353
+            n_cells_mapped: 26
+            median_bootstrap: 1.0
           - taxonomy_level: CLUSTER
             taxonomy_rank: 0
             best_target_name: 0732 Pvalb chandelier Gaba_1
             best_target_accession: CS20230722_CLUS_0732
-            group_purity: 0.451
+            group_purity: 0.45098039215686275
             target_purity: 1.0
-            f1_score: 0.622
+            f1_score: 0.6216216216216216
             n_cells_mapped: 23
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1. CLUS_0732 (Pvalb chandelier Gaba_1) is the top cluster hit for Pvalb cells (F1=0.622, 23/66 cells, target_purity=1.0). This is the strongest cluster-level hit among all Pvalb targets, consistent with the axo-axonic → chandelier supertype correspondence. PARTIAL because the source label is a mixed Pvalb population. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_que2021_pvin_mmc_wmbv1
         supports: PARTIAL
@@ -2918,34 +2934,12 @@ edges:
             best_target_name: 07 CTX-MGE GABA
             best_target_accession: CS20230722_CLAS_07
             group_purity: 1.0
-            target_purity: 0.078947
-            f1_score: 0.146341
+            target_purity: 0.07894736842105263
+            f1_score: 0.14634146341463414
             n_cells_mapped: 6
-          - taxonomy_level: SUBCLASS
-            taxonomy_rank: 2
-            best_target_name: 052 Pvalb Gaba
-            best_target_accession: CS20230722_SUBC_052
-            group_purity: 0.833333
-            target_purity: 0.066667
-            f1_score: 0.123457
-            n_cells_mapped: 5
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0206 Pvalb Gaba_2
-            best_target_accession: CS20230722_SUPT_0206
-            group_purity: 0.833333
-            target_purity: 0.065789
-            f1_score: 0.121951
-            n_cells_mapped: 5
-          - taxonomy_level: CLUSTER
-            taxonomy_rank: 0
-            best_target_name: 0739 Pvalb Gaba_2
-            best_target_accession: CS20230722_CLUS_0739
-            group_purity: 0.833333
-            target_purity: 0.138889
-            f1_score: 0.238095
-            n_cells_mapped: 5
+            median_bootstrap: 1.0
         explanation: MapMyCells local (Que 2021, GSE142546) AAC cells, n=6. 0/6 cells map to CLUS_0732 (Pvalb chandelier Gaba_1) as top cluster; 5/6 map to CLUS_0739. F1 for CLUS_0732 absent from top results. Uninformative due to n=6. Confidence remains LOW.
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -2994,16 +2988,17 @@ edges:
         n_cells_total: 66
         best_mapping_rank: 1
         metrics_by_level:
-          - *id001
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0216 Sst Gaba_3
-            best_target_accession: CS20230722_SUPT_0216
-            group_purity: 0.102
-            target_purity: 0.036
-            f1_score: 0.053
-            n_cells_mapped: 6
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 1.0
+            target_purity: 0.06327900287631831
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1. SUPT_0216 (Sst Gaba_3) receives only 6/66 Pvalb cells (F1=0.053, target_purity=0.036). The Pvalb population maps predominantly to Pvalb chandelier (SUPT_0204, F1=0.612) and Pvalb Gaba_2 (SUPT_0206, F1=0.324) supertypes. SUPT_0216 is a Sst supertype; Sst SSv4 cells map to SUPT_0216 with F1=0.488 (83/273 cells). PARTIAL: the weak Pvalb→SUPT_0216 signal reflects possible Sst co-expression in a bistratified cell subpopulation, consistent with the known transcriptomic plasticity of bistratified cells (some express both Pvalb and Sst). The Sst SSv4 Gaba population partially supports this target, but SUPT_0219 (Sst Gaba_6, F1=0.759) is the dominant Sst target. This edge should be interpreted with LOW confidence. Yao 2021 SSv4 ''Pvalb'' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.'
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260508_que2021_pvin_mmc_wmbv1
         supports: PARTIAL
@@ -3022,34 +3017,12 @@ edges:
             best_target_name: 07 CTX-MGE GABA
             best_target_accession: CS20230722_CLAS_07
             group_purity: 1.0
-            target_purity: 0.223684
-            f1_score: 0.365591
+            target_purity: 0.2236842105263158
+            f1_score: 0.3655913978494624
             n_cells_mapped: 17
-          - taxonomy_level: SUBCLASS
-            taxonomy_rank: 2
-            best_target_name: 052 Pvalb Gaba
-            best_target_accession: CS20230722_SUBC_052
-            group_purity: 0.947368
-            target_purity: 0.24
-            f1_score: 0.382979
-            n_cells_mapped: 18
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0206 Pvalb Gaba_2
-            best_target_accession: CS20230722_SUPT_0206
-            group_purity: 0.9
-            target_purity: 0.236842
-            f1_score: 0.375
-            n_cells_mapped: 18
-          - taxonomy_level: CLUSTER
-            taxonomy_rank: 0
-            best_target_name: 0737 Pvalb Gaba_2
-            best_target_accession: CS20230722_CLUS_0737
-            group_purity: 0.941176
-            target_purity: 0.695652
-            f1_score: 0.8
-            n_cells_mapped: 16
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local (Que 2021, GSE142546) morphologically identified PV bistratified cells (20 cells: hBIC + vBIC). BIC cells show NO mapping to any Sst supertype: 18/20 map to SUPT_0206 (F1=0.375) and 16/20 concentrate at CLUS_0737 (F1=0.800). SUPT_0216 (Sst Gaba_3) F1 is absent from BIC top results. This AT does not support SUPT_0216 as the primary target for canonical PV bistratified cells. The evidence for this edge rests on Sst marker co-expression and Chamberland 2024 Sst;;Tac1 genetics, which capture a Sst-dominant bistratified subpopulation. See edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206 and edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737 for the primary mapping.'
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -3124,34 +3097,30 @@ edges:
             best_target_name: 07 CTX-MGE GABA
             best_target_accession: CS20230722_CLAS_07
             group_purity: 1.0
-            target_purity: 0.223684
-            f1_score: 0.365591
+            target_purity: 0.2236842105263158
+            f1_score: 0.3655913978494624
             n_cells_mapped: 17
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 052 Pvalb Gaba
             best_target_accession: CS20230722_SUBC_052
-            group_purity: 0.947368
+            group_purity: 0.9473684210526315
             target_purity: 0.24
-            f1_score: 0.382979
+            f1_score: 0.38297872340425526
             n_cells_mapped: 18
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0206 Pvalb Gaba_2
             best_target_accession: CS20230722_SUPT_0206
             group_purity: 0.9
-            target_purity: 0.236842
+            target_purity: 0.23684210526315788
             f1_score: 0.375
             n_cells_mapped: 18
-          - taxonomy_level: CLUSTER
-            taxonomy_rank: 0
-            best_target_name: 0737 Pvalb Gaba_2
-            best_target_accession: CS20230722_CLUS_0737
-            group_purity: 0.941176
-            target_purity: 0.695652
-            f1_score: 0.8
-            n_cells_mapped: 16
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local (cell_type_mapper v1.7.1, Que 2021, GSE142546) PV bistratified cells (20 cells: hBIC + vBIC). 18/20 cells map to SUPT_0206 (group_purity=0.900, F1=0.375). Best cluster hit: CLUS_0737 (F1=0.800, group_purity=0.941, target_purity=0.696). BC cells preferentially map to CLUS_0739; BIC cells to CLUS_0737 — this BC/BIC cluster separation is a genuine transcriptomic signal from morphologically labelled cells. Gene symbols remapped to Ensembl IDs; 19788/35825 genes mapped.'
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -3212,34 +3181,39 @@ edges:
             best_target_name: 07 CTX-MGE GABA
             best_target_accession: CS20230722_CLAS_07
             group_purity: 1.0
-            target_purity: 0.223684
-            f1_score: 0.365591
+            target_purity: 0.2236842105263158
+            f1_score: 0.3655913978494624
             n_cells_mapped: 17
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 052 Pvalb Gaba
             best_target_accession: CS20230722_SUBC_052
-            group_purity: 0.947368
+            group_purity: 0.9473684210526315
             target_purity: 0.24
-            f1_score: 0.382979
+            f1_score: 0.38297872340425526
             n_cells_mapped: 18
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0206 Pvalb Gaba_2
             best_target_accession: CS20230722_SUPT_0206
             group_purity: 0.9
-            target_purity: 0.236842
+            target_purity: 0.23684210526315788
             f1_score: 0.375
             n_cells_mapped: 18
+            median_bootstrap: 1.0
           - taxonomy_level: CLUSTER
             taxonomy_rank: 0
             best_target_name: 0737 Pvalb Gaba_2
             best_target_accession: CS20230722_CLUS_0737
-            group_purity: 0.941176
-            target_purity: 0.695652
-            f1_score: 0.8
+            group_purity: 0.9411764705882353
+            target_purity: 0.6956521739130435
+            f1_score: 0.7999999999999999
             n_cells_mapped: 16
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local (Que 2021, GSE142546) PV bistratified cells (20 cells). CLUS_0737 is the primary cluster hit: F1=0.800, group_purity=0.941, target_purity=0.696. BC cells (basket) preferentially map to sibling CLUS_0739 (F1=0.827) — BC/BIC cluster separation within SUPT_0206 distinguishes basket from bistratified cells at cluster level. Strongest AT signal for bistratified cell identity in WMBv1.'
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
         supports: PARTIAL
@@ -3334,32 +3308,26 @@ edges:
         n_cells_total: 273
         best_mapping_rank: 2
         metrics_by_level:
-          - &id002
-            taxonomy_level: SUBCLASS
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.9963369963369964
+            target_purity: 0.2607861936720997
+            f1_score: 0.4133738601823709
+            n_cells_mapped: 272
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 053 Sst Gaba
             best_target_accession: CS20230722_SUBC_053
-            group_purity: 0.989
-            target_purity: 0.978
-            f1_score: 0.983
+            group_purity: 0.9888059701492538
+            target_purity: 0.977859778597786
+            f1_score: 0.9833024118738404
             n_cells_mapped: 265
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0219 Sst Gaba_6
-            best_target_accession: CS20230722_SUPT_0219
-            group_purity: 0.626
-            target_purity: 0.964
-            f1_score: 0.759
-            n_cells_mapped: 161
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0216 Sst Gaba_3
-            best_target_accession: CS20230722_SUPT_0216
-            group_purity: 0.323
-            target_purity: 1.0
-            f1_score: 0.488
-            n_cells_mapped: 83
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. At SUBCLASS level, Sst cells map strongly to SUBC_053 (Sst Gaba, F1=0.983). At SUPERTYPE level, the Sst population splits between SUPT_0219 (Sst Gaba_6, F1=0.759, 161 cells) and SUPT_0216 (Sst Gaba_3, F1=0.488, 83 cells). SUPT_0216 receives 83/273 Sst cells with target_purity=1.0. PARTIAL: the Sst label is a mixed population; OLM cells mapping to SUPT_0216 cannot be discriminated from other Sst types mapping to the same supertype. The SUPT_0219 (Sst Gaba_6) being the dominant Sst hit raises uncertainty about whether OLM cells preferentially occupy SUPT_0216 or SUPT_0219. Yao 2021 SSv4 ''Sst'' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.'
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_harris_class_mmc_wmbv1
         supports: SUPPORT
@@ -3370,15 +3338,35 @@ edges:
         n_cells_total: 3663
         best_mapping_rank: 1
         metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 1.0
+            target_purity: 0.16536458333333334
+            f1_score: 0.2837988826815643
+            n_cells_mapped: 254
+            median_bootstrap: 0.99
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            group_purity: 1.0
+            target_purity: 0.29171270718232045
+            f1_score: 0.4516680923866553
+            n_cells_mapped: 264
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0216 Sst Gaba_3
             best_target_accession: CS20230722_SUPT_0216
-            group_purity: 0.965
-            target_purity: 0.350
-            f1_score: 0.514
+            group_purity: 0.9652173913043478
+            target_purity: 0.3501577287066246
+            f1_score: 0.5138888888888888
             n_cells_mapped: 222
+            median_bootstrap: 1.0
         explanation: Harris 2018 Class Sst.Pnoc.Calb1.Igfbp5 (SST+/Pnoc+/Calb1+/Igfbp5+ OLM-type cluster, n=254 total) maps with group_purity=0.965 to SUPT_0216 Sst Gaba_3. High recall confirms this Harris cluster concentrates in Sst Gaba_3. Low target_purity reflects that SUPT_0216 contains multiple Sst types. Independent corroboration of GSE185862 OLM evidence.
+        f1_source_relpath: at_results_harris_class.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
         supports: SUPPORT
@@ -3469,24 +3457,26 @@ edges:
         n_cells_total: 273
         best_mapping_rank: 2
         metrics_by_level:
-          - *id002
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0219 Sst Gaba_6
-            best_target_accession: CS20230722_SUPT_0219
-            group_purity: 0.626
-            target_purity: 0.964
-            f1_score: 0.759
-            n_cells_mapped: 161
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0216 Sst Gaba_3
-            best_target_accession: CS20230722_SUPT_0216
-            group_purity: 0.323
-            target_purity: 1.0
-            f1_score: 0.488
-            n_cells_mapped: 83
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.9963369963369964
+            target_purity: 0.2607861936720997
+            f1_score: 0.4133738601823709
+            n_cells_mapped: 272
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            group_purity: 0.9888059701492538
+            target_purity: 0.977859778597786
+            f1_score: 0.9833024118738404
+            n_cells_mapped: 265
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. Sst cells map strongly to SUBC_053 (F1=0.983) at SUBCLASS level. At SUPERTYPE level, SUPT_0216 (Sst Gaba_3) receives 83/273 Sst cells (F1=0.488, target_purity=1.0). PARTIAL: hippocampo-septal cells are Sst+ long-range projection neurons; the Sst SSv4 label is mixed and cannot discriminate this cell type. SUPT_0219 (Sst Gaba_6) is the dominant Sst supertype target (F1=0.759) and may be a better correspondent for some Sst subtypes. Yao 2021 SSv4 ''Sst'' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.'
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -3551,31 +3541,26 @@ edges:
         n_cells_total: 384
         best_mapping_rank: 2
         metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            group_purity: 0.9973958333333334
+            target_purity: 0.3777120315581854
+            f1_score: 0.547925608011445
+            n_cells_mapped: 383
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 048 RHP-COA Ndnf Gaba
             best_target_accession: CS20230722_SUBC_048
-            group_purity: 0.613
-            target_purity: 0.995
-            f1_score: 0.759
+            group_purity: 0.6134453781512605
+            target_purity: 0.9954545454545455
+            f1_score: 0.7590987868284229
             n_cells_mapped: 219
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0197 RHP-COA Ndnf Gaba_5
-            best_target_accession: CS20230722_SUPT_0197
-            group_purity: 0.221
-            target_purity: 0.988
-            f1_score: 0.361
-            n_cells_mapped: 82
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0193 RHP-COA Ndnf Gaba_1
-            best_target_accession: CS20230722_SUPT_0193
-            group_purity: 0.205
-            target_purity: 1.0
-            f1_score: 0.34
-            n_cells_mapped: 76
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sncg subclass (n=384 HIP cells) onto WMBv1. At SUBCLASS level, Sncg cells map to SUBC_048 (RHP-COA Ndnf Gaba, F1=0.759, 219/384 cells), consistent with Ndnf-expressing neurogliaform cells. At SUPERTYPE level, Sncg cells distribute across multiple Ndnf supertypes; SUPT_0193 (RHP-COA Ndnf Gaba_1) receives 76 cells (F1=0.340). PARTIAL because the Sncg population is heterogeneous and the 'RHP-COA' label in SUPT_0193 suggests enrichment in retrohippocampal and cortical-amygdaloid areas rather than CA1. Hippocampal neurogliaform cells have a Ndnf/Lamp5 Lhx6 transcriptomic profile; SUPT_0203 (via Lamp5 label) may be an equally valid target.
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -3656,24 +3641,35 @@ edges:
         n_cells_total: 868
         best_mapping_rank: 1
         metrics_by_level:
-          - &id003
-            taxonomy_level: SUBCLASS
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.818815331010453
+            target_purity: 0.675934803451582
+            f1_score: 0.7405462184873949
+            n_cells_mapped: 705
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 050 Lamp5 Lhx6 Gaba
             best_target_accession: CS20230722_SUBC_050
-            group_purity: 0.82
-            target_purity: 0.992
-            f1_score: 0.898
+            group_purity: 0.8198614318706697
+            target_purity: 0.9916201117318436
+            f1_score: 0.8975979772439949
             n_cells_mapped: 710
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0203 Lamp5 Lhx6 Gaba_1
             best_target_accession: CS20230722_SUPT_0203
-            group_purity: 0.823
-            target_purity: 0.989
-            f1_score: 0.898
+            group_purity: 0.8229166666666666
+            target_purity: 0.9888734353268428
+            f1_score: 0.8982943777637397
             n_cells_mapped: 711
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Lamp5 subclass (n=868 HIP cells) onto WMBv1. SUPT_0203 (Lamp5 Lhx6 Gaba_1) is the dominant supertype target (F1=0.898, 711/868 cells). Neurogliaform cells in hippocampus are Lamp5+Lhx6+ (Ndnf+) interneurons; SUPT_0203 being the top Lamp5 target supports this edge. PARTIAL because SUPT_0203 is shared with ivy cells (both are Lamp5 Lhx6+), and the AT cannot discriminate neurogliaform from ivy within the Lamp5 population. See edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203 for the same AT result interpreted for ivy cells.
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -3746,16 +3742,35 @@ edges:
         n_cells_total: 868
         best_mapping_rank: 1
         metrics_by_level:
-          - *id003
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.818815331010453
+            target_purity: 0.675934803451582
+            f1_score: 0.7405462184873949
+            n_cells_mapped: 705
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 050 Lamp5 Lhx6 Gaba
+            best_target_accession: CS20230722_SUBC_050
+            group_purity: 0.8198614318706697
+            target_purity: 0.9916201117318436
+            f1_score: 0.8975979772439949
+            n_cells_mapped: 710
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0203 Lamp5 Lhx6 Gaba_1
             best_target_accession: CS20230722_SUPT_0203
-            group_purity: 0.823
-            target_purity: 0.989
-            f1_score: 0.898
+            group_purity: 0.8229166666666666
+            target_purity: 0.9888734353268428
+            f1_score: 0.8982943777637397
             n_cells_mapped: 711
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Lamp5 subclass (n=868 HIP cells) onto WMBv1. SUPT_0203 (Lamp5 Lhx6 Gaba_1) is overwhelmingly the top supertype target (F1=0.898, 711/868 cells, target_purity=0.989). At SUBCLASS level, 710/868 Lamp5 HIP cells map to SUBC_050 (Lamp5 Lhx6 Gaba, F1=0.898), confirming Lamp5 Lhx6 identity. Ivy cells are the predominant Lamp5+Lhx6+ hippocampal interneuron type; this strong and specific hit is consistent with the ivy cell → SUPT_0203 assignment. The high target_purity (0.989) confirms SUPT_0203 is almost exclusively populated by Lamp5 cells in this dataset.
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_harris_class_mmc_wmbv1
         supports: SUPPORT
@@ -3766,23 +3781,35 @@ edges:
         n_cells_total: 3663
         best_mapping_rank: 2
         metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.9823529411764705
+            target_purity: 0.10872395833333333
+            f1_score: 0.1957796014067995
+            n_cells_mapped: 167
+            median_bootstrap: 0.93
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 050 Lamp5 Lhx6 Gaba
             best_target_accession: CS20230722_SUBC_050
-            group_purity: 0.935
-            target_purity: 0.738
-            f1_score: 0.825
+            group_purity: 0.9351145038167938
+            target_purity: 0.7379518072289156
+            f1_score: 0.8249158249158248
             n_cells_mapped: 245
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0203 Lamp5 Lhx6 Gaba_1
             best_target_accession: CS20230722_SUPT_0203
-            group_purity: 0.914
-            target_purity: 0.730
-            f1_score: 0.812
+            group_purity: 0.9144981412639405
+            target_purity: 0.7299703264094956
+            f1_score: 0.8118811881188118
             n_cells_mapped: 246
+            median_bootstrap: 1.0
         explanation: Harris 2018 (GSE99888) Class Cacna2d1.Lhx6.Reln (Lamp5+/Lhx6+/Reln+ CA1 inhibitory cluster) maps predominantly to Lamp5 Lhx6 Gaba subclass (F1=0.825) and SUPT_0203 Lamp5 Lhx6 Gaba_1 (supertype F1=0.812). Independent second-dataset corroboration of GSE185862 ivy cell evidence. Consistent with ivy cell as Lhx6+/Lamp5+ MGE-derived type.
+        f1_source_relpath: at_results_harris_class.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -3871,32 +3898,26 @@ edges:
         n_cells_total: 476
         best_mapping_rank: 2
         metrics_by_level:
-          - &id004
-            taxonomy_level: SUBCLASS
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            group_purity: 1.0
+            target_purity: 0.46844181459566075
+            f1_score: 0.6380120886501007
+            n_cells_mapped: 475
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 046 Vip Gaba
             best_target_accession: CS20230722_SUBC_046
-            group_purity: 0.985
-            target_purity: 0.953
-            f1_score: 0.969
+            group_purity: 0.9851063829787234
+            target_purity: 0.9526748971193416
+            f1_score: 0.9686192468619248
             n_cells_mapped: 463
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0177 Vip Gaba_5
-            best_target_accession: CS20230722_SUPT_0177
-            group_purity: 0.248
-            target_purity: 1.0
-            f1_score: 0.397
-            n_cells_mapped: 101
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0179 Vip Gaba_7
-            best_target_accession: CS20230722_SUPT_0179
-            group_purity: 0.235
-            target_purity: 0.97
-            f1_score: 0.379
-            n_cells_mapped: 96
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Vip subclass (n=476 HIP cells) onto WMBv1. Vip cells map very strongly to SUBC_046 (Vip Gaba, F1=0.969) at SUBCLASS level, confirming VIP-family identity. At SUPERTYPE level, SUPT_0179 (Vip Gaba_7) receives 96/476 Vip cells (F1=0.379, target_purity=0.970), second to SUPT_0177 (Vip Gaba_5, F1=0.397, 101 cells). Vip cells are broadly distributed across 10+ Vip supertypes, reflecting the diversity of the Vip interneuron population. PARTIAL: the Vip SSv4 label cannot discriminate IS cells from VIP basket or other VIP subtypes. Yao 2021 SSv4 ''Vip'' subclass (n=476 HIP cells) encompasses VIP basket, IS cells, and other VIP interneuron subtypes; subtype resolution requires a dataset with morphologically identified VIP-IN labels.'
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_harris_class_mmc_wmbv1
         supports: PARTIAL
@@ -3907,23 +3928,35 @@ edges:
         n_cells_total: 3663
         best_mapping_rank: 1
         metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            group_purity: 1.0
+            target_purity: 0.05638665132336018
+            f1_score: 0.10675381263616557
+            n_cells_mapped: 98
+            median_bootstrap: 1.0
           - taxonomy_level: SUBCLASS
             taxonomy_rank: 2
             best_target_name: 046 Vip Gaba
             best_target_accession: CS20230722_SUBC_046
             group_purity: 1.0
-            target_purity: 0.208
-            f1_score: 0.344
+            target_purity: 0.208067940552017
+            f1_score: 0.3444639718804921
             n_cells_mapped: 98
+            median_bootstrap: 0.99
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0179 Vip Gaba_7
             best_target_accession: CS20230722_SUPT_0179
-            group_purity: 0.578
-            target_purity: 0.650
-            f1_score: 0.612
+            group_purity: 0.5777777777777777
+            target_purity: 0.65
+            f1_score: 0.6117647058823529
             n_cells_mapped: 26
+            median_bootstrap: 0.96
         explanation: Harris 2018 Class Calb2.Vip.Igfbp4 (Calb2+/Vip+/Igfbp4+ CA1 interneurons, n=98 total) maps entirely to Vip Gaba subclass (100% recall) and 57.8% to SUPT_0179 Vip Gaba_7 (F1=0.612). PARTIAL AT corroboration for IS-IN → SUPT_0179 edge. Dispersal across Vip supertypes reflects IS subtype heterogeneity (IS-1 is VIP-, IS-2/IS-3 are VIP+). Calb2.Vip.Igfbp4 is a broad Harris Vip cluster, not specifically IS-IN labelled.
+        f1_source_relpath: at_results_harris_class.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -3990,16 +4023,35 @@ edges:
         n_cells_total: 273
         best_mapping_rank: 2
         metrics_by_level:
-          - *id002
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.9963369963369964
+            target_purity: 0.2607861936720997
+            f1_score: 0.4133738601823709
+            n_cells_mapped: 272
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            group_purity: 0.9888059701492538
+            target_purity: 0.977859778597786
+            f1_score: 0.9833024118738404
+            n_cells_mapped: 265
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0219 Sst Gaba_6
             best_target_accession: CS20230722_SUPT_0219
-            group_purity: 0.626
-            target_purity: 0.964
-            f1_score: 0.759
+            group_purity: 0.6264591439688716
+            target_purity: 0.9640718562874252
+            f1_score: 0.759433962264151
             n_cells_mapped: 161
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst cells (F1=0.759, 161/273 cells, target_purity=0.964), consistent with the oriens-oriens cell correspondence to SUPT_0219. PARTIAL because the Sst SSv4 label is mixed; SUPT_0219 being the dominant target is supportive but not cell-type-specific. Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -4068,16 +4120,17 @@ edges:
         n_cells_total: 66
         best_mapping_rank: 1
         metrics_by_level:
-          - *id001
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0206 Pvalb Gaba_2
-            best_target_accession: CS20230722_SUPT_0206
-            group_purity: 0.203
-            target_purity: 0.8
-            f1_score: 0.324
-            n_cells_mapped: 12
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 1.0
+            target_purity: 0.06327900287631831
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
         explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1. SUPT_0206 (Pvalb Gaba_2) receives 12/66 Pvalb cells (F1=0.324, target_purity=0.800). Trilaminar cells are reported to be PV+ in some studies; the Pvalb population partially supporting SUPT_0206 is consistent with this, though the chandelier/AAC supertypes receive stronger hits. PARTIAL: the SSv4 Pvalb label is a mixed population and trilaminar cell identity cannot be confirmed from this AT alone. Yao 2021 SSv4 ''Pvalb'' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.'
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -4136,24 +4189,26 @@ edges:
         n_cells_total: 476
         best_mapping_rank: 2
         metrics_by_level:
-          - *id004
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0177 Vip Gaba_5
-            best_target_accession: CS20230722_SUPT_0177
-            group_purity: 0.248
-            target_purity: 1.0
-            f1_score: 0.397
-            n_cells_mapped: 101
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0179 Vip Gaba_7
-            best_target_accession: CS20230722_SUPT_0179
-            group_purity: 0.235
-            target_purity: 0.97
-            f1_score: 0.379
-            n_cells_mapped: 96
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            group_purity: 1.0
+            target_purity: 0.46844181459566075
+            f1_score: 0.6380120886501007
+            n_cells_mapped: 475
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 046 Vip Gaba
+            best_target_accession: CS20230722_SUBC_046
+            group_purity: 0.9851063829787234
+            target_purity: 0.9526748971193416
+            f1_score: 0.9686192468619248
+            n_cells_mapped: 463
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Vip subclass (n=476 HIP cells) onto WMBv1. Vip cells map strongly to SUBC_046 (F1=0.969) at SUBCLASS level. At SUPERTYPE level, SUPT_0179 (Vip Gaba_7) is the second-strongest target (F1=0.379, 96 cells, target_purity=0.970), alongside SUPT_0177 (Vip Gaba_5, F1=0.397). The Vip population is distributed across many supertypes; SUPT_0179 being a prominent target is consistent with the VIP basket correspondence but does not discriminate basket from IS cells. Yao 2021 SSv4 'Vip' subclass (n=476 HIP cells) encompasses VIP basket, IS cells, and other VIP interneuron subtypes; subtype resolution requires a dataset with morphologically identified VIP-IN labels.
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -4202,16 +4257,26 @@ edges:
         n_cells_total: 273
         best_mapping_rank: 2
         metrics_by_level:
-          - *id002
-          - taxonomy_level: SUPERTYPE
-            taxonomy_rank: 1
-            best_target_name: 0216 Sst Gaba_3
-            best_target_accession: CS20230722_SUPT_0216
-            group_purity: 0.323
-            target_purity: 1.0
-            f1_score: 0.488
-            n_cells_mapped: 83
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.9963369963369964
+            target_purity: 0.2607861936720997
+            f1_score: 0.4133738601823709
+            n_cells_mapped: 272
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            group_purity: 0.9888059701492538
+            target_purity: 0.977859778597786
+            f1_score: 0.9833024118738404
+            n_cells_mapped: 265
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. SUPT_0216 (Sst Gaba_3) receives 83/273 Sst cells (F1=0.488, target_purity=1.0). R-LM (radiatum-lacunosum-moleculare) cells are interneurons residing near the stratum radiatum/lacunosum boundary; if Sst+, SUPT_0216 is a plausible candidate. PARTIAL because the Sst subclass label is mixed; SUPT_0219 (Sst Gaba_6) is the dominant Sst target (F1=0.759). Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -4259,16 +4324,35 @@ edges:
         n_cells_total: 273
         best_mapping_rank: 2
         metrics_by_level:
-          - *id002
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.9963369963369964
+            target_purity: 0.2607861936720997
+            f1_score: 0.4133738601823709
+            n_cells_mapped: 272
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            group_purity: 0.9888059701492538
+            target_purity: 0.977859778597786
+            f1_score: 0.9833024118738404
+            n_cells_mapped: 265
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0219 Sst Gaba_6
             best_target_accession: CS20230722_SUPT_0219
-            group_purity: 0.626
-            target_purity: 0.964
-            f1_score: 0.759
+            group_purity: 0.6264591439688716
+            target_purity: 0.9640718562874252
+            f1_score: 0.759433962264151
             n_cells_mapped: 161
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst HIP cells (F1=0.759, 161/273 cells). P-LM cells are Sst+ interneurons in stratum lacunosum-moleculare; SUPT_0219 being the dominant Sst target is consistent with this assignment, but subtype resolution requires a P-LM-specific dataset. Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -4319,16 +4403,35 @@ edges:
         n_cells_total: 273
         best_mapping_rank: 2
         metrics_by_level:
-          - *id002
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            group_purity: 0.9963369963369964
+            target_purity: 0.2607861936720997
+            f1_score: 0.4133738601823709
+            n_cells_mapped: 272
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            group_purity: 0.9888059701492538
+            target_purity: 0.977859778597786
+            f1_score: 0.9833024118738404
+            n_cells_mapped: 265
+            median_bootstrap: 1.0
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: 0219 Sst Gaba_6
             best_target_accession: CS20230722_SUPT_0219
-            group_purity: 0.626
-            target_purity: 0.964
-            f1_score: 0.759
+            group_purity: 0.6264591439688716
+            target_purity: 0.9640718562874252
+            f1_score: 0.759433962264151
             n_cells_mapped: 161
+            median_bootstrap: 1.0
         explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. SUPT_0219 (Sst Gaba_6) is the dominant supertype target for Sst HIP cells (F1=0.759, 161/273 cells). LTH (long-tailed horizontal) cells are CA1 interneurons; if Sst+, SUPT_0219 is the most likely atlas correspondent based on this AT. PARTIAL due to mixed Sst population in source. Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.
+        f1_source_relpath: at_results.yaml
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
