@@ -523,6 +523,159 @@ def _yaml_relpath_for(rs: AnnotationTransferResultSet) -> str:
     return "at_results.yaml"
 
 
+# ─── KB sweep / refresh ───────────────────────────────────────────────
+
+
+def _kb_graph_files(kb_root: Path | None = None) -> list[Path]:
+    kb_root = kb_root or (repo_root() / "kb" / "graphs")
+    return sorted(kb_root.rglob("*.yaml"))
+
+
+def _is_at_evidence(item: dict) -> bool:
+    return item.get("evidence_type") == "ANNOTATION_TRANSFER"
+
+
+def _format_payload_for_diff(payload: dict) -> str:
+    """One-line summary of an edge's AT-evidence-payload, for diff
+    output."""
+    n = len(payload.get("metrics_by_level") or [])
+    bf = payload.get("best_f1_score")
+    bf_s = f"{bf:.3f}" if isinstance(bf, (int, float)) else "—"
+    return (
+        f"metrics_levels={n} best_f1={bf_s} "
+        f"supports_default={payload.get('supports_default')} "
+        f"f1_source={payload.get('f1_source_relpath')}"
+    )
+
+
+def refresh_kb(
+    *,
+    dry_run: bool = True,
+    only_with_run_ref: bool = True,
+    kb_root: Path | None = None,
+    runs_root: Path | None = None,
+) -> dict:
+    """Walk every MappingEdge.evidence[] AT item with a ``run_ref``,
+    recompute the payload via ``compute_edge_metrics()``, and report a
+    diff against what's stored.
+
+    With ``dry_run=False`` writes the recomputed metrics_by_level back
+    to the edge YAML (preserving everything else). The ``supports``
+    field is **not** automatically overwritten — that's a curator
+    call; we surface the suggested ``supports_default`` in the diff
+    output instead.
+
+    Returns a summary dict ``{file: [{edge_id, evidence_index, diff,
+    old_supports, suggested_supports}]}``.
+    """
+    out: dict[str, list[dict]] = {}
+    for path in _kb_graph_files(kb_root):
+        doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        rows: list[dict] = []
+        changed = False
+        for edge in doc.get("edges") or []:
+            edge_target = edge.get("taxonomy_type") or edge.get("type_b")
+            if not edge_target:
+                continue
+            for idx, ev in enumerate(edge.get("evidence") or []):
+                if not _is_at_evidence(ev):
+                    continue
+                run_ref = ev.get("run_ref")
+                if not run_ref:
+                    if only_with_run_ref:
+                        continue
+                    rows.append(
+                        {
+                            "edge_id": edge.get("id"),
+                            "evidence_index": idx,
+                            "status": "skipped:no_run_ref",
+                        }
+                    )
+                    continue
+                src = ev.get("source_cluster_label")
+                if not src:
+                    rows.append(
+                        {
+                            "edge_id": edge.get("id"),
+                            "evidence_index": idx,
+                            "status": "skipped:no_source_label",
+                        }
+                    )
+                    continue
+                try:
+                    payload = compute_edge_metrics(
+                        run_ref=run_ref,
+                        source_label=src,
+                        edge_target=edge_target,
+                        runs_root=runs_root,
+                    )
+                except (FileNotFoundError, ValueError) as exc:
+                    rows.append(
+                        {
+                            "edge_id": edge.get("id"),
+                            "evidence_index": idx,
+                            "status": f"skipped:{type(exc).__name__}",
+                            "detail": str(exc),
+                        }
+                    )
+                    continue
+                old_levels = ev.get("metrics_by_level") or []
+                new_levels = payload["metrics_by_level"]
+                old_supports = ev.get("supports")
+                row = {
+                    "edge_id": edge.get("id"),
+                    "evidence_index": idx,
+                    "source_label": src,
+                    "edge_target": edge_target,
+                    "old_n_levels": len(old_levels),
+                    "new_n_levels": len(new_levels),
+                    "diff": _format_payload_for_diff(payload),
+                    "old_supports": old_supports,
+                    "suggested_supports": payload["supports_default"],
+                    "f1_source_relpath": payload["f1_source_relpath"],
+                }
+                rows.append(row)
+                if old_levels != new_levels and not dry_run:
+                    ev["metrics_by_level"] = new_levels
+                    ev["f1_source_relpath"] = payload["f1_source_relpath"]
+                    changed = True
+        if rows:
+            out[str(path.relative_to(repo_root()))] = rows
+        if changed and not dry_run:
+            path.write_text(
+                yaml.safe_dump(doc, sort_keys=False, allow_unicode=True),
+                encoding="utf-8",
+            )
+    return out
+
+
+def print_refresh_report(summary: dict) -> None:
+    for path, rows in summary.items():
+        print(f"\n=== {path} ===")
+        for r in rows:
+            head = (
+                f"  [{r.get('evidence_index')}] {r.get('edge_id')} :: "
+                f"{r.get('source_label','-')} -> {r.get('edge_target','-')}"
+            )
+            if "status" in r:
+                print(f"{head}  STATUS={r['status']}")
+                if "detail" in r:
+                    print(f"      {r['detail']}")
+                continue
+            print(f"{head}")
+            print(f"      {r['diff']}")
+            if r["old_supports"] != r["suggested_supports"]:
+                print(
+                    f"      supports: {r['old_supports']} → "
+                    f"{r['suggested_supports']}  (suggested; not auto-applied)"
+                )
+            if r["old_n_levels"] != r["new_n_levels"]:
+                print(
+                    f"      metrics_by_level: {r['old_n_levels']} levels "
+                    f"→ {r['new_n_levels']} levels"
+                )
+
+
 # ─── CLI ──────────────────────────────────────────────────────────────
 
 
@@ -561,6 +714,26 @@ def main(argv: list[str] | None = None) -> int:
         help="Override the runs root (default: repo's kb/annotation_transfer_runs/).",
     )
 
+    p_refresh = sub.add_parser(
+        "refresh",
+        help=(
+            "Recompute metrics_by_level on every AT evidence item across "
+            "kb/graphs/ using compute_edge_metrics(). Dry-run by default; "
+            "pass --apply to write."
+        ),
+    )
+    p_refresh.add_argument(
+        "--apply",
+        action="store_true",
+        help="Write recomputed metrics back to the edge YAMLs.",
+    )
+    p_refresh.add_argument(
+        "--kb-root",
+        type=Path,
+        default=None,
+        help="Override the KB graphs root.",
+    )
+
     args = parser.parse_args(argv)
 
     if args.cmd == "migrate":
@@ -577,6 +750,15 @@ def main(argv: list[str] | None = None) -> int:
             for p in paths:
                 print(f"  {p}")
         print(f"--- Total: {total} at_results YAML files written")
+        return 0
+
+    if args.cmd == "refresh":
+        summary = refresh_kb(dry_run=not args.apply, kb_root=args.kb_root)
+        print_refresh_report(summary)
+        n_files = len(summary)
+        n_edges = sum(len(v) for v in summary.values())
+        mode = "APPLIED" if args.apply else "DRY-RUN (use --apply to write)"
+        print(f"\n--- {n_edges} AT evidence items across {n_files} files. {mode}")
         return 0
 
     return 1

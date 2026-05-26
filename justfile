@@ -61,6 +61,17 @@ validate-taxonomy-all TAXONOMY_ID:
     done
     [ $failed -eq 0 ] && echo "All taxonomy files valid." || { echo "Validation failed."; exit 1; }
 
+# Migrate every AT run's CSV(s) to schema-compliant at_results.yaml
+[group('at_metrics')]
+migrate-at-metrics:
+    uv run python -m evidencell.at_metrics migrate-all
+
+# Recompute MappingEdge.evidence[].metrics_by_level from at_results.yaml
+# (dry-run by default — pass --apply to write)
+[group('at_metrics')]
+refresh-at-metrics *ARGS:
+    uv run python -m evidencell.at_metrics refresh {{ARGS}}
+
 # Regenerate src/evidencell/_models.py (Pydantic classes from LinkML schema)
 [group('schema')]
 gen-models:
