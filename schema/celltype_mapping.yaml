@@ -625,6 +625,74 @@ enums:
           inherently uncertain.
       OTHER: {}
 
+  DiscoveryContextKind:
+    description: >
+      Semantic class of a percentile context recorded on
+      MappingEdge.discovery_score. Today only SURVIVAL_COHORT is
+      emitted by Stage A; the other values reserve slots for future
+      universal / anatomical / sibling context emission so that
+      downstream agents can reason about contexts uniformly without
+      parsing free-text descriptions.
+    permissible_values:
+      SURVIVAL_COHORT:
+        description: >
+          Candidates surviving the discovery pass's filters
+          (region, NT, sex bias, etc.) at the queried rank.
+          CURRENTLY THE ONLY KIND EMITTED BY STAGE A. Cohort
+          membership is dynamic — it depends on the query filters,
+          so two queries against the same taxonomy can yield
+          different cohorts.
+      ATLAS_UNIVERSAL:
+        description: >
+          All clusters in the taxonomy at the queried rank, with
+          no filters. Stable across queries against the same
+          taxonomy. Emission currently dormant; reserved for
+          revival of the legacy `_score_from_percentiles` path.
+      ANATOMICAL_RESTRICTION:
+        description: >
+          All clusters annotated to a specified anatomical region
+          closure, with no other filters. Anticipates future
+          anatomy-context scoring; not yet emitted by Stage A.
+      SIBLINGS_UNDER_PARENT:
+        description: >
+          Direct children of a common parent at the queried rank.
+          Legacy notion from the pre-2026 sibling/global scoring
+          scheme; reserved in case it is revived.
+
+  GeneDiscoverySource:
+    description: >
+      Where the per-gene `val` recorded on a
+      GeneDiscoveryDetail came from. Determines which of
+      val / reliable / percentiles / coverage are populated.
+    permissible_values:
+      EXPRESSION:
+        description: >
+          Value read from the candidate's precomputed_stats HDF5.
+          val / reliable / percentiles populated; coverage
+          populated at rank ≥ 1.
+      METADATA:
+        description: >
+          Gene flagged as a marker in the taxonomy YAML but
+          absent from precomputed_stats. val / reliable /
+          percentiles all null; raw_tier = +1 (a weak presence
+          assertion based on metadata, not measurement).
+
+  DiscoveryRegionEvidence:
+    description: >
+      How Stage A established that a candidate is "in region"
+      for the queried anatomy.
+    permissible_values:
+      SELF:
+        description: >
+          The candidate's own anatomical annotation places it in
+          the queried region closure.
+      DESCENDANT_ONLY:
+        description: >
+          The candidate (rank ≥ 1) was rescued because its rank-0
+          descendants annotate to the region, even though the
+          candidate's own anatomical metadata is incomplete
+          (BCKG workaround for sparse mid-rank annotation).
+
 
 # ══════════════════════════════════════════════════════════════════
 # SHARED SUPPORTING CLASSES
@@ -2041,6 +2109,274 @@ classes:
 
 
 # ══════════════════════════════════════════════════════════════════
+# DISCOVERY SCORE (Stage A persistence)
+# ══════════════════════════════════════════════════════════════════
+
+  DiscoveryContext:
+    description: >
+      A named percentile context referenced by
+      DiscoveryScore.expression_detail[*].percentiles[*].context_id.
+      Each context describes the population of candidates that
+      defines "100th percentile" for that comparison. Critical for
+      downstream readers — "0.94 of 142 survivors" is not the same
+      claim as "0.94 of 5322 atlas-wide clusters". Without an
+      explicit context registry, percentile values are ambiguous
+      and cannot be interpreted by the report-time agent.
+    attributes:
+      id:
+        required: true
+        description: >
+          Local identifier (e.g. 'cohort', 'universal',
+          'anat_hippocampus') referenced by
+          GenePercentile.context_id. Stable within one
+          discovery_score block; not a global ID.
+      kind:
+        required: true
+        range: DiscoveryContextKind
+      rank:
+        range: integer
+        description: >
+          Taxonomy rank at which the context is defined (0 = leaf
+          cluster, 1 = supertype, …). For SURVIVAL_COHORT must
+          match the parent DiscoveryScore.rank.
+      n_members:
+        required: true
+        range: integer
+        description: >
+          Number of candidates in this context. Required for
+          interpreting any percentile — 0.95 of 12 is much weaker
+          discriminator than 0.95 of 500.
+      filters:
+        multivalued: true
+        description: >
+          For SURVIVAL_COHORT — the filters that defined survival
+          (e.g. ['region=hippocampal_formation', 'nt_type=Gaba']).
+          Empty for ATLAS_UNIVERSAL. Format is free-text key=value
+          intended for agent consumption, not for programmatic
+          parsing.
+      description:
+        description: >
+          Optional human-readable expansion (e.g. 'GABAergic
+          clusters annotated to hippocampal formation closure').
+          For agent consumption when the structured fields above
+          are insufficient.
+
+  GenePercentile:
+    description: >-
+      A single gene's specificity within one named context.
+    attributes:
+      context_id:
+        required: true
+        description: References DiscoveryScore.contexts[*].id.
+      pct:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+        description: >
+          Percentile of val within the context's members (0–1).
+          Interpret with the context's n_members — 0.95 of 12 is
+          a much weaker discriminator than 0.95 of 500. Null when
+          val is null (i.e. source=metadata).
+
+  GeneDiscoveryDetail:
+    description: >
+      Stage A's per-gene observation for one queried gene against
+      one candidate. Six fields capture orthogonal aspects:
+      measurement (val, reliable, source), specificity within
+      context(s) (percentiles[]), score contribution before and
+      after modifiers (raw_tier, applied_score), and rank ≥ 1
+      distribution (coverage). Read all six together; any one in
+      isolation can mislead.
+    attributes:
+      gene:
+        required: true
+        description: >
+          Gene symbol. A leading '-' marks a NEGATIVE marker —
+          i.e. the cell type was specified to NOT express this
+          gene, and credit is awarded for absence. The prefix
+          survives every downstream surface so the reading
+          polarity is never ambiguous.
+      val:
+        range: float
+        description: >
+          Precomputed mean expression (log scale) for this gene
+          on this candidate. Null when the gene is not in the
+          precomputed_stats HDF5 (source=metadata).
+      reliable:
+        range: boolean
+        description: >
+          True iff val ≥ MIN_DETECTABLE (currently 1.0). False
+          means the value is at noise floor — for positive
+          markers, treat as 'not actually expressed'; for negative
+          markers, confirms absence.
+      raw_tier:
+        range: integer
+        description: >
+          Integer tier from the cohort-relative scoring table
+          BEFORE any modifiers. Positive markers: +2 (reliable &
+          cohort_pct ≥ 0.95), +1 (reliable, cohort_pct < 0.95),
+          0 (not reliable). Negative markers: +1 (correctly
+          absent), −1 (present, cohort_pct < 0.95 — contradicts
+          but unsurprising), −2 (cohort_pct ≥ 0.95 — aberrantly
+          high). +1 for metadata-only marker assertions.
+      applied_score:
+        range: float
+        description: >
+          Score actually contributed to DiscoveryScore.score
+          after modifiers. At rank ≥ 1 the rank-0 coverage
+          dampener (sqrt(coverage)) shrinks raw_tier
+          proportionally, so applied_score = raw_tier ×
+          sqrt(coverage) when coverage is populated. At rank 0,
+          applied_score == raw_tier. When applied_score differs
+          from raw_tier, the gap is the modifier signal —
+          investigate `coverage` next.
+      source:
+        required: true
+        range: GeneDiscoverySource
+      coverage:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+        description: >
+          AT RANK ≥ 1 ONLY (null at rank 0). Fraction of this
+          candidate's rank-0 descendants that express the gene at
+          ≥ MIN_DETECTABLE. Reveals whether a supertype-mean is
+          broadly supported (coverage ≈ 0.75 — most children
+          carry the signal) or driven by a minority (coverage ≈
+          0.25 — the supertype-mean is misleading; the signal
+          probably belongs to one child cluster). Low coverage at
+          rank ≥ 1 is a HIDDEN-1:1 signal — see §1.2 of the
+          confidence review.
+      percentiles:
+        multivalued: true
+        inlined_as_list: true
+        range: GenePercentile
+        description: >
+          Per-context specificity records. Today exactly one
+          entry per gene (context_id='cohort'); the list shape is
+          forward-compatible with universal / anatomical context
+          emission.
+
+  DiscoveryAtSignal:
+    description: >
+      Cohort-scoring view of the AT hit that contributed to
+      DiscoveryScore.score. The AUTHORITATIVE AT record lives in
+      MappingEdge.evidence[] as AnnotationTransferEvidence; this
+      block exists only to make the cohort-ranking reasoning
+      auditable — i.e. "+3 of the discovery score came from an AT
+      F1 ≥ 0.5 hit".
+    attributes:
+      f1:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+      n_cells:
+        range: integer
+      target_level:
+        description: Taxonomy level of the AT target (cluster, supertype, …).
+      target_name:
+        description: Name of the AT target the source mapped to.
+      score:
+        range: integer
+        description: >
+          AT bucket contribution to DiscoveryScore.score (+1 / +2
+          / +3 at F1 thresholds ≥ floor / 0.3 / 0.5).
+
+  DiscoveryScore:
+    description: >
+      Stage A find_candidates output recorded on the MappingEdge it
+      produced. A SINGLE SIGNAL AMONG MANY — does NOT re-state
+      overall confidence. Stage A scores cohort-relative gene
+      overlap; it does NOT see AT-pooling caveats, cluster-level
+      region scatter, literature, or morphology. Report-time
+      agents must treat `score` as one input, weighed against
+      marker comparisons, AT metrics, and literature evidence —
+      never as a confidence value. See workflows/gen-report.md
+      "How to read discovery_score" for the reader's guide.
+    attributes:
+      score:
+        range: integer
+        description: >
+          Composite Stage A score for this candidate. Sum of
+          contributions from: region match (+2), NT match (+2),
+          per-gene marker tiers (see
+          GeneDiscoveryDetail.applied_score), AT-F1 bucket
+          (+1/+2/+3 at thresholds F1 ≥ floor / 0.3 / 0.5),
+          region-exact bonus (+1), optional criteria.
+          Cohort-relative ranking matters more than the absolute
+          number; compare against `next_best_score` and
+          `cohort_size`.
+      rank_in_cohort:
+        range: integer
+        description: >
+          1-based rank of this candidate in the discovery cohort
+          (1 = top scorer). Combined with `cohort_size` and
+          `next_best_score`, lets the report-time agent reason
+          about cohort dominance.
+      cohort_size:
+        range: integer
+        description: >
+          Total number of candidates returned by this discovery
+          pass — i.e. members of the SURVIVAL_COHORT context (see
+          contexts[]). Required to interpret `rank_in_cohort` and
+          any `cohort` percentile.
+      next_best_score:
+        range: integer
+        description: >
+          Score of the cohort runner-up. A large gap (e.g. 8 vs
+          3) indicates the top candidate dominated the cohort; a
+          small gap signals ambiguity between near-tied
+          candidates.
+      rank:
+        range: integer
+        description: >
+          Taxonomy rank queried at Stage A (0 = leaf cluster,
+          1 = supertype, 2 = subclass, …). Determines whether
+          GeneDiscoveryDetail.coverage is populated (only at rank
+          ≥ 1).
+      region_fraction:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+        description: >
+          cells-in-queried-region / total annotated cells at this
+          candidate. 1.0 = candidate sits entirely inside the
+          queried region. Low values may push the predicate
+          toward PartialOverlapMatch (see §1.7 of the confidence
+          review).
+      region_evidence:
+        range: DiscoveryRegionEvidence
+      contexts:
+        multivalued: true
+        inlined_as_list: true
+        range: DiscoveryContext
+        description: >
+          Registry of percentile contexts referenced by
+          expression_detail[*].percentiles[*].context_id. Today
+          only SURVIVAL_COHORT (id='cohort') is emitted; future
+          passes may add ATLAS_UNIVERSAL or
+          ANATOMICAL_RESTRICTION. Each context captures the
+          cohort definition so a reader can interpret a
+          percentile correctly.
+      expression_detail:
+        multivalued: true
+        inlined_as_list: true
+        range: GeneDiscoveryDetail
+        description: >
+          Per-gene record of what Stage A saw for the genes the
+          curator queried. Negative markers are keyed with a '-'
+          prefix on `gene` (e.g. '-Slc17a7') and earn credit for
+          being ABSENT.
+      at_signal:
+        range: DiscoveryAtSignal
+        description: >
+          Optional. Annotation-transfer hit that contributed to
+          `score`. Cohort-scoring provenance only — the
+          authoritative AT record lives in
+          MappingEdge.evidence[] as AnnotationTransferEvidence.
+
+
+# ══════════════════════════════════════════════════════════════════
 # GRAPH EDGES
 # ══════════════════════════════════════════════════════════════════
 
@@ -2184,6 +2520,19 @@ classes:
           Name or ORCID of the human reviewer who confirmed this edge,
           distinct from the curator who created or last edited the
           record. Phase 2 schema overhaul (2026-05-12).
+      discovery_score:
+        range: DiscoveryScore
+        description: >
+          Stage A find_candidates output for this candidate,
+          recorded verbatim on the edge that consumed it. A single
+          signal among many — NOT a re-statement of overall
+          confidence. See the DiscoveryScore class description and
+          the gen-report "How to read discovery_score" prompt for
+          reader guidance. Populated by Stage B at edge creation
+          (workflows/map-cell-type.md Step 3) or by backfill from
+          on-disk discovery JSONs (just backfill-discovery-score).
+          Optional — edges that predate the discovery JSON
+          convention will have no value.
       evidence:
         required: true
         multivalued: true

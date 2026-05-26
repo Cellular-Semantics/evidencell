@@ -347,6 +347,17 @@ generate-gene-mapping stats_h5 output:
 find-candidates graph_file node_id taxonomy_id rank="1" top_k="10":
     uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}}
 
+# Backfill MappingEdge.discovery_score from on-disk discovery JSONs.
+# Walks the graph file's edges; for each edge missing discovery_score,
+# locates the candidate in research/{region}/**/discovery_*.json and
+# transcribes the block. Idempotent (skips edges already populated).
+# Unmatched edges are appended to <graph_dir>/backfill_missing.txt.
+# Usage: just backfill-discovery-score kb/graphs/hippocampus/hippocampus_OLM.yaml
+#        just backfill-discovery-score <file> --dry-run
+[group('workflows')]
+backfill-discovery-score graph_file *ARGS:
+    uv run python -m evidencell.discovery_score_backfill {{graph_file}} {{ARGS}}
+
 # Extract per-(classical, taxonomy) F1 artifact from a MapMyCells run dir.
 # Reads {run_dir}/f1_matrix.csv + manifest.yaml, filters by source_label and
 # F1 floor, resolves target labels to accessions via the taxonomy DB, writes

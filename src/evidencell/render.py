@@ -1497,6 +1497,13 @@ def extract_node_facts(
             "unresolved_questions": edge.get("unresolved_questions", []),
             "proposed_experiments": edge.get("proposed_experiments", []),
             "notes": edge.get("notes", ""),
+            # §1.11 (2026-05-26): Stage A find_candidates output
+            # persisted on the edge that consumed it. Forwarded
+            # verbatim — no transformation. The report-time agent
+            # reads this as a cohort-ranking signal alongside marker
+            # comparisons, AT metrics, and literature. See
+            # workflows/gen-report.md "How to read discovery_score".
+            "discovery_score": edge.get("discovery_score"),
         })
 
     # Quotes: collect all quote_keys referenced in node + edges

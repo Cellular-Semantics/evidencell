@@ -911,6 +911,67 @@ Cite `region_fraction` explicitly when it is in the **boundary band**
 Skip the citation when very high (>0.7) or very low (<0.3) — the
 relationship choice implies the value.
 
+## How to read `discovery_score`
+
+When `discovery_score` is present on a facts edge, treat it as Stage A's
+cohort-ranking view of the candidate. It is **meta-signal about
+candidate generation** — a single signal among many — and is **NOT a
+confidence value**. Stage A scores cohort-relative gene overlap; it
+does not see AT-pooling caveats, cluster-level region scatter,
+literature, or morphology. Weigh it against marker comparisons, AT
+metrics, and literature.
+
+Reading rules:
+
+- **`score` is composite.** Sum of region (+2), NT (+2), per-gene
+  marker tiers (see `expression_detail[*].applied_score`), AT-F1
+  bucket (+1/+2/+3), region-exact bonus (+1), optional criteria.
+  Never quote `score` as a confidence value.
+- **Dominance.** Compare `score`, `next_best_score`, `cohort_size`,
+  and `rank_in_cohort`. Score 8 vs next-best 3 in a cohort of 142 is
+  strong dominance; 5 vs 4 in a cohort of 8 is near-tied.
+- **Per-gene reading.** For each `expression_detail` entry:
+  - `gene` with a leading `-` is a **negative marker** — credit was
+    awarded for absence. Presence inverts the reading.
+  - `val` × `reliable` says whether the gene was actually expressed
+    (≥ MIN_DETECTABLE).
+  - `percentiles[].pct` says how specific. ALWAYS interpret with the
+    referenced context's `n_members` — 0.95 of 12 is much weaker
+    than 0.95 of 500. Join `context_id` → `contexts[]`.
+  - `source: EXPRESSION` means real precomputed-stats measurement;
+    `source: METADATA` means taxonomy-YAML marker flag only (a
+    weaker presence assertion, `raw_tier = 1`).
+  - **Modifier signal.** `applied_score < raw_tier` means the
+    rank-≥-1 coverage dampener fired. Inspect `coverage`. Low
+    coverage (< 0.5) at rank ≥ 1 is a **HIDDEN-1:1 signal**: the
+    supertype-mean is driven by a minority of children; consider
+    drilling to a child cluster, or qualify the broadMatch in
+    `rationale`.
+- **Percentile contexts.** `contexts[].kind` tells the percentile's
+  flavour. Today only `SURVIVAL_COHORT` (dynamic, filter-dependent —
+  read `filters[]` to see what defined survival) is emitted. Future
+  passes may add `ATLAS_UNIVERSAL` (stable) or
+  `ANATOMICAL_RESTRICTION`.
+- **Region.** `region_fraction` and `region_evidence` mirror the
+  edge-level region story; cite them per the "When to cite
+  `region_fraction`" rule above.
+  `region_evidence: DESCENDANT_ONLY` flags a rank-≥-1 candidate
+  rescued only because its children are in region — a known weak
+  signal, cite in `rationale` but do not override marker reasoning.
+- **AT.** `at_signal` is the **cohort-ranking provenance only** —
+  the authoritative AT record lives in `evidence_items[]` as
+  `ANNOTATION_TRANSFER`. Cite AT F1 from the evidence item, not
+  from `at_signal`. Use `at_signal.score` to explain why the
+  composite `score` is what it is, not to make AT claims.
+
+When citing `discovery_score` in `rationale`, name the specific
+sub-field and quote the supporting numbers: e.g. *"Stage A discovery
+dominated its 142-member GABAergic-hippocampal cohort (score 8 vs
+next-best 3)"* or *"Pvalb contributed `applied_score: 2.0` from
+cohort-pct 0.94 of 142"*. Avoid bare references to `score` without
+the cohort context — they are unverifiable and easy to misread as
+confidence.
+
 ## Indistinguishability across source groups (Phase 3 — the #61 pattern)
 
 Read `{pool_candidates_file}`. For each candidate pool, decide whether to

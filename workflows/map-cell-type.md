@@ -403,6 +403,26 @@ TASK:
    on review. See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md)
    for the SKOS direction convention and worked examples.
 
+8. **Copy the candidate's `discovery_score` block onto the edge
+   verbatim.** When DISCOVERY DATA is provided, locate this
+   candidate's entry in `candidates[]` (match on
+   `node_id == cell_set_accession`) and copy its
+   `discovery_score` value as-is onto the edge's `discovery_score`
+   slot. No transformation, no re-interpretation — Stage A's JSON
+   already matches the schema shape. The block captures Stage A's
+   cohort-ranking view: composite score, rank-in-cohort,
+   percentile contexts, per-gene contributions (raw_tier +
+   applied_score), and the AT signal that fed scoring. It is
+   meta-signal about candidate generation, NOT a confidence
+   value; the report-time agent will weigh it as one input
+   alongside marker comparisons, AT metrics, and literature.
+
+   If DISCOVERY DATA is unavailable (legacy edge, hypothesis
+   mode without a discovery run), omit `discovery_score` —
+   it's optional. The backfill module
+   (`just backfill-discovery-score`) can populate it later from
+   on-disk discovery JSONs.
+
 RETURN the complete MappingEdge YAML block as a code fence. Do not write files.
 ```
 
