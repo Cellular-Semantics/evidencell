@@ -259,8 +259,8 @@ class ATBlindAudit(AuditDriver):
                 ]
                 if not at_items:
                     continue
-                type_a = edge.get("type_a")
-                type_b = edge.get("type_b")
+                type_a = edge.get("lit_type")
+                type_b = edge.get("taxonomy_type")
                 if not (type_a and type_b):
                     continue
                 classical = nodes_by_id.get(type_a)

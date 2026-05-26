@@ -158,10 +158,9 @@ nodes:
 edges:
 
   - id: edge_gpi_shell_to_hmba
-    type_a: classical_gpi_shell
-    type_b: hmba_gpi_shell_group
-    relationship: EQUIVALENT
-    confidence: MODERATE
+    lit_type: classical_gpi_shell
+    taxonomy_type: hmba_gpi_shell_group
+    relationship: skos:exactMatch
     evidence:
 
       - evidence_type: ATLAS_METADATA
@@ -256,3 +255,4 @@ edges:
       - >
         MERFISH with probes for Sst, Tbr1, Slc17a6 and Pvalb in GPi to
         validate location and marker profile with higher spatial precision.
+    mapping_justification: semapv:UnreviewedManualMapping

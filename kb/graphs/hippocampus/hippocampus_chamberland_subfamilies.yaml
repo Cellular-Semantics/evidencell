@@ -348,10 +348,9 @@ nodes:
 edges:
 
   - id: edge_chrna2_olm_to_CS20230722_CLUS_0771
-    type_a: chrna2_olm_subfamily_chamberland
-    type_b: CS20230722_CLUS_0771
-    relationship: PARTIAL_OVERLAP
-    confidence: MODERATE
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0771
+    relationship: evidencell:PartialOverlapMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
@@ -366,18 +365,18 @@ edges:
             taxonomy_rank: 1
             best_target_name: "0216 Sst Gaba_3"
             best_target_accession: CS20230722_SUPT_0216
-            group_purity: 0.947
-            target_purity: 0.199
             f1_score: 0.329
             n_cells_mapped: 126
+            coverage: 0.947
+            purity: 0.199
           - taxonomy_level: CLUSTER
             taxonomy_rank: 0
             best_target_name: "0771 Sst Gaba_3"
             best_target_accession: CS20230722_CLUS_0771
-            group_purity: 0.813
-            target_purity: 0.540
             f1_score: 0.649
             n_cells_mapped: 74
+            coverage: 0.813
+            purity: 0.540
         explanation: >
           Chamberland Chrna2-IN cells (Harris 2018 cells satisfying the per-cluster
           Sst+/Chrna2+ rule, n=153) concentrate in CLUS_0771 Sst Gaba_3 (F1=0.65,
@@ -401,11 +400,11 @@ edges:
         alignment: APPROXIMATE
         notes: "Chrna2 expression is sparse but enriched in CLUS_0771 relative to siblings."
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_sst_nos1_to_CS20230722_CLUS_0859
-    type_a: sst_nos1_subfamily_chamberland
-    type_b: CS20230722_CLUS_0859
-    relationship: EQUIVALENT
-    confidence: HIGH
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0859
+    relationship: skos:exactMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
@@ -420,26 +419,26 @@ edges:
             taxonomy_rank: 2
             best_target_name: "056 Sst Chodl Gaba"
             best_target_accession: CS20230722_SUBC_056
-            group_purity: 1.0
-            target_purity: 0.972
             f1_score: 0.986
             n_cells_mapped: 35
+            coverage: 1.0
+            purity: 0.972
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: "0241 Sst Chodl Gaba_4"
             best_target_accession: CS20230722_SUPT_0241
-            group_purity: 0.971
-            target_purity: 1.0
             f1_score: 0.986
             n_cells_mapped: 34
+            coverage: 0.971
+            purity: 1.0
           - taxonomy_level: CLUSTER
             taxonomy_rank: 0
             best_target_name: "0859 Sst Chodl Gaba_4"
             best_target_accession: CS20230722_CLUS_0859
-            group_purity: 0.939
-            target_purity: 1.0
             f1_score: 0.969
             n_cells_mapped: 31
+            coverage: 0.939
+            purity: 1.0
         explanation: >
           Chamberland Sst::Nos1-IN cells map cleanly to the Sst Chodl Gaba subclass
           (F1=0.99 at subclass and supertype, F1=0.97 at cluster level → CLUS_0859).
@@ -466,11 +465,11 @@ edges:
         node_b_value: "Sst Chodl long-range identity"
         alignment: CONSISTENT
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_sst_tac1_to_CS20230722_SUBC_052
-    type_a: sst_tac1_subfamily_chamberland
-    type_b: CS20230722_SUBC_052
-    relationship: PARTIAL_OVERLAP
-    confidence: MODERATE
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUBC_052
+    relationship: evidencell:PartialOverlapMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
@@ -485,26 +484,26 @@ edges:
             taxonomy_rank: 2
             best_target_name: "052 Pvalb Gaba"
             best_target_accession: CS20230722_SUBC_052
-            group_purity: 0.783
-            target_purity: 0.458
             f1_score: 0.578
             n_cells_mapped: 126
+            coverage: 0.783
+            purity: 0.458
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: "0206 Pvalb Gaba_2"
             best_target_accession: CS20230722_SUPT_0206
-            group_purity: 0.437
-            target_purity: 0.802
             f1_score: 0.566
             n_cells_mapped: 69
+            coverage: 0.437
+            purity: 0.802
           - taxonomy_level: CLUSTER
             taxonomy_rank: 0
             best_target_name: "0737 Pvalb Gaba_2"
             best_target_accession: CS20230722_CLUS_0737
-            group_purity: 0.310
-            target_purity: 0.939
             f1_score: 0.466
             n_cells_mapped: 31
+            coverage: 0.310
+            purity: 0.939
         explanation: >
           Chamberland Sst::Tac1-IN cells (n=167) map dominantly to the Pvalb Gaba
           subclass (F1=0.58, recall 0.78) despite being Sst-expressing in source —
@@ -529,11 +528,11 @@ edges:
         alignment: APPROXIMATE
         notes: "Functional target (Pvalb-INs per Chamberland 2024) and transcriptomic placement (Pvalb cluster) are independently consistent but not strictly equivalent."
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_ndnf_nkx2_1_olm_to_CS20230722_SUPT_0216
-    type_a: ndnf_nkx2_1_olm_subfamily_chamberland
-    type_b: CS20230722_SUPT_0216
-    relationship: UNCERTAIN
-    confidence: LOW
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0216
+    relationship: evidencell:UncertainRelationship
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
@@ -548,18 +547,18 @@ edges:
             taxonomy_rank: 2
             best_target_name: "049 Lamp5 Gaba"
             best_target_accession: CS20230722_SUBC_049
-            group_purity: 0.353
-            target_purity: 0.021
             f1_score: 0.039
             n_cells_mapped: 6
+            coverage: 0.353
+            purity: 0.021
           - taxonomy_level: SUPERTYPE
             taxonomy_rank: 1
             best_target_name: "0199 Lamp5 Gaba_1"
             best_target_accession: CS20230722_SUPT_0199
-            group_purity: 0.368
-            target_purity: 0.030
             f1_score: 0.055
             n_cells_mapped: 7
+            coverage: 0.368
+            purity: 0.030
         explanation: >
           Chamberland Ndnf::Nkx2-1-IN cells (n=19 in this Harris re-labelling)
           do NOT concentrate at any single WMBv1 cluster or supertype — the
@@ -585,3 +584,4 @@ edges:
           F1 < 0.1 each. Mapping at any single level is uninformative. Better
           source-side evidence (e.g. Chamberland 2024's published per-cell
           Ndnf::Nkx2-1 scRNA-seq if available) needed to firm this up.
+    mapping_justification: semapv:UnspecifiedMatching

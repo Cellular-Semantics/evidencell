@@ -37,7 +37,7 @@ The primary shared disqualifying signal is the absence of Nos1 confirmation at a
 
 - Sst expression strongly consistent: precomputed stats mean=10.17 for SUPT_0219 [CS20230722_SUPT_0219], matching the Sst-positive identity of O-O cells [1].
 - SUPT_0219 belongs to the Sst Gaba subclass, consistent with the GABAergic/Sst interneuron classification of O-O cells. NT type: CONSISTENT.
-- Annotation transfer (MapMyCells; Yao 2021 Sst SSv4, GEO:GSE185862, n=273 HIP cells): Sst subclass maps to WMBv1 with high fidelity at subclass level (F1=0.983, 265 cells to 053 Sst Gaba). At supertype level, SUPT_0219 is the dominant annotation transfer target within this subclass (F1=0.759, 161/273 cells, target_purity=0.964), indicating it captures the largest fraction of hippocampal Sst interneurons in the Yao 2021 dataset.
+- Annotation transfer (MapMyCells; Yao 2021 Sst SSv4, GEO:GSE185862, n=273 HIP cells): Sst subclass maps to WMBv1 with high fidelity at subclass level (F1=0.983, 265 cells to 053 Sst Gaba). At supertype level, SUPT_0219 is the dominant annotation transfer target within this subclass (F1=0.759, 161/273 cells, purity=0.964), indicating it captures the largest fraction of hippocampal Sst interneurons in the Yao 2021 dataset.
 
 **Marker evidence provenance**
 

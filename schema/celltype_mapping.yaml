@@ -101,6 +101,11 @@ prefixes:
   # WMB = Whole Mouse Brain atlas (Allen Brain Cell Atlas CCN taxonomy)
   # Placeholder URL pending official Allen CURIE registration.
   WMB:       https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/metadata/WMB-taxonomy/20231215/cell_set_information.csv#
+  # Mapping vocabulary prefixes (Phase 2 schema overhaul, 2026-05-12).
+  # See planning/phase_2_decisions_2026-05-12.md.
+  skos:       http://www.w3.org/2004/02/skos/core#
+  semapv:     https://w3id.org/semapv/vocab/
+  evidencell: https://w3id.org/evidencell/
 
 imports:
   - linkml:types
@@ -249,78 +254,167 @@ enums:
   #   container files and in taxonomy_meta.yaml level_hierarchy.
 
   # ── Mapping relationship types ──────────────────────────────────
+  #
+  # Direction convention: relationships are directional, read from the
+  # lit_type (subject) to the taxonomy_type (object). SKOS predicates
+  # are used where they apply; custom evidencell: predicates for cases
+  # SKOS does not cover. See docs/mapping_schema_2026-05-12.md for the
+  # glossary preamble and worked examples.
+  #
+  # SKOS broadMatch / narrowMatch are counter-intuitive: the match goes
+  # *to* the broader / narrower thing, not *from* it. Enum value
+  # descriptions below restate the direction in plain English.
+  #
+  # Phase 2 schema overhaul, 2026-05-12. Old values (EQUIVALENT,
+  # PARTIAL_OVERLAP, CROSS_CUTTING, TYPE_A_SPLITS, TYPE_A_MERGES,
+  # SUBSET, SUPERSET, NO_CORRESPONDENCE, UNCERTAIN, CANDIDATE_SYNONYM,
+  # OVERLAPS) removed; KB sweep migrates existing edges in PR2.
   MappingRelationship:
     description: >
-      The nature of the correspondence between type_a and type_b in this edge.
-      Relationships are directional: from type_a to type_b.
+      The nature of the correspondence between lit_type and taxonomy_type
+      in this edge. Relationships are directional, from lit_type to
+      taxonomy_type. Permissible-value identifiers are CURIEs binding
+      to SKOS predicates where applicable; custom evidencell: predicates
+      otherwise.
     permissible_values:
-      EQUIVALENT:
+      skos:exactMatch:
         description: >
-          type_a and type_b describe the same cell population.
-          Clean 1:1 correspondence. E.g. Lugaro → WMBv1 supertype 1145 (F1=0.96).
-      PARTIAL_OVERLAP:
+          The lit_type and taxonomy_type describe the same cell population
+          (one-to-one identity). Required: cardinality 1:1; location
+          consistent (classical region + adjacent only, not distant);
+          AT supports 1:1 (F1 > 0.75) when AT is present; no major
+          contradictions. AT-absent cases may still be exactMatch on
+          converging location + markers + literature, but confidence
+          ceiling drops to MODERATE. Numeric AT gate lives in the
+          report-time prompt + rationale, not in this description.
+      skos:closeMatch:
         description: >
-          Some cells from type_a map to type_b, but the mapping is incomplete in
-          precision, recall, or both. E.g. Globular (PLI2) → cluster 5177 (precision 83%,
-          recall 93%: high precision, limited recall — also distributed across other clusters).
-      CROSS_CUTTING:
+          Same 1:1-style correspondence as exactMatch but with one or
+          more contradictions: marker mismatch with no resolving
+          heterogeneity in the lit, soft AT (F1 in a borderline band or
+          coverage/purity asymmetry), location edge case, or other
+          partial-information caveat. Pair with mapping_justification:
+          semapv:UnreviewedManualMapping when not curator-confirmed.
+      skos:broadMatch:
         description: >
-          type_b cross-cuts the boundary of type_a (and usually at least one other node).
-          The transcriptomic type captures cells that the classical taxonomy would assign
-          to multiple distinct types. E.g. MLI1 cuts across classical basket and stellate cells.
-      TYPE_A_SPLITS:
+          The lit_type is **narrower** than the taxonomy_type; the
+          match goes *to* the broader thing. Read
+          `lit_OLM --skos:broadMatch--> Sst_Gaba_3_supertype` as
+          "OLM has a broad match — the supertype is the broader thing."
+          Apply when: the taxonomy_type is located in regions distant
+          from the classical region + adjacent set; or the relationship
+          is cross-cutting at rank N but collapses to a clean broader
+          relation at rank N+1 (pick the higher rank); or multiple
+          lit_types map to a single taxonomy_type at this rank. AT must
+          be consistent with the broader reading when present. Always
+          paired with `mapping_cardinality: 1:n` (the hidden-1:1 case
+          collapses: if the specific sub-cluster is TBD, map at the
+          next rank up).
+      skos:narrowMatch:
         description: >
-          type_a (typically classical) corresponds to multiple type_b nodes.
-          Use one edge per split, all with TYPE_A_SPLITS relationship.
-          E.g. one classical interneuron type splits into MLI1 + MLI2 in transcriptomics.
-      TYPE_A_MERGES:
+          The lit_type is **broader** than the taxonomy_type; the
+          match goes *to* the narrower thing. Read
+          `lit_classical_basket --skos:narrowMatch--> mli2_cluster` as
+          "classical basket has a narrow match — this specific cluster
+          is the narrower thing." Symmetric inverse of broadMatch.
+          Always paired with `mapping_cardinality: n:1`.
+      evidencell:PartialOverlapMatch:
         description: >
-          Multiple type_a nodes (typically classical) all map to the same type_b.
-          Use one edge per merge source, all with TYPE_A_MERGES relationship.
-      SUBSET:
+          DEPRECATED (2026-05-26). Absorbed into closeMatch (1:1-ish
+          with contradictions) + broadMatch / narrowMatch / CrossCuttingMatch
+          per the new predicate rubric. Retained transitionally so the
+          KB validates against the deprecated value during migration;
+          the re-run will re-predicate the existing 42 edges. Do not
+          emit on new edges. Will be removed after migration.
+      evidencell:CrossCuttingMatch:
         description: >
-          type_a is a proper subset of type_b. All type_a cells are in type_b,
-          but type_b contains additional cells. E.g. a specific projection subtype
-          is a subset of a broader transcriptomic subclass.
-      SUPERSET:
+          The taxonomy_type cross-cuts the boundary of the lit_type
+          (and usually at least one other lit_type). The transcriptomic
+          type captures cells that the classical taxonomy would assign
+          to multiple distinct types. E.g. MLI1 cuts across classical
+          basket and stellate cells. Apply only when no higher rank
+          rescues the relationship to a clean broadMatch — if
+          cross-cutting at rank N collapses to a single broader type at
+          rank N+1, prefer broadMatch at N+1. No SKOS equivalent.
+      evidencell:NoCorrespondence:
         description: >
-          type_a is a proper superset of type_b. type_b cells are all in type_a,
-          but type_a also contains additional cells.
-      NO_CORRESPONDENCE:
+          No corresponding type exists in the target taxonomy.
+          Use to explicitly document failures of correspondence
+          (e.g. a curated literature type that the atlas does not
+          resolve at any rank). No SKOS equivalent.
+      evidencell:UncertainRelationship:
         description: >
-          No corresponding type exists in type_b's taxonomy.
-          Use to explicitly document failures of correspondence.
-      UNCERTAIN:
-        description: >
-          Evidence is insufficient or contradictory to determine relationship type.
-      CANDIDATE_SYNONYM:
-        description: >
-          The two nodes may refer to the same cell type but this has not been
-          confirmed by a curator. Used by extraction agents when two names or
-          descriptions appear to overlap but the evidence is insufficient to merge.
+          The kind of correspondence is not yet determinable from
+          available evidence. Distinct from `evidencell:NoCorrespondence`
+          (which asserts no mapping exists). Pair with
+          `mapping_justification: semapv:UnspecifiedMatching` and a
+          `reconciliation_note` describing what additional evidence
+          would resolve the question. No SKOS equivalent.
 
-          This is a provisional relationship: extraction agents should prefer
-          creating two nodes + CANDIDATE_SYNONYM over collapsing to one node
-          (split-first principle — merging is easier than splitting).
+  # ── Mapping cardinality ─────────────────────────────────────────
+  #
+  # Phase 2: split predicate from cardinality. SSSOM convention; values
+  # are literal strings (no upstream ontology).
+  MappingCardinality:
+    description: >
+      Cardinality of the mapping considered as a set relation.
+      Required with skos:broadMatch (always 1:n) and skos:narrowMatch
+      (always n:1); recommended with skos:exactMatch (always 1:1).
+      The former hidden-1:1 broadMatch case collapses: if the specific
+      sub-cluster is not yet identifiable, map at the next rank up
+      where the relationship is cleanly 1:n.
+    permissible_values:
+      "1:1":
+        description: One lit_type maps to one taxonomy_type.
+      "1:n":
+        description: One lit_type splits across multiple taxonomy_types.
+      "n:1":
+        description: Multiple lit_types collapse onto one taxonomy_type.
 
-          Resolution: a curator either confirms (→ migrate evidence to one node,
-          mark the other deprecated, or record as EQUIVALENT) or rejects
-          (→ document the distinguishing feature in caveats; change to a more
-          specific relationship type such as PARTIAL_OVERLAP or UNCERTAIN).
-
-          Queryable: "show all unresolved CANDIDATE_SYNONYM edges" surfaces
-          pending curation decisions without blocking KB construction.
-      OVERLAPS:
+  # ── Mapping justification (semapv subset) ───────────────────────
+  #
+  # Phase 2: track the provenance of the mapping decision. Values bound
+  # to the semapv vocabulary (https://w3id.org/semapv/vocab/).
+  MappingJustification:
+    description: >
+      Provenance of the mapping decision. Bound to the semapv mapping
+      provenance vocabulary; SSSOM-compatible.
+    permissible_values:
+      semapv:ManualMappingCuration:
+        description: Mapping reviewed and approved by a human curator.
+      semapv:UnreviewedManualMapping:
         description: >
-          Cross-taxonomy correspondence where a cell set in one taxonomy has
-          partial overlap with a cell set in another. Used for cross-taxonomy
-          annotation transfer edges where 1:1 equivalence cannot be assumed.
+          Manually proposed (typically agent-emitted from extraction or
+          synthesis) but not yet reviewed by a curator. The default
+          state for new edges in this KB.
+      semapv:LexicalMatching:
+        description: >
+          Mapping derived from name / synonym lexical match. Lowest
+          confidence among manual-class justifications.
+      semapv:CompositeMatching:
+        description: >
+          Mapping derived from multi-source evidence integration
+          (e.g. anatomy + markers + AT F1 all converging).
+      semapv:LogicalReasoning:
+        description: >
+          Mapping derived by logical reasoning over schema-encoded
+          relations.
+      semapv:UnspecifiedMatching:
+        description: >
+          Provenance not recorded. Use sparingly; prefer one of the
+          other values when known.
 
   # ── Mapping confidence ──────────────────────────────────────────
   MappingConfidence:
     permissible_values:
       HIGH:
-        description: Multiple independent convergent evidence types; at least one experimental
+        description: >
+          Strong experimental anchor with no major contradictions. Two
+          standard paths: (a) patch-seq annotation-transfer F1 > 0.75
+          with marker confirmation; (b) bridging or bulk RNA-seq with
+          strong structure/function convergence at similar strength.
+          Default for a clean exactMatch where AT is present and
+          supportive.
       MODERATE:
         description: Two or more independent evidence items with consistent support
       LOW:
@@ -506,7 +600,7 @@ enums:
       LOW_CELL_COUNT:
         description: Fewer than ~50 cells used in this analysis; results may not be robust
       DISTRIBUTED_ACROSS_CLUSTERS:
-        description: Source type cells are spread across multiple target clusters (low target_purity/recall)
+        description: Source type cells are spread across multiple target clusters (low coverage at finest level)
       TAXONOMY_LEVEL_MISMATCH:
         description: Best mapping is at a coarser taxonomy level than desired (e.g. supertype not cluster)
       MARKER_NOT_SPECIFIC:
@@ -544,6 +638,74 @@ enums:
           electrophysiological properties, making transcriptomic matching
           inherently uncertain.
       OTHER: {}
+
+  DiscoveryContextKind:
+    description: >
+      Semantic class of a percentile context recorded on
+      MappingEdge.discovery_score. Today only SURVIVAL_COHORT is
+      emitted by Stage A; the other values reserve slots for future
+      universal / anatomical / sibling context emission so that
+      downstream agents can reason about contexts uniformly without
+      parsing free-text descriptions.
+    permissible_values:
+      SURVIVAL_COHORT:
+        description: >
+          Candidates surviving the discovery pass's filters
+          (region, NT, sex bias, etc.) at the queried rank.
+          CURRENTLY THE ONLY KIND EMITTED BY STAGE A. Cohort
+          membership is dynamic — it depends on the query filters,
+          so two queries against the same taxonomy can yield
+          different cohorts.
+      ATLAS_UNIVERSAL:
+        description: >
+          All clusters in the taxonomy at the queried rank, with
+          no filters. Stable across queries against the same
+          taxonomy. Emission currently dormant; reserved for
+          revival of the legacy `_score_from_percentiles` path.
+      ANATOMICAL_RESTRICTION:
+        description: >
+          All clusters annotated to a specified anatomical region
+          closure, with no other filters. Anticipates future
+          anatomy-context scoring; not yet emitted by Stage A.
+      SIBLINGS_UNDER_PARENT:
+        description: >
+          Direct children of a common parent at the queried rank.
+          Legacy notion from the pre-2026 sibling/global scoring
+          scheme; reserved in case it is revived.
+
+  GeneDiscoverySource:
+    description: >
+      Where the per-gene `val` recorded on a
+      GeneDiscoveryDetail came from. Determines which of
+      val / reliable / percentiles / coverage are populated.
+    permissible_values:
+      EXPRESSION:
+        description: >
+          Value read from the candidate's precomputed_stats HDF5.
+          val / reliable / percentiles populated; coverage
+          populated at rank ≥ 1.
+      METADATA:
+        description: >
+          Gene flagged as a marker in the taxonomy YAML but
+          absent from precomputed_stats. val / reliable /
+          percentiles all null; raw_tier = +1 (a weak presence
+          assertion based on metadata, not measurement).
+
+  DiscoveryRegionEvidence:
+    description: >
+      How Stage A established that a candidate is "in region"
+      for the queried anatomy.
+    permissible_values:
+      SELF:
+        description: >
+          The candidate's own anatomical annotation places it in
+          the queried region closure.
+      DESCENDANT_ONLY:
+        description: >
+          The candidate (rank ≥ 1) was rescued because its rank-0
+          descendants annotate to the region, even though the
+          candidate's own anatomical metadata is incomplete
+          (BCKG workaround for sparse mid-rank annotation).
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -1487,25 +1649,131 @@ classes:
         description: Name of the best-matching target at this level
       best_target_accession:
         description: CCN accession of the best-matching target
-      group_purity:
+      coverage:
         range: float
         description: >
-          Precision: fraction of source cells mapping to this target.
-          High group_purity = the source type is concentrated in this target.
-      target_purity:
+          Fraction of source cells mapping to this target. High
+          coverage = the source type is concentrated on this target.
+          Equivalent to recall in standard ML terms. Surfaced as
+          `Cov` in figure annotations and `coverage` in
+          `at_figures --emit-metrics` JSON sidecars. Renamed from
+          `group_purity` in the 2026-05-25 nomenclature standardisation
+          (hard cutover).
+      purity:
         range: float
         description: >
-          Recall: fraction of all cells in the target that come from this source.
-          High target_purity = the target is specific to this source type.
+          Fraction of cells in the target that come from this source.
+          High purity = the target is specifically populated by this
+          source type. Equivalent to precision in standard ML terms.
+          Surfaced as `Pur` in figure annotations and `purity` in
+          `at_figures --emit-metrics` JSON sidecars. Renamed from
+          `target_purity` in the 2026-05-25 nomenclature standardisation
+          (hard cutover).
       f1_score:
         range: float
-        description: Harmonic mean of group_purity and target_purity
+        description: Harmonic mean of coverage and purity.
       n_cells_mapped:
         range: integer
         description: Number of source cells mapped to this target at this level (after bootstrap filter)
       median_bootstrap:
         range: float
         description: Median bootstrap confidence score for cells mapped to this target
+
+  AnnotationTransferMetricRow:
+    description: >
+      One row of (source_label, taxonomy_level, target_accession) → metrics
+      from an annotation-transfer run. Uniquely keyed on
+      (source_label, taxonomy_level, target_accession). Container for
+      the canonical per-(source, target) F1/precision/recall values that
+      `AnnotationTransferResultSet` stores. Distinct from
+      `AnnotationTransferLevelResult`: the latter records the source's
+      best target at each level (one row per (source, level)); this class
+      records every (source, level, target) triple seen by the AT run.
+    attributes:
+      source_label:
+        required: true
+        description: Source cluster / cohort label as it appears in the AT run input.
+      taxonomy_level:
+        required: true
+        description: Taxonomy level (CLASS / SUBCLASS / SUPERTYPE / CLUSTER).
+      taxonomy_rank:
+        range: integer
+        description: >
+          Integer rank of this level. 0 = most specific (leaf), incrementing
+          toward root.
+      target_name:
+        description: Name of the target at this level (e.g. "0206 Pvalb Gaba_2").
+      target_accession:
+        required: true
+        description: CCN accession of the target (e.g. CS20230722_SUPT_0206).
+      n_cells:
+        range: integer
+        description: Number of source cells mapping to this target at this level.
+      coverage:
+        range: float
+        description: >
+          Fraction of source cells mapping to this target (= recall in
+          standard ML terms). Same semantic as
+          `AnnotationTransferLevelResult.coverage`. Surfaced as `Cov`
+          in figure annotations and `coverage` in `--emit-metrics`
+          JSON sidecars.
+      purity:
+        range: float
+        description: >
+          Fraction of cells in the target coming from this source
+          (= precision in standard ML terms). Same semantic as
+          `AnnotationTransferLevelResult.purity`. Surfaced as `Pur` in
+          figure annotations and `purity` in `--emit-metrics` JSON
+          sidecars.
+      f1:
+        range: float
+        description: Harmonic mean of coverage and purity.
+      median_bootstrap:
+        range: float
+      mean_bootstrap:
+        range: float
+
+  AnnotationTransferResultSet:
+    description: >
+      The complete set of per-(source, level, target) F1/precision/recall
+      metrics for one annotation-transfer run. Schema-compliant successor
+      to the implicit "CSV columns are the contract" convention used by
+      `f1_matrix*.csv` / `f1_scores_*.csv` files. Lives alongside the
+      run's `manifest.yaml` as `at_results.yaml` (canonical source of
+      truth) — or `at_results_<variant>.yaml` for variant normalisations
+      (e.g. `at_results_by_class.yaml` for Chamberland-style within-class
+      dropout-robust scoring). `MappingEdge.evidence[].metrics_by_level`
+      is populated by `src/evidencell/at_metrics.py` reading this set
+      with (run_ref, source_label, edge.taxonomy_type) — never by an
+      LLM agent. Raw CSVs are retained as audit trail under `raw/` but
+      are not the contract.
+    attributes:
+      run_id:
+        required: true
+        description: AnnotationTransferRun.id this result set belongs to.
+      taxonomy_id:
+        required: true
+        description: Target taxonomy (e.g. CCN20230722).
+      normalisation:
+        description: >
+          Variant tag when the same run emits multiple normalisations
+          (e.g. "by_class" for within-class dropout-robust scoring;
+          null or "base" for standard F1 over the full dataset).
+      source_csv_relpath:
+        description: >
+          Path (relative to the run dir) of the raw CSV this YAML was
+          derived from, for audit. Optional once the YAML is the
+          canonical source of truth.
+      generated_at:
+        description: ISO8601 timestamp when this result set was written.
+      generator:
+        description: >
+          Script / tool that produced this YAML
+          (e.g. "src/evidencell/at_metrics.py::migrate_csv").
+      rows:
+        range: AnnotationTransferMetricRow
+        multivalued: true
+        required: true
 
   AnnotationTransferEvidence:
     is_a: EvidenceItem
@@ -1603,8 +1871,27 @@ classes:
         range: AnnotationTransferLevelResult
         multivalued: true
         description: >
-          Full per-level metrics (optional). Include when multi-level analysis is relevant;
-          omit when best_f1_score suffices. Record the best target at each level.
+          Full per-level metrics (optional). Include when multi-level
+          analysis is relevant; omit when best_f1_score suffices.
+          Populated programmatically by `src/evidencell/at_metrics.py`
+          from `kb/annotation_transfer_runs/{run_ref}/at_results.yaml`
+          using (run_ref, source_cluster_label, edge.taxonomy_type).
+          MUST NOT be transcribed by an LLM agent — see the schema
+          description of `AnnotationTransferResultSet` for the rationale.
+          For each level, records the best target the source mapped to;
+          when the edge's taxonomy_type matches the source's best at
+          some level, `best_target_accession` at that level equals
+          `edge.taxonomy_type` (the typical pattern). When it doesn't,
+          the row is informational — the supporting agent should also
+          look up F1 for (source, edge.taxonomy_type) specifically and
+          surface that in the explanation.
+      f1_source_relpath:
+        description: >
+          Path (relative to the AT run dir) of the
+          `AnnotationTransferResultSet` YAML that fed `metrics_by_level`
+          for this evidence item. Defaults to `at_results.yaml` (the
+          canonical base file); used to disambiguate when a run emits
+          multiple variant normalisations (e.g. `at_results_by_class.yaml`).
       nt_consistent_with_classical:
         range: boolean
         description: >
@@ -1621,6 +1908,65 @@ classes:
         description: >
           URL or accession of the notebook/script that produced these results.
           E.g. https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+      source_groups:
+        range: SourceGroup
+        multivalued: true
+        description: >
+          Optional. When this evidence's metrics were computed by pooling
+          multiple raw source clusters into one pseudo-source, record the
+          composition here. Absence means per-source metrics keyed by
+          source_cluster_label.
+
+  SourceGroup:
+    description: >
+      Composition of a pooled pseudo-source used to compute an
+      AnnotationTransferEvidence's metrics. `label` is the pseudo-source
+      name (also the `--pool ...:NAME` argument fed to at_figures);
+      `members` is the list of raw source_label values (as they appear
+      in the f1_matrix.csv source_label column) that were combined.
+      Optional `rationale` records justification that the pool reading
+      is defensible across the available property panels; absence means
+      no such justification is on file.
+    attributes:
+      label:
+        required: true
+        description: >
+          Pseudo-source name. Must match the `--pool ...:NAME` argument
+          and the source_label key in the figure-rendering sidecar from
+          `at_figures --emit-metrics`, so stored metrics and rendered
+          figure are joinable on a shared key.
+      members:
+        multivalued: true
+        required: true
+        description: >
+          Raw source_label values (from f1_matrix.csv) combined into the
+          pseudo-source.
+      rationale:
+        description: >
+          Optional. Justification that the pool reading is defensible
+          across the available property panels. May be supplied by a
+          human curator or by a synthesis agent. Multiple independent
+          lines of evidence are encouraged — record each as its own
+          sentence or bullet, with citations to the underlying evidence
+          (AT run id, paper PMID/DOI, edge id, etc.) where applicable.
+          Example justifications (combine where multiple apply):
+            - "Annotation transfer to the target taxonomy is
+              indistinguishable between the pooled types: both source
+              cohorts map to the same target cluster set with comparable
+              F1 distributions (cite run_id)."
+            - "Literature reports no distinguishing electrophysiology,
+              morphology, or connectivity between the pooled types
+              (cite paper)."
+            - "Pooled types share defining markers and neurotransmitter
+              type; no differential expression of canonical
+              subtype-discriminating genes is reported."
+            - "Pool reflects the originating cohort's own grouping
+              convention (e.g. shared sample-collection criterion);
+              no further cross-panel check has been performed."
+          Absence is not a gate — it just means no justification is on
+          file. A future workflow run may populate or extend the
+          rationale; existing entries should not be overwritten without
+          curator review.
 
   SpatialColocationEvidence:
     is_a: EvidenceItem
@@ -1777,46 +2123,430 @@ classes:
 
 
 # ══════════════════════════════════════════════════════════════════
+# DISCOVERY SCORE (Stage A persistence)
+# ══════════════════════════════════════════════════════════════════
+
+  DiscoveryContext:
+    description: >
+      A named percentile context referenced by
+      DiscoveryScore.expression_detail[*].percentiles[*].context_id.
+      Each context describes the population of candidates that
+      defines "100th percentile" for that comparison. Critical for
+      downstream readers — "0.94 of 142 survivors" is not the same
+      claim as "0.94 of 5322 atlas-wide clusters". Without an
+      explicit context registry, percentile values are ambiguous
+      and cannot be interpreted by the report-time agent.
+    attributes:
+      id:
+        required: true
+        description: >
+          Local identifier (e.g. 'cohort', 'universal',
+          'anat_hippocampus') referenced by
+          GenePercentile.context_id. Stable within one
+          discovery_score block; not a global ID.
+      kind:
+        required: true
+        range: DiscoveryContextKind
+      rank:
+        range: integer
+        description: >
+          Taxonomy rank at which the context is defined (0 = leaf
+          cluster, 1 = supertype, …). For SURVIVAL_COHORT must
+          match the parent DiscoveryScore.rank.
+      n_members:
+        required: true
+        range: integer
+        description: >
+          Number of candidates in this context. Required for
+          interpreting any percentile — 0.95 of 12 is much weaker
+          discriminator than 0.95 of 500.
+      filters:
+        multivalued: true
+        description: >
+          For SURVIVAL_COHORT — the filters that defined survival
+          (e.g. ['region=hippocampal_formation', 'nt_type=Gaba']).
+          Empty for ATLAS_UNIVERSAL. Format is free-text key=value
+          intended for agent consumption, not for programmatic
+          parsing.
+      description:
+        description: >
+          Optional human-readable expansion (e.g. 'GABAergic
+          clusters annotated to hippocampal formation closure').
+          For agent consumption when the structured fields above
+          are insufficient.
+
+  GenePercentile:
+    description: >-
+      A single gene's specificity within one named context.
+    attributes:
+      context_id:
+        required: true
+        description: References DiscoveryScore.contexts[*].id.
+      pct:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+        description: >
+          Percentile of val within the context's members (0–1).
+          Interpret with the context's n_members — 0.95 of 12 is
+          a much weaker discriminator than 0.95 of 500. Null when
+          val is null (i.e. source=metadata).
+
+  GeneDiscoveryDetail:
+    description: >
+      Stage A's per-gene observation for one queried gene against
+      one candidate. Six fields capture orthogonal aspects:
+      measurement (val, reliable, source), specificity within
+      context(s) (percentiles[]), score contribution before and
+      after modifiers (raw_tier, applied_score), and rank ≥ 1
+      distribution (coverage). Read all six together; any one in
+      isolation can mislead.
+    attributes:
+      gene:
+        required: true
+        description: >
+          Gene symbol. A leading '-' marks a NEGATIVE marker —
+          i.e. the cell type was specified to NOT express this
+          gene, and credit is awarded for absence. The prefix
+          survives every downstream surface so the reading
+          polarity is never ambiguous.
+      val:
+        range: float
+        description: >
+          Precomputed mean expression (log scale) for this gene
+          on this candidate. Null when the gene is not in the
+          precomputed_stats HDF5 (source=metadata).
+      reliable:
+        range: boolean
+        description: >
+          True iff val ≥ MIN_DETECTABLE (currently 1.0). False
+          means the value is at noise floor — for positive
+          markers, treat as 'not actually expressed'; for negative
+          markers, confirms absence.
+      raw_tier:
+        range: integer
+        description: >
+          Integer tier from the cohort-relative scoring table
+          BEFORE any modifiers. Positive markers: +2 (reliable &
+          cohort_pct ≥ 0.95), +1 (reliable, cohort_pct < 0.95),
+          0 (not reliable). Negative markers: +1 (correctly
+          absent), −1 (present, cohort_pct < 0.95 — contradicts
+          but unsurprising), −2 (cohort_pct ≥ 0.95 — aberrantly
+          high). +1 for metadata-only marker assertions.
+      applied_score:
+        range: float
+        description: >
+          Score actually contributed to DiscoveryScore.score
+          after modifiers. At rank ≥ 1 the rank-0 coverage
+          dampener (sqrt(coverage)) shrinks raw_tier
+          proportionally, so applied_score = raw_tier ×
+          sqrt(coverage) when coverage is populated. At rank 0,
+          applied_score == raw_tier. When applied_score differs
+          from raw_tier, the gap is the modifier signal —
+          investigate `coverage` next.
+      source:
+        required: true
+        range: GeneDiscoverySource
+      coverage:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+        description: >
+          AT RANK ≥ 1 ONLY (null at rank 0). Fraction of this
+          candidate's rank-0 descendants that express the gene at
+          ≥ MIN_DETECTABLE. Reveals whether a supertype-mean is
+          broadly supported (coverage ≈ 0.75 — most children
+          carry the signal) or driven by a minority (coverage ≈
+          0.25 — the supertype-mean is misleading; the signal
+          probably belongs to one child cluster). Low coverage at
+          rank ≥ 1 is a HIDDEN-1:1 signal — see §1.2 of the
+          confidence review.
+      percentiles:
+        multivalued: true
+        inlined_as_list: true
+        range: GenePercentile
+        description: >
+          Per-context specificity records. Today exactly one
+          entry per gene (context_id='cohort'); the list shape is
+          forward-compatible with universal / anatomical context
+          emission.
+
+  DiscoveryAtSignal:
+    description: >
+      Cohort-scoring view of the AT hit that contributed to
+      DiscoveryScore.score. The AUTHORITATIVE AT record lives in
+      MappingEdge.evidence[] as AnnotationTransferEvidence; this
+      block exists only to make the cohort-ranking reasoning
+      auditable — i.e. "+3 of the discovery score came from an AT
+      F1 ≥ 0.5 hit".
+    attributes:
+      f1:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+      n_cells:
+        range: integer
+      target_level:
+        description: Taxonomy level of the AT target (cluster, supertype, …).
+      target_name:
+        description: Name of the AT target the source mapped to.
+      score:
+        range: integer
+        description: >
+          AT bucket contribution to DiscoveryScore.score (+1 / +2
+          / +3 at F1 thresholds ≥ floor / 0.3 / 0.5).
+
+  DiscoveryScore:
+    description: >
+      Stage A find_candidates output recorded on the MappingEdge it
+      produced. A SINGLE SIGNAL AMONG MANY — does NOT re-state
+      overall confidence. Stage A scores cohort-relative gene
+      overlap; it does NOT see AT-pooling caveats, cluster-level
+      region scatter, literature, or morphology. Report-time
+      agents must treat `score` as one input, weighed against
+      marker comparisons, AT metrics, and literature evidence —
+      never as a confidence value. See workflows/gen-report.md
+      "How to read discovery_score" for the reader's guide.
+    attributes:
+      score:
+        range: integer
+        description: >
+          Composite Stage A score for this candidate. Sum of
+          contributions from: region match (+2), NT match (+2),
+          per-gene marker tiers (see
+          GeneDiscoveryDetail.applied_score), AT-F1 bucket
+          (+1/+2/+3 at thresholds F1 ≥ floor / 0.3 / 0.5),
+          region-exact bonus (+1), optional criteria.
+          Cohort-relative ranking matters more than the absolute
+          number; compare against `next_best_score` and
+          `cohort_size`.
+      rank_in_cohort:
+        range: integer
+        description: >
+          1-based rank of this candidate in the discovery cohort
+          (1 = top scorer). Combined with `cohort_size` and
+          `next_best_score`, lets the report-time agent reason
+          about cohort dominance.
+      cohort_size:
+        range: integer
+        description: >
+          Total number of candidates returned by this discovery
+          pass — i.e. members of the SURVIVAL_COHORT context (see
+          contexts[]). Required to interpret `rank_in_cohort` and
+          any `cohort` percentile.
+      next_best_score:
+        range: integer
+        description: >
+          Score of the cohort runner-up. A large gap (e.g. 8 vs
+          3) indicates the top candidate dominated the cohort; a
+          small gap signals ambiguity between near-tied
+          candidates.
+      rank:
+        range: integer
+        description: >
+          Taxonomy rank queried at Stage A (0 = leaf cluster,
+          1 = supertype, 2 = subclass, …). Determines whether
+          GeneDiscoveryDetail.coverage is populated (only at rank
+          ≥ 1).
+      region_fraction:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+        description: >
+          cells-in-queried-region / total annotated cells at this
+          candidate. 1.0 = candidate sits entirely inside the
+          queried region. Low values may push the predicate
+          toward PartialOverlapMatch (see §1.7 of the confidence
+          review).
+      region_evidence:
+        range: DiscoveryRegionEvidence
+      contexts:
+        multivalued: true
+        inlined_as_list: true
+        range: DiscoveryContext
+        description: >
+          Registry of percentile contexts referenced by
+          expression_detail[*].percentiles[*].context_id. Today
+          only SURVIVAL_COHORT (id='cohort') is emitted; future
+          passes may add ATLAS_UNIVERSAL or
+          ANATOMICAL_RESTRICTION. Each context captures the
+          cohort definition so a reader can interpret a
+          percentile correctly.
+      expression_detail:
+        multivalued: true
+        inlined_as_list: true
+        range: GeneDiscoveryDetail
+        description: >
+          Per-gene record of what Stage A saw for the genes the
+          curator queried. Negative markers are keyed with a '-'
+          prefix on `gene` (e.g. '-Slc17a7') and earn credit for
+          being ABSENT.
+      at_signal:
+        range: DiscoveryAtSignal
+        description: >
+          Optional. Annotation-transfer hit that contributed to
+          `score`. Cohort-scoring provenance only — the
+          authoritative AT record lives in
+          MappingEdge.evidence[] as AnnotationTransferEvidence.
+
+
+# ══════════════════════════════════════════════════════════════════
 # GRAPH EDGES
 # ══════════════════════════════════════════════════════════════════
 
   MappingEdge:
     description: >
       An evidenced mapping assertion between two CellTypeNodes.
-      Edges are directional (type_a → type_b) but the relationship field
-      describes the nature of the correspondence, not a hierarchy.
+      Edges are directional (lit_type → taxonomy_type) but the
+      relationship field describes the nature of the correspondence,
+      not a hierarchy.
 
       Transitivity: edges can be chained. E.g.:
-        classical_lugaro --[EQUIVALENT, Osorno 2022]--> pli3_osorno
-        pli3_osorno --[EQUIVALENT, MapMyCells]--> wmb_supertype_1145
+        classical_lugaro --[skos:exactMatch, Osorno 2022]--> pli3_osorno
+        pli3_osorno --[skos:exactMatch, MapMyCells]--> wmb_supertype_1145
 
-      Cross-cutting: use multiple edges, all pointing at the same type_b:
-        classical_basket --[CROSS_CUTTING, Kozareva 2021]--> mli1_kozareva
-        classical_stellate --[PARTIAL_OVERLAP, Kozareva 2021]--> mli1_kozareva
+      Cross-cutting: use multiple edges, all pointing at the same taxonomy_type:
+        classical_basket   --[evidencell:CrossCuttingMatch]--> mli1_kozareva
+        classical_stellate --[evidencell:PartialOverlapMatch]--> mli1_kozareva
+
+      Splits / merges: use one edge per pair, all with
+      skos:broadMatch (split) or skos:narrowMatch (merge), each carrying
+      mapping_cardinality 1:n or n:1.
+
+      Phase 2 schema overhaul (2026-05-12): type_a → lit_type, type_b →
+      taxonomy_type. The old slot names are retained as deprecated
+      aliases for the PR1 → PR2 transition window; drop after KB sweep
+      completes.
     attributes:
       id:
         required: true
         identifier: true
         description: Unique edge ID, e.g. "edge_lugaro_to_pli3"
-      type_a:
-        required: true
-        range: CellTypeNode
-        description: ID of the source node (reference to CellTypeNode.id)
-      type_b:
+      lit_type:
         required: true
         range: CellTypeNode
         description: >
-          ID of the target node (reference to CellTypeNode.id).
-          For atlas/taxonomy nodes, use the cell_set_accession as the id
-          (e.g. CS20230722_SUPT_0179). The node must be declared in the
-          graph's nodes list — a minimal stub (id, name, definition_basis,
-          taxonomy_id, cell_set_accession) suffices for taxonomy references.
+          ID of the source node (reference to CellTypeNode.id). Typically
+          a curated literature / classical type. Renamed from `type_a`
+          in the Phase 2 schema overhaul (PR2 KB sweep, 2026-05-12).
+      taxonomy_type:
+        required: true
+        range: CellTypeNode
+        description: >
+          ID of the target node (reference to CellTypeNode.id). Typically
+          an atlas / transcriptomic taxonomy node. For atlas/taxonomy
+          nodes, use the cell_set_accession as the id (e.g.
+          CS20230722_SUPT_0179). The node must be declared in the graph's
+          nodes list — a minimal stub (id, name, definition_basis,
+          taxonomy_id, cell_set_accession) suffices for taxonomy
+          references. Renamed from `type_b` in the Phase 2 schema
+          overhaul (PR2 KB sweep, 2026-05-12).
       relationship:
         required: true
         range: MappingRelationship
+      mapping_cardinality:
+        range: MappingCardinality
+        description: >
+          Cardinality of the mapping as a set relation. Required when
+          relationship is skos:broadMatch or skos:narrowMatch;
+          recommended on skos:exactMatch / skos:closeMatch (typically
+          1:1). Phase 2 schema overhaul (2026-05-12).
+      mapping_justification:
+        range: MappingJustification
+        description: >
+          Provenance of the mapping decision. Default for new edges:
+          semapv:UnreviewedManualMapping. Promote to
+          semapv:ManualMappingCuration on curator review. Phase 2
+          schema overhaul (2026-05-12).
       confidence:
-        required: true
         range: MappingConfidence
+        description: >
+          Ordinal mapping verdict. Phase 3 (2026-05-13): authority for
+          this slot moved from Stage B (map-cell-type Step 3 synthesis)
+          to report time (gen-report synthesis). Set by the report-gen
+          agent alongside `confidence_score`, `rationale`, and the
+          `rationale_*` provenance fields. Optional (`required: false`)
+          because edges that have not been through report generation
+          carry no headline verdict — honest state, not a regression.
+          Pre-Phase-3 edges were swept clear of `confidence` in the
+          Phase 3 invalidation migration; they regain it on the first
+          gen-report pass. Spreadsheet / CAP exports should render
+          edges with no confidence as "(verdict pending)".
+      confidence_score:
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+        description: >
+          Numeric confidence (0-1). Phase 3 (2026-05-13): written by
+          the report-time agent alongside the ordinal `confidence`;
+          the two agree by construction. Not curator-derived; no
+          ordinal → numeric fallback. SSSOM-compatible.
+      rationale:
+        description: >
+          Short prose verdict distilled from the full report by the
+          report-time agent. Phase 3 (2026-05-13). Format constraint:
+          must cite specific structured fields (F1 values, accessions,
+          marker counts) rather than free-form claims; an automated
+          post-write check parses these citations and verifies them
+          against the edge's structured data and references. The agent
+          MUST NOT read prior `rationale` / `confidence` /
+          `confidence_score` as input when regenerating — inputs are
+          structured data + evidence + property_comparisons + the
+          pool-candidates pre-pass.
+      report_path:
+        description: >
+          Relative path or URL to the full report that backs the
+          `rationale`. Phase 3 (2026-05-13). Written by the report-gen
+          orchestrator at write-back time.
+      rationale_generated_at:
+        range: datetime
+        description: >
+          Timestamp at which the report-time agent wrote `rationale`.
+          Phase 3 (2026-05-13).
+      rationale_source_hash:
+        description: >
+          SHA256 8-char digest over the canonical edge + endpoint-node
+          payload at rationale-generation time (excluding the
+          rationale-suite fields themselves). On every read and on
+          `just qc`, the hash is recomputed from current state and
+          compared; mismatch marks the rationale stale (still shown,
+          flagged for regeneration). Whole-edge granularity — any
+          change in the hashed inputs invalidates the whole rationale.
+          Phase 3 (2026-05-13).
+      reconciliation_note:
+        description: >
+          Structured cross-edge note. Two uses:
+          (1) Phase 2 framing — curator's synthesis when parallel
+          evidence sources DISAGREE (e.g. divergent F1 from two AT
+          runs on different datasets, or marker evidence pointing one
+          way while anatomy points another); distinct from per-property
+          notes / rationale fields.
+          (2) Phase 3 (2026-05-13) extension — agent-side cross-edge
+          indistinguishability note. When the report-time agent calls
+          two source groups indistinguishable across available property
+          panels (the Winterer Sst-OLM / Htr3a-OLM pattern; see #61,
+          #62), the structured cross-reference goes here while the
+          per-edge narrative goes in `rationale`. Paired with a
+          lit-to-lit `skos:closeMatch` edge when the indistinguishability
+          spans all available panels (not just AT).
+      reviewed_by:
+        description: >
+          Name or ORCID of the human reviewer who confirmed this edge,
+          distinct from the curator who created or last edited the
+          record. Phase 2 schema overhaul (2026-05-12).
+      discovery_score:
+        range: DiscoveryScore
+        description: >
+          Stage A find_candidates output for this candidate,
+          recorded verbatim on the edge that consumed it. A single
+          signal among many — NOT a re-statement of overall
+          confidence. See the DiscoveryScore class description and
+          the gen-report "How to read discovery_score" prompt for
+          reader guidance. Populated by Stage B at edge creation
+          (workflows/map-cell-type.md Step 3) or by backfill from
+          on-disk discovery JSONs (just backfill-discovery-score).
+          Optional — edges that predate the discovery JSON
+          convention will have no value.
       evidence:
         required: true
         multivalued: true
@@ -1828,10 +2558,11 @@ classes:
         inlined_as_list: true
         range: PropertyComparison
         description: >
-          Structured property-by-property comparison between type_a and type_b.
-          Makes the basis for the confidence judgment machine-readable and
-          surfaceable in reports. Populate at minimum: nt_type, location,
-          and all defining markers. Use NOT_ASSESSED where data is unavailable.
+          Structured property-by-property comparison between lit_type and
+          taxonomy_type. Makes the basis for the confidence judgment
+          machine-readable and surfaceable in reports. Populate at
+          minimum: nt_type, location, and all defining markers. Use
+          NOT_ASSESSED where data is unavailable.
       caveats:
         multivalued: true
         inlined_as_list: true

@@ -42,7 +42,7 @@ Total: 2 edges.
 
 ### Supporting evidence
 
-- **Annotation transfer (GEO:GSE99888, Cck.Cxcl14.Vip — PARTIAL).** Harris 2018 Class Cck.Cxcl14.Vip (CCK+/Cxcl14+/Vip+ CA1 inhibitory cluster, n=72 cells in the 3,663-cell dataset) maps to [CS20230722_SUPT_0187] Sncg Gaba_3 with F1=0.768 and group_purity=0.951 at SUPERTYPE level. Group_purity=0.951 means 95.1% of the Cck.Cxcl14.Vip Harris cells concentrate at a single supertype — a strong directional signal. This is the CCK-expressing Harris cluster with the strongest directional signal to any single WMBv1 supertype. Consistent with Fuzik et al. 2015 (PMID:26689544) and Saunders et al. 2024 (PMID:38840081) classifying CCK+ cells within the Sncg transcriptomic class.
+- **Annotation transfer (GEO:GSE99888, Cck.Cxcl14.Vip — PARTIAL).** Harris 2018 Class Cck.Cxcl14.Vip (CCK+/Cxcl14+/Vip+ CA1 inhibitory cluster, n=72 cells in the 3,663-cell dataset) maps to [CS20230722_SUPT_0187] Sncg Gaba_3 with F1=0.768 and coverage=0.951 at SUPERTYPE level. Group_purity=0.951 means 95.1% of the Cck.Cxcl14.Vip Harris cells concentrate at a single supertype — a strong directional signal. This is the CCK-expressing Harris cluster with the strongest directional signal to any single WMBv1 supertype. Consistent with Fuzik et al. 2015 (PMID:26689544) and Saunders et al. 2024 (PMID:38840081) classifying CCK+ cells within the Sncg transcriptomic class.
 
 **Concerns and caveats:**
 

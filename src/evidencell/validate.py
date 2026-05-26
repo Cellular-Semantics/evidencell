@@ -29,7 +29,7 @@ def structural_checks(doc: dict) -> list[str]:
 
     Checks:
     - No duplicate node IDs
-    - Edge type_a / type_b reference existing node IDs
+    - Edge lit_type / taxonomy_type reference existing node IDs
     - Each edge has at least one evidence item
     - No empty or placeholder snippet values in LiteratureEvidence
     - Terminal nodes (is_terminal=true) have cell_set_accession populated
@@ -55,7 +55,7 @@ def structural_checks(doc: dict) -> list[str]:
         eid = edge.get("id", "<unnamed edge>")
 
         # Endpoint references
-        for ref_field in ("type_a", "type_b"):
+        for ref_field in ("lit_type", "taxonomy_type"):
             ref = edge.get(ref_field)
             if ref and ref not in node_ids:
                 errors.append(
@@ -281,6 +281,42 @@ def check_run_refs(doc: dict, index_path: Path) -> list[str]:
 
 
 # ── Edit simulation ────────────────────────────────────────────────────────────
+
+def check_rationale_currency(doc: dict) -> list[str]:
+    """Phase 3: for each edge with a stored ``rationale_source_hash``,
+    recompute the hash from current state and compare. Mismatch =>
+    return a warning string flagging the rationale as stale. Edges
+    without a stored hash are ignored (they're either pre-Phase-3
+    legacy stubs or just haven't been through gen-report yet — the
+    "(verdict pending)" rendering convention covers them).
+
+    Non-blocking — surfaced as warnings, not errors. Caller decides
+    whether to treat as advisory or actionable.
+    """
+    from . import _rationale_hash
+
+    warnings: list[str] = []
+    nodes_by_id: dict[str, dict] = {}
+    for n in doc.get("nodes") or []:
+        if isinstance(n, dict) and n.get("id"):
+            nodes_by_id[n["id"]] = n
+    for edge in doc.get("edges") or []:
+        if not isinstance(edge, dict):
+            continue
+        stored = edge.get("rationale_source_hash")
+        if not stored:
+            continue
+        lit_node = nodes_by_id.get(edge.get("lit_type") or "")
+        tax_node = nodes_by_id.get(edge.get("taxonomy_type") or "")
+        if _rationale_hash.is_stale(edge, lit_node, tax_node):
+            current = _rationale_hash.compute_hash(edge, lit_node, tax_node)
+            warnings.append(
+                f"Edge '{edge.get('id', '<unnamed>')}': rationale stale — "
+                f"stored hash {stored}, current {current}. "
+                f"Regenerate report via just gen-report-node."
+            )
+    return warnings
+
 
 def simulate_edit(tool_name: str, tool_input: dict, file_path: Path) -> str:
     """

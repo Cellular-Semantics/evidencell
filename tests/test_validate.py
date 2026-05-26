@@ -36,8 +36,8 @@ def _node(id: str, is_terminal: bool = False, cell_set_accession: str | None = N
 def _edge(id: str, type_a: str, type_b: str, evidence: list | None = None) -> dict:
     return {
         "id": id,
-        "type_a": type_a,
-        "type_b": type_b,
+        "lit_type": type_a,
+        "taxonomy_type": type_b,
         "evidence": evidence if evidence is not None else [{"snippet": "Real verbatim text."}],
     }
 
@@ -79,22 +79,22 @@ def test_duplicate_node_id():
 
 # ── Edge endpoint references ──────────────────────────────────────────────────
 
-def test_edge_type_a_missing_node():
+def test_edge_lit_type_missing_node():
     doc = {
         "nodes": [_node("B")],
         "edges": [_edge("e1", "NONEXISTENT", "B")],
     }
     errors = structural_checks(doc)
-    assert any("type_a" in e and "NONEXISTENT" in e for e in errors)
+    assert any("lit_type" in e and "NONEXISTENT" in e for e in errors)
 
 
-def test_edge_type_b_missing_node():
+def test_edge_taxonomy_type_missing_node():
     doc = {
         "nodes": [_node("A")],
         "edges": [_edge("e1", "A", "NONEXISTENT")],
     }
     errors = structural_checks(doc)
-    assert any("type_b" in e and "NONEXISTENT" in e for e in errors)
+    assert any("taxonomy_type" in e and "NONEXISTENT" in e for e in errors)
 
 
 def test_edge_both_endpoints_valid():
@@ -110,7 +110,7 @@ def test_edge_both_endpoints_valid():
 def test_edge_missing_evidence_key():
     doc = {
         "nodes": [_node("A"), _node("B")],
-        "edges": [{"id": "e1", "type_a": "A", "type_b": "B"}],
+        "edges": [{"id": "e1", "lit_type": "A", "taxonomy_type": "B"}],
     }
     errors = structural_checks(doc)
     assert any("evidence" in e for e in errors)
@@ -119,7 +119,7 @@ def test_edge_missing_evidence_key():
 def test_edge_empty_evidence_list():
     doc = {
         "nodes": [_node("A"), _node("B")],
-        "edges": [{"id": "e1", "type_a": "A", "type_b": "B", "evidence": []}],
+        "edges": [{"id": "e1", "lit_type": "A", "taxonomy_type": "B", "evidence": []}],
     }
     errors = structural_checks(doc)
     assert any("non-empty list" in e for e in errors)
@@ -128,7 +128,7 @@ def test_edge_empty_evidence_list():
 def test_edge_null_evidence():
     doc = {
         "nodes": [_node("A"), _node("B")],
-        "edges": [{"id": "e1", "type_a": "A", "type_b": "B", "evidence": None}],
+        "edges": [{"id": "e1", "lit_type": "A", "taxonomy_type": "B", "evidence": None}],
     }
     errors = structural_checks(doc)
     assert any("non-empty list" in e for e in errors)

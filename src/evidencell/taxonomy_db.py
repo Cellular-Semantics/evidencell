@@ -2364,6 +2364,7 @@ class TaxonomyDB:
                             "val": val,
                             "reliable": reliable,
                             "cohort_pct": round(cohort_pct, 3),
+                            "raw_tier": tier,
                             "score": (
                                 round(delta, 3)
                                 if isinstance(delta, float)
@@ -2384,6 +2385,7 @@ class TaxonomyDB:
                             "val": None,
                             "reliable": None,
                             "cohort_pct": None,
+                            "raw_tier": 1,
                             "score": 1,
                             "source": "metadata",
                         }
@@ -2404,6 +2406,7 @@ class TaxonomyDB:
                             "val": val,
                             "reliable": reliable,
                             "cohort_pct": round(cohort_pct, 3),
+                            "raw_tier": tier,
                             "score": tier,
                             "source": "expression",
                         }
@@ -2416,6 +2419,7 @@ class TaxonomyDB:
                             "val": None,
                             "reliable": None,
                             "cohort_pct": None,
+                            "raw_tier": -1,
                             "score": -1,
                             "source": "metadata",
                         }
@@ -3132,53 +3136,118 @@ def _cmd_find_candidates(
     # If qualifying pool < K, all are emitted.
     candidates = candidates[:top_k]
 
-    # Output JSON
+    # Build the SURVIVAL_COHORT filters list from active query parameters.
+    # Format is free-text 'key=value' for agent consumption; not for
+    # programmatic parsing downstream.
+    cohort_filters: list[str] = []
+    if mba_ids:
+        cohort_filters.append(f"region={','.join(mba_ids)}")
+    if nt_type:
+        cohort_filters.append(f"nt_type={nt_type}")
+    if optional_criteria:
+        for k, v in optional_criteria.items():
+            cohort_filters.append(f"{k}={v}")
+
+    cohort_size = len(candidates)
+    next_best_score = (
+        int(candidates[1]["_score"]) if cohort_size >= 2 else 0
+    )
+
+    def _build_discovery_score(c: dict, idx: int) -> dict:
+        """Assemble the per-candidate discovery_score block matching
+        MappingEdge.discovery_score schema. Stage B / backfill copy
+        this block verbatim onto created edges; gen-facts forwards it
+        to the report-time agent."""
+        contexts = [
+            {
+                "id": "cohort",
+                "kind": "SURVIVAL_COHORT",
+                "rank": rank,
+                "n_members": cohort_size,
+                "filters": cohort_filters,
+            }
+        ]
+        flat = c.get("_expression_detail") or {}
+        expr_list: list[dict] = []
+        for gene_key, entry in flat.items():
+            cohort_pct = entry.get("cohort_pct")
+            percentiles: list[dict] = []
+            if cohort_pct is not None:
+                percentiles.append(
+                    {"context_id": "cohort", "pct": cohort_pct}
+                )
+            raw_tier = entry.get("raw_tier")
+            applied = entry.get("score")
+            gd: dict = {
+                "gene": gene_key,
+                "val": entry.get("val"),
+                "reliable": entry.get("reliable"),
+                "raw_tier": raw_tier,
+                "applied_score": (
+                    float(applied) if applied is not None else None
+                ),
+                "source": (
+                    entry.get("source", "EXPRESSION").upper()
+                    if entry.get("source") else "EXPRESSION"
+                ),
+                "percentiles": percentiles,
+            }
+            if "coverage" in entry:
+                gd["coverage"] = entry["coverage"]
+            expr_list.append(gd)
+
+        block: dict = {
+            "score": int(c["_score"]),
+            "rank_in_cohort": idx + 1,
+            "cohort_size": cohort_size,
+            "next_best_score": next_best_score,
+            "rank": rank,
+            "contexts": contexts,
+            "expression_detail": expr_list,
+        }
+        if c.get("_region_fraction") is not None:
+            block["region_fraction"] = c["_region_fraction"]
+        if c.get("_region_evidence"):
+            # Internal scoring uses lowercase 'self' / 'descendant_only';
+            # the schema enum uses uppercase. Map on emission so
+            # at_blind.py's lowercase consumer (which reads the
+            # internal `_region_evidence`) is unaffected.
+            block["region_evidence"] = c["_region_evidence"].upper()
+        if c.get("_at_hit"):
+            hit = c["_at_hit"]
+            block["at_signal"] = {
+                "f1": hit.get("f1"),
+                "n_cells": hit.get("n_cells"),
+                "target_level": hit.get("target_level"),
+                "target_name": hit.get("target_name"),
+                "score": hit.get("score"),
+            }
+        return block
+
+    # Output JSON. Per-candidate `discovery_score` block mirrors the
+    # MappingEdge.discovery_score schema verbatim, so Stage B writeback
+    # and the backfill module are pure transcription (no transformation).
     output = {
         "classical_node_id": node_id,
         "classical_node_name": classical.get("name", ""),
         "taxonomy_id": taxonomy_id,
         "rank": rank,
-        "n_candidates": len(candidates),
+        "n_candidates": cohort_size,
         "candidates": [
             {
                 "node_id": c["node_id"],
                 "label": c["label"],
                 "taxonomy_level": c["taxonomy_level"],
                 "taxonomy_rank": c.get("taxonomy_rank"),
-                "score": c["_score"],
                 "nt_type": c.get("nt_type"),
                 "parent_id": c.get("parent_id"),
                 **({"male_female_ratio": c["male_female_ratio"]}
                    if c.get("male_female_ratio") is not None else {}),
                 **({"criteria_applied": c["_criteria_applied"]}
                    if c.get("_criteria_applied") else {}),
-                # Gap 7: emit per-gene scoring detail so downstream consumers
-                # (refinement subagent, mapping subagent, report generation)
-                # can see val / sibling_pct / global_pct / score per gene
-                # without re-deriving them.
-                **({"expression_detail": c["_expression_detail"]}
-                   if c.get("_expression_detail") else {}),
-                # Region fraction (cells in queried region / total annotated
-                # cells). Recorded but not used for filtering or scoring at
-                # Phase 1 — see roadmap §3.3 note on "in region + distant"
-                # cases. Available for Phase 2 predicate selection
-                # (low fraction supports BROADER / PARTIAL_OVERLAP) and
-                # Phase 3 verdict-at-report-time.
-                **({"region_fraction": c["_region_fraction"]}
-                   if c.get("_region_fraction") is not None else {}),
-                # `region_evidence == "descendant_only"` flags candidates
-                # rescued by the rank-0-descendant anat fallback (BCKG
-                # workaround). Surface so callers can downweight or
-                # report the rescue origin.
-                **({"region_evidence": c["_region_evidence"]}
-                   if c.get("_region_evidence") else {}),
-                # Annotation-transfer hit (commit 4 / gap 9). Present when
-                # MapMyCells F1 hits were loaded for this (classical,
-                # taxonomy) pair and this candidate is among them.
-                **({"at_hit": c["_at_hit"]}
-                   if c.get("_at_hit") else {}),
+                "discovery_score": _build_discovery_score(c, i),
             }
-            for c in candidates
+            for i, c in enumerate(candidates)
         ],
     }
     print(json.dumps(output, indent=2))

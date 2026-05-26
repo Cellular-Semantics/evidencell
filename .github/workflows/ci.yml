@@ -4,7 +4,12 @@ on:
   push:
     branches: ["main", "report_gen"]
   pull_request:
-    branches: ["main"]
+    # `*refactor*` glob covers umbrella branches like
+    # `map_cell_type_refactor_phase2_3` so PRs targeting a long-lived
+    # refactor branch get the same CI as PRs targeting main. GitHub
+    # reads this filter from the BASE branch's copy of the workflow
+    # — keep this entry on every umbrella branch that needs CI.
+    branches: ["main", "*refactor*"]
 
 jobs:
   test:
@@ -14,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v8
+        uses: astral-sh/setup-uv@v8.1.0
         with:
           enable-cache: true
 
@@ -39,7 +44,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v8
+        uses: astral-sh/setup-uv@v8.1.0
         with:
           enable-cache: true
 

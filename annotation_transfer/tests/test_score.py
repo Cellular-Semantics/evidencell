@@ -57,10 +57,10 @@ class TestComputeF1Matrix:
         result = compute_f1_matrix(df, labels)
 
         assert not result.empty
-        # At every level, group_purity and target_purity should be 1.0
+        # At every level, coverage and purity should be 1.0
         for _, row in result.iterrows():
-            assert row["group_purity"] == pytest.approx(1.0)
-            assert row["target_purity"] == pytest.approx(1.0)
+            assert row["coverage"] == pytest.approx(1.0)
+            assert row["purity"] == pytest.approx(1.0)
             assert row["f1"] == pytest.approx(1.0)
 
     def test_two_groups_one_target(self):
@@ -73,12 +73,12 @@ class TestComputeF1Matrix:
         assert len(cluster_rows) == 2
 
         type_a = cluster_rows[cluster_rows["source_label"] == "TypeA"]
-        assert type_a["group_purity"].values[0] == pytest.approx(1.0)
-        assert type_a["target_purity"].values[0] == pytest.approx(0.6)
+        assert type_a["coverage"].values[0] == pytest.approx(1.0)
+        assert type_a["purity"].values[0] == pytest.approx(0.6)
 
         type_b = cluster_rows[cluster_rows["source_label"] == "TypeB"]
-        assert type_b["group_purity"].values[0] == pytest.approx(1.0)
-        assert type_b["target_purity"].values[0] == pytest.approx(0.4)
+        assert type_b["coverage"].values[0] == pytest.approx(1.0)
+        assert type_b["purity"].values[0] == pytest.approx(0.4)
 
     def test_two_groups_two_targets(self):
         """Two groups mapping to different targets → each has F1 = 1.0."""
@@ -179,7 +179,7 @@ class TestBestMappings:
         assert set(best["source_label"]) == {"TypeA", "TypeB"}
         assert set(best.columns) == {
             "source_label", "level", "best_target",
-            "group_purity", "target_purity", "f1", "n_cells", "median_boot",
+            "coverage", "purity", "f1", "n_cells", "median_boot",
         }
 
     def test_empty_input(self):

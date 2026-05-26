@@ -25,6 +25,7 @@ from typing import Iterable
 
 import yaml
 
+
 from evidencell.paths import (
     repo_root,
     reports_dir_for_region,
@@ -48,7 +49,7 @@ def _confidence_rank(value: str | None) -> int:
 class Edge:
     classical_id: str
     taxonomy_node_id: str
-    confidence: str
+    confidence: str | None  # Phase 3: optional — set at report time, not Stage B
     region: str
     source_file: Path
     relationship: str | None = None
@@ -84,10 +85,11 @@ def load_mappings(kb_root: Path | None = None) -> list[Edge]:
             for edge in edges:
                 if not isinstance(edge, dict):
                     continue
-                a = edge.get("type_a")
-                b = edge.get("type_b")
-                conf = edge.get("confidence")
-                if not (a and b and conf):
+                a = edge.get("lit_type")
+                b = edge.get("taxonomy_type")
+                conf = edge.get("confidence")  # may be None (Phase 3:
+                                               # report-time-owned slot)
+                if not (a and b):
                     continue
                 key = (a, b)
                 by_classical_target[key] = Edge(
@@ -179,7 +181,7 @@ def attach_edges(
     if threshold < 0:
         raise ValueError(f"Unknown confidence: {min_confidence}")
     for edge in edges:
-        if _confidence_rank(edge.confidence) < threshold:
+        if edge.confidence and _confidence_rank(edge.confidence) < threshold:
             continue
         node = nodes.get(edge.taxonomy_node_id)
         if node is None:
@@ -254,7 +256,13 @@ def _load_enum_descriptions(enum_name: str) -> dict[str, str]:
 
 
 def _collect_used_terms(roots: list[TaxonomyNode]) -> tuple[set[str], set[str]]:
-    """Walk surviving tree; return (relationships_used, confidences_used)."""
+    """Walk surviving tree; return (relationships_used, confidences_used).
+
+    Edges without a `confidence` value (Phase 3: report-time-owned slot
+    that may be null on edges that have not been through gen-report) are
+    not counted in the confidence-used set — they appear in the TOC with
+    a "(verdict pending)" tag rendered elsewhere.
+    """
     rels: set[str] = set()
     confs: set[str] = set()
     stack = list(roots)
@@ -263,9 +271,25 @@ def _collect_used_terms(roots: list[TaxonomyNode]) -> tuple[set[str], set[str]]:
         for edge in node.edges:
             if edge.relationship:
                 rels.add(edge.relationship)
-            confs.add(edge.confidence)
+            if edge.confidence:
+                confs.add(edge.confidence)
         stack.extend(node.children)
     return rels, confs
+
+
+_SKOS_DIRECTION_PREAMBLE = (
+    "**Direction convention.** Mapping relationships are read from the "
+    "`lit_type` (subject) to the `taxonomy_type` (object). "
+    "`skos:broadMatch` and `skos:narrowMatch` describe the *match target*, "
+    "not the subject — e.g. `skos:broadMatch` means the taxonomy_type is "
+    "broader than the lit_type.\n\n"
+    "**Worked example.** `OLM --skos:broadMatch--> Sst Gaba_3 supertype` "
+    "reads as *\"OLM has a broad match — the supertype is the broader "
+    "thing\"*. OLM is one of several types within the supertype; "
+    "cardinality is `1:n`.\n\n"
+    "See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) "
+    "for worked examples and cardinality interaction."
+)
 
 
 def _render_glossary(
@@ -274,23 +298,32 @@ def _render_glossary(
     *,
     heading_offset: int = 0,
 ) -> list[str]:
-    """Emit a glossary section for the relationship + confidence terms in use."""
-    if not rels_used and not confs_used:
-        return []
+    """Emit a complete glossary of mapping relationships and confidence
+    levels. All schema-defined values are listed so the reader can see
+    the full vocabulary, not just what happens to appear in this TOC.
+    The `rels_used` / `confs_used` arguments are retained for signature
+    stability but no longer drive filtering.
+    """
+    del rels_used, confs_used
     rel_descs = _load_enum_descriptions("MappingRelationship")
     conf_descs = _load_enum_descriptions("MappingConfidence")
+    if not rel_descs and not conf_descs:
+        return []
     h = "#" * (2 + heading_offset)
     sub = "#" * (3 + heading_offset)
-    lines = [f"{h} Glossary", ""]
-    if rels_used:
+    lines = [f"{h} Glossary", "", _SKOS_DIRECTION_PREAMBLE, ""]
+    if rel_descs:
         lines += [f"{sub} Mapping relationship", ""]
-        for term in sorted(rels_used):
+        for term in sorted(rel_descs):
             desc = rel_descs.get(term, "")
-            lines.append(f"- **{term}** — {desc}" if desc else f"- **{term}**")
+            lines.append(f"- **`{term}`** — {desc}" if desc else f"- **`{term}`**")
         lines.append("")
-    if confs_used:
+    if conf_descs:
         lines += [f"{sub} Mapping confidence", ""]
-        for term in sorted(confs_used, key=lambda c: -CONFIDENCE_ORDER.index(c) if c in CONFIDENCE_ORDER else 0):
+        for term in sorted(
+            conf_descs,
+            key=lambda c: -CONFIDENCE_ORDER.index(c) if c in CONFIDENCE_ORDER else 0,
+        ):
             desc = conf_descs.get(term, "")
             lines.append(f"- **{term}** — {desc}" if desc else f"- **{term}**")
         lines.append("")
@@ -372,7 +405,8 @@ def _emit_node(
             else:
                 link = ""
             label = edge.classical_id
-            tags = " · ".join(t for t in (edge.relationship, edge.confidence) if t)
+            conf_tag = edge.confidence if edge.confidence else "verdict pending"
+            tags = " · ".join(t for t in (edge.relationship, conf_tag) if t)
             if link:
                 lines.append(f"- [{label}]({link}) — {tags}")
             else:

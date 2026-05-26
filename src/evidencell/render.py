@@ -23,6 +23,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
+
 import yaml
 
 
@@ -50,15 +51,27 @@ EVIDENCE_TYPE_LABELS = {
     "BULK_CORRELATION": "Bulk correlation",
 }
 REL_LABELS = {
-    "EQUIVALENT": "≡ EQUIVALENT",
-    "PARTIAL_OVERLAP": "~ PARTIAL OVERLAP",
-    "CROSS_CUTTING": "✕ CROSS-CUTTING",
-    "TYPE_A_SPLITS": "→ TYPE_A_SPLITS",
-    "TYPE_A_MERGES": "← TYPE_A_MERGES",
-    "SUBSET": "⊂ SUBSET",
-    "SUPERSET": "⊃ SUPERSET",
-    "NO_CORRESPONDENCE": "∅ NO CORRESPONDENCE",
-    "UNCERTAIN": "? UNCERTAIN",
+    # Phase 2 CURIE-style relationship identifiers (canonical).
+    "skos:exactMatch":                  "≡ exactMatch",
+    "skos:closeMatch":                  "≈ closeMatch",
+    "skos:broadMatch":                  "↑ broadMatch",
+    "skos:narrowMatch":                 "↓ narrowMatch",
+    "evidencell:PartialOverlapMatch":   "~ partial overlap",
+    "evidencell:CrossCuttingMatch":     "✕ cross-cutting",
+    "evidencell:NoCorrespondence":      "∅ no correspondence",
+    # Deprecated ALL_CAPS values — retained for back-compat reads via
+    # when PR2 KB sweep completes.
+    "EQUIVALENT":         "≡ exactMatch",
+    "PARTIAL_OVERLAP":    "~ partial overlap",
+    "CROSS_CUTTING":      "✕ cross-cutting",
+    "TYPE_A_SPLITS":      "↑ broadMatch (1:n)",
+    "TYPE_A_MERGES":      "↓ narrowMatch (n:1)",
+    "SUBSET":             "↑ broadMatch (1:1)",
+    "SUPERSET":           "↓ narrowMatch (n:1)",
+    "NO_CORRESPONDENCE":  "∅ no correspondence",
+    "UNCERTAIN":          "? uncertain",
+    "OVERLAPS":           "≈ closeMatch",
+    "CANDIDATE_SYNONYM":  "≈ closeMatch (unreviewed)",
 }
 
 MERFISH_LOCATION_NOTE = (
@@ -651,7 +664,7 @@ def extract_methods_summary(
     """
     from datetime import datetime, timezone
 
-    edges = [e for e in graph.get("edges", []) if e.get("type_a") == node_id]
+    edges = [e for e in graph.get("edges", []) if e.get("lit_type") == node_id]
 
     evidence_type_counts: dict[str, int] = {}
     bulk_runs: list[dict] = []
@@ -844,7 +857,7 @@ def build_reference_index(
     """
     nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
     all_edges = graph.get("edges", [])
-    edges = [e for e in all_edges if e.get("type_a") == node_id] if node_id else all_edges
+    edges = [e for e in all_edges if e.get("lit_type") == node_id] if node_id else all_edges
 
     lit_n = [0]    # running counter for [1]..[N]
     qry_n = [0]    # running counter for [A]..[Z]
@@ -1065,8 +1078,8 @@ def _candidate_verdict(edge: dict, nodes_by_id: dict) -> str:
 
 
 def _best_edge(edges: list[dict], node_id: str) -> dict | None:
-    """Return highest-confidence edge where type_a == node_id."""
-    candidates = [e for e in edges if e.get("type_a") == node_id]
+    """Return highest-confidence edge where lit_type == node_id."""
+    candidates = [e for e in edges if e.get("lit_type") == node_id]
     if not candidates:
         return None
     return min(candidates, key=lambda e: CONF_ORDER.get(e.get("confidence", "REFUTED"), 99))
@@ -1165,7 +1178,7 @@ def _open_taxonomy_db(taxonomy_id: str) -> "object | None":
 
 
 def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) -> dict:
-    """Extract display info for the atlas (type_b) node of an edge.
+    """Extract display info for the atlas (taxonomy_type) node of an edge.
 
     `db_cache` is a per-render mutable dict keyed by taxonomy_id; if provided,
     looks up atlas-only properties (n_cells, parent supertype) from the
@@ -1174,7 +1187,7 @@ def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) ->
     so this lookup is what surfaces the per-node 10x cell count and the
     nearest-supertype label in reports.
     """
-    b_id = edge.get("type_b", "")
+    b_id = edge.get("taxonomy_type", "")
     b_node = nodes_by_id.get(b_id, {})
     accession = b_node.get("cell_set_accession", "")
     n_cells = b_node.get("n_cells")
@@ -1258,7 +1271,7 @@ def _collect_quotes(graph: dict, refs: dict, node_id: str) -> dict:
 
     # Edge evidence
     for edge in graph.get("edges", []):
-        if edge.get("type_a") != node_id:
+        if edge.get("lit_type") != node_id:
             continue
         for ev in edge.get("evidence", []):
             _add_quote(ev.get("quote_key", ""))
@@ -1288,7 +1301,7 @@ def extract_node_facts(
 
     all_edges = graph.get("edges", [])
     node_edges = sorted(
-        [e for e in all_edges if e.get("type_a") == node_id],
+        [e for e in all_edges if e.get("lit_type") == node_id],
         key=lambda e: CONF_ORDER.get(e.get("confidence", "UNCERTAIN"), 99),
     )
 
@@ -1467,6 +1480,14 @@ def extract_node_facts(
             "supertype": b_info["supertype"],
             "n_cells": b_info["n_cells"],
             "taxonomy_level": b_info["taxonomy_level"],
+            # Phase 3 (2026-05-13): `confidence` is included so the
+            # programmatic-render path can still display the mapping
+            # table, BUT the synthesis subagent prompt (see
+            # workflows/gen-report.md Step 3) explicitly instructs the
+            # agent to NOT read this field as input when emitting its
+            # verdict block — loop avoidance is prompt-enforced, not
+            # data-layer-enforced, because the field has legitimate
+            # readers in the programmatic render path.
             "confidence": edge.get("confidence", ""),
             "relationship": edge.get("relationship", ""),
             "verdict": verdict,
@@ -1476,6 +1497,13 @@ def extract_node_facts(
             "unresolved_questions": edge.get("unresolved_questions", []),
             "proposed_experiments": edge.get("proposed_experiments", []),
             "notes": edge.get("notes", ""),
+            # §1.11 (2026-05-26): Stage A find_candidates output
+            # persisted on the edge that consumed it. Forwarded
+            # verbatim — no transformation. The report-time agent
+            # reads this as a cohort-ranking signal alongside marker
+            # comparisons, AT metrics, and literature. See
+            # workflows/gen-report.md "How to read discovery_score".
+            "discovery_score": edge.get("discovery_score"),
         })
 
     # Quotes: collect all quote_keys referenced in node + edges
@@ -1785,7 +1813,7 @@ def render_summary(
         lines.append("")
 
     # 6. Proposed experiments
-    all_node_edges_raw = [e_raw for e_raw in graph.get("edges", []) if e_raw.get("type_a") == node_id]
+    all_node_edges_raw = [e_raw for e_raw in graph.get("edges", []) if e_raw.get("lit_type") == node_id]
     exp_groups = _group_experiments(all_node_edges_raw)
     if exp_groups:
         lines.append("## Proposed experiments")
@@ -1879,7 +1907,7 @@ def render_drilldown(
     All quotes come verbatim from references.json — raises KeyError if quote_key missing.
     """
     nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
-    node_edges = [e for e in graph.get("edges", []) if e.get("type_a") == node_id]
+    node_edges = [e for e in graph.get("edges", []) if e.get("lit_type") == node_id]
 
     # Resolve corpus entry
     bare_pmid = pmid_or_corpus.removeprefix("PMID:")
@@ -1957,7 +1985,7 @@ def render_drilldown(
         citing_edges = list(node_edges)
 
     edge_desc = "; ".join(
-        f"{e.get('type_a', '')} → {nodes_by_id.get(e.get('type_b', ''), {}).get('name', e.get('type_b', ''))}"
+        f"{e.get("lit_type") or ''} → {nodes_by_id.get(e.get("taxonomy_type") or '', {}).get('name', e.get("taxonomy_type") or '')}"
         for e in citing_edges
     )
     if citing_edges:
@@ -2107,10 +2135,16 @@ def render_index(region: str, kb_root: Path, out_path: Path) -> None:
             if node.get("is_terminal"):
                 continue
             node_id = node["id"]
-            node_edges = [e for e in all_edges if e.get("type_a") == node_id]
+            node_edges = [e for e in all_edges if e.get("lit_type") == node_id]
             best = _best_edge(all_edges, node_id)
             best_conf = best["confidence"] if best else "—"
-            best_b = nodes_by_id.get(best["type_b"], {}).get("name", best["type_b"]) if best else "—"
+            best_b = (
+                nodes_by_id.get(best.get("taxonomy_type", ""), {}).get(
+                    "name", best.get("taxonomy_type", "")
+                )
+                if best
+                else "—"
+            )
 
             tier_counts = {c: 0 for c in ("HIGH", "MODERATE", "LOW", "UNCERTAIN")}
             for e in node_edges:
@@ -2198,11 +2232,33 @@ def main() -> None:
     p_facts.add_argument("--output-dir", type=Path, default=None)
 
     # summary
-    p_sum = sub.add_parser("summary", help="Generate Markdown summary report (programmatic mode)")
+    p_sum = sub.add_parser(
+        "summary",
+        help=(
+            "Generate Markdown summary report (programmatic / structural-"
+            "only mode). NOT a substitute for the gen-report LLM "
+            "orchestrator — `render summary` produces the stub / fallback "
+            "structural render with no Introduction prose, no synthesised "
+            "Discussion, no figure embeds, and no verdict blocks. "
+            "Refuses by default to overwrite an existing report that "
+            "already contains paper-style content (Introduction / "
+            "figures / verdict blocks); use --force to override at your "
+            "own risk."
+        ),
+    )
     p_sum.add_argument("graph_file", type=Path)
     p_sum.add_argument("--node", default=None, help="Classical node id (default: all)")
     p_sum.add_argument("--output-dir", type=Path, default=None)
     p_sum.add_argument("--drilldowns", action="store_true", help="Also generate drill-downs")
+    p_sum.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "Override the paper-style-content guard. Required to overwrite "
+            "any report file that already contains `## Introduction`, an "
+            "embedded figure, or a `<!-- verdict-block-start -->` marker."
+        ),
+    )
 
     # drilldowns
     p_dd = sub.add_parser("drilldowns", help="Generate Markdown drill-down reports")
@@ -2241,6 +2297,38 @@ def main() -> None:
             node_ids = [n["id"] for n in nodes]
         for nid in node_ids:
             out_path = out_dir / f"{nid}_summary.md"
+            # Safety guard: refuse to overwrite a report file that
+            # already contains paper-style content from the gen-report
+            # LLM orchestrator. `render summary` is the deterministic
+            # structural fallback and cannot reproduce Introduction
+            # prose, figure embeds, or verdict blocks — silently
+            # overwriting destroys curated synthesis work. Pass
+            # --force to override (e.g. for legitimate stub overwrites).
+            if out_path.is_file() and not args.force:
+                existing = out_path.read_text(encoding="utf-8")
+                paper_markers = []
+                if "## Introduction" in existing:
+                    paper_markers.append("`## Introduction`")
+                if "<!-- verdict-block-start" in existing:
+                    paper_markers.append("verdict block(s)")
+                if "\n![" in existing:
+                    paper_markers.append("figure embed(s)")
+                if "<!-- quote_key:" in existing:
+                    paper_markers.append("primary-literature blockquote(s)")
+                if "## Discussion" in existing or "## Methods" in existing:
+                    paper_markers.append("paper-style Discussion/Methods section")
+                if paper_markers:
+                    print(
+                        f"REFUSED to overwrite {out_path} — it contains "
+                        + ", ".join(paper_markers) + ".\n"
+                        "`render summary` is the deterministic structural "
+                        "fallback and would destroy this paper-style content. "
+                        "Use the gen-report LLM orchestrator "
+                        "(`workflows/gen-report.md`) instead, or pass "
+                        "`--force` to bypass this guard.",
+                        file=sys.stderr,
+                    )
+                    continue
             render_summary(graph, refs, nid, out_path, graph_file)
             if args.drilldowns:
                 # Generate all drill-downs for this node
@@ -2291,7 +2379,7 @@ def _gen_all_drilldowns(
     graph: dict, refs: dict, node_id: str, out_dir: Path, graph_file: Path
 ) -> None:
     """Generate drill-downs for all papers cited in the node's edges."""
-    node_edges = [e for e in graph.get("edges", []) if e.get("type_a") == node_id]
+    node_edges = [e for e in graph.get("edges", []) if e.get("lit_type") == node_id]
     seen_pmids: set = set()
     for edge in node_edges:
         for ev in edge.get("evidence", []):

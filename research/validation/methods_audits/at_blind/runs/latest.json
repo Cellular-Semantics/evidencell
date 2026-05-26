@@ -1,8 +1,8 @@
 {
   "audit_id": "at_blind",
-  "started_at": "2026-05-12T12:33:25.368797+00:00",
-  "finished_at": "2026-05-12T12:34:53.761699+00:00",
-  "commit": "21502ad2760d725dbd4590fe40b77b41b16a249c",
+  "started_at": "2026-05-12T21:32:09.970475+00:00",
+  "finished_at": "2026-05-12T21:33:37.008020+00:00",
+  "commit": "1f1bf39670bc778edd2feb6a5a5ceff98a1718c7",
   "config": {
     "taxonomy_id": "CCN20230722",
     "top_k": 10,
@@ -36,7 +36,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.622,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -76,7 +76,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.588,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -116,7 +116,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.612,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -157,7 +157,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.8,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -211,7 +211,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.588,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -251,7 +251,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.578,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -283,7 +283,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.566,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -340,7 +340,7 @@
         "target_rank": 3,
         "target_level": "class",
         "best_f1": 0.8935,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -372,7 +372,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.9949,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -404,7 +404,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.7902,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -445,7 +445,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.973,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -477,7 +477,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.947,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -504,7 +504,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.9938,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -536,7 +536,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.775,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -568,7 +568,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.768,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -631,7 +631,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.649,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -678,7 +678,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.703,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -718,7 +718,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.584,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -767,7 +767,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.51,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -799,7 +799,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.566,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -831,7 +831,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.573,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -863,7 +863,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.665,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -895,7 +895,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.711,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -927,7 +927,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.611,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -959,7 +959,7 @@
         "target_rank": 3,
         "target_level": "class",
         "best_f1": 0.528,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -991,7 +991,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.609,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1023,7 +1023,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.788,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1055,7 +1055,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.798,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1087,7 +1087,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.805,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1119,7 +1119,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.935,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "insufficient"
       },
       "actual": {
@@ -1151,7 +1151,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.508,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1178,7 +1178,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.694,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "insufficient"
       },
       "actual": {
@@ -1219,7 +1219,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.964,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "insufficient"
       },
       "actual": {
@@ -1260,7 +1260,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.937,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "insufficient"
       },
       "actual": {
@@ -1301,7 +1301,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.686,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -1333,7 +1333,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.943,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -1382,7 +1382,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.833,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -1431,7 +1431,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.983,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1463,7 +1463,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.759,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1504,7 +1504,7 @@
         "target_rank": 3,
         "target_level": "class",
         "best_f1": 1.0,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1536,7 +1536,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 1.0,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1576,7 +1576,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.9851,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1608,7 +1608,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.9851,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1649,7 +1649,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.744,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "insufficient"
       },
       "actual": {
@@ -1676,7 +1676,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.969,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1718,7 +1718,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.612,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -1769,7 +1769,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.898,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "flat"
       },
       "actual": {
@@ -1801,7 +1801,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.898,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "flat"
       },
       "actual": {
@@ -1879,7 +1879,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.983,
-        "edge_relationship": "UNCERTAIN",
+        "edge_relationship": "evidencell:UncertainRelationship",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -1911,7 +1911,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.759,
-        "edge_relationship": "UNCERTAIN",
+        "edge_relationship": "evidencell:UncertainRelationship",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -1952,7 +1952,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.759,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -1984,7 +1984,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.898,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "flat"
       },
       "actual": {
@@ -2016,7 +2016,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.898,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "flat"
       },
       "actual": {
@@ -2102,7 +2102,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.649,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -2177,7 +2177,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.983,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2217,7 +2217,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.514,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "insufficient"
       },
       "actual": {
@@ -2297,7 +2297,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.759,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2376,7 +2376,7 @@
         "target_rank": 3,
         "target_level": "class",
         "best_f1": 0.68,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2408,7 +2408,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.68,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2440,7 +2440,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.67,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2505,7 +2505,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.983,
-        "edge_relationship": "UNCERTAIN",
+        "edge_relationship": "evidencell:UncertainRelationship",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -2537,7 +2537,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.759,
-        "edge_relationship": "UNCERTAIN",
+        "edge_relationship": "evidencell:UncertainRelationship",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -2586,7 +2586,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.983,
-        "edge_relationship": "UNCERTAIN",
+        "edge_relationship": "evidencell:UncertainRelationship",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -2618,7 +2618,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.759,
-        "edge_relationship": "UNCERTAIN",
+        "edge_relationship": "evidencell:UncertainRelationship",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -2659,7 +2659,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.942,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -2697,7 +2697,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.633,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -2722,7 +2722,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.717,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -2752,7 +2752,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.877,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -2782,7 +2782,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.546,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "rises_with_resolution"
       },
       "actual": {
@@ -2812,7 +2812,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.654,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2842,7 +2842,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.958,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2872,7 +2872,7 @@
         "target_rank": 3,
         "target_level": "class",
         "best_f1": 0.821705,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2906,7 +2906,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.622,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -2969,7 +2969,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.826667,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -3032,7 +3032,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.588,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -3074,7 +3074,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.776119,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -3108,7 +3108,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.612,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -3174,7 +3174,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.785185,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -3240,7 +3240,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.983,
-        "edge_relationship": "UNCERTAIN",
+        "edge_relationship": "evidencell:UncertainRelationship",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -3272,7 +3272,7 @@
         "target_rank": 0,
         "target_level": "cluster",
         "best_f1": 0.969,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -3299,7 +3299,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.986,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -3326,7 +3326,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.986,
-        "edge_relationship": "EQUIVALENT",
+        "edge_relationship": "skos:exactMatch",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {
@@ -3353,7 +3353,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.578,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -3385,7 +3385,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.566,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -3434,7 +3434,7 @@
         "target_rank": 1,
         "target_level": "supertype",
         "best_f1": 0.798,
-        "edge_relationship": "TYPE_A_SPLITS",
+        "edge_relationship": "skos:broadMatch",
         "at_f1_monotonicity": "insufficient"
       },
       "actual": {
@@ -3475,7 +3475,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.588,
-        "edge_relationship": "PARTIAL_OVERLAP",
+        "edge_relationship": "evidencell:PartialOverlapMatch",
         "at_f1_monotonicity": "falls_with_resolution"
       },
       "actual": {
@@ -3515,7 +3515,7 @@
         "target_rank": 2,
         "target_level": "subclass",
         "best_f1": 0.969,
-        "edge_relationship": "UNCERTAIN",
+        "edge_relationship": "evidencell:UncertainRelationship",
         "at_f1_monotonicity": "mixed"
       },
       "actual": {

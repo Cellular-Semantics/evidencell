@@ -61,6 +61,58 @@ validate-taxonomy-all TAXONOMY_ID:
     done
     [ $failed -eq 0 ] && echo "All taxonomy files valid." || { echo "Validation failed."; exit 1; }
 
+# Migrate every AT run's CSV(s) to schema-compliant at_results.yaml
+[group('at_metrics')]
+migrate-at-metrics:
+    uv run python -m evidencell.at_metrics migrate-all
+
+# Recompute MappingEdge.evidence[].metrics_by_level from at_results.yaml
+# (dry-run by default — pass --apply to write)
+[group('at_metrics')]
+refresh-at-metrics *ARGS:
+    uv run python -m evidencell.at_metrics refresh {{ARGS}}
+
+# Regenerate src/evidencell/_models.py (Pydantic classes from LinkML schema)
+[group('schema')]
+gen-models:
+    uv run gen-pydantic {{schema}} > src/evidencell/_models.py
+    @echo "Regenerated src/evidencell/_models.py from {{schema}}"
+
+# Check src/evidencell/_models.py is up to date with the schema; fails if drift
+[group('schema')]
+check-models:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    tmpfile=$(mktemp)
+    uv run gen-pydantic {{schema}} > "$tmpfile"
+    if diff -q "$tmpfile" src/evidencell/_models.py >/dev/null; then
+        echo "src/evidencell/_models.py is up to date."
+    else
+        echo "ERROR: src/evidencell/_models.py is out of sync with {{schema}}."
+        echo "Run 'just gen-models' and commit the result."
+        diff "$tmpfile" src/evidencell/_models.py | head -40
+        exit 1
+    fi
+
+# Validate an AT results YAML (AnnotationTransferResultSet root class)
+[group('validation')]
+validate-at-results FILE:
+    uv run linkml-validate -s {{schema}} -C AnnotationTransferResultSet {{FILE}}
+
+# Validate all at_results*.yaml files under kb/annotation_transfer_runs/
+[group('validation')]
+validate-at-results-all:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    files=$(find kb/annotation_transfer_runs -name "at_results*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No at_results YAML files yet."; exit 0; fi
+    failed=0
+    for f in $files; do
+        echo "Validating $f..."
+        uv run linkml-validate -s {{schema}} -C AnnotationTransferResultSet "$f" || failed=1
+    done
+    [ $failed -eq 0 ] && echo "All AT result files valid." || { echo "Validation failed."; exit 1; }
+
 # Validate all KB graph files (kb/graphs/)
 [group('validation')]
 validate-all:
@@ -79,7 +131,16 @@ validate-all:
 # Requires OAK SQLite DBs (run just fetch-oak-dbs first)
 [group('validation')]
 validate-terms:
-    uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} {{kb_dir}}
+    #!/usr/bin/env bash
+    set -euo pipefail
+    files=$(find {{kb_dir}} -name "*.yaml" 2>/dev/null)
+    if [ -z "$files" ]; then echo "No files in {{kb_dir}} yet."; exit 0; fi
+    failed=0
+    for f in $files; do
+        echo "Validating terms in $f..."
+        uv run linkml-term-validator validate --config conf/oak_config.yaml --schema {{schema}} "$f" || failed=1
+    done
+    [ $failed -eq 0 ] && echo "All KB term references valid." || { echo "Term validation failed."; exit 1; }
 
 # Validate ontology terms in a single file
 [group('validation')]
@@ -242,6 +303,20 @@ add-expression-all taxonomy_id stats_h5 gene_mapping +GENES:
 enrich-marker-union taxonomy_id stats_h5 gene_mapping:
     uv run python -m evidencell.taxonomy_ops enrich-marker-union {{taxonomy_id}} {{stats_h5}} {{gene_mapping}}
 
+# Refresh stale atlas-side expression on marker-family PropertyComparisons.
+# Sweeps MappingEdge.property_comparisons entries whose node_b_value is
+# "not resolvable from atlas metadata" (or similar) and rewrites them with
+# the current mean_expression value from kb/taxonomy/{id}/{level}.yaml.
+# Usage: just refresh-expression kb/graphs/region/file.yaml
+#        just refresh-expression-all
+[group('workflows')]
+refresh-expression graph_file *FLAGS:
+    uv run python -m evidencell.refresh_expression_pcs {{graph_file}} {{FLAGS}}
+
+[group('workflows')]
+refresh-expression-all *FLAGS:
+    uv run python -m evidencell.refresh_expression_pcs --all {{FLAGS}}
+
 # Re-ingest taxonomy from source JSON, preserving enrichment fields
 # Usage: just reingest CCN20230722 inputs/taxonomies/wmbv1_full_v2.json
 [group('workflows')]
@@ -271,6 +346,17 @@ generate-gene-mapping stats_h5 output:
 [group('workflows')]
 find-candidates graph_file node_id taxonomy_id rank="1" top_k="10":
     uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}}
+
+# Backfill MappingEdge.discovery_score from on-disk discovery JSONs.
+# Walks the graph file's edges; for each edge missing discovery_score,
+# locates the candidate in research/{region}/**/discovery_*.json and
+# transcribes the block. Idempotent (skips edges already populated).
+# Unmatched edges are appended to <graph_dir>/backfill_missing.txt.
+# Usage: just backfill-discovery-score kb/graphs/hippocampus/hippocampus_OLM.yaml
+#        just backfill-discovery-score <file> --dry-run
+[group('workflows')]
+backfill-discovery-score graph_file *ARGS:
+    uv run python -m evidencell.discovery_score_backfill {{graph_file}} {{ARGS}}
 
 # Extract per-(classical, taxonomy) F1 artifact from a MapMyCells run dir.
 # Reads {run_dir}/f1_matrix.csv + manifest.yaml, filters by source_label and
@@ -307,16 +393,21 @@ query-gene-expression taxonomy_id accessions genes:
 gen-facts GRAPH_FILE NODE_ID:
     uv run python -m evidencell.render facts {{GRAPH_FILE}} --node {{NODE_ID}}
 
-# Generate summary report for all classical nodes in one graph file (programmatic mode)
-# For LLM-assisted synthesis with hallucination guard, use: workflows/gen-report.md
+# Deterministic structural-only render for fresh stub reports (no Introduction
+# prose, no figure embeds, no verdict blocks). Refuses to overwrite any report
+# file already containing paper-style content from the gen-report LLM
+# orchestrator. Pass `--force` (forwarded to the renderer) to bypass.
+#
+# For paper-style synthesis, use `workflows/gen-report.md` (LLM orchestrator).
 [group('reports')]
-gen-report GRAPH_FILE:
-    uv run python -m evidencell.render summary {{GRAPH_FILE}}
+gen-report GRAPH_FILE *ARGS:
+    uv run python -m evidencell.render summary {{GRAPH_FILE}} {{ARGS}}
 
-# Generate summary report for one classical node by id
+# Deterministic structural-only render for one classical node. Refuses to
+# overwrite paper-style reports — see `just gen-report` for context.
 [group('reports')]
-gen-report-node GRAPH_FILE NODE_ID:
-    uv run python -m evidencell.render summary {{GRAPH_FILE}} --node {{NODE_ID}}
+gen-report-node GRAPH_FILE NODE_ID *ARGS:
+    uv run python -m evidencell.render summary {{GRAPH_FILE}} --node {{NODE_ID}} {{ARGS}}
 
 # Generate all drill-downs for a classical node
 [group('reports')]
@@ -349,15 +440,37 @@ gen-toc TAXONOMY_ID *ARGS:
 gen-at-figure RUN_ID *ARGS:
     uv run python -m evidencell.at_figures {{RUN_ID}} {{ARGS}}
 
-# Regenerate all reports + indices for the KB (programmatic mode, no LLM)
+# Surface candidate source-group pools from a KB graph (Phase 3 gen-report pre-pass).
+# Emits JSON on stdout. Use --node to restrict to candidates involving a given lit_type.
+# Usage: just pool-candidates kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml
+#        just pool-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml --node olm_hippocampus
 [group('reports')]
-gen-report-all:
+pool-candidates GRAPH_FILE *ARGS:
+    uv run python -m evidencell.pool_candidates {{GRAPH_FILE}} {{ARGS}}
+
+# Parse Phase 3 verdict blocks from a report and write the holistic
+# verdict + currency hash back to the matching MappingEdge YAML.
+# Pass --dry-run to verify without editing the YAML.
+# Usage: just rationale-writeback reports/hippocampus/olm_hippocampus_summary.md kb/graphs/hippocampus/hippocampus_OLM.yaml
+[group('reports')]
+rationale-writeback REPORT_FILE GRAPH_FILE *ARGS:
+    uv run python -m evidencell.rationale_writeback {{REPORT_FILE}} {{GRAPH_FILE}} {{ARGS}}
+
+# Deterministic structural-only render across every classical node in the KB.
+# Per-file guard (in `render summary`) protects paper-style reports from
+# being overwritten — they're skipped with a REFUSED message. Pass --force
+# to override (rare; mostly for new-stub bulk seeding).
+#
+# For LLM-driven regen at scale, run the gen-report orchestrator per node
+# (see workflows/gen-report.md).
+[group('reports')]
+gen-report-all *ARGS:
     #!/usr/bin/env bash
     set -euo pipefail
     files=$(find kb/graphs -name "*.yaml" 2>/dev/null)
     if [ -z "$files" ]; then echo "No files in kb/graphs yet."; exit 0; fi
     for f in $files; do
-        uv run python -m evidencell.render summary "$f"
+        uv run python -m evidencell.render summary "$f" {{ARGS}}
     done
     for region in $(ls kb/graphs 2>/dev/null); do
         uv run python -m evidencell.render index "$region"
@@ -365,15 +478,16 @@ gen-report-all:
     # Combined taxonomy-indexed TOC (default MODERATE+).
     uv run python -m evidencell.toc --all
 
-# Regenerate all reports + indices for one region (programmatic mode, no LLM)
+# Deterministic structural-only render across one region. Per-file guard
+# protects paper-style reports — see `just gen-report-all` for details.
 [group('reports')]
-gen-report-region REGION:
+gen-report-region REGION *ARGS:
     #!/usr/bin/env bash
     set -euo pipefail
     files=$(find kb/graphs/{{REGION}} -maxdepth 1 -name "*.yaml" 2>/dev/null)
     if [ -z "$files" ]; then echo "No YAML files in kb/graphs/{{REGION}}."; exit 0; fi
     for f in $files; do
-        uv run python -m evidencell.render summary "$f"
+        uv run python -m evidencell.render summary "$f" {{ARGS}}
     done
     uv run python -m evidencell.render index {{REGION}}
 

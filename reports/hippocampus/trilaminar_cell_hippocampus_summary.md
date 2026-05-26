@@ -39,7 +39,7 @@
 - **Marker Pvalb: CONSISTENT.** Precomputed stats mean 8.74 in SUPT_0206 [CS20230722_SUPT_0206], consistent with PV+ immunoreactivity for trilaminar cells [1].
 - **Marker M2R (Chrm2): CONSISTENT** by precomputed expression (mean 4.52), consistent with M2R immunoreactivity in PV+ interneurons documented by Katona et al. 2017 [1]. Chrm2 is absent from the SUPT_0206 defining marker list — this is a precomputed-stats-only confirmation.
 - **Negative marker Sst: CONSISTENT** at the marker-list level — Sst is absent from SUPT_0206 [CS20230722_SUPT_0206] defining markers. Precomputed mean 2.72 indicates low but non-zero transcript level (see Concerns).
-- **Annotation transfer (GEO:GSE185862).** MapMyCells local run, default parameters, source: Yao 2021 SSv4 Pvalb subclass (n=66 HIP cells): SUPT_0206 receives 12/66 Pvalb cells (F1=0.324, target_purity=0.800). PARTIAL: the SSv4 Pvalb label is a mixed population and trilaminar cell identity cannot be confirmed from this AT alone.
+- **Annotation transfer (GEO:GSE185862).** MapMyCells local run, default parameters, source: Yao 2021 SSv4 Pvalb subclass (n=66 HIP cells): SUPT_0206 receives 12/66 Pvalb cells (F1=0.324, purity=0.800). PARTIAL: the SSv4 Pvalb label is a mixed population and trilaminar cell identity cannot be confirmed from this AT alone.
 
 ### Marker evidence provenance
 

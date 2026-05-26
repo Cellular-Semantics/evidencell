@@ -296,16 +296,17 @@ TASK:
      distant cells are present — the mapping is weakened but not disproven.
    - NOT_ASSESSED: classical location not representable from atlas metadata
 
-3. Determine confidence using the decision guide:
-   - HIGH: ≥2 independent convergent evidence types, at least one experimental
-     (annotation transfer, electrophysiology, morphological reconstruction).
-     NOT achievable from literature alone.
-   - MODERATE: ≥2 independent evidence items with consistent support
-   - LOW: single evidence item or consistent but weak/indirect evidence
-   - UNCERTAIN: evidence contradictory, ambiguous, or minimal
-
-   If evidence is thin (stubs only, no lit review yet), default to LOW or UNCERTAIN.
-   Be explicit about what would upgrade the confidence.
+3. **Do NOT set `confidence`, `confidence_score`, or `rationale`.**
+   Phase 3 (2026-05-13) moved authority for the holistic verdict +
+   rationale to the report-time agent (`workflows/gen-report.md`
+   Step 3). Stage B emits structured data only — the report-gen agent
+   reads it back, synthesises the verdict against the full evidence
+   picture (including the AT pool-candidate pre-pass and cross-edge
+   indistinguishability), writes `confidence` + `confidence_score` +
+   `rationale` + `rationale_source_hash` + `report_path` +
+   `rationale_generated_at` back to the edge. The schema makes
+   `confidence` optional for exactly this reason. See #64 for the
+   design.
 
 4. Assemble evidence items. Each item needs:
    - evidence_type (LITERATURE / ATLAS_METADATA / ANNOTATION_TRANSFER / etc.)
@@ -317,12 +318,161 @@ TASK:
    use ATLAS_METADATA evidence (the atlas node's own properties as evidence
    for the mapping). This is valid LOW-confidence evidence.
 
+   **ANNOTATION_TRANSFER evidence: metrics_by_level is populated
+   programmatically — DO NOT transcribe F1 numbers.** When you create
+   an ANNOTATION_TRANSFER evidence item, supply only:
+
+   ```yaml
+   - evidence_type: ANNOTATION_TRANSFER
+     run_ref: at_run_<id>                    # matches a dir under kb/annotation_transfer_runs/
+     source_cluster_label: <bare CSV label>  # matches source_label in at_results.yaml
+     supports: <leave unset>                 # post-process sets this from noise floor
+     target_atlas: ...                       # human-readable
+     method: ...                             # for back-compat; otherwise run_ref carries it
+     source_dataset_accession: ...
+     # DO NOT write metrics_by_level, best_f1_score, best_mapping_level,
+     # best_mapping_rank, n_cells_mapped, coverage, purity, f1_score
+     # — these are written programmatically from
+     # kb/annotation_transfer_runs/{run_ref}/at_results.yaml using
+     # (run_ref, source_cluster_label, edge.taxonomy_type) by
+     # src/evidencell/at_metrics.py::compute_edge_metrics().
+     # Run `just refresh-at-metrics --apply` after writing edges to
+     # populate them.
+     explanation: |
+       Qualitative read of the AT result for this edge. Cite cell
+       counts, regional pattern, source-vs-edge-target relationship
+       where relevant. NOT the F1 number itself — that's in
+       metrics_by_level after the programmatic populate.
+   ```
+
+   `source_cluster_label` MUST be the bare label exactly as it appears
+   in the AT run's `at_results.yaml` `source_label` field — not a
+   free-text aggregate like `"BIC (hBIC n=11 + vBIC n=9 aggregated)"`
+   (which doesn't join). If the AT run pools upstream (e.g. Que 2021
+   aggregates hBC+vBC as `BC`), use the pooled name; record the
+   composition in the `source_groups` slot below.
+
+   **Pooled AnnotationTransferEvidence.** When the `metrics_by_level` /
+   `best_f1_score` on an AT evidence item were computed by pooling
+   multiple raw source clusters into one pseudo-source (the
+   `at_figures --pool A,B:NAME --emit-metrics` workflow), record the
+   pool composition in `source_groups`:
+
+   ```yaml
+   source_groups:
+     - label: {pseudo_source_name}         # matches --pool ...:NAME
+       members: [{raw_label_1}, {raw_label_2}, ...]
+       # rationale: optional — see below
+   ```
+
+   `label` must match the source_label key in the figure-rendering
+   sidecar (`figures/f1_for_*_metrics.json`) so stored metrics and
+   rendered figure are joinable. `members` are the bare source_label
+   strings from `f1_matrix.csv`.
+
+   **You MAY seed `source_groups[*].rationale`** when the
+   `property_comparisons` you just built already establish that the
+   pooled cohorts map indistinguishably to the same target cluster set
+   (an AT-side-only observation). Phrase the rationale per the example
+   forms in `SourceGroup.rationale` (schema), cite the AT run id, and
+   keep to one or two sentences. **Leave it blank** when (a) the AT
+   matrix shows scatter within the pool (different members go to
+   different targets), or (b) you have not done a cross-cohort
+   comparison — the report-time agent has full literature in scope
+   and can extend the rationale later. Never overwrite an existing
+   rationale; if you find one already present, leave it alone.
+
 5. Add caveats for any DISCORDANT or APPROXIMATE property comparisons, and for
    any known heterogeneity in the classical type.
 
 6. Add unresolved_questions and proposed_experiments where relevant.
 
-7. Produce the MappingEdge YAML block. Edge id format: "edge_{type_a_id}_to_{type_b_id}".
+7. Produce the MappingEdge YAML block. Edge id format:
+   `edge_{lit_type_id}_to_{taxonomy_type_id}`. The edge MUST set
+   both `lit_type` and `taxonomy_type` (Phase 2 schema overhaul,
+   2026-05-12 — `type_a` / `type_b` are deprecated aliases retained
+   only for the transition window).
+
+   **Predicate selection rubric (2026-05-26 refresh).** Apply the
+   following decision tree against the property_comparisons you
+   just built. The report-time agent (gen-report Stage C) uses the
+   same rubric — your initial pick should match what gen-report
+   would land on.
+
+   Step (i) — **Cardinality at this rank.** Count how many lit_types
+   plausibly map to this taxonomy_type and vice versa **at the
+   atlas-side rank you are working**.
+     - Multiple lit_types → one taxonomy_type ⇒ `skos:broadMatch` +
+       `mapping_cardinality: 1:n`.
+     - One lit_type → multiple taxonomy_types at this rank,
+       collapsing to one type at rank N+1 ⇒ prefer `skos:broadMatch`
+       at rank N+1.
+     - One lit_type → multiple taxonomy_types at this rank, with no
+       higher rank that rescues to a single broader type ⇒
+       `evidencell:CrossCuttingMatch`.
+     - Multiple lit_types → one taxonomy_type with the lit-side being
+       narrower per-instance ⇒ `skos:narrowMatch` + `mapping_cardinality: n:1`.
+     - Otherwise — clean 1:1 candidate — proceed.
+
+   Step (ii) — **Location gate (for clean 1:1 candidates).**
+     - taxonomy_type located in classical region + adjacent only ⇒
+       proceed to step (iii).
+     - taxonomy_type located in regions distant from classical
+       region + adjacent ⇒ `skos:broadMatch` + `mapping_cardinality: 1:n`
+       (the taxonomy_type is broader by location).
+
+   Step (iii) — **AT gate (when AT evidence is present).**
+     - F1 > 0.75 at the working rank with no major contradiction ⇒
+       `skos:exactMatch` + `mapping_cardinality: 1:1`.
+     - F1 in a borderline band or coverage/purity asymmetry, OR
+       marker / location contradictions present ⇒ `skos:closeMatch`.
+
+   Step (iv) — **AT absent.** A clean 1:1 candidate with consistent
+   location + markers + literature may still be `skos:exactMatch`,
+   but flag in `caveats` that AT is missing — the report-time agent
+   will cap confidence at MODERATE. Any unresolved contradiction
+   demotes to `skos:closeMatch`.
+
+   Step (v) — **Unresolvable.** If evidence is insufficient to pick
+   between any of the above ⇒ `evidencell:UncertainRelationship` +
+   `mapping_justification: semapv:UnspecifiedMatching` +
+   `reconciliation_note` describing what additional evidence would
+   resolve it.
+
+   The hidden-1:1 broadMatch case (broadMatch + 1:1) is **removed**
+   — if the specific sub-cluster is TBD, map at the next rank up
+   where the relationship is cleanly 1:n.
+
+   `evidencell:PartialOverlapMatch` is **deprecated** as of
+   2026-05-26 — do not emit on new edges. The new rubric absorbs
+   its cases into `skos:closeMatch` (1:1-ish with contradictions)
+   or one of the broad/narrow/cross-cutting predicates.
+
+   Set `mapping_justification: semapv:UnreviewedManualMapping` by
+   default (agent-emitted); curators promote to
+   `semapv:ManualMappingCuration` on review. See
+   [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md)
+   for the SKOS direction convention and worked examples.
+
+8. **Copy the candidate's `discovery_score` block onto the edge
+   verbatim.** When DISCOVERY DATA is provided, locate this
+   candidate's entry in `candidates[]` (match on
+   `node_id == cell_set_accession`) and copy its
+   `discovery_score` value as-is onto the edge's `discovery_score`
+   slot. No transformation, no re-interpretation — Stage A's JSON
+   already matches the schema shape. The block captures Stage A's
+   cohort-ranking view: composite score, rank-in-cohort,
+   percentile contexts, per-gene contributions (raw_tier +
+   applied_score), and the AT signal that fed scoring. It is
+   meta-signal about candidate generation, NOT a confidence
+   value; the report-time agent will weigh it as one input
+   alongside marker comparisons, AT metrics, and literature.
+
+   If DISCOVERY DATA is unavailable (legacy edge, hypothesis
+   mode without a discovery run), omit `discovery_score` —
+   it's optional. The backfill module
+   (`just backfill-discovery-score`) can populate it later from
+   on-disk discovery JSONs.
 
 RETURN the complete MappingEdge YAML block as a code fence. Do not write files.
 ```
@@ -337,7 +487,10 @@ Present each proposed edge to the curator:
 PROPOSED EDGE: {classical_name} → {atlas_name}
 ════════════════════════════════════════════════
 Relationship: {RELATIONSHIP}
-Confidence:   {CONFIDENCE} — {rationale summary}
+Cardinality:  {CARDINALITY}
+Justification: {JUSTIFICATION}
+
+Verdict + rationale: (pending — written by gen-report)
 
 Property comparisons:
   nt_type:              {alignment} — {node_a} vs {node_b}
@@ -352,13 +505,15 @@ Caveats: {count}
 Unresolved questions: {list}
 Proposed experiments: {list}
 
-What would upgrade confidence: {specific gaps}
+What would let gen-report reach a confident verdict: {specific gaps}
 ```
 
 Ask:
-> "Review this edge. Approve, modify (relationship/confidence/caveats), or reject.
-> If you want to proceed to lit review before committing, say 'defer' — the edge
-> will be saved as a draft proposal."
+> "Review this edge. Approve, modify (relationship/cardinality/caveats), or reject.
+> The verdict (`confidence` / `confidence_score` / `rationale`) is not set at
+> Stage B — gen-report will synthesise and write it back. If you want to proceed
+> to lit review before committing, say 'defer' — the edge will be saved as a
+> draft proposal."
 
 ---
 
@@ -372,8 +527,8 @@ For approved edges:
    `taxonomy_id`, `cell_set_accession`. Full node data lives in the taxonomy
    reference store at `kb/taxonomy/{taxonomy_id}/`.
 
-2. Append approved edges to the `edges:` section of the target file. Edge `type_b`
-   should use the `cell_set_accession` (e.g. `CS20230722_CLUS_0769`).
+2. Append approved edges to the `edges:` section of the target file. Edge
+   `taxonomy_type` should use the `cell_set_accession` (e.g. `CS20230722_CLUS_0769`).
 
 3. Update `target_atlas` on the graph if it was null (as for ASTA report ingests
    that started without an atlas target).

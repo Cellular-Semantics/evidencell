@@ -36,7 +36,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (provisional; Drd1/Drd2-expres
 
 - **NT type — CONSISTENT.** SUPT_0069 belongs to subclass SUBC_016 CA1-ProS Glut, the dedicated CA1/ProSubiculum glutamatergic subclass in WMBv1. The classical ventral hippocampal dopamine receptor-expressing pyramidal neuron is glutamatergic [1]; this identity is consistent at both the supertype and subclass level.
 
-- **Annotation transfer — PARTIAL.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq CA1-ProS subclass labels onto WMBv1 (CCN20230722): of 1704 CA1-ProS cells, 1011 (59.3%) map to SUPT_0069. F1 = 0.744, group_purity = 0.593, target_purity = 0.999. Target_purity = 0.999 confirms SUPT_0069 is exclusively populated by CA1-ProS cells, but the Yao 2021 CA1-ProS subclass is not annotated for Drd1/Drd2 expression. This annotation transfer reflects the correspondence between Yao 2021 CA1-ProS labels and SUPT_0069, not a confirmation that dopamine receptor-expressing cells specifically map here. The support is therefore PARTIAL — it establishes the ventral CA1 subfield correspondence at a supertype level but does not resolve the Drd1/Drd2 subpopulation identity.
+- **Annotation transfer — PARTIAL.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq CA1-ProS subclass labels onto WMBv1 (CCN20230722): of 1704 CA1-ProS cells, 1011 (59.3%) map to SUPT_0069. F1 = 0.744, coverage = 0.593, purity = 0.999. Target_purity = 0.999 confirms SUPT_0069 is exclusively populated by CA1-ProS cells, but the Yao 2021 CA1-ProS subclass is not annotated for Drd1/Drd2 expression. This annotation transfer reflects the correspondence between Yao 2021 CA1-ProS labels and SUPT_0069, not a confirmation that dopamine receptor-expressing cells specifically map here. The support is therefore PARTIAL — it establishes the ventral CA1 subfield correspondence at a supertype level but does not resolve the Drd1/Drd2 subpopulation identity.
 
 - **Location — APPROXIMATE.** The dopamine receptor-expressing pyramidal cells are described as specifically enriched in ventral hippocampus (vCA1 and ventral subiculum) [1]. SUPT_0069 captures the full CA1-ProS range (dorsal + ventral CA1); WMBv1 does not clearly separate dorsal and ventral CA1 at the supertype level from atlas metadata alone. The ventral-specific enrichment of the classical node within the broader CA1 supertype means the location alignment is APPROXIMATE rather than CONSISTENT.
 
@@ -112,7 +112,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP (provisional; Drd1/Drd2-expres
 
 | Edge ID | Evidence types | Supports |
 |---|---|---|
-| edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | PARTIAL — F1=0.744; target_purity=0.999; maps CA1-ProS (not Drd1/Drd2-specific) cells to SUPT_0069; Drd1 mean=0.09 and Drd2 mean=0.02 in SUPT_0069 (DISCORDANT) |
+| edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | PARTIAL — F1=0.744; purity=0.999; maps CA1-ProS (not Drd1/Drd2-specific) cells to SUPT_0069; Drd1 mean=0.09 and Drd2 mean=0.02 in SUPT_0069 (DISCORDANT) |
 
 ---
 

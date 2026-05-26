@@ -1,5 +1,5 @@
 # CA1 pyramidal cell — WMBv1 (CCN20230722) Mapping Report
-*2026-04-27 · Source: `/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml`*
+*2026-04-27 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml`*
 
 ---
 
@@ -7,12 +7,12 @@
 
 CA1 pyramidal cells are the principal glutamatergic projection neurons of the
 hippocampal CA1 subfield, with somata clustered in the pyramidal layer of CA1
-[1][2][3][4][5]. They form one of the major excitatory output populations of the
-hippocampal formation [1][4][5] and account for a substantial fraction of the
-densely packed pyramidal layer cells reported to make up >90% of hippocampal
-neurons [5]. Anchoring this classical population in the WMBv1 (CCN20230722)
-taxonomy is a prerequisite for any downstream CA1 circuit, marker, or disease
-study that wants to use the atlas as a reference.
+[1][2][3][4][5]. They form one of the major excitatory output populations of
+the hippocampal formation [1][4][5] and account for a substantial fraction of
+the densely packed pyramidal layer cells reported to make up >90% of
+hippocampal neurons [5]. Anchoring this classical population in the WMBv1
+(CCN20230722) taxonomy is a prerequisite for any downstream CA1 circuit,
+marker, or disease study that wants to use the atlas as a reference.
 
 ### Classical type table
 
@@ -60,13 +60,24 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 ## Results
 
-One candidate atlas supertype was assessed; 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] is the primary mapping at MODERATE confidence under a TYPE_A_SPLITS relationship, because the classical CA1 pyramidal cell encompasses multiple CA1-ProS supertypes within the parent 016 CA1-ProS Glut subclass.
+One candidate atlas supertype was assessed; 0069 CA1-ProS Glut_1
+[CS20230722_SUPT_0069] is the primary mapping at MODERATE confidence under a
+`skos:broadMatch` relationship, because the classical CA1 pyramidal cell
+encompasses multiple CA1-ProS supertypes within the parent 016 CA1-ProS Glut
+subclass.
 
 ![Filtered AT figure for CA1 pyramidal cell](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/figures/f1_for_ca1_pc_hippocampus.png)
 
-*F1 across taxonomy levels for the 1 source group (CA1-ProS, Yao 2021 SSv4) relevant to CA1 pyramidal cell. Each panel row is a source-cell group; nodes are coloured by F1 with precision (P) and recall (R) shown inline. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
+*F1 across taxonomy levels for the 1 source group (CA1-ProS, Yao 2021 SSv4)
+relevant to CA1 pyramidal cell. Each panel row is a source-cell group; nodes
+are coloured by F1 with precision (P) and recall (R) shown inline. F1 ≥ 0.5
+at a level indicates a clean mapping at that resolution.*
 
-The Yao 2021 CA1-ProS group reaches a clean mapping at SUBCLASS (016 CA1-ProS Glut, F1=0.9949) and a primary supertype assignment to 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] (F1=0.7902); the SUPERTYPE-level drop reflects splitting across sibling supertypes within the 016 CA1-ProS Glut subclass, consistent with the TYPE_A_SPLITS framing.
+The Yao 2021 CA1-ProS group reaches a clean mapping at SUBCLASS (016 CA1-ProS
+Glut, F1=0.99) and a primary supertype assignment to 0069 CA1-ProS Glut_1
+[CS20230722_SUPT_0069] (F1=0.79); the SUPERTYPE-level drop reflects splitting
+across sibling supertypes within the 016 CA1-ProS Glut subclass, consistent
+with the broad-match framing.
 
 ### 4. Mapping candidates table
 
@@ -74,7 +85,7 @@ The Yao 2021 CA1-ProS group reaches a clean mapping at SUBCLASS (016 CA1-ProS Gl
 |---|---|---|---|---|---|---|
 | 1 | — | 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] | 13245 | 🟡 MODERATE | NT CONSISTENT · location CONSISTENT · Wfs1 CONSISTENT | Best candidate |
 
-1 edge total; relationship: TYPE_A_SPLITS.
+1 edge total; relationship: `skos:broadMatch`.
 
 **Table 1 — Property comparison (0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069])**
 
@@ -92,7 +103,7 @@ The Yao 2021 CA1-ProS group reaches a clean mapping at SUBCLASS (016 CA1-ProS Gl
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
 | WMBv1 atlas metadata (016 CA1-ProS Glut / 0069 CA1-ProS Glut_1) | Atlas metadata | SUPPORT | 0069 CA1-ProS Glut_1 in 016 CA1-ProS Glut; 2553 cells in MBA:407 | atlas-internal |
-| Yao 2021 SSv4 MapMyCells AT | Annotation transfer | SUPPORT | SUBCLASS F1=0.9949; SUPERTYPE F1=0.7902 (0069 CA1-ProS Glut_1) | atlas-internal |
+| Yao 2021 SSv4 MapMyCells AT | Annotation transfer | SUPPORT | SUBCLASS F1=0.99; SUPERTYPE F1=0.79 (0069 CA1-ProS Glut_1) | atlas-internal |
 
 ### 5. Candidate paragraphs
 
@@ -101,12 +112,12 @@ The Yao 2021 CA1-ProS group reaches a clean mapping at SUBCLASS (016 CA1-ProS Gl
 **Supporting evidence**
 
 - 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] is the highest-scoring WMBv1 supertype candidate for CA1 pyramidal cells (discovery score 5). It belongs to subclass 016 CA1-ProS Glut, the dedicated CA1/ProS glutamatergic subclass in WMBv1, and the MERFISH soma distribution places 2553 cells in Field CA1, pyramidal layer [MBA:407] — directly matching the classical CA1 stratum pyramidale soma location [UBERON:0014548]. Additional CA1-ProS cells distribute across stratum oriens [MBA:399] (5205 cells) and stratum radiatum [MBA:415] (4162 cells); these adjacent strata likely reflect MERFISH registration spread of pyramidal-layer somata across nearby compartments *(note: stratum oriens and stratum radiatum are immediately adjacent to stratum pyramidale, so this spread is consistent with a CA1 pyramidal-layer population)*.
-- MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 CA1-ProS labels onto WMBv1 reaches F1=0.9949 at SUBCLASS (016 CA1-ProS Glut) and F1=0.7902 at SUPERTYPE with 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] as the best target. Of 1704 source CA1-ProS cells, the cohort maps cleanly into the 016 CA1-ProS Glut subclass, with 0069 CA1-ProS Glut_1 the primary supertype recipient; target_purity ≈ 1.0 at supertype indicates that this supertype is exclusively populated by CA1-ProS cells in this dataset. Remaining CA1-ProS cells split into the neighbouring 016 CA1-ProS Glut supertypes (0070, 0072, 0071, 0073), consistent with the TYPE_A_SPLITS framing where the classical CA1 PC encompasses all CA1-ProS Glut supertypes.
-- Wfs1, the classical CA1 PC defining marker, is not in the 0069 CA1-ProS Glut_1 atlas-listed defining marker set (Lefty1, Fibcd1, Pcp4l1) but shows precomputed mean expression = 3.97 at supertype level — a substantial expression level that supports the alignment rather than refuting it. The atlas marker list captures supertype-distinguishing markers; Wfs1 is broadly expressed across CA1-ProS supertypes and so does not serve as a distinguishing feature within the 016 CA1-ProS Glut subclass *(note: Wfs1 is classically described as enriched in deep CA1 PCs and broadly present across the CA1 pyramidal population — its presence at mean=3.97 here is consistent with that pan-CA1 PC expression pattern)*.
+- MapMyCells local annotation transfer (`at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1`) of Yao 2021 (GSE185862) mouse hippocampus SSv4 CA1-ProS labels onto WMBv1 reaches F1=0.99 at SUBCLASS (016 CA1-ProS Glut) and F1=0.79 at SUPERTYPE with 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] as the best target. Of 1704 source CA1-ProS cells, the cohort maps cleanly into the 016 CA1-ProS Glut subclass, with 0069 CA1-ProS Glut_1 the primary supertype recipient; purity ≈ 1.0 at supertype indicates that this supertype is exclusively populated by CA1-ProS cells in this dataset. Remaining CA1-ProS cells split into the neighbouring 016 CA1-ProS Glut supertypes (0070, 0072, 0071, 0073), consistent with the broad-match framing where the classical CA1 PC encompasses all CA1-ProS Glut supertypes.
+- Wfs1, the classical CA1 PC defining marker, is not in the 0069 CA1-ProS Glut_1 atlas-listed defining marker set (Lefty1, Fibcd1, Pcp4l1) but shows precomputed mean expression = 3.97 at supertype level (scRNA-seq precomputed stats) — a substantial expression level that supports the alignment rather than refuting it. The atlas marker list captures supertype-distinguishing markers; Wfs1 is broadly expressed across CA1-ProS supertypes and so does not serve as a distinguishing feature within the 016 CA1-ProS Glut subclass *(note: Wfs1 is classically described as enriched in deep CA1 PCs and broadly present across the CA1 pyramidal population — its presence at mean=3.97 here is consistent with that pan-CA1 PC expression pattern)*.
 
 **Marker evidence provenance**
 
-- **Wfs1**: classical marker support is mixed — direct primary citations testing Wfs1 specifically in morphologically/anatomically defined CA1 PCs are not present in this facts file; the cited references [6]–[10] are protein-level / receptor-distribution studies of hippocampal pyramidal cells and a set of papers on Neuroplastin-65 distribution that include CA1 pyramidal neurons. The atlas transcript-level value (mean=3.97 at 0069 CA1-ProS Glut_1) provides quantitative confirmation that Wfs1 is expressed in this supertype, but the literature chain for Wfs1 as a *defining* CA1 PC marker would benefit from a targeted cite-traverse for primary Wfs1 in situ / IHC studies in CA1 sublayers.
+- **Wfs1**: classical marker support is mixed — direct primary citations testing Wfs1 specifically in morphologically/anatomically defined CA1 PCs are not present in this facts file; the cited references [6]–[10] are protein-level / receptor-distribution studies of hippocampal pyramidal cells and a set of papers on Neuroplastin-65 distribution that include CA1 pyramidal neurons. The atlas transcript-level value (mean=3.97 at 0069 CA1-ProS Glut_1, scRNA-seq) provides quantitative confirmation that Wfs1 is expressed in this supertype, but the literature chain for Wfs1 as a *defining* CA1 PC marker would benefit from a targeted cite-traverse for primary Wfs1 in situ / immunohistochemistry studies in CA1 sublayers.
 
 **Concerns**
 
@@ -117,7 +128,7 @@ The Yao 2021 CA1-ProS group reaches a clean mapping at SUBCLASS (016 CA1-ProS Gl
 
 - Resolve which CA1-ProS supertypes (0069–0072) correspond to deep vs. superficial CA1 pyramidal cell sublayers. Wfs1 marks deep-layer CA1 PCs in the literature; checking which supertype carries the highest Wfs1 expression in the atlas would resolve the sublayer correspondence.
 - Run MapMyCells annotation transfer of Cembrowski 2016 (deep-vs-superficial CA1) or Zeisel 2018 dorsal CA1 pyramidal cell labels onto WMBv1 to resolve 0069–0072 CA1-ProS Glut supertype correspondence (target F1 ≥ 0.80 at SUPERTYPE for each sublayer label; expected output: AnnotationTransferEvidence on additional edges to the 0070, 0071, and 0072 CA1-ProS Glut supertypes).
-- Targeted cite-traverse for primary Wfs1 in situ / IHC studies in CA1 sublayers to strengthen the marker evidence chain.
+- Targeted cite-traverse for primary Wfs1 in situ / immunohistochemistry studies in CA1 sublayers to strengthen the marker evidence chain.
 
 ---
 
@@ -169,7 +180,7 @@ rejects any unresolvable identifier or unattributed blockquote. Specific
 mapping limitations and caveats are documented per-candidate in the
 Discussion section.
 
-*Generated by evidencell `bb9feaf` at 2026-05-13T10:39:01+00:00 from [kb/graphs/hippocampus/hippocampus_glutamatergic.yaml](kb/graphs/hippocampus/hippocampus_glutamatergic.yaml).*
+*Generated by evidencell `d121f84` at 2026-05-13T15:01:00+00:00 from [kb/graphs/hippocampus/hippocampus_glutamatergic.yaml](kb/graphs/hippocampus/hippocampus_glutamatergic.yaml).*
 
 **Evidence base table**
 
@@ -183,7 +194,7 @@ Discussion section.
 
 ## Discussion
 
-**Primary mapping:** CA1 pyramidal cell → 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] at MODERATE confidence. Key support: atlas metadata (CA1 stratum pyramidale soma distribution, 016 CA1-ProS Glut subclass placement) and MapMyCells annotation transfer of Yao 2021 CA1-ProS labels (SUBCLASS F1=0.9949; SUPERTYPE F1=0.7902 onto 0069 CA1-ProS Glut_1). Key caveat: AMBIGUOUS_MAPPING — the classical CA1 PC population spans at least four CA1-ProS Glut supertypes (the 0069 target plus its 0070, 0071, and 0072 siblings) under a TYPE_A_SPLITS relationship.
+**Primary mapping:** CA1 pyramidal cell → 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] at MODERATE confidence. Key support: atlas metadata (CA1 stratum pyramidale soma distribution, 016 CA1-ProS Glut subclass placement) and MapMyCells annotation transfer of Yao 2021 CA1-ProS labels (SUBCLASS F1=0.99; SUPERTYPE F1=0.79 onto 0069 CA1-ProS Glut_1). Key caveat: AMBIGUOUS_MAPPING — the classical CA1 PC population spans at least four CA1-ProS Glut supertypes (the 0069 target plus its 0070, 0071, and 0072 siblings) under a `skos:broadMatch` relationship.
 
 No Cell Ontology term currently assigned. Candidate for CL contribution covering the CA1 pyramidal cell (and, downstream, deep- vs. superficial-CA1 PC sublayer subtypes once the 0069–0072 CA1-ProS Glut supertype correspondence is resolved).
 
@@ -191,7 +202,7 @@ No Cell Ontology term currently assigned. Candidate for CL contribution covering
 
 The Yao 2021 SSv4 MapMyCells AT already establishes the CA1-ProS subclass-level
 mapping and the primary 0069 CA1-ProS Glut_1 correspondence (SUBCLASS
-F1=0.9949; SUPERTYPE F1=0.7902). What remains unresolved is sublayer
+F1=0.99; SUPERTYPE F1=0.79). What remains unresolved is sublayer
 correspondence within the 016 CA1-ProS Glut subclass.
 
 - **What:** MapMyCells annotation transfer using a sublayer-resolved CA1 PC source dataset (Cembrowski 2016 deep-vs-superficial CA1, or Zeisel 2018 dorsal CA1 pyramidal cells).
@@ -199,7 +210,7 @@ correspondence within the 016 CA1-ProS Glut subclass.
 - **Expected output:** AnnotationTransferEvidence on additional edges from CA1 pyramidal cell to the 0070, 0071, and 0072 CA1-ProS Glut supertypes (and refined evidence on the existing 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] edge).
 - **Resolves:** open question 1 (sublayer correspondence) and the AMBIGUOUS_MAPPING caveat on the 0069 CA1-ProS Glut_1 edge.
 
-- **What:** targeted cite-traverse for primary Wfs1 in situ / IHC studies in CA1 sublayers.
+- **What:** targeted cite-traverse for primary Wfs1 in situ / immunohistochemistry studies in CA1 sublayers.
 - **Target:** at least one primary citation per Wfs1 + CA1 sublayer (deep vs. superficial) finding.
 - **Expected output:** LiteratureEvidence on the classical node strengthening the Wfs1 defining-marker citation chain.
 - **Resolves:** marker provenance gap noted under the 0069 CA1-ProS Glut_1 candidate.
@@ -224,3 +235,24 @@ correspondence within the 016 CA1-ProS Glut subclass.
 | [8] | Herrera-Molina et al. 2017 | [28779130](https://pubmed.ncbi.nlm.nih.gov/28779130/) | Wfs1 marker |
 | [9] | Langnaese et al. 1997 | [8995369](https://pubmed.ncbi.nlm.nih.gov/8995369/) | Wfs1 marker |
 | [10] | Herrera-Molina et al. 2014 | [24554721](https://pubmed.ncbi.nlm.nih.gov/24554721/) | Wfs1 marker |
+
+<!-- verdict-block-start: edge_ca1_pc_hippocampus_to_supt_0069 -->
+```yaml
+verdict:
+  confidence: MODERATE
+  confidence_score: 0.7
+  rationale: >
+    Yao 2021 SSv4 scRNA-seq annotation transfer
+    (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) anchors CA1 pyramidal cells
+    to the 016 CA1-ProS Glut subclass (F1=0.99) and supertype
+    CS20230722_SUPT_0069 (F1=0.79), with MERFISH soma in Field CA1 pyramidal
+    layer concordant with the classical CA1 stratum pyramidale assignment;
+    1 of 1 markers CONSISTENT (Wfs1 mean_expression=3.97 at SUPT_0069).
+    Confidence is held at MODERATE because the classical CA1 PC population
+    splits across sibling supertypes (0070-0072) within the 016 CA1-ProS Glut
+    subclass, making this a broadMatch rather than an exclusive supertype
+    assignment.
+  unresolved_questions:
+    - Run MapMyCells annotation transfer of a sublayer-resolved CA1 PC source dataset (Cembrowski 2016 or Zeisel 2018) onto WMBv1 to resolve deep- vs. superficial-CA1 correspondence across CS20230722_SUPT_0069 through CS20230722_SUPT_0072.
+```
+<!-- verdict-block-end -->

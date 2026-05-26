@@ -1,0 +1,250 @@
+# AT `metrics_by_level` vs `f1_matrix.csv` audit — 2026-05-14
+
+Survey script: `/tmp/at_survey.py` (one-off; not committed).
+
+## Methodology
+
+For every `ANNOTATION_TRANSFER` evidence item in `kb/graphs/**/*.yaml`,
+recompute the F1 value that *should* live in `metrics_by_level[*].f1_score`
+by reading the run's `f1_matrix.csv`, filtering to the row whose
+`source_label` matches the evidence's `source_cluster_label`, and looking
+up the `target_name` declared in the metrics row.
+
+Tolerance: ±0.05 absolute on F1.
+
+## Headline numbers
+
+| Category | Count |
+|---|---|
+| Total AT metric rows across KB | 196 |
+| Within tolerance (stored ≈ CSV row for declared `source_cluster_label`) | 132 |
+| Diverged by > 0.05 from declared-label CSV row | 26 |
+| `source_cluster_label` is a pool (`" + "`, `"combined"`, `"aggregated"`) and no exact CSV row exists | 24 |
+| No CSV available (no `run_ref` or run dir missing) | 38 (mostly cerebellum) |
+
+So **64 of 196 AT metric rows (33%) are either divergent or unverifiable**
+against the canonical `f1_matrix.csv`.
+
+## Divergence buckets
+
+### Bucket A — Hand-entered numbers that don't match any obvious aggregation
+
+- `hippocampus_OLM.yaml` edge_olm_to_wmb_clus_0769 (4 rows) — fixed
+  in this session. Stored 0.68 / 0.68 / 0.67 / 0.47 was neither
+  per-source nor pooled. Replaced with pooled values from
+  `at_figures --pool --emit-metrics` (0.99 / 0.99 / 0.97 / 0.65).
+
+### Bucket B — Pooled labels that read as single source
+
+Edges declare `source_cluster_label: "BIC (hBIC n=11 + vBIC n=9 aggregated)"`
+or `"Sst-OLM + Htr3a-OLM (combined)"`, but the CSV uses the bare label
+`BIC` / has separate `Sst-OLM` + `Htr3a-OLM` rows. The stored F1 may have
+been computed under one grouping while the figure used another.
+
+Affected:
+
+- `hippocampus_GABAergic_interneurons.yaml`: BIC bistratified (9 rows),
+  PV basket pool (also flagged as unauditable, 6 rows).
+- `hippocampus_OLM.yaml`: combined OLM (fixed).
+
+### Bucket C — Stored < CSV row by 0.4–0.6 absolute
+
+The Que 2021 PV-IN AAC edges in `hippocampus_GABAergic_interneurons.yaml`:
+stored ≈ 0.12–0.24 vs CSV ≈ 0.78–0.83 at all levels. AAC IS a single
+source label in the CSV. Stored values look like they were computed
+against the WRONG target (cross-contamination row e.g. CLUS_0739 instead
+of an AAC-best target), or filtered to a non-best target on the edge.
+
+Affected:
+- `edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0204` (4 levels)
+- `edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0732` (4 levels)
+
+These are large divergences and likely indicate a curation bug, not just
+a sync drift.
+
+### Bucket D — DG immature/neuroblast/granule run
+
+`20260414_dentate_gyrus_report_ingest.yaml` has 9 rows diverging by
+−0.07 to −0.64. Pattern looks like the values were taken from a
+non-best target at each level (e.g. `dg_neuroblast → 04 DG-IMN Glut`
+stored F1=0.10 but Neuroblast_1 at CLASS level has F1=0.57). Either the
+"best" claim is wrong or a different metric (filtered to a specific
+target subset) was used.
+
+### Bucket E — Chamberland subfamily
+
+`hippocampus_chamberland_subfamilies.yaml` Chrna2/Ndnf rows: stored
+0.33 / 0.04 / 0.05 vs CSV 0.74 / 0.23 / 0.20. Same pattern as Bucket C.
+
+## Unverifiable rows
+
+### Cerebellum (`CB_MLI_types.yaml`, `CB_PLI_types.yaml`)
+No `run_ref` on the evidence items — they predate the
+`annotation_transfer_runs/` directory convention. 5 evidence items
+across both files. Cannot audit without finding the source matrix.
+
+### Yao 2021 SSv4 subclass-level groupings
+A handful of edges have `source_cluster_label` = `'Pvalb'` or `'Sst'`
+(subclass-level groupings of the Yao 2021 SSv4 data). These labels
+don't exist in `f1_matrix.csv` (which is keyed on cluster-level Yao
+labels). Either the original ingest aggregated to subclass before
+writing the F1, or the wrong label was recorded.
+
+## What this confirms
+
+The OLM-edge divergence is **not** an isolated case. The KB has a
+systematic problem:
+
+1. AT metrics are stored as a one-shot snapshot when the evidence is
+   first written; no script keeps them in sync with the canonical
+   `f1_matrix.csv`.
+2. `source_cluster_label` is free-text — pools, aliases, and aggregation
+   notes are all stuffed into the same string, defeating programmatic
+   joins back to the CSV.
+3. There is no recorded provenance for *how* a stored F1 was computed
+   (best-target per source? pooled? best of any source at this target?
+   a manual filter applied at ingest?). When stored ≠ CSV, we cannot
+   even tell which side is wrong.
+
+## Recommendations (for the broader persistence-audit project)
+
+1. **Add a refresh tool** analogous to `refresh_expression_pcs.py`:
+   `refresh_at_metrics.py` that, for every AT evidence item with a
+   resolvable `run_ref`, recomputes `metrics_by_level` from the CSV
+   (per-source or pooled per declared rule) and rewrites it. Conservative
+   default = dry-run + diff report.
+
+2. **Schema move**: make `source_cluster_label` a structured slot:
+   ```yaml
+   source_groups:
+     - label: "Sst-OLM"        # CSV-matching key
+       n_cells: 23
+     - label: "Htr3a-OLM"
+       n_cells: 23
+   aggregation: POOLED         # POOLED | PER_SOURCE | BEST_OF_ANY
+   ```
+   `metrics_by_level` then carries `aggregation` too, so the recompute
+   is unambiguous.
+
+3. **Make `metrics_by_level` derived, not stored**: at report time the
+   gen-report agent reads the CSV + the structured `source_groups` /
+   `aggregation` and computes the figure, the caption, and the inline
+   stats from one source. The edge YAML stores only the *interpretation*
+   (which target was called, why) — not the raw numbers.
+
+4. **`at_figures.py --emit-metrics`** (landed this session) makes (3)
+   feasible: the same code that draws the figure emits the sidecar JSON
+   the report grounds against. Extending it to also dump pooled values
+   for declared pools would close the audit loop.
+
+## Action proposed for this session
+
+- ✅ OLM edge fixed (Bucket A; commit 2704993).
+- ✅ `--emit-metrics` landed (commit e8b883a).
+- ✅ Survey done (this doc).
+- ✅ Schema landed for `source_groups` on AnnotationTransferEvidence
+  (commit fdf7dd9). Optional `SourceGroup.rationale` records
+  cross-panel defensibility justification; left blank when no
+  justification is on file.
+- ✅ OLM edges backfilled with `source_groups` (commit 914b0c3); the
+  supporting Sst Gaba_3 edge carries an AT-side rationale citing
+  pooled F1=0.97 + per-cluster scatter not separating by source
+  cohort.
+- ✅ Bucket B resolved (commit d3e6ab1; KB file
+  `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`).
+  Renamed `source_cluster_label` from the free-text aggregate to the
+  bare CSV label (`BC`, `BIC`) and attached `source_groups` with the
+  upstream-aggregation composition (`BC`: `[hBC, vBC]`; `BIC`:
+  `[hBIC, vBIC]`) on 3 BIC + 2 BC affected evidence items. Stored
+  metrics matched the CSV row-for-row at all four taxonomy levels in
+  every case, so no metric recomputation was needed. `rationale`
+  left blank — the aggregation reflects the Que 2021 AT run author's
+  convention (per manifest) with no cross-panel check on file.
+  rationale_source_hash refreshed on all affected edges via
+  writeback against existing reports; verdict prose unchanged.
+- ⏭ Broader fix-up (Buckets C / D / E and the cerebellum NO-CSV rows)
+  deferred to a follow-up — each will need its CSV interpreted carefully,
+  some will require re-running the AT pipeline against the original
+  source data, and the schema move is a substantial design change.
+
+File the architecture issue ("Property persistence audit") and attach
+this doc as the AT-specific evidence.
+
+---
+
+## Follow-up: programmatic AT metrics infrastructure (branch `feat/programmatic-at-metrics`)
+
+The investigation into Buckets C / D / E during the
+`review/confidence-and-predicates` branch produced a sharper
+diagnosis than the original audit: the issue is not numeric
+divergence between stored values and CSV rows, but a **schema-
+semantic mismatch** in `AnnotationTransferEvidence.metrics_by_level`.
+Across hippocampus + sexually_dimorphic + dentate_gyrus, **29 AT
+evidence items** store metrics for the source's best target at a
+level when the edge's target at that level is different (e.g.
+`edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0204` stores
+`best_target_accession: CS20230722_SUPT_0206` — the chandelier edge
+records F1 for the basket supertype). The agent transcribed the
+right CSV row for the source's best; it just wasn't the row for the
+edge's target. Honest CSV reads, dishonest framing.
+
+The structural fix (committed under
+`feat/programmatic-at-metrics`):
+
+- **Schema (commit `0521e74`).** `AnnotationTransferMetricRow` +
+  `AnnotationTransferResultSet` classes. The latter is the
+  schema-compliant successor to the implicit "CSV columns are the
+  contract" convention. `f1_source_relpath` slot on
+  `AnnotationTransferEvidence` for variant disambiguation
+  (Chamberland's by-class vs base).
+- **Pydantic models (commit `76603f9`).** `just gen-models` runs
+  `linkml gen-pydantic` → `src/evidencell/_models.py`.
+  `just check-models` is the CI drift guard. Programmatic writers
+  instantiate the models — invalid output is impossible by
+  construction.
+- **CSV → YAML migration (commit `abe79c3`).** `src/evidencell/at_metrics.py`
+  `migrate-all` subcommand converted all 7 known runs' CSVs into
+  10 `at_results*.yaml` files. Two CSV shapes handled (Shape A:
+  best-per-source-level only, e.g. Que 2021 / Hochgerner DG;
+  Shape B: full matrix, e.g. Winterer / Chamberland). Accession
+  derivation handles the CCN20230722 → CS20230722 prefix
+  convention.
+- **`compute_edge_metrics()` (commit `bb152bc`).** Read-side that
+  returns metrics_by_level keyed on (run_ref, source_label,
+  edge.taxonomy_type) — never on source-best. Empty list when the
+  AT run only saved best-per-source rows and edge target isn't
+  one of them (the Bucket-C case). Noise-floor default for
+  `supports`: NO_EVIDENCE below F1=0.10, PARTIAL below 0.60,
+  SUPPORT otherwise. Returns `source_best_summary` so the agent
+  can still cite where the source went, with `is_edge_target`
+  flags per level.
+- **Sweep tool (commit `632f7a7`).** `just refresh-at-metrics`
+  walks the KB; dry-run by default. Initial sweep on the full
+  KB surfaces 68 AT evidence items across 5 files; ~half would
+  go from N levels → 0 levels under the strict semantic
+  (`(source, edge_target)` only) — paused on a policy decision
+  about whether to also persist `source_best_summary` on the
+  evidence item to preserve ancestor-level context.
+- **Stage B prompt update (commit `900372d`).** Mapping subagent
+  no longer transcribes F1 numbers — supplies only `run_ref` +
+  `source_cluster_label`; metrics_by_level + supports populated
+  by `just refresh-at-metrics --apply`.
+- **Tests (commit `9063257`).** 23 tests covering accession
+  derivation, both CSV shapes, lookup hit/miss cases, noise
+  floor bands, variant selection, dry-run vs apply behaviour.
+  Test suite: 516 passed.
+
+**Still deferred from this branch:**
+
+- **Strict-vs-lineage policy for `metrics_by_level` semantics.**
+  Strict: only rows for (source, edge_target) — honest, but loses
+  ancestor context that the old data carried implicitly. Lineage-
+  aware: walk the taxonomy tree, lookup F1 for the ancestor of
+  edge_target at each level, include alongside the source-best.
+  Needs a curator-side review of dry-run output before deciding.
+- **Applying the sweep** to write new metrics across the KB.
+  Sweep code is dry-run-clean; --apply ready when policy lands.
+- **Buckets C / D / E content-level review.** Once the sweep is
+  applied with the chosen policy, AAC / DG-mature / Chamberland
+  edges may also need verdict revisits (the rationales were
+  partially built on the misleading metrics).

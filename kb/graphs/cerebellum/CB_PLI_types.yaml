@@ -236,7 +236,7 @@ nodes:
       comment: >
         Mapping to Lugaro cell is based on annotation transfer of PLI3 transcriptomic
         data (Osorno et al. 2022, PMID:35578131, SCP795) to WMBv1 using MapMyCells,
-        yielding group_purity=0.94 and target_purity=0.98 at supertype level (1145 CB
+        yielding coverage=0.94 and purity=0.98 at supertype level (1145 CB
         PLI Gly-Gaba_2). Lugaro cells co-transmit GABA and glycine (consistent with
         the GABA-Glyc NT prediction of supertype 1145). Best mapping is at supertype
         rather than cluster level; individual clusters within supertype 1145 may reflect
@@ -450,10 +450,9 @@ edges:
   # ── Step 1: Classical → Prior T-type (Osorno 2022) ─────────────
 
   - id: edge_candelabrum_to_pli1
-    type_a: classical_candelabrum
-    type_b: pli1_osorno
-    relationship: EQUIVALENT
-    confidence: HIGH
+    lit_type: classical_candelabrum
+    taxonomy_type: pli1_osorno
+    relationship: skos:exactMatch
     evidence:
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -490,11 +489,11 @@ edges:
           question distinguishing CC axon targeting from basket cell targeting.
         study_type: REVIEW
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_globular_to_pli2
-    type_a: classical_globular
-    type_b: pli2_osorno
-    relationship: EQUIVALENT
-    confidence: MODERATE
+    lit_type: classical_globular
+    taxonomy_type: pli2_osorno
+    relationship: skos:exactMatch
     evidence:
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -514,11 +513,11 @@ edges:
         own contribution — prior classical literature may not have this type
         explicitly named.
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_lugaro_to_pli3
-    type_a: classical_lugaro
-    type_b: pli3_osorno
-    relationship: EQUIVALENT
-    confidence: HIGH
+    lit_type: classical_lugaro
+    taxonomy_type: pli3_osorno
+    relationship: skos:exactMatch
     evidence:
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -535,11 +534,11 @@ edges:
 
   # ── Step 2: Prior T-type → WMBv1 (MapMyCells annotation transfer) ─
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_pli1_to_wmb5178
-    type_a: pli1_osorno
-    type_b: wmb_cluster_5178
-    relationship: EQUIVALENT
-    confidence: HIGH
+    lit_type: pli1_osorno
+    taxonomy_type: wmb_cluster_5178
+    relationship: skos:exactMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         supports: SUPPORT
@@ -558,42 +557,42 @@ edges:
         metrics_by_level:
           - taxonomy_level: CLASS
             best_target_name: "28 CB GABA"
-            group_purity: 1.000
-            target_purity: 0.026
             f1_score: 0.050
             n_cells_mapped: 1175
             median_bootstrap: 1.0
+            coverage: 1.000
+            purity: 0.026
           - taxonomy_level: SUBCLASS
             best_target_name: "309 CB PLI Gly-Gaba"
             best_target_accession: CS20230722_SUBC_309
-            group_purity: 0.998
-            target_purity: 0.463
             f1_score: 0.633
             n_cells_mapped: 1117
             median_bootstrap: 1.0
+            coverage: 0.998
+            purity: 0.463
           - taxonomy_level: SUPERTYPE
             best_target_name: "1144 CB PLI Gly-Gaba_1"
             best_target_accession: CS20230722_SUPT_1144
-            group_purity: 0.953
-            target_purity: 0.575
             f1_score: 0.717
             n_cells_mapped: 1059
             median_bootstrap: 1.0
+            coverage: 0.953
+            purity: 0.575
           - taxonomy_level: CLUSTER
             best_target_name: "5178 CB PLI Gly-Gaba_1"
             best_target_accession: CS20230722_CLUS_5178
-            group_purity: 0.937
-            target_purity: 0.947
             f1_score: 0.942
             n_cells_mapped: 903
             median_bootstrap: 1.0
+            coverage: 0.937
+            purity: 0.947
         code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_pli2_to_wmb5177
-    type_a: pli2_osorno
-    type_b: wmb_cluster_5177
-    relationship: PARTIAL_OVERLAP
-    confidence: MODERATE
+    lit_type: pli2_osorno
+    taxonomy_type: wmb_cluster_5177
+    relationship: evidencell:PartialOverlapMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         supports: PARTIAL
@@ -613,41 +612,41 @@ edges:
         metrics_by_level:
           - taxonomy_level: CLASS
             best_target_name: "28 CB GABA"
-            group_purity: 1.000
-            target_purity: 0.016
             f1_score: 0.031
             n_cells_mapped: 733
             median_bootstrap: 1.0
+            coverage: 1.000
+            purity: 0.016
           - taxonomy_level: SUBCLASS
             best_target_name: "309 CB PLI Gly-Gaba"
             best_target_accession: CS20230722_SUBC_309
-            group_purity: 0.992
-            target_purity: 0.298
             f1_score: 0.458
             n_cells_mapped: 720
             median_bootstrap: 1.0
+            coverage: 0.992
+            purity: 0.298
           - taxonomy_level: SUPERTYPE
             best_target_name: "1144 CB PLI Gly-Gaba_1"
             best_target_accession: CS20230722_SUPT_1144
-            group_purity: 0.975
-            target_purity: 0.380
             f1_score: 0.546
             n_cells_mapped: 700
             median_bootstrap: 1.0
+            coverage: 0.975
+            purity: 0.380
           - taxonomy_level: CLUSTER
             best_target_name: "5177 CB PLI Gly-Gaba_1"
             best_target_accession: CS20230722_CLUS_5177
-            group_purity: 0.830
-            target_purity: 0.930
             f1_score: 0.877
             n_cells_mapped: 521
             median_bootstrap: 1.0
+            coverage: 0.830
+            purity: 0.930
         code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: >
           PLI2 (Globular) cells distribute across multiple WMBv1 clusters within
-          the CB PLI Gly-Gaba subclass (subclass-level target_purity only 30%),
+          the CB PLI Gly-Gaba subclass (subclass-level purity only 30%),
           suggesting either transcriptomic heterogeneity within the Globular type
           or that the classical morphological Globular definition encompasses
           multiple transcriptomic subtypes.
@@ -660,18 +659,18 @@ edges:
         Re-analyse PLI2 cells from SCP795 at higher resolution to determine
         if the cluster-level heterogeneity reflects a biologically meaningful split.
 
+    mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_pli3_to_wmb1145
-    type_a: pli3_osorno
-    type_b: wmb_supertype_1145
-    relationship: EQUIVALENT
-    confidence: HIGH
+    lit_type: pli3_osorno
+    taxonomy_type: wmb_supertype_1145
+    relationship: skos:exactMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         supports: SUPPORT
         explanation: >
           MapMyCells annotation transfer of PLI3 (Lugaro) cells to WMBv1 shows
-          clean mapping at supertype level (1145 CB PLI Gly-Gaba_2): group_purity=0.94,
-          target_purity=0.98, F1=0.96. Cluster-level mapping is less clean (group_purity
+          clean mapping at supertype level (1145 CB PLI Gly-Gaba_2): coverage=0.94,
+          purity=0.98, F1=0.96. Cluster-level mapping is less clean (coverage
           only 49% to cluster 5180), indicating PLI3 cells distribute across the 2-3
           clusters within supertype 1145. NT prediction (GABA-Glyc) is consistent with
           Lugaro co-transmission.
@@ -685,35 +684,35 @@ edges:
         metrics_by_level:
           - taxonomy_level: CLASS
             best_target_name: "28 CB GABA"
-            group_purity: 0.998
-            target_purity: 0.011
             f1_score: 0.022
             n_cells_mapped: 523
             median_bootstrap: 1.0
+            coverage: 0.998
+            purity: 0.011
           - taxonomy_level: SUBCLASS
             best_target_name: "309 CB PLI Gly-Gaba"
             best_target_accession: CS20230722_SUBC_309
-            group_purity: 0.992
-            target_purity: 0.217
             f1_score: 0.357
             n_cells_mapped: 524
             median_bootstrap: 1.0
+            coverage: 0.992
+            purity: 0.217
           - taxonomy_level: SUPERTYPE
             best_target_name: "1145 CB PLI Gly-Gaba_2"
             best_target_accession: CS20230722_SUPT_1145
-            group_purity: 0.939
-            target_purity: 0.979
             f1_score: 0.958
             n_cells_mapped: 464
             median_bootstrap: 1.0
+            coverage: 0.939
+            purity: 0.979
           - taxonomy_level: CLUSTER
             best_target_name: "5180 CB PLI Gly-Gaba_2"
             best_target_accession: CS20230722_CLUS_5180
-            group_purity: 0.488
-            target_purity: 0.991
             f1_score: 0.654
             n_cells_mapped: 219
             median_bootstrap: 1.0
+            coverage: 0.488
+            purity: 0.991
         code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
     caveats:
       - caveat_type: TAXONOMY_LEVEL_MISMATCH
@@ -727,3 +726,4 @@ edges:
         Sub-cluster analysis of supertype 1145 with additional markers (particularly
         MERFISH-compatible probes) to determine if the intra-supertype variation
         corresponds to identifiable biological differences in Lugaro cells.
+    mapping_justification: semapv:UnreviewedManualMapping

@@ -38,7 +38,7 @@ The primary disqualifying signal is that SUPT_0216 [CS20230722_SUPT_0216] is sim
 - NT alignment: CONSISTENT — R-LM cell is GABAergic; SUPT_0216 belongs to the Sst Gaba subclass.
 - Stratum oriens soma location: CONSISTENT — SUPT_0216 [CS20230722_SUPT_0216] has strong CA1 stratum oriens representation (818 cells), matching the reported soma location [1].
 - Sst marker: CONSISTENT — Sst is the defining classical marker [2]; SUPT_0216 expresses Sst (precomputed mean 11.44). Additional atlas markers Reln, Rbp4, and Npffr1 may inform distinction from other Sst subtypes (see below).
-- Annotation transfer (MapMyCells; Yao 2021, GEO:GSE185862; n=273 HIP Sst cells): Sst subclass maps to WMBv1 at subclass level with high confidence (F1=0.983). At supertype level, SUPT_0216 [CS20230722_SUPT_0216] receives 83/273 Sst cells (F1=0.488, target_purity=1.0), indicating that a subset of SST+ hippocampal cells projects to this supertype.
+- Annotation transfer (MapMyCells; Yao 2021, GEO:GSE185862; n=273 HIP Sst cells): Sst subclass maps to WMBv1 at subclass level with high confidence (F1=0.983). At supertype level, SUPT_0216 [CS20230722_SUPT_0216] receives 83/273 Sst cells (F1=0.488, purity=1.0), indicating that a subset of SST+ hippocampal cells projects to this supertype.
 
 Additionally, Perez et al. 2020 [1] provide transcriptomic context for R-LM-like neurons:
 

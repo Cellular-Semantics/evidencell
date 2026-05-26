@@ -43,7 +43,7 @@ All edges: `TYPE_A_SPLITS`
 - Cluster CS20230722_CLUS_0506 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.69. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, St18. Neuropeptides: Cck. Soma: DG do (dorsal outer GCL) (HIP:0.99). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
 - Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
 - Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
-- MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0506 DG Glut_2 is the best cluster match (F1=0.665, group_purity=0.833, target_purity=0.553). Subclass 037 DG Glut achieves F1=0.711 (group_purity=0.980). High group purity (83% of confident cluster-level cells map to 0506) confirms this as the primary atlas correlate of mature granule neurons in Hochgerner 2018. [Annotation transfer]
+- MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0506 DG Glut_2 is the best cluster match (F1=0.665, coverage=0.833, purity=0.553). Subclass 037 DG Glut achieves F1=0.711 (coverage=0.980). High group purity (83% of confident cluster-level cells map to 0506) confirms this as the primary atlas correlate of mature granule neurons in Hochgerner 2018. [Annotation transfer]
 
 **Concerns:**
 
@@ -90,7 +90,7 @@ All edges: `TYPE_A_SPLITS`
 - Cluster CS20230722_CLUS_0507 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.67. Core TF/MERFISH markers: Glis3, Neurod2, St18. Neuropeptides: Cck, Pdyn. Soma: DG do (dorsal outer GCL) (HIP:0.98). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
 - Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
 - Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
-- MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0507 DG Glut_2 receives 7 cells from Granule-mature (F1=0.068, group_purity=0.053). Very weak PARTIAL support; dominant mapping is to 0506 (F1=0.665). [Annotation transfer]
+- MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0507 DG Glut_2 receives 7 cells from Granule-mature (F1=0.068, coverage=0.053). Very weak PARTIAL support; dominant mapping is to 0506 (F1=0.665). [Annotation transfer]
 
 **Concerns:**
 
@@ -231,7 +231,7 @@ All edges: `TYPE_A_SPLITS`
 - Cluster CS20230722_CLUS_0509 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.59. Core TF/MERFISH markers: Glis3, Neurod2, Atf3, Bhlhe41, Cebpb. Neuropeptides: Cck, Pdyn, Npy. Soma: DG do (dorsal outer GCL) (HIP:0.96). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap. [Atlas metadata]
 - Establishes stage-6 mature identity as DCX−/NeuN+/Calbindin+. DG Glut clusters collectively represent this terminal state; absence of DCX/Eomes and presence of mature TF core (Glis3, Neurod2) distinguishes them from upstream neuroblast and immature GN clusters. [Literature] [4]
 - Confirms Tbr1 marks terminally differentiated postmitotic granule cells. DG Glut clusters represent the Tbr1+ mature stage even though Tbr1 does not appear as a cluster-distinguishing marker. [Literature] [5]
-- MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0509 DG Glut_3 receives 12 cells from Granule-mature (F1=0.167, group_purity=0.091, target_purity=1.0). Low group purity; 0509 is not a dominant target. Weak PARTIAL support. [Annotation transfer]
+- MapMyCells transfer of Hochgerner 2018 Granule-mature cells (n=1712; GSE95315) to WMBv1. Cluster 0509 DG Glut_3 receives 12 cells from Granule-mature (F1=0.167, coverage=0.091, purity=1.0). Low group purity; 0509 is not a dominant target. Weak PARTIAL support. [Annotation transfer]
 
 **Concerns:**
 

@@ -1,214 +1,296 @@
 # Bistratified cell — WMBv1 (CCN20230722) Mapping Report
 *2026-04-09 · Source: `kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml`*
 
+---
+
 ## Introduction
 
-Hippocampal bistratified cells are CA1 GABAergic interneurons whose somata lie
-in/near stratum pyramidale and whose axons innervate stratum oriens and
-stratum radiatum in a characteristic bilaminar pattern, providing dendritic
-inhibition to pyramidal cells [1][2][3][4]. They co-express the canonical
-parvalbumin (Pvalb) marker of fast-spiking PV interneurons with somatostatin
-(Sst) and Tac1 [5][6][7][8][9], distinguishing them from PV basket cells (which
-target the soma) and from Sst-only OLM cells. Mapping this morphologically and
-functionally defined population to a single-cell transcriptomic atlas is non-trivial
-because PV interneuron transcriptomic landscapes are continuous rather than
-discrete [8], and because bistratified Sst/Tac1 co-expression places them
-near both the Pvalb and Sst transcriptomic neighbourhoods.
+The hippocampal bistratified cell is a classical, morphologically defined CA1
+GABAergic interneuron whose axon ramifies bilaminarly in stratum oriens and
+stratum radiatum, where it inhibits the dendrites of CA1 pyramidal cells [1, 2].
+It belongs to the parvalbumin-expressing (PV) interneuron family and co-expresses
+Pvalb, Sst and Tac1 [4, 5, 6, 7, 8, 9]. Because bistratified cells share a
+PV/Sst molecular profile with neighbouring populations (basket, axo-axonic, OLM),
+their unambiguous placement within a transcriptomic taxonomy has long been an
+open question — and bistratified cells therefore serve as a stress test of
+whether transcriptomic atlas clusters resolve PV-IN morphological subtypes.
 
 ### Classical type table
 
 | Property | Value | References |
 |---|---|---|
-| Soma location | pyramidal layer of CA1 [UBERON:0014548]; axon in CA1 stratum oriens [UBERON:0014552] and CA1 stratum radiatum [UBERON:0014554] | [1][2][3] |
-| NT | GABAergic | [4] |
-| Markers | Pvalb (defining), Sst, Tac1 | Pvalb [5][6][7][8]; Sst, Tac1 [9] |
+| Soma location | pyramidal layer of CA1 [UBERON:0014548] (axon extends into CA1 stratum oriens [UBERON:0014552] and CA1 stratum radiatum [UBERON:0014554]) | [1, 2, 3] |
+| Neurotransmitter | GABAergic | [4] |
+| Defining markers | Pvalb [5, 6, 7, 8]; Sst [9]; Tac1 [9] | [5–9] |
 | Neuropeptides | Sst | [9] |
-| CL term | bistratified cell [CL:0004247] (BROAD) | — |
+| Cell Ontology | bistratified cell [CL:0004247] (BROAD; retinal-focused term, no dedicated hippocampal CL term) | — |
 
 <details>
 <summary>Details — source evidence for classical type properties</summary>
 
-- **Soma location:** classical morphology · CA1 stratum pyramidale soma with bilaminar SO/SR axonal field · [1][2][3]
+- **Soma location:** Chamberland & Topolnik 2012 review · [1]
   > The hippocampal cells they most resemble, Basket-bistratified, HS and OLM interneurons, have their somata in the stratum pyramidale (sp) of the hippocampus
   > — Perez et al. 2020, Identification of cell types based on the somatic transcriptome · [3] <!-- quote_key: 224817966_79f4a500 -->
-
   > the most representative ones, the PV-expressing basket and bistratified cells, the NOS-expressing ivy cells and 2 types of interneuron-selective interneurons (ISI 1 and 3) that express calretinin
   > — Bocchio et al. 2024, Results · [2] <!-- quote_key: 262127573_ba6d02e9 -->
-
+- **Neurotransmitter (GABA):** Dannenberg et al. 2017 · [4]
+  > Interneurons expressing the calcium binding protein parvalbumin (PV) make up approximately 40% of all GABAergic interneurons. However, this is a heterogeneous group of functionally distinct interneuron subtypes. For example, in the hippocampus alone, there are at least three functionally and morphologically distinct populations of PV + expressing interneurons, namely basket, axo-axonic and bistratified cells. Fast spiking interneurons in the hippocampus and neocortex are often PV + positive and target the soma of pyramidal cells.
+  > — Dannenberg et al. 2017, Classification Schemes and Methodological Approaches · [4] <!-- quote_key: 38778375_462ec931 -->
+- **Pvalb marker:** Ekins et al. 2020 · [5]; Chamberland et al. 2023 · [6]; Tzilivaki et al. 2023 · [7]; Que et al. 2021 · [8]
+  > WT PV+INTs consist of two physiological subtypes (80% fast-spiking (FS), 20% non-fast-spiking (NFS)) and four morphological subtypes (basket, axo-axonic, bistratified, radiatum-targeting).
+  > — Ekins et al. 2020, Classification Schemes and Methodological Approaches · [5] <!-- quote_key: 221276443_e917908b -->
+  > while PV-INs differ in anatomy and in vivo activity, their continuous transcriptomic and homogenous biophysical landscapes are not predictive of these distinct identities
+  > — Que et al. 2021 · [8] <!-- quote_key: 230508306_e8cc8c19 -->
+- **Sst / Tac1 markers and neuropeptide:** Chamberland et al. 2024 · [9]
+  > the Sst;;Tac1 intersection targeted a population of bistratified cells that overwhelmingly targeted fast-spiking interneurons. In contrast, the Ndnf;;Nkx2-1 intersection revealed a population of oriens lacunosum-moleculare interneurons that selectively targeted CA1 pyramidal cells
+  > — Chamberland et al. 2024, Transcriptomic Interneuron Classifications · [9] <!-- quote_key: 269246896_c084d5c0 -->
+- **Electrophysiology / morphology context:** Chamberland & Topolnik 2012 · [1]
   > Different types of hippocampal inhibitory interneurons control spike initiation [e.g., axo-axonic and basket cells (BCs)] and synaptic integration (e.g., bistratified and oriens–lacunosum moleculare interneurons) within pyramidal neurons
   > — Chamberland & Topolnik 2012, Classical Functional and Morphological Interneuron Types · [1] <!-- quote_key: 8530661_92702482 -->
 
-- **Pvalb defining marker:** classical and transcriptomic confirmation; PV-IN heterogeneity includes bistratified subtype [4][5][8]
-  > Interneurons expressing the calcium binding protein parvalbumin (PV) make up approximately 40% of all GABAergic interneurons. However, this is a heterogeneous group of functionally distinct interneuron subtypes. For example, in the hippocampus alone, there are at least three functionally and morphologically distinct populations of PV + expressing interneurons, namely basket, axo-axonic and bistratified cells. Fast spiking interneurons in the hippocampus and neocortex are often PV + positive and target the soma of pyramidal cells.
-  > — Dannenberg et al. 2017, Classification Schemes and Methodological Approaches · [4] <!-- quote_key: 38778375_462ec931 -->
-
-  > WT PV+INTs consist of two physiological subtypes (80% fast-spiking (FS), 20% non-fast-spiking (NFS)) and four morphological subtypes (basket, axo-axonic, bistratified, radiatum-targeting).
-  > — Ekins et al. 2020, Classification Schemes and Methodological Approaches · [5] <!-- quote_key: 221276443_e917908b -->
-
-  > while PV-INs differ in anatomy and in vivo activity, their continuous transcriptomic and homogenous biophysical landscapes are not predictive of these distinct identities
-  > — Que et al. 2021 · [8] <!-- quote_key: 230508306_e8cc8c19 -->
-
-- **Sst / Tac1 markers and bistratified targeting:** Sst;;Tac1 intersectional genetics labels bistratified cells [9]
-  > the Sst;;Tac1 intersection targeted a population of bistratified cells that overwhelmingly targeted fast-spiking interneurons. In contrast, the Ndnf;;Nkx2-1 intersection revealed a population of oriens lacunosum-moleculare interneurons that selectively targeted CA1 pyramidal cells
-  > — Chamberland et al. 2024, Transcriptomic Interneuron Classifications · [9] <!-- quote_key: 269246896_c084d5c0 -->
-
 </details>
 
-Cell Ontology mapping: bistratified cell [[CL:0004247](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0004247)] (BROAD).
+### Cell Ontology mapping
+
+**Cell Ontology mapping:** bistratified cell [[CL:0004247](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0004247)] (BROAD).
+
+The CL term is retinal-focused; the hippocampal Pvalb/Sst/Tac1+ bistratified
+cell with axons in CA1 SO and SR has no dedicated CL term and is a candidate
+for a new term. Mapping notes are surfaced again in the Discussion.
 
 ---
 
 ## Results
 
-Three candidate atlas mappings were assessed; the primary mapping is the
-supertype 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] and its child cluster
-0737 Pvalb Gaba_2 [CS20230722_CLUS_0737], with morphologically confirmed PV
-bistratified cells from Que 2021 producing an F1 = 0.80 at the cluster level
-to CLUS_0737 (MODERATE confidence).
+Three candidate atlas edges were assessed against the bistratified-cell
+classical node. The primary mapping is **CLUS_0737 (0737 Pvalb Gaba_2)** at
+MODERATE confidence — the sole WMBv1 cluster whose MERFISH bilaminar CA1
+SO + CA1 SR distribution and Pvalb/Sst/Tac1 marker profile align with the
+classical morphological definition, and the cluster recipient of 16/17
+morphologically labelled Que 2021 BIC patch-seq cells reaching cluster
+resolution. The parent supertype SUPT_0206 (Pvalb Gaba_2) is co-assigned at
+MODERATE confidence; SUPT_0216 (Sst Gaba_3) is retained at LOW confidence
+to represent any Sst-dominant bistratified subpopulation that would not
+be captured under the canonical PV branch.
 
-**Annotation-transfer overview figure (run-level, filtered).** Three AT
-runs inform this node; the morphologically confirmed PV bistratified cells
-from Que 2021 are the primary evidence and are shown first.
+### Annotation-transfer overview figure (Que 2021 patch-seq, BIC)
 
-![Filtered AT figure for Bistratified cell — Que 2021 morphologically confirmed BIC cells](../../kb/annotation_transfer_runs/at_run_20260508_que2021_pvin_mmc_wmbv1/figures/f1_for_bistratified_cell_hippocampus.png)
+![Filtered AT figure for bistratified cells (Que 2021 BIC)](figures/f1_for_bistratified_cell_hippocampus.png)
 
-*F1 across taxonomy levels for the BIC (bistratified, n=20) source group
-from Que 2021 patch-seq morphological labels. BIC cells map cleanly to
-0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] at cluster level (F1 = 0.800,
-group_purity = 0.941, target_purity = 0.696) within supertype
-0206 Pvalb Gaba_2 [CS20230722_SUPT_0206]. The BC sibling group maps
-preferentially to CLUS_0739, separating basket from bistratified at
-cluster resolution.*
+*F1 across taxonomy levels for the single source group relevant to the
+classical bistratified cell — Que 2021 patch-seq BIC (pooled hBIC + vBIC,
+n=20 morphologically confirmed cells; CS20230722). Each panel row is a
+source-cell group; nodes are coloured by F1 with **Purity** (Pur) and
+**Coverage** (Cov) shown inline. Coverage = fraction of source-group cells
+landing on this target; Purity = fraction of this target's cells coming
+from the source group. With a single source group in the figure, Coverage
+discriminates the landing site while Purity reports the target cluster's
+contamination by other PV morphological types. F1 ≥ 0.5 at a level
+indicates a clean mapping at that resolution. The cluster-level landing
+site CS20230722_CLUS_0737 reaches F1=0.80 (Cov=0.94, Pur=0.70) — the
+strongest BIC signal in WMBv1.*
 
-![Filtered AT figure for Bistratified cell — Yao 2021 Pvalb and Sst SSv4 groups](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/figures/f1_for_bistratified_cell_hippocampus.png)
+The cluster-level F1 jump from 0.38 at supertype to 0.80 at cluster
+reflects that the supertype SUPT_0206 pools BIC and basket (BC)
+morphologies; only at cluster resolution do BC (→ CLUS_0739, F1=0.83 in
+the companion analysis reported in the run caveats) and BIC
+(→ CLUS_0737) separate cleanly.
 
-*F1 across taxonomy levels for the Pvalb and Sst SSv4 source groups from
-Yao 2021 GSE185862 hippocampal formation. The Yao 2021 SSv4 'Pvalb' label
-is morphologically unresolved (mixes basket, axo-axonic and bistratified),
-yielding diffuse signal across Pvalb supertypes with only a weak component
-to 0216 Sst Gaba_3 [CS20230722_SUPT_0216] (F1 = 0.053). Shown as
-supporting context for the LOW-confidence Sst-supertype edge.*
-
-![Filtered AT figure for Bistratified cell — Chamberland Sst_Tac1 per-cluster subfamily](../../kb/annotation_transfer_runs/at_run_20260512_chamberland_subfamily_mmc_wmbv1/figures/f1_for_bistratified_cell_hippocampus.png)
-
-*F1 across taxonomy levels for the Sst_Tac1 source group derived from
-Harris 2018 cluster-mean expression using Chamberland 2024 in-silico
-gene-pair rules (n=168). The Sst_Tac1 group surfaces a cross-subclass
-Sst→Pvalb landing at 052 Pvalb Gaba subclass (F1 = 0.578, recall = 0.783)
-with target_purity = 0.939 at 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] at
-cluster level — independent in-silico support for the Sst-Pvalb
-transcriptomic continuity of bistratified cells described by Chamberland
-2024 [9]. The Sst_Tac1 label is derived from cluster-mean expression
-rather than morphology and so supports the mapping in PARTIAL only.*
-
-### Mapping candidates table
+### Mapping candidates
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
-|---|---|---|---:|---|---|---|
-| 1 | 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] | 0206 Pvalb Gaba_2 | 1312 | 🟡 MODERATE | Pvalb CONSISTENT · CA1 SO+SR CONSISTENT · Sst:4.4 · Tac1:7.3 | Best candidate (cluster-level) |
-| 2 | 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] | — (supertype) | 2860 | 🟡 MODERATE | Pvalb CONSISTENT · SO+SR via CLUS_0737 | Best candidate (supertype-level) |
-| — | 0216 Sst Gaba_3 [CS20230722_SUPT_0216] | — (supertype) | 2712 | 🔴 LOW | Sst CONSISTENT · Tac1 CONSISTENT · Pvalb DISCORDANT | Speculative (Sst-dominant subpopulation) |
+|:--:|---|---|--:|:--:|---|---|
+| 1 | 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] | 0206 Pvalb Gaba_2 | 1312 | 🟡 MODERATE | Bilaminar CA1 SO+SR CONSISTENT · Pvalb/Sst/Tac1 CONSISTENT | Best candidate |
+| 2 | 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] | — | 2860 | 🟡 MODERATE | Pvalb subclass CONSISTENT · pools BC + BIC | Best candidate (supertype) |
+| 3 | 0216 Sst Gaba_3 [CS20230722_SUPT_0216] | — | 2712 | 🔴 LOW | Sst/Tac1 CONSISTENT · Pvalb DISCORDANT · location APPROXIMATE | Speculative |
 
-Total edges: 3 (2 MODERATE, 1 LOW); relationship PARTIAL_OVERLAP for all.
+Total: 3 edges on this node; all `evidencell:PartialOverlapMatch`.
 
-### Primary candidate property alignment — 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] · 🟡 MODERATE
+### Primary candidate — CLUS_0737 (Pvalb Gaba_2)
 
-**Table 1 — Property comparison.**
+**Table 1 — Property comparison (CLUS_0737 and parent SUPT_0206).**
 
 | Property | Classical | Supertype | Best cluster | Alignment |
 |---|---|---|---|---|
-| NT type | GABAergic | GABA (Pvalb Gaba_2) | GABA (CLUS_0737) | CONSISTENT |
-| Pvalb expression | defining marker | Pvalb subclass (MERFISH in sibling CLUS_0739) | Pvalb subclass; scoped marker Ednra (CLUS_0737) | CONSISTENT |
-| Soma/axon location | CA1 stratum oriens [UBERON:0014552] + CA1 stratum radiatum [UBERON:0014554] (axon) | bilaminar via CLUS_0737 | CA1 SO: 361 cells, CA1 SR: 72, CA3 SO: 72 (CLUS_0737) | CONSISTENT |
+| NT type | GABAergic | GABA | GABA | CONSISTENT |
+| Soma / axon location | CA1 stratum oriens [UBERON:0014552] + CA1 stratum radiatum [UBERON:0014554] (axonal bilamina) | not separable (pools BC + BIC) | CLUS_0737: CA1 SO (361), CA1 SR (72), CA3 SO (72) — bilaminar | CONSISTENT |
+| Pvalb expression | defining marker | Pvalb subclass; CLUS_0739 MERFISH: Pvalb present | Pvalb subclass; CLUS_0737 scoped marker Ednra (Pvalb not in CLUS_0737 MERFISH panel but present in parent subclass) | CONSISTENT |
 | Sst expression | co-expressed | NP: Sst:4.4 (CLUS_0737) | NP: Sst:4.4 (CLUS_0737) | CONSISTENT |
-| Tac1 expression | co-expressed | NP: Tac1:7.3 (CLUS_0737) | NP: Tac1:7.3 (CLUS_0737) | CONSISTENT |
-| Sex ratio | not documented | not available | not available | NOT_ASSESSED |
+| Tac1 expression | co-expressed (Sst;;Tac1 intersection targets BIC) | NP: Tac1:7.3 (CLUS_0737) | NP: Tac1:7.3 (CLUS_0737) | CONSISTENT |
+| Sex ratio | not documented | not available | not assessed | NOT_ASSESSED |
 
-**Table 2 — Evidence support.**
-
-| Evidence | Type | Supports | Headline | Source |
-|---|---|---|---|---|
-| Atlas precomputed expression + MERFISH (CLUS_0737) | Atlas metadata | SUPPORT | CA1 SO 361 · CA1 SR 72 · NP Sst:4.4 Tac1:7.3 | atlas-internal |
-| Que 2021 MapMyCells (morphologically confirmed BIC, n=20) | Annotation transfer | SUPPORT | F1 = 0.800 at CLUS_0737 (group_purity 0.941, target_purity 0.696) | atlas-internal |
-| Chamberland per-cluster Sst_Tac1 (Harris 2018, n=168) | Annotation transfer | PARTIAL | target_purity 0.939 at CLUS_0737; subclass F1 = 0.578, recall 0.783 | atlas-internal |
-
-*(Of the SUPT_0206 child clusters, CLUS_0737 carries the bistratified-specific
-bilaminar CA1 SO + CA1 SR anatomy and the Sst+Tac1 NP profile; sibling
-CLUS_0739 carries the basket morphology and receives the BC cells in the
-Que 2021 patch-seq run. Best match: CLUS_0737.)*
-
-### Secondary candidate property alignment — 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] · 🟡 MODERATE
-
-**Table 1 — Property comparison.**
-
-| Property | Classical | Supertype | Best cluster | Alignment |
-|---|---|---|---|---|
-| NT type | GABAergic | GABA | GABA (CLUS_0737) | CONSISTENT |
-| Pvalb expression | defining marker | Pvalb subclass; CLUS_0739 MERFISH: Pvalb present | Pvalb subclass (CLUS_0737) | CONSISTENT |
-| Soma/axon location | CA1 stratum oriens [UBERON:0014552] + CA1 stratum radiatum [UBERON:0014554] | bilaminar pattern in CLUS_0737 | CA1 SO 361, CA1 SR 72, CA3 SO 72 (CLUS_0737) | CONSISTENT |
-| Sst expression | co-expressed | NP: Sst:4.4 (via CLUS_0737) | NP: Sst:4.4 (CLUS_0737) | CONSISTENT |
-| Tac1 expression | co-expressed | NP: Tac1:7.3 (via CLUS_0737) | NP: Tac1:7.3 (CLUS_0737) | CONSISTENT |
-| Sex ratio | not documented | not available | not available | NOT_ASSESSED |
-
-**Table 2 — Evidence support.**
+**Table 2 — Evidence support (all items on CLUS_0737 + SUPT_0206 edges).**
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| Atlas precomputed expression (SUPT_0206 + CLUS_0737) | Atlas metadata | PARTIAL | dominant hippocampal Pvalb supertype; bistratified-specific child CLUS_0737 | atlas-internal |
-| Que 2021 MapMyCells (BIC, n=20) | Annotation transfer | SUPPORT | SUPT_0206 F1 = 0.375 (group_purity 0.900); CLUS_0737 F1 = 0.800 | atlas-internal |
+| SUPT_0206 atlas metadata | Atlas metadata | PARTIAL | Pvalb supertype; contains CLUS_0737 (BIC) and CLUS_0739 (BC) | atlas-internal |
+| Que 2021 patch-seq AT → SUPT_0206 | Annotation transfer | SUPPORT | F1=0.38 (Cov=0.90, Pur=0.24); 18/20 BIC cells land on SUPT_0206 | atlas-internal |
+| CLUS_0737 atlas metadata | Atlas metadata | SUPPORT | Bilaminar CA1 SO (361)+SR (72); NP Tac1:7.3, Sst:4.4, Cort:8.0 | atlas-internal |
+| Que 2021 patch-seq AT → CLUS_0737 | Annotation transfer | SUPPORT | F1=0.80 (Cov=0.94, Pur=0.70); 16/17 cluster-resolved BIC at CLUS_0737 | atlas-internal |
+| Chamberland Sst_Tac1 in-silico AT → CLUS_0737 | Annotation transfer | PARTIAL | Cluster F1=0.47 (Cov=0.31, Pur=0.94); confirms landing site | atlas-internal |
 
-*(At supertype level, SUPT_0206 contains both PV basket (CLUS_0739) and
-PV bistratified (CLUS_0737) populations; the supertype is therefore not
-separable for basket vs. bistratified — cluster-level resolution at
-CLUS_0737 is required. Best match: CLUS_0737.)*
+*(BIC/BC cluster separation within SUPT_0206 is recovered only at cluster
+resolution: of 17 morphologically confirmed BIC cells reaching the right
+lineage at cluster level, 16 concentrate at CLUS_0737, while sibling
+CLUS_0739 is the preferred landing site for BC cells. Best match: CLUS_0737.)*
 
-### 0206 Pvalb Gaba_2 [CS20230722_SUPT_0206] · 🟡 MODERATE
-
-**Supporting evidence**
-- SUPT_0206 (Pvalb Gaba_2) is the dominant hippocampal Pvalb supertype and primary atlas target for canonical PV interneurons including bistratified cells. Pvalb is the defining marker of bistratified cells and SUPT_0206 sits within the Pvalb subclass (052 Pvalb Gaba [CS20230722_SUBC_052]).
-- Child cluster 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] shows bilaminar anatomy (CA1 SO 361 cells, CA1 SR 72 cells) directly matching the bistratified cell axon target lamination, with NP markers Sst:4.4 and Tac1:7.3 consistent with bistratified identity (Sst;;Tac1 intersection labels bistratified cells per Chamberland 2024 [9]).
-- Que 2021 patch-seq morphologically confirmed BIC cells (n=20) map 18/20 to SUPT_0206 (group_purity = 0.900, F1 = 0.375 at supertype level). The lower supertype F1 vs. cluster F1 reflects that SUPT_0206 is the parent of both BIC and BC target clusters; the supertype hit is purity-rich but mixed with the BC sibling. *(note: supertype F1 is bounded by sibling-cluster confusion; the cluster-level F1 = 0.800 is the relevant headline.)*
-
-**Concerns**
-- DISTRIBUTED_ACROSS_CLUSTERS: SUPT_0206 contains both PV basket cells (CLUS_0739) and PV bistratified cells (CLUS_0737). Not separable at supertype level; cluster-level resolution at CLUS_0737 is required for bistratified-specific mapping.
-
-**What would upgrade confidence**
-- Independent morphologically confirmed PV bistratified scRNA-seq from an additional study reaching F1 ≥ 0.80 at CLUSTER level on CLUS_0737 (currently met by Que 2021 alone).
-
-### 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737] · 🟡 MODERATE
+### 0737 Pvalb Gaba_2 · 🟡 MODERATE
 
 **Supporting evidence**
-- Atlas precomputed expression and MERFISH for CLUS_0737 give CA1 SO 361, CA1 SR 72, CA3 SO 72 — the bilaminar CA1 SO + CA1 SR distribution directly matches the bistratified cell axon territory described in classical morphology [1][2][3]. NP markers: Cort:8.0, Tac1:7.3, Npy:5.5, Cck:5.2, Sst:4.4 — Sst and Tac1 are the two markers used by Chamberland 2024 Sst;;Tac1 intersection genetics to label bistratified cells [9].
-- Que 2021 (GEO:GSE142546) MapMyCells local annotation transfer of morphologically confirmed PV bistratified cells (hBIC + vBIC, n=20) places 16/20 cells at CLUS_0737 (F1 = 0.800, group_purity = 0.941, target_purity = 0.696). Sibling CLUS_0739 receives the BC cells (F1 = 0.827), demonstrating clean cluster-level basket-vs-bistratified separation within the SUPT_0206 supertype despite the continuous transcriptomic landscape PV-INs occupy [8].
-- Chamberland per-cluster Sst_Tac1 in-silico labels applied to Harris 2018 (n=168) provide independent support: target_purity = 0.939 at CLUS_0737 at cluster level, with subclass-level F1 = 0.578 and recall = 0.783 to 052 Pvalb Gaba subclass — a cross-subclass Sst → Pvalb landing consistent with the Chamberland 2024 Sst-Pvalb transcriptomic continuity reading for bistratified cells [9].
+
+- WMBv1 MERFISH for CLUS_0737 shows the largest CA1 stratum oriens cell
+  count of any Pvalb cluster (361 cells) together with a substantive CA1
+  stratum radiatum component (72 cells) — the bilaminar SO + SR axon
+  territory that defines the bistratified morphological type [atlas-internal].
+- CLUS_0737 neuropeptide stats list Tac1:7.3, Sst:4.4 and Cort:8.0,
+  directly consistent with the Pvalb+/Sst+/Tac1+ co-expression that
+  Chamberland et al. 2024 used to target bistratified cells via the
+  Sst;;Tac1 intersection [9].
+- Que 2021 (GSE142546) morphologically confirmed PV bistratified cells
+  (pooled hBIC + vBIC patch-seq, n=20) map to CLUS_0737 at F1=0.80
+  (Cov=0.94, Pur=0.70), with 16 of 17 cluster-resolved cells landing on
+  CLUS_0737 (`at_run_20260508_que2021_pvin_mmc_wmbv1`). This is the
+  strongest cluster-level AT signal for bistratified identity in WMBv1
+  and is the primary quantitative anchor of this mapping.
+- Sibling CLUS_0739 is the preferred BC (basket) landing site in the
+  same run (F1=0.83 reported in the run caveats), demonstrating that
+  BC and BIC morphological types separate cleanly at cluster resolution
+  within SUPT_0206 even though they share Pvalb subclass identity.
+- Independent in-silico support: Chamberland 2024 Sst_Tac1 per-cluster
+  labels (Harris 2018 cells re-aggregated by Chamberland gene-pair rules,
+  n=126 cells reaching Pvalb subclass) land on CLUS_0737 with cluster-
+  level Pur=0.94 (Cov=0.31, F1=0.47) in
+  `at_run_20260512_chamberland_subfamily_mmc_wmbv1` — high purity confirms
+  CLUS_0737 as the specific Sst+Tac1+ landing site within the Pvalb
+  branch, consistent with the Sst–Pvalb transcriptomic continuity
+  reported for bistratified cells in Chamberland 2024 [9].
 
 **Marker evidence provenance**
-- **Pvalb (defining):** transcript-level evidence from PV-IN heterogeneity studies [4][5][8] and Pvalb subclass placement in WMBv1; CLUS_0737 lists Pvalb subclass placement and a scoped Ednra marker but Pvalb is not in CLUS_0737 MERFISH genes (it is present in sibling CLUS_0739 MERFISH). The Pvalb-bistratified identity is established by morphology + protein-level PV immunoreactivity in the classical literature; the cluster-level transcript support is via subclass membership and confirmed in Que 2021 patch-seq.
-- **Sst (defining and neuropeptide):** transcript-level confirmation in NP precomputed stats for CLUS_0737 (Sst:4.4); literature evidence from morphology-confirmed bistratified cells via Sst;;Tac1 intersectional genetics [9]. Direct expression evidence supports the Sst co-expression claim in the relevant Pvalb cluster, not only in Sst-subclass clusters.
-- **Tac1 (defining):** transcript-level confirmation via CLUS_0737 NP precomputed stats (Tac1:7.3) and SUPT_0216 DEFINING_SCOPED marker presence; intersectional-genetic evidence from Chamberland 2024 [9]. Cell-type specificity is strong — the Sst;;Tac1 intersection in Chamberland 2024 was validated as targeting bistratified-morphology cells that preferentially synapse onto fast-spiking interneurons.
+
+- **Pvalb:** confirmed at the patch-seq level by Que et al. 2021 in
+  morphologically reconstructed BIC cells [8] and in genetically targeted
+  Pvalb-Cre populations by Ekins et al. 2020 [5], Tzilivaki et al. 2023
+  [7] and Chamberland et al. 2023 [6] — protein- and transcript-level
+  evidence converge. CLUS_0737 itself does not list Pvalb in its MERFISH
+  scoped marker panel (it lists Ednra), but Pvalb is the defining marker
+  of the parent subclass (Pvalb Gaba) and the patch-seq mapping anchors
+  CLUS_0737 to Pvalb+ morphology directly.
+- **Sst, Tac1:** Chamberland et al. 2024 [9] established the
+  Sst;;Tac1 intersection as a bistratified-cell driver in a morphology-
+  confirmed cohort. The CLUS_0737 NP profile (Sst:4.4, Tac1:7.3) is
+  directly consistent.
+- No marker provenance gaps that warrant a targeted cite-traverse.
 
 **Concerns**
-- DISTRIBUTED_ACROSS_CLUSTERS: a Sst-expressing bistratified subpopulation may distribute toward SUPT_0216 Sst Gaba_3 (see the LOW-confidence speculative edge). CLUS_0737 captures the canonical PV-primary bistratified population; a Sst-dominant component may be under-represented here.
+
+- AT F1=0.80 is good but not high (≥0.90); n_cells_mapped at cluster
+  level is 16/20 (4 cells did not reach cluster resolution), and the
+  Que 2021 dataset is the only morphology-confirmed PV-IN scRNA-seq
+  source currently available — replication is missing.
+- Que 2021 input was TPM rounded to integer pseudo-counts (raw counts
+  not available for patch-seq); robustness of the CLUS_0737 assignment
+  to a true raw-counts re-run is untested.
+- Age skew: Que 2021 cohort spans P10–P77 with mean ~P30 (juvenile),
+  while WMBv1 reference is adult. Que et al. found high transcriptomic
+  similarity of morphological types across age, but a fully adult PV-IN
+  patch-seq replication remains desirable.
+- The supertype SUPT_0206 pools BC (CLUS_0739) and BIC (CLUS_0737) — at
+  supertype level Pvalb morphological types are not separable
+  (caveat `DISTRIBUTED_ACROSS_CLUSTERS`).
 
 **What would upgrade confidence**
-- A second morphologically confirmed PV bistratified scRNA-seq dataset reaching F1 ≥ 0.80 at CLUSTER level on CLUS_0737 would lift confidence to HIGH.
-- Direct re-analysis of GEO:GSE142546 Que 2021 raw counts (vs. TPM pseudo-counts used in the current AT run) to confirm the cluster assignment is robust to normalization choice.
 
-### 0216 Sst Gaba_3 [CS20230722_SUPT_0216] · 🔴 LOW
+- A second morphologically confirmed PV-IN scRNA-seq dataset (patch-seq
+  or sorted) with adult mice, mapped onto WMBv1 via MapMyCells.
+  Expected output: `AnnotationTransferEvidence` reaching F1 ≥ 0.80 at
+  CLUSTER level for BIC → CLUS_0737. Resolves open question 1.
+- Raw-counts re-run of GSE142546 (if available) confirming CLUS_0737
+  assignment is robust to TPM-vs-counts normalisation. Resolves open
+  question 2.
+
+### 0206 Pvalb Gaba_2 · 🟡 MODERATE
 
 **Supporting evidence**
-- SUPT_0216 carries Tac1 in DEFINING_SCOPED markers and is a Sst supertype with Sst precomputed mean 11.44 — both Sst and Tac1 co-expression are consistent with the Sst;;Tac1 intersectional-genetic targeting of bistratified cells [9]. This edge represents a possible Sst-dominant bistratified subpopulation, not the canonical PV-primary bistratified population.
-- Yao 2021 (GEO:GSE185862) SSv4 'Pvalb'-labelled hippocampal cells map weakly to SUPT_0216 (6/66 cells, F1 = 0.053, target_purity = 0.036). The weak signal is consistent with reading some Pvalb-bistratified cells along the Sst-Pvalb continuity rather than as evidence that SUPT_0216 is the primary bistratified target.
+
+- SUPT_0206 is the dominant hippocampal Pvalb supertype and the primary
+  atlas branch for canonical PV interneurons of the hippocampus —
+  Pvalb is the defining marker of bistratified cells, and the child
+  CLUS_0737 carries the bilaminar CA1 SO + SR signature [atlas-internal].
+- Que 2021 BIC patch-seq AT places 18/20 BIC cells onto SUPT_0206
+  (F1=0.38, Cov=0.90, Pur=0.24 — purity is low because SUPT_0206 also
+  contains BC cells from CLUS_0739) (`at_run_20260508_que2021_pvin_mmc_wmbv1`).
+- Together with the CLUS_0737 signal, this places bistratified cells
+  unambiguously on the PV branch and within Pvalb Gaba_2.
 
 **Concerns**
-- Pvalb DISCORDANT at the supertype level: SUPT_0216 is a Sst-subclass supertype, not Pvalb. Bistratified cells co-express Pvalb and Sst [7]; the Sst subclass placement does not capture the Pvalb component. *(note: this is a marker-coverage discordance, not a regional one — the supertype is anatomically reasonable for hippocampal CA1 Sst cells.)*
-- Location APPROXIMATE: classical bistratified soma in CA1 stratum pyramidale [UBERON:0014548]; SUPT_0216 dominant hippocampal signal is in CA1 SO (818 cells), not pyramidale. *(adjacent region — could reflect registration boundary error; weak counter-evidence.)*
-- DISTRIBUTED_ACROSS_CLUSTERS: SUPT_0216 (Sst Gaba_3) is the shared supertype of at least three classical hippocampal Sst types: OLM cells (Sst+/Chrna2+), bistratified cells (Sst+/Pvalb+/Tac1+), and HS cells (Sst+, long-range projecting). The supertype is not separable for these at supertype resolution; this edge captures the Sst component of bistratified identity only.
-- MARKER_NOT_SPECIFIC: Pvalb co-expression — defining for bistratified — is not captured at supertype level. Sst subclass placement may under-represent the PV component of bistratified cell identity.
-- Que 2021 morphologically confirmed BIC cells show zero mapping to SUPT_0216 (or to any Sst supertype): 18/20 map to SUPT_0206 and 16/20 to CLUS_0737. This is the strongest counter-evidence against SUPT_0216 as a primary bistratified target.
+
+- Caveat `DISTRIBUTED_ACROSS_CLUSTERS`: SUPT_0206 contains both PV
+  basket cells (CLUS_0739) and PV bistratified cells (CLUS_0737); not
+  separable at supertype level. This is a normal consequence of the
+  atlas hierarchy rather than a defect of the mapping — the cluster-level
+  edge resolves it.
 
 **What would upgrade confidence**
-- This edge is unlikely to upgrade — it is retained as a speculative pointer to a possible Sst-dominant bistratified subpopulation captured by Chamberland 2024 Sst;;Tac1 genetics. A targeted intersectional-genetic dataset (Sst-Cre × Tac1-Flp × Pvalb-negative gate) with subsequent scRNA-seq would test whether such a subpopulation exists and whether it maps to SUPT_0216 specifically.
+
+- Whether SUPT_0206 contains any morphologically informative
+  substructure beyond the BC/BIC cluster-level split is an open question
+  (open question 3). Resolves only by deeper subtype analysis (patch-seq
+  + transcriptomic clustering at finer resolution).
+
+### 0216 Sst Gaba_3 · 🔴 LOW
+
+This edge is retained to represent a hypothetical Sst-dominant,
+Pvalb-low bistratified subpopulation. It is **not** the primary atlas
+target for canonical bistratified cells.
+
+**Supporting evidence**
+
+- SUPT_0216 carries Sst as a subclass-defining marker (precomputed
+  mean 11.44) and Tac1 in DEFINING_SCOPED markers (precomputed mean
+  0.55), both consistent with the Sst;;Tac1 marker logic Chamberland et
+  al. used to target bistratified cells [9] [atlas-internal].
+
+![Filtered AT figure for Yao 2021 Pvalb subclass (HIP cells)](figures/f1_for_bistratified_cell_hippocampus_yao_pvalb.png)
+
+*As before, Pur = Purity (fraction of target cells from this source);
+Cov = Coverage (fraction of source cells on this target). Yao 2021
+(GSE185862) SSv4 'Pvalb' HIP cells (n=66) — a label that mixes PV basket,
+axo-axonic and bistratified subtypes. The Pvalb subclass label maps
+predominantly to PV chandelier supertype CS20230722_SUPT_0204
+(F1=0.61, Pur=1.0, Cov=0.44) and the edge metrics record only 6/66
+Pvalb cells reaching CS20230722_SUPT_0216 (Sst Gaba_3) in
+`at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1` — a weak signal consistent
+with Sst co-expression in a bistratified subset rather than a primary
+target.*
+
+**Concerns**
+
+- The Que 2021 morphology-confirmed BIC cohort shows zero mapping to
+  any Sst supertype — 18/20 BIC cells land on SUPT_0206 and 16/17 on
+  CLUS_0737. The Sst supertype is not the canonical landing site.
+- `marker_Pvalb` is DISCORDANT: SUPT_0216 is in the Sst subclass; Pvalb
+  is not listed in supertype markers and the precomputed Pvalb mean is
+  1.48 — the PV component of bistratified identity is not captured here.
+- Location is APPROXIMATE: the dominant MBA signal on SUPT_0216 is
+  CA1 stratum oriens (MBA:399, 818 cells) with no pyramidal-layer
+  listing, whereas canonical bistratified somata sit in/near stratum
+  pyramidale. *(note: CA1 SO is adjacent to stratum pyramidale, so the
+  location mismatch is geometrically modest — but combined with the
+  Pvalb discordance it is a real signal that this is not the primary
+  bistratified target.)*
+- Caveat `DISTRIBUTED_ACROSS_CLUSTERS`: SUPT_0216 simultaneously
+  contains OLM cells (Sst+/Chrna2+), bistratified cells (in this
+  Sst-dominant reading) and HS cells — none separable at supertype level.
+
+**What would upgrade confidence (or downgrade further)**
+
+- A Sst-Cre × Tac1-Flp × Pvalb-negative intersectional scRNA-seq +
+  morphology dataset would test whether a Sst-dominant bistratified
+  subpopulation exists at all and, if so, whether it maps to SUPT_0216
+  specifically. Resolves open question 4. Without such a dataset, this
+  edge remains a placeholder for an unobserved subpopulation; an
+  alternative outcome is REFUTED (no Sst-dominant bistratified
+  subpopulation exists and the edge should be removed).
 
 ---
 
@@ -217,39 +299,38 @@ CLUS_0737 is required. Best match: CLUS_0737.)*
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** The bistratified cell is defined here on a
-CLASSICAL_MULTIMODAL basis: classical morphology + immunohistochemistry place
-the soma in CA1 stratum pyramidale [UBERON:0014548] with bilaminar axon in
-CA1 stratum oriens [UBERON:0014552] and CA1 stratum radiatum [UBERON:0014554]
-[1][2][3]; the type is GABAergic [4]; defining markers are Pvalb [5][6][7][8],
-Sst and Tac1 [9]; Sst is the neuropeptide [9].
+**Classical type definition.** The bistratified cell is a `CLASSICAL_MULTIMODAL`
+classical node whose defining markers Pvalb [5, 6, 7, 8], Sst [9] and Tac1 [9],
+GABAergic NT [4] and CA1 stratum pyramidale / oriens / radiatum location
+[1, 2, 3] derive from morphology- and genetics-anchored literature. The
+electrophysiology / morphology context is set by Chamberland & Topolnik 2012
+[1], Dannenberg et al. 2017 [4] and Ekins et al. 2020 [5]: bistratified cells
+sit alongside basket and axo-axonic cells within the PV-IN family but are
+distinguished by their bilaminar dendritic-targeting axon arbor in CA1 SO
+and SR.
 
-**Atlas mapping query.**
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the
+WMBv1 taxonomy (CCN20230722) at ranks 0 (cluster) and 1 (supertype) using
+metadata-based scoring (region match, NT type, defining markers, sex bias
+when applicable). Full scoring rules: `workflows/map-cell-type.md`.
 
-Candidate atlas clusters were retrieved from the WMBv1 (CCN20230722) taxonomy
-at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region
-match, NT type, defining markers, sex bias when applicable). Full scoring
-rules: `workflows/map-cell-type.md`.
-
-**Property alignment.**
-
-Each defining property of the classical type was compared to the corresponding
-atlas-side value via the `property_comparisons` schema, with alignments graded
-CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical
-values came from precomputed expression on the cluster (cluster.yaml in the
-taxonomy reference store) and from MERFISH spatial registration for soma
-location.
+**Property alignment.** Each defining property of the classical type was
+compared to the corresponding atlas-side value via the `property_comparisons`
+schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT /
+NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on
+the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH
+spatial registration for soma location.
 
 **Annotation transfer.**
 
-Run 1 — Que 2021 patch-seq PV interneurons → WMBv1 (primary AT for this node):
+*Run `at_run_20260508_que2021_pvin_mmc_wmbv1` (Que 2021 patch-seq, primary).*
 
 | Field | Value |
 |---|---|
-| Source dataset | GEO:GSE142546 (Que 2021 patch-seq PV interneuron morphological types: hBC, vBC, hBIC, vBIC, AAC; aggregated BC n=62, BIC n=20, AAC n=6; 88 QC-passed cells from 128 total) |
+| Source dataset | GEO:GSE142546 (Que 2021 patch-seq PV interneurons; BIC = hBIC + vBIC, n=20) |
 | Source species | NCBITaxon:10090 |
 | Target atlas | WMBv1 (CCN20230722; SHA-256: b21ca985) |
-| Method | MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization, 100 bootstrap iterations). Gene symbols remapped to Ensembl IDs (19788/35825 genes mapped). TPM input rounded to integer pseudo-counts. F1 scored with both fine-grained and aggregated labels; aggregated results used in KB. |
+| Method | MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization) |
 | Tool version | cell_type_mapper v1.7.1 |
 | Bootstrap threshold | 0.0 |
 | n cells | 88 (filtered to 88) |
@@ -257,61 +338,60 @@ Run 1 — Que 2021 patch-seq PV interneurons → WMBv1 (primary AT for this node
 | Script (external) | README.md |
 | Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
 | F1 matrix | [`f1_scores_aggregated_best.csv`](../../kb/annotation_transfer_runs/at_run_20260508_que2021_pvin_mmc_wmbv1/f1_scores_aggregated_best.csv) |
-| Caveats | Patch-seq dataset with morphologically confirmed PV subtypes. TPM input used as pseudo-counts (standard for patch-seq where raw counts not available). Age range P10–P77; most cells juvenile (mean P30) vs. adult WMBv1. AAC n=6 insufficient for reliable F1 scoring; AAC results uninformative. BC and BIC separate cleanly within SUPT_0206 — BC to CLUS_0739 (F1 = 0.827), BIC to CLUS_0737 (F1 = 0.800). |
+| Caveats | TPM input used as pseudo-counts; cohort P10–P77 (mean ~P30) juvenile, WMBv1 adult; AAC n=6 is uninformative. Headline finding: BC and BIC separate cleanly within SUPT_0206 at cluster level — BC → CLUS_0739 (F1=0.83), BIC → CLUS_0737 (F1=0.80). |
 
-Run 2 — Yao 2021 SSv4 hippocampal formation → WMBv1 (supporting context for the SUPT_0216 LOW edge):
-
-| Field | Value |
-|---|---|
-| Source dataset | GEO:GSE185862 (Yao 2021 mouse hippocampal formation SMART-Seq v4 Allen Institute taxonomy labels) |
-| Source species | NCBITaxon:10090 |
-| Target atlas | WMBv1 (CCN20230722) |
-| Method | MapMyCells local (cell_type_mapper, default parameters, raw normalization, 100 bootstrap iterations). Per-cell labels aggregated by source_cluster_label and target taxonomy level for F1 scoring. |
-| Tool version | cell_type_mapper |
-| Bootstrap threshold | 0.0 |
-| n cells | 6398 (filtered to 6398) |
-| Run record | [`kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml) |
-| Script (external) | README.md |
-| Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
-| F1 matrix | [`f1_scores_best.csv`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/f1_scores_best.csv) |
-
-Run 3 — Harris 2018 + Chamberland 2024 in-silico subfamily labels → WMBv1 (independent in-silico support for the Sst-Pvalb continuity reading at CLUS_0737):
+*Run `at_run_20260512_chamberland_subfamily_mmc_wmbv1` (in-silico
+Chamberland subfamily, secondary).*
 
 | Field | Value |
 |---|---|
-| Source dataset | GEO:GSE99888 (Harris 2018 Class labels relabelled by Chamberland 2024 in-silico functional subfamily rules: Sst+Tac1, Sst+Nos1, Sst+/Ndnf+, Sst+/Chrna2+ gene-pair products; priority Chrna2 > Ndnf > Sst_Nos1 > Sst_Tac1; per-cluster derivation is the primary result) |
+| Source dataset | GEO:GSE99888 (Harris 2018 re-aggregated under Chamberland 2024 gene-pair subfamily rules; Sst_Tac1 label is the bistratified proxy) |
 | Source species | NCBITaxon:10090 |
 | Target atlas | WMBv1 (CCN20230722; SHA-256: b21ca985) |
-| Method | MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization, bootstrap_iteration=100). Same MMC output as at_run_20260512_harris_class_mmc_wmbv1; re-aggregated under Chamberland subfamily labels via class_to_subfamily.tsv. |
+| Method | MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization, bootstrap_iteration=100) |
 | Tool version | cell_type_mapper v1.7.1 |
 | Bootstrap threshold | 0.8 |
 | n cells | 3663 (filtered to 3663) |
 | Run record | [`kb/annotation_transfer_runs/at_run_20260512_chamberland_subfamily_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260512_chamberland_subfamily_mmc_wmbv1/manifest.yaml) |
-| Script (external) | ../at_run_20260506_harris_chamberland_mmc_wmbv1/README.md |
 | Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
-| F1 matrix | [`f1_matrix_chamberland_by_class.csv`](../../kb/annotation_transfer_runs/at_run_20260512_chamberland_subfamily_mmc_wmbv1/f1_matrix_chamberland_by_class.csv) |
-| Caveats | Per-cluster derivation is the primary result; per-cell derivation is also retained but subject to scRNA-seq dropout. Sst_Tac1 → Pvalb subclass (recall 0.78) surfaces Sst-Pvalb transcriptomic continuity for bistratified types. Sst_Tac1 cluster-level F1 at CLUS_0737 = 0.467 but target_purity = 0.939 — supports CLUS_0737 as the landing site within the Pvalb subclass. |
+| Caveats | Per-cluster derivation is the primary result (dropout-robust); per-cell labels subject to scRNA-seq dropout. Sst_Tac1 label is in-silico from Harris cluster-mean expression, not morphologically confirmed. |
 
-**Anti-hallucination.**
+*Run `at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1` (Yao 2021 SSv4 HPF, context).*
 
-All citations, atlas accessions, ontology CURIEs, and verbatim literature
-quotes in this report are validated against the evidencell knowledge base
-at write time. Authored-prose evidence narratives are validated against
-their source `evidence_items[*].explanation` fields. The pre-write hook
+| Field | Value |
+|---|---|
+| Source dataset | GEO:GSE185862 (Yao 2021 SSv4 mouse HPF, Pvalb subclass n=66 HIP cells) |
+| Source species | NCBITaxon:10090 |
+| Target atlas | WMBv1 (CCN20230722) |
+| Method | MapMyCells local (cell_type_mapper, default parameters, raw normalization, 100 bootstrap iterations) |
+| Tool version | cell_type_mapper |
+| Bootstrap threshold | 0.0 |
+| n cells | 6398 (filtered to 6398) |
+| Run record | [`kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml) |
+| Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
+| Caveats | SSv4 'Pvalb' label is the subclass — it pools BC, AAC and BIC morphologies and so cannot resolve bistratified cells specifically. Used here only as context for the SUPT_0216 edge. |
+
+**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and
+verbatim literature quotes in this report are validated against the evidencell
+knowledge base at write time. Authored-prose evidence narratives are validated
+against their source `evidence_items[*].explanation` fields. The pre-write hook
 rejects any unresolvable identifier or unattributed blockquote. Specific
-mapping limitations and caveats are documented per-candidate in the
-Discussion section.
+mapping limitations and caveats are documented per-candidate in the Discussion
+section.
 
-*Generated by evidencell `bb9feaf` at 2026-05-13T10:38:57+00:00 from
+*Generated by evidencell `50602e9` at 2026-05-26T12:00:33+00:00 from
 [kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml](kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml).*
 
-**Evidence base table.**
+<details>
+<summary>Evidence base table</summary>
 
 | Edge ID | Evidence types | Supports | Source |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206 | ATLAS_METADATA; ANNOTATION_TRANSFER | PARTIAL; SUPPORT | atlas-internal |
 | edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737 | ATLAS_METADATA; ANNOTATION_TRANSFER (×2) | SUPPORT; SUPPORT; PARTIAL | atlas-internal |
 | edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0216 | ATLAS_METADATA; ANNOTATION_TRANSFER (×2) | PARTIAL; PARTIAL; PARTIAL | atlas-internal |
+
+</details>
 
 </details>
 
@@ -319,73 +399,59 @@ Discussion section.
 
 ## Discussion
 
-**Primary mapping:** Bistratified cell → 0737 Pvalb Gaba_2 [CS20230722_CLUS_0737]
-at MODERATE confidence (with parent supertype 0206 Pvalb Gaba_2
-[CS20230722_SUPT_0206] also MODERATE). Key support: morphologically confirmed
-PV bistratified patch-seq cells from Que 2021 reach F1 = 0.800 at CLUS_0737
-(group_purity 0.941, target_purity 0.696), and CLUS_0737 carries the
-bistratified-specific bilaminar CA1 SO + CA1 SR anatomy with Sst:4.4 and
-Tac1:7.3 NP profile consistent with the Sst;;Tac1 intersectional-genetic
-labelling of Chamberland 2024 [9]. Key caveats: DISTRIBUTED_ACROSS_CLUSTERS
-(SUPT_0206 contains both PV basket CLUS_0739 and PV bistratified CLUS_0737;
-supertype-level mapping is not separable for these two morphologically and
-functionally distinct PV-IN types) and a possible Sst-dominant bistratified
-subpopulation distributing toward SUPT_0216.
+**Primary mapping:** Bistratified cell → 0737 Pvalb Gaba_2
+[CS20230722_CLUS_0737] at MODERATE confidence. Key support: Que 2021 patch-seq
+annotation transfer (F1=0.80 at cluster level, 16/17 morphologically confirmed
+BIC cells reaching cluster resolution; corroborated by Chamberland Sst_Tac1
+in-silico AT, cluster Pur=0.94) plus WMBv1 MERFISH bilaminar CA1 SO+SR cell
+distribution and an Sst/Tac1+ neuropeptide profile consistent with Chamberland
+et al. 2024 Sst;;Tac1 bistratified genetics. Key caveats:
+`DISTRIBUTED_ACROSS_CLUSTERS` (the parent SUPT_0206 also contains PV basket
+cells in CLUS_0739, so resolution requires cluster level) and a single
+morphology-confirmed AT cohort (juvenile-skewed Que 2021 patch-seq) without
+independent replication.
 
-The Cell Ontology has no specific term for the hippocampal bistratified
-interneuron; bistratified cell [[CL:0004247](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0004247)]
-is the closest available ancestor and is the BROAD mapping used here. CL:0004247
-is retinal-focused; the hippocampal bistratified interneuron (Pvalb/Sst/Tac1+,
-axon in SO and SR) has no dedicated CL term and is a candidate for a new CL
-term request.
+The Cell Ontology has no specific term for the hippocampal Pvalb/Sst/Tac1+
+bistratified interneuron; **bistratified cell** [[CL:0004247](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0004247)]
+is a BROAD ancestor whose definition is retinal-focused. CL:0004247 is retained
+as the closest available term; a dedicated CL term for the hippocampal
+bistratified cell would be a candidate addition.
 
 ### Proposed experiments and follow-ups
 
-**Cross-check with existing AT evidence.** The primary mapping is already
-supported by a morphologically confirmed PV bistratified patch-seq run
-(Que 2021, F1 = 0.800 at CLUS_0737) and an independent in-silico Sst_Tac1
-subfamily labelling (Chamberland-on-Harris, target_purity 0.939 at CLUS_0737).
-A naive proposed experiment "map bistratified cells to WMBv1 with MapMyCells"
-is therefore already done; the gaps that remain concern (a) independent
-replication of the Que 2021 cluster assignment and (b) testing whether a
-Sst-dominant bistratified subpopulation exists.
-
-1. **Independent morphologically confirmed PV bistratified scRNA-seq → MapMyCells.**
-   - What: New patch-seq or fate-mapped + sorted bistratified scRNA-seq dataset (e.g. Sst-Cre × Tac1-Flp intersectional line).
-   - Target: F1 ≥ 0.80 at CLUSTER level on CLUS_0737, independent of the Que 2021 dataset.
-   - Expected output: AnnotationTransferEvidence on the CLUS_0737 edge, lifting confidence MODERATE → HIGH.
-   - Resolves: replication gap for the primary mapping.
-
-2. **Direct re-analysis of GEO:GSE142546 raw counts.**
-   - What: Refined MapMyCells run on Que 2021 with raw counts (rather than TPM pseudo-counts) and standard adult-atlas QC.
-   - Target: confirm BIC → CLUS_0737 F1 ≥ 0.80 is robust to normalization.
-   - Expected output: updated AnnotationTransferEvidence on CLUS_0737.
-   - Resolves: normalization-robustness caveat from the Que 2021 run record.
-
-3. **Intersectional-genetic targeting of a putative Sst-dominant bistratified subpopulation.**
-   - What: Sst-Cre × Tac1-Flp × Pvalb-negative gate, with subsequent scRNA-seq + morphological reconstruction.
-   - Target: test whether a Sst-dominant Pvalb-low bistratified subpopulation exists and whether it maps to SUPT_0216.
-   - Expected output: AnnotationTransferEvidence on SUPT_0216 (either confirming the speculative edge or refuting it).
-   - Resolves: speculative SUPT_0216 edge.
-
-4. **CL new term request.**
-   - What: draft a CL new term request for "hippocampal bistratified interneuron" via `workflows/cl-term-request.md`.
-   - Target: dedicated CL term replacing the BROAD CL:0004247 mapping.
-   - Expected output: CL term issue; subsequent EXACT cl_mapping on this node.
-   - Resolves: CL placement gap.
+- **Replication patch-seq / morphology-confirmed scRNA-seq.** A second
+  morphologically reconstructed PV-IN dataset in adult mice, mapped by
+  MapMyCells to WMBv1. Target: F1 ≥ 0.80 at CLUSTER level for BIC → CLUS_0737.
+  Expected output: a second `AnnotationTransferEvidence` item replicating the
+  Que 2021 signal. Resolves open question 1 (single-cohort dependence) and
+  open question 2 (age-skew robustness).
+- **Raw-counts re-mapping of GSE142546 (if upstream raw counts become
+  available).** Target: confirm CLUS_0737 assignment is invariant to TPM-vs-
+  counts normalisation. Expected output: an `AnnotationTransferEvidence` item
+  whose CLUS_0737 F1 is within ±0.05 of the present 0.80. Resolves open
+  question 2.
+- **Sst-Cre × Tac1-Flp × Pvalb-negative intersectional scRNA-seq + morphology.**
+  Test whether a Sst-dominant, Pvalb-low bistratified subpopulation exists at
+  all. Expected output: either a new `AnnotationTransferEvidence` supporting
+  the SUPT_0216 edge with F1 ≥ 0.50, or refutation of the edge. Resolves open
+  question 4.
+- **Sub-supertype resolution within SUPT_0206 beyond the BC/BIC cluster
+  split.** Look for morphologically informative substructure (radiatum-
+  targeting, axo-axonic-like) within the SUPT_0206 → CLUS_0737 / CLUS_0739 /
+  others tree. Resolves open question 3.
 
 ### Open questions
 
-No `unresolved_questions[]` entries are recorded on the edges; the open
-questions are implicit in the caveats and are folded into the proposed
-experiments above.
-
-1. Does the SUPT_0206 supertype provide any morphologically informative
-   substructure beyond the CLUS_0737 / CLUS_0739 BIC/BC split? (From the
-   DISTRIBUTED_ACROSS_CLUSTERS caveat on SUPT_0206 and CLUS_0737.)
-2. Does a Sst-dominant Pvalb-low bistratified subpopulation exist, and if so
-   does it map to SUPT_0216 specifically? (From the DISTRIBUTED_ACROSS_CLUSTERS
-   and MARKER_NOT_SPECIFIC caveats on the SUPT_0216 edge.)
+1. Independent replication of Que 2021 BIC → CLUS_0737 F1=0.80 with a
+   morphologically confirmed PV bistratified scRNA-seq dataset.
+2. Robustness of CLUS_0737 assignment to raw-counts vs TPM-pseudo-counts
+   normalisation in GEO:GSE142546.
+3. Whether SUPT_0206 provides morphologically informative substructure
+   beyond the CLUS_0737 / CLUS_0739 BIC/BC cluster-level split.
+4. Whether a Sst-dominant, Pvalb-low bistratified subpopulation exists, and
+   if so whether it maps to CS20230722_SUPT_0216 specifically — a question
+   that requires a Sst-Cre × Tac1-Flp × Pvalb-negative intersectional
+   scRNA-seq + morphology dataset.
 
 ---
 
@@ -393,12 +459,73 @@ experiments above.
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Chamberland & Topolnik 2012 | [23162426](https://pubmed.ncbi.nlm.nih.gov/23162426) | soma location |
-| [2] | Bocchio et al. 2024 | [39401246](https://pubmed.ncbi.nlm.nih.gov/39401246) | soma location |
-| [3] | Perez et al. 2020 | [33404500](https://pubmed.ncbi.nlm.nih.gov/33404500) | soma location |
-| [4] | Dannenberg et al. 2017 | [29321728](https://pubmed.ncbi.nlm.nih.gov/29321728) | neurotransmitter type |
-| [5] | Ekins et al. 2020 | [33150866](https://pubmed.ncbi.nlm.nih.gov/33150866) | Pvalb marker |
-| [6] | Chamberland et al. 2023 | [37162922](https://pubmed.ncbi.nlm.nih.gov/37162922) | Pvalb marker |
-| [7] | Tzilivaki et al. 2023 | [37467748](https://pubmed.ncbi.nlm.nih.gov/37467748) | Pvalb marker |
-| [8] | Que et al. 2021 | [33398060](https://pubmed.ncbi.nlm.nih.gov/33398060) | Pvalb marker |
-| [9] | Chamberland et al. 2024 | [38640347](https://pubmed.ncbi.nlm.nih.gov/38640347) | Sst marker |
+| 1 | Chamberland & Topolnik 2012 | [23162426](https://pubmed.ncbi.nlm.nih.gov/23162426) | Soma location, ephys/morphology context |
+| 2 | Bocchio et al. 2024 | [39401246](https://pubmed.ncbi.nlm.nih.gov/39401246) | Soma location |
+| 3 | Perez et al. 2020 | [33404500](https://pubmed.ncbi.nlm.nih.gov/33404500) | Soma location |
+| 4 | Dannenberg et al. 2017 | [29321728](https://pubmed.ncbi.nlm.nih.gov/29321728) | Neurotransmitter type |
+| 5 | Ekins et al. 2020 | [33150866](https://pubmed.ncbi.nlm.nih.gov/33150866) | Pvalb marker |
+| 6 | Chamberland et al. 2023 | [37162922](https://pubmed.ncbi.nlm.nih.gov/37162922) | Pvalb marker |
+| 7 | Tzilivaki et al. 2023 | [37467748](https://pubmed.ncbi.nlm.nih.gov/37467748) | Pvalb marker |
+| 8 | Que et al. 2021 | [33398060](https://pubmed.ncbi.nlm.nih.gov/33398060) | Pvalb marker; patch-seq BIC source |
+| 9 | Chamberland et al. 2024 | [38640347](https://pubmed.ncbi.nlm.nih.gov/38640347) | Sst, Tac1 markers; Sst;;Tac1 bistratified genetics |
+
+<!-- verdict-block-start: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737 -->
+```yaml
+verdict:
+  confidence: MODERATE
+  confidence_score: 0.72
+  rationale: >
+    Que 2021 patch-seq BIC (hBIC + vBIC, n=20) lands on CS20230722_CLUS_0737
+    at F1=0.80 in at_run_20260508_que2021_pvin_mmc_wmbv1, the strongest
+    cluster-level signal in WMBv1, supported independently by Chamberland
+    Sst_Tac1 in-silico AT in at_run_20260512_chamberland_subfamily_mmc_wmbv1
+    (CS20230722_CLUS_0737 cluster Pur=0.94). 3 of 3 markers CONSISTENT
+    (Pvalb, Sst, Tac1) anchored in patch-seq, MERFISH and scRNA-seq
+    modalities, alongside CONSISTENT NT and bilaminar CA1 SO+SR location.
+    Replication and a raw-counts re-run remain caveats.
+  unresolved_questions:
+    - Replication of Que 2021 BIC → CS20230722_CLUS_0737 F1=0.80 with an independent morphologically confirmed PV bistratified scRNA-seq dataset.
+    - Robustness of CS20230722_CLUS_0737 assignment to raw-counts vs TPM-pseudo-counts normalization in GEO:GSE142546.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206 -->
+```yaml
+verdict:
+  confidence: MODERATE
+  confidence_score: 0.62
+  rationale: >
+    Que 2021 patch-seq BIC maps to CS20230722_SUPT_0206 at F1=0.38 with
+    coverage 0.90 (18/20 cells) in at_run_20260508_que2021_pvin_mmc_wmbv1;
+    the low supertype F1 reflects pooling of BC and BIC morphologies within
+    SUPT_0206 rather than a weakness of the assignment — cluster-level
+    resolution at CS20230722_CLUS_0737 recovers the BIC landing site
+    cleanly. 3 of 3 markers CONSISTENT (Pvalb, Sst, Tac1) supported
+    by scRNA-seq and immunohistochemistry; NT and Pvalb subclass also
+    CONSISTENT.
+  unresolved_questions:
+    - Whether CS20230722_SUPT_0206 provides morphologically informative substructure beyond the CS20230722_CLUS_0737 / CLUS_0739 BIC/BC cluster-level split.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0216 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.22
+  rationale: >
+    Morphologically confirmed Que 2021 BIC patch-seq shows zero mapping to
+    any Sst supertype in at_run_20260508_que2021_pvin_mmc_wmbv1 — 18/20
+    cells land on CS20230722_SUPT_0206 and 16/17 cluster-resolved cells
+    on CS20230722_CLUS_0737. Yao 2021 SSv4 Pvalb-subclass cells map only
+    6/66 to CS20230722_SUPT_0216 in
+    at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1. 3 of 4 markers CONSISTENT
+    (Sst, Tac1, Gad1 by scRNA-seq); Pvalb DISCORDANT (Sst subclass, atlas
+    Pvalb mean 1.48); location APPROXIMATE (CA1 SO, not stratum pyramidale).
+    Edge retained as placeholder for a hypothetical Sst-dominant,
+    Pvalb-low bistratified subpopulation not yet observed in any
+    morphology-confirmed dataset.
+  unresolved_questions:
+    - Does a Sst-dominant Pvalb-low bistratified subpopulation exist, and if so does it map to CS20230722_SUPT_0216 specifically? Requires a Sst-Cre × Tac1-Flp × Pvalb-negative intersectional scRNA-seq + morphology dataset.
+```
+<!-- verdict-block-end -->

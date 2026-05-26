@@ -39,7 +39,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP.
 
 - **Marker C1ql2 — CONSISTENT.** C1ql2 is listed as a defining marker of the DG granule cell [9]. Precomputed expression stats confirm C1ql2 mean expression = 5.77 in SUPT_0137, consistent with C1ql2 marking this supertype.
 
-- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Hochgerner 2018 (GEO:GSE95315) mouse hippocampus scRNA-seq Granule-mature and Granule-immature labels onto WMBv1 (CCN20230722). Both mature and immature granule cell populations map primarily to SUPT_0137 at the supertype level: F1 = 0.584 (Granule-mature, 433/609 cells) and F1 = 0.601 (Granule-immature, 437/581 cells). At subclass level, group_purity for DG Glut subclass (037) is 0.988 (Granule-mature) and 0.888 (Granule-immature), confirming DG Glut as the dominant classification.
+- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Hochgerner 2018 (GEO:GSE95315) mouse hippocampus scRNA-seq Granule-mature and Granule-immature labels onto WMBv1 (CCN20230722). Both mature and immature granule cell populations map primarily to SUPT_0137 at the supertype level: F1 = 0.584 (Granule-mature, 433/609 cells) and F1 = 0.601 (Granule-immature, 437/581 cells). At subclass level, coverage for DG Glut subclass (037) is 0.988 (Granule-mature) and 0.888 (Granule-immature), confirming DG Glut as the dominant classification.
 
 **Marker evidence provenance**
 
@@ -67,7 +67,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP.
 
 ## Proposed experiments
 
-*Note on existing AT evidence:* The Hochgerner 2018 (GEO:GSE95315) annotation transfer establishes SUPT_0137 as the dominant DG Glut supertype at subclass level (group_purity ≥ 0.88). A refined round using a mouse-specific granule cell dataset would remove the species extrapolation concern and strengthen the mapping.
+*Note on existing AT evidence:* The Hochgerner 2018 (GEO:GSE95315) annotation transfer establishes SUPT_0137 as the dominant DG Glut supertype at subclass level (coverage ≥ 0.88). A refined round using a mouse-specific granule cell dataset would remove the species extrapolation concern and strengthen the mapping.
 
 ### Add-expression (Prox1 and C1ql2 on DG Glut supertypes)
 
@@ -97,7 +97,7 @@ Total: 1 edge. Relationship type: PARTIAL_OVERLAP.
 
 | Edge ID | Evidence types | Supports |
 |---|---|---|
-| edge_dg_granule_cell_hippocampus_to_supt_0137 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE95315) | SUPPORT — F1=0.584 (Granule-mature) / F1=0.601 (Granule-immature); subclass group_purity ≥ 0.88; SUPT_0137 is dominant DG Glut supertype |
+| edge_dg_granule_cell_hippocampus_to_supt_0137 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE95315) | SUPPORT — F1=0.584 (Granule-mature) / F1=0.601 (Granule-immature); subclass coverage ≥ 0.88; SUPT_0137 is dominant DG Glut supertype |
 | edge_dg_granule_cell_hippocampus_to_supt_0137 | ATLAS_METADATA | SUPPORT — 7199 cells in DG granule cell layer (MBA:632); Prox1 mean=8.59, C1ql2 mean=5.77 in SUPT_0137 |
 
 ---

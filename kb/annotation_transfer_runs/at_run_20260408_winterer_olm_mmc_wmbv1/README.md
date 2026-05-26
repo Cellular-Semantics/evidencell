@@ -15,7 +15,7 @@ This is the expected pattern for a classical type that is real at one taxonomy l
 | File | Purpose |
 |---|---|
 | `manifest.yaml` | `AnnotationTransferRun` record (provenance + run params) |
-| `f1_matrix.csv` | F1 / group_purity / target_purity per (source_label × level × target_name); 25 rows |
+| `f1_matrix.csv` | F1 / coverage / purity per (source_label × level × target_name); 25 rows |
 | `mmc_results.csv` | Raw MapMyCells per-cell mapping output |
 | `source_cell_labels.json` | 46 cell barcodes → source_label (Sst-OLM, Htr3a-OLM) |
 | `GSE124847_OLM_mmc.h5ad` | Input AnnData (3.7 MB) — converted from GSE124847 raw counts via the MapMyCells2CL preprocessing pipeline |

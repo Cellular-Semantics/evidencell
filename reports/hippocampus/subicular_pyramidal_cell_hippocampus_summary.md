@@ -38,7 +38,7 @@ Total: 1 edge. Relationship type: TYPE_A_SPLITS (the classical subicular pyramid
 
 - **Soma location — CONSISTENT.** WMBv1 MERFISH spatial data places SUPT_0096 cells in subicular and prosubicular layers, directly matching the classical soma location in the subiculum [UBERON:0002191] [1][2][3][4]. The subiculum is a well-delineated output structure of the hippocampal formation and the correspondence is anatomically unambiguous.
 
-- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq SUB-ProS subclass labels onto WMBv1 (CCN20230722): of 471 SUB-ProS cells, 313 (66.5%) map to SUPT_0096 at the supertype level. F1 = 0.798, group_purity = 0.665, target_purity = 1.000. The near-perfect target purity confirms that all cells assigned to SUPT_0096 originate exclusively from the subicular neuron population, with no contamination from other HPF subclasses. This is the primary quantitative evidence for this mapping. SUPT_0097 and SUPT_0098 account for a further 14.6% (F1=0.253) and 18.0% (F1=0.305) of SUB-ProS cells respectively, consistent with the TYPE_A_SPLITS relationship.
+- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq SUB-ProS subclass labels onto WMBv1 (CCN20230722): of 471 SUB-ProS cells, 313 (66.5%) map to SUPT_0096 at the supertype level. F1 = 0.798, coverage = 0.665, purity = 1.000. The near-perfect target purity confirms that all cells assigned to SUPT_0096 originate exclusively from the subicular neuron population, with no contamination from other HPF subclasses. This is the primary quantitative evidence for this mapping. SUPT_0097 and SUPT_0098 account for a further 14.6% (F1=0.253) and 18.0% (F1=0.305) of SUB-ProS cells respectively, consistent with the TYPE_A_SPLITS relationship.
 
 - **Marker Np65 — CONSISTENT.** Np65 (the Nptn gene product, neuroplastin-65) is listed as a defining marker of the subicular pyramidal cell [6]. Precomputed expression stats (precomputed_stats.h5, supertype level) confirm Np65 mean expression = 8.60 in SUPT_0096, placing it among the higher-expressing HPF supertypes (range approximately 2.1–9.5 across HPF supertypes). While this confirms expression, Np65 at this level is broadly distributed across hippocampal pyramidal neurons and does not discriminate among SUPT_0096, 0097, and 0098.
 
@@ -96,7 +96,7 @@ Total: 1 edge. Relationship type: TYPE_A_SPLITS (the classical subicular pyramid
 
 | Edge ID | Evidence types | Supports |
 |---|---|---|
-| edge_subicular_pyramidal_cell_hippocampus_to_supt_0096 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.798; target_purity=1.000; 66.5% of SUB-ProS cells map to SUPT_0096 |
+| edge_subicular_pyramidal_cell_hippocampus_to_supt_0096 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.798; purity=1.000; 66.5% of SUB-ProS cells map to SUPT_0096 |
 
 ---
 
