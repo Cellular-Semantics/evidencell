@@ -791,17 +791,30 @@ nodes:
   negative_markers: []
   neuropeptides: []
   morphology:
-    description: Specialised glutamatergic projection neuron in CA1 stratum radiatum, distinct from CA1 pyramidal cells. First
-      described by Kirson et al. (2000); rare and not extensively characterised.
+    description: Large triangular soma in upper CA1 stratum radiatum; one to two prominent thick apical dendrites bifurcating close to the soma and ascending to stratum lacunosum-moleculare, arborizing extensively with spiny second-order dendrites; myelinated axon. Axon arises vertically, traverses stratum pyramidale and bifurcates in stratum oriens — one branch toward subiculum, one toward fimbria (projecting ultimately to olfactory cortex). Axon collaterals in stratum oriens form asymmetric (excitatory) synapses. Three morphological subtypes — symmetrical two-dendrite form; one main dendrite plus shorter parallel dendrite; pyramidal-like single bifurcating apical dendrite. Soma and dendrites readily identified by DIC optics in living tissue (Christie et al. 2000). Morphology confirmed in adult mouse with same inverted triangular soma and two thick apical dendrites (Nasrallah et al. 2019).
     sources:
     - ref: PMID:10864941
-      method: patch-clamp recording in slice
-      scope: rat CA1
-      quote_key: 502543_4f78ac74
+      method: biocytin fill + confocal reconstruction, patch-clamp recording in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_01caddaa
+    - ref: PMID:10864941
+      method: biocytin fill + confocal reconstruction
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_651f2f6e
+    - ref: PMID:10864941
+      method: biocytin fill + confocal reconstruction
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_7b22eb75
+    - ref: PMID:11153713
+      method: DIC optics + biocytin fill
+      scope: adult rat CA1 acute slice
+      quote_key: 16689152_6f562856
+    - ref: PMID:30943417
+      method: whole-cell patch-clamp + biocytin fill
+      scope: adult mouse CA1 acute slice
+      quote_key: 92998057_50a6488b
   electrophysiology:
-    description: Glutamatergic synaptic activation fires an NMDA receptor-dependent burst of action potentials even after
-      blocking non-NMDA receptors — a unique property distinguishing radiatum giant cells from typical CA1 pyramidal cells.
-      Enhanced synaptic excitability attributed to unique properties of synaptic NMDA receptors.
+    description: NMDA receptor-dependent burst firing in response to glutamatergic synaptic activation even after non-NMDA receptor blockade (CNQX-insensitive, APV-sensitive burst). EPSCs at least threefold larger than in CA1 pyramidal cells. Prominent spike afterdepolarization (ADP) and spike frequency accommodation (common but not universal). Lacks the pronounced fast afterhyperpolarization (fAHP) that characterises stratum radiatum interneurons. NMDA receptors active at resting membrane potential — Mg2+ block Kd ~0.42 mM at -60 mV (vs ~0.15 mM in CA1 PCs), less voltage-dependent (delta 0.80 vs 0.95 in PCs). NMDA EPSC decay slower (Af/As ~2.25 vs ~6.2 in PCs); rise times faster (9.6 +/- 0.7 ms vs 11.7 +/- 0.6 ms). NMDA-dependent LTP induced by 100-Hz stimulation (magnitude ~51% +/- 18%; blocked by APV; requires postsynaptic Ca2+ influx); 200-Hz stimuli do not induce LTP. Reversed HCN channel expression gradient vs other CA1 PNs (Bullis et al. 2007, via Nasrallah et al. 2019). NR2D (GRIN2D) subunit proposed as contributor to biophysical signature (Discussion-level inference).
     sources:
     - ref: PMID:10864941
       method: patch-clamp recording in slice
@@ -811,13 +824,33 @@ nodes:
       method: patch-clamp recording in slice
       scope: rat CA1
       quote_key: 502543_10e7f921
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_3d8cdf8d
+    - ref: PMID:10864941
+      method: patch-clamp recording in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 502543_89f231a8
+    - ref: PMID:11153713
+      method: whole-cell patch-clamp in slice, biocytin fill
+      scope: adult rat CA1 acute slice
+      quote_key: 16689152_399c08ed
+    - ref: PMID:11153713
+      method: whole-cell patch-clamp in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 16689152_9c3d2f1e
+    - ref: PMID:11153713
+      method: whole-cell patch-clamp in slice
+      scope: adult rat CA1 acute slice
+      quote_key: 16689152_d0088250
   definition_references:
   - PMID:10864941
+  - PMID:11153713
+  - PMID:30943417
   is_terminal: false
-  notes: 'GAP: defined essentially from a single primary citation (Kirson & Yaari 2000); markers absent in source material.
-    Properties await replication and modern molecular characterisation.
+  notes: 'Morphology and LTP properties independently replicated in Christie et al. (2000, PMID:11153713); RGC identity confirmed in mouse and CA2 pyramidal neurons identified as a strong presynaptic input by Nasrallah et al. (2019, PMID:30943417). GAP: defining molecular markers absent; reversed HCN channel expression gradient reported (Bullis et al. 2007) but not yet entered as a source. Modern transcriptomic characterisation needed.
 
 
-    CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum
-    radiatum first described by Kirson et al. (2000); potential CL contribution.'
+    CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential CL contribution.'
 edges: []

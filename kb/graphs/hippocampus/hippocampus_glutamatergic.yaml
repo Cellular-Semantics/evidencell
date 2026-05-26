@@ -130,6 +130,31 @@ nodes:
       method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
       scope: adult mouse hippocampus, P15-P18
       quote_key: 18746823_fd8665d7
+  cl_mapping:
+    cl_term:
+      id: CL:1001571
+      label: hippocampal pyramidal neuron
+      name_in_source: CA1 pyramidal cell
+    mapping_notes: CA1 pyramidal cells are a subpopulation of hippocampal pyramidal neurons; CL:1001571 covers all hippocampal pyramidal neurons and is therefore a BROAD match. No CA1-specific CL term currently exists.
+    mapping_type: BROAD
+  proposed_cl_term:
+    label: CA1 pyramidal cell
+    parent_cl_term:
+      id: CL:1001571
+      label: hippocampal pyramidal neuron
+      name_in_source: hippocampal pyramidal neuron
+    definition: A hippocampal pyramidal neuron with soma located in the pyramidal layer of hippocampal area CA1 (UBERON:0014548) (Cembrowski et al., 2016; Müller & Remy, 2017), forming the dominant excitatory projection population of the CA1 subfield. As the primary output cell of Ammon's horn, it projects via the subiculum to entorhinal cortex and is capable of glutamate secretion as a neurotransmitter (Dale et al., 2015). In mouse, it is distinguished from CA2 and CA3 pyramidal neurons by soma position within the CA1 stratum pyramidale and by expression of wolframin (Wfs1), an endoplasmic reticulum-resident membrane protein enriched in deep-sublayer CA1 cells (Cembrowski et al., 2016).
+    xrefs:
+    - PMID:27113915
+    - PMID:29250747
+    - PMID:26346726
+    - CS20230722_SUPT_0069
+    status: SUBMITTED
+  definition_references:
+  - PMID:27113915
+  - PMID:29250747
+  - PMID:26346726
+  - PMID:37011759
 - id: ca2_pc_hippocampus
   name: CA2 pyramidal cell
   definition_basis: CLASSICAL_MULTIMODAL
@@ -216,6 +241,42 @@ nodes:
       method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
       scope: adult mouse hippocampus, P15-P18
       quote_key: 18746823_437ba8b3
+  proposed_cl_term:
+    label: CA2 pyramidal cell
+    parent_cl_term:
+      id: CL:1001571
+      label: hippocampal pyramidal neuron
+      name_in_source: hippocampal pyramidal neuron
+    definition: A hippocampal pyramidal neuron with soma located in the pyramidal layer of hippocampal area CA2 (Cembrowski et al., 2016; Sanchez-Aguilera et al., 2021). Distinguished from CA1 and CA3 pyramidal neurons by expression of Pcp4, Rgs14, and Amigo2 in rodents (San Antonio et al., 2014; Caruana et al., 2012), and by absence of the CA1 marker wolframin (Wfs1) (Evans et al., 2018). Receives strong LTP-competent input from entorhinal cortex at distal dendrites, while Schaffer collateral inputs to proximal dendrites are resistant to canonical LTP in wild-type animals (Chevaleyre & Siegelbaum, 2010). Required for social memory in mice (Hitti & Siegelbaum, 2014).
+    xrefs:
+    - PMID:27113915
+    - PMID:24166578
+    - PMID:22904370
+    - PMID:29911178
+    - PMID:24572357
+    - PMID:20510860
+    - CS20230722_SUPT_0100
+    status: SUBMITTED
+    cl_id: https://github.com/obophenotype/cell-ontology/issues/3651
+  negative_markers:
+  - symbol: Wfs1
+    ncbi_gene_id: NCBIGene:22393
+    sources:
+    - ref: PMID:29911178
+      method: immunolabeling (anti-WFS1 antibody)
+      scope: adult mouse hippocampus, CA2 versus CA1
+      quote_key: 49237374_714b76e3
+      marker_type: PROTEIN
+  definition_references:
+  - PMID:27113915
+  - PMID:33956790
+  - PMID:26346726
+  - PMID:24166578
+  - PMID:22904370
+  - PMID:29911178
+  - PMID:24572357
+  - PMID:20510860
+  notes: 'CA2 pyramidal cells express Pcp4, Rgs14, and Amigo2 as defining markers and do not express the CA1 marker Wfs1 (Evans et al. 2018, PMID:29911178). CA2 is essential for social memory: genetic inactivation of CA2 pyramidal neurons via Amigo2-Cre causes a pronounced deficit in social recognition with no change in general sociability (Hitti & Siegelbaum 2014, PMID:24572357). Entorhinal cortex inputs produce strong LTP at distal CA2 dendrites, forming a powerful disynaptic cortico-hippocampal loop, while SC (Schaffer collateral) inputs are resistant to canonical LTP (Chevaleyre & Siegelbaum 2010, PMID:20510860).'
 - id: ca3_pc_hippocampus
   name: CA3 pyramidal cell
   definition_basis: CLASSICAL_MULTIMODAL
@@ -430,6 +491,35 @@ nodes:
       method: sharp electrode recording (guinea pig)
       scope: guinea pig hippocampus
       quote_key: 11290620_0f99e676
+  cl_mapping:
+    cl_term:
+      id: CL:4023062
+      label: dentate gyrus neuron
+      name_in_source: hilar mossy cell
+    mapping_notes: Hilar mossy cells are glutamatergic neurons with soma restricted to the dentate gyrus polymorphic layer; CL:4023062 covers all dentate gyrus neurons and is therefore a BROAD match. No mossy cell-specific CL term currently exists.
+    mapping_type: BROAD
+  proposed_cl_term:
+    label: hilar mossy cell
+    parent_cl_term:
+      id: CL:4023062
+      label: dentate gyrus neuron
+      name_in_source: dentate gyrus neuron
+    definition: A dentate gyrus neuron with soma in the polymorphic layer (UBERON:0002928) (Scharfman & Myers, 2012), capable of glutamate secretion as a neurotransmitter (Scharfman & Bernstein, 2015). Distinguished by a large multipolar soma, thorny excrescences on proximal dendrites, and commissural/associational axon projections terminating in the inner molecular layer of the dentate gyrus (Scharfman & Myers, 2012). Electrophysiologically characterised by a depolarised resting membrane potential, prominent hyperpolarisation-activated cation current (Ih), and firing accommodation (Scharfman & Myers, 2012). In rodents, serves as a major excitatory neuron of the dentate hilus providing feedback excitation to granule cells (Sun et al., 2017).
+    xrefs:
+    - PMID:23420672
+    - PMID:26347618
+    - PMID:28451637
+    - PMID:34214666
+    - PMID:33600026
+    - CS20230722_SUPT_0078
+    - CS20230722_SUPT_0079
+    status: SUBMITTED
+  definition_references:
+  - PMID:23420672
+  - PMID:26347618
+  - PMID:28451637
+  - PMID:34214666
+  - PMID:33600026
 - id: CS20230722_SUPT_0069
   name: 0069 CA1-ProS Glut_1
   definition_basis: ATLAS_TRANSCRIPTOMIC
