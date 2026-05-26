@@ -273,9 +273,12 @@ def migrate_run(
 ) -> list[Path]:
     """Migrate every metric-bearing CSV in ``run_dir``.
 
-    Resolves taxonomy_id from the manifest if not supplied. Returns the
-    list of YAML paths written. Skips files that aren't metric CSVs
-    (e.g. ``mmc_results.csv``).
+    Resolves taxonomy_id from the manifest if not supplied. Falls back
+    to deriving mapping proportions from a per-cell ``mapping_result.csv``
+    / ``mmc_output.csv`` (referenced by manifest ``output.relpath``)
+    when no f1_*.csv exists in the run dir — Bhatt-2025 pattern. Returns
+    the list of YAML paths written. Skips files that aren't metric CSVs
+    (e.g. raw ``mmc_results.csv`` in the run dir).
     """
     tax_id = taxonomy_id or _taxonomy_id_from_manifest(run_dir)
     if not tax_id:
@@ -290,7 +293,167 @@ def migrate_run(
             continue  # not a metrics CSV
         yaml_path, _ = migrate_csv(run_dir, csv_path.name, tax_id)
         written.append(yaml_path)
+    if not written:
+        prop_path = migrate_proportions_from_manifest(run_dir, tax_id)
+        if prop_path is not None:
+            written.append(prop_path)
     return written
+
+
+# ─── Proportions migration (no F1 available) ──────────────────────────
+
+
+_LEVEL_COLS: list[tuple[str, str, str]] = [
+    # (taxonomy_level, accession_column, name_column)
+    ("CLASS",     "class_label",     "class_name"),
+    ("SUBCLASS",  "subclass_label",  "subclass_name"),
+    ("SUPERTYPE", "supertype_label", "supertype_name"),
+    ("CLUSTER",   "cluster_label",   "cluster_name"),
+]
+
+
+def _read_mmc_results(path: Path) -> tuple[list[str], list[list[str]]]:
+    """Parse a MapMyCells per-cell output CSV.
+
+    Skips leading comment lines starting with ``#`` (the metadata
+    header). Returns ``(header, rows)`` of column-aligned data.
+    """
+    header: list[str] = []
+    rows: list[list[str]] = []
+    with path.open("r", encoding="utf-8") as fh:
+        reader = csv.reader(fh)
+        for raw in reader:
+            if not raw or raw[0].startswith("#"):
+                continue
+            if not header:
+                header = raw
+                continue
+            rows.append(raw)
+    return header, rows
+
+
+def derive_proportions_from_mmc(
+    mmc_rows: list[dict[str, str]],
+    *,
+    source_label: str,
+    taxonomy_id: str,
+) -> list[AnnotationTransferMetricRow]:
+    """Aggregate per-cell mapping output into per-(level, target)
+    proportions.
+
+    For each level, counts cells per target_label and emits a row with
+    ``group_purity = count / total`` (precision-side mass on this
+    target), ``n_cells = count``, and ``f1 / target_purity = None``
+    (no source-side cluster labels = no recall side).
+    """
+    total = len(mmc_rows)
+    if total == 0:
+        return []
+    out: list[AnnotationTransferMetricRow] = []
+    for level, accn_col, name_col in _LEVEL_COLS:
+        counts: dict[str, tuple[str, int]] = {}  # accn → (name, count)
+        for r in mmc_rows:
+            accn = r.get(accn_col)
+            if not accn:
+                continue
+            name = r.get(name_col) or ""
+            existing = counts.get(accn)
+            if existing is None:
+                counts[accn] = (name, 1)
+            else:
+                counts[accn] = (existing[0], existing[1] + 1)
+        for accn, (name, n) in counts.items():
+            out.append(
+                AnnotationTransferMetricRow(
+                    source_label=source_label,
+                    taxonomy_level=level,
+                    taxonomy_rank=_LEVEL_TO_RANK[level],
+                    target_name=name,
+                    target_accession=accn,
+                    n_cells=n,
+                    group_purity=n / total,
+                    target_purity=None,
+                    f1=None,
+                )
+            )
+    return out
+
+
+def migrate_proportions_from_manifest(
+    run_dir: Path, taxonomy_id: str
+) -> Path | None:
+    """Read the manifest's ``output.relpath``, resolve relative to
+    ``run_dir``, parse the per-cell MMC CSV, and write proportions
+    into an ``at_results.yaml``.
+
+    Returns the YAML path, or ``None`` if the manifest doesn't declare
+    an output path or the file is missing. Source label is read from
+    the manifest's ``source_cluster_label`` field.
+    """
+    manifest_path = run_dir / "manifest.yaml"
+    if not manifest_path.is_file():
+        return None
+    doc = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or {}
+    output = doc.get("output") or {}
+    relpath = output.get("relpath")
+    if not relpath:
+        return None
+    # Try several resolution strategies: as-given (absolute), relative
+    # to run_dir, and relative to repo root. The third covers manifests
+    # whose ../../.. counts are stale (e.g. after a run dir rename) or
+    # written as if from a different root.
+    candidates = [
+        (run_dir / relpath).resolve(),
+        (repo_root() / relpath.lstrip("./")).resolve()
+        if not relpath.startswith("/")
+        else Path(relpath),
+    ]
+    # Also try matching a research/ subpath of the manifest's relpath
+    # against the repo root — strips any leading `../`.
+    stripped = relpath
+    while stripped.startswith("../"):
+        stripped = stripped[3:]
+    candidates.append((repo_root() / stripped).resolve())
+
+    csv_path = next((c for c in candidates if c.is_file()), None)
+    if csv_path is None:
+        print(
+            f"  WARNING: manifest output relpath {relpath!r} not found via any of "
+            f"{[str(c) for c in candidates]}",
+            file=sys.stderr,
+        )
+        return None
+
+    source_label = (doc.get("source_cluster_label") or "").strip()
+    if not source_label:
+        print(
+            f"  WARNING: manifest missing source_cluster_label; skipping {run_dir}",
+            file=sys.stderr,
+        )
+        return None
+
+    header, raw_rows = _read_mmc_results(csv_path)
+    mmc_rows = [dict(zip(header, r)) for r in raw_rows]
+    rows = derive_proportions_from_mmc(
+        mmc_rows, source_label=source_label, taxonomy_id=taxonomy_id
+    )
+    if not rows:
+        return None
+
+    rs = AnnotationTransferResultSet(
+        run_id=run_dir.name,
+        taxonomy_id=taxonomy_id,
+        normalisation="proportions",
+        source_csv_relpath=relpath,
+        generated_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        generator=(
+            "src/evidencell/at_metrics.py::migrate_proportions_from_manifest"
+        ),
+        rows=rows,
+    )
+    yaml_path = run_dir / "at_results.yaml"
+    _atomic_write_yaml(yaml_path, rs.model_dump(exclude_none=True))
+    return yaml_path
 
 
 def migrate_all(
