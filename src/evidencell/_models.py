@@ -1328,11 +1328,12 @@ class AnnotationTransferLevelResult(ConfiguredBaseModel):
                        'TaxonomyNodeList']} })
     best_target_name: str = Field(default=..., description="""Name of the best-matching target at this level""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult']} })
     best_target_accession: Optional[str] = Field(default=None, description="""CCN accession of the best-matching target""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult']} })
-    group_purity: Optional[float] = Field(default=None, description="""Precision: fraction of source cells mapping to this target. High group_purity = the source type is concentrated in this target.
+    group_purity: Optional[float] = Field(default=None, description="""**Recall** in standard ML terms: fraction of source cells mapping to this target. High group_purity = the source type is concentrated in this target. Surfaced as `recall` in `at_figures --emit-metrics` JSON sidecars and as `Coverage` (Cov) in figure annotations.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
-    target_purity: Optional[float] = Field(default=None, description="""Recall: fraction of all cells in the target that come from this source. High target_purity = the target is specific to this source type.
+    target_purity: Optional[float] = Field(default=None, description="""**Precision** in standard ML terms: fraction of cells in the target that come from this source. High target_purity = the target is specific to this source type. Surfaced as `precision` in `at_figures --emit-metrics` JSON sidecars and as `Purity` (Pur) in figure annotations.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
-    f1_score: Optional[float] = Field(default=None, description="""Harmonic mean of group_purity and target_purity""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult']} })
+    f1_score: Optional[float] = Field(default=None, description="""Harmonic mean of group_purity (recall) and target_purity (precision).
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult']} })
     n_cells_mapped: Optional[int] = Field(default=None, description="""Number of source cells mapped to this target at this level (after bootstrap filter)""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult']} })
     median_bootstrap: Optional[float] = Field(default=None, description="""Median bootstrap confidence score for cells mapped to this target""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
 
@@ -1359,9 +1360,11 @@ class AnnotationTransferMetricRow(ConfiguredBaseModel):
     n_cells: Optional[int] = Field(default=None, description="""Number of source cells mapping to this target at this level.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode',
                        'AnnotationTransferMetricRow',
                        'ChildClusterExpression']} })
-    group_purity: Optional[float] = Field(default=None, description="""Precision — fraction of source cells mapping to this target.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
-    target_purity: Optional[float] = Field(default=None, description="""Recall — fraction of cells in the target coming from this source.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
-    f1: Optional[float] = Field(default=None, description="""Harmonic mean of group_purity and target_purity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow']} })
+    group_purity: Optional[float] = Field(default=None, description="""**Recall** — fraction of source cells mapping to this target. Surfaced as `recall` in `--emit-metrics` JSON sidecars and as `Coverage` (Cov) in figure annotations. Same semantic as `AnnotationTransferLevelResult.group_purity`.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
+    target_purity: Optional[float] = Field(default=None, description="""**Precision** — fraction of cells in the target coming from this source. Surfaced as `precision` in `--emit-metrics` JSON sidecars and as `Purity` (Pur) in figure annotations. Same semantic as `AnnotationTransferLevelResult.target_purity`.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
+    f1: Optional[float] = Field(default=None, description="""Harmonic mean of group_purity (recall) and target_purity (precision).""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow']} })
     median_bootstrap: Optional[float] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferLevelResult', 'AnnotationTransferMetricRow']} })
     mean_bootstrap: Optional[float] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow']} })
 

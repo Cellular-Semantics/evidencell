@@ -1570,16 +1570,24 @@ classes:
       group_purity:
         range: float
         description: >
-          Precision: fraction of source cells mapping to this target.
-          High group_purity = the source type is concentrated in this target.
+          **Recall** in standard ML terms: fraction of source cells
+          mapping to this target. High group_purity = the source type
+          is concentrated in this target. Surfaced as `recall` in
+          `at_figures --emit-metrics` JSON sidecars and as `Coverage`
+          (Cov) in figure annotations.
       target_purity:
         range: float
         description: >
-          Recall: fraction of all cells in the target that come from this source.
-          High target_purity = the target is specific to this source type.
+          **Precision** in standard ML terms: fraction of cells in the
+          target that come from this source. High target_purity = the
+          target is specific to this source type. Surfaced as
+          `precision` in `at_figures --emit-metrics` JSON sidecars and
+          as `Purity` (Pur) in figure annotations.
       f1_score:
         range: float
-        description: Harmonic mean of group_purity and target_purity
+        description: >
+          Harmonic mean of group_purity (recall) and target_purity
+          (precision).
       n_cells_mapped:
         range: integer
         description: Number of source cells mapped to this target at this level (after bootstrap filter)
@@ -1619,13 +1627,21 @@ classes:
         description: Number of source cells mapping to this target at this level.
       group_purity:
         range: float
-        description: Precision — fraction of source cells mapping to this target.
+        description: >
+          **Recall** — fraction of source cells mapping to this target.
+          Surfaced as `recall` in `--emit-metrics` JSON sidecars and as
+          `Coverage` (Cov) in figure annotations. Same semantic as
+          `AnnotationTransferLevelResult.group_purity`.
       target_purity:
         range: float
-        description: Recall — fraction of cells in the target coming from this source.
+        description: >
+          **Precision** — fraction of cells in the target coming from
+          this source. Surfaced as `precision` in `--emit-metrics`
+          JSON sidecars and as `Purity` (Pur) in figure annotations.
+          Same semantic as `AnnotationTransferLevelResult.target_purity`.
       f1:
         range: float
-        description: Harmonic mean of group_purity and target_purity.
+        description: Harmonic mean of group_purity (recall) and target_purity (precision).
       median_bootstrap:
         range: float
       mean_bootstrap:

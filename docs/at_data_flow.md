@@ -135,6 +135,26 @@ Use this table when a consumer doesn't know which file to trust.
 
 ---
 
+## Precision / recall / purity / coverage — naming reference
+
+The same two quantities go by **four** names across this codebase. They
+all refer to the same numbers; the differences are stylistic.
+
+| Standard ML term | Schema slot (`AnnotationTransfer{LevelResult,MetricRow}`) | `--emit-metrics` JSON key | Figure annotation |
+|---|---|---|---|
+| **Recall** — fraction of *source* cells that landed on this target | `group_purity` | `recall` | `Coverage` (Cov) |
+| **Precision** — fraction of *target* cells that came from this source | `target_purity` | `precision` | `Purity` (Pur) |
+
+When in doubt: `group_purity` describes the *source group*'s distribution
+(how concentrated was it on this target?). `target_purity` describes the
+*target*'s composition (how purely is it populated by cells from this
+source?).
+
+The schema description labels were inverted in earlier revisions
+("Precision: fraction of source cells…" — that's actually recall);
+fixed 2026-05-25 in commit [TBD] to match standard ML conventions
+across all surfaces.
+
 ## Per-source vs pooled F1
 
 A perennial source of confusion. Settled here.
