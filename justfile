@@ -61,6 +61,28 @@ validate-taxonomy-all TAXONOMY_ID:
     done
     [ $failed -eq 0 ] && echo "All taxonomy files valid." || { echo "Validation failed."; exit 1; }
 
+# Regenerate src/evidencell/_models.py (Pydantic classes from LinkML schema)
+[group('schema')]
+gen-models:
+    uv run gen-pydantic {{schema}} > src/evidencell/_models.py
+    @echo "Regenerated src/evidencell/_models.py from {{schema}}"
+
+# Check src/evidencell/_models.py is up to date with the schema; fails if drift
+[group('schema')]
+check-models:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    tmpfile=$(mktemp)
+    uv run gen-pydantic {{schema}} > "$tmpfile"
+    if diff -q "$tmpfile" src/evidencell/_models.py >/dev/null; then
+        echo "src/evidencell/_models.py is up to date."
+    else
+        echo "ERROR: src/evidencell/_models.py is out of sync with {{schema}}."
+        echo "Run 'just gen-models' and commit the result."
+        diff "$tmpfile" src/evidencell/_models.py | head -40
+        exit 1
+    fi
+
 # Validate an AT results YAML (AnnotationTransferResultSet root class)
 [group('validation')]
 validate-at-results FILE:
