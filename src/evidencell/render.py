@@ -2225,11 +2225,33 @@ def main() -> None:
     p_facts.add_argument("--output-dir", type=Path, default=None)
 
     # summary
-    p_sum = sub.add_parser("summary", help="Generate Markdown summary report (programmatic mode)")
+    p_sum = sub.add_parser(
+        "summary",
+        help=(
+            "Generate Markdown summary report (programmatic / structural-"
+            "only mode). NOT a substitute for the gen-report LLM "
+            "orchestrator — `render summary` produces the stub / fallback "
+            "structural render with no Introduction prose, no synthesised "
+            "Discussion, no figure embeds, and no verdict blocks. "
+            "Refuses by default to overwrite an existing report that "
+            "already contains paper-style content (Introduction / "
+            "figures / verdict blocks); use --force to override at your "
+            "own risk."
+        ),
+    )
     p_sum.add_argument("graph_file", type=Path)
     p_sum.add_argument("--node", default=None, help="Classical node id (default: all)")
     p_sum.add_argument("--output-dir", type=Path, default=None)
     p_sum.add_argument("--drilldowns", action="store_true", help="Also generate drill-downs")
+    p_sum.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "Override the paper-style-content guard. Required to overwrite "
+            "any report file that already contains `## Introduction`, an "
+            "embedded figure, or a `<!-- verdict-block-start -->` marker."
+        ),
+    )
 
     # drilldowns
     p_dd = sub.add_parser("drilldowns", help="Generate Markdown drill-down reports")
@@ -2268,6 +2290,34 @@ def main() -> None:
             node_ids = [n["id"] for n in nodes]
         for nid in node_ids:
             out_path = out_dir / f"{nid}_summary.md"
+            # Safety guard: refuse to overwrite a report file that
+            # already contains paper-style content from the gen-report
+            # LLM orchestrator. `render summary` is the deterministic
+            # structural fallback and cannot reproduce Introduction
+            # prose, figure embeds, or verdict blocks — silently
+            # overwriting destroys curated synthesis work. Pass
+            # --force to override (e.g. for legitimate stub overwrites).
+            if out_path.is_file() and not args.force:
+                existing = out_path.read_text(encoding="utf-8")
+                paper_markers = []
+                if "## Introduction" in existing:
+                    paper_markers.append("`## Introduction`")
+                if "<!-- verdict-block-start" in existing:
+                    paper_markers.append("verdict block(s)")
+                if "\n![" in existing:
+                    paper_markers.append("figure embed(s)")
+                if paper_markers:
+                    print(
+                        f"REFUSED to overwrite {out_path} — it contains "
+                        + ", ".join(paper_markers) + ".\n"
+                        "`render summary` is the deterministic structural "
+                        "fallback and would destroy this paper-style content. "
+                        "Use the gen-report LLM orchestrator "
+                        "(`workflows/gen-report.md`) instead, or pass "
+                        "`--force` to bypass this guard.",
+                        file=sys.stderr,
+                    )
+                    continue
             render_summary(graph, refs, nid, out_path, graph_file)
             if args.drilldowns:
                 # Generate all drill-downs for this node
