@@ -219,7 +219,11 @@ KB writes regardless of which workflow is running.
 **KB YAML** (`kb/**/*.yaml`) — blocks writes with: YAML parse errors, structural
 integrity failures (dangling edges, duplicate IDs, placeholder snippets), `quote_key`
 values absent from `references.json`, `PMID:`/`DOI:` citations absent from
-`references.json`, LinkML schema non-conformance.
+`references.json`, LinkML schema non-conformance, and ontology-term references
+(CL/UBERON/NCBITaxon CURIEs) that don't resolve via the OAK semsql DBs. The
+term check is soft-skipped on fresh clones where OAK DBs aren't cached yet
+(run `just fetch-oak-dbs`); `EVIDENCELL_SKIP_TERM_CHECK=1` provides an
+explicit emergency bypass. CI runs the same check on every push/PR.
 
 **Markdown reports** (`reports/{region}/*.md`) — blocks writes with: blockquote blocks
 missing a `<!-- quote_key: X -->` attribution annotation, quote keys or PMIDs absent

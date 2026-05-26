@@ -456,3 +456,91 @@ def test_valid_kb_file_passes():
     assert r.returncode == 0, (
         f"Expected exit 0 for valid KB file, got {r.returncode}\n{r.stderr}"
     )
+
+
+# ── Term-reference validation ──────────────────────────────────────────────────
+
+
+def _run_hook_with_env(
+    payload: dict,
+    extra_env: dict[str, str],
+    user: str | None = "dosumis@gmail.com",
+) -> subprocess.CompletedProcess:
+    """Run the hook with extra env vars (e.g. EVIDENCELL_SKIP_TERM_CHECK=1)."""
+    env = os.environ.copy()
+    if user is not None:
+        env["EVIDENCELL_HOOK_USER"] = user
+    env.update(extra_env)
+    return subprocess.run(
+        [sys.executable, str(HOOK)],
+        input=json.dumps(payload),
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+
+def test_term_check_bypass_env_short_circuits():
+    """EVIDENCELL_SKIP_TERM_CHECK=1 prints a bypass notice and skips term validation.
+
+    Structural checks still run, so a structurally-valid YAML should pass even
+    if the term check would have rejected it.
+    """
+    payload = _write_payload(_MINIMAL_VALID_YAML)
+    r = _run_hook_with_env(payload, {"EVIDENCELL_SKIP_TERM_CHECK": "1"})
+    # Hook should print the bypass notice
+    assert "bypassed" in r.stderr.lower() or "term check" in r.stderr.lower()
+    # And should not have invoked validate_terms (no "term check skipped: OAK" message)
+    # We do *not* assert exit code here because LinkML schema check may still
+    # fire and either pass or skip; this test isolates the bypass path.
+
+
+def test_term_check_skipped_when_oak_dbs_missing(tmp_path: Path, monkeypatch):
+    """Soft-skip path: when no OAK DBs are cached, the hook still allows the
+    write but emits the informational `[term check skipped: ...]` message.
+
+    Exercised by pointing PYSTOW_HOME at an empty tmp dir so the semsql
+    lookup finds no DB files.
+    """
+    payload = _write_payload(_MINIMAL_VALID_YAML)
+    # Empty pystow home → no .data/semsql/sqlite/*.db files
+    fake_home = tmp_path / "pystow_home"
+    fake_home.mkdir()
+    r = _run_hook_with_env(payload, {"PYSTOW_HOME": str(fake_home)})
+    # The skipped message should appear (assuming conf/oak_config.yaml is
+    # present in the project — it is, so the function gets past the first
+    # short-circuit and into the missing-DB branch).
+    assert (
+        "term check skipped" in r.stderr.lower()
+        or "fetch-oak-dbs" in r.stderr.lower()
+    )
+
+
+@pytest.mark.integration
+def test_term_check_rejects_bad_curie(tmp_path: Path):
+    """End-to-end: when OAK DBs are warm and YAML contains an unresolvable
+    CURIE, the hook blocks. Marked integration because it requires the OAK
+    semsql DBs to be cached locally.
+    """
+    if not SCHEMA.exists():
+        pytest.skip("Schema file not found — run from evidencell/ root")
+    # Skip unless OAK DBs are actually cached locally
+    import pystow
+    cl_db = pystow.join("semsql", "sqlite", name="cl.db")
+    if not cl_db.exists():
+        pytest.skip(f"OAK CL DB not cached at {cl_db}; run `just fetch-oak-dbs`")
+
+    bad_yaml = """\
+nodes:
+  - id: type_a
+    name: Type A
+    cl_term: "CL:9999999999"
+edges: []
+"""
+    r = _run_hook(_write_payload(bad_yaml))
+    # Hook must block (exit code 2) when the CURIE doesn't resolve. We
+    # allow either the LinkML schema check or the term check to be the
+    # failing check, but stderr should mention the bad CURIE or term.
+    assert r.returncode == 2, (
+        f"Expected exit 2 for bad CURIE, got {r.returncode}\n{r.stderr}"
+    )

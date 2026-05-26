@@ -26,3 +26,44 @@ jobs:
 
       - name: Run fast tests (no OAK DB / network)
         run: uv run pytest -m "not integration" --no-cov -q
+
+  kb-validate:
+    # Schema + ontology-term validation across every KB YAML. Uses an
+    # actions/cache step keyed on conf/oak_config.yaml so the OAK semsql
+    # SQLite DBs (CL, UBERON, NCBITaxon — ~hundreds of MB, gitignored) are
+    # restored across runs. Cold-cache runs fall back to fetching DBs via
+    # runoak; warm-cache runs are ~5 s restore + ~10 s validate.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Restore OAK semsql cache
+        id: cache-oak
+        uses: actions/cache@v4
+        with:
+          path: ~/.data/semsql
+          key: oak-semsql-${{ hashFiles('conf/oak_config.yaml') }}-v1
+          restore-keys: |
+            oak-semsql-
+
+      - name: Pre-cache OAK DBs (on cache miss)
+        if: steps.cache-oak.outputs.cache-hit != 'true'
+        run: |
+          uv run runoak -i sqlite:obo:cl info CL:0000000 >/dev/null
+          uv run runoak -i sqlite:obo:uberon info UBERON:0000955 >/dev/null
+          uv run runoak -i sqlite:obo:ncbitaxon info NCBITaxon:9606 >/dev/null
+
+      - name: Install just
+        uses: extractions/setup-just@v2
+
+      - name: Validate KB schema + term references
+        run: just validate-all && just validate-terms
