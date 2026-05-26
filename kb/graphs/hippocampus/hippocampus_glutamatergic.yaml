@@ -272,6 +272,39 @@ nodes:
       method: review (anatomy + physiology)
       scope: rodent hippocampal mossy fiber pathway to CA3
       quote_key: 7458943_e2eed73d
+  cl_mapping:
+    cl_term:
+      id: CL:1001571
+      label: hippocampal pyramidal neuron
+      name_in_source: CA3 pyramidal cell
+    mapping_notes: CA3 pyramidal cells are a subpopulation of hippocampal pyramidal neurons;
+      CL:1001571 covers all hippocampal pyramidal neurons without anatomical resolution to
+      individual subfields. No CA3-specific CL term currently exists.
+    mapping_type: BROAD
+  definition_references:
+  - PMID:27113915
+  - PMID:26402459
+  - PMID:26346726
+  - PMID:24319410
+  - PMID:23271650
+  notes: 'CA3 pyramidal cells are the principal glutamatergic neurons of hippocampal area
+    CA3, forming the main excitatory relay of the trisynaptic circuit: they receive mossy
+    fiber input from dentate gyrus granule cells via thorny excrescences on proximal apical
+    dendrites (a defining morphological hallmark unique to CA3 among Ammon''s horn pyramidal
+    cells), and project via Schaffer collaterals to CA1. The dense recurrent collateral
+    network underlies pattern completion memory models and enables single CA3 neurons to
+    act as hub neurons capable of triggering network bursts (PMID:23271650). No molecular
+    marker exclusively specific to CA3 has been identified in classical literature; the
+    thorny excrescence morphology and mossy fiber innervation remain the primary defining
+    criteria.'
+  proposed_cl_term:
+    label: CA3 pyramidal cell
+    parent_cl_term:
+      id: CL:1001571
+      label: hippocampal pyramidal neuron
+      name_in_source: hippocampal pyramidal neuron
+    status: SUBMITTED
+    cl_id: https://github.com/obophenotype/cell-ontology/issues/3653
 - id: dg_granule_cell_hippocampus
   name: Dentate gyrus granule cell
   definition_basis: CLASSICAL_MULTIMODAL
