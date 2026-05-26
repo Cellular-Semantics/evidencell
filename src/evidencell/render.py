@@ -2306,6 +2306,10 @@ def main() -> None:
                     paper_markers.append("verdict block(s)")
                 if "\n![" in existing:
                     paper_markers.append("figure embed(s)")
+                if "<!-- quote_key:" in existing:
+                    paper_markers.append("primary-literature blockquote(s)")
+                if "## Discussion" in existing or "## Methods" in existing:
+                    paper_markers.append("paper-style Discussion/Methods section")
                 if paper_markers:
                     print(
                         f"REFUSED to overwrite {out_path} — it contains "

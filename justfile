@@ -382,16 +382,21 @@ query-gene-expression taxonomy_id accessions genes:
 gen-facts GRAPH_FILE NODE_ID:
     uv run python -m evidencell.render facts {{GRAPH_FILE}} --node {{NODE_ID}}
 
-# Generate summary report for all classical nodes in one graph file (programmatic mode)
-# For LLM-assisted synthesis with hallucination guard, use: workflows/gen-report.md
+# Deterministic structural-only render for fresh stub reports (no Introduction
+# prose, no figure embeds, no verdict blocks). Refuses to overwrite any report
+# file already containing paper-style content from the gen-report LLM
+# orchestrator. Pass `--force` (forwarded to the renderer) to bypass.
+#
+# For paper-style synthesis, use `workflows/gen-report.md` (LLM orchestrator).
 [group('reports')]
-gen-report GRAPH_FILE:
-    uv run python -m evidencell.render summary {{GRAPH_FILE}}
+gen-report GRAPH_FILE *ARGS:
+    uv run python -m evidencell.render summary {{GRAPH_FILE}} {{ARGS}}
 
-# Generate summary report for one classical node by id
+# Deterministic structural-only render for one classical node. Refuses to
+# overwrite paper-style reports — see `just gen-report` for context.
 [group('reports')]
-gen-report-node GRAPH_FILE NODE_ID:
-    uv run python -m evidencell.render summary {{GRAPH_FILE}} --node {{NODE_ID}}
+gen-report-node GRAPH_FILE NODE_ID *ARGS:
+    uv run python -m evidencell.render summary {{GRAPH_FILE}} --node {{NODE_ID}} {{ARGS}}
 
 # Generate all drill-downs for a classical node
 [group('reports')]
@@ -440,15 +445,21 @@ pool-candidates GRAPH_FILE *ARGS:
 rationale-writeback REPORT_FILE GRAPH_FILE *ARGS:
     uv run python -m evidencell.rationale_writeback {{REPORT_FILE}} {{GRAPH_FILE}} {{ARGS}}
 
-# Regenerate all reports + indices for the KB (programmatic mode, no LLM)
+# Deterministic structural-only render across every classical node in the KB.
+# Per-file guard (in `render summary`) protects paper-style reports from
+# being overwritten — they're skipped with a REFUSED message. Pass --force
+# to override (rare; mostly for new-stub bulk seeding).
+#
+# For LLM-driven regen at scale, run the gen-report orchestrator per node
+# (see workflows/gen-report.md).
 [group('reports')]
-gen-report-all:
+gen-report-all *ARGS:
     #!/usr/bin/env bash
     set -euo pipefail
     files=$(find kb/graphs -name "*.yaml" 2>/dev/null)
     if [ -z "$files" ]; then echo "No files in kb/graphs yet."; exit 0; fi
     for f in $files; do
-        uv run python -m evidencell.render summary "$f"
+        uv run python -m evidencell.render summary "$f" {{ARGS}}
     done
     for region in $(ls kb/graphs 2>/dev/null); do
         uv run python -m evidencell.render index "$region"
@@ -456,15 +467,16 @@ gen-report-all:
     # Combined taxonomy-indexed TOC (default MODERATE+).
     uv run python -m evidencell.toc --all
 
-# Regenerate all reports + indices for one region (programmatic mode, no LLM)
+# Deterministic structural-only render across one region. Per-file guard
+# protects paper-style reports — see `just gen-report-all` for details.
 [group('reports')]
-gen-report-region REGION:
+gen-report-region REGION *ARGS:
     #!/usr/bin/env bash
     set -euo pipefail
     files=$(find kb/graphs/{{REGION}} -maxdepth 1 -name "*.yaml" 2>/dev/null)
     if [ -z "$files" ]; then echo "No YAML files in kb/graphs/{{REGION}}."; exit 0; fi
     for f in $files; do
-        uv run python -m evidencell.render summary "$f"
+        uv run python -m evidencell.render summary "$f" {{ARGS}}
     done
     uv run python -m evidencell.render index {{REGION}}
 
