@@ -1,5 +1,8 @@
 # DG-PIR Ex IMN_2 — Allen Brain Cell Atlas CCN202307220 Mapping Report
-*2026-04-16 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/dentate_gyrus/dg_pir_ex_imn.yaml`*
+*Draft · 2026-04-16 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/dg_pir_ex_imn.yaml`*
+
+> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
+> All edges require expert review before use.
 
 ---
 
@@ -14,17 +17,9 @@
 
 ---
 
-## Cell Ontology mapping
-
-DG-PIR Ex IMN_2 is a **broad match** to **dentate gyrus neuroblast (CL:9900001)** in the Cell Ontology — i.e. **dentate gyrus neuroblast (CL:9900001)** is the closest existing CL term (an ancestor) but does not fully cover this type. A new child term is a candidate for submission to CL.
-
-*Mapping notes:* Supertype grouping four clusters: type-2b progenitor (0513), late neuroblast (0512), immature granule cell (0514, 0515). No single CL term covers the full supertype; CL:9900001 (dentate gyrus neuroblast) applied as broadest common ancestor at supertype level. Cluster-level mappings are more precise.
-
----
-
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 

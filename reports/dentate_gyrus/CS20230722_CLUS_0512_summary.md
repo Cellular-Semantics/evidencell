@@ -1,5 +1,8 @@
 # 0512 DG-PIR Ex IMN_2 — Allen Brain Cell Atlas CCN202307220 Mapping Report
-*2026-04-16 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/dentate_gyrus/dg_pir_ex_imn.yaml`*
+*Draft · 2026-04-16 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/dg_pir_ex_imn.yaml`*
+
+> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
+> All edges require expert review before use.
 
 ---
 
@@ -14,17 +17,9 @@
 
 ---
 
-## Cell Ontology mapping
-
-0512 DG-PIR Ex IMN_2 is a **broad match** to **dentate gyrus neuroblast (CL:9900001)** in the Cell Ontology — i.e. **dentate gyrus neuroblast (CL:9900001)** is the closest existing CL term (an ancestor) but does not fully cover this type. A new child term is a candidate for submission to CL.
-
-*Mapping notes:* Curator-annotated as "late neuroblast". Key markers: Eomes (=Tbr2) still expressed, Prox1 (DG lineage TF), Calb2 (calretinin — transiently expressed in immature granule neurons); MERFISH validates Eomes and Calb2. Calretinin onset indicates transition toward immature granule neuron stage. CL:9900001 (dentate gyrus neuroblast) — type-3/neuroblast stage.
-
----
-
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 

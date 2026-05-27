@@ -1,5 +1,8 @@
 # CA3 pyramidal cell — WMBv1 (CCN20230722) Mapping Report
-*2026-04-27 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
+*Draft · 2026-04-27 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
+
+> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
+> All edges require expert review before use.
 
 ---
 
@@ -8,23 +11,15 @@
 | Property | Value | References |
 |---|---|---|
 | CL term | hippocampal pyramidal neuron (CL:1001571) | |
-| Soma location | CA3 stratum pyramidale [UBERON:0014550]; CA3 stratum radiatum / stratum oriens (apical and basal dendritic field) [UBERON:0005372]; CA1 stratum radiatum (Schaffer collateral projection target) [UBERON:0014554] | [1] [1] [2] [2] [1] |
+| Soma location | CA3 stratum pyramidale [UBERON:0014550]; CA3 stratum radiatum / stratum oriens (apical and basal dendritic field) [UBERON:0005372]; CA1 stratum radiatum (Schaffer collateral projection target) [UBERON:0014548] | [1] [1] [2] [2] [1] |
 | NT | glutamatergic | [3] [4] [5] |
 | Markers | Gria1+, Gria2+, Grm1+, Slc17a7+, Nptn+, Gjd2+ | [2] [6] [7] [3] |
 
 ---
 
-## Cell Ontology mapping
-
-CA3 pyramidal cell is a **broad match** to **hippocampal pyramidal neuron (CL:1001571)** in the Cell Ontology — i.e. **hippocampal pyramidal neuron (CL:1001571)** is the closest existing CL term (an ancestor) but does not fully cover this type. A new child term is a candidate for submission to CL.
-
-*Mapping notes:* CA3-specific term absent from CL. Best available match is CL:1001571 (hippocampal pyramidal neuron); synonym 'hippocampus (CA) pyramidal cell' covers CA1–CA3 without subfield specificity.
-
----
-
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 
@@ -43,7 +38,7 @@ CA3 pyramidal cell is a **broad match** to **hippocampal pyramidal neuron (CL:10
 |---|---|---|---|
 | [1] | Munster-Wandowski et al. 2013 · PMID:24319410 | [24319410](https://pubmed.ncbi.nlm.nih.gov/24319410/) | soma location |
 | [2] | Yeung et al. 2020 · PMID:32009891 | [32009891](https://pubmed.ncbi.nlm.nih.gov/32009891/) | soma location |
-| [3] | https://doi.org/10.3389/fnana.2012.00013 | — | neurotransmitter type |
+| [3] | Hamzei-Sichani et al. 2012 · DOI:10.3389/fnana.2012.00013 | — | neurotransmitter type |
 | [4] | Dale et al. 2015 · PMID:26346726 | [26346726](https://pubmed.ncbi.nlm.nih.gov/26346726/) | neurotransmitter type |
 | [5] | Cembrowski et al. 2016 · PMID:27113915 | [27113915](https://pubmed.ncbi.nlm.nih.gov/27113915/) | neurotransmitter type |
 | [6] | Sarvari et al. 2016 · PMID:27375434 | [27375434](https://pubmed.ncbi.nlm.nih.gov/27375434/) | Grm1 marker |

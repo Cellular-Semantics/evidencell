@@ -1,95 +1,113 @@
 # entorhinal cortex layer II stellate cell — WMBv1 (CCN20230722) Mapping Report
-*2026-04-27 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml`*
+*draft · 2026-04-27 · Source: `kb/draft/hippocampus/hippocampus_glutamatergic.yaml`*
+
+**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
 
 ---
 
-## Classical type
+## 1. Classical type
 
 | Property | Value | References |
 |---|---|---|
 | CL term | glutamatergic neuron (CL:0000679) | |
-| Soma location | entorhinal cortex layer II [UBERON:0002728] | [1] [2] [3] [4] [5] [6] [7] |
+| Soma location | entorhinal cortex layer II [UBERON:0002728] | [1][2][3][4][5][6][7] |
 | NT | glutamatergic | [4] |
-| Markers | Reln+ | [1] |
+| Defining markers | Reln (reelin) | [1] |
+| Negative markers | — | |
+| Neuropeptides | — | |
 
 ---
 
-## Cell Ontology mapping
+## 2. Mapping candidates
 
-entorhinal cortex layer II stellate cell is a **broad match** to **glutamatergic neuron (CL:0000679)** in the Cell Ontology — i.e. **glutamatergic neuron (CL:0000679)** is the closest existing CL term (an ancestor) but does not fully cover this type. A new child term is a candidate for submission to CL.
+| Rank | WMBv1 supertype | Supertype | Cells | Confidence | Key property alignment | Verdict |
+|---|---|---|---|---|---|---|
+| 1 | 0042 L2/3 IT PIR-ENTl Glut_4 [CS20230722_SUPT_0042] | L2/3 IT PIR-ENTl Glut | — | 🟡 MODERATE | Reln CONSISTENT · F1=0.964 | Best candidate |
 
-*Mapping notes:* EC layer II stellate cells have stellate morphology and express reelin but not calbindin, distinguishing them from layer II pyramidal cells. No EC layer II stellate-specific CL term exists; CL:0000679 is used as the broadest accurate mapping.
-
----
-
-## Mapping candidates
-
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
-|---|---|---|---|---|---|
-| — | 0042 L2/3 IT PIR-ENTl Glut_4 [CS20230722_SUPT_0042] |  | 12,221 |  |  |
-
-All edges: `skos:closeMatch`
+Total: 1 edge. Relationship type: PARTIAL_OVERLAP (the classical EC layer II stellate cell is specifically Reln+; SUPT_0042 may include a minor piriform cortex component sharing transcriptomic similarity).
 
 ---
 
-## 0042 L2/3 IT PIR-ENTl Glut_4 · 
+## 3. Candidate paragraphs
 
-*`CS20230722_SUPT_0042` · 12,221 cells (10x)*
+## 0042 L2/3 IT PIR-ENTl Glut_4 [CS20230722_SUPT_0042] · 🟡 MODERATE
 
-**Supporting evidence:**
+**Supporting evidence**
 
-- Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 'L2 IT ENTl' subclass cells (n=180), representing lateral entorhinal cortex layer II IT neurons, map to SUPT_0042 (L2/3 IT PIR-ENTl Glut_4) with coverage=0.956 and F1=0.964. The near-perfect F1 indicates SUPT_0042 is a highly specific match for lateral EC layer II cells. The Yao 2021 'L2 IT ENTl' subclass corresponds to the population containing reelin-positive stellate cells — the dominant excitatory neuron type in lateral EC layer II. The 'PIR-ENTl' designation in the supertype name reflects the shared transcriptomic signature between piriform cortex and lateral entorhinal cortex layer II populations. [Annotation transfer]
+- **NT type — CONSISTENT.** SUPT_0042 belongs to subclass SUBC_009 L2/3 IT PIR-ENTl Glut, a glutamatergic subclass grouping lateral entorhinal cortex and piriform cortex layer II/III intratelencephalic (IT) neurons. The classical EC layer II stellate cell is glutamatergic [4], consistent with this subclass identity.
 
-**Concerns:**
+- **Annotation transfer — SUPPORT.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq data onto WMBv1 (CCN20230722): of 180 Yao 2021 'L2 IT ENTl' subclass cells (representing lateral entorhinal cortex layer II IT neurons — the population containing reelin-positive stellate cells as the dominant excitatory type), 172 (95.6%) map to SUPT_0042 at the supertype level. F1 = 0.964, coverage = 0.956, purity = 0.972. This is an exceptionally high F1, indicating SUPT_0042 is a highly specific and sensitive match for lateral EC layer II cells. This is the strongest quantitative evidence for this mapping.
 
-- **location** (APPROXIMATE): A=entorhinal cortex layer II (UBERON:0002728, compartment: SOMA) / B=SUPT_0042 in PIR-ENTl subclass; MERFISH assignment not assessed. The SUBC_009 (L2/3 IT PIR-ENTl Glut) subclass spans both lateral entorhinal cortex and piriform cortex, reflecting a shared transcriptomic signature. EC layer II stellate cells are in entorhinal cortex; any PIR component in SUPT_0042 may represent piriform layer II neurons with similar molecular profiles.
+- **Marker Reln — CONSISTENT.** Reln is listed as the defining identity marker of EC layer II stellate cells [1]. Precomputed expression stats (precomputed_stats.h5, supertype level) confirm Reln mean expression = 8.17 in SUPT_0042. Although Reln does not appear among the defining discriminating markers listed for SUPT_0042 in the atlas (Igfn1, Endou, Bcl11b, Boc), the high precomputed Reln expression confirms that stellate cell-level Reln expression is present in this supertype, consistent with stellate cell identity.
 
-- The 'L2 IT ENTl' Yao 2021 subclass may include both Reln+ stellate cells and minor non-stellate populations in lateral EC layer II. The classical ec_layer2_stellate_cell is specifically Reln+; the Yao 2021 subclass may contain a small Reln- fraction. This does not substantially affect the mapping given the extremely high purity (F1=0.964). The 'PIR' component of the SUPT_0042 name warrants investigation to confirm EC vs. piriform contribution.
-- [AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.
+- **Location — APPROXIMATE.** The 'PIR-ENTl' subclass designation reflects a shared transcriptomic signature between lateral entorhinal cortex and piriform cortex. EC layer II stellate cells reside specifically in the entorhinal cortex [UBERON:0002728]; piriform cortex layer II neurons share a similar molecular profile but are a distinct population. *(note: piriform cortex and lateral entorhinal cortex are anatomically adjacent — the piriform-entorhinal border is not sharply delineated — which may explain the shared transcriptomic cluster identity; this adjacency makes the location APPROXIMATE rather than DISCORDANT.)*
 
-**What would upgrade confidence:**
+**Marker evidence provenance**
 
-- *Unresolved:* Does SUPT_0042 expression include a significant piriform cortex component in the WMBv1 MERFISH data, or is the PIR-ENTl designation primarily driven by transcriptomic similarity rather than spatial overlap?
+- **Reln** [1]: Naumann et al. 2015 established that Reln-positive cells in EC layer II have the electrophysiological properties of stellate cells and project to the dentate gyrus, distinguishing them from Calb1-positive pyramidal cells that project to CA1. Cell-type identity in this study was established by electrophysiological characterisation combined with projection tracing (retrograde labelling), providing strong specificity for the stellate cell identity. The evidence is transcript- and protein-level (immunofluorescence). The Reln mean expression of 8.17 in SUPT_0042 from precomputed stats is consistent with the high Reln expression expected for this population. No significant discrepancy exists between the literature and atlas values for Reln. *(Recommendation: Running add-expression for Reln and Calb1 across all SUBC_009 supertypes at the atlas level would directly confirm the stellate/pyramidal marker distinction within the PIR-ENTl subclass.)*
 
-- *Unresolved:* Is Reln expressed in SUPT_0042 at the level expected for stellate cells? Running add-expression for Reln on CCN20230722 precomputed stats would confirm.
+**Concerns**
 
-- *Proposed:* Run add-expression for Reln and Calb1 on CCN20230722 to distinguish SUPT_0042 (Reln+, stellate) from SUPT_0052 (potentially Calb1+, pyramidal) at the atlas level.
+- **Location APPROXIMATE — piriform cortex component.** The SUBC_009 (L2/3 IT PIR-ENTl Glut) subclass spans both lateral entorhinal cortex and piriform cortex. Any piriform cortex component within SUPT_0042 would represent a different biological population sharing a transcriptomic signature with EC layer II stellate cells rather than being true stellate cells. *(note: lateral entorhinal cortex and piriform cortex are adjacent regions and the PIR-ENTl designation likely reflects transcriptomic clustering rather than equal spatial representation — this is weak counter-evidence, consistent with an adjacent-region boundary effect.)*
 
+- **PARTIAL_OVERLAP caveat — minor non-stellate fraction.** The Yao 2021 'L2 IT ENTl' subclass may include a small fraction of non-stellate (Reln-negative) neurons in lateral EC layer II. Given the extremely high purity (F1=0.964), this contamination is minimal and does not substantially affect the mapping confidence.
 
----
+**What would upgrade confidence**
 
-## Proposed experiments
+- **Reln and Calb1 expression atlas check:** Running add-expression for Reln and Calb1 on CCN20230722 SUBC_009 supertypes would confirm that SUPT_0042 is Reln-high/Calb1-low (stellate) and SUPT_0052 is Reln-low/Calb1-high (pyramidal), directly resolving the stellate/pyramidal distinction at the atlas level (Open question 1). This can be done without new experiments.
 
-### 1 — Other
-
-- Run add-expression for Reln and Calb1 on CCN20230722 to distinguish SUPT_0042 (Reln+, stellate) from SUPT_0052 (potentially Calb1+, pyramidal) at the atlas level.
-*Resolves: edge_ec_layer2_stellate_cell_hippocampus_to_supt_0042*
+- **MERFISH spatial validation:** Checking WMBv1 MERFISH soma assignments for SUPT_0042 cells to quantify the entorhinal vs. piriform cortex spatial distribution would resolve whether the 'PIR' component is a substantial contaminant or a minor transcriptomic artefact (Open question 2).
 
 ---
 
-## Open questions
+## 4. Proposed experiments
 
-1. Does SUPT_0042 expression include a significant piriform cortex component in the WMBv1 MERFISH data, or is the PIR-ENTl designation primarily driven by transcriptomic similarity rather than spatial overlap?
-2. Is Reln expressed in SUPT_0042 at the level expected for stellate cells? Running add-expression for Reln on CCN20230722 precomputed stats would confirm.
+### 1 — Atlas expression query (add-expression)
+
+**What:** Run add-expression for Reln and Calb1 on CCN20230722 precomputed stats across all SUBC_009 (L2/3 IT PIR-ENTl Glut) supertypes.
+
+**Target:** Confirm Reln mean expression significantly higher in SUPT_0042 than in SUPT_0052; Calb1 mean expression significantly higher in SUPT_0052 than in SUPT_0042.
+
+**Expected output:** PrecomputedExpression entries on atlas nodes confirming the molecular distinction between stellate and pyramidal EC layer II supertypes.
+
+**Resolves:** Open question 1 (stellate vs. pyramidal molecular distinction at atlas level).
+
+### 2 — MERFISH / spatial transcriptomics
+
+**What:** Check WMBv1 MERFISH soma assignments for SUPT_0042 cells to quantify entorhinal cortex vs. piriform cortex spatial distribution.
+
+**Target:** Determine whether the majority of SUPT_0042 cells are spatially assigned to lateral entorhinal cortex or piriform cortex in the MERFISH dataset.
+
+**Expected output:** Atlas metadata evidence (ATLAS_METADATA) clarifying whether PARTIAL_OVERLAP should be upgraded to CONSISTENT if the piriform component is negligible.
+
+**Resolves:** Open question 2 (piriform vs. entorhinal spatial contribution to SUPT_0042).
 
 ---
 
-## Evidence base
+## 5. Open questions
 
-| Edge | Evidence types | Supports |
+1. Does Reln expression in SUPT_0042 match the level expected for stellate cells, and does Calb1 expression distinguish SUPT_0042 (Reln+, stellate) from SUPT_0052 (Calb1+, pyramidal) at the atlas level? Running add-expression for Reln and Calb1 across SUBC_009 supertypes would resolve this.
+
+2. Does SUPT_0042 include a substantial piriform cortex component in the WMBv1 MERFISH data, or does the 'PIR-ENTl' designation primarily reflect transcriptomic similarity rather than equal spatial representation? Checking MERFISH soma assignments for SUPT_0042 would resolve this.
+
+---
+
+## 6. Evidence base table
+
+| Edge ID | Evidence types | Supports |
 |---|---|---|
-| edge_ec_layer2_stellate_cell_hippocampus_to_supt_0042 | Annotation transfer | SUPPORT |
+| edge_ec_layer2_stellate_cell_hippocampus_to_supt_0042 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | SUPPORT — F1=0.964; coverage=0.956; purity=0.972; 95.6% of L2 IT ENTl cells map to SUPT_0042 |
 
 ---
 
-## References
+## 7. References
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Naumann et al. 2015 · PMID:26223342 | [26223342](https://pubmed.ncbi.nlm.nih.gov/26223342/) | soma location |
-| [2] | Unknown 2016 · PMID:26711115 | [26711115](https://pubmed.ncbi.nlm.nih.gov/26711115/) | soma location |
-| [3] | Unknown 2010 · PMID:20512133 | [20512133](https://pubmed.ncbi.nlm.nih.gov/20512133/) | soma location |
-| [4] | Unknown 2021 · PMID:34949991 | [34949991](https://pubmed.ncbi.nlm.nih.gov/34949991/) | soma location |
-| [5] | Unknown 2023 · PMID:37219048 | [37219048](https://pubmed.ncbi.nlm.nih.gov/37219048/) | soma location |
-| [6] | Unknown 2018 · PMID:29665671 | [29665671](https://pubmed.ncbi.nlm.nih.gov/29665671/) | soma location |
-| [7] | Unknown 2018 · PMID:30209250 | [30209250](https://pubmed.ncbi.nlm.nih.gov/30209250/) | soma location |
+| [1] | Naumann et al. 2015 · PMID:26223342 | [26223342](https://pubmed.ncbi.nlm.nih.gov/26223342/) | Soma location; Reln marker |
+| [2] | Unknown 2016 · PMID:26711115 | [26711115](https://pubmed.ncbi.nlm.nih.gov/26711115/) | Soma location |
+| [3] | Unknown 2010 · PMID:20512133 | [20512133](https://pubmed.ncbi.nlm.nih.gov/20512133/) | Soma location |
+| [4] | Unknown 2021 · PMID:34949991 | [34949991](https://pubmed.ncbi.nlm.nih.gov/34949991/) | Soma location; NT type |
+| [5] | Unknown 2023 · PMID:37219048 | [37219048](https://pubmed.ncbi.nlm.nih.gov/37219048/) | Soma location |
+| [6] | Unknown 2018 · PMID:29665671 | [29665671](https://pubmed.ncbi.nlm.nih.gov/29665671/) | Soma location |
+| [7] | Unknown 2018 · PMID:30209250 | [30209250](https://pubmed.ncbi.nlm.nih.gov/30209250/) | Soma location |

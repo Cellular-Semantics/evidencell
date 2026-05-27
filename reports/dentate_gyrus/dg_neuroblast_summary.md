@@ -1,5 +1,8 @@
 # Dentate Gyrus Neuroblast (Type-3 Progenitor) — Allen Brain Cell Atlas CCN202307220 Mapping Report
-*2026-04-14 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml`*
+*Draft · 2026-04-14 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml`*
+
+> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
+> All edges require expert review before use.
 
 ---
 
@@ -8,34 +11,24 @@
 | Property | Value | References |
 |---|---|---|
 | CL term | dentate gyrus neuroblast (CL:9900001) | |
-| Soma location | subgranular zone (SGZ) [UBERON:0009952] |  |
+| Soma location | subgranular zone (SGZ) [UBERON:0009952] | [1] [2] |
 | NT | glutamatergic (committed but not yet functional) |  |
-| Markers | DCX+, Ki67+, PSA-NCAM+, Nestin+ | [1] [2] |
+| Markers | DCX+, Ki67+, PSA-NCAM+, Nestin+ | [3] [4] |
 | Negative | NeuN−, Calbindin−, GFAP− | |
-
----
-
-## Cell Ontology mapping
-
-Dentate Gyrus Neuroblast (Type-3 Progenitor) is mapped to **dentate gyrus neuroblast (CL:9900001)** as an **exact match** in the Cell Ontology (skos:exactMatch); the existing CL term covers this type.
-
-*Mapping notes:* CL:9900001 (dentate gyrus neuroblast, child of CL:0011020 neural progenitor cell) is an exact match — defined specifically as the DCX+ type-3 neuroblast stage in the dentate gyrus SGZ. This node encompasses the type-2b/type-3 transitional and type-3 stages; atlas clusters 0511–0512 provide the transcriptomic correlates.
 
 ---
 
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
 |---|---|---|---|---|---|
-| — | 0511 DG-PIR Ex IMN_1 [CS20230722_CLUS_0511] |  | — |  |  |
+| 1 | 0511 DG-PIR Ex IMN_1 [CS20230722_CLUS_0511] |  | — | 🔴 LOW | Speculative |
 
-All edges: `skos:closeMatch`
+All edges: `PARTIAL_OVERLAP`
 
 ---
 
-## 0511 DG-PIR Ex IMN_1 · 
-
-*`CS20230722_CLUS_0511`*
+## 0511 DG-PIR Ex IMN_1 · 🔴 LOW
 
 **Supporting evidence:**
 
@@ -52,7 +45,6 @@ All edges: `skos:closeMatch`
 - Classical markers are defined by protein IHC (DCX, Ki67, PSA-NCAM, Nestin for neuroblast; DCX, NeuN, PSA-NCAM, Tis21 for immature GN; Calbindin, NeuN, Tbr1 for mature GN). Atlas defining_markers are derived from scRNA-seq: (1) protein abundance does not track mRNA linearly for structural proteins; (2) PSA-NCAM is a post-translational glycan epitope undetectable by transcriptomics; (3) broadly expressed stage markers are filtered out in cluster-level marker selection. APPROXIMATE alignments reflect this methodological gap, not biological discordance.
 - CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label 'DG STR' places cells at the DG-STR boundary (SGZ), but CCF-level soma location cannot be fully verified. The high NA fraction is a known artefact of sparse CCF coverage at the SGZ margin.
 - The classical dg_neuroblast node spans type-2b (Nestin+/DCX+/Eomes+) and type-3 (DCX+/Eomes-low) sub-stages. Cluster 0511 is enriched for type-2b (Eomes+ dominant). Full correspondence with the type-3 sub-stage is unconfirmed; cluster 0512 is a secondary candidate for the type-3 transition.
-- [AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.
 
 **What would upgrade confidence:**
 
@@ -101,5 +93,7 @@ All edges: `skos:closeMatch`
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Micheli 2025 · PMID:40519263 | [40519263](https://pubmed.ncbi.nlm.nih.gov/40519263/) | DCX marker |
-| [2] | Stepień 2021 · PMID:37082558 | [37082558](https://pubmed.ncbi.nlm.nih.gov/37082558/) | DCX marker |
+| [1] | PMID:28168008 | [28168008](https://pubmed.ncbi.nlm.nih.gov/28168008/) | soma location |
+| [2] | PMID:18385329 | [18385329](https://pubmed.ncbi.nlm.nih.gov/18385329/) | soma location |
+| [3] | PMID:40519263 | [40519263](https://pubmed.ncbi.nlm.nih.gov/40519263/) | DCX marker |
+| [4] | PMID:37082558 | [37082558](https://pubmed.ncbi.nlm.nih.gov/37082558/) | DCX marker |

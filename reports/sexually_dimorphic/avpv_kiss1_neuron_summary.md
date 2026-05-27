@@ -30,7 +30,7 @@ AVPV/PeN kisspeptin neuron is a **broad match** to **hypothalamus kisspeptin neu
 | — | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] |  | 178 |  |  |
 | — | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | 5 |  |  |
 
-All edges: `skos:closeMatch`
+All edges: `evidencell:PartialOverlapMatch`
 
 ---
 
@@ -51,7 +51,6 @@ All edges: `skos:closeMatch`
 - **marker_Th** (APPROXIMATE): A=POSITIVE (protein, co-expressed with Kiss1) / B=precomputed mean_expression=2.72. 
 - SUPT_0486 spans PVpo-VMPO-MPN and contains multiple preoptic cell types. avpv_kiss1_neuron, avpv_th_neuron, and mpoa_esr1_neuron all map to SUPT_0486, reflecting the heterogeneity of this preoptic GABAergic supertype. AVPV Kiss1 neurons are a subset.
 - Supertype-level sex ratio not directly available. Female-biased sex ratio signal is concentrated in child cluster CLUS_1915 (male_female_ratio=0.02). A cluster-level edge to CLUS_1915 would provide more specific mapping.
-- [AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.
 
 **What would upgrade confidence:**
 
@@ -81,7 +80,6 @@ All edges: `skos:closeMatch`
 
 - CLUS_1915 contains only n=3–5 total cells in the WMBv1 atlas. The sex ratio (MFR=0.02) and expression values are reliable in direction but have limited statistical power. Confidence is capped at MODERATE pending annotation transfer evidence or larger-dataset replication.
 - CLUS_1915 is a sub-resolution split of SUPT_0486. The cluster-level Kiss1+Th+Dopa phenotype is the most specific available match for avpv_kiss1_neuron; however, avpv_th_neuron maps to the same cluster (both types substantially overlap in the classical literature — most AVPV Kiss1 cells co-express Th).
-- [AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.
 
 **What would upgrade confidence:**
 
