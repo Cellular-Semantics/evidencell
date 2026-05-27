@@ -23,11 +23,12 @@ description: >
   Consensus Taxonomy. CL term CL:4310096 has been created for this type.
 
 brain_region:
-  id: HBA:12898
-  label: "globus pallidus, internal segment"
+  id: DHBA:10344
+  label: "internal segment of globus pallidus"
   name_in_source: "Internal segment of globus pallidus"
-  # HBA:12898 = human adult Allen Brain Atlas term (preferred for primate data).
-  # DHBA:10344 = internal segment of globus pallidus (developing human) — use for fetal/developing data.
+  # DHBA:10344 used as the current Allen-atlas anchor for the primate GPi
+  # term (HBA equivalents are not maintained against the brain-bican
+  # release tooling; HOMBA migration planned once HOMBA stabilises).
   # UBERON:0002474 = cross-species fallback.
 
 target_atlas: HMBA_BG_Consensus
@@ -51,12 +52,12 @@ nodes:
     definition_basis: CLASSICAL_ANATOMICAL
     species: {id: NCBITaxon:9443, label: Primates, name_in_source: Primates}
     anatomical_location:
-      - id: HBA:12898
-        label: "globus pallidus, internal segment"
+      - id: DHBA:10344
+        label: "internal segment of globus pallidus"
         name_in_source: "Internal segment of globus pallidus, shell region"
         # Shell is a sub-regional descriptor; no separate Allen term for the shell zone.
-        # HBA:12898 is the enclosing structure. Shell localisation documented in
-        # Wallace et al. 2017 (PMID:28384468). For developing human brain use DHBA:10344.
+        # DHBA:10344 is the enclosing structure. Shell localisation documented in
+        # Wallace et al. 2017 (PMID:28384468).
     colocated_types:
       - neighboring_type: "GPi core neuron (PVALB+)"
         spatial_relationship: ADJACENT
@@ -86,7 +87,7 @@ nodes:
       - symbol: SST
         ncbi_gene_id: "NCBIGene:6750"
     cl_mapping:
-      cl_term: {id: CL:4310096, label: internal globus pallidus shell projection neuron, name_in_source: internal globus pallidus shell projection neuron}
+      cl_term: {id: CL:4310096, label: GPi Shell neuron (Primate), name_in_source: internal globus pallidus shell projection neuron}
       mapping_type: EXACT
       mapping_notes: >
         CL:4310096 was created specifically for this type; this node IS that term.
@@ -127,8 +128,8 @@ nodes:
     cell_set_accession: CS20250428_GROUP_0016
     species: {id: NCBITaxon:9443, label: Primates, name_in_source: Primates}
     anatomical_location:
-      - id: HBA:12898
-        label: "globus pallidus, internal segment"
+      - id: DHBA:10344
+        label: "internal segment of globus pallidus"
         name_in_source: "Internal segment of globus pallidus"
     nt_type:
       name_in_source: "GABA-Glut (dual)"

@@ -53,7 +53,7 @@ nodes:
             method: "literature description"
             scope: "adult mouse"
             quote_key: "4702847_ebd225e6"
-      - id: MBA:341
+      - id: MBA:126
         label: "Periventricular hypothalamic nucleus, posterior part"
         name_in_source: "periventricular nucleus (PeN)"
         compartment: SOMA
@@ -409,8 +409,8 @@ nodes:
       label: "Mus musculus"
       name_in_source: "Mus musculus"
     anatomical_location:
-      - id: MBA:464
-        label: "Medial preoptic nucleus"
+      - id: MBA:523
+        label: "Medial preoptic area"
         name_in_source: "medial preoptic area (MPOA)"
         compartment: SOMA
         sources:
@@ -659,7 +659,7 @@ nodes:
       label: "Mus musculus"
       name_in_source: "Mus musculus"
     anatomical_location:
-      - id: MBA:174
+      - id: MBA:351
         label: "Bed nuclei of the stria terminalis"
         name_in_source: "dorsolateral bed nucleus of the stria terminalis (dlBNST)"
         compartment: SOMA
@@ -672,7 +672,7 @@ nodes:
             method: "literature description"
             scope: "adult mouse"
             quote_key: "14550592_292dccea"
-      - id: MBA:174
+      - id: MBA:351
         label: "Bed nuclei of the stria terminalis"
         name_in_source: "oval nucleus of the BNST (ovBNST)"
         compartment: SOMA
@@ -685,7 +685,7 @@ nodes:
             method: "literature description"
             scope: "adult mouse"
             quote_key: "14550592_292dccea"
-      - id: MBA:174
+      - id: MBA:351
         label: "Bed nuclei of the stria terminalis"
         name_in_source: "anterolateral BNST (alBNST)"
         compartment: SOMA
@@ -1615,10 +1615,10 @@ edges:
           confidence.
     property_comparisons:
       - property: location_MBA174_BNST
-        node_a_value: "MBA:174 (BNST — dlBNST, ovBNST, alBNST subnuclei)"
+        node_a_value: "MBA:351 (BNST — dlBNST, ovBNST, alBNST subnuclei)"
         node_b_value: "MBA:351 (BNST) n=140 (primary location)"
         alignment: CONSISTENT
-        notes: MBA:174 and MBA:351 are both BNST-level annotations for the same structure.
+        notes: MBA:351 and MBA:351 are both BNST-level annotations for the same structure.
       - property: nt_type
         node_a_value: "GABAergic (inferred from literature context)"
         node_b_value: "GABAergic (Gad2 DEFINING marker, Gaba label)"

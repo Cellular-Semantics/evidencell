@@ -76,6 +76,8 @@ linkml_meta = LinkMLMeta({'default_prefix': 'https://bican.org/schema/celltype-e
      'name': 'CellTypeEvidence',
      'prefixes': {'ABAO': {'prefix_prefix': 'ABAO',
                            'prefix_reference': 'http://purl.obolibrary.org/obo/ABAO_'},
+                  'BFO': {'prefix_prefix': 'BFO',
+                          'prefix_reference': 'http://purl.obolibrary.org/obo/BFO_'},
                   'CL': {'prefix_prefix': 'CL',
                          'prefix_reference': 'http://purl.obolibrary.org/obo/CL_'},
                   'DHBA': {'prefix_prefix': 'DHBA',
@@ -88,6 +90,8 @@ linkml_meta = LinkMLMeta({'default_prefix': 'https://bican.org/schema/celltype-e
                           'prefix_reference': 'http://purl.obolibrary.org/obo/HBA_'},
                   'HGNC': {'prefix_prefix': 'HGNC',
                            'prefix_reference': 'https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/'},
+                  'HOMBA': {'prefix_prefix': 'HOMBA',
+                            'prefix_reference': 'https://purl.brain-bican.org/ontology/homba/HOMBA_'},
                   'MBA': {'prefix_prefix': 'MBA',
                           'prefix_reference': 'http://purl.obolibrary.org/obo/MBA_'},
                   'NCBIGene': {'prefix_prefix': 'NCBIGene',
@@ -111,6 +115,30 @@ linkml_meta = LinkMLMeta({'default_prefix': 'https://bican.org/schema/celltype-e
                   'skos': {'prefix_prefix': 'skos',
                            'prefix_reference': 'http://www.w3.org/2004/02/skos/core#'}},
      'source_file': 'schema/celltype_mapping.yaml'} )
+
+class CLClassTerm(str):
+    """
+    Any term in the Cell Ontology (CL) reachable from CL:0000000 (cell) via subClassOf. Used as the binding range for cl_term, cl_terms, and parent_cl_term slots.
+
+    """
+    pass
+
+
+class NCBITaxonClassTerm(str):
+    """
+    Any taxon in NCBITaxon reachable from NCBITaxon:1 (root) via subClassOf. Used as the binding range for species, source_species, and target_species slots.
+
+    """
+    pass
+
+
+class AnatomyTerm(str):
+    """
+    Any anatomical term reachable from UBERON:0001062 (anatomical entity) via subClassOf or part_of. Covers UBERON plus the brain-bican atlas ontologies (MBA, DHBA, HOMBA) — all three carry is_a / part_of links that bottom out at UBERON, so a single source_node suffices. Used as the binding range for anatomical_location, anatomical_region, projection_target, and brain_region slots.
+
+    """
+    pass
+
 
 class DefinitionBasis(str, Enum):
     """
@@ -675,7 +703,7 @@ class OntologyTerm(ConfiguredBaseModel):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|ABAO):[0-9]+$")
+        pattern=re.compile(r"^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|HOMBA|ABAO):[0-9]+$")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -732,7 +760,7 @@ class AnatomicalLocation(OntologyTerm):
 
     @field_validator('id')
     def pattern_id(cls, v):
-        pattern=re.compile(r"^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|ABAO):[0-9]+$")
+        pattern=re.compile(r"^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|HOMBA|ABAO):[0-9]+$")
         if isinstance(v, list):
             for element in v:
                 if isinstance(element, str) and not pattern.match(element):
@@ -751,7 +779,10 @@ class CLMapping(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
-    cl_term: OntologyTerm = Field(default=..., description="""The CL term (existing or most appropriate ancestor)""", json_schema_extra = { "linkml_meta": {'domain_of': ['CLMapping']} })
+    cl_term: OntologyTerm = Field(default=..., description="""The CL term (existing or most appropriate ancestor)""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'CLClassTerm'}],
+         'domain_of': ['CLMapping']} })
     mapping_type: CLMappingType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['CLMapping']} })
     mapping_notes: Optional[str] = Field(default=None, description="""Free text explaining the basis for this mapping type, especially for BROAD/RELATED.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CLMapping']} })
@@ -1067,7 +1098,10 @@ class NeurotransmitterType(ConfiguredBaseModel):
                        'NeurotransmitterType',
                        'AnnotationTransferEvidence']} })
     cl_terms: Optional[list[OntologyTerm]] = Field(default=None, description="""CL ontology terms for this NT type. One entry per transmitter (e.g. two entries for a dual-transmitter type). Each OntologyTerm carries id, label, and name_in_source (the individual substance name as it appears in the source, e.g. \"GABA\", \"Glut\"). Strongly recommended for classical nodes; optional for atlas terminal nodes where atlas naming is primary.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['NeurotransmitterType']} })
+""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'CLClassTerm'}],
+         'domain_of': ['NeurotransmitterType']} })
     sources: Optional[list[PropertySource]] = Field(default=None, description="""Evidence sources establishing this NT type. One or more PropertySource entries with ref, method, scope, snippet. method should describe how NT type was established, e.g. \"IHC (GABA antibody)\", \"scRNA-seq (Gad2/Slc17a6 co-expression)\", \"electrophysiology (inhibitory PSPs recorded)\". scope is important — NT type can differ across species or developmental stage. Leave empty on ATLAS_TRANSCRIPTOMIC nodes (provenance implicit).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
                        'GeneDescriptor',
@@ -1123,7 +1157,10 @@ class ProposedCLTerm(ConfiguredBaseModel):
     cl_id: Optional[str] = Field(default=None, description="""Existing CL ID (e.g. CL:4310096) or proposed new ID placeholder""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm']} })
     label: Optional[str] = Field(default=None, description="""Term label""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm', 'ProposedCLTerm', 'SourceGroup']} })
     parent_cl_term: Optional[OntologyTerm] = Field(default=None, description="""The CL term this proposed term is a child of. For nodes with cl_mapping.mapping_type = BROAD, this should match cl_mapping.cl_term. For nodes with cl_mapping.mapping_type = EXACT, this field is typically not needed. Drives placement in the CL hierarchy and should be confirmed with CL editors.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm']} })
+""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'CLClassTerm'}],
+         'domain_of': ['ProposedCLTerm']} })
     definition: Optional[str] = Field(default=None, description="""Proposed CL definition text. Standard template: \"A [parent_cl_term.label] that is [distinguishing_feature]. These cells are located in [location]. Reference transcriptomic data for this type can be found in [atlas] in cell set [accession].\"
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm']} })
     comment: Optional[str] = Field(default=None, description="""Proposed CL comment: the mapping rationale derived from the evidence chain. Template: \"Mapping to [type] is based on [evidence summary]. [Caveats if any].\"
@@ -1157,9 +1194,15 @@ Include all forms that appear in the literature or atlases: abbreviations (OLM),
 For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only if that label is used as a cell type name in at least one non-atlas paper.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     definition_basis: DefinitionBasis = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
-    species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'CellTypeMappingGraph', 'BulkDataset']} })
+    species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'NCBITaxonClassTerm'}],
+         'domain_of': ['CellTypeNode', 'CellTypeMappingGraph', 'BulkDataset']} })
     anatomical_location: Optional[list[AnatomicalLocation]] = Field(default=None, description="""Anatomical location(s) of this cell type. Each entry is an AnatomicalLocation (OntologyTerm + optional compartment). Prefer Allen atlas terms (MBA for mouse; DHBA or HBA for human/primate); use UBERON as fallback. Look up via OLS4. name_in_source carries the region name as written in the source (e.g. \"GPi shell region\", \"GPi\"). Multiple entries for types that span regions or are defined relative to multiple structures. Set compartment (SOMA, AXON_TARGET, DENDRITE) when a type has different compartments in different regions (e.g. OLM: soma in SO, axon in SLM). Leave compartment absent when location is not compartment-specific or compartment is unknown.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'AnatomyTerm'}],
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     colocated_types: Optional[list[CellTypeColocation]] = Field(default=None, description="""Other cell types that co-localise with or are spatially adjacent to this type. Records relative positional context separately from the anatomical location above (e.g. \"adjacent to GPi core neurons\").
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     cl_mapping: Optional[CLMapping] = Field(default=None, description="""CL term binding with mapping type (EXACT or BROAD). Every non-terminal node should have a cl_mapping. EXACT: this node IS this CL term (modulo species). BROAD: this node is a subtype; a ProposedCLTerm would be a new child of the cl_term. Terminal nodes (atlas cell sets) may also have a cl_mapping once cognate CL terms exist.
@@ -1324,7 +1367,10 @@ class AtlasMetadataEvidence(EvidenceItem):
                        'AnnotationTransferRun']} })
     cell_set_accession: Optional[str] = Field(default=None, description="""CCN accession for the referenced cell set""", json_schema_extra = { "linkml_meta": {'domain_of': ['HierarchyNode', 'CellTypeNode', 'AtlasMetadataEvidence']} })
     anatomical_location: Optional[list[AnatomicalLocation]] = Field(default=None, description="""Anatomical location from atlas curation. AnatomicalLocation with name_in_source set to the verbatim atlas annotation (e.g. \"GPi\", \"GPi shell and surrounding GPi core neurons\"). id/label from Allen atlas (MBA/DHBA) or UBERON. Compartment is typically absent for atlas entries (MERFISH captures soma position implicitly).
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'AnatomyTerm'}],
+         'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     ccf_distribution: Optional[str] = Field(default=None, description="""CCF region frequency distribution from atlas, e.g. \"GPi:0.78,GPe:0.12\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     nt_type: Optional[NeurotransmitterType] = Field(default=None, description="""NT type as recorded in the atlas taxonomy. Use NeurotransmitterType: set name_in_source to the verbatim atlas label (e.g. \"Glut-GABA\"); cl_terms recommended. Leave sources empty — provenance is implicit from this evidence item's atlas + metadata_url.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
@@ -1493,9 +1539,15 @@ class AnnotationTransferEvidence(EvidenceItem):
     run_ref: Optional[str] = Field(default=None, description="""AnnotationTransferRun.id (pointing at kb/annotation_transfer_runs/{run_id}/manifest.yaml). Optional — when populated, the run carries the full F1 matrix, script provenance, and figures; this evidence item is a thin pointer at the relevant target_accession's row in that matrix. New evidence items should populate run_ref; existing evidence remains valid via its inline method/tool_version fields.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'BulkCorrelationEvidence']} })
     source_species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term for the species of the source dataset. Required when source and target species differ (cross-species transfer). E.g. {id: NCBITaxon:9443, label: Primates} for primate → mouse WMBv1.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
+""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'NCBITaxonClassTerm'}],
+         'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     target_species: Optional[OntologyTerm] = Field(default=None, description="""NCBITaxon term for the species of the target atlas. E.g. {id: NCBITaxon:10090, label: Mus musculus} for WMBv1.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
+""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'NCBITaxonClassTerm'}],
+         'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     source_dataset_accession: Optional[str] = Field(default=None, description="""Accession of the source dataset. E.g. SCP:SCP795, GEO:GSE173954, NeMO:nemo_xxxxxxx For cross-Allen-taxonomy transfers, this may be the taxonomy_id (e.g. CCN202307220) or the atlas identifier (e.g. \"HMBA_BG_Consensus\").
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence',
                        'AnnotationTransferRunSummary',
@@ -1579,7 +1631,10 @@ class SpatialColocationEvidence(EvidenceItem):
 
     spatial_dataset: Optional[str] = Field(default=None, description="""Dataset accession or publication reference""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
     spatial_technology: Optional[str] = Field(default=None, description="""MERFISH, Visium, seqFISH+, smFISH, FISH, ExSEQ""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
-    anatomical_region: Optional[OntologyTerm] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
+    anatomical_region: Optional[OntologyTerm] = Field(default=None, json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'AnatomyTerm'}],
+         'domain_of': ['SpatialColocationEvidence']} })
     probes_used: Optional[list[str]] = Field(default=None, description="""Gene probes in the spatial assay""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
     colocation_metric: Optional[str] = Field(default=None, description="""Metric: Moran's I, nearest-neighbour distance, co-expression fraction""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
     colocation_value: Optional[float] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['SpatialColocationEvidence']} })
@@ -1642,7 +1697,10 @@ class ProjectionSeqEvidence(EvidenceItem):
                        'ElectrophysiologyEvidence',
                        'MorphologyEvidence',
                        'MarkerAnalysisEvidence']} })
-    projection_target: Optional[OntologyTerm] = Field(default=None, description="""Brain region where axons project to""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProjectionSeqEvidence']} })
+    projection_target: Optional[OntologyTerm] = Field(default=None, description="""Brain region where axons project to""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'AnatomyTerm'}],
+         'domain_of': ['ProjectionSeqEvidence']} })
     fraction_projecting: Optional[float] = Field(default=None, description="""Fraction of the cell set with projections to this target""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProjectionSeqEvidence']} })
     method: Optional[str] = Field(default=None, description="""retrograde tracing + scRNAseq, proj-seq, MERFISH + anterograde tracing""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource',
                        'AnnotationTransferEvidence',
@@ -2002,11 +2060,17 @@ class CellTypeMappingGraph(ConfiguredBaseModel):
                        'AnnotationTransferDataset',
                        'BulkDataset']} })
     brain_region: Optional[OntologyTerm] = Field(default=None, description="""Brain region covered by this evidence graph. OntologyTerm with Allen atlas term preferred (MBA/DHBA); UBERON as fallback.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeMappingGraph']} })
+""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'AnatomyTerm'}],
+         'domain_of': ['CellTypeMappingGraph']} })
     target_atlas: str = Field(default=..., description="""The community atlas that terminal nodes belong to""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence',
                        'CellTypeMappingGraph',
                        'AnnotationTransferRun']} })
-    species: Optional[OntologyTerm] = Field(default=None, description="""Primary species (NCBITaxon)""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'CellTypeMappingGraph', 'BulkDataset']} })
+    species: Optional[OntologyTerm] = Field(default=None, description="""Primary species (NCBITaxon)""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
+                       'obligation_level': 'REQUIRED',
+                       'range': 'NCBITaxonClassTerm'}],
+         'domain_of': ['CellTypeNode', 'CellTypeMappingGraph', 'BulkDataset']} })
     nodes: list[CellTypeNode] = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeMappingGraph', 'TaxonomyNodeList']} })
     edges: list[MappingEdge] = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeMappingGraph']} })
     creation_date: Optional[date] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['MappingEdge', 'CellTypeMappingGraph']} })
