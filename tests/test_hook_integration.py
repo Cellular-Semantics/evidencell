@@ -516,31 +516,92 @@ def test_term_check_skipped_when_oak_dbs_missing(tmp_path: Path, monkeypatch):
     )
 
 
+def _oak_dbs_ready() -> tuple[bool, str]:
+    """Check whether the local OAK DBs needed for binding validation are
+    cached. Returns (ready, missing_description).
+    """
+    import pystow
+    project_root = Path(__file__).parent.parent
+    missing: list[str] = []
+    for name in ("cl", "uberon"):
+        if not pystow.join("oaklib", name=f"{name}.db").exists():
+            missing.append(name)
+    for fname in ("taxslim.obo", "mbao.obo"):
+        if not (project_root / "conf" / "oak_dbs" / fname).exists():
+            missing.append(fname)
+    return (not missing), ", ".join(missing)
+
+
 @pytest.mark.integration
-def test_term_check_rejects_bad_curie(tmp_path: Path):
-    """End-to-end: when OAK DBs are warm and YAML contains an unresolvable
-    CURIE, the hook blocks. Marked integration because it requires the OAK
-    semsql DBs to be cached locally.
+@pytest.mark.parametrize(
+    "real_curie,bad_curie,expect_substr",
+    [
+        # CL slot: cl_mapping.cl_term — bogus ID should fail the CLClassTerm binding.
+        ("CL:4310096", "CL:9999999999", "CL:9999999999"),
+        # NCBITaxon slot: species — bogus ID should fail NCBITaxonClassTerm.
+        ("NCBITaxon:9443", "NCBITaxon:9999999999", "NCBITaxon:9999999999"),
+        # Anatomy slot: brain_region — bogus UBERON should fail AnatomyTerm.
+        # Use the brain_region CURIE actually present in the fixture (DHBA:10344).
+        ("DHBA:10344", "UBERON:9999999999", "UBERON:9999999999"),
+    ],
+    ids=["bogus_CL", "bogus_NCBITaxon", "bogus_UBERON"],
+)
+def test_term_check_rejects_bad_curie(real_curie: str, bad_curie: str, expect_substr: str):
+    """End-to-end: when OAK DBs are warm, the hook blocks writes containing
+    a CURIE that doesn't resolve in the bound ontology. Marked integration
+    because it requires CL + UBERON semsql DBs cached locally plus the
+    NCBITaxon / MBA file-adapter OBOs fetched by `just fetch-oak-dbs`.
     """
     if not SCHEMA.exists():
         pytest.skip("Schema file not found — run from evidencell/ root")
-    # Skip unless OAK DBs are actually cached locally
-    import pystow
-    cl_db = pystow.join("semsql", "sqlite", name="cl.db")
-    if not cl_db.exists():
-        pytest.skip(f"OAK CL DB not cached at {cl_db}; run `just fetch-oak-dbs`")
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    ready, missing = _oak_dbs_ready()
+    if not ready:
+        pytest.skip(f"OAK DBs missing: {missing}; run `just fetch-oak-dbs`")
 
-    bad_yaml = """\
-nodes:
-  - id: type_a
-    name: Type A
-    cl_term: "CL:9999999999"
-edges: []
-"""
-    r = _run_hook(_write_payload(bad_yaml))
-    # Hook must block (exit code 2) when the CURIE doesn't resolve. We
-    # allow either the LinkML schema check or the term check to be the
-    # failing check, but stderr should mention the bad CURIE or term.
+    content = VALID_KB_FIXTURE.read_text()
+    if real_curie not in content:
+        pytest.skip(f"Fixture does not contain expected real CURIE {real_curie}")
+    bad_content = content.replace(real_curie, bad_curie)
+
+    r = _run_hook(_write_payload(bad_content))
     assert r.returncode == 2, (
-        f"Expected exit 2 for bad CURIE, got {r.returncode}\n{r.stderr}"
+        f"Expected exit 2 for bogus CURIE {bad_curie}, got {r.returncode}\n{r.stderr}"
+    )
+    assert expect_substr in r.stderr, (
+        f"Expected stderr to mention {expect_substr}, got:\n{r.stderr}"
+    )
+
+
+@pytest.mark.integration
+def test_term_check_rejects_label_mismatch():
+    """An OntologyTerm whose label disagrees with OAK's canonical fires a
+    BindingValidationPlugin label_mismatch and is reported (exit non-zero).
+    """
+    if not SCHEMA.exists():
+        pytest.skip("Schema file not found — run from evidencell/ root")
+    if not VALID_KB_FIXTURE.exists():
+        pytest.skip(f"Fixture file not found: {VALID_KB_FIXTURE}")
+    ready, missing = _oak_dbs_ready()
+    if not ready:
+        pytest.skip(f"OAK DBs missing: {missing}; run `just fetch-oak-dbs`")
+
+    content = VALID_KB_FIXTURE.read_text()
+    # Swap the canonical species label "Primates" for a wrong one while
+    # leaving NCBITaxon:9443 in place — exactly the wrong-name-for-right-ID
+    # hallucination shape.
+    bad_content = content.replace(
+        "{id: NCBITaxon:9443, label: Primates, name_in_source: Primates}",
+        "{id: NCBITaxon:9443, label: Rodentia, name_in_source: Primates}",
+    )
+    if bad_content == content:
+        pytest.skip("Fixture did not contain expected NCBITaxon Primates triple")
+
+    r = _run_hook(_write_payload(bad_content))
+    assert r.returncode == 2, (
+        f"Expected exit 2 for label mismatch, got {r.returncode}\n{r.stderr}"
+    )
+    assert "Label mismatch" in r.stderr or "label" in r.stderr.lower(), (
+        f"Expected stderr to mention label mismatch, got:\n{r.stderr}"
     )

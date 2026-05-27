@@ -238,17 +238,32 @@ Three test tiers keep runs cheap:
 
 **What NOT to write tests for:**
 
-- OAK DB term lookups — too heavy; validate terms interactively with `runoak` before committing.
 - Workflow orchestrators (`workflows/*.md`) — these are prose + control flow, not Python code; test them by running them, not by unit-testing them.
 - Stub modules (`fetch.py`, `render.py`, `compliance.py`) — add tests when the implementation lands.
 - Just recipe shell glue — trivial file-existence / grep logic; not worth mocking.
+
+**OAK DB term-lookup tests ARE required (NOT the previous "too heavy" exception).**
+End-to-end hook tests that exercise the term-validation path against real OAK
+adapters must exist and run in CI. Mark them `@pytest.mark.integration` (so
+`just test-fast` skips them) and gate each test on the relevant DB being cached
+locally — CI fetches the DBs via `just fetch-oak-dbs` before running the
+integration suite. Mocking the validator inside `tests/test_validate.py` is
+fine for testing the wiring (e.g. soft-skip behaviour) but does **not**
+substitute for an integration test that runs the real validator against the
+real schema with a deliberately-hallucinated CURIE.
 
 **Regression rule:** if a bug slips through `just qc` or `just test` once, add a targeted test before fixing it so it cannot regress silently.
 
 ## Anti-hallucination mechanisms
 
-Anti-hallucination is a **central design principle** of all evidencell workflows. The system
-enforces correctness structurally rather than relying on self-correction.
+Anti-hallucination is the **primary correctness mechanism** for evidencell — it is not
+a nice-to-have, it is the load-bearing safeguard that lets us trust LLM-authored
+curation. Every category of identifier present in the KB — ontology CURIEs (CL,
+UBERON, NCBITaxon, MBA, DHBA, HOMBA, …), publication IDs (PMID, DOI), gene IDs (NCBI
+Gene, HGNC), verbatim quote keys, atlas accessions — **must have a working, tested
+check** that catches a hallucinated value before it lands on disk. If any check is
+absent, soft-skipped, or silently bypassed, hallucinated content can reach `kb/` and
+downstream reports without trace.
 
 Two complementary mechanisms:
 
@@ -260,14 +275,56 @@ Two complementary mechanisms:
    cross-check generated content against a provenance-labelled facts file. See
    `workflows/gen-report.md` Step 4 for the pattern.
 
-Each validated content type (ontology terms, gene IDs, publication IDs, verbatim quotes)
-has a defined storage syntax and a defined verification source. All checks rely on this
-consistency: a name:ID pair can be verified against an ontology endpoint; a quote can be
-verified as verbatim against its content-hashed entry in `references.json`.
+Each validated content type has a defined storage syntax and a defined verification
+source. A name:ID pair can be verified against an ontology endpoint; a quote against
+its content-hashed entry in `references.json`; a PMID against the metadata in the
+same store.
 
-For current implementation details, validation sources, and the rules governing agentic
-writes to validated stores, read:
-**[`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md)** *(compulsory read before modifying hooks, validation logic, or `references.json` ingest)*
+### Discipline for hallucination checks (NON-NEGOTIABLE)
+
+**Every identifier category present in the KB must have a check that is wired in
+end-to-end and tested in CI.** Concretely:
+
+- **Coverage**: When a new identifier category is introduced (e.g. a new ontology
+  prefix, a new ID-like field), the same PR that introduces the storage must wire
+  up the check, the soft-skip mechanism (with a clear missing-resource message),
+  and the integration test. Do not land "we'll add validation later" — later
+  reliably becomes never, and the gap is invisible until something hallucinates.
+- **End-to-end test required**: Each check must have a test in
+  `tests/test_hook_integration.py` of the form "valid YAML → exit 0, deliberately
+  hallucinated value → exit 2 with the bad identifier mentioned in stderr."
+  Marked `@pytest.mark.integration` when it requires external resources (OAK DBs,
+  network); CI must run integration tests after fetching those resources via
+  `just fetch-oak-dbs`. **A unit test that mocks the validator is not sufficient
+  — the check must be exercised end-to-end through the actual hook.**
+- **Soft-skip is dangerous**: A soft-skip path (e.g. "resource not available →
+  allow the write with an info message") is necessary for fresh clones but is
+  also the most common silent-failure mode. Any soft-skip MUST:
+  - Print a clearly visible message to stderr with the actionable fix
+    (`run `just fetch-oak-dbs``).
+  - Be tested: a test must confirm the soft-skip message appears when the
+    resource is removed.
+  - Be exercised in CI: CI must fetch the resources so the real (non-skip)
+    path runs against every PR. Never run CI in skip mode.
+  - Be reviewed for path-sync drift on every dependency upgrade. The
+    `_semsql_db_path` regression (the function checked `~/.data/semsql/sqlite/`
+    while oaklib started caching under `~/.data/oaklib/`) silently disabled
+    term validation for an unknown period before the term-validation-bindings
+    PR caught it. Path conventions of vendored caches are external state — pin
+    them in a test that asserts the resource exists where we expect.
+- **No new check without a regression-locking test**: If a hallucination slips
+  past CI once, the test that would have caught it MUST be added before the
+  data is repaired. This is the same regression rule as elsewhere in the
+  codebase, but it applies with extra force here.
+
+### What is and isn't currently checked
+
+A live status of which checks fire end-to-end on which content types lives in
+[`.claude/anti-hallucination-hooks.md`](.claude/anti-hallucination-hooks.md).
+**Read it before modifying hooks, validation logic, the schema's ontology
+bindings, or `references.json` ingest.** When a check moves from
+"intended/documented" to "actually wired", update the Status line in the same
+PR — stale status claims are the antecedent of silent failures.
 
 ## Working with YAML and LinkML
 

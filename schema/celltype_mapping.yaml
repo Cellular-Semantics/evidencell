@@ -86,18 +86,25 @@ prefixes:
   DOI:       https://doi.org/
   GEO:       https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=
   SCP:       https://singlecell.broadinstitute.org/single_cell/study/
+  # BFO is referenced as a relation predicate in dynamic-enum reachable_from
+  # declarations (BFO:0000050 = part_of).
+  BFO:       http://purl.obolibrary.org/obo/BFO_
   # Allen Brain Atlas anatomy ontologies:
-  # MBA  = Allen Mouse Brain Atlas ontology (CCF structure terms, mouse)
-  # ABAO = Allen Brain Atlas Ontology (mouse CCF, older prefix — prefer MBA)
-  # DHBA = Developing Human Brain Atlas ontology (human/primate)
-  # HBA  = Human Brain Atlas ontology (human adult)
-  # These have UBERON cross-references and are available in OLS / via OAK.
-  # HOMBA (multi-species Allen neuro-anatomy ontology) not yet released —
-  # add prefix here when available and update anatomical_location terms.
+  # MBA   = Allen Mouse Brain Atlas ontology (CCF structure terms, mouse)
+  # DHBA  = Developing Human Brain Atlas ontology (human/primate)
+  # HOMBA = Harmonized Mammalian Brain Anatomy Ontology (cross-species,
+  #         intended successor to HBA; harmonises MBA/DHBA/HBA concepts).
+  # HBA   = Human Brain Atlas ontology (human adult) — legacy; new curation
+  #         should prefer HOMBA, but existing HBA terms remain valid.
+  # ABAO  = Allen Brain Atlas Ontology (mouse CCF, older prefix — prefer MBA)
+  # All four have UBERON cross-references; MBA/DHBA/HOMBA are validated via
+  # OAK file adapters (see conf/oak_config.yaml) under the AnatomyTerm
+  # binding (reachable from UBERON:0001062 via subClassOf + part_of).
   MBA:       http://purl.obolibrary.org/obo/MBA_
   ABAO:      http://purl.obolibrary.org/obo/ABAO_
   HBA:       http://purl.obolibrary.org/obo/HBA_
   DHBA:      http://purl.obolibrary.org/obo/DHBA_
+  HOMBA:     https://purl.brain-bican.org/ontology/homba/HOMBA_
   # WMB = Whole Mouse Brain atlas (Allen Brain Cell Atlas CCN taxonomy)
   # Placeholder URL pending official Allen CURIE registration.
   WMB:       https://allen-brain-cell-atlas.s3.us-west-2.amazonaws.com/metadata/WMB-taxonomy/20231215/cell_set_information.csv#
@@ -178,6 +185,51 @@ default_range: string
 # ══════════════════════════════════════════════════════════════════
 
 enums:
+
+  # ── Ontology-term ranges (dynamic enums for binding validation) ─
+  # These enums are consumed by linkml-term-validator's BindingValidationPlugin
+  # in the pre-edit hook. They drive both:
+  #   (1) label round-trip — the value's {id, label} pair must match OAK
+  #   (2) range-appropriateness — the value must be reachable from the
+  #       declared root term via the listed relationship_types
+  # Adapter selection routes by the value's prefix (CL → CL adapter, MBA →
+  # mbao.obo adapter, etc.) per conf/oak_config.yaml. Lazy validation: no
+  # pre-expansion step required.
+  CLClassTerm:
+    description: >
+      Any term in the Cell Ontology (CL) reachable from CL:0000000 (cell)
+      via subClassOf. Used as the binding range for cl_term, cl_terms,
+      and parent_cl_term slots.
+    reachable_from:
+      source_ontology: obo:cl
+      source_nodes: [CL:0000000]
+      include_self: true
+      relationship_types: [rdfs:subClassOf]
+
+  NCBITaxonClassTerm:
+    description: >
+      Any taxon in NCBITaxon reachable from NCBITaxon:1 (root) via
+      subClassOf. Used as the binding range for species, source_species,
+      and target_species slots.
+    reachable_from:
+      source_ontology: obo:ncbitaxon
+      source_nodes: [NCBITaxon:1]
+      include_self: true
+      relationship_types: [rdfs:subClassOf]
+
+  AnatomyTerm:
+    description: >
+      Any anatomical term reachable from UBERON:0001062 (anatomical entity)
+      via subClassOf or part_of. Covers UBERON plus the brain-bican atlas
+      ontologies (MBA, DHBA, HOMBA) — all three carry is_a / part_of links
+      that bottom out at UBERON, so a single source_node suffices. Used as
+      the binding range for anatomical_location, anatomical_region,
+      projection_target, and brain_region slots.
+    reachable_from:
+      source_ontology: obo:uberon
+      source_nodes: [UBERON:0001062]
+      include_self: true
+      relationship_types: [rdfs:subClassOf, BFO:0000050]
 
   # ── Node definition basis ───────────────────────────────────────
   DefinitionBasis:
@@ -723,7 +775,7 @@ classes:
     attributes:
       id:
         required: true
-        pattern: "^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|ABAO):[0-9]+$"
+        pattern: "^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|HOMBA|ABAO):[0-9]+$"
         description: >
           Ontology CURIE from a recognised namespace. Pattern enforces a known
           prefix — add new prefixes here when new ontologies are adopted (e.g.
@@ -797,6 +849,10 @@ classes:
       cl_term:
         required: true
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: CLClassTerm
+            obligation_level: REQUIRED
         description: The CL term (existing or most appropriate ancestor)
       mapping_type:
         required: true
@@ -1133,6 +1189,10 @@ classes:
         multivalued: true
         inlined_as_list: true
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: CLClassTerm
+            obligation_level: REQUIRED
         description: >
           CL ontology terms for this NT type. One entry per transmitter
           (e.g. two entries for a dual-transmitter type). Each OntologyTerm
@@ -1213,11 +1273,27 @@ classes:
       parent_cl_term = cl_mapping.cl_term, placing the new term as a child in the hierarchy.
     attributes:
       cl_id:
-        description: Existing CL ID (e.g. CL:4310096) or proposed new ID placeholder
+        description: >
+          Existing CL term ID this proposed term is updating, when applicable
+          (e.g. when adding/refining a definition for an existing CL term).
+          Leave absent for brand-new proposed terms — temporary CL: placeholder
+          IDs must not be used, as they cannot be validated against the live
+          ontology. Track the term request in `term_request_url` instead.
+      term_request_url:
+        description: >
+          URL of the CL new-term-request issue tracking this proposed term
+          (e.g. https://github.com/obophenotype/cell-ontology/issues/N).
+          Populated once a term request has been filed via the cl-term-request
+          workflow. The eventual CL ID assigned on merge replaces this field
+          with cl_id.
       label:
         description: Term label
       parent_cl_term:
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: CLClassTerm
+            obligation_level: REQUIRED
         description: >
           The CL term this proposed term is a child of.
           For nodes with cl_mapping.mapping_type = BROAD, this should match cl_mapping.cl_term.
@@ -1282,11 +1358,19 @@ classes:
         range: DefinitionBasis
       species:
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: NCBITaxonClassTerm
+            obligation_level: REQUIRED
         description: NCBITaxon term
       anatomical_location:
         range: AnatomicalLocation
         multivalued: true
         inlined_as_list: true
+        bindings:
+          - binds_value_of: id
+            range: AnatomyTerm
+            obligation_level: REQUIRED
         description: >
           Anatomical location(s) of this cell type. Each entry is an
           AnatomicalLocation (OntologyTerm + optional compartment).
@@ -1559,6 +1643,10 @@ classes:
         range: AnatomicalLocation
         multivalued: true
         inlined_as_list: true
+        bindings:
+          - binds_value_of: id
+            range: AnatomyTerm
+            obligation_level: REQUIRED
         description: >
           Anatomical location from atlas curation. AnatomicalLocation with
           name_in_source set to the verbatim atlas annotation (e.g. "GPi",
@@ -1816,12 +1904,20 @@ classes:
           via its inline method/tool_version fields.
       source_species:
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: NCBITaxonClassTerm
+            obligation_level: REQUIRED
         description: >
           NCBITaxon term for the species of the source dataset.
           Required when source and target species differ (cross-species transfer).
           E.g. {id: NCBITaxon:9443, label: Primates} for primate → mouse WMBv1.
       target_species:
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: NCBITaxonClassTerm
+            obligation_level: REQUIRED
         description: >
           NCBITaxon term for the species of the target atlas.
           E.g. {id: NCBITaxon:10090, label: Mus musculus} for WMBv1.
@@ -1978,6 +2074,10 @@ classes:
         description: "MERFISH, Visium, seqFISH+, smFISH, FISH, ExSEQ"
       anatomical_region:
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: AnatomyTerm
+            obligation_level: REQUIRED
       probes_used:
         multivalued: true
         description: Gene probes in the spatial assay
@@ -2025,6 +2125,10 @@ classes:
         description: Dataset accession
       projection_target:
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: AnatomyTerm
+            obligation_level: REQUIRED
         description: Brain region where axons project to
       fraction_projecting:
         range: float
@@ -2599,6 +2703,10 @@ classes:
       description: {}
       brain_region:
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: AnatomyTerm
+            obligation_level: REQUIRED
         description: >
           Brain region covered by this evidence graph. OntologyTerm with
           Allen atlas term preferred (MBA/DHBA); UBERON as fallback.
@@ -2607,6 +2715,10 @@ classes:
         description: The community atlas that terminal nodes belong to
       species:
         range: OntologyTerm
+        bindings:
+          - binds_value_of: id
+            range: NCBITaxonClassTerm
+            obligation_level: REQUIRED
         description: Primary species (NCBITaxon)
       nodes:
         required: true

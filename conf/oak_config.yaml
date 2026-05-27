@@ -16,8 +16,14 @@ ontology_adapters:
   # Cell type ontology — primary controlled vocabulary for cell type nodes
   CL: sqlite:obo:cl
 
-  # Anatomy — brain regions, CCF structures
+  # Anatomy — UBERON for whole-organism anatomy; per-atlas ontologies
+  # (MBA, DHBA, HOMBA) for brain-atlas-specific regions. All four are
+  # validated via the AnatomyTerm dynamic enum in the schema, which
+  # follows subClassOf + part_of from UBERON:0001062 (anatomical entity).
   UBERON: sqlite:obo:uberon
+  MBA:    simpleobo:conf/oak_dbs/mbao.obo    # Allen Mouse Brain Atlas
+  DHBA:   simpleobo:conf/oak_dbs/dhbao.obo   # Developing Human Brain Atlas
+  HOMBA:  simpleobo:conf/oak_dbs/homba.obo   # Harmonized Mammalian Brain Anatomy
 
   # Taxonomy — species identifiers on evidence scope fields.
   # Backed by the upstream NCBITaxon slim (taxslim.obo, ~9 MB), not the

@@ -440,23 +440,30 @@ _FILE_ADAPTER_PREFIXES = ("simpleobo:", "pronto:")
 def _semsql_db_path(adapter_name: str) -> Path:
     """Return the on-disk path of an OAK semsql sqlite DB for `adapter_name`.
 
-    OAK uses pystow to cache semsql DBs under `~/.data/semsql/sqlite/{name}.db`
-    (overridable via PYSTOW_HOME). Returning the path without checking
+    Modern OAK (oaklib's SqlImplementation) caches semsql DBs under
+    `~/.data/oaklib/{name}.db` (the gzipped form `{name}.db.gz` is the
+    download, decompressed alongside on first use). Overridable via
+    PYSTOW_HOME. Returns the decompressed `.db` path without checking
     existence; callers test `.exists()`.
+
+    The earlier convention `~/.data/semsql/sqlite/{name}.db` is **not**
+    used by current oaklib releases — checking it always missed and the
+    soft-skip path silently bypassed term validation for every hook
+    invocation. See the fix in the term-validation-bindings work.
     """
     try:
         import pystow  # local import — pystow is an oaklib dependency
-        return pystow.join("semsql", "sqlite", name=f"{adapter_name}.db")
+        return pystow.join("oaklib", name=f"{adapter_name}.db")
     except ImportError:
         # Fallback for environments without pystow on the import path
-        return Path.home() / ".data" / "semsql" / "sqlite" / f"{adapter_name}.db"
+        return Path.home() / ".data" / "oaklib" / f"{adapter_name}.db"
 
 
 def oak_dbs_available(oak_config_path: Path) -> tuple[bool, list[str]]:
     """Return (all_present, missing_db_names).
 
     Reads `conf/oak_config.yaml` and checks each adapter's backing file:
-      - `sqlite:obo:<name>`  → pystow-cached semsql DB at ~/.data/semsql/sqlite/
+      - `sqlite:obo:<name>`  → oaklib-cached semsql DB at ~/.data/oaklib/
       - `simpleobo:<path>` / `pronto:<path>` → local file relative to the
         project root (the parent of `conf/`).
       - Empty values are skipped (validation deliberately disabled).

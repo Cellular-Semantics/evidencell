@@ -63,16 +63,42 @@ OBO at `conf/oak_dbs/taxslim.obo` (versioned upstream artefact; the
 full NCBITaxon semsql DB is ~10 GB, the slim is ~9 MB and covers all
 UniProt reference proteomes — sufficient for BICAN species).
 
-**Status:** Implemented. The pre-edit hook calls
-`evidencell.validate.validate_terms`, which subprocess-invokes
-`linkml-term-validator validate` against `conf/oak_config.yaml`. Fresh clones
-without OAK DBs are soft-skipped — the hook prints `[term check skipped: OAK
-semsql DB missing for {names}; run `just fetch-oak-dbs` to enable]` and lets
-the write through. Set `EVIDENCELL_SKIP_TERM_CHECK=1` for an explicit
-emergency bypass (e.g. mid-session OAK corruption); the bypass logs to
-stderr so it's visible in transcripts. CI runs the same check via the
-`kb-validate` job in `.github/workflows/ci.yml` with the OAK cache restored
-from a `actions/cache@v4` step keyed on `conf/oak_config.yaml`.
+**Status:** Implemented end-to-end as of the term-validation-bindings work.
+The pre-edit hook calls `evidencell.validate.validate_terms`, which
+subprocess-invokes `linkml-term-validator validate` against
+`conf/oak_config.yaml`. The schema declares LinkML `bindings:` on every
+OntologyTerm-ranged slot (`cl_term`, `cl_terms`, `parent_cl_term`,
+`species`, `source_species`, `target_species`, `anatomical_location`,
+`anatomical_region`, `projection_target`, `brain_region`) pointing at
+dynamic enums (`CLClassTerm`, `NCBITaxonClassTerm`, `AnatomyTerm`)
+whose `reachable_from` queries drive both range-check (term must descend
+from the declared root) and label round-trip (data's `label` must match
+OAK's canonical) — both checks are exercised by the BindingValidationPlugin
+in progressive (lazy) mode, so no upfront enum expansion is needed.
+Adapters route by the value's prefix (`CL` → CL semsql DB; `NCBITaxon` →
+local `taxslim.obo`; `MBA` / `DHBA` / `HOMBA` → local file adapters under
+`conf/oak_dbs/`). Fresh clones without resources are soft-skipped — the
+hook prints `[term check skipped: OAK semsql DB missing for {names}; run
+`just fetch-oak-dbs` to enable]` and lets the write through.
+`EVIDENCELL_SKIP_TERM_CHECK=1` provides an explicit emergency bypass and
+logs to stderr.
+
+**Historical bug (pre-PR fix worth recording):** until the term-validation-bindings
+PR, `_semsql_db_path` looked under `~/.data/semsql/sqlite/` while
+modern oaklib caches under `~/.data/oaklib/`. The path mismatch meant
+`oak_dbs_available()` always reported the CL and UBERON DBs as missing,
+the soft-skip branch fired on every hook invocation, and term validation
+never actually ran via the hook — even when the DBs were present. The
+fix is at [src/evidencell/validate.py:440](../src/evidencell/validate.py#L440).
+The integration tests in `tests/test_hook_integration.py` (the
+`test_term_check_rejects_bad_curie` parametrised suite) now run the real
+validator against a deliberately-hallucinated CURIE per ontology and
+assert exit 2, locking the regression.
+
+CI runs the same check via the `kb-validate` job in
+`.github/workflows/ci.yml` with the OAK cache restored from `actions/cache@v4`
+keyed on `conf/oak_config.yaml`, plus `just fetch-oak-dbs` for the file
+adapters that aren't cached.
 
 ---
 
@@ -230,6 +256,14 @@ cite a publication via `run_ref → manifest → dataset.source_pmid`.
 The hook extracts these with `parse_md_annotations()` and checks:
 - CURIEs against `term_index.json` (silently skipped if absent)
 - Accessions against sibling KB YAML nodes (silently skipped if not discoverable)
+
+**Known gap (not yet fixed):** `term_index.json` is not generated anywhere
+in the repo, so the report-side CURIE check is universally soft-skipped in
+practice. It needs a generator (likely fed by KB YAML aggregation + OAK
+canonical label lookup) before this check provides real coverage. The
+KB-YAML-side ontology check via schema bindings (above) catches CURIE
+hallucinations at the source; the report-side check would catch
+hallucinations introduced during synthesis. Tracked as a follow-up.
 
 ---
 

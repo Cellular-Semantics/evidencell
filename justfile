@@ -22,13 +22,19 @@ install-hooks:
     chmod +x .git/hooks/pre-commit
     @echo "Git hooks installed."
 
-# Pinned NCBITaxon slim release — bump when upgrading.
-# Browse releases: https://github.com/obophenotype/ncbitaxon/releases
+# Pinned ontology releases — bump when upgrading.
+# - NCBITaxon slim: https://github.com/obophenotype/ncbitaxon/releases
+# - MBA (mouse_brain_atlas_ontology): https://github.com/brain-bican/mouse_brain_atlas_ontology/releases
+# - DHBA: no tagged release; fetched from main branch
+# - HOMBA: https://github.com/brain-bican/harmonized_ontology_of_mammalian_brain_anatomy_ontology/releases
 taxslim_version := "v2026-05-13"
+mbao_version    := "v2025-07-04"
+homba_version   := "latest"
 
-# Download OAK ontology databases for CL, UBERON, NCBITaxon.
+# Download OAK ontology databases used by term validation.
 # Run once after install; databases are large and not committed to git.
-# NCBITaxon uses a 9 MB slim (taxslim.obo) rather than the full 10+ GB DB.
+#   - CL, UBERON: lazy-fetched by OAK as semsql DBs on first use
+#   - NCBITaxon, MBA, DHBA, HOMBA: file-adapter OBOs cached here
 [group('setup')]
 fetch-oak-dbs:
     mkdir -p conf/oak_dbs
@@ -36,7 +42,16 @@ fetch-oak-dbs:
     @echo "Fetching NCBITaxon slim ({{taxslim_version}})…"
     curl -fsSL -o conf/oak_dbs/taxslim.obo \
         "https://github.com/obophenotype/ncbitaxon/releases/download/{{taxslim_version}}/taxslim.obo"
-    @echo "NCBITaxon slim cached at conf/oak_dbs/taxslim.obo"
+    @echo "Fetching Mouse Brain Atlas Ontology ({{mbao_version}})…"
+    curl -fsSL -o conf/oak_dbs/mbao.obo \
+        "https://github.com/brain-bican/mouse_brain_atlas_ontology/releases/download/{{mbao_version}}/mbao.obo"
+    @echo "Fetching Developing Human Brain Atlas Ontology (main)…"
+    curl -fsSL -o conf/oak_dbs/dhbao.obo \
+        "https://raw.githubusercontent.com/brain-bican/developing_human_brain_atlas_ontology/refs/heads/main/dhbao.obo"
+    @echo "Fetching Harmonized Mammalian Brain Anatomy Ontology ({{homba_version}})…"
+    curl -fsSL -o conf/oak_dbs/homba.obo \
+        "https://github.com/brain-bican/harmonized_ontology_of_mammalian_brain_anatomy_ontology/releases/{{homba_version}}/download/homba.obo"
+    @echo "All file-adapter OBOs cached under conf/oak_dbs/"
     @echo ""
     @echo "CL and UBERON are fetched lazily by OAK on first use. To pre-cache:"
     @echo "  uv run runoak -i sqlite:obo:cl info CL:0000000"
