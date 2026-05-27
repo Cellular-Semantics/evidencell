@@ -1,0 +1,1226 @@
+##
+# Proposed mapping edges for classical node: dg_granule_cell
+# Classical graph: kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml
+# Target atlas: WMBv1 (CCN20230722)
+# Discovery JSONs:
+#   - research/hippocampus/glutamatergic_report_ingest/discovery_2026-05-27/discovery_dg_granule_cell_rank0.json
+#   - research/hippocampus/glutamatergic_report_ingest/discovery_2026-05-27/discovery_dg_granule_cell_rank1.json
+# Rubric: workflows/map-cell-type.md Step 7 (2026-05-26 predicate revision)
+##
+
+classical_node_id: dg_granule_cell
+taxonomy_id: CCN20230722
+
+stubs:
+  - id: CS20230722_CLUS_0385
+    name: 0385 SUB-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0385
+  - id: CS20230722_CLUS_0507
+    name: 0507 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0507
+  - id: CS20230722_CLUS_0510
+    name: 0510 DG Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0510
+  - id: CS20230722_CLUS_0315
+    name: 0315 CA3 Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0315
+  - id: CS20230722_CLUS_0316
+    name: 0316 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0316
+  - id: CS20230722_SUPT_0137
+    name: 0137 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0137
+  - id: CS20230722_SUPT_0078
+    name: 0078 CA3 Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0078
+  - id: CS20230722_SUPT_0139
+    name: 0139 DG Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0139
+  - id: CS20230722_SUPT_0067
+    name: 0067 ENTmv-PA-COAp Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0067
+  - id: CS20230722_SUPT_0096
+    name: 0096 SUB-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0096
+
+edges:
+
+  # ── Rank 1 (supertype) edges ───────────────────────────────────────
+
+  - id: edge_dg_granule_cell_to_CS20230722_SUPT_0137
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_SUPT_0137
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: null
+        alignment: NOT_ASSESSED
+        notes: Supertype nt_type unset in taxonomy YAML; child cluster CS20230722_CLUS_0507 is Glut.
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: MBA:632 (Dentate gyrus, granule cell layer) — dominant (~46k cells SOMA)
+        alignment: CONSISTENT
+        notes: Supertype soma overwhelmingly in dentate gyrus granule cell layer; matches classical SOMA.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN (PMID:27375434)
+        atlas_value: precomputed_expression mean=8.06
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: precomputed_expression mean=11.14
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: precomputed_expression mean=10.73
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: precomputed_expression mean=9.46
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: precomputed_expression mean=7.76
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          Supertype 0137 'DG Glut_2' (CCN20230722) — soma distribution from WMBv1
+          MERFISH is dominated by MBA:632 (Dentate gyrus, granule cell layer;
+          ~46,050 SOMA cells across replicates), matching the canonical classical
+          DG granule cell soma location. All five classical defining markers
+          (Slc17a7, Gria1, Gria2, Grm1, Nptn) have detectable mean expression in
+          the precomputed_stats for this supertype, with Gria1/Gria2/Grm1 in the
+          high-tier range. Supertype-level match is preferred as the primary
+          edge because at rank 0 multiple sibling clusters (0507, 0510) within
+          this supertype's lineage also map to DG (see rubric (i)).
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: SUPERTYPE_AGGREGATE
+        description: >
+          Supertype is an aggregate over child clusters; one of those clusters
+          (0507) is itself a strong DG match. Edge is recorded at the supertype
+          level for the canonical 1:1 correspondence and at the cluster level
+          (0507) where the more specific exactMatch is closer to evidence.
+    unresolved_questions:
+      - Whether 0137 alone, or 0137 + 0139 (also DG-named), best represents the full classical DG granule cell population.
+    proposed_experiments:
+      - MERFISH co-staining (Slc17a7 + DG GCL boundary markers) to confirm cluster-level GCL restriction.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 8.06
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.707
+          coverage: 1.0
+        - gene: Gria1
+          val: 11.14
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.951
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.73
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.902
+          coverage: 1.0
+        - gene: Grm1
+          val: 9.46
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.951
+          coverage: 1.0
+        - gene: Nptn
+          val: 7.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.512
+          coverage: 1.0
+      region_fraction: 0.711
+      region_evidence: SELF
+
+  - id: edge_dg_granule_cell_to_CS20230722_SUPT_0139
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_SUPT_0139
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: null
+        alignment: NOT_ASSESSED
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: MBA:632 (~6.2k cells) + MBA:10704 polymorph (~3.8k) + MBA:10703 molecular (~1.7k)
+        alignment: APPROXIMATE
+        notes: SOMA partly in DG GCL but also substantially in polymorph and molecular layers; less restricted than 0137.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=8.72
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=11.25
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=10.6
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=9.44
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.61
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          Supertype 0139 'DG Glut_4' has DG GCL representation but also substantial
+          polymorph/molecular layer presence; markers consistent with DG glutamatergic
+          principal cells. closeMatch reflects partial overlap with the classical
+          GC SOMA definition.
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: HETEROGENEOUS_LOCATION
+        description: Supertype spans DG GCL, polymorph (hilus), and molecular layers — may include adult-born GCs, displaced GCs, or non-GC subpopulations.
+    unresolved_questions:
+      - Is 0139 a distinct DG GC subpopulation (e.g., adult-born immature GCs) or a more heterogeneous DG glutamatergic aggregate?
+    discovery_score:
+      score: 7
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 8.72
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.829
+          coverage: 1.0
+        - gene: Gria1
+          val: 11.25
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.976
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.6
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.854
+          coverage: 1.0
+        - gene: Grm1
+          val: 9.44
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.927
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.829
+          coverage: 1.0
+      region_fraction: 0.409
+      region_evidence: SELF
+
+  - id: edge_dg_granule_cell_to_CS20230722_SUPT_0078
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_SUPT_0078
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: null
+        alignment: NOT_ASSESSED
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: CA3 strata (pyramidal, lucidum, oriens, radiatum, lacunosum-moleculare)
+        alignment: DISCORDANT
+        notes: Supertype soma is in CA3, not DG GCL — distant location.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=10.37
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=10.73
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=10.64
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=8.21
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.75
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          Survives the cohort filter by expressing the broad glutamatergic principal-cell
+          marker set (Slc17a7, Gria1/2, Grm1, Nptn) at high levels, but soma localisation
+          is firmly CA3 (pyramidal layer dominant). Classical DG granule cell SOMA is
+          MBA:632 (granule cell layer); 0078 is a CA3 supertype. Recorded as broadMatch
+          because the shared property is the broad hippocampal-glutamatergic principal-cell
+          signature, not granule-cell identity.
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: DISTANT_LOCATION
+        description: Survivor of cohort filter via shared glut-principal markers; soma in CA3 not DG.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 10.37
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.976
+          coverage: 1.0
+        - gene: Gria1
+          val: 10.73
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.854
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.64
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.878
+          coverage: 1.0
+        - gene: Grm1
+          val: 8.21
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.683
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.75
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.951
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: DESCENDANT_ONLY
+
+  - id: edge_dg_granule_cell_to_CS20230722_SUPT_0067
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_SUPT_0067
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: null
+        alignment: NOT_ASSESSED
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: Entorhinal cortex (medial, lateral), prosubiculum, subiculum, posterior amygdala
+        alignment: DISCORDANT
+        notes: Soma in entorhinal/amygdalar/subicular structures — not in DG GCL.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=9.3
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=10.51
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=10.07
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=8.31
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.78
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          Shares glutamatergic principal-cell marker signature with classical DG GC
+          but soma localisation is in entorhinal/amygdalar/subicular structures, far
+          from DG GCL. broadMatch on shared glut-principal axis only.
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: DISTANT_LOCATION
+        description: Extra-hippocampal soma; survives by marker overlap only.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 9.3
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.902
+          coverage: 1.0
+        - gene: Gria1
+          val: 10.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.756
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.07
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.707
+          coverage: 1.0
+        - gene: Grm1
+          val: 8.31
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.732
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.78
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.976
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: DESCENDANT_ONLY
+
+  - id: edge_dg_granule_cell_to_CS20230722_SUPT_0096
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_SUPT_0096
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: null
+        alignment: NOT_ASSESSED
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: Subiculum and Prosubiculum (dominant); minor CA1 stratum radiatum
+        alignment: DISCORDANT
+        notes: Soma in subiculum/prosubiculum, not DG GCL.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=9.19
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=10.95
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=10.98
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=5.03
+        alignment: APPROXIMATE
+        notes: Grm1 lower than the DG-resident supertypes (~9.4) but still positive.
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.64
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          Subicular/prosubicular glutamatergic supertype; shares broad principal-cell
+          markers but distinct location. broadMatch only.
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: DISTANT_LOCATION
+        description: Subiculum/prosubiculum soma, not DG GCL.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 9.19
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.878
+          coverage: 1.0
+        - gene: Gria1
+          val: 10.95
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.902
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.98
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.951
+          coverage: 1.0
+        - gene: Grm1
+          val: 5.03
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.463
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.64
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.878
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: DESCENDANT_ONLY
+
+  # ── Rank 0 (cluster) edges ─────────────────────────────────────────
+
+  - id: edge_dg_granule_cell_to_CS20230722_CLUS_0507
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_CLUS_0507
+    mapping_predicate: skos:exactMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: Glut
+        alignment: CONSISTENT
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: MBA:632 (Dentate gyrus, granule cell layer) — dominant (~30.5k cells SOMA)
+        alignment: CONSISTENT
+        notes: Cluster soma is overwhelmingly in DG granule cell layer; tight match to classical SOMA.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=8.7
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=11.48
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=10.8
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=9.45
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.37
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          Cluster 0507 'DG Glut_2' (child of SUPT_0137) — MERFISH soma distribution
+          is overwhelmingly dentate gyrus granule cell layer (~30,513 cells in
+          MBA:632 across replicates, vs. low-thousands elsewhere). All five classical
+          defining markers (Slc17a7, Gria1, Gria2, Grm1, Nptn) are expressed at high
+          mean levels; NT type explicitly Glut. Rubric (iv): clean 1:1 cluster-level
+          correspondence without AT data; recorded as exactMatch with explicit
+          caveat that no annotation-transfer F1 is available.
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: NO_AT_F1
+        description: No AnnotationTransferEvidence yet; exactMatch is based on atlas metadata + expression only (rubric iv).
+    proposed_experiments:
+      - Run MapMyCells annotation transfer of an external DG GC dataset to WMBv1 to obtain cluster-level F1.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 8.7
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.891
+        - gene: Gria1
+          val: 11.48
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.989
+        - gene: Gria2
+          val: 10.8
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.946
+        - gene: Grm1
+          val: 9.45
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+        - gene: Nptn
+          val: 8.37
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.783
+      region_fraction: 0.703
+      region_evidence: SELF
+
+  - id: edge_dg_granule_cell_to_CS20230722_CLUS_0510
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_CLUS_0510
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: Glut
+        alignment: CONSISTENT
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: MBA:632 (~6.2k cells SOMA) + MBA:10704 polymorph + MBA:10703 molecular + CA3 strata
+        alignment: APPROXIMATE
+        notes: Substantial DG GCL presence but distributed across hilus/molecular layer and CA3 strata; less restricted than CLUS_0507.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=8.72
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=11.25
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=10.6
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=9.44
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.61
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          Cluster 0510 'DG Glut_4' has clear DG GCL representation and full DG
+          glut-principal marker signature, but soma also extends into hilus,
+          molecular layer, and CA3 strata. closeMatch reflects the partial
+          spatial overlap — likely a DG subpopulation (possibly adult-born or
+          displaced GCs) rather than the canonical compact GCL population.
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: HETEROGENEOUS_LOCATION
+        description: SOMA partially outside DG GCL; consistent with a non-canonical DG GC subpopulation.
+    unresolved_questions:
+      - Whether CLUS_0510 corresponds to adult-born immature granule cells (Sun et al., 2015 PMID:24319410) or another DG GC subpopulation.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 8.72
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.902
+        - gene: Gria1
+          val: 11.25
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+        - gene: Gria2
+          val: 10.6
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.891
+        - gene: Grm1
+          val: 9.44
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.967
+        - gene: Nptn
+          val: 8.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.902
+      region_fraction: 0.409
+      region_evidence: SELF
+
+  - id: edge_dg_granule_cell_to_CS20230722_CLUS_0385
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_CLUS_0385
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: Glut
+        alignment: CONSISTENT
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: Subiculum (~415 cells), Presubiculum, Postsubiculum (SOMA); trace DG molecular layer
+        alignment: DISCORDANT
+        notes: Soma is in subiculum/presubiculum complex, not DG GCL.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=9.22
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=11.16
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=10.96
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=5.49
+        alignment: APPROXIMATE
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.61
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          Cluster 0385 'SUB-ProS Glut_1' soma is in subiculum/prosubiculum, not in
+          DG GCL. Marker signature broadly consistent with hippocampal glutamatergic
+          principal cells. broadMatch only — distant location (rubric ii).
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: DISTANT_LOCATION
+        description: Subicular/presubicular soma; cohort survivor on marker grounds alone.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 9.22
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.957
+        - gene: Gria1
+          val: 11.16
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.957
+        - gene: Gria2
+          val: 10.96
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+        - gene: Grm1
+          val: 5.49
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.707
+        - gene: Nptn
+          val: 8.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.902
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_granule_cell_to_CS20230722_CLUS_0315
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_CLUS_0315
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: Glut
+        alignment: CONSISTENT
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: CA3 strata (pyramidal, oriens, radiatum, lucidum, LM); minor DG polymorph
+        alignment: DISCORDANT
+        notes: Soma in CA3, not DG GCL.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=10.35
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=10.93
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=10.65
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=8.92
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.73
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          CA3 glutamatergic cluster; soma firmly in CA3 strata. Distant from
+          classical DG GC SOMA. broadMatch via shared glut-principal markers only
+          (rubric ii).
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: DISTANT_LOCATION
+        description: CA3 soma — not a DG GC.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 10.35
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.989
+        - gene: Gria1
+          val: 10.93
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.913
+        - gene: Gria2
+          val: 10.65
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.924
+        - gene: Grm1
+          val: 8.92
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.891
+        - gene: Nptn
+          val: 8.73
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_granule_cell_to_CS20230722_CLUS_0316
+    lit_type: dg_granule_cell
+    taxonomy_type: CS20230722_CLUS_0316
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        classical_value: glutamatergic
+        atlas_value: Glut
+        alignment: CONSISTENT
+      - property: location
+        classical_value: UBERON:0005381 (dentate gyrus granule cell layer) SOMA
+        atlas_value: CA3 strata + minor DG polymorph + medial amygdala
+        alignment: DISCORDANT
+        notes: Soma in CA3, not DG GCL.
+      - property: marker_Slc17a7
+        classical_value: PROTEIN
+        atlas_value: mean=8.76
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        classical_value: PROTEIN
+        atlas_value: mean=11.23
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        classical_value: PROTEIN
+        atlas_value: mean=11.04
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        classical_value: PROTEIN
+        atlas_value: mean=4.11
+        alignment: APPROXIMATE
+        notes: Grm1 substantially lower than DG-resident clusters; consistent with CA3 not DG identity.
+      - property: marker_Nptn
+        classical_value: PROTEIN
+        atlas_value: mean=8.14
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          CA3 glutamatergic cluster (CA3 Glut_5); soma in CA3, not DG. broadMatch
+          on glut-principal markers only.
+        target_atlas: WMBv1
+    caveats:
+      - caveat_type: DISTANT_LOCATION
+        description: CA3 soma — not a DG GC.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 8.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.924
+        - gene: Gria1
+          val: 11.23
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.967
+        - gene: Gria2
+          val: 11.04
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.989
+        - gene: Grm1
+          val: 4.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.696
+        - gene: Nptn
+          val: 8.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.728
+      region_fraction: 0.0
+      region_evidence: SELF

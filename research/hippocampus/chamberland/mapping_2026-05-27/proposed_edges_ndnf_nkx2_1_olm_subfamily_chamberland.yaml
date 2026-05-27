@@ -1,0 +1,1074 @@
+classical_node_id: ndnf_nkx2_1_olm_subfamily_chamberland
+taxonomy_id: CCN20230722
+
+# Minimal taxonomy reference stubs for candidates referenced by edges below.
+stubs:
+  - id: CS20230722_CLUS_0725
+    name: "0725 Lamp5 Lhx6 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0725
+  - id: CS20230722_CLUS_0659
+    name: "0659 Vip Gaba_10"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0659
+  - id: CS20230722_CLUS_0724
+    name: "0724 Lamp5 Lhx6 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0724
+  - id: CS20230722_CLUS_0731
+    name: "0731 Lamp5 Lhx6 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0731
+  - id: CS20230722_CLUS_0732
+    name: "0732 Pvalb chandelier Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0732
+  - id: CS20230722_SUPT_0203
+    name: "0203 Lamp5 Lhx6 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0203
+  - id: CS20230722_SUPT_0216
+    name: "0216 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+  - id: CS20230722_SUPT_0233
+    name: "0233 STR Prox1 Lhx6 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0233
+  - id: CS20230722_SUPT_0204
+    name: "0204 Pvalb chandelier Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0204
+  - id: CS20230722_SUPT_0219
+    name: "0219 Sst Gaba_6"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0219
+
+edges:
+
+  # ── Rank 0 (cluster) candidates ─────────────────────────────────
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0725
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0725
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        agreement: MATCH
+        notes: >
+          Both GABAergic — consistent.
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "CA1 stratum oriens (MBA:399, 7 cells) plus CA1 stratum radiatum, CA3 stratum radiatum, prosubiculum"
+        agreement: PARTIAL
+        notes: >
+          Cluster has somata in CA1 stratum oriens (matching classical SOMA), but
+          majority of cells localise to CA1 stratum radiatum and CA3 stratum
+          radiatum. Region overlaps but cluster is broader than classical type.
+      - property: marker_Sst
+        node_a_value: "POSITIVE (Sst-Flp intersection)"
+        node_b_value: "mean_expression=1.05 (cohort percentile 0.52, tier 1)"
+        agreement: PARTIAL
+        notes: >
+          Cluster expresses Sst at low/median cohort level; consistent with the
+          Chamberland gene-pair rule but not a strong Sst signal.
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=0.51 (cohort percentile 0.673, tier 1)"
+        agreement: PARTIAL
+        notes: >
+          Low absolute Ndnf expression; cluster sits above cohort median but the
+          signal is weak compared to canonical Ndnf supertypes.
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE (Nkx2-1-Cre intersection)"
+        node_b_value: "mean_expression=5.05 (cohort percentile 0.959, tier 2)"
+        agreement: MATCH
+        notes: >
+          Strong Nkx2-1 signal — top of GABAergic CA1 cohort. Consistent with
+          Nkx2-1 lineage intersectional labelling.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 1 of 5 (score 5, next-best 4) at
+          cluster level under filters region=MBA:399 (CA1 stratum oriens),
+          nt_type=GABAergic. Top-ranked CA1-SO Lamp5 Lhx6 cluster, with Nkx2-1
+          expression in the 96th cohort percentile.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_CLUS_0725
+    caveats:
+      - caveat_type: AT_MISSING
+        description: >
+          No annotation-transfer signal in the Stage A discovery cohort. The
+          Chamberland-subfamily AT run (at_run_20260512_chamberland_subfamily_mmc_wmbv1)
+          maps source_label=Ndnf primarily to RHP-COA Ndnf and Lamp5/Sncg
+          supertypes with low F1 (none > 0.20), with no clean target. Mapping
+          rests on cohort-relative marker expression alone.
+      - caveat_type: LOCATION_BROADER_THAN_CLASSICAL
+        description: >
+          Cluster spans multiple CA1/CA3 laminae and prosubiculum; classical
+          Ndnf::Nkx2-1-IN is anchored to CA1 stratum oriens / alveus.
+    unresolved_questions:
+      - >
+        Are the 7 CA1 stratum oriens cells in CS20230722_CLUS_0725 the
+        Ndnf::Nkx2-1-IN subfamily, or do they represent a separate Lamp5 Lhx6
+        population co-localised in the same lamina?
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.05
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.52
+        - gene: Ndnf
+          val: 0.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.673
+        - gene: Nkx2-1
+          val: 5.05
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+      region_fraction: 0.117
+      region_evidence: SELF
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0659
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0659
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "CA3 strata (radiatum, lucidum, oriens), basomedial amygdala, some CA1 stratum oriens (~6 cells)"
+        agreement: PARTIAL
+        notes: >
+          Cluster contains a handful of CA1 stratum oriens cells but the bulk of
+          the population resides in CA3 and amygdala — not the canonical Ndnf-OLM
+          location.
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=1.54 (cohort percentile 0.796)"
+        agreement: PARTIAL
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=4.94 (cohort percentile 0.878)"
+        agreement: MATCH
+        notes: >
+          Highest Ndnf in the cohort — strong positive signal.
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE (Nkx2-1-Cre intersection)"
+        node_b_value: "mean_expression=0.15 (cohort percentile 0.816, tier 1 but absolute very low)"
+        agreement: MISMATCH
+        notes: >
+          Absolute Nkx2-1 expression near floor (0.15). Although cohort
+          percentile is high, this reflects low Nkx2-1 overall in CA1-SO GABA
+          clusters. Inconsistent with Nkx2-1-Cre intersectional labelling.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 2 of 5 at cluster level (score 4)
+          under filters region=MBA:399, nt_type=GABAergic. Vip Gaba_10 cluster
+          (parent SUPT_0182) is an outlier — Vip subclass, not Lamp5/Sst, and
+          dominantly CA3/amygdala-localised.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_CLUS_0659
+    caveats:
+      - caveat_type: CROSS_CUTTING_NEIGHBOURHOOD
+        description: >
+          Vip Gaba_10 is a Vip subclass cluster — markedly distant from the
+          Lamp5/Sst families that Chamberland 2024 Sst-IN subfamilies belong to.
+          Mapping is driven by Ndnf expression alone.
+      - caveat_type: AT_MISSING
+        description: >
+          No annotation-transfer signal in discovery; Chamberland-subfamily AT
+          run does not place Ndnf cells in this cluster with meaningful F1.
+    unresolved_questions:
+      - >
+        Why does CS20230722_CLUS_0659 express high Ndnf with low Nkx2-1 yet
+        survive cohort filtering? Likely reflects the cohort breadth (entire
+        CA1-SO GABA) rather than a true Ndnf::Nkx2-1 match.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.54
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.796
+        - gene: Ndnf
+          val: 4.94
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.878
+        - gene: Nkx2-1
+          val: 0.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.816
+      region_fraction: 0.2
+      region_evidence: SELF
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0724
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0724
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "CA1 stratum oriens (MBA:399, 160 cells across two MERFISH studies; ~100% region_fraction)"
+        agreement: MATCH
+        notes: >
+          All catalogued MERFISH somata for this cluster lie in CA1 stratum
+          oriens — a clean SOMA match.
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=1.18 (cohort percentile 0.602)"
+        agreement: PARTIAL
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=0.17 (cohort percentile 0.398, tier 1)"
+        agreement: MISMATCH
+        notes: >
+          Ndnf signal absent at this cluster (below cohort median).
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE (Nkx2-1-Cre intersection)"
+        node_b_value: "mean_expression=2.99 (cohort percentile 0.929)"
+        agreement: MATCH
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 3 of 5 (score 4) at cluster
+          level under filters region=MBA:399, nt_type=GABAergic. CA1 stratum
+          oriens localisation is exceptional (region_fraction=1.0) and parent
+          supertype CS20230722_SUPT_0203 contains the top rank-0 candidate.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_CLUS_0724
+    caveats:
+      - caveat_type: MARKER_PARTIAL
+        description: >
+          Ndnf expression is low (0.17, below cohort median) despite Sst/Nkx2-1
+          presence. The Chamberland Ndnf::Nkx2-1 subfamily requires Ndnf
+          positivity by intersectional Ndnf-Flp; this cluster may capture
+          Nkx2-1+ Lamp5 Lhx6 cells without the Ndnf-positive component.
+      - caveat_type: AT_MISSING
+        description: >
+          No discovery AT signal; Chamberland-subfamily AT run does not
+          highlight this cluster for source_label=Ndnf.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.602
+        - gene: Ndnf
+          val: 0.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.398
+        - gene: Nkx2-1
+          val: 2.99
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.929
+      region_fraction: 1.0
+      region_evidence: SELF
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0731
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0731
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "CA3 strata oriens/pyramidal/radiatum dominant; CA1 stratum oriens ~85 cells; posterior amygdala"
+        agreement: PARTIAL
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=1.24 (cohort percentile 0.633)"
+        agreement: PARTIAL
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=0.49 (cohort percentile 0.663)"
+        agreement: PARTIAL
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=0.59 (cohort percentile 0.857)"
+        agreement: PARTIAL
+        notes: >
+          Nkx2-1 cohort percentile high but absolute level modest (0.59) — much
+          weaker than canonical Nkx2-1 supertype CS20230722_SUPT_0203 (1.85).
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 4 of 5 (score 4) at cluster
+          level under region=MBA:399 / GABAergic filters. Parent supertype is
+          CS20230722_SUPT_0203 (Lamp5 Lhx6 Gaba_1).
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_CLUS_0731
+    caveats:
+      - caveat_type: LOCATION_DOMINANT_OUT_OF_REGION
+        description: >
+          Bulk of this cluster localises to CA3 and posterior amygdala, not
+          CA1 stratum oriens. Classical type is anchored to CA1.
+      - caveat_type: MARKER_WEAK
+        description: >
+          All three Chamberland-rule markers are present at low/median levels;
+          no single marker reaches the strong signal seen in
+          CS20230722_CLUS_0725 or CS20230722_SUPT_0203.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.24
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.633
+        - gene: Ndnf
+          val: 0.49
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.663
+        - gene: Nkx2-1
+          val: 0.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.857
+      region_fraction: 0.174
+      region_evidence: SELF
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0732
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0732
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "Distributed CA1/CA3/DG; CA1 stratum oriens ~91 cells; CA1 pyramidal layer dominant"
+        agreement: PARTIAL
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=0.97 (cohort percentile 0.5)"
+        agreement: PARTIAL
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=0.26 (cohort percentile 0.52)"
+        agreement: MISMATCH
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=0.69 (cohort percentile 0.867)"
+        agreement: PARTIAL
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 5 of 5 (score 4). Pvalb
+          chandelier cluster — parent supertype CS20230722_SUPT_0204 — is a
+          Pvalb-family chandelier identity, biologically distant from Ndnf-OLM.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_CLUS_0732
+    caveats:
+      - caveat_type: CROSS_CUTTING_NEIGHBOURHOOD
+        description: >
+          Pvalb chandelier identity (Pvalb-family) does not align with the
+          Lamp5 Lhx6 / Sst neighbourhood expected for an Ndnf::Nkx2-1 OLM-like
+          subfamily.
+      - caveat_type: MARKER_MISMATCH
+        description: >
+          All three Chamberland-rule markers register at floor-to-modest
+          levels; the cluster passes the cohort filter rather than matching
+          the subfamily marker profile.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 0.97
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.5
+        - gene: Ndnf
+          val: 0.26
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.52
+        - gene: Nkx2-1
+          val: 0.69
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.867
+      region_fraction: 0.227
+      region_evidence: SELF
+
+  # ── Rank 1 (supertype) candidates ────────────────────────────────
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0203
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0203
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (inherited from cluster children)"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "DG molecular layer (~743 cells), CA3 stratum radiatum/oriens, CA1 stratum radiatum — supertype spans the broader Lamp5 Lhx6 niche"
+        agreement: PARTIAL
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=1.52 (cohort percentile 0.784)"
+        agreement: PARTIAL
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=1.32 (cohort percentile 0.73)"
+        agreement: PARTIAL
+        notes: >
+          Supertype-level Ndnf is moderate; the constituent clusters split
+          high (CS20230722_CLUS_0725 / 0731) and low (CS20230722_CLUS_0724).
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE (Nkx2-1-Cre intersection)"
+        node_b_value: "mean_expression=1.85 (cohort percentile 0.973, tier 2)"
+        agreement: MATCH
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 1 of 5 at supertype level
+          (score 3, next-best 2) under region=MBA:399 / GABAergic filters.
+          Supertype CS20230722_SUPT_0203 (Lamp5 Lhx6 Gaba_1) contains the
+          rank-0 cluster candidates CS20230722_CLUS_0724, CS20230722_CLUS_0725,
+          and CS20230722_CLUS_0731 — invoking rubric (i) for broadMatch at
+          this level.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_SUPT_0203
+    caveats:
+      - caveat_type: AT_MISSING
+        description: >
+          Chamberland-subfamily AT run does not produce a clean source_label=Ndnf
+          hit at this supertype; Ndnf cells fragment across Lamp5/Sncg/RHP-COA
+          Ndnf supertypes with no F1 > 0.20.
+      - caveat_type: LOCATION_BROADER_THAN_CLASSICAL
+        description: >
+          Supertype localisation is dominated by DG molecular layer rather
+          than the classical CA1 stratum oriens / alveus of Ndnf-OLM.
+    proposed_experiments:
+      - >
+        Sub-cluster analysis restricted to CA1 stratum oriens cells within
+        CS20230722_SUPT_0203 to test whether Ndnf+/Nkx2-1+ cells separate
+        from the broader Lamp5 Lhx6 supertype.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.52
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.784
+          coverage: 1.0
+        - gene: Ndnf
+          val: 1.32
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.73
+          coverage: 1.0
+        - gene: Nkx2-1
+          val: 1.85
+          reliable: true
+          raw_tier: 2
+          applied_score: 1.732
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 0.75
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0216
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0216
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "CA1 stratum oriens (~1375 cells), alveus (~303 cells), prosubiculum, subiculum, posterior amygdala"
+        agreement: MATCH
+        notes: >
+          Strong CA1 stratum oriens and alveus localisation — matches the
+          canonical Chamberland CA1-SO/alveus anchor for Ndnf-OLM and Chrna2-OLM.
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=11.44 (cohort percentile 0.973, tier 2)"
+        agreement: MATCH
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=1.64 (cohort percentile 0.757)"
+        agreement: PARTIAL
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE (Nkx2-1-Cre intersection)"
+        node_b_value: "mean_expression=0.04 (UNRELIABLE, tier -1)"
+        agreement: MISMATCH
+        notes: >
+          Nkx2-1 essentially absent at supertype level — incompatible with
+          Nkx2-1-Cre intersectional definition.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 2 of 5 (score 2). CS20230722_SUPT_0216
+          (Sst Gaba_3) is the canonical Sst supertype anchoring CA1-SO/alveus,
+          but the Nkx2-1 signal is unreliable / near-zero, contradicting the
+          Chamberland Ndnf::Nkx2-1 intersectional definition.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_SUPT_0216
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: PARTIAL
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Ndnf
+        explanation: >
+          Chamberland-subfamily AT run places source_label=Ndnf cells at
+          CS20230722_SUPT_0216 at low F1 (0.10, coverage 0.36, purity 0.058),
+          reflecting the fragmented Ndnf mapping noted in
+          hippocampus_chamberland_subfamilies.yaml. AT signal is present but
+          weak; not sufficient to elevate the predicate.
+    caveats:
+      - caveat_type: MARKER_MISMATCH
+        description: >
+          Nkx2-1 floor expression at CS20230722_SUPT_0216 is incompatible
+          with the Ndnf::Nkx2-1 intersectional reporter. Despite strong
+          Sst/CA1-SO match, this supertype is unlikely to be the
+          transcriptomic home of the Ndnf::Nkx2-1-IN subfamily.
+    unresolved_questions:
+      - >
+        Could a minority of Nkx2-1+ cells embedded in CS20230722_SUPT_0216
+        constitute the Ndnf::Nkx2-1-IN subfamily, escaping detection at
+        supertype-level pseudobulk?
+    proposed_experiments:
+      - >
+        Single-cell-level interrogation of CS20230722_SUPT_0216 for an
+        Nkx2-1+/Ndnf+ subpopulation co-localised in CA1 stratum oriens.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.44
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 1.0
+        - gene: Ndnf
+          val: 1.64
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.943
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.757
+          coverage: 0.889
+        - gene: Nkx2-1
+          val: 0.04
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.811
+      region_fraction: 0.584
+      region_evidence: SELF
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0233
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0233
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (inherited)"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "Striatum (medial/central amygdala, BNST, basomedial amygdala) — no hippocampus SOMA at supertype level (DESCENDANT_ONLY region evidence)"
+        agreement: MISMATCH
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=3.22 (cohort percentile 0.865)"
+        agreement: MATCH
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=0.57 (cohort percentile 0.622)"
+        agreement: PARTIAL
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=0.75 (cohort percentile 0.919)"
+        agreement: PARTIAL
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 3 of 5 (score 2). Region
+          evidence is DESCENDANT_ONLY — no SOMA in CA1 stratum oriens at
+          supertype level. CS20230722_SUPT_0233 is the STR Prox1 Lhx6
+          supertype, anatomically distant from hippocampus.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_SUPT_0233
+    caveats:
+      - caveat_type: REGION_MISMATCH
+        description: >
+          Supertype is striatum/amygdala-resident; classical Ndnf-OLM is a
+          CA1 type. Per rubric (ii) location alone could downgrade to
+          broadMatch+1:n, but the marker profile is also weak (no single
+          strong intersectional signal), so the predicate is uncertain.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 3.22
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.865
+          coverage: 1.0
+        - gene: Ndnf
+          val: 0.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.866
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.622
+          coverage: 0.75
+        - gene: Nkx2-1
+          val: 0.75
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.866
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.919
+          coverage: 0.75
+      region_fraction: 0.0
+      region_evidence: DESCENDANT_ONLY
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0204
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0204
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "Piriform area dominant; no CA1 SOMA at supertype level (region_evidence=DESCENDANT_ONLY)"
+        agreement: MISMATCH
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=0.95 (cohort percentile 0.459)"
+        agreement: PARTIAL
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=0.17 (cohort percentile 0.351)"
+        agreement: MISMATCH
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=1.76 (cohort percentile 0.946)"
+        agreement: MATCH
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 4 of 5 (score 2).
+          CS20230722_SUPT_0204 is the Pvalb chandelier supertype; rank-0
+          descendant CS20230722_CLUS_0732 surfaced via CA1 region descent
+          rather than SOMA at this supertype.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_SUPT_0204
+    caveats:
+      - caveat_type: CROSS_CUTTING_NEIGHBOURHOOD
+        description: >
+          Pvalb chandelier identity is biologically incompatible with the
+          Lamp5 Lhx6 / Sst neighbourhood expected for an Ndnf::Nkx2-1 OLM-like
+          subfamily.
+      - caveat_type: REGION_MISMATCH
+        description: >
+          Supertype-level SOMA is piriform area, not hippocampus.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 0.95
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.459
+          coverage: 1.0
+        - gene: Ndnf
+          val: 0.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.707
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.351
+          coverage: 0.5
+        - gene: Nkx2-1
+          val: 1.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.946
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: DESCENDANT_ONLY
+
+  - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0219
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0219
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        agreement: MATCH
+      - property: location
+        node_a_value: "CA1 stratum oriens (UBERON:0005371)"
+        node_b_value: "DG polymorph layer, CA3 strata oriens/radiatum/lucidum; CA1 stratum oriens (~89 cells, minority)"
+        agreement: PARTIAL
+      - property: marker_Sst
+        node_a_value: "POSITIVE"
+        node_b_value: "mean_expression=10.17 (cohort percentile 0.892)"
+        agreement: MATCH
+      - property: marker_Ndnf
+        node_a_value: "POSITIVE (defining)"
+        node_b_value: "mean_expression=0.37 (cohort percentile 0.514)"
+        agreement: MISMATCH
+      - property: marker_Nkx2-1
+        node_a_value: "POSITIVE (Nkx2-1-Cre intersection)"
+        node_b_value: "mean_expression=0.0 (UNRELIABLE, tier -1)"
+        agreement: MISMATCH
+        notes: >
+          Nkx2-1 absent at supertype level — directly contradicts the Nkx2-1-Cre
+          intersectional definition.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          Discovery cohort SURVIVAL_COHORT rank 5 of 5 (score 2). High-Sst
+          Sst Gaba_6 supertype but no Nkx2-1 expression.
+        source_atlas: WMBv1
+        source_taxonomy_id: CCN20230722
+        source_cell_set_accession: CS20230722_SUPT_0219
+    caveats:
+      - caveat_type: MARKER_MISMATCH
+        description: >
+          Nkx2-1 floor expression contradicts the Ndnf::Nkx2-1 intersectional
+          definition. Likely a canonical Sst-GABA type rather than an Ndnf-OLM
+          relative.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.892
+          coverage: 1.0
+        - gene: Ndnf
+          val: 0.37
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.514
+          coverage: 1.0
+        - gene: Nkx2-1
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.05
+      region_evidence: SELF

@@ -1,0 +1,1554 @@
+# 2026-05-27 mapping re-run for olm_hippocampus
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters
+# and top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric.
+classical_node_id: olm_hippocampus
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0768
+    name: "0768 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0768
+  - id: CS20230722_CLUS_0772
+    name: "0772 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0772
+  - id: CS20230722_CLUS_0771
+    name: "0771 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0771
+  - id: CS20230722_CLUS_0775
+    name: "0775 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0775
+  - id: CS20230722_CLUS_0773
+    name: "0773 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0773
+  - id: CS20230722_SUPT_0216
+    name: "0216 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+  - id: CS20230722_SUPT_0219
+    name: "0219 Sst Gaba_6"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0219
+  - id: CS20230722_SUPT_0225
+    name: "0225 Sst Gaba_12"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0225
+  - id: CS20230722_SUPT_0213
+    name: "0213 Pvalb Gaba_9"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0213
+  - id: CS20230722_SUPT_0206
+    name: "0206 Pvalb Gaba_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0206
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0216
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0216
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic (GAD-GFP, electrophysiology)"
+        node_b_value: "GABA (taxonomy parent subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA; biocytin fill, adult rat & mouse dorsal CA1)"
+        node_b_value: "Field CA1 stratum oriens 1375 cells; Prosubiculum 404; alveus 303; Posterior amygdalar nucleus 163; Subiculum 108"
+        alignment: CONSISTENT
+        notes: |
+          Soma counts dominated by CA1 stratum oriens (the classical OLM region). Adjacent
+          subicular/prosubicular subfields and alveus are common boundary/registration
+          neighbours. Posterior amygdalar component (~6% of cells) is anatomically distant
+          and likely a minor non-OLM contamination at the supertype level.
+      - property: marker_Sst
+        node_a_value: "Sst detected 46/46 cells (100%); mean counts 305273 (GSE124847 re-analysis)"
+        node_b_value: "Sst: 11.44 (precomputed mean); coverage 1.0 across child clusters"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 detected 16/46 cells (35%); Htr3a-OLM 43% vs Sst-OLM 26% (sparse)"
+        node_b_value: "Chrna2: 0.61 (precomputed mean); coverage 0.667 across child clusters"
+        alignment: APPROXIMATE
+        notes: |
+          Low absolute supertype mean reflects sparse classical OLM Chrna2 expression and
+          incomplete coverage (only 2/3 child clusters detectably express Chrna2). Pattern
+          consistent with classical heterogeneity.
+      - property: marker_mGluR1
+        node_a_value: "Grm1 detected 44/46 cells (96%); mean counts 3901 (mGluR1 is a robust OLM marker)"
+        node_b_value: "Grm1: 9.33 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT (classical OLM-defining negative marker)"
+        node_b_value: "Pvalb: 1.48 (precomputed mean) — low, consistent with absence"
+        alignment: CONSISTENT
+      - property: negative_marker_CB
+        node_a_value: "CB (Calb1) ABSENT"
+        node_b_value: "Calb1: 5.56 (precomputed mean) — moderate, possibly elevated"
+        alignment: APPROXIMATE
+        notes: |
+          Calb1 precomputed mean is non-trivially above zero at the supertype level. Atlas
+          taxonomy does not list Calb1 as a defining marker; flagged for further inspection
+          but not strongly discordant given the broad supertype scope.
+      - property: negative_marker_CR
+        node_a_value: "CR (Calb2) ABSENT"
+        node_b_value: "Calb2: 1.28 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: negative_marker_NOS
+        node_a_value: "NOS (Nos1) ABSENT"
+        node_b_value: "Nos1: 2.94 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+        notes: |
+          Nos1 expression at the supertype is moderate. Classical OLM is reported NOS-negative
+          but some heterogeneity may exist; pooling across child clusters could obscure cluster
+          specificity.
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.42 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst detected 46/46 cells (100%)"
+        node_b_value: "Sst: 11.44 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy detected 37/46 cells (80%); Sst-OLM 70%, Htr3a-OLM 91%"
+        node_b_value: "Npy: 5.07 (precomputed mean); coverage 1.0 across child clusters"
+        alignment: CONSISTENT
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc detected 27/46 cells (59%); moderate penetrance"
+        node_b_value: "Pnoc: 3.69 (precomputed mean); coverage 0.889 across child clusters"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0216 Sst Gaba_3 is dominated by CA1 stratum oriens soma (1375 cells)
+          and expresses Sst (mean 11.44), Grm1 (9.33), Npy (5.07), with low Pvalb/Vip —
+          a profile aligning with the classical OLM molecular signature. The supertype
+          aggregates all four top-ranked rank-0 candidate clusters (0768, 0772, 0771,
+          0775), motivating a broadMatch 1:n call at this rank.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Sst-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          MapMyCells annotation transfer from Winterer 2019 (GSE124847) Sst-OLM cells to
+          WMBv1 supertypes: 22 of the Sst-OLM cohort mapped to supertype 0216 Sst Gaba_3,
+          the modal target at the supertype level. Pairs naturally with the Htr3a-OLM
+          evidence item below; combined signal supports the supertype as the broader
+          home of classical OLM cells.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Htr3a-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          Htr3a-OLM cohort also maps to supertype 0216 Sst Gaba_3 (21 cells), confirming
+          that both classical OLM subtypes converge on this supertype at the rank-1 level.
+    caveats:
+      - |
+        Supertype contains the four top rank-0 clusters (CLUS_0768/0772/0771/0775) — the
+        specific OLM sub-cluster identity should be resolved at rank 0 rather than mapped
+        1:1 at the supertype level.
+      - |
+        Posterior amygdalar component (163 cells, ~6%) is anatomically distant from CA1
+        and may represent a minor non-OLM subpopulation pooled in this supertype.
+      - |
+        Calb1 (5.56) and Nos1 (2.94) supertype-mean expression are above background;
+        classical OLM is reported CB/NOS-negative. May reflect supertype heterogeneity
+        (one or more constituent clusters carrying these markers) — re-check at rank 0.
+    unresolved_questions:
+      - |
+        Does the supertype-level mapping persist when restricted to CA1-only soma cells,
+        or are subicular/amygdalar cells driving some of the marker signal?
+    proposed_experiments:
+      - |
+        Per-cluster MERFISH validation (Sst, Grm1, Chrna2, Calb1) across CLUS_0768/0772/0771/0775
+        in CA1 stratum oriens to identify the rank-0 cluster that best matches the
+        Chrna2-Cre-labelled canonical OLM population.
+    discovery_score:
+      score: 9
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.44
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.61
+          reliable: true
+          raw_tier: 2
+          applied_score: 1.633
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 0.667
+        - gene: Npy
+          val: 5.07
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.919
+          coverage: 1.0
+        - gene: Pnoc
+          val: 3.69
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.943
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.595
+          coverage: 0.889
+      region_fraction: 0.584
+      region_evidence: SELF
+      at_signal:
+        f1: 0.6666666666666667
+        n_cells: 22
+        target_level: supertype
+        target_name: 0216 Sst Gaba_3
+        score: 3
+
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0219
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0219
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA3 stratum oriens 495; CA3 pyramidal layer 453; CA3 stratum radiatum 337; DG polymorph 215; CA3 stratum lucidum 196; CA1 stratum oriens 89"
+        alignment: APPROXIMATE
+        notes: |
+          Dominated by CA3 (not CA1) stratum oriens with substantial DG polymorph component.
+          CA3 has its own OLM-like population; this supertype may represent the CA3 analogue
+          of OLM rather than the canonical CA1 OLM described in the classical node.
+      - property: marker_Sst
+        node_a_value: "Sst 100% (classical)"
+        node_b_value: "Sst: 10.17 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35% sparse"
+        node_b_value: "Chrna2: 0.0 (precomputed mean) — not detected"
+        alignment: DISCORDANT
+        notes: |
+          Chrna2 is absent at this supertype, in contrast to the canonical Chrna2-Cre OLM
+          line. Suggests this supertype is not the Chrna2+ OLM population.
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96% (robust OLM marker)"
+        node_b_value: "Grm1: 8.09 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT"
+        node_b_value: "Pvalb: 1.68 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 2.14 (precomputed mean) — low/moderate"
+        alignment: CONSISTENT
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 0.22 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 1.81 (precomputed mean) — low/moderate"
+        alignment: CONSISTENT
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.44 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 10.17 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 7.18 (precomputed mean) — high; coverage 1.0"
+        alignment: CONSISTENT
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59% moderate"
+        node_b_value: "Pnoc: 4.18 (precomputed mean); coverage 1.0"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0219 Sst Gaba_6 carries Sst+/Npy+/Grm1+/Pnoc+ markers consistent with an
+          OLM-like Sst interneuron, but its dominant CA3 (not CA1) soma distribution
+          and the absence of Chrna2 suggest it is either a CA3 OLM-analogue or a
+          distinct Sst-interneuron type rather than the canonical CA1 Chrna2+ OLM.
+    caveats:
+      - |
+        Atlas soma distribution dominated by CA3 (not CA1) — may represent CA3 OLM
+        analogue rather than the canonical CA1 OLM described in the classical node.
+      - |
+        Chrna2 absent (0.0); inconsistent with the Chrna2-Cre transgenic line used to
+        define a major OLM cohort (PMID:29487503).
+      - |
+        Substantial DG polymorph layer component (215 cells) — DG hilar Sst interneurons
+        (HIPP cells) overlap molecularly with OLM and may be pooled here.
+    unresolved_questions:
+      - |
+        Is there a CA3-stratum-oriens OLM-equivalent population that should be modelled
+        as a separate classical node, or is the existing olm_hippocampus node intended to
+        encompass CA3 OLMs as well?
+    proposed_experiments:
+      - |
+        Chrna2-Cre tracing or smFISH in CA3 stratum oriens to test whether Chrna2+ OLMs
+        exist outside CA1.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.892
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: Npy
+          val: 7.18
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 1.0
+        - gene: Pnoc
+          val: 4.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.676
+          coverage: 1.0
+      region_fraction: 0.05
+      region_evidence: SELF
+
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0225
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0225
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Entorhinal area medial dorsal layer 6 (200); Entorhinal lateral layer 6a (135); Subiculum (120); Entorhinal medial dorsal layer 5 (82); Entorhinal lateral layer 5 (29)"
+        alignment: DISCORDANT
+        notes: |
+          Dominated by entorhinal cortex layers 5-6 — anatomically distinct from hippocampus
+          proper. No CA1 stratum oriens component. region_evidence=DESCENDANT_ONLY (rolled
+          up from rank-0 descendants).
+      - property: marker_Sst
+        node_a_value: "Sst 100% (classical)"
+        node_b_value: "Sst: 10.61 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35% sparse"
+        node_b_value: "Chrna2: 0.23 (precomputed mean); coverage 0.333"
+        alignment: APPROXIMATE
+        notes: |
+          Detectable but very sparse Chrna2 and low coverage across child clusters.
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96%"
+        node_b_value: "Grm1: 8.61 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT"
+        node_b_value: "Pvalb: 1.39 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 4.12 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 0.15 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 2.44 (precomputed mean)"
+        alignment: APPROXIMATE
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.11 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 10.61"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 1.77 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Classical OLM is robustly Npy+ (80% detection); supertype mean is low — argues
+          against this being an OLM population.
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59%"
+        node_b_value: "Pnoc: 3.80 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0225 Sst Gaba_12 is dominated by entorhinal cortex L5-L6 soma — distant from
+          CA1 stratum oriens. Low Npy expression also argues against OLM identity.
+          Best interpreted as an entorhinal Sst interneuron type that ranked into the
+          rank-1 cohort via the hippocampus-region descendant-anat fallback.
+    caveats:
+      - Atlas soma distribution is in entorhinal cortex, not hippocampus.
+      - Low Npy (1.77) is inconsistent with classical OLM Npy positivity.
+      - region_evidence=DESCENDANT_ONLY — supertype's own anat is non-hippocampal.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.946
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.577
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.946
+          coverage: 0.333
+        - gene: Npy
+          val: 1.77
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.595
+          coverage: 1.0
+        - gene: Pnoc
+          val: 3.8
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.622
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: DESCENDANT_ONLY
+
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0213
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0213
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 052 Pvalb Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Subiculum 50; Retrosplenial ventral L5 19; Retrosplenial ventral L6a 19; Prosubiculum 15; CA1 stratum oriens 7"
+        alignment: DISCORDANT
+        notes: |
+          Minimal CA1 stratum oriens component (7 cells); dominated by subiculum and
+          retrosplenial cortex.
+      - property: marker_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 10.28 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35%"
+        node_b_value: "Chrna2: 0.0 (precomputed mean)"
+        alignment: DISCORDANT
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96%"
+        node_b_value: "Grm1: 3.56 (precomputed mean) — moderate/low"
+        alignment: APPROXIMATE
+        notes: Lower than canonical OLM Grm1 levels.
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT (defining negative marker)"
+        node_b_value: "Pvalb: 5.93 (precomputed mean) — high; supertype name 'Pvalb Gaba_9'"
+        alignment: DISCORDANT
+        notes: |
+          Strong Pvalb expression directly violates the OLM PV-negative defining property.
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 3.13 (precomputed mean)"
+        alignment: APPROXIMATE
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 0.13 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 7.51 (precomputed mean) — high"
+        alignment: DISCORDANT
+        notes: |
+          Strong Nos1 expression conflicts with the classical OLM NOS-negative annotation.
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.0 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 10.28"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 1.70 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59%"
+        node_b_value: "Pnoc: 6.93 (precomputed mean) — high"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0213 Pvalb Gaba_9 sits under the Pvalb Gaba subclass and expresses Pvalb (5.93)
+          and Nos1 (7.51) — both classical OLM negative markers. Soma distribution centred
+          on subiculum/retrosplenial cortex. Note: Zhang et al. (2025) describe a PV+ OLM
+          subset, so this cannot be fully excluded as a candidate for that specific
+          subpopulation; however, location and Chrna2 absence weaken the case.
+    caveats:
+      - Strong Pvalb expression conflicts with classical OLM PV-negative defining property.
+      - Strong Nos1 expression conflicts with classical OLM NOS-negative annotation.
+      - Soma distribution is predominantly subicular/retrosplenial, not CA1.
+      - Chrna2 absent.
+    unresolved_questions:
+      - |
+        Could this supertype correspond to the Zhang 2025 PV+ OLM subset rather than the
+        canonical Sst+/PV- OLM? Currently insufficient evidence to adjudicate.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.28
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.919
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: Npy
+          val: 1.7
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.568
+          coverage: 1.0
+        - gene: Pnoc
+          val: 6.93
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.946
+          coverage: 1.0
+      region_fraction: 0.057
+      region_evidence: SELF
+
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0206
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0206
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 052 Pvalb Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 812; Piriform area 296; Field CA3 stratum oriens 152; Field CA1 pyramidal layer 91"
+        alignment: APPROXIMATE
+        notes: |
+          Substantial CA1 stratum oriens component, but with a large piriform-area pool
+          (296) suggesting heterogeneity / mixed identity. Likely a canonical CA1 basket/
+          stratum-oriens PV interneuron supertype rather than OLM.
+      - property: marker_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 2.72 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Sst is the central defining marker of OLM. Supertype mean (2.72) is well below
+          the OLM range, arguing strongly against OLM identity.
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35%"
+        node_b_value: "Chrna2: 0.0 (precomputed mean)"
+        alignment: DISCORDANT
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96%"
+        node_b_value: "Grm1: 3.04 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT"
+        node_b_value: "Pvalb: 8.74 (precomputed mean) — very high; supertype name 'Pvalb Gaba_2'"
+        alignment: DISCORDANT
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 5.47 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 0.70 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 3.64 (precomputed mean)"
+        alignment: APPROXIMATE
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.43 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 2.72"
+        alignment: DISCORDANT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 2.87 (precomputed mean) — low"
+        alignment: APPROXIMATE
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59%"
+        node_b_value: "Pnoc: 0.63 (precomputed mean) — low"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0206 Pvalb Gaba_2 is a Pvalb-positive (8.74) supertype with low Sst (2.72) and
+          low Pnoc (0.63), profile clearly incompatible with canonical OLM. CA1 stratum
+          oriens soma component reflects PV+ basket/perisomatic interneurons that share
+          the layer with OLM cells.
+    caveats:
+      - Sst very low; OLM is a Sst-defining type.
+      - Pvalb very high; conflicts with OLM PV-negative annotation.
+      - Profile better matches a CA1 PV+ stratum-oriens interneuron, not OLM.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 2.72
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.838
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: Npy
+          val: 2.87
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.757
+          coverage: 1.0
+        - gene: Pnoc
+          val: 0.63
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.351
+          coverage: 1.0
+      region_fraction: 0.601
+      region_evidence: SELF
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0768
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0768
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 207; alveus 85; CA1 pyramidal layer 16"
+        alignment: CONSISTENT
+        notes: Clean CA1 stratum oriens dominance with adjacent alveus/pyramidale.
+      - property: marker_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 12.70 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35% sparse"
+        node_b_value: "Chrna2: 0.57 (precomputed mean) — sparse, matches classical pattern"
+        alignment: CONSISTENT
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96%"
+        node_b_value: "Grm1: 10.27 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT"
+        node_b_value: "Pvalb: 3.12 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+        notes: Pvalb mean is non-zero; could reflect a Zhang 2025-like PV+ OLM admixture.
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 3.87 (precomputed mean) — low/moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 2.30 (precomputed mean)"
+        alignment: APPROXIMATE
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 0.76 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.31 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 12.70"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 7.58 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59%"
+        node_b_value: "Pnoc: 2.51 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0768 has the highest Sst (12.70) and Grm1 (10.27) in the cohort, sparse
+          Chrna2 (0.57) matching the classical Chrna2 35% detection pattern, robust Npy
+          (7.58), and CA1 stratum oriens-dominated soma distribution — the most OLM-like
+          rank-0 candidate.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Sst-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          Winterer 2019 Sst-OLM cohort: 10 cells mapped to cluster 0768 (modal rank-0
+          target). Combined with Htr3a-OLM signal (12 cells), CLUS_0768 absorbs the largest
+          share of OLM cells at the cluster level.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Htr3a-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          Htr3a-OLM cohort: 12 cells mapped to cluster 0768. Both OLM subtypes converge
+          on this cluster at the rank-0 level.
+    caveats:
+      - |
+        Pvalb (3.12), Calb1 (3.87), and Calb2 (2.30) are non-trivially expressed; classical
+        OLM is annotated as negative for these markers. May indicate molecular heterogeneity
+        within the cluster (PV+ OLM subset of Zhang 2025) or simply that the negative-marker
+        thresholds in the classical literature do not match transcriptomic-mean detection.
+      - |
+        AT F1 at this cluster (0.444) is in the borderline band — predicate set to
+        closeMatch rather than exactMatch.
+    discovery_score:
+      score: 9
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.7
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.99
+        - gene: Chrna2
+          val: 0.57
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+        - gene: Npy
+          val: 7.58
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.918
+        - gene: Pnoc
+          val: 2.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.551
+      region_fraction: 0.651
+      region_evidence: SELF
+      at_signal:
+        f1: 0.4444444444444445
+        n_cells: 10
+        target_level: cluster
+        target_name: 0768 Sst Gaba_3
+        score: 2
+
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0772
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0772
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 337; alveus 57; CA1 stratum radiatum 22"
+        alignment: CONSISTENT
+        notes: Strong CA1 stratum oriens dominance.
+      - property: marker_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 11.92 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35% sparse"
+        node_b_value: "Chrna2: 0.46 (precomputed mean) — sparse"
+        alignment: CONSISTENT
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96%"
+        node_b_value: "Grm1: 9.74 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT"
+        node_b_value: "Pvalb: 0.34 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 4.65 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 0.81 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 1.09 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.35 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 11.92"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 8.22 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59%"
+        node_b_value: "Pnoc: 1.65 (precomputed mean) — moderate/low"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0772 has highest Npy (8.22) in cohort, strong Sst (11.92) and Grm1 (9.74),
+          sparse Chrna2 (0.46) consistent with classical OLM, and CA1 stratum oriens-
+          dominant soma. PV very low (0.34) — best-matching negative marker profile
+          among the rank-0 candidates.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Sst-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          Sst-OLM cohort: 4 cells mapped to CLUS_0772 (secondary modal target after 0768).
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Htr3a-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          Htr3a-OLM cohort: 3 cells mapped to CLUS_0772.
+    caveats:
+      - Calb1 (4.65) non-trivial — classical OLM annotated CB-negative; flagged.
+      - AT F1 modest (0.267); predicate kept at closeMatch rather than exactMatch.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.92
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+        - gene: Chrna2
+          val: 0.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.939
+        - gene: Npy
+          val: 8.22
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+        - gene: Pnoc
+          val: 1.65
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.51
+      region_fraction: 0.81
+      region_evidence: SELF
+      at_signal:
+        f1: 0.26666666666666666
+        n_cells: 4
+        target_level: cluster
+        target_name: 0772 Sst Gaba_3
+        score: 1
+
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0771
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0771
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 117; Subiculum 59; Prosubiculum 52; corpus callosum posterior forceps 26; Retrosplenial ventral L5 22"
+        alignment: APPROXIMATE
+        notes: |
+          CA1 stratum oriens leads but substantial subicular/prosubicular component
+          and a retrosplenial fraction — possible subicular OLM-like population or
+          mixed cluster.
+      - property: marker_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 11.62 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35% sparse"
+        node_b_value: "Chrna2: 2.56 (precomputed mean) — highest Chrna2 in cohort"
+        alignment: CONSISTENT
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96%"
+        node_b_value: "Grm1: 10.29 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT"
+        node_b_value: "Pvalb: 1.16 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 8.34 (precomputed mean) — high"
+        alignment: DISCORDANT
+        notes: |
+          Calb1 strongly expressed (8.34), conflicting with classical OLM CB-negative
+          annotation. Could indicate this cluster is a Calb1+ Sst interneuron type
+          distinct from canonical OLM.
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 3.53 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 1.67 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.87 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 11.62"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 2.02 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Low Npy at the cluster level conflicts with classical OLM 80% Npy detection.
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59%"
+        node_b_value: "Pnoc: 3.72 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0771 carries the strongest Chrna2 signal (2.56) of the cohort — fitting
+          the Chrna2-Cre OLM hallmark — alongside high Sst and Grm1. However Calb1 (8.34)
+          and low Npy (2.02) deviate from the canonical OLM profile, and the cluster
+          extends into subiculum/prosubiculum/retrosplenial regions.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Sst-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          Sst-OLM cohort: 2 cells mapped to CLUS_0771. Small but non-zero count.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Htr3a-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          Htr3a-OLM cohort: 2 cells mapped to CLUS_0771.
+    caveats:
+      - High Calb1 (8.34) inconsistent with classical OLM CB-negative annotation.
+      - Low Npy (2.02) deviates from classical OLM Npy-positive pattern.
+      - Soma distribution extends into subiculum/prosubiculum/retrosplenial.
+    unresolved_questions:
+      - |
+        Is CLUS_0771 a Chrna2+/Calb1+ OLM variant, or a non-OLM Sst interneuron
+        that happens to share Chrna2 expression?
+    discovery_score:
+      score: 7
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.62
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+        - gene: Chrna2
+          val: 2.56
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.99
+        - gene: Npy
+          val: 2.02
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.673
+        - gene: Pnoc
+          val: 3.72
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.643
+      region_fraction: 0.413
+      region_evidence: SELF
+
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0775
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0775
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 42; Prosubiculum 34; Subiculum 19; alveus 18"
+        alignment: APPROXIMATE
+        notes: |
+          CA1 stratum oriens leads only narrowly (42) over prosubiculum (34) — substantial
+          subicular component. May be a subicular OLM-like population.
+      - property: marker_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 10.86 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35% sparse"
+        node_b_value: "Chrna2: 0.73 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96%"
+        node_b_value: "Grm1: 8.31 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT"
+        node_b_value: "Pvalb: 2.39 (precomputed mean)"
+        alignment: APPROXIMATE
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 1.51 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 0.65 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 5.65 (precomputed mean) — high"
+        alignment: DISCORDANT
+        notes: |
+          Nos1 strongly expressed; conflicts with classical OLM NOS-negative annotation.
+          Could indicate this cluster is the NOS+ subicular-leaning Sst population
+          rather than canonical CA1 OLM.
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.67 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 10.86"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 2.18 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59%"
+        node_b_value: "Pnoc: 7.20 (precomputed mean) — highest Pnoc in cohort"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0775 has very high Pnoc (7.20) — matching the Thulin 2025 Sst/Pnoc OLM
+          subcluster note in the classical node — and sparse Chrna2 (0.73). But strong
+          Nos1 (5.65) and low Npy (2.18) deviate from canonical OLM. May correspond
+          to a Pnoc-high subicular variant.
+    caveats:
+      - Nos1 high (5.65) conflicts with OLM NOS-negative annotation.
+      - Npy low (2.18) deviates from OLM Npy-positive pattern.
+      - Substantial subicular/prosubicular soma component.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.86
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.929
+        - gene: Chrna2
+          val: 0.73
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.98
+        - gene: Npy
+          val: 2.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.684
+        - gene: Pnoc
+          val: 7.2
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+      region_fraction: 0.372
+      region_evidence: SELF
+
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0773
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0773
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 113; Prosubiculum 26; Posterior amygdalar nucleus 23; alveus 13; corpus callosum anterior forceps 5; Subiculum 5"
+        alignment: APPROXIMATE
+        notes: |
+          CA1 stratum oriens dominant but with a Posterior amygdalar nucleus tail (23 cells)
+          that is anatomically distant. Subicular/prosubicular component also present.
+      - property: marker_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 11.43 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2 35% sparse"
+        node_b_value: "Chrna2: 0.65 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_mGluR1
+        node_a_value: "Grm1 96%"
+        node_b_value: "Grm1: 9.90 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_PV
+        node_a_value: "PV ABSENT"
+        node_b_value: "Pvalb: 0.36 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_CB
+        node_a_value: "CB ABSENT"
+        node_b_value: "Calb1: 5.07 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_CR
+        node_a_value: "CR ABSENT"
+        node_b_value: "Calb2: 1.21 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_NOS
+        node_a_value: "NOS ABSENT"
+        node_b_value: "Nos1: 3.61 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_VIP
+        node_a_value: "VIP ABSENT"
+        node_b_value: "Vip: 0.27 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst 100%"
+        node_b_value: "Sst: 11.43"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "Npy 80%"
+        node_b_value: "Npy: 1.61 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: neuropeptide_Pnoc
+        node_a_value: "Pnoc 59%"
+        node_b_value: "Pnoc: 4.40 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0773 has Sst (11.43), Chrna2 (0.65), Grm1 (9.90) consistent with OLM,
+          but low Npy (1.61) and a Posterior amygdalar nucleus soma fraction (23 cells)
+          weaken the case. Calb1 (5.07) also non-trivially expressed.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Sst-OLM
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE124847
+        explanation: |
+          Sst-OLM cohort: 1 cell mapped to CLUS_0773.
+    caveats:
+      - Posterior amygdalar nucleus soma component anatomically distant from CA1.
+      - Low Npy (1.61) deviates from classical OLM Npy positivity.
+      - Calb1 (5.07) and Nos1 (3.61) above background — conflict with OLM negative-marker annotations.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.43
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.949
+        - gene: Chrna2
+          val: 0.65
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+        - gene: Npy
+          val: 1.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.612
+        - gene: Pnoc
+          val: 4.4
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.673
+      region_fraction: 0.611
+      region_evidence: SELF

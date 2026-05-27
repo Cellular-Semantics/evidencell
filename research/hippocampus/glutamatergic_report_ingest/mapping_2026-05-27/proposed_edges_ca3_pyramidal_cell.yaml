@@ -1,0 +1,1511 @@
+# 2026-05-27 mapping re-run for ca3_pyramidal_cell
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters
+# and top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric.
+classical_node_id: ca3_pyramidal_cell
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0297
+    name: "0297 CA3 Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0297
+  - id: CS20230722_CLUS_0304
+    name: "0304 CA3 Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0304
+  - id: CS20230722_CLUS_0309
+    name: "0309 CA3 Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0309
+  - id: CS20230722_CLUS_0303
+    name: "0303 CA3 Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0303
+  - id: CS20230722_CLUS_0311
+    name: "0311 CA3 Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0311
+  - id: CS20230722_SUPT_0076
+    name: "0076 CA3 Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0076
+  - id: CS20230722_SUPT_0079
+    name: "0079 CA3 Glut_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: CS20230722_SUPT_0100
+    name: "0100 CA2-FC-IG Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0100
+  - id: CS20230722_SUPT_0141
+    name: "0141 DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0141
+  - id: CS20230722_SUPT_0197
+    name: "0197 RHP-COA Ndnf Gaba_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0197
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_SUPT_0076
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0076
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (Slc17a7+, AMPA/NMDA receptor descriptions)"
+        node_b_value: "Glut (subclass 017 CA3 Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA; PMID:24319410, PMID:32009891)"
+        node_b_value: "Field CA3 pyramidal layer 910; Field CA3 stratum oriens 701; Posterior amygdalar nucleus 529; Hippocampal formation 231; Field CA3 stratum lucidum 182; Field CA3 stratum radiatum 147"
+        alignment: CONSISTENT
+        notes: |
+          CA3 layers dominate soma counts (~1940 total CA3-resident cells across pyr,
+          oriens, lucidum, radiatum). Posterior amygdalar component (529 cells, ~25%)
+          is anatomically distant and likely a non-CA3 pyramidal subpopulation pooled
+          in this supertype — flagged. Consistent overall with classical CA3 pyramidal
+          location at the supertype scope.
+      - property: marker_Gria1
+        node_a_value: "Gria1+ (AMPA receptor IHC; PMID:32009891)"
+        node_b_value: "Gria1: 11.17 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "Gria2+ (AMPA receptor IHC; PMID:32009891)"
+        node_b_value: "Gria2: 10.62 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+ (mGluR1 review; PMID:27375434)"
+        node_b_value: "Grm1: 5.68 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+        notes: Modest Grm1 mean at supertype; child clusters vary (CLUS_0303 5.16, CLUS_0304 7.23).
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+ (VGluT1; PMID:27375434)"
+        node_b_value: "Slc17a7: 8.57 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "Nptn+ (IHC human hippocampus; PMID:28779130)"
+        node_b_value: "Nptn: 8.37 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+ (freeze-fracture replica; DOI:10.3389/fnana.2012.00013)"
+        node_b_value: "Gjd2: 0.91 (precomputed mean) — modest at supertype, higher in cluster CLUS_0303/0304 (2.01/1.28)"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0076 CA3 Glut_2 aggregates both rank-0 clusters CLUS_0303 and
+          CLUS_0304 (along with three other CA3 Glut child clusters). Its soma
+          distribution is dominated by CA3 pyramidal layer / stratum oriens with a
+          large posterior amygdalar contingent. Glutamatergic CA3 Glut subclass.
+          BroadMatch 1:n appropriate because two top-ranked rank-0 clusters
+          (0303, 0304) belong here and a specific cluster identity should be
+          resolved at rank 0.
+    caveats:
+      - |
+        Supertype contains multiple passing rank-0 clusters (CLUS_0303, CLUS_0304);
+        specific CA3 pyramidal subtype identity should be resolved at rank 0 rather
+        than mapped 1:1 at the supertype level.
+      - |
+        Posterior amygdalar component (529 cells, ~25%) is anatomically distant from
+        CA3 and may represent a non-canonical CA3-Glut subpopulation pooled in this
+        supertype.
+    unresolved_questions:
+      - |
+        Does the posterior amygdalar component represent a distinct ectopic CA3-like
+        type, or smRNA-seq registration noise at the CA3/amygdala border?
+    proposed_experiments:
+      - |
+        Per-cluster MERFISH (Slc17a7, Grm1, Cnr1) restricted to CA3 stratum pyramidale
+        to identify which rank-0 cluster best matches the classical canonical CA3
+        pyramidal cell.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 11.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.879
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.62
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.727
+          coverage: 1.0
+        - gene: Grm1
+          val: 5.68
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.485
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 8.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.667
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.37
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.636
+          coverage: 1.0
+        - gene: Gjd2
+          val: 0.91
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.848
+          coverage: 1.0
+      region_fraction: 0.337
+      region_evidence: SELF
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_SUPT_0079
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0079
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass 017 CA3 Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Dentate gyrus polymorph layer 1264; Field CA3 pyramidal layer 459; Field CA3 stratum radiatum 349; Field CA3 stratum oriens 225; Field CA3 stratum lucidum 175; DG granule cell layer 147"
+        alignment: APPROXIMATE
+        notes: |
+          Dominant soma component is the DG polymorph layer (hilus) — this is where
+          mossy cells reside, not CA3 pyramidal neurons. CA3 layers contribute a
+          substantial secondary component. This supertype likely represents the
+          mossy-cell / CA3 ventral border population (sometimes pooled with CA3
+          due to molecular similarity), not the canonical CA3 pyramidal cell.
+      - property: marker_Gria1
+        node_a_value: "Gria1+"
+        node_b_value: "Gria1: 11.12 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 10.92 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+ (robust)"
+        node_b_value: "Grm1: 6.10 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+"
+        node_b_value: "Slc17a7: 9.45 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "Nptn+"
+        node_b_value: "Nptn: 8.20 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+ (mixed electrical synapses)"
+        node_b_value: "Gjd2: 0.31 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Low Gjd2 contrasts with classical CA3 pyramidal Cx36 freeze-fracture data
+          (DOI:10.3389/fnana.2012.00013). Mossy cells are not classically Cx36+.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0079 CA3 Glut_5 carries Slc17a7/Gria1/Gria2 markers consistent with a
+          hippocampal glutamatergic principal neuron, but soma distribution is
+          dominated by DG polymorph layer (hilus) — characteristic of mossy
+          cells rather than CA3 pyramidal cells. Calb2 (9.59) is also strongly
+          expressed, consistent with mossy-cell identity. Predicate closeMatch
+          rather than broadMatch because this is a single supertype (no multiple
+          passing children at rank 0 within the cohort).
+    caveats:
+      - |
+        Dominant soma fraction in DG polymorph layer (hilus) — classical mossy cell
+        territory, not CA3 stratum pyramidale.
+      - |
+        High Calb2 (9.59) supports mossy-cell identity (mossy cells are classically
+        Calb2/calretinin+ in their dorsal-ventral gradient).
+      - |
+        Low Gjd2 conflicts with classical CA3 pyramidal Cx36 expression.
+    unresolved_questions:
+      - |
+        Should this supertype be mapped to the dg_mossy_cell classical node rather
+        than ca3_pyramidal_cell? Discovery ranked it for CA3 because of CA3-layer
+        soma minority and shared CA3-Glut subclass membership.
+    proposed_experiments:
+      - |
+        Calb2 + Calb1 smFISH co-localisation in DG hilus vs CA3 pyramidale to
+        confirm mossy-cell identity of this supertype's cells.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 11.12
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.818
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.92
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.939
+          coverage: 1.0
+        - gene: Grm1
+          val: 6.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.515
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 9.45
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.788
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.2
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.576
+          coverage: 1.0
+        - gene: Gjd2
+          val: 0.31
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.667
+          coverage: 1.0
+      region_fraction: 0.175
+      region_evidence: SELF
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_SUPT_0100
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0100
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass 025 CA2-FC-IG Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Field CA3 pyramidal layer 626; Field CA1 stratum oriens 427; Field CA1 pyramidal layer 395; Field CA2 pyramidal layer 307; Field CA3 stratum oriens 215; Field CA3 stratum lucidum 210"
+        alignment: APPROXIMATE
+        notes: |
+          Soma distribution spans CA3 + CA2 + CA1 + fasciola cinerea / induseum
+          griseum (per subclass name 025 CA2-FC-IG Glut). CA3 component is large
+          (~1050 cells across CA3 layers) but the supertype's primary identity is
+          CA2/FC/IG — distinct hippocampal subfields from CA3 proper.
+      - property: marker_Gria1
+        node_a_value: "Gria1+"
+        node_b_value: "Gria1: 10.65 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 10.48 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+"
+        node_b_value: "Grm1: 7.43 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+"
+        node_b_value: "Slc17a7: 10.38 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "Nptn+"
+        node_b_value: "Nptn: 8.88 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+"
+        node_b_value: "Gjd2: 0.0 (precomputed mean) — not detected"
+        alignment: DISCORDANT
+        notes: |
+          Gjd2 absent at the supertype — conflicts with classical CA3 pyramidal Cx36
+          freeze-fracture data and argues against CA3 pyramidal identity.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0100 CA2-FC-IG Glut_1 sits under subclass 025 CA2-FC-IG Glut, encompassing
+          CA2, fasciola cinerea and induseum griseum pyramidal neurons. Although the
+          supertype has a large CA3 pyramidal-layer cell count, its molecular and
+          taxonomic identity is CA2/FC/IG, not CA3 proper. Predicate closeMatch
+          reflects shared general principal-neuron molecular profile but a different
+          hippocampal subfield assignment.
+    caveats:
+      - |
+        Supertype primary identity is CA2/FC/IG (not CA3) per subclass label.
+      - |
+        Absent Gjd2 conflicts with CA3 pyramidal Cx36 expression annotation.
+    unresolved_questions:
+      - |
+        Why does the supertype carry a large CA3 pyramidal-layer soma count if its
+        subclass is CA2-FC-IG? Could reflect CA2/CA3a boundary registration uncertainty
+        in MERFISH atlas annotation.
+    proposed_experiments:
+      - |
+        Rgs14 (a CA2 marker) + Gjd2 smFISH co-localisation to disambiguate this
+        supertype's identity from canonical CA3.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 10.65
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.636
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.636
+          coverage: 1.0
+        - gene: Grm1
+          val: 7.43
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.636
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 10.38
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.97
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.88
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.97
+          coverage: 1.0
+        - gene: Gjd2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.25
+      region_evidence: SELF
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_SUPT_0141
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0141
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass 038 DG-PIR Ex IMN)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Dentate gyrus granule cell layer 1475; Dentate gyrus polymorph layer 1094; Dentate gyrus molecular layer 238; Field CA3 stratum oriens 135; Field CA3 pyramidal layer 82"
+        alignment: DISCORDANT
+        notes: |
+          Soma distribution is overwhelmingly in dentate gyrus (granule cell + polymorph
+          + molecular layers). CA3 contribution is a small minority (~217 cells).
+      - property: marker_Gria1
+        node_a_value: "Gria1+"
+        node_b_value: "Gria1: 8.84 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 10.26 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+ (robust)"
+        node_b_value: "Grm1: 2.43 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+"
+        node_b_value: "Slc17a7: 2.43 (precomputed mean) — very low"
+        alignment: DISCORDANT
+        notes: |
+          Very low Slc17a7 is unusual for a mature CA3 pyramidal cell; subclass
+          name DG-PIR Ex IMN (excitatory immature neuron) suggests an
+          adult-born/immature granule-cell-like population.
+      - property: marker_Nptn
+        node_a_value: "Nptn+"
+        node_b_value: "Nptn: 5.06 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+"
+        node_b_value: "Gjd2: 0.42 (precomputed mean) — low"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0141 DG-PIR Ex IMN_2 is an excitatory immature neuron population under
+          the DG-PIR (dentate gyrus / piriform) subclass — distinct from CA3
+          pyramidal cells. High Prox1 (9.52) is a granule-cell lineage marker.
+          Low Slc17a7 and Grm1 further argue against CA3 pyramidal identity.
+          Discovery likely ranked this supertype via marker similarity (Gria1/2)
+          and a minor CA3 stratum oriens component, not subfield identity.
+    caveats:
+      - Subclass identity is DG-PIR / immature neuron, not CA3.
+      - Soma distribution is in dentate gyrus, not CA3.
+      - Slc17a7 (2.43) and Grm1 (2.43) are very low relative to canonical CA3 pyramidal.
+      - High Prox1 (9.52) is a granule-cell marker.
+    unresolved_questions:
+      - |
+        Is this supertype a dentate gyrus immature neuron type that should map to a
+        DG-lineage classical node (e.g., dg_granule_cell or a separate immature node)
+        rather than ca3_pyramidal_cell?
+    discovery_score:
+      score: 7
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 8.84
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.515
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.26
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.576
+          coverage: 1.0
+        - gene: Grm1
+          val: 2.43
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.364
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 2.43
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.424
+          coverage: 1.0
+        - gene: Nptn
+          val: 5.06
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.212
+          coverage: 1.0
+        - gene: Gjd2
+          val: 0.42
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.697
+          coverage: 1.0
+      region_fraction: 0.027
+      region_evidence: SELF
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_SUPT_0197
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0197
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "GABAergic (subclass 048 RHP-COA Ndnf Gaba — name indicates GABAergic Ndnf interneuron)"
+        alignment: DISCORDANT
+        notes: |
+          Subclass name indicates this is a GABAergic Ndnf+ interneuron type from the
+          retrohippocampal/cortical amygdalar region. Direct NT-type conflict with
+          classical CA3 pyramidal (glutamatergic).
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Field CA3 stratum oriens 108; Field CA3 pyramidal layer 64; Field CA3 stratum radiatum 59; Field CA1 stratum oriens 44; Field CA3 stratum lucidum 22; Field CA1 stratum radiatum 20"
+        alignment: APPROXIMATE
+        notes: |
+          Soma sits in CA3/CA1 layers (oriens, pyramidale, radiatum) — i.e. CA3
+          interneurons interleaved with pyramidal neurons. Location is in the
+          right region but the cells are interneurons, not pyramidal.
+      - property: marker_Gria1
+        node_a_value: "Gria1+"
+        node_b_value: "Gria1: 9.70 (precomputed mean) — moderate (broadly expressed in neurons)"
+        alignment: APPROXIMATE
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 9.09 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+ (robust)"
+        node_b_value: "Grm1: 5.02 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+ (VGluT1, defining glutamatergic marker)"
+        node_b_value: "Slc17a7: 1.12 (precomputed mean) — very low"
+        alignment: DISCORDANT
+        notes: |
+          Low Slc17a7 is the strongest argument that this is not a glutamatergic
+          principal neuron. Combined with the GABAergic subclass label, this
+          confirms an interneuron identity.
+      - property: marker_Nptn
+        node_a_value: "Nptn+"
+        node_b_value: "Nptn: 8.46 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+"
+        node_b_value: "Gjd2: 3.16 (precomputed mean) — high"
+        alignment: APPROXIMATE
+        notes: |
+          High Gjd2 is consistent with electrical-synapse-rich interneuron networks
+          (also Cx36+ in classical literature), not specifically CA3 pyramidal.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0197 RHP-COA Ndnf Gaba_5 is a GABAergic Ndnf-expressing interneuron type per
+          subclass label, with low Slc17a7 (1.12) confirming non-glutamatergic identity.
+          Soma is in CA3 layers but the cells are interneurons, not pyramidal. The
+          rank-1 discovery hit reflects co-localisation in CA3 stratum pyramidale-
+          adjacent layers and incidental AMPA-receptor expression, not CA3 pyramidal
+          identity.
+    caveats:
+      - Subclass label indicates GABAergic Ndnf interneuron — fundamental NT mismatch.
+      - Very low Slc17a7 (1.12) confirms non-glutamatergic.
+      - Discovery ranking here is a false-positive at the supertype level — the cohort
+        filter (region=MBA:495) admitted CA3-resident GABAergic cells.
+    unresolved_questions:
+      - |
+        Why did the glutamatergic NT-type filter admit a GABAergic-named supertype?
+        Possible cause: nt_type field is null at the supertype level and filtering
+        only applies at the subclass/cluster level. Worth verifying.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 7
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 9.7
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.545
+          coverage: 1.0
+        - gene: Gria2
+          val: 9.09
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.455
+          coverage: 1.0
+        - gene: Grm1
+          val: 5.02
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.455
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 1.12
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.242
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.697
+          coverage: 1.0
+        - gene: Gjd2
+          val: 3.16
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.97
+          coverage: 1.0
+      region_fraction: 0.196
+      region_evidence: SELF
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_CLUS_0297
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0297
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Field CA3 stratum oriens 839; Field CA3 pyramidal layer 562; Field CA3 stratum lucidum 236; Field CA3 stratum radiatum 131; alveus 108; fimbria 93"
+        alignment: CONSISTENT
+        notes: |
+          All major soma components are CA3-resident across pyramidal, oriens, lucidum,
+          radiatum layers — clean canonical CA3 distribution with adjacent alveus/fimbria.
+      - property: marker_Gria1
+        node_a_value: "Gria1+ (AMPA receptor IHC)"
+        node_b_value: "Gria1: 10.99 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 10.95 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+ (mGluR1)"
+        node_b_value: "Grm1: 8.00 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+ (VGluT1)"
+        node_b_value: "Slc17a7: 10.31 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "Nptn+ (IHC human hippocampus)"
+        node_b_value: "Nptn: 8.55 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+ (freeze-fracture replica, CA3 mixed synapses)"
+        node_b_value: "Gjd2: 2.01 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0297 (0297 CA3 Glut_1, supertype 0075) shows the strongest match across
+          all property comparisons: CA3 layers dominate the soma distribution, all six
+          classical markers (Gria1, Gria2, Grm1, Slc17a7, Nptn, Gjd2) are highly expressed,
+          and Gjd2 is the highest in the rank-0 cohort (2.01) — directly matching the
+          Cx36-mediated electrical synapse property reported for CA3 pyramidal cells
+          (DOI:10.3389/fnana.2012.00013). Predicate kept at closeMatch in the absence
+          of an annotation-transfer F1 score; closeMatch reflects strong but unvalidated
+          1:1 correspondence.
+    caveats:
+      - |
+        No annotation transfer evidence available; predicate set to closeMatch rather
+        than exactMatch pending AT validation.
+      - |
+        Cck (3.49) and Wfs1 (2.37) modest expression — possible CA3a/CA3b/CA3c
+        subregional heterogeneity not captured at this cluster.
+    unresolved_questions:
+      - |
+        Does CLUS_0297 represent a specific CA3 subregion (CA3a vs CA3b vs CA3c) or
+        the canonical CA3 pyramidal cell across the whole field? MERFISH spatial
+        registration would help.
+    proposed_experiments:
+      - |
+        MERFISH-validated co-expression of Gjd2 with Slc17a7 + Grm1 in CA3 stratum
+        pyramidale to confirm CLUS_0297 as the canonical CA3 pyramidal cell type.
+      - |
+        Annotation transfer of a labelled CA3 pyramidal scRNA-seq dataset (e.g.,
+        Cembrowski 2016 / Habib 2017) to WMBv1 to quantify F1 against this cluster.
+    discovery_score:
+      score: 9
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 10.99
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.775
+        - gene: Gria2
+          val: 10.95
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.966
+        - gene: Grm1
+          val: 8.0
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.854
+        - gene: Slc17a7
+          val: 10.31
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.933
+        - gene: Nptn
+          val: 8.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.775
+        - gene: Gjd2
+          val: 2.01
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+      region_fraction: 0.285
+      region_evidence: SELF
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_CLUS_0304
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0304
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Field CA3 stratum oriens 430; Field CA3 pyramidal layer 406; Field CA3 stratum lucidum 116; Field CA3 stratum radiatum 95; Posterior amygdalar nucleus 50"
+        alignment: CONSISTENT
+        notes: |
+          CA3 layers dominate (~1050 cells); minor PostAmygdalar component (50) is small.
+      - property: marker_Gria1
+        node_a_value: "Gria1+"
+        node_b_value: "Gria1: 11.28 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 10.99 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+"
+        node_b_value: "Grm1: 7.23 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+"
+        node_b_value: "Slc17a7: 9.76 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "Nptn+"
+        node_b_value: "Nptn: 8.37 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+"
+        node_b_value: "Gjd2: 1.28 (precomputed mean) — moderate"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0304 (0304 CA3 Glut_2, supertype 0076) has the highest Gria1 (11.28) in
+          the cohort, robust expression of all six classical CA3 pyramidal markers, and
+          CA3 layer-dominant soma distribution. A strong canonical CA3 pyramidal
+          candidate alongside CLUS_0297. Predicate closeMatch absent AT validation.
+    caveats:
+      - |
+        Minor posterior amygdalar component (50 cells) may indicate boundary cells
+        or ectopic CA3-like neurons.
+      - Calb2 (1.91) and Nos1 (1.70) modest; classical CA3 pyramidal cell expression
+        of these is not strongly characterised.
+    proposed_experiments:
+      - |
+        Annotation transfer with a CA3-labelled dataset to quantify F1 against CLUS_0304
+        vs CLUS_0297 — both are strong candidates.
+    discovery_score:
+      score: 9
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 11.28
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.944
+        - gene: Gria2
+          val: 10.99
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+        - gene: Grm1
+          val: 7.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.708
+        - gene: Slc17a7
+          val: 9.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.854
+        - gene: Nptn
+          val: 8.37
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.708
+        - gene: Gjd2
+          val: 1.28
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.955
+      region_fraction: 0.37
+      region_evidence: SELF
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_CLUS_0309
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0309
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Field CA3 stratum oriens 1771; Field CA3 pyramidal layer 777; Field CA3 stratum radiatum 297; Field CA3 stratum lucidum 232; alveus 145"
+        alignment: CONSISTENT
+        notes: Clean CA3 dominance; this is the most populous cluster (n=2598).
+      - property: marker_Gria1
+        node_a_value: "Gria1+"
+        node_b_value: "Gria1: 10.49 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 10.59 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+"
+        node_b_value: "Grm1: 7.60 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+"
+        node_b_value: "Slc17a7: 10.46 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "Nptn+"
+        node_b_value: "Nptn: 8.71 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+"
+        node_b_value: "Gjd2: 0.30 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Low Gjd2 contrasts with classical CA3 pyramidal Cx36 expression. May
+          indicate a CA3 subregional subtype with reduced electrical-synapse
+          density, or a specific CA3 cluster with different gap junction biology.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0309 (0309 CA3 Glut_3, supertype 0077) has the highest Slc17a7 (10.46)
+          of the rank-0 cohort and the largest cell count (n=2598). Soma distribution
+          is dominantly CA3 stratum oriens (1771) and pyramidal layer. However Gjd2
+          is markedly low (0.30) and Nos1 (5.39) and Cck (8.54) are elevated — a
+          molecular profile that may represent a distinct CA3 pyramidal subtype
+          (possibly CA3 stratum-oriens-resident or CA3c). PartialOverlapMatch was
+          deprecated; closeMatch reflects strong overall match with one discordant
+          property.
+    caveats:
+      - |
+        Low Gjd2 (0.30) conflicts with classical CA3 pyramidal Cx36 expression.
+      - |
+        Elevated Nos1 (5.39) and Cck (8.54) are not classical CA3 pyramidal hallmarks
+        and may indicate a specific CA3 subtype or contamination by stratum-oriens
+        interneurons / CA3c-region neurons.
+    unresolved_questions:
+      - |
+        Is CLUS_0309 a CA3 pyramidal subtype (e.g., CA3c) with reduced Cx36 / higher
+        Nos1, or a non-pyramidal CA3 stratum-oriens excitatory neuron?
+    proposed_experiments:
+      - |
+        Gjd2 + Slc17a7 dual smFISH in CA3 stratum oriens to test whether this
+        cluster's cells genuinely lack Cx36.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 10.49
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.596
+        - gene: Gria2
+          val: 10.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.685
+        - gene: Grm1
+          val: 7.6
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.798
+        - gene: Slc17a7
+          val: 10.46
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.989
+        - gene: Nptn
+          val: 8.71
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.899
+        - gene: Gjd2
+          val: 0.3
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.809
+      region_fraction: 0.241
+      region_evidence: SELF
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_CLUS_0303
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0303
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Field CA3 pyramidal layer 167; Hippocampal formation 84; Field CA3 stratum oriens 84; Posterior amygdalar nucleus 68; Medial amygdalar nucleus 58"
+        alignment: APPROXIMATE
+        notes: |
+          Small cluster (n=143 cells in atlas). CA3 layers dominate (~251 across pyr +
+          oriens + formation) but substantial amygdalar contamination (PostAmyg 68 +
+          MedAmyg 58). Mixed identity.
+      - property: marker_Gria1
+        node_a_value: "Gria1+"
+        node_b_value: "Gria1: 11.15 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 10.58 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+"
+        node_b_value: "Grm1: 5.16 (precomputed mean) — moderate/low"
+        alignment: APPROXIMATE
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+"
+        node_b_value: "Slc17a7: 8.15 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "Nptn+"
+        node_b_value: "Nptn: 8.25 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+"
+        node_b_value: "Gjd2: 2.01 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0303 (0303 CA3 Glut_2, supertype 0076) shows strong Gjd2 (2.01) and
+          robust glutamatergic markers, consistent with CA3 pyramidal. However, a
+          substantial fraction of the cluster's cells reside in posterior/medial
+          amygdalar nuclei (~88% of non-CA3 cells), and high Calb2 (7.95) is
+          atypical for canonical CA3 pyramidal cells. Predicate closeMatch reflects
+          shared CA3 Glut markers with the caveat that this is a small, mixed-identity
+          cluster.
+    caveats:
+      - |
+        Small cluster (n=143); substantial amygdalar (PostAmyg, MedAmyg) component.
+      - |
+        High Calb2 (7.95) is atypical for canonical CA3 pyramidal cell expression.
+    unresolved_questions:
+      - |
+        Is CLUS_0303 a small CA3/amygdala-border or CA3 ventral-pole pyramidal
+        subtype, or a non-CA3 type pooled into the CA3 Glut_2 supertype?
+    discovery_score:
+      score: 8
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 11.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.888
+        - gene: Gria2
+          val: 10.58
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.674
+        - gene: Grm1
+          val: 5.16
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.596
+        - gene: Slc17a7
+          val: 8.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.607
+        - gene: Nptn
+          val: 8.25
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.64
+        - gene: Gjd2
+          val: 2.01
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+      region_fraction: 0.362
+      region_evidence: SELF
+
+  - id: edge_ca3_pyramidal_cell_to_CS20230722_CLUS_0311
+    lit_type: ca3_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0311
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA3 stratum pyramidale (SOMA)"
+        node_b_value: "Field CA3 pyramidal layer 638; Field CA3 stratum lucidum 251; Field CA3 stratum radiatum 190; Field CA3 stratum oriens 188"
+        alignment: CONSISTENT
+        notes: All major soma components are CA3-resident — clean canonical CA3 distribution.
+      - property: marker_Gria1
+        node_a_value: "Gria1+"
+        node_b_value: "Gria1: 11.08 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "Gria2+"
+        node_b_value: "Gria2: 10.79 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Grm1
+        node_a_value: "Grm1+"
+        node_b_value: "Grm1: 7.66 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "Slc17a7+"
+        node_b_value: "Slc17a7: 9.69 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "Nptn+"
+        node_b_value: "Nptn: 8.62 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gjd2
+        node_a_value: "Gjd2/Cx36+"
+        node_b_value: "Gjd2: 1.60 (precomputed mean) — moderate"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0311 (0311 CA3 Glut_3, supertype 0077) carries strong CA3 pyramidal
+          markers (Gria1/Gria2/Slc17a7/Grm1/Nptn) and moderate Gjd2 (1.60). Soma
+          distribution is entirely within CA3 layers — among the cleanest in the
+          rank-0 cohort. However Calb2 (8.33) is high and Cck (10.66) is the
+          highest in the cohort, suggesting a specific CA3 subtype (possibly
+          CA3 thorny excrescence pyramidal neuron or a CA3-ventral subtype).
+    caveats:
+      - |
+        Very high Calb2 (8.33) and Cck (10.66) are atypical for canonical CA3
+        pyramidal — may represent a specific CA3 subtype (e.g., ventral CA3 or
+        CA3c).
+      - |
+        Elevated Nos1 (3.75) flagged but consistent with supertype 0077 pattern.
+    unresolved_questions:
+      - |
+        Does CLUS_0311 correspond to ventral CA3 / CA3c pyramidal neurons, given
+        its Calb2 enrichment?
+    discovery_score:
+      score: 8
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria1
+          val: 11.08
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.831
+        - gene: Gria2
+          val: 10.79
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.798
+        - gene: Grm1
+          val: 7.66
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.831
+        - gene: Slc17a7
+          val: 9.69
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.82
+        - gene: Nptn
+          val: 8.62
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.876
+        - gene: Gjd2
+          val: 1.6
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.966
+      region_fraction: 0.504
+      region_evidence: SELF

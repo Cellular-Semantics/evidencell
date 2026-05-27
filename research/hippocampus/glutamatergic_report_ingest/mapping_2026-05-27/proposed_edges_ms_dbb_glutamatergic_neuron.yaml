@@ -1,0 +1,1246 @@
+# 2026-05-27 mapping re-run for ms_dbb_glutamatergic_neuron
+# Stage B output: proposed MappingEdges against top 5 rank-1 supertypes
+# and top 5 rank-0 clusters from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric. All ten candidates are anatomically
+# extra-MS/DBB (thalamic or entorhinal) and receive evidencell:UncertainRelationship;
+# none constitute a viable MS-DBB glutamatergic match in the current discovery cohort.
+classical_node_id: ms_dbb_glutamatergic_neuron
+taxonomy_id: CCN20230722
+stubs:
+- id: CS20230722_CLUS_2668
+  name: 2668 TH Prkcd Grin2c Glut_8
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_2668
+- id: CS20230722_CLUS_2622
+  name: 2622 PVT-PT Ntrk1 Glut_2
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_2622
+- id: CS20230722_CLUS_2625
+  name: 2625 PVT-PT Ntrk1 Glut_3
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_2625
+- id: CS20230722_CLUS_2627
+  name: 2627 PVT-PT Ntrk1 Glut_4
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_2627
+- id: CS20230722_CLUS_2628
+  name: 2628 PVT-PT Ntrk1 Glut_4
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_CLUS_2628
+- id: CS20230722_SUPT_0646
+  name: 0646 PVT-PT Ntrk1 Glut_4
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0646
+- id: CS20230722_SUPT_0007
+  name: 0007 L5/6 IT TPE-ENT Glut_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0007
+- id: CS20230722_SUPT_0010
+  name: 0010 L5/6 IT TPE-ENT Glut_4
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0010
+- id: CS20230722_SUPT_0053
+  name: 0053 L2 IT ENT-po Glut_3
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0053
+- id: CS20230722_SUPT_0051
+  name: 0051 L2 IT ENT-po Glut_1
+  definition_basis: ATLAS_TRANSCRIPTOMIC
+  taxonomy_id: CCN20230722
+  cell_set_accession: CS20230722_SUPT_0051
+edges:
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0646
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_SUPT_0646
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy supertype 0646 PVT-PT Ntrk1 Glut_4)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Xiphoid thalamic nucleus 71+39; Interanteromedial nucleus of the thalamus 72; Thalamus 61; Paraventricular
+      nucleus of the thalamus 143+38
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in thalamus (PVT/anterior/midline thalamic nuclei) \u2014 no medial septum / diagonal\
+      \ band of Broca component. Classical node has soma in MS/DBB; candidate emerged via hippocampus-region anat fallback\
+      \ or via a sibling glutamatergic cohort but is anatomically unrelated to MS-DBB."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 0.41 (precomputed mean)'
+    alignment: DISCORDANT
+    notes: Slc17a7 low; classical MS-DBB Glut neurons co-express VGluT1 and VGluT2 but VGluT2 is the more prominent transcript
+      in some accounts. Low Slc17a7 here is consistent with a VGluT2-dominant thalamic population, not the dual-VGluT1/VGluT2
+      MS-DBB pattern.
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 9.63 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.03 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 0646 PVT-PT Ntrk1 Glut_4 (supertype; neighborhood TH-EPI-Glut) carries a glutamatergic transcriptomic
+      profile (Slc17a6/Slc17a7; Chat/Gad1 negative) but its soma distribution is entirely outside the medial septum / diagonal
+      band of Broca. The classical MS-DBB glutamatergic neuron has its soma in MS/DBB (extrahippocampal) and projects into
+      hippocampal stratum oriens; the candidate is best interpreted as a thalamic (PVT / anterior / midline) or entorhinal/parasubicular
+      glutamatergic type that surfaced via the hippocampus-region anat fallback or the broader glutamatergic survival cohort,
+      not as the MS-DBB classical type.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 5
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 0.41
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.62
+      coverage: 1.0
+    - gene: Slc17a6
+      val: 9.63
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.985
+      coverage: 1.0
+    - gene: -Chat
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    - gene: -Gad1
+      val: 0.03
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.003
+    region_fraction: 0.0
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0007
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_SUPT_0007
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy supertype 0007 L5/6 IT TPE-ENT Glut_1)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Agranular insular area, dorsal part, layer 5 321; Entorhinal area, lateral part, layer 5 520+175; Entorhinal
+      area, lateral part, layer 3 29; Entorhinal area, lateral part, layer 6a 31
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in entorhinal/parasubicular cortex \u2014 no medial septum / diagonal band of Broca\
+      \ component. Classical node has soma in MS/DBB; candidate is anatomically unrelated."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 10.31 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 1.48 (precomputed mean)'
+    alignment: APPROXIMATE
+    notes: Slc17a6 low; entorhinal pyramidal-type candidates rely on Slc17a7.
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.02 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.85 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 0007 L5/6 IT TPE-ENT Glut_1 (supertype; neighborhood PAL-CTX-Glut (entorhinal)) is an entorhinal/parasubicular
+      Slc17a7+ pyramidal-type glutamatergic population, anatomically distinct from MS-DBB. Surfaced via the survival cohort
+      but its soma is in entorhinal cortex / parasubiculum, not MS/DBB.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 4
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 10.31
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.986
+      coverage: 1.0
+    - gene: Slc17a6
+      val: 1.48
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.242
+      coverage: 1.0
+    - gene: -Chat
+      val: 0.02
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.582
+    - gene: -Gad1
+      val: 0.85
+      reliable: true
+      raw_tier: -1
+      applied_score: -1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.623
+    region_fraction: 0.702
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0010
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_SUPT_0010
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy supertype 0010 L5/6 IT TPE-ENT Glut_4)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Entorhinal area, lateral part, layer 5 499+374; Entorhinal area, medial part, dorsal zone, layer 6 287+259;
+      Entorhinal area, medial part, dorsal zone, layer 5 138+115
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in entorhinal/parasubicular cortex \u2014 no medial septum / diagonal band of Broca\
+      \ component. Classical node has soma in MS/DBB; candidate is anatomically unrelated."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 9.92 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 0.23 (precomputed mean)'
+    alignment: DISCORDANT
+    notes: Slc17a6 low; entorhinal pyramidal-type candidates rely on Slc17a7.
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.92 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 0010 L5/6 IT TPE-ENT Glut_4 (supertype; neighborhood PAL-CTX-Glut (entorhinal)) is an entorhinal/parasubicular
+      Slc17a7+ pyramidal-type glutamatergic population, anatomically distinct from MS-DBB. Surfaced via the survival cohort
+      but its soma is in entorhinal cortex / parasubiculum, not MS/DBB.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 4
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 9.92
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.957
+      coverage: 1.0
+    - gene: Slc17a6
+      val: 0.23
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.098
+      coverage: 1.0
+    - gene: -Chat
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    - gene: -Gad1
+      val: 0.92
+      reliable: true
+      raw_tier: -1
+      applied_score: -1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.663
+    region_fraction: 1.0
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0053
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_SUPT_0053
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy supertype 0053 L2 IT ENT-po Glut_3)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Entorhinal area, medial part, dorsal zone, layer 5 105; Entorhinal area, medial part, dorsal zone, layer
+      3 185; Field CA1, stratum radiatum 1; Piriform area 1
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in entorhinal/parasubicular cortex \u2014 no medial septum / diagonal band of Broca\
+      \ component. Classical node has soma in MS/DBB; candidate is anatomically unrelated."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 9.97 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 2.07 (precomputed mean)'
+    alignment: APPROXIMATE
+    notes: Slc17a6 low; entorhinal pyramidal-type candidates rely on Slc17a7.
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.59 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 0053 L2 IT ENT-po Glut_3 (supertype; neighborhood PAL-CTX-Glut (entorhinal)) is an entorhinal/parasubicular
+      Slc17a7+ pyramidal-type glutamatergic population, anatomically distinct from MS-DBB. Surfaced via the survival cohort
+      but its soma is in entorhinal cortex / parasubiculum, not MS/DBB.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 4
+    rank_in_cohort: 4
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 9.97
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.963
+      coverage: 1.0
+    - gene: Slc17a6
+      val: 2.07
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.264
+      coverage: 1.0
+    - gene: -Chat
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    - gene: -Gad1
+      val: 0.59
+      reliable: true
+      raw_tier: -1
+      applied_score: -1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.306
+    region_fraction: 0.998
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0051
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_SUPT_0051
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy supertype 0051 L2 IT ENT-po Glut_1)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Parasubiculum 391; Entorhinal area, medial part, dorsal zone, layer 2 510+411; Entorhinal area, medial part,
+      dorsal zone, layer 3 296+258; Entorhinal area, medial part, dorsal zone, layer 1 59
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in entorhinal/parasubicular cortex \u2014 no medial septum / diagonal band of Broca\
+      \ component. Classical node has soma in MS/DBB; candidate is anatomically unrelated."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 10.39 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 6.26 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.04 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.66 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 0051 L2 IT ENT-po Glut_1 (supertype; neighborhood PAL-CTX-Glut (entorhinal)) is an entorhinal/parasubicular
+      Slc17a7+ pyramidal-type glutamatergic population, anatomically distinct from MS-DBB. Surfaced via the survival cohort
+      but its soma is in entorhinal cortex / parasubiculum, not MS/DBB.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 4
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 4
+    rank: 1
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 1
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 10.39
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.991
+      coverage: 1.0
+    - gene: Slc17a6
+      val: 6.26
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.349
+      coverage: 1.0
+    - gene: -Chat
+      val: 0.04
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.7
+    - gene: -Gad1
+      val: 0.66
+      reliable: true
+      raw_tier: -1
+      applied_score: -1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.416
+    region_fraction: 1.0
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2668
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_CLUS_2668
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy cluster 2668 TH Prkcd Grin2c Glut_8)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Interanteromedial nucleus of the thalamus 20; Interanterodorsal nucleus of the thalamus 20; Anteromedial
+      nucleus, dorsal part 41+2; Posterior complex of the thalamus 1; Thalamus 7
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in thalamus (PVT/anterior/midline thalamic nuclei) \u2014 no medial septum / diagonal\
+      \ band of Broca component. Classical node has soma in MS/DBB; candidate emerged via hippocampus-region anat fallback\
+      \ or via a sibling glutamatergic cohort but is anatomically unrelated to MS-DBB."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 0.61 (precomputed mean)'
+    alignment: DISCORDANT
+    notes: Slc17a7 low; classical MS-DBB Glut neurons co-express VGluT1 and VGluT2 but VGluT2 is the more prominent transcript
+      in some accounts. Low Slc17a7 here is consistent with a VGluT2-dominant thalamic population, not the dual-VGluT1/VGluT2
+      MS-DBB pattern.
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 9.5 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 2668 TH Prkcd Grin2c Glut_8 (cluster; neighborhood TH-EPI-Glut) carries a glutamatergic transcriptomic
+      profile (Slc17a6/Slc17a7; Chat/Gad1 negative) but its soma distribution is entirely outside the medial septum / diagonal
+      band of Broca. The classical MS-DBB glutamatergic neuron has its soma in MS/DBB (extrahippocampal) and projects into
+      hippocampal stratum oriens; the candidate is best interpreted as a thalamic (PVT / anterior / midline) or entorhinal/parasubicular
+      glutamatergic type that surfaced via the hippocampus-region anat fallback or the broader glutamatergic survival cohort,
+      not as the MS-DBB classical type.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 6
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 0.61
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.707
+    - gene: Slc17a6
+      val: 9.5
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.979
+    - gene: -Chat
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    - gene: -Gad1
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.009
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2622
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_CLUS_2622
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy cluster 2622 PVT-PT Ntrk1 Glut_2)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Paraventricular nucleus of the thalamus 43+8; Mediodorsal nucleus of thalamus 73+6; Intermediodorsal nucleus
+      of the thalamus 2; Parataenial nucleus 2
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in thalamus (PVT/anterior/midline thalamic nuclei) \u2014 no medial septum / diagonal\
+      \ band of Broca component. Classical node has soma in MS/DBB; candidate emerged via hippocampus-region anat fallback\
+      \ or via a sibling glutamatergic cohort but is anatomically unrelated to MS-DBB."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 0.52 (precomputed mean)'
+    alignment: DISCORDANT
+    notes: Slc17a7 low; classical MS-DBB Glut neurons co-express VGluT1 and VGluT2 but VGluT2 is the more prominent transcript
+      in some accounts. Low Slc17a7 here is consistent with a VGluT2-dominant thalamic population, not the dual-VGluT1/VGluT2
+      MS-DBB pattern.
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 9.47 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 2622 PVT-PT Ntrk1 Glut_2 (cluster; neighborhood TH-EPI-Glut) carries a glutamatergic transcriptomic
+      profile (Slc17a6/Slc17a7; Chat/Gad1 negative) but its soma distribution is entirely outside the medial septum / diagonal
+      band of Broca. The classical MS-DBB glutamatergic neuron has its soma in MS/DBB (extrahippocampal) and projects into
+      hippocampal stratum oriens; the candidate is best interpreted as a thalamic (PVT / anterior / midline) or entorhinal/parasubicular
+      glutamatergic type that surfaced via the hippocampus-region anat fallback or the broader glutamatergic survival cohort,
+      not as the MS-DBB classical type.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 5
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 0.52
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.699
+    - gene: Slc17a6
+      val: 9.47
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.975
+    - gene: -Chat
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    - gene: -Gad1
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.0
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2625
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_CLUS_2625
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy cluster 2625 PVT-PT Ntrk1 Glut_3)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Paraventricular nucleus of the thalamus 224+25; Nucleus of reuniens 5; Thalamus 35+4; Parataenial nucleus
+      18
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in thalamus (PVT/anterior/midline thalamic nuclei) \u2014 no medial septum / diagonal\
+      \ band of Broca component. Classical node has soma in MS/DBB; candidate emerged via hippocampus-region anat fallback\
+      \ or via a sibling glutamatergic cohort but is anatomically unrelated to MS-DBB."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 0.42 (precomputed mean)'
+    alignment: DISCORDANT
+    notes: Slc17a7 low; classical MS-DBB Glut neurons co-express VGluT1 and VGluT2 but VGluT2 is the more prominent transcript
+      in some accounts. Low Slc17a7 here is consistent with a VGluT2-dominant thalamic population, not the dual-VGluT1/VGluT2
+      MS-DBB pattern.
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 10.18 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 2625 PVT-PT Ntrk1 Glut_3 (cluster; neighborhood TH-EPI-Glut) carries a glutamatergic transcriptomic
+      profile (Slc17a6/Slc17a7; Chat/Gad1 negative) but its soma distribution is entirely outside the medial septum / diagonal
+      band of Broca. The classical MS-DBB glutamatergic neuron has its soma in MS/DBB (extrahippocampal) and projects into
+      hippocampal stratum oriens; the candidate is best interpreted as a thalamic (PVT / anterior / midline) or entorhinal/parasubicular
+      glutamatergic type that surfaced via the hippocampus-region anat fallback or the broader glutamatergic survival cohort,
+      not as the MS-DBB classical type.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 5
+    rank_in_cohort: 3
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 0.42
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.683
+    - gene: Slc17a6
+      val: 10.18
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.999
+    - gene: -Chat
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    - gene: -Gad1
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.0
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2627
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_CLUS_2627
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy cluster 2627 PVT-PT Ntrk1 Glut_4)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Xiphoid thalamic nucleus 24+1; Thalamus 10; Nucleus of reuniens 7+2; Paraventricular hypothalamic nucleus
+      1
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in thalamus (PVT/anterior/midline thalamic nuclei) \u2014 no medial septum / diagonal\
+      \ band of Broca component. Classical node has soma in MS/DBB; candidate emerged via hippocampus-region anat fallback\
+      \ or via a sibling glutamatergic cohort but is anatomically unrelated to MS-DBB."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 0.11 (precomputed mean)'
+    alignment: DISCORDANT
+    notes: Slc17a7 low; classical MS-DBB Glut neurons co-express VGluT1 and VGluT2 but VGluT2 is the more prominent transcript
+      in some accounts. Low Slc17a7 here is consistent with a VGluT2-dominant thalamic population, not the dual-VGluT1/VGluT2
+      MS-DBB pattern.
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 9.56 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 2627 PVT-PT Ntrk1 Glut_4 (cluster; neighborhood TH-EPI-Glut) carries a glutamatergic transcriptomic
+      profile (Slc17a6/Slc17a7; Chat/Gad1 negative) but its soma distribution is entirely outside the medial septum / diagonal
+      band of Broca. The classical MS-DBB glutamatergic neuron has its soma in MS/DBB (extrahippocampal) and projects into
+      hippocampal stratum oriens; the candidate is best interpreted as a thalamic (PVT / anterior / midline) or entorhinal/parasubicular
+      glutamatergic type that surfaced via the hippocampus-region anat fallback or the broader glutamatergic survival cohort,
+      not as the MS-DBB classical type.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 5
+    rank_in_cohort: 4
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 0.11
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.529
+    - gene: Slc17a6
+      val: 9.56
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.981
+    - gene: -Chat
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    - gene: -Gad1
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.0
+    region_evidence: SELF
+- id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2628
+  lit_type: ms_dbb_glutamatergic_neuron
+  taxonomy_type: CS20230722_CLUS_2628
+  mapping_predicate: evidencell:UncertainRelationship
+  mapping_cardinality: '1:1'
+  mapping_justification: semapv:UnspecifiedMatching
+  property_comparisons:
+  - property: nt_type
+    node_a_value: glutamatergic (VGluT1/VGluT2; CHAT- and GAD1-negative)
+    node_b_value: Glut (taxonomy cluster 2628 PVT-PT Ntrk1 Glut_4)
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: Medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 used as nearest umbrella)
+    node_b_value: Xiphoid thalamic nucleus 23; Interanteromedial nucleus of the thalamus 20; Thalamus 9; Paraventricular nucleus
+      of the thalamus 41+3; Paraventricular hypothalamic nucleus, descending division 1
+    alignment: DISCORDANT
+    notes: "Atlas SOMA distribution is in thalamus (PVT/anterior/midline thalamic nuclei) \u2014 no medial septum / diagonal\
+      \ band of Broca component. Classical node has soma in MS/DBB; candidate emerged via hippocampus-region anat fallback\
+      \ or via a sibling glutamatergic cohort but is anatomically unrelated to MS-DBB."
+  - property: marker_Slc17a7
+    node_a_value: Slc17a7+ (VGluT1; classical MS-DBB glutamatergic neurons express VGluT1 and VGluT2)
+    node_b_value: 'Slc17a7: 0.18 (precomputed mean)'
+    alignment: DISCORDANT
+    notes: Slc17a7 low; classical MS-DBB Glut neurons co-express VGluT1 and VGluT2 but VGluT2 is the more prominent transcript
+      in some accounts. Low Slc17a7 here is consistent with a VGluT2-dominant thalamic population, not the dual-VGluT1/VGluT2
+      MS-DBB pattern.
+  - property: marker_Slc17a6
+    node_a_value: Slc17a6+ (VGluT2)
+    node_b_value: 'Slc17a6: 9.75 (precomputed mean)'
+    alignment: CONSISTENT
+    notes: null
+  - property: negative_marker_Chat
+    node_a_value: Chat ABSENT (classical glutamatergic vs cholinergic distinction)
+    node_b_value: 'Chat: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  - property: negative_marker_Gad1
+    node_a_value: Gad1 ABSENT (classical glutamatergic vs GABAergic distinction)
+    node_b_value: 'Gad1: 0.0 (precomputed mean)'
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: REFUTE
+    reference: https://doi.org/10.1038/s41586-023-06812-z
+    explanation: Candidate 2628 PVT-PT Ntrk1 Glut_4 (cluster; neighborhood TH-EPI-Glut) carries a glutamatergic transcriptomic
+      profile (Slc17a6/Slc17a7; Chat/Gad1 negative) but its soma distribution is entirely outside the medial septum / diagonal
+      band of Broca. The classical MS-DBB glutamatergic neuron has its soma in MS/DBB (extrahippocampal) and projects into
+      hippocampal stratum oriens; the candidate is best interpreted as a thalamic (PVT / anterior / midline) or entorhinal/parasubicular
+      glutamatergic type that surfaced via the hippocampus-region anat fallback or the broader glutamatergic survival cohort,
+      not as the MS-DBB classical type.
+  caveats:
+  - SOMA location is entirely outside the medial septum / diagonal band of Broca; no anatomical overlap with the classical
+    MS-DBB glutamatergic neuron soma.
+  - "WMBv1 does not currently include a clearly demarcated MS-DBB glutamatergic supertype/cluster among the rank-0/rank-1\
+    \ candidates surfaced for this classical node \u2014 the discovery cohort is dominated by thalamic (PVT/anterior/midline)\
+    \ and entorhinal glutamatergic types."
+  - "Classical MS-DBB glutamatergic neurons are defined in part by their hippocampal projection target and cluster-firing\
+    \ electrophysiology \u2014 neither property is comparable from atlas metadata alone."
+  unresolved_questions:
+  - Does WMBv1 contain an MS-DBB glutamatergic cluster (e.g. under a septal/PAL neighborhood) that was excluded from the hippocampus-region
+    discovery query?
+  - Could a targeted query against MBA septal-complex anat terms (MBA medial septal nucleus, diagonal band nucleus) recover
+    an appropriate atlas type?
+  proposed_experiments:
+  - Re-run candidate discovery against MS-DBB anat terms (medial septal nucleus, diagonal band nucleus) rather than the hippocampal
+    formation region, restricted to glutamatergic NT and excluding Chat/Gad1.
+  - "If a septal Slc17a6/Slc17a7+ cluster is identified, validate the hippocampal projection via Slc17a6-Cre \xD7 AAV anterograde\
+    \ tracing into CA1/CA3 stratum oriens."
+  discovery_score:
+    score: 5
+    rank_in_cohort: 5
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:1089
+      - nt_type=glutamatergic
+    expression_detail:
+    - gene: Slc17a7
+      val: 0.18
+      reliable: true
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.59
+    - gene: Slc17a6
+      val: 9.75
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.992
+    - gene: -Chat
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    - gene: -Gad1
+      val: 0.0
+      reliable: false
+      raw_tier: 1
+      applied_score: 1.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.0
+    region_fraction: 0.0
+    region_evidence: SELF

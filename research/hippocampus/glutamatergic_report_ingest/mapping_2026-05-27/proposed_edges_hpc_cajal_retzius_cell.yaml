@@ -1,0 +1,839 @@
+classical_node_id: hpc_cajal_retzius_cell
+taxonomy_id: CCN20230722
+
+stubs:
+  - id: WMB:CS20230722_CLUS_0497
+    name: 0497 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0497
+  - id: WMB:CS20230722_CLUS_0498
+    name: 0498 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0498
+  - id: WMB:CS20230722_CLUS_0499
+    name: 0499 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0499
+  - id: WMB:CS20230722_CLUS_0500
+    name: 0500 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0500
+  - id: WMB:CS20230722_CLUS_0501
+    name: 0501 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0501
+  - id: WMB:CS20230722_SUPT_0135
+    name: 0135 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0135
+  - id: WMB:CS20230722_SUPT_1154
+    name: 1154 CB Granule Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1154
+  - id: WMB:CS20230722_SUPT_1155
+    name: 1155 CB Granule Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1155
+  - id: WMB:CS20230722_SUPT_1170
+    name: 1170 Astroependymal NN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1170
+  - id: WMB:CS20230722_SUPT_1169
+    name: 1169 Astroependymal NN_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1169
+
+edges:
+
+  # ── PRIMARY MATCH: dominant HPF CR cluster (CA1 SLM + DG mol layer) ──────────
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0497
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0497
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (cl_terms: CL:0000679)"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 stratum lacunosum-moleculare (SOMA); UBERON:0001885 dentate gyrus OML (SOMA)"
+        node_b_value: "MBA:10703 Dentate gyrus molecular layer (SOMA; 640 Zhuang 2023 + 1735 Yao 2024 = 2375 cells); MBA:391 Field CA1 stratum lacunosum-moleculare (SOMA; 139+179 = 318 cells); MBA:526 Entorhinal area medial part dorsal zone layer 1 (SOMA; 182 cells)"
+        alignment: CONSISTENT
+        notes: >
+          Excellent anatomical match: dominant SOMA distribution in DG molecular
+          layer + CA1 SLM exactly matches the classical hippocampal Cajal-Retzius
+          cell SOMA locations (SLM and OML). Entorhinal L1 SOMA component is
+          consistent with the known distribution of CR cells across cortical/
+          hippocampal marginal zones. region_fraction 0.937 against the
+          hippocampal closure (MBA:391 + MBA:726).
+      - property: marker_Reln
+        node_a_value: "asserted present (PMID:25253849 optogenetic; PMID:25206826 IHC)"
+        node_b_value: "precomputed mean 12.42 (cohort percentile 0.999); not listed in taxonomy DEFINING/MERFISH metadata but extremely high"
+        alignment: CONSISTENT
+        notes: >
+          Reln expression is in the top percentile of the glutamatergic cohort,
+          consistent with the defining classical marker for hippocampal CR cells.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          WMB cluster 0497 (HPF CR Glut_1) has its dominant SOMA distribution in
+          the dentate gyrus molecular layer (2375 cells combined across Yao 2024
+          and Zhuang 2023 MERFISH) and CA1 stratum lacunosum-moleculare (318
+          cells) — the canonical anatomical loci of hippocampal Cajal-Retzius
+          cells. Glutamatergic NT-type assignment matches the classical
+          reelin+/calretinin+/VGluT3+ subpopulation. Reln expression is at the
+          top of the cohort (mean 12.42, percentile 0.999), and high Ndnf
+          (mean 11.09) is consistent with marginal-zone Reln+ neurons. The
+          cluster taxonomic name "HPF CR Glut_1" itself reflects the atlas
+          curators' identification of this cluster as hippocampal CR cells.
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: >
+          Zhuang 2023 MERFISH provides independent confirmation of the SOMA
+          distribution (640 cells in DG molecular layer, 139 in CA1 SLM)
+          consistent with the Yao 2024 dataset.
+    caveats:
+      - >
+        Classical node aggregates only the glutamatergic CR subpopulation
+        (Reln+/calretinin+/VGluT3+); the classical node notes a substantial
+        GABAergic CR fraction that is not represented here. WMB cluster 0497
+        is purely glutamatergic and so corresponds to the glutamatergic
+        subpopulation only.
+      - >
+        Classical node morphology section identifies three axonal subtypes
+        (layer-restricted local, cross-fissure local, long-range projecting);
+        cluster 0497 collapses any such heterogeneity, and the atlas data
+        does not separately resolve axonal subtypes.
+      - >
+        Vglut3 precomputed mean is low (0.29) despite the classical
+        Reln+/calretinin+/VGluT3+ marker triad being part of the node
+        definition. Calb2 (calretinin) is high (4.88, consistent). The
+        Vglut3 discrepancy may reflect (i) low Slc17a8/Vglut3 transcript
+        relative to protein, (ii) dilution by non-VGluT3 subpopulations, or
+        (iii) detection limit issues — not investigated here.
+      - >
+        No annotation transfer evidence is available for this edge; confidence
+        will be capped per Stage B rubric (iv) at report-time synthesis.
+    unresolved_questions:
+      - >
+        Does the SOMA in entorhinal cortex medial dorsal layer 1 (MBA:526,
+        182 cells) represent hippocampal CR cells extending into adjacent
+        cortex, or a separate cortical CR population that this cluster
+        encompasses?
+      - >
+        Why is Vglut3 transcript so low relative to the classical VGluT3+
+        molecular signature reported in optogenetic studies?
+      - >
+        Can the three axonal subtypes (layer-restricted local, cross-fissure
+        local, long-range projecting) be resolved as sub-clusters within
+        cluster 0497?
+    proposed_experiments:
+      - >
+        smFISH or single-cell Vglut3/Slc17a8 transcript profiling on Reln+
+        cells in DG OML and CA1 SLM to test the apparent Vglut3 transcript-
+        protein discrepancy.
+      - >
+        Sub-cluster analysis of CLUS_0497 with axonal-projection markers (if
+        any are identifiable) to test whether the three classical axonal
+        subtypes correspond to molecular subsets.
+      - >
+        Annotation transfer from a Reln-Cre or calretinin-targeted dataset
+        with confirmed CR identity to formally measure F1 correspondence
+        to CLUS_0497.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 12.42
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.999
+      region_fraction: 0.937
+      region_evidence: SELF
+
+  # ── Parent supertype (multiple passing clusters → broadMatch + 1:n) ─────────
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_0135
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_0135
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (inherited from class/subclass; child clusters all Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "MBA:10703 DG molecular layer (SOMA; 647 cells); MBA:391 CA1 SLM (SOMA; 140 cells); MBA:526 Entorhinal area medial part dorsal zone layer 1 (SOMA; 189 cells)"
+        alignment: CONSISTENT
+        notes: >
+          Supertype SOMA distribution matches the classical CR cell
+          distribution (DG molecular layer + CA1 SLM). region_fraction 0.936.
+          Aggregates 5 child clusters (CLUS_0497-0501) covering 1942 cells.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 12.43 (cohort percentile 0.998); coverage 1.0 across child clusters"
+        alignment: CONSISTENT
+        notes: >
+          Reln is high across all five child clusters (range 11.91 to 13.26),
+          coverage 1.0 — the defining marker is uniformly expressed.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          Supertype 0135 (HPF CR Glut_1) contains 5 child clusters
+          (CLUS_0497-0501) all named "HPF CR Glut_1" and all expressing high
+          Reln (range 11.91-13.26). The supertype SOMA distribution is
+          dominated by DG molecular layer + CA1 SLM. CLUS_0497 is the
+          dominant child by far (1747/1942 cells = 90%); the other four
+          clusters (0498-0501) are small (26-85 cells each) and have more
+          diffuse SOMA distributions (olfactory, entorhinal, cortical L1)
+          that may represent CR cells in adjacent/related marginal zones
+          or rare sub-populations. The classical hippocampal CR cell maps
+          most directly to CLUS_0497; the supertype is broader by including
+          these minor extra-hippocampal child clusters.
+    caveats:
+      - >
+        Supertype is broader than the classical hippocampal CR cell only by
+        the four minor child clusters (CLUS_0498-0501); the dominant child
+        CLUS_0497 alone accounts for ~90% of supertype cells and is
+        anatomically concordant.
+      - >
+        Glutamatergic-only restriction means the GABAergic CR subpopulation
+        is not represented anywhere in this supertype.
+    unresolved_questions:
+      - >
+        Do CLUS_0498-0501 represent (i) extra-hippocampal CR-like cells in
+        olfactory/cortical marginal zones, (ii) rare hippocampal CR sub-
+        populations, or (iii) registration noise?
+    proposed_experiments:
+      - >
+        Spatial sub-clustering and per-cluster SOMA distribution analysis
+        of CLUS_0498-0501 to determine whether they represent distinct
+        CR-like populations worth separate classical typing.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 12.43
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.998
+          coverage: 1.0
+      region_fraction: 0.936
+      region_evidence: SELF
+
+  # ── Sibling clusters within supertype 0135 (closeMatch per rubric i) ────────
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0498
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0498
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "MBA:10703 Dentate gyrus molecular layer (10 cells); MBA:507 Main olfactory bulb (16); MBA:1016 olfactory nerve layer (12); MBA:754 Olfactory tubercle (5); MBA:698 Olfactory areas (3). Predominantly olfactory."
+        alignment: APPROXIMATE
+        notes: >
+          Cluster is small (57 cells total) with predominantly olfactory SOMA
+          distribution and only minor DG molecular layer representation.
+          region_fraction 0.217 against the hippocampal closure. Possibly an
+          olfactory CR-like population rather than canonical hippocampal CR.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 12.13 (cohort percentile 0.999)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          CLUS_0498 shares supertype 0135 (HPF CR Glut_1) with the primary
+          mapping target CLUS_0497 and expresses Reln at the top of the
+          cohort, but its SOMA distribution is predominantly olfactory
+          (main olfactory bulb, olfactory tubercle, olfactory areas) with
+          only a small DG molecular-layer footprint. May represent a CR-like
+          population in olfactory marginal zones rather than the canonical
+          hippocampal CR cell.
+    caveats:
+      - >
+        Predominantly olfactory SOMA distribution; only ~10 of 57 cells in
+        DG molecular layer.
+      - >
+        Small cluster size (57 cells) limits statistical robustness.
+    unresolved_questions:
+      - >
+        Is CLUS_0498 an olfactory CR-like population sharing molecular
+        features with hippocampal CR cells, or are the olfactory cells
+        registration noise?
+    proposed_experiments:
+      - >
+        Targeted Reln/Calb2 IHC in olfactory bulb/tubercle to test whether
+        olfactory CR-like cells with the CLUS_0498 molecular signature
+        exist.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 12.13
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.999
+      region_fraction: 0.217
+      region_evidence: SELF
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0499
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0499
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "MBA:961 Piriform area (6); MBA:10703 DG molecular layer (4); MBA:507 Main olfactory bulb (3); MBA:754 Olfactory tubercle (2); MBA:639 Cortical amygdalar area anterior (2); plus scattered cortical/amygdalar — diffuse cortical/olfactory."
+        alignment: APPROXIMATE
+        notes: >
+          Very small cluster (27 cells) with diffuse cortical/olfactory SOMA
+          and only ~4 cells in DG molecular layer. region_fraction 0.143
+          against the hippocampal closure. Calb2 is also notably low
+          (0.59 vs 4.88 in CLUS_0497) so molecular profile diverges from
+          the classical Reln+/calretinin+ signature.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 11.91 (cohort percentile 0.998)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          CLUS_0499 sits in supertype 0135 and is Reln-high, but its SOMA
+          distribution is scattered across cortical/olfactory/amygdalar
+          regions with minimal hippocampal representation, and its
+          calretinin (Calb2) signal is notably reduced relative to
+          CLUS_0497. May represent a CR-like cell in heterogeneous marginal
+          zones rather than canonical hippocampal CR.
+    caveats:
+      - >
+        Calb2 low (0.59) — diverges from classical CR calretinin+ profile.
+      - >
+        Very small cluster (27 cells), diffuse cortical/olfactory SOMA.
+    unresolved_questions:
+      - >
+        Is CLUS_0499 a Calb2-low CR-like sub-population, or noise from
+        boundary cells aggregated by the taxonomy?
+    proposed_experiments:
+      - >
+        Targeted profiling of Reln+/Calb2-low cells in cortical/olfactory
+        marginal zones to clarify CLUS_0499 identity.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 11.91
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.998
+      region_fraction: 0.143
+      region_evidence: SELF
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0500
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0500
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "MBA:961 Piriform area (8); MBA:754 Olfactory tubercle (7); MBA:10703 DG molecular layer (6); MBA:391 CA1 SLM (6); MBA:639 Cortical amygdalar area anterior (5); MBA:526 Entorhinal medial dorsal L1 (5); MBA:1121 Entorhinal lateral L1 (5); MBA:663 Cortical amygdalar posterior medial (6). Distributed cortical marginal-zone."
+        alignment: APPROXIMATE
+        notes: >
+          Small cluster (85 cells) distributed across cortical marginal-zone
+          structures (entorhinal L1, piriform, cortical amygdala, olfactory
+          tubercle) plus a small hippocampal component. region_fraction
+          0.367. Calb2 is the highest of the cohort (8.17), so the
+          calretinin+ signature is well preserved.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 12.45 (cohort percentile 0.999)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          CLUS_0500 shows Reln and Calb2 both high (12.45 and 8.17 resp.)
+          and SOMA distribution across cortical marginal zones (entorhinal
+          L1, piriform, cortical amygdala) plus minor hippocampal cells.
+          The molecular profile is consistent with CR cells, but the
+          predominant location is extra-hippocampal cortical marginal
+          zones. Likely represents pan-cortical CR cells in adjacent
+          regions sharing molecular identity with hippocampal CR.
+    caveats:
+      - >
+        Predominantly cortical marginal-zone SOMA (entorhinal/piriform/
+        amygdalar L1); only ~12/85 cells in hippocampal regions.
+      - >
+        Small cluster size (85 cells).
+    unresolved_questions:
+      - >
+        Does CLUS_0500 represent a pan-cortical CR cell population that
+        extends to the hippocampal marginal zones at low frequency?
+    proposed_experiments:
+      - >
+        Pan-cortical Reln/Calb2 mapping to test whether the cortical
+        marginal-zone CR cells in CLUS_0500 share developmental origin and
+        function with hippocampal CR cells.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 12.45
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.999
+      region_fraction: 0.367
+      region_evidence: SELF
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0501
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0501
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "MBA:10703 DG molecular layer (3); MBA:477 Striatum (3); MBA:803 Pallidum (3); MBA:605 Taenia tecta ventral (2); MBA:597 Taenia tecta dorsal (1); plus scattered prelimbic/infralimbic/motor L1 — diffuse subcortical/cortical."
+        alignment: APPROXIMATE
+        notes: >
+          Very small cluster (26 cells) with diffuse and unusual SOMA
+          distribution including striatum, pallidum, taenia tecta and
+          various cortical L1 regions. region_fraction 0.167. Reln mean
+          13.26 is the highest of the cohort.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 13.26 (cohort percentile 1.0)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          CLUS_0501 has the highest Reln expression of the cohort but a
+          highly diffuse SOMA distribution including subcortical structures
+          (striatum, pallidum, taenia tecta) atypical for canonical
+          hippocampal CR cells. Very small cluster (26 cells).
+    caveats:
+      - >
+        Very small cluster (26 cells) with diffuse and atypical SOMA
+        including subcortical regions.
+      - >
+        Hippocampal representation only ~3 cells.
+    unresolved_questions:
+      - >
+        Are the striatum/pallidum/taenia tecta cells in CLUS_0501 ectopic
+        CR-like cells, registration noise, or a distinct Reln-high
+        non-CR population?
+    proposed_experiments:
+      - >
+        Validation of Reln+ cells in striatum/pallidum to determine
+        whether CLUS_0501 represents an ectopic CR-like population.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 13.26
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 1.0
+      region_fraction: 0.167
+      region_evidence: SELF
+
+  # ── Off-target distant supertypes (broadMatch + 1:n per rubric ii) ──────────
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_1154
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_1154
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (CB Granule Glut subclass)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "Cerebellum granule cell layer — anatomically remote from hippocampus."
+        alignment: DISCORDANT
+        notes: No hippocampal SOMA representation; cerebellar granule cells.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 8.14 (cohort percentile 0.97); coverage 1.0"
+        alignment: APPROXIMATE
+        notes: >
+          Reln moderately expressed but Ndnf is essentially absent (0.01)
+          and Slc17a7 (Vglut1) is dominant — granule-cell signature, not
+          marginal-zone CR signature.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          SUPT_1154 (CB Granule Glut_1) is a cerebellar granule cell
+          supertype — anatomically incompatible with the hippocampal CR
+          cell. Co-clustering arises from glutamatergic NT + moderate Reln
+          expression only; Ndnf and the broader CR molecular signature are
+          absent.
+    caveats:
+      - Region mismatch decisive; cerebellar granule cell supertype.
+      - Listed for completeness per rubric (ii); expected to be excluded at synthesis.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 8.14
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.97
+          coverage: 1.0
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_1155
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_1155
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (CB Granule Glut subclass)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "Cerebellum granule cell layer — anatomically remote from hippocampus."
+        alignment: DISCORDANT
+        notes: Cerebellar granule cells.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 9.65 (cohort percentile 0.989); coverage 1.0"
+        alignment: APPROXIMATE
+        notes: Reln moderate; Ndnf absent (0.0); Slc17a7 dominant.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          SUPT_1155 (CB Granule Glut_2) is a cerebellar granule cell
+          supertype — anatomically incompatible with hippocampal CR cell.
+    caveats:
+      - Region mismatch decisive; cerebellar granule cells.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 2
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 9.65
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.989
+          coverage: 1.0
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_1170
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_1170
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Astroependymal NN (non-neuronal supertype; nt_type null at supertype)"
+        alignment: DISCORDANT
+        notes: >
+          SUPT_1170 is an astroependymal (non-neuronal) supertype — not a
+          glutamatergic neuron. Co-incidence on the cohort filter likely
+          reflects how the discovery query handled non-neuronal supertypes
+          with moderate Reln expression.
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "Fourth ventricle, area postrema, choroid plexus, cerebellar nodulus/uvula — non-hippocampal ependymal/circumventricular."
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          SUPT_1170 (Astroependymal NN_2) is a non-neuronal astroependymal
+          supertype located in circumventricular structures (4th ventricle,
+          area postrema, choroid plexus) — anatomically and cell-class
+          incompatible with the hippocampal CR neuron. Listed for
+          completeness only.
+    caveats:
+      - Cell class mismatch (non-neuronal astroependymal) AND region mismatch — decisive.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 8.95
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.979
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_1169
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_1169
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Astroependymal NN (non-neuronal; nt_type null)"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "UBERON:0014557 CA1 SLM (SOMA); UBERON:0001885 DG OML (SOMA)"
+        node_b_value: "MBA:10703 DG molecular layer (38); MBA:266 lateral septal nucleus ventral (268); MBA:483 medial habenula (151); MBA:129 third ventricle (53). Predominantly septum/habenula/ventricular ependymal."
+        alignment: DISCORDANT
+        notes: >
+          A small DG-molecular-layer subpopulation exists but the dominant
+          SOMA is septum/habenula/3rd ventricle — non-hippocampal-CR.
+          region_fraction 0.024.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 2.62 (cohort percentile 0.756); coverage 1.0"
+        alignment: APPROXIMATE
+        notes: Reln only modestly above MIN_DETECTABLE; weak signal vs CLUS_0497.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          SUPT_1169 (Astroependymal NN_1) is a non-neuronal astroependymal
+          supertype located mainly in lateral septum, medial habenula and
+          ventricular structures — incompatible cell class and predominantly
+          non-hippocampal location. Listed for completeness per rubric (ii).
+    caveats:
+      - Cell class mismatch (astroependymal, not neuronal) — decisive.
+      - Reln expression weak and SOMA predominantly non-hippocampal.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 2.62
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.756
+          coverage: 1.0
+      region_fraction: 0.024
+      region_evidence: SELF

@@ -1,0 +1,610 @@
+##
+# Proposed Stage B mapping edges for ca1_radiatum_giant_cell → CCN20230722
+# Discovery: research/hippocampus/glutamatergic_report_ingest/discovery_2026-05-27/
+#   discovery_ca1_radiatum_giant_cell_rank{0,1}.json
+# Predicate rubric: 2026-05-26 (PartialOverlapMatch deprecated)
+# Mapping_justification: semapv:UnreviewedManualMapping
+#
+# Note: ca1_radiatum_giant_cell is a rare CA1 stratum radiatum projection neuron
+# (Kirson 2000, Christie 2000, Nasrallah 2019) with no defining transcriptomic
+# markers in the classical literature. No transcriptomic counterpart has been
+# reported. All candidates either (a) localise primarily outside CA1 stratum
+# radiatum (ENT/PA/COAp, SUB/ProS), or (b) represent the canonical CA1 pyramidal
+# supertype (SUPT_0069 / CLUS_0261), which RGCs are morphologically and
+# electrophysiologically distinct from. All edges are UncertainRelationship
+# pending transcriptomic characterisation of RGCs.
+##
+
+classical_node_id: ca1_radiatum_giant_cell
+taxonomy_id: CCN20230722
+
+stubs:
+  - id: CS20230722_CLUS_0190
+    name: "0190 L2 IT ENT-po Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0190
+  - id: CS20230722_CLUS_0253
+    name: "0253 ENTmv-PA-COAp Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0253
+  - id: CS20230722_CLUS_0254
+    name: "0254 ENTmv-PA-COAp Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0254
+  - id: CS20230722_CLUS_0256
+    name: "0256 ENTmv-PA-COAp Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0256
+  - id: CS20230722_CLUS_0261
+    name: "0261 CA1-ProS Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0261
+  - id: CS20230722_SUPT_0053
+    name: "0053 L2 IT ENT-po Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0053
+  - id: CS20230722_SUPT_0098
+    name: "0098 SUB-ProS Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0098
+  - id: CS20230722_SUPT_0097
+    name: "0097 SUB-ProS Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0097
+  - id: CS20230722_SUPT_0096
+    name: "0096 SUB-ProS Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0096
+  - id: CS20230722_SUPT_0069
+    name: "0069 CA1-ProS Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0069
+
+edges:
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0190
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0190
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: Glut
+        agreement: AGREE
+        notes: Both glutamatergic.
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: Predominantly entorhinal cortex (lateral L2/L3, medial L3/L5; MBA:20, MBA:52, MBA:664, MBA:727); only trace MERFISH counts in MBA:415 (Field CA1, stratum radiatum)
+        agreement: DISAGREE
+        notes: Atlas cluster centred on entorhinal cortex, not CA1 sr.
+      - property: marker_Grm1
+        lit_value: "expressed (reported as CA1/CA3 marker, not RGC-specific)"
+        taxonomy_value: "mean_expression assessed in precomputed_expression"
+        agreement: UNDETERMINED
+        notes: No RGC-specific markers reported; CA1 sr is a minor location for this cluster.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          CLUS_0190 (L2 IT ENT-po Glut_3) is dominantly localised to entorhinal
+          cortex (lateral and medial subdivisions, layers 2/3/5) with only single
+          MERFISH cells annotated in MBA:415 (Field CA1, stratum radiatum). The
+          discovery cohort filter (region=MBA:415) selected this cluster because
+          a small number of MERFISH cells were registered to CA1 sr; however
+          the cluster identity is entorhinal, not hippocampal RGC. RGC has no
+          defining transcriptomic markers in the literature.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_CLUS_0190
+    discovery_score:
+      score: 1
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.002
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: >
+          Atlas cluster is entorhinal, not CA1; selection driven by a single
+          MERFISH cell annotated to CA1 sr. No transcriptomic counterpart of
+          RGC has been reported; classical literature provides no defining
+          markers to test correspondence.
+    unresolved_questions:
+      - >
+        Does any WMBv1 cluster contain transcriptomically defined RGCs, or are
+        RGCs absent from snRNA-seq sampling owing to their rarity?
+    proposed_experiments:
+      - >
+        Targeted patch-seq of biocytin-filled RGCs in adult mouse CA1 sr
+        (e.g. Nasrallah 2019 platform) to obtain a defining transcriptomic
+        signature.
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0253
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0253
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: Glut
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: Hippocampo-amygdalar transition area (MBA:589508447), posterior amygdalar nucleus (MBA:780), CA1 stratum oriens (MBA:399) and stratum radiatum (MBA:415) — minor CA1 sr fraction (~31 cells)
+        agreement: DISAGREE
+        notes: Atlas cluster centred on HATA/PA/COAp, not CA1 sr.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          CLUS_0253 (ENTmv-PA-COAp Glut_1) is dominantly localised to the
+          hippocampo-amygdalar transition area and posterior amygdalar nucleus
+          with smaller fractions in CA1 sr/so. Identity is amygdalar/transitional,
+          not CA1-RGC.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_CLUS_0253
+    discovery_score:
+      score: 1
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.053
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: Atlas cluster centred outside CA1 (HATA/PA/COAp); RGC has no defining transcriptomic markers in the literature.
+    unresolved_questions:
+      - Could amygdalar-transitional glutamatergic neurons share electrophysiological signatures with RGCs?
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs (see edge above).
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0254
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0254
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: Glut
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: Hippocampo-amygdalar transition area (MBA:589508447), prosubiculum, ENT medial L6, posterior amygdalar nucleus; CA1 sr cell_count=34
+        agreement: DISAGREE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          CLUS_0254 (ENTmv-PA-COAp Glut_1) localises primarily to HATA,
+          prosubiculum and posterior amygdalar nucleus with small CA1 sr fraction.
+          Identity is transitional/amygdalar.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_CLUS_0254
+    discovery_score:
+      score: 1
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.066
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: Atlas cluster centred outside CA1.
+    unresolved_questions:
+      - As edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0253.
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs.
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0256
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0256
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: Glut
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: HATA, subiculum, ENT medial L5/L6, posterior amygdalar nucleus; CA1 sr cell_count ~2
+        agreement: DISAGREE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          CLUS_0256 (ENTmv-PA-COAp Glut_2) localises predominantly to subiculum,
+          HATA and entorhinal medial L5/L6 with negligible CA1 sr representation.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_CLUS_0256
+    discovery_score:
+      score: 1
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.019
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: Atlas cluster centred on subiculum/entorhinal/amygdalar, not CA1 sr.
+    unresolved_questions:
+      - As above.
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs.
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0261
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0261
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: Glut
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: CA1 stratum oriens, CA1 pyramidal layer, CA1 stratum radiatum, CA2/CA3 pyramidal/oriens — the canonical CA1-ProS pyramidal cluster
+        agreement: PARTIAL
+        notes: >
+          CLUS_0261 contains the canonical CA1 pyramidal neurons. RGCs reside in
+          CA1 stratum radiatum and are morphologically and electrophysiologically
+          distinct from CA1 PCs (NMDA-dependent bursting, EPSCs ≥3× larger,
+          inverted HCN gradient). MERFISH cells in MBA:415 in this cluster are
+          presumably CA1 PCs whose soma centre or processes register to sr.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          CLUS_0261 (CA1-ProS Glut_1) is the canonical CA1 pyramidal cell cluster
+          (dominant MERFISH counts in CA1 pyramidal layer, oriens, radiatum and
+          CA2/CA3 fields). RGCs are a rare specialised projection neuron in CA1
+          stratum radiatum that classical literature explicitly distinguishes
+          from CA1 PCs (Kirson 2000, Christie 2000, Nasrallah 2019). Without
+          defining transcriptomic markers for RGCs, we cannot rule out that
+          RGCs are a transcriptomically distinct minority contained within this
+          cluster, but no positive evidence supports correspondence.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_CLUS_0261
+    discovery_score:
+      score: 1
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.104
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: >
+          CLUS_0261 is canonical CA1 PC; RGCs are a distinct rare cell type in
+          CA1 sr. Mapping is unresolvable without RGC transcriptomics.
+    unresolved_questions:
+      - >
+        Are RGCs an unsampled rare population, or are they a transcriptomically
+        subtle subset within the CA1 pyramidal cluster?
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs in adult mouse CA1 sr.
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0053
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0053
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: (supertype; NT inherited from constituent Glut clusters)
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: Entorhinal cortex (lateral L2/L3, medial L3/L5); only trace MERFISH cells in CA1 sr
+        agreement: DISAGREE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0053 (L2 IT ENT-po Glut_3) is the entorhinal cortex supertype
+          encompassing CLUS_0190. Soma distribution is entorhinal, not CA1.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_SUPT_0053
+    discovery_score:
+      score: 1
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.002
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: Supertype localised to entorhinal cortex.
+    unresolved_questions:
+      - As above.
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs.
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0098
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0098
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: (supertype Glut)
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: Prosubiculum, CA1 stratum oriens, subiculum; CA1 sr ~138 cells
+        agreement: DISAGREE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0098 (SUB-ProS Glut_3) is a subiculum/prosubiculum supertype with
+          secondary representation in CA1 stratum oriens; CA1 sr is a minor
+          location.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_SUPT_0098
+    discovery_score:
+      score: 1
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.047
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: Supertype localised to subiculum/prosubiculum/CA1 so.
+    unresolved_questions:
+      - As above.
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs.
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0097
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0097
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: (supertype Glut)
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: CA1 stratum oriens (dominant), prosubiculum, HATA, posterior amygdalar nucleus; CA1 sr ~150 cells
+        agreement: DISAGREE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0097 (SUB-ProS Glut_2) is dominant in CA1 stratum oriens and
+          prosubiculum, with secondary HATA/PA presence. CA1 sr is a minor
+          location.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_SUPT_0097
+    discovery_score:
+      score: 1
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.03
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: Supertype centred on CA1 so / subiculum complex, not CA1 sr.
+    unresolved_questions:
+      - As above.
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs.
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0096
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0096
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: (supertype Glut)
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: Subiculum (dominant), prosubiculum; CA1 sr ~215 cells
+        agreement: DISAGREE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0096 (SUB-ProS Glut_1) is the canonical subiculum/prosubiculum
+          supertype with thousands of cells in MBA:502/MBA:484682470 and only
+          ~215 in CA1 sr.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_SUPT_0096
+    discovery_score:
+      score: 1
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.033
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: Supertype centred on subiculum/prosubiculum, not CA1 sr.
+    unresolved_questions:
+      - As above.
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs.
+
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0069
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0069
+    relationship: evidencell:UncertainRelationship
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        lit_value: glutamatergic
+        taxonomy_value: (supertype Glut; constituent CLUS_0261 = Glut)
+        agreement: AGREE
+      - property: SOMA_location
+        lit_value: CA1 stratum radiatum (UBERON:0005372)
+        taxonomy_value: CA1 pyramidal layer (dominant), CA1 stratum oriens, CA1 stratum radiatum (~4162-6573 cells) — canonical CA1-ProS pyramidal supertype
+        agreement: PARTIAL
+        notes: >
+          Substantial MERFISH representation in CA1 sr but supertype identity is
+          CA1 pyramidal cells (which RGCs are explicitly distinguished from).
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0069 (CA1-ProS Glut_1) is the canonical CA1 pyramidal supertype
+          containing CLUS_0261. RGCs are a rare specialised projection neuron
+          in CA1 sr morphologically and electrophysiologically distinct from
+          CA1 PCs (Kirson 2000, Christie 2000, Nasrallah 2019). Without RGC
+          transcriptomic markers we cannot determine whether RGCs are unsampled
+          or a hidden minority within this supertype.
+        source_atlas: WMBv1
+        source_cell_set_accession: CS20230722_SUPT_0069
+    discovery_score:
+      score: 1
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.276
+      region_evidence: SELF
+    caveats:
+      - caveat_type: OTHER
+        description: >
+          Supertype is canonical CA1 pyramidal cells; RGCs are a morphologically
+          and electrophysiologically distinct rare type in CA1 sr. No
+          transcriptomic markers for RGCs in the classical literature.
+    unresolved_questions:
+      - >
+        Are RGCs a rare unsampled population, or a hidden minority within
+        SUPT_0069?
+    proposed_experiments:
+      - Targeted patch-seq of biocytin-filled RGCs to obtain a defining
+        transcriptomic signature distinguishable from CA1 PCs.

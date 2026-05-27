@@ -1,0 +1,891 @@
+# 2026-05-27 mapping re-run for sst_nos1_subfamily_chamberland
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters and
+# top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric.
+#
+# Classical node: Sst::Nos1-IN (long-range projecting, Chamberland 2024).
+# Defined as Sst+/Nos1+ GABAergic CA1 stratum oriens / alveus interneurons via
+# Sst-Flp;Nos1-Cre intersectional genetics. Long-range-projecting cells whose
+# axons reach medial septum and contralateral hippocampus — the canonical
+# hippocampo-septal / back-projection identity.
+#
+# NB: per the classical node's notes, the principal AT target for the Nos1
+# subfamily in at_run_20260512_chamberland_subfamily_mmc_wmbv1 was
+# SUPT_0241 / CLUS_0859 (Sst Chodl Gaba_4) with F1=0.97 — the Sst Chodl
+# branch which contains long-range-projecting Sst types. Neither SUPT_0241
+# nor CLUS_0859 appears in the 2026-05-27 discovery cohort, because the
+# cohort was anchored to MBA:399 (Field CA1 stratum oriens) and the Sst
+# Chodl branch's modal anatomy lies elsewhere. The candidates surveyed
+# here are therefore the *region-anchored* survivors and are uniformly
+# weaker matches than the cross-supertype Sst Chodl target. This is
+# called out in each edge's caveats and in the file-level commentary.
+classical_node_id: sst_nos1_subfamily_chamberland
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0651
+    name: "0651 Vip Gaba_7"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0651
+  - id: CS20230722_CLUS_0724
+    name: "0724 Lamp5 Lhx6 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0724
+  - id: CS20230722_CLUS_0731
+    name: "0731 Lamp5 Lhx6 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0731
+  - id: CS20230722_CLUS_0768
+    name: "0768 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0768
+  - id: CS20230722_CLUS_0771
+    name: "0771 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0771
+  - id: CS20230722_SUPT_0216
+    name: "0216 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+  - id: CS20230722_SUPT_1164
+    name: "1164 Astro-TE NN_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1164
+  - id: CS20230722_SUPT_0219
+    name: "0219 Sst Gaba_6"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0219
+  - id: CS20230722_SUPT_0213
+    name: "0213 Pvalb Gaba_9"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0213
+  - id: CS20230722_SUPT_0206
+    name: "0206 Pvalb Gaba_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0206
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_0216
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0216
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic (Sst-Flp / Nos1-Cre intersectional reporter)"
+        node_b_value: "GABA (taxonomy parent subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA; Sst-Flp;Nos1-Cre intersectional)"
+        node_b_value: "Field CA1 stratum oriens 1375; Prosubiculum 404; alveus 303; Posterior amygdalar nucleus 163; Subiculum 108"
+        alignment: CONSISTENT
+        notes: |
+          Supertype soma distribution dominated by CA1 stratum oriens — the
+          canonical CA1-O anchor for Sst::Nos1 cells. Subicular/alveus components
+          are common boundary neighbours.
+      - property: marker_Sst
+        node_a_value: "Sst+ (Sst-Flp intersectional; gene-pair rule Sst+Nos1 expression-product>1)"
+        node_b_value: "Sst: 11.44 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (Nos1-Cre defining)"
+        node_b_value: "Nos1: 2.94 (precomputed mean) — modest"
+        alignment: APPROXIMATE
+        notes: |
+          Supertype-mean Nos1 (2.94) is well above background but well below the
+          high-Nos1 rank-0 clusters in this cohort (CLUS_0651 9.01, CLUS_0724 9.14,
+          CLUS_0731 8.55). Supertype 0216 pools Nos1-low and Nos1-modest Sst Gaba_3
+          children; Sst::Nos1 cells are likely concentrated in only part of this
+          supertype.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0216 Sst Gaba_3 is dominated by CA1 stratum oriens soma and
+          carries high Sst (11.44) with moderate Nos1 (2.94) at supertype level.
+          A Sst-OLM-adjacent supertype anchored in CA1-O — partially consistent
+          with the Sst::Nos1 subfamily's anatomy but Nos1 is not strongly enriched
+          here at supertype level.
+    caveats:
+      - |
+        The Chamberland 2024 classical-node notes record that the principal AT
+        target for the Nos1 source label in at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        was the Sst Chodl branch (SUPT_0241 / CLUS_0859, F1=0.97) — *not* this
+        supertype. SUPT_0216 is a region-anchored survivor of the rank-1
+        discovery cohort but is not the principal transcriptomic home of the
+        Sst::Nos1 long-range-projecting subfamily.
+      - |
+        Nos1 mean (2.94) at supertype level is below the high-Nos1 rank-0 cluster
+        means in this cohort, suggesting Sst::Nos1 cells are concentrated in only
+        some children of this supertype.
+    unresolved_questions:
+      - |
+        Does any subset of SUPT_0216 children carry the long-range hippocampo-
+        septal projection identity, or is that identity entirely captured by the
+        Sst Chodl branch (SUPT_0241)?
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.44
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 1.0
+        - gene: Nos1
+          val: 2.94
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.676
+          coverage: 1.0
+      region_fraction: 0.584
+      region_evidence: SELF
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_1164
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_1164
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "Non-neuronal (Astro-TE; subclass 319 Astro-TE NN)"
+        alignment: DISCORDANT
+        notes: Astrocyte supertype — incompatible with GABAergic neuron identity.
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "corpus callosum body 133; CA1 stratum oriens 147; endopiriform dorsal 139; corpus callosum posterior forceps 175; alveus 141"
+        alignment: APPROXIMATE
+        notes: |
+          Includes a CA1 stratum oriens fraction but cells are astrocytes, not neurons.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 0.80 (precomputed mean) — near zero"
+        alignment: DISCORDANT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 0.20 (precomputed mean) — near zero"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          1164 Astro-TE NN_4 is a telencephalic astrocyte supertype. Although it
+          includes CA1 stratum oriens soma (astrocytes occupy the same layer as
+          Sst::Nos1 neurons), the cell type is non-neuronal and lacks both Sst
+          and Nos1 expression — categorically incompatible with the Sst::Nos1
+          interneuron identity. Ranked into the cohort by region overlap alone.
+    caveats:
+      - Astrocyte supertype, not a neuron — fundamentally incompatible cell-class.
+      - Sst (0.80) and Nos1 (0.20) both below threshold for defining markers.
+      - Discovery rank driven by CA1 stratum oriens region overlap; biological match REFUTE.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 0.8
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.324
+          coverage: 1.0
+        - gene: Nos1
+          val: 0.2
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.162
+          coverage: 1.0
+      region_fraction: 0.056
+      region_evidence: SELF
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_0219
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0219
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "DG polymorph 215; CA3 stratum radiatum 337; CA3 stratum oriens 495"
+        alignment: APPROXIMATE
+        notes: |
+          Dominated by CA3 (not CA1) stratum oriens with DG hilus component.
+          A possible CA3/DG Sst interneuron type rather than the CA1-anchored
+          Sst::Nos1 subfamily.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 10.17 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 1.81 (precomputed mean) — modest"
+        alignment: APPROXIMATE
+        notes: |
+          Detectable but well below the high-Nos1 rank-0 candidates in this
+          cohort. Combined with CA3/DG-leaning anatomy, weakens the match.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0219 Sst Gaba_6 carries the Sst-OLM-family signature (Sst+ in subclass
+          053) but soma are dominated by CA3 and DG hilus rather than CA1 stratum
+          oriens, and Nos1 is modest. Plausibly a CA3/DG Sst HIPP-like population,
+          not the CA1 Sst::Nos1 long-range-projecting subfamily.
+    caveats:
+      - Atlas soma distribution is dominated by CA3 and DG hilus, not CA1.
+      - Nos1 mean (1.81) is modest — below the high-Nos1 rank-0 cohort members.
+      - Possibly a CA3/DG HIPP-like Sst type rather than CA1 hippocampo-septal Sst::Nos1.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.892
+          coverage: 1.0
+        - gene: Nos1
+          val: 1.81
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.541
+          coverage: 1.0
+      region_fraction: 0.05
+      region_evidence: SELF
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_0213
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0213
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 052 Pvalb Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Subiculum 50; Retrosplenial ventral L5 19; Prosubiculum 15; CA1 stratum oriens 7"
+        alignment: DISCORDANT
+        notes: |
+          Minimal CA1 stratum oriens component (7 cells); dominated by subiculum
+          and retrosplenial cortex — anatomically distant from the CA1-anchored
+          Sst::Nos1 cells.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 10.28 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 7.51 (precomputed mean) — high"
+        alignment: CONSISTENT
+        notes: |
+          Strong Nos1+ Sst+ co-expression, but the cells are under the Pvalb
+          subclass with subicular/retrosplenial anatomy — a different identity.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0213 Pvalb Gaba_9 expresses both Sst (10.28) and Nos1 (7.51) at high
+          levels but sits under the Pvalb subclass (subclass 052) with soma in
+          subiculum and retrosplenial cortex — distinct from the CA1 Sst::Nos1
+          long-range-projecting identity defined by Chamberland 2024. May be a
+          Pvalb-subclass Sst+/Nos1+ type orthogonal to the Sst::Nos1 subfamily.
+    caveats:
+      - Subclass is Pvalb Gaba — different transcriptomic family from the canonical Sst-OLM lineage.
+      - Soma distribution outside hippocampus CA1.
+      - Strong Sst/Nos1 co-expression nonetheless makes this an interesting cross-cutting case.
+    unresolved_questions:
+      - |
+        Are subicular/retrosplenial Sst+/Nos1+ cells in SUPT_0213 a separate
+        long-range-projecting Sst type, or unrelated to the hippocampo-septal
+        Sst::Nos1 population?
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.28
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.919
+          coverage: 1.0
+        - gene: Nos1
+          val: 7.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.946
+          coverage: 1.0
+      region_fraction: 0.057
+      region_evidence: SELF
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_0206
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0206
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 052 Pvalb Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 812; CA3 stratum oriens 152; CA1 pyramidal layer 91; Piriform area 137"
+        alignment: CONSISTENT
+        notes: |
+          CA1 stratum oriens is the dominant region — anatomically consistent
+          with Sst::Nos1 cell location.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 2.72 (precomputed mean) — modest"
+        alignment: APPROXIMATE
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 3.64 (precomputed mean) — modest"
+        alignment: APPROXIMATE
+        notes: |
+          Both Sst and Nos1 detectable but at modest levels. The supertype sits
+          under the Pvalb subclass — Chamberland 2024 explicitly notes that
+          *Sst::Tac1* cells (the bistratified-like subfamily) localise to this
+          supertype, not Sst::Nos1.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0206 Pvalb Gaba_2 is anchored in CA1 stratum oriens but sits under the
+          Pvalb subclass. Per Chamberland 2024 (and the curator's notes on the
+          sst_tac1_subfamily_chamberland node), this supertype is the modal
+          MapMyCells destination for the *Sst::Tac1* (bistratified-like) subfamily,
+          not Sst::Nos1. Sst (2.72) and Nos1 (3.64) are modest, not the high levels
+          expected for Sst::Nos1. Best interpreted as overlap due to shared CA1-O
+          anatomy and pleiotropic Sst expression, not a bona fide Sst::Nos1 home.
+    caveats:
+      - Subclass is Pvalb Gaba — this supertype is the established Sst::Tac1 destination, not Sst::Nos1.
+      - Tac1 (5.36) is high while Nos1 (3.64) is only modest — the Tac1 subfamily signature.
+      - Risk of conflating Sst::Tac1 and Sst::Nos1 if mapped here.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 2.72
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.838
+          coverage: 1.0
+        - gene: Nos1
+          val: 3.64
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.811
+          coverage: 1.0
+      region_fraction: 0.601
+      region_evidence: SELF
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0651
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0651
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA3 stratum oriens 11; CA3 pyramidal layer 12; CA3 stratum lucidum 7; CA1 stratum oriens 23; CA1 stratum radiatum 13; CA1 pyramidal layer 10"
+        alignment: APPROXIMATE
+        notes: |
+          Broadly distributed across CA1 and CA3 layers; CA1 stratum oriens
+          present but cluster is not CA1-O-dominated. Cluster is Vip subclass,
+          not Sst subclass.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 0.70 (precomputed mean) — near zero"
+        alignment: DISCORDANT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 9.01 (precomputed mean) — very high"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          CLUS_0651 is a Vip Gaba cluster with very high Nos1 (9.01) but
+          essentially absent Sst (0.70) — the Sst+ defining gene of Sst::Nos1
+          is missing. Vip is high (6.45). Cluster identity is a Vip+/Nos1+
+          interneuron type, distinct from the Sst::Nos1 long-range subfamily.
+    caveats:
+      - Sst absent (0.70) — the defining Sst+ marker for Sst::Nos1 is missing.
+      - Cluster sits under Vip Gaba supertype 0179 (not Sst subclass).
+      - High Nos1 is a coincidence of Nos1 being expressed by multiple non-Sst types.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 0.7
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.378
+        - gene: Nos1
+          val: 9.01
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.98
+      region_fraction: 0.303
+      region_evidence: SELF
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0724
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0724
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 160"
+        alignment: CONSISTENT
+        notes: Entirely CA1 stratum oriens — anatomically clean.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 1.18 (precomputed mean) — near zero"
+        alignment: DISCORDANT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 9.14 (precomputed mean) — very high"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          CLUS_0724 is a Lamp5 Lhx6 Gaba cluster with very high Nos1 (9.14) and
+          high Lamp5 (8.47) but absent Sst (1.18) — the defining Sst+ marker is
+          missing. Anatomy is clean CA1-O but cluster identity is a Lamp5+/Lhx6+
+          (Ivy/neurogliaform-like) interneuron, not Sst::Nos1. Likely the
+          Ivy/HS-cell-adjacent transcriptomic identity.
+    caveats:
+      - Sst absent (1.18) — defining marker missing.
+      - Cluster is Lamp5 Lhx6 Gaba (Ivy-like / neurogliaform-like), not Sst-subclass.
+      - High Nos1 + CA1-O anatomy is coincidental; cluster identity differs from Sst::Nos1.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.602
+        - gene: Nos1
+          val: 9.14
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.99
+      region_fraction: 1.0
+      region_evidence: SELF
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0731
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0731
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA3 stratum oriens 141; CA3 pyramidal layer 86; CA3 stratum radiatum 91; CA1 stratum oriens 85; Posterior amygdalar nucleus 85"
+        alignment: APPROXIMATE
+        notes: CA3-leaning with CA1 stratum oriens and amygdalar components.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 1.24 (precomputed mean) — near zero"
+        alignment: DISCORDANT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 8.55 (precomputed mean) — very high"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          CLUS_0731 is a Lamp5 Lhx6 Gaba cluster (Lamp5 8.51) with very high Nos1
+          (8.55) but absent Sst (1.24) — the defining Sst+ marker is missing. Soma
+          distribution leans CA3 with an amygdalar component. A Lamp5+/Lhx6+/Nos1+
+          interneuron, not Sst::Nos1.
+    caveats:
+      - Sst absent — defining marker missing.
+      - Cluster is Lamp5 Lhx6 Gaba; soma leans CA3 and amygdala.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.24
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.633
+        - gene: Nos1
+          val: 8.55
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+      region_fraction: 0.174
+      region_evidence: SELF
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0768
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0768
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 207; alveus 85; CA1 pyramidal layer 16"
+        alignment: CONSISTENT
+        notes: Clean CA1 stratum oriens / alveus dominance — matches the Sst::Nos1 anatomical anchor.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 12.70 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 0.76 (precomputed mean) — sparse"
+        alignment: DISCORDANT
+        notes: |
+          Nos1 is detectable but sparse — far below the cluster Nos1 means in this
+          cohort (CLUS_0651/0724/0731 all ~9). CLUS_0768 is an excellent canonical
+          Sst-OLM home but does not carry the defining Nos1+ signal of the Sst::Nos1
+          subfamily.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0768 has the highest Sst (12.70) and clean CA1-O / alveus anatomy
+          — the canonical Sst-OLM transcriptomic home — but Nos1 (0.76) is sparse.
+          A subset of CLUS_0768 cells may be Nos1+ and contribute to the Sst::Nos1
+          subfamily, but the cluster as a whole is not Nos1-defined. Consistent
+          with the Chamberland 2024 finding that Sst::Nos1 cells map principally
+          to the Sst Chodl branch (CLUS_0859), not to Sst Gaba_3.
+    caveats:
+      - Nos1 sparse (0.76) — cluster as a whole is not Nos1-defined.
+      - Better aligned with the broader Sst-OLM identity than with the Sst::Nos1 subfamily specifically.
+      - Per classical-node notes, the principal AT target for Sst::Nos1 lies outside this cohort (Sst Chodl CLUS_0859).
+    unresolved_questions:
+      - |
+        Does any Nos1+ subset of CLUS_0768 represent overlap with the Sst::Nos1
+        subfamily, or are these distinct populations co-localised in CA1-O?
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.7
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.99
+        - gene: Nos1
+          val: 0.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.5
+      region_fraction: 0.651
+      region_evidence: SELF
+
+  - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0771
+    lit_type: sst_nos1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0771
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 117; Subiculum 59; Prosubiculum 52; Retrosplenial ventral L5 22; alveus 7"
+        alignment: APPROXIMATE
+        notes: CA1 stratum oriens leads with substantial subicular/retrosplenial extension.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 11.62 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Nos1
+        node_a_value: "Nos1+ (defining)"
+        node_b_value: "Nos1: 1.67 (precomputed mean) — sparse"
+        alignment: APPROXIMATE
+        notes: |
+          Nos1 detectable but modest — between CLUS_0768 (0.76) and the high-Nos1
+          rank-0 candidates (>8). Cluster may include some Sst::Nos1 cells but is
+          not Nos1-defined.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0771 carries high Sst (11.62), modest Nos1 (1.67) and notably the
+          highest Chrna2 (2.56) of the Sst Gaba_3 children — it is the principal
+          Chrna2-OLM home rather than the Sst::Nos1 home. Anatomy includes CA1-O
+          but extends into subiculum/retrosplenial. Best interpreted as a
+          Sst-OLM cluster that may contain a minor Sst::Nos1 fraction.
+    caveats:
+      - Nos1 modest (1.67); cluster is principally the Chrna2-OLM rank-0 home.
+      - Per classical-node notes the principal Sst::Nos1 AT target is CLUS_0859 (Sst Chodl), outside this cohort.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.62
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+        - gene: Nos1
+          val: 1.67
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.643
+      region_fraction: 0.413
+      region_evidence: SELF

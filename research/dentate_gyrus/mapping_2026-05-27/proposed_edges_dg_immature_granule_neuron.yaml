@@ -1,0 +1,779 @@
+# 2026-05-27 mapping re-run for dg_immature_granule_neuron
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters and
+# top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric (PartialOverlapMatch DEPRECATED).
+#
+# IMPORTANT CONTEXT — expected atlas correlates absent from discovery output:
+#   The classical dg_immature_granule_neuron node (CL:9900002, immature
+#   dentate gyrus granule neuron) is defined as the postmitotic, synaptically
+#   integrating stage marked by DCX+/NeuN+/Tbr1+ PRIOR TO calbindin (Calb1)
+#   acquisition. Per the classical node notes in
+#   kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml the
+#   transcriptomic correlates in CCN20230722 are clusters 0514 and 0515
+#   (Tbr1+/Prox1+/Igfbpl1+ DG-PIR Ex IMN). NEITHER of these clusters appears
+#   in the 2026-05-27 discovery output at rank 0 or rank 1.
+#
+#   The cohort filter (region=MBA:632 + nt_type=glutamatergic) instead
+#   returned mature/maturing DG granule and CA3 pyramidal types. Every
+#   candidate below has Prox1 in the mature-GC range and Calb1 in the
+#   moderate-to-high range (mature/maturing DG granule profile) or — for
+#   the CA3 candidate — no Prox1 expression at all. None match the
+#   defining Calb1-negative property of the classical immature granule
+#   neuron. The atlas gene panel does not include DCX/NeuN/Igfbpl1/Tis21,
+#   so positive defining markers cannot be cross-checked here.
+#
+#   Consequently every edge below is either evidencell:UncertainRelationship
+#   (mature-GC types whose Calb1+ profile directly contradicts the
+#   immature-stage defining negative-marker, but which share the Prox1+ DG
+#   granule lineage) or skos:broadMatch where the supertype contains all
+#   mature DG sub-clusters of the relevant lineage. The CA3 candidate is
+#   off-lineage and is flagged accordingly. The actual atlas correlate
+#   (CLUS_0514/0515) should be re-surfaced via a discovery re-run with the
+#   appropriate cohort filter (likely DG polymorph/SGZ + immature-neuron
+#   markers).
+classical_node_id: dg_immature_granule_neuron
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0317
+    name: "0317 CA3 Glut_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0317
+  - id: CS20230722_CLUS_0507
+    name: "0507 DG Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0507
+  - id: CS20230722_CLUS_0508
+    name: "0508 DG Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0508
+  - id: CS20230722_CLUS_0509
+    name: "0509 DG Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0509
+  - id: CS20230722_CLUS_0502
+    name: "0502 DG Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0502
+  - id: CS20230722_SUPT_0079
+    name: "0079 CA3 Glut_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: CS20230722_SUPT_0139
+    name: "0139 DG Glut_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0139
+  - id: CS20230722_SUPT_0138
+    name: "0138 DG Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0138
+  - id: CS20230722_SUPT_0137
+    name: "0137 DG Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0137
+  - id: CS20230722_SUPT_0136
+    name: "0136 DG Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0136
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_SUPT_0079
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0079
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (parent subclass 017 CA3 Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (UBERON:0005381; inner GCL — SOMA)"
+        node_b_value: "Dentate gyrus polymorph layer 1083; Field CA3 pyramidal layer 294; CA3 stratum radiatum 261; DG polymorph 181; CA3 stratum lucidum 175"
+        alignment: DISCORDANT
+        notes: |
+          Supertype 0079 is a CA3 pyramidal-projection type with substantial DG polymorph
+          layer (hilus) component, NOT granule cell layer. Off-lineage for the immature
+          granule neuron (which arises in SGZ/polymorph but matures into GCL).
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected (lineage-defining DG granule marker; not cited explicitly on classical node but implied via CL:9900002)"
+        node_b_value: "Prox1: 0.29 (precomputed mean) — effectively absent"
+        alignment: DISCORDANT
+        notes: |
+          Prox1 absence rules out DG granule lineage. Confirms CA3 pyramidal identity
+          rather than immature granule neuron.
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected (classical node cl_mapping evidence references Tbr1+ atlas clusters 0514/0515)"
+        node_b_value: "Tbr1: 2.00 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+        notes: |
+          Tbr1 is broadly expressed in glutamatergic projection neurons (including CA3
+          pyramids); presence here does not specifically support immature granule identity.
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT — defining negative marker of the immature, pre-mature granule stage"
+        node_b_value: "Calb1: 0.51 (precomputed mean) — low/absent"
+        alignment: CONSISTENT
+        notes: |
+          Calb1 low here matches the immature-stage negative marker, but in this case it
+          reflects CA3 pyramidal identity (CA3 pyramids are also Calb1-low) rather than
+          the immature granule stage.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0079 CA3 Glut_5 sits under the CA3 pyramidal subclass (017), has
+          Prox1 essentially absent (0.29), high Cck (9.09) and Calb2 (9.59) — a CA3
+          pyramidal profile. Soma distribution is in DG polymorph layer / CA3
+          pyramidal layer, not GCL. This is the wrong lineage for an immature DG
+          granule neuron despite the survival in the cohort.
+    caveats:
+      - |
+        Prox1-negative — rules out DG granule lineage entirely; this is CA3 pyramidal.
+      - |
+        Soma in DG polymorph / CA3 pyramidal layer, not the granule cell layer
+        (UBERON:0005381) that the classical node specifies.
+    unresolved_questions:
+      - |
+        Why did the CA3 Glut_5 supertype survive a cohort filtered for DG immature
+        granule neuron? Likely a region-filter rollup (DG polymorph layer is part of
+        MBA:632) that should be tightened.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.056
+      region_evidence: SELF
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_SUPT_0139
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0139
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (parent subclass 037 DG Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (UBERON:0005381 inner GCL — SOMA)"
+        node_b_value: "DG granule cell layer 4676; DG polymorph layer 2386; DG granule cell layer 1570; DG polymorph layer 1424; CA3 stratum oriens 1402"
+        alignment: CONSISTENT
+        notes: |
+          Soma distribution dominated by DG granule cell layer with polymorph component —
+          anatomically consistent. (Note: DG-IMN axons traverse stratum oriens, but soma
+          location is GCL/SGZ.)
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected (DG granule lineage)"
+        node_b_value: "Prox1: 8.98 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected (atlas evidence clusters 0514/0515 are Tbr1+)"
+        node_b_value: "Tbr1: 2.73 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT — defining negative marker"
+        node_b_value: "Calb1: 8.21 (precomputed mean) — high"
+        alignment: DISCORDANT
+        notes: |
+          High Calb1 directly contradicts the immature-stage defining negative marker.
+          Profile fits MATURE DG granule neurons, not the DCX+/Calb1- immature stage.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0139 DG Glut_4 is a high-Prox1 (8.98), high-Calb1 (8.21), high-Pcp4
+          (9.66), GCL-dominant supertype — i.e., a mature DG granule supertype. The
+          high Calb1 directly violates the classical node's negative_marker assertion
+          for the immature stage. The actual immature correlate (CLUS_0514/0515) is
+          absent from the discovery cohort.
+    caveats:
+      - |
+        Calb1 (8.21) high; classical immature granule neuron is Calb1-negative.
+      - |
+        This supertype is the mature DG granule (DG Glut_4) population, not the
+        immature stage; would be a better candidate for dg_mature_granule_neuron.
+    unresolved_questions:
+      - |
+        Should the immature-granule classical node be re-discovered with a filter that
+        excludes high-Calb1 supertypes / requires explicit immature markers
+        (Igfbpl1, Sema5a, Dcx) — to surface CLUS_0514/0515 as the appropriate atlas
+        correlate?
+    discovery_score:
+      score: 1
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.409
+      region_evidence: SELF
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_SUPT_0138
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0138
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (parent subclass 037 DG Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (UBERON:0005381 inner GCL — SOMA)"
+        node_b_value: "DG granule cell layer 820; DG granule cell layer 221; DG molecular layer 141; DG polymorph 93; DG molecular layer 79; DG polymorph 75"
+        alignment: CONSISTENT
+        notes: |
+          Predominantly DG granule cell layer with polymorph/molecular fractions —
+          anatomically consistent with newborn/maturing granule neurons in the inner GCL.
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected (DG granule lineage)"
+        node_b_value: "Prox1: 9.13 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected (atlas evidence CLUS_0514/0515)"
+        node_b_value: "Tbr1: 0.91 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Tbr1 low at supertype level — the classical node specifically anchors
+          immature granule identity on Tbr1+ atlas clusters.
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT — defining negative marker"
+        node_b_value: "Calb1: 6.74 (precomputed mean) — moderate/high"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0138 DG Glut_3 contains the rank-0 children CLUS_0508 and CLUS_0509
+          (both surviving the discovery cohort); it carries high Prox1 (9.13), moderate-
+          high Calb1 (6.74), low Tbr1 (0.91) — a maturing DG granule profile, not the
+          DCX+/Calb1-/Tbr1+ immature stage. broadMatch 1:n is recorded only to capture
+          the multi-child cohort relationship per the 2026-05-26 cardinality rule.
+    caveats:
+      - |
+        Calb1 (6.74) inconsistent with immature-stage Calb1-negative defining property;
+        Tbr1 (0.91) below the level expected of the classical immature granule.
+      - |
+        Supertype groups CLUS_0508 + CLUS_0509 (both rank-0 survivors) → broadMatch 1:n
+        applies even though the underlying identity match is poor.
+    unresolved_questions:
+      - |
+        Does this supertype contain a Calb1-low/Tbr1+ subpopulation at finer resolution
+        that corresponds to immature-stage cells, or is it uniformly mature?
+    proposed_experiments:
+      - |
+        Sub-cluster-level Calb1/Tbr1/DCX co-expression analysis within CLUS_0508/0509
+        to test whether an immature subset is hidden inside these clusters.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.688
+      region_evidence: SELF
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_SUPT_0137
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0137
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (parent subclass 037 DG Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (UBERON:0005381 inner GCL — SOMA)"
+        node_b_value: "DG granule cell layer 38851; DG granule cell layer 7199; DG molecular layer 6636; DG polymorph 4750; DG polymorph 3067; DG molecular layer 2697"
+        alignment: CONSISTENT
+        notes: |
+          Massive DG GCL-dominant supertype (~22k cells) — the bulk DG granule neuron
+          supertype. Anatomically consistent with granule lineage but volume argues
+          against immature-stage identity (immature granules are a minority subset).
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected"
+        node_b_value: "Prox1: 8.59 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected (atlas evidence CLUS_0514/0515)"
+        node_b_value: "Tbr1: 1.81 (precomputed mean) — low/moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT — defining negative marker"
+        node_b_value: "Calb1: 5.76 (precomputed mean) — moderate"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0137 DG Glut_2 is the parent of CLUS_0507 (12k-cell DG granule
+          cluster) — a mature DG granule supertype. Moderate Calb1 (5.76) is
+          inconsistent with the immature, Calb1-negative stage. Cell count (~22k)
+          is also inconsistent with the small immature-cell pool expected in the
+          adult SGZ.
+    caveats:
+      - |
+        Calb1 (5.76) violates the immature-stage Calb1-negative defining property.
+      - |
+        Supertype size (~22k cells) far exceeds the expected size of the adult
+        immature granule neuron pool.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.711
+      region_evidence: SELF
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_SUPT_0136
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0136
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (parent subclass 037 DG Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (UBERON:0005381 inner GCL — SOMA)"
+        node_b_value: "DG granule cell layer 546; DG polymorph 487; Field CA3 pyramidal layer 479; DG molecular layer 441; DG granule cell layer 307; Field CA3 stratum radiatum 300"
+        alignment: APPROXIMATE
+        notes: |
+          DG GCL leads narrowly; large CA3 pyramidal-layer/radiatum components suggest
+          a mixed identity. Reln (4.62) elevation is suggestive of mossy-cell / hilar
+          contamination rather than immature granule.
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected"
+        node_b_value: "Prox1: 8.62 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected"
+        node_b_value: "Tbr1: 0.83 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT"
+        node_b_value: "Calb1: 5.59 (precomputed mean) — moderate"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0136 DG Glut_1 has high Prox1 (8.62) and moderate Calb1 (5.59) with
+          notable Reln (4.62) — consistent with a Reln+ Prox1+ DG glutamatergic type
+          (possibly a hilar mossy-cell or Reln+ GC subset) rather than the immature
+          Calb1-negative stage. Mixed CA3 anat further weakens the immature granule
+          identity assignment.
+    caveats:
+      - |
+        Calb1 (5.59) violates the immature-stage negative-marker property.
+      - |
+        Elevated Reln (4.62) is atypical for mature DG granule neurons; this supertype
+        may correspond to a hilar/mossy-cell-adjacent population.
+      - |
+        Mixed CA3 anatomy (~30% of top anat counts) suggests heterogeneity.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.234
+      region_evidence: SELF
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0317
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0317
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (inner GCL — SOMA)"
+        node_b_value: "DG polymorph layer 1029; CA3 pyramidal layer 195; CA3 stratum radiatum 132; DG GCL 125; DG polymorph 124; CA3 stratum oriens 116"
+        alignment: DISCORDANT
+        notes: |
+          Soma dominated by DG polymorph (hilus) and CA3 pyramidal/radiatum — NOT the
+          granule cell layer where the classical node places the immature granule neuron.
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected (DG granule lineage)"
+        node_b_value: "Prox1: 0.35 (precomputed mean) — effectively absent"
+        alignment: DISCORDANT
+        notes: |
+          Prox1-negative rules out DG granule lineage. This cluster is CA3 pyramidal.
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected"
+        node_b_value: "Tbr1: 2.90 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+        notes: |
+          Tbr1 broadly expressed in glutamatergic projection neurons; not specific here.
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT"
+        node_b_value: "Calb1: 0.44 (precomputed mean) — absent"
+        alignment: CONSISTENT
+        notes: |
+          Coincidental match: CA3 pyramidal cells are also Calb1-low; not evidence for
+          immature granule identity.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0317 CA3 Glut_5 is a CA3 pyramidal cluster (high Cck 10.01, high Calb2
+          9.58, high Pcp4 9.76, Prox1 effectively absent). Soma is in DG polymorph
+          (hilus) / CA3 — wrong lineage and wrong anatomy for an immature DG granule
+          neuron. Survived the cohort due to region overlap (DG polymorph layer falls
+          under MBA:632).
+    caveats:
+      - |
+        Prox1-negative → wrong lineage (CA3 pyramidal, not DG granule).
+      - |
+        Soma in DG polymorph / CA3 pyramidal, not GCL.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.069
+      region_evidence: SELF
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0507
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0507
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (inner GCL — SOMA)"
+        node_b_value: "DG GCL 26869; DG GCL 3644; DG molecular layer 3408; DG polymorph 3388; DG polymorph 1811; DG molecular layer 1790"
+        alignment: CONSISTENT
+        notes: |
+          Predominantly DG GCL — anatomically consistent with DG granule lineage.
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected (DG granule lineage)"
+        node_b_value: "Prox1: 9.11 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected"
+        node_b_value: "Tbr1: 2.43 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT — defining negative marker of the immature stage"
+        node_b_value: "Calb1: 8.13 (precomputed mean) — high"
+        alignment: DISCORDANT
+        notes: |
+          High Calb1 directly contradicts the immature-stage definition; this is a
+          mature DG granule cluster.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0507 DG Glut_2 is the largest DG granule cluster (12k cells), Prox1 9.11
+          and Calb1 8.13 — i.e., mature, Calb1-acquired DG granule neurons. The Calb1
+          signature directly contradicts the immature, Calb1-negative stage definition.
+    caveats:
+      - |
+        Calb1 (8.13) violates immature-stage negative-marker property → this is the
+        mature granule neuron cluster, not the immature stage.
+      - |
+        Cluster size (~12k cells) is consistent with a major mature subset rather than
+        the small adult-neurogenesis immature pool.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.703
+      region_evidence: SELF
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0508
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0508
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (inner GCL — SOMA)"
+        node_b_value: "DG GCL 319; DG GCL 130; DG molecular layer 86; DG polymorph 53; DG polymorph 51; CA3 stratum lacunosum-moleculare 40"
+        alignment: CONSISTENT
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected"
+        node_b_value: "Prox1: 9.03 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected"
+        node_b_value: "Tbr1: 0.82 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT"
+        node_b_value: "Calb1: 7.70 (precomputed mean) — high"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0508 DG Glut_3 has high Prox1 (9.03), high Calb1 (7.70), low Tbr1 (0.82)
+          — a mature DG granule cluster, not the Tbr1+/Calb1- immature stage referenced
+          by the classical node's cl_mapping notes.
+    caveats:
+      - Calb1 (7.70) violates immature-stage negative-marker.
+      - Tbr1 (0.82) below level expected for immature granule.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.632
+      region_evidence: SELF
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0509
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0509
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (inner GCL — SOMA)"
+        node_b_value: "DG GCL 501; DG GCL 91; DG molecular layer 65; DG molecular layer 55; DG polymorph 40; DG polymorph 24"
+        alignment: CONSISTENT
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected"
+        node_b_value: "Prox1: 9.23 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected"
+        node_b_value: "Tbr1: 0.99 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT"
+        node_b_value: "Calb1: 5.77 (precomputed mean) — moderate"
+        alignment: DISCORDANT
+        notes: |
+          Calb1 lower than CLUS_0507/0508 but still well above the immature-stage
+          expectation. Elevated Npy (4.05) is notable but not part of the classical
+          immature-granule profile.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0509 DG Glut_3 (sibling of 0508 under SUPT_0138) is a smaller mature
+          DG granule cluster with notable Npy (4.05). Calb1 (5.77) and Tbr1 (0.99)
+          do not fit the Tbr1+/Calb1- immature signature. The Npy elevation is
+          interesting but not diagnostic for the immature stage.
+    caveats:
+      - Calb1 (5.77) above immature-stage expectation; Tbr1 (0.99) below.
+      - |
+        Elevated Npy (4.05) is unusual for DG granule neurons; may indicate a
+        functional subset rather than developmental stage.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.749
+      region_evidence: SELF
+
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0502
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0502
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "Dentate gyrus granule cell layer (inner GCL — SOMA)"
+        node_b_value: "Medial amygdalar nucleus 260; DG GCL 180; Medial amygdalar nucleus 124; Posterior amygdalar nucleus 71; fiber tracts 43; DG molecular layer 43"
+        alignment: DISCORDANT
+        notes: |
+          Soma dominated by medial/posterior amygdalar nuclei, not GCL. Off-region
+          for an immature DG granule neuron.
+      - property: marker_Prox1
+        node_a_value: "Prox1 expected"
+        node_b_value: "Prox1: 8.53 (precomputed mean) — high"
+        alignment: CONSISTENT
+        notes: |
+          Prox1+ is consistent with DG granule lineage but is also expressed in some
+          amygdalar populations; with the dominant amygdalar anatomy here it does not
+          discriminate.
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 expected"
+        node_b_value: "Tbr1: 0.21 (precomputed mean) — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT"
+        node_b_value: "Calb1: 4.82 (precomputed mean) — moderate"
+        alignment: DISCORDANT
+        notes: |
+          Elevated Reln (5.80) further suggests a Reln+ Prox1+ population (possible
+          mossy-cell-adjacent or amygdalar GC-like) rather than the immature stage.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0502 DG Glut_1 has high Prox1 (8.53) and high Reln (5.80) with soma
+          predominantly in medial amygdalar nucleus — likely a Reln+ Prox1+ extra-
+          hippocampal population, not the SGZ-born immature DG granule neuron.
+    caveats:
+      - |
+        Soma in medial amygdalar nucleus, not DG GCL — off-region for the classical
+        immature granule neuron.
+      - |
+        Elevated Reln (5.80) suggests a Reln+ identity (mossy-cell-like or
+        amygdalar-GC-like), not consistent with the classical immature stage.
+      - |
+        Tbr1 effectively absent (0.21).
+    discovery_score:
+      score: 1
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 1
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.223
+      region_evidence: SELF

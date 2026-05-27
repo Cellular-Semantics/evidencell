@@ -1,0 +1,976 @@
+# 2026-05-27 mapping re-run for dg_type2b_progenitor
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters
+# and top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric (PartialOverlapMatch deprecated).
+classical_node_id: dg_type2b_progenitor
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0499
+    name: "0499 HPF CR Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0499
+  - id: CS20230722_CLUS_0512
+    name: "0512 DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0512
+  - id: CS20230722_CLUS_0513
+    name: "0513 DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0513
+  - id: CS20230722_CLUS_0593
+    name: "0593 OB-STR-CTX Inh IMN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0593
+  - id: CS20230722_CLUS_0498
+    name: "0498 HPF CR Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0498
+  - id: CS20230722_SUPT_1156
+    name: "1156 DCO UBC Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1156
+  - id: CS20230722_SUPT_0141
+    name: "0141 DG-PIR Ex IMN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0141
+  - id: CS20230722_SUPT_1154
+    name: "1154 CB Granule Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1154
+  - id: CS20230722_SUPT_1155
+    name: "1155 CB Granule Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1155
+  - id: CS20230722_SUPT_0135
+    name: "0135 HPF CR Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0135
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_SUPT_0141
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_SUPT_0141
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "Glut (parent subclass 038 DG-PIR Ex IMN; child clusters annotated Glut/NA)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ; SOMA)"
+        node_b_value: "Dentate gyrus, granule cell layer 1475; Dentate gyrus, polymorph layer 1094; Dentate gyrus, molecular layer 238; Field CA3 stratum oriens 135; Field CA3 pyramidal layer 82"
+        alignment: CONSISTENT
+        notes: |
+          Soma counts dominated by DG granule cell and polymorph layers — immediately
+          adjacent to the SGZ where type-2b progenitors reside (the SGZ is the boundary
+          between hilus/polymorph layer and the granule cell layer). MERFISH boundary
+          imprecision routinely places SGZ cells in either flanking layer.
+      - property: marker_Eomes
+        node_a_value: "Eomes (Tbr2) positive — canonical type-2b TF"
+        node_b_value: "Eomes: 3.31 (precomputed mean)"
+        alignment: CONSISTENT
+        notes: |
+          Supertype-level mean rolls up four constituent clusters including the
+          late-neuroblast 0512 (3.76) and early-neuroblast 0513 (8.93). The signal is
+          diluted relative to cluster 0513 but well above background.
+      - property: marker_Nestin
+        node_a_value: "Nestin (Nes) positive — type-2b/type-1 marker; lost by type-3"
+        node_b_value: "Nes not in precomputed gene panel"
+        alignment: APPROXIMATE
+        notes: |
+          Nes is not in the precomputed_expression panel for this taxonomy; cannot be
+          directly evaluated. Sox2 (alternative progenitor TF) is moderate (2.3) at the
+          supertype, consistent with persisting progenitor character.
+      - property: marker_DCX
+        node_a_value: "DCX positive — type-2b/type-3 marker"
+        node_b_value: "Dcx not in precomputed gene panel"
+        alignment: APPROXIMATE
+        notes: |
+          Dcx is not in the precomputed_expression panel; cannot be evaluated directly.
+          Supertype-level Prox1 (9.52) is high, consistent with neurogenic DG lineage.
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN (Rbfox3) ABSENT — type-2b precedes mature granule cell marker"
+        node_b_value: "Rbfox3 not in precomputed gene panel"
+        alignment: APPROXIMATE
+        notes: NeuN/Rbfox3 not in panel; cannot be directly verified.
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT — type-2b precedes mature granule cell marker"
+        node_b_value: "Calb1: 0.51 (precomputed mean) — low"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0141 DG-PIR Ex IMN_2 groups the immature-neuron clusters
+          (0512 late neuroblast, 0513 early neuroblast / type-2b, plus 0514/0515 immature
+          granule cells) and is annotated by the atlas curator under CL:9900001
+          (dentate gyrus neuroblast). Eomes mean (3.31) and Prox1 (9.52) together with
+          DG-restricted soma distribution support broadMatch: the supertype encompasses
+          the type-2b → neuroblast → immature granule progression rather than a clean
+          1:1 type-2b correspondence. Cluster 0513 (highest Eomes 8.93) is the
+          best-resolved cluster-level type-2b candidate within the supertype.
+    caveats:
+      - |
+        Supertype spans multiple developmental stages (type-2b through immature granule
+        cell). Cluster-level resolution (CLUS_0513) is the appropriate target for an
+        exact-type-2b mapping; the supertype is a broader developmental neighbourhood.
+      - |
+        Nes (Nestin), Dcx and Rbfox3 (NeuN) are not in the precomputed_expression panel
+        for CCN20230722, so direct cross-checking of classical positive (Nes, Dcx) and
+        negative (NeuN) markers is not possible from the taxonomy YAML alone.
+    unresolved_questions:
+      - |
+        Within supertype 0141, do clusters 0512/0513 (Eomes-positive neuroblast stages)
+        cleanly separate from 0514/0515 (Eomes-low immature granule cells), and should
+        a finer-grained mapping be issued at the cluster level?
+    proposed_experiments:
+      - |
+        MERFISH co-staining for Eomes + Sox2 + Prox1 in the SGZ to confirm cluster 0513
+        as the Eomes-high type-2b stage and to delineate the boundary with 0512
+        (late neuroblast).
+    discovery_score:
+      score: 1
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 3.31
+          reliable: true
+          raw_tier: 2
+          applied_score: 1.732
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.951
+          coverage: 0.75
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_SUPT_1156
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_SUPT_1156
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "Glut (UBC lineage)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ; SOMA)"
+        node_b_value: "No taxonomy soma counts at supertype level; supertype name '1156 DCO UBC Glut_1' = dorsal cochlear nucleus unipolar brush cell"
+        alignment: DISCORDANT
+        notes: |
+          Dorsal cochlear nucleus / unipolar brush cell supertype — anatomically distant
+          from the dentate gyrus SGZ. region_fraction=0.0 in the discovery cohort.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive"
+        node_b_value: "Eomes: 7.64 (precomputed mean) — very high"
+        alignment: CONSISTENT
+        notes: |
+          Unipolar brush cells are themselves Eomes/Tbr2-positive (classical UBC TF
+          marker, distinct from DG type-2b context). Shared TF expression does not
+          imply lineage equivalence.
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b)"
+        node_b_value: "Nes not in panel"
+        alignment: APPROXIMATE
+      - property: marker_DCX
+        node_a_value: "DCX positive (type-2b)"
+        node_b_value: "Dcx not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN ABSENT"
+        node_b_value: "Rbfox3 not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin ABSENT"
+        node_b_value: "Calb1: 0.13 (precomputed mean) — low"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 1156 is the dorsal cochlear nucleus unipolar brush cell lineage —
+          anatomically distinct from the dentate gyrus. Its high Eomes mean (7.64)
+          reflects the well-known UBC Eomes/Tbr2 expression and is independent of any
+          DG type-2b identity. Surfaced in the discovery cohort solely because the
+          query is anchored on Eomes expression among glutamatergic-committed cells.
+    caveats:
+      - |
+        Discovery match driven by Eomes alone; anatomical location (cochlear nucleus /
+        cerebellum-adjacent) excludes any DG progenitor interpretation.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 7.64
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.976
+          coverage: 1.0
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_SUPT_1154
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_SUPT_1154
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed)"
+        node_b_value: "Glut (cerebellar granule lineage)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "No taxonomy soma counts at supertype level; supertype name '1154 CB Granule Glut_1' = cerebellar granule cell"
+        alignment: DISCORDANT
+        notes: Cerebellar granule cell lineage — anatomically distinct from DG SGZ.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive"
+        node_b_value: "Eomes: 2.53 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+        notes: |
+          Cerebellar granule cells are Eomes/Tbr2-positive in development (Hevner
+          lineage). Shared TF does not imply DG lineage equivalence.
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b)"
+        node_b_value: "Nes not in panel"
+        alignment: APPROXIMATE
+      - property: marker_DCX
+        node_a_value: "DCX positive (type-2b)"
+        node_b_value: "Dcx not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN ABSENT"
+        node_b_value: "Rbfox3 not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin ABSENT"
+        node_b_value: "Calb1: 0.47 (precomputed mean) — low"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 1154 is the cerebellar granule cell lineage. Eomes detection is a
+          shared developmental TF feature but anatomical and lineage context exclude any
+          DG type-2b interpretation. Surfaced via Eomes-driven discovery scoring.
+    caveats:
+      - |
+        Cerebellar lineage — anatomically distant from the dentate gyrus SGZ.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 2.53
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.902
+          coverage: 1.0
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_SUPT_1155
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_SUPT_1155
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed)"
+        node_b_value: "Glut (cerebellar granule lineage)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "No taxonomy soma counts at supertype level; supertype name '1155 CB Granule Glut_2'"
+        alignment: DISCORDANT
+        notes: Cerebellar granule cell lineage — not DG.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive"
+        node_b_value: "Eomes: 2.56 (precomputed mean)"
+        alignment: APPROXIMATE
+        notes: Shared CB granule developmental Eomes signal.
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "Nes not in panel"
+        alignment: APPROXIMATE
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "Dcx not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN ABSENT"
+        node_b_value: "Rbfox3 not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin ABSENT"
+        node_b_value: "Calb1: 0.21 (precomputed mean) — low"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 1155 is a second cerebellar granule cell lineage. Discovery match
+          driven solely by Eomes; anatomy and lineage exclude DG type-2b interpretation.
+    caveats:
+      - |
+        Cerebellar lineage — anatomically distant from the dentate gyrus.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 2.56
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.927
+          coverage: 1.0
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_SUPT_0135
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_SUPT_0135
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed)"
+        node_b_value: "Glut (CR / Cajal-Retzius lineage)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "Dentate gyrus, molecular layer 2416; Field CA1 stratum lacunosum-moleculare 326; Entorhinal area medial dorsal layer 1 189"
+        alignment: DISCORDANT
+        notes: |
+          Cajal-Retzius cells reside in the dentate gyrus MOLECULAR layer (and CA1
+          stratum lacunosum-moleculare, EC L1) — distinct from the SGZ where type-2b
+          progenitors are located. The DG ML soma counts are abundant but not the
+          target compartment.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive"
+        node_b_value: "Eomes: 1.05 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Eomes mean is modest; CR cells are not classically Eomes-positive in the
+          adult, weak signal likely reflects developmental remnants.
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "Nes not in panel"
+        alignment: APPROXIMATE
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "Dcx not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN ABSENT"
+        node_b_value: "Rbfox3 not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin ABSENT"
+        node_b_value: "Calb1: 0.59 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: marker_Reln
+        node_a_value: "Reln not a type-2b marker"
+        node_b_value: "Reln: 12.43 (precomputed mean) — very high; canonical CR-cell marker"
+        alignment: DISCORDANT
+        notes: |
+          Very high Reln expression identifies this supertype as Cajal-Retzius cells,
+          not type-2b progenitors.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0135 HPF CR Glut_1 is the hippocampal Cajal-Retzius cell supertype
+          (Reln=12.43, Tbr1=6.05), residing in the DG molecular layer and CA1 SLM, not
+          the SGZ. Discovery surfaced this supertype only because of low-level Eomes
+          (1.05) within the glutamatergic-committed cohort filter. CR cells are not
+          type-2b neural progenitors.
+    caveats:
+      - |
+        Cajal-Retzius cell supertype (Reln-high) — not a neural progenitor lineage.
+      - |
+        Soma distribution is DG molecular layer, not SGZ.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 1.05
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.894
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.878
+          coverage: 0.8
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0513
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_CLUS_0513
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ; SOMA)"
+        node_b_value: "Dentate gyrus, polymorph layer 60; Dentate gyrus, granule cell layer 103; Dentate gyrus, molecular layer 16; Field CA3 stratum oriens 31; corpus callosum, body 23"
+        alignment: CONSISTENT
+        notes: |
+          DG-restricted soma distribution split between granule cell layer (where SGZ
+          immediately abuts on its hilar side) and polymorph layer. MERFISH boundary
+          imprecision (and the SGZ being a narrow band between layers) accounts for the
+          flanking-layer dominance. Corpus callosum component is small.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive — canonical type-2b TF"
+        node_b_value: "Eomes: 8.93 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+        notes: |
+          Cluster 0513 carries the strongest Eomes signal among the candidates and is
+          the best transcriptomic correlate of the Eomes-high type-2b stage.
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b)"
+        node_b_value: "Nes not in precomputed panel; atlas defining_markers include Vim (vimentin — progenitor cytoskeletal marker)"
+        alignment: APPROXIMATE
+        notes: |
+          Nestin is not in the precomputed panel; the atlas annotation for CLUS_0513
+          highlights Vim (vimentin) as a scoped distinctive marker — Vim is a recognised
+          progenitor cytoskeletal marker, consistent with type-2b progenitor identity.
+      - property: marker_DCX
+        node_a_value: "DCX positive (type-2b)"
+        node_b_value: "Dcx not in precomputed panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN (Rbfox3) ABSENT"
+        node_b_value: "Rbfox3 not in precomputed panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin (Calb1) ABSENT"
+        node_b_value: "Calb1: 0.23 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: marker_Sox2
+        node_a_value: "Sox2 positive in type-1/type-2 progenitors (waning by type-2b)"
+        node_b_value: "Sox2: 5.80 (precomputed mean) — high"
+        alignment: CONSISTENT
+        notes: |
+          Sox2 high expression at the cluster level supports active-progenitor identity
+          (type-2b retains some Sox2 from the type-1/type-2a lineage).
+      - property: marker_Prox1
+        node_a_value: "Prox1 onsets in type-2b/type-3 (DG lineage TF)"
+        node_b_value: "Prox1: 8.13 (precomputed mean) — high"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Cluster 0513 (DG-PIR Ex IMN_2 sub-cluster) carries the highest Eomes
+          expression (8.93) among the candidate cohort, with co-expression of Sox2
+          (5.80) and Prox1 (8.13) and DG-restricted soma. The atlas curator annotates
+          this cluster as "early neuroblast" mapping to CL:9900004 (dentate gyrus
+          type-2b neural progenitor) under a BROAD relation, with Vim/Eomes/Igfbpl1 as
+          spatially validated markers. closeMatch (rather than exactMatch) reflects the
+          inability to directly verify Nes/Dcx/Rbfox3 (not in the precomputed panel)
+          and the lack of annotation-transfer evidence for this developmental type.
+    caveats:
+      - |
+        Three canonical type-2b markers (Nestin/Nes, DCX, NeuN/Rbfox3) are absent from
+        the CCN20230722 precomputed_expression panel, so direct positive/negative
+        marker cross-checks are not possible from taxonomy YAML; reliance falls on
+        Eomes/Sox2/Prox1 and the atlas curator's CL:9900004 BROAD annotation.
+      - |
+        No annotation-transfer (MapMyCells) evidence available for type-2b progenitors;
+        AT pipelines typically rely on adult interneuron / projection-neuron reference
+        datasets that exclude the SGZ neurogenic lineage.
+    unresolved_questions:
+      - |
+        Does CLUS_0513 separate cleanly from CLUS_0511 (the parent supertype 0140 early
+        neuroblast cluster, also CL:9900004 in dg_pir_ex_imn.yaml)? CLUS_0511 was not
+        returned by this discovery query but is the existing curated correlate.
+    proposed_experiments:
+      - |
+        MERFISH co-staining for Eomes + Vim + Nes in the SGZ to test whether CLUS_0513
+        and CLUS_0511 represent overlapping or distinct sub-stages of the type-2b
+        progenitor population.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 8.93
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.989
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0512
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_CLUS_0512
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed)"
+        node_b_value: "NA (no atlas NT assignment at cluster level; parent subclass = DG-PIR Ex IMN Glut)"
+        alignment: APPROXIMATE
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ; SOMA)"
+        node_b_value: "Dentate gyrus, polymorph layer 137; Dentate gyrus, granule cell layer 208; Dentate gyrus, molecular layer 64; Field CA3 stratum oriens 42; Field CA3 pyramidal layer 34"
+        alignment: CONSISTENT
+        notes: |
+          DG-restricted soma distribution, with abundant polymorph and granule cell
+          layer cells flanking the SGZ.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive"
+        node_b_value: "Eomes: 3.76 (precomputed mean)"
+        alignment: CONSISTENT
+        notes: |
+          Moderate Eomes — lower than CLUS_0513 (8.93). Atlas annotation labels this
+          cluster as 'late neuroblast' representing the type-2b/type-3 transition;
+          Eomes wanes as cells progress to type-3.
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b)"
+        node_b_value: "Nes not in panel"
+        alignment: APPROXIMATE
+      - property: marker_DCX
+        node_a_value: "DCX positive (type-2b)"
+        node_b_value: "Dcx not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN ABSENT"
+        node_b_value: "Rbfox3 not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin ABSENT"
+        node_b_value: "Calb1: 0.60 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: marker_Prox1
+        node_a_value: "Prox1 onsets in type-2b/type-3"
+        node_b_value: "Prox1: 9.70 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Calb2
+        node_a_value: "Calb2 (calretinin) onsets in late neuroblast / immature granule cell"
+        node_b_value: "Calb2: 7.25 (precomputed mean) — high"
+        alignment: APPROXIMATE
+        notes: |
+          High Calb2 indicates this cluster is more advanced (type-3 / late neuroblast)
+          than the canonical Eomes-high type-2b. closeMatch reflects this developmental
+          drift.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Cluster 0512 is annotated as 'late neuroblast' by the atlas curator (BROAD to
+          CL:9900001 dentate gyrus neuroblast in dg_pir_ex_imn.yaml). Eomes (3.76) is
+          still detectable but lower than CLUS_0513; Prox1 (9.70) is high and Calb2
+          (7.25) onset marks the transition toward immature granule cells. Best read as
+          the late-type-2b / type-3 transition stage rather than the canonical
+          Eomes-high type-2b — hence closeMatch rather than exactMatch.
+    caveats:
+      - |
+        Cluster represents the type-2b/type-3 boundary; molecular profile (high Calb2,
+        high Prox1, moderate Eomes) sits between the strict type-2b and type-3 stages.
+      - |
+        Nes/Dcx/Rbfox3 absent from the precomputed_expression panel.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 3.76
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.967
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0499
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_CLUS_0499
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed)"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "Piriform area 9; Main olfactory bulb 3; Dentate gyrus molecular layer 4; Olfactory tubercle 2; Anterior olfactory nucleus 2; Striatum 2"
+        alignment: DISCORDANT
+        notes: |
+          Soma distribution is olfactory/piriform-dominated; only 4 cells in the DG
+          molecular layer (and none in SGZ/polymorph). Not a DG progenitor lineage.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive"
+        node_b_value: "Eomes: 4.04 (precomputed mean) — moderate/high"
+        alignment: APPROXIMATE
+        notes: |
+          Detectable Eomes, but interpreted as olfactory CR-lineage Tbr2 expression
+          rather than DG type-2b.
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "Nes not in panel"
+        alignment: APPROXIMATE
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "Dcx not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN ABSENT"
+        node_b_value: "Rbfox3 not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin ABSENT"
+        node_b_value: "Calb1: 0.0 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Reln
+        node_a_value: "Reln not a type-2b marker"
+        node_b_value: "Reln: 11.91 (precomputed mean) — very high (CR-cell signature)"
+        alignment: DISCORDANT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 not a type-2b marker"
+        node_b_value: "Tbr1: 6.04 (precomputed mean) — high (CR-cell signature)"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Cluster 0499 (HPF CR Glut_1 sub-cluster) is part of the hippocampal/olfactory
+          Cajal-Retzius family — Reln (11.91) and Tbr1 (6.04) high, soma distribution
+          olfactory and DG molecular layer. Not a DG progenitor.
+    caveats:
+      - |
+        CR-cell cluster — high Reln/Tbr1 incompatible with type-2b progenitor identity.
+      - |
+        Soma distribution is olfactory/piriform, not DG SGZ.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 4.04
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0593
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_CLUS_0593
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed)"
+        node_b_value: "NA (cluster); parent name 'OB-STR-CTX Inh IMN_1' suggests INHIBITORY immature neuron"
+        alignment: DISCORDANT
+        notes: |
+          Cluster name includes 'Inh' (inhibitory). Gad2 (4.36) and Gad1 (1.76)
+          precomputed means confirm GABAergic identity, not glutamatergic. Mismatched
+          to a glutamatergic-committed DG type-2b progenitor.
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "Dentate gyrus polymorph 20; Dentate gyrus granule cell layer 12; Caudoputamen 9; lateral ventricle 9; Anterior olfactory nucleus 9; corpus callosum, body 17"
+        alignment: DISCORDANT
+        notes: |
+          Mixed striatal/olfactory/ventricular soma distribution typical of an OB-STR
+          rostral migratory stream / olfactory immature neuron pool, not DG SGZ.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive"
+        node_b_value: "Eomes: 1.68 (precomputed mean) — low/moderate"
+        alignment: APPROXIMATE
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "Nes not in panel"
+        alignment: APPROXIMATE
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "Dcx not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN ABSENT"
+        node_b_value: "Rbfox3 not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin ABSENT"
+        node_b_value: "Calb1: 0.42 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: marker_Sox2
+        node_a_value: "Sox2 (progenitor TF)"
+        node_b_value: "Sox2: 8.09 (precomputed mean) — very high"
+        alignment: APPROXIMATE
+        notes: Indicates active progenitor identity, but olfactory-lineage, not DG.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Cluster 0593 belongs to the OB-STR-CTX inhibitory immature neuron family
+          (RMS / olfactory neurogenic lineage). GABAergic (Gad2=4.36), soma in
+          olfactory/striatal/ventricular regions — distinct lineage from the DG SGZ
+          glutamatergic-committed type-2b progenitor.
+    caveats:
+      - |
+        Inhibitory (GABAergic) lineage — incompatible with glutamatergic-committed
+        DG type-2b progenitor. Surfaced in discovery cohort via Eomes alone.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 1.68
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.957
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0498
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_CLUS_0498
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed)"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "Main olfactory bulb 16; olfactory nerve layer 12; Dentate gyrus, molecular layer 10; Olfactory tubercle 5; Olfactory areas 3"
+        alignment: DISCORDANT
+        notes: |
+          Olfactory-dominant soma distribution; only 10 cells in DG molecular layer
+          (not SGZ). CR-lineage cluster sibling of 0499.
+      - property: marker_Eomes
+        node_a_value: "Eomes positive"
+        node_b_value: "Eomes: 0.56 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: Borderline Eomes detection.
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "Nes not in panel"
+        alignment: APPROXIMATE
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "Dcx not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN ABSENT"
+        node_b_value: "Rbfox3 not in panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin ABSENT"
+        node_b_value: "Calb1: 0.30 (precomputed mean) — low"
+        alignment: CONSISTENT
+      - property: marker_Reln
+        node_a_value: "Reln not a type-2b marker"
+        node_b_value: "Reln: 12.13 (precomputed mean) — very high (CR signature)"
+        alignment: DISCORDANT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1 not a type-2b marker"
+        node_b_value: "Tbr1: 5.36 (precomputed mean) — high (CR signature)"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Cluster 0498 is a second hippocampal/olfactory Cajal-Retzius sub-cluster
+          (Reln=12.13, Tbr1=5.36). Not a DG progenitor lineage.
+    caveats:
+      - |
+        CR-cell cluster — high Reln/Tbr1 incompatible with type-2b.
+      - |
+        Olfactory-dominant soma distribution.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Eomes
+          val: 0.56
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.935
+      region_fraction: 0.0
+      region_evidence: SELF

@@ -1,0 +1,1362 @@
+# Stage B mapping output — ca1_pyramidal_cell (2026-05-27 re-run)
+# Orchestrator: workflows/map-cell-type.md Step 3 + Step 7 predicate rubric (2026-05-26)
+# Discovery inputs: research/hippocampus/glutamatergic_report_ingest/discovery_2026-05-27/discovery_ca1_pyramidal_cell_rank{0,1}.json
+
+classical_node_id: ca1_pyramidal_cell
+taxonomy_id: CCN20230722
+
+# Minimal taxonomy ref stubs for atlas nodes referenced by proposed edges.
+# Full data lives in kb/taxonomy/CCN20230722/{cluster,supertype}.yaml.
+stubs:
+  - id: CS20230722_CLUS_0262
+    name: "0262 CA1-ProS Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0262
+  - id: CS20230722_CLUS_0263
+    name: "0263 CA1-ProS Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0263
+  - id: CS20230722_CLUS_0273
+    name: "0273 CA1-ProS Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0273
+  - id: CS20230722_CLUS_0395
+    name: "0395 SUB-ProS Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0395
+  - id: CS20230722_CLUS_0261
+    name: "0261 CA1-ProS Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0261
+  - id: CS20230722_SUPT_0098
+    name: "0098 SUB-ProS Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0098
+  - id: CS20230722_SUPT_0097
+    name: "0097 SUB-ProS Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0097
+  - id: CS20230722_SUPT_0096
+    name: "0096 SUB-ProS Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0096
+  - id: CS20230722_SUPT_0069
+    name: "0069 CA1-ProS Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0069
+  - id: CS20230722_SUPT_0077
+    name: "0077 CA3 Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0077
+
+edges:
+
+  # ── Rank 0 (cluster) candidates ────────────────────────────────
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_CLUS_0262
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0262
+    relationship: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Field CA1, pyramidal layer (MBA:407) dominant
+          (cc=1353+9298); Field CA1, stratum oriens (MBA:399)
+          cc=1560+4529; Field CA1, stratum radiatum (MBA:415)
+          cc=2264+5281. All within CA1.
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        node_a_value: "present (PMID:32009891 IHC)"
+        node_b_value: "Gria1: 11.6 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present (PMID:32009891 IHC)"
+        node_b_value: "Gria2: 10.89 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present (PMID:28779130 IHC)"
+        node_b_value: "Nptn: 8.9 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present (PMID:27375434 review)"
+        node_b_value: "Slc17a7: 9.27 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1; PMID:27678395)"
+        node_b_value: "Drd1: 0.0 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          WMBv1 cluster 0262 (CA1-ProS Glut_1) cells are predominantly in
+          Field CA1 pyramidal layer (MBA:407, cc>10000 across MERFISH
+          datasets) with adjacent CA1 strata; Glut NT type; AMPA receptor
+          subunit (Gria1/Gria2) and Slc17a7 expression match classical
+          markers; Drd1 absent (consistent with dorsal CA1).
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Sibling clusters CS20230722_CLUS_0261 and CS20230722_CLUS_0263
+          share supertype SUPT_0069 with very similar marker profiles —
+          this cluster is one of several transcriptomic sub-types of CA1
+          principal cell.
+      - caveat_type: OTHER
+        description: >-
+          No annotation transfer evidence available for this taxonomy yet;
+          predicate selection rests on metadata + precomputed expression.
+    unresolved_questions:
+      - >-
+        Which sub-cluster within SUPT_0069 (0261/0262/0263) corresponds to
+        the canonical CA1 pyramidal cell vs CA1-ProS border cells?
+    proposed_experiments:
+      - >-
+        Run MapMyCells annotation transfer from a Drd1-/Calb1+ CA1 dorsal
+        snRNA-seq dataset onto CCN20230722 to resolve cluster-level
+        correspondence.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 11.6
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.983}
+        - gene: Gria2
+          val: 10.89
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.863}
+        - gene: Nptn
+          val: 8.9
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.974}
+        - gene: Slc17a7
+          val: 9.27
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.65}
+        - gene: "-Drd1"
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.0}
+      region_fraction: 0.439
+      region_evidence: SELF
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_CLUS_0263
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0263
+    relationship: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Field CA1, stratum oriens (MBA:399) cc=1562+2574; Field
+          CA1, pyramidal layer (MBA:407) cc=2017+932; Field CA1,
+          stratum radiatum (MBA:415) cc=645+1726. All CA1.
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 11.47 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 11.02 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 8.82 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 9.02 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.0 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Cluster 0263 distributes across CA1 stratum oriens, pyramidal,
+          and radiatum (all CA1 subfields). Sibling of 0262 within
+          supertype 0069. Classical markers concordant; Drd1 absent.
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Soma signal split between CA1 stratum oriens and pyramidal
+          layer; may indicate registration spread or a deep-layer CA1 PC
+          subtype.
+      - caveat_type: OTHER
+        description: >-
+          No annotation transfer evidence available; sibling-non-
+          discriminating expression profile (0262/0263 share SUPT_0069).
+    unresolved_questions:
+      - >-
+        Does the CA1 stratum oriens-heavy distribution of 0263 reflect
+        deep-sublayer CA1 PCs vs registration noise vs O-LM-adjacent
+        soma?
+    proposed_experiments:
+      - >-
+        Spatial transcriptomics with sub-pyramidal-layer resolution
+        (e.g. Slide-seq, Xenium) on dorsal CA1 to map 0262 vs 0263
+        soma-laminar distributions.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 11.47
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.957}
+        - gene: Gria2
+          val: 11.02
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.957}
+        - gene: Nptn
+          val: 8.82
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.932}
+        - gene: Slc17a7
+          val: 9.02
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.53}
+        - gene: "-Drd1"
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.0}
+      region_fraction: 0.312
+      region_evidence: SELF
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_CLUS_0273
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0273
+    relationship: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Field CA1, stratum oriens (MBA:399) cc=303+309; Field
+          CA1, pyramidal layer (MBA:407) cc=45+153; Field CA1,
+          stratum radiatum (MBA:415) cc=76+null. All CA1.
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 11.51 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 11.04 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 8.76 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 9.29 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.0 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Cluster 0273 (CA1-ProS Glut_2, parent SUPT_0070) is a smaller
+          CA1-localised cluster with the same marker profile as
+          SUPT_0069 clusters. May represent a separate transcriptomic
+          CA1 PC subtype (e.g. deep vs superficial pyramidal layer).
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Parent supertype SUPT_0070 was not surfaced as a rank-1
+          candidate (supertype-level discovery returned only SUPT_0069
+          among CA1-ProS supertypes) — investigate whether SUPT_0070
+          should also be a rank-1 candidate or has been filtered.
+      - caveat_type: OTHER
+        description: >-
+          No annotation transfer evidence available.
+    unresolved_questions:
+      - >-
+        Does 0273 represent CA1 deep vs superficial PCs, or CA1-ProS
+        border cells with distinct molecular profile from SUPT_0069?
+    proposed_experiments:
+      - >-
+        Cross-reference 0273 markers with Cembrowski 2016 deep/
+        superficial CA1 PC profiles to test sublayer hypothesis.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 11.51
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.966}
+        - gene: Gria2
+          val: 11.04
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.991}
+        - gene: Nptn
+          val: 8.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.821}
+        - gene: Slc17a7
+          val: 9.29
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.667}
+        - gene: "-Drd1"
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.0}
+      region_fraction: 0.223
+      region_evidence: SELF
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_CLUS_0395
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0395
+    relationship: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Prosubiculum (MBA:484682470) cc=54+195 dominant; Subiculum
+          (MBA:502) cc=14+92; Field CA1, stratum radiatum (MBA:415)
+          cc=46; Field CA1, stratum oriens cc=26+30; Field CA1,
+          pyramidal layer (MBA:407) cc=14. Soma predominantly in
+          subiculum/prosubiculum with a CA1 minority.
+        alignment: APPROXIMATE
+        notes: >-
+          Atlas cluster soma is dominated by prosubiculum/subiculum
+          cells; CA1 pyramidal layer is a small minority (cc=14). The
+          classical CA1 PC location is at best peripheral to this
+          cluster.
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 11.24 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 11.03 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 9.03 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 9.06 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.0 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Cluster 0395 is a SUB-ProS Glut_3 cluster; soma predominantly
+          subicular/prosubicular with a small CA1 component. Markers
+          consistent with hippocampal glutamatergic principal cell but
+          location displaced from canonical CA1 stratum pyramidale.
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Location is predominantly Subiculum/Prosubiculum, not CA1
+          pyramidal layer — this cluster is better described as a
+          subicular projection neuron. Surfaced as a CA1 PC candidate
+          because of CA1-adjacent cells and shared glutamatergic marker
+          profile.
+      - caveat_type: OTHER
+        description: >-
+          Consider remapping to a subiculum classical node if/when one
+          is added.
+    unresolved_questions:
+      - >-
+        Does the CA1 component of 0395 represent CA1/subiculum border
+        cells or registration spread?
+    proposed_experiments:
+      - >-
+        Examine MERFISH spatial centroid of 0395 cells across CA1
+        boundary to distinguish border-cell vs registration-error
+        interpretations.
+    discovery_score:
+      score: 8
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 11.24
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.88}
+        - gene: Gria2
+          val: 11.03
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.983}
+        - gene: Nptn
+          val: 9.03
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.991}
+        - gene: Slc17a7
+          val: 9.06
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.556}
+        - gene: "-Drd1"
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.0}
+      region_fraction: 0.029
+      region_evidence: SELF
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_CLUS_0261
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_CLUS_0261
+    relationship: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Field CA1, stratum oriens (MBA:399) cc=69+215; Field CA1,
+          pyramidal layer (MBA:407) cc=42+94; Field CA1, stratum
+          radiatum (MBA:415) cc=33+38; also Field CA2 pyramidal
+          (MBA:446) cc=35; CA2 stratum oriens (MBA:438) cc=37;
+          CA3 pyramidal (MBA:495) cc=14+34; CA3 stratum lucidum
+          (MBA:479) cc=11; CA3 stratum radiatum (MBA:504) cc=17.
+          Predominantly CA1 with appreciable CA2/CA3 distribution.
+        alignment: APPROXIMATE
+        notes: >-
+          Soma extends across CA1, CA2, and CA3 fields (n=529 total).
+          The classical CA1 PC is CA1-specific; this cluster may
+          represent a pan-CA principal cell subtype or a CA1 PC with
+          MERFISH spread into CA2/CA3.
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 11.36 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 10.92 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 8.88 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 9.71 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.0 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Cluster 0261 is a small (n=529) sibling of 0262/0263 within
+          SUPT_0069; CA1-dominant but with CA2/CA3 minority. Markers
+          consistent with hippocampal glutamatergic PC. May represent
+          a rare CA1 PC subset or a transition population.
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Soma distribution extends beyond CA1 to CA2/CA3 fields —
+          atypical for canonical CA1 PC. Could indicate a transition
+          subtype or MERFISH registration spread.
+      - caveat_type: OTHER
+        description: >-
+          Small cluster size (n=529) limits resolution of within-cluster
+          structure.
+    unresolved_questions:
+      - >-
+        Is the CA2/CA3 component of 0261 biologically meaningful (e.g.
+        a rare CA-border PC) or registration spread?
+    proposed_experiments:
+      - >-
+        Targeted FISH for CA1-vs-CA2-vs-CA3 markers on 0261-identified
+        cells to test whether they are biologically CA1 or scattered
+        across fields.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 8
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 11.36
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.906}
+        - gene: Gria2
+          val: 10.92
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.897}
+        - gene: Nptn
+          val: 8.88
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.957}
+        - gene: Slc17a7
+          val: 9.71
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.915}
+        - gene: "-Drd1"
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.0}
+      region_fraction: 0.199
+      region_evidence: SELF
+
+  # ── Rank 1 (supertype) candidates ──────────────────────────────
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_SUPT_0098
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0098
+    relationship: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "(supertype-level NT not annotated; inferred Glut from subclass 023 SUB-ProS Glut)"
+        alignment: CONSISTENT
+        notes: NT not directly annotated at supertype; subclass 023 SUB-ProS Glut confirms glutamatergic.
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Prosubiculum (MBA:484682470) cc=611+647; Field CA1,
+          stratum oriens (MBA:399) cc=474+629; Subiculum (MBA:502)
+          cc=160+278; Field CA1, stratum radiatum (MBA:415) cc=138.
+          Soma predominantly Subiculum/Prosubiculum.
+        alignment: DISCORDANT
+        notes: >-
+          Supertype soma is centred on prosubiculum/subiculum rather
+          than CA1 pyramidal layer; CA1 stratum oriens cells present
+          but the supertype is broader-by-location than a pure CA1 PC.
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 10.82 (precomputed mean); coverage=1.0 across child clusters"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 10.92 (precomputed mean); coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 8.8 (precomputed mean); coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 8.96 (precomputed mean); coverage=1.0"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.03 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Supertype 0098 (SUB-ProS Glut_3) is centred on subiculum/
+          prosubiculum with a CA1 stratum oriens component. Mapped here
+          as broadMatch because the supertype encompasses subicular
+          principal cells of which only a fraction project to or border
+          CA1; it is broader-by-location than the classical CA1 PC.
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Supertype location predominantly subiculum/prosubiculum, not
+          CA1 — broadMatch rationale is location-spread, not multi-
+          cluster cardinality alone.
+      - caveat_type: OTHER
+        description: >-
+          Better suited as a candidate for a future subiculum classical
+          node.
+    unresolved_questions:
+      - >-
+        Should this edge be replaced with a subiculum-projection-cell
+        edge once that classical node exists?
+    proposed_experiments:
+      - >-
+        Add a subiculum projection neuron classical node and re-run
+        mapping to test whether SUPT_0098 is a better fit there.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 6
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 10.82
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.791}
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.92
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.93}
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.8
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.953}
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 8.96
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.465}
+          coverage: 1.0
+        - gene: "-Drd1"
+          val: 0.03
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.233}
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_SUPT_0097
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0097
+    relationship: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "(supertype NT not annotated; subclass 023 SUB-ProS Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Prosubiculum (MBA:484682470) cc=553+875; Hippocampo-
+          amygdalar transition (MBA:589508447) cc=163+337; Field
+          CA1, stratum oriens (MBA:399) cc=1215+1248; Posterior
+          amygdalar nucleus (MBA:780) cc=262; CA1 pyramidal layer
+          (MBA:407) cc=193; CA1 stratum radiatum cc=150.
+        alignment: DISCORDANT
+        notes: >-
+          Supertype soma extends into Hippocampo-amygdalar transition
+          area and posterior amygdalar nucleus — anatomically
+          distant/unrelated regions for a hippocampal CA1 PC.
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 10.47 (precomputed mean); coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 10.72 (precomputed mean); coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 8.65 (precomputed mean); coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 9.1 (precomputed mean); coverage=1.0"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.01 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Supertype 0097 spans prosubiculum, hippocampo-amygdalar
+          transition, and posterior amygdalar nucleus with a CA1 stratum
+          oriens contribution — broader by location than a CA1 PC.
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Significant cells in posterior amygdalar nucleus and
+          hippocampo-amygdalar transition — anatomically distant from
+          CA1 stratum pyramidale. Mapping retained as broadMatch but
+          this supertype is poorly aligned to the classical CA1 PC.
+    unresolved_questions:
+      - >-
+        Why does the supertype span amygdalar territories? Likely a
+        ventral hippocampal / amygdalo-hippocampal projection subtype.
+    proposed_experiments:
+      - >-
+        Restrict mapping to dorsal CA1 region in a follow-up discovery
+        run to exclude amygdalo-hippocampal supertypes.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 6
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 10.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.535}
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.72
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.791}
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.65
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.698}
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 9.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.581}
+          coverage: 1.0
+        - gene: "-Drd1"
+          val: 0.01
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.116}
+      region_fraction: 0.039
+      region_evidence: SELF
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_SUPT_0096
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0096
+    relationship: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "(subclass 023 SUB-ProS Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Prosubiculum (MBA:484682470) cc=593+1280; Subiculum
+          (MBA:502) cc=1378+3149 (dominant); Field CA1, stratum
+          radiatum (MBA:415) cc=215. Soma centred on subiculum.
+        alignment: DISCORDANT
+        notes: >-
+          Supertype soma centred on subiculum proper, not CA1.
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 10.95; coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 10.98; coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 8.64; coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 9.19; coverage=1.0"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.03"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Supertype 0096 is subiculum-dominant with only a small CA1
+          stratum radiatum component. Glutamatergic markers consistent
+          but location distant from CA1 pyramidal layer.
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Subiculum-centred supertype; this edge is a placeholder until
+          a subiculum classical node exists.
+    unresolved_questions:
+      - >-
+        Should this edge be migrated to a subiculum classical node when
+        available?
+    proposed_experiments:
+      - >-
+        Add a subiculum projection-neuron classical node.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 6
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 10.95
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.837}
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.98
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.953}
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.64
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.674}
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 9.19
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.605}
+          coverage: 1.0
+        - gene: "-Drd1"
+          val: 0.03
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.233}
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_SUPT_0069
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0069
+    relationship: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "(subclass 016 CA1-ProS Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Field CA1, pyramidal layer (MBA:407) cc=2553+12028
+          (dominant); Field CA1, stratum oriens (MBA:399) cc=5205+
+          8353; Field CA1, stratum radiatum (MBA:415) cc=4162+6573.
+          Entirely CA1.
+        alignment: CONSISTENT
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 11.18; coverage=1.0 across child clusters (0261/0262/0263)"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 10.86; coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 8.76; coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 9.58; coverage=1.0"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.09 (precomputed mean)"
+        alignment: CONSISTENT
+        notes: >-
+          Drd1 mean slightly elevated relative to leaf clusters
+          (0261/0262/0263 all 0.0); coverage data suggests minor signal
+          confined to a subset of child cells. Still below MIN_DETECTABLE.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Supertype 0069 (CA1-ProS Glut_1) encompasses three child
+          clusters (0261, 0262, 0263) all centred on CA1 fields. This
+          is the canonical CA1 PC supertype; multiple-passing-clusters
+          rubric drives broadMatch + 1:n at this rank.
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Three child clusters (CS20230722_CLUS_0261/0262/0263) all
+          map plausibly to CA1 PC at rank 0; supertype is therefore the
+          appropriate broadMatch parent.
+      - caveat_type: OTHER
+        description: >-
+          Supertype-level Drd1 mean (0.09) is slightly above leaf-
+          cluster zeros — flag for investigation; likely a small minority
+          of cells with detectable Drd1.
+    unresolved_questions:
+      - >-
+        Do the three child clusters correspond to distinct CA1 PC
+        sublayer/projection subtypes, or to dorsal-ventral CA1 axis
+        partition?
+    proposed_experiments:
+      - >-
+        Sublayer-resolved transcriptomics on dorsal CA1 to test the
+        hypothesis that 0261/0262/0263 reflect deep vs superficial
+        sublayers.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 6
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 11.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.907}
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.86
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.86}
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.884}
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 9.58
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.86}
+          coverage: 1.0
+        - gene: "-Drd1"
+          val: 0.09
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.465}
+      region_fraction: 0.375
+      region_evidence: SELF
+
+  - id: edge_ca1_pyramidal_cell_to_CS20230722_SUPT_0077
+    lit_type: ca1_pyramidal_cell
+    taxonomy_type: CS20230722_SUPT_0077
+    relationship: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "(subclass 017 CA3 Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum pyramidale (UBERON:0014548)"
+        node_b_value: >-
+          Field CA3, pyramidal layer (MBA:495) cc=1292+1494; Field
+          CA3, stratum oriens (MBA:486) cc=488+3103; Field CA3,
+          stratum lucidum (MBA:479) cc=608; Field CA3, stratum
+          radiatum (MBA:504) cc=548. Entirely CA3, no CA1.
+        alignment: DISCORDANT
+        notes: >-
+          Supertype soma is entirely in CA3, not CA1. Surfaced as a
+          rank-1 candidate via the descendant-anat fallback
+          (region_evidence: DESCENDANT_ONLY at discovery) and shared
+          glutamatergic principal-cell marker profile.
+      - property: marker_Gria1
+        node_a_value: "present"
+        node_b_value: "Gria1: 10.67; coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Gria2
+        node_a_value: "present"
+        node_b_value: "Gria2: 10.68; coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Nptn
+        node_a_value: "present"
+        node_b_value: "Nptn: 8.56; coverage=1.0"
+        alignment: CONSISTENT
+      - property: marker_Slc17a7
+        node_a_value: "present"
+        node_b_value: "Slc17a7: 9.99; coverage=1.0"
+        alignment: CONSISTENT
+      - property: negative_marker_Drd1
+        node_a_value: "absent (dorsal CA1)"
+        node_b_value: "Drd1: 0.07"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >-
+          Supertype 0077 (CA3 Glut_3) is CA3-localised. Shares the
+          glutamatergic hippocampal PC marker programme but anatomical
+          location is the wrong subfield for the classical CA1 PC.
+          Surfaced via Step 0a descendant-anat fallback at rank 1
+          (region_evidence: DESCENDANT_ONLY).
+    caveats:
+      - caveat_type: OTHER
+        description: >-
+          Wrong subfield (CA3 not CA1). This edge should be re-routed
+          to ca3_pyramidal_cell during curator review; retained here
+          because it appeared in the rank-1 discovery cohort.
+      - caveat_type: OTHER
+        description: >-
+          region_evidence is DESCENDANT_ONLY at discovery — the
+          supertype's own anat row was stripped by BCKG; rank-0
+          descendants surfaced the CA3 location. See planning/
+          at_blind_region_drop_findings_2026-05-12.md.
+    unresolved_questions:
+      - >-
+        Should this edge be moved to ca3_pyramidal_cell? Yes — flagged
+        for curator action.
+    proposed_experiments:
+      - >-
+        Move edge to ca3_pyramidal_cell classical node on curator
+        review.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 6
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - "region=MBA:407"
+            - "nt_type=glutamatergic"
+      expression_detail:
+        - gene: Gria1
+          val: 10.67
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.674}
+          coverage: 1.0
+        - gene: Gria2
+          val: 10.68
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.767}
+          coverage: 1.0
+        - gene: Nptn
+          val: 8.56
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.581}
+          coverage: 1.0
+        - gene: Slc17a7
+          val: 9.99
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.953}
+          coverage: 1.0
+        - gene: "-Drd1"
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - {context_id: cohort, pct: 0.442}
+      region_fraction: 0.0
+      region_evidence: DESCENDANT_ONLY

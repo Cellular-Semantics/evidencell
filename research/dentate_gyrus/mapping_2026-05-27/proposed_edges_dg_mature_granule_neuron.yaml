@@ -1,0 +1,943 @@
+# 2026-05-27 mapping re-run for dg_mature_granule_neuron
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters
+# and top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric.
+#
+# NOTE: All 10 candidates surfaced by the rank-0/rank-1 cohorts are NON-DG-granule
+# types (cortical L5/L6 IT pyramidal, claustrum-endopiriform Car3, Cajal-Retzius)
+# that ranked in solely because they express Tbr1 — the only classical marker
+# present in the discovery scoring pool that is shared with mature granule cells.
+# The expected atlas correlates of the canonical DG granule cell (Prox1+, Calb1+,
+# NeuN+, Slc17a7+, soma DG granule cell layer) are not represented in this cohort.
+# Every edge is therefore evidencell:UncertainRelationship (rule v: unresolvable)
+# or skos:broadMatch where the classical Tbr1+ glutamatergic property is shared
+# but anatomical location and Prox1 signature are discordant. No AT signal is
+# available for dg_mature_granule_neuron in this run.
+
+classical_node_id: dg_mature_granule_neuron
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0500
+    name: "0500 HPF CR Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0500
+  - id: CS20230722_CLUS_0001
+    name: "0001 CLA-EPd-CTX Car3 Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0001
+  - id: CS20230722_CLUS_0003
+    name: "0003 CLA-EPd-CTX Car3 Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0003
+  - id: CS20230722_CLUS_0004
+    name: "0004 CLA-EPd-CTX Car3 Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0004
+  - id: CS20230722_CLUS_0005
+    name: "0005 CLA-EPd-CTX Car3 Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0005
+  - id: CS20230722_SUPT_0019
+    name: "0019 L5 IT CTX Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0019
+  - id: CS20230722_SUPT_0018
+    name: "0018 L5 IT CTX Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0018
+  - id: CS20230722_SUPT_0017
+    name: "0017 L6 IT CTX Glut_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0017
+  - id: CS20230722_SUPT_0020
+    name: "0020 L5 IT CTX Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0020
+  - id: CS20230722_SUPT_0006
+    name: "0006 IT EP-CLA Glut_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0006
+
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_SUPT_0019
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0019
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (CL:0000679)"
+        node_b_value: "Glut (subclass parent; supertype nt_type unset)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA; UBERON:0001885 / DG GCL)"
+        node_b_value: "Retrosplenial area ventral L5 5313; Retrosplenial area dorsal L5 4494; Anterior cingulate ventral L5 2600; RSP lateral L5 791; ACA dorsal L5 643"
+        alignment: DISCORDANT
+        notes: |
+          Supertype 0019 is a retrosplenial/cingulate cortical L5 IT pyramidal type — no
+          DG granule cell layer component. Anatomically incompatible with the classical
+          dentate gyrus mature granule neuron.
+      - property: marker_Calbindin
+        node_a_value: "Calbindin (Calb1)+ (defining marker, stage 6)"
+        node_b_value: "Calb1: 0.26 (precomputed mean) — very low"
+        alignment: DISCORDANT
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (Rbfox3; defining marker, stage 6)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+        notes: NeuN is a pan-neuronal marker; not separately informative for the supertype call.
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+ (TF cascade endpoint)"
+        node_b_value: "Tbr1: 6.95 (precomputed mean) — high"
+        alignment: CONSISTENT
+        notes: |
+          Cortical L5 IT pyramidal types express Tbr1 broadly — this is the only basis on
+          which the supertype entered the cohort, not evidence of DG granule identity.
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT (mature stage)"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT (mature stage)"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT (mature stage)"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining for DG granule cells, classical)"
+        node_b_value: "Prox1: 0.05 (precomputed mean) — absent"
+        alignment: DISCORDANT
+        notes: |
+          Prox1 is the canonical dentate granule lineage marker; its absence here is a
+          strong argument against any DG granule identity for this supertype.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0019 Sst L5 IT CTX Glut_2 is a retrosplenial/cingulate L5 intratelencephalic
+          pyramidal supertype. It surfaced in the rank-1 cohort solely because of broad cortical
+          Tbr1 expression. Prox1 is absent and soma distribution is entirely cortical (no DG
+          component), incompatible with the dentate gyrus mature granule neuron.
+    caveats:
+      - Anatomical distribution entirely in retrosplenial/cingulate cortex L5 — no DG component.
+      - Prox1 absent; Calb1 very low; neither is consistent with DG granule identity.
+      - Surfaced into the cohort only because of broad cortical Tbr1 expression.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 6.95
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.96
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_SUPT_0018
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0018
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass parent)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "Primary visual area L5 989; SSp barrel L6a 324; SSs L5 306; ACA ventral L5 265; Orbital lateral L6a 176"
+        alignment: DISCORDANT
+        notes: Cortical L5/L6 IT pyramidal supertype; no DG soma.
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 1.07 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 7.01 (precomputed mean) — high"
+        alignment: CONSISTENT
+        notes: Broad cortical Tbr1 expression; not granule-specific.
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.11 (precomputed mean) — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0018 L5 IT CTX Glut_1 is a cortical L5 IT pyramidal supertype dominated
+          by visual/somatosensory L5 soma — incompatible with DG granule neuron identity.
+          Tbr1 expression alone does not constitute granule identity.
+    caveats:
+      - Soma entirely in cortex; no DG component.
+      - Prox1 absent; Calb1 low.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 7.01
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.965
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_SUPT_0017
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0017
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass parent)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "Secondary motor L5 1562; ACA dorsal L5 875; Prelimbic L5 672; Primary motor L5 535; ACA ventral L5 512"
+        alignment: DISCORDANT
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 1.28 — low"
+        alignment: DISCORDANT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 6.89 — high"
+        alignment: CONSISTENT
+        notes: Cortical Tbr1 expression, not granule-specific.
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.09 — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0017 L6 IT CTX Glut_5 is a motor/cingulate L5 IT pyramidal supertype.
+          No DG component; Prox1 absent.
+    caveats:
+      - Soma entirely cortical motor/cingulate; no DG.
+      - Prox1 absent.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 6.89
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.957
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_SUPT_0020
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0020
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass parent)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "Primary motor L5 5140; Secondary motor L5 3027; SSs L5 752; SSp mouth L5 562; SSp barrel L5 529"
+        alignment: DISCORDANT
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 0.24 — very low"
+        alignment: DISCORDANT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 6.94 — high"
+        alignment: CONSISTENT
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.07 — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0020 L5 IT CTX Glut_3 is a motor/somatosensory L5 IT pyramidal supertype.
+          No DG component; Prox1 absent; Calb1 very low.
+    caveats:
+      - Soma entirely in motor/somatosensory cortex L5.
+      - Prox1 absent; Calb1 very low.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 6.94
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_SUPT_0006
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_SUPT_0006
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass parent)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "Olfactory areas 633; Anterior olfactory nucleus 317; Endopiriform nucleus dorsal 256; Piriform area 252"
+        alignment: DISCORDANT
+        notes: Olfactory/claustrum-endopiriform supertype; no DG.
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 1.93 — low"
+        alignment: DISCORDANT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 7.09 — high"
+        alignment: CONSISTENT
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.06 — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0006 IT EP-CLA Glut_4 is an olfactory/endopiriform/claustrum
+          IT pyramidal supertype. No DG component; Prox1 absent.
+    caveats:
+      - Soma in olfactory/endopiriform/claustrum; no DG.
+      - Prox1 absent.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 7.09
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0500
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0500
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (CL:0000679)"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "Dentate gyrus, molecular layer 23; Cortical amygdalar posterior medial 14; Cortical amygdalar anterior 11; Piriform 8; Olfactory tubercle 7"
+        alignment: APPROXIMATE
+        notes: |
+          Soma in DG MOLECULAR layer, not granule cell layer — anatomically adjacent but
+          distinct. Cluster 0500 is the canonical hippocampal Cajal-Retzius type (HPF CR
+          Glut_1), positioned in the DG molecular layer.
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 0.73 — low"
+        alignment: DISCORDANT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 7.04 — high"
+        alignment: CONSISTENT
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.07 — absent"
+        alignment: DISCORDANT
+        notes: Prox1 absent rules out DG granule identity.
+      - property: marker_Reln
+        node_a_value: "(not part of classical definition)"
+        node_b_value: "Reln: 12.45 — very high (CR-defining)"
+        alignment: DISCORDANT
+        notes: |
+          Strong Reln + Calb2 (8.17) + Trp73 lineage markers identify CLUS_0500 as a
+          Cajal-Retzius cell, not a granule cell.
+      - property: marker_Calb2
+        node_a_value: "(not classical for granule)"
+        node_b_value: "Calb2: 8.17 — high (Cajal-Retzius marker)"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0500 (0500 HPF CR Glut_1) is the hippocampal Cajal-Retzius cluster — its
+          DG soma component (molecular layer, not granule cell layer), Reln+ (12.45),
+          Calb2+ (8.17), Trp73/Lef1/Ebf3 transcription factor signature, and Prox1−
+          profile collectively identify it as a Cajal-Retzius cell, not a granule neuron.
+          The shared Tbr1 expression is the only basis for cohort inclusion.
+    caveats:
+      - |
+        CLUS_0500 is a Cajal-Retzius cell, not a granule cell — Reln-high, Calb2-high,
+        Trp73-defining, Prox1-absent, soma in DG molecular layer rather than granule layer.
+      - Discovery cohort selected on Tbr1 alone; Prox1 was not in the marker panel.
+    unresolved_questions:
+      - |
+        Discovery did not surface any cluster matching the canonical Prox1+/Calb1+
+        DG granule profile. The mature granule neuron may map to a CCN20230722 cluster
+        outside the top-5 rank-0 cohort (likely under subclass "025 DG Glut", clusters
+        0513-0517 by name; clusters 0516-0517 are the conventional mature DG granule
+        clusters per the atlas). Re-running discovery with Prox1 and Calb1 weighted
+        markers, or a region-only (MBA:726) gate without the Tbr1 marker requirement,
+        is needed.
+    proposed_experiments:
+      - |
+        Re-run candidate discovery for dg_mature_granule_neuron with Prox1/Calb1 in the
+        marker panel and/or a region-only cohort to recover the canonical DG granule
+        clusters (expected: CS20230722_CLUS_0516, 0517 within subclass "025 DG Glut").
+      - |
+        Cross-check against the WMBv1 publication's DG granule cluster annotations to
+        identify the expected CCN20230722 cluster correlates and add them as proposed
+        candidates manually.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 7.04
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.974
+      region_fraction: 0.291
+      region_evidence: SELF
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0001
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0001
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "Endopiriform nucleus dorsal 886; Piriform area 718; Olfactory areas 525; Claustrum 435; SSs L6a 435"
+        alignment: DISCORDANT
+        notes: Claustrum-endopiriform-cortex Car3 type; no DG soma.
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 5.50 — moderate"
+        alignment: APPROXIMATE
+        notes: Moderate Calb1 in claustrum/endopiriform Car3 cells, but does not on its own indicate DG granule identity.
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 7.32 — high"
+        alignment: CONSISTENT
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.12 — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0001 (0001 CLA-EPd-CTX Car3 Glut_1) is a Car3+ claustrum/endopiriform/cortex
+          IT pyramidal cluster — no DG component, Prox1 absent. Car3/Satb2/Lgr5 lineage
+          markers define this type; surfaced only by Tbr1 expression.
+    caveats:
+      - Soma in claustrum/endopiriform/cortex, not DG.
+      - Prox1 absent.
+      - Car3-defining transcriptomic signature unrelated to DG granule cells.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 7.32
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0003
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0003
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "SSs L6a 980; Temporal association L6a 924; Temporal association L5 819; Claustrum 735; AId L6a 696"
+        alignment: DISCORDANT
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 3.35 — low"
+        alignment: DISCORDANT
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 7.62 — high"
+        alignment: CONSISTENT
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.03 — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0003 is another CLA-EPd-CTX Car3+ pyramidal cluster — cortical soma,
+          Prox1 absent. Surfaced on Tbr1 alone.
+    caveats:
+      - Cortical-claustrum soma; no DG.
+      - Prox1 absent.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 7.62
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.993
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0004
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0004
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "SSs L6a 4050; SSs L5 1000; SSp barrel L6a 735"
+        alignment: DISCORDANT
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 4.65 — low/moderate"
+        alignment: APPROXIMATE
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 7.94 — high"
+        alignment: CONSISTENT
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.03 — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0004 is a CLA-EPd-CTX Car3+ cluster dominated by somatosensory L6a/L5
+          soma. No DG component; Prox1 absent. Surfaced on Tbr1 alone.
+    caveats:
+      - Soma in somatosensory cortex L6a/L5; no DG.
+      - Prox1 absent.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 7.94
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.997
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mature_granule_neuron_to_CS20230722_CLUS_0005
+    lit_type: dg_mature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0005
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "dentate gyrus granule cell layer (SOMA)"
+        node_b_value: "Piriform area 331; Endopiriform nucleus dorsal 283; Claustrum 210; AIp L6a 101; Olfactory areas 80"
+        alignment: DISCORDANT
+      - property: marker_Calbindin
+        node_a_value: "Calbindin+ (defining)"
+        node_b_value: "Calb1: 6.40 — moderate/high"
+        alignment: APPROXIMATE
+        notes: Calb1 is moderate but the soma is in piriform/endopiriform/claustrum, not DG.
+      - property: marker_Tbr1
+        node_a_value: "Tbr1+"
+        node_b_value: "Tbr1: 7.02 — high"
+        alignment: CONSISTENT
+      - property: marker_NeuN
+        node_a_value: "NeuN+ (pan-neuronal)"
+        node_b_value: "Rbfox3: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: marker_Prox1
+        node_a_value: "Prox1+ (lineage-defining)"
+        node_b_value: "Prox1: 0.00 — absent"
+        alignment: DISCORDANT
+      - property: negative_marker_DCX
+        node_a_value: "DCX ABSENT"
+        node_b_value: "Dcx: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_Nestin
+        node_a_value: "Nestin ABSENT"
+        node_b_value: "Nes: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+      - property: negative_marker_PSA-NCAM
+        node_a_value: "PSA-NCAM ABSENT"
+        node_b_value: "Ncam1: not in precomputed_expression panel"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0005 (0005 CLA-EPd-CTX Car3 Glut_2) is a piriform/endopiriform/claustrum
+          Car3+ pyramidal cluster — no DG component, Prox1 absent. Cnr1 and Pcp4 high.
+    caveats:
+      - Soma in piriform/endopiriform/claustrum; no DG.
+      - Prox1 absent.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Tbr1
+          val: 7.02
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.972
+      region_fraction: 0.0
+      region_evidence: SELF

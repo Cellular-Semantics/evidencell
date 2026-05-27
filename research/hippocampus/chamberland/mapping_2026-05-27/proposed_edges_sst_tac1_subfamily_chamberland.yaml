@@ -1,0 +1,1006 @@
+# 2026-05-27 mapping re-run for sst_tac1_subfamily_chamberland
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters
+# and top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric.
+#
+# Classical context: Chamberland 2024 Sst::Tac1-IN — bistratified-like
+# interneuron-selective Sst-IN that targets fast-spiking Pvalb cells (not
+# pyramidal cells). MapMyCells localised it to the WMBv1 Pvalb Gaba subclass
+# (SUBC_052), notably SUPT_0206 / CLUS_0737, despite Sst expression in
+# source — reflects transcriptomic Sst/Pvalb continuity.
+classical_node_id: sst_tac1_subfamily_chamberland
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0739
+    name: "0739 Pvalb Gaba_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0739
+  - id: CS20230722_CLUS_0737
+    name: "0737 Pvalb Gaba_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0737
+  - id: CS20230722_CLUS_0768
+    name: "0768 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0768
+  - id: CS20230722_CLUS_0772
+    name: "0772 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0772
+  - id: CS20230722_CLUS_0774
+    name: "0774 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0774
+  - id: CS20230722_SUPT_0206
+    name: "0206 Pvalb Gaba_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0206
+  - id: CS20230722_SUPT_0216
+    name: "0216 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+  - id: CS20230722_SUPT_0179
+    name: "0179 Vip Gaba_7"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0179
+  - id: CS20230722_SUPT_0182
+    name: "0182 Vip Gaba_10"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0182
+  - id: CS20230722_SUPT_0196
+    name: "0196 RHP-COA Ndnf Gaba_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0196
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0206
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0206
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic (Sst-Flp;Tac1-Cre intersectional reporter)"
+        node_b_value: "GABA (subclass 052 Pvalb Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA; Chamberland 2024)"
+        node_b_value: "Field CA1 stratum oriens (dominant); Field CA3 stratum oriens; Field CA1 pyramidal layer; Piriform area"
+        alignment: CONSISTENT
+        notes: |
+          Supertype soma includes substantial CA1 stratum oriens component matching
+          the classical node, with piriform contamination unrelated to the hippocampal
+          Sst::Tac1 population.
+      - property: marker_Sst
+        node_a_value: "Sst+ (Chamberland 2024 gene-pair rule, intersectional Sst-Flp)"
+        node_b_value: "Sst: 2.72 (precomputed mean, supertype)"
+        alignment: APPROXIMATE
+        notes: |
+          Low absolute supertype mean; classical Sst::Tac1 is Sst-positive but maps
+          into the Pvalb Gaba subclass where Sst is sparsely expressed — confirms the
+          cross-subclass Sst/Pvalb continuity flagged in the classical node notes.
+      - property: marker_Tac1
+        node_a_value: "Tac1+ (Chamberland 2024 gene-pair rule, Tac1-Cre)"
+        node_b_value: "Tac1: 5.36 (precomputed mean, supertype) — high"
+        alignment: CONSISTENT
+      - property: marker_Pvalb
+        node_a_value: "(not explicitly defined on classical node; Chamberland 2024 describes Sst::Tac1 cells as bistratified-like targeting PV+ INs)"
+        node_b_value: "Pvalb: 8.74 (precomputed mean) — very high (defining marker of supertype 'Pvalb Gaba_2')"
+        alignment: APPROXIMATE
+        notes: |
+          Supertype is strongly Pvalb+; the Chamberland 2024 MapMyCells assignment to
+          Pvalb Gaba subclass surfaces this transcriptomic identity despite the cells
+          being Sst+/Tac1+ in source.
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 5.36 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 2.72 (precomputed mean) — low"
+        alignment: APPROXIMATE
+      - property: neuropeptide_Npy
+        node_a_value: "(not asserted)"
+        node_b_value: "Npy: 2.87 (precomputed mean)"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          Supertype 0206 Pvalb Gaba_2 carries the cohort-highest Tac1 (5.36) signal
+          alongside Pvalb+ identity. It is the rank-1 parent of both top-ranked
+          rank-0 clusters (CLUS_0737 and CLUS_0739), motivating a broadMatch 1:n
+          call at the supertype level with rank-0 clusters resolving the specific
+          cellular identity. Consistent with Chamberland 2024's own MapMyCells
+          assignment of Sst::Tac1 cells to SUBC_052 / SUPT_0206 / CLUS_0737.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Sst_Tac1
+        target_atlas: WMBv1
+        method: MapMyCells
+        explanation: |
+          MapMyCells annotation transfer of Chamberland 2024 Sst::Tac1 cells to WMBv1
+          supertypes: 20 cells mapped to supertype 0206 Pvalb Gaba_2 (F1=0.229,
+          coverage=0.225, purity=0.233) — the modal target among Pvalb supertypes at
+          rank 1. Pairs with the supertype 0205 / 0208 receipts noted in the classical
+          node and confirms the bistratified-like cells are pooled into Pvalb Gaba_2.
+    caveats:
+      - |
+          Supertype contains both top-ranked rank-0 clusters (CLUS_0737, CLUS_0739);
+          specific Sst::Tac1 identity is better resolved at the cluster level.
+      - |
+          AT cohort is distributed across multiple Pvalb supertypes (0205 n=22, 0206
+          n=20, 0208 n=15); no single supertype captures Sst::Tac1 cleanly at rank 1.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 2.72
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.838
+          coverage: 1.0
+        - gene: Tac1
+          val: 5.36
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 1.0
+      region_fraction: 0.601
+      region_evidence: SELF
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0216
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0216
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens (dominant); alveus; Posterior amygdalar nucleus; Subiculum; Prosubiculum"
+        alignment: CONSISTENT
+      - property: marker_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 11.44 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.55 (precomputed mean) — low; coverage 0.667 across child clusters"
+        alignment: DISCORDANT
+        notes: |
+          Supertype is Sst-high but Tac1-low — the canonical OLM-like Sst supertype
+          rather than the bistratified-like Sst::Tac1 cohort.
+      - property: marker_Pvalb
+        node_a_value: "(targets PV+ cells; transcriptomic Sst/Pvalb continuity in source)"
+        node_b_value: "Pvalb: 1.48 (precomputed mean) — low"
+        alignment: APPROXIMATE
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.55 (precomputed mean)"
+        alignment: DISCORDANT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 11.44 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Npy
+        node_a_value: "(not asserted)"
+        node_b_value: "Npy: 5.07 (precomputed mean)"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          Supertype 0216 Sst Gaba_3 is the Sst-positive parent of CLUS_0768/0772/0774
+          (the rank-0 OLM-overlap candidates). Tac1 is low (0.55) — this is the
+          OLM-like rather than bistratified-like Sst supertype. Retained as a
+          candidate because Sst::Tac1 cells partially scatter here in AT (n=9).
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Sst_Tac1
+        target_atlas: WMBv1
+        method: MapMyCells
+        explanation: |
+          9 Sst::Tac1 cells mapped to supertype 0216 (F1=0.025). Small fraction of the
+          cohort — consistent with the classical node primarily identifying as Pvalb
+          Gaba_2 rather than Sst Gaba_3 at the supertype level.
+    caveats:
+      - Low Tac1 (0.55) at the supertype is the defining inconsistency with Sst::Tac1.
+      - This supertype is the primary OLM landing site (see olm_hippocampus mapping); overlap with Sst::Tac1 here is small and likely a minority transcriptomic spillover.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.44
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 1.0
+        - gene: Tac1
+          val: 0.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.816
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.784
+          coverage: 0.667
+      region_fraction: 0.584
+      region_evidence: SELF
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0179
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0179
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 046 Vip Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Dentate gyrus polymorph; Field CA3 stratum oriens; Field CA1 stratum oriens; CA3 pyramidal; CA1 pyramidal"
+        alignment: APPROXIMATE
+      - property: marker_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 1.04 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.15 (precomputed mean) — very low"
+        alignment: DISCORDANT
+      - property: marker_Vip
+        node_a_value: "(not asserted positive)"
+        node_b_value: "Vip: 6.78 (precomputed mean) — high; supertype is Vip Gaba"
+        alignment: DISCORDANT
+        notes: |
+          Vip+ supertype is incompatible with the Sst::Tac1 Sst/Tac1-defined identity.
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.15 (precomputed mean)"
+        alignment: DISCORDANT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 1.04 (precomputed mean)"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          Vip Gaba supertype with very low Sst (1.04) and very low Tac1 (0.15) —
+          incompatible with the Sst::Tac1 defining markers. Likely ranked into the
+          cohort via region/NT filters rather than marker congruence.
+    caveats:
+      - Sst, Tac1 both effectively absent; Vip-defined supertype.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.04
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.541
+          coverage: 1.0
+        - gene: Tac1
+          val: 0.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.405
+          coverage: 1.0
+      region_fraction: 0.165
+      region_evidence: SELF
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0182
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0182
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 046 Vip Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Basomedial amygdalar (posterior); CA1 stratum radiatum; Cortical amygdalar; CA1 stratum oriens; Medial amygdalar"
+        alignment: DISCORDANT
+        notes: |
+          Soma distribution dominated by amygdalar nuclei with only minor CA1 stratum
+          oriens presence — anatomically incompatible with the Chamberland CA1-defined
+          Sst::Tac1 population.
+      - property: marker_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 1.25 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.16 (precomputed mean) — very low"
+        alignment: DISCORDANT
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.16 (precomputed mean)"
+        alignment: DISCORDANT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 1.25 (precomputed mean)"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          Vip Gaba supertype with low Sst, low Tac1, dominantly amygdalar soma
+          distribution. Incompatible with the CA1-restricted Sst::Tac1 identity.
+    caveats:
+      - Amygdalar soma distribution; not a hippocampal Sst::Tac1 candidate.
+      - Sst, Tac1 effectively absent.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.25
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.73
+          coverage: 1.0
+        - gene: Tac1
+          val: 0.16
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.432
+          coverage: 1.0
+      region_fraction: 0.1
+      region_evidence: SELF
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0196
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0196
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 048 RHP-COA Ndnf Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA3 pyramidal; CA3 stratum oriens; CA3 stratum radiatum; CA1 stratum oriens; CA1 stratum radiatum; Posterior amygdalar; CA3 stratum lucidum"
+        alignment: APPROXIMATE
+        notes: |
+          Dominated by CA3 with a minor CA1 stratum oriens contribution. Anatomically
+          distant from the canonical CA1-restricted Sst::Tac1 population.
+      - property: marker_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 1.71 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.23 (precomputed mean) — very low"
+        alignment: DISCORDANT
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.23 (precomputed mean)"
+        alignment: DISCORDANT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 1.71 (precomputed mean)"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          RHP-COA Ndnf Gaba supertype with low Sst, very low Tac1, CA3-dominant soma —
+          incompatible with the Sst::Tac1 marker and CA1 anatomical definitions.
+    caveats:
+      - Sst and Tac1 effectively absent at supertype level.
+      - CA3/amygdalar soma; not a CA1 Sst::Tac1 candidate.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.71
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.811
+          coverage: 1.0
+        - gene: Tac1
+          val: 0.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.649
+          coverage: 1.0
+      region_fraction: 0.049
+      region_evidence: SELF
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0737
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0737
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens (610 cells combined; dominant); CA1 stratum radiatum; CA3 stratum oriens; CA1 pyramidal layer"
+        alignment: CONSISTENT
+      - property: marker_Sst
+        node_a_value: "Sst+ defining (Chamberland 2024)"
+        node_b_value: "Sst: 4.39 (precomputed mean) — moderate; supertype-elevated"
+        alignment: CONSISTENT
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 7.26 (precomputed mean) — high (cluster-elevated within Pvalb supertype)"
+        alignment: CONSISTENT
+      - property: marker_Pvalb
+        node_a_value: "(targets PV+ INs; transcriptomic Pvalb continuity noted by Chamberland 2024)"
+        node_b_value: "Pvalb: 8.27 (precomputed mean) — high"
+        alignment: APPROXIMATE
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 7.26 (precomputed mean); listed NEUROPEPTIDE category with expression_score 7.3"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 4.39 (precomputed mean); listed NEUROPEPTIDE with expression_score 4.4"
+        alignment: CONSISTENT
+      - property: neuropeptide_Cort
+        node_a_value: "(not asserted)"
+        node_b_value: "Cort: NEUROPEPTIDE expression_score 8.0 (cluster's top neuropeptide)"
+        alignment: APPROXIMATE
+      - property: neuropeptide_Npy
+        node_a_value: "(not asserted)"
+        node_b_value: "Npy: NEUROPEPTIDE expression_score 5.5"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          CLUS_0737 carries Tac1 (7.26) and Sst (4.39) co-expression on a Pvalb-high
+          (8.27) cluster within the Pvalb Gaba_2 supertype — the rank-0 cluster whose
+          marker profile most closely matches the Chamberland Sst::Tac1 gene-pair
+          definition. CA1 stratum oriens-dominated soma distribution. This is the
+          specific WMBv1 cluster Chamberland 2024 identified as the modal target for
+          the Sst::Tac1 cohort.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Sst_Tac1
+        target_atlas: WMBv1
+        method: MapMyCells
+        explanation: |
+          14 Sst::Tac1 cells mapped to CLUS_0737 (F1=0.333, coverage=0.275,
+          purity=0.424) — the highest-F1 rank-0 target in the AT cohort. Consistent
+          with the modal-cluster assignment in the classical node notes.
+    caveats:
+      - |
+          AT F1 (0.333) is well below the 0.75 exactMatch threshold; the Sst::Tac1
+          cohort scatters across multiple Pvalb clusters (0734, 0736, 0739 also receive
+          cells) so even the modal cluster does not capture a clean 1:1 correspondence.
+      - |
+          The classical Sst::Tac1 cells are Sst+/Tac1+ by intersectional genetics; their
+          transcriptomic landing in a Pvalb-high cluster reflects shared molecular
+          identity but means the cluster is not a 'pure' Sst::Tac1 type.
+    unresolved_questions:
+      - |
+          Is the cluster's Pvalb-high transcriptomic signature consistent with the
+          bistratified-like morphology Chamberland 2024 attributes to Sst::Tac1 cells,
+          or does it indicate that some Sst::Tac1 cells are misassigned by MapMyCells
+          to canonical Pvalb basket-like clusters?
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 4.39
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.847
+        - gene: Tac1
+          val: 7.26
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.98
+      region_fraction: 0.741
+      region_evidence: SELF
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0739
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0739
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens (multiple references; dominant); CA1 pyramidal layer; CA3 stratum oriens; CA3 pyramidal; CA1 stratum radiatum; CA3 stratum lucidum"
+        alignment: CONSISTENT
+      - property: marker_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 1.51 (precomputed mean) — low"
+        alignment: APPROXIMATE
+        notes: |
+          Lower Sst than CLUS_0737; sits at the Pvalb-dominant end of the Pvalb Gaba_2
+          supertype.
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 3.69 (precomputed mean) — moderate"
+        alignment: CONSISTENT
+      - property: marker_Pvalb
+        node_a_value: "(targets PV+ INs)"
+        node_b_value: "Pvalb: 10.63 (precomputed mean) — very high"
+        alignment: APPROXIMATE
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 3.69 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 1.51 (precomputed mean)"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          Sister cluster to CLUS_0737 within Pvalb Gaba_2. Lower Sst (1.51) but still
+          Tac1+ (3.69) and CA1 stratum oriens-dominant soma. A secondary candidate
+          for the Sst::Tac1 subfamily.
+    caveats:
+      - |
+          Sst expression at this cluster is low; classical Sst::Tac1 cells were defined
+          on Sst+/Tac1+ gene-pair rule — CLUS_0737 better fits the Sst dimension.
+      - |
+          No AT cells from the Sst_Tac1 cohort landed in CLUS_0739 directly in the
+          chamberland_subfamily AT run (F1 not reported among the top targets).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 1.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.786
+        - gene: Tac1
+          val: 3.69
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+      region_fraction: 0.342
+      region_evidence: SELF
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0768
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0768
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens (dominant); alveus; CA1 pyramidal layer"
+        alignment: CONSISTENT
+      - property: marker_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 12.70 (precomputed mean) — very high"
+        alignment: CONSISTENT
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.15 (precomputed mean) — very low"
+        alignment: DISCORDANT
+        notes: |
+          Effectively no Tac1 — this is the OLM-like cluster, not the bistratified-like
+          Sst::Tac1 cohort.
+      - property: marker_Pvalb
+        node_a_value: "(targets PV+ INs)"
+        node_b_value: "Pvalb: 3.12 (precomputed mean) — moderate"
+        alignment: APPROXIMATE
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.15 (precomputed mean)"
+        alignment: DISCORDANT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 12.70 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          CLUS_0768 is the primary OLM-overlap candidate (see olm_hippocampus mapping).
+          Although Sst-high, Tac1 is effectively absent — incompatible with the
+          Sst::Tac1 gene-pair definition. Included in the rank-0 cohort because of
+          shared Sst+ region/NT filters.
+    caveats:
+      - Tac1 effectively absent (0.15) — disqualifies as a Sst::Tac1 type.
+      - This is the canonical OLM cluster, not a bistratified-like target.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.7
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.99
+        - gene: Tac1
+          val: 0.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.367
+      region_fraction: 0.651
+      region_evidence: SELF
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0772
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0772
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens (dominant); alveus; CA1 stratum radiatum"
+        alignment: CONSISTENT
+      - property: marker_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 11.92 (precomputed mean) — very high"
+        alignment: CONSISTENT
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.14 (precomputed mean) — very low"
+        alignment: DISCORDANT
+      - property: marker_Pvalb
+        node_a_value: "(targets PV+ INs)"
+        node_b_value: "Pvalb: 0.34 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Pvalb is low — this cluster does not show the cross-subclass Sst/Pvalb
+          continuity expected for Sst::Tac1.
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 0.14 (precomputed mean)"
+        alignment: DISCORDANT
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 11.92 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          Sst-high but Tac1 absent (0.14) and Pvalb low. Another OLM-overlap cluster
+          incompatible with the Sst::Tac1 marker profile.
+    caveats:
+      - Tac1 effectively absent.
+      - Pvalb low; missing the Sst/Pvalb transcriptomic continuity flagged for Sst::Tac1.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.92
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+        - gene: Tac1
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.327
+      region_fraction: 0.81
+      region_evidence: SELF
+
+  - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0774
+    lit_type: sst_tac1_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0774
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum radiatum; Field CA1 stratum oriens; Field CA3 stratum oriens; Field CA3 stratum radiatum; Field CA3 stratum lucidum"
+        alignment: APPROXIMATE
+      - property: marker_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 12.11 (precomputed mean) — very high"
+        alignment: CONSISTENT
+      - property: marker_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 2.65 (precomputed mean) — moderate (the highest Tac1 among Sst Gaba_3 child clusters)"
+        alignment: APPROXIMATE
+      - property: marker_Pvalb
+        node_a_value: "(targets PV+ INs)"
+        node_b_value: "Pvalb: 1.39 (precomputed mean) — low"
+        alignment: DISCORDANT
+      - property: neuropeptide_Tac1
+        node_a_value: "Tac1+ defining"
+        node_b_value: "Tac1: 2.65 (precomputed mean)"
+        alignment: APPROXIMATE
+      - property: neuropeptide_Sst
+        node_a_value: "Sst+ defining"
+        node_b_value: "Sst: 12.11 (precomputed mean)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          CLUS_0774 is the only Sst Gaba_3 child cluster with non-trivial Tac1 (2.65)
+          — could represent an Sst/Tac1 co-expressing subset of the OLM-supertype.
+          However Pvalb is low, missing the Sst/Pvalb continuity feature of the
+          canonical Sst::Tac1 cells.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Sst_Tac1
+        target_atlas: WMBv1
+        method: MapMyCells
+        explanation: |
+          3 Sst::Tac1 cells mapped to CLUS_0774 (F1=0.063) — small minority component
+          of the AT cohort.
+    caveats:
+      - Pvalb low; absent Sst/Pvalb continuity argues against canonical Sst::Tac1 identity.
+      - AT support is minimal (n=3).
+    unresolved_questions:
+      - |
+          Is CLUS_0774 a transcriptomic outlier within Sst Gaba_3 that represents a
+          minor Sst+/Tac1+ population distinct from the Pvalb-high bistratified-like
+          cohort?
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.11
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.98
+        - gene: Tac1
+          val: 2.65
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.949
+      region_fraction: 0.438
+      region_evidence: SELF

@@ -1,0 +1,846 @@
+# 2026-05-27 mapping re-run for dg_type2a_progenitor
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters
+# and top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric.
+#
+# Context: per the classical node's own notes, type-2a is NOT resolved as a
+# distinct cluster in the Allen Brain Cell Atlas DG taxonomy. The earliest
+# DG-PIR Ex IMN clusters (e.g. 0511) already express Eomes/Tbr2, a type-2b
+# marker. Discovery returned candidates filtered on Sox2 expression within
+# the DG region, but the survival cohort is dominated by non-neurogenic
+# Sox2+ populations (astrocytes, oligo precursors/NFOL, ependymal) and a
+# proliferating immature-neuron cluster of subpallial/OB origin (0593).
+# No candidate matches the canonical type-2a (Nestin+/Sox2+/DCX-/GFAP-)
+# transit-amplifying progenitor profile of the SGZ. Consequently all edges
+# below are UncertainRelationship.
+classical_node_id: dg_type2a_progenitor
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0593
+    name: "0593 OB-STR-CTX Inh IMN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0593
+  - id: CS20230722_CLUS_5230
+    name: "5230 Astro-TE NN_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_5230
+  - id: CS20230722_CLUS_5275
+    name: "5275 COP NN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_5275
+  - id: CS20230722_CLUS_5280
+    name: "5280 NFOL NN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_5280
+  - id: CS20230722_CLUS_0294
+    name: "0294 CA1-ProS Glut_6"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0294
+  - id: CS20230722_SUPT_1169
+    name: "1169 Astroependymal NN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1169
+  - id: CS20230722_SUPT_1162
+    name: "1162 Astro-TE NN_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1162
+  - id: CS20230722_SUPT_1192
+    name: "1192 SMC NN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1192
+  - id: CS20230722_SUPT_1183
+    name: "1183 MFOL NN_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1183
+  - id: CS20230722_SUPT_1184
+    name: "1184 MOL NN_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1184
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_SUPT_1169
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_SUPT_1169
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (Astroependymal non-neuronal)"
+        alignment: DISCORDANT
+        notes: |
+          Type-2a is a lineage-committed neuronal progenitor; this supertype is
+          a non-neuronal astroependymal class with no neurotransmitter assignment.
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "third ventricle 683; Medial habenula 417; Lateral septal nucleus ventral 268; third ventricle 53; Dentate gyrus molecular layer 38"
+        alignment: DISCORDANT
+        notes: |
+          Soma distribution centred on third ventricle / medial habenula /
+          lateral septum (ependymal/tanycyte habitat). Hippocampal component is
+          a small dentate molecular-layer fraction with no SGZ presence.
+      - property: marker_Sox2
+        node_a_value: "Sox2+ (defining marker, classical)"
+        node_b_value: "Sox2: 6.21 (precomputed mean)"
+        alignment: CONSISTENT
+        notes: |
+          Sox2 expression alone is shared across many neural-stem and non-neuronal
+          progenitor populations; not specific to DG type-2a.
+      - property: marker_Nestin
+        node_a_value: "Nestin+ (defining marker, classical)"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent (classical type-2a)"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent (classical type-2a; distinguishes from type-1 RGL)"
+        node_b_value: "supertype labelled 'Astroependymal'; constituent defining markers include Gfap, Fabp7"
+        alignment: DISCORDANT
+        notes: |
+          Atlas-defining marker set (Gfap, Cnmd, Id1, Fabp7) directly violates the
+          type-2a GFAP-negative classical annotation.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          1169 Astroependymal NN_1 is a non-neuronal astroependymal supertype with
+          GFAP among its defining markers and soma centred on third ventricle and
+          medial habenula. Profile is incompatible with the SGZ-localised
+          Nestin+/Sox2+/GFAP-/DCX- type-2a transit-amplifying progenitor. Sox2
+          positivity drove its appearance in the discovery cohort but is not
+          specific evidence of a type-2a relationship.
+    caveats:
+      - |
+        Non-neuronal supertype; GFAP defining marker conflicts with type-2a
+        GFAP-negative annotation.
+      - |
+        Soma distribution is ventricular/septal/habenular, not in DG SGZ.
+      - |
+        Discovery filter relied on Sox2 + DG-region presence; the small DG
+        molecular-layer fraction (38 cells) and pan-Sox2 expression in
+        astroependymal cells explain the spurious cohort placement.
+    unresolved_questions:
+      - |
+        Does this supertype contain any Hes5+/Nestin+ radial-glia-like (type-1)
+        component that could serve as the parental population for the type-2a
+        stage, or is it strictly ependymal/tanycyte?
+    discovery_score:
+      score: 2
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 6.21
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.951
+          coverage: 1.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_SUPT_1162
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_SUPT_1162
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (Astrocyte non-neuronal)"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "no per-region soma counts available at supertype level"
+        alignment: UNKNOWN
+      - property: marker_Sox2
+        node_a_value: "Sox2+"
+        node_b_value: "Sox2: 7.41 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nestin
+        node_a_value: "Nestin+"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "telencephalic astrocyte supertype (Astro-TE); Hepacam defining marker — astrocytes broadly express GFAP"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          1162 Astro-TE NN_2 is a telencephalic astrocyte supertype. The mature
+          astrocyte identity conflicts with the GFAP-negative, neuronally
+          committed type-2a transit-amplifying progenitor. Sox2 expression is
+          a shared neural-marker only.
+    caveats:
+      - Astrocyte non-neuronal supertype; identity incompatible with type-2a neuronal progenitor.
+      - No soma per-region counts available at this supertype.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 7.41
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.976
+          coverage: 1.0
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_SUPT_1192
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_SUPT_1192
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (smooth muscle non-neuronal)"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "no per-region soma counts available at supertype level"
+        alignment: UNKNOWN
+      - property: marker_Sox2
+        node_a_value: "Sox2+"
+        node_b_value: "Sox2: 0.19 (precomputed mean) — low"
+        alignment: DISCORDANT
+        notes: |
+          Sox2 mean very low; the discovery filter passed this supertype on
+          weak Sox2 detection (raw_tier 1) but the absolute value contradicts
+          the Sox2-positive defining annotation.
+      - property: marker_Nestin
+        node_a_value: "Nestin+"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "supertype is smooth muscle (Acta2+, Myh11+); GFAP unlikely"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          1192 SMC NN_1 is a smooth muscle cell supertype (Acta2+, Myh11+),
+          entirely incompatible with a neuronal progenitor identity. Inclusion
+          in the rank-1 cohort reflects discovery-filter noise rather than any
+          plausible biological relationship to type-2a.
+    caveats:
+      - Vascular smooth muscle supertype; not a neural lineage.
+      - Sox2 mean (0.19) is low — discovery-filter survival is borderline.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 0.19
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.439
+          coverage: 1.0
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_SUPT_1183
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_SUPT_1183
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (myelinating oligodendrocyte lineage)"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "no per-region soma counts available at supertype level"
+        alignment: UNKNOWN
+      - property: marker_Sox2
+        node_a_value: "Sox2+"
+        node_b_value: "Sox2: 6.01 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nestin
+        node_a_value: "Nestin+"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "oligodendrocyte (Cldn11+); GFAP not a defining marker"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          1183 MFOL NN_3 is a myelinating-oligodendrocyte-lineage supertype
+          (Cldn11+). Sox2 expression in oligodendrocyte precursors is well
+          documented but does not indicate type-2a identity. The wholly
+          non-neuronal lineage refutes the mapping.
+    caveats:
+      - Oligodendrocyte-lineage supertype; not a neuronal progenitor.
+      - Sox2 positivity is a shared precursor marker, not type-2a-specific.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 6.01
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.902
+          coverage: 1.0
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_SUPT_1184
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_SUPT_1184
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (mature oligodendrocyte)"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "no per-region soma counts available at supertype level"
+        alignment: UNKNOWN
+      - property: marker_Sox2
+        node_a_value: "Sox2+"
+        node_b_value: "Sox2: 4.62 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nestin
+        node_a_value: "Nestin+"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "oligodendrocyte (Cldn11+, Anln+)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          1184 MOL NN_4 is a mature oligodendrocyte supertype. Non-neuronal
+          identity refutes any type-2a mapping; cohort placement reflects
+          residual Sox2 expression in the oligo lineage.
+    caveats:
+      - Mature oligodendrocyte supertype; not a neuronal progenitor.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 4.62
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.829
+          coverage: 1.0
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_CLUS_0593
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_CLUS_0593
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (subpallial GABAergic immature neuron lineage; Gad2 mean 4.36)"
+        alignment: DISCORDANT
+        notes: |
+          Cluster sits in the Subpallium-GABA;NN-IMN-GC neighbourhood with
+          Gad2 (4.36) > Slc17a7 (1.07) — a GABAergic immature-neuron identity,
+          incompatible with the glutamatergic-committed DG type-2a node.
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "Dentate gyrus polymorph layer 20; Dentate gyrus granule cell layer 12; corpus callosum body 10/7; Caudoputamen 9; lateral ventricle 9; Olfactory areas 7"
+        alignment: DISCORDANT
+        notes: |
+          DG soma component exists (polymorph + granule cell layer) but the
+          modal soma distribution spans corpus callosum, caudoputamen, lateral
+          ventricle and olfactory areas — characteristic of OB-bound RMS
+          subpallial immature neurons, not SGZ DG type-2a.
+      - property: marker_Sox2
+        node_a_value: "Sox2+ (defining)"
+        node_b_value: "Sox2: 8.09 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Nestin
+        node_a_value: "Nestin+ (defining)"
+        node_b_value: "not in precomputed panel; defining markers are Top2a/Pif1/Clvs1 (proliferating IMN)"
+        alignment: UNKNOWN
+        notes: |
+          Top2a expression confirms proliferating identity; cell-cycle status
+          matches transit-amplifying expectation.
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent (defining negative)"
+        node_b_value: "not in precomputed panel; Igfbpl1 is a MERFISH marker (immature-neuron module)"
+        alignment: UNKNOWN
+        notes: |
+          Cluster name 'Inh IMN' (inhibitory immature neuron) and Igfbpl1
+          membership both suggest active immature-neuron programmes — DCX is
+          a likely marker, in which case this would violate the type-2a
+          DCX-negative annotation.
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not in precomputed panel; cluster is not astrocytic"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0593 OB-STR-CTX Inh IMN_1 is a proliferating (Top2a+) GABAergic
+          immature-neuron cluster of subpallial origin destined for olfactory
+          bulb / striatum / cortex, not the DG glutamatergic neurogenic
+          lineage. The modal MERFISH soma distribution (corpus callosum,
+          caudoputamen, lateral ventricle, olfactory areas) traces the RMS,
+          and the Gad2/Sox2/Prox1/Eomes profile is GABAergic-immature-neuron-
+          like rather than DG type-2a. The minor DG-polymorph (20 cells) and
+          DG-granule-layer (12 cells) components likely reflect MERFISH
+          ambiguity at the SGZ boundary rather than genuine DG residency.
+    caveats:
+      - |
+        Highest-scoring rank-0 candidate but biologically refuted: GABAergic
+        identity, subpallial neighbourhood, and OB/striatal/cortical soma
+        distribution all preclude DG type-2a identity.
+      - |
+        DG component (~32 cells total in two layers) is plausible noise rather
+        than evidence of DG residency for this cluster.
+    unresolved_questions:
+      - |
+        Is there any cluster within the Pallium-Glut neighbourhood with an
+        Ascl1+/Hes5+/Nestin+ (but Eomes-negative) profile that would
+        correspond to the canonical SGZ type-2a stage? Discovery did not
+        return one — likely reflects atlas under-sampling of the
+        transit-amplifying compartment.
+    proposed_experiments:
+      - |
+        Re-examine the WMB DG-PIR Ex IMN clusters 0511–0513 (the type-2b
+        correlates) at the cell level for an Ascl1+/Nestin+/DCX- subpopulation
+        that may correspond to type-2a but is currently absorbed into 0511.
+      - |
+        Cross-reference Hochgerner et al. 2018 (GSE95315) DG developmental
+        trajectory clusters against WMB clusters to localise a candidate
+        type-2a transcriptomic correlate if one exists in the source dataset.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 8.09
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.957
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_CLUS_5230
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_CLUS_5230
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (astrocyte)"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "no per-cluster MERFISH soma counts available"
+        alignment: UNKNOWN
+      - property: marker_Sox2
+        node_a_value: "Sox2+"
+        node_b_value: "Sox2: 8.16 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Nestin
+        node_a_value: "Nestin+"
+        node_b_value: "not in precomputed panel"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent"
+        node_b_value: "not in precomputed panel; astrocyte cluster — DCX unlikely"
+        alignment: CONSISTENT
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent (distinguishes type-2a from type-1 RGL)"
+        node_b_value: "Astro-TE NN_5 — defining markers S1pr1/Adamts18/Crym (telencephalic astrocyte); GFAP not in defining set but expected for an astrocyte cluster"
+        alignment: DISCORDANT
+        notes: |
+          Mature astrocyte identity implies GFAP expression, conflicting with
+          the type-2a GFAP-negative annotation that distinguishes it from
+          type-1 RGL stem cells.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          5230 Astro-TE NN_5 is a telencephalic-astrocyte cluster. Sox2
+          positivity is shared between astrocytes and neural progenitors and
+          alone cannot establish a type-2a relationship; the astrocyte
+          identity refutes it.
+    caveats:
+      - Astrocyte cluster; not a neuronal progenitor.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 8.16
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_CLUS_5275
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_CLUS_5275
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (committed oligodendrocyte precursor)"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "no per-cluster MERFISH soma counts available"
+        alignment: UNKNOWN
+      - property: marker_Sox2
+        node_a_value: "Sox2+"
+        node_b_value: "Sox2: 8.86 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+      - property: marker_Nestin
+        node_a_value: "Nestin+"
+        node_b_value: "not in precomputed panel; defining markers include Bmp4, Sox10 — oligodendrocyte lineage"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent"
+        node_b_value: "not in precomputed panel; oligo lineage — DCX unlikely"
+        alignment: CONSISTENT
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "oligo precursor (Sox10+) — GFAP not expected"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          5275 COP NN_1 is a committed oligodendrocyte precursor (Sox10+,
+          Bmp4+). Wrong lineage for type-2a; Sox2 positivity is generic
+          precursor expression.
+    caveats:
+      - Committed oligodendrocyte precursor; not a neuronal lineage.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 8.86
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.989
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_CLUS_5280
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_CLUS_5280
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "null (newly-formed oligodendrocyte)"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "no per-cluster MERFISH soma counts available"
+        alignment: UNKNOWN
+      - property: marker_Sox2
+        node_a_value: "Sox2+"
+        node_b_value: "Sox2: 8.10 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Nestin
+        node_a_value: "Nestin+"
+        node_b_value: "not in precomputed panel; oligo lineage (Sox10+)"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent"
+        node_b_value: "not in precomputed panel; oligo lineage — DCX unlikely"
+        alignment: CONSISTENT
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "newly-formed oligodendrocyte — GFAP not expected"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          5280 NFOL NN_2 is a newly-formed-oligodendrocyte cluster. Lineage
+          incompatible with type-2a; Sox2 expression reflects generic
+          precursor programmes.
+    caveats:
+      - Oligodendrocyte-lineage cluster; not a neuronal progenitor.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 8.1
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.967
+
+  - id: edge_dg_type2a_progenitor_to_CS20230722_CLUS_0294
+    lit_type: dg_type2a_progenitor
+    taxonomy_type: CS20230722_CLUS_0294
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (lineage committed, not yet functional)"
+        node_b_value: "Glut (mature glutamatergic; Slc17a7 mean 9.53)"
+        alignment: APPROXIMATE
+        notes: |
+          Both glutamatergic, but classical node is an immature lineage-committed
+          progenitor while this cluster is a mature pyramidal neuron type.
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SOMA)"
+        node_b_value: "Prosubiculum 147/140; Subiculum 146/22; Field CA1 stratum radiatum 64; Dentate gyrus molecular layer 36; Field CA1 stratum lacunosum-moleculare 25"
+        alignment: DISCORDANT
+        notes: |
+          Soma centred on prosubiculum/subiculum; only a minor DG-molecular-layer
+          component and no SGZ residency. Anatomy incompatible with type-2a.
+      - property: marker_Sox2
+        node_a_value: "Sox2+ (defining)"
+        node_b_value: "Sox2: 0.14 (precomputed mean) — very low"
+        alignment: DISCORDANT
+        notes: |
+          Sox2 expression is essentially absent at the cluster mean; passed
+          discovery on raw_tier 1 but the absolute value contradicts the
+          defining Sox2+ classical annotation.
+      - property: marker_Nestin
+        node_a_value: "Nestin+"
+        node_b_value: "not in precomputed panel; cluster is mature glut"
+        alignment: UNKNOWN
+      - property: negative_marker_DCX
+        node_a_value: "DCX absent"
+        node_b_value: "not in precomputed panel; mature glut cluster"
+        alignment: CONSISTENT
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not in precomputed panel; mature glut cluster"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0294 CA1-ProS Glut_6 is a mature subicular/CA1 glutamatergic pyramidal
+          cluster (Slc17a7 mean 9.53, Cck 9.4 neuropeptide). Sox2 is essentially
+          absent (0.14). Cluster is not a progenitor and does not reside in the
+          DG SGZ; refuted as type-2a candidate.
+    caveats:
+      - Mature glutamatergic cluster; not a progenitor.
+      - Sox2 mean (0.14) directly contradicts the type-2a Sox2+ defining annotation.
+      - Soma in subicular/prosubicular layers, not DG SGZ.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 2
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (lineage committed, not yet functional)
+      expression_detail:
+        - gene: Sox2
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.217
+      region_fraction: 0.0
+      region_evidence: SELF

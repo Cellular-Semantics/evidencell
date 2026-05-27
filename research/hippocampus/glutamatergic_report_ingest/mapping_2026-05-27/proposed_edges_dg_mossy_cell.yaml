@@ -1,0 +1,1309 @@
+classical_node_id: dg_mossy_cell
+taxonomy_id: CCN20230722
+
+stubs:
+  - id: WMB:CS20230722_CLUS_0317
+    name: 0317 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0317
+  - id: WMB:CS20230722_SUPT_0079
+    name: 0079 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: WMB:CS20230722_CLUS_4054
+    name: 4054 PB Evx2 Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_4054
+  - id: WMB:CS20230722_CLUS_3246
+    name: 3246 SCig-an-PPT Foxb1 Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_3246
+  - id: WMB:CS20230722_CLUS_4060
+    name: 4060 PB Evx2 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_4060
+  - id: WMB:CS20230722_CLUS_4074
+    name: 4074 PB Evx2 Glut_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_4074
+  - id: WMB:CS20230722_SUPT_0648
+    name: 0648 PVT-PT Ntrk1 Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0648
+  - id: WMB:CS20230722_SUPT_0673
+    name: 0673 MG-POL-SGN Nts Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0673
+  - id: WMB:CS20230722_SUPT_0009
+    name: 0009 L5/6 IT TPE-ENT Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0009
+  - id: WMB:CS20230722_SUPT_0064
+    name: 0064 LA-BLA-BMA-PA Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0064
+
+edges:
+
+  # ── PRIMARY MATCH: DG polymorph layer cluster ──────────────────────────────
+
+  - id: edge_dg_mossy_cell_to_CS20230722_CLUS_0317
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_CLUS_0317
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: 1:1
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (cl_terms: CL:0000679)"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus / polymorph layer (SOMA)"
+        node_b_value: "MBA:10704 Dentate gyrus, polymorph layer (SOMA; 1029 cells Yao 2024 + 124 cells Zhuang 2023). Also CA3 strata (pyramidal 195, oriens 116, radiatum 132, lucidum 78) and DG granule cell layer (125)."
+        alignment: CONSISTENT
+        notes: >
+          DG polymorph layer is the dominant SOMA region for this cluster (~1153 cells
+          combined across two MERFISH datasets). Additional CA3-stratum representation
+          (~521 cells across pyramidal/oriens/radiatum/lucidum) suggests the cluster
+          may also encompass non-mossy hilar/CA3-adjacent glutamatergic neurons or
+          reflect anatomical registration spillover between adjacent CA3 and dentate
+          hilus.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present (PMID:27375434, marker_type PROTEIN, rat hippocampus review)"
+        node_b_value: "precomputed mean 10.15 (cohort percentile 0.982); not listed in taxonomy DEFINING/MERFISH metadata"
+        alignment: CONSISTENT
+      - property: marker_Drd2
+        node_a_value: "asserted present (PMID:33600026 Drd2-Cre viral labeling; PMID:37546856 transcriptomics ventral hippocampus)"
+        node_b_value: "precomputed mean 4.95 (cohort percentile 0.965); listed in taxonomy MERFISH markers"
+        alignment: CONSISTENT
+      - property: marker_Calcrl
+        node_a_value: "asserted present (PMID:33600026 Crlr-Cre viral labeling, mouse)"
+        node_b_value: "precomputed mean 0.76 (cohort percentile 0.872); not listed in taxonomy metadata"
+        alignment: APPROXIMATE
+        notes: >
+          Calcrl precomputed mean (0.76) is just below the MIN_DETECTABLE 1.0 threshold
+          but is in the 87th percentile of the cohort — presence credit only,
+          sibling-non-discriminating expression.
+      - property: marker_Reln
+        node_a_value: "asserted present (PMID:25206826 immunohistochemistry, mouse hippocampus)"
+        node_b_value: "precomputed mean 0.21 (cohort percentile 0.202); not listed in taxonomy metadata"
+        alignment: DISCORDANT
+        notes: >
+          Reln precomputed mean 0.21 is below MIN_DETECTABLE 1.0 and in the bottom
+          quintile of the cohort. Classical mossy cell literature reports Reln+
+          IHC in dentate hilar mossy cells; if CLUS_0317 corresponds to mossy cells,
+          the Reln signal is unexpectedly weak. May reflect (i) post-development
+          downregulation in transcript vs persistent protein, (ii) sub-population
+          heterogeneity, or (iii) cluster includes non-mossy cells diluting Reln+
+          fraction.
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative (PMID:23420672 review, dentate hilus)"
+        node_b_value: "precomputed mean 1.49 (cohort percentile 0.923); not listed in taxonomy metadata"
+        alignment: DISCORDANT
+        notes: >
+          Classical mossy cell asserted Gad1-negative, but CLUS_0317 precomputed
+          mean 1.49 is above MIN_DETECTABLE 1.0 and in the top decile of the
+          glutamatergic cohort. Suggests low-level Gad1 transcript may be detectable
+          in transcriptomic data despite glutamatergic NT phenotype, or cluster
+          contains some GABAergic contamination. Flag for review.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          WMB cluster 0317 (CA3 Glut_5) has its dominant SOMA distribution in the
+          Dentate gyrus polymorph layer (1029 cells, Yao 2024 MERFISH; 124 cells,
+          Zhuang 2023 MERFISH) — the canonical anatomical locus of hilar mossy
+          cells. Glutamatergic NT-type assignment is consistent with classical
+          mossy cell definition. High Drd2 expression (mean 4.95) and high Slc17a7
+          (mean 10.15) match the Drd2/Calcrl/Slc17a7 multimodal definition of
+          mossy cells from PMID:33600026 (Drd2-Cre / Crlr-Cre viral labeling).
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: >
+          Zhuang 2023 MERFISH shows additional CA3-strata SOMA representation
+          (pyramidal 195, oriens 116, radiatum 132, lucidum 78) and DG granule cell
+          layer (125) for this cluster — anatomically adjacent to the hilus but
+          extending the cluster beyond a pure hilar-mossy-cell pool. May indicate
+          registration spillover or sub-population heterogeneity.
+    caveats:
+      - >
+        Reln expression in CLUS_0317 (mean 0.21) is below MIN_DETECTABLE and far
+        below the classical IHC-based assertion of Reln+ in dentate hilar mossy
+        cells. The discrepancy is unexplained.
+      - >
+        Gad1 expression in CLUS_0317 (mean 1.49) is above MIN_DETECTABLE despite
+        the classical assertion that mossy cells are Gad1-negative.
+      - >
+        Cluster label is "CA3 Glut_5" and SOMA distribution extends substantially
+        into CA3 strata. The mapping rests on dentate-polymorph SOMA dominance
+        + Drd2/Slc17a7 expression; the CA3-strata sub-population may represent
+        a distinct (non-mossy) component of this cluster.
+      - >
+        No annotation transfer evidence available for this edge — confidence
+        will be capped at MODERATE by report-time agent per Stage B rubric step (iv).
+      - >
+        Heterogeneity flag from classical node notes: dorsal vs ventral mossy
+        cells (dorsal: IML+MML projection; ventral: IML only) — single atlas
+        cluster may collapse this axis.
+    unresolved_questions:
+      - >
+        Does CLUS_0317 contain both hilar mossy cells (DG polymorph) and a
+        distinct CA3-stratum glutamatergic population, or is the CA3 signal
+        registration spillover from adjacent dentate hilus in MERFISH sections?
+      - >
+        Why is Reln transcript so low (0.21) when classical IHC reports Reln+
+        protein in dentate hilar mossy cells (PMID:25206826)?
+      - >
+        Does CLUS_0317 separate dorsal vs ventral mossy cell sub-populations,
+        or is it dorsoventrally collapsed?
+    proposed_experiments:
+      - >
+        Spatial sub-clustering of CLUS_0317 cells restricted to MBA:10704 (DG
+        polymorph) vs CA3 strata to test whether the cluster collapses two
+        anatomically distinct glutamatergic populations.
+      - >
+        Re-examine Reln in CLUS_0317 at single-cell resolution to test whether
+        Reln+ is a minority sub-population (consistent with PMID:25206826) or
+        broadly low expression across the cluster.
+      - >
+        Annotation transfer from a mossy-cell-enriched dataset (e.g. Drd2-Cre
+        FACS or hilar microdissection RNA-seq) to confirm 1:1 correspondence
+        to CLUS_0317.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 10.15
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.982
+        - gene: Drd2
+          val: 4.95
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.965
+        - gene: Calcrl
+          val: 0.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.872
+        - gene: Reln
+          val: 0.21
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.202
+        - gene: -Gad1
+          val: 1.49
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.923
+      region_fraction: 0.71
+      region_evidence: SELF
+
+  # ── Parent supertype (broader by composition) ──────────────────────────────
+
+  - id: edge_dg_mossy_cell_to_CS20230722_SUPT_0079
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_SUPT_0079
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass 017 CA3 Glut)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus / polymorph layer (SOMA)"
+        node_b_value: "MBA:10704 DG polymorph (1083 Yao + 181 Zhuang) plus CA3 strata (pyramidal 165+294, oriens 104+121, radiatum 88+261, lucidum 175) and DG granule cell layer (147). Supertype spans CA3 + dentate hilus."
+        alignment: APPROXIMATE
+        notes: >
+          Supertype 0079 spans dentate polymorph and multiple CA3 strata. Mossy
+          cell occupies the DG polymorph subset — supertype is broader by
+          anatomy.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "precomputed supertype mean 9.45 (cohort percentile 0.892); coverage 1.0 across child clusters"
+        alignment: CONSISTENT
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "precomputed supertype mean 3.81 (cohort percentile 0.971); coverage 1.0"
+        alignment: CONSISTENT
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "precomputed supertype mean 0.79 (cohort percentile 0.848); coverage 1.0"
+        alignment: APPROXIMATE
+        notes: >
+          Below MIN_DETECTABLE 1.0 but high cohort percentile and full coverage
+          across child clusters — presence credit only.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed supertype mean 0.16 (cohort percentile 0.101); coverage 1.0"
+        alignment: DISCORDANT
+        notes: >
+          Reln signal extremely low across all child clusters at supertype level.
+          Conflict with classical IHC assertion of Reln+ in dentate hilar mossy
+          cells.
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "precomputed supertype mean 1.24 (cohort percentile 0.808)"
+        alignment: DISCORDANT
+        notes: >
+          Above MIN_DETECTABLE; conflicts with negative_marker assertion.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          Supertype 0079 (CA3 Glut_5) contains CLUS_0317 — the DG-polymorph-dominant
+          cluster identified as the primary mossy cell candidate — alongside other
+          CA3-located child clusters. The supertype spans dentate hilus + CA3
+          strata, so it is broader than the classical mossy cell type. region_fraction
+          0.539 confirms about half of supertype cells fall in the broader DG closure.
+    caveats:
+      - >
+        Mossy cell maps to a child cluster (CLUS_0317) within this supertype;
+        broadMatch reflects supertype heterogeneity over CA3 + dentate hilus.
+      - >
+        Reln and Gad1 discrepancies persist at supertype level — issue is not
+        cluster-specific dilution.
+    unresolved_questions:
+      - >
+        Does the supertype 0079 contain other DG-hilus child clusters beyond
+        CLUS_0317 that should also be considered candidate mossy cells?
+    proposed_experiments:
+      - >
+        Enumerate all child clusters of SUPT_0079 and check which have a
+        DG-polymorph-dominant SOMA distribution to ensure no mossy-cell-like
+        cluster is missed.
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 9.45
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.892
+          coverage: 1.0
+        - gene: Drd2
+          val: 3.81
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.971
+          coverage: 1.0
+        - gene: Calcrl
+          val: 0.79
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.848
+          coverage: 1.0
+        - gene: Reln
+          val: 0.16
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.101
+          coverage: 1.0
+        - gene: -Gad1
+          val: 1.24
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.808
+      region_fraction: 0.539
+      region_evidence: SELF
+
+  # ── Off-target distant-region candidates (broadMatch + 1:n per rubric ii) ──
+
+  - id: edge_dg_mossy_cell_to_CS20230722_CLUS_4054
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_CLUS_4054
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus / polymorph layer (SOMA)"
+        node_b_value: "MBA:867 Parabrachial nucleus (SOMA; 22+41 cells), MBA:976 Lobule II (13+30), MBA:795 Periaqueductal gray, MBA:326 superior cerebellar peduncles. No dentate gyrus SOMA."
+        alignment: DISCORDANT
+        notes: >
+          Cluster SOMA is in parabrachial nucleus, cerebellum, and midbrain —
+          anatomically distant from dentate gyrus. region_fraction 0.0.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.1 (cohort percentile 0.521)"
+        alignment: DISCORDANT
+        notes: Below MIN_DETECTABLE 1.0.
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 5.05 (cohort percentile 0.968)"
+        alignment: CONSISTENT
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.13 (cohort percentile 0.551)"
+        alignment: DISCORDANT
+        notes: Below MIN_DETECTABLE.
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.96 (cohort percentile 0.54)"
+        alignment: APPROXIMATE
+        notes: Just below MIN_DETECTABLE 1.0; presence credit only.
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "precomputed mean 0.0 (not reliable per discovery score)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          CLUS_4054 SOMA distribution (parabrachial nucleus, cerebellar lobule II,
+          periaqueductal gray) is anatomically incompatible with a dentate hilar
+          mossy cell. Discovery score cohort placement reflects expression-tier
+          co-incidence (Drd2 high) rather than region match. Listed for
+          completeness per rubric step (ii) but expected to be excluded at report
+          synthesis.
+    caveats:
+      - Region mismatch is decisive; this candidate is implausible as a mossy cell mapping.
+      - Co-clustered into the discovery cohort by glutamatergic NT + Drd2-high expression only.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 0.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.521
+        - gene: Drd2
+          val: 5.05
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+        - gene: Calcrl
+          val: 0.13
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.551
+        - gene: Reln
+          val: 0.96
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.54
+        - gene: -Gad1
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mossy_cell_to_CS20230722_CLUS_3246
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_CLUS_3246
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus (SOMA)"
+        node_b_value: "Superior colliculus intermediate gray / pedunculopontine tegmental (SCig-an-PPT) — distant from dentate gyrus."
+        alignment: DISCORDANT
+        notes: region_fraction 0.0 against DG closure.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.26 (cohort percentile 0.633)"
+        alignment: DISCORDANT
+        notes: Below MIN_DETECTABLE.
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 7.37 (cohort percentile 0.999)"
+        alignment: CONSISTENT
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 2.33 (cohort percentile 0.951)"
+        alignment: CONSISTENT
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 10.33 (cohort percentile 0.993)"
+        alignment: CONSISTENT
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "precomputed mean 0.38 (below MIN_DETECTABLE)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          CLUS_3246 (SCig-an-PPT Foxb1 Glut_1) is anatomically located in superior
+          colliculus / pedunculopontine tegmental nucleus — anatomically remote
+          from dentate gyrus. Despite strong marker co-incidence (Drd2, Calcrl,
+          Reln all high), the region mismatch decisively refutes the mapping.
+    caveats:
+      - >
+        Strong marker co-incidence (Drd2 + Reln + Calcrl all high) is biologically
+        notable but region mismatch overrides; listed for completeness per rubric (ii).
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 0.26
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.633
+        - gene: Drd2
+          val: 7.37
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.999
+        - gene: Calcrl
+          val: 2.33
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.951
+        - gene: Reln
+          val: 10.33
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.993
+        - gene: -Gad1
+          val: 0.38
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.18
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mossy_cell_to_CS20230722_CLUS_4060
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_CLUS_4060
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus (SOMA)"
+        node_b_value: "Parabrachial nucleus (PB Evx2) — distant from dentate gyrus."
+        alignment: DISCORDANT
+        notes: region_fraction 0.0.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.14 (cohort percentile 0.557)"
+        alignment: DISCORDANT
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 3.83 (cohort percentile 0.931)"
+        alignment: CONSISTENT
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.25 (cohort percentile 0.718)"
+        alignment: DISCORDANT
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.47 (cohort percentile 0.405)"
+        alignment: DISCORDANT
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "precomputed mean 0.0 (not reliable)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          CLUS_4060 (PB Evx2 Glut_5) is located in the parabrachial nucleus —
+          anatomically incompatible with dentate gyrus hilar mossy cell. Marker
+          profile also weak (Slc17a7, Calcrl, Reln all below MIN_DETECTABLE).
+    caveats:
+      - Region mismatch + weak marker support; implausible as a mossy cell mapping.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.557
+        - gene: Drd2
+          val: 3.83
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.931
+        - gene: Calcrl
+          val: 0.25
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.718
+        - gene: Reln
+          val: 0.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.405
+        - gene: -Gad1
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mossy_cell_to_CS20230722_CLUS_4074
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_CLUS_4074
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus (SOMA)"
+        node_b_value: "Parabrachial nucleus (PB Evx2) — distant from dentate gyrus."
+        alignment: DISCORDANT
+        notes: region_fraction 0.0.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.1 (cohort percentile 0.521)"
+        alignment: DISCORDANT
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 2.03 (cohort percentile 0.828)"
+        alignment: CONSISTENT
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 0.14 (cohort percentile 0.57)"
+        alignment: DISCORDANT
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "precomputed mean 3.9 (cohort percentile 0.773)"
+        alignment: CONSISTENT
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "precomputed mean 0.0 (not reliable)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          CLUS_4074 (PB Evx2 Glut_7) is in parabrachial nucleus — anatomically
+          remote from dentate gyrus. Reln high but Slc17a7 and Calcrl below
+          MIN_DETECTABLE.
+    caveats:
+      - Region mismatch decisive; listed for completeness.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 0.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.521
+        - gene: Drd2
+          val: 2.03
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.828
+        - gene: Calcrl
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.57
+        - gene: Reln
+          val: 3.9
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.773
+        - gene: -Gad1
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mossy_cell_to_CS20230722_SUPT_0648
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_SUPT_0648
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut (subclass)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus (SOMA)"
+        node_b_value: "Paraventricular thalamus / parataenial (PVT-PT Ntrk1) — distant from hippocampus."
+        alignment: DISCORDANT
+        notes: region_fraction 0.0.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.31 (cohort percentile 0.598); coverage 1.0"
+        alignment: DISCORDANT
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.17 (cohort percentile 0.363); coverage 1.0"
+        alignment: DISCORDANT
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.33 (cohort percentile 0.75); coverage 1.0"
+        alignment: DISCORDANT
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 1.05 (cohort percentile 0.518); coverage 1.0"
+        alignment: CONSISTENT
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "supertype mean 0.0 (not reliable)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          SUPT_0648 (PVT-PT Ntrk1 Glut_6) is a paraventricular / parataenial
+          thalamic supertype — anatomically distant from dentate gyrus. Marker
+          profile also fails on Slc17a7, Drd2, Calcrl.
+    caveats:
+      - Region mismatch decisive.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 0.31
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.598
+          coverage: 1.0
+        - gene: Drd2
+          val: 0.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.363
+          coverage: 1.0
+        - gene: Calcrl
+          val: 0.33
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.75
+          coverage: 1.0
+        - gene: Reln
+          val: 1.05
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.518
+          coverage: 1.0
+        - gene: -Gad1
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mossy_cell_to_CS20230722_SUPT_0673
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_SUPT_0673
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus (SOMA)"
+        node_b_value: "Medial geniculate / polymodal SGN (MG-POL-SGN Nts) — distant from hippocampus."
+        alignment: DISCORDANT
+        notes: region_fraction 0.0.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.11 (cohort percentile 0.46); coverage 0.667"
+        alignment: DISCORDANT
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 2.39 (cohort percentile 0.89); coverage 1.0"
+        alignment: CONSISTENT
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.33 (cohort percentile 0.75); coverage 0.667"
+        alignment: DISCORDANT
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.2 (cohort percentile 0.137); coverage 1.0"
+        alignment: DISCORDANT
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "supertype mean 0.07 (not reliable)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          SUPT_0673 is a medial-geniculate / polymodal SGN supertype — anatomically
+          unrelated to hippocampus.
+    caveats:
+      - Region mismatch decisive.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 0.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.816
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.46
+          coverage: 0.667
+        - gene: Drd2
+          val: 2.39
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.89
+          coverage: 1.0
+        - gene: Calcrl
+          val: 0.33
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.816
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.75
+          coverage: 0.667
+        - gene: Reln
+          val: 0.2
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.137
+          coverage: 1.0
+        - gene: -Gad1
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.005
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mossy_cell_to_CS20230722_SUPT_0009
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_SUPT_0009
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus (SOMA)"
+        node_b_value: "Layer 5/6 IT temporal/perirhinal/entorhinal cortex (L5/6 IT TPE-ENT) — cortical, not hippocampal."
+        alignment: DISCORDANT
+        notes: region_fraction 0.0.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 9.79 (cohort percentile 0.938); coverage 1.0"
+        alignment: CONSISTENT
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 4.59 (cohort percentile 0.986); coverage 1.0"
+        alignment: CONSISTENT
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.16 (cohort percentile 0.559); coverage 1.0"
+        alignment: DISCORDANT
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.39 (cohort percentile 0.305); coverage 1.0"
+        alignment: DISCORDANT
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "supertype mean 0.79 (below MIN_DETECTABLE; cohort percentile 0.562)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          SUPT_0009 is a deep-layer IT cortical supertype in temporal/perirhinal/entorhinal
+          cortex — distant from dentate hilus. Slc17a7 and Drd2 are co-incident
+          (both Slc17a7-high cortical and dentate populations) but region mismatch
+          decisive.
+    caveats:
+      - Region mismatch decisive despite Slc17a7/Drd2 co-incidence.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 9.79
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.938
+          coverage: 1.0
+        - gene: Drd2
+          val: 4.59
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.986
+          coverage: 1.0
+        - gene: Calcrl
+          val: 0.16
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.559
+          coverage: 1.0
+        - gene: Reln
+          val: 0.39
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.305
+          coverage: 1.0
+        - gene: -Gad1
+          val: 0.79
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.562
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_mossy_cell_to_CS20230722_SUPT_0064
+    lit_type: dg_mossy_cell
+    taxonomy_type: CS20230722_SUPT_0064
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic"
+        node_b_value: "Glut"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "UBERON:0001885 dentate gyrus hilus (SOMA)"
+        node_b_value: "Lateral / basolateral / basomedial / posterior amygdala (LA-BLA-BMA-PA) — distant from hippocampus."
+        alignment: DISCORDANT
+        notes: region_fraction 0.0.
+      - property: marker_Slc17a7
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 10.0 (cohort percentile 0.966); coverage 1.0"
+        alignment: CONSISTENT
+      - property: marker_Drd2
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.96 (cohort percentile 0.66); coverage 1.0"
+        alignment: APPROXIMATE
+        notes: Just below MIN_DETECTABLE 1.0.
+      - property: marker_Calcrl
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.46 (cohort percentile 0.79); coverage 1.0"
+        alignment: DISCORDANT
+      - property: marker_Reln
+        node_a_value: "asserted present"
+        node_b_value: "supertype mean 0.33 (cohort percentile 0.264); coverage 1.0"
+        alignment: DISCORDANT
+      - property: negative_marker_Gad1
+        node_a_value: "asserted negative"
+        node_b_value: "supertype mean 0.98 (just below MIN_DETECTABLE; cohort percentile 0.7)"
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: >
+          SUPT_0064 is an amygdalar supertype (lateral / basolateral / basomedial /
+          posterior amygdala) — distinct from dentate hilus despite shared
+          glutamatergic identity and Slc17a7 expression.
+    caveats:
+      - Region mismatch decisive.
+    unresolved_questions: []
+    proposed_experiments: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 10.0
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.966
+          coverage: 1.0
+        - gene: Drd2
+          val: 0.96
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.66
+          coverage: 1.0
+        - gene: Calcrl
+          val: 0.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.79
+          coverage: 1.0
+        - gene: Reln
+          val: 0.33
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.264
+          coverage: 1.0
+        - gene: -Gad1
+          val: 0.98
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.7
+      region_fraction: 0.0
+      region_evidence: SELF

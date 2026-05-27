@@ -1,0 +1,837 @@
+# 2026-05-27 mapping re-run for dg_neuroblast (Dentate Gyrus Neuroblast / Type-3 Progenitor)
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters and top 5 rank-1 supertypes
+# from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric (PartialOverlapMatch DEPRECATED).
+#
+# IMPORTANT CONTEXT — Atlas coverage gap for DG neurogenesis lineage:
+#   The classical dg_neuroblast node is the DCX+/Tis21+/Ki67+ adult-neurogenic
+#   neuroblast (type-3) population of the dentate gyrus subgranular zone.
+#   Per the classical node notes and the dg_type2b_progenitor mapping_notes
+#   in kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml, the
+#   transcriptomic correlates in CCN20230722 are clusters 0511-0513 (DG-PIR Ex
+#   IMN_*, the immature-neuron lineage). NONE of those clusters appear in the
+#   2026-05-27 discovery output for dg_neuroblast at rank 0 or rank 1.
+#
+#   Instead, the cohort filter (region=MBA:10702 DG + nt_type=glutamatergic)
+#   produced candidates that are unrelated cell types: pyramidal-projection
+#   glutamatergic clusters (ENT, CA1-ProS, CA3) and cerebellar/brainstem
+#   supertypes (CB Granule, DCO UBC, SMC NN, DC NN). All candidates returned
+#   score=0 with region_fraction=0.0 — i.e., NO candidate has SOMA in DG
+#   (MBA:10702) and NONE express the DG-neuroblast defining markers
+#   (DCX/Ki67/Tis21/Eomes/Prox1) at meaningful levels. The expected DG-IMN
+#   clusters 0511-0513 are filtered out by the discovery scorer, possibly
+#   because their atlas nt_type is annotated as "Glut" while the cohort
+#   filter "glutamatergic (committed but not yet functional)" pulled from
+#   the classical-node nt_type string did not match, or because their soma
+#   are annotated to DG granule cell layer (MBA:10703 molecular / 10705
+#   granule cell layer) rather than the polymorph/SGZ MBA:10702 used in
+#   the cohort context. Discovery-level investigation required.
+#
+#   Consequently, every edge below is marked evidencell:UncertainRelationship
+#   with semapv:UnspecifiedMatching — none of these candidates is a
+#   plausible match for dg_neuroblast. Edges are written to preserve a
+#   complete audit trail of the discovery cohort.
+classical_node_id: dg_neuroblast
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0032
+    name: "0032 L5/6 IT TPE-ENT Glut_6"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0032
+  - id: CS20230722_CLUS_0256
+    name: "0256 ENTmv-PA-COAp Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0256
+  - id: CS20230722_CLUS_0294
+    name: "0294 CA1-ProS Glut_6"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0294
+  - id: CS20230722_CLUS_0315
+    name: "0315 CA3 Glut_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0315
+  - id: CS20230722_CLUS_0316
+    name: "0316 CA3 Glut_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0316
+  - id: CS20230722_SUPT_1154
+    name: "1154 CB Granule Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1154
+  - id: CS20230722_SUPT_1155
+    name: "1155 CB Granule Glut_2"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1155
+  - id: CS20230722_SUPT_1156
+    name: "1156 DCO UBC Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1156
+  - id: CS20230722_SUPT_1192
+    name: "1192 SMC NN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1192
+  - id: CS20230722_SUPT_1197
+    name: "1197 DC NN_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1197
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_dg_neuroblast_to_CS20230722_SUPT_1154
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_SUPT_1154
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "not annotated at supertype level (child clusters annotated Glut)"
+        alignment: APPROXIMATE
+        notes: |
+          Supertype is in the cerebellar granule cell lineage (label "CB Granule Glut_1");
+          glutamatergic identity matches in broad terms, but cell identity is unrelated.
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ), UBERON:0009952"
+        node_b_value: "Cerebellar granule layer (per supertype label 'CB Granule'); supertype-level anat not populated in taxonomy YAML"
+        alignment: DISCORDANT
+        notes: |
+          Cerebellar location is anatomically distant from hippocampal dentate gyrus.
+      - property: marker_DCX
+        node_a_value: "DCX positive (defining marker; PMID:40519263, PMID:37082558)"
+        node_b_value: "not assessed (precomputed_expression unavailable at supertype level in current taxonomy YAML)"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive (proliferative; PMID:37082558)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive (migrating neuroblast surface marker)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b stage only)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent (pre-mature)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent (pre-mature)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent (post-type-1 stage)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 1154 "CB Granule Glut_1" is in the cerebellar granule lineage and has
+          no anatomical or molecular relationship to the dentate gyrus adult neurogenic
+          neuroblast. It appears in the rank-1 discovery cohort only by virtue of the
+          glutamatergic nt-type filter; the DG soma anatomy is absent.
+    caveats:
+      - |
+          Cerebellar granule cell supertype — anatomically and developmentally distinct
+          from DG neuroblasts. Inclusion in the discovery cohort reflects a region-filter
+          limitation, not biological similarity.
+      - |
+          Discovery score = 0; region_fraction = 0.0; no marker evidence applied.
+    unresolved_questions:
+      - |
+          Why did the discovery cohort surface cerebellar supertypes for a DG-region query?
+          Likely the SURVIVAL_COHORT region filter MBA:10702 (DG polymorph layer) did not
+          successfully eliminate non-DG candidates at rank 1 when no rank-1 candidates with
+          DG anat survived.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 0
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+
+  - id: edge_dg_neuroblast_to_CS20230722_SUPT_1155
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_SUPT_1155
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "not annotated at supertype level (CB Granule lineage = Glut)"
+        alignment: APPROXIMATE
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ), UBERON:0009952"
+        node_b_value: "Cerebellar granule layer (per label); supertype anat not populated"
+        alignment: DISCORDANT
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Sibling of SUPT_1154 in the cerebellar granule lineage; not anatomically or
+          developmentally related to DG neurogenesis.
+    caveats:
+      - Cerebellar granule supertype — not a plausible DG-neuroblast correlate.
+      - Discovery score = 0.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 0
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+
+  - id: edge_dg_neuroblast_to_CS20230722_SUPT_1156
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_SUPT_1156
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "not annotated at supertype level (DCO UBC = unipolar brush cell, Glut)"
+        alignment: APPROXIMATE
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ)"
+        node_b_value: "Dorsal cochlear nucleus (per label DCO UBC); supertype anat not populated"
+        alignment: DISCORDANT
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Dorsal cochlear nucleus unipolar brush cell supertype — brainstem/cerebellar
+          lineage, not DG.
+    caveats:
+      - Unrelated brainstem UBC supertype; discovery score = 0.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 0
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+
+  - id: edge_dg_neuroblast_to_CS20230722_SUPT_1192
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_SUPT_1192
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "NN (non-neuronal) per supertype label '1192 SMC NN_1'"
+        alignment: DISCORDANT
+        notes: |
+          Supertype label SMC NN denotes a non-neuronal (smooth muscle cell) population —
+          fundamentally incompatible with a neuronal lineage classical node.
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ)"
+        node_b_value: "Vascular/smooth muscle (per label); supertype anat not populated"
+        alignment: DISCORDANT
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 1192 is a non-neuronal smooth muscle cell supertype. Not a candidate
+          for a neuronal lineage; included in the cohort solely because the discovery
+          scorer surfaced it under the rank-1 region filter.
+    caveats:
+      - Non-neuronal (NN) supertype — categorically incompatible with neuroblast.
+      - Discovery score = 0.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 0
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+
+  - id: edge_dg_neuroblast_to_CS20230722_SUPT_1197
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_SUPT_1197
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "NN (non-neuronal) per supertype label '1197 DC NN_1'"
+        alignment: DISCORDANT
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ)"
+        node_b_value: "Dorsal column / non-neuronal (per label); supertype anat not populated"
+        alignment: DISCORDANT
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 1197 is a non-neuronal supertype; no overlap with the DG neurogenic
+          lineage. Included via the same cohort artefact as SUPT_1192.
+    caveats:
+      - Non-neuronal supertype; categorically incompatible.
+      - Discovery score = 0.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 0
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_dg_neuroblast_to_CS20230722_CLUS_0032
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_CLUS_0032
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "Glut (mature)"
+        alignment: APPROXIMATE
+        notes: |
+          Both glutamatergic, but the classical node refers to a developmentally-committed
+          pre-mature neuroblast while the cluster represents a mature L5/6 IT projection
+          neuron — functionally distinct.
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ), UBERON:0009952"
+        node_b_value: "Entorhinal area medial dorsal L6 (1); Presubiculum (7); DG molecular layer (1); Parasubiculum (1) — MERFISH"
+        alignment: DISCORDANT
+        notes: |
+          Soma distribution is in entorhinal/presubicular cortex L5/6, not DG SGZ. A
+          single cell in DG molecular layer is negligible.
+      - property: marker_DCX
+        node_a_value: "DCX positive (defining)"
+        node_b_value: "not in taxonomy precomputed_expression stats (means unavailable)"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b stage)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed (cluster is a mature glutamatergic IT projection neuron — NeuN expected positive)"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0032 is an entorhinal-presubicular L5/6 intratelencephalic projection
+          neuron cluster — a mature pyramidal cell type, anatomically and developmentally
+          distinct from a DG SGZ neuroblast. Discovery score 0; region_fraction 0.0.
+    caveats:
+      - Not a DG cell — entorhinal/presubicular pyramidal projection neuron.
+      - Mature, not immature/proliferative.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 0
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_neuroblast_to_CS20230722_CLUS_0256
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_CLUS_0256
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "Glut (mature)"
+        alignment: APPROXIMATE
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ)"
+        node_b_value: "Hippocampo-amygdalar transition area (7); Subiculum (47); ENT medial dorsal L5 (15); DG polymorph layer (1); ENT lateral L5 (1) — MERFISH"
+        alignment: DISCORDANT
+        notes: |
+          Soma centred on entorhinal-subicular-amygdaloid transition zones, with only a
+          single cell in DG polymorph layer.
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive (type-2b)"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          ENTmv-PA-COAp glutamatergic cluster — entorhinal/peri-amygdalar projection
+          neurons, not DG neurogenic lineage.
+    caveats:
+      - Entorhinal/peri-amygdalar projection neuron cluster; not DG.
+      - Discovery score = 0.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 0
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_neuroblast_to_CS20230722_CLUS_0294
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_CLUS_0294
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "Glut (mature pyramidal)"
+        alignment: APPROXIMATE
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ)"
+        node_b_value: "Prosubiculum (140+147); CA1 stratum radiatum (64); CA1 stratum lacunosum-moleculare (25); Subiculum (22+146); DG molecular layer (36) — MERFISH"
+        alignment: DISCORDANT
+        notes: |
+          Dominant prosubiculum/CA1/subiculum distribution; modest DG molecular layer
+          component (36 cells) is the layer of granule-cell dendrites, not the SGZ
+          containing neuroblast soma.
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CA1-ProS Glut_6 is a mature CA1/prosubicular pyramidal neuron cluster — not
+          related to DG neurogenesis. The DG-molecular-layer cells likely reflect cell
+          processes intersecting the layer in MERFISH segmentation.
+    caveats:
+      - CA1/prosubiculum pyramidal cluster; not DG neuroblast.
+      - Discovery score = 0; region_fraction = 0.0.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 0
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_neuroblast_to_CS20230722_CLUS_0315
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_CLUS_0315
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "Glut (mature CA3 pyramidal)"
+        alignment: APPROXIMATE
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ)"
+        node_b_value: "CA3 stratum lucidum (514+649); CA3 pyramidal layer (666+2874); CA3 lacunosum-moleculare (430); DG polymorph layer (320); CA3 stratum oriens (366+857) — MERFISH"
+        alignment: DISCORDANT
+        notes: |
+          Predominantly CA3 pyramidal layer; DG polymorph component (320) is a minor
+          fraction. CA3 pyramidal neurons are anatomically and developmentally distinct
+          from DG neuroblasts.
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CA3 Glut_4 is a mature CA3 pyramidal projection neuron cluster — not a DG
+          neurogenic lineage member.
+    caveats:
+      - CA3 pyramidal cluster; not DG neuroblast.
+      - Discovery score = 0.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 0
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+      region_fraction: 0.0
+      region_evidence: SELF
+
+  - id: edge_dg_neuroblast_to_CS20230722_CLUS_0316
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_CLUS_0316
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "glutamatergic (committed but not yet functional)"
+        node_b_value: "Glut (mature)"
+        alignment: APPROXIMATE
+      - property: location
+        node_a_value: "dentate gyrus subgranular zone (SGZ)"
+        node_b_value: "CA3 stratum oriens (66); DG polymorph layer (57+54); Medial amygdalar nucleus (60); CA3 pyramidal (99+118); CA3 stratum radiatum (129+54) — MERFISH"
+        alignment: DISCORDANT
+        notes: |
+          Spread across CA3/DG-polymorph/amygdala. The DG polymorph component (~110
+          combined) is non-trivial but represents the hilar polymorph layer, not the SGZ
+          where neuroblasts reside; amygdalar component flags non-DG identity.
+      - property: marker_DCX
+        node_a_value: "DCX positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Ki67
+        node_a_value: "Ki67 positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_PSA-NCAM
+        node_a_value: "PSA-NCAM positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: marker_Nestin
+        node_a_value: "Nestin positive"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_NeuN
+        node_a_value: "NeuN absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Calbindin
+        node_a_value: "Calbindin absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+      - property: negative_marker_GFAP
+        node_a_value: "GFAP absent"
+        node_b_value: "not assessed"
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CA3 Glut_5 is a CA3-hilar mature glutamatergic cluster (likely mossy cells
+          or CA3c-adjacent neurons) — not a neurogenic neuroblast. Strong male-bias
+          (m/f=3.55) reported but not interpretable as DG-neuroblast evidence.
+    caveats:
+      - CA3/hilar mature cluster; not DG neuroblast.
+      - Amygdalar component (60 cells) further argues against DG-restricted identity.
+      - Discovery score = 0.
+    discovery_score:
+      score: 0
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 0
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:10702
+            - nt_type=glutamatergic (committed but not yet functional)
+      expression_detail: []
+      region_fraction: 0.0
+      region_evidence: SELF

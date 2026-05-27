@@ -1,0 +1,939 @@
+# 2026-05-27 mapping re-run for chrna2_olm_subfamily_chamberland
+# Stage B output: proposed MappingEdges against top 5 rank-0 clusters
+# and top 5 rank-1 supertypes from discovery_2026-05-27.
+# Predicates follow the 2026-05-26 rubric.
+#
+# Classical node: Chrna2-IN (Chrna2-OLM, Chamberland 2024).
+# Defined as Sst+/Chrna2+ GABAergic CA1 stratum oriens interneurons via
+# Chrna2-Cre / Sst-Flp intersectional genetics. A subset of the canonical
+# OLM population — Chrna2 expression is the *defining* discriminator
+# vs other Sst-OLM subfamilies (notably Ndnf::Nkx2-1).
+#
+# Cohort overlaps the OLM (olm_hippocampus) candidates because both are
+# Sst+ CA1 stratum-oriens interneurons. The key adjudicator at rank-0 is
+# Chrna2 expression: CLUS_0771 carries the highest Chrna2 mean (2.56) and
+# is the modal target of the Chamberland Chrna2 source label in the
+# at_run_20260512_chamberland_subfamily_mmc_wmbv1 AT run (41 of 60 cells,
+# F1≈0.42 cluster-level). This contrasts with canonical OLM, whose AT
+# (Winterer 2019) preferred CLUS_0768.
+classical_node_id: chrna2_olm_subfamily_chamberland
+taxonomy_id: CCN20230722
+stubs:
+  - id: CS20230722_CLUS_0768
+    name: "0768 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0768
+  - id: CS20230722_CLUS_0771
+    name: "0771 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0771
+  - id: CS20230722_CLUS_0772
+    name: "0772 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0772
+  - id: CS20230722_CLUS_0773
+    name: "0773 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0773
+  - id: CS20230722_CLUS_0775
+    name: "0775 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0775
+  - id: CS20230722_SUPT_0216
+    name: "0216 Sst Gaba_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+  - id: CS20230722_SUPT_0225
+    name: "0225 Sst Gaba_12"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0225
+  - id: CS20230722_SUPT_1164
+    name: "1164 Astro-TE NN_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1164
+  - id: CS20230722_SUPT_0219
+    name: "0219 Sst Gaba_6"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0219
+  - id: CS20230722_SUPT_0213
+    name: "0213 Pvalb Gaba_9"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0213
+edges:
+
+  # ── Rank-1 (supertype) edges ───────────────────────────────────────────
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_0216
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0216
+    mapping_predicate: skos:broadMatch
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic (Chrna2-Cre / Sst-Flp intersectional reporter)"
+        node_b_value: "GABA (taxonomy parent subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA; Chrna2-Cre transgenic; biocytin fill)"
+        node_b_value: "Field CA1 stratum oriens 1375 cells; Prosubiculum 404; alveus 303; Posterior amygdalar nucleus 163; Subiculum 108"
+        alignment: CONSISTENT
+        notes: |
+          Supertype soma distribution dominated by CA1 stratum oriens — the canonical
+          Chrna2-OLM region. Adjacent subicular/prosubicular/alveus fractions are common
+          boundary/registration neighbours. Posterior amygdalar component (~6%) is a
+          minor non-OLM contaminant at the supertype level.
+      - property: marker_Sst
+        node_a_value: "Sst+ (Sst-Flp intersectional; gene-pair rule Sst+/Chrna2+>0)"
+        node_b_value: "Sst: 11.44 (precomputed mean); coverage 1.0 across child clusters"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (Chrna2-Cre defining; gene-pair rule)"
+        node_b_value: "Chrna2: 0.61 (precomputed mean); coverage 0.667 across child clusters"
+        alignment: APPROXIMATE
+        notes: |
+          Supertype-mean Chrna2 expression is sparse (0.61) and only 2 of 3 child
+          clusters detectably express Chrna2 (coverage 0.667). This matches the
+          expected sparsity of Chrna2 in classical Sst-OLM and the fact that the
+          Chrna2-OLM subfamily is a *subset* of cells aggregated into this supertype.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          Supertype 0216 Sst Gaba_3 is dominated by CA1 stratum oriens soma (1375 cells)
+          and expresses Sst (mean 11.44) and Chrna2 (mean 0.61, coverage 0.667 across
+          children) — the molecular signature of the canonical OLM family. Because the
+          Chrna2-OLM subfamily is one of several Sst-OLM subfamilies pooled within this
+          supertype, the relation is broader-than (skos:broadMatch, 1:n) rather than
+          exact. The supertype aggregates all four top-ranked rank-0 candidate clusters
+          (0768, 0771, 0772, 0773, 0775) — the specific Chrna2+ sub-cluster identity
+          (CLUS_0771) should be resolved at rank 0.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Chrna2
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE116217
+        explanation: |
+          MapMyCells transfer of Chamberland 2024 Chrna2-subfamily-labelled Harris 2018
+          cells to WMBv1: 74 of the Chrna2 cohort mapped to supertype 0216 Sst Gaba_3
+          (modal supertype, coverage 0.90, F1 0.21). The F1 is low because Chrna2 cells
+          are a small fraction of the supertype — consistent with Chrna2-OLM being a
+          *subfamily* within the broader Sst Gaba_3 supertype.
+    caveats:
+      - |
+        Supertype contains the four top rank-0 candidate clusters (CLUS_0768/0771/0772/
+        0773/0775) plus additional Sst Gaba_3 clusters — the specific Chrna2+ sub-cluster
+        identity is best resolved at rank 0 (CLUS_0771).
+      - |
+        AT F1 at this supertype is low (0.21) despite high coverage (0.90), reflecting
+        the fact that Chrna2-OLM is a subfamily within the broader supertype — typical
+        for the broadMatch case rather than a sign of poor mapping.
+      - |
+        Posterior amygdalar component (163 cells, ~6%) is anatomically distant from CA1
+        and may represent a minor non-OLM subpopulation pooled in this supertype.
+      - |
+        Chrna2 coverage across child clusters is 0.667 — at least one child cluster
+        within supertype 0216 has undetectable Chrna2 and is therefore not part of the
+        Chrna2-OLM subfamily.
+    proposed_experiments:
+      - |
+        Per-cluster MERFISH validation (Sst, Chrna2) across CLUS_0768/0771/0772/0773/0775
+        in CA1 stratum oriens to identify which rank-0 cluster(s) carry the bulk of the
+        Chrna2-Cre-labelled population.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.44
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.61
+          reliable: true
+          raw_tier: 2
+          applied_score: 1.633
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.973
+          coverage: 0.667
+      region_fraction: 0.584
+      region_evidence: SELF
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_0225
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0225
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Entorhinal area medial dorsal layer 6 (200); Entorhinal lateral layer 6a (135); Subiculum (120); Entorhinal medial dorsal layer 5 (82); Entorhinal lateral layer 5 (29)"
+        alignment: DISCORDANT
+        notes: |
+          Dominated by entorhinal cortex layers 5-6 — anatomically distinct from CA1
+          stratum oriens. region_evidence=DESCENDANT_ONLY (rolled up from rank-0
+          descendants).
+      - property: marker_Sst
+        node_a_value: "Sst+"
+        node_b_value: "Sst: 10.61 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining)"
+        node_b_value: "Chrna2: 0.23 (precomputed mean); coverage 0.333 across child clusters"
+        alignment: APPROXIMATE
+        notes: |
+          Detectable but very sparse Chrna2 with low coverage (1 of 3 child clusters).
+          Inconsistent with Chrna2 being a *defining* feature of this subfamily.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0225 Sst Gaba_12 is dominated by entorhinal cortex L5–L6 soma — anatomically
+          distinct from CA1 stratum oriens. Chrna2 expression is sparse (0.23) with
+          limited coverage. Best interpreted as an entorhinal Sst interneuron type that
+          ranked into the cohort via the hippocampus-region descendant-anat fallback.
+    caveats:
+      - Atlas soma distribution is entorhinal cortex, not hippocampus CA1.
+      - Chrna2 sparse (0.23) with coverage 0.333 — inconsistent with Chrna2-defining identity.
+      - region_evidence=DESCENDANT_ONLY — supertype's own anat is non-hippocampal.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.946
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.577
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.946
+          coverage: 0.333
+      region_fraction: 0.0
+      region_evidence: DESCENDANT_ONLY
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_1164
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_1164
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "Non-neuronal (Astro-TE; subclass 319 Astro-TE NN)"
+        alignment: DISCORDANT
+        notes: Astrocyte supertype — incompatible with GABAergic neuron identity.
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "corpus callosum body (133); CA1 stratum oriens (147); endopiriform dorsal (139); corpus callosum posterior forceps (175); alveus (141)"
+        alignment: APPROXIMATE
+        notes: |
+          Includes a CA1 stratum oriens fraction but cells are astrocytes, not neurons.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 0.80 (precomputed mean) — near zero"
+        alignment: DISCORDANT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining)"
+        node_b_value: "Chrna2: 0.0 (precomputed mean); not reliable"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06808-9"
+        explanation: |
+          1164 Astro-TE NN_4 is a telencephalic astrocyte supertype defined by Gfap+/
+          Thbs4+. Although it includes CA1 stratum oriens soma (astrocytes occupy the
+          same layer as Chrna2-OLM neurons), the cell type is non-neuronal and lacks
+          Sst and Chrna2 expression — categorically incompatible with the Chrna2-OLM
+          identity. Ranked into the cohort by region overlap alone.
+    caveats:
+      - Astrocyte supertype, not a neuron — fundamentally incompatible cell-class.
+      - Sst (0.80) and Chrna2 (0.0) both below threshold for the defining markers.
+      - Discovery rank driven by CA1 stratum oriens region overlap; biological match REFUTE.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 0.8
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.324
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.056
+      region_evidence: SELF
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_0219
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0219
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 053 Sst Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA3 stratum oriens 495; CA3 pyramidal layer 453; CA3 stratum radiatum 337; DG polymorph 215; CA3 stratum lucidum 196; CA1 stratum oriens 89"
+        alignment: APPROXIMATE
+        notes: |
+          Dominated by CA3 (not CA1) stratum oriens with DG hilus component. May be
+          a CA3 OLM-analogue rather than canonical CA1 OLM. Minimal CA1 stratum oriens
+          fraction.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 10.17 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining)"
+        node_b_value: "Chrna2: 0.0 (precomputed mean) — not detected (unreliable)"
+        alignment: DISCORDANT
+        notes: |
+          Chrna2 absent. Argues strongly against this being the Chrna2-OLM subfamily,
+          even if Sst and broad anatomy are compatible.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0219 Sst Gaba_6 carries Sst+ markers consistent with the Sst-OLM family, but
+          (i) soma dominated by CA3 not CA1 and (ii) Chrna2 undetected. Chamberland 2024
+          defines Chrna2-OLM by Chrna2+ expression; absence here removes this supertype
+          as a candidate for the Chrna2-OLM subfamily specifically.
+    caveats:
+      - Chrna2 absent — defining marker missing.
+      - Atlas soma distribution dominated by CA3, not CA1.
+      - Possibly a CA3 OLM-analogue or DG hilar HIPP-like Sst population.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.892
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.05
+      region_evidence: SELF
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_0213
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_SUPT_0213
+    mapping_predicate: evidencell:UncertainRelationship
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnspecifiedMatching
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA (subclass 052 Pvalb Gaba)"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Subiculum 50; Retrosplenial ventral L5 19; Retrosplenial ventral L6a 19; Prosubiculum 15; CA1 stratum oriens 7"
+        alignment: DISCORDANT
+        notes: |
+          Minimal CA1 stratum oriens component (7 cells); dominated by subiculum and
+          retrosplenial cortex.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 10.28 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining)"
+        node_b_value: "Chrna2: 0.0 (precomputed mean) — not detected"
+        alignment: DISCORDANT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: REFUTE
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          0213 Pvalb Gaba_9 sits under the Pvalb subclass (subclass 052) with strong
+          Pvalb expression. Chrna2-OLM is annotated PV-negative by the canonical OLM
+          literature; this is therefore a category mismatch at the subclass level.
+          Soma centred on subiculum/retrosplenial cortex, not CA1.
+    caveats:
+      - Subclass is Pvalb Gaba — incompatible with canonical OLM PV-negative identity.
+      - Chrna2 absent.
+      - Soma distribution outside hippocampus CA1.
+    discovery_score:
+      score: 1
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 1
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.28
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.919
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.057
+      region_evidence: SELF
+
+  # ── Rank-0 (cluster) edges ─────────────────────────────────────────────
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0771
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0771
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 117; Subiculum 59; Prosubiculum 52; corpus callosum posterior forceps 26; Retrosplenial ventral L5 22"
+        alignment: APPROXIMATE
+        notes: |
+          CA1 stratum oriens leads, with substantial subicular/prosubicular component
+          and a retrosplenial fraction. Anatomy is compatible with Chrna2-OLM CA1
+          localisation but with peri-hippocampal extension.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 11.62 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining; Chrna2-Cre transgenic)"
+        node_b_value: "Chrna2: 2.56 (precomputed mean) — highest Chrna2 in cohort"
+        alignment: CONSISTENT
+        notes: |
+          CLUS_0771 carries the strongest Chrna2 signal of any rank-0 candidate,
+          consistent with this being the principal transcriptomic home of the
+          Chrna2-Cre-labelled OLM subset.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0771 has the highest Chrna2 mean (2.56) in the rank-0 cohort and high
+          Sst (11.62), Grm1 (10.29). Anatomy CA1-stratum-oriens-leading but with
+          subicular/retrosplenial extension. The best-aligned single rank-0 cluster
+          for the Chrna2-defined subfamily.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Chrna2
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE116217
+        explanation: |
+          MapMyCells transfer of Chamberland Chrna2 subfamily cells: 41 of 60 Chrna2
+          cells mapped to CLUS_0771 (modal rank-0 target; coverage 0.683, purity 0.299,
+          F1 0.416). By far the dominant rank-0 destination, supporting CLUS_0771 as
+          the principal Chrna2-OLM transcriptomic cluster.
+    caveats:
+      - |
+        AT F1 (0.42) is in the borderline band — predicate set to skos:closeMatch rather
+        than exactMatch. The borderline F1 reflects that Chrna2 cells distribute
+        partly into adjacent clusters (Sst Gaba_3 supertype heterogeneity) rather than
+        a poor underlying mapping.
+      - |
+        Soma distribution extends beyond CA1 into subiculum/prosubiculum/retrosplenial —
+        Chrna2-OLM as defined by Chamberland 2024 is canonically CA1-restricted.
+    unresolved_questions:
+      - |
+        Does the subicular/retrosplenial fraction of CLUS_0771 represent a peri-hippocampal
+        Chrna2+ Sst population biologically distinct from the canonical CA1 Chrna2-OLM,
+        or is it boundary/registration overlap?
+    proposed_experiments:
+      - |
+        Chrna2-Cre × reporter visualisation paired with MERFISH for Sst/Chrna2 across
+        CA1 stratum oriens vs subiculum/retrosplenial to test whether Chrna2-OLM extends
+        outside CA1.
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 5
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.62
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+        - gene: Chrna2
+          val: 2.56
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.99
+      region_fraction: 0.413
+      region_evidence: SELF
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0768
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0768
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 207; alveus 85; CA1 pyramidal layer 16"
+        alignment: CONSISTENT
+        notes: Clean CA1 stratum oriens dominance with adjacent alveus/pyramidale.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 12.70 (precomputed mean) — highest in cohort"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining)"
+        node_b_value: "Chrna2: 0.57 (precomputed mean) — sparse"
+        alignment: APPROXIMATE
+        notes: |
+          Chrna2 detectable but sparse. Lower than CLUS_0771 (2.56). Together with the
+          Chamberland AT (only 3 of 60 Chrna2 cells mapped here), suggests CLUS_0768 is
+          not the principal Chrna2-OLM home, but rather a related Sst-OLM cluster with
+          some Chrna2 expression.
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0768 has the highest Sst (12.70) and clean CA1 stratum oriens anatomy,
+          but Chrna2 expression is sparse (0.57). Anatomically and Sst-wise an excellent
+          Sst-OLM cluster; for the Chrna2-defined subfamily specifically the alignment
+          is weaker than CLUS_0771.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Chrna2
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE116217
+        explanation: |
+          Chrna2 subfamily AT: only 3 cells mapped to CLUS_0768 (F1 0.056). Minor
+          rank-0 destination, in stark contrast to canonical OLM (Winterer 2019)
+          which preferred this cluster — surfaces the Chrna2 vs canonical-OLM
+          distinction at the cluster level.
+    caveats:
+      - |
+        AT signal weak (3 cells, F1 0.056) — CLUS_0768 is not the principal Chrna2-OLM
+        home despite being the modal cluster for canonical Sst-OLM.
+      - |
+        Chrna2 expression sparse (0.57). Consistent with the cluster containing some
+        Chrna2+ cells but not being defined by Chrna2.
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.7
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.99
+        - gene: Chrna2
+          val: 0.57
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.959
+      region_fraction: 0.651
+      region_evidence: SELF
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0772
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0772
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 337; alveus 57; CA1 stratum radiatum 22"
+        alignment: CONSISTENT
+        notes: Strong CA1 stratum oriens dominance.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 11.92 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining)"
+        node_b_value: "Chrna2: 0.46 (precomputed mean) — sparse"
+        alignment: APPROXIMATE
+        notes: |
+          Chrna2 lower than CLUS_0771. AT signal minor (2 cells).
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0772 is a strong canonical Sst-OLM cluster (Sst 11.92, CA1-O-dominated)
+          but Chrna2 (0.46) is sparse — not the principal Chrna2 cluster.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Chrna2
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE116217
+        explanation: |
+          Chrna2 subfamily AT: 2 cells mapped to CLUS_0772 (F1 0.036). Minor
+          destination.
+    caveats:
+      - Chrna2 sparse (0.46); AT signal minor (2 cells).
+      - Better aligned with canonical Sst-OLM than with Chrna2-specific subfamily.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.92
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+        - gene: Chrna2
+          val: 0.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.939
+      region_fraction: 0.81
+      region_evidence: SELF
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0773
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0773
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "CA1 stratum oriens (dominant per parent-supertype 0216 anat profile; cluster-level breakdown not enumerated here)"
+        alignment: CONSISTENT
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 11.43 (precomputed mean) — high"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining)"
+        node_b_value: "Chrna2: 0.65 (precomputed mean) — sparse"
+        alignment: APPROXIMATE
+        notes: |
+          Chrna2 detectable but sparse. AT signal minor (2 cells, F1 0.053).
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0773 is a Sst Gaba_3 cluster with Sst 11.43 and modest Chrna2 (0.65).
+          A plausible secondary home for Chrna2+ Sst-OLM cells but not the dominant
+          target.
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
+        source_cluster_label: Chrna2
+        target_atlas: WMBv1
+        method: MapMyCells
+        source_dataset_accession: GSE116217
+        explanation: |
+          Chrna2 subfamily AT: 2 cells mapped to CLUS_0773 (F1 0.053). Minor
+          destination consistent with a small share of Chrna2+ cells.
+    caveats:
+      - Chrna2 sparse; AT signal minor.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 5
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.43
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.949
+        - gene: Chrna2
+          val: 0.65
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+      region_fraction: 0.611
+      region_evidence: SELF
+
+  - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0775
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: CS20230722_CLUS_0775
+    mapping_predicate: skos:closeMatch
+    mapping_cardinality: "1:1"
+    mapping_justification: semapv:UnreviewedManualMapping
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: "GABA"
+        alignment: CONSISTENT
+      - property: location
+        node_a_value: "CA1 stratum oriens (SOMA)"
+        node_b_value: "Field CA1 stratum oriens 42; Prosubiculum 34; Subiculum 19; alveus 18"
+        alignment: APPROXIMATE
+        notes: |
+          CA1 stratum oriens leads only narrowly over prosubiculum. Substantial
+          subicular component.
+      - property: marker_Sst
+        node_a_value: "Sst+ (defining)"
+        node_b_value: "Sst: 10.86 (precomputed mean)"
+        alignment: CONSISTENT
+      - property: marker_Chrna2
+        node_a_value: "Chrna2+ (defining)"
+        node_b_value: "Chrna2: 0.73 (precomputed mean) — sparse"
+        alignment: APPROXIMATE
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: "https://doi.org/10.1038/s41586-023-06812-z"
+        explanation: |
+          CLUS_0775 carries moderate Chrna2 (0.73) and Sst (10.86) but a substantial
+          subicular/prosubicular soma fraction. No appreciable Chamberland AT signal
+          at this cluster in the by-class results.
+    caveats:
+      - Soma extends substantially into prosubiculum/subiculum.
+      - Chrna2 sparse; weak adjudication against CLUS_0771.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 5
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.86
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.929
+        - gene: Chrna2
+          val: 0.73
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.98
+      region_fraction: 0.372
+      region_evidence: SELF
