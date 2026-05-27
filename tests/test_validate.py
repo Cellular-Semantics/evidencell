@@ -774,6 +774,32 @@ def test_oak_dbs_available_all_present(tmp_path: Path):
     assert missing == []
 
 
+def test_oak_dbs_available_file_adapter_missing(tmp_path: Path):
+    """simpleobo:<path> adapters whose file is absent are flagged as missing."""
+    cfg = _write_oak_config(
+        tmp_path,
+        {"NCBITaxon": "simpleobo:conf/oak_dbs/taxslim.obo"},
+    )
+    # No file at conf/oak_dbs/taxslim.obo under tmp_path → missing.
+    ok, missing = oak_dbs_available(cfg)
+    assert ok is False
+    assert missing == ["conf/oak_dbs/taxslim.obo"]
+
+
+def test_oak_dbs_available_file_adapter_present(tmp_path: Path):
+    """simpleobo:<path> adapters resolve relative to project_root and pass when present."""
+    slim_path = tmp_path / "conf" / "oak_dbs" / "taxslim.obo"
+    slim_path.parent.mkdir(parents=True)
+    slim_path.write_bytes(b"")  # marker
+    cfg = _write_oak_config(
+        tmp_path,
+        {"NCBITaxon": "simpleobo:conf/oak_dbs/taxslim.obo"},
+    )
+    ok, missing = oak_dbs_available(cfg)
+    assert ok is True
+    assert missing == []
+
+
 def test_validate_terms_skips_when_config_missing(tmp_path: Path):
     """If conf/oak_config.yaml is missing, term check returns soft-success."""
     # schema_path.parent.parent is the project root; oak_config lives at

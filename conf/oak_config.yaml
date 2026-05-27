@@ -4,6 +4,9 @@
 # Adapter types:
 #   sqlite:obo:<name>  - Pre-built SQLite databases (fast, offline, recommended)
 #                        OAK caches these in ~/.data/oaklib/ on first use.
+#   simpleobo:<path>   - Local OBO file parsed on each load. Use for
+#                        ontologies where we ship a slim rather than the
+#                        full DB (e.g. NCBITaxon).
 #   ""                 - Skip validation for this prefix (no warning)
 #
 # Only prefixes listed here are validated.
@@ -16,8 +19,12 @@ ontology_adapters:
   # Anatomy — brain regions, CCF structures
   UBERON: sqlite:obo:uberon
 
-  # Taxonomy — species identifiers on evidence scope fields
-  NCBITaxon: sqlite:obo:ncbitaxon
+  # Taxonomy — species identifiers on evidence scope fields.
+  # Backed by the upstream NCBITaxon slim (taxslim.obo, ~9 MB), not the
+  # full DB (~10+ GB). Fetched by `just fetch-oak-dbs`. The slim covers
+  # all UniProt reference proteomes — model organisms + standard primates
+  # used in BICAN work. See issue #73.
+  NCBITaxon: simpleobo:conf/oak_dbs/taxslim.obo
 
   # Skip LinkML/RDF meta-prefixes
   linkml: ""
