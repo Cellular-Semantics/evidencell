@@ -573,3 +573,10 @@ register-at-run:
 [group('utilities')]
 inspect FILE:
     uv run python -c "import yaml, sys; yaml.dump(yaml.safe_load(open('{{FILE}}')), sys.stdout, allow_unicode=True, sort_keys=False)"
+
+# Migrate deprecated evidencell:PartialOverlapMatch edges to the 2026-05-26
+# predicate rubric. Reads each edge's existing AT + comparisons and picks a
+# new predicate + cardinality. See src/evidencell/refresh_predicates.py.
+[group('utilities')]
+refresh-predicates *ARGS:
+    uv run python -m evidencell.refresh_predicates {{ARGS}}
