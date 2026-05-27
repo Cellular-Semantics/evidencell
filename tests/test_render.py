@@ -489,8 +489,27 @@ def test_extract_node_facts_unknown_node_raises():
 
 
 def test_extract_node_facts_terminal_node_raises():
-    with pytest.raises(ValueError, match="terminal"):
+    with pytest.raises(ValueError, match="atlas node"):
         extract_node_facts(MINIMAL_GRAPH, MINIMAL_REFS, "atlas_clus_001", Path("test.yaml"))
+
+
+def test_extract_node_facts_atlas_definition_basis_raises():
+    # Atlas stubs in KB graphs carry definition_basis: ATLAS_TRANSCRIPTOMIC
+    # without is_terminal (see issue #85). They must still be rejected.
+    graph = {
+        "nodes": [
+            {
+                "id": "atlas_stub_001",
+                "name": "Atlas stub",
+                "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+                "taxonomy_id": "CCN20230722",
+                "cell_set_accession": "CS20230722_CLUS_0502",
+            },
+        ],
+        "edges": [],
+    }
+    with pytest.raises(ValueError, match="atlas node"):
+        extract_node_facts(graph, MINIMAL_REFS, "atlas_stub_001", Path("test.yaml"))
 
 
 def test_extract_node_facts_ref_index_no_invention():
