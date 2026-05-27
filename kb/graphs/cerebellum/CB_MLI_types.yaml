@@ -285,7 +285,7 @@ edges:
   - id: edge_stellate_to_mli1
     lit_type: classical_stellate
     taxonomy_type: mli1_kozareva
-    relationship: evidencell:PartialOverlapMatch
+    relationship: evidencell:UncertainRelationship
     evidence:
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -307,11 +307,13 @@ edges:
           quantified by Kozareva 2021 — the split is described qualitatively as
           location-dependent. Quantitative spatial analysis needed.
 
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to evidencell:UncertainRelationship by `refresh_predicates.py`. Rule: rule-4: no AT and no property_comparisons → UncertainRelationship. Curator review recommended.'
     mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_stellate_to_mli2
     lit_type: classical_stellate
     taxonomy_type: mli2_kozareva
-    relationship: evidencell:PartialOverlapMatch
+    relationship: evidencell:UncertainRelationship
     evidence:
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -332,6 +334,9 @@ edges:
   # These edges are clean 1:1, showing T-type → atlas correspondence.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    caveats:
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to evidencell:UncertainRelationship by `refresh_predicates.py`. Rule: rule-4: no AT and no property_comparisons → UncertainRelationship. Curator review recommended.'
   - id: edge_mli1_to_wmb5188
     lit_type: mli1_kozareva
     taxonomy_type: wmb_cluster_5188

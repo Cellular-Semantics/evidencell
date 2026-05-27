@@ -21,7 +21,7 @@
 | — | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_SUPT_0486] |  | 178 |  |  |
 | — | 1915 PVpo-VMPO-MPN Hmx2 Gaba_5 [CS20230722_CLUS_1915] | 0486 PVpo-VMPO-MPN Hmx2 Gaba_5 | 5 |  |  |
 
-All edges: `evidencell:PartialOverlapMatch`
+All edges: `skos:closeMatch`
 
 ---
 
@@ -41,6 +41,7 @@ All edges: `evidencell:PartialOverlapMatch`
 - **marker_Kiss1** (APPROXIMATE): A=POSITIVE (transcript, co-expressed with Th in AVPV) / B=precomputed mean_expression=0.62. 
 - SUPT_0486 carries a Gaba_5 label at supertype level while the classical AVPV TH neuron is dopaminergic. Dopaminergic identity is resolved only at cluster level (CLUS_1915, Dopa designation).
 - avpv_th_neuron and avpv_kiss1_neuron both map to SUPT_0486 — these two classical types substantially overlap (most AVPV/PeN Kiss1 cells co-express Th). Cluster-level resolution needed to determine whether they are separable within SUPT_0486.
+- [AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.
 
 **What would upgrade confidence:**
 
@@ -64,6 +65,7 @@ All edges: `evidencell:PartialOverlapMatch`
 - **location_MBA272** (APPROXIMATE): A=MBA:272 (AVPV) / B=MBA:272 (AVPV) n=1; MBA:133 PVpo n=1; MBA:1097 Hypothalamus n=3. AVPV cells present; cluster too small to resolve sub-regional anatomy precisely.
 - CLUS_1915 has only n=3–5 total cells. All metrics are directionally correct but have limited statistical power. Confidence capped at MODERATE.
 - avpv_th_neuron and avpv_kiss1_neuron both map to CLUS_1915 — the two classical types are substantially overlapping (most AVPV Kiss1 cells co-express Th). These may be the same cell population described from different entry points in the classical literature.
+- [AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.
 
 **What would upgrade confidence:**
 

@@ -457,7 +457,7 @@ edges:
   - id: edge_dg_neuroblast_to_CS20230722_CLUS_0511
     lit_type: dg_neuroblast
     taxonomy_type: CS20230722_CLUS_0511
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     property_comparisons:
       - property: nt_type
         node_a_value: glutamatergic (committed but not yet functional)
@@ -571,6 +571,8 @@ edges:
         description: CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label 'DG STR' places cells at the DG-STR boundary (SGZ), but CCF-level soma location cannot be fully verified. The high NA fraction is a known artefact of sparse CCF coverage at the SGZ margin.
       - caveat_type: OTHER
         description: The classical dg_neuroblast node spans type-2b (Nestin+/DCX+/Eomes+) and type-3 (DCX+/Eomes-low) sub-stages. Cluster 0511 is enriched for type-2b (Eomes+ dominant). Full correspondence with the type-3 sub-stage is unconfirmed; cluster 0512 is a secondary candidate for the type-3 transition.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - Does Dcx transcript appear in cluster 0511 cells at a level below the differential expression threshold for defining_marker selection? A targeted Dcx expression query on the full atlas feature matrix would resolve this.
       - Is the Gad2 nt_marker signal (score 3.24) in cluster 0511 ambient RNA, a minor contaminating GABAergic population, or evidence of transient GABAergic signalling in type-2b progenitors?
@@ -579,6 +581,7 @@ edges:
       - Triple-label smFISH combining Dcx, Eomes, and Sox6 transcripts with Ki67 IHC in adult mouse DG to directly test co-localisation of atlas cluster 0511 signature with classical DCX+/Ki67+ neuroblasts in the SGZ.
       - DCX-GFP sorted cells from adult DG followed by snRNA-seq and MapMyCells projection onto CCN202307220 to assign protein-defined neuroblasts to specific atlas clusters.
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0514
     lit_type: dg_immature_granule_neuron
     taxonomy_type: CS20230722_CLUS_0514
@@ -1620,7 +1623,7 @@ edges:
   - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0511
     lit_type: dg_type2b_progenitor
     taxonomy_type: CS20230722_CLUS_0511
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     property_comparisons:
       - property: nt_type
         node_a_value: glutamatergic (lineage committed, not yet functional)
@@ -1712,6 +1715,8 @@ edges:
         description: Cluster 0511 spans the type-2b/type-3 boundary. The curator annotation "early neuroblast" and the presence of Neurod1 (expressed from the neuroblast stage onward) indicate that some cells in this cluster may have already progressed past the type-2b stage. PARTIAL_OVERLAP reflects that type-2b progenitors are the dominant population but the cluster is not exclusive to this stage.
       - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
         description: CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label 'DG STR' places cells at the DG-STR boundary (SGZ), but CCF soma location cannot be fully verified. The high NA fraction is a known artefact of sparse CCF coverage at the SGZ margin.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.059 ≤ 0.75, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - Do clusters 0512 and 0513 (in dg_pir_ex_imn.yaml) together with 0511 represent a progressive type-2b to type-3 transition series, and if so should the type-2b node have secondary PARTIAL_OVERLAP edges to 0512/0513?
       - Is the Gad2 signal (score 3.24) in cluster 0511 ambient RNA, a minor GABAergic contaminant, or evidence of transient GABAergic signalling in type-2b progenitors?
@@ -1719,3 +1724,4 @@ edges:
       - Triple-label smFISH combining Eomes, Sox6, and Nes transcripts with Tbr2 IHC to confirm co-localisation of cluster 0511 signature with classical Tbr2+/Nestin+ type-2b cells in adult mouse SGZ.
       - Tbr2-CreERT2 fate-mapping with snRNA-seq from sorted Tbr2+ cells followed by MapMyCells projection onto CCN202307220 to assign IHC-defined type-2b cells to specific atlas clusters.
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"

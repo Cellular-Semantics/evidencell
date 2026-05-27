@@ -1,8 +1,5 @@
 # DG-PIR Ex IMN — Allen Brain Cell Atlas CCN202307220 Mapping Report
-*Draft · 2026-04-16 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/dg_pir_ex_imn.yaml`*
-
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+*2026-04-16 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/dentate_gyrus/dg_pir_ex_imn.yaml`*
 
 ---
 
@@ -17,9 +14,17 @@
 
 ---
 
+## Cell Ontology mapping
+
+DG-PIR Ex IMN is a **broad match** to **immature neuron (CL:4042028)** in the Cell Ontology — i.e. **immature neuron (CL:4042028)** is the closest existing CL term (an ancestor) but does not fully cover this type. A new child term is a candidate for submission to CL.
+
+*Mapping notes:* Subclass spanning dentate gyrus immature neurons (supertypes 1, 2: DG-origin, mapped to CL:9900001/9900002/9900004) and piriform cortex immature neurons (supertype 3: PIR-origin, MERFISH-verified). No single CL term covers the heterogeneous subclass; CL:4042028 (immature neuron) as broadest common ancestor. Cluster-level mappings are more precise.
+
+---
+
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 

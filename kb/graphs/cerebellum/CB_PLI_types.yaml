@@ -592,7 +592,7 @@ edges:
   - id: edge_pli2_to_wmb5177
     lit_type: pli2_osorno
     taxonomy_type: wmb_cluster_5177
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         supports: PARTIAL
@@ -650,6 +650,8 @@ edges:
           suggesting either transcriptomic heterogeneity within the Globular type
           or that the classical morphological Globular definition encompasses
           multiple transcriptomic subtypes.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Do the PLI2 cells mapping to clusters other than 5177 represent a distinct
@@ -660,6 +662,7 @@ edges:
         if the cluster-level heterogeneity reflects a biologically meaningful split.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_pli3_to_wmb1145
     lit_type: pli3_osorno
     taxonomy_type: wmb_supertype_1145

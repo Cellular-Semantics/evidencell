@@ -1,8 +1,5 @@
 # DG-IMN Glut — Allen Brain Cell Atlas CCN202307220 Mapping Report
-*Draft · 2026-04-16 · Source: `/Users/ar38/Documents/GitHub/evidencell/kb/draft/dentate_gyrus/dg_glut.yaml`*
-
-> ⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted.
-> All edges require expert review before use.
+*2026-04-16 · Source: `/Users/do12/Documents/GitHub/evidencell/kb/graphs/dentate_gyrus/dg_glut.yaml`*
 
 ---
 
@@ -17,9 +14,17 @@
 
 ---
 
+## Cell Ontology mapping
+
+DG-IMN Glut is a **broad match** to **dentate gyrus granule cell (CL:2000089)** in the Cell Ontology — i.e. **dentate gyrus granule cell (CL:2000089)** is the closest existing CL term (an ancestor) but does not fully cover this type. A new child term is a candidate for submission to CL.
+
+*Mapping notes:* Class node spanning both mature granule cells (DG Glut subclass) and immature/neuroblast types (DG-PIR Ex IMN subclass). CL:2000089 covers the mature terminal state but is too narrow for the class as a whole; mapping is BROAD. The class name "DG-IMN Glut" indicates it includes immature neurons not yet represented in CL.
+
+---
+
 ## Mapping candidates
 
-| Rank | WMBv1 cluster | Supertype | Cells | Confidence | Verdict |
+| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Verdict |
 |---|---|---|---|---|---|
 
 

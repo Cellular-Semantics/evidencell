@@ -350,7 +350,7 @@ edges:
   - id: edge_chrna2_olm_to_CS20230722_CLUS_0771
     lit_type: chrna2_olm_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0771
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
@@ -401,6 +401,10 @@ edges:
         notes: "Chrna2 expression is sparse but enriched in CLUS_0771 relative to siblings."
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
+    caveats:
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.649 ≤ 0.75 → closeMatch. Curator review recommended.'
   - id: edge_sst_nos1_to_CS20230722_CLUS_0859
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0859
@@ -469,7 +473,7 @@ edges:
   - id: edge_sst_tac1_to_CS20230722_SUBC_052
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_SUBC_052
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
@@ -529,6 +533,10 @@ edges:
         notes: "Functional target (Pvalb-INs per Chamberland 2024) and transcriptomic placement (Pvalb cluster) are independently consistent but not strictly equivalent."
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
+    caveats:
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.578 ≤ 0.75 → closeMatch. Curator review recommended.'
   - id: edge_ndnf_nkx2_1_olm_to_CS20230722_SUPT_0216
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0216

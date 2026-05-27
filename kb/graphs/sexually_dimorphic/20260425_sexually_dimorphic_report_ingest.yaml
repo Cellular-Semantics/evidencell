@@ -1048,7 +1048,7 @@ edges:
   - id: edge_avpv_kiss1_neuron_to_cs20230722_supt_0486
     lit_type: avpv_kiss1_neuron
     taxonomy_type: CS20230722_SUPT_0486
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -1112,6 +1112,8 @@ edges:
           Supertype-level sex ratio not directly available. Female-biased sex ratio signal is
           concentrated in child cluster CLUS_1915 (male_female_ratio=0.02). A cluster-level
           edge to CLUS_1915 would provide more specific mapping.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Which cluster(s) within SUPT_0486 carry peak Kiss1+Th+Esr1 co-expression
@@ -1126,10 +1128,11 @@ edges:
         MapMyCells annotation transfer of published AVPV Kiss1 scRNA-seq data to WMBv1.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_avpv_th_neuron_to_cs20230722_supt_0486
     lit_type: avpv_th_neuron
     taxonomy_type: CS20230722_SUPT_0486
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
@@ -1182,6 +1185,8 @@ edges:
           avpv_th_neuron and avpv_kiss1_neuron both map to SUPT_0486 — these two classical
           types substantially overlap (most AVPV/PeN Kiss1 cells co-express Th). Cluster-level
           resolution needed to determine whether they are separable within SUPT_0486.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Does CLUS_1915 specifically correspond to AVPV A14 TH neurons? Confirm by
@@ -1192,6 +1197,7 @@ edges:
         scRNA-seq data to WMBv1 for F1-based confirmation.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_sdn_poa_calbindin_neuron_to_cs20230722_supt_0423
     lit_type: sdn_poa_calbindin_neuron
     taxonomy_type: CS20230722_SUPT_0423
@@ -1538,7 +1544,7 @@ edges:
   - id: edge_pvn_crfr1_neuron_to_cs20230722_supt_0585
     lit_type: pvn_crfr1_neuron
     taxonomy_type: CS20230722_SUPT_0585
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -1581,6 +1587,8 @@ edges:
           Crhr1=0.84 across SUPT_0585 indicates CRFR1+ neurons are a minority subset.
           SUPT_0589 (parent of male-biased CLUS_2382, ratio 2.7) is an alternative or
           co-equal mapping target worth curator assessment.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Which cluster within the PVH-SO-PVa Otp Glut subclass shows highest Crhr1
@@ -1589,10 +1597,11 @@ edges:
         Is SUPT_0589 a better or co-equal mapping target compared to SUPT_0585?
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_bnst_crf_neuron_to_cs20230722_supt_0393
     lit_type: bnst_crf_neuron
     taxonomy_type: CS20230722_SUPT_0393
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -1638,6 +1647,8 @@ edges:
           The classical type is defined at sub-nucleus resolution (dlBNST, ovBNST, alBNST).
           WMBv1 MERFISH annotation uses the parent BNST term (MBA:351) without sub-nucleus
           assignment. Sub-nucleus identity of the matching cells cannot be confirmed.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Do individual clusters under SUPT_0393 segregate into Calb1-high and Calb1-low
@@ -1650,10 +1661,11 @@ edges:
         identify any Calb1-low cluster as a more specific mapping candidate.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_bnst_crf_neuron_to_cs20230722_supt_0358
     lit_type: bnst_crf_neuron
     taxonomy_type: CS20230722_SUPT_0358
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: BULK_CORRELATION
         supports: PARTIAL
@@ -1715,6 +1727,8 @@ edges:
           SUPT_0358 has no DEFINING marker for Crh in atlas metadata. The mapping rests on
           bulk-correlation co-localisation evidence (Esr1+ proxy) only. Direct Crh expression
           measurement at cluster level required for confidence upgrade.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         What fraction of SUPT_0358 cells co-express Esr1 and Crh? ISH or scRNA-seq for
@@ -1731,10 +1745,11 @@ edges:
         annotations to WMBv1; expect F1 split between SUPT_0358 and SUPT_0393.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_mea_esr1_neuron_to_cs20230722_supt_0055
     lit_type: mea_esr1_neuron
     taxonomy_type: CS20230722_SUPT_0055
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: BULK_CORRELATION
         supports: SUPPORT
@@ -1786,6 +1801,8 @@ edges:
           included in the original sexually-dimorphic asta-report-ingest cycle. This
           edge is added based on bulk-correlation evidence alone; the classical node
           itself awaits proper ingest.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Does the existing classical literature support a single MeA Esr1+ classical
@@ -1803,6 +1820,7 @@ edges:
         WMBv1 to provide direct AT evidence alongside bulk correlation.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_arc_aromatase_neuron_to_cs20230722_supt_0486
     lit_type: arc_aromatase_neuron
     taxonomy_type: CS20230722_SUPT_0486
@@ -1944,7 +1962,7 @@ edges:
   - id: edge_avpv_kiss1_neuron_to_cs20230722_clus_1915
     lit_type: avpv_kiss1_neuron
     taxonomy_type: CS20230722_CLUS_1915
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
@@ -2021,6 +2039,8 @@ edges:
           phenotype is the most specific available match for avpv_kiss1_neuron; however,
           avpv_th_neuron maps to the same cluster (both types substantially overlap in the
           classical literature — most AVPV Kiss1 cells co-express Th).
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Do avpv_kiss1_neuron and avpv_th_neuron represent separable populations within
@@ -2031,10 +2051,11 @@ edges:
         scRNA-seq data to WMBv1; confirm F1 score against CLUS_1915.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_avpv_th_neuron_to_cs20230722_clus_1915
     lit_type: avpv_th_neuron
     taxonomy_type: CS20230722_CLUS_1915
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
@@ -2085,6 +2106,8 @@ edges:
           types are substantially overlapping (most AVPV Kiss1 cells co-express Th). These
           may be the same cell population described from different entry points in the
           classical literature.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Is CLUS_1915 specifically the A14 TH/Kiss1 cluster, or does it also include
@@ -2095,10 +2118,11 @@ edges:
         confirmation at cluster level.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_sdn_poa_calbindin_neuron_to_cs20230722_clus_1550
     lit_type: sdn_poa_calbindin_neuron
     taxonomy_type: CS20230722_CLUS_1550
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: WEAK
@@ -2152,6 +2176,8 @@ edges:
           Spatial inspection of Th channel in MERFISH data for CLUS_1550 cells at MBA:515 is
           needed to determine whether Th expression co-occurs with MPN cells, or whether it
           originates from the PVH/PVHap components of this multi-region cluster.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Do CLUS_1550 cells at MBA:515 express Th, or does Th signal originate from
@@ -2167,10 +2193,11 @@ edges:
         MERFISH spatial channel inspection of Th in CLUS_1550 cells assigned to MBA:515.
 
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
   - id: edge_pmv_otr_neuron_to_cs20230722_clus_2470
     lit_type: pmv_otr_neuron
     taxonomy_type: CS20230722_CLUS_2470
-    relationship: evidencell:PartialOverlapMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
@@ -2227,6 +2254,8 @@ edges:
           If these are functionally distinct cell types, a single cluster-level edge
           conflates them. Node splitting (pmv_otr, pmv_dat, pmv_pacap) may be required
           before a higher-confidence cluster assignment can be made.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
     unresolved_questions:
       - >
         Why is MFR absent for CLUS_2470 (n=192 cells)? Is this a DB ingest gap or
@@ -2242,3 +2271,4 @@ edges:
         MapMyCells annotation transfer of published PMv scRNA-seq or Oxtr-Cre /
         Slc6a3-Cre lineage data against WMBv1 for F1-based evidence on CLUS_2470.
     mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
