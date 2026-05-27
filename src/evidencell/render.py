@@ -1296,8 +1296,8 @@ def extract_node_facts(
     node = nodes_by_id.get(node_id)
     if node is None:
         raise ValueError(f"Node '{node_id}' not found in graph")
-    if node.get("is_terminal"):
-        raise ValueError(f"Node '{node_id}' is a terminal (atlas) node; reports are for classical nodes")
+    if _is_atlas_node(node):
+        raise ValueError(f"Node '{node_id}' is an atlas node; reports are for classical nodes")
 
     all_edges = graph.get("edges", [])
     node_edges = sorted(
@@ -2132,7 +2132,7 @@ def render_index(region: str, kb_root: Path, out_path: Path) -> None:
         nodes_by_id = {n["id"]: n for n in graph.get("nodes", [])}
         all_edges = graph.get("edges", [])
         for node in graph.get("nodes", []):
-            if node.get("is_terminal"):
+            if _is_atlas_node(node):
                 continue
             node_id = node["id"]
             node_edges = [e for e in all_edges if e.get("lit_type") == node_id]
@@ -2214,8 +2214,12 @@ def _load_graph_and_refs(graph_file: Path) -> tuple[dict, dict]:
     return graph, refs
 
 
+def _is_atlas_node(node: dict) -> bool:
+    return bool(node.get("is_terminal")) or node.get("definition_basis") == "ATLAS_TRANSCRIPTOMIC"
+
+
 def _classical_nodes(graph: dict) -> list[dict]:
-    return [n for n in graph.get("nodes", []) if not n.get("is_terminal")]
+    return [n for n in graph.get("nodes", []) if not _is_atlas_node(n)]
 
 
 def main() -> None:
