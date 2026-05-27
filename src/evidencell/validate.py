@@ -432,6 +432,10 @@ def linkml_validate(
 
 _SQLITE_OBO_PREFIX = "sqlite:obo:"
 
+# OAK adapter schemes that point at a local file. The substring after the
+# colon is a filesystem path (relative to the project root or absolute).
+_FILE_ADAPTER_PREFIXES = ("simpleobo:", "pronto:")
+
 
 def _semsql_db_path(adapter_name: str) -> Path:
     """Return the on-disk path of an OAK semsql sqlite DB for `adapter_name`.
@@ -451,12 +455,12 @@ def _semsql_db_path(adapter_name: str) -> Path:
 def oak_dbs_available(oak_config_path: Path) -> tuple[bool, list[str]]:
     """Return (all_present, missing_db_names).
 
-    Reads `conf/oak_config.yaml`, collects adapter strings of the form
-    `sqlite:obo:<name>` (skipping entries whose value is empty), and checks
-    whether the corresponding semsql DB file exists for each.
-
-    Adapters whose value does not start with `sqlite:obo:` are ignored — we
-    cannot offline-check them.
+    Reads `conf/oak_config.yaml` and checks each adapter's backing file:
+      - `sqlite:obo:<name>`  → pystow-cached semsql DB at ~/.data/semsql/sqlite/
+      - `simpleobo:<path>` / `pronto:<path>` → local file relative to the
+        project root (the parent of `conf/`).
+      - Empty values are skipped (validation deliberately disabled).
+      - Any other adapter scheme is ignored — we can't offline-check it.
     """
     if not oak_config_path.exists():
         # No config means no terms to validate — report as available.
@@ -466,14 +470,26 @@ def oak_dbs_available(oak_config_path: Path) -> tuple[bool, list[str]]:
     except yaml.YAMLError:
         return True, []
 
+    project_root = oak_config_path.parent.parent
     adapters = (cfg.get("ontology_adapters") or {})
     missing: list[str] = []
     for prefix, adapter in adapters.items():
-        if not isinstance(adapter, str) or not adapter.startswith(_SQLITE_OBO_PREFIX):
+        if not isinstance(adapter, str) or not adapter:
             continue
-        name = adapter[len(_SQLITE_OBO_PREFIX):]
-        if not _semsql_db_path(name).exists():
-            missing.append(name)
+        if adapter.startswith(_SQLITE_OBO_PREFIX):
+            name = adapter[len(_SQLITE_OBO_PREFIX):]
+            if not _semsql_db_path(name).exists():
+                missing.append(name)
+            continue
+        for file_prefix in _FILE_ADAPTER_PREFIXES:
+            if adapter.startswith(file_prefix):
+                rel = adapter[len(file_prefix):]
+                path = Path(rel)
+                if not path.is_absolute():
+                    path = project_root / path
+                if not path.exists():
+                    missing.append(rel)
+                break
     return (not missing), missing
 
 

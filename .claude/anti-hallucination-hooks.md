@@ -57,8 +57,11 @@ name_in_source: "oriens layer of hippocampus CA1"   # verbatim from source docum
 - `name_in_source` is a known label or synonym for `id` — catches substitution of a
   plausible-sounding name for a different concept.
 
-**Verification source:** OAK semsql DB snapshots (`~/.data/semsql/sqlite/`,
-managed by pystow).
+**Verification source:** OAK semsql DB snapshots for CL and UBERON
+(`~/.data/semsql/sqlite/`, managed by pystow), and the NCBITaxon slim
+OBO at `conf/oak_dbs/taxslim.obo` (versioned upstream artefact; the
+full NCBITaxon semsql DB is ~10 GB, the slim is ~9 MB and covers all
+UniProt reference proteomes — sufficient for BICAN species).
 
 **Status:** Implemented. The pre-edit hook calls
 `evidencell.validate.validate_terms`, which subprocess-invokes

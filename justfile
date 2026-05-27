@@ -22,17 +22,26 @@ install-hooks:
     chmod +x .git/hooks/pre-commit
     @echo "Git hooks installed."
 
-# Download OAK SQLite databases for CL, UBERON, NCBITaxon
-# Run once after install; databases are large and not committed to git
+# Pinned NCBITaxon slim release — bump when upgrading.
+# Browse releases: https://github.com/obophenotype/ncbitaxon/releases
+taxslim_version := "v2026-05-13"
+
+# Download OAK ontology databases for CL, UBERON, NCBITaxon.
+# Run once after install; databases are large and not committed to git.
+# NCBITaxon uses a 9 MB slim (taxslim.obo) rather than the full 10+ GB DB.
 [group('setup')]
 fetch-oak-dbs:
     mkdir -p conf/oak_dbs
     uv run python -c "import oaklib; print('oaklib version:', oaklib.__version__)"
-    @echo "Run the following to pre-cache OAK SQLite DBs (large download):"
+    @echo "Fetching NCBITaxon slim ({{taxslim_version}})…"
+    curl -fsSL -o conf/oak_dbs/taxslim.obo \
+        "https://github.com/obophenotype/ncbitaxon/releases/download/{{taxslim_version}}/taxslim.obo"
+    @echo "NCBITaxon slim cached at conf/oak_dbs/taxslim.obo"
+    @echo ""
+    @echo "CL and UBERON are fetched lazily by OAK on first use. To pre-cache:"
     @echo "  uv run runoak -i sqlite:obo:cl info CL:0000000"
     @echo "  uv run runoak -i sqlite:obo:uberon info UBERON:0000955"
-    @echo "  uv run runoak -i sqlite:obo:ncbitaxon info NCBITaxon:9606"
-    @echo "OAK caches DBs in ~/.data/oaklib/ automatically on first use."
+    @echo "OAK caches sqlite DBs under ~/.data/oaklib/ automatically."
 
 # ── Validation ─────────────────────────────────────────────────────────────────
 
