@@ -1,0 +1,11 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/hippocampus/hippocampus_glutamatergic.yaml hpc_calretinin_glu_neuron_hippocampus CCN20230722 0 5
+  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
+  WARNING: UBERON:0002421 xref → ['MBA:1089'] (Hippocampal formation) — name mismatch with 'stratum lacunosum-moleculare / outer molecular layer', but no name fallback found
+Classical node: hpc_calretinin_glu_neuron_hippocampus (hippocampal calretinin-positive glutamatergic neuron)
+  NT type: glutamatergic
+  Markers (defining + neuropeptides): ['Calb2']
+  Soma locations: ['UBERON:0002421']
+  Resolved MBA IDs: ['MBA:1089']
+  Query rank: 0
+  Taxonomy: CCN20230722
+  AT artifact: not found (proceeding without AT scoring)

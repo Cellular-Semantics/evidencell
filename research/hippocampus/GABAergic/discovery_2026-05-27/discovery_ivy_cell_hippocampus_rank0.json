@@ -1,0 +1,585 @@
+{
+  "classical_node_id": "ivy_cell_hippocampus",
+  "classical_node_name": "Ivy cell (IvC)",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_0651",
+      "label": "0651 Vip Gaba_7",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0179",
+      "male_female_ratio": 0.61,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 4,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nos1",
+            "val": 9.01,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.98
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 1.52,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.602
+              }
+            ]
+          },
+          {
+            "gene": "Lamp5",
+            "val": 1.55,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.878
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.05,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.184
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.7,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.378
+              }
+            ]
+          },
+          {
+            "gene": "-Calb2",
+            "val": 6.9,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.939
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.132,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0731",
+      "label": "0731 Lamp5 Lhx6 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0203",
+      "male_female_ratio": 1.13,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 4,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nos1",
+            "val": 8.55,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.959
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 4.35,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.806
+              }
+            ]
+          },
+          {
+            "gene": "Lamp5",
+            "val": 8.51,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.99
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.07,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.245
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 1.24,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.633
+              }
+            ]
+          },
+          {
+            "gene": "-Calb2",
+            "val": 0.31,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.439
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5229",
+      "label": "5229 Astro-TE NN_5",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1165",
+      "male_female_ratio": 0.92,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 4,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nos1",
+            "val": 0.1,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.092
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 0.23,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.163
+              }
+            ]
+          },
+          {
+            "gene": "Lamp5",
+            "val": 0.1,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.286
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.05,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.184
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.42,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.235
+              }
+            ]
+          },
+          {
+            "gene": "-Calb2",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5230",
+      "label": "5230 Astro-TE NN_5",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1165",
+      "male_female_ratio": 0.92,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 4,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nos1",
+            "val": 0.12,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.133
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 0.15,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.133
+              }
+            ]
+          },
+          {
+            "gene": "Lamp5",
+            "val": 0.16,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.398
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.05,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.184
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.33,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.153
+              }
+            ]
+          },
+          {
+            "gene": "-Calb2",
+            "val": 0.08,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.092
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0705",
+      "label": "0705 RHP-COA Ndnf Gaba_6",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0198",
+      "male_female_ratio": 1.04,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 4,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nos1",
+            "val": 2.5,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.714
+              }
+            ]
+          },
+          {
+            "gene": "Npy",
+            "val": 4.19,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.786
+              }
+            ]
+          },
+          {
+            "gene": "Lamp5",
+            "val": 4.63,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.929
+              }
+            ]
+          },
+          {
+            "gene": "-Pvalb",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.96,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.49
+              }
+            ]
+          },
+          {
+            "gene": "-Calb2",
+            "val": 0.29,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.388
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.152,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}

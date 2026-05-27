@@ -1,0 +1,11 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml p_lm_cell_hippocampus CCN20230722 0 5
+  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
+  UBERON:0014548 xref → ['MBA:407'] (Field CA1, pyramidal layer) — name mismatch with 'stratum pyramidale', using name fallback: ['MBA:268', 'MBA:284', 'MBA:407', 'MBA:416', 'MBA:446', 'MBA:465', 'MBA:484682483', 'MBA:484682500', 'MBA:495', 'MBA:845', 'MBA:870']
+Classical node: p_lm_cell_hippocampus (Pyramidale-lacunosum moleculare (P-LM) cell)
+  NT type: GABAergic
+  Markers (defining + neuropeptides): ['Sst']
+  Soma locations: ['UBERON:0014548']
+  Resolved MBA IDs: ['MBA:268', 'MBA:284', 'MBA:407', 'MBA:416', 'MBA:446', 'MBA:465', 'MBA:484682483', 'MBA:484682500', 'MBA:495', 'MBA:845', 'MBA:870']
+  Query rank: 0
+  Taxonomy: CCN20230722
+  AT artifact: not found (proceeding without AT scoring)

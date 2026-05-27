@@ -1,853 +1,234 @@
-# Hippocampus GABA stratum oriens — OLM mapping to WMBv1
-# Sources: hippocampus_GABA_stratum_oriens.json (taxonomy), OLM_Neurons_asta_report.pdf (classical)
-# Ingested: 2026-03-25
-# Status: DRAFT — initial discovery mapping; evidence gaps to be filled by lit review
-# SCHEMA_CANDIDATE fields preserved as comments — see field_mapping.json
+name: Hippocampus GABA stratum oriens — OLM to WMBv1
+description: 'Evidence graph mapping the classically defined Oriens-Lacunosum Moleculare
+  (O-LM) interneuron to candidate cell sets in the WMBv1 atlas (CCN20230722). Classical
+  node from ASTA report ingest; 12 supertype + 49 cluster atlas stubs from taxonomy
+  ingest. Mapping edges at LOW/UNCERTAIN confidence pending lit review.
 
-name: "Hippocampus GABA stratum oriens — OLM to WMBv1"
-description: >
-  Evidence graph mapping the classically defined Oriens-Lacunosum Moleculare (O-LM)
-  interneuron to candidate cell sets in the WMBv1 atlas (CCN20230722). Classical node
-  from ASTA report ingest; 12 supertype + 49 cluster atlas stubs from taxonomy ingest.
-  Mapping edges at LOW/UNCERTAIN confidence pending lit review.
-
+  '
 brain_region:
   id: UBERON:0005371
-  label: "hippocampus stratum oriens"
-  name_in_source: "stratum oriens"
-
-target_atlas: "WMBv1"
-
+  label: hippocampus stratum oriens
+  name_in_source: stratum oriens
+target_atlas: WMBv1
 species:
   id: NCBITaxon:10090
   label: Mus musculus
-  name_in_source: "Mus musculus"
-
-creation_date: "2026-03-25"
-
-
-# ══════════════════════════════════════════════════════════════════
-# NODES
-# ══════════════════════════════════════════════════════════════════
-
+  name_in_source: Mus musculus
+creation_date: '2026-03-25'
 nodes:
+- id: olm_hippocampus
+  name: Oriens-Lacunosum Moleculare (O-LM) interneuron
+  definition_basis: CLASSICAL_MULTIMODAL
+  species: null
+  anatomical_location:
+  - id: UBERON:0005371
+    label: hippocampus stratum oriens
+    name_in_source: CA1 stratum oriens
+    compartment: SOMA
+    sources:
+    - ref: PMID:20421280
+      method: biocytin fill + light microscopy
+      scope: adult rat CA1
+      quote_key: 3106274_e54f60e9
+    - ref: PMID:29487503
+      method: biocytin fill + DAB staining
+      scope: mouse dorsal CA1
+      quote_key: 3591966_2414c9e9
+  - id: UBERON:0007640
+    label: hippocampus stratum lacunosum moleculare
+    name_in_source: stratum lacunosum-moleculare
+    compartment: AXON_TARGET
+    sources:
+    - ref: PMID:20421280
+      method: biocytin fill + light microscopy
+      scope: adult rat CA1
+      quote_key: 3106274_e54f60e9
+    - ref: PMID:33361464
+      method: computational axonal-dendritic overlap
+      scope: rodent CA1
+      quote_key: 229694907_6865b9db
+  nt_type:
+    name_in_source: GABAergic
+    cl_terms:
+    - id: CL:0000617
+      label: GABAergic neuron
+      name_in_source: GABAergic
+    sources:
+    - ref: PMID:26021702
+      method: electrophysiology (inhibitory interneuron identification)
+      scope: rat CA1
+      quote_key: 15101210_5604b9a4
+    - ref: PMID:10777798
+      method: GAD-GFP transgenic line
+      scope: mouse hippocampus
+      quote_key: 13398453_9154fc23
+  defining_markers:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - marker_type: PROTEIN
+      ref: PMID:10804195
+      method: in situ hybridization
+      scope: mouse CA1 stratum oriens
+      quote_key: 6652630_215c5f40
+    - marker_type: TRANSCRIPT
+      ref: PMID:31420995
+      method: single-cell RNA-seq
+      scope: mouse hippocampus
+      quote_key: 201041756_69dc904d
+    - marker_type: TRANSCRIPT
+      ref: PMID:31420995
+      method: scRNA-seq raw counts (GSE124847, re-analysis)
+      scope: mouse hippocampus OLM cells
+      notes: Detected in 46/46 cells (100%); mean counts 305273. Universally expressed
+        in both Sst-OLM and Htr3a-OLM subtypes.
+  - symbol: Chrna2
+    ncbi_gene_id: null
+    sources:
+    - marker_type: TRANSCRIPT
+      ref: PMID:29487503
+      method: Chrna2-Cre transgenic line
+      scope: mouse dorsal CA1
+      quote_key: 3591966_644f1e68
+    - marker_type: TRANSCRIPT
+      ref: PMID:23042082
+      method: Chrna2-Cre transgenic line + optogenetics
+      scope: mouse hippocampus
+      quote_key: 7952877_ae03c6e0
+    - marker_type: TRANSCRIPT
+      ref: PMID:31420995
+      method: scRNA-seq raw counts (GSE124847, re-analysis)
+      scope: mouse hippocampus OLM cells
+      notes: Detected in 16/46 cells (35%); sparse expression. Htr3a-OLM 43% vs Sst-OLM
+        26%. Consistent with scattered Chrna2 at Sst Gaba_3 supertype level in WMBv1.
+  - symbol: mGluR1
+    ncbi_gene_id: null
+    sources:
+    - marker_type: PROTEIN
+      ref: PMID:10804195
+      method: electrophysiology + in situ hybridization
+      scope: mouse CA1
+      quote_key: 6652630_17d10a9e
+    - marker_type: TRANSCRIPT
+      ref: PMID:31420995
+      method: scRNA-seq raw counts (GSE124847, re-analysis)
+      scope: mouse hippocampus OLM cells
+      notes: Grm1 detected in 44/46 cells (96%); mean counts 3901. Near-universal
+        expression confirms mGluR1 as a robust OLM transcript-level marker.
+  negative_markers:
+  - symbol: PV
+    modifier: ABSENT
+    ncbi_gene_id: null
+  - symbol: CB
+    modifier: ABSENT
+    ncbi_gene_id: null
+  - symbol: CR
+    modifier: ABSENT
+    ncbi_gene_id: null
+  - symbol: NOS
+    modifier: ABSENT
+    ncbi_gene_id: null
+  - symbol: VIP
+    modifier: ABSENT
+    ncbi_gene_id: null
+  neuropeptides:
+  - symbol: Sst
+    ncbi_gene_id: null
+    sources:
+    - marker_type: TRANSCRIPT
+      ref: PMID:31420995
+      method: scRNA-seq raw counts (GSE124847, re-analysis)
+      scope: mouse hippocampus OLM cells
+      notes: Detected in 46/46 cells (100%); see defining_markers.Sst for full detail.
+  - symbol: Npy
+    ncbi_gene_id: null
+    sources:
+    - marker_type: TRANSCRIPT
+      ref: PMID:31420995
+      method: single-cell RNA-seq
+      scope: mouse hippocampus
+      quote_key: 201041756_8d16e821
+    - marker_type: TRANSCRIPT
+      ref: PMID:31420995
+      method: scRNA-seq raw counts (GSE124847, re-analysis)
+      scope: mouse hippocampus OLM cells
+      notes: Detected in 37/46 cells (80%); mean counts 18709. Present in both subtypes
+        (Sst-OLM 70%, Htr3a-OLM 91%).
+  - symbol: Pnoc
+    ncbi_gene_id: null
+    sources:
+    - marker_type: TRANSCRIPT
+      ref: PMID:40757734
+      method: single-cell transcriptomic cluster analysis
+      scope: mouse hippocampus
+      quote_key: 280420054_8a6529c5
+    - marker_type: TRANSCRIPT
+      ref: PMID:31420995
+      method: scRNA-seq raw counts (GSE124847, re-analysis)
+      scope: mouse hippocampus OLM cells
+      notes: Detected in 27/46 cells (59%); mean counts 1389. Moderate penetrance
+        — consistent with Pnoc marking a subset of OLM cells (cf. Thulin et al. 2025
+        Sst/Pnoc subclusters).
+  morphology:
+    description: 'Large horizontally-oriented soma at oriens/alveus border. Horizontal
+      dendrites in stratum oriens, densely decorated with long spines. Axon projects
+      vertically through pyramidale and radiatum, ramifies extensively in stratum
+      lacunosum-moleculare with dense terminal arborizations and heavily packed varicosities.
+      Some axon collaterals with boutons in stratum oriens.
 
-  # ── Classical type: OLM interneuron ─────────────────────────────
+      '
+    sources:
+    - ref: PMID:20421280
+      method: biocytin fill + light microscopy
+      scope: adult rat CA1
+      quote_key: 3106274_e54f60e9
+    - ref: PMID:33991454
+      method: biocytin fill + reconstruction
+      scope: mouse CA1
+      quote_key: 234597703_fda66a57
+    - ref: PMID:10804195
+      method: intracellular fill + reconstruction
+      scope: mouse CA1 stratum oriens
+      quote_key: 6652630_6ba030f8
+  electrophysiology:
+    description: 'Regular-to-fast spiking with tonic or mildly adapting firing. Pronounced
+      sag response to hyperpolarizing current (Ih via HCN2 h-channels). Theta spiking
+      resonance. High input resistance, slow membrane time constants. Anti-Hebbian
+      LTP dependent on Ca2+-permeable AMPA receptors. Phase-locked to theta rhythms
+      (4-12 Hz).
 
-  - id: olm_hippocampus
-    name: "Oriens-Lacunosum Moleculare (O-LM) interneuron"
-    definition_basis: CLASSICAL_MULTIMODAL
-    species:       # described in rat (Rattus norvegicus) and mouse (Mus musculus); species-specific nodes pending
-    anatomical_location:
-      - id: UBERON:0005371
-        label: "hippocampus stratum oriens"
-        name_in_source: "CA1 stratum oriens"
-        compartment: SOMA
-        sources:
-          - ref: "PMID:20421280"
-            method: "biocytin fill + light microscopy"
-            scope: "adult rat CA1"
-            quote_key: "3106274_e54f60e9"
-          - ref: "PMID:29487503"
-            method: "biocytin fill + DAB staining"
-            scope: "mouse dorsal CA1"
-            quote_key: "3591966_2414c9e9"
-      - id: UBERON:0007640
-        label: "hippocampus stratum lacunosum moleculare"
-        name_in_source: "stratum lacunosum-moleculare"
-        compartment: AXON_TARGET
-        sources:
-          - ref: "PMID:20421280"
-            method: "biocytin fill + light microscopy"
-            scope: "adult rat CA1"
-            quote_key: "3106274_e54f60e9"
-          - ref: "PMID:33361464"
-            method: "computational axonal-dendritic overlap"
-            scope: "rodent CA1"
-            quote_key: "229694907_6865b9db"
-    nt_type:
-      name_in_source: "GABAergic"
-      cl_terms:
-        - id: CL:0000617
-          label: "GABAergic neuron"
-          name_in_source: "GABAergic"
-      sources:
-        - ref: "PMID:26021702"
-          method: "electrophysiology (inhibitory interneuron identification)"
-          scope: "rat CA1"
-          quote_key: "15101210_5604b9a4"
-        - ref: "PMID:10777798"
-          method: "GAD-GFP transgenic line"
-          scope: "mouse hippocampus"
-          quote_key: "13398453_9154fc23"
-    defining_markers:
-      - symbol: Sst
-        ncbi_gene_id:
-        sources:
-          - marker_type: PROTEIN
-            ref: "PMID:10804195"
-            method: "in situ hybridization"
-            scope: "mouse CA1 stratum oriens"
-            quote_key: "6652630_215c5f40"
-          - marker_type: TRANSCRIPT
-            ref: "PMID:31420995"
-            method: "single-cell RNA-seq"
-            scope: "mouse hippocampus"
-            quote_key: "201041756_69dc904d"
-          - marker_type: TRANSCRIPT
-            ref: "PMID:31420995"
-            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
-            scope: "mouse hippocampus OLM cells"
-            notes: "Detected in 46/46 cells (100%); mean counts 305273. Universally expressed in both Sst-OLM and Htr3a-OLM subtypes."
-      - symbol: Chrna2
-        ncbi_gene_id:
-        sources:
-          - marker_type: TRANSCRIPT
-            ref: "PMID:29487503"
-            method: "Chrna2-Cre transgenic line"
-            scope: "mouse dorsal CA1"
-            quote_key: "3591966_644f1e68"
-          - marker_type: TRANSCRIPT
-            ref: "PMID:23042082"
-            method: "Chrna2-Cre transgenic line + optogenetics"
-            scope: "mouse hippocampus"
-            quote_key: "7952877_ae03c6e0"
-          - marker_type: TRANSCRIPT
-            ref: "PMID:31420995"
-            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
-            scope: "mouse hippocampus OLM cells"
-            notes: "Detected in 16/46 cells (35%); sparse expression. Htr3a-OLM 43% vs Sst-OLM 26%. Consistent with scattered Chrna2 at Sst Gaba_3 supertype level in WMBv1."
-      - symbol: mGluR1
-        ncbi_gene_id:
-        sources:
-          - marker_type: PROTEIN
-            ref: "PMID:10804195"
-            method: "electrophysiology + in situ hybridization"
-            scope: "mouse CA1"
-            quote_key: "6652630_17d10a9e"
-          - marker_type: TRANSCRIPT
-            ref: "PMID:31420995"
-            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
-            scope: "mouse hippocampus OLM cells"
-            notes: "Grm1 detected in 44/46 cells (96%); mean counts 3901. Near-universal expression confirms mGluR1 as a robust OLM transcript-level marker."
-    negative_markers:
-      - symbol: PV
-        modifier: ABSENT
-        ncbi_gene_id:
-      - symbol: CB
-        modifier: ABSENT
-        ncbi_gene_id:
-      - symbol: CR
-        modifier: ABSENT
-        ncbi_gene_id:
-      - symbol: NOS
-        modifier: ABSENT
-        ncbi_gene_id:
-      - symbol: VIP
-        modifier: ABSENT
-        ncbi_gene_id:
-        # All negative markers from Katona et al. 2017 (PMID:27997999), quote_key: 4934764_4f190450
-        # Note: PV overlap reported in a subpopulation (Zhang et al. 2025; Hernandez-Frausto 2023)
-    neuropeptides:
-      - symbol: Sst
-        ncbi_gene_id:
-        sources:
-          - marker_type: TRANSCRIPT
-            ref: "PMID:31420995"
-            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
-            scope: "mouse hippocampus OLM cells"
-            notes: "Detected in 46/46 cells (100%); see defining_markers.Sst for full detail."
-      - symbol: Npy
-        ncbi_gene_id:
-        sources:
-          - marker_type: TRANSCRIPT
-            ref: "PMID:31420995"
-            method: "single-cell RNA-seq"
-            scope: "mouse hippocampus"
-            quote_key: "201041756_8d16e821"
-          - marker_type: TRANSCRIPT
-            ref: "PMID:31420995"
-            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
-            scope: "mouse hippocampus OLM cells"
-            notes: "Detected in 37/46 cells (80%); mean counts 18709. Present in both subtypes (Sst-OLM 70%, Htr3a-OLM 91%)."
-      - symbol: Pnoc
-        ncbi_gene_id:
-        sources:
-          - marker_type: TRANSCRIPT
-            ref: "PMID:40757734"
-            method: "single-cell transcriptomic cluster analysis"
-            scope: "mouse hippocampus"
-            quote_key: "280420054_8a6529c5"
-          - marker_type: TRANSCRIPT
-            ref: "PMID:31420995"
-            method: "scRNA-seq raw counts (GSE124847, re-analysis)"
-            scope: "mouse hippocampus OLM cells"
-            notes: "Detected in 27/46 cells (59%); mean counts 1389. Moderate penetrance — consistent with Pnoc marking a subset of OLM cells (cf. Thulin et al. 2025 Sst/Pnoc subclusters)."
-    morphology:
-      description: >
-        Large horizontally-oriented soma at oriens/alveus border. Horizontal dendrites
-        in stratum oriens, densely decorated with long spines. Axon projects vertically
-        through pyramidale and radiatum, ramifies extensively in stratum lacunosum-moleculare
-        with dense terminal arborizations and heavily packed varicosities. Some axon
-        collaterals with boutons in stratum oriens.
-      sources:
-        - ref: "PMID:20421280"
-          method: "biocytin fill + light microscopy"
-          scope: "adult rat CA1"
-          quote_key: "3106274_e54f60e9"
-        - ref: "PMID:33991454"
-          method: "biocytin fill + reconstruction"
-          scope: "mouse CA1"
-          quote_key: "234597703_fda66a57"
-        - ref: "PMID:10804195"
-          method: "intracellular fill + reconstruction"
-          scope: "mouse CA1 stratum oriens"
-          quote_key: "6652630_6ba030f8"
-    electrophysiology:
-      description: >
-        Regular-to-fast spiking with tonic or mildly adapting firing. Pronounced sag
-        response to hyperpolarizing current (Ih via HCN2 h-channels). Theta spiking
-        resonance. High input resistance, slow membrane time constants. Anti-Hebbian LTP
-        dependent on Ca2+-permeable AMPA receptors. Phase-locked to theta rhythms (4-12 Hz).
-      sources:
-        - ref: "PMID:33093823"
-          method: "whole-cell patch-clamp"
-          scope: "SOM-YFP mouse, acute slice"
-          quote_key: "221742877_26f1e4cc"
-        - ref: "PMID:19176803"
-          method: "whole-cell patch-clamp"
-          scope: "rat CA1 O-LM cells"
-          quote_key: "1015389_e9028538"
-        - ref: "PMID:33991454"
-          method: "whole-cell patch-clamp"
-          scope: "mouse CA1"
-          quote_key: "234597703_fda66a57"
-    cl_mapping:
-    # No CL term found. Candidate for CL contribution.
-    # Closest: CL:1001569 'hippocampal interneuron' (BROAD), CL:4023017 'sst GABAergic interneuron' (neocortex-defined)
-    is_terminal: false
-    definition_references:
-      - "PMID:20421280"    # Zemankovics et al., 2010 — morphology + ephys
-      - "PMID:29487503"    # Nichol et al., 2018 — Chrna2 marker, morphology
-      - "PMID:23042082"    # Leao et al., 2012 — Chrna2, optogenetics, function
-      - "PMID:39097181"    # Fernandez et al., 2024 — comprehensive OLM review
-      - "PMID:25324774"    # Muller & Remy, 2014 — OLM review: morphology, markers, function
-    notes: >
-      HETEROGENEITY: The OLM class contains molecularly heterogeneous subpopulations.
-      Zhang et al. (2025) report a PV-positive OLM subset that fires in the gamma range
-      (vs theta for SST-only OLM cells). Thulin et al. (2025) identify three Sst/Pnoc
-      subclusters with differential dorsal-ventral connectivity. These may warrant separate
-      nodes in future iterations. TRPV1 expression (Hurtado-Zavala et al., 2017) is
-      reported in a subpopulation but not confirmed by other sources. Lacaille 1987
-      described O/A interneurons with axons branching in stratum oriens and pyramidale
-      (not SLM) — these are likely a distinct population from canonical O-LM cells.
-      Species: most morphology data from rat; marker/transgenic data from mouse.
-      Cross-species validation pending.
+      '
+    sources:
+    - ref: PMID:33093823
+      method: whole-cell patch-clamp
+      scope: SOM-YFP mouse, acute slice
+      quote_key: 221742877_26f1e4cc
+    - ref: PMID:19176803
+      method: whole-cell patch-clamp
+      scope: rat CA1 O-LM cells
+      quote_key: 1015389_e9028538
+    - ref: PMID:33991454
+      method: whole-cell patch-clamp
+      scope: mouse CA1
+      quote_key: 234597703_fda66a57
+  cl_mapping: null
+  is_terminal: false
+  definition_references:
+  - PMID:20421280
+  - PMID:29487503
+  - PMID:23042082
+  - PMID:39097181
+  - PMID:25324774
+  notes: 'HETEROGENEITY: The OLM class contains molecularly heterogeneous subpopulations.
+    Zhang et al. (2025) report a PV-positive OLM subset that fires in the gamma range
+    (vs theta for SST-only OLM cells). Thulin et al. (2025) identify three Sst/Pnoc
+    subclusters with differential dorsal-ventral connectivity. These may warrant separate
+    nodes in future iterations. TRPV1 expression (Hurtado-Zavala et al., 2017) is
+    reported in a subpopulation but not confirmed by other sources. Lacaille 1987
+    described O/A interneurons with axons branching in stratum oriens and pyramidale
+    (not SLM) — these are likely a distinct population from canonical O-LM cells.
+    Species: most morphology data from rat; marker/transgenic data from mouse. Cross-species
+    validation pending.
 
-
-  # ── Taxonomy references (minimal — full data in kb/taxonomy/CCN20230722/) ──
-
-  - id: CS20230722_CLUS_0727
-    name: "0727 Lamp5 Lhx6 Gaba_1"
-    definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN20230722
-    cell_set_accession: CS20230722_CLUS_0727
-
-  - id: CS20230722_CLUS_0769
-    name: "0769 Sst Gaba_3"
-    definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN20230722
-    cell_set_accession: CS20230722_CLUS_0769
-
-  - id: CS20230722_CLUS_0785
-    name: "0785 Sst Gaba_6"
-    definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN20230722
-    cell_set_accession: CS20230722_CLUS_0785
-
-  - id: CS20230722_CLUS_0788
-    name: "0788 Sst Gaba_6"
-    definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN20230722
-    cell_set_accession: CS20230722_CLUS_0788
-
-  - id: CS20230722_CLUS_0789
-    name: "0789 Sst Gaba_6"
-    definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN20230722
-    cell_set_accession: CS20230722_CLUS_0789
-
-# ══════════════════════════════════════════════════════════════════
-# EDGES — OLM classical type → WMBv1 atlas candidates
-# All edges LOW confidence from atlas metadata only.
-# Upgrade path: Chrna2-Cre + MapMyCells, patch-seq, lit review.
-# ══════════════════════════════════════════════════════════════════
-
-edges:
-
-  # ── Edge 1: OLM → wmb_clus_0727 (Lamp5 Lhx6 Gaba_1) ──────────
-  # SURPRISING CANDIDATE: Lamp5 Lhx6 subclass, not Sst
-
-  - id: edge_olm_to_wmb_clus_0727
-    lit_type: olm_hippocampus
-    taxonomy_type: CS20230722_CLUS_0727
-    relationship: skos:broadMatch
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: PARTIAL
-        explanation: >
-          Partial property overlap. GABA consistent. CA3 SO + SLM match OLM anatomy.
-          Sst and Pnoc neuropeptides present but Npy absent. Subclass is Lamp5 Lhx6,
-          NOT Sst — discordant with canonical OLM identity. Chrna2/Grm1 not assessable.
-      - evidence_type: ANNOTATION_TRANSFER
-        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
-        supports: REFUTE
-        explanation: >
-          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
-          mapped 0/46 cells to Lamp5 Lhx6 subclass. All 45 successfully classified cells
-          mapped to Sst Gaba subclass (Sst Gaba_3 supertype). Zero support for this
-          Lamp5 Lhx6 cluster as an OLM target.
-        target_atlas: "WMBv1 (CCN20230722)"
-        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
-        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        source_dataset_accession: "GEO:GSE124847"
-        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        source_groups:
-          - label: OLM-pooled
-            members: [Sst-OLM, Htr3a-OLM]
-        n_cells_total: 46
-        n_cells_after_filter: 0
-        bootstrap_threshold: 0.8
-        tool_version: "cell_type_mapper v1.7.1"
-    property_comparisons:
-      - property: nt_type
-        node_a_value: "GABAergic"
-        node_b_value: "GABA"
-        alignment: CONSISTENT
-      - property: location
-        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007640)"
-        node_b_value: "CA3 SO (MBA:486); CA3 SLM (MBA:471)"
-        alignment: APPROXIMATE
-        notes: "SO and SLM present. CA3-enriched, not CA1."
-      - property: marker_Sst
-        node_a_value: "Sst — defining marker"
-        node_b_value: "Sst in neuropeptides, NOT defining_markers; Lamp5 Lhx6 subclass"
-        alignment: APPROXIMATE
-        notes: "Sst expressed but not defining. Subclass is Lamp5 Lhx6, not Sst."
-      - property: marker_Chrna2
-        node_a_value: "Chrna2 — defining marker"
-        node_b_value: "not present"
-        alignment: NOT_ASSESSED
-      - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
-        node_b_value: "Grm1 mean_expression=5.85"
-        alignment: NOT_ASSESSED
-        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
-      - property: neuropeptide_Sst
-        node_a_value: "Sst"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Npy
-        node_a_value: "Npy"
-        node_b_value: "absent"
-        alignment: DISCORDANT
-        notes: "OLM expresses Npy; this cluster does not."
-      - property: neuropeptide_Pnoc
-        node_a_value: "Pnoc"
-        node_b_value: "present"
-        alignment: CONSISTENT
-    caveats:
-      - caveat_type: OTHER
-        description: >
-          Lamp5 Lhx6 subclass (CGE-derived), not Sst (MGE-derived). Biologically
-          surprising for canonical Sst+ MGE-derived OLM. Requires independent validation.
-      - caveat_type: MARKER_NOT_SPECIFIC
-        description: "Chrna2 and mGluR1 not resolvable from atlas metadata."
-    unresolved_questions:
-      - "Is Sst expression in this Lamp5 Lhx6 cluster biologically meaningful? OLM morphology/ephys present?"
-      - Do any OLM-morphology cells fall into CS20230722_CLUS_0727 despite the Lamp5 Lhx6 subclass mismatch?
-      - Do any OLM-morphology cells fall into CS20230722_CLUS_0727 despite the Lamp5 Lhx6 (CGE) vs Sst (MGE) lineage mismatch?
-    proposed_experiments:
-      - "Patch-seq of Lamp5-Lhx6 neurons in CA3 stratum oriens."
-      - "Chrna2-Cre + MapMyCells to test Chrna2+ neuron mapping."
-
-  # ── Edge 2: OLM → wmb_clus_0785 (Sst Gaba_6) ─────────────────
-
-    mapping_cardinality: 1:n
-    mapping_justification: semapv:UnreviewedManualMapping
-    confidence: LOW
-    confidence_score: 0.15
-    rationale: "CS20230722_CLUS_0727 (Lamp5 Lhx6 Gaba_1) is refuted as an OLM target by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq): 0/46 OLM cells map to the Lamp5 Lhx6 subclass and all 45 classified cells map instead to CS20230722_SUPT_0216 (Sst Gaba_3). Npy is DISCORDANT, Sst is APPROXIMATE only (in neuropeptide annotations, not defining_markers), cluster Grm1 mean_expression=5.85 is the lowest among candidates, and Chrna2 is absent. 2 of 6 markers CONSISTENT (Sst-NP, Pnoc-NP) against a Lamp5 Lhx6 (CGE-derived) vs Sst (MGE-derived) subclass and developmental-lineage mismatch; CA3 SO + SLM anatomy (morphology-relevant) is suggestive but not sufficient.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
-    report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: ca71f180
-  - id: edge_olm_to_wmb_clus_0785
-    lit_type: olm_hippocampus
-    taxonomy_type: CS20230722_CLUS_0785
-    relationship: skos:broadMatch
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: PARTIAL
-        explanation: >
-          Sst subclass and GABA consistent. CA3 SO + SLM match OLM anatomy. However,
-          Chrna2 expression absent from parent supertype Sst Gaba_6 per ABC Atlas
-          (HPF/GABA/Chrna2 filter). Chrna2 is a defining OLM marker — its absence
-          argues against this cluster containing OLM cells.
-      - evidence_type: ATLAS_QUERY
-        supports: REFUTE
-        atlas: "ABC Atlas"
-        query_url: "https://tinyurl.com/a4f3kd4v"
-        filters_applied: "anatomy=HPF; NT=GABA; expression=Chrna2"
-        explanation: >
-          Filtering the ABC Atlas on HPF anatomy, GABAergic NT, and Chrna2 expression
-          eliminates the Sst Gaba_6 supertype entirely. Chrna2 is a defining marker
-          of OLM interneurons; its absence from this supertype argues against any
-          cluster within it being OLM.
-      - evidence_type: ANNOTATION_TRANSFER
-        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
-        supports: REFUTE
-        explanation: >
-          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
-          mapped 0/46 cells to Sst Gaba_6 supertype. All 45 successfully classified cells
-          mapped to Sst Gaba_3 supertype instead. Zero support for this Sst Gaba_6 cluster
-          as an OLM target.
-        target_atlas: "WMBv1 (CCN20230722)"
-        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
-        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        source_dataset_accession: "GEO:GSE124847"
-        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        source_groups:
-          - label: OLM-pooled
-            members: [Sst-OLM, Htr3a-OLM]
-        n_cells_total: 46
-        n_cells_after_filter: 0
-        bootstrap_threshold: 0.8
-        tool_version: "cell_type_mapper v1.7.1"
-    property_comparisons:
-      - property: nt_type
-        node_a_value: "GABAergic"
-        node_b_value: "GABA"
-        alignment: CONSISTENT
-      - property: location
-        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007640)"
-        node_b_value: "CA3 SO (MBA:486, 39 cells); CA3 SLM (MBA:471, 11 cells)"
-        alignment: APPROXIMATE
-        notes: "SO and SLM present. CA3-enriched, not CA1."
-      - property: marker_Sst
-        node_a_value: "Sst — defining marker"
-        node_b_value: "Sst subclass"
-        alignment: CONSISTENT
-      - property: marker_Chrna2
-        node_a_value: "Chrna2 — defining marker"
-        node_b_value: "absent from Sst Gaba_6 supertype per ABC Atlas"
-        alignment: DISCORDANT
-        notes: >
-          ABC Atlas filter (HPF/GABA/Chrna2) eliminates Sst Gaba_6.
-          https://tinyurl.com/a4f3kd4v
-      - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
-        node_b_value: "Grm1 mean_expression=10.30"
-        alignment: NOT_ASSESSED
-        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
-      - property: neuropeptide_Sst
-        node_a_value: "Sst"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Npy
-        node_a_value: "Npy"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Pnoc
-        node_a_value: "Pnoc"
-        node_b_value: "absent"
-        alignment: DISCORDANT
-        notes: "OLM expresses Pnoc; absent from this cluster."
-    caveats:
-      - caveat_type: MARKER_NOT_SPECIFIC
-        description: >
-          Chrna2 absent from Sst Gaba_6 supertype — discordant with OLM identity.
-          mGluR1 not resolvable.
-      - caveat_type: OTHER
-        description: "CA3-enriched; classical OLM best characterized in CA1."
-    unresolved_questions:
-      - "Given Chrna2 absence, is this cluster a non-OLM Sst stratum oriens type?"
-
-  # ── Edge 3: OLM → wmb_clus_0769 (Sst Gaba_3) ─────────────────
-
-      - Given Chrna2 absence at Sst Gaba_6, is CS20230722_CLUS_0785 a non-OLM Sst stratum oriens type?
-    mapping_cardinality: 1:n
-    mapping_justification: semapv:UnreviewedManualMapping
-    confidence: REFUTED
-    confidence_score: 0.05
-    rationale: "CS20230722_CLUS_0785 (Sst Gaba_6) is refuted by two independent signals: (1) ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminates the entire Sst Gaba_6 supertype, and (2) MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq) maps 0/46 OLM cells to Sst Gaba_6, with all 45 classified cells going to CS20230722_SUPT_0216 instead. Chrna2 DISCORDANT and Pnoc DISCORDANT; 3 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP) but the Chrna2 elimination is decisive. CA3-enriched anatomy further weakens the candidate. Cluster Grm1 mean_expression=10.30 does not rescue the Chrna2 elimination.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
-    report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 24f1a883
-  - id: edge_olm_to_wmb_clus_0769
-    lit_type: olm_hippocampus
-    taxonomy_type: CS20230722_CLUS_0769
-    relationship: skos:broadMatch
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: SUPPORT
-        explanation: >
-          Best CA1 signal. Sst subclass consistent. CA1 SO (87 cells) — primary OLM
-          location. Full neuropeptide triad: Sst, Npy, Pnoc. No SLM. Significant
-          prosubiculum (61) and posterior amygdala (95) distribution.
-      - evidence_type: ANNOTATION_TRANSFER
-        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
-        supports: PARTIAL
-        explanation: >
-          MapMyCells annotation transfer of the pooled OLM cohort (46 cells;
-          Sst-OLM + Htr3a-OLM combined; GSE124847, Winterer 2019) strongly
-          supports the parent Sst Gaba_3 supertype (43/45 classified cells;
-          pooled F1=0.97; pooled CLASS/SUBCLASS F1=0.99) but OLM cells scatter
-          across sibling clusters 0767–0774 within it. Cluster 0769 specifically
-          received 0/46 cells — OLM cells preferentially map to cluster 0768
-          (22/45, best pooled cluster-level F1=0.65). This indicates OLM
-          identity is captured at the Sst Gaba_3 supertype rather than at any
-          single child cluster. The high pooled supertype F1 reflects removal
-          of the inter-source mis-attribution penalty that depresses per-source
-          F1; both Sst-OLM and Htr3a-OLM converge on the same Sst Gaba_3
-          supertype.
-        target_atlas: "WMBv1 (CCN20230722)"
-        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
-        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        source_dataset_accession: "GEO:GSE124847"
-        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        source_groups:
-          - label: OLM-pooled
-            members: [Sst-OLM, Htr3a-OLM]
-            rationale: >
-              Sst-OLM and Htr3a-OLM map indistinguishably to the same
-              target cluster set under run_ref
-              at_run_20260408_winterer_olm_mmc_wmbv1: all 45 classified
-              cells from both source cohorts converge on
-              CS20230722_SUPT_0216 (Sst Gaba_3) with pooled F1=0.97 at
-              SUPERTYPE level, and the per-cluster scatter within
-              Sst Gaba_3 does not differentiate by source cohort
-              (see figures/f1_for_olm_pooled.png). This is an AT-side
-              observation; cross-panel literature confirmation
-              (ephys / morphology / connectivity) of OLM-subtype
-              equivalence has not been audited and remains optional
-              follow-up.
-        n_cells_total: 46
-        n_cells_after_filter: 42
-        bootstrap_threshold: 0.8
-        tool_version: "cell_type_mapper v1.7.1"
-        metrics_by_level:
-          # Pooled (Sst-OLM + Htr3a-OLM combined) values recomputed via
-          # `at_figures --pool Sst-OLM,Htr3a-OLM:OLM-pooled --emit-metrics`.
-          # Previous values stored here were stale per-source approximations
-          # that did not match either per-source or pooled actuals.
-          - taxonomy_level: "CLASS"
-            best_target_name: "07 CTX-MGE GABA"
-            best_target_accession: "CS20230722_CLAS_07"
-            f1_score: 0.99
-            n_cells_mapped: 45
-            median_bootstrap: 1.0
-            coverage: 0.98
-            purity: 1.0
-          - taxonomy_level: "SUBCLASS"
-            best_target_name: "053 Sst Gaba"
-            best_target_accession: "CS20230722_SUBC_053"
-            f1_score: 0.99
-            n_cells_mapped: 45
-            median_bootstrap: 1.0
-            coverage: 0.98
-            purity: 1.0
-          - taxonomy_level: "SUPERTYPE"
-            best_target_name: "0216 Sst Gaba_3"
-            best_target_accession: "CS20230722_SUPT_0216"
-            f1_score: 0.97
-            n_cells_mapped: 43
-            median_bootstrap: 1.0
-            coverage: 0.94
-            purity: 1.0
-          - taxonomy_level: "CLUSTER"
-            best_target_name: "0768 Sst Gaba_3"
-            best_target_accession: "CS20230722_CLUS_0768"
-            f1_score: 0.65
-            n_cells_mapped: 22
-            median_bootstrap: 1.0
-            coverage: 0.48
-            purity: 1.0
-    property_comparisons:
-      - property: nt_type
-        node_a_value: "GABAergic"
-        node_b_value: "GABA"
-        alignment: CONSISTENT
-      - property: location
-        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007640)"
-        node_b_value: "CA1 SO (MBA:399, 87 cells); prosubiculum; posterior amygdala"
-        alignment: APPROXIMATE
-        notes: "CA1 SO matches — strongest CA1 signal. SLM absent. Extra-hippocampal spread."
-      - property: marker_Sst
-        node_a_value: "Sst — defining marker"
-        node_b_value: "Sst subclass"
-        alignment: CONSISTENT
-      - property: marker_Chrna2
-        node_a_value: "Chrna2 — defining marker"
-        node_b_value: "Chrna2 expressed (scattered) in Sst Gaba_3 supertype per ABC Atlas"
-        alignment: APPROXIMATE
-        notes: >
-          ABC Atlas filter (HPF/GABA/Chrna2) retains Sst Gaba_3 but eliminates Sst Gaba_6.
-          Expression scattered across clusters of this supertype — not a defining marker
-          at cluster level, but present. https://tinyurl.com/a4f3kd4v
-      - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
-        node_b_value: "Grm1 mean_expression=8.29"
-        alignment: NOT_ASSESSED
-        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
-      - property: neuropeptide_Sst
-        node_a_value: "Sst"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Npy
-        node_a_value: "Npy"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Pnoc
-        node_a_value: "Pnoc"
-        node_b_value: "present"
-        alignment: CONSISTENT
-        notes: "Full neuropeptide triad match."
-    caveats:
-      - caveat_type: MARKER_NOT_SPECIFIC
-        description: "mGluR1 (Grm1) not resolvable from atlas metadata."
-      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
-        description: >
-          Prosubiculum (61 cells) and posterior amygdala (95 cells) — cluster
-          may include non-OLM Sst interneurons from adjacent regions.
-      - caveat_type: OTHER
-        description: >
-          Annotation transfer maps OLM cells to Sst Gaba_3 supertype but to sibling
-          clusters (primarily 0768), not 0769. May indicate the mapping is more
-          appropriate at supertype than cluster level.
-    unresolved_questions:
-      - "Are the CA1 SO cells OLM-morphology? What are the amygdala cells?"
-      - "Why do OLM cells map to cluster 0768 rather than 0769? Do these clusters differ in hippocampal enrichment?"
-      - Why do OLM cells preferentially map to CS20230722_CLUS_0768 rather than CS20230722_CLUS_0769 within Sst Gaba_3?
-      - Why do OLM cells map preferentially to CS20230722_CLUS_0768 rather than CS20230722_CLUS_0769 within CS20230722_SUPT_0216?
-    proposed_experiments:
-      - "Chrna2-Cre + MapMyCells for CA1 stratum oriens neurons."
-      - "Targeted scRNA-seq or MERFISH of Chrna2+ stratum oriens neurons."
-
-  # ── Edge 4: OLM → wmb_clus_0788 (Sst Gaba_6) ─────────────────
-
-    mapping_cardinality: 1:n
-    mapping_justification: semapv:UnreviewedManualMapping
-    confidence: MODERATE
-    confidence_score: 0.6
-    rationale: "Primary mapping to CS20230722_CLUS_0769 within CS20230722_SUPT_0216 (Sst Gaba_3) is anchored by atlas metadata (CA1 SO presence, full Sst/Npy/Pnoc neuropeptide triad, Sst subclass) and by MapMyCells annotation transfer of Winterer 2019 OLM cells (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq with MERFISH spatial registration on the target side) reaching pooled F1=0.99 at CLASS/SUBCLASS, pooled F1=0.97 at the SUPERTYPE level (CS20230722_SUPT_0216), and pooled F1=0.65 at the best child cluster CS20230722_CLUS_0768; cluster Grm1 mean_expression=8.29 is qualitatively concordant with mGluR1 being a defining OLM marker by electrophysiology and scRNA-seq. 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) with Chrna2 APPROXIMATE and mGluR1 NOT_ASSESSED at the atlas defining-markers panel.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
-    report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 3d3f7d04
-  - id: edge_olm_to_wmb_clus_0788
-    lit_type: olm_hippocampus
-    taxonomy_type: CS20230722_CLUS_0788
-    relationship: skos:broadMatch
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: PARTIAL
-        explanation: >
-          Small cluster (50 cells) with CA1 SO (8) and CA3 SO (13). Sst subclass,
-          GABA consistent. Full neuropeptide triad plus Cort. However, Chrna2 expression
-          filtering in ABC Atlas eliminates parent supertype Sst Gaba_6 as OLM candidate.
-      - evidence_type: ATLAS_QUERY
-        supports: REFUTE
-        atlas: "ABC Atlas"
-        query_url: "https://tinyurl.com/a4f3kd4v"
-        filters_applied: "anatomy=HPF; NT=GABA; expression=Chrna2"
-        explanation: >
-          Filtering the ABC Atlas on HPF anatomy, GABAergic NT, and Chrna2 expression
-          eliminates the Sst Gaba_6 supertype entirely. Chrna2 is a defining marker
-          of OLM interneurons; its absence from this supertype argues against any
-          cluster within it being OLM.
-      - evidence_type: ANNOTATION_TRANSFER
-        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
-        supports: REFUTE
-        explanation: >
-          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
-          mapped 0/46 cells to Sst Gaba_6 supertype. All 45 successfully classified cells
-          mapped to Sst Gaba_3 supertype instead. Zero support for this Sst Gaba_6 cluster
-          as an OLM target.
-        target_atlas: "WMBv1 (CCN20230722)"
-        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
-        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        source_dataset_accession: "GEO:GSE124847"
-        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        source_groups:
-          - label: OLM-pooled
-            members: [Sst-OLM, Htr3a-OLM]
-        n_cells_total: 46
-        n_cells_after_filter: 0
-        bootstrap_threshold: 0.8
-        tool_version: "cell_type_mapper v1.7.1"
-    property_comparisons:
-      - property: nt_type
-        node_a_value: "GABAergic"
-        node_b_value: "GABA"
-        alignment: CONSISTENT
-      - property: location
-        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007640)"
-        node_b_value: "CA3 SO (MBA:486, 13 cells); CA1 SO (MBA:399, 8 cells); no SLM"
-        alignment: APPROXIMATE
-        notes: "SO in CA1 and CA3. SLM absent. Small counts."
-      - property: marker_Sst
-        node_a_value: "Sst — defining marker"
-        node_b_value: "Sst subclass"
-        alignment: CONSISTENT
-      - property: marker_Chrna2
-        node_a_value: "Chrna2 — defining marker"
-        node_b_value: "not present in parent supertype Sst Gaba_6"
-        alignment: DISCORDANT
-        notes: >
-          ABC Atlas filtering on Chrna2 expression eliminates Sst Gaba_6 entirely.
-          https://tinyurl.com/a4f3kd4v
-      - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
-        node_b_value: "Grm1 mean_expression=9.08"
-        alignment: NOT_ASSESSED
-        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
-      - property: neuropeptide_Sst
-        node_a_value: "Sst"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Npy
-        node_a_value: "Npy"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Pnoc
-        node_a_value: "Pnoc"
-        node_b_value: "present"
-        alignment: CONSISTENT
-        notes: "Full triad plus Cort."
-    caveats:
-      - caveat_type: LOW_CELL_COUNT
-        description: "50 cells total. Corpus callosum cells (4) may be contamination."
-      - caveat_type: MARKER_NOT_SPECIFIC
-        description: "mGluR1 not resolvable from atlas metadata. Chrna2 now DISCORDANT based on ABC Atlas expression data."
-    unresolved_questions:
-      - "Are SO cells OLM-morphology? What are corpus callosum cells?"
-      - Are the CA1 SO and CA3 SO cells in CS20230722_CLUS_0788 OLM-morphology, and what are the corpus callosum cells in the same cluster?
-    proposed_experiments:
-      - "Chrna2-Cre + MapMyCells."
-      - "Patch-seq of Sst+ CA1/CA3 stratum oriens neurons."
-
-  # ── Edge 5: OLM → wmb_clus_0789 (Sst Gaba_6) ─────────────────
-
-    mapping_cardinality: 1:n
-    mapping_justification: semapv:UnreviewedManualMapping
-    confidence: REFUTED
-    confidence_score: 0.05
-    rationale: "CS20230722_CLUS_0788 (Sst Gaba_6) is refuted by ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminating the Sst Gaba_6 supertype and by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq; 0/46 OLM cells to Sst Gaba_6). Chrna2 DISCORDANT; 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) but the Chrna2 elimination is decisive. Cluster is small (50 cells total) with CA1 SO (8) plus CA3 SO (13) and no SLM; cluster Grm1 mean_expression=9.08 does not rescue the Chrna2 elimination.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
-    report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 56fab4c2
-  - id: edge_olm_to_wmb_clus_0789
-    lit_type: olm_hippocampus
-    taxonomy_type: CS20230722_CLUS_0789
-    relationship: skos:broadMatch
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: PARTIAL
-        explanation: >
-          Sst subclass, GABA consistent. CA3 SO (25 cells) but no CA1 SO or SLM.
-          Full neuropeptide triad plus Cort. 28% amygdala cells suggest cluster
-          is not hippocampus-specific. Chrna2 expression filtering in ABC Atlas
-          eliminates parent supertype Sst Gaba_6 as OLM candidate.
-      - evidence_type: ATLAS_QUERY
-        supports: REFUTE
-        atlas: "ABC Atlas"
-        query_url: "https://tinyurl.com/a4f3kd4v"
-        filters_applied: "anatomy=HPF; NT=GABA; expression=Chrna2"
-        explanation: >
-          Filtering the ABC Atlas on HPF anatomy, GABAergic NT, and Chrna2 expression
-          eliminates the Sst Gaba_6 supertype entirely. Chrna2 is a defining marker
-          of OLM interneurons; its absence from this supertype argues against any
-          cluster within it being OLM.
-      - evidence_type: ANNOTATION_TRANSFER
-        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
-        supports: REFUTE
-        explanation: >
-          MapMyCells annotation transfer of 46 OLM interneurons (GSE124847, Winterer 2019)
-          mapped 0/46 cells to Sst Gaba_6 supertype. All 45 successfully classified cells
-          mapped to Sst Gaba_3 supertype instead. Zero support for this Sst Gaba_6 cluster
-          as an OLM target.
-        target_atlas: "WMBv1 (CCN20230722)"
-        method: "MapMyCells (cell_type_mapper v1.7.1, default parameters, raw normalization)"
-        source_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        target_species: {id: "NCBITaxon:10090", label: "Mus musculus", name_in_source: "Mus musculus"}
-        source_dataset_accession: "GEO:GSE124847"
-        source_cluster_label: "Sst-OLM + Htr3a-OLM (combined)"
-        source_groups:
-          - label: OLM-pooled
-            members: [Sst-OLM, Htr3a-OLM]
-        n_cells_total: 46
-        n_cells_after_filter: 0
-        bootstrap_threshold: 0.8
-        tool_version: "cell_type_mapper v1.7.1"
-    property_comparisons:
-      - property: nt_type
-        node_a_value: "GABAergic"
-        node_b_value: "GABA"
-        alignment: CONSISTENT
-      - property: location
-        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007640)"
-        node_b_value: "CA3 SO (MBA:486, 25 cells); medial amygdala (31); posterior amygdala (18)"
-        alignment: APPROXIMATE
-        notes: "CA3 SO present. No CA1 or SLM. Major amygdala component."
-      - property: marker_Sst
-        node_a_value: "Sst — defining marker"
-        node_b_value: "Sst subclass"
-        alignment: CONSISTENT
-      - property: marker_Chrna2
-        node_a_value: "Chrna2 — defining marker"
-        node_b_value: "not present in parent supertype Sst Gaba_6"
-        alignment: DISCORDANT
-        notes: >
-          ABC Atlas filtering on Chrna2 expression eliminates Sst Gaba_6 entirely.
-          https://tinyurl.com/a4f3kd4v
-      - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
-        node_b_value: "Grm1 mean_expression=8.00"
-        alignment: NOT_ASSESSED
-        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
-      - property: neuropeptide_Sst
-        node_a_value: "Sst"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Npy
-        node_a_value: "Npy"
-        node_b_value: "present"
-        alignment: CONSISTENT
-      - property: neuropeptide_Pnoc
-        node_a_value: "Pnoc"
-        node_b_value: "present"
-        alignment: CONSISTENT
-        notes: "Full triad plus Cort."
-    caveats:
-      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
-        description: "28% amygdala cells — cluster not hippocampus-specific."
-      - caveat_type: MARKER_NOT_SPECIFIC
-        description: "mGluR1 not resolvable from atlas metadata. Chrna2 now DISCORDANT based on ABC Atlas expression data."
-    unresolved_questions:
-      - "Are CA3 SO cells OLM? What is the amygdala population?"
-      - What is the amygdala population dominating CS20230722_CLUS_0789?
-      - What is the identity of the amygdala population dominating CS20230722_CLUS_0789?
-    proposed_experiments:
-      - "Chrna2-Cre + MapMyCells."
-      - "Region-specific dissection of CA3 SO vs amygdala cells in this cluster."
-    mapping_cardinality: 1:n
-    mapping_justification: semapv:UnreviewedManualMapping
-    confidence: REFUTED
-    confidence_score: 0.05
-    rationale: "CS20230722_CLUS_0789 (Sst Gaba_6) is refuted by ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminating the Sst Gaba_6 supertype and by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq; 0/46 OLM cells to Sst Gaba_6). Chrna2 DISCORDANT; cluster is amygdala-dominated (28% amygdala cells; CA3 SO 25; no CA1; no SLM). 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) but Chrna2 elimination plus extra-hippocampal (morphology/region) location are decisive. Cluster Grm1 mean_expression=8.00 does not rescue.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
-    report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: f53b0321
+    '
+edges: []

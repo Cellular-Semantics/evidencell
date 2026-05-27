@@ -1,0 +1,383 @@
+{
+  "classical_node_id": "bistratified_cell_hippocampus",
+  "classical_node_name": "Bistratified cell",
+  "taxonomy_id": "CCN20230722",
+  "rank": 1,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_SUPT_0206",
+      "label": "0206 Pvalb Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_052",
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pvalb",
+            "val": 8.74,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.892
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Sst",
+            "val": 2.72,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.838
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Tac1",
+            "val": 5.36,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.973
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.067,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0216",
+      "label": "0216 Sst Gaba_3",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_053",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pvalb",
+            "val": 1.48,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 0.943,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.784
+              }
+            ],
+            "coverage": 0.889
+          },
+          {
+            "gene": "Sst",
+            "val": 11.44,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.973
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Tac1",
+            "val": 0.55,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 0.816,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.784
+              }
+            ],
+            "coverage": 0.667
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_1152",
+      "label": "1152 CBX Purkinje Gaba_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_313",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pvalb",
+            "val": 9.2,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.919
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Sst",
+            "val": 0.41,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.108
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Tac1",
+            "val": 0.23,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.649
+              }
+            ],
+            "coverage": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_1153",
+      "label": "1153 CBX Purkinje Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_313",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pvalb",
+            "val": 9.37,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.946
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Sst",
+            "val": 0.43,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.135
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Tac1",
+            "val": 0.19,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.595
+              }
+            ],
+            "coverage": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_1183",
+      "label": "1183 MFOL NN_3",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_327",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:407",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pvalb",
+            "val": 0.17,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.351
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Sst",
+            "val": 0.47,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.162
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Tac1",
+            "val": 2.18,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.865
+              }
+            ],
+            "coverage": 1.0
+          }
+        ]
+      }
+    }
+  ]
+}

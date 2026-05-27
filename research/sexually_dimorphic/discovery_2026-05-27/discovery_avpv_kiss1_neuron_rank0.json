@@ -1,0 +1,393 @@
+{
+  "classical_node_id": "avpv_kiss1_neuron",
+  "classical_node_name": "AVPV/PeN kisspeptin neuron",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_1891",
+      "label": "1891 PVpo-VMPO-MPN Hmx2 Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0483",
+      "male_female_ratio": 0.1,
+      "criteria_applied": [
+        "sex_bias=female"
+      ],
+      "discovery_score": {
+        "score": 8,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272,MBA:341",
+              "nt_type=GABAergic / dopaminergic (TH co-expression)",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Kiss1",
+            "val": 0.14,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.997
+              }
+            ]
+          },
+          {
+            "gene": "Th",
+            "val": 0.23,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.753
+              }
+            ]
+          },
+          {
+            "gene": "Esr1",
+            "val": 9.42,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.997
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.045,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1301",
+      "label": "1301 MEA-BST Lhx6 Nfib Gaba_4",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0360",
+      "male_female_ratio": 0.1,
+      "criteria_applied": [
+        "sex_bias=female"
+      ],
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272,MBA:341",
+              "nt_type=GABAergic / dopaminergic (TH co-expression)",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Kiss1",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Th",
+            "val": 4.11,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.966
+              }
+            ]
+          },
+          {
+            "gene": "Esr1",
+            "val": 9.31,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.996
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.013,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1890",
+      "label": "1890 PVpo-VMPO-MPN Hmx2 Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0483",
+      "male_female_ratio": 19.0,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272,MBA:341",
+              "nt_type=GABAergic / dopaminergic (TH co-expression)",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Kiss1",
+            "val": 0.23,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.998
+              }
+            ]
+          },
+          {
+            "gene": "Th",
+            "val": 0.45,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.829
+              }
+            ]
+          },
+          {
+            "gene": "Esr1",
+            "val": 8.86,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.994
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.153,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1913",
+      "label": "1913 PVpo-VMPO-MPN Hmx2 Gaba_5",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0486",
+      "male_female_ratio": 10.11,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272,MBA:341",
+              "nt_type=GABAergic / dopaminergic (TH co-expression)",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Kiss1",
+            "val": 0.54,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.999
+              }
+            ]
+          },
+          {
+            "gene": "Th",
+            "val": 2.59,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.946
+              }
+            ]
+          },
+          {
+            "gene": "Esr1",
+            "val": 7.93,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.977
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.205,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1895",
+      "label": "1895 PVpo-VMPO-MPN Hmx2 Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0483",
+      "male_female_ratio": 0.06,
+      "criteria_applied": [
+        "sex_bias=female"
+      ],
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 6,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272,MBA:341",
+              "nt_type=GABAergic / dopaminergic (TH co-expression)",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Kiss1",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Th",
+            "val": 0.18,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.716
+              }
+            ]
+          },
+          {
+            "gene": "Esr1",
+            "val": 9.73,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.999
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.01,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}

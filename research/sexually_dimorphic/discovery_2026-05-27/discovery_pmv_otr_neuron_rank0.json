@@ -1,0 +1,387 @@
+{
+  "classical_node_id": "pmv_otr_neuron",
+  "classical_node_name": "Ventral premammillary nucleus (PMv) oxytocin receptor neuron",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_2771",
+      "label": "2771 IF-RL-CLI-PAG Foxa1 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0685",
+      "male_female_ratio": 4.26,
+      "criteria_applied": [
+        "sex_bias=male"
+      ],
+      "discovery_score": {
+        "score": 7,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:1004",
+              "sex_bias=male"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Oxtr",
+            "val": 3.48,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.984
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a3",
+            "val": 1.02,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.966
+              }
+            ]
+          },
+          {
+            "gene": "Adcyap1",
+            "val": 1.15,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.631
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_2470",
+      "label": "2470 PMv-TMv Pitx2 Glut_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0607",
+      "discovery_score": {
+        "score": 7,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:1004",
+              "sex_bias=male"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Oxtr",
+            "val": 4.45,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.993
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a3",
+            "val": 6.02,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.992
+              }
+            ]
+          },
+          {
+            "gene": "Adcyap1",
+            "val": 8.13,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.951
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.683,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1571",
+      "label": "1571 ARH-PVi Six6 Dopa-Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Dopa",
+      "parent_id": "CS20230722_SUPT_0427",
+      "male_female_ratio": 5.25,
+      "criteria_applied": [
+        "sex_bias=male"
+      ],
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:1004",
+              "sex_bias=male"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Oxtr",
+            "val": 0.18,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.582
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a3",
+            "val": 8.13,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.998
+              }
+            ]
+          },
+          {
+            "gene": "Adcyap1",
+            "val": 0.18,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.285
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_2330",
+      "label": "2330 LHA-AHN-PVH Otp Trh Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0575",
+      "male_female_ratio": 3.35,
+      "criteria_applied": [
+        "sex_bias=male"
+      ],
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:1004",
+              "sex_bias=male"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Oxtr",
+            "val": 0.19,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.589
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a3",
+            "val": 0.23,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.882
+              }
+            ]
+          },
+          {
+            "gene": "Adcyap1",
+            "val": 8.52,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.972
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_2441",
+      "label": "2441 STN-PSTN Pitx2 Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0599",
+      "male_female_ratio": 1.33,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:1004",
+              "sex_bias=male"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Oxtr",
+            "val": 3.06,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.973
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a3",
+            "val": 0.85,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.957
+              }
+            ]
+          },
+          {
+            "gene": "Adcyap1",
+            "val": 8.48,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.971
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}

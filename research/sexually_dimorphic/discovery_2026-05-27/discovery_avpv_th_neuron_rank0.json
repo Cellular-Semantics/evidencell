@@ -1,0 +1,317 @@
+{
+  "classical_node_id": "avpv_th_neuron",
+  "classical_node_name": "AVPV tyrosine hydroxylase (TH) neuron",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_1915",
+      "label": "1915 PVpo-VMPO-MPN Hmx2 Gaba_5",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Dopa",
+      "parent_id": "CS20230722_SUPT_0486",
+      "male_female_ratio": 0.02,
+      "criteria_applied": [
+        "sex_bias=female"
+      ],
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272",
+              "nt_type=dopaminergic",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Th",
+            "val": 6.6,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.839
+              }
+            ]
+          },
+          {
+            "gene": "Kiss1",
+            "val": 2.51,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.982
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.005,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1572",
+      "label": "1572 ARH-PVi Six6 Dopa-Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Dopa",
+      "parent_id": "CS20230722_SUPT_0428",
+      "male_female_ratio": 3.76,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272",
+              "nt_type=dopaminergic",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Th",
+            "val": 7.78,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.964
+              }
+            ]
+          },
+          {
+            "gene": "Kiss1",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1904",
+      "label": "1904 PVpo-VMPO-MPN Hmx2 Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Dopa",
+      "parent_id": "CS20230722_SUPT_0484",
+      "male_female_ratio": 1.5,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272",
+              "nt_type=dopaminergic",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Th",
+            "val": 6.82,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.857
+              }
+            ]
+          },
+          {
+            "gene": "Kiss1",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.038,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1905",
+      "label": "1905 PVpo-VMPO-MPN Hmx2 Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Dopa",
+      "parent_id": "CS20230722_SUPT_0484",
+      "male_female_ratio": 2.03,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272",
+              "nt_type=dopaminergic",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Th",
+            "val": 8.14,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.982
+              }
+            ]
+          },
+          {
+            "gene": "Kiss1",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1907",
+      "label": "1907 PVpo-VMPO-MPN Hmx2 Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Dopa",
+      "parent_id": "CS20230722_SUPT_0484",
+      "male_female_ratio": 2.7,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:272",
+              "nt_type=dopaminergic",
+              "sex_bias=female"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Th",
+            "val": 7.2,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.911
+              }
+            ]
+          },
+          {
+            "gene": "Kiss1",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.038,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}

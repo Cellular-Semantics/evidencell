@@ -1,6 +1,7 @@
 name: Hippocampal glutamatergic principal cells — draft classical types
-description: Draft evidence graph for classical hippocampal glutamatergic principal cell types extracted from ASTA deep research
-  report on glutamatergic-positive cells of the hippocampus. Node properties are synthesis-derived and require primary literature
+description: Draft evidence graph for classical hippocampal glutamatergic principal
+  cell types extracted from ASTA deep research report on glutamatergic-positive cells
+  of the hippocampus. Node properties are synthesis-derived and require primary literature
   verification. Edges empty pending mapping evidence.
 target_atlas: WMBv1 (CCN20230722)
 brain_region:
@@ -9,9 +10,11 @@ brain_region:
   name_in_source: hippocampus
 species: null
 creation_date: '2026-04-27'
-notes: All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evidence is from rat and mouse; species must be
-  confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup. Quote provenance
-  lives in references/hippocampus/references.json; quote_keys reference verbatim text only.
+notes: All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evidence
+  is from rat and mouse; species must be confirmed per-node from primary sources.
+  Marker ncbi_gene_ids left null — require NodeNormalization lookup. Quote provenance
+  lives in references/hippocampus/references.json; quote_keys reference verbatim text
+  only.
 nodes:
 - id: dg_granule_cell
   name: dentate gyrus granule cell
@@ -96,9 +99,11 @@ nodes:
   negative_markers: []
   neuropeptides: []
   morphology:
-    description: Compact granule cell soma in stratum granulosum; thin unmyelinated mossy fiber axons project into stratum
-      lucidum of CA3. ~1 million GCs in adult rat dentate gyrus. 85% of GCs are generated postnatally; adult-born GCs receive
-      their first glutamatergic input on dendritic spines at the end of the second week after birth.
+    description: Compact granule cell soma in stratum granulosum; thin unmyelinated
+      mossy fiber axons project into stratum lucidum of CA3. ~1 million GCs in adult
+      rat dentate gyrus. 85% of GCs are generated postnatally; adult-born GCs receive
+      their first glutamatergic input on dendritic spines at the end of the second
+      week after birth.
     sources:
     - ref: PMID:24592213
       quote_key: 11333153_d0620f0a
@@ -107,9 +112,10 @@ nodes:
     - ref: PMID:24319410
       quote_key: 7458943_efa15be5
   electrophysiology:
-    description: Lower firing threshold than typical cortical neurons; AMPA, kainate, and NMDA receptors broadly co-expressed.
-      Mossy fiber stimulation elicits mixed GABAergic and glutamatergic monosynaptic currents in CA3 principal cells in juvenile
-      animals.
+    description: Lower firing threshold than typical cortical neurons; AMPA, kainate,
+      and NMDA receptors broadly co-expressed. Mossy fiber stimulation elicits mixed
+      GABAergic and glutamatergic monosynaptic currents in CA3 principal cells in
+      juvenile animals.
     sources:
     - ref: PMID:24592213
       quote_key: 11333153_abe1b682
@@ -131,9 +137,11 @@ nodes:
   - PMID:21927594
   - PMID:32009891
   is_terminal: false
-  notes: Adult-born immature granule cells form a distinct functional subpopulation with delayed maturation; dorsal vs. ventral
-    heterogeneity implied. Mossy fiber terminals co-express VGLUT1, VGLUT2, and VGAT (mixed transmission to CA3 in juvenile
-    animals) — co-release is developmental and does not redefine the granule cell as a non-glutamatergic principal cell.
+  notes: Adult-born immature granule cells form a distinct functional subpopulation
+    with delayed maturation; dorsal vs. ventral heterogeneity implied. Mossy fiber
+    terminals co-express VGLUT1, VGLUT2, and VGAT (mixed transmission to CA3 in juvenile
+    animals) — co-release is developmental and does not redefine the granule cell
+    as a non-glutamatergic principal cell.
 - id: dg_mossy_cell
   name: hilar mossy cell
   definition_basis: CLASSICAL_MULTIMODAL
@@ -152,7 +160,8 @@ nodes:
       quote_key: 3583187_ea3794f5
   - id: UBERON:0022347
     label: dentate gyrus molecular layer inner
-    name_in_source: dentate gyrus inner molecular layer (IML; ipsilateral and contralateral commissural projection)
+    name_in_source: dentate gyrus inner molecular layer (IML; ipsilateral and contralateral
+      commissural projection)
     compartment: AXON_TARGET
     sources:
     - ref: PMID:33600026
@@ -163,7 +172,8 @@ nodes:
       quote_key: 231953329_54cbe1b7
   - id: UBERON:0022346
     label: dentate gyrus molecular layer middle
-    name_in_source: dentate gyrus middle molecular layer (MML; dorsal mossy cells only)
+    name_in_source: dentate gyrus middle molecular layer (MML; dorsal mossy cells
+      only)
     compartment: AXON_TARGET
     sources:
     - ref: PMID:33600026
@@ -232,10 +242,12 @@ nodes:
       marker_type: PROTEIN
   neuropeptides: []
   morphology:
-    description: Large hilar somata with thick bushy proximal dendrites encrusted with thorny excrescences (complex spines)
-      receiving mossy fiber input from granule cells. Dendrites mainly in the hilus. ~25% of axon in hilar collaterals; >60%
-      of axon distal in the molecular layer, predominantly the inner molecular layer (IML), with commissural projection to
-      contralateral dentate gyrus. Dorsal MCs uniquely also project to the middle molecular layer (MML).
+    description: Large hilar somata with thick bushy proximal dendrites encrusted
+      with thorny excrescences (complex spines) receiving mossy fiber input from granule
+      cells. Dendrites mainly in the hilus. ~25% of axon in hilar collaterals; >60%
+      of axon distal in the molecular layer, predominantly the inner molecular layer
+      (IML), with commissural projection to contralateral dentate gyrus. Dorsal MCs
+      uniquely also project to the middle molecular layer (MML).
     sources:
     - ref: PMID:23420672
       quote_key: 11290620_a475a601
@@ -244,8 +256,9 @@ nodes:
     - ref: PMID:33600026
       quote_key: 231953329_6269a191
   electrophysiology:
-    description: Regular-spiking firing pattern in hilar cells with thorny excrescences. Mossy cells produce unitary EPSPs
-      in granule cells, confirming glutamatergic output.
+    description: Regular-spiking firing pattern in hilar cells with thorny excrescences.
+      Mossy cells produce unitary EPSPs in granule cells, confirming glutamatergic
+      output.
     sources:
     - ref: PMID:23420672
       method: patch-clamp recording in slice
@@ -258,14 +271,16 @@ nodes:
   - PMID:23420672
   - PMID:25206826
   is_terminal: false
-  notes: 'Dorsal vs. ventral mossy cells differ in axonal projection (dorsal: IML+MML; ventral: IML only). Reelin-positive
-    mossy cells in the dentate hilus are predominantly glutamatergic (in contrast to GABAergic reelin+ cells in the molecular
-    layer). HETEROGENEITY: dorsal/ventral subtypes likely warrant separate atlas correspondence.
+  notes: 'Dorsal vs. ventral mossy cells differ in axonal projection (dorsal: IML+MML;
+    ventral: IML only). Reelin-positive mossy cells in the dentate hilus are predominantly
+    glutamatergic (in contrast to GABAergic reelin+ cells in the molecular layer).
+    HETEROGENEITY: dorsal/ventral subtypes likely warrant separate atlas correspondence.
 
 
-    CL mapping note: No CL term found for hilar mossy cell. Children of CL:4023062 (dentate gyrus neuron) include granule
-    cell (CL:2000089), basket cell (CL:2000087), kisspeptin neuron (CL:4023124) and stellate cell (CL:2000090); none matches
-    mossy cell. Potential CL contribution.'
+    CL mapping note: No CL term found for hilar mossy cell. Children of CL:4023062
+    (dentate gyrus neuron) include granule cell (CL:2000089), basket cell (CL:2000087),
+    kisspeptin neuron (CL:4023124) and stellate cell (CL:2000090); none matches mossy
+    cell. Potential CL contribution.'
 - id: ca3_pyramidal_cell
   name: CA3 pyramidal cell
   definition_basis: CLASSICAL_MULTIMODAL
@@ -284,7 +299,8 @@ nodes:
       quote_key: 210181642_7ac40176
   - id: UBERON:0005372
     label: hippocampus stratum radiatum
-    name_in_source: CA3 stratum radiatum / stratum oriens (apical and basal dendritic field)
+    name_in_source: CA3 stratum radiatum / stratum oriens (apical and basal dendritic
+      field)
     compartment: DENDRITE
     sources:
     - ref: PMID:32009891
@@ -365,8 +381,9 @@ nodes:
   negative_markers: []
   neuropeptides: []
   morphology:
-    description: Cell bodies in CA3 stratum pyramidale receive mossy fiber input from granule cells in stratum lucidum; form
-      Schaffer collateral projections to CA1. Form rare mixed electrical-chemical glutamatergic synapses with neuronal gap
+    description: Cell bodies in CA3 stratum pyramidale receive mossy fiber input from
+      granule cells in stratum lucidum; form Schaffer collateral projections to CA1.
+      Form rare mixed electrical-chemical glutamatergic synapses with neuronal gap
       junctions containing Cx36.
     sources:
     - ref: PMID:23271650
@@ -376,8 +393,9 @@ nodes:
     - ref: https://doi.org/10.3389/fnana.2012.00013
       quote_key: 1115431_623fc68d
   electrophysiology:
-    description: Fast excitatory synaptic transmission via non-NMDA (AMPA/kainate) glutamate receptors; NMDA receptors serve
-      a slower modulatory role. AMPA, kainate, and NMDA receptor families are broadly co-localized.
+    description: Fast excitatory synaptic transmission via non-NMDA (AMPA/kainate)
+      glutamate receptors; NMDA receptors serve a slower modulatory role. AMPA, kainate,
+      and NMDA receptor families are broadly co-localized.
     sources:
     - ref: PMID:7722624
       quote_key: 5468451_656975dd
@@ -391,8 +409,9 @@ nodes:
       label: hippocampal pyramidal neuron
       name_in_source: hippocampal pyramidal neuron
     mapping_type: BROAD
-    mapping_notes: CA3-specific term absent from CL. Best available match is CL:1001571 (hippocampal pyramidal neuron); synonym
-      'hippocampus (CA) pyramidal cell' covers CA1–CA3 without subfield specificity.
+    mapping_notes: CA3-specific term absent from CL. Best available match is CL:1001571
+      (hippocampal pyramidal neuron); synonym 'hippocampus (CA) pyramidal cell' covers
+      CA1–CA3 without subfield specificity.
   definition_references:
   - PMID:19342486
   - DOI:10.3389/fnana.2012.00013
@@ -400,9 +419,11 @@ nodes:
   - PMID:7722624
   - PMID:23271650
   is_terminal: false
-  notes: 'AMBIGUITY: Pioneer early-generated CA3 glutamatergic neurons (Marissal et al., 2012) form a morpho-functionally
-    distinct subpopulation with persistent features into adulthood — likely a separable subtype. GAP: no dedicated electrophysiology
-    quotes specific to CA3 pyramidal cells (vs. shared CA1/CA3 receptor descriptions); primary verification needed.'
+  notes: 'AMBIGUITY: Pioneer early-generated CA3 glutamatergic neurons (Marissal et
+    al., 2012) form a morpho-functionally distinct subpopulation with persistent features
+    into adulthood — likely a separable subtype. GAP: no dedicated electrophysiology
+    quotes specific to CA3 pyramidal cells (vs. shared CA1/CA3 receptor descriptions);
+    primary verification needed.'
 - id: ca1_pyramidal_cell
   name: CA1 pyramidal cell
   definition_basis: CLASSICAL_MULTIMODAL
@@ -508,16 +529,18 @@ nodes:
       marker_type: PROTEIN
   neuropeptides: []
   morphology:
-    description: Pyramidal cell bodies in CA1 stratum pyramidale; receive Schaffer collateral input from CA3 in stratum radiatum
-      and project to subiculum and entorhinal cortex. High Np65 (neuroplastin-65) immunoreactivity at cell body membranes
-      and dendrites. GluA1 strong dense immunoreactivity in str. oriens and radiatum; GluA2 localized to cell bodies in str.
-      pyramidale.
+    description: Pyramidal cell bodies in CA1 stratum pyramidale; receive Schaffer
+      collateral input from CA3 in stratum radiatum and project to subiculum and entorhinal
+      cortex. High Np65 (neuroplastin-65) immunoreactivity at cell body membranes
+      and dendrites. GluA1 strong dense immunoreactivity in str. oriens and radiatum;
+      GluA2 localized to cell bodies in str. pyramidale.
     sources:
     - ref: PMID:23180766
       quote_key: 13358368_423cf3cc
   electrophysiology:
-    description: Fast excitatory transmission via AMPA receptors; NMDA receptors serve a slower modulatory role. Np65 regulates
-      the number and function of excitatory synapses in CA1. AMPA/kainate and NMDA receptors are colocalized at individual
+    description: Fast excitatory transmission via AMPA receptors; NMDA receptors serve
+      a slower modulatory role. Np65 regulates the number and function of excitatory
+      synapses in CA1. AMPA/kainate and NMDA receptors are colocalized at individual
       spines.
     sources:
     - ref: PMID:7722624
@@ -532,7 +555,8 @@ nodes:
       label: hippocampal pyramidal neuron
       name_in_source: hippocampal pyramidal neuron
     mapping_type: BROAD
-    mapping_notes: CA1-specific term absent from CL. Same BROAD mapping to CL:1001571 as CA3.
+    mapping_notes: CA1-specific term absent from CL. Same BROAD mapping to CL:1001571
+      as CA3.
   definition_references:
   - PMID:19342486
   - PMID:28779130
@@ -540,9 +564,10 @@ nodes:
   - PMID:27678395
   - PMID:24319410
   is_terminal: false
-  notes: 'AMBIGUITY: Ventral CA1 pyramidal neurons express D1/D2 dopamine receptors (45.1% of D1/D2 cells in vHipp are glutamatergic)
-    — likely projection-specific vCA1/vSubiculum subtypes; dorsal CA1 pyramidal cells are D1R-negative. Np65-positive glutamatergic
-    neurons are not CA1-specific (also CA2-3 and subiculum).'
+  notes: 'AMBIGUITY: Ventral CA1 pyramidal neurons express D1/D2 dopamine receptors
+    (45.1% of D1/D2 cells in vHipp are glutamatergic) — likely projection-specific
+    vCA1/vSubiculum subtypes; dorsal CA1 pyramidal cells are D1R-negative. Np65-positive
+    glutamatergic neurons are not CA1-specific (also CA2-3 and subiculum).'
 - id: ms_dbb_glutamatergic_neuron
   name: medial septal / diagonal band of Broca glutamatergic neuron
   definition_basis: CLASSICAL_MULTIMODAL
@@ -550,8 +575,8 @@ nodes:
   anatomical_location:
   - id: UBERON:0002421
     label: hippocampal formation
-    name_in_source: medial septum / diagonal band of Broca (extrahippocampal soma — UBERON term used as nearest available;
-      soma is not in hippocampal formation)
+    name_in_source: medial septum / diagonal band of Broca (extrahippocampal soma
+      — UBERON term used as nearest available; soma is not in hippocampal formation)
     compartment: SOMA
     sources:
     - ref: PMID:29250747
@@ -617,8 +642,9 @@ nodes:
       marker_type: PROTEIN
   neuropeptides: []
   morphology:
-    description: Soma in medial septum/diagonal band of Broca; account for ~23% of MS projections to hippocampus; project
-      preferentially to hippocampal interneurons with somata in stratum oriens near the alveus.
+    description: Soma in medial septum/diagonal band of Broca; account for ~23% of
+      MS projections to hippocampus; project preferentially to hippocampal interneurons
+      with somata in stratum oriens near the alveus.
     sources:
     - ref: PMID:29250747
       method: review
@@ -629,11 +655,13 @@ nodes:
       scope: rodent septohippocampal
       quote_key: 21358766_01840c4a
   electrophysiology:
-    description: 'Highly heterogeneous firing in four subtypes: (1) fast-spiking with little AP accommodation, occasional
-      spontaneous firing, sometimes pronounced Ih sag; (2) cluster-firing (8-14 Hz) with subthreshold membrane oscillations
-      and strong AP accommodation — UNIQUE to glutamatergic MS-DBB neurons; (3) burst-firing (distinct from GABAergic burst
-      pattern) with little/no sag; (4) slow-firing with broad accommodating APs. Can spontaneously fire rhythmically at theta
-      frequencies. Activity rises before locomotion onset and during running.'
+    description: 'Highly heterogeneous firing in four subtypes: (1) fast-spiking with
+      little AP accommodation, occasional spontaneous firing, sometimes pronounced
+      Ih sag; (2) cluster-firing (8-14 Hz) with subthreshold membrane oscillations
+      and strong AP accommodation — UNIQUE to glutamatergic MS-DBB neurons; (3) burst-firing
+      (distinct from GABAergic burst pattern) with little/no sag; (4) slow-firing
+      with broad accommodating APs. Can spontaneously fire rhythmically at theta frequencies.
+      Activity rises before locomotion onset and during running.'
     sources:
     - ref: PMID:29250747
       quote_key: 21358766_0c242fdc
@@ -646,14 +674,15 @@ nodes:
   - PMID:21106833
   - PMID:32132227
   is_terminal: false
-  notes: 'Four electrophysiologically distinct VGluT2+ subgroups (fast-spiking, cluster-firing, burst-firing, slow-firing).
-    Cluster firing is a unique electrophysiological marker for glutamatergic (not GABAergic) MS-DBB neurons. Soma is extrahippocampal
-    — node retained because the cell projects into hippocampal formation; UBERON soma assignment is approximate (hippocampal
-    formation used as nearest umbrella term).
+  notes: 'Four electrophysiologically distinct VGluT2+ subgroups (fast-spiking, cluster-firing,
+    burst-firing, slow-firing). Cluster firing is a unique electrophysiological marker
+    for glutamatergic (not GABAergic) MS-DBB neurons. Soma is extrahippocampal — node
+    retained because the cell projects into hippocampal formation; UBERON soma assignment
+    is approximate (hippocampal formation used as nearest umbrella term).
 
 
-    CL mapping note: No CL term for medial septal / diagonal band of Broca glutamatergic neuron. CL:0000679 (glutamatergic
-    neuron) too broad. Potential CL contribution.'
+    CL mapping note: No CL term for medial septal / diagonal band of Broca glutamatergic
+    neuron. CL:0000679 (glutamatergic neuron) too broad. Potential CL contribution.'
 - id: hpc_cajal_retzius_cell
   name: hippocampal Cajal-Retzius cell
   definition_basis: CLASSICAL_MULTIMODAL
@@ -715,12 +744,14 @@ nodes:
   negative_markers: []
   neuropeptides: []
   morphology:
-    description: 'Soma in stratum lacunosum-moleculare (SLM) and outer molecular layer (OML) of the hippocampal formation.
-      Three axonal subtypes: (1) layer-restricted local-projecting CR cells acting as glutamatergic interneurons; (2) local-projecting
-      CR cells whose axons cross the hippocampal fissure between SLM and OML; (3) long-range projecting CR cells targeting
-      distant subregions. CR cells are biased toward targeting dendritic shafts of GABAergic interneurons over spines, and
-      produce large-amplitude glutamatergic unitary postsynaptic potentials on interneurons. Reelin-positive CR cells increase
-      in density with age in adult hippocampus.'
+    description: 'Soma in stratum lacunosum-moleculare (SLM) and outer molecular layer
+      (OML) of the hippocampal formation. Three axonal subtypes: (1) layer-restricted
+      local-projecting CR cells acting as glutamatergic interneurons; (2) local-projecting
+      CR cells whose axons cross the hippocampal fissure between SLM and OML; (3)
+      long-range projecting CR cells targeting distant subregions. CR cells are biased
+      toward targeting dendritic shafts of GABAergic interneurons over spines, and
+      produce large-amplitude glutamatergic unitary postsynaptic potentials on interneurons.
+      Reelin-positive CR cells increase in density with age in adult hippocampus.'
     sources:
     - ref: PMID:26582498
       quote_key: 2565845_ec963328
@@ -729,10 +760,11 @@ nodes:
     - ref: PMID:26582498
       quote_key: 2565845_8c6a8b64
   electrophysiology:
-    description: Optogenetic activation of CR cells in SLM elicits monosynaptic AMPA/NMDA receptor-mediated EPSCs in local
-      interneurons (faster kinetics) and CA1 pyramidal cells (slower kinetics). Responses are blocked by TTX and rescued in
-      interneurons by 4-AP, indicating direct monosynaptic CR cell-to-interneuron connection. Provides feedforward GABAergic
-      input onto pyramidal cells via interneuron activation.
+    description: Optogenetic activation of CR cells in SLM elicits monosynaptic AMPA/NMDA
+      receptor-mediated EPSCs in local interneurons (faster kinetics) and CA1 pyramidal
+      cells (slower kinetics). Responses are blocked by TTX and rescued in interneurons
+      by 4-AP, indicating direct monosynaptic CR cell-to-interneuron connection. Provides
+      feedforward GABAergic input onto pyramidal cells via interneuron activation.
     sources:
     - ref: PMID:25253849
       method: optogenetic activation in slice
@@ -748,8 +780,9 @@ nodes:
       label: Cajal-Retzius cell
       name_in_source: Cajal-Retzius cell
     mapping_type: BROAD
-    mapping_notes: CL:0000695 = Cajal-Retzius cell describes the general CR cell class across cortex and hippocampus; the
-      proposed type is the specifically hippocampal, adult-persisting, glutamatergic subpopulation (reelin+/calretinin+/VGluT3+).
+    mapping_notes: CL:0000695 = Cajal-Retzius cell describes the general CR cell class
+      across cortex and hippocampus; the proposed type is the specifically hippocampal,
+      adult-persisting, glutamatergic subpopulation (reelin+/calretinin+/VGluT3+).
       The CL definition includes hippocampal SLM and OML localisation.
   definition_references:
   - PMID:25253849
@@ -758,10 +791,11 @@ nodes:
   - PMID:26402459
   - DOI:10.1523/JNEUROSCI.1407-14.2014
   is_terminal: false
-  notes: 'HETEROGENEITY: a substantial fraction of hippocampal CR cells are GABAergic; only the glutamatergic (reelin+/calretinin+/VGluT3+)
-    subpopulation is captured here. Three axonal subtypes (layer-restricted local, cross-fissure local, long-range) likely
-    warrant separate sub-nodes. AMBIGUITY: CR cells are more abundant in adult rat than previously assumed (Quattrocolo et
-    al., 2014).'
+  notes: 'HETEROGENEITY: a substantial fraction of hippocampal CR cells are GABAergic;
+    only the glutamatergic (reelin+/calretinin+/VGluT3+) subpopulation is captured
+    here. Three axonal subtypes (layer-restricted local, cross-fissure local, long-range)
+    likely warrant separate sub-nodes. AMBIGUITY: CR cells are more abundant in adult
+    rat than previously assumed (Quattrocolo et al., 2014).'
 - id: ca1_radiatum_giant_cell
   name: CA1 radiatum giant cell
   definition_basis: CLASSICAL_MULTIMODAL
@@ -791,7 +825,18 @@ nodes:
   negative_markers: []
   neuropeptides: []
   morphology:
-    description: Large triangular soma in upper CA1 stratum radiatum; one to two prominent thick apical dendrites bifurcating close to the soma and ascending to stratum lacunosum-moleculare, arborizing extensively with spiny second-order dendrites; myelinated axon. Axon arises vertically, traverses stratum pyramidale and bifurcates in stratum oriens — one branch toward subiculum, one toward fimbria (projecting ultimately to olfactory cortex). Axon collaterals in stratum oriens form asymmetric (excitatory) synapses. Three morphological subtypes — symmetrical two-dendrite form; one main dendrite plus shorter parallel dendrite; pyramidal-like single bifurcating apical dendrite. Soma and dendrites readily identified by DIC optics in living tissue (Christie et al. 2000). Morphology confirmed in adult mouse with same inverted triangular soma and two thick apical dendrites (Nasrallah et al. 2019).
+    description: Large triangular soma in upper CA1 stratum radiatum; one to two prominent
+      thick apical dendrites bifurcating close to the soma and ascending to stratum
+      lacunosum-moleculare, arborizing extensively with spiny second-order dendrites;
+      myelinated axon. Axon arises vertically, traverses stratum pyramidale and bifurcates
+      in stratum oriens — one branch toward subiculum, one toward fimbria (projecting
+      ultimately to olfactory cortex). Axon collaterals in stratum oriens form asymmetric
+      (excitatory) synapses. Three morphological subtypes — symmetrical two-dendrite
+      form; one main dendrite plus shorter parallel dendrite; pyramidal-like single
+      bifurcating apical dendrite. Soma and dendrites readily identified by DIC optics
+      in living tissue (Christie et al. 2000). Morphology confirmed in adult mouse
+      with same inverted triangular soma and two thick apical dendrites (Nasrallah
+      et al. 2019).
     sources:
     - ref: PMID:10864941
       method: biocytin fill + confocal reconstruction, patch-clamp recording in slice
@@ -814,7 +859,20 @@ nodes:
       scope: adult mouse CA1 acute slice
       quote_key: 92998057_50a6488b
   electrophysiology:
-    description: NMDA receptor-dependent burst firing in response to glutamatergic synaptic activation even after non-NMDA receptor blockade (CNQX-insensitive, APV-sensitive burst). EPSCs at least threefold larger than in CA1 pyramidal cells. Prominent spike afterdepolarization (ADP) and spike frequency accommodation (common but not universal). Lacks the pronounced fast afterhyperpolarization (fAHP) that characterises stratum radiatum interneurons. NMDA receptors active at resting membrane potential — Mg2+ block Kd ~0.42 mM at -60 mV (vs ~0.15 mM in CA1 PCs), less voltage-dependent (delta 0.80 vs 0.95 in PCs). NMDA EPSC decay slower (Af/As ~2.25 vs ~6.2 in PCs); rise times faster (9.6 +/- 0.7 ms vs 11.7 +/- 0.6 ms). NMDA-dependent LTP induced by 100-Hz stimulation (magnitude ~51% +/- 18%; blocked by APV; requires postsynaptic Ca2+ influx); 200-Hz stimuli do not induce LTP. Reversed HCN channel expression gradient vs other CA1 PNs (Bullis et al. 2007, via Nasrallah et al. 2019). NR2D (GRIN2D) subunit proposed as contributor to biophysical signature (Discussion-level inference).
+    description: NMDA receptor-dependent burst firing in response to glutamatergic
+      synaptic activation even after non-NMDA receptor blockade (CNQX-insensitive,
+      APV-sensitive burst). EPSCs at least threefold larger than in CA1 pyramidal
+      cells. Prominent spike afterdepolarization (ADP) and spike frequency accommodation
+      (common but not universal). Lacks the pronounced fast afterhyperpolarization
+      (fAHP) that characterises stratum radiatum interneurons. NMDA receptors active
+      at resting membrane potential — Mg2+ block Kd ~0.42 mM at -60 mV (vs ~0.15 mM
+      in CA1 PCs), less voltage-dependent (delta 0.80 vs 0.95 in PCs). NMDA EPSC decay
+      slower (Af/As ~2.25 vs ~6.2 in PCs); rise times faster (9.6 +/- 0.7 ms vs 11.7
+      +/- 0.6 ms). NMDA-dependent LTP induced by 100-Hz stimulation (magnitude ~51%
+      +/- 18%; blocked by APV; requires postsynaptic Ca2+ influx); 200-Hz stimuli
+      do not induce LTP. Reversed HCN channel expression gradient vs other CA1 PNs
+      (Bullis et al. 2007, via Nasrallah et al. 2019). NR2D (GRIN2D) subunit proposed
+      as contributor to biophysical signature (Discussion-level inference).
     sources:
     - ref: PMID:10864941
       method: patch-clamp recording in slice
@@ -849,8 +907,15 @@ nodes:
   - PMID:11153713
   - PMID:30943417
   is_terminal: false
-  notes: 'Morphology and LTP properties independently replicated in Christie et al. (2000, PMID:11153713); RGC identity confirmed in mouse and CA2 pyramidal neurons identified as a strong presynaptic input by Nasrallah et al. (2019, PMID:30943417). GAP: defining molecular markers absent; reversed HCN channel expression gradient reported (Bullis et al. 2007) but not yet entered as a source. Modern transcriptomic characterisation needed.
+  notes: 'Morphology and LTP properties independently replicated in Christie et al.
+    (2000, PMID:11153713); RGC identity confirmed in mouse and CA2 pyramidal neurons
+    identified as a strong presynaptic input by Nasrallah et al. (2019, PMID:30943417).
+    GAP: defining molecular markers absent; reversed HCN channel expression gradient
+    reported (Bullis et al. 2007) but not yet entered as a source. Modern transcriptomic
+    characterisation needed.
 
 
-    CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential CL contribution.'
+    CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised
+    excitatory projection neuron in CA1 stratum radiatum first described by Kirson
+    et al. (2000); potential CL contribution.'
 edges: []
