@@ -167,9 +167,9 @@ def test_anat_cell_count(tmp_path):
 
 
 def test_anat_multi_source_expansion(tmp_path):
-    """A merged-edge anat entry with parallel cell_count/source lists expands
-    into one AnatomicalLocation per source, each with its own count and a
-    single PropertySource carrying the DOI."""
+    """A merged-edge anat entry with parallel cell_count/ratio/source lists
+    expands into one AnatomicalLocation per source, each with its own count,
+    ratios (legacy + 100µm), and a single PropertySource carrying the DOI."""
     yao = "https://doi.org/10.1038/s41586-023-06808-9"
     zhuang = "https://doi.org/10.1038/s41586-023-06812-z"
     fixture = [{
@@ -190,6 +190,8 @@ def test_anat_multi_source_expansion(tmp_path):
                 "anat_label": "Periventricular preoptic",
                 "cell_count": [135, 1],
                 "cell_ratio": [0.6, 0.2],
+                "count_in_or_near_100um": [180, 5],
+                "ratio_in_or_near_100um": [0.78, 0.022],
                 "source": [yao, zhuang],
             },
             {
@@ -197,6 +199,8 @@ def test_anat_multi_source_expansion(tmp_path):
                 "anat_label": "Medial preoptic",
                 "cell_count": [26],
                 "cell_ratio": [0.115556],
+                "count_in_or_near_100um": [40],
+                "ratio_in_or_near_100um": [0.178],
                 "source": [yao],
             },
         ],
@@ -216,16 +220,112 @@ def test_anat_multi_source_expansion(tmp_path):
     pvpo = by_region["MBA:133"]
     assert len(pvpo) == 2
     assert pvpo[0]["cell_count"] == 135
+    assert pvpo[0]["cell_ratio"] == 0.6
+    assert pvpo[0]["count_in_or_near_100um"] == 180
+    assert pvpo[0]["ratio_in_or_near_100um"] == 0.78
     assert pvpo[0]["sources"][0]["ref"] == yao
     assert pvpo[0]["sources"][0]["method"] == "MERFISH (Yao 2024)"
     assert pvpo[1]["cell_count"] == 1
+    assert pvpo[1]["cell_ratio"] == 0.2
+    assert pvpo[1]["count_in_or_near_100um"] == 5
+    assert pvpo[1]["ratio_in_or_near_100um"] == 0.022
     assert pvpo[1]["sources"][0]["ref"] == zhuang
     assert pvpo[1]["sources"][0]["method"] == "MERFISH (Zhuang 2023)"
     # Single-source region stays as one entry.
     mpo = by_region["MBA:515"]
     assert len(mpo) == 1
     assert mpo[0]["cell_count"] == 26
+    assert mpo[0]["cell_ratio"] == 0.115556
+    assert mpo[0]["count_in_or_near_100um"] == 40
+    assert mpo[0]["ratio_in_or_near_100um"] == 0.178
     assert mpo[0]["sources"][0]["ref"] == yao
+
+
+def test_anat_legacy_shape_without_new_fields(tmp_path):
+    """Legacy fixtures without `count_in_or_near_100um` / `ratio_in_or_near_100um`
+    keys still ingest cleanly — the new slots simply stay absent in the
+    output YAML. Back-compat guard for pre-issue-#93 JSON dumps and CAS imports."""
+    yao = "https://doi.org/10.1038/s41586-023-06808-9"
+    fixture = [{
+        "cl": None,
+        "node": {
+            "labels": ["CCN20230722_cluster", "Individual"],
+            "properties": {
+                "curie": "WMB:CS20230722_CLUS_LEGACY",
+                "short_form": "CS20230722_CLUS_LEGACY",
+                "label": "LEGACY cluster",
+            },
+        },
+        "parent_curie": None,
+        "level": "CCN20230722_cluster",
+        "anat": [{
+            "anat_id": "MBA:200",
+            "anat_label": "Some region",
+            "cell_count": [50],
+            "cell_ratio": [0.4],
+            "source": [yao],
+        }],
+    }]
+    src = tmp_path / "legacy.json"
+    src.write_text(json.dumps(fixture))
+    out = tmp_path / "out"
+    out.mkdir()
+    ingest_to_yaml(src, "TEST_LEGACY", out)
+    cluster_yaml = yaml.safe_load((out / "CCN20230722_cluster.yaml").read_text())
+    loc = cluster_yaml["nodes"][0]["anatomical_location"][0]
+    assert loc["cell_count"] == 50
+    assert loc["cell_ratio"] == 0.4
+    assert "count_in_or_near_100um" not in loc
+    assert "ratio_in_or_near_100um" not in loc
+
+
+def test_anat_sqlite_roundtrip_populates_all_columns(tmp_path):
+    """YAML → SQLite reingest populates cell_ratio + the two 100µm columns
+    on the `anat` table (regression guard for the pre-#93 bug where
+    cell_ratio was always inserted as NULL because the YAML write dropped
+    it and the rebuild had no source to read from)."""
+    yao = "https://doi.org/10.1038/s41586-023-06808-9"
+    fixture = [{
+        "cl": None,
+        "node": {
+            "labels": ["CCN20230722_cluster", "Individual"],
+            "properties": {
+                "curie": "WMB:CS20230722_CLUS_RT",
+                "short_form": "CS20230722_CLUS_RT",
+                "label": "RT cluster",
+            },
+        },
+        "parent_curie": None,
+        "level": "CCN20230722_cluster",
+        "anat": [{
+            "anat_id": "MBA:300",
+            "anat_label": "Test region",
+            "cell_count": [70],
+            "cell_ratio": [0.5],
+            "count_in_or_near_100um": [95],
+            "ratio_in_or_near_100um": [0.68],
+            "source": [yao],
+        }],
+    }]
+    src = tmp_path / "rt.json"
+    src.write_text(json.dumps(fixture))
+    out = tmp_path / "out"
+    out.mkdir()
+    ingest_to_yaml(src, "TEST_RT", out)
+    db_path = out / "TEST_RT.db"
+    db = TaxonomyDB(db_path)
+    db.build_from_yaml(out)
+    with sqlite3.connect(db_path) as con:
+        con.row_factory = sqlite3.Row
+        row = con.execute(
+            "SELECT cell_count, cell_ratio, count_in_or_near_100um, "
+            "ratio_in_or_near_100um FROM anat WHERE anat_id = 'MBA:300'"
+        ).fetchone()
+    assert row is not None
+    assert row["cell_count"] == 70
+    assert row["cell_ratio"] == 0.5
+    assert row["count_in_or_near_100um"] == 95
+    assert row["ratio_in_or_near_100um"] == 0.68
 
 
 def test_ingest_to_yaml_idempotent(tmp_path):

@@ -18,7 +18,7 @@
     "cl": "Full CL node object {identity, labels, properties: {curie, label, definition}} or null. Present on ~120 nodes: mainly neurotransmitter (all 10), subclass (~67), class (~31), sparse on supertype (10) and cluster (8).",
     "wmb": "The taxonomy node: {identity, labels (→ taxonomy level), properties (node data), elementId}",
     "wmb_parent.curie": "Parent node CURIE as flat string e.g. WMB:CS20230722_SUBC_285. Null for class and neurotransmitter nodes.",
-    "anat": "Array of {anat_id (MBA CURIE), anat_label, cell_count, cell_ratio}. Authoritative location source."
+    "anat": "Array of {anat_id (MBA CURIE), anat_label, cell_count, cell_ratio, count_in_or_near_100um, ratio_in_or_near_100um, source}. Authoritative location source. Each scalar slot is a parallel list indexed by source DOI (one entry per contributing spatial study); ingest unfolds into one AnatomicalLocation per (region, source). See GH issue #93 for the upstream schema additions."
   },
   "taxonomy_level_extraction": {
     "source": "wmb.labels",
@@ -43,8 +43,10 @@
       {"source": "wmb.properties.cell_ontology_term[0]", "target": "cell_ontology_term", "confidence": "HIGH", "notes": "CL label string present on class/subclass even when cl object is null. Value is list — take first element."},
       {"source": "anat[].anat_id",             "target": "anat[].id",    "confidence": "HIGH", "notes": "MBA CURIE e.g. MBA:399 (renamed from loc_id in old format)"},
       {"source": "anat[].anat_label",          "target": "anat[].label", "confidence": "HIGH", "notes": "Region name (renamed from loc_name in old format)"},
-      {"source": "anat[].cell_count",          "target": "anat[].cell_count", "confidence": "HIGH", "notes": "May be wrapped in a list in source — take [0]"},
-      {"source": "anat[].cell_ratio",          "target": "anat[].cell_ratio", "confidence": "MODERATE", "notes": "Fraction of type in this region; null in current file, may be populated later"}
+      {"source": "anat[].cell_count",              "target": "anat[].cell_count",              "confidence": "HIGH",     "notes": "Per-source parallel list (one entry per source DOI). Soma strictly in region (legacy in-region count)."},
+      {"source": "anat[].cell_ratio",              "target": "anat[].cell_ratio",              "confidence": "HIGH",     "notes": "Per-source parallel list. Legacy BCKG-stored ratio (= cell_count / cluster cell_count). Upstream renamed the source edge property to `obsolete_cell_ratio`; the Cypher reads `r.obsolete_cell_ratio` and aliases back to `cell_ratio` here. Prefer `ratio_in_or_near_100um` for new region-presence logic."},
+      {"source": "anat[].count_in_or_near_100um",  "target": "anat[].count_in_or_near_100um",  "confidence": "HIGH",     "notes": "Per-source parallel list. Count of soma in or within 100µm of region (current authoritative spatial count, from upstream `r.countInOrNear100um`)."},
+      {"source": "anat[].ratio_in_or_near_100um",  "target": "anat[].ratio_in_or_near_100um",  "confidence": "HIGH",     "notes": "Per-source parallel list. Computed in Cypher as countInOrNear100um / cluster cell_count. The active region-inclusion cutoff is applied upstream against this value; evidencell does no further thresholding."}
     ],
     "cluster_and_supertype": [
       {"source": "wmb.properties.nt_type_label",                      "target": "nt_type",                    "confidence": "HIGH"},
