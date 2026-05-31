@@ -725,7 +725,13 @@ class AnatomicalLocation(OntologyTerm):
 
     compartment: Optional[CellCompartment] = Field(default=None, description="""Which cellular compartment resides in this region. Required when a cell type spans multiple regions with different compartments (e.g. OLM: soma in SO, axon in SLM). Leave absent for atlas terminal nodes (MERFISH captures soma implicitly) and for types where location is not compartment-specific.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation']} })
-    cell_count: Optional[int] = Field(default=None, description="""Number of cells of this type registered to this anatomical region. Populated from atlas MERFISH registration data (e.g. WMBv1 anat cell counts per cluster per region). Enables ranking of anatomical locations by cell abundance. Leave absent for non-atlas nodes.
+    cell_count: Optional[int] = Field(default=None, description="""Number of cells of this type with soma strictly registered to this anatomical region (legacy in-region count). Populated from atlas MERFISH registration data (e.g. WMBv1 anat cell counts per cluster per region). Enables ranking of anatomical locations by cell abundance. Leave absent for non-atlas nodes.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation']} })
+    cell_ratio: Optional[float] = Field(default=None, description="""Legacy BCKG-stored ratio (= cell_count / cluster total cell count). Upstream renamed the source edge property to `obsolete_cell_ratio` (cosmetic churn — same value), retained here under the legacy name for audit and continuity. New region-inclusion logic should prefer `ratio_in_or_near_100um`. Leave absent for non-atlas nodes.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation']} })
+    count_in_or_near_100um: Optional[int] = Field(default=None, description="""Count of cells of this type with soma in or within 100µm of this anatomical region. Per-source contribution (one AnatomicalLocation entry per (region, source DOI) — see `sources`). Currently the authoritative spatial count; `cell_count` is restricted to soma strictly in-region. Populated from upstream brain_cell_KG `countInOrNear100um` spatial-edge property.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation']} })
+    ratio_in_or_near_100um: Optional[float] = Field(default=None, description="""Fraction of cluster cells with soma in or within 100µm of this region (= count_in_or_near_100um / cluster total cell count). The active region-inclusion cutoff is applied upstream against this value; evidencell does no further thresholding. Prefer this over `cell_ratio` for new region-presence logic.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation']} })
     sources: Optional[list[PropertySource]] = Field(default=None, description="""Evidence sources for this specific anatomical location assertion. Populate for classical and prior-transcriptomic nodes, especially for sub-regional claims where location is specific or contested. scope is critical where location is context-dependent. Leave empty for atlas terminal nodes (provenance implicit from atlas + cell_set_accession).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
@@ -1154,7 +1160,10 @@ class ProposedCLTerm(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
-    cl_id: Optional[str] = Field(default=None, description="""Existing CL ID (e.g. CL:4310096) or proposed new ID placeholder""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm']} })
+    cl_id: Optional[str] = Field(default=None, description="""Existing CL term ID this proposed term is updating, when applicable (e.g. when adding/refining a definition for an existing CL term). Leave absent for brand-new proposed terms — temporary CL: placeholder IDs must not be used, as they cannot be validated against the live ontology. Track the term request in `term_request_url` instead.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm']} })
+    term_request_url: Optional[str] = Field(default=None, description="""URL of the CL new-term-request issue tracking this proposed term (e.g. https://github.com/obophenotype/cell-ontology/issues/N). Populated once a term request has been filed via the cl-term-request workflow. The eventual CL ID assigned on merge replaces this field with cl_id.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm']} })
     label: Optional[str] = Field(default=None, description="""Term label""", json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm', 'ProposedCLTerm', 'SourceGroup']} })
     parent_cl_term: Optional[OntologyTerm] = Field(default=None, description="""The CL term this proposed term is a child of. For nodes with cl_mapping.mapping_type = BROAD, this should match cl_mapping.cl_term. For nodes with cl_mapping.mapping_type = EXACT, this field is typically not needed. Drives placement in the CL hierarchy and should be confirmed with CL editors.
 """, json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',

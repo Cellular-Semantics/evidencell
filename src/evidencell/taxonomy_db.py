@@ -436,30 +436,68 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
     rationale_dois = dois_raw if isinstance(dois_raw, list) else []
 
     # anat — KG returns one merged edge per (cluster, region) with parallel
-    # lists for cell_count, cell_ratio, and source (DOI). Order is aligned:
-    # index i is one source's contribution. Expand into one entry per source
-    # so each AnatomicalLocation in the output YAML has a single count and a
-    # single source DOI (option (a) per planning/dev_requests/
-    # 2026-04-30_zhuang-spatial-ingest.md). Legacy scalar fields (no list,
-    # no source) are still accepted for older fixtures and CAS imports.
+    # lists indexed by source (DOI):
+    #   cell_count[i]              soma strictly in region (legacy count)
+    #   cell_ratio[i]              cell_count[i] / cluster cell_count
+    #                              (upstream property `obsolete_cell_ratio`,
+    #                              aliased to `cell_ratio` in the Cypher)
+    #   count_in_or_near_100um[i]  soma in or within 100µm of region
+    #                              (current authoritative spatial count)
+    #   ratio_in_or_near_100um[i]  count_in_or_near_100um[i] / cluster
+    #                              cell_count (precalc'd in Cypher)
+    #   source[i]                  DOI of the contributing study
+    # Expand into one entry per source so each AnatomicalLocation in the
+    # output YAML has a single count + ratio + source DOI. Legacy scalar
+    # fields (no list, no source) are still accepted for older fixtures
+    # and CAS imports.
     anat_entries = []
     for a in (row.get(rk.get("anat", "anat")) or []):
         anat_id = a.get("anat_id")
         anat_label = a.get("anat_label")
         counts = a.get("cell_count")
         ratios = a.get("cell_ratio")
+        counts_100um = a.get("count_in_or_near_100um")
+        ratios_100um = a.get("ratio_in_or_near_100um")
         sources = a.get("source")
         # Normalise to parallel lists. Treat scalar inputs (legacy) as length-1.
         counts_list = counts if isinstance(counts, list) else [counts]
         ratios_list = ratios if isinstance(ratios, list) else [ratios]
+        counts_100um_list = (
+            counts_100um if isinstance(counts_100um, list) else [counts_100um]
+        )
+        ratios_100um_list = (
+            ratios_100um if isinstance(ratios_100um, list) else [ratios_100um]
+        )
         sources_list = sources if isinstance(sources, list) else [sources]
-        n = max(len(counts_list), len(ratios_list), len(sources_list), 1)
+        n = max(
+            len(counts_list),
+            len(ratios_list),
+            len(counts_100um_list),
+            len(ratios_100um_list),
+            len(sources_list),
+            1,
+        )
+        # Coerce numeric types out of ijson's Decimal default — YAML cannot
+        # round-trip Decimal safely (it emits a !!python/object tag that
+        # safe_load rejects). Ints stay ints, floats become Python floats.
+        def _as_int(v: object) -> int | None:
+            return int(v) if v is not None else None
+
+        def _as_float(v: object) -> float | None:
+            return float(v) if v is not None else None
+
         for i in range(n):
             anat_entries.append({
                 "id": anat_id,
                 "label": anat_label,
-                "cell_count": counts_list[i] if i < len(counts_list) else None,
-                "cell_ratio": ratios_list[i] if i < len(ratios_list) else None,
+                "cell_count": _as_int(counts_list[i]) if i < len(counts_list) else None,
+                "cell_ratio": _as_float(ratios_list[i]) if i < len(ratios_list) else None,
+                "count_in_or_near_100um": (
+                    _as_int(counts_100um_list[i]) if i < len(counts_100um_list) else None
+                ),
+                "ratio_in_or_near_100um": (
+                    _as_float(ratios_100um_list[i]) if i < len(ratios_100um_list) else None
+                ),
                 "source": sources_list[i] if i < len(sources_list) else None,
             })
 
@@ -722,6 +760,12 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
         }
         if a.get("cell_count") is not None:
             loc["cell_count"] = a["cell_count"]
+        if a.get("cell_ratio") is not None:
+            loc["cell_ratio"] = a["cell_ratio"]
+        if a.get("count_in_or_near_100um") is not None:
+            loc["count_in_or_near_100um"] = a["count_in_or_near_100um"]
+        if a.get("ratio_in_or_near_100um") is not None:
+            loc["ratio_in_or_near_100um"] = a["ratio_in_or_near_100um"]
         src_doi = a.get("source")
         if src_doi:
             loc["sources"] = [{
@@ -1136,11 +1180,13 @@ CREATE TABLE IF NOT EXISTS nodes (
 );
 
 CREATE TABLE IF NOT EXISTS anat (
-  node_id    TEXT NOT NULL REFERENCES nodes(node_id),
-  anat_id    TEXT NOT NULL,
-  anat_label TEXT NOT NULL,
-  cell_count INTEGER,
-  cell_ratio REAL
+  node_id                TEXT NOT NULL REFERENCES nodes(node_id),
+  anat_id                TEXT NOT NULL,
+  anat_label             TEXT NOT NULL,
+  cell_count             INTEGER,
+  cell_ratio             REAL,
+  count_in_or_near_100um INTEGER,
+  ratio_in_or_near_100um REAL
 );
 
 CREATE INDEX IF NOT EXISTS idx_nodes_level  ON nodes(taxonomy_level);
@@ -1730,13 +1776,15 @@ class TaxonomyDB:
             if not anat_id:
                 continue
             con.execute(
-                "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO anat VALUES (?, ?, ?, ?, ?, ?, ?)",
                 (
                     node_id,
                     anat_id,
                     a.get("label") or a.get("name_in_source", ""),
                     a.get("cell_count"),
-                    None,  # cell_ratio not in AnatomicalLocation schema
+                    a.get("cell_ratio"),
+                    a.get("count_in_or_near_100um"),
+                    a.get("ratio_in_or_near_100um"),
                 ),
             )
 
