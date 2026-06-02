@@ -1,0 +1,169 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml bla_pv_axo_axonic_cell CCN20230722 0 5
+  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
+Classical node: bla_pv_axo_axonic_cell (Basolateral amygdala parvalbumin-positive axo-axonic (chandelier) cell)
+  NT type: None
+  Markers (defining + neuropeptides): ['PVALB']
+  Soma locations: ['UBERON:0002887']
+  Resolved MBA IDs: ['MBA:295']
+  Query rank: 0
+  Taxonomy: CCN20230722
+  AT artifact: not found (proceeding without AT scoring)
+{
+  "classical_node_id": "bla_pv_axo_axonic_cell",
+  "classical_node_name": "Basolateral amygdala parvalbumin-positive axo-axonic (chandelier) cell",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_0010",
+      "label": "0010 IT EP-CLA Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0003",
+      "male_female_ratio": 0.56,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0014",
+      "label": "0014 IT EP-CLA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0004",
+      "male_female_ratio": 0.96,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0015",
+      "label": "0015 IT EP-CLA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0004",
+      "male_female_ratio": 0.79,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0016",
+      "label": "0016 IT EP-CLA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0004",
+      "male_female_ratio": 0.96,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0017",
+      "label": "0017 IT EP-CLA Glut_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0004",
+      "male_female_ratio": 0.79,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:295"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.003,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}
