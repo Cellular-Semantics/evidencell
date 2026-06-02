@@ -1,39 +1,39 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml cea_large_aspiny_neuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml cea_small_aspiny_neuron CCN20230722 1 5
+  Loaded leaf expression data: 5322 nodes at cluster level (for coverage computation)
+  Loaded expression data: 6523 nodes (merged across queried + leaf ranks where applicable)
+Classical node: cea_small_aspiny_neuron (Central amygdala small aspiny neuron)
   NT type: None
   Markers (defining + neuropeptides): []
   Soma locations: ['UBERON:0002883']
   Resolved MBA IDs: ['MBA:536']
-  Query rank: 0
+  Query rank: 1
   Taxonomy: CCN20230722
   AT artifact: not found (proceeding without AT scoring)
 {
-  "classical_node_id": "cea_large_aspiny_neuron",
-  "classical_node_name": "Central amygdala large aspiny neuron",
+  "classical_node_id": "cea_small_aspiny_neuron",
+  "classical_node_name": "Central amygdala small aspiny neuron",
   "taxonomy_id": "CCN20230722",
-  "rank": 0,
+  "rank": 1,
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0192",
-      "label": "0192 MEA Slc17a7 Glut_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 3.76,
+      "node_id": "CS20230722_SUPT_1164",
+      "label": "1164 Astro-TE NN_4",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_319",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 1,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
               "region=MBA:536"
@@ -41,29 +41,28 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.0,
+        "region_fraction": 0.005,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0200",
-      "label": "0200 MEA Slc17a7 Glut_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 4.26,
+      "node_id": "CS20230722_SUPT_0065",
+      "label": "0065 LA-BLA-BMA-PA Glut_6",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_014",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 2,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
               "region=MBA:536"
@@ -71,29 +70,28 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.02,
+        "region_fraction": 0.011,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0202",
-      "label": "0202 MEA Slc17a7 Glut_2",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
-      "male_female_ratio": 2.33,
+      "node_id": "CS20230722_SUPT_0064",
+      "label": "0064 LA-BLA-BMA-PA Glut_5",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_014",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 3,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
               "region=MBA:536"
@@ -101,29 +99,28 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.108,
+        "region_fraction": 0.109,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0203",
-      "label": "0203 MEA Slc17a7 Glut_2",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
-      "male_female_ratio": 1.22,
+      "node_id": "CS20230722_SUPT_0063",
+      "label": "0063 LA-BLA-BMA-PA Glut_4",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_014",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 4,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
               "region=MBA:536"
@@ -131,29 +128,28 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.184,
+        "region_fraction": 0.027,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0204",
-      "label": "0204 MEA Slc17a7 Glut_2",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
-      "male_female_ratio": 1.56,
+      "node_id": "CS20230722_SUPT_0062",
+      "label": "0062 LA-BLA-BMA-PA Glut_3",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_014",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 5,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
               "region=MBA:536"
@@ -161,7 +157,7 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.05,
+        "region_fraction": 0.009,
         "region_evidence": "SELF"
       }
     }

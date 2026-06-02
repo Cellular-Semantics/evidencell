@@ -1,39 +1,99 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml mea_glutamatergic_projection_neuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml mea_glutamatergic_projection_neuron CCN20230722 1 5
+  Loaded leaf expression data: 5322 nodes at cluster level (for coverage computation)
+  Loaded expression data: 6523 nodes (merged across queried + leaf ranks where applicable)
 Classical node: mea_glutamatergic_projection_neuron (Medial amygdala glutamatergic projection neuron)
   NT type: Glutamatergic
   Markers (defining + neuropeptides): []
   Soma locations: ['UBERON:0002892']
   Resolved MBA IDs: ['MBA:403']
-  Query rank: 0
+  Query rank: 1
   Taxonomy: CCN20230722
   AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "mea_glutamatergic_projection_neuron",
   "classical_node_name": "Medial amygdala glutamatergic projection neuron",
   "taxonomy_id": "CCN20230722",
-  "rank": 0,
+  "rank": 1,
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0143",
-      "label": "0143 L2/3 IT PIR-ENTl Glut_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0039",
-      "male_female_ratio": 1.13,
+      "node_id": "CS20230722_SUPT_1103",
+      "label": "1103 MDRNd Prox1 Pax6 Gly-Gaba_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_289",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 1,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_1196",
+      "label": "1196 Monocytes NN_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_336",
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_1197",
+      "label": "1197 DC NN_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_337",
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
             "n_members": 5,
             "filters": [
               "region=MBA:403",
@@ -47,86 +107,23 @@ Classical node: mea_glutamatergic_projection_neuron (Medial amygdala glutamaterg
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0194",
-      "label": "0194 MEA Slc17a7 Glut_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 2.7,
-      "discovery_score": {
-        "score": 1,
-        "rank_in_cohort": 2,
-        "cohort_size": 5,
-        "next_best_score": 1,
-        "rank": 0,
-        "contexts": [
-          {
-            "id": "cohort",
-            "kind": "SURVIVAL_COHORT",
-            "rank": 0,
-            "n_members": 5,
-            "filters": [
-              "region=MBA:403",
-              "nt_type=Glutamatergic"
-            ]
-          }
-        ],
-        "expression_detail": [],
-        "region_fraction": 0.212,
-        "region_evidence": "SELF"
-      }
-    },
-    {
-      "node_id": "CS20230722_CLUS_0195",
-      "label": "0195 MEA Slc17a7 Glut_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 1.27,
-      "discovery_score": {
-        "score": 1,
-        "rank_in_cohort": 3,
-        "cohort_size": 5,
-        "next_best_score": 1,
-        "rank": 0,
-        "contexts": [
-          {
-            "id": "cohort",
-            "kind": "SURVIVAL_COHORT",
-            "rank": 0,
-            "n_members": 5,
-            "filters": [
-              "region=MBA:403",
-              "nt_type=Glutamatergic"
-            ]
-          }
-        ],
-        "expression_detail": [],
-        "region_fraction": 0.401,
-        "region_evidence": "SELF"
-      }
-    },
-    {
-      "node_id": "CS20230722_CLUS_0196",
-      "label": "0196 MEA Slc17a7 Glut_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 4.88,
+      "node_id": "CS20230722_SUPT_1199",
+      "label": "1199 ILC NN_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_338",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 4,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
               "region=MBA:403",
@@ -135,29 +132,28 @@ Classical node: mea_glutamatergic_projection_neuron (Medial amygdala glutamaterg
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.396,
+        "region_fraction": 0.0,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0197",
-      "label": "0197 MEA Slc17a7 Glut_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 10.11,
+      "node_id": "CS20230722_SUPT_1187",
+      "label": "1187 VLMC NN_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_330",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 5,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
               "region=MBA:403",
@@ -166,7 +162,7 @@ Classical node: mea_glutamatergic_projection_neuron (Medial amygdala glutamaterg
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.451,
+        "region_fraction": 0.004,
         "region_evidence": "SELF"
       }
     }

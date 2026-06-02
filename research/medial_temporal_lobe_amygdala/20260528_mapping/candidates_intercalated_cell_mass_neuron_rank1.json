@@ -1,172 +1,168 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml bla_lamp5_interneuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: bla_lamp5_interneuron (Basolateral amygdala LAMP5-expressing interneuron)
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml intercalated_cell_mass_neuron CCN20230722 1 5
+  Loaded leaf expression data: 5322 nodes at cluster level (for coverage computation)
+  Loaded expression data: 6523 nodes (merged across queried + leaf ranks where applicable)
+Classical node: intercalated_cell_mass_neuron (Intercalated cell mass FOXP2+ GABAergic interneuron)
   NT type: GABAergic
-  Markers (defining + neuropeptides): ['LAMP5']
-  Soma locations: ['UBERON:0002887']
-  Resolved MBA IDs: ['MBA:295']
-  Query rank: 0
+  Markers (defining + neuropeptides): ['FOXP2', 'DRD1', 'OPRM1']
+  Soma locations: ['UBERON:0002884']
+  Resolved MBA IDs: ['MBA:1105']
+  Query rank: 1
   Taxonomy: CCN20230722
   AT artifact: not found (proceeding without AT scoring)
 {
-  "classical_node_id": "bla_lamp5_interneuron",
-  "classical_node_name": "Basolateral amygdala LAMP5-expressing interneuron",
+  "classical_node_id": "intercalated_cell_mass_neuron",
+  "classical_node_name": "Intercalated cell mass FOXP2+ GABAergic interneuron",
   "taxonomy_id": "CCN20230722",
-  "rank": 0,
+  "rank": 1,
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0596",
-      "label": "0596 OB-STR-CTX Inh IMN_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
+      "node_id": "CS20230722_SUPT_0215",
+      "label": "0215 Sst Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUPT_0166",
-      "male_female_ratio": 0.47,
+      "parent_id": "CS20230722_SUBC_053",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 1,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295",
+              "region=MBA:1105",
               "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.008,
+        "region_fraction": 0.003,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0628",
-      "label": "0628 Vip Gaba_2",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0174",
-      "male_female_ratio": 1.44,
+      "node_id": "CS20230722_SUPT_0206",
+      "label": "0206 Pvalb Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_052",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 2,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295",
+              "region=MBA:1105",
               "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.049,
+        "region_fraction": 0.001,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0623",
-      "label": "0623 Vip Gaba_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
-      "male_female_ratio": 1.38,
+      "node_id": "CS20230722_SUPT_0249",
+      "label": "0249 NDB-SI-MA-STRv Lhx8 Gaba_6",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_057",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 3,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295",
+              "region=MBA:1105",
               "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.007,
+        "region_fraction": 0.003,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0625",
-      "label": "0625 Vip Gaba_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
-      "male_female_ratio": 1.17,
+      "node_id": "CS20230722_SUPT_0255",
+      "label": "0255 NDB-SI-MA-STRv Lhx8 Gaba_12",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_057",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 4,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295",
+              "region=MBA:1105",
               "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.094,
+        "region_fraction": 0.003,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0626",
-      "label": "0626 Vip Gaba_1",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
-      "male_female_ratio": 1.63,
+      "node_id": "CS20230722_SUPT_0235",
+      "label": "0235 STR Prox1 Lhx6 Gaba_3",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_054",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 5,
         "cohort_size": 5,
         "next_best_score": 1,
-        "rank": 0,
+        "rank": 1,
         "contexts": [
           {
             "id": "cohort",
             "kind": "SURVIVAL_COHORT",
-            "rank": 0,
+            "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295",
+              "region=MBA:1105",
               "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.026,
+        "region_fraction": 0.015,
         "region_evidence": "SELF"
       }
     }
