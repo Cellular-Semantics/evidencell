@@ -136,7 +136,10 @@ nodes:
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: 6078957_3d072d3b
-  cl_mapping: CL:0000598
+  cl_mapping:
+    cl_term: {id: 'CL:0000598', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:17234587
@@ -205,7 +208,7 @@ nodes:
       method: asta_snippet — scRNA-seq identifies Pvalb-expressing MGE-derived 
         interneuron types in mouse amygdala
       scope: mouse amygdala scRNA-seq
-      quote_key: .inf
+      quote_key: null
       marker_type: TRANSCRIPT
     - ref: PMID:39463931
       method: asta_snippet — primate snRNA-seq identifies PVALB+ interneuron 
@@ -271,7 +274,10 @@ nodes:
         and tightly control principal-neuron spike discharge
       scope: rodent BLA fear-learning circuit review
       quote_key: 233450033_2f3f1d53
-  cl_mapping: CL:0000118
+  cl_mapping:
+    cl_term: {id: 'CL:0000118', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:17234587
@@ -355,7 +361,10 @@ nodes:
       method: asta_report
       scope: electrophysiology synthesis from ASTA report
       quote_key: 212579559_51e7dd2b
-  cl_mapping: CL:4023036
+  cl_mapping:
+    cl_term: {id: 'CL:4023036', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:32144495
@@ -471,7 +480,10 @@ nodes:
         learning (opposite effect to PV+ activation)
       scope: rodent BLA fear-learning, optogenetics
       quote_key: 233450033_6def067a
-  cl_mapping: CL:0011005
+  cl_mapping:
+    cl_term: {id: 'CL:0011005', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:17234587
@@ -588,7 +600,10 @@ nodes:
       method: asta_report
       scope: electrophysiology synthesis from ASTA report
       quote_key: 212579559_51e7dd2b
-  cl_mapping: CL:0000118
+  cl_mapping:
+    cl_term: {id: 'CL:0000118', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:17234587
@@ -727,7 +742,10 @@ nodes:
         in BLA during fear conditioning
       scope: rodent BLA fear-learning, optogenetics
       quote_key: 233450033_a39dd55b
-  cl_mapping: CL:0011005
+  cl_mapping:
+    cl_term: {id: 'CL:0011005', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:22837739
@@ -796,7 +814,10 @@ nodes:
       method: asta_report
       scope: electrophysiology synthesis from ASTA report
       quote_key: 212579559_51e7dd2b
-  cl_mapping: CL:0000693
+  cl_mapping:
+    cl_term: {id: 'CL:0000693', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:31636080
@@ -978,7 +999,10 @@ nodes:
         activity
       scope: mouse CeL, electrophysiology
       quote_key: 280558687_a3cf6200
-  cl_mapping: CL:0011005
+  cl_mapping:
+    cl_term: {id: 'CL:0011005', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:25309888
@@ -1058,7 +1082,10 @@ nodes:
         defensive behaviors differentially marked by Lhx6 and Lhx9
       scope: mouse medial amygdala, fate mapping
       quote_key: 627853_c6aafc07
-  cl_mapping: CL:0011005
+  cl_mapping:
+    cl_term: {id: 'CL:0011005', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:25309337
@@ -1127,7 +1154,10 @@ nodes:
         subpallial origins, yielding a diverse neuronal population
       scope: review of amygdala molecular cell types
       quote_key: 267685584_c9abe6b1
-  cl_mapping: CL:0000679
+  cl_mapping:
+    cl_term: {id: 'CL:0000679', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:27160258
@@ -1428,7 +1458,10 @@ nodes:
         derived from the paralaminar nucleus
       scope: cross-species amygdala snRNA-seq (human/macaque/mouse/chicken)
       quote_key: 256832817_58d7b193
-  cl_mapping: CL:4042028
+  cl_mapping:
+    cl_term: {id: 'CL:4042028', label: null, name_in_source: null}
+    mapping_type: BROAD
+    mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
   proposed_cl_term:
   definition_references:
   - PMID:24155945
@@ -1538,6 +1571,12 @@ edges:
   taxonomy_type: CS20230722_SUPT_0057
   relationship: skos:exactMatch
   mapping_justification: semapv:UnreviewedManualMapping
+  confidence: LOW
+  confidence_score: 0.4
+  rationale: >
+    NT type (Glutamatergic/Glut) and soma location (MBA:403 Medial amygdalar nucleus, region_fraction 0.588) are CONSISTENT across two independent MERFISH datasets (Zhuang 2023; Yao 2024). SUPT_0057 ranks first among five MEA Slc17a7 Glut supertypes by MeA enrichment, making it the best available candidate at this rank. Confidence is capped at LOW because the classical defining marker LHX9 is absent from atlas metadata and no precomputed expression data are available to confirm Lhx9 expression in this supertype. Upgrade to MODERATE requires LHX9 expression confirmation.
+  rationale_generated_at: '2026-06-02T12:53:35+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/medial_amygdala_lhx9_glutamatergic_neuron_summary.md
   property_comparisons:
   - property: nt_type
     node_a_value: Glutamatergic
@@ -1593,6 +1632,12 @@ edges:
   taxonomy_type: CS20230722_SUPT_0249
   relationship: skos:broadMatch
   mapping_justification: semapv:UnreviewedManualMapping
+  confidence: LOW
+  confidence_score: 0.3
+  rationale: >
+    NT type is CONSISTENT (GABAergic/GABA). Location is APPROXIMATE — CeA cells are present in SUPT_0249 (14% of the supertype) but the supertype spans NDB/SI/STRv/Pallidum. The classical node has no defining_markers; all marker comparisons are NOT_ASSESSED. Th (tyrosine hydroxylase) is a defining marker of the atlas supertype, which is atypical for CeA GABAergic neurons and may indicate that this supertype does not specifically represent CeA output neurons. Five equally-scored CeA GABAergic supertypes were returned in discovery; this assignment is provisional and requires targeted marker queries (Prkcd, Sst, Crh, Isl1) across all five candidates.
+  rationale_generated_at: '2026-06-02T12:53:35+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/central_amygdala_gabaergic_projection_neuron_summary.md
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -1658,6 +1703,12 @@ edges:
   taxonomy_type: CS20230722_SUPT_0235
   relationship: skos:broadMatch
   mapping_justification: semapv:UnreviewedManualMapping
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    NT type is CONSISTENT (GABAergic). Location is APPROXIMATE — ITC cells (MBA:1105) are present in the supertype (2.2% of cells) and the Prox1+/Lhx6+ lineage is biologically consistent with ITC developmental origin; however, the supertype's dominant distribution is in Striatum and Cortical subplate. No defining_markers are encoded on the classical node; all marker comparisons are NOT_ASSESSED. Confidence is LOW because the supertype is not ITC-selective and marker-level validation is not possible without formal ITC marker extraction (TSHZ1, FOXP2, DRD1) and precomputed expression data.
+  rationale_generated_at: '2026-06-02T12:53:35+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/amygdala_intercalated_cell_summary.md
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -1718,6 +1769,12 @@ edges:
   taxonomy_type: CS20230722_SUPT_0005
   relationship: skos:broadMatch
   mapping_justification: semapv:UnreviewedManualMapping
+  confidence: LOW
+  confidence_score: 0.25
+  rationale: >
+    NT type is CONSISTENT (Glutamatergic/Glut). Location is APPROXIMATE — BLA cells (MBA:295) confirmed in SUPT_0005 by Zhuang 2023 MERFISH (33 cells, 8% of supertype), but the supertype is primarily distributed in Cortical subplate and Olfactory areas; Yao 2024 gives only 3 cells (0.6%), a ten-fold discrepancy. SUPT_0005 captures a minor EP/claustrum-homologous BLA subpopulation. Classical defining markers SLC17A7 and CAMK2A are NOT_ASSESSED. Three LA-BLA-BMA-PA Glut supertypes (region_fraction 0.40-0.71) represent the likely primary candidates for the bulk of BLA principal neurons and require hypothesis-mode assessment before this mapping can be upgraded.
+  rationale_generated_at: '2026-06-02T12:53:35+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
   property_comparisons:
   - property: nt_type
     node_a_value: Glutamatergic
@@ -1781,6 +1838,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0256
   relationship: skos:broadMatch
   mapping_justification: semapv:UnreviewedManualMapping
+  confidence: LOW
+  confidence_score: 0.2
+  rationale: >
+    NT type is CONSISTENT (GABAergic). Location is APPROXIMATE — MeA cells (MBA:403) are present in SUPT_0256 (~6% of the supertype) but the dominant distribution is striatopallidal. The classical node is poorly characterised with no defining_markers; all marker comparisons are NOT_ASSESSED. This is a broad classical type (likely encompassing multiple atlas supertypes) mapped to a single provisionally ranked candidate from a cohort of 5 equally-scored MeA GABAergic supertypes. Confidence is LOW and cardinality is n:m; neuropeptide-marker extraction (Gal, Avp, Sst, Npy) from literature is needed to resolve subtype boundaries.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   property_comparisons:
   - property: nt_type
     node_a_value: GABAergic
@@ -1835,6 +1897,12 @@ edges:
   taxonomy_type: CS20230722_SUPT_0005
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.07
+  rationale: >
+    Paralaminar immature neurons are a primate-enriched population defined by DCX/BCL2/NES/VIM immaturity markers absent from adult mouse brain. Cross-species snRNA-seq (PMID:36788214) explicitly confirms this population is absent from mouse datasets. Location is DISCORDANT (paralaminar nucleus has no MBA CCF equivalent; SUPT_0005 maps to Cortical subplate EP/CLA territory). Classical defining markers are incompatible with any adult mouse transcriptomic type. This edge records the closest available type by regional/NT filter only and does not represent a biological equivalence. MapMyCells on published human paralaminar snRNA-seq data is the decisive experiment.
+  rationale_generated_at: '2026-06-02T12:18:19+00:00'
+  report_path: reports/medial_temporal_lobe_amygdala/paralaminar_immature_neuron_summary.md
   reconciliation_note: >
     Paralaminar neurons are primate-enriched (human-prominent), defined by DCX/BCL2/NES/VIM immaturity markers absent from adult mouse brain. WMBv1 (CCN20230722) is derived from adult mouse brain and contains no equivalent persistent immature neuronal state in the amygdala. SUPT_0005 (IT EP-CLA Glut_3) was surfaced by regional/NT survival-cohort filter only — not by any shared biological property or marker overlap. Published cross-species snRNA-seq (PMID:36788214) explicitly confirms absence of this population from mouse datasets. This edge records the closest available transcriptomic type by broad anatomical proximity; it is not a biological equivalence claim.
   property_comparisons:
@@ -1896,6 +1964,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0235
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.1
+  rationale: >
+    PVALB-defining marker absent from atlas metadata for all rank1 BLA GABAergic supertypes. Without precomputed expression data (local_stats None), discovery cannot distinguish PV basket cells from other BLA interneuron types — all scored equally (score=1.0). Candidate SUPT_0235 (STR Prox1 Lhx6 Gaba_3) represents the cohort top-rank by ordering only. This mapping is not biologically grounded; a PV-specific atlas type in the BLA cannot be identified in degraded mode. Confidence: UNCERTAIN pending precomputed expression profiling.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     No precomputed expression data available (local_stats None). PVALB is absent from atlas metadata for all rank1 candidates. Discovery in degraded mode returned the same 5 GABAergic supertypes for all BLA interneuron types; SUPT_0235 (STR Prox1 Lhx6 Gaba_3) is rank1 cohort top but cannot be distinguished from other candidates without expression data. PV-specific atlas types (e.g. Pvalb-named supertypes in BLA) not identified in this query; may require expanded regional search or HDF5 data.
   property_comparisons:
@@ -1941,6 +2014,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0235
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.1
+  rationale: >
+    PVALB-defining marker absent from atlas metadata for all rank1 BLA GABAergic supertypes. Discovery in degraded mode (no precomputed expression) cannot distinguish PV axo-axonic cells from other BLA GABAergic types. SUPT_0235 is cohort top-rank by ordering only. A PV-specific atlas type in BLA cannot be identified in degraded mode. Confidence: UNCERTAIN.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     Same degraded-mode issue as bla_pv_basket_cell. PVALB-positive axo-axonic cells in BLA cannot be resolved from other BLA GABAergic types without expression data. The AAC type has been described across all amygdala nuclei containing GLU PNs (Raudales et al. 2024), suggesting a broad distribution that may map to multiple supertypes.
   property_comparisons:
@@ -1986,6 +2064,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0235
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.1
+  rationale: >
+    SST and CALB1 markers absent from atlas metadata for rank1 BLA GABAergic supertypes. Discovery in degraded mode cannot distinguish SST interneurons from other BLA GABAergic types. SUPT_0230 (Sst Gaba_17) is also in the tied cohort and may be more biologically relevant by name, but scored identically. Confidence: UNCERTAIN pending expression data.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     SST and CALB1 absent from atlas metadata for all rank1 candidates. Discovery in degraded mode; SUPT_0230 (Sst Gaba_17) also appears in rank1 cohort and may be a more specific candidate by name alone, but scored equally. Expression data needed to distinguish.
   property_comparisons:
@@ -2036,6 +2119,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0235
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.1
+  rationale: >
+    CCK and CALB1 markers absent from atlas metadata for all rank1 BLA GABAergic supertypes. Discovery in degraded mode cannot distinguish CCK basket cells from other BLA interneuron types. Confidence: UNCERTAIN pending precomputed expression profiling.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     CCK and CALB1 absent from atlas metadata for rank1 candidates. Cannot distinguish CCK basket cells from other BLA GABAergic types in degraded mode. Note: bla_cck_basket_cell and bla_cck_cb1_basket_cell (amygdala graph) may overlap in coverage.
   property_comparisons:
@@ -2086,6 +2174,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0235
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.1
+  rationale: >
+    VIP, CALB2, CCK markers absent from atlas metadata for rank1 candidates. Rank0 Vip Gaba clusters (CLUS_0625-0637) could be more biologically relevant by name but scored identically to all other BLA GABAergic candidates. Discovery cannot discriminate without expression data. Confidence: UNCERTAIN.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     VIP, CALB2, CCK absent from atlas metadata for rank1 candidates in degraded mode. Rank0 candidates include 'Vip Gaba' clusters (CS20230722_CLUS_0625-0637) which by name could be more relevant, but all score 1.0 tied with no discrimination possible.
   property_comparisons:
@@ -2141,6 +2234,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0235
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.1
+  rationale: >
+    NPY marker absent from atlas metadata for rank1 BLA GABAergic supertypes. Discovery in degraded mode cannot identify the NPY neurogliaform cell subtype. Confidence: UNCERTAIN pending expression data.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     NPY absent from atlas metadata for rank1 candidates. Discovery in degraded mode; NPY expression data needed to identify which BLA GABAergic supertype hosts the neurogliaform cell subpopulation.
   property_comparisons:
@@ -2186,6 +2284,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0235
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.1
+  rationale: >
+    SST and NOS1 markers absent from atlas metadata for rank1 BLA GABAergic supertypes. The SST+/NOS1+ long-range GABAergic projection neuron is a rare BLA type (~5-8% of GABAergic neurons) that may be distinguishable from local interneurons by co-expression of SST and NOS1 — but this cannot be assessed without expression data. Confidence: UNCERTAIN.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     SST+/NOS1+ long-range GABAergic projection neurons absent from atlas metadata discriminators in degraded mode. This type is relatively rare (~5-8% of BLA GABAergic neurons) and may map to a specific atlas supertype or cluster distinguishable by SST+NOS1 co-expression — needs expression data.
   property_comparisons:
@@ -2236,6 +2339,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0005
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: >
+    Fear neurons are a circuit-level functional concept defined by activity during Pavlovian fear conditioning, not by molecular identity. No defining markers are encoded. This type is likely a subpopulation within BLA glutamatergic principal neurons but cannot be mapped to a specific atlas transcriptomic type without molecular characterisation (e.g. Fos-TRAP scRNA-seq or activity-dependent labelling). Confidence: UNCERTAIN.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     Fear neurons are a functional circuit-level concept defined by activity during fear conditioning, not by molecular markers. They are likely a subpopulation within the BLA glutamatergic principal neuron population (same candidates as bla_glutamatergic_principal_neuron). No specific molecular atlas type corresponds to this functional identity; mapping is provisional pending molecular characterisation of fear-active BLA neurons (e.g. Fos-TRAP experiments paired with scRNA-seq).
   property_comparisons:
@@ -2276,6 +2384,11 @@ edges:
   taxonomy_type: CS20230722_SUPT_0005
   relationship: evidencell:UncertainRelationship
   mapping_justification: semapv:UnspecifiedMatching
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: >
+    Extinction neurons are a circuit-level functional concept defined by activity during fear extinction, not by molecular identity. No defining markers are encoded. Like fear neurons, they are likely a subpopulation within BLA glutamatergic principal neurons but cannot be mapped without molecular characterisation. Confidence: UNCERTAIN.
+  rationale_generated_at: '2026-06-02T12:54:17+00:00'
   reconciliation_note: >
     Extinction neurons are a functional circuit-level concept defined by activity during fear extinction, not by molecular markers. Like fear neurons, they are likely a subpopulation within BLA glutamatergic principal neurons. No specific molecular atlas type corresponds to this functional identity; molecular characterisation is needed.
   property_comparisons:
