@@ -1,12 +1,38 @@
 {
   "node_id": "bla_pv_axo_axonic_cell",
-  "summaries_read": 80,
-  "skipped_excluded": 0,
-  "skipped_duplicate_ref": 4,
-  "skipped_low_relevance": 5,
-  "entries_written": 3,
-  "fields_populated": ["defining_markers.PVALB.sources", "morphology.sources"],
-  "fields_with_no_evidence": ["anatomical_location.sources", "electrophysiology.sources", "nt_type.sources"],
-  "synonyms_found": [],
-  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json"
+  "node_name": "Basolateral amygdala parvalbumin-positive axo-axonic (chandelier) cell",
+  "run_date": "2026-06-03",
+  "added_by": "evidence_extraction_bla_pv_axo_axonic_cell_2026-06-03",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/all_summaries_merged.json",
+  "excluded_corpus_ids": [
+    "231758452",
+    "1229611",
+    "244936719"
+  ],
+  "existing_refs_skipped": [
+    "PMID:22726836",
+    "PMID:27013983",
+    "PMID:28542195",
+    "PMID:31636080",
+    "PMID:33837051",
+    "PMID:39012795"
+  ],
+  "evidence_added": [
+    {
+      "corpus_id": "233450033",
+      "pmid": "PMID:33994955",
+      "title": "Inhibitory Circuits in the Basolateral Amygdala in Aversive Learning and Memory",
+      "quote_key": "233450033_2f375c7c",
+      "quote_text": "PV+ cells have been separated into basket cells, axo-axonic chandelier cells and AStria cells",
+      "kb_field": "morphology.sources",
+      "method": "asta_snippet \u2014 Leroy & Bhatt 2021 review: PV chandelier cells in BLA \u2014 basket vs axo-axonic distinction",
+      "scope": "rodent basolateral amygdala, review of in vivo optogenetics and in vitro electrophysiology",
+      "rationale": "Directly names axo-axonic chandelier cells as a PV+ subtype in BLA, supporting morphological classification. PMID:33994955 was not in existing refs."
+    }
+  ],
+  "summaries_considered": 10,
+  "summaries_skipped_excluded": 0,
+  "summaries_skipped_existing_ref": 6,
+  "summaries_skipped_low_relevance_no_target": 0,
+  "summaries_skipped_insufficient_evidence": 3
 }

@@ -1,12 +1,29 @@
 {
   "node_id": "intercalated_cell_mass_neuron",
-  "summaries_read": 80,
-  "skipped_excluded": 0,
-  "skipped_duplicate_ref": 5,
+  "run_date": "2026-06-03",
+  "summaries_read": 82,
+  "skipped_excluded": 2,
+  "skipped_duplicate_ref": 6,
   "skipped_low_relevance": 4,
-  "entries_written": 3,
-  "fields_populated": ["nt_type.sources", "defining_markers.DRD1.sources"],
-  "fields_with_no_evidence": ["morphology.sources (existing)", "electrophysiology.sources"],
+  "entries_written": 1,
+  "quotes_added_to_refs": 1,
+  "fields_populated": [
+    "morphology.sources"
+  ],
+  "fields_with_no_evidence": [
+    "electrophysiology.sources"
+  ],
   "synonyms_found": [],
-  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json"
+  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json",
+  "extractions": [
+    {
+      "corpus_id": "273531817",
+      "pmid": "PMID:39463931",
+      "quote_key": "273531817_6f61f40d",
+      "field": "morphology.sources",
+      "quote_text": "suggesting that the D3-enriched population was spiny and the HTR7-enriched population was aspiny, confirming a prior morphological analysis of ITC neurons",
+      "action": "new quote written to refs; added as morphology.sources entry \u2014 provides cross-species (human/NHP) transcriptomic evidence for morphological heterogeneity (spiny vs aspiny ITC subtypes)"
+    }
+  ],
+  "notes": "New morphology source from Totty et al. 2024 (PMID:39463931) snRNA-seq in human/NHP amygdala \u2014 TSHZ1+/FOXP2+ ITC subtypes differ in morphology (D3+/DRD1+ = spiny; HTR7+ = aspiny). This strengthens the intercalated_cell_mass_neuron morphology claim beyond the existing Veinante et al. 2013 reference."
 }

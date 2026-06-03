@@ -1,12 +1,41 @@
 {
   "node_id": "cea_pkc_delta_neuron",
+  "run_date": "2026-06-03",
   "summaries_read": 80,
-  "skipped_excluded": 0,
-  "skipped_duplicate_ref": 4,
+  "skipped_excluded": 4,
+  "skipped_duplicate_ref": 6,
   "skipped_low_relevance": 2,
-  "entries_written": 1,
-  "fields_populated": ["defining_markers.PRKCD.sources"],
-  "fields_with_no_evidence": ["electrophysiology.sources (existing)", "anatomical_location.sources (existing)", "nt_type.sources (existing)"],
-  "synonyms_found": [],
-  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json"
+  "entries_written": 2,
+  "fields_populated": [
+    "defining_markers.Prkcd.sources"
+  ],
+  "sources_added": [
+    {
+      "corpus_id": "273531817",
+      "pmid": "PMID:39463931",
+      "quote_key": "273531817_722a2099",
+      "quote_text": "We also identified clusters corresponding to protein kinase C-δ + (PKRCD + /SST -) interneurons in the central nucleus",
+      "field": "defining_markers.Prkcd.sources",
+      "note": "Added in prior run (2026-05-28): Yu et al. 2024 primate snRNA-seq identifies PKRCD+/SST- interneuron cluster in primate central nucleus"
+    },
+    {
+      "corpus_id": "253356112",
+      "pmid": "PMID:36425768",
+      "quote_key": "253356112_39b8cae2",
+      "quote_text": "Prkcd and Sst each exhibited mixed expression across multiple scRNA-seq-clusters",
+      "field": "defining_markers.Prkcd.sources",
+      "section": "Results",
+      "marker_type": "TRANSCRIPT",
+      "note": "New 2026-06-03: Bhatt et al. 2022 CeA scRNA-seq identifies Prkcd as canonical CeA marker; notes partial overlap with Sst clusters"
+    }
+  ],
+  "fields_with_no_evidence": [
+    "electrophysiology.sources (existing: PMID:21068836, PMID:40780965)",
+    "anatomical_location.sources (existing: PMID:33188006, PMID:21068836, PMID:38419794)",
+    "nt_type.sources (existing: PMID:21068836, PMID:25433901)",
+    "negative_markers.Sst.sources (existing: PMID:33188006, PMID:21068836)"
+  ],
+  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json",
+  "kb_file": "/Users/ar38/Documents/GitHub/evidencell/kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml",
+  "added_by": "evidence_extraction_cea_pkc_delta_neuron_2026-06-03"
 }

@@ -1,13 +1,31 @@
 {
   "node_id": "cea_small_aspiny_neuron",
-  "summaries_read": 80,
-  "skipped_excluded": 0,
-  "skipped_duplicate_ref": 1,
+  "run_date": "2026-06-03",
+  "summaries_read": 82,
+  "skipped_excluded": 2,
+  "skipped_duplicate_ref": 2,
   "skipped_low_relevance": 0,
-  "entries_written": 0,
-  "fields_populated": [],
-  "fields_with_no_evidence": ["anatomical_location.sources (existing)", "morphology.sources (existing)"],
+  "entries_written": 1,
+  "quotes_added_to_refs": 0,
+  "fields_populated": [
+    "electrophysiology.sources"
+  ],
+  "fields_with_no_evidence": [
+    "anatomical_location.sources (existing)",
+    "morphology.sources (existing)",
+    "nt_type.sources (existing)"
+  ],
   "synonyms_found": [],
   "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json",
-  "notes": "No new corpus_id in summaries provides a verbatim quote specific to CeA small aspiny neurons; existing characterisation derives from Lo Iacono et al. 2020 (220976356 / PMID:32751957), already cited."
+  "extractions": [
+    {
+      "corpus_id": "220976356",
+      "pmid": "PMID:32751957",
+      "quote_key": "220976356_ae5a369d",
+      "field": "electrophysiology.sources",
+      "quote_text": ".Two distinct cell types were described in terms of their reaction to a prolonged and short current injection: type A (75%) and type B (25%) (Schiess et al., 1999)(Schiess et al., 1993). Another two types of cells called \"burst-firing\" cells and \"fast-spiking\" cells are present in the amygdala.",
+      "action": "added electrophysiology field with CeA neuron type classification evidence (quote already in refs)"
+    }
+  ],
+  "notes": "Electrophysiology block added using existing refs quote 220976356_ae5a369d (Nikolenko et al. 2020 / PMID:32751957). Small aspiny neurons likely correspond to fast-spiking internuncial neurons described in this paper."
 }

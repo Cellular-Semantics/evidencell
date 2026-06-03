@@ -8,7 +8,8 @@
 
 graph_id: amygdala_specific_report_ingest_20260528
 graph_label: Amygdala Cell Types — ASTA Amygdala-Specific Report Ingest
-graph_description: Classical cell type nodes from the amygdala-specific ASTA deep research PDF. 13 genuinely new nodes not present in the broader MTL+amygdala ingest. Enrichments for 3 overlapping nodes merged into the first KB file.
+graph_description: Classical cell type nodes from the amygdala-specific ASTA deep research PDF. 13 genuinely new nodes 
+  not present in the broader MTL+amygdala ingest. Enrichments for 3 overlapping nodes merged into the first KB file.
 created_by: asta-report-ingest
 created_date: '2026-05-28'
 status: DRAFT
@@ -42,7 +43,8 @@ nodes:
       quote_key: 10647550_e0390ac0
       marker_type: PROTEIN
   morphology:
-    description: PV-expressing interneuron targeting the axon initial segment of principal neurons; receives synaptic contacts from both PV and CCK basket cells.
+    description: PV-expressing interneuron targeting the axon initial segment of principal neurons; receives synaptic 
+      contacts from both PV and CCK basket cells.
     sources:
     - ref: PMID:28542195
       method: asta_report
@@ -64,6 +66,10 @@ nodes:
       method: asta_snippet — brain-wide AAC genetic targeting confirms AIS-targeting identity in BLA
       scope: mouse amygdaloid complex (LA, BA, BMA, CoA, MeA), sparse genetic labelling with AnkG co-staining
       quote_key: 271240390_5b03e842
+    - ref: PMID:33994955
+      method: 'asta_snippet — Leroy & Bhatt 2021 review: PV chandelier cells in BLA — basket vs axo-axonic distinction'
+      scope: rodent basolateral amygdala, review of in vivo optogenetics and in vitro electrophysiology
+      quote_key: 233450033_2f375c7c
   cl_mapping: CL:4023036
   proposed_cl_term:
   definition_references:
@@ -72,7 +78,8 @@ nodes:
   - PMID:28542195
   - PMID:31636080
   is_terminal: false
-  notes: Estimated 5.5-6% of GABAergic cells in LA/BA. Distinct from the basket-cell class by axon-initial-segment targeting; both share PVALB expression.
+  notes: Estimated 5.5-6% of GABAergic cells in LA/BA. Distinct from the basket-cell class by axon-initial-segment 
+    targeting; both share PVALB expression.
   anatomical_location:
   - id: UBERON:0002887
     name: basolateral amygdala
@@ -104,6 +111,10 @@ nodes:
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: 204835327_91ea43a5
+    - ref: PMID:17234587
+      method: asta_snippet — Woodruff & Sah 2007 review of PV interneuron networks in BLA; CCK+ subpopulation described
+      scope: rat/mouse basolateral amygdala, review of immunohistochemistry and electrophysiology
+      quote_key: 161407_e34026c5
   neuropeptides:
   - symbol: Cck
     ncbi_gene_id:
@@ -121,7 +132,10 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 204835327_91ea43a5
   morphology:
-    description: Perisomatic-targeting basket cell expressing cholecystokinin and CB1 cannabinoid receptor; innervates principal-cell somata and proximal dendrites alongside PV basket cells. Forms a parallel basket-cell network distinct from the PV network; mutually interconnected within CCK group but does not innervate PV basket cells, while contacting axo-axonic cells.
+    description: Perisomatic-targeting basket cell expressing cholecystokinin and CB1 cannabinoid receptor; innervates 
+      principal-cell somata and proximal dendrites alongside PV basket cells. Forms a parallel basket-cell network 
+      distinct from the PV network; mutually interconnected within CCK group but does not innervate PV basket cells, 
+      while contacting axo-axonic cells.
     sources:
     - ref: PMID:28542195
       method: asta_report
@@ -136,11 +150,13 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 204835327_91ea43a5
     - ref: PMID:33837051
-      method: asta_snippet — Vereczki et al. 2021 in vivo recording confirms CCK+/CB1+ basket-cell identity (71.1% of CCK+ INs)
+      method: asta_snippet — Vereczki et al. 2021 in vivo recording confirms CCK+/CB1+ basket-cell identity (71.1% of 
+        CCK+ INs)
       scope: mouse lateral and basal amygdala, GFP-targeted patch recording
       quote_key: 232283078_6d9c6756
     - ref: PMID:39463931
-      method: asta_snippet — Yu et al. 2024 primate snRNA-seq identifies CCK+/CNR1+ cluster homologous to mouse CCK basket cell
+      method: asta_snippet — Yu et al. 2024 primate snRNA-seq identifies CCK+/CNR1+ cluster homologous to mouse CCK 
+        basket cell
       scope: human, macaque, baboon amygdala snRNA-seq
       quote_key: 273531817_f8731728
   cl_mapping: CL:0000118
@@ -151,7 +167,8 @@ nodes:
   - PMID:28542195
   - PMID:31636080
   is_terminal: false
-  notes: Estimated 7-9% of GABAergic cells in LA/BA. CNR1 (CB1) marks this population as distinct from PV basket cells; several CCK interneuron subclasses identified in the basal amygdala in fear-extinction work.
+  notes: Estimated 7-9% of GABAergic cells in LA/BA. CNR1 (CB1) marks this population as distinct from PV basket cells; 
+    several CCK interneuron subclasses identified in the basal amygdala in fear-extinction work.
   anatomical_location:
   - id: UBERON:0002887
     name: basolateral amygdala
@@ -171,6 +188,10 @@ nodes:
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: '11544073_94689603'
+    - ref: PMID:33994955
+      method: 'asta_snippet — Leroy & Bhatt 2021 review: SST+ BLA interneurons oppose PV+ in fear learning'
+      scope: rodent basolateral amygdala, optogenetics in fear conditioning
+      quote_key: 233450033_6def067a
   defining_markers:
   - symbol: Calb1
     ncbi_gene_id:
@@ -192,7 +213,8 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 204835327_bf931431
   morphology:
-    description: SST-expressing GABAergic interneuron that selectively targets the dendritic shafts and (to a lesser extent) spines of BLA principal neurons.
+    description: SST-expressing GABAergic interneuron that selectively targets the dendritic shafts and (to a lesser 
+      extent) spines of BLA principal neurons.
     sources:
     - ref: PMID:33837051
       method: asta_snippet — Vereczki et al. 2021 BLA SST+ interneuron dendritic-targeting characterisation
@@ -202,13 +224,18 @@ nodes:
       method: asta_snippet — Vereczki/Capogna 2020 review of BLA SOM+ dendrite-targeting interneuron
       scope: rodent basolateral amygdala
       quote_key: 212579559_e47ad3e6
+    - ref: PMID:17234587
+      method: 'asta_snippet — Woodruff & Sah 2007 review: SST+ interneurons one of four cardinal BLA interneuron classes'
+      scope: rat/mouse basolateral amygdala, review of immunohistochemistry and electrophysiology
+      quote_key: 161407_e34026c5
   cl_mapping:
   proposed_cl_term:
   definition_references:
   - PMID:22837739
   - PMID:31636080
   is_terminal: false
-  notes: Estimated 10-16% of GABAergic cells in LA/BA. Distinct from somatostatin/nNOS-expressing GABAergic projection neurons (bla_gabaergic_projection_neuron).
+  notes: Estimated 10-16% of GABAergic cells in LA/BA. Distinct from somatostatin/nNOS-expressing GABAergic projection 
+    neurons (bla_gabaergic_projection_neuron).
   anatomical_location:
   - id: UBERON:0002887
     name: basolateral amygdala
@@ -236,19 +263,30 @@ nodes:
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: 10647550_48ea3c0f
+    - ref: PMID:32144495
+      method: asta_snippet
+      scope: mouse LA interneuron review
+      quote_key: 212579559_81debee5
+      marker_type: PROTEIN
   morphology:
-    description: Calbindin-positive interneurons targeting dendrites of BLA principal cells; characterized in vivo as a distinct dendrite-targeting class separable by marker content from somatostatin dendrite-targeting cells.
+    description: Calbindin-positive interneurons targeting dendrites of BLA principal cells; characterized in vivo as a 
+      distinct dendrite-targeting class separable by marker content from somatostatin dendrite-targeting cells.
     sources:
     - ref: PMID:22726836
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: 10647550_48ea3c0f
+    - ref: PMID:32144495
+      method: asta_snippet
+      scope: mouse LA in vitro/in vivo electrophysiology
+      quote_key: 212579559_e47ad3e6
   cl_mapping:
   proposed_cl_term:
   definition_references:
   - PMID:22726836
   is_terminal: false
-  notes: Overlaps partially with SOM/CB+ interneurons in older marker schemes; distinguished by CALB1 positivity without SST co-expression.
+  notes: Overlaps partially with SOM/CB+ interneurons in older marker schemes; distinguished by CALB1 positivity without
+    SST co-expression.
   anatomical_location:
   - id: UBERON:0002887
     name: basolateral amygdala
@@ -257,6 +295,14 @@ nodes:
       method: asta_report
       scope: BLA interneuron classification
       quote_key: 10647550_48ea3c0f
+  electrophysiology:
+    description: Fires synchronously with hippocampal theta oscillations in vivo; distinguished from PV+ basket cells by
+      theta coupling rather than noxious-stimulus recruitment.
+    sources:
+    - ref: PMID:22726836
+      method: asta_snippet
+      scope: mouse BLA, in vivo juxtacellular recording
+      quote_key: 10647550_86aa283c
 - id: bla_vip_cr_interneuron_selective_interneuron
   name: Basolateral amygdala VIP/calretinin-expressing interneuron-selective interneuron
   definition_basis: CLASSICAL
@@ -276,6 +322,11 @@ nodes:
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: '11544073_94689603'
+    - ref: PMID:37884748
+      method: asta_snippet
+      scope: mouse amygdala scRNA-seq
+      quote_key: '264517392_e4968477'
+      marker_type: TRANSCRIPT
   neuropeptides:
   - symbol: Vip
     ncbi_gene_id:
@@ -292,26 +343,35 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: '11544073_94689603'
   morphology:
-    description: Small bipolar or bitufted interneuron coexpressing calretinin, VIP, and often CCK; preferentially targets other interneurons rather than principal cells.
+    description: Small bipolar or bitufted interneuron coexpressing calretinin, VIP, and often CCK; preferentially 
+      targets other interneurons rather than principal cells.
     sources:
     - ref: PMID:22837739
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: '11544073_94689603'
     - ref: PMID:33837051
-      method: asta_snippet — Vereczki et al. 2021 quantifies VIP/calretinin IS interneurons as the largest GABAergic class in LA/BA
+      method: asta_snippet — Vereczki et al. 2021 quantifies VIP/calretinin IS interneurons as the largest GABAergic 
+        class in LA/BA
       scope: mouse lateral and basal amygdala, unbiased stereology
       quote_key: 232283078_08e867ee
     - ref: PMID:39463931
-      method: asta_snippet — Yu et al. 2024 primate snRNA-seq confirms VIP+ IS interneuron co-expression of CALB2/CCK/CRH/CNR1
+      method: asta_snippet — Yu et al. 2024 primate snRNA-seq confirms VIP+ IS interneuron co-expression of 
+        CALB2/CCK/CRH/CNR1
       scope: human, macaque, baboon amygdala snRNA-seq
       quote_key: 273531817_447a3097
+    - ref: PMID:33994955
+      method: asta_snippet
+      scope: mouse BLA fear conditioning, optogenetics
+      quote_key: 233450033_a39dd55b
   cl_mapping:
   proposed_cl_term:
   definition_references:
   - PMID:22837739
   is_terminal: false
-  notes: Estimated 29-38% of GABAergic cells in LA/BA - the largest GABAergic class. Overlaps with the classical 'small bipolar/bitufted CR/CCK/VIP' subgroup. Corresponds to bla_vip_calretinin_interneuron in the first ingest; split out here because second report provides CNR1-negative, calretinin-leading characterization.
+  notes: Estimated 29-38% of GABAergic cells in LA/BA - the largest GABAergic class. Overlaps with the classical 'small 
+    bipolar/bitufted CR/CCK/VIP' subgroup. Corresponds to bla_vip_calretinin_interneuron in the first ingest; split out 
+    here because second report provides CNR1-negative, calretinin-leading characterization.
   anatomical_location:
   - id: UBERON:0002887
     name: basolateral amygdala
@@ -368,9 +428,15 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 267685584_daaf5612
     - ref: PMID:39463931
-      method: asta_snippet — Yu et al. 2024 primate snRNA-seq identifies PKRCD+/SST- interneuron cluster in primate central nucleus
+      method: asta_snippet — Yu et al. 2024 primate snRNA-seq identifies PKRCD+/SST- interneuron cluster in primate 
+        central nucleus
       scope: human, macaque, baboon central amygdala snRNA-seq
       quote_key: 273531817_722a2099
+      marker_type: TRANSCRIPT
+    - ref: PMID:36425768
+      method: asta_snippet
+      scope: mouse CeA scRNA-seq
+      quote_key: 253356112_39b8cae2
       marker_type: TRANSCRIPT
   negative_markers:
   - symbol: Sst
@@ -385,7 +451,8 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 2270983_0fa016d1
   electrophysiology:
-    description: Predominantly late-firing; corresponds to the physiologically defined CeL-OFF population that reduces firing to fear-conditioned stimuli.
+    description: Predominantly late-firing; corresponds to the physiologically defined CeL-OFF population that reduces 
+      firing to fear-conditioned stimuli.
     sources:
     - ref: PMID:21068836
       method: asta_report
@@ -465,8 +532,16 @@ nodes:
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: 267685584_daaf5612
+    - ref: PMID:36425768
+      method: asta_snippet — O'Leary et al. 2022 scRNA-seq of CeA reveals Sst as canonical marker with mixed cluster 
+        expression
+      scope: mouse central amygdala scRNA-seq
+      quote_key: 253356112_39b8cae2
+      marker_type: TRANSCRIPT
   morphology:
-    description: GABAergic somatostatin-expressing neuron of CeL/CeC; receives potentiated excitatory input from lateral amygdala during fear conditioning and inhibits CeL output to disinhibit CeM and drive fear expression (CeL-ON-like role).
+    description: GABAergic somatostatin-expressing neuron of CeL/CeC; receives potentiated excitatory input from lateral
+      amygdala during fear conditioning and inhibits CeL output to disinhibit CeM and drive fear expression (CeL-ON-like
+      role).
     sources:
     - ref: PMID:23354330
       method: asta_report
@@ -546,7 +621,9 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 220976356_f1fe3fe1
   morphology:
-    description: Ovoid soma with several primary nonspiny dendrites that branch into spiny secondary and tertiary dendrites; axons begin branching before leaving the nucleus. Predominant cell type in the lateral sector of CeA — the striatal-like principal class.
+    description: Ovoid soma with several primary nonspiny dendrites that branch into spiny secondary and tertiary 
+      dendrites; axons begin branching before leaving the nucleus. Predominant cell type in the lateral sector of CeA — 
+      the striatal-like principal class.
     sources:
     - ref: PMID:32751957
       method: asta_report
@@ -564,6 +641,14 @@ nodes:
       method: asta_snippet — Hochgerner et al. 2023 scRNA-seq localises Ppp1r1b (DARPP-32) MSN-like types to lateral CEA
       scope: mouse whole amygdala scRNA-seq
       quote_key: 264517392_113398c6
+    - ref: PMID:33691931
+      method: asta_snippet — Bhatt et al. 2020 review contrasting BLA cortical-like vs CeA striatal-like composition
+      scope: rodent amygdala, review
+      quote_key: 230972365_38b6ac94
+    - ref: PMID:36232376
+      method: 'asta_snippet — Bhattacherjee et al. 2023 review: CeA defined as striatum-like GABAergic structure'
+      scope: rodent and human amygdala, review
+      quote_key: 252477669_78dee1ef
   cl_mapping: CL:1001474
   proposed_cl_term:
   definition_references:
@@ -594,7 +679,8 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 220976356_f1fe3fe1
   morphology:
-    description: Big soma with thick aspiny primary dendrites branching to secondary processes that are only seldom spiny.
+    description: Big soma with thick aspiny primary dendrites branching to secondary processes that are only seldom 
+      spiny.
     sources:
     - ref: PMID:32751957
       method: asta_report
@@ -606,6 +692,14 @@ nodes:
   - PMID:32751957
   is_terminal: false
   notes: Classical morphological class described alongside medium spiny and small aspiny neurons.
+  electrophysiology:
+    description: 'Electrophysiologically heterogeneous; two physiological types described: type A (75%, low-threshold response)
+      and type B (25%, high-threshold), plus fast-spiking internuncial neurons in CeA.'
+    sources:
+    - ref: PMID:32751957
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 220976356_ae5a369d
 - id: cea_small_aspiny_neuron
   name: Central amygdala small aspiny neuron
   definition_basis: CLASSICAL
@@ -626,7 +720,8 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 220976356_f1fe3fe1
   morphology:
-    description: Small soma with aspiny dendrites; third classical morphological cell type of CeA after medium spiny and large aspiny neurons.
+    description: Small soma with aspiny dendrites; third classical morphological cell type of CeA after medium spiny and
+      large aspiny neurons.
     sources:
     - ref: PMID:32751957
       method: asta_report
@@ -638,6 +733,14 @@ nodes:
   - PMID:32751957
   is_terminal: false
   notes: Likely overlaps with fast-spiking internuncial neurons of CeA, though direct mapping not given.
+  electrophysiology:
+    description: 'Electrophysiologically heterogeneous; two physiological types described: type A (75%, low-threshold response)
+      and type B (25%, high-threshold), plus fast-spiking internuncial neurons in CeA.'
+    sources:
+    - ref: PMID:32751957
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 220976356_ae5a369d
 - id: intercalated_cell_mass_neuron
   name: Intercalated cell mass FOXP2+ GABAergic interneuron
   definition_basis: CLASSICAL
@@ -654,11 +757,13 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 230972365_dfd1f8d3
     - ref: PMID:8158266
-      method: asta_snippet — Pitkanen & Amaral 1994 monkey amygdala GABA mapping confirms ITC neurons virtually all GABAergic
+      method: asta_snippet — Pitkanen & Amaral 1994 monkey amygdala GABA mapping confirms ITC neurons virtually all 
+        GABAergic
       scope: macaque amygdala immunohistochemistry and in situ hybridization
       quote_key: 14068807_9efc175b
     - ref: PMID:37884748
-      method: asta_snippet — Hochgerner et al. 2023 scRNA-seq identifies ITC-related GABAergic types (Tacr3+/Tshz2+) in/near CEA
+      method: asta_snippet — Hochgerner et al. 2023 scRNA-seq identifies ITC-related GABAergic types (Tacr3+/Tshz2+) 
+        in/near CEA
       scope: mouse whole amygdala scRNA-seq
       quote_key: 264517392_f65ef1ec
   anatomical_location:
@@ -701,7 +806,8 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 273531817_88e4457f
     - ref: PMID:36788214
-      method: europepmc_fulltext — Yu et al. 2023 cross-species snRNA-seq identifies two TSHZ1+ ITC types (DRD1+ and DRD1-)
+      method: europepmc_fulltext — Yu et al. 2023 cross-species snRNA-seq identifies two TSHZ1+ ITC types (DRD1+ and 
+        DRD1-)
       scope: human, macaque, mouse, chicken amygdala snRNA-seq
       quote_key: 256832817_4f39c6f9
       marker_type: TRANSCRIPT
@@ -717,12 +823,19 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 273531817_88e4457f
   morphology:
-    description: Densely packed small GABAergic neuron forming discrete clusters at the borders between basolateral and central amygdala. Often noted for dopamine D1 receptor and mu-opioid receptor expression; recent transcriptomics distinguishes FOXP2+ subtypes specific to ITCs.
+    description: Densely packed small GABAergic neuron forming discrete clusters at the borders between basolateral and 
+      central amygdala. Often noted for dopamine D1 receptor and mu-opioid receptor expression; recent transcriptomics 
+      distinguishes FOXP2+ subtypes specific to ITCs.
     sources:
     - ref: PMID:25408902
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: 15449738_b01f91f5
+    - ref: PMID:39463931
+      method: asta_snippet — Totty et al. 2024 primate snRNA-seq distinguishes spiny (D3+) vs aspiny (HTR7+) ITC 
+        subtypes
+      scope: human, macaque, baboon amygdala snRNA-seq
+      quote_key: 273531817_6f61f40d
   cl_mapping:
   proposed_cl_term:
   definition_references:
@@ -732,7 +845,9 @@ nodes:
   - PMID:33691931
   - PMID:39463931
   is_terminal: false
-  notes: Recent human/NHP transcriptomic work identifies distinct FOXP2+ ITC subtypes; ITCs are treated as a specialized inhibitory population rather than an extension of neighboring nuclei. Overlaps with amygdala_intercalated_cell in the first ingest but adds molecular markers (FOXP2, DRD1, OPRM1).
+  notes: Recent human/NHP transcriptomic work identifies distinct FOXP2+ ITC subtypes; ITCs are treated as a specialized
+    inhibitory population rather than an extension of neighboring nuclei. Overlaps with amygdala_intercalated_cell in 
+    the first ingest but adds molecular markers (FOXP2, DRD1, OPRM1).
 - id: mea_glutamatergic_projection_neuron
   name: Medial amygdala glutamatergic projection neuron
   definition_basis: CLASSICAL
@@ -760,8 +875,13 @@ nodes:
       method: asta_snippet — Carney et al. 2010 MeA posterior subdivisions (MePD, MePV) delineated by Lhx6/Lhx9
       scope: mouse medial amygdala development
       quote_key: 627853_76bae8ef
+    - ref: PMID:37884748
+      method: europepmc_fulltext — Hochgerner et al. 2023 scRNA-seq identifies VGLUT2 and GABA classes intermixed in MEA
+      scope: mouse whole amygdala scRNA-seq, spatial correlation with Allen Brain Atlas
+      quote_key: 264517392_28378bc6
   morphology:
-    description: Pyramidal-like glutamatergic projection neuron of rodent medial amygdala; derived from third-ventricle neuroepithelium and also populates the BST and hypothalamus.
+    description: Pyramidal-like glutamatergic projection neuron of rodent medial amygdala; derived from third-ventricle 
+      neuroepithelium and also populates the BST and hypothalamus.
     sources:
     - ref: PMID:39012795
       method: asta_report
@@ -776,11 +896,13 @@ nodes:
       scope: amygdala literature synthesis
       quote_key: 15738241_fe94a85e
     - ref: PMID:33515290
-      method: asta_snippet — Biechl et al. 2021 review of MeA glutamatergic neurons migrating tangentially from VP/SPV/EmT
+      method: asta_snippet — Biechl et al. 2021 review of MeA glutamatergic neurons migrating tangentially from 
+        VP/SPV/EmT
       scope: comparative analysis of mouse medial amygdala development
       quote_key: 231758452_d035e2d6
   electrophysiology:
-    description: Heterogeneous slice ephys reported in MeA (pyramidal-like, late-firing, first-firing classes — Niimi et al., 2012); explicit ephys for the glutamatergic subset not isolated.
+    description: Heterogeneous slice ephys reported in MeA (pyramidal-like, late-firing, first-firing classes — Niimi et
+      al., 2012); explicit ephys for the glutamatergic subset not isolated.
     sources:
     - ref: PMID:22960119
       method: asta_report
@@ -829,12 +951,19 @@ nodes:
       method: cite_traverse
       scope: amygdala literature synthesis
       quote_key: 253356112_2fc294b0
+    - ref: PMID:25309337
+      method: europepmc_fulltext — Vicario et al. 2014 mammalian CeA LGEv-derived Islet1+ neurons
+      scope: mammalian central amygdala, comparative avian/rodent developmental study
+      quote_key: 10856039_51074be7
   cl_mapping:
   proposed_cl_term:
   definition_references:
   - PMID:36425768
   is_terminal: false
-  notes: Identified by O'Leary et al. 2022 (iScience) as an Isl1-expressing medial-CeA cell type accounting for many long-range CEA projections; constitutes approximately one-third of all CEA neurons together with an Nr2f2+ non-canonical subdomain. Prkcd and Sst exhibit mixed expression across multiple scRNA-seq clusters, suggesting these canonical markers alone do not resolve all CeA projection cell types. STUB — pending primary evidence extraction.
+  notes: Identified by O'Leary et al. 2022 (iScience) as an Isl1-expressing medial-CeA cell type accounting for many 
+    long-range CEA projections; constitutes approximately one-third of all CEA neurons together with an Nr2f2+ 
+    non-canonical subdomain. Prkcd and Sst exhibit mixed expression across multiple scRNA-seq clusters, suggesting these
+    canonical markers alone do not resolve all CeA projection cell types. STUB — pending primary evidence extraction.
 - id: bla_lamp5_interneuron
   name: Basolateral amygdala LAMP5-expressing interneuron
   definition_basis: CLASSICAL
@@ -868,7 +997,10 @@ nodes:
   - PMID:36788214
   - PMID:39463931
   is_terminal: false
-  notes: Identified as a major canonical inhibitory interneuron class in primate amygdala (Totty et al. 2024; Yu et al. 2023); notably more abundant in primates than rodents. Represents one of five major inhibitory classes (SST/PVALB/VIP/CCK/LAMP5) resolved in cross-species snRNA-seq atlases. Molecular and morphological properties in BLA not yet fully characterised. STUB — pending primary evidence extraction.
+  notes: Identified as a major canonical inhibitory interneuron class in primate amygdala (Totty et al. 2024; Yu et al. 
+    2023); notably more abundant in primates than rodents. Represents one of five major inhibitory classes 
+    (SST/PVALB/VIP/CCK/LAMP5) resolved in cross-species snRNA-seq atlases. Molecular and morphological properties in BLA
+    not yet fully characterised. STUB — pending primary evidence extraction.
   anatomical_location:
   - id: UBERON:0002887
     name: basolateral amygdala
