@@ -1,13 +1,3 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml cea_large_aspiny_neuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
-  NT type: None
-  Markers (defining + neuropeptides): []
-  Soma locations: ['UBERON:0002883']
-  Resolved MBA IDs: ['MBA:536']
-  Query rank: 0
-  Taxonomy: CCN20230722
-  AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "cea_large_aspiny_neuron",
   "classical_node_name": "Central amygdala large aspiny neuron",
@@ -16,13 +6,13 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0192",
-      "label": "0192 MEA Slc17a7 Glut_1",
+      "node_id": "CS20230722_CLUS_0657",
+      "label": "0657 Vip Gaba_9",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 3.76,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0181",
+      "male_female_ratio": 1.78,
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 1,
@@ -36,23 +26,24 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.0,
+        "region_fraction": 0.004,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0200",
-      "label": "0200 MEA Slc17a7 Glut_1",
+      "node_id": "CS20230722_CLUS_0705",
+      "label": "0705 RHP-COA Ndnf Gaba_6",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 4.26,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0198",
+      "male_female_ratio": 1.04,
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 2,
@@ -66,23 +57,24 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.02,
+        "region_fraction": 0.014,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0202",
-      "label": "0202 MEA Slc17a7 Glut_2",
+      "node_id": "CS20230722_CLUS_0723",
+      "label": "0723 Lamp5 Gaba_4",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
-      "male_female_ratio": 2.33,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0202",
+      "male_female_ratio": 1.5,
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 3,
@@ -96,23 +88,24 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.108,
+        "region_fraction": 0.064,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0203",
-      "label": "0203 MEA Slc17a7 Glut_2",
+      "node_id": "CS20230722_CLUS_0725",
+      "label": "0725 Lamp5 Lhx6 Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
-      "male_female_ratio": 1.22,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0203",
+      "male_female_ratio": 0.69,
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 4,
@@ -126,23 +119,24 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.184,
+        "region_fraction": 0.005,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0204",
-      "label": "0204 MEA Slc17a7 Glut_2",
+      "node_id": "CS20230722_CLUS_0738",
+      "label": "0738 Pvalb Gaba_2",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
-      "male_female_ratio": 1.56,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0206",
+      "male_female_ratio": 1.44,
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 5,
@@ -156,12 +150,13 @@ Classical node: cea_large_aspiny_neuron (Central amygdala large aspiny neuron)
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.05,
+        "region_fraction": 0.005,
         "region_evidence": "SELF"
       }
     }

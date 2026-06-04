@@ -1,13 +1,3 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml bla_som_dendrite_targeting_interneuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: bla_som_dendrite_targeting_interneuron (Basolateral amygdala somatostatin-positive dendrite-targeting interneuron)
-  NT type: GABAergic
-  Markers (defining + neuropeptides): ['CALB1', 'SST']
-  Soma locations: ['UBERON:0002887']
-  Resolved MBA IDs: ['MBA:295']
-  Query rank: 0
-  Taxonomy: CCN20230722
-  AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "bla_som_dendrite_targeting_interneuron",
   "classical_node_name": "Basolateral amygdala somatostatin-positive dendrite-targeting interneuron",
@@ -16,18 +6,18 @@ Classical node: bla_som_dendrite_targeting_interneuron (Basolateral amygdala som
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0596",
-      "label": "0596 OB-STR-CTX Inh IMN_1",
+      "node_id": "CS20230722_CLUS_0765",
+      "label": "0765 Sst Gaba_2",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": null,
-      "parent_id": "CS20230722_SUPT_0166",
-      "male_female_ratio": 0.47,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0215",
+      "male_female_ratio": 1.78,
       "discovery_score": {
-        "score": 1,
+        "score": 5,
         "rank_in_cohort": 1,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 5,
         "rank": 0,
         "contexts": [
           {
@@ -41,24 +31,53 @@ Classical node: bla_som_dendrite_targeting_interneuron (Basolateral amygdala som
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.008,
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 9.57,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.965
+              }
+            ]
+          },
+          {
+            "gene": "Sst",
+            "val": 11.92,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.967
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.201,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0628",
-      "label": "0628 Vip Gaba_2",
+      "node_id": "CS20230722_CLUS_0774",
+      "label": "0774 Sst Gaba_3",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0174",
-      "male_female_ratio": 1.44,
+      "parent_id": "CS20230722_SUPT_0216",
+      "male_female_ratio": 0.72,
       "discovery_score": {
-        "score": 1,
+        "score": 5,
         "rank_in_cohort": 2,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 5,
         "rank": 0,
         "contexts": [
           {
@@ -72,24 +91,53 @@ Classical node: bla_som_dendrite_targeting_interneuron (Basolateral amygdala som
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.049,
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 9.23,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.952
+              }
+            ]
+          },
+          {
+            "gene": "Sst",
+            "val": 12.11,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.987
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.004,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0623",
-      "label": "0623 Vip Gaba_1",
+      "node_id": "CS20230722_CLUS_0666",
+      "label": "0666 Sncg Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
-      "male_female_ratio": 1.38,
+      "parent_id": "CS20230722_SUPT_0185",
+      "male_female_ratio": 1.27,
       "discovery_score": {
-        "score": 1,
+        "score": 4,
         "rank_in_cohort": 3,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 5,
         "rank": 0,
         "contexts": [
           {
@@ -103,24 +151,53 @@ Classical node: bla_som_dendrite_targeting_interneuron (Basolateral amygdala som
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.007,
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 10.37,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.989
+              }
+            ]
+          },
+          {
+            "gene": "Sst",
+            "val": 1.41,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.633
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.1,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0625",
-      "label": "0625 Vip Gaba_1",
+      "node_id": "CS20230722_CLUS_0668",
+      "label": "0668 Sncg Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
+      "parent_id": "CS20230722_SUPT_0185",
       "male_female_ratio": 1.17,
       "discovery_score": {
-        "score": 1,
+        "score": 4,
         "rank_in_cohort": 4,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 5,
         "rank": 0,
         "contexts": [
           {
@@ -134,24 +211,53 @@ Classical node: bla_som_dendrite_targeting_interneuron (Basolateral amygdala som
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.094,
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 10.43,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.991
+              }
+            ]
+          },
+          {
+            "gene": "Sst",
+            "val": 1.0,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.417
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.048,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0626",
-      "label": "0626 Vip Gaba_1",
+      "node_id": "CS20230722_CLUS_0738",
+      "label": "0738 Pvalb Gaba_2",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
-      "male_female_ratio": 1.63,
+      "parent_id": "CS20230722_SUPT_0206",
+      "male_female_ratio": 1.44,
       "discovery_score": {
-        "score": 1,
+        "score": 4,
         "rank_in_cohort": 5,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 5,
         "rank": 0,
         "contexts": [
           {
@@ -165,8 +271,37 @@ Classical node: bla_som_dendrite_targeting_interneuron (Basolateral amygdala som
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.026,
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 10.86,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.998
+              }
+            ]
+          },
+          {
+            "gene": "Sst",
+            "val": 2.25,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.734
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.178,
         "region_evidence": "SELF"
       }
     }

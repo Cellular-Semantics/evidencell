@@ -1,13 +1,3 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml bla_lamp5_interneuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: bla_lamp5_interneuron (Basolateral amygdala LAMP5-expressing interneuron)
-  NT type: GABAergic
-  Markers (defining + neuropeptides): ['LAMP5']
-  Soma locations: ['UBERON:0002887']
-  Resolved MBA IDs: ['MBA:295']
-  Query rank: 0
-  Taxonomy: CCN20230722
-  AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "bla_lamp5_interneuron",
   "classical_node_name": "Basolateral amygdala LAMP5-expressing interneuron",
@@ -16,18 +6,18 @@ Classical node: bla_lamp5_interneuron (Basolateral amygdala LAMP5-expressing int
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0596",
-      "label": "0596 OB-STR-CTX Inh IMN_1",
+      "node_id": "CS20230722_CLUS_0710",
+      "label": "0710 Lamp5 Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": null,
-      "parent_id": "CS20230722_SUPT_0166",
-      "male_female_ratio": 0.47,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0199",
+      "male_female_ratio": 1.22,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 1,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -41,24 +31,39 @@ Classical node: bla_lamp5_interneuron (Basolateral amygdala LAMP5-expressing int
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.008,
+        "expression_detail": [
+          {
+            "gene": "Lamp5",
+            "val": 8.78,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.998
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.02,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0628",
-      "label": "0628 Vip Gaba_2",
+      "node_id": "CS20230722_CLUS_0711",
+      "label": "0711 Lamp5 Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0174",
-      "male_female_ratio": 1.44,
+      "parent_id": "CS20230722_SUPT_0199",
+      "male_female_ratio": 1.56,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 2,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -72,24 +77,39 @@ Classical node: bla_lamp5_interneuron (Basolateral amygdala LAMP5-expressing int
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.049,
+        "expression_detail": [
+          {
+            "gene": "Lamp5",
+            "val": 8.42,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.987
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.036,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0623",
-      "label": "0623 Vip Gaba_1",
+      "node_id": "CS20230722_CLUS_0712",
+      "label": "0712 Lamp5 Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
+      "parent_id": "CS20230722_SUPT_0199",
       "male_female_ratio": 1.38,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 3,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -103,24 +123,39 @@ Classical node: bla_lamp5_interneuron (Basolateral amygdala LAMP5-expressing int
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.007,
+        "expression_detail": [
+          {
+            "gene": "Lamp5",
+            "val": 6.31,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.963
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.056,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0625",
-      "label": "0625 Vip Gaba_1",
+      "node_id": "CS20230722_CLUS_0713",
+      "label": "0713 Lamp5 Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
+      "parent_id": "CS20230722_SUPT_0199",
       "male_female_ratio": 1.17,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 4,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -134,24 +169,39 @@ Classical node: bla_lamp5_interneuron (Basolateral amygdala LAMP5-expressing int
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.094,
+        "expression_detail": [
+          {
+            "gene": "Lamp5",
+            "val": 7.82,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.976
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.017,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0626",
-      "label": "0626 Vip Gaba_1",
+      "node_id": "CS20230722_CLUS_0723",
+      "label": "0723 Lamp5 Gaba_4",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
-      "male_female_ratio": 1.63,
+      "parent_id": "CS20230722_SUPT_0202",
+      "male_female_ratio": 1.5,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 5,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -165,8 +215,23 @@ Classical node: bla_lamp5_interneuron (Basolateral amygdala LAMP5-expressing int
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.026,
+        "expression_detail": [
+          {
+            "gene": "Lamp5",
+            "val": 6.04,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.956
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.043,
         "region_evidence": "SELF"
       }
     }

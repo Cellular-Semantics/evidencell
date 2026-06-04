@@ -1,14 +1,3 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml cea_pkc_delta_neuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: cea_pkc_delta_neuron (Central amygdala protein kinase C-delta (PKC-delta) neuron)
-  NT type: GABAergic
-  Markers (defining + neuropeptides): ['PRKCD']
-  Negative markers: ['SST']
-  Soma locations: ['UBERON:0002883']
-  Resolved MBA IDs: ['MBA:536']
-  Query rank: 0
-  Taxonomy: CCN20230722
-  AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "cea_pkc_delta_neuron",
   "classical_node_name": "Central amygdala protein kinase C-delta (PKC-delta) neuron",
@@ -17,18 +6,18 @@ Classical node: cea_pkc_delta_neuron (Central amygdala protein kinase C-delta (P
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0657",
-      "label": "0657 Vip Gaba_9",
+      "node_id": "CS20230722_CLUS_5192",
+      "label": "5192 CBX MLI Cdh22 Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0181",
-      "male_female_ratio": 1.78,
+      "parent_id": "CS20230722_SUPT_1151",
+      "male_female_ratio": 0.56,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 1,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -42,24 +31,51 @@ Classical node: cea_pkc_delta_neuron (Central amygdala protein kinase C-delta (P
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.004,
-        "region_evidence": "SELF"
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 5.42,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.985
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.06,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.015
+              }
+            ]
+          }
+        ]
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0705",
-      "label": "0705 RHP-COA Ndnf Gaba_6",
+      "node_id": "CS20230722_CLUS_5215",
+      "label": "5215 Astro-NT NN_2",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0198",
-      "male_female_ratio": 1.04,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1160",
+      "male_female_ratio": 0.92,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 2,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -73,24 +89,51 @@ Classical node: cea_pkc_delta_neuron (Central amygdala protein kinase C-delta (P
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.014,
-        "region_evidence": "SELF"
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 3.16,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.968
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.09,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.019
+              }
+            ]
+          }
+        ]
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0723",
-      "label": "0723 Lamp5 Gaba_4",
+      "node_id": "CS20230722_CLUS_5264",
+      "label": "5264 CHOR NN_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0202",
-      "male_female_ratio": 1.5,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1178",
+      "male_female_ratio": 0.96,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 3,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -104,24 +147,51 @@ Classical node: cea_pkc_delta_neuron (Central amygdala protein kinase C-delta (P
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.064,
-        "region_evidence": "SELF"
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 2.09,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.951
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.08,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.017
+              }
+            ]
+          }
+        ]
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0725",
-      "label": "0725 Lamp5 Lhx6 Gaba_1",
+      "node_id": "CS20230722_CLUS_1032",
+      "label": "1032 NDB-SI-ant Prdm12 Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0203",
-      "male_female_ratio": 0.69,
+      "parent_id": "CS20230722_SUPT_0295",
+      "male_female_ratio": 1.7,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 4,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -135,24 +205,53 @@ Classical node: cea_pkc_delta_neuron (Central amygdala protein kinase C-delta (P
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.005,
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 0.51,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.88
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.017,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0738",
-      "label": "0738 Pvalb Gaba_2",
+      "node_id": "CS20230722_CLUS_5234",
+      "label": "5234 Astro-OLF NN_2",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0206",
-      "male_female_ratio": 1.44,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1167",
+      "male_female_ratio": 1.5,
       "discovery_score": {
-        "score": 1,
+        "score": 2,
         "rank_in_cohort": 5,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -166,9 +265,36 @@ Classical node: cea_pkc_delta_neuron (Central amygdala protein kinase C-delta (P
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.005,
-        "region_evidence": "SELF"
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 1.12,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.923
+              }
+            ]
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.03,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.011
+              }
+            ]
+          }
+        ]
       }
     }
   ]

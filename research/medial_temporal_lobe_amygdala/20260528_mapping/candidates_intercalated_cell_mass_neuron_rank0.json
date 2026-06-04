@@ -1,13 +1,3 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml intercalated_cell_mass_neuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: intercalated_cell_mass_neuron (Intercalated cell mass FOXP2+ GABAergic interneuron)
-  NT type: GABAergic
-  Markers (defining + neuropeptides): ['FOXP2', 'DRD1', 'OPRM1']
-  Soma locations: ['UBERON:0002884']
-  Resolved MBA IDs: ['MBA:1105']
-  Query rank: 0
-  Taxonomy: CCN20230722
-  AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "intercalated_cell_mass_neuron",
   "classical_node_name": "Intercalated cell mass FOXP2+ GABAergic interneuron",
@@ -16,18 +6,18 @@ Classical node: intercalated_cell_mass_neuron (Intercalated cell mass FOXP2+ GAB
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0625",
-      "label": "0625 Vip Gaba_1",
+      "node_id": "CS20230722_CLUS_0998",
+      "label": "0998 STR D1 Sema5a Gaba_3",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0173",
-      "male_female_ratio": 1.17,
+      "parent_id": "CS20230722_SUPT_0283",
+      "male_female_ratio": 0.96,
       "discovery_score": {
-        "score": 1,
+        "score": 7,
         "rank_in_cohort": 1,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 7,
         "rank": 0,
         "contexts": [
           {
@@ -41,55 +31,141 @@ Classical node: intercalated_cell_mass_neuron (Intercalated cell mass FOXP2+ GAB
             ]
           }
         ],
-        "expression_detail": [],
+        "expression_detail": [
+          {
+            "gene": "Foxp2",
+            "val": 11.35,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.985
+              }
+            ]
+          },
+          {
+            "gene": "Drd1",
+            "val": 7.07,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ]
+          },
+          {
+            "gene": "Oprm1",
+            "val": 8.31,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.991
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.001,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_1009",
+      "label": "1009 STR-PAL Chst9 Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0287",
+      "male_female_ratio": 1.04,
+      "discovery_score": {
+        "score": 7,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 7,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:1105",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Foxp2",
+            "val": 11.38,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.987
+              }
+            ]
+          },
+          {
+            "gene": "Drd1",
+            "val": 5.9,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.966
+              }
+            ]
+          },
+          {
+            "gene": "Oprm1",
+            "val": 8.31,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.991
+              }
+            ]
+          }
+        ],
         "region_fraction": 0.003,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0630",
-      "label": "0630 Vip Gaba_2",
+      "node_id": "CS20230722_CLUS_1352",
+      "label": "1352 CEA-AAA-BST Six3 Sp9 Gaba_1",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0174",
-      "male_female_ratio": 1.63,
+      "parent_id": "CS20230722_SUPT_0373",
+      "male_female_ratio": 1.44,
       "discovery_score": {
-        "score": 1,
-        "rank_in_cohort": 2,
-        "cohort_size": 5,
-        "next_best_score": 1,
-        "rank": 0,
-        "contexts": [
-          {
-            "id": "cohort",
-            "kind": "SURVIVAL_COHORT",
-            "rank": 0,
-            "n_members": 5,
-            "filters": [
-              "region=MBA:1105",
-              "nt_type=GABAergic"
-            ]
-          }
-        ],
-        "expression_detail": [],
-        "region_fraction": 0.0,
-        "region_evidence": "SELF"
-      }
-    },
-    {
-      "node_id": "CS20230722_CLUS_0657",
-      "label": "0657 Vip Gaba_9",
-      "taxonomy_level": "cluster",
-      "taxonomy_rank": 0,
-      "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0181",
-      "male_female_ratio": 1.78,
-      "discovery_score": {
-        "score": 1,
+        "score": 6,
         "rank_in_cohort": 3,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 7,
         "rank": 0,
         "contexts": [
           {
@@ -103,24 +179,67 @@ Classical node: intercalated_cell_mass_neuron (Intercalated cell mass FOXP2+ GAB
             ]
           }
         ],
-        "expression_detail": [],
+        "expression_detail": [
+          {
+            "gene": "Foxp2",
+            "val": 10.5,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.955
+              }
+            ]
+          },
+          {
+            "gene": "Drd1",
+            "val": 5.23,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.953
+              }
+            ]
+          },
+          {
+            "gene": "Oprm1",
+            "val": 6.99,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.863
+              }
+            ]
+          }
+        ],
         "region_fraction": 0.0,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0658",
-      "label": "0658 Vip Gaba_10",
+      "node_id": "CS20230722_CLUS_1000",
+      "label": "1000 STR D1 Sema5a Gaba_4",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0182",
-      "male_female_ratio": 4.88,
+      "parent_id": "CS20230722_SUPT_0284",
+      "male_female_ratio": 0.85,
       "discovery_score": {
-        "score": 1,
+        "score": 6,
         "rank_in_cohort": 4,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 7,
         "rank": 0,
         "contexts": [
           {
@@ -134,24 +253,67 @@ Classical node: intercalated_cell_mass_neuron (Intercalated cell mass FOXP2+ GAB
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.0,
+        "expression_detail": [
+          {
+            "gene": "Foxp2",
+            "val": 11.64,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.994
+              }
+            ]
+          },
+          {
+            "gene": "Drd1",
+            "val": 7.61,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.989
+              }
+            ]
+          },
+          {
+            "gene": "Oprm1",
+            "val": 7.64,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.944
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.003,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0694",
-      "label": "0694 RHP-COA Ndnf Gaba_3",
+      "node_id": "CS20230722_CLUS_1010",
+      "label": "1010 STR-PAL Chst9 Gaba_3",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
       "nt_type": "GABA",
-      "parent_id": "CS20230722_SUPT_0195",
+      "parent_id": "CS20230722_SUPT_0287",
       "male_female_ratio": 1.13,
       "discovery_score": {
-        "score": 1,
+        "score": 6,
         "rank_in_cohort": 5,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 7,
         "rank": 0,
         "contexts": [
           {
@@ -165,8 +327,51 @@ Classical node: intercalated_cell_mass_neuron (Intercalated cell mass FOXP2+ GAB
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.0,
+        "expression_detail": [
+          {
+            "gene": "Foxp2",
+            "val": 10.95,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.979
+              }
+            ]
+          },
+          {
+            "gene": "Drd1",
+            "val": 5.32,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.955
+              }
+            ]
+          },
+          {
+            "gene": "Oprm1",
+            "val": 7.03,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.867
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.004,
         "region_evidence": "SELF"
       }
     }

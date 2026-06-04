@@ -1,13 +1,3 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml cea_crf_neuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: cea_crf_neuron (Central amygdala corticotropin-releasing factor (CRF) neuron)
-  NT type: None
-  Markers (defining + neuropeptides): ['CRH']
-  Soma locations: ['UBERON:0002883']
-  Resolved MBA IDs: ['MBA:536']
-  Query rank: 0
-  Taxonomy: CCN20230722
-  AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "cea_crf_neuron",
   "classical_node_name": "Central amygdala corticotropin-releasing factor (CRF) neuron",
@@ -16,18 +6,18 @@ Classical node: cea_crf_neuron (Central amygdala corticotropin-releasing factor 
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0192",
-      "label": "0192 MEA Slc17a7 Glut_1",
+      "node_id": "CS20230722_CLUS_0899",
+      "label": "0899 NDB-SI-MA-STRv Lhx8 Gaba_6",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 3.76,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0249",
+      "male_female_ratio": 1.04,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 1,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -36,28 +26,44 @@ Classical node: cea_crf_neuron (Central amygdala corticotropin-releasing factor 
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.0,
+        "expression_detail": [
+          {
+            "gene": "Crh",
+            "val": 4.72,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.964
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.081,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0200",
-      "label": "0200 MEA Slc17a7 Glut_1",
+      "node_id": "CS20230722_CLUS_0903",
+      "label": "0903 NDB-SI-MA-STRv Lhx8 Gaba_6",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0055",
-      "male_female_ratio": 4.26,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0249",
+      "male_female_ratio": 0.96,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 2,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -66,28 +72,44 @@ Classical node: cea_crf_neuron (Central amygdala corticotropin-releasing factor 
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.02,
+        "expression_detail": [
+          {
+            "gene": "Crh",
+            "val": 8.77,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.996
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.082,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0202",
-      "label": "0202 MEA Slc17a7 Glut_2",
+      "node_id": "CS20230722_CLUS_0900",
+      "label": "0900 NDB-SI-MA-STRv Lhx8 Gaba_6",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
-      "male_female_ratio": 2.33,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0249",
+      "male_female_ratio": 1.38,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 3,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -96,28 +118,44 @@ Classical node: cea_crf_neuron (Central amygdala corticotropin-releasing factor 
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.108,
+        "expression_detail": [
+          {
+            "gene": "Crh",
+            "val": 8.18,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.994
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.102,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0203",
-      "label": "0203 MEA Slc17a7 Glut_2",
+      "node_id": "CS20230722_CLUS_0901",
+      "label": "0901 NDB-SI-MA-STRv Lhx8 Gaba_6",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
-      "male_female_ratio": 1.22,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0249",
+      "male_female_ratio": 1.04,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 4,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -126,28 +164,44 @@ Classical node: cea_crf_neuron (Central amygdala corticotropin-releasing factor 
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.184,
+        "expression_detail": [
+          {
+            "gene": "Crh",
+            "val": 6.24,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.974
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.167,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0204",
-      "label": "0204 MEA Slc17a7 Glut_2",
+      "node_id": "CS20230722_CLUS_0955",
+      "label": "0955 STR D1 Gaba_5",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0056",
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0269",
       "male_female_ratio": 1.56,
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 5,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 0,
         "contexts": [
           {
@@ -156,12 +210,28 @@ Classical node: cea_crf_neuron (Central amygdala corticotropin-releasing factor 
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:536"
+              "region=MBA:536",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.05,
+        "expression_detail": [
+          {
+            "gene": "Crh",
+            "val": 6.94,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.985
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.109,
         "region_evidence": "SELF"
       }
     }

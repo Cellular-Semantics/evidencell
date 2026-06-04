@@ -1,13 +1,3 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml bla_vip_cr_interneuron_selective_interneuron CCN20230722 0 5
-  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
-Classical node: bla_vip_cr_interneuron_selective_interneuron (Basolateral amygdala VIP/calretinin-expressing interneuron-selective interneuron)
-  NT type: None
-  Markers (defining + neuropeptides): ['CALB2', 'VIP', 'CCK']
-  Soma locations: ['UBERON:0002887']
-  Resolved MBA IDs: ['MBA:295']
-  Query rank: 0
-  Taxonomy: CCN20230722
-  AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "bla_vip_cr_interneuron_selective_interneuron",
   "classical_node_name": "Basolateral amygdala VIP/calretinin-expressing interneuron-selective interneuron",
@@ -16,18 +6,18 @@ Classical node: bla_vip_cr_interneuron_selective_interneuron (Basolateral amygda
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_CLUS_0010",
-      "label": "0010 IT EP-CLA Glut_1",
+      "node_id": "CS20230722_CLUS_0628",
+      "label": "0628 Vip Gaba_2",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0003",
-      "male_female_ratio": 0.56,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0174",
+      "male_female_ratio": 1.44,
       "discovery_score": {
-        "score": 1,
+        "score": 6,
         "rank_in_cohort": 1,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 6,
         "rank": 0,
         "contexts": [
           {
@@ -36,28 +26,72 @@ Classical node: bla_vip_cr_interneuron_selective_interneuron (Basolateral amygda
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.0,
+        "expression_detail": [
+          {
+            "gene": "Calb2",
+            "val": 8.12,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ]
+          },
+          {
+            "gene": "Vip",
+            "val": 11.11,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.969
+              }
+            ]
+          },
+          {
+            "gene": "Cck",
+            "val": 0.97,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.417
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.049,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0014",
-      "label": "0014 IT EP-CLA Glut_2",
+      "node_id": "CS20230722_CLUS_0630",
+      "label": "0630 Vip Gaba_2",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0004",
-      "male_female_ratio": 0.96,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0174",
+      "male_female_ratio": 1.63,
       "discovery_score": {
-        "score": 1,
+        "score": 6,
         "rank_in_cohort": 2,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 6,
         "rank": 0,
         "contexts": [
           {
@@ -66,28 +100,72 @@ Classical node: bla_vip_cr_interneuron_selective_interneuron (Basolateral amygda
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.0,
+        "expression_detail": [
+          {
+            "gene": "Calb2",
+            "val": 8.64,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.993
+              }
+            ]
+          },
+          {
+            "gene": "Vip",
+            "val": 10.99,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.965
+              }
+            ]
+          },
+          {
+            "gene": "Cck",
+            "val": 1.03,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.428
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.066,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0015",
-      "label": "0015 IT EP-CLA Glut_2",
+      "node_id": "CS20230722_CLUS_0638",
+      "label": "0638 Vip Gaba_4",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0004",
-      "male_female_ratio": 0.79,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0176",
+      "male_female_ratio": 1.86,
       "discovery_score": {
-        "score": 1,
+        "score": 6,
         "rank_in_cohort": 3,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 6,
         "rank": 0,
         "contexts": [
           {
@@ -96,28 +174,72 @@ Classical node: bla_vip_cr_interneuron_selective_interneuron (Basolateral amygda
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.0,
+        "expression_detail": [
+          {
+            "gene": "Calb2",
+            "val": 7.56,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.969
+              }
+            ]
+          },
+          {
+            "gene": "Vip",
+            "val": 11.77,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ]
+          },
+          {
+            "gene": "Cck",
+            "val": 1.14,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.456
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.006,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0016",
-      "label": "0016 IT EP-CLA Glut_2",
+      "node_id": "CS20230722_CLUS_0649",
+      "label": "0649 Vip Gaba_7",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0004",
-      "male_female_ratio": 0.96,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0179",
+      "male_female_ratio": 1.04,
       "discovery_score": {
-        "score": 1,
+        "score": 6,
         "rank_in_cohort": 4,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 6,
         "rank": 0,
         "contexts": [
           {
@@ -126,28 +248,72 @@ Classical node: bla_vip_cr_interneuron_selective_interneuron (Basolateral amygda
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
+        "expression_detail": [
+          {
+            "gene": "Calb2",
+            "val": 7.47,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.967
+              }
+            ]
+          },
+          {
+            "gene": "Vip",
+            "val": 9.17,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.956
+              }
+            ]
+          },
+          {
+            "gene": "Cck",
+            "val": 0.92,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.397
+              }
+            ]
+          }
+        ],
         "region_fraction": 0.0,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_CLUS_0017",
-      "label": "0017 IT EP-CLA Glut_2",
+      "node_id": "CS20230722_CLUS_0656",
+      "label": "0656 Vip Gaba_9",
       "taxonomy_level": "cluster",
       "taxonomy_rank": 0,
-      "nt_type": "Glut",
-      "parent_id": "CS20230722_SUPT_0004",
-      "male_female_ratio": 0.79,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0181",
+      "male_female_ratio": 1.33,
       "discovery_score": {
-        "score": 1,
+        "score": 6,
         "rank_in_cohort": 5,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 6,
         "rank": 0,
         "contexts": [
           {
@@ -156,12 +322,56 @@ Classical node: bla_vip_cr_interneuron_selective_interneuron (Basolateral amygda
             "rank": 0,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.003,
+        "expression_detail": [
+          {
+            "gene": "Calb2",
+            "val": 8.29,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.985
+              }
+            ]
+          },
+          {
+            "gene": "Vip",
+            "val": 8.69,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.952
+              }
+            ]
+          },
+          {
+            "gene": "Cck",
+            "val": 6.29,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.867
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.068,
         "region_evidence": "SELF"
       }
     }

@@ -1,14 +1,3 @@
-uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml bla_calbindin_dendrite_targeting_interneuron CCN20230722 1 5
-  Loaded leaf expression data: 5322 nodes at cluster level (for coverage computation)
-  Loaded expression data: 6523 nodes (merged across queried + leaf ranks where applicable)
-Classical node: bla_calbindin_dendrite_targeting_interneuron (Basolateral amygdala calbindin-positive dendrite-targeting interneuron)
-  NT type: None
-  Markers (defining + neuropeptides): ['CALB1']
-  Soma locations: ['UBERON:0002887']
-  Resolved MBA IDs: ['MBA:295']
-  Query rank: 1
-  Taxonomy: CCN20230722
-  AT artifact: not found (proceeding without AT scoring)
 {
   "classical_node_id": "bla_calbindin_dendrite_targeting_interneuron",
   "classical_node_name": "Basolateral amygdala calbindin-positive dendrite-targeting interneuron",
@@ -17,17 +6,17 @@ Classical node: bla_calbindin_dendrite_targeting_interneuron (Basolateral amygda
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_SUPT_1164",
-      "label": "1164 Astro-TE NN_4",
+      "node_id": "CS20230722_SUPT_0209",
+      "label": "0209 Pvalb Gaba_5",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_319",
+      "parent_id": "CS20230722_SUBC_052",
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 1,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 1,
         "contexts": [
           {
@@ -36,27 +25,44 @@ Classical node: bla_calbindin_dendrite_targeting_interneuron (Basolateral amygda
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.01,
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 9.48,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.966
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.004,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0007",
-      "label": "0007 L5/6 IT TPE-ENT Glut_1",
+      "node_id": "CS20230722_SUPT_0210",
+      "label": "0210 Pvalb Gaba_6",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_003",
+      "parent_id": "CS20230722_SUBC_052",
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 2,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 1,
         "contexts": [
           {
@@ -65,27 +71,44 @@ Classical node: bla_calbindin_dendrite_targeting_interneuron (Basolateral amygda
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.056,
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 10.03,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.005,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0005",
-      "label": "0005 IT EP-CLA Glut_3",
+      "node_id": "CS20230722_SUPT_0233",
+      "label": "0233 STR Prox1 Lhx6 Gaba_1",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_002",
+      "parent_id": "CS20230722_SUBC_054",
       "discovery_score": {
-        "score": 1,
+        "score": 3,
         "rank_in_cohort": 3,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 1,
         "contexts": [
           {
@@ -94,27 +117,44 @@ Classical node: bla_calbindin_dendrite_targeting_interneuron (Basolateral amygda
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.035,
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 9.2,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.955
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.03,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0004",
-      "label": "0004 IT EP-CLA Glut_2",
+      "node_id": "CS20230722_SUPT_1152",
+      "label": "1152 CBX Purkinje Gaba_1",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_002",
+      "parent_id": "CS20230722_SUBC_313",
       "discovery_score": {
-        "score": 1,
+        "score": 2,
         "rank_in_cohort": 4,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 1,
         "contexts": [
           {
@@ -123,27 +163,42 @@ Classical node: bla_calbindin_dendrite_targeting_interneuron (Basolateral amygda
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.001,
-        "region_evidence": "SELF"
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 10.78,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.989
+              }
+            ],
+            "coverage": 1.0
+          }
+        ]
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0003",
-      "label": "0003 IT EP-CLA Glut_1",
+      "node_id": "CS20230722_SUPT_1153",
+      "label": "1153 CBX Purkinje Gaba_2",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_002",
+      "parent_id": "CS20230722_SUBC_313",
       "discovery_score": {
-        "score": 1,
+        "score": 2,
         "rank_in_cohort": 5,
         "cohort_size": 5,
-        "next_best_score": 1,
+        "next_best_score": 3,
         "rank": 1,
         "contexts": [
           {
@@ -152,13 +207,28 @@ Classical node: bla_calbindin_dendrite_targeting_interneuron (Basolateral amygda
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:295"
+              "region=MBA:295",
+              "nt_type=GABAergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.0,
-        "region_evidence": "SELF"
+        "expression_detail": [
+          {
+            "gene": "Calb1",
+            "val": 11.03,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.994
+              }
+            ],
+            "coverage": 1.0
+          }
+        ]
       }
     }
   ]
