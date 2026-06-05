@@ -1,10 +1,3 @@
-# Draft KB — medial_temporal_lobe_amygdala
-# Source: ASTA deep research report — inputs/deepsearch/Cell Types Populating the Medial Temporal Lobe and Amygdala.pdf
-# Ingestion date: 2026-05-28
-# Status: DRAFT — node metadata from ASTA report, pending primary verification
-# Property assertions reference quotes in references/medial_temporal_lobe_amygdala/references.json
-# Classical nodes proposed by: asta-report-ingest
-
 graph_id: medial_temporal_lobe_amygdala_report_ingest_20260528
 graph_label: Medial Temporal Lobe and Amygdala — ASTA Report Ingest Draft
 graph_description: Draft classical cell type nodes proposed from ASTA deep research PDF. Pending primary verification.
@@ -123,7 +116,10 @@ nodes:
           scope: amygdala literature synthesis
           quote_key: 6078957_3d072d3b
     cl_mapping:
-      cl_term: {id: 'CL:0000598', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0000598
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -255,7 +251,10 @@ nodes:
           scope: rodent BLA fear-learning circuit review
           quote_key: 233450033_2f3f1d53
     cl_mapping:
-      cl_term: {id: 'CL:0000118', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0000118
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -346,7 +345,10 @@ nodes:
           scope: electrophysiology synthesis from ASTA report
           quote_key: 212579559_51e7dd2b
     cl_mapping:
-      cl_term: {id: 'CL:4023036', label: null, name_in_source: null}
+      cl_term:
+        id: CL:4023036
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -466,7 +468,10 @@ nodes:
           scope: rodent BLA fear-learning, optogenetics
           quote_key: 233450033_6def067a
     cl_mapping:
-      cl_term: {id: 'CL:0011005', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0011005
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -588,7 +593,10 @@ nodes:
           scope: electrophysiology synthesis from ASTA report
           quote_key: 212579559_51e7dd2b
     cl_mapping:
-      cl_term: {id: 'CL:0000118', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0000118
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -737,7 +745,10 @@ nodes:
           scope: rodent BLA fear-learning, optogenetics
           quote_key: 233450033_a39dd55b
     cl_mapping:
-      cl_term: {id: 'CL:0011005', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0011005
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -822,7 +833,10 @@ nodes:
           scope: electrophysiology synthesis from ASTA report
           quote_key: 212579559_51e7dd2b
     cl_mapping:
-      cl_term: {id: 'CL:0000693', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0000693
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -991,7 +1005,10 @@ nodes:
           scope: mouse CeL, electrophysiology
           quote_key: 280558687_a3cf6200
     cl_mapping:
-      cl_term: {id: 'CL:0011005', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0011005
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -1066,7 +1083,10 @@ nodes:
           scope: mouse medial amygdala, fate mapping
           quote_key: 627853_c6aafc07
     cl_mapping:
-      cl_term: {id: 'CL:0011005', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0011005
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -1132,7 +1152,10 @@ nodes:
           scope: review of amygdala molecular cell types
           quote_key: 267685584_c9abe6b1
     cl_mapping:
-      cl_term: {id: 'CL:0000679', label: null, name_in_source: null}
+      cl_term:
+        id: CL:0000679
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -1448,7 +1471,10 @@ nodes:
           scope: cross-species amygdala snRNA-seq (human/macaque/mouse/chicken)
           quote_key: 256832817_58d7b193
     cl_mapping:
-      cl_term: {id: 'CL:4042028', label: null, name_in_source: null}
+      cl_term:
+        id: CL:4042028
+        label:
+        name_in_source:
       mapping_type: BROAD
       mapping_notes: Auto-proposed by asta-report-ingest; requires expert review.
     proposed_cl_term:
@@ -1543,7 +1569,46 @@ nodes:
     definition_basis: ATLAS_TRANSCRIPTOMIC
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0256
-
+  - id: CS20230722_CLUS_0733
+    name: 0733 Pvalb chandelier Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0733
+  - id: CS20230722_CLUS_0664
+    name: 0664 Sncg Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0664
+  - id: CS20230722_CLUS_0765
+    name: 0765 Sst Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0765
+  - id: CS20230722_CLUS_0628
+    name: 0628 Vip Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0628
+  - id: CS20230722_CLUS_0738
+    name: 0738 Pvalb Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0738
+  - id: CS20230722_CLUS_0998
+    name: 0998 STR D1 Sema5a Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0998
+  - id: CS20230722_CLUS_0850
+    name: 0850 Sst Chodl Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0850
+  - id: CS20230722_CLUS_0710
+    name: 0710 Lamp5 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0710
 edges:
   - id: edge_medial_amygdala_lhx9_glutamatergic_neuron_to_cs20230722_supt_0057
     lit_type: medial_amygdala_lhx9_glutamatergic_neuron
@@ -1552,8 +1617,9 @@ edges:
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
     confidence_score: 0.4
-    rationale: >
-      NT type (Glutamatergic/Glut) and soma location (MBA:403 Medial amygdalar nucleus, region_fraction 0.588) are CONSISTENT across two independent MERFISH datasets (Zhuang 2023; Yao 2024). SUPT_0057 ranks first among five MEA Slc17a7 Glut supertypes by MeA enrichment, making it the best available candidate at this rank. Confidence is capped at LOW because the classical defining marker LHX9 is absent from atlas metadata and no precomputed expression data are available to confirm Lhx9 expression in this supertype. Upgrade to MODERATE requires LHX9 expression confirmation.
+    rationale: 'NT type (Glutamatergic/Glut) and soma location (MBA:403 Medial amygdalar nucleus, region_fraction 0.588) are CONSISTENT across two independent MERFISH datasets (Zhuang 2023; Yao 2024). SUPT_0057 ranks first among five MEA Slc17a7 Glut supertypes by MeA enrichment, making it the best available candidate at this rank. Confidence is capped at LOW because the classical defining marker LHX9 is absent from atlas metadata and no precomputed expression data are available to confirm Lhx9 expression in this supertype. Upgrade to MODERATE requires LHX9 expression confirmation.
+
+      '
     rationale_generated_at: '2026-06-02T12:53:35+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/medial_amygdala_lhx9_glutamatergic_neuron_summary.md
     property_comparisons:
@@ -1604,8 +1670,7 @@ edges:
       expression_detail: []
       region_fraction: 0.588
       region_evidence: SELF
-    mapping_cardinality: "1:1"
-
+    mapping_cardinality: '1:1'
   - id: edge_central_amygdala_gabaergic_projection_neuron_to_cs20230722_supt_0249
     lit_type: central_amygdala_gabaergic_projection_neuron
     taxonomy_type: CS20230722_SUPT_0249
@@ -1613,8 +1678,9 @@ edges:
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
     confidence_score: 0.3
-    rationale: >
-      NT type is CONSISTENT (GABAergic/GABA). Location is APPROXIMATE — CeA cells are present in SUPT_0249 (14% of the supertype) but the supertype spans NDB/SI/STRv/Pallidum. The classical node has no defining_markers; all marker comparisons are NOT_ASSESSED. Th (tyrosine hydroxylase) is a defining marker of the atlas supertype, which is atypical for CeA GABAergic neurons and may indicate that this supertype does not specifically represent CeA output neurons. Five equally-scored CeA GABAergic supertypes were returned in discovery; this assignment is provisional and requires targeted marker queries (Prkcd, Sst, Crh, Isl1) across all five candidates.
+    rationale: 'NT type is CONSISTENT (GABAergic/GABA). Location is APPROXIMATE — CeA cells are present in SUPT_0249 (14% of the supertype) but the supertype spans NDB/SI/STRv/Pallidum. The classical node has no defining_markers; all marker comparisons are NOT_ASSESSED. Th (tyrosine hydroxylase) is a defining marker of the atlas supertype, which is atypical for CeA GABAergic neurons and may indicate that this supertype does not specifically represent CeA output neurons. Five equally-scored CeA GABAergic supertypes were returned in discovery; this assignment is provisional and requires targeted marker queries (Prkcd, Sst, Crh, Isl1) across all five candidates.
+
+      '
     rationale_generated_at: '2026-06-02T12:53:35+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/central_amygdala_gabaergic_projection_neuron_summary.md
     property_comparisons:
@@ -1624,7 +1690,7 @@ edges:
         alignment: CONSISTENT
       - property: location_soma
         node_a_value: UBERON:0002883 central amygdala
-        node_b_value: 'MBA:536 Central amygdalar nucleus (33 cells/0.073 Yao 2024; 85 cells/0.150 Zhuang 2023); dominant locations NDB, SI, Striatum, Pallidum (region_fraction 0.14 for CeA)'
+        node_b_value: MBA:536 Central amygdalar nucleus (33 cells/0.073 Yao 2024; 85 cells/0.150 Zhuang 2023); dominant locations NDB, SI, Striatum, Pallidum (region_fraction 0.14 for CeA)
         alignment: APPROXIMATE
         notes: CeA is represented but is only ~14% of this supertype. Supertype spans NDB/SI/STRv/Pallidum — much broader than the CeA-specific classical node.
       - property: marker_GBX1
@@ -1676,73 +1742,6 @@ edges:
       region_fraction: 0.14
       region_evidence: SELF
     mapping_cardinality: 1:n
-
-  - id: edge_amygdala_intercalated_cell_to_cs20230722_supt_0235
-    lit_type: amygdala_intercalated_cell
-    taxonomy_type: CS20230722_SUPT_0235
-    relationship: skos:broadMatch
-    mapping_justification: semapv:UnreviewedManualMapping
-    confidence: LOW
-    confidence_score: 0.15
-    rationale: >
-      NT type is CONSISTENT (GABAergic). Location is APPROXIMATE — ITC cells (MBA:1105) are present in the supertype (2.2% of cells) and the Prox1+/Lhx6+ lineage is biologically consistent with ITC developmental origin; however, the supertype's dominant distribution is in Striatum and Cortical subplate. No defining_markers are encoded on the classical node; all marker comparisons are NOT_ASSESSED. Confidence is LOW because the supertype is not ITC-selective and marker-level validation is not possible without formal ITC marker extraction (TSHZ1, FOXP2, DRD1) and precomputed expression data.
-    rationale_generated_at: '2026-06-02T12:53:35+00:00'
-    report_path: reports/medial_temporal_lobe_amygdala/amygdala_intercalated_cell_summary.md
-    property_comparisons:
-      - property: nt_type
-        node_a_value: GABAergic
-        node_b_value: GABAergic (subclass STR Prox1 Lhx6 Gaba; high Gad1/Gad2 in cluster precomputed data)
-        alignment: CONSISTENT
-      - property: location_soma
-        node_a_value: UBERON:0002884 amygdala intercalated nuclei (BLA-CeA interface)
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (6 cells/0.024 Zhuang 2023; 3 cells/0.27 Yao 2024); dominant: Striatum MBA:477, Cortical subplate MBA:703; BLA-anterior MBA:303 also present'
-        alignment: APPROXIMATE
-        notes: ITC location confirmed but minority (region_fraction 0.022). Supertype is predominantly striatal/subpallial.
-      - property: marker_TSHZ1_FOXP2
-        node_a_value: TSHZ1, FOXP2 (referenced in morphology sources as ITC markers; not formally encoded as defining_markers on classical node)
-        node_b_value: Gna14, Car4, Daam2 (atlas defining markers — not known ITC markers)
-        alignment: NOT_ASSESSED
-        notes: Classical node lacks formal defining_markers. ITC-specific markers (TSHZ1, FOXP2, DRD1, Tacr3) present in snippets but not extracted. Atlas markers reflect broader STR Prox1 Lhx6 lineage.
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: PARTIAL
-        reference: PMID:37915112
-        explanation: MERFISH (Zhuang 2023) places minor SUPT_0235 contingent at MBA:1105 (6 cells, ratio 0.024) and BLA-adjacent MBA:303 (65 cells). ITC location confirmed but quantitatively minor within this broad supertype.
-      - evidence_type: LITERATURE
-        supports: PARTIAL
-        reference: PMID:38567489
-        explanation: ITC cells share Prox1+/Lhx6+ lineage (subpallial MGE origin), consistent with the STR Prox1 Lhx6 Gaba subclass lineage of SUPT_0235. Provides biological plausibility for the broadMatch despite non-ITC-specific distribution.
-    caveats:
-      - caveat_type: BROAD_ATLAS_SUPERTYPE
-        description: SUPT_0235 (STR Prox1 Lhx6 Gaba_3) has majority cells in Striatum and Cortical subplate; ITC (MBA:1105) accounts for only ~2% of the supertype. Not ITC-selective.
-      - caveat_type: MISSING_CLASSICAL_MARKERS
-        description: No defining_markers encoded on amygdala_intercalated_cell classical node. ITC-specific markers (TSHZ1, FOXP2, DRD1, Tacr3, Nts) present in morphology snippets but not formally extracted. Cannot perform marker-level comparison.
-    unresolved_questions:
-      - Is there a more ITC-specific cluster within STR Prox1 Lhx6 Gaba subclass (SUBC_054) concentrated at MBA:1105?
-      - Do TSHZ1/FOXP2 selectively mark a cluster within SUBC_054, or a different subclass (e.g. CEA-AAA-BST)?
-      - Should CEA-AAA-BST Six3 Sp9 Gaba candidates (SUPT_0379, SUPT_0377) be evaluated as alternative ITC matches?
-    proposed_experiments:
-      - Extract ITC marker genes (TSHZ1, FOXP2, DRD1, TACR3, NTS) from primary literature, add to classical node, then re-run map-cell-type to test if a specific cluster in SUBC_054 selectively expresses this profile.
-      - Assess CEA-AAA-BST Six3 Sp9 Gaba candidates as parallel ITC hypotheses.
-    discovery_score:
-      score: 1
-      rank_in_cohort: 1
-      cohort_size: 5
-      next_best_score: 1
-      rank: 1
-      contexts:
-        - id: cohort
-          kind: SURVIVAL_COHORT
-          rank: 1
-          n_members: 5
-          filters:
-            - region=MBA:1105
-            - nt_type=GABAergic
-      expression_detail: []
-      region_fraction: 0.022
-      region_evidence: SELF
-    mapping_cardinality: 1:n
-
   - id: edge_bla_glutamatergic_principal_neuron_to_cs20230722_supt_0005
     lit_type: bla_glutamatergic_principal_neuron
     taxonomy_type: CS20230722_SUPT_0005
@@ -1750,8 +1749,9 @@ edges:
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
     confidence_score: 0.25
-    rationale: >
-      NT type is CONSISTENT (Glutamatergic/Glut). Location is APPROXIMATE — BLA cells (MBA:295) confirmed in SUPT_0005 by Zhuang 2023 MERFISH (33 cells, 8% of supertype), but the supertype is primarily distributed in Cortical subplate and Olfactory areas; Yao 2024 gives only 3 cells (0.6%), a ten-fold discrepancy. SUPT_0005 captures a minor EP/claustrum-homologous BLA subpopulation. Classical defining markers SLC17A7 and CAMK2A are NOT_ASSESSED. Three LA-BLA-BMA-PA Glut supertypes (region_fraction 0.40-0.71) represent the likely primary candidates for the bulk of BLA principal neurons and require hypothesis-mode assessment before this mapping can be upgraded.
+    rationale: 'NT type is CONSISTENT (Glutamatergic/Glut). Location is APPROXIMATE — BLA cells (MBA:295) confirmed in SUPT_0005 by Zhuang 2023 MERFISH (33 cells, 8% of supertype), but the supertype is primarily distributed in Cortical subplate and Olfactory areas; Yao 2024 gives only 3 cells (0.6%), a ten-fold discrepancy. SUPT_0005 captures a minor EP/claustrum-homologous BLA subpopulation. Classical defining markers SLC17A7 and CAMK2A are NOT_ASSESSED. Three LA-BLA-BMA-PA Glut supertypes (region_fraction 0.40-0.71) represent the likely primary candidates for the bulk of BLA principal neurons and require hypothesis-mode assessment before this mapping can be upgraded.
+
+      '
     rationale_generated_at: '2026-06-02T12:53:35+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
     property_comparisons:
@@ -1811,7 +1811,6 @@ edges:
       region_fraction: 0.042
       region_evidence: SELF
     mapping_cardinality: 1:n
-
   - id: edge_medial_amygdala_gabaergic_neuron_to_cs20230722_supt_0256
     lit_type: medial_amygdala_gabaergic_neuron
     taxonomy_type: CS20230722_SUPT_0256
@@ -1819,8 +1818,9 @@ edges:
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
     confidence_score: 0.15
-    rationale: >
-      NT type CONSISTENT (GABAergic label on CS20230722_SUPT_0256); location APPROXIMATE (region_fraction 0.06 at MBA:403; dominant distribution striatopallidal MBA:477/803; 1 of 1 property comparisons assessed CONSISTENT, 1 APPROXIMATE, 1 NOT_ASSESSED). No defining markers on classical node; 5 equally-scoring MeA GABAergic supertypes in discovery cohort (score 1, cohort_size 5, next_best_score 1) — SUPT_0256 ranked first by cohort order only. BROAD_CLASSICAL_NODE caveat applies.
+    rationale: 'NT type CONSISTENT (GABAergic label on CS20230722_SUPT_0256); location APPROXIMATE (region_fraction 0.06 at MBA:403; dominant distribution striatopallidal MBA:477/803; 1 of 1 property comparisons assessed CONSISTENT, 1 APPROXIMATE, 1 NOT_ASSESSED). No defining markers on classical node; 5 equally-scoring MeA GABAergic supertypes in discovery cohort (score 1, cohort_size 5, next_best_score 1) — SUPT_0256 ranked first by cohort order only. BROAD_CLASSICAL_NODE caveat applies.
+
+      '
     rationale_generated_at: '2026-06-04T12:21:38+00:00'
     property_comparisons:
       - property: nt_type
@@ -1850,8 +1850,12 @@ edges:
     unresolved_questions:
       - Which of the 5 MeA GABAergic supertypes best represents the multiple MeA subpopulations (galanin+, vasopressin+, SST+, NPY+ populations)?
       - Does Lhx8 expression in SUPT_0256 indicate a genuine Lhx8-expressing MeA subpopulation, or is this a striatopallidal signal in non-MeA cells?
-      - "Which of the 5 MeA GABAergic supertypes (CS20230722_SUPT_0256, SUPT_0249, SUPT_0233, SUPT_0230, SUPT_0286) best represents each neuropeptide-defined subpopulation (Gal+, Avp+, Sst+, Npy+)? Neuropeptide markers should be extracted from ASTA corpus and added to the classical node before re-running discovery.\n"
-      - "Does Lhx8 on CS20230722_SUPT_0256 reflect genuine MeA-resident Lhx8+ cells or striatopallidal contamination? Targeted Lhx8/Lhx6 literature check needed.\n"
+      - 'Which of the 5 MeA GABAergic supertypes (CS20230722_SUPT_0256, SUPT_0249, SUPT_0233, SUPT_0230, SUPT_0286) best represents each neuropeptide-defined subpopulation (Gal+, Avp+, Sst+, Npy+)? Neuropeptide markers should be extracted from ASTA corpus and added to the classical node before re-running discovery.
+
+        '
+      - 'Does Lhx8 on CS20230722_SUPT_0256 reflect genuine MeA-resident Lhx8+ cells or striatopallidal contamination? Targeted Lhx8/Lhx6 literature check needed.
+
+        '
     proposed_experiments:
       - Extract neuropeptide markers (Gal, Avp, Sst, Npy) from ASTA snippets and add to classical node, then re-run discovery to assess which MeA supertypes best match each neuropeptide subtype.
     discovery_score:
@@ -1872,8 +1876,9 @@ edges:
       region_fraction: 0.06
       region_evidence: SELF
     mapping_cardinality: n:m
+    reconciliation_note: 'skos:broadMatch is appropriate: the classical node spans multiple developmental lineages (pallidal, preoptic, hypothalamic, prethalamic) likely distributed across several supertypes. The mapping is speculative until neuropeptide subtype markers are added and Stage A re-run.
 
-    reconciliation_note: "skos:broadMatch is appropriate: the classical node spans multiple developmental lineages (pallidal, preoptic, hypothalamic, prethalamic) likely distributed across several supertypes. The mapping is speculative until neuropeptide subtype markers are added and Stage A re-run.\n"
+      '
     report_path: reports/medial_temporal_lobe_amygdala/medial_amygdala_gabaergic_neuron_summary.md
     rationale_source_hash: f14020a8
   - id: edge_paralaminar_immature_neuron_to_cs20230722_supt_0005
@@ -1883,12 +1888,14 @@ edges:
     mapping_justification: semapv:UnspecifiedMatching
     confidence: UNCERTAIN
     confidence_score: 0.07
-    rationale: >
-      Paralaminar immature neurons are a primate-enriched population defined by DCX/BCL2/NES/VIM immaturity markers absent from adult mouse brain. Cross-species snRNA-seq (PMID:36788214) explicitly confirms this population is absent from mouse datasets. Location is DISCORDANT (paralaminar nucleus has no MBA CCF equivalent; SUPT_0005 maps to Cortical subplate EP/CLA territory). Classical defining markers are incompatible with any adult mouse transcriptomic type. This edge records the closest available type by regional/NT filter only and does not represent a biological equivalence. MapMyCells on published human paralaminar snRNA-seq data is the decisive experiment.
+    rationale: 'Paralaminar immature neurons are a primate-enriched population defined by DCX/BCL2/NES/VIM immaturity markers absent from adult mouse brain. Cross-species snRNA-seq (PMID:36788214) explicitly confirms this population is absent from mouse datasets. Location is DISCORDANT (paralaminar nucleus has no MBA CCF equivalent; SUPT_0005 maps to Cortical subplate EP/CLA territory). Classical defining markers are incompatible with any adult mouse transcriptomic type. This edge records the closest available type by regional/NT filter only and does not represent a biological equivalence. MapMyCells on published human paralaminar snRNA-seq data is the decisive experiment.
+
+      '
     rationale_generated_at: '2026-06-02T12:18:19+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/paralaminar_immature_neuron_summary.md
-    reconciliation_note: >
-      Paralaminar neurons are primate-enriched (human-prominent), defined by DCX/BCL2/NES/VIM immaturity markers absent from adult mouse brain. WMBv1 (CCN20230722) is derived from adult mouse brain and contains no equivalent persistent immature neuronal state in the amygdala. SUPT_0005 (IT EP-CLA Glut_3) was surfaced by regional/NT survival-cohort filter only — not by any shared biological property or marker overlap. Published cross-species snRNA-seq (PMID:36788214) explicitly confirms absence of this population from mouse datasets. This edge records the closest available transcriptomic type by broad anatomical proximity; it is not a biological equivalence claim.
+    reconciliation_note: 'Paralaminar neurons are primate-enriched (human-prominent), defined by DCX/BCL2/NES/VIM immaturity markers absent from adult mouse brain. WMBv1 (CCN20230722) is derived from adult mouse brain and contains no equivalent persistent immature neuronal state in the amygdala. SUPT_0005 (IT EP-CLA Glut_3) was surfaced by regional/NT survival-cohort filter only — not by any shared biological property or marker overlap. Published cross-species snRNA-seq (PMID:36788214) explicitly confirms absence of this population from mouse datasets. This edge records the closest available transcriptomic type by broad anatomical proximity; it is not a biological equivalence claim.
+
+      '
     property_comparisons:
       - property: nt_type
         node_a_value: Glutamatergic (inferred; no explicit nt_type block; cl_mapping CL:4042028)
@@ -1941,423 +1948,6 @@ edges:
       expression_detail: []
       region_fraction: 0.042
       region_evidence: SELF
-
-
-  - id: edge_bla_pv_basket_cell_to_cs20230722_supt_0235
-    lit_type: bla_pv_basket_cell
-    taxonomy_type: CS20230722_SUPT_0235
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnspecifiedMatching
-    confidence: UNCERTAIN
-    confidence_score: 0.05
-    rationale: >
-      NT type CONSISTENT (GABAergic) with CS20230722_SUPT_0235; however, Pvalb marker is NOT_ASSESSED due to absent precomputed expression data for CCN20230722 (no HDF5 available). Sst negative marker is also NOT_ASSESSED for the same reason. LITERATURE evidence supports Pvalb expression in BLA basket cells across multiple sources [1][3][4][5][6], but no AT evidence exists to anchor the atlas mapping. All five rank-1 BLA GABAergic supertypes scored equally (score=1, cohort of 5); this candidate is the cohort top-rank entry only. Location APPROXIMATE (MBA:1105 intercalated amygdalar nucleus, 2.2% of supertype; dominant distribution in striatum/cortical subplate). UNCERTAIN pending precomputed expression availability or AT evidence.
-    rationale_generated_at: '2026-06-05T13:16:42+00:00'
-    reconciliation_note:
-    property_comparisons:
-      - property: nt_type
-        node_a_value: GABAergic
-        node_b_value: GABA (inferred from supertype label STR Prox1 Lhx6 Gaba_3)
-        alignment: CONSISTENT
-      - property: location_soma
-        node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
-        alignment: APPROXIMATE
-        notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
-      - property: marker_PVALB
-        node_a_value: PVALB defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: NO_EVIDENCE
-        reference: PMID:37915112
-        explanation: Discovery-mode candidate from survival cohort filter (MBA:1105/MBA:295, GABAergic). All rank1 BLA GABAergic supertypes scored equally (score=1.0) with no marker-based discrimination possible in the absence of precomputed expression data. This edge records the cohort top-ranked candidate only.
-    discovery_score:
-      score: 1
-      rank_in_cohort: 1
-      cohort_size: 5
-      next_best_score: 1
-      rank: 1
-      contexts:
-        - id: cohort
-          kind: SURVIVAL_COHORT
-          rank: 1
-          n_members: 5
-          filters:
-            - region=MBA:295
-            - nt_type=GABAergic
-      expression_detail: []
-      region_fraction: 0.022
-      region_evidence: SELF
-
-    report_path: reports/medial_temporal_lobe_amygdala/bla_pv_basket_cell_summary.md
-    unresolved_questions:
-      - Obtain precomputed expression HDF5 for CCN20230722 to enable PVALB marker scoring across BLA GABAergic supertypes — blocks upgrade from UNCERTAIN.
-      - 'Run AT using amygdala scRNA-seq source dataset against CCN20230722 to identify best-matching cluster for BLA PV basket cells (target: F1 >= 0.60 at supertype level for MODERATE).'
-      - Determine whether BLA PV basket cells and PV axo-axonic cells segregate into distinct CCN20230722 clusters given shared PV+/CB+ PROTEIN expression signature.
-      - Obtain precomputed expression HDF5 for CCN20230722 to enable Pvalb and Sst marker scoring across BLA GABAergic supertypes — blocks upgrade from UNCERTAIN.
-      - 'Run AT using amygdala source dataset against CCN20230722 to identify best-matching cluster for BLA PV basket cells (target: F1 >= 0.60 at supertype level for MODERATE).'
-      - Determine whether BLA PV basket cells and PV axo-axonic cells segregate into distinct CCN20230722 clusters given shared PV+/CB+ signature.
-      - Confirm Sst negative-marker designation with a primary citation testing Sst expression in Pvalb+ BLA cells.
-    rationale_source_hash: 4801dc42
-  - id: edge_bla_axo_axonic_cell_to_cs20230722_supt_0235
-    lit_type: bla_axo_axonic_cell
-    taxonomy_type: CS20230722_SUPT_0235
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnspecifiedMatching
-    confidence: UNCERTAIN
-    confidence_score: 0.08
-    rationale: >
-      NT type is CONSISTENT (GABAergic). Pvalb defining marker is NOT_ASSESSED: Pvalb absent from atlas metadata for CS20230722_SUPT_0235 and no precomputed expression data available (HDF5 absent). Sst negative marker is NOT_ASSESSED: absence cannot be confirmed without precomputed expression data. Soma location is APPROXIMATE (region_fraction = 0.022; supertype dominant in Striatum/Cortical subplate, not BLA). Stage A discovery score = 1.0 in a 5-member cohort (next_best = 1.0): all rank-1 BLA GABAergic supertypes are fully tied; SUPT_0235 is cohort-order artefact only, not a marker-supported match. No annotation-transfer evidence. Relationship is evidencell:UncertainRelationship.
-    rationale_generated_at: '2026-06-05T13:16:43+00:00'
-    reconciliation_note: >
-      Same degraded-mode blocker as bla_pv_basket_cell: Pvalb-based discrimination impossible without CCN20230722 HDF5 precomputed expression. The broad nuclear distribution of BLA axo-axonic cells (Raudales et al. 2024, PMID:39012795) further suggests the mapping may span multiple supertypes at rank 1 rather than a single cluster. HDF5 acquisition is the primary unblocking step.
-    property_comparisons:
-      - property: nt_type
-        node_a_value: GABAergic
-        node_b_value: GABA (inferred from supertype label STR Prox1 Lhx6 Gaba_3)
-        alignment: CONSISTENT
-      - property: location_soma
-        node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
-        alignment: APPROXIMATE
-        notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
-      - property: marker_PVALB
-        node_a_value: PVALB defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: NO_EVIDENCE
-        reference: PMID:37915112
-        explanation: Discovery-mode candidate from survival cohort filter (MBA:1105/MBA:295, GABAergic). All rank1 BLA GABAergic supertypes scored equally (score=1.0) with no marker-based discrimination possible in the absence of precomputed expression data. This edge records the cohort top-ranked candidate only.
-    discovery_score:
-      score: 1
-      rank_in_cohort: 1
-      cohort_size: 5
-      next_best_score: 1
-      rank: 1
-      contexts:
-        - id: cohort
-          kind: SURVIVAL_COHORT
-          rank: 1
-          n_members: 5
-          filters:
-            - region=MBA:295
-            - nt_type=GABAergic
-      expression_detail: []
-      region_fraction: 0.022
-      region_evidence: SELF
-
-    report_path: reports/medial_temporal_lobe_amygdala/bla_axo_axonic_cell_summary.md
-    unresolved_questions:
-      - Which CCN20230722 rank-0 clusters in MBA:295 express Pvalb at levels consistent with the axo-axonic cell defining marker? Requires HDF5 access and re-run of find-candidates.
-      - Can BLA axo-axonic cells be distinguished from BLA PV+ basket cells in CCN20230722? Both are Pvalb+; whether they separate into distinct clusters at rank 0 is unknown.
-    rationale_source_hash: 113c0044
-  - id: edge_bla_sst_interneuron_to_cs20230722_supt_0235
-    lit_type: bla_sst_interneuron
-    taxonomy_type: CS20230722_SUPT_0235
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnspecifiedMatching
-    confidence: UNCERTAIN
-    confidence_score: 0.05
-    rationale: >
-      Degraded-mode run: precomputed expression data unavailable for CCN20230722. All 5 BLA GABAergic rank-1 supertypes scored equally (score=1.0 in a cohort of 5; NT_type=GABAergic + region=MBA:295 filters only). marker_SST and marker_CALB1 both NOT_ASSESSED (no atlas metadata entries; no HDF5 expression values). NT type CONSISTENT (GABA inferred from supertype label). Location APPROXIMATE: SUPT_0235 has region_fraction=0.022 in MBA:1105 with dominant Striatum/Cortical subplate distribution. evidencell:UncertainRelationship assigned; no marker evidence for any BLA GABAergic supertype; SUPT_0235 is an arbitrary tie-break representative of the cohort.
-    rationale_generated_at: '2026-06-05T13:16:44+00:00'
-    reconciliation_note: >
-    property_comparisons:
-      - property: nt_type
-        node_a_value: GABAergic
-        node_b_value: GABA (inferred from supertype label STR Prox1 Lhx6 Gaba_3)
-        alignment: CONSISTENT
-      - property: location_soma
-        node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
-        alignment: APPROXIMATE
-        notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
-      - property: marker_SST
-        node_a_value: SST defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-      - property: marker_CALB1
-        node_a_value: CALB1 defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: NO_EVIDENCE
-        reference: PMID:37915112
-        explanation: Discovery-mode candidate from survival cohort filter (MBA:1105/MBA:295, GABAergic). All rank1 BLA GABAergic supertypes scored equally (score=1.0) with no marker-based discrimination possible in the absence of precomputed expression data. This edge records the cohort top-ranked candidate only.
-    discovery_score:
-      score: 1
-      rank_in_cohort: 1
-      cohort_size: 5
-      next_best_score: 1
-      rank: 1
-      contexts:
-        - id: cohort
-          kind: SURVIVAL_COHORT
-          rank: 1
-          n_members: 5
-          filters:
-            - region=MBA:295
-            - nt_type=GABAergic
-      expression_detail: []
-      region_fraction: 0.022
-      region_evidence: SELF
-
-    report_path: reports/medial_temporal_lobe_amygdala/bla_sst_interneuron_summary.md
-    unresolved_questions:
-      - Ingest HDF5 precomputed expression for CCN20230722 to enable Sst and Calb1 marker comparisons across BLA GABAergic supertypes — this is the primary blocker for this mapping.
-      - Run MapMyCells AT on a mouse BLA SST+ source dataset to identify the BLA-specific CCN20230722 cluster(s) for this interneuron class.
-    rationale_source_hash: 33632dcc
-  - id: edge_bla_cck_basket_cell_to_cs20230722_supt_0235
-    lit_type: bla_cck_basket_cell
-    taxonomy_type: CS20230722_SUPT_0235
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnspecifiedMatching
-    confidence: UNCERTAIN
-    confidence_score: 0.05
-    rationale: >
-      CS20230722_SUPT_0235 (0235 STR Prox1 Lhx6 Gaba_3) is the cohort-top-ranked rank-1 BLA GABAergic supertype candidate, but ranks purely by tie-break: all 5 members of the SURVIVAL_COHORT (region=MBA:295, nt_type=GABAergic) scored equally (score=1, cohort_size=5). Discovery ran in degraded mode — no precomputed expression data available — so marker_CCK and marker_CALB1 are both NOT_ASSESSED. The sole CONSISTENT property is nt_type (GABAergic), shared by all cohort members. Location_soma is APPROXIMATE: the supertype is dominant in Striatum/Cortical subplate with only 2.2% of cells at MBA:1105 (region_fraction=0.022). No positive evidence supports this mapping; confidence is UNCERTAIN pending precomputed expression profiling of CCN20230722 BLA GABAergic supertypes.
-    rationale_generated_at: '2026-06-05T13:16:44+00:00'
-    reconciliation_note: >
-      CCK and CALB1 absent from atlas metadata for all rank-1 BLA GABAergic supertypes; cannot distinguish CCK basket cells from other BLA GABAergic types in degraded mode. Pvalb negative marker likewise not assessable in degraded mode. Note: bla_cck_basket_cell and bla_cck_cb1_basket_cell (both in the amygdala graph) may overlap in coverage — curator review recommended before committing to a distinct mapping for bla_cck_basket_cell.
-    property_comparisons:
-      - property: nt_type
-        node_a_value: GABAergic
-        node_b_value: GABA (inferred from supertype label STR Prox1 Lhx6 Gaba_3)
-        alignment: CONSISTENT
-      - property: location_soma
-        node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
-        alignment: APPROXIMATE
-        notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
-      - property: marker_CCK
-        node_a_value: CCK defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-      - property: marker_CALB1
-        node_a_value: CALB1 defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: NO_EVIDENCE
-        reference: PMID:37915112
-        explanation: Discovery-mode candidate from survival cohort filter (MBA:1105/MBA:295, GABAergic). All rank1 BLA GABAergic supertypes scored equally (score=1.0) with no marker-based discrimination possible in the absence of precomputed expression data. This edge records the cohort top-ranked candidate only.
-    discovery_score:
-      score: 1
-      rank_in_cohort: 1
-      cohort_size: 5
-      next_best_score: 1
-      rank: 1
-      contexts:
-        - id: cohort
-          kind: SURVIVAL_COHORT
-          rank: 1
-          n_members: 5
-          filters:
-            - region=MBA:295
-            - nt_type=GABAergic
-      expression_detail: []
-      region_fraction: 0.022
-      region_evidence: SELF
-
-    report_path: reports/medial_temporal_lobe_amygdala/bla_cck_basket_cell_summary.md
-    unresolved_questions:
-      - Which rank-1 or rank-0 CCN20230722 BLA GABAergic supertype/cluster shows cohort-dominant Cck expression once precomputed expression data are available?
-      - Do bla_cck_basket_cell and bla_cck_cb1_basket_cell represent overlapping populations that should be merged or further distinguished?
-      - Which rank-1 or rank-0 CCN20230722 BLA GABAergic supertype/cluster shows cohort-dominant Cck expression combined with Calb1 presence and Pvalb absence once precomputed expression data are available?
-    rationale_source_hash: cf3b7da7
-  - id: edge_bla_vip_calretinin_interneuron_to_cs20230722_supt_0235
-    lit_type: bla_vip_calretinin_interneuron
-    taxonomy_type: CS20230722_SUPT_0235
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnspecifiedMatching
-    confidence: UNCERTAIN
-    confidence_score: 0.05
-    rationale: >
-      Degraded-mode discovery: all five BLA GABAergic supertypes in the survival cohort (region=MBA:295, nt_type=GABAergic; n=5) scored identically (score=1; next_best_score=1), providing no basis for marker-level discrimination. Defining markers Vip (`marker_VIP` NOT_ASSESSED), Calb2 (`marker_CALB2` NOT_ASSESSED), and Cck (`marker_CCK` NOT_ASSESSED) are absent from atlas metadata for CS20230722_SUPT_0235; 0 of 3 markers CONSISTENT. Negative markers Pvalb and Sst are likewise NOT_ASSESSED. NT type is CONSISTENT (GABAergic / GABA label). Location is APPROXIMATE: 2.2% of CS20230722_SUPT_0235 cells fall in MBA:1105 (BLA-adjacent intercalated nucleus) but the dominant mass is Striatum/Cortical subplate. Confidence UNCERTAIN pending HDF5 expression data and rank-0 re-query of Vip Gaba clusters (by atlas label annotation).
-    rationale_generated_at: '2026-06-05T13:17:55+00:00'
-    reconciliation_note: >
-      Rank-0 Vip Gaba clusters (labelled "Vip Gaba" in atlas) are biologically more relevant candidates but also scored identically to all other BLA GABAergic rank-0 candidates in degraded mode. A separate rank-0 edge with expression data is required before this mapping can be upgraded.
-    property_comparisons:
-      - property: nt_type
-        node_a_value: GABAergic
-        node_b_value: GABA (inferred from supertype label STR Prox1 Lhx6 Gaba_3)
-        alignment: CONSISTENT
-      - property: location_soma
-        node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
-        alignment: APPROXIMATE
-        notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
-      - property: marker_VIP
-        node_a_value: VIP defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-      - property: marker_CALB2
-        node_a_value: CALB2 defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-      - property: marker_CCK
-        node_a_value: CCK defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: NO_EVIDENCE
-        reference: PMID:37915112
-        explanation: Discovery-mode candidate from survival cohort filter (MBA:1105/MBA:295, GABAergic). All rank1 BLA GABAergic supertypes scored equally (score=1.0) with no marker-based discrimination possible in the absence of precomputed expression data. This edge records the cohort top-ranked candidate only.
-    discovery_score:
-      score: 1
-      rank_in_cohort: 1
-      cohort_size: 5
-      next_best_score: 1
-      rank: 1
-      contexts:
-        - id: cohort
-          kind: SURVIVAL_COHORT
-          rank: 1
-          n_members: 5
-          filters:
-            - region=MBA:295
-            - nt_type=GABAergic
-      expression_detail: []
-      region_fraction: 0.022
-      region_evidence: SELF
-
-    report_path: reports/medial_temporal_lobe_amygdala/bla_vip_calretinin_interneuron_summary.md
-    unresolved_questions:
-      - Identify which Vip Gaba rank-0 cluster(s) (CS20230722_CLUS_0625–CS20230722_CLUS_0637) best match the BLA VIP/calretinin interneuron-selective interneuron once HDF5 expression data are available.
-      - Determine whether the VIP/calretinin population maps to a single rank-0 cluster or is split (1:N or CrossCuttingMatch) — the classical molecular heterogeneity (VIP and/or calretinin) predicts possible split.
-      - Identify which Vip Gaba rank-0 cluster(s) best match the BLA VIP/calretinin interneuron once HDF5 expression data are available.
-    rationale_source_hash: 5611b5d3
-  - id: edge_bla_npy_neurogliaform_cell_to_cs20230722_supt_0235
-    lit_type: bla_npy_neurogliaform_cell
-    taxonomy_type: CS20230722_SUPT_0235
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnspecifiedMatching
-    confidence: UNCERTAIN
-    confidence_score: 0.05
-    rationale: >
-      Degraded-mode discovery: all five rank-1 BLA GABAergic supertypes in the CS20230722 survival cohort (region=MBA:295, nt_type=GABAergic) scored equally at score=1 with no marker-based discrimination possible (no precomputed expression data; HDF5 absent). CS20230722_SUPT_0235 (0235 STR Prox1 Lhx6 Gaba_3; 146 cells) is the recorded top-ranked candidate by ordering only. NT type CONSISTENT (GABAergic). marker_NPY NOT_ASSESSED: Npy absent from atlas node defining markers and precomputed expression unavailable. Negative markers Pvalb and Sst NOT_ASSESSED: neither can be evaluated in degraded mode; their absence in the target would support assignment. location_soma APPROXIMATE: supertype dominant distribution is Striatum/Cortical subplate with 2.2% in MBA:1105 (adjacent to BLA). No ANNOTATION_TRANSFER evidence. evidencell:UncertainRelationship assigned; resolve by obtaining HDF5 precomputed expression and re-running discovery.
-    rationale_generated_at: '2026-06-05T13:16:45+00:00'
-    reconciliation_note: >
-    property_comparisons:
-      - property: nt_type
-        node_a_value: GABAergic
-        node_b_value: GABA (inferred from supertype label STR Prox1 Lhx6 Gaba_3)
-        alignment: CONSISTENT
-      - property: location_soma
-        node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
-        alignment: APPROXIMATE
-        notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
-      - property: marker_NPY
-        node_a_value: NPY defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: NO_EVIDENCE
-        reference: PMID:37915112
-        explanation: Discovery-mode candidate from survival cohort filter (MBA:1105/MBA:295, GABAergic). All rank1 BLA GABAergic supertypes scored equally (score=1.0) with no marker-based discrimination possible in the absence of precomputed expression data. This edge records the cohort top-ranked candidate only.
-    discovery_score:
-      score: 1
-      rank_in_cohort: 1
-      cohort_size: 5
-      next_best_score: 1
-      rank: 1
-      contexts:
-        - id: cohort
-          kind: SURVIVAL_COHORT
-          rank: 1
-          n_members: 5
-          filters:
-            - region=MBA:295
-            - nt_type=GABAergic
-      expression_detail: []
-      region_fraction: 0.022
-      region_evidence: SELF
-
-    report_path: reports/medial_temporal_lobe_amygdala/bla_npy_neurogliaform_cell_summary.md
-    unresolved_questions:
-      - Which of the five rank-1 BLA GABAergic supertypes expresses Npy at detectable levels? Blocked on HDF5 precomputed expression availability.
-      - Is there published transcriptomic characterisation of BLA NPY neurogliaform cells mapping to a specific CCN20230722 supertype or cluster?
-      - Do CCN20230722 BLA GABAergic supertypes segregate by Pvalb and Sst expression? Negative-marker filtering could narrow the five-way tie once precomputed expression data are available.
-    rationale_source_hash: bf950f7f
-  - id: edge_bla_gabaergic_projection_neuron_to_cs20230722_supt_0235
-    lit_type: bla_gabaergic_projection_neuron
-    taxonomy_type: CS20230722_SUPT_0235
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnspecifiedMatching
-    confidence: UNCERTAIN
-    confidence_score: 0.1
-    rationale: >
-      NT type CONSISTENT (GABAergic; GABA inferred from SUPT_0235 label STR Prox1 Lhx6 Gaba_3). Location APPROXIMATE: SUPT_0235 has 2.2% of cells in MBA:1105 (BLA-adjacent; dominant Striatum/Cortical subplate). Both defining markers (marker_SST, marker_NOS1) are NOT_ASSESSED — absent from atlas metadata for all five BLA GABAergic rank-1 candidates; no precomputed expression data available (degraded mode). All five cohort members scored equally (score=1, cohort_size=5, next_best_score=1); Stage A discovery provided no discriminating power. The SST+/NOS1+ co-expression signature cannot be confirmed or excluded at this rank without expression data. UNCERTAIN until precomputed expression or annotation-transfer evidence is obtained.
-    rationale_generated_at: '2026-06-05T13:16:46+00:00'
-    reconciliation_note: >
-      SST+/NOS1+ long-range GABAergic projection neurons absent from atlas metadata discriminators in degraded mode. This type is relatively rare (~5.5-8% of BLA GABAergic neurons, per marker_SST and marker_NOS1 NOT_ASSESSED on all rank-1 candidates) and may map to a specific atlas supertype or cluster distinguishable by SST+NOS1 co-expression — needs expression data.
-    property_comparisons:
-      - property: nt_type
-        node_a_value: GABAergic
-        node_b_value: GABA (inferred from supertype label STR Prox1 Lhx6 Gaba_3)
-        alignment: CONSISTENT
-      - property: location_soma
-        node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
-        alignment: APPROXIMATE
-        notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
-      - property: marker_SST
-        node_a_value: SST defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-      - property: marker_NOS1
-        node_a_value: NOS1 defining marker
-        node_b_value: not present in atlas node defining markers
-        alignment: NOT_ASSESSED
-        notes: No precomputed expression data available; marker absent from atlas metadata.
-    evidence:
-      - evidence_type: ATLAS_METADATA
-        supports: NO_EVIDENCE
-        reference: PMID:37915112
-        explanation: Discovery-mode candidate from survival cohort filter (MBA:1105/MBA:295, GABAergic). All rank1 BLA GABAergic supertypes scored equally (score=1.0) with no marker-based discrimination possible in the absence of precomputed expression data. This edge records the cohort top-ranked candidate only.
-    discovery_score:
-      score: 1
-      rank_in_cohort: 1
-      cohort_size: 5
-      next_best_score: 1
-      rank: 1
-      contexts:
-        - id: cohort
-          kind: SURVIVAL_COHORT
-          rank: 1
-          n_members: 5
-          filters:
-            - region=MBA:295
-            - nt_type=GABAergic
-      expression_detail: []
-      region_fraction: 0.022
-      region_evidence: SELF
-
-    report_path: reports/medial_temporal_lobe_amygdala/bla_gabaergic_projection_neuron_summary.md
-    unresolved_questions:
-      - Obtain precomputed expression data for CCN20230722 BLA GABAergic supertypes to assess Sst and Nos1 expression and resolve which rank-0 cluster hosts the SST+/NOS1+ projection neuron population.
-      - Determine whether SST+/NOS1+ co-expression is sufficient to distinguish this projection type from local SST dendrite-targeting interneurons at atlas rank-0 cluster level.
-    rationale_source_hash: dc3d716d
   - id: edge_basal_amygdala_fear_neuron_to_cs20230722_supt_0005
     lit_type: basal_amygdala_fear_neuron
     taxonomy_type: CS20230722_SUPT_0005
@@ -2365,11 +1955,13 @@ edges:
     mapping_justification: semapv:UnspecifiedMatching
     confidence: UNCERTAIN
     confidence_score: 0.05
-    rationale: >
-      Fear neurons are a purely activity-defined functional ensemble; no NT type, markers, or expression profile are encoded on this classical node. Stage A discovery returned a 5-member tied cohort (all score=1; next_best_score=1; cohort_size=5) with no basis for discrimination; CS20230722_SUPT_0005 is the top-ranked entry by position only, not by evidence. The single ATLAS_METADATA evidence item is rated NO_EVIDENCE. Location comparison is APPROXIMATE (MBA:1105, 2.2% of supertype); NT comparison is NOT_ASSESSED. No atlas cluster in CCN20230722 corresponds to a fear-conditioning activity state. Molecular characterisation (e.g. Fos-TRAP followed by single-nucleus sequencing) is required before a meaningful mapping can be assessed.
+    rationale: 'Fear neurons are a purely activity-defined functional ensemble; no NT type, markers, or expression profile are encoded on this classical node. Stage A discovery returned a 5-member tied cohort (all score=1; next_best_score=1; cohort_size=5) with no basis for discrimination; CS20230722_SUPT_0005 is the top-ranked entry by position only, not by evidence. The single ATLAS_METADATA evidence item is rated NO_EVIDENCE. Location comparison is APPROXIMATE (MBA:1105, 2.2% of supertype); NT comparison is NOT_ASSESSED. No atlas cluster in CCN20230722 corresponds to a fear-conditioning activity state. Molecular characterisation (e.g. Fos-TRAP followed by single-nucleus sequencing) is required before a meaningful mapping can be assessed.
+
+      '
     rationale_generated_at: '2026-06-04T12:17:33+00:00'
-    reconciliation_note: >
-      Fear neurons are a circuit-level functional concept defined by activity during Pavlovian fear conditioning, not by molecular markers. They are likely a subpopulation within BLA glutamatergic principal neurons but cannot be mapped to a specific atlas transcriptomic type without molecular characterisation. See also edge_basal_amygdala_extinction_neuron_to_cs20230722_supt_0005 for the parallel extinction neuron case; both share the same absence-of-molecular-identity blocker.
+    reconciliation_note: 'Fear neurons are a circuit-level functional concept defined by activity during Pavlovian fear conditioning, not by molecular markers. They are likely a subpopulation within BLA glutamatergic principal neurons but cannot be mapped to a specific atlas transcriptomic type without molecular characterisation. See also edge_basal_amygdala_extinction_neuron_to_cs20230722_supt_0005 for the parallel extinction neuron case; both share the same absence-of-molecular-identity blocker.
+
+      '
     property_comparisons:
       - property: nt_type
         node_a_value: not defined (functional type)
@@ -2377,7 +1969,7 @@ edges:
         alignment: NOT_ASSESSED
       - property: location_soma
         node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
+        node_b_value: MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate
         alignment: APPROXIMATE
         notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
     evidence:
@@ -2402,7 +1994,6 @@ edges:
       expression_detail: []
       region_fraction: 0.022
       region_evidence: SELF
-
     report_path: reports/medial_temporal_lobe_amygdala/basal_amygdala_fear_neuron_summary.md
     unresolved_questions:
       - Identify molecular markers co-expressed in fear-conditioned BLA neurons via activity-dependent labelling + transcriptomics (e.g. Fos-TRAP); encode as defining_markers to enable atlas mapping.
@@ -2416,11 +2007,13 @@ edges:
     mapping_justification: semapv:UnspecifiedMatching
     confidence: UNCERTAIN
     confidence_score: 0.05
-    rationale: >
-      Extinction neurons are a circuit-level functional concept defined by activity during fear extinction, not by molecular identity. No defining markers are encoded on the classical node; `marker_nt_type` alignment is NOT_ASSESSED. The sole discovery-mode candidate (CS20230722_SUPT_0005; score=1 of 5-member GABAergic cohort, tied next_best_score=1) carries NO_EVIDENCE support. `location_soma` is APPROXIMATE only (MBA:1105, 2.2% of supertype). No molecular basis for mapping exists until activity-dependent transcriptomic profiling defines a marker signature.
+    rationale: 'Extinction neurons are a circuit-level functional concept defined by activity during fear extinction, not by molecular identity. No defining markers are encoded on the classical node; `marker_nt_type` alignment is NOT_ASSESSED. The sole discovery-mode candidate (CS20230722_SUPT_0005; score=1 of 5-member GABAergic cohort, tied next_best_score=1) carries NO_EVIDENCE support. `location_soma` is APPROXIMATE only (MBA:1105, 2.2% of supertype). No molecular basis for mapping exists until activity-dependent transcriptomic profiling defines a marker signature.
+
+      '
     rationale_generated_at: '2026-06-04T12:16:59+00:00'
-    reconciliation_note: >
-      Extinction neurons are a functional circuit-level concept defined by activity during fear extinction, not by molecular markers. Like fear neurons, they are likely a subpopulation within BLA glutamatergic principal neurons. No specific molecular atlas type corresponds to this functional identity; molecular characterisation is needed.
+    reconciliation_note: 'Extinction neurons are a functional circuit-level concept defined by activity during fear extinction, not by molecular markers. Like fear neurons, they are likely a subpopulation within BLA glutamatergic principal neurons. No specific molecular atlas type corresponds to this functional identity; molecular characterisation is needed.
+
+      '
     property_comparisons:
       - property: nt_type
         node_a_value: not defined (functional type)
@@ -2428,7 +2021,7 @@ edges:
         alignment: NOT_ASSESSED
       - property: location_soma
         node_a_value: UBERON:0002887 basolateral amygdala
-        node_b_value: 'MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate'
+        node_b_value: MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate
         alignment: APPROXIMATE
         notes: Supertype has minor BLA-adjacent presence. Location filter confirms GABAergic cells in amygdala region but supertype is not BLA-specific.
     evidence:
@@ -2458,3 +2051,732 @@ edges:
       - Does a molecularly distinct transcriptomic signature exist for BLA extinction neurons, or do they represent a transient activity state within the BLA glutamatergic principal neuron population?
       - Has activity-dependent transcriptomic profiling (TRAP-seq or equivalent) of BLA extinction-active neurons been published with a gene expression signature that can be mapped to CCN20230722?
     rationale_source_hash: b38e1656
+  - id: edge_bla_axo_axonic_cell_to_cs20230722_clus_0733
+    lit_type: bla_axo_axonic_cell
+    taxonomy_type: CS20230722_CLUS_0733
+    relationship: skos:closeMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: '1:1'
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0002887 basolateral amygdala
+        node_b_value: MBA:295 BLA present (~4% of cluster); wider cortical/subplate distribution.
+        alignment: APPROXIMATE
+        notes: Chandelier cell is pan-cortical; BLA is a secondary site.
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: Pvalb precomputed mean 6.38 (cohort 97.8th pct; tier 2). Cluster "0733 Pvalb chandelier Gaba_1".
+        alignment: CONSISTENT
+      - property: atlas_label_chandelier
+        node_a_value: axo-axonic (chandelier) morphology — AIS-targeting
+        node_b_value: Cluster "0733 Pvalb chandelier Gaba_1"; parent supertype SUPT_0204 "Pvalb chandelier Gaba_1" — chandelier explicit in both.
+        alignment: CONSISTENT
+      - property: negative_marker_Sst
+        node_a_value: Sst — negative marker
+        node_b_value: NOT_ASSESSED — Sst not in precomputed data for CLUS_0733.
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:22726836
+        explanation: Bienvenu et al. 2012 confirmed the BLA axo-axonic cell as a distinct PVALB+ type targeting the axon initial segment.
+        quote_key: 10647550_e0390ac0
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: PMID:37915112
+        explanation: CLUS_0733 labeled "Pvalb chandelier Gaba_1" in WMBv1 — direct label correspondence to axo-axonic (chandelier) identity.
+    caveats:
+      - caveat_type: OTHER
+        description: No AT evidence; confidence capped at closeMatch.
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: CLUS_0733 is not BLA-restricted. The chandelier cell type is pan-cortical.
+    unresolved_questions:
+      - Does CLUS_0733 resolve cleanly to axo-axonic cells in BLA by AnkG co-staining?
+      - Does CS20230722_CLUS_0733 resolve to axo-axonic cells in MBA:295 by AnkG co-staining?
+      - Can Sst absence be confirmed in CS20230722_CLUS_0733 from precomputed stats?
+    proposed_experiments:
+      - MapMyCells AT on morphologically confirmed BLA axo-axonic cell transcriptomes.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:295
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 6.38
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+      region_fraction: 0.042
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.28
+    rationale: "Atlas label \"Pvalb chandelier Gaba_1\" on CS20230722_CLUS_0733 provides direct nomenclature correspondence to axo-axonic (chandelier) identity. `marker_Pvalb` CONSISTENT: precomputed mean 6.38 at 97.8th percentile of BLA GABAergic cohort (1 of 2 markers CONSISTENT; `negative_marker_Sst` NOT_ASSESSED). `atlas_label_chandelier` CONSISTENT. `nt_type` CONSISTENT (GABAergic/GABA). `location_soma` APPROXIMATE: region_fraction = 0.042; CS20230722_CLUS_0733 is pan-cortical, BLA a secondary site. No annotation-transfer evidence; confidence capped at LOW per closeMatch-no-AT rubric.\n"
+    rationale_generated_at: '2026-06-05T13:49:46+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_axo_axonic_cell_summary.md
+    rationale_source_hash: 8daa6bbd
+  - id: edge_bla_cck_basket_cell_to_cs20230722_clus_0664
+    lit_type: bla_cck_basket_cell
+    taxonomy_type: CS20230722_CLUS_0664
+    relationship: skos:closeMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: 1:N
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0002887 basolateral amygdala
+        node_b_value: MBA:295 BLA present; region_fraction 0.031.
+        alignment: CONSISTENT
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide
+        node_b_value: Cck precomputed mean 11.15 (98.3rd pct; tier 2). Sncg supertype = canonical CCK co-expression.
+        alignment: CONSISTENT
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — negative marker
+        node_b_value: NOT_ASSESSED — Sncg lineage is circumstantially consistent with Pvalb-negativity.
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:33837051
+        explanation: 'Vereczki et al. 2021: 71.1% of CCK+ interneurons in mouse LA/BA confirmed as CCK+/CB1+ basket cells.'
+        quote_key: 232283078_6d9c6756
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: PMID:37915112
+        explanation: 'CLUS_0664 "Sncg Gaba_1" (WMBv1): Cnr1 mean 12.36 (98.5th pct), Cck mean 11.15 (98.3rd pct) — both tier-2 reliable.'
+    caveats:
+      - caveat_type: OTHER
+        description: No AT evidence.
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: Five Sncg Gaba_1 clusters all score equally on Cnr1+Cck.
+    unresolved_questions:
+      - Which Sncg Gaba_1 sibling cluster is the most BLA-enriched?
+      - Which Sncg Gaba_1 sibling cluster is the most BLA-enriched once AT evidence is available?
+      - Do bla_cck_basket_cell and bla_cck_cb1_basket_cell represent overlapping populations that should be merged?
+    proposed_experiments:
+      - MapMyCells AT on BLA CCK basket cell transcriptomes to resolve 1:N.
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:295
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 11.15
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.983
+      region_fraction: 0.031
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "CS20230722_CLUS_0664 (0664 Sncg Gaba_1) carries Cck mean 11.15 (98.3rd pct) and Cnr1 mean 12.36 (98.5th pct) in the BLA GABAergic rank-0 cohort — both tier-2 reliable from EXPRESSION source. Vereczki et al. 2021 (PMID:33837051) confirms 71.1% of BLA CCK+ interneurons are CCK+/CB1+ basket cells; NT type CONSISTENT (GABAergic/GABA); location_soma CONSISTENT (MBA:295, region_fraction=0.031). Confidence is LOW: no annotation-transfer evidence; Calb1 (a defining marker) is NOT_ASSESSED; five sibling Sncg Gaba_1 clusters are indistinguishable on available data (DISTRIBUTED_ACROSS_CLUSTERS caveat). Overlap with bla_cck_cb1_basket_cell (same target cluster) requires curator review.\n"
+    reconciliation_note: "Both bla_cck_basket_cell and bla_cck_cb1_basket_cell map to CS20230722_CLUS_0664; Calb1 (defining marker on bla_cck_basket_cell) is NOT_ASSESSED in the current atlas build. Curator review of node distinctiveness recommended before upgrading confidence.\n"
+    rationale_generated_at: '2026-06-05T13:48:50+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_cck_basket_cell_summary.md
+    rationale_source_hash: 1f2603bb
+  - id: edge_bla_sst_interneuron_to_cs20230722_clus_0765
+    lit_type: bla_sst_interneuron
+    taxonomy_type: CS20230722_CLUS_0765
+    relationship: skos:broadMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: 1:n
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0002887 basolateral amygdala
+        node_b_value: 'MBA:295 BLA: region_fraction 0.289 — dominant BLA presence.'
+        alignment: CONSISTENT
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide
+        node_b_value: Sst precomputed mean 11.92 (96.7th pct; tier 2). Cluster "0765 Sst Gaba_2".
+        alignment: CONSISTENT
+      - property: marker_Calb1
+        node_a_value: Calb1 — defining marker
+        node_b_value: Calb1 precomputed mean 9.57 (96.5th pct; tier 2).
+        alignment: CONSISTENT
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — negative marker
+        node_b_value: NOT_ASSESSED.
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:33837051
+        explanation: 'Vereczki et al. 2021: SST+/Calb1+ BLA interneurons estimated 10-16% of GABAergic cells; dendrite-targeting class distinct from PV and CCK types.'
+        quote_key: 232283078_bd1f3975
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: PMID:37915112
+        explanation: 'CLUS_0765 "Sst Gaba_2" (WMBv1): Sst 96.7th pct, Calb1 96.5th pct; dominant BLA fraction 0.289.'
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: CLUS_0765 and CLUS_0774 both score equally. Parallel edge to CLUS_0774 may be needed.
+      - caveat_type: OTHER
+        description: No AT evidence.
+    unresolved_questions:
+      - Do CLUS_0765 and CLUS_0774 represent distinct SST subtypes in BLA?
+      - Do CLUS_0765 and CLUS_0774 represent distinct SST subtypes in BLA? A parallel edge to CLUS_0774 may be warranted.
+      - Run annotation transfer on a mouse BLA SST+ source dataset to confirm cluster assignment and resolve CLUS_0765 vs CLUS_0774 ambiguity.
+    proposed_experiments:
+      - smFISH with Sst+Calb1 in mouse BLA.
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:295
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.92
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.967
+        - gene: Calb1
+          val: 9.57
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.965
+      region_fraction: 0.289
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "Sst precomputed mean 11.92 (96.7th pct; `neuropeptide_Sst` CONSISTENT) and Calb1 precomputed mean 9.57 (96.5th pct; `marker_Calb1` CONSISTENT); 2 of 3 markers CONSISTENT (`negative_marker_Pvalb` NOT_ASSESSED). NT type CONSISTENT (GABA). Location CONSISTENT: region_fraction=0.289 in MBA:295 (dominant BLA presence; borderline band, consistent with skos:broadMatch 1:n). No AT evidence available; atlas-metadata-only support caps confidence at LOW. DISTRIBUTED_ACROSS_CLUSTERS caveat: CLUS_0765 and CLUS_0774 tied in Stage A discovery (score=5 of 5-member cohort, rank_in_cohort=1).\n"
+    reconciliation_note: ''
+    rationale_generated_at: '2026-06-05T13:47:33+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_sst_interneuron_summary.md
+    rationale_source_hash: 1fbc3e6d
+  - id: edge_bla_vip_calretinin_interneuron_to_cs20230722_clus_0628
+    lit_type: bla_vip_calretinin_interneuron
+    taxonomy_type: CS20230722_CLUS_0628
+    relationship: skos:broadMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: 1:n
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0002887 basolateral amygdala
+        node_b_value: MBA:295 BLA present; region_fraction 0.049.
+        alignment: CONSISTENT
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: Calb2 precomputed mean 8.12 (98.3rd pct; tier 2).
+        alignment: CONSISTENT
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide
+        node_b_value: Vip precomputed mean 11.11 (96.9th pct; tier 2).
+        alignment: CONSISTENT
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide
+        node_b_value: Cck mean 0.97 (41.7th pct; tier 1 — low reliability).
+        alignment: APPROXIMATE
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — negative marker
+        node_b_value: NOT_ASSESSED.
+        alignment: NOT_ASSESSED
+      - property: negative_marker_Sst
+        node_a_value: Sst — negative marker
+        node_b_value: NOT_ASSESSED.
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:22837739
+        explanation: McDonald et al. characterises BLA VIP/calretinin interneurons as the IS subclass; largest GABAergic class (29-38%).
+        quote_key: '11544073_94689603'
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: PMID:37915112
+        explanation: 'CLUS_0628 "Vip Gaba_2": Calb2 98.3rd pct, Vip 96.9th pct — both tier-2. Five Vip Gaba clusters all score equally.'
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: Five Vip Gaba clusters tie at score 6.
+      - caveat_type: OTHER
+        description: No AT evidence.
+    unresolved_questions:
+      - Which Vip Gaba cluster captures the IS morphological specialisation?
+      - Which of the five Vip Gaba rank-0 clusters best matches the BLA VIP/calretinin IS interneuron — resolve by annotation transfer targeting F1 >= 0.50 at CLUSTER level.
+      - Determine whether the VIP/calretinin population maps to one cluster or multiple (1:N / CrossCuttingMatch) given acknowledged molecular heterogeneity.
+    proposed_experiments:
+      - MapMyCells AT on IS interneuron patch-seq transcriptomes.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:295
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 8.12
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.983
+        - gene: Vip
+          val: 11.11
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+      region_fraction: 0.049
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "`marker_Calb2` CONSISTENT (Calb2 mean 8.12, 98.3rd pct, tier 2) and `neuropeptide_Vip` CONSISTENT (Vip mean 11.11, 96.9th pct, tier 2) in CS20230722_CLUS_0628; 2 of 2 expression-assessed markers CONSISTENT. `neuropeptide_Cck` APPROXIMATE (Cck mean 0.97, 41.7th pct, tier 1 — low reliability). NT CONSISTENT (GABA). Location CONSISTENT (MBA:295 present; region_fraction 0.049). Stage A discovery score 6, rank 1 of 5 in BLA GABAergic cohort (next_best_score 6) — five Vip Gaba clusters tied; broadMatch 1:n reflects inability to resolve cardinality without AT evidence. No annotation-transfer evidence present.\n"
+    rationale_generated_at: '2026-06-05T13:46:51+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_vip_calretinin_interneuron_summary.md
+    rationale_source_hash: 26ca0e63
+  - id: edge_bla_pv_basket_cell_to_cs20230722_clus_0738
+    lit_type: bla_pv_basket_cell
+    taxonomy_type: CS20230722_CLUS_0738
+    relationship: skos:broadMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: 1:n
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0002887 basolateral amygdala
+        node_b_value: MBA:295 BLA present; region_fraction 0.178 — highest among Pvalb clusters in BLA GABAergic cohort.
+        alignment: CONSISTENT
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: Pvalb precomputed mean 10.86 (99.8th pct; tier 2). Cluster "0738 Pvalb Gaba_2" — non-chandelier Pvalb type.
+        alignment: CONSISTENT
+      - property: atlas_label_basket
+        node_a_value: perisomatic basket cell — soma-targeting
+        node_b_value: Cluster "0738 Pvalb Gaba_2" — no explicit chandelier label; selected over CLUS_0733 (chandelier) for basket cell identity.
+        alignment: APPROXIMATE
+      - property: negative_marker_Sst
+        node_a_value: Sst — negative marker
+        node_b_value: NOT_ASSESSED.
+        alignment: NOT_ASSESSED
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:33837051
+        explanation: 'Vereczki et al. 2021: PV+ basket cells constitute 17-20% of BLA GABAergic cells — dominant perisomatic inhibitory class.'
+        quote_key: 232283078_d4238834
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: PMID:37915112
+        explanation: 'CLUS_0738 "Pvalb Gaba_2" (WMBv1): Pvalb 99.8th pct in BLA GABAergic cohort; region_fraction 0.178 highest among Pvalb clusters in BLA. Selected over CLUS_0733 (chandelier) for basket cell identity.'
+    caveats:
+      - caveat_type: OTHER
+        description: No AT evidence. Basket vs axo-axonic identity not confirmable from transcriptomics alone.
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: Multiple Pvalb Gaba_2 clusters may contain basket cells. 1:n cardinality expected.
+    unresolved_questions:
+      - Does CLUS_0738 contain predominantly basket cells vs axo-axonic cells?
+      - Does CS20230722_CLUS_0738 contain predominantly basket cells vs axo-axonic cells in BLA? AnkG co-staining needed to confirm soma-targeting (CLUS_0738) vs AIS-targeting (CLUS_0733) identity in tissue.
+      - Sst precomputed mean for CS20230722_CLUS_0738 is NOT_ASSESSED — retrieve from taxonomy reference store to evaluate negative-marker alignment.
+      - Do additional Pvalb clusters in CCN20230722 contribute to the basket-cell population in BLA? AT evidence needed to resolve the 1:n cardinality call.
+    proposed_experiments:
+      - AnkG co-staining in mouse BLA to distinguish AIS-targeting (CLUS_0733) vs soma-targeting (CLUS_0738) Pvalb cells.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 5
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:295
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 10.86
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.998
+      region_fraction: 0.178
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "CS20230722_CLUS_0738 (\"0738 Pvalb Gaba_2\") is the highest-BLA-fraction Pvalb cluster in the CCN20230722 BLA GABAergic survival cohort: region_fraction=0.178 (highest among Pvalb clusters) and Pvalb precomputed mean 10.86 at cohort-pct 0.998 of 5-member cohort (applied_score 2.0; source: EXPRESSION). NT type CONSISTENT (GABAergic/GABA). ATLAS_METADATA SUPPORT: cluster label \"Pvalb Gaba_2\" with no chandelier designation — selected over CS20230722_CLUS_0733 (chandelier) for basket cell identity. LITERATURE SUPPORT: Vereczki et al. 2021 (PMID:33837051) establishes PV+ basket cells as 17–20% of BLA GABAergic cells. Atlas_label_basket APPROXIMATE: no explicit basket label; identity by chandelier-exclusion only. Sst negative_marker NOT_ASSESSED. AT_ABSENT: no annotation-transfer evidence; 1:n cardinality (basket population may distribute across multiple Pvalb Gaba_2 clusters). Confidence capped at LOW per broadMatch + AT_ABSENT rubric.\n"
+    reconciliation_note: "No pool candidates identified. Predicate skos:broadMatch with 1:n cardinality reflects that the basket-cell population likely spans multiple Pvalb clusters in CCN20230722; CLUS_0738 is the best single-cluster proxy by region_fraction but the 1:1 resolution requires AT evidence.\n"
+    rationale_generated_at: '2026-06-05T13:46:56+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_pv_basket_cell_summary.md
+    rationale_source_hash: aa3ca11f
+  - id: edge_amygdala_intercalated_cell_to_cs20230722_clus_0998
+    lit_type: amygdala_intercalated_cell
+    taxonomy_type: CS20230722_CLUS_0998
+    relationship: skos:broadMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: 1:n
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0002884 intercalated cell masses
+        node_b_value: MBA:1105 intercalated nucleus present; region_fraction 0.001.
+        alignment: CONSISTENT
+        notes: Low region_fraction reflects small ITC structure.
+      - property: marker_Foxp2
+        node_a_value: Foxp2 — defining marker
+        node_b_value: Foxp2 precomputed mean 11.35 (98.5th pct; tier 2).
+        alignment: CONSISTENT
+      - property: marker_Drd1
+        node_a_value: Drd1 — defining marker
+        node_b_value: Drd1 precomputed mean 7.07 (98.3rd pct; tier 2).
+        alignment: CONSISTENT
+      - property: marker_Oprm1
+        node_a_value: Oprm1 — defining marker
+        node_b_value: Oprm1 precomputed mean 8.31 (99.1th pct; tier 2).
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:32858950
+        explanation: FOXP2+/DRD1+/OPRM1+ as the molecular signature of ITC neurons.
+        quote_key: 221366115_e5c2cd9e
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: PMID:37915112
+        explanation: 'CLUS_0998 "STR D1 Sema5a Gaba_3": score 7/7 on Foxp2+Drd1+Oprm1 — strongest three-marker convergence in ITC cohort.'
+    caveats:
+      - caveat_type: LOW_CELL_COUNT
+        description: ITC region_fraction 0.001 very low; small structure.
+      - caveat_type: OTHER
+        description: No AT evidence.
+    unresolved_questions:
+      - Are CLUS_0998 and CLUS_1009 both genuine ITC transcriptomic types?
+      - Are CS20230722_CLUS_0998 and CS20230722_CLUS_1009 both genuine ITC transcriptomic types?
+    proposed_experiments:
+      - smFISH with Foxp2+Drd1+Oprm1 in mouse amygdala.
+    discovery_score:
+      score: 7
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 7
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:1105
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Foxp2
+          val: 11.35
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+        - gene: Drd1
+          val: 7.07
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.983
+        - gene: Oprm1
+          val: 8.31
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.991
+      region_fraction: 0.001
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.35
+    rationale: "Foxp2, Drd1, and Oprm1 are all CONSISTENT (3 of 3 markers CONSISTENT) against CS20230722_CLUS_0998; Stage A discovery score 7 (rank 1 of 5 in the GABAergic MBA:1105 SURVIVAL_COHORT). Location CONSISTENT via MBA:1105 intercalated nucleus. Confidence is LOW: no annotation-transfer evidence and region_fraction 0.001 reflects small ITC structure.\n"
+    reconciliation_note: ''
+    rationale_generated_at: '2026-06-05T13:48:24+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/amygdala_intercalated_cell_summary.md
+    rationale_source_hash: f3d2b91c
+  - id: edge_bla_gabaergic_projection_neuron_to_cs20230722_clus_0850
+    lit_type: bla_gabaergic_projection_neuron
+    taxonomy_type: CS20230722_CLUS_0850
+    relationship: skos:broadMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: 1:n
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0002887 basolateral amygdala
+        node_b_value: MBA:295 BLA present; region_fraction 0.015.
+        alignment: CONSISTENT
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: Sst precomputed mean 12.23 (99.6th pct; tier 2). Cluster "0850 Sst Chodl Gaba_2".
+        alignment: CONSISTENT
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker (nNOS)
+        node_b_value: Nos1 precomputed mean 12.1 (tier 2). Sst Chodl clusters are the canonical Sst+/Nos1+ family.
+        alignment: CONSISTENT
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — negative marker
+        node_b_value: Pvalb val 0.0 (0th pct; effectively absent). CONSISTENT.
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:33837051
+        explanation: 'Vereczki et al. 2021: SST+/nNOS+ GABAergic projection neurons estimated 5.5-8% of BLA GABAergic cells; long-range projecting.'
+        quote_key: 232283078_d4238834
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        reference: PMID:37915112
+        explanation: 'CLUS_0850 "Sst Chodl Gaba_2": Sst 99.6th pct, Nos1 tier-2, Pvalb 0.0 — all three property comparisons CONSISTENT. Three Sst Chodl clusters (0850/0858/0860) score equally (score 6).'
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: CLUS_0850, 0858, 0860 all score 6/6 on Sst+Nos1. Three Sst Chodl clusters, 1:n cardinality.
+      - caveat_type: OTHER
+        description: No AT evidence.
+    unresolved_questions:
+      - Do Sst Chodl clusters in BLA correspond to the long-range projecting SST/nNOS population?
+      - Which of CLUS_0850, CLUS_0858, CLUS_0860 best represents the BLA long-range SST/nNOS projection neuron — retrograde tracing plus atlas cross-reference needed to discriminate.
+    proposed_experiments:
+      - Retrograde tracing + SST/NOS1 intersectional labelling to confirm projection identity.
+    discovery_score:
+      score: 6
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:295
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.23
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.996
+        - gene: Nos1
+          val: 12.1
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.996
+        - gene: -Pvalb
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.035
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "3 of 3 markers CONSISTENT (marker_Sst: precomputed mean 12.23 at 99.6th pct; marker_Nos1: precomputed mean 12.1 tier-2; negative_marker_Pvalb: val 0.0) anchors broadMatch to CS20230722_CLUS_0850. LOW confidence: no AT evidence; DISTRIBUTED_ACROSS_CLUSTERS caveat — CLUS_0850, CLUS_0858, and CLUS_0860 score equally (score 6 in BLA GABAergic cohort of 5).\n"
+    reconciliation_note: ''
+    rationale_generated_at: '2026-06-05T13:51:29+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_gabaergic_projection_neuron_summary.md
+    rationale_source_hash: 799440db
+  - id: edge_bla_npy_neurogliaform_cell_to_cs20230722_clus_0710
+    lit_type: bla_npy_neurogliaform_cell
+    taxonomy_type: CS20230722_CLUS_0710
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnspecifiedMatching
+    mapping_cardinality: 1:n
+    reconciliation_note: ''
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0002887 basolateral amygdala
+        node_b_value: MBA:295 BLA present; region_fraction 0.02.
+        alignment: APPROXIMATE
+        notes: Low BLA fraction; Lamp5 interneurons are sparse in mouse BLA.
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide
+        node_b_value: Npy precomputed mean 10.5 (tier 2; applied_score 2.0). Best available Npy+ GABA candidate in BLA cohort.
+        alignment: CONSISTENT
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — negative marker
+        node_b_value: Pvalb val 0.1 (low; consistent with Pvalb-negativity).
+        alignment: CONSISTENT
+      - property: negative_marker_Sst
+        node_a_value: Sst — negative marker
+        node_b_value: Sst val 1.0 (above MIN_DETECTABLE; applied_score -1.0 DISCORDANT). Slight Sst expression in CLUS_0710.
+        alignment: DISCORDANT
+        notes: Borderline Sst detection conflicts with Sst-negativity expected for NPY neurogliaform cells.
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:33837051
+        explanation: 'Vereczki et al. 2021: NPY neurogliaform cells estimated 14-15% of BLA GABAergic cells; separate class from Pvalb and Sst populations.'
+        quote_key: 232283078_d4238834
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        reference: PMID:37915112
+        explanation: 'CLUS_0710 "Lamp5 Gaba_1": Npy tier-2 (10.5), Pvalb absent — but Sst=1.0 DISCORDANT. Best available Npy+ GABA candidate despite Sst concern.'
+    caveats:
+      - caveat_type: OTHER
+        description: 'Sst DISCORDANT: val 1.0 above MIN_DETECTABLE. NPY neurogliaform cells expected Sst-negative.'
+      - caveat_type: OTHER
+        description: CLUS_0710 also mapped to bla_lamp5_interneuron — overlap between LAMP5+ and NPY+ neurogliaform types likely at this rank.
+      - caveat_type: OTHER
+        description: No AT evidence.
+    unresolved_questions:
+      - Do BLA NPY neurogliaform cells overlap with the Lamp5 Gaba family in WMBv1?
+      - Is the Sst signal in CLUS_0710 genuine co-expression or averaging artifact?
+      - Run multiplexed smFISH (Npy+Lamp5+Sst) in mouse BLA to resolve whether Sst co-expression occurs in NPY neurogliaform cells.
+      - Acquire CCN20230722 HDF5 and re-run Stage A discovery with explicit Npy+/Sst- scoring to test for a better-fitting BLA cluster.
+    proposed_experiments:
+      - Multiplexed smFISH with Npy+Lamp5+Sst probes in mouse BLA.
+      - Acquire CCN20230722 HDF5 and re-run discovery with Npy+/-Sst scoring.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 5
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 5
+          filters:
+            - region=MBA:295
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Npy
+          val: 10.5
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.98
+        - gene: -Pvalb
+          val: 0.1
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.1
+        - gene: -Sst
+          val: 1.0
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.333
+      region_fraction: 0.02
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "Npy neuropeptide CONSISTENT: precomputed mean 10.5 (tier 2; applied_score 2.0; 98th pct of 5-member BLA GABAergic cohort; EXPRESSION source). Pvalb negative-marker CONSISTENT: val 0.1 (reliable=false). NT type CONSISTENT (GABA). Sst negative-marker DISCORDANT: val 1.0 above MIN_DETECTABLE (applied_score -1.0) in CS20230722_CLUS_0710; Sst-negativity is a defining property of BLA NPY neurogliaform cells per [1]. Location APPROXIMATE: region_fraction 0.02 in MBA:295. 1 of 2 negative-marker comparisons CONSISTENT; 1 DISCORDANT. No ANNOTATION_TRANSFER evidence. evidencell:UncertainRelationship 1:n retained pending resolution of Sst discordance via smFISH or AT.\n"
+    rationale_generated_at: '2026-06-05T13:48:48+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_npy_neurogliaform_cell_summary.md
+    rationale_source_hash: '67273693'
