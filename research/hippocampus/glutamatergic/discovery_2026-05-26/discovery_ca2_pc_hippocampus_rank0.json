@@ -1,0 +1,900 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/hippocampus/hippocampus_glutamatergic.yaml ca2_pc_hippocampus CCN20230722 0 10
+  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
+Classical node: ca2_pc_hippocampus (CA2 pyramidal cell)
+  NT type: glutamatergic
+  Markers (defining + neuropeptides): ['Pcp4', 'Rgs14', 'Amigo2']
+  Negative markers: ['Wfs1']
+  Soma locations: ['UBERON:0014549']
+  Resolved MBA IDs: ['MBA:446']
+  Query rank: 0
+  Taxonomy: CCN20230722
+  AT artifact: not found (proceeding without AT scoring)
+{
+  "classical_node_id": "ca2_pc_hippocampus",
+  "classical_node_name": "CA2 pyramidal cell",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 10,
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_0399",
+      "label": "0399 CA2-FC-IG Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0100",
+      "male_female_ratio": 0.75,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 1,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 11.26,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 8.84,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 7.39,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 1.33,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.466
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.123,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0310",
+      "label": "0310 CA3 Glut_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0077",
+      "male_female_ratio": 1.13,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 2,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 8.31,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.879
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 7.73,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.966
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 5.83,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.966
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 1.17,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.379
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.001,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0298",
+      "label": "0298 CA3 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0075",
+      "male_female_ratio": 1.17,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 3,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 9.65,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.948
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 5.19,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.914
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 2.51,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.914
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 2.16,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.69
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.026,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0301",
+      "label": "0301 CA3 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0075",
+      "male_female_ratio": 1.08,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 4,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 10.11,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.966
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 5.0,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.879
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 4.59,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.948
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 1.22,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.397
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0261",
+      "label": "0261 CA1-ProS Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0069",
+      "male_female_ratio": 1.08,
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 5,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 1.68,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.293
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 5.59,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.948
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 0.14,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.345
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 4.29,
+            "reliable": true,
+            "raw_tier": -2,
+            "applied_score": -2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.983
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.051,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0270",
+      "label": "0270 CA1-ProS Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0069",
+      "male_female_ratio": 0.56,
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 6,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 4.58,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.707
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 3.84,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.81
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 0.29,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.552
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 2.68,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.845
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0289",
+      "label": "0289 CA1-ProS Glut_5",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0073",
+      "male_female_ratio": 0.59,
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 7,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 8.06,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.845
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 3.64,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.793
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 0.27,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.534
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 2.94,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.931
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0296",
+      "label": "0296 CA3 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0075",
+      "male_female_ratio": 1.33,
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 8,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 9.04,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.931
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 4.97,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.862
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 1.84,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.879
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 1.4,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.517
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0299",
+      "label": "0299 CA3 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0075",
+      "male_female_ratio": 1.7,
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 9,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 8.52,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.914
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 4.81,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.845
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 1.29,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.81
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 2.6,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.81
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0291",
+      "label": "0291 CA1-ProS Glut_5",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0073",
+      "male_female_ratio": 0.45,
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 10,
+        "cohort_size": 10,
+        "next_best_score": 5,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:446",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Pcp4",
+            "val": 8.14,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.862
+              }
+            ]
+          },
+          {
+            "gene": "Rgs14",
+            "val": 1.81,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.759
+              }
+            ]
+          },
+          {
+            "gene": "Amigo2",
+            "val": 0.14,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.345
+              }
+            ]
+          },
+          {
+            "gene": "-Wfs1",
+            "val": 1.81,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.655
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}

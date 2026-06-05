@@ -1,0 +1,628 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/hippocampus/hippocampus_glutamatergic.yaml hilar_mossy_cell_hippocampus CCN20230722 1 10
+  Loaded leaf expression data: 5322 nodes at cluster level (for coverage computation)
+  Loaded expression data: 6523 nodes (merged across queried + leaf ranks where applicable)
+Classical node: hilar_mossy_cell_hippocampus (Hilar mossy cell)
+  NT type: glutamatergic
+  Markers (defining + neuropeptides): ['Gria4', 'Dkk3']
+  Soma locations: ['UBERON:0002928']
+  Resolved MBA IDs: ['MBA:10704']
+  Query rank: 1
+  Taxonomy: CCN20230722
+  AT artifact: not found (proceeding without AT scoring)
+{
+  "classical_node_id": "hilar_mossy_cell_hippocampus",
+  "classical_node_name": "Hilar mossy cell",
+  "taxonomy_id": "CCN20230722",
+  "rank": 1,
+  "n_candidates": 10,
+  "candidates": [
+    {
+      "node_id": "CS20230722_SUPT_0096",
+      "label": "0096 SUB-ProS Glut_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_023",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 1,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 5.63,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.366
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 9.27,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.976
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "DESCENDANT_ONLY"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0081",
+      "label": "0081 L2 IT PPP-APr Glut_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_018",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 2,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 9.21,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.683
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 8.79,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.951
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0079",
+      "label": "0079 CA3 Glut_5",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_017",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 3,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 8.05,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.512
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 5.32,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.78
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.483,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0139",
+      "label": "0139 DG Glut_4",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_037",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 4,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 6.02,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.415
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 1.0,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.39
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.25,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0138",
+      "label": "0138 DG Glut_3",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_037",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 5,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 3.42,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.293
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 0.75,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.293
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.111,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0136",
+      "label": "0136 DG Glut_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_037",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 6,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 6.42,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.463
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 0.55,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.244
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.184,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0141",
+      "label": "0141 DG-PIR Ex IMN_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_038",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 7,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 4.57,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.317
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 1.97,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.512
+              }
+            ],
+            "coverage": 1.0
+          }
+        ],
+        "region_fraction": 0.362,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0864",
+      "label": "0864 PRT Mecom Gaba_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_210",
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 8,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 10.12,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.951
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 2.14,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 0.905,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.537
+              }
+            ],
+            "coverage": 0.818
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "DESCENDANT_ONLY"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0137",
+      "label": "0137 DG Glut_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_037",
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 9,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 3.26,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.268
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 0.51,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 0.816,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.22
+              }
+            ],
+            "coverage": 0.667
+          }
+        ],
+        "region_fraction": 0.121,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_1192",
+      "label": "1192 SMC NN_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_332",
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 10,
+        "cohort_size": 10,
+        "next_best_score": 3,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 10,
+            "filters": [
+              "region=MBA:10704",
+              "nt_type=glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Gria4",
+            "val": 0.67,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.024
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "Dkk3",
+            "val": 1.61,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.463
+              }
+            ],
+            "coverage": 1.0
+          }
+        ]
+      }
+    }
+  ]
+}
