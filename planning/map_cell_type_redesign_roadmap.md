@@ -386,10 +386,15 @@ marker columns (defining/MERFISH/TF/np), score `+1` for positive markers
 and `−1` for negatives.
 
 **LLM adjacency** (formerly part of region filter): reverted in
-Phase 1 follow-up A. Region mismatches now hard-drop programmatically.
-The `llm_adjacency` module is retained as dormant infrastructure for a
-future "characterise off-target expression" use case feeding Phase 2
-predicate selection.
+Phase 1 follow-up A. Region mismatches initially fell back to
+programmatic taxonomic expansion (`expanded_anat` walk). Issue #95
+(2026-05-31) replaced both with a permissive filter using the 100µm
+proximity counts now stored on every anat row — soma scatter at a
+region boundary qualifies a candidate through
+`count_in_or_near_100um > 0` rather than through MBA-tree walks or
+LLM judgement. The `llm_adjacency` module was deleted in the same
+issue. See [`research/validation/methods_audits/at_blind/README.md`](../research/validation/methods_audits/at_blind/README.md)
+for the audit-driven decision trail.
 
 The previous atlas-global / sibling-pct scheme is documented below for
 historical reference but is no longer in use.

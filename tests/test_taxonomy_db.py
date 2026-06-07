@@ -967,11 +967,11 @@ def test_find_candidates_region_fraction_emitted(populated_db):
         con.execute("DELETE FROM anat WHERE node_id = ?", (node_id,))
         # 30 cells in MBA:888, 70 cells elsewhere → fraction 0.30
         con.execute(
-            "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO anat(node_id, anat_id, anat_label, cell_count, cell_ratio) VALUES (?, ?, ?, ?, ?)",
             (node_id, "MBA:888", "target", 30, 0.30),
         )
         con.execute(
-            "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO anat(node_id, anat_id, anat_label, cell_count, cell_ratio) VALUES (?, ?, ?, ?, ?)",
             (node_id, "MBA:777", "elsewhere", 70, 0.70),
         )
         con.commit()
@@ -1001,7 +1001,7 @@ def test_find_candidates_at_bypass_skips_filters(populated_db):
     with sqlite3.connect(db.db_path) as con:
         con.execute("DELETE FROM anat WHERE node_id = ?", (node_id,))
         con.execute(
-            "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO anat(node_id, anat_id, anat_label, cell_count, cell_ratio) VALUES (?, ?, ?, ?, ?)",
             (node_id, "MBA:777", "elsewhere", 100, 1.0),
         )
         con.execute(
@@ -1220,7 +1220,7 @@ def test_find_candidates_at_hit_bypasses_region_and_nt_filters(populated_db):
     with sqlite3.connect(db.db_path) as con:
         con.execute("DELETE FROM anat WHERE node_id = ?", (node_id,))
         con.execute(
-            "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO anat(node_id, anat_id, anat_label, cell_count, cell_ratio) VALUES (?, ?, ?, ?, ?)",
             (node_id, "MBA:777", "elsewhere", 100, 1.0),
         )
         con.execute(
@@ -1562,3 +1562,177 @@ def test_freshness_recovers_after_rebuild(populated_db):
     db.build_from_yaml(tmp_path)
     stale, reasons = _freshness_at(db.db_path, tmp_path)
     assert stale is False, f"expected fresh after rebuild, got reasons={reasons}"
+
+
+# ── Proximity-aware region filter (issue #95) ────────────────────────────────
+
+
+def _make_focused_db(tmp_path: Path) -> TaxonomyDB:
+    """Build a minimal taxonomy DB suitable for proximity-filter regression
+    tests. The default `populated_db` fixture is built from a one-row JSON
+    with no cluster-level node, so those tests silently no-op; this helper
+    produces a DB with three cluster-level candidates we can shape per test.
+    """
+    db = TaxonomyDB(tmp_path / "PROX_TAX.db")
+    from evidencell.taxonomy_db import _DDL
+    with db._connect() as con:
+        con.executescript(_DDL)
+        con.commit()
+    return db
+
+
+def _insert_node(db: TaxonomyDB, node_id: str, n_cells: int) -> None:
+    with db._connect() as con:
+        con.execute(
+            "INSERT INTO nodes(node_id, short_form, label, taxonomy_id, "
+            "taxonomy_level, taxonomy_rank, n_cells) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (node_id, node_id, node_id, "PROX_TAX", "cluster", 0, n_cells),
+        )
+        con.commit()
+
+
+def _insert_anat(
+    db: TaxonomyDB,
+    node_id: str,
+    anat_id: str,
+    cell_count: int,
+    count_100um: int,
+    completeness: str | None = None,
+) -> None:
+    with db._connect() as con:
+        con.execute(
+            "INSERT INTO anat(node_id, anat_id, anat_label, cell_count, "
+            "cell_ratio, count_in_or_near_100um, ratio_in_or_near_100um, "
+            "cell_count_completeness) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (node_id, anat_id, anat_id, cell_count, None, count_100um, None,
+             completeness),
+        )
+        con.commit()
+
+
+def test_region_count_completeness_surfaces_on_survivor(tmp_path):
+    """Issue #95: when the anat row driving region_fraction_100um is
+    tagged 'lower_bound' (rollup with non-painted descendants), surface
+    that on the survivor so Stage B agents can caveat the citation."""
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "EXACT", n_cells=100)
+    _insert_anat(db, "EXACT", "MBA:1", cell_count=50, count_100um=50,
+                 completeness="exact")
+    _insert_node(db, "LOWER", n_cells=100)
+    _insert_anat(db, "LOWER", "MBA:1", cell_count=30, count_100um=30,
+                 completeness="lower_bound")
+    _insert_node(db, "PAINTED", n_cells=100)
+    _insert_anat(db, "PAINTED", "MBA:1", cell_count=20, count_100um=20)  # no tag
+
+    results = db.find_candidates(anat_ids=["MBA:1"], rank=0)
+    by_id = {c["node_id"]: c for c in results}
+    assert by_id["EXACT"].get("_region_count_completeness") == "exact"
+    assert by_id["LOWER"].get("_region_count_completeness") == "lower_bound"
+    # Painted-domain row has no tag → no key on survivor.
+    assert "_region_count_completeness" not in by_id["PAINTED"]
+
+
+def test_permissive_filter_keeps_proximity_only_candidate(tmp_path):
+    """Issue #95: a candidate with `cell_count == 0` strictly in the query
+    region but `count_in_or_near_100um > 0` survives the region filter
+    (where the legacy strict-cell-count filter would have dropped it).
+    Surfaces both fractions on the survivor for downstream consumption.
+
+    Each candidate has a `MBA:BRAIN` rollup row carrying the total
+    spatially-registered cell count so the fraction denominator
+    (= MAX across the candidate's anat rows) is the cluster total,
+    not the queried-region count.
+    """
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "STRICT", n_cells=100)
+    _insert_anat(db, "STRICT", "MBA:BRAIN", cell_count=100, count_100um=100)
+    _insert_anat(db, "STRICT", "MBA:1", cell_count=60, count_100um=80)
+    _insert_node(db, "PROX", n_cells=100)
+    _insert_anat(db, "PROX", "MBA:BRAIN", cell_count=100, count_100um=100)
+    # Soma all outside MBA:1 but within 100µm of it (registration scatter).
+    _insert_anat(db, "PROX", "MBA:1", cell_count=0, count_100um=25)
+
+    results = db.find_candidates(anat_ids=["MBA:1"], rank=0)
+    ids = {c["node_id"] for c in results}
+    assert "STRICT" in ids
+    assert "PROX" in ids, "Proximity-only candidate must survive permissive filter"
+
+    prox = next(c for c in results if c["node_id"] == "PROX")
+    assert prox.get("_region_fraction") == 0.0
+    assert prox.get("_region_fraction_100um") == pytest.approx(0.25, abs=0.01)
+    # Strict candidate gets the +1 region_exact_match bonus baked into _score.
+    strict = next(c for c in results if c["node_id"] == "STRICT")
+    assert strict.get("_region_fraction") == pytest.approx(0.6, abs=0.01)
+    assert strict.get("_region_fraction_100um") == pytest.approx(0.8, abs=0.01)
+
+
+def test_graded_region_score_tiers(tmp_path):
+    """Issue #95: graded region score from `region_fraction_100um` —
+    ≥ 0.5 → +2, ≥ 0.1 → +1, > 0 → +0.5. Strict-exact bonus adds another
+    +1 when `cell_count > 0` in the queried region.
+
+    Each candidate has a `MBA:BRAIN` rollup row carrying the total
+    spatially-registered count so the fraction denominator
+    (= MAX across the candidate's anat rows) reflects the cluster total.
+    """
+    db = _make_focused_db(tmp_path)
+    # HIGH: rf100 = 70/100 = 0.7 → +2; strict_cell_count > 0 → +1 → 3.
+    _insert_node(db, "HIGH", n_cells=100)
+    _insert_anat(db, "HIGH", "MBA:BRAIN", cell_count=100, count_100um=100)
+    _insert_anat(db, "HIGH", "MBA:1", cell_count=70, count_100um=70)
+    # MID: rf100 = 20/100 = 0.2 → +1; strict 20 → +1 → 2.
+    _insert_node(db, "MID", n_cells=100)
+    _insert_anat(db, "MID", "MBA:BRAIN", cell_count=100, count_100um=100)
+    _insert_anat(db, "MID", "MBA:1", cell_count=20, count_100um=20)
+    # LOW: rf100 = 5/100 = 0.05 → +0.5; no strict cells → no exact-bonus → 0.5.
+    _insert_node(db, "LOW", n_cells=100)
+    _insert_anat(db, "LOW", "MBA:BRAIN", cell_count=100, count_100um=100)
+    _insert_anat(db, "LOW", "MBA:1", cell_count=0, count_100um=5)
+
+    results = db.find_candidates(anat_ids=["MBA:1"], rank=0)
+    by_id = {c["node_id"]: c for c in results}
+    assert by_id["HIGH"]["_score"] == pytest.approx(3.0, abs=0.01)
+    assert by_id["MID"]["_score"] == pytest.approx(2.0, abs=0.01)
+    assert by_id["LOW"]["_score"] == pytest.approx(0.5, abs=0.01)
+    # Sorted descending by score.
+    assert [c["node_id"] for c in results] == ["HIGH", "MID", "LOW"]
+
+
+def test_closure_aggregated_query_uses_max_not_sum(tmp_path):
+    """Issue #95: brain_cell_KG closure-aggregates anat counts upstream,
+    so a cluster with cells in stratum oriens has its own edges to both
+    Field CA1 (parent rollup) and the stratum (specific) — with overlapping
+    counts. find_candidates must take MAX across matched anat rows, not
+    SUM, to avoid double-counting the same cells. Regression guard
+    against re-introducing `get_descendants()` expansion."""
+    db = _make_focused_db(tmp_path)
+    # Stratum oriens (specific) and Field CA1 (rollup parent) both carry the
+    # same biological cells; the parent's count_in_or_near_100um == 100
+    # subsumes the descendant's 80.
+    _insert_node(db, "ROLLUP", n_cells=100)
+    _insert_anat(db, "ROLLUP", "MBA:382", cell_count=100, count_100um=100)  # Field CA1
+    _insert_anat(db, "ROLLUP", "MBA:399", cell_count=80, count_100um=80)    # stratum oriens
+
+    # Curator queries the parent term — region_fraction_100um must equal
+    # 1.0 (the parent edge's value), not 1.8 (parent + descendant).
+    results = db.find_candidates(anat_ids=["MBA:382"], rank=0)
+    cand = next(c for c in results if c["node_id"] == "ROLLUP")
+    assert cand["_region_fraction_100um"] == pytest.approx(1.0, abs=0.01)
+    assert cand["_region_fraction"] == pytest.approx(1.0, abs=0.01)
+
+    # Querying both parent + descendant explicitly: still MAX, not SUM.
+    results = db.find_candidates(anat_ids=["MBA:382", "MBA:399"], rank=0)
+    cand = next(c for c in results if c["node_id"] == "ROLLUP")
+    assert cand["_region_fraction_100um"] == pytest.approx(1.0, abs=0.01)
+
+
+def test_filter_drops_candidate_outside_proximity_and_strict(tmp_path):
+    """A candidate with zero cells AND zero proximity in any queried anat
+    term is dropped (no permissive-rule rescue)."""
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "OFF", n_cells=100)
+    _insert_anat(db, "OFF", "MBA:999", cell_count=100, count_100um=100)  # elsewhere
+
+    results = db.find_candidates(anat_ids=["MBA:1"], rank=0)
+    assert "OFF" not in {c["node_id"] for c in results}

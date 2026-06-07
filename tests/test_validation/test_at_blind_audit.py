@@ -60,7 +60,10 @@ def synthetic_corpus(tmp_path, monkeypatch):
       rationale TEXT, rationale_dois TEXT, male_female_ratio REAL, n_cells INTEGER
     );
     CREATE TABLE anat (
-      node_id TEXT, anat_id TEXT, anat_label TEXT, cell_count INTEGER, cell_ratio REAL
+      node_id TEXT, anat_id TEXT, anat_label TEXT,
+      cell_count INTEGER, cell_ratio REAL,
+      count_in_or_near_100um INTEGER, ratio_in_or_near_100um REAL,
+      cell_count_completeness TEXT
     );
     CREATE TABLE anat_terms (
       anat_id TEXT PRIMARY KEY, label TEXT NOT NULL, uberon_id TEXT
@@ -89,11 +92,14 @@ def synthetic_corpus(tmp_path, monkeypatch):
     # expansion); DISTANT in MBA:FAR (parent of FAR is MBA:ROOT, no
     # overlap with the queried branch).
     con.executemany(
-        "INSERT INTO anat VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO anat(node_id, anat_id, anat_label, cell_count, "
+        "cell_ratio, count_in_or_near_100um, ratio_in_or_near_100um, "
+        "cell_count_completeness) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [
-            ("CLUS_TARGET", "MBA:QUERY", "Queried region", 100, 1.0),
-            ("CLUS_SIBLING", "MBA:SIB", "Sibling region", 100, 1.0),
-            ("CLUS_DISTANT", "MBA:FAR", "Far away", 100, 1.0),
+            ("CLUS_TARGET", "MBA:QUERY", "Queried region", 100, 1.0, 100, 1.0, None),
+            ("CLUS_SIBLING", "MBA:SIB", "Sibling region", 100, 1.0, 100, 1.0, None),
+            ("CLUS_DISTANT", "MBA:FAR", "Far away", 100, 1.0, 100, 1.0, None),
         ],
     )
     con.executemany(

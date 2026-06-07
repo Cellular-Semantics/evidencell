@@ -375,8 +375,14 @@ def _target_class_for_kb_path(file_path: Path) -> str | None:
             return "AnnotationTransferRun"
         return None
     if sub == "taxonomy":
-        if name in {"cluster.yaml", "supertype.yaml", "subclass.yaml",
-                    "class.yaml", "neurotransmitter.yaml"}:
+        # Per-level taxonomy YAMLs; gzipped variants supported.
+        taxonomy_levels = {
+            "cluster.yaml", "supertype.yaml", "subclass.yaml",
+            "class.yaml", "neurotransmitter.yaml",
+            "cluster.yaml.gz", "supertype.yaml.gz", "subclass.yaml.gz",
+            "class.yaml.gz", "neurotransmitter.yaml.gz",
+        }
+        if name in taxonomy_levels:
             return "TaxonomyNodeList"
         return None
     if sub == "graphs":

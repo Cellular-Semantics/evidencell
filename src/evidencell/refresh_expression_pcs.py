@@ -45,7 +45,7 @@ from typing import Any
 
 from ruamel.yaml import YAML
 
-from .paths import repo_root
+from .paths import open_taxonomy_yaml, repo_root
 
 
 # Atlas accession prefix → taxonomy YAML filename
@@ -149,7 +149,8 @@ def _load_precomputed_expression(
     or the node has no precomputed_expression panel."""
     yaml_safe = YAML(typ="safe")
     yaml_safe.allow_duplicate_keys = True
-    doc = yaml_safe.load(taxonomy_yaml_path.read_text(encoding="utf-8")) or {}
+    with open_taxonomy_yaml(taxonomy_yaml_path) as fh:
+        doc = yaml_safe.load(fh) or {}
     nodes = doc.get("nodes") or []
     for node in nodes:
         if not isinstance(node, dict):
