@@ -9,6 +9,13 @@
 //                              authoritative spatial count)
 //   - source[i]                DOI of the contributing study
 //
+// Per-edge (not per-source):
+//   - cellCountCompleteness   null on CCF2020-painted leaf domains
+//                             (authoritative); 'exact' on rollup edges
+//                             whose descendants are all painted; or
+//                             'lower_bound' on rollup edges with
+//                             non-painted descendants. See issue #95.
+//
 // Within evidencell we retain the internal name `cell_ratio` for the
 // legacy ratio (audit / continuity) and additionally surface the new
 // 100µm count + ratio. Upstream applies the region-inclusion threshold;
@@ -32,5 +39,6 @@ RETURN cl,
            WHEN head(wmb.cell_count) IS NULL OR head(wmb.cell_count) = 0 THEN null
            ELSE [x IN r.countInOrNear100um | toFloat(x) / head(wmb.cell_count)]
          END,
-         source: r.source
+         source: r.source,
+         cell_count_completeness: head(r.cellCountCompleteness)
        }) AS anat

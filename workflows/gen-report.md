@@ -552,15 +552,28 @@ OLM hippocampus' may resolve this").
 
 **Concerns** (bulleted):
 - From evidence items where `supports` = REFUTE.
-- From DISCORDANT or APPROXIMATE property_comparisons — interpret each:
-  - Location APPROXIMATE + adjacent subfield in `notes`:
-    add "*(adjacent region — could reflect registration boundary error; weak counter-evidence)*"
-  - Location DISCORDANT + distant region in `notes`:
-    add "*(distant region — stronger counter-evidence; classical type may still be a
-    subtype of this T-type but not the {brain region} population specifically)*"
-  - Use your neuroanatomical knowledge to assess distance accurately. Do not rely on
-    the notes field alone — check whether the named region (e.g. CA3, amygdala, cortex)
-    is adjacent or anatomically distant from the classical type's specified location.
+- From DISCORDANT or APPROXIMATE property_comparisons — interpret each.
+  For LOCATION comparisons cite the candidate's
+  `discovery_score.region_fraction_100um` (the per-candidate
+  proximity fraction Stage A computed):
+  - **Location APPROXIMATE** with `region_fraction_100um` in
+    `[0.1, 0.5)` or with high proximity but low strict
+    `region_fraction`: add *"(boundary scatter — `region_fraction_100um:
+    {value}`; could reflect registration error; weak
+    counter-evidence)"*. Quote the value.
+  - **Location DISCORDANT** with `region_fraction_100um < 0.1` or
+    `region_evidence: DESCENDANT_ONLY`: add *"(distant region —
+    `region_fraction_100um: {value}`; stronger counter-evidence;
+    classical type may still be a subtype of this T-type but not
+    the {brain region} population specifically)"*. Quote the
+    value and, if useful, the dominant off-target anat label from
+    the atlas node's `anatomical_location[]`.
+  - When `region_fraction_100um` is null (taxonomy lacks
+    proximity data), fall back to neuroanatomical knowledge:
+    check whether the named region (e.g. CA3, amygdala, cortex)
+    is adjacent or anatomically distant from the classical
+    type's specified location. State the fallback explicitly:
+    *"(proximity data unavailable; neuroanatomical assessment)"*.
 - From `caveats[]` items.
 
 **What would upgrade confidence:**
@@ -980,12 +993,27 @@ check parses each of the following patterns and verifies them:
 
 > "Strong agreement across multiple lines of evidence."
 
-## When to cite `region_fraction`
+## When to cite `region_fraction` and `region_fraction_100um`
 
-Cite `region_fraction` explicitly when it is in the **boundary band**
-(roughly 0.3–0.7) and explain whether it drove the relationship choice.
-Skip the citation when very high (>0.7) or very low (<0.3) — the
-relationship choice implies the value.
+Stage A emits two region fractions on each `discovery_score`:
+
+- **`region_fraction`** — strict in-region (the candidate's
+  `cell_count` at the curator-queried anat term ÷ `n_cells`).
+- **`region_fraction_100um`** — proximity (the candidate's
+  `count_in_or_near_100um` at the curator-queried anat term ÷
+  `n_cells`). The canonical "is this candidate located in the
+  target region?" signal, captures registration-edge cases.
+
+**Prefer `region_fraction_100um`** for location alignment narrative;
+cite it explicitly when it falls in the **boundary band** (roughly
+`[0.1, 0.5)`) and explain whether it drove the relationship choice.
+Skip the citation when very high (≥ 0.7) or zero — the
+relationship choice implies the value. When both fractions disagree
+materially (high proximity, low strict), that's the signature of
+boundary scatter / registration imprecision: surface it explicitly
+(*"`region_fraction_100um: 0.62` but `region_fraction: 0.08` — soma
+sit at the queried region's 100µm boundary rather than centred
+inside it"*).
 
 ## How to read `discovery_score`
 
@@ -999,10 +1027,12 @@ metrics, and literature.
 
 Reading rules:
 
-- **`score` is composite.** Sum of region (+2), NT (+2), per-gene
-  marker tiers (see `expression_detail[*].applied_score`), AT-F1
-  bucket (+1/+2/+3), region-exact bonus (+1), optional criteria.
-  Never quote `score` as a confidence value.
+- **`score` is composite.** Sum of region graded score (+2 / +1 /
+  +0.5 / 0 from `region_fraction_100um`), region-exact bonus (+1
+  when strict cells in region), per-gene marker tiers (see
+  `expression_detail[*].applied_score`), AT-F1 bucket (+1/+2/+3),
+  optional criteria. (NT contributes via the filter, not a point
+  award.) Never quote `score` as a confidence value.
 - **Dominance.** Compare `score`, `next_best_score`, `cohort_size`,
   and `rank_in_cohort`. Score 8 vs next-best 3 in a cohort of 142 is
   strong dominance; 5 vs 4 in a cohort of 8 is near-tied.
@@ -1028,12 +1058,26 @@ Reading rules:
   read `filters[]` to see what defined survival) is emitted. Future
   passes may add `ATLAS_UNIVERSAL` (stable) or
   `ANATOMICAL_RESTRICTION`.
-- **Region.** `region_fraction` and `region_evidence` mirror the
-  edge-level region story; cite them per the "When to cite
-  `region_fraction`" rule above.
+- **Region.** `region_fraction` (strict), `region_fraction_100um`
+  (proximity), `region_count_completeness` (provenance), and
+  `region_evidence` mirror the edge-level region story; cite them
+  per the "When to cite `region_fraction` and
+  `region_fraction_100um`" rule above.
   `region_evidence: DESCENDANT_ONLY` flags a rank-≥-1 candidate
-  rescued only because its children are in region — a known weak
-  signal, cite in `rationale` but do not override marker reasoning.
+  rescued only because its rank-0 children had qualifying anat
+  rows under the permissive (strict OR proximity) rule — a known
+  weak signal; cite in `rationale` but do not override marker
+  reasoning. When `region_fraction_100um` is materially higher
+  than `region_fraction`, that's boundary scatter (good
+  candidate; registration noise rather than off-target).
+  **Lower-bound completeness.** When
+  `region_count_completeness == "lower_bound"`, the rollup edge
+  driving the fraction includes non-painted CCF2020 descendants
+  whose cells aren't counted; the value is a floor. Caveat
+  citations: *"`region_fraction_100um: 0.31` (lower_bound
+  rollup — true value may be higher)"*. Do not cite a
+  `lower_bound` zero as a counter-signal; treat it as
+  uninformative.
 - **AT.** `at_signal` is the **cohort-ranking provenance only** —
   the authoritative AT record lives in `evidence_items[]` as
   `ANNOTATION_TRANSFER`. Cite AT F1 from the evidence item, not

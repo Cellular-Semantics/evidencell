@@ -1,0 +1,25 @@
+{
+  "audit_id": "at_blind",
+  "started_at": "2026-05-31T20:52:32.867713+00:00",
+  "finished_at": "2026-05-31T20:52:32.886000+00:00",
+  "commit": "0934db52a0ca812b376b730a13594338f42d1323",
+  "config": {
+    "taxonomy_id": "CCN20230722",
+    "top_k": 10,
+    "f1_floor": 0.5,
+    "limit": null
+  },
+  "preflight_assertions": [
+    {
+      "name": "taxonomy_db_exists",
+      "status": "pass"
+    },
+    {
+      "name": "taxonomy_db_fresh",
+      "status": "fail",
+      "note": "Taxonomy DB is stale: YAML newer than DB (newest YAML 2026-05-31T13:18:36+00:00, DB 2026-05-30T15:21:53+00:00) \u2014 re-ingest happened after last build. Rebuild with: just build-taxonomy-db CCN20230722"
+    }
+  ],
+  "outcomes": [],
+  "summary_stats": {}
+}

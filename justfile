@@ -142,12 +142,22 @@ validate-at-results-all:
 validate-all:
     #!/usr/bin/env bash
     set -euo pipefail
-    files=$(find {{kb_dir}} -name "*.yaml" 2>/dev/null)
+    files=$(find {{kb_dir}} \( -name "*.yaml" -o -name "*.yaml.gz" \) 2>/dev/null)
     if [ -z "$files" ]; then echo "No files in {{kb_dir}} yet."; exit 0; fi
     failed=0
+    tmpdir=$(mktemp -d)
+    trap "rm -rf $tmpdir" EXIT
     for f in $files; do
         echo "Validating $f..."
-        uv run linkml-validate -s {{schema}} "$f" || failed=1
+        if [[ "$f" == *.yaml.gz ]]; then
+            # linkml-validate doesn't read gzip; gunzip to a tempfile
+            # preserving the .yaml suffix so its parser is happy.
+            tmp="$tmpdir/$(basename "$f" .gz)"
+            gunzip -c "$f" > "$tmp"
+            uv run linkml-validate -s {{schema}} "$tmp" || failed=1
+        else
+            uv run linkml-validate -s {{schema}} "$f" || failed=1
+        fi
     done
     [ $failed -eq 0 ] && echo "All KB files valid." || { echo "Validation failed."; exit 1; }
 

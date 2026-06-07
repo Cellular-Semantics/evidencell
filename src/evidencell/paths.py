@@ -5,6 +5,9 @@ artefacts, and reports lives here.
 """
 
 from pathlib import Path
+import gzip
+from contextlib import contextmanager
+
 import yaml
 
 
@@ -89,8 +92,54 @@ def taxonomy_db_path(taxonomy_id: str) -> Path:
 
 
 def taxonomy_yaml_path(taxonomy_id: str, level: str) -> Path:
-    """Return the YAML file path for a given taxonomy level."""
-    return taxonomy_dir(taxonomy_id) / f"{level}.yaml"
+    """Return the YAML file path for a given taxonomy level.
+
+    Prefers `{level}.yaml.gz` when present (the large WMBv1 cluster.yaml
+    is gzipped on disk to stay under GitHub's 100 MB file limit); falls
+    back to the uncompressed `{level}.yaml`. Callers that read the file
+    should use `open_taxonomy_yaml()` to get a transparently-decompressed
+    text stream.
+    """
+    base = taxonomy_dir(taxonomy_id) / f"{level}.yaml"
+    gz = base.with_suffix(".yaml.gz")
+    if gz.exists():
+        return gz
+    return base
+
+
+@contextmanager
+def open_taxonomy_yaml(path: Path):
+    """Open a taxonomy YAML file as a text stream, transparently
+    gunzipping when the path ends in `.yaml.gz`. Use this for any
+    read of a file returned by `taxonomy_yaml_path()` or discovered
+    via a `*.yaml*` glob on `kb/taxonomy/{taxonomy_id}/`.
+    """
+    if str(path).endswith(".gz"):
+        with gzip.open(path, "rt", encoding="utf-8") as fh:
+            yield fh
+    else:
+        with path.open(encoding="utf-8") as fh:
+            yield fh
+
+
+def iter_taxonomy_level_files(taxonomy_dir_path: Path):
+    """Yield the per-level taxonomy YAML files in a taxonomy directory,
+    catching both `*.yaml` and `*.yaml.gz` variants. Skips
+    `taxonomy_meta.yaml` and `field_mapping.yaml` (non-level config).
+    """
+    skip_names = {"taxonomy_meta.yaml", "taxonomy_meta.yaml.gz",
+                  "field_mapping.yaml", "field_mapping.yaml.gz"}
+    seen_stems: set[str] = set()
+    # Prefer .gz when both forms exist (consistent with taxonomy_yaml_path).
+    for ext in ("*.yaml.gz", "*.yaml"):
+        for f in sorted(taxonomy_dir_path.glob(ext)):
+            if f.name in skip_names:
+                continue
+            stem = f.name.removesuffix(".gz").removesuffix(".yaml")
+            if stem in seen_stems:
+                continue
+            seen_stems.add(stem)
+            yield f
 
 
 def taxonomy_meta_path(taxonomy_id: str) -> Path:

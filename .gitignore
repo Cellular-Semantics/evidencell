@@ -17,8 +17,18 @@ uv.lock
 # Generated / large local files
 conf/oak_dbs/
 
-# Generated report intermediates (facts JSON); final reports are committed
+# Generated report intermediates (facts JSON, pool-candidates, 4b
+# correction reports); final reports are committed
 reports/**/*_facts.json
+reports/**/*_pool_candidates.json
+reports/**/*.corrections.json
+
+# Demo / dry-run artifacts — kept untracked; regenerable per session
+kb/draft/
+kb/graphs/**/_demo_*
+reports/**/_demo_*
+research/demo_*/
+research/hippocampus/map_*_2026*/
 
 # Annotation transfer data (large GEO downloads, re-fetchable)
 annotation_transfer/data/

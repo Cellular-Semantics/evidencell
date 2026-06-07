@@ -459,6 +459,14 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
         counts_100um = a.get("count_in_or_near_100um")
         ratios_100um = a.get("ratio_in_or_near_100um")
         sources = a.get("source")
+        # cell_count_completeness is per-edge (one value per (cluster,
+        # MBA) edge), not per-source. Painted leaf domains have no
+        # tag (treat as authoritative); rollups are tagged 'exact' or
+        # 'lower_bound'. Replicate the single value across the
+        # per-source unfold.
+        completeness_raw = a.get("cell_count_completeness")
+        if isinstance(completeness_raw, list):
+            completeness_raw = completeness_raw[0] if completeness_raw else None
         # Normalise to parallel lists. Treat scalar inputs (legacy) as length-1.
         counts_list = counts if isinstance(counts, list) else [counts]
         ratios_list = ratios if isinstance(ratios, list) else [ratios]
@@ -499,6 +507,7 @@ def _extract_node(row: dict, taxonomy_id: str, fc: dict[str, list[str]]) -> Taxo
                     _as_float(ratios_100um_list[i]) if i < len(ratios_100um_list) else None
                 ),
                 "source": sources_list[i] if i < len(sources_list) else None,
+                "cell_count_completeness": completeness_raw,
             })
 
     # Neuronal / Glial booleans (class level)
@@ -766,6 +775,8 @@ def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, st
             loc["count_in_or_near_100um"] = a["count_in_or_near_100um"]
         if a.get("ratio_in_or_near_100um") is not None:
             loc["ratio_in_or_near_100um"] = a["ratio_in_or_near_100um"]
+        if a.get("cell_count_completeness") is not None:
+            loc["cell_count_completeness"] = a["cell_count_completeness"]
         src_doi = a.get("source")
         if src_doi:
             loc["sources"] = [{
@@ -1180,13 +1191,14 @@ CREATE TABLE IF NOT EXISTS nodes (
 );
 
 CREATE TABLE IF NOT EXISTS anat (
-  node_id                TEXT NOT NULL REFERENCES nodes(node_id),
-  anat_id                TEXT NOT NULL,
-  anat_label             TEXT NOT NULL,
-  cell_count             INTEGER,
-  cell_ratio             REAL,
-  count_in_or_near_100um INTEGER,
-  ratio_in_or_near_100um REAL
+  node_id                  TEXT NOT NULL REFERENCES nodes(node_id),
+  anat_id                  TEXT NOT NULL,
+  anat_label               TEXT NOT NULL,
+  cell_count               INTEGER,
+  cell_ratio               REAL,
+  count_in_or_near_100um   INTEGER,
+  ratio_in_or_near_100um   REAL,
+  cell_count_completeness  TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_nodes_level  ON nodes(taxonomy_level);
@@ -1578,14 +1590,15 @@ def load_expression_data(taxonomy_id: str, level: str) -> dict[str, dict[str, fl
     Returns ``{cell_set_accession: {gene_symbol: mean_expression}}``.
     Returns an empty dict if the YAML or precomputed_expression data is absent.
     """
-    from evidencell.paths import taxonomy_yaml_path
+    from evidencell.paths import open_taxonomy_yaml, taxonomy_yaml_path
 
     yaml_path = taxonomy_yaml_path(taxonomy_id, level)
     if not yaml_path.exists():
         return {}
 
     try:
-        data = yaml.safe_load(yaml_path.read_text(encoding="utf-8")) or {}
+        with open_taxonomy_yaml(yaml_path) as fh:
+            data = yaml.safe_load(fh) or {}
     except Exception:
         return {}
 
@@ -1639,16 +1652,16 @@ class TaxonomyDB:
         self.db_path = db_path
 
     def build_from_yaml(self, taxonomy_dir: Path) -> None:
-        """Populate DB from kb/taxonomy/{taxonomy_id}/*.yaml. Idempotent (drops + rebuilds)."""
+        """Populate DB from kb/taxonomy/{taxonomy_id}/*.yaml{,.gz}.
+        Idempotent (drops + rebuilds)."""
+        from evidencell.paths import iter_taxonomy_level_files, open_taxonomy_yaml
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         con = sqlite3.connect(self.db_path)
         try:
             con.executescript("DROP TABLE IF EXISTS anat; DROP TABLE IF EXISTS nodes;")
             con.executescript(_DDL)
-            for yaml_file in sorted(taxonomy_dir.glob("*.yaml")):
-                if yaml_file.name in ("taxonomy_meta.yaml", "field_mapping.yaml"):
-                    continue
-                with yaml_file.open(encoding="utf-8") as fh:
+            for yaml_file in iter_taxonomy_level_files(taxonomy_dir):
+                with open_taxonomy_yaml(yaml_file) as fh:
                     data = yaml.safe_load(fh)
                 file_rank: int | None = None
                 if isinstance(data, dict) and "nodes" in data:
@@ -1776,7 +1789,7 @@ class TaxonomyDB:
             if not anat_id:
                 continue
             con.execute(
-                "INSERT INTO anat VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO anat VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     node_id,
                     anat_id,
@@ -1785,6 +1798,7 @@ class TaxonomyDB:
                     a.get("cell_ratio"),
                     a.get("count_in_or_near_100um"),
                     a.get("ratio_in_or_near_100um"),
+                    a.get("cell_count_completeness"),
                 ),
             )
 
@@ -2048,7 +2062,6 @@ class TaxonomyDB:
         expression_data: dict[str, dict[str, float]] | None = None,
         at_bypass: set[str] | None = None,
         at_hits: dict[str, dict] | None = None,
-        region_expand_levels: int = 1,
     ) -> list[dict]:
         """Return candidate nodes matching any combination of region, NT, and markers.
 
@@ -2084,13 +2097,34 @@ class TaxonomyDB:
                           (see README § Expression scoring) instead of binary +1.
                           Falls back to binary +1 for genes absent from expression_data.
 
-        Scoring: region match = 2 pts, NT match = 2 pts.
-        Marker scoring (with expression_data): sibling-percentile primary (+2/+1/0),
-        global-percentile specificity bonus (+1 if top 10% atlas-wide), negative markers
-        inverted. Without expression_data: binary +1 per marker found in DB columns.
-        Candidates with mean_expression < MIN_DETECTABLE for a queried gene are flagged
-        as unreliable and contribute 0 from that gene.
-        Optional criteria add their registered bonus (default 1 pt each).
+        Scoring:
+          - Region (graded, from `region_fraction_100um`): +2 if ≥ 0.5,
+            +1 if ≥ 0.1, +0.5 if > 0, else 0.
+          - Region exact-match bonus: +1 when candidate has cells
+            strictly in any of the curator-queried anat terms
+            (`cell_count > 0`, not just proximity).
+          - NT match (filter only — no explicit point award).
+          - Marker scoring (with expression_data): sibling-percentile
+            primary (+2/+1/0), global-percentile specificity bonus
+            (+1 if top 10% atlas-wide), negative markers inverted.
+          - Without expression_data: binary +1 per marker found in
+            DB columns. Candidates with mean_expression <
+            MIN_DETECTABLE for a queried gene contribute 0.
+          - AT signal (if at_hits provided): F1 ≥ 0.5 → +3, ≥ 0.3 → +2,
+            ≥ floor → +1.
+          - Optional criteria add their registered bonus (default 1).
+
+        Region filter (permissive): a candidate survives if any of its
+        anat rows in `anat_ids ∪ anat_root_ids` has `cell_count > 0`
+        (strict in-region) OR `count_in_or_near_100um > 0` (soma within
+        100µm of the queried region). The 100µm-proximity signal
+        replaces the legacy MBA-tree `expanded_anat` walk for
+        registration-edge cases (CA1 ↔ subiculum etc.). brain_cell_KG
+        materialises closure aggregates upstream, so `effective_anat`
+        is the curator's literal term set — no descendant expansion
+        on our side (it would double-count parent + descendant
+        edges that already share the same rolled-up cells).
+
         Results sorted descending by score.
         """
         if rank is None and level is None:
@@ -2098,43 +2132,18 @@ class TaxonomyDB:
 
         _marker_cols = tuple(marker_columns) if marker_columns else self._ALL_MARKER_COLS
 
-        # Resolve anat_root_ids to full descendant sets via closure.
-        # `effective_anat` is the strict / exact query closure used for the
-        # exact-match bonus. `expanded_anat` widens it by walking up the MBA
-        # hierarchy `region_expand_levels` times and including those parents'
-        # descendants — rescues sibling-sublayer hits (e.g. CA1 pyramidal
-        # ↔ CA1 stratum oriens, both under MBA:382 Field CA1) without
-        # requiring the curator to enumerate every sublayer manually. The
-        # filter uses `expanded_anat`; the +1 region-exact bonus uses
-        # `effective_anat`.
-        effective_anat: set[str] = set(anat_ids or [])
-        if anat_root_ids:
-            for root in anat_root_ids:
-                effective_anat.update(self.get_descendants(root, include_self=True))
-
-        expanded_anat: set[str] = set(effective_anat)
-        if region_expand_levels > 0 and (anat_ids or anat_root_ids):
-            seed_ids: list[str] = list(anat_ids or []) + list(anat_root_ids or [])
-            parents: set[str] = set()
-            frontier = list(seed_ids)
-            for _ in range(region_expand_levels):
-                next_frontier: list[str] = []
-                for nid in frontier:
-                    for p in self.get_anat_parents(nid):
-                        if p not in parents:
-                            parents.add(p)
-                            next_frontier.append(p)
-                frontier = next_frontier
-                if not frontier:
-                    break
-            for p in parents:
-                try:
-                    expanded_anat.update(
-                        self.get_descendants(p, include_self=True)
-                    )
-                except RuntimeError:
-                    # anat_closure not built — skip expansion silently
-                    break
+        # `effective_anat` is the literal curator-supplied query set —
+        # union of `anat_ids` and `anat_root_ids`. brain_cell_KG
+        # materialises closure aggregates upstream (a cluster with cells
+        # in CA1 stratum oriens has its own edges to Field CA1 AND to
+        # Hippocampal formation, with rolled-up counts on each), so we
+        # do NOT expand via `get_descendants()` on this side — that
+        # would double-count parent + descendant rows. The legacy MBA-
+        # tree `expanded_anat` walk (sibling-sublayer rescue via
+        # parent-then-redescend) is replaced by physical 100µm
+        # proximity: a soma in CA1 stratum oriens is within 100µm of
+        # CA1 pyramidale and registers via `count_in_or_near_100um`.
+        effective_anat: set[str] = set(anat_ids or []) | set(anat_root_ids or [])
 
         # Determine whether we're at leaf rank (rank 0) for NT propagation
         is_leaf = rank == 0 if rank is not None else (level == "cluster")
@@ -2256,67 +2265,107 @@ class TaxonomyDB:
 
             node_anat_rows = self._get_anat(node_acc) if effective_anat else []
             region_fraction: float | None = None
+            region_fraction_100um: float | None = None
             region_exact_match: bool = False
             region_evidence: str | None = None
+            region_count_completeness: str | None = None
             if effective_anat:
-                node_anat_ids = {a["anat_id"] for a in node_anat_rows}
-                if node_anat_rows:
-                    total_cells = sum(
-                        (r.get("cell_count") or 0) for r in node_anat_rows
-                    )
-                    if total_cells > 0:
-                        # region_fraction is calculated against the EXACT
-                        # closure so it reflects how on-target the candidate
-                        # really is, regardless of expansion.
-                        matched_cells = sum(
-                            (r.get("cell_count") or 0)
-                            for r in node_anat_rows
-                            if r["anat_id"] in effective_anat
+                # Permissive region filter: candidate keeps its slot if
+                # any of its own anat rows in `effective_anat` has either
+                # `cell_count > 0` (strict in-region) or
+                # `count_in_or_near_100um > 0` (soma within 100µm).
+                # Per-source unfold means multiple rows per (cluster,
+                # anat_id) — one per registration study (Yao, Zhuang…).
+                # Each source is an independent measurement of the same
+                # biological population; take MAX (most generous
+                # estimate across studies), not SUM (which double-counts).
+                strict_in_region: dict[str, int] = defaultdict(int)
+                prox_in_region: dict[str, int] = defaultdict(int)
+                completeness_in_region: dict[str, str | None] = {}
+                for r in node_anat_rows:
+                    aid = r.get("anat_id")
+                    if aid in effective_anat:
+                        strict_in_region[aid] = max(
+                            strict_in_region[aid], r.get("cell_count") or 0
                         )
-                        region_fraction = matched_cells / total_cells
-                region_exact_match = bool(node_anat_ids & effective_anat)
-                if node_anat_rows:
-                    region_evidence = (
-                        "self" if (node_anat_ids & expanded_anat) else None
+                        prox_in_region[aid] = max(
+                            prox_in_region[aid], r.get("count_in_or_near_100um") or 0
+                        )
+                        # All per-source rows for the same (cluster, anat)
+                        # share completeness — last write wins, idempotent.
+                        completeness_in_region[aid] = r.get("cell_count_completeness")
+
+                own_strict_hit = any(v > 0 for v in strict_in_region.values())
+                own_prox_hit = any(v > 0 for v in prox_in_region.values())
+                region_exact_match = own_strict_hit
+
+                # `region_fraction` / `region_fraction_100um` normalise
+                # against the candidate's *spatially-registered* cell
+                # total — NOT `n_cells` (the 10x transcriptomic count,
+                # which is a different sample). With KG closure
+                # aggregation, the candidate's highest-ranked anat
+                # rollup (typically MBA:997 "brain") carries the sum
+                # over all painted descendants — that's the right
+                # denominator. Take MAX over all candidate anat rows,
+                # which naturally picks the broadest rollup
+                # (descendants' counts can't exceed their ancestors').
+                # Numerator: MAX over per-source rows at the matched
+                # anat term, then MAX across matched terms (closure
+                # means parent + descendant rows would overlap; MAX
+                # avoids double-counting).
+                cluster_total_strict = 0
+                cluster_total_prox = 0
+                for r in node_anat_rows:
+                    cluster_total_strict = max(
+                        cluster_total_strict, r.get("cell_count") or 0
                     )
-                # Filter uses expanded closure so sibling-sublayer hits
-                # survive. Drop only when neither the exact closure NOR
-                # the expansion catches the target's anat.
-                #
-                # ─── BCKG over-strip workaround ─────────────────────────
-                # At rank ≥ 1, subclass / supertype `anat` rows in the
-                # taxonomy DB are sometimes over-stripped (an upstream
-                # percent-of-cells cutoff in Brain Cell KG drops non-
-                # dominant regions). Rank-0 (cluster) anat is unaffected,
-                # since it comes from the source cluster-cell-anat table.
-                # When a rank ≥ 1 candidate fails the region intersection
-                # on its own anat, fall back to the union of its rank-0
-                # descendants' anat before declaring a region drop.
-                # Surviving via fallback is tagged
-                # _region_evidence='descendant_only' so callers (audit,
-                # reports) can attribute the rescue and downweight if
-                # desired.
-                #
-                # NOTE: remove this fallback once BCKG ships the upstream
-                # anat-rollup fix so non-leaf nodes carry a complete
-                # rollup of their descendants' regions. See
-                # planning/at_blind_region_drop_findings_2026-05-12.md §a.
-                if not bypassed and node_anat_rows and not (
-                    node_anat_ids & expanded_anat
-                ):
+                    cluster_total_prox = max(
+                        cluster_total_prox, r.get("count_in_or_near_100um") or 0
+                    )
+                if strict_in_region and cluster_total_strict > 0:
+                    region_fraction = (
+                        max(strict_in_region.values()) / cluster_total_strict
+                    )
+                if prox_in_region and cluster_total_prox > 0:
+                    winning_aid = max(prox_in_region, key=lambda k: prox_in_region[k])
+                    region_fraction_100um = (
+                        prox_in_region[winning_aid] / cluster_total_prox
+                    )
+                    region_count_completeness = completeness_in_region.get(winning_aid)
+
+                if own_strict_hit or own_prox_hit:
+                    region_evidence = "self"
+                elif not bypassed:
+                    # BCKG over-strip workaround at rank ≥ 1 — see the
+                    # notes block below. Apply the same permissive rule
+                    # to the union of rank-0-descendant anat rows.
                     descendant_anat_hit = False
                     if build_descendant_map:
                         leaves = parent_to_rank0.get(node_acc, [])
                         if leaves:
-                            desc_anat_ids: set[str] = set()
                             for leaf in leaves:
                                 for lar in self._get_anat(leaf):
-                                    desc_anat_ids.add(lar["anat_id"])
-                            if desc_anat_ids & expanded_anat:
-                                descendant_anat_hit = True
+                                    aid = lar.get("anat_id")
+                                    if aid in effective_anat:
+                                        if (
+                                            (lar.get("cell_count") or 0) > 0
+                                            or (lar.get("count_in_or_near_100um") or 0) > 0
+                                        ):
+                                            descendant_anat_hit = True
+                                            break
+                                if descendant_anat_hit:
+                                    break
                     if not descendant_anat_hit:
                         continue
                     region_evidence = "descendant_only"
+                # NOTE on the BCKG over-strip workaround: brain_cell_KG
+                # applies an upstream percent-of-cells cutoff that strips
+                # non-dominant regions from non-leaf (rank ≥ 1) anat
+                # rollups. Rank-0 (cluster) anat is unaffected, since it
+                # comes from the source cluster-cell-anat table. The
+                # fallback rescues rank ≥ 1 candidates whose own anat
+                # missed entirely. Remove once BCKG ships a complete
+                # upstream anat-rollup fix.
 
             if nt_type and not bypassed:
                 node_nt = nd.get("nt_type") or _nt_map.get(node_acc)
@@ -2347,6 +2396,10 @@ class TaxonomyDB:
             nd["_bypassed"] = bypassed
             if region_fraction is not None:
                 nd["_region_fraction"] = round(region_fraction, 3)
+            if region_fraction_100um is not None:
+                nd["_region_fraction_100um"] = round(region_fraction_100um, 3)
+            if region_count_completeness is not None:
+                nd["_region_count_completeness"] = region_count_completeness
             if effective_anat:
                 nd["_region_exact_match"] = region_exact_match
                 if region_evidence is not None:
@@ -2500,12 +2553,35 @@ class TaxonomyDB:
                         "score": at_delta,
                     }
 
-            # Region exact-match bonus (Phase 1 follow-up E): when the
-            # candidate has cells in the strict queried-region closure (not
-            # only the expanded closure used for filtering), add +1. This
-            # preserves discrimination between candidates annotated to the
-            # precise queried sublayer and those rescued only by expansion
-            # to the parent region.
+            # Graded region score from `region_fraction_100um`. Replaces
+            # the legacy flat region-survival bonus — a candidate with
+            # most of its cells inside/near the queried region scores
+            # higher than one with scatter at the edge. With closure
+            # aggregation, strict-in-region cells also contribute to
+            # the 100µm proximity numerator (a soma inside a region is
+            # by definition within 100µm of it), so this signal
+            # subsumes "is the candidate located here?" generally.
+            #
+            # The only zero case is the DESCENDANT_ONLY rescue path:
+            # the candidate's own anat has no qualifying hit and the
+            # rank-0-children-union rescued it. `_region_fraction_100um`
+            # is then None (or 0) and the graded region score is 0 —
+            # the `region_evidence: DESCENDANT_ONLY` flag carries the
+            # weak-signal record.
+            rf100 = nd.get("_region_fraction_100um")
+            if rf100 is not None:
+                if rf100 >= 0.5:
+                    score += 2
+                elif rf100 >= 0.1:
+                    score += 1
+                elif rf100 > 0:
+                    score += 0.5
+
+            # Region exact-match bonus (Phase 1 follow-up E, retained):
+            # +1 when the candidate has cells strictly (not just
+            # proximity) in any curator-queried anat term. Preserves
+            # discrimination between candidates centred in the region
+            # and those rescued only by 100µm scatter.
             if nd.pop("_region_exact_match", False):
                 score += 1
 
@@ -3255,6 +3331,10 @@ def _cmd_find_candidates(
         }
         if c.get("_region_fraction") is not None:
             block["region_fraction"] = c["_region_fraction"]
+        if c.get("_region_fraction_100um") is not None:
+            block["region_fraction_100um"] = c["_region_fraction_100um"]
+        if c.get("_region_count_completeness"):
+            block["region_count_completeness"] = c["_region_count_completeness"]
         if c.get("_region_evidence"):
             # Internal scoring uses lowercase 'self' / 'descendant_only';
             # the schema enum uses uppercase. Map on emission so

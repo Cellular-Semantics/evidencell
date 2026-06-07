@@ -15,8 +15,8 @@ Run after any of:
 - Material change to Stage A scoring in `find_candidates` (positive/
   negative marker tiers, cohort-percentile thresholds, coverage
   dampening, region filter semantics, AT bypass behaviour).
-- Change to `find_candidates`' default config (e.g. `top_k`,
-  `region_expand_levels`).
+- Change to `find_candidates`' default config (e.g. `top_k`, the
+  region-filter strictness rules).
 - Curated AT evidence is added or substantially edited in
   `kb/graphs/**/*.yaml`.
 - Before a milestone freeze that touches map-cell-type.
