@@ -220,7 +220,7 @@ smoke:
 # Run all tests except those marked integration (OAK DB / network)
 [group('testing')]
 test-fast:
-    uv run pytest -m "not integration" --no-cov
+    uv run pytest -m "not integration and not slow" --no-cov
 
 # ── Workflows ──────────────────────────────────────────────────────────────────
 
@@ -380,6 +380,15 @@ generate-gene-mapping stats_h5 output:
 [group('workflows')]
 find-candidates graph_file node_id taxonomy_id rank="1" top_k="10":
     uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}}
+
+# Mechanical Stage B emit — replaces the per-candidate mapping subagent
+# with structural-only MappingEdge generation (issue #96). Reads the
+# Stage A discovery JSON, appends edges + taxonomy-ref stubs to the
+# graph file. Idempotent (skips existing edge ids).
+# Usage: just emit-stage-b kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 5
+[group('workflows')]
+emit-stage-b graph_file node_id taxonomy_id rank="0" top_k="5" *ARGS:
+    uv run python -m evidencell.stage_b_emit {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}} {{ARGS}}
 
 # Backfill MappingEdge.discovery_score from on-disk discovery JSONs.
 # Walks the graph file's edges; for each edge missing discovery_score,
