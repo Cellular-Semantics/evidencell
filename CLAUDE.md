@@ -181,7 +181,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; call as a skill for targeted follow-up, not primary discovery |
 | `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After survey or asta-report-ingest — writes PropertySource entries with quote_key to KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: queries taxonomy DB at multiple ranks (0=leaf, 1, 2…) for candidate atlas matches; hypothesis mode: tests curator's proposed mapping. Uses `just find-candidates` with rank parameter. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
-| `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook). Reports now open with an Introduction section surfacing `cl_mapping` + `proposed_cl_term`. |
+| `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Single agentic session does filter (top-K → ≤ 3 survivors via evidence-hierarchy rubric) + AT-pooling decisions + paper-style report on survivors. Writes verdicts back for ALL top-K edges (survivors get SSSOM trio + caveats + proposed_experiments; cuts get confidence + tier:CUT rationale). LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook + post-write structured-claims check). Reports open with an Introduction section surfacing `cl_mapping` + `proposed_cl_term`. |
 | `cl-term-request` | `workflows/cl-term-request.md` | Reporting | **Ready** | Draft a CL new term request for a node with BROAD/RELATED/null `cl_mapping`. Reads facts via `just gen-facts`, applies CL definition + relations guidelines (`docs/LLM_prompt_guidelines_for_CL_definitions.md`, `docs/relations_guide.md`), emits issue-ready markdown. Posting is gated: `just preview-cl-ntr` then `just post-cl-ntr`. |
 | `annotation-transfer` | `workflows/annotation-transfer.md` | Evidence transfer | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
 
@@ -283,13 +283,16 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 
 ── Mapping ────────────────────────────────────────────────────────────────────
 
-4.  workflows/map-cell-type.md                   # evidence + atlas metadata → MappingEdge
-    [GATE] expert reviews proposed edges
+4.  workflows/map-cell-type.md                   # evidence + atlas metadata → MappingEdge top-K
+    # Stage B emits the top-K candidate edges mechanically; no curator
+    # pre-filter gate. Filtering happens inside gen-report (next step).
 
 ── Reports + community ────────────────────────────────────────────────────────
 
 5.  just gen-facts {graph_file} {node_id}        # extract structured facts
-    → workflows/gen-report.md                    # LLM synthesis + ID/quote validation
+    just pool-candidates {graph_file} --node {node_id} > ...
+    → workflows/gen-report.md                    # single session: filter (top-K → ≤3) +
+                                                 # AT-pooling + synth + verdict write-back
     [GATE] biologist reviews, executes proposed experiments
 
 6.  workflows/annotation-transfer.md             # AT results → AnnotationTransferEvidence

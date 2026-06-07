@@ -104,9 +104,11 @@ Spawn a **synthesis subagent** with this exact prompt (substitute values for
 `{region}`, `{graph_file}`):
 
 ```
-You are a cell type mapping report writer. Write a high-quality, biologist-readable
-summary report from structured evidence facts, AND emit a structured verdict
-block for write-back to the MappingEdge YAML.
+You are a cell type mapping report writer. You run as a SINGLE agentic
+session that performs three acts: (1) filter the top-K candidate
+edges down to up to 3 survivors, (2) decide AT source-label /
+pooling questions, (3) write a paper-style report on survivors plus
+verdict blocks for every top-K edge (survivors AND cuts).
 
 INPUTS YOU READ:
 - FACTS FILE: {facts_file}
@@ -120,7 +122,84 @@ INPUTS YOU MUST NOT READ (Phase 3 loop avoidance):
 
 OUTPUT FILE: {summary_file}
 
-First, read all inputs completely. Then write the Markdown report below.
+First, read all inputs completely. Then perform Acts 1–3 below before
+drafting the report body.
+
+---
+
+## Act 1 — Filter (run first; survivors feed Act 3)
+
+You receive the full top-K candidate edges (typically K=10) for this
+classical node. Most of these do NOT warrant a full report — they're
+the wide-net output of Stage A's mechanical scoring. Whittle them
+down to **at most 3 survivors** using the evidence-hierarchy rubric
+below.
+
+### Tier rubric
+
+Assign each candidate to one of four tiers. The tier label appears
+at the head of `rationale` in the verdict block as
+`[tier:STRONGEST|NEXT|WEAKEST|CUT]` so a future re-run / curator can
+read it back.
+
+| Tier | Criteria |
+|---|---|
+| **STRONGEST** | AT F1 ≥ 0.5 at CLUSTER level AND ≥2 of (markers CONSISTENT, region_fraction_100um ≥ 0.5, NT CONSISTENT) AND lit quote evidence for at least one of (patch-seq, transgene-marked scRNA-seq, IHC-confirmed unique marker combo, replicated across labs). |
+| **NEXT** | AT F1 ≥ 0.3 AND region_fraction_100um ≥ 0.3 AND ≥ 2 markers CONSISTENT; OR strong marker convergence + spatial-transcriptomics confirmation in lit quotes (no AT). |
+| **WEAKEST** | single-modality evidence; sc-only AT; gross-dissection-level markers; rank ≥ 1 with significant coverage dampening. |
+| **CUT** | no AT AND region_fraction_100um < 0.1 AND ≥ 2 DISCORDANT markers; OR `region_evidence: DESCENDANT_ONLY` with no marker convergence; OR every property_comparison DISCORDANT/NOT_ASSESSED. |
+
+The rubric is a guide — you may override per edge with explicit
+rationale citing structured fields. The same anti-hallucination
+discipline applies to your tier-justification prose as to the rest
+of `rationale`.
+
+### Survivor selection
+
+Sort by tier (STRONGEST → NEXT → WEAKEST) breaking ties by
+`discovery_score.score`. Keep **the top 3 across tiers**: a STRONGEST
+always beats a WEAKEST regardless of score. Pool-merged candidates
+(see Act 2) count as one candidate after pooling. **CUT-tier
+candidates are never kept** even if the survivor list is < 3 —
+under-3 is honest signal.
+
+---
+
+## Act 2 — AT source-label / pooling decisions
+
+Walk `{pool_candidates_file}`. For each candidate pool, decide
+whether the source groups are truly indistinguishable across all
+available property panels (CASE A) or only on AT (CASE B). See the
+"Indistinguishability across source groups" section later in this
+prompt for the full CASE A / CASE B protocol.
+
+When CASE A fires, pooling **happens before** survivor selection in
+Act 1 — the pooled candidate replaces the two competing edges in
+the survivor list, so two AT labels collapsing into one pseudo-source
+is reflected in the top-3 count.
+
+When CASE A fires, also emit a `source-groups-rationale` block (see
+the verdict block schema below) populating
+`SourceGroup.rationale` on the relevant AT evidence items if it's
+currently empty. Never overwrite an existing rationale.
+
+---
+
+## Act 3 — Report body + verdict blocks
+
+Write the paper-style report below for **SURVIVORS only**. CUT
+candidates get NO per-candidate paragraph; they collapse into a
+single "Eliminated at filter step" subsection in the Discussion
+listing each cut edge's accession + tier + one-sentence rationale
+(verbatim from its verdict block).
+
+Verdict blocks are emitted for **every top-K edge** — survivors get
+a full verdict (confidence + relationship + cardinality +
+justification + caveats + proposed_experiments + unresolved); cuts
+get a minimal verdict (confidence LOW/UNCERTAIN/REFUTED + rationale
+beginning `[tier:CUT]`; relationship stays
+`evidencell:UncertainRelationship` for cuts — there's no point
+refining the predicate on a candidate that didn't survive).
 
 ---
 
@@ -584,13 +663,25 @@ OLM hippocampus' may resolve this").
   provenance section above — weak marker evidence is a gap that literature
   review can address without new experiments.
 
-**UNCERTAIN edges:** Collapse all into one `## Eliminated candidates` section.
+**CUT-tier edges (from Act 1 filter):** Do NOT write per-candidate
+paragraphs for cuts. They collapse into a single
+`### Eliminated at filter step` subsection nested in `## Discussion`,
+with one bullet per cut edge:
 
-- Check if there is a shared disqualifying signal (same property DISCORDANT across all
-  UNCERTAIN edges). If so, state it up front as the primary reason.
-- Sub-section per edge: cluster name + n_cells, bullet list of disqualifying evidence.
-- For location evidence on eliminated edges, apply the adjacent/distant interpretation rule.
-- Note which counter-evidence is weak (adjacent region) vs strong (distant region).
+- `{cluster_short_name} [{accession}]` (tier:CUT) — one-sentence
+  rationale verbatim from the verdict block.
+
+If a shared disqualifying signal applies across multiple CUTs (e.g.
+no AT + ARH region absent + Cyp19a1=0 across all candidates), state
+it once up front as the primary reason and reference it in each
+bullet. For location evidence on cut edges, apply the
+adjacent/distant interpretation rule and note which counter-evidence
+is weak (adjacent region) vs strong (distant region).
+
+Survivors that the filter assigned tier UNCERTAIN-ish (WEAKEST tier
+that the agent kept for completeness when fewer than 3 viable
+candidates existed) still get a full per-candidate paragraph — they
+are not cuts.
 
 ---
 
@@ -848,9 +939,9 @@ Do not invent PMIDs or query URLs.
 
 ## Phase 3 — Verdict block (emit at the end of the report)
 
-After the References section, emit one fenced YAML `verdict:` block per
-edge you covered in the report. Each block is wrapped in HTML comment
-delimiters identifying the edge by id:
+After the References section, emit one fenced YAML `verdict:` block
+per top-K edge (BOTH survivors AND cuts). Each block is wrapped in
+HTML comment delimiters identifying the edge by id:
 
 ```
 <!-- verdict-block-start: {edge_id} -->
@@ -858,16 +949,35 @@ delimiters identifying the edge by id:
 verdict:
   confidence: HIGH | MODERATE | LOW | UNCERTAIN | REFUTED
   confidence_score: <float, 0.0–1.0>
+  # SSSOM trio — commit the predicate when evidence supports it.
+  # Omit (leaves existing edge value untouched) when uncertain;
+  # CUT edges should omit (leaves the Stage B
+  # evidencell:UncertainRelationship stub in place).
+  relationship: skos:exactMatch | skos:closeMatch | skos:broadMatch | skos:narrowMatch | evidencell:CrossCuttingMatch | evidencell:UncertainRelationship | evidencell:NoCorrespondence
+  mapping_cardinality: "1:1" | "1:n" | "n:1"
+  mapping_justification: semapv:ManualMappingCuration | semapv:CompositeMatching | semapv:LogicalReasoning | semapv:LexicalMatching | semapv:UnspecifiedMatching | semapv:UnreviewedManualMapping
   rationale: >
-    <one or two sentences; format constraints below>
+    [tier:STRONGEST|NEXT|WEAKEST|CUT] <one or two sentences;
+    format constraints below>
   reconciliation_note: >
-    <optional; cross-edge note when calling indistinguishability>
+    <optional; cross-edge note when calling indistinguishability,
+    OR predicate-uncertainty note when relationship is left as
+    UncertainRelationship between two live alternatives>
+  caveats:
+    # REPLACE semantics — emit the canonical post-synth set.
+    - caveat_type: <CaveatType enum value>
+      description: <prose; quantitative claims checked against
+                   structured data, same as rationale>
+  proposed_experiments:
+    # REPLACE semantics. Strings (free text), one per experiment.
+    - <prose; quantitative claims + modality citations checked>
+  unresolved_questions:
+    # APPEND semantics (preserves cross-run accumulation).
+    - <string; appended to existing list, not overwriting>
   lit_to_lit_edges:
     - lit_a: <node_id>
       lit_b: <node_id>
       mapping_justification: semapv:CompositeMatching
-  unresolved_questions:
-    - <string; APPENDED to existing list, not overwriting>
 ` ` `
 <!-- verdict-block-end -->
 ```
@@ -876,27 +986,75 @@ verdict:
 spacing here is only to keep the example readable inside this synthesis
 prompt.)
 
+### Source-groups-rationale block (optional, Act 2 output)
+
+When Act 2 reaches a CASE A pooling decision, emit a companion block
+next to the verdict block:
+
+```
+<!-- source-groups-rationale-start: {edge_id} -->
+` ` `yaml
+source_groups_rationale:
+  - source_group_label: <SourceGroup.label on the AT evidence item>
+    run_ref: <at_run_... id; optional, disambiguates when multiple
+              AT evidence items share an edge>
+    rationale: >
+      <multi-panel evidence statement justifying the pool reading;
+      cites AT run_id, paper PMID/DOI, edge id as appropriate>
+` ` `
+<!-- source-groups-rationale-end -->
+```
+
+The writer populates `source_groups[*].rationale` on the matched
+AT evidence item only if it's currently empty (existing entries are
+preserved without curator review).
+
+### Optional-field semantics summary
+
+- **Omit**: writer leaves the existing edge value untouched. Use for
+  uncertain refinements (you'd rather not write than guess) and on
+  CUT verdicts where the field doesn't deserve agent attention.
+- **`caveats[]` and `proposed_experiments[]`**: REPLACE semantics —
+  emit the canonical set. Omitting clears nothing; emitting an
+  empty list explicitly *does* clear.
+- **`unresolved_questions[]`**: APPEND semantics — added to the
+  existing list, deduplicated by exact-string match. Never
+  overwrites.
+- **`relationship` + `mapping_cardinality` + `mapping_justification`**:
+  if you commit `relationship` to a SKOS predicate, you SHOULD also
+  set `mapping_cardinality` and (typically)
+  `semapv:ManualMappingCuration` as `mapping_justification`. The
+  schema permits omitting cardinality on `evidencell:UncertainRelationship`.
+
 The orchestrator runs an anti-hallucination post-write check
 (`python -m evidencell.rationale_writeback`) that parses each block and
 verifies every quantitative claim in `rationale` against the edge's
 structured data. **Any verification failure blocks write-back of all
 blocks atomically.** Format your rationale accordingly.
 
-## Predicate + confidence rubric (2026-05-26 refresh)
+## Predicate + confidence rubric (2026-06 refresh — report-time authority)
 
 The verdict is a **TOC signal telling reviewers where to look**.
 Reviewers drill into the report for fine detail. Pick `confidence`
-deterministically against the evidence on the edge; the predicate
-itself was selected by Stage B against the same rubric (see
-`workflows/map-cell-type.md` Step 3 #7) — if the inherited predicate
-is inconsistent with the evidence under the rubric below, flag it in
-`reconciliation_note` and let the curator-review pass correct it
-(do not silently revise the predicate from the verdict block).
+deterministically against the evidence on the edge.
 
-### Predicate rubric (reference)
+**You (the report-time agent) are the predicate authority.** Stage B
+emits `evidencell:UncertainRelationship` as a stub; you have the
+full evidence picture (AT pooling, region scatter, lit modality
+strength, cross-edge view) and commit `relationship`,
+`mapping_cardinality`, and `mapping_justification` on each SURVIVOR
+edge using the rubric below. When you're genuinely uncertain
+between two predicate options, write
+`evidencell:UncertainRelationship` and explain in
+`reconciliation_note` (e.g. *"close vs. broad — soft AT F1=0.66 +
+region_fraction_100um: 0.31; depends on whether the boundary
+scatter is real heterogeneity or registration noise"*). CUT edges
+leave the Stage B stub in place (omit the SSSOM trio).
 
-Stage B picks `relationship` from a decision tree on cardinality →
-location → AT support → marker consistency:
+### Predicate rubric
+
+Decision tree on cardinality → location → AT support → marker
+consistency:
 
 - **`skos:exactMatch`** — clean 1:1; location is classical region +
   adjacent only; AT (if present) F1 > 0.75; no major contradictions.
@@ -960,8 +1118,19 @@ rationale and the follow-up surface in the verdict block.
 
 ## Rationale format constraints (enforced by the post-write check)
 
-The rationale prose MUST cite specific structured-field references. The
-check parses each of the following patterns and verifies them:
+The post-write check runs the same pattern scan over **`rationale`,
+`reconciliation_note`, every `caveats[*].description`, and every
+`proposed_experiments[*]`** string. Quantitative claims and modality
+citations anywhere in this prose-suite are checked against the
+edge's structured data; a failure on any field blocks the whole
+edge's write-back atomically.
+
+Enum-validated fields (`confidence`, `relationship`,
+`mapping_cardinality`, `mapping_justification`, `caveats[*].caveat_type`)
+are also schema-checked before the YAML edit; an invalid value is
+caught at parse time with a clear error message.
+
+The check parses each of the following patterns and verifies them:
 
 - **F1 values** — pattern `F1=0.NN`. Must match an
   `evidence_items[*].metrics_by_level[*].f1_score` rounded to 2 decimals

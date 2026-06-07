@@ -117,7 +117,12 @@ def test_hash_changes_on_marker_edit():
     assert h_base != h_changed
 
 
-def test_hash_changes_on_relationship_edit():
+def test_hash_unaffected_by_relationship_edit():
+    """``relationship`` is a Phase-3 report-time output (filter+synth
+    merge), so it's excluded from the hash domain. A curator
+    re-predicating an edge does not invalidate the rationale-currency
+    hash; staleness is keyed off upstream-evidence drift, not the
+    agent's own outputs."""
     h_base = compute_hash(_sample_edge(), _sample_lit_node(), _sample_tax_node())
 
     edge_changed = _sample_edge()
@@ -125,7 +130,7 @@ def test_hash_changes_on_relationship_edit():
     h_changed = compute_hash(
         edge_changed, _sample_lit_node(), _sample_tax_node()
     )
-    assert h_base != h_changed
+    assert h_base == h_changed
 
 
 def test_is_stale_no_stored_hash():
