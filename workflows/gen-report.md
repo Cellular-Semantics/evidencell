@@ -99,9 +99,27 @@ Sst-OLM / Htr3a-OLM case and #62 for the related ingest-side prevention.
 
 ## Step 3 — Synthesis subagent
 
-Spawn a **synthesis subagent** with this exact prompt (substitute values for
-`{node_id}`, `{facts_file}`, `{pool_candidates_file}`, `{summary_file}`,
-`{region}`, `{graph_file}`):
+The orchestrator MUST dispatch this step as an **isolated subagent**
+via the Agent tool (`subagent_type: general-purpose` or equivalent),
+NOT execute the prompt inline in the parent context. Context
+isolation is the point: the synthesis call must see only the
+workflow prompt + the explicitly named input files, not the parent
+session's history of prior drafts, discussion, or hand-holding.
+Inline execution defeats this and produces results that will not
+reproduce when a fresh production session is invoked.
+
+If you find yourself reading the facts file in the parent context
+to "help" the synthesis agent reason, you are doing it wrong —
+stop, dispatch via Agent, and let the subagent read the facts on
+its own.
+
+The one exception: when the user has explicitly asked for an inline
+iteration ("let's draft this one ourselves to debug the prompt"),
+inline is fine; default behaviour is always dispatch.
+
+Spawn the synthesis subagent with this exact prompt (substitute values
+for `{node_id}`, `{facts_file}`, `{pool_candidates_file}`,
+`{summary_file}`, `{region}`, `{graph_file}`):
 
 ```
 You are a cell type mapping report writer. Write a biologist-readable
@@ -1525,7 +1543,13 @@ Write the report now.
 
 ## Step 4 — Validation subagent
 
-Spawn a **validation subagent** with this exact prompt (substitute values):
+The orchestrator MUST dispatch this step as an isolated subagent
+via the Agent tool, NOT execute inline. The independent-reviewer
+property — validation catching things the writer was blind to — is
+defeated if the validator inherits the synthesis context. Same
+dispatch discipline as Step 3.
+
+Spawn the validation subagent with this exact prompt (substitute values):
 
 ```
 You are a report validation agent. Verify that the generated Markdown report contains
@@ -1762,8 +1786,13 @@ from `references/{region}/references.json` and a flat evidence summary table. Co
 
 ### Step DD-2 — Drill-down synthesis subagent
 
-Spawn a **drill-down synthesis subagent** with this exact prompt (substitute values for
-`{scaffold_file}`, `{facts_file}`, `{output_file}`, `{region}`, `{pmid}`):
+The orchestrator MUST dispatch this step as an isolated subagent
+via the Agent tool, NOT execute inline. Same dispatch discipline as
+Step 3.
+
+Spawn the drill-down synthesis subagent with this exact prompt
+(substitute values for `{scaffold_file}`, `{facts_file}`,
+`{output_file}`, `{region}`, `{pmid}`):
 
 ```
 You are a cell type mapping drill-down report writer. You write a human-readable

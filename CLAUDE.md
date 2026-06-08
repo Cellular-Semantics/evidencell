@@ -76,6 +76,26 @@ research prerequisites that the orchestrator already addresses. Use the skills a
 it references. Stop at steps marked `[GATE]` and present results for human review before
 proceeding.
 
+**Subagent steps MUST be dispatched, not run inline.** When a workflow step says "spawn
+a subagent" (synthesis subagent, validation subagent, drill-down subagent, etc.), it MUST
+be dispatched via the Agent tool with an explicit `subagent_type`. Executing the prompt
+inline in the orchestrator's own context window:
+
+- defeats the context isolation the workflow is testing — the subagent prompt is the
+  product, and it must be validated under the conditions it will actually run in
+  production (fresh context, no parent history);
+- silently incorporates prior conversation context, prior drafts, and parent-session
+  hand-holding into the result, producing output that won't reproduce when a fresh
+  production session is invoked;
+- masks prompt deficiencies (ambiguities, missing instructions, friction points) that
+  would surface immediately in a context-isolated dispatch.
+
+The only exception is when the user has explicitly asked for an inline iteration to
+debug the prompt itself. Default behaviour is always dispatch via Agent. If you find
+yourself reading the subagent's input files in the parent context to "help" the
+subagent reason, you are skipping the isolation — stop, dispatch, and let the
+subagent read on its own.
+
 ---
 
 ## KB data management principles
