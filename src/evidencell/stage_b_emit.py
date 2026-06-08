@@ -28,11 +28,7 @@ import yaml
 from ruamel.yaml import YAML
 
 from evidencell.at_metrics import compute_edge_metrics
-from evidencell.paths import (
-    open_taxonomy_yaml,
-    repo_root,
-    taxonomy_yaml_path,
-)
+from evidencell.paths import repo_root
 from evidencell.taxonomy_db import (
     MIN_DETECTABLE,
     _load_at_artifact,
@@ -777,22 +773,69 @@ def _load_atlas_node(
 ) -> dict | None:
     """Load the atlas node dict for a given accession from the taxonomy YAML.
 
-    Uses `rank` to pick the right level file (cluster.yaml / supertype.yaml
-    etc.). Returns None if not found (logs a warning to stderr).
+    The ``rank`` argument is accepted for backwards-compat but unused —
+    the DB lookup keys off accession directly. Returns None when the
+    accession isn't in the DB.
+
+    Assembled from the taxonomy SQLite index (node_expression + nodes
+    marker columns + anat table), not from the level YAML. The
+    returned dict mirrors the shape downstream consumers expect
+    (``anatomical_location``, ``precomputed_expression.genes``,
+    ``markers``) so callers — ``_atlas_location_summary``,
+    ``_atlas_precomputed_expr``, ``_atlas_marker_categories`` — don't
+    change.
+
+    YAML stays the edit interface for atlas data
+    (``just add-expression`` writes precomputed_expression panels,
+    ``just reingest`` rewrites from source preserving enrichments);
+    ``just build-taxonomy-db`` propagates those edits into the DB.
     """
-    level_name = _RANK_TO_LEVEL_NAME.get(rank)
-    if not level_name:
+    del rank  # unused; kept in signature for backwards-compat
+    from evidencell.paths import taxonomy_db_path
+    from evidencell.taxonomy_db import TaxonomyDB
+
+    db_path = taxonomy_db_path(taxonomy_id)
+    if not db_path.exists():
         return None
-    path = taxonomy_yaml_path(taxonomy_id, level_name)
-    if not path.exists():
+    db = TaxonomyDB(db_path)
+    node = db.get_node_by_accession(accession)
+    if not node:
         return None
-    with open_taxonomy_yaml(path) as fh:
-        data = yaml.safe_load(fh)
-    nodes = data.get("nodes") or []
-    for n in nodes:
-        if n.get("cell_set_accession") == accession or n.get("id", "").endswith(accession):
-            return n
-    return None
+
+    expr_map = db.get_node_expression(accession)
+    anat_rows = db.get_node_anat_rows(accession)
+    marker_cats = db.get_node_marker_categories(accession)
+
+    nt_raw = node.get("nt_type")
+    nt_obj = {"name_in_source": nt_raw} if nt_raw else None
+    return {
+        "id": node.get("node_id"),
+        "cell_set_accession": node.get("short_form") or accession,
+        "name": node.get("label"),
+        "nt_type": nt_obj,
+        "anatomical_location": [
+            {
+                "id": r["anat_id"],
+                "label": r["anat_label"],
+                "cell_count": r.get("cell_count"),
+                "cell_ratio": r.get("cell_ratio"),
+                "count_in_or_near_100um": r.get("count_in_or_near_100um"),
+                "ratio_in_or_near_100um": r.get("ratio_in_or_near_100um"),
+                "cell_count_completeness": r.get("cell_count_completeness"),
+            }
+            for r in anat_rows
+        ],
+        "precomputed_expression": {
+            "genes": [
+                {"symbol": sym, "mean_expression": val}
+                for sym, val in expr_map.items()
+            ],
+        },
+        "markers": [
+            {"symbol": sym, "category": cat}
+            for sym, cat in marker_cats.items()
+        ],
+    }
 
 
 # ─── writeback ──────────────────────────────────────────────────────────────

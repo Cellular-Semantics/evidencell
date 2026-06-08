@@ -1736,3 +1736,129 @@ def test_filter_drops_candidate_outside_proximity_and_strict(tmp_path):
 
     results = db.find_candidates(anat_ids=["MBA:1"], rank=0)
     assert "OFF" not in {c["node_id"] for c in results}
+
+
+# ── node_expression DB table + helper queries ──────────────────────────────
+
+
+def _insert_expr(db: TaxonomyDB, node_id: str, symbol: str,
+                  mean: float, ensembl: str | None = None) -> None:
+    with db._connect() as con:
+        con.execute(
+            "INSERT OR REPLACE INTO node_expression VALUES (?, ?, ?, ?)",
+            (node_id, symbol, ensembl, mean),
+        )
+        con.commit()
+
+
+def test_get_node_expression_returns_all_genes(tmp_path):
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "CLUS_X", n_cells=100)
+    _insert_expr(db, "CLUS_X", "Sst", 10.5, "ENSMUSG00000004366")
+    _insert_expr(db, "CLUS_X", "Pvalb", 0.2)
+    _insert_expr(db, "CLUS_X", "Chrna2", 0.05)
+
+    expr = db.get_node_expression("CLUS_X")
+    assert expr == {"Sst": 10.5, "Pvalb": 0.2, "Chrna2": 0.05}
+
+
+def test_get_node_expression_restricts_to_queried_symbols(tmp_path):
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "CLUS_X", n_cells=100)
+    _insert_expr(db, "CLUS_X", "Sst", 10.5)
+    _insert_expr(db, "CLUS_X", "Pvalb", 0.2)
+    _insert_expr(db, "CLUS_X", "Chrna2", 0.05)
+
+    expr = db.get_node_expression("CLUS_X", symbols=["Sst", "Chrna2"])
+    assert expr == {"Sst": 10.5, "Chrna2": 0.05}
+
+
+def test_get_node_expression_empty_for_unknown_node(tmp_path):
+    db = _make_focused_db(tmp_path)
+    assert db.get_node_expression("CLUS_DOES_NOT_EXIST") == {}
+
+
+def test_get_expression_for_level_groups_by_accession(tmp_path):
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "CLUS_A", n_cells=10)
+    _insert_node(db, "CLUS_B", n_cells=10)
+    _insert_expr(db, "CLUS_A", "Sst", 10.5)
+    _insert_expr(db, "CLUS_A", "Pvalb", 0.2)
+    _insert_expr(db, "CLUS_B", "Sst", 8.0)
+
+    out = db.get_expression_for_level("cluster")
+    assert out == {"CLUS_A": {"Sst": 10.5, "Pvalb": 0.2}, "CLUS_B": {"Sst": 8.0}}
+
+
+def test_get_expression_for_level_restricts_to_symbols(tmp_path):
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "CLUS_A", n_cells=10)
+    _insert_expr(db, "CLUS_A", "Sst", 10.5)
+    _insert_expr(db, "CLUS_A", "Pvalb", 0.2)
+
+    out = db.get_expression_for_level("cluster", symbols=["Sst"])
+    assert out == {"CLUS_A": {"Sst": 10.5}}
+
+
+def test_get_node_marker_categories_priorities(tmp_path):
+    db = _make_focused_db(tmp_path)
+    with db._connect() as con:
+        con.execute(
+            "INSERT INTO nodes(node_id, short_form, label, taxonomy_id, "
+            "taxonomy_level, taxonomy_rank, defining_markers, "
+            "defining_markers_scoped, tf_markers, merfish_markers, np_markers) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            ("CLUS_M", "CLUS_M", "test", "T", "cluster", 0,
+             '["Sst", "Gad1"]',
+             '["Sst", "Chodl"]',
+             '["Lhx6"]',
+             '["Cck"]',
+             "Npy:8.0,Sst:11.0"),
+        )
+        con.commit()
+
+    cats = db.get_node_marker_categories("CLUS_M")
+    # Highest-priority wins when a gene appears in multiple categories
+    # (Sst appears in defining + defining_scoped + np → DEFINING wins).
+    assert cats["Sst"] == "DEFINING"
+    assert cats["Gad1"] == "DEFINING"
+    assert cats["Chodl"] == "DEFINING_SCOPED"
+    assert cats["Lhx6"] == "TF"
+    assert cats["Cck"] == "MERFISH"
+    assert cats["Npy"] == "NEUROPEPTIDE"
+
+
+def test_get_node_anat_rows_returns_full_row_shape(tmp_path):
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "CLUS_X", n_cells=100)
+    _insert_anat(db, "CLUS_X", "MBA:399", cell_count=80, count_100um=90,
+                  completeness="lower_bound")
+    _insert_anat(db, "CLUS_X", "MBA:431", cell_count=20, count_100um=22)
+
+    rows = db.get_node_anat_rows("CLUS_X")
+    assert len(rows) == 2
+    by_id = {r["anat_id"]: r for r in rows}
+    assert by_id["MBA:399"]["cell_count"] == 80
+    assert by_id["MBA:399"]["count_in_or_near_100um"] == 90
+    assert by_id["MBA:399"]["cell_count_completeness"] == "lower_bound"
+    assert by_id["MBA:431"]["cell_count_completeness"] is None
+
+
+def test_load_expression_data_uses_db(tmp_path, monkeypatch):
+    """load_expression_data is the Stage A entry; it must now read from
+    the DB rather than re-parsing taxonomy YAML."""
+    from evidencell.taxonomy_db import load_expression_data
+    from evidencell import paths as paths_module
+
+    db = _make_focused_db(tmp_path)
+    _insert_node(db, "CLUS_A", n_cells=10)
+    _insert_expr(db, "CLUS_A", "Sst", 10.5)
+    _insert_expr(db, "CLUS_A", "Pvalb", 0.2)
+
+    # Point taxonomy_db_path at our fixture DB.
+    def fake_db_path(_taxonomy_id: str):
+        return tmp_path / "PROX_TAX.db"
+    monkeypatch.setattr(paths_module, "taxonomy_db_path", fake_db_path)
+
+    out = load_expression_data("PROX_TAX", "cluster")
+    assert out == {"CLUS_A": {"Sst": 10.5, "Pvalb": 0.2}}
