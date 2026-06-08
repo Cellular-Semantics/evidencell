@@ -45,6 +45,10 @@ from typing import Any
 
 from ruamel.yaml import YAML
 
+# Protein → gene alias map lives in :mod:`marker_aliases`. Import the
+# canonical mapping so the two refreshers (this module and
+# stage_b_emit) stay in sync.
+from .marker_aliases import PROTEIN_TO_GENE_ALIASES as _PROTEIN_TO_GENE_ALIASES
 from .paths import repo_root
 
 
@@ -54,25 +58,6 @@ _ACCESSION_PREFIX_TO_YAML = {
     "SUBC_": "subclass.yaml",
     "SUPT_": "supertype.yaml",
     "CLUS_": "cluster.yaml",
-}
-
-# Common protein-name → mouse-gene-symbol aliases. Add as new clashes
-# emerge.
-_PROTEIN_TO_GENE_ALIASES: dict[str, str] = {
-    "mGluR1": "Grm1",
-    "mGluR5": "Grm5",
-    "GFAP":   "Gfap",
-    "PV":     "Pvalb",
-    "GAD67":  "Gad1",
-    "GAD65":  "Gad2",
-    "CR":     "Calb2",
-    "CB":     "Calb1",
-    "CCK":    "Cck",
-    "NPY":    "Npy",
-    "VIP":    "Vip",
-    "SST":    "Sst",
-    "NOS":    "Nos1",
-    "5-HT3a": "Htr3a",
 }
 
 

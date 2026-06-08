@@ -390,6 +390,18 @@ find-candidates graph_file node_id taxonomy_id rank="1" top_k="10":
 emit-stage-b graph_file node_id taxonomy_id rank="0" top_k="5" *ARGS:
     uv run python -m evidencell.stage_b_emit {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}} {{ARGS}}
 
+# Refresh property_comparisons + discovery_score on existing edges using
+# the current Stage A + Stage B rules. Matches edges by (lit_type,
+# taxonomy_type) biological identity (not by edge.id), so legacy
+# lowercase-accession edges are picked up. Leaves byte-identical:
+# evidence[], rationale-suite, caveats, proposed_experiments,
+# unresolved_questions, curator, reviewed_by. Closes #103.
+# Usage: just refresh-property-comparisons kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0
+#        just refresh-property-comparisons {{graph}} {{node}} {{tax}} {{rank}} --dry-run
+[group('workflows')]
+refresh-property-comparisons graph_file node_id taxonomy_id rank *ARGS:
+    uv run python -m evidencell.refresh_property_comparisons {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{ARGS}}
+
 # Backfill MappingEdge.discovery_score from on-disk discovery JSONs.
 # Walks the graph file's edges; for each edge missing discovery_score,
 # locates the candidate in research/{region}/**/discovery_*.json and
