@@ -76,6 +76,37 @@ research prerequisites that the orchestrator already addresses. Use the skills a
 it references. Stop at steps marked `[GATE]` and present results for human review before
 proceeding.
 
+**Subagent steps MUST be dispatched, not run inline.** When a workflow step says "spawn
+a subagent" (synthesis subagent, validation subagent, drill-down subagent, etc.), it MUST
+be dispatched via the Agent tool with an explicit `subagent_type`. Executing the prompt
+inline in the orchestrator's own context window:
+
+- defeats the context isolation the workflow is testing — the subagent prompt is the
+  product, and it must be validated under the conditions it will actually run in
+  production (fresh context, no parent history);
+- silently incorporates prior conversation context, prior drafts, and parent-session
+  hand-holding into the result, producing output that won't reproduce when a fresh
+  production session is invoked;
+- masks prompt deficiencies (ambiguities, missing instructions, friction points) that
+  would surface immediately in a context-isolated dispatch.
+
+The only exception is when the user has explicitly asked for an inline iteration to
+debug the prompt itself. Default behaviour is always dispatch via Agent. If you find
+yourself reading the subagent's input files in the parent context to "help" the
+subagent reason, you are skipping the isolation — stop, dispatch, and let the
+subagent read on its own.
+
+**"Orchestrator" = the Claude session that opened the workflow.** In production this is
+normally the top-level user-facing Claude Code session. If you yourself were dispatched
+as a subagent by a harness (test runs, multi-node batching, etc.) and Agent-tool
+dispatch is not available in your environment, **abort with a clear diagnostic — do not
+inline.** The dispatch rule exists to keep subagent contexts clean, and silent
+inline fallback produces results that won't reproduce when the workflow runs from
+a top-level session. Diagnostic template: *"workflow Step N requires Agent-tool
+dispatch; this environment does not expose it. Re-invoke from a Claude session with
+Agent-tool access, or pass an explicit `allow_inline=true` parameter (debug-only
+override)."*
+
 ---
 
 ## KB data management principles
@@ -181,7 +212,7 @@ The human is the top-level coordinator. Run each orchestrator when ready, review
 | `cite-traverse` | `workflows/cite-traverse.md` | Literature | **Ready** | Citation traversal + synthesis; call as a skill for targeted follow-up, not primary discovery |
 | `evidence-extraction` | `workflows/evidence-extraction.md` | Literature | **Ready** | After survey or asta-report-ingest — writes PropertySource entries with quote_key to KB YAML |
 | `map-cell-type` | `workflows/map-cell-type.md` | Mapping | **Ready** | Discovery mode: queries taxonomy DB at multiple ranks (0=leaf, 1, 2…) for candidate atlas matches; hypothesis mode: tests curator's proposed mapping. Uses `just find-candidates` with rank parameter. Produces MappingEdge YAML with property comparisons. Can run on stubs (LOW confidence) or after lit review. |
-| `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Generate summary + drill-down reports from KB YAML; LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook). Reports now open with an Introduction section surfacing `cl_mapping` + `proposed_cl_term`. |
+| `gen-report` | `workflows/gen-report.md` | Reporting | **Ready** | Single agentic session does filter (top-K → ≤ 3 survivors via evidence-hierarchy rubric) + AT-pooling decisions + paper-style report on survivors. Writes verdicts back for ALL top-K edges (survivors get SSSOM trio + caveats + proposed_experiments; cuts get confidence + tier:CUT rationale). LLM synthesis with hallucination guard (ID/quote/PMID/accession validation via pre-write hook + post-write structured-claims check). Reports open with an Introduction section surfacing `cl_mapping` + `proposed_cl_term`. |
 | `cl-term-request` | `workflows/cl-term-request.md` | Reporting | **Ready** | Draft a CL new term request for a node with BROAD/RELATED/null `cl_mapping`. Reads facts via `just gen-facts`, applies CL definition + relations guidelines (`docs/LLM_prompt_guidelines_for_CL_definitions.md`, `docs/relations_guide.md`), emits issue-ready markdown. Posting is gated: `just preview-cl-ntr` then `just post-cl-ntr`. |
 | `annotation-transfer` | `workflows/annotation-transfer.md` | Evidence transfer | **Pipeline ready** | Dataset retrieval → MapMyCells → F1 matrix → AnnotationTransferEvidence; marker assessment moved to `map-cell-type` |
 
@@ -283,13 +314,16 @@ parallel where possible (taxonomy ingest + report ingest are independent).
 
 ── Mapping ────────────────────────────────────────────────────────────────────
 
-4.  workflows/map-cell-type.md                   # evidence + atlas metadata → MappingEdge
-    [GATE] expert reviews proposed edges
+4.  workflows/map-cell-type.md                   # evidence + atlas metadata → MappingEdge top-K
+    # Stage B emits the top-K candidate edges mechanically; no curator
+    # pre-filter gate. Filtering happens inside gen-report (next step).
 
 ── Reports + community ────────────────────────────────────────────────────────
 
 5.  just gen-facts {graph_file} {node_id}        # extract structured facts
-    → workflows/gen-report.md                    # LLM synthesis + ID/quote validation
+    just pool-candidates {graph_file} --node {node_id} > ...
+    → workflows/gen-report.md                    # single session: filter (top-K → ≤3) +
+                                                 # AT-pooling + synth + verdict write-back
     [GATE] biologist reviews, executes proposed experiments
 
 6.  workflows/annotation-transfer.md             # AT results → AnnotationTransferEvidence

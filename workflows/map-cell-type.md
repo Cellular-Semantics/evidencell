@@ -343,3 +343,9 @@ fragment.
   report-time agent (`workflows/gen-report.md` Step 3) writes the final
   predicate, cardinality, and confidence/rationale via the verdict
   block at writeback time (Phase 3 design).
+- **No curator pre-filter between Stage B and report-time.** Stage B
+  unconditionally emits the top-K candidate edges; gen-report's
+  synthesis session performs filter + AT-pooling + synth as one
+  agentic pass (Acts 1–3, see `workflows/gen-report.md` Step 3),
+  whittles down to ≤ 3 survivors using the evidence-hierarchy
+  rubric, and writes back verdicts for both survivors and cuts.

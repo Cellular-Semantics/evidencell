@@ -1668,6 +1668,17 @@ classes:
           Prefer stable, persistent URLs (DOI-resolved figures, database entry
           pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and
           Figshare/Zenodo figure links are all acceptable.
+      manually_curated:
+        range: ManualCurationMarker
+        inlined: true
+        description: >
+          Optional human-curation marker (see ManualCurationMarker
+          class). When present, downstream mechanical re-emits
+          (e.g. emit-stage-b --rewrite-existing) MUST preserve this
+          evidence item verbatim rather than regenerating it. Use to
+          lock a curator-authored evidence item (typically a
+          LiteratureEvidence entry added manually) against future
+          analysis-pipeline rewrites.
 
   LiteratureEvidence:
     is_a: EvidenceItem
@@ -2288,6 +2299,39 @@ classes:
         description: >
           Specific explanation of this caveat in the context of this mapping.
           Will appear in the CL comment and community report.
+      manually_curated:
+        range: ManualCurationMarker
+        inlined: true
+        description: >
+          Optional human-curation marker. When present, downstream
+          mechanical re-emits (e.g. emit-stage-b --rewrite-existing)
+          MUST preserve this caveat verbatim rather than regenerating
+          it. Use to lock a curator-authored caveat against future
+          analysis-pipeline rewrites.
+
+  ManualCurationMarker:
+    description: >
+      Provenance marker indicating that the containing item is
+      human-authored and should be preserved by mechanical re-emit
+      passes. Attached to mixed-source items (EvidenceItem, Caveat)
+      where mechanical and manual entries can coexist in the same
+      list. Today no curators are writing the KB directly, so this
+      field is rarely populated; future reviewer / curator tooling
+      will set it when committing manual edits.
+    attributes:
+      by:
+        required: true
+        description: >
+          Curator name or ORCID URI (e.g. "https://orcid.org/0000-0002-...").
+      date:
+        required: true
+        range: date
+        description: Date the manual edit was committed.
+      notes:
+        description: >
+          Optional free-text rationale for the manual override. Useful
+          when the manual entry contradicts what a mechanical re-emit
+          would produce.
 
 
 # ══════════════════════════════════════════════════════════════════

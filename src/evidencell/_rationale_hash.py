@@ -42,6 +42,18 @@ _RATIONALE_SUITE_FIELDS = frozenset(
         "rationale_generated_at",
         "rationale_source_hash",
         "report_path",
+        # Phase-3 filter+synth merge: the SSSOM trio + typed caveats +
+        # proposed_experiments are also report-time outputs. Excluded
+        # from the hash so the agent's own write doesn't invalidate the
+        # hash it just computed. A subsequent curator edit to any of
+        # these fields would not be caught as staleness, which is the
+        # intended trade-off — these fields are the rationale-suite's
+        # own outputs, not its inputs.
+        "relationship",
+        "mapping_cardinality",
+        "mapping_justification",
+        "caveats",
+        "proposed_experiments",
         # `reconciliation_note` is also report-time-writable (Q7), but
         # it captures cross-edge agreement and should be part of the
         # hash so a curator's manual reconciliation invalidates the

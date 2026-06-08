@@ -99,14 +99,62 @@ Sst-OLM / Htr3a-OLM case and #62 for the related ingest-side prevention.
 
 ## Step 3 — Synthesis subagent
 
-Spawn a **synthesis subagent** with this exact prompt (substitute values for
-`{node_id}`, `{facts_file}`, `{pool_candidates_file}`, `{summary_file}`,
-`{region}`, `{graph_file}`):
+**Who is "the orchestrator"?** The orchestrator is the Claude session
+that opened this workflow file. In production that's the top-level
+user-facing Claude Code session ("run gen-report on OLM"). The
+orchestrator MUST dispatch this step as an **isolated subagent**
+via the Agent tool (`subagent_type: general-purpose` or equivalent),
+NOT execute the prompt inline in the parent context. Context
+isolation is the point: the synthesis call must see only the
+workflow prompt + the explicitly named input files, not the parent
+session's history of prior drafts, discussion, or hand-holding.
+Inline execution defeats this and produces results that will not
+reproduce when a fresh production session is invoked.
+
+If you find yourself reading the facts file in the parent context
+to "help" the synthesis agent reason, you are doing it wrong —
+stop, dispatch via Agent, and let the subagent read the facts on
+its own.
+
+**Environment check.** If you are running as the orchestrator and
+the Agent tool is *not* available in your environment (e.g. you
+yourself were dispatched as a subagent by a harness that doesn't
+support nested dispatch), **abort with a clear diagnostic — do not
+inline.** The dispatch rule exists to keep the synthesis subagent
+context-clean, and silently falling back to inline execution
+produces results that won't reproduce in production. Diagnostic
+template: *"gen-report.md Step 3 requires Agent-tool dispatch; this
+environment does not expose it. Re-invoke gen-report from a Claude
+session with Agent-tool access, or pass an explicit
+`allow_inline=true` parameter (override sentinel for debugging only)."*
+
+The one user-driven exception: when the user has explicitly asked
+for an inline iteration ("let's draft this one ourselves to debug
+the prompt"), inline is fine; default behaviour is always dispatch.
+
+**Pre-flight cleanup before dispatch.** If the synthesis subagent
+will write to a `summary_file` that already exists on disk (from a
+prior synth run), the orchestrator MUST delete the existing file
+before dispatching the subagent. Reason: the Write tool requires
+a Read-before-Write on existing files, but the synthesis prompt
+explicitly forbids reading any prior report draft (it would
+contaminate the context-isolation guarantee). A pre-delete from
+the orchestrator avoids both: the synthesis subagent writes the
+file fresh, having never seen the prior version. If the user
+wants the prior draft preserved as an artifact, the orchestrator
+should move it to `research/{region}/{stamped-dir}/` before
+deleting from `reports/{region}/`.
+
+Spawn the synthesis subagent with this exact prompt (substitute values
+for `{node_id}`, `{facts_file}`, `{pool_candidates_file}`,
+`{summary_file}`, `{region}`, `{graph_file}`):
 
 ```
-You are a cell type mapping report writer. Write a high-quality, biologist-readable
-summary report from structured evidence facts, AND emit a structured verdict
-block for write-back to the MappingEdge YAML.
+You are a cell type mapping report writer. Write a biologist-readable
+report from structured evidence facts and literature quotes. The report
+narrates the biology of the mapping; the agent-as-process layer
+(filtering down the candidate set, pooling AT source labels, audit
+metadata) MUST NOT leak into user-facing prose.
 
 INPUTS YOU READ:
 - FACTS FILE: {facts_file}
@@ -120,7 +168,318 @@ INPUTS YOU MUST NOT READ (Phase 3 loop avoidance):
 
 OUTPUT FILE: {summary_file}
 
-First, read all inputs completely. Then write the Markdown report below.
+First, read all inputs completely. Then complete the three internal
+judgement passes below, THEN draft the report body. The passes are
+your reasoning; they have no visible counterparts in the report.
+
+---
+
+## Internal pass 1 — Survivor selection (biology- and quote-driven)
+
+You receive the full top-K candidate edges (typically K=10) for this
+classical node. Most do NOT warrant a full per-candidate paragraph —
+they're the wide-net output of Stage A's mechanical scoring.
+Select **at most 3 survivors** to write full per-candidate paragraphs
+for. Cuts get a one-clause "Eliminated (reason)" entry in the
+candidates table only; no body section, no separate "filter step"
+heading, no `[tier:…]` token in the visible report.
+
+**The judgement is quote-driven, not threshold-driven.** Structured
+signals (AT F1, region_fraction_100um, property_comparisons
+alignment) are inputs to your reading, but the *strength of evidence*
+question is what the literature quotes reveal about how each evidence
+type was generated. Survey the references corpus for each
+candidate's evidence items and ask:
+
+1. **Source-cell identity confirmation.** Did the AT source paper
+   target the classical cell type via transgene driver
+   (Chrna2-Cre, Sst-Cre, Pvalb-Flp, etc.), patch-seq with morphology
+   recovery, or post-hoc immunostaining on the sequenced cells? If
+   yes — that AT result is *direct evidence* of the classical type
+   mapping, not generic convergence on a shared marker. Cite the
+   quote.
+2. **Pooling justification (lit-derived).** When two source labels in
+   an AT run map indistinguishably (CASE A — see Internal pass 2),
+   the strongest pooling rationale comes from the source paper
+   itself reporting no distinguishing electrophysiology, morphology,
+   connectivity, or transcript signature between the two labels.
+   Cite that quote in the pool rationale, not just the AT-matrix
+   observation that the F1 distributions overlap.
+3. **Marker quality.** Are the defining markers confirmed at
+   transcript level (vs. only protein), replicated across labs, and
+   tested specifically on the classical type rather than on a
+   broader population (e.g. "Sst+ interneurons in oriens" without
+   morphology confirmation)? A marker absent at transcript level on
+   the candidate cluster is decisive only if the lit established it
+   as a transcript-level discriminator.
+4. **Heterogeneity / contradictions.** Do the source quotes name
+   subpopulations within the classical type that would predict
+   atlas-side scatter (e.g. "OLM cells comprise three Pnoc
+   subclusters")? That changes how to read AT scatter at cluster
+   level — scatter is signal of subtype structure, not failure.
+
+**Survivor selection comes from this reading**, applied to each
+candidate's evidence portfolio. As a rough scaffold: candidates with
+direct-evidence AT (transgene-targeted, patch-seq, etc.) that lands
+on the candidate's supertype or cluster lead the survivor list;
+candidates with only structural-signal contradiction (e.g. wrong
+subclass, defining marker DISCORDANT where the lit established the
+marker as a transcript-level discriminator) are cuts. Don't generate
+a candidates-by-tier table; trust your reading and let the
+narrative carry the call.
+
+Cap survivors at 3. Cuts are not capped — they all go in the
+candidates table at the end of Results. Sub-3 survivors is honest
+signal that few candidates merit detailed treatment.
+
+**Supertype + best-child-within-supertype pattern.** When the
+canonical mapping resolution is a supertype broadMatch + a single
+best-cluster-within-it (the OLM-style scatter-across-children
+pattern: AT lands on a supertype with F1 > 0.7 and one of the
+supertype's children clearly leads the cluster-level F1
+distribution), count them as **two survivors** (parent + best
+child), not one. Both get full per-survivor paragraphs. The verdict
+blocks should encode the relationship explicitly: the supertype
+edge gets `skos:broadMatch + 1:n` to the supertype accession; the
+best-child edge gets `skos:closeMatch + 1:1` to the cluster
+accession; both should cite the other in `reconciliation_note` so
+the reader sees they're paired. The candidates table at the end of
+Results lists them in their natural rank order (supertype row +
+cluster row); cuts (other children of the same supertype that
+didn't lead) collapse into the cuts section of the table normally.
+
+**Both targets MUST exist as edges in the graph for the
+two-survivor pattern to fire.** The synthesis subagent can only
+emit verdict blocks against edges that the graph actually carries.
+If the parent supertype OR the AT-best child cluster isn't
+currently in `graph.edges` (because the curator's original picks
+didn't include them, or because Stage A's prior run had a small
+top-K), the orchestrator MUST add them via
+`just emit-stage-b GRAPH NODE TAXONOMY RANK 5` (idempotent — won't
+overwrite existing edges) at both relevant ranks before dispatching
+the synth subagent. If a paired target is genuinely absent and
+cannot be emitted, fall back to a single-survivor verdict with the
+two-target story narrated in `reconciliation_note` + `Concerns`
+prose only.
+
+**Subcluster concordance sentence when narrating supertype via
+a child-cluster edge.** The mandatory "(N of M child clusters
+show {property} concordant)" sentence (in the property-alignment
+section) assumes a supertype-level edge with subcluster breakdown.
+When a supertype-narrating mapping is written against a
+child-cluster edge (the supertype was narrated via the
+best-cluster's pairing — the parent supertype is also a survivor
+but the child-cluster edge is the one being written about), the
+sentence becomes ambiguous: the writer is talking about one
+specific child, not surveying many. In that case write the
+concordance as a per-property fact tied to the named child cluster
+(e.g. "Chrna2 absent on CLUS_0769 but present on the AT-best
+CLUS_0768") rather than as an "N of M" inventory. The "N of M"
+form is reserved for the parent supertype's verdict block, where
+the inventory makes sense.
+
+**Legacy / fresh-emit edge ID duplicates.** When two edges in the
+graph target the same `taxonomy_type` accession but have different
+edge IDs (typically a legacy lowercase-ID edge from a pre-emitter
+curator pass alongside a fresh-emit uppercase-ID edge from
+`emit-stage-b`), dedupe by `taxonomy_type` and **prefer the edge
+that carries substantive structured evidence** —
+`property_comparisons` with populated `node_b_value`s and curator-
+authored `caveats[]` typically beat a fresh-emit edge that only
+carries `discovery_score` and a stub property_comparison. Surface
+the impoverished duplicate as an explicit follow-up
+(`unresolved_questions[]`: "curator removal of duplicate edge
+{edge_id} — legacy/fresh-emit ID collision on taxonomy_type X").
+Do NOT silently keep both; the reader sees a confusing
+duplication.
+
+For audit purposes only, every verdict block (survivor or cut)
+records a `[tier:STRONGEST|NEXT|WEAKEST|CUT]` token at the head of
+its rationale string. **The token MUST NOT appear in body prose**
+(not in candidate paragraphs, not in the eliminated-candidates
+table, not in section headings). It's metadata for a future
+re-curation pass, not a user-facing label.
+
+---
+
+## Internal pass 2 — AT source-label / pooling decisions
+
+Walk `{pool_candidates_file}`. For each candidate pool, decide
+whether the source groups are truly indistinguishable across all
+available property panels (CASE A) or only on AT (CASE B). See the
+"Indistinguishability across source groups" section later in this
+prompt for the full CASE A / CASE B protocol.
+
+When CASE A fires, pooling **happens before** survivor selection in
+pass 1 — the pooled candidate replaces the two competing edges in
+the survivor list, so two AT labels collapsing into one pseudo-source
+is reflected in the top-3 count.
+
+When CASE A fires, also emit a `source-groups-rationale` block (see
+the verdict block schema below) populating
+`SourceGroup.rationale` on the relevant AT evidence items if it's
+currently empty. Never overwrite an existing rationale.
+
+**The pooling rationale is biology-led, lit-grounded.** Don't just
+say "F1 distributions overlap"; cite what the source paper reports
+about whether the pooled labels differ in any assayed property
+(ephys, morphology, connectivity, marker panel, developmental
+origin). Pooling without that supporting quote is a CASE B call
+(AT-only indistinguishability — record narrowly in
+`reconciliation_note`, do not emit a `lit_to_lit_edges` block).
+
+---
+
+## Internal pass 3 — Report body + verdict blocks
+
+Write the paper-style report below for **SURVIVORS only**. CUT
+candidates do NOT get per-candidate paragraphs. They appear:
+
+- as one row each in the candidates table (under-fold, end of
+  Results — see Report structure below), with the "Verdict" column
+  giving a 3–6 word elimination reason in biological terms (e.g.
+  "Eliminated (Chrna2 absent)", "Eliminated (wrong subclass)",
+  "Eliminated (no hippocampal cells)");
+- as one line each in the Methods evidence-base table (existing
+  structure).
+
+Do NOT write a separate "Eliminated at filter step" or
+"Eliminated candidates" subsection. The candidates table is the
+single place cuts surface in the body.
+
+Verdict blocks are emitted for **every top-K edge** — survivors get
+a full verdict (confidence + relationship + cardinality +
+justification + caveats + proposed_experiments + unresolved); cuts
+get a minimal verdict (confidence LOW/UNCERTAIN/REFUTED + rationale
+beginning with `[tier:CUT]` + a one-sentence biological reason;
+relationship stays `evidencell:UncertainRelationship` for cuts).
+The verdict-block YAML is read by the rationale-writeback tool; it
+is NOT rendered in the user-facing report.
+
+---
+
+## Voice and style (mandatory — applies to ALL body prose)
+
+Write like a biology paper, not like a process executing. A
+biologist reading the report should learn the cells the mapping is
+about, the experiments that produced the evidence, and the
+biological reading of the result — *not* the orchestrator's
+internal steps, schema field names, or the agent's reasoning
+machinery.
+
+### Opening sentence shape
+
+Each per-survivor paragraph AND the Results opener follows the same
+shape: **evidence types → source modality (with experimental
+provenance) → conclusion → inline figure/table references for
+detail**. The conclusion comes early; the methodology phrase
+qualifies the strength of evidence; figure/table refs replace
+restating numbers in prose.
+
+**Good** (the model to write toward):
+
+> Marker expression alignment and annotation transfer evidence from
+> Cre-driver-targeted cells with OLM morphology and
+> electrophysiology (Winterer 2019) supports mapping to the
+> supertype 0216 Sst Gaba_3 [CS20230722_SUPT_0216] (F1=0.97; see
+> figure and property comparison table). The same annotation
+> transfer evidence shows distributed transfer across child clusters
+> within Sst Gaba_3, with 0768 Sst Gaba_3 [CS20230722_CLUS_0768] as
+> the top cluster candidate (Purity=1.00, Coverage=0.48, F1=0.65).
+
+**Bad** (anti-patterns to avoid):
+
+- *"Under the Acts 1–3 evidence-hierarchy rubric, one candidate
+  survives the filter…"* — process vocabulary in body prose.
+- *"…is a lit-derived pooling call confirmed by the indistinguishable
+  AT distributions of the two cohorts."* — talks about how the call
+  was made, not what it is. The biology is "Winterer reports no
+  distinguishing properties between the two Cre-marked cohorts";
+  the AT confirmation is implicit in the figure.
+- *"The mapping is encoded as `skos:broadMatch + mapping_cardinality:
+  1:n` onto CS20230722_SUPT_0216 rather than as a 1:1 to any
+  specific child."* — schema vocabulary in narrative. Write the
+  biology ("OLM cells distribute across several Sst Gaba_3 child
+  clusters; the supportable mapping is at supertype level"). The
+  SSSOM encoding lives in the verdict-block YAML, not in body
+  prose.
+- *"Five candidate WMBv1 clusters were assessed. The primary
+  mapping is to CLUS_0769 at MODERATE confidence."* — opens with a
+  process count and an enum, not with the biology.
+
+### Banned vocabulary in body prose
+
+These words/phrases name the orchestrator's mechanism and MUST NOT
+appear in any user-facing body text (Introduction, Results,
+Methods, Discussion, References, or any per-survivor paragraph).
+They're fine inside the verdict-block YAML (which is not rendered).
+
+| Banned | Reason | Use instead |
+|---|---|---|
+| Act 1 / Act 2 / Act 3 | internal pass label | (omit) |
+| filter / filter step / filter pass | mechanism | "the candidates assessed" or rephrase |
+| rubric / evidence-hierarchy rubric | mechanism | (state the biological reasoning directly) |
+| tier / `[tier:STRONGEST\|NEXT\|WEAKEST\|CUT]` | audit token | use confidence badge + verdict-column text |
+| survivor / cut / cut-tier / cut candidate | mechanism | "primary candidate" / "eliminated (reason)" |
+| lit-derived / quote-derived call | meta-statement | state the lit finding directly with a citation |
+| rationale (as a noun referring to the report) | report-internal | (omit; just write the reasoning) |
+| encoded as / is read as / is best read as `skos:…` | schema vocabulary | describe the biological relationship; SSSOM lives in YAML |
+| reconciliation_note / unresolved_questions (as field names) | schema vocabulary | write the substance directly |
+
+The `[tier:…]` token MUST still appear at the head of every
+verdict-block YAML `rationale` string (the rationale-writeback tool
+needs it for audit). It MUST NOT appear in any other context.
+
+### Figure legend rule
+
+The legend tells the reader **what the figure is, how to read it,
+and what to take from it** — never the numbers the figure already
+shows. Pull metric values into the legend only when they don't
+appear on the figure axes / annotations (e.g. an n_cells count
+absent from the rendered F1 panel).
+
+**Good legend (concise; tells reader what to look at):**
+
+> F1 across taxonomy levels for the Winterer 2019 OLM cohort
+> (Sst-OLM + Htr3a-OLM pooled to a single OLM group; n=46 source
+> cells). Coverage = fraction of source-group cells landing on the
+> target; Purity = fraction of target cells from the source group.
+> With a single pooled source, Purity is 1.0 at every target and
+> only Coverage discriminates. Cluster-level scatter across multiple
+> Sst Gaba_3 children is consistent with within-OLM subcluster
+> heterogeneity reported by Thulin et al. 2025 [9].
+
+**Bad legend (restates figure metrics in prose):**
+
+> …Best target per level: CLASS CS20230722_CLAS_07 F1=0.99 (Cov=0.98
+> / n=45); SUBCLASS CS20230722_SUBC_053 F1=0.99 (Cov=0.98 / n=45);
+> SUPERTYPE CS20230722_SUPT_0216 F1=0.97 (Cov=0.93 / n=43); CLUSTER
+> CS20230722_CLUS_0768 F1=0.65 (Cov=0.48 / n=22).
+
+Pool composition lives in the legend (one sentence naming the
+pseudo-source's members; pulled from
+`source_groups[*].label` and `source_groups[*].members`); pool
+*rationale* lives in the Methods table's "Source pooling" row or
+in `SourceGroup.rationale` write-back, NOT in the Results opener
+or the per-survivor paragraph.
+
+### Reference, don't restate
+
+When a property comparison appears in Table 1 and a figure metric
+appears in the AT figure, prose paragraphs should *cite* the table
+or figure ("see property comparison table" / "see figure"), not
+re-list every value. Specific numbers in prose are reserved for the
+single most consequential claim (typically the headline F1 + the
+best-cluster F1) and per-claim citations needed by the
+anti-hallucination check (accession + run_ref + the F1 value).
+
+### Conclusion-first sentence ordering
+
+Within each survivor paragraph, lead with the conclusion and then
+back it up. Don't bury the call in three sentences of methodology.
+The first sentence of the survivor paragraph names what the cluster
+is, the strongest evidence for the call, and the confidence. Detail
+follows.
 
 ---
 
@@ -229,15 +588,39 @@ authored prose like other authored-prose blockquote paths).
 For BROAD / RELATED / NARROW mappings, `mapping_notes` is reprised in the
 Discussion's Best candidate + caveats section (do not duplicate it here).
 
+**Duplication discipline between Introduction §4 and Discussion §6.**
+The CL mapping appears in two places by design: the Introduction
+states the placement (one line + optional proposed-CL-term block),
+the Discussion's Best candidate paragraph reprises the mapping
+type's *interpretation* alongside the primary survivor verdict.
+**Do NOT paraphrase the same `mapping_notes` content in both
+places** — the Introduction line is descriptive (CL term + type),
+the Discussion line is interpretive (what the type implies for
+this specific mapping). If `mapping_notes` carries verbatim prose
+suitable for one location, place it in the Discussion (where the
+verdict context lives), not in the Introduction. The Introduction
+should stay biology-led; mapping-type interpretation is
+verdict-side material.
+
 ---
 
 ## Results
 
-This top-level section bundles the mapping candidate overview, per-candidate
-property alignment + Evidence support tables, and the per-candidate paragraph(s).
-Open with one summary sentence: how many candidates were assessed and what the
-primary verdict is (e.g. "Three candidate atlas clusters were assessed; CLUS_1915
-in SUPT_0486 is the primary mapping at MODERATE confidence").
+This top-level section bundles the AT figure, per-survivor property
+alignment + Evidence support tables, the per-survivor paragraph(s),
+and an under-fold candidates audit table at the end. Apply the
+"Voice and style" rules to all prose in this section (and the rest
+of the body). Two sentences are enough for the Results opener:
+one stating the primary mapping with the strongest evidence inline
+(evidence types → source-modality phrase → conclusion → cited
+figure/table refs); one acknowledging the cluster-level scatter or
+caveat if relevant, with inline ref to the figure for detail. Do
+NOT open with a candidate count, with the orchestrator's mechanism
+("filter", "rubric", "act", "tier", "cut", "survivor"), or with a
+schema-vocabulary verdict ("encoded as `skos:broadMatch + 1:n`").
+
+The Voice section's worked example serves as the model — match its
+shape, not the substance verbatim.
 
 **Annotation-transfer overview figure (run-level, filtered)**
 
@@ -336,30 +719,22 @@ classical type being reported. For each cited AT run:
 Use a short interpretive line below the figure (≤2 sentences) drawing on
 `methods_summary.annotation_transfer_runs[*].caveats` if relevant.
 
-### 4. Mapping candidates table + property alignment table
+### 4. Per-survivor property alignment + Evidence support tables
 
-**4a. Candidate overview table (one row per edge)**
+Property alignment + Evidence support tables go HERE in Results,
+immediately preceding each survivor's per-candidate paragraph
+(see 4b below). They are the granular evidence trail for the
+survivors only.
 
-Columns: Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict.
+The full candidates audit table (one row per top-K edge, including
+cuts) is demoted to an under-fold table at the END of Results
+(see 4c below) so it does not dominate the biology-led narrative.
 
-The **Cells (10x)** column shows the total 10x scRNA-seq cluster size from
-`facts.edges[*].n_cells` (sourced from the taxonomy reference DB at gen-facts
-time). MERFISH spatial cell counts (per-region distribution from
-`anatomical_location[*].cell_count`) belong in the property-alignment table's
-location row, not in this column.
-
-Note: if the rendered facts file shows `n_cells: null` for an edge, the
-taxonomy DB is stale relative to the schema (the n_cells column was added in
-PR #21). Rebuild with `just build-taxonomy-db {taxonomy_id}` and re-run
-`just gen-facts` before continuing.
-
-Sort: MODERATE before LOW before UNCERTAIN. Rank only MODERATE and LOW edges (1, 2, …);
-use "—" for UNCERTAIN.
-
-For "Key property alignment", give a 1-2 word summary of the most informative
-property comparison for that edge (e.g. "Chrna2 APPROXIMATE · Npy CONSISTENT").
-
-Use confidence badges: 🟢 HIGH / 🟡 MODERATE / 🔴 LOW / ⚪ UNCERTAIN.
+**4a. (removed)** The per-candidate overview table is no longer
+opened with at top of Results. Cuts surface only in the under-fold
+candidates audit table (4c); survivors are introduced by their
+per-candidate paragraph (5) which carries its own header and
+verdict badge inline.
 
 Note at the end: total edge count and relationship type.
 
@@ -444,12 +819,62 @@ the remaining 4 are either sex-neutral/male-biased or lack Kiss1 expression.)*
 If child-cluster breakdown information is not available in the edge YAML, write:
 *(Child-cluster breakdown not assessed — see proposed experiments.)*
 
+### 4c. Candidates audit table (under-fold, end of Results)
+
+Place this table at the very END of the Results section, AFTER all
+per-survivor paragraphs (§5) and BEFORE the Methods fold. Wrap it in
+a `<details>` fold so it does not dominate the reading view —
+biologists read the survivor narrative; reviewers / curators open
+the fold for the full candidate audit.
+
+```html
+<details>
+<summary>### Candidates audited (full top-K)</summary>
+
+One row per top-K edge (survivors AND cuts), in this order:
+survivors first by descending confidence (HIGH → MODERATE → LOW),
+then cuts in any stable order (e.g. by accession).
+
+| WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key evidence | Verdict |
+|---|---|---:|---|---|---|
+
+- **WMBv1 cluster:** `{cluster name} [{accession}]`.
+- **Supertype:** `{supertype name} [{accession}]` (omit if same as cluster row).
+- **Cells (10x):** from `facts.edges[*].n_cells` (taxonomy DB).
+  Note: if `n_cells: null`, the DB is stale —
+  `just build-taxonomy-db {taxonomy_id}` and re-run `gen-facts`.
+- **Confidence badge:** 🟢 HIGH / 🟡 MODERATE / 🔴 LOW / ⚪ UNCERTAIN / 🔴 REFUTED.
+- **Key evidence:** ≤ 8 words naming the single strongest
+  supporting or refuting signal in biological terms (e.g.
+  "Sst Gaba_3 AT F1=0.97 to supertype", "Chrna2 absent",
+  "Wrong subclass (Lamp5 Lhx6)").
+- **Verdict:** short biological call. For survivors:
+  "Primary", "Secondary", or "Supports broader mapping". For
+  cuts: "Eliminated ({short reason})" — e.g.
+  "Eliminated (Chrna2 absent)", "Eliminated (wrong subclass)",
+  "Eliminated (no hippocampal cells)". The reason MUST be
+  biology in plain language; do not write "tier:CUT" or
+  "rubric" or "filter step".
+
+Sort survivors by descending confidence; sort cuts in stable order
+(accession). The reader can scan this for the full audit set;
+biology lives in the survivor paragraphs above.
+
+</details>
+```
+
+The verdict-column wording for cuts is the one place cuts surface
+in the body. There is NO separate "Eliminated candidates" or
+"Eliminated at filter step" section anywhere in the report.
+
+---
+
 **Null result headline (for UNCERTAIN-only mappings)**
 
 If all edges are UNCERTAIN and the UNCERTAIN classification is confirmed by
 expression data (e.g. Cyp19a1 = 0.0 in all ARH clusters), the report body must
 open with a clear finding statement immediately after the classical type table,
-before the mapping candidates table. Example:
+before any candidate paragraphs. Example:
 
 > "A complete scan of CCN20230722 (ranks 0 and 1) confirmed that no cluster in
 > MBA:223 (Arcuate hypothalamic nucleus) expresses Cyp19a1 at detectable levels.
@@ -525,17 +950,56 @@ For each marker/neuropeptide on the classical node, assess the evidence chain:
   metadata), note the discrepancy factually. Do not explain it away — present
   both values and flag for investigation.
 - **Atlas annotation vs. expression discrepancy (mandatory check)**: For each
-  marker or neuropeptide listed as DEFINING, DEFINING_SCOPED, or NEUROPEPTIDE in
-  the atlas node's metadata, check whether the corresponding precomputed expression
-  value (from `property_comparisons[*].node_b_value`) is near-zero (< 0.5) or
-  absent. If so, flag explicitly:
+  marker or neuropeptide listed as DEFINING, DEFINING_SCOPED, NEUROPEPTIDE,
+  TF, or MERFISH in the atlas node's metadata, check whether the corresponding
+  precomputed expression value (from `property_comparisons[*].node_b_value`)
+  is near-zero (< 0.5) or absent. If so, flag explicitly:
   > ⚠ **Atlas annotation/expression discrepancy**: {gene} is listed as a {DEFINING /
-  > NEUROPEPTIDE} marker in WMBv1 atlas metadata for {accession} but shows
-  > precomputed mean expression = {value}. This may reflect a neuropeptide annotation
-  > derived from a different dataset or resolution level, or a marker that is
-  > expressed in a subset of cells below the atlas-level mean. Flag for investigation.
-  This is most common for neuropeptides, which are often low-expressed or cell-sparse.
-  The discrepancy should also appear in the Concerns list for that candidate.
+  > NEUROPEPTIDE / TF / MERFISH} marker in WMBv1 atlas metadata for {accession}
+  > but shows precomputed mean expression = {value}. This may reflect a marker
+  > annotation derived from a different dataset or resolution level, or a marker
+  > that is expressed in a subset of cells below the atlas-level mean. Flag for
+  > investigation.
+  This is most common for neuropeptides, which are often low-expressed or cell-sparse,
+  and for MERFISH-panel markers, which are present in the atlas team's MERFISH probe
+  set but not necessarily discriminating at the cluster level. The discrepancy should
+  also appear in the Concerns list for that candidate.
+
+  **Atlas marker category narrative guidance.** The five category tags
+  carry different weight in the report:
+  - `DEFINING`: the atlas team's primary discriminator for this cluster.
+    Cite directly in the marker-narrative ("Sst is a defining marker
+    on this cluster per atlas curation").
+  - `DEFINING_SCOPED`: discriminates within-subclass but not across.
+    Mention with the scope caveat.
+  - `NEUROPEPTIDE`: atlas-side neuropeptide annotation (may come from
+    a packed metadata column rather than per-cell expression; treat
+    presence as informational, not as a discriminator on its own).
+  - `TF`: transcription factor on the atlas TF marker panel. Useful
+    context but rarely the primary biological argument; note its
+    presence but don't lead with it unless the classical-side marker
+    list explicitly names TFs.
+  - `MERFISH`: gene is in the atlas team's MERFISH probe panel. This
+    is a panel-selection signal, not an expression-quality signal —
+    do NOT narrate MERFISH-tag presence as evidence of marker
+    importance. Use only as supporting context for why the figure /
+    spatial data exists.
+
+- **Supertype-name circularity check**: When the atlas supertype's name
+  contains the gene symbol of one of the classical node's defining_markers
+  (e.g. supertype "Lamp5 Lhx6 Gaba_1" being a candidate for a classical
+  type whose defining_markers include Lamp5), AND that marker on the
+  classical node has no primary citation in its `sources[]` (only review
+  citations or no sources at all), surface the circularity explicitly:
+  > ⚠ **Marker concordance circularity**: classical marker {gene} matches
+  > the atlas supertype's name ({supertype label}), but {gene} on the
+  > classical node lacks a primary citation. The marker concordance is
+  > therefore partially nominal — flag for curator review to anchor
+  > {gene} to a primary study before treating this concordance as
+  > supporting evidence.
+
+  This belongs in the marker-provenance bullets, not in the Concerns
+  list (it's an upstream curation gap, not a candidate-specific caveat).
 - **Quantitative cross-check**: If precomputed stats values are available in
   `property_comparisons[*].node_b_value`, note where they confirm or
   challenge the expected marker profile. For negative markers, note any
@@ -584,13 +1048,16 @@ OLM hippocampus' may resolve this").
   provenance section above — weak marker evidence is a gap that literature
   review can address without new experiments.
 
-**UNCERTAIN edges:** Collapse all into one `## Eliminated candidates` section.
+**Cuts get NO per-candidate paragraph.** They appear once in the
+under-fold candidates audit table (§4c) with a biology-language
+verdict ("Eliminated (Chrna2 absent)" etc.) and once in the
+Methods evidence-base table. There is no separate "Eliminated" or
+"filter step" section anywhere in the body. The `[tier:CUT]` token
+lives only inside the verdict-block YAML, never in user-facing prose.
 
-- Check if there is a shared disqualifying signal (same property DISCORDANT across all
-  UNCERTAIN edges). If so, state it up front as the primary reason.
-- Sub-section per edge: cluster name + n_cells, bullet list of disqualifying evidence.
-- For location evidence on eliminated edges, apply the adjacent/distant interpretation rule.
-- Note which counter-evidence is weak (adjacent region) vs strong (distant region).
+Survivors marked WEAKEST internally (kept when fewer than 3
+candidates have stronger evidence) still get a full per-candidate
+paragraph — they are survivors, not cuts.
 
 ---
 
@@ -842,15 +1309,29 @@ Do not invent PMIDs or query URLs.
 7. Every anatomical location (soma location, layer, region) must be written as:
    `Name [PREFIX:ID]`
    using the `id` field from `facts.classical_nodes[].anatomical_location`. Do not invent IDs.
-8. Every atlas cluster accession must be written as:
+8. Every atlas **cluster** or **supertype** accession (CLUS_/SUPT_)
+   in body prose must be written as:
    `Cluster name [accession]`
-   using the `node_b_accession` field from `facts.edges`. Do not invent accessions.
+   using the `node_b_accession` field from `facts.edges`. Do not
+   invent accessions.
+
+   **Class- and subclass-level accessions are NOT written in
+   bracketed form in body prose.** They surface in AT
+   `metrics_by_level` rows (e.g. `CS20230722_CLAS_07`,
+   `CS20230722_SUBC_053`) but are not registered as KB
+   nodes — the pre-edit hook will reject them as unknown
+   accessions if you bracket them. Reference class/subclass levels
+   by name only (e.g. "07 CTX-MGE GABA class" or "Sst Gaba
+   subclass"); they may appear bracketed only inside the Methods
+   fold's AT table, the figure legend, and the verdict-block
+   YAML rationale (which has its own structured-data-grounded
+   accession check).
 
 ## Phase 3 — Verdict block (emit at the end of the report)
 
-After the References section, emit one fenced YAML `verdict:` block per
-edge you covered in the report. Each block is wrapped in HTML comment
-delimiters identifying the edge by id:
+After the References section, emit one fenced YAML `verdict:` block
+per top-K edge (BOTH survivors AND cuts). Each block is wrapped in
+HTML comment delimiters identifying the edge by id:
 
 ```
 <!-- verdict-block-start: {edge_id} -->
@@ -858,16 +1339,35 @@ delimiters identifying the edge by id:
 verdict:
   confidence: HIGH | MODERATE | LOW | UNCERTAIN | REFUTED
   confidence_score: <float, 0.0–1.0>
+  # SSSOM trio — commit the predicate when evidence supports it.
+  # Omit (leaves existing edge value untouched) when uncertain;
+  # CUT edges should omit (leaves the Stage B
+  # evidencell:UncertainRelationship stub in place).
+  relationship: skos:exactMatch | skos:closeMatch | skos:broadMatch | skos:narrowMatch | evidencell:CrossCuttingMatch | evidencell:UncertainRelationship | evidencell:NoCorrespondence
+  mapping_cardinality: "1:1" | "1:n" | "n:1"
+  mapping_justification: semapv:ManualMappingCuration | semapv:CompositeMatching | semapv:LogicalReasoning | semapv:LexicalMatching | semapv:UnspecifiedMatching | semapv:UnreviewedManualMapping
   rationale: >
-    <one or two sentences; format constraints below>
+    [tier:STRONGEST|NEXT|WEAKEST|CUT] <one or two sentences;
+    format constraints below>
   reconciliation_note: >
-    <optional; cross-edge note when calling indistinguishability>
+    <optional; cross-edge note when calling indistinguishability,
+    OR predicate-uncertainty note when relationship is left as
+    UncertainRelationship between two live alternatives>
+  caveats:
+    # REPLACE semantics — emit the canonical post-synth set.
+    - caveat_type: <CaveatType enum value>
+      description: <prose; quantitative claims checked against
+                   structured data, same as rationale>
+  proposed_experiments:
+    # REPLACE semantics. Strings (free text), one per experiment.
+    - <prose; quantitative claims + modality citations checked>
+  unresolved_questions:
+    # APPEND semantics (preserves cross-run accumulation).
+    - <string; appended to existing list, not overwriting>
   lit_to_lit_edges:
     - lit_a: <node_id>
       lit_b: <node_id>
       mapping_justification: semapv:CompositeMatching
-  unresolved_questions:
-    - <string; APPENDED to existing list, not overwriting>
 ` ` `
 <!-- verdict-block-end -->
 ```
@@ -876,27 +1376,75 @@ verdict:
 spacing here is only to keep the example readable inside this synthesis
 prompt.)
 
+### Source-groups-rationale block (optional, Act 2 output)
+
+When Act 2 reaches a CASE A pooling decision, emit a companion block
+next to the verdict block:
+
+```
+<!-- source-groups-rationale-start: {edge_id} -->
+` ` `yaml
+source_groups_rationale:
+  - source_group_label: <SourceGroup.label on the AT evidence item>
+    run_ref: <at_run_... id; optional, disambiguates when multiple
+              AT evidence items share an edge>
+    rationale: >
+      <multi-panel evidence statement justifying the pool reading;
+      cites AT run_id, paper PMID/DOI, edge id as appropriate>
+` ` `
+<!-- source-groups-rationale-end -->
+```
+
+The writer populates `source_groups[*].rationale` on the matched
+AT evidence item only if it's currently empty (existing entries are
+preserved without curator review).
+
+### Optional-field semantics summary
+
+- **Omit**: writer leaves the existing edge value untouched. Use for
+  uncertain refinements (you'd rather not write than guess) and on
+  CUT verdicts where the field doesn't deserve agent attention.
+- **`caveats[]` and `proposed_experiments[]`**: REPLACE semantics —
+  emit the canonical set. Omitting clears nothing; emitting an
+  empty list explicitly *does* clear.
+- **`unresolved_questions[]`**: APPEND semantics — added to the
+  existing list, deduplicated by exact-string match. Never
+  overwrites.
+- **`relationship` + `mapping_cardinality` + `mapping_justification`**:
+  if you commit `relationship` to a SKOS predicate, you SHOULD also
+  set `mapping_cardinality` and (typically)
+  `semapv:ManualMappingCuration` as `mapping_justification`. The
+  schema permits omitting cardinality on `evidencell:UncertainRelationship`.
+
 The orchestrator runs an anti-hallucination post-write check
 (`python -m evidencell.rationale_writeback`) that parses each block and
 verifies every quantitative claim in `rationale` against the edge's
 structured data. **Any verification failure blocks write-back of all
 blocks atomically.** Format your rationale accordingly.
 
-## Predicate + confidence rubric (2026-05-26 refresh)
+## Predicate + confidence rubric (2026-06 refresh — report-time authority)
 
 The verdict is a **TOC signal telling reviewers where to look**.
 Reviewers drill into the report for fine detail. Pick `confidence`
-deterministically against the evidence on the edge; the predicate
-itself was selected by Stage B against the same rubric (see
-`workflows/map-cell-type.md` Step 3 #7) — if the inherited predicate
-is inconsistent with the evidence under the rubric below, flag it in
-`reconciliation_note` and let the curator-review pass correct it
-(do not silently revise the predicate from the verdict block).
+deterministically against the evidence on the edge.
 
-### Predicate rubric (reference)
+**You (the report-time agent) are the predicate authority.** Stage B
+emits `evidencell:UncertainRelationship` as a stub; you have the
+full evidence picture (AT pooling, region scatter, lit modality
+strength, cross-edge view) and commit `relationship`,
+`mapping_cardinality`, and `mapping_justification` on each SURVIVOR
+edge using the rubric below. When you're genuinely uncertain
+between two predicate options, write
+`evidencell:UncertainRelationship` and explain in
+`reconciliation_note` (e.g. *"close vs. broad — soft AT F1=0.66 +
+region_fraction_100um: 0.31; depends on whether the boundary
+scatter is real heterogeneity or registration noise"*). CUT edges
+leave the Stage B stub in place (omit the SSSOM trio).
 
-Stage B picks `relationship` from a decision tree on cardinality →
-location → AT support → marker consistency:
+### Predicate rubric
+
+Decision tree on cardinality → location → AT support → marker
+consistency:
 
 - **`skos:exactMatch`** — clean 1:1; location is classical region +
   adjacent only; AT (if present) F1 > 0.75; no major contradictions.
@@ -960,8 +1508,19 @@ rationale and the follow-up surface in the verdict block.
 
 ## Rationale format constraints (enforced by the post-write check)
 
-The rationale prose MUST cite specific structured-field references. The
-check parses each of the following patterns and verifies them:
+The post-write check runs the same pattern scan over **`rationale`,
+`reconciliation_note`, every `caveats[*].description`, and every
+`proposed_experiments[*]`** string. Quantitative claims and modality
+citations anywhere in this prose-suite are checked against the
+edge's structured data; a failure on any field blocks the whole
+edge's write-back atomically.
+
+Enum-validated fields (`confidence`, `relationship`,
+`mapping_cardinality`, `mapping_justification`, `caveats[*].caveat_type`)
+are also schema-checked before the YAML edit; an invalid value is
+caught at parse time with a clear error message.
+
+The check parses each of the following patterns and verifies them:
 
 - **F1 values** — pattern `F1=0.NN`. Must match an
   `evidence_items[*].metrics_by_level[*].f1_score` rounded to 2 decimals
@@ -1140,7 +1699,16 @@ Write the report now.
 
 ## Step 4 — Validation subagent
 
-Spawn a **validation subagent** with this exact prompt (substitute values):
+The orchestrator (same definition as in Step 3 — the Claude session
+that opened this workflow) MUST dispatch this step as an isolated
+subagent via the Agent tool, NOT execute inline. The
+independent-reviewer property — validation catching things the
+writer was blind to — is defeated if the validator inherits the
+synthesis context. Same dispatch discipline and environment-check
+rules as Step 3 (abort with a clear diagnostic if Agent-tool
+dispatch isn't available; do not inline).
+
+Spawn the validation subagent with this exact prompt (substitute values):
 
 ```
 You are a report validation agent. Verify that the generated Markdown report contains
@@ -1377,8 +1945,13 @@ from `references/{region}/references.json` and a flat evidence summary table. Co
 
 ### Step DD-2 — Drill-down synthesis subagent
 
-Spawn a **drill-down synthesis subagent** with this exact prompt (substitute values for
-`{scaffold_file}`, `{facts_file}`, `{output_file}`, `{region}`, `{pmid}`):
+The orchestrator (same definition as in Step 3) MUST dispatch this
+step as an isolated subagent via the Agent tool, NOT execute inline.
+Same dispatch discipline and environment-check rules as Step 3.
+
+Spawn the drill-down synthesis subagent with this exact prompt
+(substitute values for `{scaffold_file}`, `{facts_file}`,
+`{output_file}`, `{region}`, `{pmid}`):
 
 ```
 You are a cell type mapping drill-down report writer. You write a human-readable
