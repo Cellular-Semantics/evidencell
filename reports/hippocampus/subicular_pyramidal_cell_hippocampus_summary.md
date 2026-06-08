@@ -316,7 +316,7 @@ verdict:
     - Annotation transfer of Yao 2021 SUB-ProS source cells onto
       CS20230722_SUPT_0097 and CS20230722_SUPT_0098 to complete the IT
       subicular mapping (F1 reported at supertype rank).
-    - Patch-seq from RF / WB / SB firing-class subicular pyramidal cells
+    - Targeted transcriptomic profiling of RF / WB / SB firing-class subicular pyramidal cells
       mapped to WMBv1 by MapMyCells at F1 >= 0.80 at supertype rank to
       resolve the firing-class to supertype assignment.
     - Targeted literature trawl for additional primary-citation
@@ -380,7 +380,7 @@ verdict:
     - Annotation transfer from Yao 2021 source labels carrying the "NP
       SUB" subclass onto CS20230722_SUPT_0128 (F1 >= 0.6 at supertype
       rank).
-    - Patch-seq from near-projecting subicular cells (with axonal
+    - Targeted transcriptomic profiling of near-projecting subicular cells (with axonal
       labelling) mapped to WMBv1 to confirm the NP SUB identity.
   unresolved_questions:
     - Does CS20230722_SUPT_0128 correspond to one of the classical
@@ -417,7 +417,7 @@ verdict:
     - Annotation transfer from Yao 2021 source labels carrying the "CT
       SUB" subclass onto CS20230722_SUPT_0121 (F1 >= 0.6 at supertype
       rank).
-    - Patch-seq from electrophysiologically classified cortico-thalamic
+    - Targeted transcriptomic profiling of electrophysiologically classified cortico-thalamic
       subicular cells mapped to WMBv1.
   unresolved_questions:
     - Does CS20230722_SUPT_0121 correspond to one of the classical

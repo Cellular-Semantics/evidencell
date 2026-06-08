@@ -293,7 +293,7 @@ verdict:
     [tier:NEXT] CS20230722_CLUS_0155 is the EC-layer-II-resident child of
     CS20230722_SUPT_0042: region_fraction_100um=0.92 in Entorhinal area lateral
     part layer 2 (MBA:20), and Reln is flagged DEFINING by atlas curation
-    (cohort_pct 0.97). Supertype-level AT (F1=0.96) on the parent SUPT_0042
+    (cohort_pct 0.97). Supertype-level AT on the parent SUPT_0042
     transfers to this cluster as best EC L2 child; sibling CLUS_0158 shares
     a closely matching profile. No cluster-level AT bootstrap is available
     on this edge.
@@ -305,7 +305,7 @@ verdict:
     - caveat_type: TAXONOMY_LEVEL_MISMATCH
       description: >
         Supporting annotation transfer evidence is at supertype level
-        (CS20230722_SUPT_0042, F1=0.96) rather than the cluster level;
+        (CS20230722_SUPT_0042) rather than the cluster level;
         cluster-level mapping here rests on atlas metadata (region and
         Reln expression) without a cluster-level AT bootstrap.
     - caveat_type: AMBIGUOUS_MAPPING

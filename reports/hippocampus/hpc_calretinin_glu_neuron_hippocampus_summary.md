@@ -192,7 +192,7 @@ verdict:
     [tier:STRONGEST] MapMyCells annotation transfer of Hochgerner 2018
     (run_ref at_run_20260427_hochgerner2018_dg_mmc_wmbv1) routes the
     Cajal-Retzius source cluster onto CS20230722_SUPT_0135 with F1=0.99
-    at supertype and F1=1.00 at cluster CS20230722_CLUS_0497;
+    at supertype and F1=1.00 at the best-matching child cluster;
     CS20230722_SUPT_0135 is the only WMBv1 HPF Glut supertype localised
     to SLM/OML (region_fraction_100um 0.823) with Calb2 marker_Calb2
     CONSISTENT (1 of 1 markers CONSISTENT). Confidence held at LOW
@@ -248,7 +248,7 @@ verdict:
       the edge).
     - Targeted literature search ("calretinin SLM glutamatergic
       mouse" and "VGluT3 SLM hippocampus") to anchor Calb2 (and
-      clarify Slc17a8 status) to a primary study on morphology- or
+      clarify Slc17a8 status) to a primary study on
       laminar-position-confirmed adult cells.
   unresolved_questions:
     - Is CS20230722_SUPT_0135 a Cajal-Retzius remnant population or

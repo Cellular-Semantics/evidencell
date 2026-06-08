@@ -409,11 +409,9 @@ edges:
         alignment: CONSISTENT
     caveats:
       - caveat_type: OTHER
-        description: >
-          Lamp5 Lhx6 subclass (CGE-derived), not Sst (MGE-derived). Biologically
-          surprising for canonical Sst+ MGE-derived OLM. Requires independent validation.
-      - caveat_type: MARKER_NOT_SPECIFIC
-        description: "Chrna2 and mGluR1 not resolvable from atlas metadata."
+        description: "Wrong subclass: Lamp5 Lhx6 Gaba_1 (CGE-derived) versus the canonical MGE-derived Sst lineage of OLM.\n"
+      - caveat_type: OTHER
+        description: "Legacy edge outside the current Stage A top-50 cohort at rank 0; property_comparisons not refreshed (see #111).\n"
     unresolved_questions:
       - "Is Sst expression in this Lamp5 Lhx6 cluster biologically meaningful? OLM morphology/ephys present?"
       - Do any OLM-morphology cells fall into CS20230722_CLUS_0727 despite the Lamp5 Lhx6 subclass mismatch?
@@ -426,12 +424,12 @@ edges:
 
     mapping_cardinality: 1:n
     mapping_justification: semapv:UnreviewedManualMapping
-    confidence: LOW
-    confidence_score: 0.15
-    rationale: "CS20230722_CLUS_0727 (Lamp5 Lhx6 Gaba_1) is refuted as an OLM target by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq): 0/46 OLM cells map to the Lamp5 Lhx6 subclass and all 45 classified cells map instead to CS20230722_SUPT_0216 (Sst Gaba_3). Npy is DISCORDANT, Sst is APPROXIMATE only (in neuropeptide annotations, not defining_markers), cluster Grm1 mean_expression=5.85 is the lowest among candidates, and Chrna2 is absent. 2 of 6 markers CONSISTENT (Sst-NP, Pnoc-NP) against a Lamp5 Lhx6 (CGE-derived) vs Sst (MGE-derived) subclass and developmental-lineage mismatch; CA3 SO + SLM anatomy (morphology-relevant) is suggestive but not sufficient.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_CLUS_0727 sits in the Lamp5 Lhx6 Gaba_1 subclass (CGE-derived) rather than the Sst (MGE-derived) subclass that carries the canonical OLM identity; the pooled OLM cluster annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to this cluster. This is a legacy edge from a pre-emitter curator pass and falls outside the current Stage A top-50 cohort at rank 0; the property_comparisons were not refreshed under the current scoring. Recommend curator review / removal in line with issue #111.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: ca71f180
+    rationale_source_hash: 0dfb8ddf
   - id: edge_olm_to_wmb_clus_0785
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0785
@@ -516,11 +514,9 @@ edges:
         notes: "OLM expresses Pnoc; absent from this cluster."
     caveats:
       - caveat_type: MARKER_NOT_SPECIFIC
-        description: >
-          Chrna2 absent from Sst Gaba_6 supertype — discordant with OLM identity.
-          mGluR1 not resolvable.
+        description: "Chrna2 absent at parent supertype Sst Gaba_6 per ABC Atlas filtering ([A]); Chrna2 is a defining OLM marker per Leao et al. 2012 (PMID:23042082).\n"
       - caveat_type: OTHER
-        description: "CA3-enriched; classical OLM best characterized in CA1."
+        description: "Legacy edge outside the current Stage A top-50 cohort at rank 0; property_comparisons not refreshed (see #111).\n"
     unresolved_questions:
       - "Given Chrna2 absence, is this cluster a non-OLM Sst stratum oriens type?"
 
@@ -530,11 +526,11 @@ edges:
     mapping_cardinality: 1:n
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: REFUTED
-    confidence_score: 0.05
-    rationale: "CS20230722_CLUS_0785 (Sst Gaba_6) is refuted by two independent signals: (1) ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminates the entire Sst Gaba_6 supertype, and (2) MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq) maps 0/46 OLM cells to Sst Gaba_6, with all 45 classified cells going to CS20230722_SUPT_0216 instead. Chrna2 DISCORDANT and Pnoc DISCORDANT; 3 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP) but the Chrna2 elimination is decisive. CA3-enriched anatomy further weakens the candidate. Cluster Grm1 mean_expression=10.30 does not rescue the Chrna2 elimination.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
+    confidence_score: 0.03
+    rationale: "[tier:CUT] CS20230722_CLUS_0785 sits within parent supertype Sst Gaba_6, where Chrna2 expression is absent per ABC Atlas filtering (anatomy=HPF; NT=GABA; expression=Chrna2; see [A]); pooled OLM cluster annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to Sst Gaba_6. This is a legacy edge from a pre-emitter curator pass and falls outside the current Stage A top-50 cohort at rank 0; the property_comparisons were not refreshed under the current scoring. Recommend curator review / removal in line with issue #111.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 24f1a883
+    rationale_source_hash: ce7dab5f
   - id: edge_olm_to_wmb_clus_0769
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0769
@@ -693,16 +689,9 @@ edges:
         notes: val=3.23; cohort percentile 0.563
     caveats:
       - caveat_type: MARKER_NOT_SPECIFIC
-        description: "mGluR1 (Grm1) not resolvable from atlas metadata."
+        description: "Chrna2 absent on CS20230722_CLUS_0769 (mean 0.00) versus present on sibling CS20230722_CLUS_0768 (mean 0.57); Chrna2 is a defining OLM marker per Leao et al. 2012 (PMID:23042082) and Nichol et al. 2018 (PMID:29487503).\n"
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
-        description: >
-          Prosubiculum (61 cells) and posterior amygdala (95 cells) — cluster
-          may include non-OLM Sst interneurons from adjacent regions.
-      - caveat_type: OTHER
-        description: >
-          Annotation transfer maps OLM cells to Sst Gaba_3 supertype but to sibling
-          clusters (primarily 0768), not 0769. May indicate the mapping is more
-          appropriate at supertype than cluster level.
+        description: "Pooled OLM annotation transfer routes 0/45 cells to CS20230722_CLUS_0769 under run_ref at_run_20260408_winterer_olm_mmc_wmbv1; the modal recipient is the sibling CS20230722_CLUS_0768.\n"
     unresolved_questions:
       - "Are the CA1 SO cells OLM-morphology? What are the amygdala cells?"
       - "Why do OLM cells map to cluster 0768 rather than 0769? Do these clusters differ in hippocampal enrichment?"
@@ -716,12 +705,12 @@ edges:
 
     mapping_cardinality: 1:n
     mapping_justification: semapv:UnreviewedManualMapping
-    confidence: MODERATE
-    confidence_score: 0.6
-    rationale: "Primary mapping to CS20230722_CLUS_0769 within CS20230722_SUPT_0216 (Sst Gaba_3) is anchored by atlas metadata (CA1 SO presence, full Sst/Npy/Pnoc neuropeptide triad, Sst subclass) and by MapMyCells annotation transfer of Winterer 2019 OLM cells (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq with MERFISH spatial registration on the target side) reaching pooled F1=0.99 at CLASS/SUBCLASS, pooled F1=0.97 at the SUPERTYPE level (CS20230722_SUPT_0216), and pooled F1=0.65 at the best child cluster CS20230722_CLUS_0768; cluster Grm1 mean_expression=8.29 is qualitatively concordant with mGluR1 being a defining OLM marker by electrophysiology and scRNA-seq. 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) with Chrna2 APPROXIMATE and mGluR1 NOT_ASSESSED at the atlas defining-markers panel.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] Sibling within CS20230722_SUPT_0216 but Chrna2 is absent on this cluster (atlas mean 0.00, DISCORDANT); pooled OLM annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to CS20230722_CLUS_0769 while 22/45 land on the sibling CS20230722_CLUS_0768. The supertype-level mapping is carried by edge_olm_hippocampus_to_CS20230722_SUPT_0216; the cluster-level closeMatch is carried by edge_olm_hippocampus_to_CS20230722_CLUS_0768. This cluster is not the best within-supertype representative of the OLM cohort.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 3d3f7d04
+    rationale_source_hash: ad47d3c9
     discovery_score:
       score: 4
       rank_in_cohort: 48
@@ -858,10 +847,10 @@ edges:
         alignment: CONSISTENT
         notes: "Full triad plus Cort."
     caveats:
-      - caveat_type: LOW_CELL_COUNT
-        description: "50 cells total. Corpus callosum cells (4) may be contamination."
       - caveat_type: MARKER_NOT_SPECIFIC
-        description: "mGluR1 not resolvable from atlas metadata. Chrna2 now DISCORDANT based on ABC Atlas expression data."
+        description: "Chrna2 absent at parent supertype Sst Gaba_6 per ABC Atlas filtering ([A]); Chrna2 is a defining OLM marker per Leao et al. 2012 (PMID:23042082).\n"
+      - caveat_type: OTHER
+        description: "Legacy edge outside the current Stage A top-50 cohort at rank 0; property_comparisons not refreshed (see #111).\n"
     unresolved_questions:
       - "Are SO cells OLM-morphology? What are corpus callosum cells?"
       - Are the CA1 SO and CA3 SO cells in CS20230722_CLUS_0788 OLM-morphology, and what are the corpus callosum cells in the same cluster?
@@ -874,11 +863,11 @@ edges:
     mapping_cardinality: 1:n
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: REFUTED
-    confidence_score: 0.05
-    rationale: "CS20230722_CLUS_0788 (Sst Gaba_6) is refuted by ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminating the Sst Gaba_6 supertype and by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq; 0/46 OLM cells to Sst Gaba_6). Chrna2 DISCORDANT; 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) but the Chrna2 elimination is decisive. Cluster is small (50 cells total) with CA1 SO (8) plus CA3 SO (13) and no SLM; cluster Grm1 mean_expression=9.08 does not rescue the Chrna2 elimination.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
+    confidence_score: 0.03
+    rationale: "[tier:CUT] CS20230722_CLUS_0788 sits within parent supertype Sst Gaba_6, where Chrna2 expression is absent per ABC Atlas filtering (anatomy=HPF; NT=GABA; expression=Chrna2; see [A]); pooled OLM cluster annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to Sst Gaba_6. This is a legacy edge from a pre-emitter curator pass and falls outside the current Stage A top-50 cohort at rank 0; the property_comparisons were not refreshed under the current scoring. Recommend curator review / removal in line with issue #111.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: 56fab4c2
+    rationale_source_hash: 27c8b7a5
   - id: edge_olm_to_wmb_clus_0789
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0789
@@ -962,10 +951,12 @@ edges:
         alignment: CONSISTENT
         notes: "Full triad plus Cort."
     caveats:
-      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
-        description: "28% amygdala cells — cluster not hippocampus-specific."
       - caveat_type: MARKER_NOT_SPECIFIC
-        description: "mGluR1 not resolvable from atlas metadata. Chrna2 now DISCORDANT based on ABC Atlas expression data."
+        description: "Chrna2 absent at parent supertype Sst Gaba_6 per ABC Atlas filtering ([A]); Chrna2 is a defining OLM marker per Leao et al. 2012 (PMID:23042082).\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "28% amygdala cells in CS20230722_CLUS_0789 — cluster is not hippocampus-specific.\n"
+      - caveat_type: OTHER
+        description: "Legacy edge outside the current Stage A top-50 cohort at rank 0; property_comparisons not refreshed (see #111).\n"
     unresolved_questions:
       - "Are CA3 SO cells OLM? What is the amygdala population?"
       - What is the amygdala population dominating CS20230722_CLUS_0789?
@@ -976,16 +967,16 @@ edges:
     mapping_cardinality: 1:n
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: REFUTED
-    confidence_score: 0.05
-    rationale: "CS20230722_CLUS_0789 (Sst Gaba_6) is refuted by ABC Atlas filter (HPF + GABA + Chrna2 expression, scRNA-seq) eliminating the Sst Gaba_6 supertype and by MapMyCells annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1, scRNA-seq; 0/46 OLM cells to Sst Gaba_6). Chrna2 DISCORDANT; cluster is amygdala-dominated (28% amygdala cells; CA3 SO 25; no CA1; no SLM). 4 of 6 markers CONSISTENT (Sst, Sst-NP, Npy-NP, Pnoc-NP) but Chrna2 elimination plus extra-hippocampal (morphology/region) location are decisive. Cluster Grm1 mean_expression=8.00 does not rescue.\n"
-    rationale_generated_at: '2026-05-20T12:34:37+00:00'
+    confidence_score: 0.03
+    rationale: "[tier:CUT] CS20230722_CLUS_0789 sits within parent supertype Sst Gaba_6, where Chrna2 expression is absent per ABC Atlas filtering (anatomy=HPF; NT=GABA; expression=Chrna2; see [A]); pooled OLM cluster annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to Sst Gaba_6, and the cluster's soma distribution is amygdala-dominant (28% amygdala cells per cluster property_comparisons). This is a legacy edge from a pre-emitter curator pass and falls outside the current Stage A top-50 cohort at rank 0; the property_comparisons were not refreshed under the current scoring. Recommend curator review / removal in line with issue #111.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
-    rationale_source_hash: f53b0321
+    rationale_source_hash: c1cf5ca1
   - id: edge_olm_hippocampus_to_CS20230722_CLUS_0768
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0768
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnreviewedManualMapping
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -1102,9 +1093,11 @@ edges:
         notes: val=2.51; cohort percentile 0.479
     caveats:
       - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+        description: "DISCORDANT transcript means for five classical OLM negative markers on CS20230722_CLUS_0768 (PV 3.12, CB 3.87, CR 2.30, NOS 0.76, VIP 0.31); PV carries an atlas MERFISH-panel tag (panel-selection metadata, not expression-quality signal), the other four are precomputed transcript means above MIN_DETECTABLE. Curator audit of transcript-vs-protein conventions for the OLM negative-marker panel is required to resolve.\n"
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
-        description: AT cluster-level F1 = 0.444 is below the 0.5 threshold — source cells are scattered across multiple atlas clusters rather than concentrated here. Cleaner AT signal may live at a coarser taxonomy level.
+        description: "Cluster captures the modal but not the full OLM cohort: 22/45 cells under pooled run_ref at_run_20260408_winterer_olm_mmc_wmbv1 (F1=0.67); 23/45 cells distribute across CS20230722_CLUS_0772 (7) and the parent supertype's other children (sibling clusters within Sst Gaba_3).\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "Pnoc on CS20230722_CLUS_0768 is APPROXIMATE (mean 2.51; cohort_pct 0.479) versus the supertype mean 3.69 and a Pnoc-high sibling CS20230722_CLUS_0775 (mean 7.20); if the three Sst-Pnoc OLM subclusters of Thulin et al. 2025 (PMID:40757734) correspond to atlas children, CS20230722_CLUS_0768 may be the Chrna2-stronger / Pnoc-weaker subgroup.\n"
     discovery_score:
       score: 10
       rank_in_cohort: 1
@@ -1165,6 +1158,20 @@ edges:
         target_level: cluster
         target_name: 0768 Sst Gaba_3
         score: 2
+    confidence: MODERATE
+    confidence_score: 0.72
+    rationale: "[tier:STRONGEST] Best within-supertype cluster recipient of the pooled OLM cluster annotation transfer (Winterer 2019; run_ref at_run_20260408_winterer_olm_mmc_wmbv1): 22/45 OLM cells land on CS20230722_CLUS_0768 with pooled F1=0.67 at cluster level. Chrna2 detected on CS20230722_CLUS_0768 (mean 0.57, cohort_pct 0.95) — discriminating versus sibling CS20230722_CLUS_0769 where Chrna2 mean is 0.00 — addressing the primary OLM defining-marker test; Sst cohort_pct 0.99 (val 12.70); mGluR1 mean 10.27. region_fraction_100um 0.818 with Field CA1 stratum oriens [MBA:399] dominant. Paired with parent supertype edge edge_olm_hippocampus_to_CS20230722_SUPT_0216 (skos:broadMatch).\n"
+    reconciliation_note: "Paired with CS20230722_SUPT_0216 (skos:broadMatch + 1:n) as the supertype-level coverage of the full OLM cohort; this cluster captures the modal Chrna2-positive subset (22/45 cells). Remaining cells distribute across CS20230722_CLUS_0772 (7) and the parent supertype's other children (13 cells across three sibling clusters) — consistent with the three Sst-Pnoc OLM subclusters reported by Thulin et al. 2025 (PMID:40757734).\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - "Chrna2-Cre + cluster annotation transfer of CA1 stratum oriens neurons; target F1 >= 0.80 at CLUSTER level on CS20230722_CLUS_0768; feeds back as AnnotationTransferEvidence; resolves whether CS20230722_CLUS_0768 corresponds to the Chrna2+ OLM subgroup of Leao et al. 2012 (PMID:23042082).\n"
+      - "Targeted transcriptomic profiling with morphology recovery on Chrna2-Cre-targeted cells; target paired morphology + electrophysiology annotation on at least 50 cells assigned to CS20230722_CLUS_0768; resolves whether the cluster corresponds to one of the three Sst-Pnoc OLM subclusters reported by Thulin et al. 2025 (PMID:40757734).\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    unresolved_questions:
+      - "Why does the pooled OLM cohort prefer CS20230722_CLUS_0768 over the sibling CS20230722_CLUS_0769 within CS20230722_SUPT_0216? Is the Chrna2 atlas mean difference (0.57 vs 0.00) the discriminating signal?\n"
+      - "Does CS20230722_CLUS_0768 correspond to a specific Sst-Pnoc OLM subcluster from Thulin et al. 2025 (PMID:40757734)?\n"
+    rationale_source_hash: a73a95e2
   - id: edge_olm_hippocampus_to_CS20230722_CLUS_0772
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0772
@@ -1285,10 +1292,8 @@ edges:
         alignment: APPROXIMATE
         notes: val=1.65; cohort percentile 0.420
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
-        description: AT cluster-level F1 = 0.267 is below the 0.5 threshold — source cells are scattered across multiple atlas clusters rather than concentrated here. Cleaner AT signal may live at a coarser taxonomy level.
+        description: "Pooled annotation transfer routes 7/45 OLM cells here under run_ref at_run_20260408_winterer_olm_mmc_wmbv1 (F1=0.27); the modal recipient is CS20230722_CLUS_0768 (22/45).\n"
     discovery_score:
       score: 9
       rank_in_cohort: 2
@@ -1349,6 +1354,12 @@ edges:
         target_level: cluster
         target_name: 0772 Sst Gaba_3
         score: 1
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:CUT] Within-supertype scatter: a Sst Gaba_3 sibling of the best-child cluster CS20230722_CLUS_0768; pooled OLM cluster annotation transfer (run_ref at_run_20260408_winterer_olm_mmc_wmbv1) routes 7/45 cells here (cluster F1=0.27), well below the modal CS20230722_CLUS_0768 (22/45). The supertype-level coverage is carried by edge_olm_hippocampus_to_CS20230722_SUPT_0216.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    rationale_source_hash: 62f07793
   - id: edge_olm_hippocampus_to_CS20230722_CLUS_0773
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0773
@@ -1425,8 +1436,8 @@ edges:
         alignment: CONSISTENT
         notes: val=4.40; cohort percentile 0.639
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "No annotation_transfer evidence item on this edge; the modal recipient within the supertype is CS20230722_CLUS_0768 (22/45).\n"
     discovery_score:
       score: 8
       rank_in_cohort: 3
@@ -1481,6 +1492,12 @@ edges:
       region_fraction: 0.355
       region_fraction_100um: 0.648
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] Within-supertype scatter: a Sst Gaba_3 sibling of the best-child cluster CS20230722_CLUS_0768. No direct annotation_transfer evidence item on this edge; the supertype-level coverage is carried by edge_olm_hippocampus_to_CS20230722_SUPT_0216.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    rationale_source_hash: 2c8feac6
   - id: edge_olm_hippocampus_to_CS20230722_CLUS_0775
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0775
@@ -1557,8 +1574,8 @@ edges:
         alignment: CONSISTENT
         notes: val=7.20; cohort percentile 0.966
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "No annotation_transfer evidence item on this edge at cluster rank; the modal recipient within the supertype is CS20230722_CLUS_0768.\n"
     discovery_score:
       score: 8
       rank_in_cohort: 4
@@ -1613,6 +1630,12 @@ edges:
       region_fraction: 0.227
       region_fraction_100um: 0.442
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.28
+    rationale: "[tier:CUT] Within-supertype scatter: a Sst Gaba_3 sibling of the best-child cluster CS20230722_CLUS_0768; carries the highest Pnoc transcript mean among the Sst Gaba_3 children (7.20; cohort_pct 0.966) but no annotation_transfer evidence item on this edge. region_fraction_100um 0.442 (lower than CS20230722_CLUS_0768's 0.818).\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    rationale_source_hash: 391b5cbd
   - id: edge_olm_hippocampus_to_CS20230722_CLUS_0770
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0770
@@ -1689,8 +1712,8 @@ edges:
         alignment: CONSISTENT
         notes: val=6.98; cohort percentile 0.941
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "No annotation_transfer evidence item on this edge at cluster rank; the modal recipient within the supertype is CS20230722_CLUS_0768.\n"
     discovery_score:
       score: 7
       rank_in_cohort: 5
@@ -1745,11 +1768,17 @@ edges:
       region_fraction: 0.302
       region_fraction_100um: 0.506
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.28
+    rationale: "[tier:CUT] Within-supertype scatter: a Sst Gaba_3 sibling of the best-child cluster CS20230722_CLUS_0768; no annotation_transfer evidence item on this edge. The supertype-level coverage is carried by edge_olm_hippocampus_to_CS20230722_SUPT_0216.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    rationale_source_hash: 5d03d795
   - id: edge_olm_hippocampus_to_CS20230722_SUPT_0216
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_SUPT_0216
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnreviewedManualMapping
+    relationship: skos:broadMatch
+    mapping_justification: semapv:ManualMappingCuration
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -1856,8 +1885,12 @@ edges:
         alignment: CONSISTENT
         notes: val=3.69; cohort percentile 0.667; child-cluster coverage 0.889
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "OLM is transcriptomically heterogeneous within Sst Gaba_3: Thulin et al. 2025 (PMID:40757734) report three Sst-Pnoc OLM subclusters; pooled cluster annotation transfer distributes 22/CLUS_0768, 7/CLUS_0772, 5/CLUS_0767, 4/CLUS_0771, 4/CLUS_0774 (run_ref at_run_20260408_winterer_olm_mmc_wmbv1).\n"
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "Five classical negative markers (PV, CB, CR, NOS, VIP) detected at supertype transcript means above MIN_DETECTABLE (PV 1.48, CB 5.56, CR 1.28, NOS 2.94, VIP 0.42); the classical negative-marker panel is largely protein-level cite-traverse consensus, transcript means do not necessarily refute it but the gap warrants curator audit.\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "Supertype includes non-hippocampal Sst Gaba_3 cells; region_fraction_100um 0.539 reflects the supertype-wide soma-distribution rollup. Mapping is to the hippocampal subset of CS20230722_SUPT_0216.\n"
     discovery_score:
       score: 10
       rank_in_cohort: 1
@@ -1922,6 +1955,21 @@ edges:
         target_level: supertype
         target_name: 0216 Sst Gaba_3
         score: 3
+    confidence: MODERATE
+    confidence_score: 0.78
+    rationale: "[tier:STRONGEST] Cre-driver-targeted cluster annotation transfer (Winterer 2019 OLM cohort pooled; run_ref at_run_20260408_winterer_olm_mmc_wmbv1) lands the OLM cohort on CS20230722_SUPT_0216 with F1=0.68 at supertype, with subclass (053 Sst Gaba) and class (07 CTX-MGE GABA) at the same edge-level F1 (0.67–0.68); 3 of 3 defining markers CONSISTENT (Sst cohort_pct 0.905; Chrna2 cohort_pct 0.952 with child-coverage 0.667; mGluR1 mean 9.33). region_fraction_100um 0.539 reflects supertype-wide rollup including non-hippocampal Sst Gaba_3 cells; the hippocampal subset is the mapping target. Five negative markers DISCORDANT at transcript level (PV, CB, CR, NOS, VIP) — a transcript-vs-protein convention gap, not a refutation. Paired with best-child CS20230722_CLUS_0768 (see edge edge_olm_hippocampus_to_CS20230722_CLUS_0768).\n"
+    reconciliation_note: "Paired supertype + best-child pattern: this supertype broadMatch covers the full OLM cohort (43/45 cells), while CS20230722_CLUS_0768 captures the modal subset (22/45) as closeMatch at cluster rank. Within-supertype scatter across CLUS_0768, CLUS_0772, CLUS_0767, CLUS_0771, CLUS_0774 is consistent with the three Sst-Pnoc OLM subclusters reported by Thulin et al. 2025 (PMID:40757734) — the atlas resolves within-OLM heterogeneity rather than the canonical type as a unit.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Chrna2-Cre + cluster annotation transfer of CA1 stratum oriens neurons; target F1 >= 0.80 at CLUSTER level within Sst Gaba_3; feeds back as AnnotationTransferEvidence at cluster rank; resolves whether cluster-level scatter tracks the three Sst-Pnoc OLM subclusters of Thulin et al. 2025 (PMID:40757734).\n"
+      - "Targeted transcriptomic profiling with morphology recovery on OLM-targeted cells; target F1 >= 0.80 at CLUSTER level with paired morphology + electrophysiology annotation; resolves whether within-Sst Gaba_3 atlas heterogeneity tracks documented OLM heterogeneity (PV-positive gamma-firing subset; Sst-Pnoc subclusters; TRPV1+ subpopulation).\n"
+      - "Targeted literature trawl on OLM negative-marker panel (PV, CB, CR, NOS, VIP) for transcript-level vs. protein-level evidence in morphology-confirmed OLM cells; feeds back as LiteratureEvidence on the classical node.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    unresolved_questions:
+      - "Do the three Sst-Pnoc OLM subclusters of Thulin et al. 2025 (PMID:40757734) correspond to specific CS20230722_SUPT_0216 child clusters?\n"
+      - "Are the supertype-level transcript means for the five classical OLM negative markers (PV, CB, CR, NOS, VIP) a transcript-vs-protein convention gap, real subpopulation biology, or an upstream curation issue?\n"
+    rationale_source_hash: 3882d69f
   - id: edge_olm_hippocampus_to_CS20230722_SUPT_0226
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_SUPT_0226
@@ -1998,8 +2046,8 @@ edges:
         alignment: CONSISTENT
         notes: val=1.93; cohort percentile 0.508; child-cluster coverage 1.000
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location, negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "region_fraction_100um 0.016 (distant region — soma distribution is isocortex/cortical subplate dominated; classical OLM is CA1 stratum oriens).\n"
     discovery_score:
       score: 8
       rank_in_cohort: 2
@@ -2058,6 +2106,12 @@ edges:
       region_fraction: 0.008
       region_fraction_100um: 0.016
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0226 (0226 Sst Gaba_13) is isocortex-dominant with region_fraction_100um 0.016 and strict region_fraction 0.008 — soma distribution sits outside the hippocampal target region. Although Sst (12.08; cohort_pct 0.968) and Chrna2 (0.61; cohort_pct 0.952) are CONSISTENT on transcript means, the location DISCORDANT call rules out the classical hippocampal OLM identity.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    rationale_source_hash: cadb201e
   - id: edge_olm_hippocampus_to_CS20230722_SUPT_0217
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_SUPT_0217
@@ -2134,8 +2188,8 @@ edges:
         alignment: APPROXIMATE
         notes: val=0.51; cohort percentile 0.365; child-cluster coverage 1.000
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location, negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "region_fraction_100um 0.015 (distant region — soma distribution is isocortex dominated, with motor area enrichment; classical OLM is CA1 stratum oriens).\n"
     discovery_score:
       score: 6
       rank_in_cohort: 3
@@ -2194,6 +2248,12 @@ edges:
       region_fraction: 0.009
       region_fraction_100um: 0.015
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0217 (0217 Sst Gaba_4) is isocortex-dominant with region_fraction_100um 0.015 — soma distribution sits outside the hippocampal target region. Sst (10.79) and Chrna2 (1.90, atlas category DEFINING_SCOPED at cohort_pct 0.984) are CONSISTENT on transcript means, but the location DISCORDANT call rules out the classical hippocampal OLM identity. May correspond to a cortical Chrna2+ Sst type distinct from CA1 OLM.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    rationale_source_hash: 4601bfee
   - id: edge_olm_hippocampus_to_CS20230722_SUPT_0241
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_SUPT_0241
@@ -2270,8 +2330,10 @@ edges:
         alignment: APPROXIMATE
         notes: val=0.35; cohort percentile 0.333; child-cluster coverage 1.000
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location, marker_Chrna2, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "region_fraction_100um 0.021 (distant region — soma distribution is isocortex / lateral forebrain bundle / corpus callosum; classical OLM is CA1 stratum oriens).\n"
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "Chrna2 absent on CS20230722_SUPT_0241 (mean 0.00); Chrna2 is a defining OLM marker per Leao et al. 2012 (PMID:23042082).\n"
     discovery_score:
       score: 5
       rank_in_cohort: 4
@@ -2329,6 +2391,12 @@ edges:
       region_fraction: 0.008
       region_fraction_100um: 0.021
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.08
+    rationale: "[tier:CUT] CS20230722_SUPT_0241 (0241 Sst Chodl Gaba_4) is isocortex-dominant with region_fraction_100um 0.021 and Chrna2 DISCORDANT (atlas mean 0.00). Sst Chodl is a distinct long-range projecting Sst subtype, not the canonical CA1 OLM identity.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    rationale_source_hash: 17f1e036
   - id: edge_olm_hippocampus_to_CS20230722_SUPT_0224
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_SUPT_0224
@@ -2405,8 +2473,8 @@ edges:
         alignment: APPROXIMATE
         notes: val=0.29; cohort percentile 0.317; child-cluster coverage 1.000
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location, negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "region_fraction_100um 0.032 (distant region — soma distribution is isocortex dominated; classical OLM is CA1 stratum oriens).\n"
     discovery_score:
       score: 5
       rank_in_cohort: 5
@@ -2465,3 +2533,9 @@ edges:
       region_fraction: 0.01
       region_fraction_100um: 0.032
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0224 (0224 Sst Gaba_11) is isocortex-dominant with region_fraction_100um 0.032 — soma distribution sits outside the hippocampal target region. Chrna2 is CONSISTENT but at a borderline transcript mean (0.10) with child-coverage 0.500. Location DISCORDANT call rules out the classical hippocampal OLM identity.\n"
+    rationale_generated_at: '2026-06-08T21:04:10+00:00'
+    report_path: reports/hippocampus/olm_hippocampus_summary.md
+    rationale_source_hash: d005803b

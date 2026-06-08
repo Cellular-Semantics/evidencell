@@ -581,7 +581,7 @@ edges:
     proposed_experiments:
       - "Targeted profiling on Chrna2-Cre-labelled oriens interneurons, pairing functional and morphological characterisation with single-cell transcriptomics, with the resulting transcriptomes mapped against CCN20230722; target F1 ≥ 0.80 at CLUSTER level on CS20230722_CLUS_0771.\n"
       - "Re-score Sst::Tac1-IN, Sst::Nos1-IN, and Ndnf::Nkx2-1-IN Chamberland subfamilies against sibling Sst Gaba_3 clusters under CS20230722_SUPT_0216 using existing at_run_20260512_chamberland_subfamily_mmc_wmbv1 output.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     unresolved_questions:
       - "Are the ~46% of cells in CS20230722_CLUS_0771 that are not Chamberland-rule-positive a scRNA-seq dropout artefact of the Sst+/Chrna2+ gene-pair criterion, or a co-resident non-Chrna2 OLM subset?\n"
@@ -590,7 +590,7 @@ edges:
   - id: edge_sst_nos1_to_CS20230722_CLUS_0859
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0859
-    relationship: skos:exactMatch
+    relationship: skos:closeMatch
     evidence:
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260512_chamberland_subfamily_mmc_wmbv1
@@ -651,7 +651,23 @@ edges:
         node_b_value: "Sst Chodl long-range identity"
         alignment: CONSISTENT
 
-    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_justification: semapv:ManualMappingCuration
+    confidence: HIGH
+    confidence_score: 0.85
+    rationale: "[tier:STRONGEST] Chamberland Sst::Nos1 per-cluster cohort maps to CS20230722_CLUS_0859 at F1=0.97 in at_run_20260512_chamberland_subfamily_mmc_wmbv1 (Coverage=0.94, Purity=1.0, n=31); 2 of 2 markers CONSISTENT (Sst, Nos1) on this edge; cross-supertype assignment into Sst Chodl Gaba is biologically coherent with the long-range Sst Chodl identity.\n"
+    reconciliation_note: "Paired with supertype edge against CS20230722_SUPT_0241 (also F1=0.99 at supertype); legacy edge ID — fell outside current Stage A top-50 at rank 0 so property_comparisons not refreshed with fresh-emit edges (see #111).\n"
+    mapping_cardinality: "1:1"
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: "AT evidence derives from a single MapMyCells run (at_run_20260512_chamberland_subfamily_mmc_wmbv1) against Chamberland's in-silico per-cluster Sst x Nos1 gene-pair labelling of the Harris 2018 source dataset.\n"
+    proposed_experiments:
+      - "Targeted transcriptomic profiling of Sst-Cre x Nos1 intersectional cohort, mapped onto WMBv1; target F1 >= 0.80 at CLUSTER against CS20230722_CLUS_0859 with confirmed long- range axonal projection to medial septum.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    unresolved_questions:
+      - "CLUS_0859 fell outside current Stage A top-50 and warrants curator review (per Cellular-Semantics/evidencell#111).\n"
+      - "Resolve overlap with the classical hippocampo-septal back- projection cell type in hippocampus_GABAergic_interneurons.yaml.\n"
+    rationale_source_hash: 1ccc28c8
   - id: edge_sst_tac1_to_CS20230722_SUBC_052
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_SUBC_052
@@ -717,8 +733,21 @@ edges:
     mapping_justification: semapv:UnreviewedManualMapping
     mapping_cardinality: "1:1"
     caveats:
-      - caveat_type: OTHER
-        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.578 ≤ 0.75 → closeMatch. Curator review recommended.'
+      - caveat_type: SINGLE_DATASET
+        description: "AT signal derives from one rule-relabelled re-analysis of Harris 2018 (GEO:GSE99888); direct sequencing of Chamberland Sst×Tac1 intersectional reporter cells has not been performed.\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "Cluster-level transfer is distributed across multiple Pvalb Gaba_2 children; the subclass is the supportable level for this edge.\n"
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:NEXT] Annotation transfer on the Sst_Tac1 Chamberland-rule source group lands on the Pvalb Gaba subclass (F1=0.58, Coverage=0.78) under at_run_20260512_chamberland_subfamily_mmc_wmbv1; the subclass-level transfer is the structural basis for placing the Sst::Tac1 subfamily on the Pvalb branch rather than on Sst-named supertypes. Subclass-level edge supports the broader mapping; the supertype-level call is on edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0206.\n"
+    reconciliation_note: "Subclass-level companion to the supertype edge edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0206 (Pvalb Gaba_2); both narrate the same AT signal at adjacent taxonomy ranks.\n"
+    proposed_experiments:
+      - "Direct MapMyCells of cells from the Chamberland Sst×Tac1 intersectional reporter line onto WMBv1 at F1 ≥ 0.70 at subclass level would convert this rule-relabelled-Harris signal into transgene-anchored AnnotationTransferEvidence.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    unresolved_questions:
+      - "Does direct sequencing of Sst×Tac1 reporter cells reproduce the Pvalb Gaba subclass placement at F1 ≥ 0.70?\n"
+    rationale_source_hash: 9a30052f
   - id: edge_ndnf_nkx2_1_olm_to_CS20230722_SUPT_0216
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0216
@@ -785,11 +814,9 @@ edges:
         notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.714
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
-        description: >
-          Ndnf::Nkx2-1-IN signal fragments across multiple WMBv1 targets with
-          F1 < 0.1 each. Mapping at any single level is uninformative. Better
-          source-side evidence (e.g. Chamberland 2024's published per-cell
-          Ndnf::Nkx2-1 scRNA-seq if available) needed to firm this up.
+        description: "AT signal in at_run_20260512_chamberland_subfamily_mmc_wmbv1 fragments across Lamp5, Sncg, and Sst types with all targets F1 < 0.1; the Chamberland per-cluster Ndnf source pool (n=19) is too small and noisy to support a confident assignment.\n"
+      - caveat_type: OTHER
+        description: "Nkx2-1 DISCORDANT at CS20230722_SUPT_0216 (val=0.04, below MIN_DETECTABLE) breaks the subfamily-defining MGE/Nkx2-1 marker from Chamberland 2024.\n"
     mapping_justification: semapv:UnspecifiedMatching
     discovery_score:
       score: 3
@@ -838,6 +865,19 @@ edges:
       region_fraction: 0.305
       region_fraction_100um: 0.539
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:NEXT] Sst (val=11.44; cohort_pct 0.905) and Ndnf (val=1.64; cohort_pct 0.889) CONSISTENT at CS20230722_SUPT_0216, with region CONSISTENT (region_fraction_100um: 0.539; Field CA1, stratum oriens dominant). Nkx2-1 DISCORDANT (val=0.04, below MIN_DETECTABLE 0.1) breaks the MGE/Nkx2-1 axis defining the subfamily, and AT signal in at_run_20260512_chamberland_subfamily_mmc_wmbv1 is fragmented (best SUPERTYPE F1=0.06 at 0199 Lamp5 Gaba_1; cluster-level scatter across many targets). 2 of 3 markers CONSISTENT.\n"
+    reconciliation_note: "Sst/Ndnf/location point here; Nkx2-1 axis points to CS20230722_SUPT_0203 (Lamp5 Lhx6 Gaba_1). The mapping is unresolved between Sst Gaba_3 (region + Sst/Ndnf) and Lamp5 Lhx6 (Nkx2-1 marker). Predicate left uncertain pending targeted Ndnf::Nkx2-1 transcriptomic profiling.\n"
+    proposed_experiments:
+      - "Targeted Ndnf::Nkx2-1 intersectional transcriptomic profiling, transferred onto WMBv1 at F1 >= 0.50 at SUPERTYPE level, to discriminate CS20230722_SUPT_0216 from competing Lamp5 Lhx6 supertype candidates.\n"
+      - "Cluster-level Nkx2-1 expression survey across CS20230722_SUPT_0216 children to test for HIDDEN-1:1 minority Nkx2-1+ signal masked at supertype mean.\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    unresolved_questions:
+      - "Is the Nkx2-1 axis a binary subfamily discriminator or a graded continuum within hippocampal Sst Gaba_3?\n"
+      - "Does Chamberland 2024 publish per-cell Ndnf::Nkx2-1 intersectional scRNA-seq that could be re-mapped directly to WMBv1?\n"
+    rationale_source_hash: bf4a1822
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0768
     lit_type: chrna2_olm_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0768
@@ -908,7 +948,7 @@ edges:
     confidence: LOW
     confidence_score: 0.2
     rationale: "[tier:CUT] CS20230722_CLUS_0768 carries low Chrna2 (0.57) compared to the AT-best CS20230722_CLUS_0771 (2.56), and the Chamberland-labelled AT signal at this cluster is negligible — not the cluster carrying the Chrna2-IN identity within CS20230722_SUPT_0216.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: c0b05ec6
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0772
@@ -981,7 +1021,7 @@ edges:
     confidence: LOW
     confidence_score: 0.2
     rationale: "[tier:CUT] CS20230722_CLUS_0772 carries low Chrna2 (0.46) relative to the AT-best CS20230722_CLUS_0771 (2.56); Chamberland-labelled AT signal on this cluster is minimal. Sibling Sst Gaba_3 cluster, not the Chrna2-IN home.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: ab14f867
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0773
@@ -1054,7 +1094,7 @@ edges:
     confidence: LOW
     confidence_score: 0.2
     rationale: "[tier:CUT] CS20230722_CLUS_0773 shows Chrna2=0.65 — well below CS20230722_CLUS_0771 (2.56) — and Chamberland-labelled AT signal on this cluster is non-leading. Sibling under CS20230722_SUPT_0216, not the Chrna2-IN home.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: 081b8a66
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0770
@@ -1127,7 +1167,7 @@ edges:
     confidence: LOW
     confidence_score: 0.2
     rationale: "[tier:CUT] CS20230722_CLUS_0770 carries low Chrna2 (0.52) compared with CS20230722_CLUS_0771 (2.56) and shows no leading Chamberland-labelled AT signal. Sibling Sst Gaba_3 cluster, not the Chrna2-IN home.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: e30153fa
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_CLUS_0771
@@ -1146,7 +1186,7 @@ edges:
     confidence_score: 0.3
     rationale: "[tier:CUT] Legacy/fresh-emit duplicate edge targeting CS20230722_CLUS_0771; the substantive AT-bearing record lives on edge_chrna2_olm_to_CS20230722_CLUS_0771 (skos:closeMatch). This edge carries only ATLAS_METADATA and should be retired by the curator.\n"
     reconciliation_note: "Duplicate of edge_chrna2_olm_to_CS20230722_CLUS_0771 on the same taxonomy_type accession.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: a0396cc1
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_0216
@@ -1229,7 +1269,7 @@ edges:
     mapping_cardinality: "1:n"
     proposed_experiments:
       - "Subfamily-resolved annotation transfer of the remaining Chamberland labels against CS20230722_SUPT_0216 children, to verify that residual non-Chrna2 cells correspond to other Sst-IN subfamilies and not unrelated populations.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     unresolved_questions:
       - "Which sibling clusters of CS20230722_CLUS_0771 within CS20230722_SUPT_0216 carry the Sst::Tac1, Sst::Nos1, and Ndnf::Nkx2-1 Chamberland subfamilies?\n"
@@ -1308,7 +1348,7 @@ edges:
     confidence: LOW
     confidence_score: 0.1
     rationale: "[tier:CUT] CS20230722_SUPT_0226 soma distribution is DISCORDANT with classical CA1 stratum oriens — region_fraction_100um: 0.016 with the bulk of cells in Isocortex and endopiriform regions. Marker concordance is nominal (Sst+/Chrna2+) but the supertype is a cortical Sst-IN population, not the hippocampal one.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: 5ac6332e
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_0217
@@ -1385,7 +1425,7 @@ edges:
     confidence: LOW
     confidence_score: 0.1
     rationale: "[tier:CUT] CS20230722_SUPT_0217 soma distribution is DISCORDANT — region_fraction_100um: 0.015 with cells dominated by Isocortex (motor areas). Cortical Sst-IN supertype, not the hippocampal Chrna2-IN home.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: b0d5ca30
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_0224
@@ -1462,7 +1502,7 @@ edges:
     confidence: LOW
     confidence_score: 0.1
     rationale: "[tier:CUT] CS20230722_SUPT_0224 soma distribution is DISCORDANT — region_fraction_100um: 0.032 with Isocortex-dominated location. Chrna2 atlas-side value (0.10) is also marginal. Cortical Sst-IN population, not the hippocampal Chrna2-IN home.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: 935a5d5e
   - id: edge_chrna2_olm_subfamily_chamberland_to_CS20230722_SUPT_0225
@@ -1539,7 +1579,7 @@ edges:
     confidence: LOW
     confidence_score: 0.1
     rationale: "[tier:CUT] CS20230722_SUPT_0225 soma distribution is DISCORDANT — region_fraction_100um: 0.017 with cells dominated by entorhinal cortex. Chrna2 atlas-side (0.23) is low. Entorhinal Sst-IN population, not the hippocampal Chrna2-IN home.\n"
-    rationale_generated_at: '2026-06-08T20:52:05+00:00'
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
     report_path: reports/hippocampus/chrna2_olm_subfamily_chamberland_summary.md
     rationale_source_hash: 84bb7421
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0724
@@ -1623,6 +1663,12 @@ edges:
       region_fraction: 0.07
       region_fraction_100um: 0.158
       region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Nkx2-1 CONSISTENT (val=2.99; cohort_pct 0.966) at CS20230722_CLUS_0724, but Sst APPROXIMATE (val=1.18; cohort_pct 0.479) and Ndnf APPROXIMATE (val=0.17; cohort_pct 0.471) — the Sst-IN subfamily defining marker is only weakly expressed. Location APPROXIMATE (region_fraction_100um: 0.158) with substantial Isocortex and lateral forebrain bundle off-target painted counts.\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: 0a8bd02a
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0725
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0725
@@ -1704,6 +1750,12 @@ edges:
       region_fraction: 0.053
       region_fraction_100um: 0.159
       region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Nkx2-1 CONSISTENT (val=5.05; cohort_pct 0.992; highest among candidates) and Ndnf CONSISTENT at CS20230722_CLUS_0725, but Sst APPROXIMATE (val=1.05; cohort_pct 0.403). Location APPROXIMATE (region_fraction_100um: 0.159) with Field CA1, stratum radiatum dominant rather than stratum oriens.\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: 3b5d50a4
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0767
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0767
@@ -1739,7 +1791,9 @@ edges:
         node_b_value: 'Nkx2-1: 0.17; cohort_pct 0.874'
         alignment: CONSISTENT
         notes: val=0.17; cohort percentile 0.874
-    caveats: []
+    caveats:
+      - caveat_type: OTHER
+        description: "Nkx2-1 val=0.17 at CS20230722_CLUS_0767 is just above MIN_DETECTABLE; the MGE/Nkx2-1 axis is weaker here than at Lamp5 Lhx6 candidates, even though the cohort percentile (0.874) is high.\n"
     discovery_score:
       score: 6
       rank_in_cohort: 3
@@ -1785,6 +1839,15 @@ edges:
       region_fraction: 0.422
       region_fraction_100um: 0.578
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:STRONGEST] All three defining markers CONSISTENT at CS20230722_CLUS_0767 (Sst val=10.78 cohort_pct 0.832; Ndnf val=1.03 cohort_pct 0.832; Nkx2-1 val=0.17 cohort_pct 0.874) and location CONSISTENT (region_fraction_100um: 0.578; Hippocampal formation dominant). 3 of 3 markers CONSISTENT. No annotation-transfer evidence is recorded on this edge, so the relationship cannot be committed beyond the structural-signal match.\n"
+    reconciliation_note: "Best-region candidate within the Sst Gaba_3 territory; competes with a Lamp5 Lhx6 candidate on the Nkx2-1 axis where 0767 expresses Nkx2-1 only weakly in absolute terms (val=0.17). Predicate left uncertain pending direct AT evidence on this edge.\n"
+    proposed_experiments:
+      - "Targeted Ndnf::Nkx2-1 intersectional transcriptomic profiling transferred onto WMBv1 at F1 >= 0.50 at CLUSTER level to test whether OLM-like Ndnf::Nkx2-1 cells co-cluster with CS20230722_CLUS_0767.\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: ae7e4e15
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0726
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0726
@@ -1868,6 +1931,12 @@ edges:
       region_fraction: 0.037
       region_fraction_100um: 0.088
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] All three markers CONSISTENT at CS20230722_CLUS_0726 (Sst val=1.38; Ndnf val=0.89; Nkx2-1 val=3.90 cohort_pct 0.983) but location DISCORDANT (region_fraction_100um: 0.088; Dentate gyrus [MBA:726] dominant rather than CA1 stratum oriens).\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: 29ee0f95
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_CLUS_0730
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0730
@@ -1951,6 +2020,12 @@ edges:
       region_fraction: 0.016
       region_fraction_100um: 0.063
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] All three markers CONSISTENT at CS20230722_CLUS_0730 (Sst val=1.39; Ndnf val=0.52; Nkx2-1 val=2.08 cohort_pct 0.958 atlas category DEFINING_SCOPED) but location DISCORDANT (region_fraction_100um: 0.063; Field CA3 pyramidal layer dominant rather than CA1 stratum oriens).\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: 0ef7cfa4
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0203
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0203
@@ -1986,7 +2061,9 @@ edges:
         node_b_value: 'Nkx2-1: 1.85; cohort_pct 0.984; child-coverage 0.750'
         alignment: CONSISTENT
         notes: val=1.85; cohort percentile 0.984; child-cluster coverage 0.750
-    caveats: []
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Location APPROXIMATE with Dentate gyrus and Field CA3 contributing substantial off-target painted counts beyond CA1 stratum oriens; region_fraction_100um: 0.114 is in the boundary band.\n"
     discovery_score:
       score: 5
       rank_in_cohort: 1
@@ -2035,6 +2112,17 @@ edges:
       region_fraction: 0.05
       region_fraction_100um: 0.114
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.35
+    rationale: "[tier:STRONGEST] Nkx2-1 CONSISTENT (val=1.85; cohort_pct 0.984; child-cluster coverage 0.750) at CS20230722_SUPT_0203 — strongest MGE/Nkx2-1 axis among assessed candidates. Sst CONSISTENT (val=1.52; cohort_pct 0.603; child coverage 1.000) and Ndnf CONSISTENT (val=1.32; cohort_pct 0.873; child coverage 1.000). 3 of 3 markers CONSISTENT. Location APPROXIMATE (region_fraction_100um: 0.114; Hippocampal formation dominant in absolute counts but with Dentate gyrus and Field CA3 also contributing). No annotation-transfer evidence is recorded on this edge.\n"
+    reconciliation_note: "Best-Nkx2-1 candidate; competes with a Sst Gaba_3 supertype which leads on Sst/Ndnf expression and Field CA1, stratum oriens location. Predicate left uncertain pending direct AT evidence from a Ndnf::Nkx2-1 intersectional dataset.\n"
+    proposed_experiments:
+      - "Targeted Ndnf::Nkx2-1 intersectional transcriptomic profiling, transferred onto WMBv1 at F1 >= 0.50 at SUPERTYPE level, to discriminate CS20230722_SUPT_0203 from competing Sst Gaba_3 supertype candidates.\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    unresolved_questions:
+      - "Whether the depth gradient within CA1 O/A reported by Chamberland 2024 maps to a transcriptomic gradient within Lamp5 Lhx6 vs. Sst Gaba_3 territories.\n"
+    rationale_source_hash: 0da5b624
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0204
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0204
@@ -2121,6 +2209,12 @@ edges:
       region_fraction: 0.024
       region_fraction_100um: 0.065
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Nkx2-1 CONSISTENT (val=1.76; cohort_pct 0.968) at CS20230722_SUPT_0204 but Sst APPROXIMATE (val=0.95; cohort_pct 0.413) and Ndnf APPROXIMATE (val=0.17; cohort_pct 0.492). Location DISCORDANT (region_fraction_100um: 0.065; Isocortex dominant). This is the Pvalb chandelier supertype — wrong subclass for an OLM-like Sst-IN.\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: c5a0e425
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0230
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0230
@@ -2207,6 +2301,12 @@ edges:
       region_fraction: 0.029
       region_fraction_100um: 0.055
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Sst CONSISTENT (val=6.13; cohort_pct 0.746) and Nkx2-1 CONSISTENT (val=1.17; cohort_pct 0.952) at CS20230722_SUPT_0230, but Ndnf APPROXIMATE (val=0.14; cohort_pct 0.429; child-cluster coverage 0.333; HIDDEN-1:1 signal noted). Location DISCORDANT (region_fraction_100um: 0.055; Cortical subplate dominant rather than hippocampus).\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: 806e3f55
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0233
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0233
@@ -2293,6 +2393,12 @@ edges:
       region_fraction: 0.025
       region_fraction_100um: 0.025
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] All three markers CONSISTENT at CS20230722_SUPT_0233 (Sst val=3.22; Ndnf val=0.57; Nkx2-1 val=0.75) but location DISCORDANT (region_fraction_100um: 0.025; Striatum dominant). Wrong region for a hippocampal CA1 stratum oriens subfamily.\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: e9053e09
   - id: edge_ndnf_nkx2_1_olm_subfamily_chamberland_to_CS20230722_SUPT_0215
     lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0215
@@ -2379,6 +2485,12 @@ edges:
       region_fraction: 0.012
       region_fraction_100um: 0.024
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Sst CONSISTENT (val=11.32; cohort_pct 0.873) and Nkx2-1 CONSISTENT (val=0.67; cohort_pct 0.905) and Ndnf CONSISTENT (val=0.19; cohort_pct 0.524) at CS20230722_SUPT_0215, but location DISCORDANT (region_fraction_100um: 0.024; Olfactory areas and Piriform area dominant). Wrong region for a hippocampal subfamily.\n"
+    rationale_generated_at: '2026-06-08T21:04:11+00:00'
+    report_path: reports/hippocampus/ndnf_nkx2_1_olm_subfamily_chamberland_summary.md
+    rationale_source_hash: a042256c
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0768
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0768
@@ -2446,6 +2558,12 @@ edges:
       region_fraction: 0.458
       region_fraction_100um: 0.818
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0768 sits in CA1 stratum oriens with high Sst (cohort_pct 0.992) but Nos1 only at cohort_pct 0.378; no AT support; the Chamberland Sst::Nos1 cohort maps to the Sst Chodl branch (CS20230722_CLUS_0859), not into Sst Gaba_3.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: d8007389
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0772
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0772
@@ -2513,6 +2631,12 @@ edges:
       region_fraction: 0.527
       region_fraction_100um: 0.706
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0772 sits in CA1 stratum oriens with high Sst (cohort_pct 0.958) but Nos1 only at cohort_pct 0.454; no AT support; AT routes the Sst::Nos1 cohort to Sst Chodl, not Sst Gaba_3.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: a6b32b70
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0850
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0850
@@ -2544,8 +2668,8 @@ edges:
         alignment: CONSISTENT
         notes: val=12.14; cohort percentile 0.992
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant anatomy is striatum (region_fraction_100um: 0.030); not a hippocampal cluster.\n"
     discovery_score:
       score: 5
       rank_in_cohort: 3
@@ -2582,6 +2706,12 @@ edges:
       region_fraction: 0.024
       region_fraction_100um: 0.03
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0850 has high Sst (cohort_pct 0.983) and high Nos1 (cohort_pct 0.992) but is striatum- localised (region_fraction_100um: 0.030; dominant anatomy Striatum / Nucleus accumbens / Caudoputamen); no hippocampal cells.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: 81725eb2
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0651
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0651
@@ -2649,6 +2779,12 @@ edges:
       region_fraction: 0.174
       region_fraction_100um: 0.406
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0651 is a Vip Gaba_7 cluster; Sst is near-absent (cohort_pct 0.269); high Nos1 alone does not rescue the wrong-subclass call.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: 50241b1e
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_CLUS_0724
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0724
@@ -2716,11 +2852,17 @@ edges:
       region_fraction: 0.07
       region_fraction_100um: 0.158
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0724 is Lamp5 Lhx6 Gaba_1; Sst is near-absent (cohort_pct 0.479); wrong subclass for an Sst-IN classical type.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: 35ac2082
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_0241
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0241
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnreviewedManualMapping
+    relationship: skos:broadMatch
+    mapping_justification: semapv:ManualMappingCuration
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -2747,8 +2889,10 @@ edges:
         alignment: CONSISTENT
         notes: val=11.26; cohort percentile 0.968; child-cluster coverage 1.000
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: "Supertype-level region rollup is dominated by extra- hippocampal Sst Chodl cells (region_fraction_100um: 0.021); the AT-best child cluster CS20230722_CLUS_0859 sits in CA1 stratum oriens.\n"
+      - caveat_type: SINGLE_DATASET
+        description: "Supporting AT evidence on the paired cluster edge derives from a single annotation-transfer run.\n"
     discovery_score:
       score: 5
       rank_in_cohort: 1
@@ -2787,6 +2931,18 @@ edges:
       region_fraction: 0.008
       region_fraction_100um: 0.021
       region_evidence: SELF
+    confidence: HIGH
+    confidence_score: 0.88
+    rationale: "[tier:STRONGEST] AT evidence on the paired cluster edge (edge_sst_nos1_to_CS20230722_CLUS_0859) records strong supertype-level concordance against CS20230722_SUPT_0241. Supertype is broader than the classical hippocampal subfamily because the Sst Chodl long-range branch includes extra- hippocampal Sst types. Sst and Nos1 CONSISTENT at supertype with full child-cluster coverage; AT-best child is CS20230722_CLUS_0859.\n"
+    reconciliation_note: "Paired with cluster edge against CS20230722_CLUS_0859 (skos:closeMatch + 1:1); supertype-level region rollup is DISCORDANT (region_fraction_100um: 0.021) because the Sst Chodl supertype includes long-range Sst types outside CA1.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Targeted transcriptomic profiling of Sst-Cre x Nos1 intersectional cohort, mapped onto WMBv1; target F1 >= 0.80 at CLUSTER against CS20230722_CLUS_0859 with confirmed long- range projection.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    unresolved_questions:
+      - "CLUS_0859 fell outside current Stage A top-50 and warrants curator review (per Cellular-Semantics/evidencell#111).\n"
+    rationale_source_hash: 27efea7b
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_0216
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0216
@@ -2856,6 +3012,12 @@ edges:
       region_fraction: 0.305
       region_fraction_100um: 0.539
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_SUPT_0216 (Sst Gaba_3) is the canonical hippocampal Sst supertype with strong CA1 stratum oriens enrichment (region_fraction_100um: 0.539) and high Sst (cohort_pct 0.905), but Nos1 is only cohort_pct 0.667 and the AT signal routes Sst::Nos1 to the Sst Chodl branch (CS20230722_SUPT_0241), not to Sst Gaba_3.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: 709c47c6
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_0203
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0203
@@ -2925,6 +3087,12 @@ edges:
       region_fraction: 0.05
       region_fraction_100um: 0.114
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0203 is Lamp5 Lhx6 Gaba_1; wrong subclass for an Sst-IN classical type; Sst cohort_pct 0.603 is mid-range and not sufficient against the wrong-subclass signal.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: 54d45040
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_0226
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0226
@@ -2956,8 +3124,8 @@ edges:
         alignment: CONSISTENT
         notes: val=1.92; cohort percentile 0.556; child-cluster coverage 1.000
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant anatomy is Isocortex (region_fraction_100um: 0.016); not hippocampal.\n"
     discovery_score:
       score: 4
       rank_in_cohort: 4
@@ -2996,6 +3164,12 @@ edges:
       region_fraction: 0.008
       region_fraction_100um: 0.016
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_SUPT_0226 (Sst Gaba_13) has high Sst (cohort_pct 0.968) but is cortex-localised (region_fraction_100um: 0.016; dominant anatomy Isocortex); not a hippocampal Sst supertype.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: 9cd9befe
   - id: edge_sst_nos1_subfamily_chamberland_to_CS20230722_SUPT_1164
     lit_type: sst_nos1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_1164
@@ -3065,6 +3239,12 @@ edges:
       region_fraction: 0.065
       region_fraction_100um: 0.244
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_1164 is Astro-TE NN_4, a non- neuronal (astrocyte) supertype; Sst (cohort_pct 0.333) and Nos1 (cohort_pct 0.175) are both near-absent; wrong cell class entirely.\n"
+    rationale_generated_at: '2026-06-08T21:04:12+00:00'
+    report_path: reports/hippocampus/sst_nos1_subfamily_chamberland_summary.md
+    rationale_source_hash: 15d68c4d
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0768
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0768
@@ -3095,7 +3275,9 @@ edges:
         node_b_value: 'Tac1: 0.15; cohort_pct 0.303'
         alignment: APPROXIMATE
         notes: val=0.15; cohort percentile 0.303
-    caveats: []
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Strong region + Sst signal here conflict with the transcriptome-wide transfer signal, which points to the Pvalb branch; cluster-level placement on CS20230722_CLUS_0768 is not supported.\n"
     discovery_score:
       score: 6
       rank_in_cohort: 1
@@ -3132,6 +3314,12 @@ edges:
       region_fraction: 0.458
       region_fraction_100um: 0.818
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0768 is the best stratum-oriens-localised child of Sst Gaba_3 (region_fraction_100um: 0.818) but Tac1=0.15 (cohort_pct 0.303) is far below the cohort median for a Tac1-defined subfamily, and cluster annotation transfer does not place Sst::Tac1 on the Sst Gaba_3 branch.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    rationale_source_hash: 6d1e88d1
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0772
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0772
@@ -3162,7 +3350,9 @@ edges:
         node_b_value: 'Tac1: 0.14; cohort_pct 0.261'
         alignment: APPROXIMATE
         notes: val=0.14; cohort percentile 0.261
-    caveats: []
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Tac1-absent stratum-oriens Sst Gaba_3 child; AT off-branch.
     discovery_score:
       score: 6
       rank_in_cohort: 2
@@ -3199,6 +3389,12 @@ edges:
       region_fraction: 0.527
       region_fraction_100um: 0.706
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.12
+    rationale: "[tier:CUT] CS20230722_CLUS_0772 has a strong stratum-oriens footprint (region_fraction_100um: 0.706) and high Sst (cohort_pct 0.958) but Tac1=0.14 (cohort_pct 0.261) is incompatible with a Tac1-defined subfamily; AT does not land here.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    rationale_source_hash: b11b8f6d
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0767
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0767
@@ -3229,7 +3425,9 @@ edges:
         node_b_value: 'Tac1: 0.80; cohort_pct 0.706'
         alignment: CONSISTENT
         notes: val=0.80; cohort percentile 0.706
-    caveats: []
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Mixed region; transcriptome-wide transfer off-branch.
     discovery_score:
       score: 5
       rank_in_cohort: 3
@@ -3266,6 +3464,12 @@ edges:
       region_fraction: 0.422
       region_fraction_100um: 0.578
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0767 carries moderate Tac1 (0.80, cohort_pct 0.706) and Sst (10.78, cohort_pct 0.832) but region_fraction_100um: 0.578 with substantial off-target mass in cerebrum-related and medial-forebrain-bundle anat terms; cluster annotation transfer does not place Sst::Tac1 on Sst Gaba_3.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    rationale_source_hash: 594ff6fa
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0774
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0774
@@ -3296,7 +3500,9 @@ edges:
         node_b_value: 'Tac1: 2.65; cohort_pct 0.866'
         alignment: CONSISTENT
         notes: val=2.65; cohort percentile 0.866
-    caveats: []
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Transcriptome-wide transfer off-branch despite plausible Tac1 + Sst signal.
     discovery_score:
       score: 5
       rank_in_cohort: 4
@@ -3333,6 +3539,12 @@ edges:
       region_fraction: 0.276
       region_fraction_100um: 0.497
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.18
+    rationale: "[tier:CUT] CS20230722_CLUS_0774 has the most plausible Sst Gaba_3 Tac1 signal (Tac1=2.65, cohort_pct 0.866) and high Sst (cohort_pct 0.975), but region_fraction_100um: 0.497 is APPROXIMATE and cluster annotation transfer does not land on the Sst Gaba_3 branch.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    rationale_source_hash: 19529db1
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0791
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_CLUS_0791
@@ -3363,7 +3575,9 @@ edges:
         node_b_value: 'Tac1: 8.27; cohort_pct 0.992; atlas category: NEUROPEPTIDE'
         alignment: CONSISTENT
         notes: val=8.27; cohort percentile 0.992
-    caveats: []
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Wrong supertype family; transcriptome-wide transfer off-branch.
     discovery_score:
       score: 5
       rank_in_cohort: 5
@@ -3400,6 +3614,12 @@ edges:
       region_fraction: 0.164
       region_fraction_100um: 0.41
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0791 (Sst Gaba_6) has the highest Tac1 in the Sst-named candidate set (Tac1=8.27, cohort_pct 0.992) but region_fraction_100um: 0.410 with off-target mass in Field CA3 and cluster annotation transfer does not land on Sst Gaba_6.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    rationale_source_hash: e8b6aec5
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0216
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0216
@@ -3430,7 +3650,9 @@ edges:
         node_b_value: 'Tac1: 0.55; cohort_pct 0.619; child-coverage 0.667'
         alignment: CONSISTENT
         notes: val=0.55; cohort percentile 0.619; child-cluster coverage 0.667
-    caveats: []
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Region + Sst concordance pull toward CS20230722_SUPT_0216 but the transcriptome-wide transfer signal pulls toward the Pvalb Gaba_2 supertype; the two signals are in tension and the transcriptome-wide signal carries more weight.\n"
     discovery_score:
       score: 4
       rank_in_cohort: 1
@@ -3469,6 +3691,17 @@ edges:
       region_fraction: 0.305
       region_fraction_100um: 0.539
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:NEXT] CS20230722_SUPT_0216 carries the strongest stratum-oriens soma footprint of any Sst-named hippocampal supertype (region_fraction_100um: 0.539; Field CA1, stratum oriens MBA:399 count_100um=1463) and Sst is strongly expressed (cohort_pct 0.905); however cluster annotation transfer does not land on this supertype's branch, and Tac1 at the best stratum-oriens-localised child cluster of this supertype is very low (Tac1=0.15, cohort_pct 0.303). Region + Sst marker concordance is insufficient against the transcriptome-wide signal pointing to the Pvalb branch.\n"
+    reconciliation_note: "Sst Gaba_3 retains the canonical Sst-OLM supertype role in companion mappings; placing Sst::Tac1-IN here would conflict with the Chamberland functional taxonomy in which OLM vs. Sst::Tac1 are distinct subfamilies.\n"
+    proposed_experiments:
+      - "Direct cluster annotation transfer of Chamberland Sst×Tac1 reporter cells onto WMBv1 at supertype level would either confirm the Pvalb Gaba_2 placement (refuting CS20230722_SUPT_0216) or surface a genuine split across both supertypes.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    unresolved_questions:
+      - "Is the Sst marker concordance at CS20230722_SUPT_0216 driven by contaminant or genuine subpopulation overlap, or is it incidental to the supertype's broader Sst-OLM membership?\n"
+    rationale_source_hash: 594729cb
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0212
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0212
@@ -3500,8 +3733,8 @@ edges:
         alignment: CONSISTENT
         notes: val=7.58; cohort percentile 0.968; child-cluster coverage 1.000
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Isocortex-dominant supertype; not hippocampal.
     discovery_score:
       score: 4
       rank_in_cohort: 2
@@ -3540,6 +3773,12 @@ edges:
       region_fraction: 0.028
       region_fraction_100um: 0.053
       region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0212 (Pvalb Gaba_8) shows strong Tac1 (cohort_pct 0.968) but location is DISCORDANT (region_fraction_100um: 0.053; dominant anat term is Isocortex MBA:315 count_100um=6762) — this is a cortical Pvalb supertype, not a hippocampal one. Cluster annotation transfer does not land here.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    rationale_source_hash: 0fcd9d72
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0211
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0211
@@ -3571,8 +3810,8 @@ edges:
         alignment: CONSISTENT
         notes: val=7.65; cohort percentile 0.984; child-cluster coverage 1.000
     caveats:
-      - caveat_type: AMBIGUOUS_MAPPING
-        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Isocortex-dominant supertype; not hippocampal.
     discovery_score:
       score: 4
       rank_in_cohort: 3
@@ -3611,11 +3850,17 @@ edges:
       region_fraction: 0.023
       region_fraction_100um: 0.082
       region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0211 (Pvalb Gaba_7) shows strong Tac1 (cohort_pct 0.984) but location is DISCORDANT (region_fraction_100um: 0.082; Isocortex MBA:315 dominant) — a cortical Pvalb supertype. AT does not land here.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    rationale_source_hash: 53c40677
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0206
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0206
-    relationship: evidencell:UncertainRelationship
-    mapping_justification: semapv:UnreviewedManualMapping
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
     evidence:
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
@@ -3641,7 +3886,13 @@ edges:
         node_b_value: 'Tac1: 5.36; cohort_pct 0.921; child-coverage 1.000'
         alignment: CONSISTENT
         notes: val=5.36; cohort percentile 0.921; child-cluster coverage 1.000
-    caveats: []
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: "AT signal derives from one rule-relabelled re-analysis of Harris 2018 (GEO:GSE99888); direct Sst×Tac1 reporter sequencing has not been performed.\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "Cluster-level transfer is distributed across multiple Pvalb Gaba_2 children; the supertype is the supportable mapping resolution.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Source intersection is Sst-driven, yet the transcriptome-wide signal lands on the Pvalb subclass — the mapping rests on transcriptomic Sst-Pvalb continuity rather than on Sst-supertype concordance.\n"
     discovery_score:
       score: 4
       rank_in_cohort: 4
@@ -3680,6 +3931,19 @@ edges:
       region_fraction: 0.174
       region_fraction_100um: 0.287
       region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:STRONGEST] Cluster annotation transfer places the Sst_Tac1 Chamberland-rule source group on CS20230722_SUPT_0206 with both defining markers concordant at the supertype (Sst cohort_pct 0.905, Tac1 cohort_pct 0.921; child-coverage 1.000 on each). 2 of 2 markers CONSISTENT. Location is APPROXIMATE (region_fraction_100um: 0.287 — boundary scatter; supertype is not a pure hippocampal supertype). Cluster-level transfer is distributed across Pvalb Gaba_2 children (cardinality 1:n).\n"
+    reconciliation_note: "Subclass-level companion edge edge_sst_tac1_to_CS20230722_SUBC_052 on the Pvalb Gaba subclass supports the broader Pvalb-branch placement; this supertype edge is the finest resolution the transcriptome-wide signal supports cleanly.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Direct cluster annotation transfer of Chamberland Sst×Tac1 intersectional reporter cells onto WMBv1 at the supertype level on CS20230722_SUPT_0206 would convert the rule-relabelled-Harris signal into transgene-anchored AnnotationTransferEvidence.\n"
+      - "Targeted transcriptomic profiling of bistratified-like CA1 stratum-oriens interneurons would tie functional bistratified identity to CS20230722_SUPT_0206 placement.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    unresolved_questions:
+      - "Within Pvalb Gaba_2, does Sst::Tac1 resolve to a single child cluster under direct AT or remain genuinely 1:n across multiple Pvalb Gaba_2 children?\n"
+    rationale_source_hash: 4a66292f
   - id: edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0203
     lit_type: sst_tac1_subfamily_chamberland
     taxonomy_type: CS20230722_SUPT_0203
@@ -3710,7 +3974,9 @@ edges:
         node_b_value: 'Tac1: 2.64; cohort_pct 0.841; child-coverage 1.000'
         alignment: CONSISTENT
         notes: val=2.64; cohort percentile 0.841; child-cluster coverage 1.000
-    caveats: []
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Wrong subclass (Lamp5 Lhx6); transcriptome-wide transfer off-branch.
     discovery_score:
       score: 4
       rank_in_cohort: 5
@@ -3749,3 +4015,9 @@ edges:
       region_fraction: 0.05
       region_fraction_100um: 0.114
       region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0203 (Lamp5 Lhx6 Gaba_1) carries Tac1 cohort_pct 0.841 and Sst cohort_pct 0.603 but region_fraction_100um: 0.114 is APPROXIMATE with Dentate gyrus MBA:726 as a major off-target, and the Lamp5 Lhx6 subclass is the wrong transcriptomic subclass for a Sst×Tac1 intersectional subfamily. Cluster annotation transfer does not land here.\n"
+    rationale_generated_at: '2026-06-08T21:04:13+00:00'
+    report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
+    rationale_source_hash: 734666a6

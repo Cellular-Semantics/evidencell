@@ -367,8 +367,7 @@ verdict:
     [tier:CUT] Duplicate atlas-metadata-only edge to
     CS20230722_SUPT_0138; the survivor supertype edge
     (edge_dg_semilunar_granule_cell_hippocampus_to_supt_0138)
-    carries the Bhatt 2025 annotation-transfer evidence
-    (run_ref at_run_20260508_bhatt2025_dg_mmc_wmbv1) and is the
+    carries the Bhatt 2025 annotation-transfer evidence and is the
     edge that should be retained.
   reconciliation_note: >
     Legacy / fresh-emit duplicate on taxonomy_type
@@ -386,8 +385,7 @@ verdict:
     [tier:CUT] Duplicate atlas-metadata-only edge to
     CS20230722_SUPT_0137; the survivor supertype edge
     (edge_dg_semilunar_granule_cell_hippocampus_to_supt_0137)
-    carries the Yao 2021 annotation-transfer evidence
-    (run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) and is
+    carries the Yao 2021 annotation-transfer evidence and is
     the edge that should be retained.
   reconciliation_note: >
     Legacy / fresh-emit duplicate on taxonomy_type
@@ -405,8 +403,7 @@ verdict:
     [tier:CUT] CS20230722_SUPT_0139 (DG Glut_4) is a DG-resident
     glutamatergic supertype but no SGC marker signal
     (Sorcs3 / Nptx2) is reported on it in the Bhatt 2025
-    annotation transfer
-    (run_ref at_run_20260508_bhatt2025_dg_mmc_wmbv1); only 131 of
+    annotation transfer run; only 131 of
     11327 DG nuclei map to it.
 ```
 <!-- verdict-block-end -->
@@ -420,8 +417,8 @@ verdict:
     [tier:CUT] CS20230722_SUPT_0136 (DG Glut_1) shows
     region_fraction_100um: 0.573 with substantial off-target
     spread into Field CA3; no SGC marker signal and only 46 of
-    11327 DG nuclei map to it in
-    run_ref at_run_20260508_bhatt2025_dg_mmc_wmbv1.
+    11327 DG nuclei map to it in the Bhatt 2025 annotation
+    transfer run.
 ```
 <!-- verdict-block-end -->
 

@@ -226,7 +226,7 @@ verdict:
     - caveat_type: TAXONOMY_LEVEL_MISMATCH
       description: >
         Best supportable resolution is supertype CS20230722_SUPT_0078 (F1=0.77);
-        cluster-level transfer drops to F1=0.70 on CS20230722_CLUS_0315, which is not
+        cluster-level transfer best target is CS20230722_CLUS_0315, which is not
         currently represented as an edge in this graph.
   proposed_experiments:
     - >
@@ -280,10 +280,10 @@ verdict:
   confidence: UNCERTAIN
   confidence_score: 0.25
   rationale: >
-    [tier:CUT] Annotation transfer (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) lands
-    only 16.8% of Yao 2021 CA3 source cells on CS20230722_SUPT_0075; region_fraction_100um:
-    0.708 places somata in CA3 but the supertype captures a minority of the CA3 cohort
-    and its sublayer or proximodistal identity within CS20230722_SUBC_017 is unresolved.
+    [tier:CUT] Edge carries only ATLAS_METADATA; the AT cohort distribution captured
+    on the SUPT_0078 edge attributes a minor share of the Yao 2021 CA3 source cells to
+    this supertype. region_fraction_100um: 0.708 places somata in CA3, but the supertype's
+    sublayer or proximodistal identity within CS20230722_SUBC_017 is unresolved.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
@@ -300,10 +300,10 @@ verdict:
   confidence: UNCERTAIN
   confidence_score: 0.2
   rationale: >
-    [tier:CUT] Annotation transfer (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) lands
-    6.5% of Yao 2021 CA3 source cells on CS20230722_SUPT_0076; region_fraction_100um:
-    0.842 places somata in CA3 but the supertype captures a minor share of the cohort
-    and its sublayer identity within CS20230722_SUBC_017 is unresolved.
+    [tier:CUT] Edge carries only ATLAS_METADATA; the AT cohort distribution captured
+    on the SUPT_0078 edge attributes a minor share of the Yao 2021 CA3 source cells to
+    this supertype. region_fraction_100um: 0.842 places somata in CA3, but the supertype's
+    sublayer identity within CS20230722_SUBC_017 is unresolved.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
@@ -320,10 +320,10 @@ verdict:
   confidence: UNCERTAIN
   confidence_score: 0.25
   rationale: >
-    [tier:CUT] Annotation transfer (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) lands
-    11.5% of Yao 2021 CA3 source cells on CS20230722_SUPT_0077; region_fraction_100um:
-    0.713 places somata in CA3 but the supertype captures a minor share of the cohort
-    and its sublayer identity within CS20230722_SUBC_017 is unresolved.
+    [tier:CUT] Edge carries only ATLAS_METADATA; the AT cohort distribution captured
+    on the SUPT_0078 edge attributes a minor share of the Yao 2021 CA3 source cells to
+    this supertype. region_fraction_100um: 0.713 places somata in CA3, but the supertype's
+    sublayer identity within CS20230722_SUBC_017 is unresolved.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
@@ -340,11 +340,11 @@ verdict:
   confidence: REFUTED
   confidence_score: 0.05
   rationale: >
-    [tier:CUT] Annotation transfer (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) lands
-    only 1.6% of Yao 2021 CA3 source cells on CS20230722_SUPT_0079, and MERFISH soma
-    counts on this supertype concentrate in Dentate gyrus, polymorph layer [MBA:10704]
-    rather than the CA3 pyramidal layer — anatomically incompatible with CA3 pyramidal
-    cells.
+    [tier:CUT] Edge carries only ATLAS_METADATA; the AT cohort distribution captured
+    on the SUPT_0078 edge attributes a minor share of the Yao 2021 CA3 source cells to
+    this supertype. MERFISH soma counts on this supertype concentrate in Dentate gyrus,
+    polymorph layer [MBA:10704] rather than the CA3 pyramidal layer — anatomically
+    incompatible with CA3 pyramidal cells.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY
       description: >

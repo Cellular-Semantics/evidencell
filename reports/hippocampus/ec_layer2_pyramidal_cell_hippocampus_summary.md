@@ -279,7 +279,7 @@ verdict:
     (n=42) places 59.5% of source cells on CS20230722_SUPT_0052 with F1=0.69
     at supertype level (run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1);
     location region_fraction_100um=1.000 and Calb1=7.14 (cohort_pct 0.913)
-    are both CONSISTENT. 2 of 3 markers CONSISTENT (Calb1, location); NT
+    are both CONSISTENT. 1 of 1 marker CONSISTENT (Calb1); location separately CONSISTENT; NT
     NOT_ASSESSED on the supertype side. 33% AT scatter onto sibling
     CS20230722_SUPT_0054 motivates 1:n cardinality.
   reconciliation_note: >
@@ -302,7 +302,7 @@ verdict:
         glutamatergic assertion in Naumann 2015.
   proposed_experiments:
     - >
-      Larger medial-EC layer II scRNA-seq or patch-seq cohort with
+      Larger medial-EC layer II scRNA-seq cohort using targeted transcriptomic profiling with
       Cre-driver targeting (e.g. Wfs1-Cre) or anatomically restricted
       medial-EC dissection, mapped via MapMyCells; target F1 >= 0.80 at
       supertype level with explicit SUPT_0052/SUPT_0054 partition reporting.
@@ -327,15 +327,13 @@ verdict:
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
     [tier:NEXT] AT scatter partner of CS20230722_SUPT_0052: 33% of the Yao
-    2021 L2 IT ENTm cohort (n=42) lands here (run_ref:
-    at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1); together with SUPT_0052
+    2021 L2 IT ENTm cohort (n=42) lands here; together with SUPT_0052
     the pair covers 92.8% of source cells. Location is the strongest of
     all candidates (region_fraction_100um=0.979, strict region_fraction=0.954,
     painted soma concentrated in entorhinal area medial part dorsal zone
     layer 2). Calb1=0.66 (cohort_pct 0.489) is APPROXIMATE — the central
     inconsistency: best location among candidates but supertype-level mean
-    Calb1 below the high-expression tier. 1 of 3 markers CONSISTENT
-    (location); Calb1 APPROXIMATE; NT NOT_ASSESSED.
+    Calb1 below the high-expression tier. 0 of 1 marker CONSISTENT (Calb1 APPROXIMATE); location separately CONSISTENT; NT NOT_ASSESSED.
   reconciliation_note: >
     Paired with CS20230722_SUPT_0052 as primary; the calbindin pyramidal
     population partitions across both ENT-po Glut supertypes. The
@@ -378,8 +376,7 @@ verdict:
     painted soma in entorhinal area lateral part layer 3). No annotation-
     transfer evidence supports this supertype: the analogous Yao 2021
     source label "L2/3 IT ENTl" maps onto a dentate gyrus supertype at n=2
-    (likely source-side under-sampling, not refutation). 2 of 3 markers
-    CONSISTENT (Calb1, location); NT NOT_ASSESSED. The classical calbindin
+    (likely source-side under-sampling, not refutation). 1 of 1 marker CONSISTENT (Calb1); location separately CONSISTENT; NT NOT_ASSESSED. The classical calbindin
     patches are canonically medial-EC layer II; SUPT_0035 is lateral-EC
     layer 3 and likely represents a separate Calb1+ EC population rather
     than the canonical type.
@@ -400,7 +397,7 @@ verdict:
         available run.
   proposed_experiments:
     - >
-      Medial-EC-restricted scRNA-seq cohort mapped to WMBv1 to determine
+      Medial-EC-restricted transcriptomic cohort mapped to WMBv1 to determine
       whether any medial-EC L2 calbindin cells land on CS20230722_SUPT_0035
       versus exclusively on the ENT-po supertypes.
   unresolved_questions:

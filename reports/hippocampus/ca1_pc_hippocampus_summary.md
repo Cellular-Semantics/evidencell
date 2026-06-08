@@ -457,34 +457,32 @@ verdict:
   mapping_cardinality: "1:1"
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    [tier:NEXT] CS20230722_CLUS_0262 is the leading child cluster within
-    CS20230722_SUPT_0069 on joint criteria: region_fraction_100um 0.975
-    against MBA:407, Wfs1 mean 7.68 (cohort percentile 0.98), and the
-    highest coverage among SUPT_0069 children in the Yao 2021 CA1-ProS
-    annotation transfer (run_ref
-    at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1; F1=0.44 cluster-level,
-    purity 1.00, coverage 0.28). 1 of 1 markers CONSISTENT.
+    [tier:NEXT] CS20230722_CLUS_0262 is the leading CA1-ProS supertype child
+    by region cell count within CS20230722_SUPT_0069: region_fraction_100um
+    0.975 against MBA:407 and Wfs1 mean 7.68 (cohort percentile 0.98). 1 of
+    1 markers CONSISTENT. Cluster-level AT evidence is not carried on this
+    edge (ATLAS_METADATA only); supertype-level AT is reported on the
+    parent SUPT_0069 edge.
   reconciliation_note: >
     Paired with the parent supertype edge to CS20230722_SUPT_0069
-    (broadMatch, 1:n); CLUS_0262 is the best-child within SUPT_0069 but the
-    cluster-level F1 of 0.44 reflects distribution of CA1-ProS source cells
-    across multiple SUPT_0069 children - the supertype level is the
-    cleaner anchor.
+    (broadMatch, 1:n); CLUS_0262 is the leading CA1-ProS supertype child by
+    region cell count within SUPT_0069, but the supertype level is the
+    cleaner anchor because CA1-ProS source cells distribute across multiple
+    SUPT_0069 children.
   caveats:
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
-        Yao 2021 CA1-ProS source cells distribute across CS20230722_CLUS_0262
-        and sibling clusters within SUPT_0069 (cluster-level F1=0.44, coverage
-        0.28); CS20230722_CLUS_0263 carries even higher Wfs1 (mean 7.75,
-        cohort percentile 0.99), and the cluster wins by region cell count
-        plus marginal annotation-transfer advantage rather than by an
-        unambiguous marker signature.
+        CA1-ProS source cells distribute across CS20230722_CLUS_0262 and
+        sibling clusters within SUPT_0069; CS20230722_CLUS_0263 carries
+        marginally higher Wfs1 (mean 7.75, cohort percentile 0.99), and
+        CLUS_0262 wins on region cell count rather than on an unambiguous
+        marker signature. Cluster-level AT evidence is not carried on this
+        edge.
     - caveat_type: TAXONOMY_LEVEL_MISMATCH
       description: >
-        Cluster-level annotation-transfer F1 (0.44) is well below
-        supertype-level F1 (0.79 on CS20230722_SUPT_0069); the cleanest
-        mapping resolution for the classical CA1 pyramidal cell is the
-        supertype, with the cluster-level call held provisionally pending
+        The cleanest mapping resolution for the classical CA1 pyramidal cell
+        is the supertype (SUPT_0069), where annotation-transfer evidence is
+        carried; the cluster-level call is held provisionally pending
         sublayer-resolved annotation transfer.
   proposed_experiments:
     - >
@@ -680,7 +678,7 @@ verdict:
     (region_fraction_100um 0.684; strict region_fraction 0.186 against
     MBA:407) and modest Wfs1 (mean 3.84, cohort percentile 0.79).
     Absorbs roughly a fifth of CA1-ProS annotation-transfer coverage in
-    the Yao 2021 run (run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1);
+    the Yao 2021 run;
     supports the broader 1:n mapping at subclass level.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY

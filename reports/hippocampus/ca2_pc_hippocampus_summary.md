@@ -224,7 +224,7 @@ verdict:
     1.000) and MERFISH soma counts in CA2 pyramidal layer; 3 of 4 markers
     CONSISTENT. Annotation transfer in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
     routes Yao's mixed CA2-IG-FC label to the FC/IG-enriched sibling
-    CS20230722_SUPT_0101 (supertype F1=0.95) which has no CA2 pyramidal layer
+    CS20230722_SUPT_0101 (subclass-level F1=0.97) which has no CA2 pyramidal layer
     soma; SUPT_0100 retains the CA2-PC mapping under the MERFISH-anatomy
     reading. Supertype lumps CA2 with fasciola cinerea and indusium griseum
     (broadMatch + 1:n).
@@ -249,7 +249,7 @@ verdict:
       description: >
         Annotation transfer of Yao 2021 (GEO:GSE185862) CA2-IG-FC subclass label
         (n=19) via at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1 maps 18/19 cells
-        to CS20230722_SUPT_0101 (supertype F1=0.95) and only 1/19 to
+        to CS20230722_SUPT_0101 (subclass-level F1=0.97) and only 1/19 to
         CS20230722_SUPT_0100; SUPT_0101 has 0 CA2 pyramidal layer cells in
         MERFISH while SUPT_0100 has 446. AT result reflects FC/IG dominance in
         Yao's pooled source label, not the correct target for CA2 pyramidal
@@ -468,11 +468,11 @@ verdict:
   rationale: >
     [tier:CUT] CS20230722_SUPT_0101 is the FC/IG-enriched sibling supertype
     in subclass 025 CA2-FC-IG Glut. Markers high (Pcp4=9.99, Rgs14=5.67,
-    Amigo2=4.12) and Yao 2021 AT in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
-    routes 18/19 cells of the mixed CA2-IG-FC source label here (supertype F1=0.95).
-    However MERFISH soma anatomy shows 0 cells in CA2 pyramidal layer for this
-    supertype (dominant anatomy Hippocampal formation outside CA2;
-    region_fraction_100um=0.136). The high AT signal reflects FC/IG dominance
+    Amigo2=4.12). MERFISH soma anatomy shows 0 cells in CA2 pyramidal layer
+    for this supertype (dominant anatomy Hippocampal formation outside CA2;
+    region_fraction_100um=0.136). The Yao 2021 AT signal routing the mixed
+    CA2-IG-FC source label to this branch is captured on the paired
+    edge_ca2_pc_hippocampus_to_supt_0100 verdict and reflects FC/IG dominance
     in Yao's pooled source label, not CA2 pyramidal cells.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY

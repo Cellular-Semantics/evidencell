@@ -304,7 +304,7 @@ verdict:
         Hochgerner 2018 identifies three molecular mossy-cell subtypes
         (Cyp26b1, Adcyap1, Klk8); SUPT_0079 captures the Adcyap1+
         subtype while SUPT_0078 captures the Cyp26b1+ subtype. Mossy-Klk8
-        (n=6) maps ambiguously across CA3 supertypes (best F1=0.31) —
+        (n=6) maps ambiguously across CA3 supertypes (best F1=0.56) —
         insufficient evidence for a separate edge.
     - caveat_type: SINGLE_DATASET
       description: >
@@ -406,14 +406,15 @@ verdict:
   mapping_cardinality: "1:1"
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    [tier:STRONGEST] CS20230722_CLUS_0317 is the AT-best child cluster
-    within CS20230722_SUPT_0079; Hochgerner 2018 Mossy-Adcyap1 transfers
-    at F1=0.79 (purity 0.94, coverage 0.68) in
-    at_run_20260427_hochgerner2018_dg_mmc_wmbv1. All 4 of 4 property
-    comparisons CONSISTENT (Gria4=8.03 cohort_pct 0.778, Dkk3=7.34
-    cohort_pct 0.852, NT Glut, location strict region_fraction 0.835 in
-    Dentate gyrus, polymorph layer [MBA:10704]). This is the only
-    candidate whose MERFISH soma distribution is strictly hilar.
+    [tier:STRONGEST] CS20230722_CLUS_0317 is the best-supported child
+    cluster within CS20230722_SUPT_0079, inheriting supertype-level AT
+    support from the canonical edge
+    edge_hilar_mossy_cell_hippocampus_to_supt_0079 (Hochgerner 2018
+    Mossy-Adcyap1). All 4 of 4 property comparisons CONSISTENT
+    (Gria4=8.03 cohort_pct 0.778, Dkk3=7.34 cohort_pct 0.852, NT Glut,
+    location strict region_fraction 0.835 in Dentate gyrus, polymorph
+    layer [MBA:10704]). This is the only candidate whose MERFISH soma
+    distribution is strictly hilar.
   reconciliation_note: >
     Cluster-level resolution of the CS20230722_SUPT_0079 mapping; both
     edges encode the same Adcyap1+ mossy-cell biology at different
@@ -426,16 +427,17 @@ verdict:
         assignment.
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
-        CS20230722_CLUS_0317 covers 68% (coverage 0.68) of the
-        Mossy-Adcyap1 source label at cluster resolution; the remaining
-        32% scatters to sibling clusters within CS20230722_SUPT_0079.
-        Supertype-level mapping is the primary call.
+        Cluster-level AT support is inherited from the supertype-level
+        edge edge_hilar_mossy_cell_hippocampus_to_supt_0079; the
+        Mossy-Adcyap1 label is distributed across sibling clusters
+        within CS20230722_SUPT_0079. Supertype-level mapping is the
+        primary call.
     - caveat_type: SINGLE_DATASET
       description: >
         AT evidence comes from a single source dataset (GEO:GSE95315).
   proposed_experiments:
     - >
-      Independent mouse DG scRNA-seq annotation transfer targeting the
+      Independent mouse DG transcriptomic annotation transfer targeting the
       Adcyap1+ mossy-cell subtype, with F1 ≥ 0.80 at CLUSTER level on
       CS20230722_CLUS_0317.
   unresolved_questions:
@@ -452,12 +454,13 @@ verdict:
   confidence: LOW
   confidence_score: 0.3
   rationale: >
-    [tier:CUT] CS20230722_CLUS_0315 is the AT-best child within
-    CS20230722_SUPT_0078 (F1=0.83 cluster level) but MERFISH soma rollup
-    is dominated by Field CA3, pyramidal layer (region_fraction_100um:
-    0.279, strict 0.065) — not the dentate hilus. Inherits the
-    DISCORDANT_ANATOMY concern from the parent SUPT_0078 mapping; cuts
-    at cluster level pending hilar/boundary anatomy validation.
+    [tier:CUT] CS20230722_CLUS_0315 is the best-supported child within
+    CS20230722_SUPT_0078 (see parent edge for AT provenance) but MERFISH
+    soma rollup is dominated by Field CA3, pyramidal layer
+    (region_fraction_100um: 0.279, strict 0.065) — not the dentate
+    hilus. Inherits the DISCORDANT_ANATOMY concern from the parent
+    SUPT_0078 mapping; cuts at cluster level pending hilar/boundary
+    anatomy validation.
 ```
 <!-- verdict-block-end -->
 

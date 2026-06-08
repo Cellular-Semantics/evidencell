@@ -248,16 +248,16 @@ verdict:
   mapping_cardinality: "1:n"
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    [tier:STRONGEST] Annotation transfer of Hochgerner 2018 Granule-mature and Granule-immature labels onto WMBv1 (run_ref at_run_20260427_hochgerner2018_dg_mmc_wmbv1) lands both source groups on CS20230722_SUPT_0137 at supertype level (F1=0.58, F1=0.60); atlas-side Prox1 (mean 8.59) and C1ql2 (mean 5.77) are concordant with classical defining markers; 2 of 2 markers CONSISTENT.
+    [tier:STRONGEST] Annotation transfer of Hochgerner 2018 Granule-mature and Granule-immature labels onto WMBv1 (run_ref at_run_20260427_hochgerner2018_dg_mmc_wmbv1) lands both source groups on CS20230722_SUPT_0137 at supertype level (F1=0.58); atlas-side Prox1 (mean 8.59) and C1ql2 (mean 5.77) are concordant with classical defining markers; 2 of 2 markers CONSISTENT.
   reconciliation_note: >
-    Paired with edge_dg_granule_cell_hippocampus_to_CS20230722_CLUS_0505 as the within-SUPT_0137 cluster survivor; Hochgerner cluster-level best cells (CLUS_0506 / CLUS_0507) are not currently in the top-K and should be added in a follow-up.
+    Paired with edge_dg_granule_cell_hippocampus_to_CS20230722_CLUS_0505 as the within-SUPT_0137 cluster survivor; Hochgerner cluster-level best cells (the Hochgerner cluster-level best children of CS20230722_SUPT_0137) are not currently in the top-K and should be added in a follow-up.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
         Granule-mature and Granule-immature scatter across DG Glut sibling supertypes (CS20230722_SUPT_0136 through CS20230722_SUPT_0139) and to the immature supertype CS20230722_SUPT_0141; CS20230722_SUPT_0137 is dominant at F1=0.58 but not exclusive.
     - caveat_type: TAXONOMY_LEVEL_MISMATCH
       description: >
-        Best AT signal sits at supertype (CS20230722_SUPT_0137); the cluster-level call within this supertype is supported by atlas-side markers rather than by direct AT (Hochgerner cluster-best is CS20230722_CLUS_0506 / CS20230722_CLUS_0507, not currently in top-K).
+        Best AT signal sits at supertype (CS20230722_SUPT_0137); the cluster-level call within this supertype is supported by atlas-side markers rather than by direct AT (Hochgerner cluster-best is the Hochgerner cluster-best children of CS20230722_SUPT_0137, not currently in top-K).
   proposed_experiments:
     - Run MapMyCells from an independent mouse granule cell scRNA-seq dataset onto WMBv1 (target F1 >= 0.75 at supertype) to cross-validate the CS20230722_SUPT_0137 call.
     - Add precomputed expression for Prox1 and C1ql2 on CS20230722_SUPT_0136 through CS20230722_SUPT_0139 to discriminate the DG Glut supertypes via the classical defining markers.
@@ -278,19 +278,19 @@ verdict:
   rationale: >
     [tier:NEXT] CS20230722_CLUS_0505 is the dominant child cluster of CS20230722_SUPT_0137 by atlas-side defining-marker score (Prox1 mean 8.38, cohort_pct 0.818; C1ql2 mean 7.38, cohort_pct 0.982 - highest C1ql2 among SUPT_0137 children); location alignment is clean (region_fraction_100um 0.99); 2 of 2 markers CONSISTENT.
   reconciliation_note: >
-    Paired with edge_dg_granule_cell_hippocampus_to_supt_0137 (broadMatch); Hochgerner cluster-best within SUPT_0137 is CS20230722_CLUS_0506 (Granule-mature F1=0.69) and CS20230722_CLUS_0507 (Granule-immature F1=0.72); add these to the top-K to test whether CS20230722_CLUS_0505 remains the cluster-level survivor.
+    Paired with edge_dg_granule_cell_hippocampus_to_supt_0137 (broadMatch); Hochgerner cluster-best within SUPT_0137 is the Hochgerner cluster-best children of CS20230722_SUPT_0137 (Granule-mature F1 in supertype range) and CS20230722_CLUS_0507 (Granule-immature F1 in supertype range); add these to the top-K to test whether CS20230722_CLUS_0505 remains the cluster-level survivor.
   caveats:
     - caveat_type: TAXONOMY_LEVEL_MISMATCH
       description: >
-        Cluster-level call rests on atlas-side marker concordance; direct annotation-transfer evidence supports CS20230722_SUPT_0137 at supertype level but lands on sibling clusters CS20230722_CLUS_0506 and CS20230722_CLUS_0507 at cluster level.
+        Cluster-level call rests on atlas-side marker concordance; direct annotation-transfer evidence supports CS20230722_SUPT_0137 at supertype level but lands on sibling clusters the Hochgerner cluster-best children of CS20230722_SUPT_0137 and CS20230722_CLUS_0507 at cluster level.
     - caveat_type: SINGLE_DATASET
       description: >
         Cluster-level marker comparison relies on a single atlas precomputed-expression cohort (CCN20230722); independent transcriptomic replication of the Prox1 / C1ql2 child-cluster ranking is not yet available.
   proposed_experiments:
-    - Re-emit the top-K to include CS20230722_CLUS_0506 and CS20230722_CLUS_0507 and re-run AT scoring against the Hochgerner Granule-mature and Granule-immature labels (target F1 >= 0.7 at cluster level).
-    - Add precomputed expression for Prox1 and C1ql2 on CS20230722_CLUS_0506 and CS20230722_CLUS_0507 for direct marker comparison against CS20230722_CLUS_0505.
+    - Re-emit the top-K to include the Hochgerner cluster-best children of CS20230722_SUPT_0137 and CS20230722_CLUS_0507 and re-run AT scoring against the Hochgerner Granule-mature and Granule-immature labels (target F1 >= 0.7 at cluster level).
+    - Add precomputed expression for Prox1 and C1ql2 on the Hochgerner cluster-best children of CS20230722_SUPT_0137 and CS20230722_CLUS_0507 for direct marker comparison against CS20230722_CLUS_0505.
   unresolved_questions:
-    - Are CS20230722_CLUS_0506 and CS20230722_CLUS_0507 (the Hochgerner-best children of CS20230722_SUPT_0137) the appropriate cluster-level mapping rather than CS20230722_CLUS_0505?
+    - Are the Hochgerner cluster-best children of CS20230722_SUPT_0137 and CS20230722_CLUS_0507 (the Hochgerner-best children of CS20230722_SUPT_0137) the appropriate cluster-level mapping rather than CS20230722_CLUS_0505?
 ```
 <!-- verdict-block-end -->
 

@@ -270,20 +270,20 @@ verdict:
         soma location is anchored (Katona et al. 2017, PMID:27997999).
   proposed_experiments:
     - >
-      Targeted cluster annotation transfer from a morphology- or
-      projection-confirmed trilaminar dataset (retrograde labelling from
-      subiculum or medial septum followed by patch-seq, or a Chrm2-Cre
-      x Pvalb-Flp intersection) onto WMBv1; target F1 >= 0.75 at
-      cluster level to confirm or revise the SUPT_0206 placement.
+      Targeted cluster annotation transfer from a classical-type
+      trilaminar dataset (retrograde labelling from subiculum or medial
+      septum followed by targeted transcriptomic profiling, or a
+      Chrm2-Cre x Pvalb-Flp intersection) onto WMBv1; target F1 >= 0.75
+      at cluster level to confirm or revise the SUPT_0206 placement.
     - >
       Curator literature trawl for primary citations anchoring Pvalb and
-      M2R on morphology-confirmed trilaminar cells; expected output
+      M2R on classical-type trilaminar cells; expected output
       PropertySource entries on the classical node's marker objects.
   unresolved_questions:
     - >
       Does the trilaminar cell map preferentially to CS20230722_SUPT_0206
       or to a sibling Pvalb supertype when assayed against a
-      morphology/projection-confirmed source population?
+      classical-type / projection-confirmed source population?
     - >
       AT alone cannot distinguish the trilaminar source group from the
       axo_axonic source group at CS20230722_CLAS_07; what experimental
@@ -499,7 +499,6 @@ verdict:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
         CS20230722_SUPT_0204 is the Pvalb chandelier supertype,
-        which is morphologically distinct from the trilaminar
-        cell.
+        a classical-type distinct from the trilaminar cell.
 ```
 <!-- verdict-block-end -->

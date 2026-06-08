@@ -272,8 +272,8 @@ verdict:
       description: >
         LTH is defined solely by physiological clustering (high Ih
         sag, low rheobase) in SST-Cre Ai14 cells from a single
-        study (PMID:33991454); no transcriptomic or morphological
-        anchor ties the cell type to CS20230722_SUPT_0216
+        study (PMID:33991454); no transcriptomic anchor
+        ties the cell type to CS20230722_SUPT_0216
         specifically rather than to any other CA1-SO Sst+ supertype.
     - caveat_type: SINGLE_STUDY
       description: >
@@ -288,8 +288,8 @@ verdict:
         supertype level.
   proposed_experiments:
     - >
-      Patch-seq on Ih-sag-positive low-rheobase CA1 stratum oriens
-      Sst+ interneurons; target F1 ≥ 0.75 at SUPERTYPE level against
+      Targeted transcriptomic profiling of Ih-sag-positive low-rheobase
+      CA1 stratum oriens Sst+ interneurons; target F1 ≥ 0.75 at SUPERTYPE level against
       CCN20230722. Adds an LTH-specific source label to a future AT
       run and resolves whether LTH is anchored to CS20230722_SUPT_0216
       (anatomy-preferred) or CS20230722_SUPT_0219 (current AT-anchored
@@ -349,9 +349,9 @@ verdict:
         anchor specific to LTH.
   proposed_experiments:
     - >
-      Patch-seq targeting Ih-sag-positive low-rheobase CA1-SO Sst+
-      cells; target F1 ≥ 0.80 at CLUSTER level against CCN20230722.
-      Adds AnnotationTransferEvidence with morphology- and
+      Targeted transcriptomic profiling of Ih-sag-positive low-rheobase
+      CA1-SO Sst+ cells; target F1 ≥ 0.80 at CLUSTER level against CCN20230722.
+      Adds AnnotationTransferEvidence with
       physiology-confirmed source cells and tests 1:1 vs n:1
       mapping to CS20230722_CLUS_0768.
   unresolved_questions:
@@ -405,8 +405,8 @@ verdict:
     - caveat_type: ELECTROPHYSIOLOGY_ONLY_DEFINITION
       description: >
         LTH cell is defined exclusively by physiological clustering
-        (PMID:33991454) in a single study. No morphological
-        reconstruction or molecular markers beyond SST-Cre labelling
+        (PMID:33991454) in a single study. No transcriptomic anchor
+        or molecular markers beyond SST-Cre labelling
         exist; transcriptomic identity is unknown.
     - caveat_type: SINGLE_STUDY
       description: >
@@ -415,8 +415,8 @@ verdict:
         has not been established.
   proposed_experiments:
     - >
-      Patch-seq on Ih-sag-positive CA1-SO Sst+ interneurons; target
-      F1 ≥ 0.75 at SUPERTYPE level against CCN20230722. Resolves
+      Targeted transcriptomic profiling of Ih-sag-positive CA1-SO Sst+
+      interneurons; target F1 ≥ 0.75 at SUPERTYPE level against CCN20230722. Resolves
       whether LTH maps to CS20230722_SUPT_0219 (current AT-anchored
       alternative) or CS20230722_SUPT_0216 (anatomy-anchored
       primary) by providing an LTH-specific source label.

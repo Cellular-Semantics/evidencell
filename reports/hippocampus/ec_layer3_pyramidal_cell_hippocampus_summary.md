@@ -234,13 +234,13 @@ verdict:
     Paired with edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037
     (10.2% secondary AT route; together 99.0% of L3 IT ENT cells) — kept
     as separate closeMatch edges rather than collapsing because the
-    secondary route's F1=0.18 is too low to assert as the same population.
+    secondary route's 
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
         CS20230722_SUPT_0036 and CS20230722_SUPT_0037 together capture
         99.0% of Yao 2021 L3 IT ENT cells (TYPE_A_SPLITS). Secondary
-        route to CS20230722_SUPT_0037 carries F1=0.18 (n=60/588).
+        route to CS20230722_SUPT_0037 carries ).
     - caveat_type: OTHER
       description: >
         NT type not asserted on CS20230722_SUPT_0036 — NT alignment
@@ -256,7 +256,7 @@ verdict:
       carries the temporoammonic EC layer III population.
     - >
       Retrograde-labelled CA1 stratum lacunosum-moleculare projecting
-      EC layer III neurons subjected to patch-seq or scRNA-seq (>=50
+      EC layer III neurons subjected to targeted transcriptomic profiling or scRNA-seq (>=50
       cells) to add projection-defined source provenance to the L3 IT
       ENT subclass identity.
   unresolved_questions:
@@ -283,7 +283,7 @@ verdict:
     [tier:NEXT] Secondary annotation transfer route in
     at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1: 10.2% of Yao 2021 L3 IT
     ENT cells route to CS20230722_SUPT_0037 with F1=0.18; together with
-    CS20230722_SUPT_0036 (F1=0.94) the two supertypes account for 99.0%
+    the primary CS20230722_SUPT_0036 route the two supertypes account for 99.0%
     of L3 IT ENT cells. Pcp4 transcript mean 9.44 (cohort_pct 0.707);
     MERFISH region_fraction_100um=0.943 (entorhinal area, lateral part,
     layer 3). 1 of 1 markers CONSISTENT.

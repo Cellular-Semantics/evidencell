@@ -240,7 +240,7 @@ verdict:
     Sst/Ndnf/location point here; Nkx2-1 axis points to CS20230722_SUPT_0203
     (Lamp5 Lhx6 Gaba_1). The mapping is unresolved between Sst Gaba_3
     (region + Sst/Ndnf) and Lamp5 Lhx6 (Nkx2-1 marker). Predicate left
-    uncertain pending targeted Ndnf::Nkx2-1 patch-seq.
+    uncertain pending targeted Ndnf::Nkx2-1 transcriptomic profiling.
   caveats:
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
@@ -255,10 +255,10 @@ verdict:
         from Chamberland 2024.
   proposed_experiments:
     - >
-      Targeted Ndnf::Nkx2-1 intersectional scRNA-seq or patch-seq with
-      morphology recovery, mapped to WMBv1 via MapMyCells at F1 >= 0.50
-      at SUPERTYPE level, to discriminate CS20230722_SUPT_0216 from
-      CS20230722_SUPT_0203.
+      Targeted Ndnf::Nkx2-1 intersectional transcriptomic profiling,
+      transferred onto WMBv1 at F1 >= 0.50 at SUPERTYPE level, to
+      discriminate CS20230722_SUPT_0216 from competing Lamp5 Lhx6
+      supertype candidates.
     - >
       Cluster-level Nkx2-1 expression survey across CS20230722_SUPT_0216
       children to test for HIDDEN-1:1 minority Nkx2-1+ signal masked at
@@ -313,27 +313,26 @@ verdict:
     CS20230722_CLUS_0767 (Sst val=10.78 cohort_pct 0.832; Ndnf val=1.03
     cohort_pct 0.832; Nkx2-1 val=0.17 cohort_pct 0.874) and location
     CONSISTENT (region_fraction_100um: 0.578; Hippocampal formation
-    dominant). 3 of 3 markers CONSISTENT. AT signal is not concentrated
-    here (cluster-level F1 < 0.1 across all targets in
-    at_run_20260512_chamberland_subfamily_mmc_wmbv1) so the relationship
-    cannot be committed beyond the structural-signal match.
+    dominant). 3 of 3 markers CONSISTENT. No annotation-transfer evidence
+    is recorded on this edge, so the relationship cannot be committed
+    beyond the structural-signal match.
   reconciliation_note: >
-    Best-region candidate within the Sst Gaba_3 territory; competes with
-    CS20230722_SUPT_0203 (Lamp5 Lhx6) on the Nkx2-1 axis where 0767
-    expresses Nkx2-1 only weakly in absolute terms (val=0.17 vs. 1.85 at
-    SUPT_0203). Predicate left uncertain pending direct AT evidence.
+    Best-region candidate within the Sst Gaba_3 territory; competes with a
+    Lamp5 Lhx6 candidate on the Nkx2-1 axis where 0767 expresses Nkx2-1
+    only weakly in absolute terms (val=0.17). Predicate left uncertain
+    pending direct AT evidence on this edge.
   caveats:
     - caveat_type: OTHER
       description: >
         Nkx2-1 val=0.17 at CS20230722_CLUS_0767 is just above MIN_DETECTABLE;
-        the MGE/Nkx2-1 axis is weaker here than at CS20230722_SUPT_0203
-        children, even though the cohort percentile (0.874) is high.
+        the MGE/Nkx2-1 axis is weaker here than at Lamp5 Lhx6 candidates,
+        even though the cohort percentile (0.874) is high.
   proposed_experiments:
     - >
-      Targeted Ndnf::Nkx2-1 patch-seq with morphology recovery (OLM dendrites
-      in stratum oriens + axons in stratum lacunosum-moleculare) mapped to
-      WMBv1 via MapMyCells at F1 >= 0.50 at CLUSTER level to test whether
-      OLM-like Ndnf::Nkx2-1 cells co-cluster with CS20230722_CLUS_0767.
+      Targeted Ndnf::Nkx2-1 intersectional transcriptomic profiling
+      transferred onto WMBv1 at F1 >= 0.50 at CLUSTER level to
+      test whether OLM-like Ndnf::Nkx2-1 cells co-cluster with
+      CS20230722_CLUS_0767.
 ```
 <!-- verdict-block-end -->
 
@@ -378,14 +377,12 @@ verdict:
     cohort_pct 0.873; child coverage 1.000). 3 of 3 markers CONSISTENT.
     Location APPROXIMATE (region_fraction_100um: 0.114; Hippocampal
     formation dominant in absolute counts but with Dentate gyrus and
-    Field CA3 also contributing); the AT run
-    at_run_20260512_chamberland_subfamily_mmc_wmbv1 does not concentrate
-    here (best SUPERTYPE F1=0.06 at 0199 Lamp5 Gaba_1, a different
-    Lamp5 supertype).
+    Field CA3 also contributing). No annotation-transfer evidence is
+    recorded on this edge.
   reconciliation_note: >
-    Best-Nkx2-1 candidate; competes with CS20230722_SUPT_0216 (Sst Gaba_3)
-    which leads on Sst/Ndnf expression and Field CA1, stratum oriens
-    location. Predicate left uncertain pending direct AT evidence from a
+    Best-Nkx2-1 candidate; competes with a Sst Gaba_3 supertype which
+    leads on Sst/Ndnf expression and Field CA1, stratum oriens location.
+    Predicate left uncertain pending direct AT evidence from a
     Ndnf::Nkx2-1 intersectional dataset.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
@@ -395,10 +392,10 @@ verdict:
         region_fraction_100um: 0.114 is in the boundary band.
   proposed_experiments:
     - >
-      Targeted Ndnf::Nkx2-1 intersectional scRNA-seq or patch-seq with
-      morphology recovery, mapped to WMBv1 via MapMyCells at F1 >= 0.50
-      at SUPERTYPE level, to discriminate CS20230722_SUPT_0203 from
-      CS20230722_SUPT_0216.
+      Targeted Ndnf::Nkx2-1 intersectional transcriptomic profiling,
+      transferred onto WMBv1 at F1 >= 0.50 at SUPERTYPE level, to
+      discriminate CS20230722_SUPT_0203 from competing Sst Gaba_3
+      supertype candidates.
   unresolved_questions:
     - >
       Whether the depth gradient within CA1 O/A reported by Chamberland

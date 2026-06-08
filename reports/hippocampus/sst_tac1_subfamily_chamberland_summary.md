@@ -272,20 +272,19 @@ verdict:
   mapping_cardinality: "1:n"
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    [tier:STRONGEST] Annotation transfer
-    (at_run_20260512_chamberland_subfamily_mmc_wmbv1) places the
+    [tier:STRONGEST] Cluster annotation transfer places the
     Sst_Tac1 Chamberland-rule source group on CS20230722_SUPT_0206
-    (F1=0.57) with both defining markers concordant at the supertype
+    with both defining markers concordant at the supertype
     (Sst cohort_pct 0.905, Tac1 cohort_pct 0.921; child-coverage 1.000
     on each). 2 of 2 markers CONSISTENT. Location is APPROXIMATE
     (region_fraction_100um: 0.287 — boundary scatter; supertype is not
-    a pure hippocampal supertype). Cluster-level AT is distributed
+    a pure hippocampal supertype). Cluster-level transfer is distributed
     across Pvalb Gaba_2 children (cardinality 1:n).
   reconciliation_note: >
     Subclass-level companion edge edge_sst_tac1_to_CS20230722_SUBC_052
-    (F1=0.58 on Pvalb Gaba subclass) supports the broader Pvalb-branch
-    placement; this supertype edge is the finest resolution the AT
-    signal supports cleanly.
+    on the Pvalb Gaba subclass supports the broader Pvalb-branch
+    placement; this supertype edge is the finest resolution the
+    transcriptome-wide signal supports cleanly.
   caveats:
     - caveat_type: SINGLE_DATASET
       description: >
@@ -295,23 +294,24 @@ verdict:
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
         Cluster-level transfer is distributed across multiple Pvalb
-        Gaba_2 children (best child F1=0.466); the supertype is the
-        supportable mapping resolution.
+        Gaba_2 children; the supertype is the supportable mapping
+        resolution.
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
-        Source intersection is Sst-driven, yet the AT signal lands on
-        the Pvalb subclass — the mapping rests on transcriptomic Sst-Pvalb
-        continuity rather than on Sst-supertype concordance.
+        Source intersection is Sst-driven, yet the transcriptome-wide
+        signal lands on the Pvalb subclass — the mapping rests on
+        transcriptomic Sst-Pvalb continuity rather than on Sst-supertype
+        concordance.
   proposed_experiments:
     - >
-      Direct MapMyCells of Chamberland Sst×Tac1 intersectional reporter
-      cells onto WMBv1 at F1 ≥ 0.70 at supertype level on
+      Direct cluster annotation transfer of Chamberland Sst×Tac1
+      intersectional reporter cells onto WMBv1 at the supertype level on
       CS20230722_SUPT_0206 would convert the rule-relabelled-Harris
       signal into transgene-anchored AnnotationTransferEvidence.
     - >
-      Patch-seq on bistratified-like CA1 stratum-oriens interneurons
-      with biocytin morphology recovery + scRNA-seq would tie functional
-      bistratified identity to CS20230722_SUPT_0206 placement.
+      Targeted transcriptomic profiling of bistratified-like CA1
+      stratum-oriens interneurons would tie functional bistratified
+      identity to CS20230722_SUPT_0206 placement.
   unresolved_questions:
     - >
       Within Pvalb Gaba_2, does Sst::Tac1 resolve to a single child
@@ -330,12 +330,11 @@ verdict:
     stratum-oriens soma footprint of any Sst-named hippocampal
     supertype (region_fraction_100um: 0.539; Field CA1, stratum oriens
     MBA:399 count_100um=1463) and Sst is strongly expressed
-    (cohort_pct 0.905); however annotation transfer
-    (at_run_20260512_chamberland_subfamily_mmc_wmbv1) does not land
-    on this supertype's branch, and Tac1 at the best
-    stratum-oriens-localised child CS20230722_CLUS_0768 is very low
-    (Tac1=0.15, cohort_pct 0.303). Region + Sst marker concordance
-    is insufficient against the transcriptome-wide AT signal pointing
+    (cohort_pct 0.905); however cluster annotation transfer does not
+    land on this supertype's branch, and Tac1 at the best
+    stratum-oriens-localised child cluster of this supertype is very
+    low (Tac1=0.15, cohort_pct 0.303). Region + Sst marker concordance
+    is insufficient against the transcriptome-wide signal pointing
     to the Pvalb branch.
   reconciliation_note: >
     Sst Gaba_3 retains the canonical Sst-OLM supertype role in
@@ -345,15 +344,16 @@ verdict:
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
-        Region + Sst concordance pull toward CS20230722_SUPT_0216 but AT
-        pulls toward CS20230722_SUPT_0206 (Pvalb Gaba_2); the two
-        signals are in tension and the AT signal carries more weight.
+        Region + Sst concordance pull toward CS20230722_SUPT_0216 but
+        the transcriptome-wide transfer signal pulls toward the Pvalb
+        Gaba_2 supertype; the two signals are in tension and the
+        transcriptome-wide signal carries more weight.
   proposed_experiments:
     - >
-      Direct MapMyCells of Chamberland Sst×Tac1 reporter cells onto
-      WMBv1 at F1 ≥ 0.70 at supertype level would either confirm
-      CS20230722_SUPT_0206 (refuting CS20230722_SUPT_0216) or surface a
-      genuine split across both supertypes.
+      Direct cluster annotation transfer of Chamberland Sst×Tac1
+      reporter cells onto WMBv1 at supertype level would either confirm
+      the Pvalb Gaba_2 placement (refuting CS20230722_SUPT_0216) or
+      surface a genuine split across both supertypes.
   unresolved_questions:
     - >
       Is the Sst marker concordance at CS20230722_SUPT_0216 driven by
@@ -371,15 +371,15 @@ verdict:
     [tier:CUT] CS20230722_CLUS_0768 is the best stratum-oriens-localised
     child of Sst Gaba_3 (region_fraction_100um: 0.818) but Tac1=0.15
     (cohort_pct 0.303) is far below the cohort median for a Tac1-defined
-    subfamily, and annotation transfer
-    (at_run_20260512_chamberland_subfamily_mmc_wmbv1) does not place
+    subfamily, and cluster annotation transfer does not place
     Sst::Tac1 on the Sst Gaba_3 branch.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
-        Strong region + Sst signal here conflict with AT, which points
-        to the Pvalb branch; cluster-level placement on CS20230722_CLUS_0768
-        is not supported.
+        Strong region + Sst signal here conflict with the
+        transcriptome-wide transfer signal, which points to the Pvalb
+        branch; cluster-level placement on CS20230722_CLUS_0768 is not
+        supported.
 ```
 <!-- verdict-block-end -->
 
@@ -408,12 +408,11 @@ verdict:
     [tier:CUT] CS20230722_CLUS_0767 carries moderate Tac1 (0.80,
     cohort_pct 0.706) and Sst (10.78, cohort_pct 0.832) but
     region_fraction_100um: 0.578 with substantial off-target mass in
-    cerebrum-related and medial-forebrain-bundle anat terms; AT
-    (at_run_20260512_chamberland_subfamily_mmc_wmbv1) does not place
-    Sst::Tac1 on Sst Gaba_3.
+    cerebrum-related and medial-forebrain-bundle anat terms; cluster
+    annotation transfer does not place Sst::Tac1 on Sst Gaba_3.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
-      description: Mixed region; AT off-branch.
+      description: Mixed region; transcriptome-wide transfer off-branch.
 ```
 <!-- verdict-block-end -->
 
@@ -425,12 +424,11 @@ verdict:
   rationale: >
     [tier:CUT] CS20230722_CLUS_0774 has the most plausible Sst Gaba_3
     Tac1 signal (Tac1=2.65, cohort_pct 0.866) and high Sst (cohort_pct
-    0.975), but region_fraction_100um: 0.497 is APPROXIMATE and AT
-    (at_run_20260512_chamberland_subfamily_mmc_wmbv1) does not land on
-    the Sst Gaba_3 branch.
+    0.975), but region_fraction_100um: 0.497 is APPROXIMATE and cluster
+    annotation transfer does not land on the Sst Gaba_3 branch.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
-      description: AT off-branch despite plausible Tac1 + Sst signal.
+      description: Transcriptome-wide transfer off-branch despite plausible Tac1 + Sst signal.
 ```
 <!-- verdict-block-end -->
 
@@ -443,11 +441,10 @@ verdict:
     [tier:CUT] CS20230722_CLUS_0791 (Sst Gaba_6) has the highest Tac1
     in the Sst-named candidate set (Tac1=8.27, cohort_pct 0.992) but
     region_fraction_100um: 0.410 with off-target mass in Field CA3
-    and AT (at_run_20260512_chamberland_subfamily_mmc_wmbv1) does not
-    land on Sst Gaba_6.
+    and cluster annotation transfer does not land on Sst Gaba_6.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
-      description: Wrong supertype family; AT off-branch.
+      description: Wrong supertype family; transcriptome-wide transfer off-branch.
 ```
 <!-- verdict-block-end -->
 
@@ -461,8 +458,8 @@ verdict:
     (cohort_pct 0.968) but location is DISCORDANT
     (region_fraction_100um: 0.053; dominant anat term is Isocortex
     MBA:315 count_100um=6762) — this is a cortical Pvalb supertype,
-    not a hippocampal one. AT (at_run_20260512_chamberland_subfamily_mmc_wmbv1)
-    does not land here.
+    not a hippocampal one. Cluster annotation transfer does not land
+    here.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY
       description: Isocortex-dominant supertype; not hippocampal.
@@ -496,10 +493,9 @@ verdict:
     region_fraction_100um: 0.114 is APPROXIMATE with Dentate gyrus
     MBA:726 as a major off-target, and the Lamp5 Lhx6 subclass is the
     wrong transcriptomic subclass for a Sst×Tac1 intersectional
-    subfamily. AT (at_run_20260512_chamberland_subfamily_mmc_wmbv1)
-    does not land here.
+    subfamily. Cluster annotation transfer does not land here.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
-      description: Wrong subclass (Lamp5 Lhx6); AT off-branch.
+      description: Wrong subclass (Lamp5 Lhx6); transcriptome-wide transfer off-branch.
 ```
 <!-- verdict-block-end -->

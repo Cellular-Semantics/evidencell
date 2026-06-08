@@ -175,7 +175,7 @@ The Cell Ontology has no specific term for ventral hippocampal dopamine receptor
 - *Resolves:* open question 2.
 
 **Ventral-CA1 D1R/D2R-targeted annotation transfer.**
-- *What:* MapMyCells annotation transfer onto WMBv1 from a ventral hippocampus dataset with Drd1-Cre and/or Drd2-Cre lineage labelling.
+- *What:* MapMyCells annotation transfer onto WMBv1 from a ventral hippocampus dataset with Drd1-Cre and/or Drd2-Cre driver labelling.
 - *Target:* F1 ≥ 0.50 at supertype level on a labelled D1R+/D2R+ pyramidal subset; F1 ≥ 0.30 at cluster level.
 - *Expected output:* `AnnotationTransferEvidence` on the edge, replacing the current CA1-ProS-wide AT signal with a D1R/D2R-specific signal.
 - *Resolves:* open questions 1 and 2.
@@ -262,7 +262,7 @@ verdict:
       cohort.
     - >
       Targeted MapMyCells annotation transfer from a ventral
-      hippocampus dataset with Drd1-Cre and/or Drd2-Cre lineage
+      hippocampus dataset with Drd1-Cre and/or Drd2-Cre driver
       labelling onto WMBv1 (CCN20230722); target F1 >= 0.50 at
       supertype and F1 >= 0.30 at cluster level on the
       D1R+/D2R+ pyramidal subset; output AnnotationTransferEvidence

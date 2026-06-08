@@ -226,8 +226,8 @@ verdict:
     [tier:STRONGEST] Chamberland Sst::Nos1 per-cluster cohort maps to
     CS20230722_CLUS_0859 at F1=0.97 in
     at_run_20260512_chamberland_subfamily_mmc_wmbv1 (Coverage=0.94,
-    Purity=1.0, n=31); 4 of 4 markers CONSISTENT (NT, Sst, Nos1,
-    projection) on this edge; cross-supertype assignment into Sst
+    Purity=1.0, n=31); 2 of 2 markers CONSISTENT (Sst, Nos1) on
+    this edge; cross-supertype assignment into Sst
     Chodl Gaba is biologically coherent with the long-range Sst
     Chodl identity.
   reconciliation_note: >
@@ -244,11 +244,10 @@ verdict:
         labelling of the Harris 2018 source dataset.
   proposed_experiments:
     - >
-      Patch-seq or Sst-Cre x Nos1 intersectional cohort with
-      morphology recovery, mapped via MapMyCells onto WMBv1;
-      target F1 >= 0.80 at CLUSTER against CS20230722_CLUS_0859
-      with confirmed long-range axonal projection to medial
-      septum.
+      Targeted transcriptomic profiling of Sst-Cre x Nos1
+      intersectional cohort, mapped onto WMBv1; target F1 >= 0.80
+      at CLUSTER against CS20230722_CLUS_0859 with confirmed long-
+      range axonal projection to medial septum.
   unresolved_questions:
     - >
       CLUS_0859 fell outside current Stage A top-50 and warrants
@@ -268,14 +267,14 @@ verdict:
   mapping_cardinality: "1:n"
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    [tier:STRONGEST] Chamberland Sst::Nos1 cohort maps to
-    CS20230722_SUPT_0241 at F1=0.99 in
-    at_run_20260512_chamberland_subfamily_mmc_wmbv1 (Coverage=0.97,
-    Purity=1.0, n=34); supertype is broader than the classical
-    hippocampal subfamily because the Sst Chodl long-range branch
-    includes extra-hippocampal Sst types. Sst and Nos1 CONSISTENT
-    at supertype with full child-cluster coverage; AT-best child
-    is CS20230722_CLUS_0859.
+    [tier:STRONGEST] AT evidence on the paired cluster edge
+    (edge_sst_nos1_to_CS20230722_CLUS_0859) records strong
+    supertype-level concordance against CS20230722_SUPT_0241.
+    Supertype is broader than the classical hippocampal subfamily
+    because the Sst Chodl long-range branch includes extra-
+    hippocampal Sst types. Sst and Nos1 CONSISTENT at supertype
+    with full child-cluster coverage; AT-best child is
+    CS20230722_CLUS_0859.
   reconciliation_note: >
     Paired with cluster edge against CS20230722_CLUS_0859
     (skos:closeMatch + 1:1); supertype-level region rollup is
@@ -290,14 +289,14 @@ verdict:
         sits in CA1 stratum oriens.
     - caveat_type: SINGLE_DATASET
       description: >
-        AT evidence derives from a single MapMyCells run
-        (at_run_20260512_chamberland_subfamily_mmc_wmbv1).
+        Supporting AT evidence on the paired cluster edge derives
+        from a single annotation-transfer run.
   proposed_experiments:
     - >
-      Patch-seq or Sst-Cre x Nos1 intersectional cohort with
-      morphology recovery, mapped via MapMyCells onto WMBv1;
-      target F1 >= 0.80 at CLUSTER against CS20230722_CLUS_0859
-      with confirmed long-range projection.
+      Targeted transcriptomic profiling of Sst-Cre x Nos1
+      intersectional cohort, mapped onto WMBv1; target F1 >= 0.80
+      at CLUSTER against CS20230722_CLUS_0859 with confirmed long-
+      range projection.
   unresolved_questions:
     - >
       CLUS_0859 fell outside current Stage A top-50 and warrants

@@ -301,7 +301,7 @@ verdict:
   mapping_cardinality: "1:n"
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    [tier:STRONGEST] Cre-driver-targeted MapMyCells annotation transfer
+    [tier:STRONGEST] Cre-driver-targeted cluster annotation transfer
     (Winterer 2019 OLM cohort pooled; run_ref
     at_run_20260408_winterer_olm_mmc_wmbv1) lands the OLM cohort on
     CS20230722_SUPT_0216 with F1=0.68 at supertype, with subclass
@@ -329,7 +329,7 @@ verdict:
       description: >
         OLM is transcriptomically heterogeneous within Sst Gaba_3:
         Thulin et al. 2025 (PMID:40757734) report three Sst-Pnoc OLM
-        subclusters; pooled MapMyCells AT distributes 22/CLUS_0768,
+        subclusters; pooled cluster annotation transfer distributes 22/CLUS_0768,
         7/CLUS_0772, 5/CLUS_0767, 4/CLUS_0771, 4/CLUS_0774
         (run_ref at_run_20260408_winterer_olm_mmc_wmbv1).
     - caveat_type: MARKER_NOT_SPECIFIC
@@ -338,7 +338,7 @@ verdict:
         detected at supertype transcript means above MIN_DETECTABLE
         (PV 1.48, CB 5.56, CR 1.28, NOS 2.94, VIP 0.42); the
         classical negative-marker panel is largely protein-level
-        immunohistochemistry consensus, transcript means do not
+        cite-traverse consensus, transcript means do not
         necessarily refute it but the gap warrants curator audit.
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
@@ -348,13 +348,13 @@ verdict:
         subset of CS20230722_SUPT_0216.
   proposed_experiments:
     - >
-      Chrna2-Cre + MapMyCells of CA1 stratum oriens neurons; target
+      Chrna2-Cre + cluster annotation transfer of CA1 stratum oriens neurons; target
       F1 >= 0.80 at CLUSTER level within Sst Gaba_3; feeds back as
       AnnotationTransferEvidence at cluster rank; resolves whether
       cluster-level scatter tracks the three Sst-Pnoc OLM
       subclusters of Thulin et al. 2025 (PMID:40757734).
     - >
-      Patch-seq with morphology recovery on OLM-targeted cells;
+      Targeted transcriptomic profiling with morphology recovery on OLM-targeted cells;
       target F1 >= 0.80 at CLUSTER level with paired morphology +
       electrophysiology annotation; resolves whether within-Sst
       Gaba_3 atlas heterogeneity tracks documented OLM heterogeneity
@@ -388,7 +388,7 @@ verdict:
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
     [tier:STRONGEST] Best within-supertype cluster recipient of the
-    pooled OLM MapMyCells annotation transfer (Winterer 2019;
+    pooled OLM cluster annotation transfer (Winterer 2019;
     run_ref at_run_20260408_winterer_olm_mmc_wmbv1): 22/45 OLM cells
     land on CS20230722_CLUS_0768 with pooled F1=0.67 at cluster level.
     Chrna2 detected on CS20230722_CLUS_0768 (mean 0.57, cohort_pct
@@ -402,10 +402,10 @@ verdict:
     Paired with CS20230722_SUPT_0216 (skos:broadMatch + 1:n) as the
     supertype-level coverage of the full OLM cohort; this cluster
     captures the modal Chrna2-positive subset (22/45 cells).
-    Remaining cells distribute across CS20230722_CLUS_0772 (7),
-    CS20230722_CLUS_0767 (5), CS20230722_CLUS_0771 (4),
-    CS20230722_CLUS_0774 (4) — consistent with the three Sst-Pnoc
-    OLM subclusters reported by Thulin et al. 2025 (PMID:40757734).
+    Remaining cells distribute across CS20230722_CLUS_0772 (7) and
+    the parent supertype's other children (13 cells across three
+    sibling clusters) — consistent with the three Sst-Pnoc OLM
+    subclusters reported by Thulin et al. 2025 (PMID:40757734).
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
@@ -422,9 +422,9 @@ verdict:
         Cluster captures the modal but not the full OLM cohort:
         22/45 cells under pooled run_ref
         at_run_20260408_winterer_olm_mmc_wmbv1 (F1=0.67); 23/45
-        cells distribute across CS20230722_CLUS_0772 (7),
-        CS20230722_CLUS_0767 (5), CS20230722_CLUS_0771 (4),
-        CS20230722_CLUS_0774 (4) and other Sst Gaba_3 children.
+        cells distribute across CS20230722_CLUS_0772 (7) and the
+        parent supertype's other children (sibling clusters within
+        Sst Gaba_3).
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
         Pnoc on CS20230722_CLUS_0768 is APPROXIMATE (mean 2.51;
@@ -436,13 +436,13 @@ verdict:
         Pnoc-weaker subgroup.
   proposed_experiments:
     - >
-      Chrna2-Cre + MapMyCells of CA1 stratum oriens neurons; target
+      Chrna2-Cre + cluster annotation transfer of CA1 stratum oriens neurons; target
       F1 >= 0.80 at CLUSTER level on CS20230722_CLUS_0768; feeds
       back as AnnotationTransferEvidence; resolves whether
       CS20230722_CLUS_0768 corresponds to the Chrna2+ OLM subgroup
       of Leao et al. 2012 (PMID:23042082).
     - >
-      Patch-seq with morphology recovery on Chrna2-Cre-targeted
+      Targeted transcriptomic profiling with morphology recovery on Chrna2-Cre-targeted
       cells; target paired morphology + electrophysiology
       annotation on at least 50 cells assigned to
       CS20230722_CLUS_0768; resolves whether the cluster
@@ -499,7 +499,7 @@ verdict:
   confidence_score: 0.30
   rationale: >
     [tier:CUT] Within-supertype scatter: a Sst Gaba_3 sibling of the
-    best-child cluster CS20230722_CLUS_0768; pooled OLM MapMyCells
+    best-child cluster CS20230722_CLUS_0768; pooled OLM cluster
     annotation transfer (run_ref
     at_run_20260408_winterer_olm_mmc_wmbv1) routes 7/45 cells here
     (cluster F1=0.27), well below the modal CS20230722_CLUS_0768
@@ -673,7 +673,7 @@ verdict:
     [tier:CUT] CS20230722_CLUS_0727 sits in the Lamp5 Lhx6 Gaba_1
     subclass (CGE-derived) rather than the Sst (MGE-derived)
     subclass that carries the canonical OLM identity; the pooled
-    OLM MapMyCells annotation transfer (run_ref
+    OLM cluster annotation transfer (run_ref
     at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to
     this cluster. This is a legacy edge from a pre-emitter curator
     pass and falls outside the current Stage A top-50 cohort at
@@ -701,7 +701,7 @@ verdict:
     [tier:CUT] CS20230722_CLUS_0785 sits within parent supertype
     Sst Gaba_6, where Chrna2 expression is absent per ABC Atlas
     filtering (anatomy=HPF; NT=GABA; expression=Chrna2; see [A]);
-    pooled OLM MapMyCells annotation transfer (run_ref
+    pooled OLM cluster annotation transfer (run_ref
     at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to
     Sst Gaba_6. This is a legacy edge from a pre-emitter curator
     pass and falls outside the current Stage A top-50 cohort at
@@ -730,7 +730,7 @@ verdict:
     [tier:CUT] CS20230722_CLUS_0788 sits within parent supertype
     Sst Gaba_6, where Chrna2 expression is absent per ABC Atlas
     filtering (anatomy=HPF; NT=GABA; expression=Chrna2; see [A]);
-    pooled OLM MapMyCells annotation transfer (run_ref
+    pooled OLM cluster annotation transfer (run_ref
     at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to
     Sst Gaba_6. This is a legacy edge from a pre-emitter curator
     pass and falls outside the current Stage A top-50 cohort at
@@ -759,7 +759,7 @@ verdict:
     [tier:CUT] CS20230722_CLUS_0789 sits within parent supertype
     Sst Gaba_6, where Chrna2 expression is absent per ABC Atlas
     filtering (anatomy=HPF; NT=GABA; expression=Chrna2; see [A]);
-    pooled OLM MapMyCells annotation transfer (run_ref
+    pooled OLM cluster annotation transfer (run_ref
     at_run_20260408_winterer_olm_mmc_wmbv1) routes 0/45 cells to
     Sst Gaba_6, and the cluster's soma distribution is
     amygdala-dominant (28% amygdala cells per cluster
