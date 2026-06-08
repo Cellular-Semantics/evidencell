@@ -1,19 +1,30 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml medial_amygdala_lhx9_glutamatergic_neuron CCN20230722 1 5
+  Loaded leaf expression data: 5322 nodes at cluster level (for coverage computation)
+  Loaded expression data: 6523 nodes (merged across queried + leaf ranks where applicable)
+Classical node: medial_amygdala_lhx9_glutamatergic_neuron (Medial amygdala Lhx9+ ventral pallial-derived glutamatergic neuron)
+  NT type: Glutamatergic
+  Markers (defining + neuropeptides): ['Lhx9']
+  Soma locations: ['UBERON:0002892']
+  Resolved MBA IDs: ['MBA:403']
+  Query rank: 1
+  Taxonomy: CCN20230722
+  AT artifact: not found (proceeding without AT scoring)
 {
-  "classical_node_id": "cea_small_aspiny_neuron",
-  "classical_node_name": "Central amygdala small aspiny neuron",
+  "classical_node_id": "medial_amygdala_lhx9_glutamatergic_neuron",
+  "classical_node_name": "Medial amygdala Lhx9+ ventral pallial-derived glutamatergic neuron",
   "taxonomy_id": "CCN20230722",
   "rank": 1,
   "n_candidates": 5,
   "candidates": [
     {
-      "node_id": "CS20230722_SUPT_1164",
-      "label": "1164 Astro-TE NN_4",
+      "node_id": "CS20230722_SUPT_0511",
+      "label": "0511 COAa-PAA-MEA Barhl2 Glut_3",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_319",
+      "parent_id": "CS20230722_SUBC_114",
       "discovery_score": {
-        "score": 1,
+        "score": 2,
         "rank_in_cohort": 1,
         "cohort_size": 5,
         "next_best_score": 1,
@@ -25,23 +36,33 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
-        "expression_detail": [],
-        "region_fraction": 0.005,
+        "expression_detail": [
+          {
+            "gene": "Lhx9",
+            "val": null,
+            "reliable": null,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "METADATA",
+            "percentiles": []
+          }
+        ],
+        "region_fraction": 0.255,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0215",
-      "label": "0215 Sst Gaba_2",
+      "node_id": "CS20230722_SUPT_1103",
+      "label": "1103 MDRNd Prox1 Pax6 Gly-Gaba_1",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_053",
+      "parent_id": "CS20230722_SUBC_289",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 2,
@@ -55,23 +76,23 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.006,
+        "region_fraction": 0.0,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0206",
-      "label": "0206 Pvalb Gaba_2",
+      "node_id": "CS20230722_SUPT_1196",
+      "label": "1196 Monocytes NN_1",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_052",
+      "parent_id": "CS20230722_SUBC_336",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 3,
@@ -85,23 +106,23 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.002,
+        "region_fraction": 0.0,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0204",
-      "label": "0204 Pvalb chandelier Gaba_1",
+      "node_id": "CS20230722_SUPT_1197",
+      "label": "1197 DC NN_1",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_051",
+      "parent_id": "CS20230722_SUBC_337",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 4,
@@ -115,23 +136,23 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.002,
+        "region_fraction": 0.001,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0202",
-      "label": "0202 Lamp5 Gaba_4",
+      "node_id": "CS20230722_SUPT_1199",
+      "label": "1199 ILC NN_2",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_049",
+      "parent_id": "CS20230722_SUBC_338",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 5,
@@ -145,13 +166,13 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.008,
+        "region_fraction": 0.0,
         "region_evidence": "SELF"
       }
     }

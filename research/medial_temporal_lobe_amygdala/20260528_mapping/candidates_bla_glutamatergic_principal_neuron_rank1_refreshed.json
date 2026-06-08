@@ -1,6 +1,17 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml bla_glutamatergic_principal_neuron CCN20230722 1 5
+  Loaded leaf expression data: 5322 nodes at cluster level (for coverage computation)
+  Loaded expression data: 6523 nodes (merged across queried + leaf ranks where applicable)
+Classical node: bla_glutamatergic_principal_neuron (Basolateral amygdala glutamatergic principal neuron)
+  NT type: Glutamatergic
+  Markers (defining + neuropeptides): ['SLC17A7', 'CAMK2A']
+  Soma locations: ['UBERON:0002887']
+  Resolved MBA IDs: ['MBA:295']
+  Query rank: 1
+  Taxonomy: CCN20230722
+  AT artifact: not found (proceeding without AT scoring)
 {
-  "classical_node_id": "cea_small_aspiny_neuron",
-  "classical_node_name": "Central amygdala small aspiny neuron",
+  "classical_node_id": "bla_glutamatergic_principal_neuron",
+  "classical_node_name": "Basolateral amygdala glutamatergic principal neuron",
   "taxonomy_id": "CCN20230722",
   "rank": 1,
   "n_candidates": 5,
@@ -25,23 +36,23 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.005,
+        "region_fraction": 0.01,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0215",
-      "label": "0215 Sst Gaba_2",
+      "node_id": "CS20230722_SUPT_0007",
+      "label": "0007 L5/6 IT TPE-ENT Glut_1",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_053",
+      "parent_id": "CS20230722_SUBC_003",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 2,
@@ -55,23 +66,23 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.006,
+        "region_fraction": 0.056,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0206",
-      "label": "0206 Pvalb Gaba_2",
+      "node_id": "CS20230722_SUPT_0005",
+      "label": "0005 IT EP-CLA Glut_3",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_052",
+      "parent_id": "CS20230722_SUBC_002",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 3,
@@ -85,23 +96,23 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.002,
+        "region_fraction": 0.035,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0204",
-      "label": "0204 Pvalb chandelier Gaba_1",
+      "node_id": "CS20230722_SUPT_0004",
+      "label": "0004 IT EP-CLA Glut_2",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_051",
+      "parent_id": "CS20230722_SUBC_002",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 4,
@@ -115,23 +126,23 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.002,
+        "region_fraction": 0.001,
         "region_evidence": "SELF"
       }
     },
     {
-      "node_id": "CS20230722_SUPT_0202",
-      "label": "0202 Lamp5 Gaba_4",
+      "node_id": "CS20230722_SUPT_0003",
+      "label": "0003 IT EP-CLA Glut_1",
       "taxonomy_level": "supertype",
       "taxonomy_rank": 1,
       "nt_type": null,
-      "parent_id": "CS20230722_SUBC_049",
+      "parent_id": "CS20230722_SUBC_002",
       "discovery_score": {
         "score": 1,
         "rank_in_cohort": 5,
@@ -145,13 +156,13 @@
             "rank": 1,
             "n_members": 5,
             "filters": [
-              "region=MBA:536",
-              "nt_type=GABAergic"
+              "region=MBA:295",
+              "nt_type=Glutamatergic"
             ]
           }
         ],
         "expression_detail": [],
-        "region_fraction": 0.008,
+        "region_fraction": 0.0,
         "region_evidence": "SELF"
       }
     }
