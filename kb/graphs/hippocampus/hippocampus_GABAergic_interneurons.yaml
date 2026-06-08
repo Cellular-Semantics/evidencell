@@ -2401,6 +2401,66 @@ nodes:
         - cluster_accession: CS20230722_CLUS_0791
           n_cells: 1
           expression: '{"Calb2": 0.18, "Cck": 1.89, "Chrna2": 1.49, "Cnr1": 5.36, "Gad1": 9.93, "Gad2": 9.77, "Id2": 3.75, "Lamp5": 2.24, "Chrm2": 4.79, "Nos1": 1.06, "Npy": 8.6, "Pnoc": 5.77, "Pvalb": 5.48, "Reln": 4.93, "Sst": 7.68, "Tac1": 8.27, "Slc17a8": 2.05, "Vip": 0.6}'
+  - id: CS20230722_CLUS_0768
+    name: 0768 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0768
+  - id: CS20230722_CLUS_0772
+    name: 0772 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0772
+  - id: CS20230722_SUPT_0212
+    name: 0212 Pvalb Gaba_8
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0212
+  - id: CS20230722_SUPT_0196
+    name: 0196 RHP-COA Ndnf Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0196
+  - id: CS20230722_CLUS_0651
+    name: 0651 Vip Gaba_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0651
+  - id: CS20230722_CLUS_0731
+    name: 0731 Lamp5 Lhx6 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0731
+  - id: CS20230722_CLUS_0655
+    name: 0655 Vip Gaba_9
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0655
+  - id: CS20230722_CLUS_0695
+    name: 0695 RHP-COA Ndnf Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0695
+  - id: CS20230722_CLUS_0705
+    name: 0705 RHP-COA Ndnf Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0705
+  - id: CS20230722_SUPT_1196
+    name: 1196 Monocytes NN_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1196
+  - id: CS20230722_SUPT_0181
+    name: 0181 Vip Gaba_9
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0181
+  - id: CS20230722_SUPT_0173
+    name: 0173 Vip Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0173
 edges:
   - id: edge_pv_basket_cell_hippocampus_to_CS20230722_SUPT_0206
     lit_type: pv_basket_cell_hippocampus
@@ -4760,3 +4820,1798 @@ edges:
 
           '
     mapping_justification: semapv:UnspecifiedMatching
+  - id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0739
+    lit_type: bistratified_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0739
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0739 Pvalb Gaba_2; region_fraction_100um=0.331; strict region_fraction=0.100.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=461 [painted]; Field CA1 [MBA:382] count_100um=238 [painted]; Field CA3 [MBA:463] count_100um=229 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.331; strict region_fraction: 0.100; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 10.63; cohort_pct 0.985; atlas category: MERFISH'
+        alignment: CONSISTENT
+        notes: val=10.63; cohort percentile 0.985
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 1.51; cohort_pct 0.618'
+        alignment: CONSISTENT
+        notes: val=1.51; cohort percentile 0.618
+      - property: marker_Tac1
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 3.69; cohort_pct 0.912; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=3.69; cohort percentile 0.912
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 1.51; cohort_pct 0.618'
+        alignment: CONSISTENT
+        notes: val=1.51; cohort percentile 0.618
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 10.63
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+        - gene: Sst
+          val: 1.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.618
+        - gene: Tac1
+          val: 3.69
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.912
+      region_fraction: 0.1
+      region_fraction_100um: 0.331
+      region_evidence: SELF
+  - id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0732
+    lit_type: bistratified_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0732
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0732 Pvalb chandelier Gaba_1; region_fraction_100um=0.431; strict region_fraction=0.142.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=305 [painted]; Field CA1 [MBA:382] count_100um=159 [painted]; Field CA3 [MBA:463] count_100um=156 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.431; strict region_fraction: 0.142; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.56; cohort_pct 0.971'
+        alignment: CONSISTENT
+        notes: val=8.56; cohort percentile 0.971
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 0.97; cohort_pct 0.191'
+        alignment: APPROXIMATE
+        notes: val=0.97; cohort percentile 0.191
+      - property: marker_Tac1
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 1.47; cohort_pct 0.838'
+        alignment: CONSISTENT
+        notes: val=1.47; cohort percentile 0.838
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 0.97; cohort_pct 0.191'
+        alignment: APPROXIMATE
+        notes: val=0.97; cohort percentile 0.191
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.56
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.971
+        - gene: Sst
+          val: 0.97
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.191
+        - gene: Tac1
+          val: 1.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.838
+      region_fraction: 0.142
+      region_fraction_100um: 0.431
+      region_evidence: SELF
+  - id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0768
+    lit_type: bistratified_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0768
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0768 Sst Gaba_3; region_fraction_100um=0.248; strict region_fraction=0.050.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=296 [painted]; Field CA1 [MBA:382] count_100um=273 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=261 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.248; strict region_fraction: 0.050; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 3.12; cohort_pct 0.882; atlas category: MERFISH'
+        alignment: CONSISTENT
+        notes: val=3.12; cohort percentile 0.882
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 12.70; cohort_pct 0.985; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=12.70; cohort percentile 0.985
+      - property: marker_Tac1
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 0.15; cohort_pct 0.338'
+        alignment: APPROXIMATE
+        notes: val=0.15; cohort percentile 0.338
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 12.70; cohort_pct 0.985; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=12.70; cohort percentile 0.985
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 3.12
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.882
+        - gene: Sst
+          val: 12.7
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+        - gene: Tac1
+          val: 0.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.338
+      region_fraction: 0.05
+      region_fraction_100um: 0.248
+      region_evidence: SELF
+  - id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0772
+    lit_type: bistratified_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0772
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0772 Sst Gaba_3; region_fraction_100um=0.180; strict region_fraction=0.023.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=315 [painted]; Field CA1 [MBA:382] count_100um=255 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=247 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.180; strict region_fraction: 0.023; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 0.34; cohort_pct 0.529'
+        alignment: CONSISTENT
+        notes: val=0.34; cohort percentile 0.529
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 11.92; cohort_pct 0.956; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.92; cohort percentile 0.956
+      - property: marker_Tac1
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 0.14; cohort_pct 0.265'
+        alignment: APPROXIMATE
+        notes: val=0.14; cohort percentile 0.265
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 11.92; cohort_pct 0.956; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.92; cohort percentile 0.956
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 0.34
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.529
+        - gene: Sst
+          val: 11.92
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.956
+        - gene: Tac1
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.265
+      region_fraction: 0.023
+      region_fraction_100um: 0.18
+      region_evidence: SELF
+  - id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0212
+    lit_type: bistratified_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0212
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0212 Pvalb Gaba_8; region_fraction_100um=0.019; strict region_fraction=0.002.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Isocortex [MBA:315] count_100um=6762 [painted]; Hippocampal formation [MBA:1089] count_100um=2349 [painted]; Secondary motor area [MBA:993] count_100um=914 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.019; strict region_fraction: 0.002; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.06; cohort_pct 0.935; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.06; cohort percentile 0.935; child-cluster coverage 1.000
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 2.00; cohort_pct 0.742; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=2.00; cohort percentile 0.742; child-cluster coverage 1.000
+      - property: marker_Tac1
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 7.58; cohort_pct 0.968; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=7.58; cohort percentile 0.968; child-cluster coverage 1.000
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 2.00; cohort_pct 0.742; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=2.00; cohort percentile 0.742; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.06
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.935
+          coverage: 1.0
+        - gene: Sst
+          val: 2.0
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.742
+          coverage: 1.0
+        - gene: Tac1
+          val: 7.58
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+      region_fraction: 0.002
+      region_fraction_100um: 0.019
+      region_evidence: SELF
+  - id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0196
+    lit_type: bistratified_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0196
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0196 RHP-COA Ndnf Gaba_4; region_fraction_100um=0.147; strict region_fraction=0.028.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=104 [painted]; Field CA3 [MBA:463] count_100um=88 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=69 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.147; strict region_fraction: 0.028; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 0.48; cohort_pct 0.548; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.48; cohort percentile 0.548; child-cluster coverage 1.000
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 1.71; cohort_pct 0.710; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.71; cohort percentile 0.710; child-cluster coverage 1.000
+      - property: marker_Tac1
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 0.23; cohort_pct 0.613; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.23; cohort percentile 0.613; child-cluster coverage 1.000
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 1.71; cohort_pct 0.710; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.71; cohort percentile 0.710; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 0.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.548
+          coverage: 1.0
+        - gene: Sst
+          val: 1.71
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.71
+          coverage: 1.0
+        - gene: Tac1
+          val: 0.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.613
+          coverage: 1.0
+      region_fraction: 0.028
+      region_fraction_100um: 0.147
+      region_evidence: SELF
+  - id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0219
+    lit_type: bistratified_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0219
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0219 Sst Gaba_6; region_fraction_100um=0.110; strict region_fraction=0.016.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1350 [painted]; Field CA3 [MBA:463] count_100um=1068 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=799 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.110; strict region_fraction: 0.016; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 1.68; cohort_pct 0.839; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.68; cohort percentile 0.839; child-cluster coverage 1.000
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.17; cohort_pct 0.839; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=10.17; cohort percentile 0.839; child-cluster coverage 1.000
+      - property: marker_Tac1
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 2.43; cohort_pct 0.839; child-coverage 0.857'
+        alignment: CONSISTENT
+        notes: val=2.43; cohort percentile 0.839; child-cluster coverage 0.857
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 10.17; cohort_pct 0.839; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=10.17; cohort percentile 0.839; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 1.68
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+          coverage: 1.0
+        - gene: Sst
+          val: 10.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+          coverage: 1.0
+        - gene: Tac1
+          val: 2.43
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.926
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+          coverage: 0.857
+      region_fraction: 0.016
+      region_fraction_100um: 0.11
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0651
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0651
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0651 Vip Gaba_7; region_fraction_100um=0.391; strict region_fraction=0.087.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=63 [painted]; Field CA1 [MBA:382] count_100um=36 [painted]; Field CA3 [MBA:463] count_100um=30 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.391; strict region_fraction: 0.087; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 9.01; cohort_pct 0.971'
+        alignment: CONSISTENT
+        notes: val=9.01; cohort percentile 0.971
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 1.52; cohort_pct 0.338'
+        alignment: APPROXIMATE
+        notes: val=1.52; cohort percentile 0.338
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 1.55; cohort_pct 0.794'
+        alignment: CONSISTENT
+        notes: val=1.55; cohort percentile 0.794
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.05; cohort_pct 0.132'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.132
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.70; cohort_pct 0.074'
+        alignment: DISCORDANT
+        notes: val=0.70; cohort percentile 0.074
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.90; cohort_pct 0.882'
+        alignment: DISCORDANT
+        notes: val=6.90; cohort percentile 0.882
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 1.52; cohort_pct 0.338'
+        alignment: APPROXIMATE
+        notes: val=1.52; cohort percentile 0.338
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 9.01
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.971
+        - gene: Npy
+          val: 1.52
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.338
+        - gene: Lamp5
+          val: 1.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.794
+        - gene: -Pvalb
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.132
+        - gene: -Sst
+          val: 0.7
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.074
+        - gene: -Calb2
+          val: 6.9
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.882
+      region_fraction: 0.087
+      region_fraction_100um: 0.391
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0731
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0731
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0731 Lamp5 Lhx6 Gaba_1; region_fraction_100um=0.132; strict region_fraction=0.015.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=457 [painted]; Field CA3 [MBA:463] count_100um=287 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=207 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.132; strict region_fraction: 0.015; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 8.55; cohort_pct 0.941'
+        alignment: CONSISTENT
+        notes: val=8.55; cohort percentile 0.941
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 4.35; cohort_pct 0.662; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.35; cohort percentile 0.662
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 8.51; cohort_pct 0.985; atlas category: MERFISH'
+        alignment: CONSISTENT
+        notes: val=8.51; cohort percentile 0.985
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.07; cohort_pct 0.206'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.206
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.24; cohort_pct 0.397'
+        alignment: DISCORDANT
+        notes: val=1.24; cohort percentile 0.397
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.31; cohort_pct 0.368'
+        alignment: DISCORDANT
+        notes: val=0.31; cohort percentile 0.368
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 4.35; cohort_pct 0.662; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.35; cohort percentile 0.662
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 8.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.941
+        - gene: Npy
+          val: 4.35
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.662
+        - gene: Lamp5
+          val: 8.51
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+        - gene: -Pvalb
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.206
+        - gene: -Sst
+          val: 1.24
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.397
+        - gene: -Calb2
+          val: 0.31
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.368
+      region_fraction: 0.015
+      region_fraction_100um: 0.132
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0655
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0655
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0655 Vip Gaba_9; region_fraction_100um=0.176; strict region_fraction=0.028.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=111 [painted]; Field CA1 [MBA:382] count_100um=51 [painted]; Field CA3 [MBA:463] count_100um=46 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.176; strict region_fraction: 0.028; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 2.01; cohort_pct 0.412'
+        alignment: APPROXIMATE
+        notes: val=2.01; cohort percentile 0.412
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 1.14; cohort_pct 0.250'
+        alignment: APPROXIMATE
+        notes: val=1.14; cohort percentile 0.250
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.23; cohort_pct 0.235'
+        alignment: APPROXIMATE
+        notes: val=0.23; cohort percentile 0.235
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.05; cohort_pct 0.132'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.132
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.23; cohort_pct 0.382'
+        alignment: DISCORDANT
+        notes: val=1.23; cohort percentile 0.382
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.15; cohort_pct 0.838'
+        alignment: DISCORDANT
+        notes: val=6.15; cohort percentile 0.838
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 1.14; cohort_pct 0.250'
+        alignment: APPROXIMATE
+        notes: val=1.14; cohort percentile 0.250
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 2.01
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.412
+        - gene: Npy
+          val: 1.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.25
+        - gene: Lamp5
+          val: 0.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.235
+        - gene: -Pvalb
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.132
+        - gene: -Sst
+          val: 1.23
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.382
+        - gene: -Calb2
+          val: 6.15
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.838
+      region_fraction: 0.028
+      region_fraction_100um: 0.176
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0695
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0695
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0695 RHP-COA Ndnf Gaba_3; region_fraction_100um=0.120; strict region_fraction=0.021.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=170 [painted]; Field CA1 [MBA:382] count_100um=124 [painted]; Field CA1, stratum radiatum [MBA:415] count_100um=106 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.120; strict region_fraction: 0.021; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 0.35; cohort_pct 0.074'
+        alignment: CONSISTENT
+        notes: val=0.35; cohort percentile 0.074
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 4.59; cohort_pct 0.691; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.59; cohort percentile 0.691
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 1.94; cohort_pct 0.809'
+        alignment: CONSISTENT
+        notes: val=1.94; cohort percentile 0.809
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.45; cohort_pct 0.662'
+        alignment: DISCORDANT
+        notes: val=0.45; cohort percentile 0.662
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.92; cohort_pct 0.147'
+        alignment: DISCORDANT
+        notes: val=0.92; cohort percentile 0.147
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.05; cohort_pct 0.059'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.059
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 4.59; cohort_pct 0.691; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.59; cohort percentile 0.691
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Pvalb, negative_marker_Sst. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 0.35
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.074
+        - gene: Npy
+          val: 4.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.691
+        - gene: Lamp5
+          val: 1.94
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.809
+        - gene: -Pvalb
+          val: 0.45
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.662
+        - gene: -Sst
+          val: 0.92
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.147
+        - gene: -Calb2
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.059
+      region_fraction: 0.021
+      region_fraction_100um: 0.12
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0705
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0705
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0705 RHP-COA Ndnf Gaba_6; region_fraction_100um=0.255; strict region_fraction=0.059.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=36 [painted]; Field CA1 [MBA:382] count_100um=28 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=21 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.255; strict region_fraction: 0.059; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 2.50; cohort_pct 0.500'
+        alignment: CONSISTENT
+        notes: val=2.50; cohort percentile 0.500
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 4.19; cohort_pct 0.632; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.19; cohort percentile 0.632
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 4.63; cohort_pct 0.882'
+        alignment: CONSISTENT
+        notes: val=4.63; cohort percentile 0.882
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.96; cohort_pct 0.176'
+        alignment: DISCORDANT
+        notes: val=0.96; cohort percentile 0.176
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.29; cohort_pct 0.294'
+        alignment: DISCORDANT
+        notes: val=0.29; cohort percentile 0.294
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 4.19; cohort_pct 0.632; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.19; cohort percentile 0.632
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 2.5
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.5
+        - gene: Npy
+          val: 4.19
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.632
+        - gene: Lamp5
+          val: 4.63
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.882
+        - gene: -Pvalb
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Sst
+          val: 0.96
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.176
+        - gene: -Calb2
+          val: 0.29
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.294
+      region_fraction: 0.059
+      region_fraction_100um: 0.255
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0179
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0179
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0179 Vip Gaba_7; region_fraction_100um=0.235; strict region_fraction=0.069.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=206 [painted]; Field CA3 [MBA:463] count_100um=105 [painted]; Field CA1 [MBA:382] count_100um=99 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.235; strict region_fraction: 0.069; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 6.91; cohort_pct 0.903; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.91; cohort percentile 0.903; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 1.30; cohort_pct 0.355; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.30; cohort percentile 0.355; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.73; cohort_pct 0.710; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.73; cohort percentile 0.710; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.09; cohort_pct 0.129'
+        alignment: CONSISTENT
+        notes: val=0.09; below MIN_DETECTABLE (0.1); cohort percentile 0.129
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.04; cohort_pct 0.387'
+        alignment: DISCORDANT
+        notes: val=1.04; cohort percentile 0.387
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.78; cohort_pct 0.903'
+        alignment: DISCORDANT
+        notes: val=6.78; cohort percentile 0.903
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 1.30; cohort_pct 0.355; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.30; cohort percentile 0.355; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 6.91
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.903
+          coverage: 1.0
+        - gene: Npy
+          val: 1.3
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.355
+          coverage: 1.0
+        - gene: Lamp5
+          val: 0.73
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.71
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.09
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.129
+        - gene: -Sst
+          val: 1.04
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.387
+        - gene: -Calb2
+          val: 6.78
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.903
+      region_fraction: 0.069
+      region_fraction_100um: 0.235
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_1196
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_1196
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1196 Monocytes NN_1; region_fraction_100um=0.017; strict region_fraction=0.018.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Isocortex [MBA:315] count_100um=15 [painted]; Cerebellum [MBA:512] count_100um=11 [painted]; Midbrain [MBA:313] count_100um=8 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.017; strict region_fraction: 0.018; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 0.27; cohort_pct 0.065; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.27; cohort percentile 0.065; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 0.56; cohort_pct 0.032; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.56; cohort percentile 0.032; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.31; cohort_pct 0.548; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.31; cohort percentile 0.548; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 1.05; cohort_pct 0.774'
+        alignment: DISCORDANT
+        notes: val=1.05; cohort percentile 0.774
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.30; cohort_pct 0.000'
+        alignment: DISCORDANT
+        notes: val=0.30; cohort percentile 0.000
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 0.56; cohort_pct 0.032; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.56; cohort percentile 0.032; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_Pvalb, negative_marker_Sst. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 0.27
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.065
+          coverage: 1.0
+        - gene: Npy
+          val: 0.56
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.032
+          coverage: 1.0
+        - gene: Lamp5
+          val: 0.31
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.548
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 1.05
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.774
+        - gene: -Sst
+          val: 0.3
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Calb2
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.018
+      region_fraction_100um: 0.017
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0181
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0181
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0181 Vip Gaba_9; region_fraction_100um=0.099; strict region_fraction=0.015.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=259 [painted]; Cortical subplate [MBA:703] count_100um=127 [painted]; Field CA3 [MBA:463] count_100um=124 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.099; strict region_fraction: 0.015; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 1.73; cohort_pct 0.355; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.73; cohort percentile 0.355; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 0.79; cohort_pct 0.161; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.79; cohort percentile 0.161; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.20; cohort_pct 0.194; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.20; cohort percentile 0.194; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.04; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.99; cohort_pct 0.323'
+        alignment: DISCORDANT
+        notes: val=0.99; cohort percentile 0.323
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.96; cohort_pct 0.935'
+        alignment: DISCORDANT
+        notes: val=6.96; cohort percentile 0.935
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 0.79; cohort_pct 0.161; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.79; cohort percentile 0.161; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 1.73
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.355
+          coverage: 1.0
+        - gene: Npy
+          val: 0.79
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.161
+          coverage: 1.0
+        - gene: Lamp5
+          val: 0.2
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.194
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Sst
+          val: 0.99
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.323
+        - gene: -Calb2
+          val: 6.96
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.935
+      region_fraction: 0.015
+      region_fraction_100um: 0.099
+      region_evidence: SELF
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0173
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0173
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0173 Vip Gaba_1; region_fraction_100um=0.027; strict region_fraction=0.006.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Isocortex [MBA:315] count_100um=1706 [painted]; Hippocampal formation [MBA:1089] count_100um=324 [painted]; Secondary motor area [MBA:993] count_100um=248 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.027; strict region_fraction: 0.006; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 1.11; cohort_pct 0.290; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.11; cohort percentile 0.290; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 0.73; cohort_pct 0.097; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.73; cohort percentile 0.097; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.26; cohort_pct 0.290; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.26; cohort percentile 0.290; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.04; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.77; cohort_pct 0.097'
+        alignment: DISCORDANT
+        notes: val=0.77; cohort percentile 0.097
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.41; cohort_pct 0.839'
+        alignment: DISCORDANT
+        notes: val=6.41; cohort percentile 0.839
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 0.73; cohort_pct 0.097; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.73; cohort percentile 0.097; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 1.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.29
+          coverage: 1.0
+        - gene: Npy
+          val: 0.73
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.097
+          coverage: 1.0
+        - gene: Lamp5
+          val: 0.26
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.29
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Sst
+          val: 0.77
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.097
+        - gene: -Calb2
+          val: 6.41
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+      region_fraction: 0.006
+      region_fraction_100um: 0.027
+      region_evidence: SELF

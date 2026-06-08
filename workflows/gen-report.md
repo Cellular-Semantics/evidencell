@@ -132,6 +132,19 @@ The one user-driven exception: when the user has explicitly asked
 for an inline iteration ("let's draft this one ourselves to debug
 the prompt"), inline is fine; default behaviour is always dispatch.
 
+**Pre-flight cleanup before dispatch.** If the synthesis subagent
+will write to a `summary_file` that already exists on disk (from a
+prior synth run), the orchestrator MUST delete the existing file
+before dispatching the subagent. Reason: the Write tool requires
+a Read-before-Write on existing files, but the synthesis prompt
+explicitly forbids reading any prior report draft (it would
+contaminate the context-isolation guarantee). A pre-delete from
+the orchestrator avoids both: the synthesis subagent writes the
+file fresh, having never seen the prior version. If the user
+wants the prior draft preserved as an artifact, the orchestrator
+should move it to `research/{region}/{stamped-dir}/` before
+deleting from `reports/{region}/`.
+
 Spawn the synthesis subagent with this exact prompt (substitute values
 for `{node_id}`, `{facts_file}`, `{pool_candidates_file}`,
 `{summary_file}`, `{region}`, `{graph_file}`):
@@ -234,6 +247,36 @@ the reader sees they're paired. The candidates table at the end of
 Results lists them in their natural rank order (supertype row +
 cluster row); cuts (other children of the same supertype that
 didn't lead) collapse into the cuts section of the table normally.
+
+**Both targets MUST exist as edges in the graph for the
+two-survivor pattern to fire.** The synthesis subagent can only
+emit verdict blocks against edges that the graph actually carries.
+If the parent supertype OR the AT-best child cluster isn't
+currently in `graph.edges` (because the curator's original picks
+didn't include them, or because Stage A's prior run had a small
+top-K), the orchestrator MUST add them via
+`just emit-stage-b GRAPH NODE TAXONOMY RANK 5` (idempotent — won't
+overwrite existing edges) at both relevant ranks before dispatching
+the synth subagent. If a paired target is genuinely absent and
+cannot be emitted, fall back to a single-survivor verdict with the
+two-target story narrated in `reconciliation_note` + `Concerns`
+prose only.
+
+**Subcluster concordance sentence when narrating supertype via
+a child-cluster edge.** The mandatory "(N of M child clusters
+show {property} concordant)" sentence (in the property-alignment
+section) assumes a supertype-level edge with subcluster breakdown.
+When a supertype-narrating mapping is written against a
+child-cluster edge (the supertype was narrated via the
+best-cluster's pairing — the parent supertype is also a survivor
+but the child-cluster edge is the one being written about), the
+sentence becomes ambiguous: the writer is talking about one
+specific child, not surveying many. In that case write the
+concordance as a per-property fact tied to the named child cluster
+(e.g. "Chrna2 absent on CLUS_0769 but present on the AT-best
+CLUS_0768") rather than as an "N of M" inventory. The "N of M"
+form is reserved for the parent supertype's verdict block, where
+the inventory makes sense.
 
 **Legacy / fresh-emit edge ID duplicates.** When two edges in the
 graph target the same `taxonomy_type` accession but have different
@@ -544,6 +587,20 @@ authored prose like other authored-prose blockquote paths).
 
 For BROAD / RELATED / NARROW mappings, `mapping_notes` is reprised in the
 Discussion's Best candidate + caveats section (do not duplicate it here).
+
+**Duplication discipline between Introduction §4 and Discussion §6.**
+The CL mapping appears in two places by design: the Introduction
+states the placement (one line + optional proposed-CL-term block),
+the Discussion's Best candidate paragraph reprises the mapping
+type's *interpretation* alongside the primary survivor verdict.
+**Do NOT paraphrase the same `mapping_notes` content in both
+places** — the Introduction line is descriptive (CL term + type),
+the Discussion line is interpretive (what the type implies for
+this specific mapping). If `mapping_notes` carries verbatim prose
+suitable for one location, place it in the Discussion (where the
+verdict context lives), not in the Introduction. The Introduction
+should stay biology-led; mapping-type interpretation is
+verdict-side material.
 
 ---
 

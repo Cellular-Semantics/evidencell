@@ -283,6 +283,56 @@ nodes:
 # Upgrade path: Chrna2-Cre + MapMyCells, patch-seq, lit review.
 # ══════════════════════════════════════════════════════════════════
 
+  - id: CS20230722_CLUS_0768
+    name: 0768 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0768
+  - id: CS20230722_CLUS_0772
+    name: 0772 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0772
+  - id: CS20230722_CLUS_0773
+    name: 0773 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0773
+  - id: CS20230722_CLUS_0775
+    name: 0775 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0775
+  - id: CS20230722_CLUS_0770
+    name: 0770 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0770
+  - id: CS20230722_SUPT_0216
+    name: 0216 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+  - id: CS20230722_SUPT_0226
+    name: 0226 Sst Gaba_13
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0226
+  - id: CS20230722_SUPT_0217
+    name: 0217 Sst Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0217
+  - id: CS20230722_SUPT_0241
+    name: 0241 Sst Chodl Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0241
+  - id: CS20230722_SUPT_0224
+    name: 0224 Sst Gaba_11
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0224
 edges:
 
   # ── Edge 1: OLM → wmb_clus_0727 (Lamp5 Lhx6 Gaba_1) ──────────
@@ -931,3 +981,1487 @@ edges:
     rationale_generated_at: '2026-05-20T12:34:37+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
     rationale_source_hash: f53b0321
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0768
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0768
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0768 Sst Gaba_3; region_fraction_100um=0.818; strict region_fraction=0.458.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: SUPPORT
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Sst-OLM
+        target_atlas: WMBv1
+        method: MapMyCells (via at_metrics.compute_edge_metrics)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            coverage: 1.0
+            purity: 0.5111111111111111
+            f1_score: 0.676470588235294
+            n_cells_mapped: 23
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            coverage: 1.0
+            purity: 0.5111111111111111
+            f1_score: 0.676470588235294
+            n_cells_mapped: 23
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0216 Sst Gaba_3
+            best_target_accession: CS20230722_SUPT_0216
+            coverage: 0.9565217391304348
+            purity: 0.5116279069767442
+            f1_score: 0.6666666666666667
+            n_cells_mapped: 22
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0768 Sst Gaba_3
+            best_target_accession: CS20230722_CLUS_0768
+            coverage: 0.43478260869565216
+            purity: 0.45454545454545453
+            f1_score: 0.4444444444444445
+            n_cells_mapped: 10
+            median_bootstrap: 1.0
+        explanation: AT transfer of Sst-OLM to CS20230722_CLUS_0768 — best F1 0.676 at class level; per-level metrics populated programmatically from at_results.yaml.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=296 [painted]; Field CA1 [MBA:382] count_100um=273 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=261 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.818; strict region_fraction: 0.458; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 12.70; cohort_pct 0.992; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=12.70; cohort percentile 0.992
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.57; cohort_pct 0.950'
+        alignment: CONSISTENT
+        notes: val=0.57; cohort percentile 0.950
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 10.27'
+        alignment: CONSISTENT
+        notes: val=10.27
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 3.12; atlas category: MERFISH'
+        alignment: DISCORDANT
+        notes: val=3.12
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 3.87'
+        alignment: DISCORDANT
+        notes: val=3.87
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 2.30'
+        alignment: DISCORDANT
+        notes: val=2.30
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 0.76'
+        alignment: DISCORDANT
+        notes: val=0.76
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.31'
+        alignment: DISCORDANT
+        notes: val=0.31
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 12.70; cohort_pct 0.992; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=12.70; cohort percentile 0.992
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 7.58; cohort_pct 0.857; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=7.58; cohort percentile 0.857
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 2.51; cohort_pct 0.479'
+        alignment: APPROXIMATE
+        notes: val=2.51; cohort percentile 0.479
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: AT cluster-level F1 = 0.444 is below the 0.5 threshold — source cells are scattered across multiple atlas clusters rather than concentrated here. Cleaner AT signal may live at a coarser taxonomy level.
+    discovery_score:
+      score: 10
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.7
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.992
+        - gene: Chrna2
+          val: 0.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.95
+        - gene: Npy
+          val: 7.58
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.857
+        - gene: Pnoc
+          val: 2.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.479
+      region_fraction: 0.458
+      region_fraction_100um: 0.818
+      region_evidence: SELF
+      at_signal:
+        f1: 0.4444444444444445
+        n_cells: 10
+        target_level: cluster
+        target_name: 0768 Sst Gaba_3
+        score: 2
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0772
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0772
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0772 Sst Gaba_3; region_fraction_100um=0.706; strict region_fraction=0.527.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: SUPPORT
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Sst-OLM
+        target_atlas: WMBv1
+        method: MapMyCells (via at_metrics.compute_edge_metrics)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            coverage: 1.0
+            purity: 0.5111111111111111
+            f1_score: 0.676470588235294
+            n_cells_mapped: 23
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            coverage: 1.0
+            purity: 0.5111111111111111
+            f1_score: 0.676470588235294
+            n_cells_mapped: 23
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0216 Sst Gaba_3
+            best_target_accession: CS20230722_SUPT_0216
+            coverage: 0.9565217391304348
+            purity: 0.5116279069767442
+            f1_score: 0.6666666666666667
+            n_cells_mapped: 22
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0772 Sst Gaba_3
+            best_target_accession: CS20230722_CLUS_0772
+            coverage: 0.17391304347826086
+            purity: 0.5714285714285714
+            f1_score: 0.26666666666666666
+            n_cells_mapped: 4
+            median_bootstrap: 0.735
+        explanation: AT transfer of Sst-OLM to CS20230722_CLUS_0772 — best F1 0.676 at class level; per-level metrics populated programmatically from at_results.yaml.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=315 [painted]; Field CA1 [MBA:382] count_100um=255 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=247 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.706; strict region_fraction: 0.527; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 11.92; cohort_pct 0.958; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.92; cohort percentile 0.958
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.46; cohort_pct 0.933'
+        alignment: CONSISTENT
+        notes: val=0.46; cohort percentile 0.933
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 9.74'
+        alignment: CONSISTENT
+        notes: val=9.74
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 0.34'
+        alignment: DISCORDANT
+        notes: val=0.34
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 4.65'
+        alignment: DISCORDANT
+        notes: val=4.65
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 0.81'
+        alignment: DISCORDANT
+        notes: val=0.81
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 1.09'
+        alignment: DISCORDANT
+        notes: val=1.09
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.35'
+        alignment: DISCORDANT
+        notes: val=0.35
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 11.92; cohort_pct 0.958; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.92; cohort percentile 0.958
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 8.22; cohort_pct 0.924; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=8.22; cohort percentile 0.924
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 1.65; cohort_pct 0.420'
+        alignment: APPROXIMATE
+        notes: val=1.65; cohort percentile 0.420
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: AT cluster-level F1 = 0.267 is below the 0.5 threshold — source cells are scattered across multiple atlas clusters rather than concentrated here. Cleaner AT signal may live at a coarser taxonomy level.
+    discovery_score:
+      score: 9
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.92
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.958
+        - gene: Chrna2
+          val: 0.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.933
+        - gene: Npy
+          val: 8.22
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.924
+        - gene: Pnoc
+          val: 1.65
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.42
+      region_fraction: 0.527
+      region_fraction_100um: 0.706
+      region_evidence: SELF
+      at_signal:
+        f1: 0.26666666666666666
+        n_cells: 4
+        target_level: cluster
+        target_name: 0772 Sst Gaba_3
+        score: 1
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0773
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0773
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0773 Sst Gaba_3; region_fraction_100um=0.648; strict region_fraction=0.355.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=182 [painted]; Field CA1 [MBA:382] count_100um=158 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=153 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.648; strict region_fraction: 0.355; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 11.43; cohort_pct 0.908; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.43; cohort percentile 0.908
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.65; cohort_pct 0.958'
+        alignment: CONSISTENT
+        notes: val=0.65; cohort percentile 0.958
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 9.90'
+        alignment: CONSISTENT
+        notes: val=9.90
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 0.36'
+        alignment: DISCORDANT
+        notes: val=0.36
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 5.07'
+        alignment: DISCORDANT
+        notes: val=5.07
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 1.21'
+        alignment: DISCORDANT
+        notes: val=1.21
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 3.61'
+        alignment: DISCORDANT
+        notes: val=3.61
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.27'
+        alignment: DISCORDANT
+        notes: val=0.27
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 11.43; cohort_pct 0.908; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.43; cohort percentile 0.908
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 1.61; cohort_pct 0.471'
+        alignment: APPROXIMATE
+        notes: val=1.61; cohort percentile 0.471
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 4.40; cohort_pct 0.639; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.40; cohort percentile 0.639
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 8
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.43
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.908
+        - gene: Chrna2
+          val: 0.65
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.958
+        - gene: Npy
+          val: 1.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.471
+        - gene: Pnoc
+          val: 4.4
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.639
+      region_fraction: 0.355
+      region_fraction_100um: 0.648
+      region_evidence: SELF
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0775
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0775
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0775 Sst Gaba_3; region_fraction_100um=0.442; strict region_fraction=0.227.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=93 [painted]; Prosubiculum [MBA:484682470] count_100um=59 [painted]; Field CA1 [MBA:382] count_100um=58 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.442; strict region_fraction: 0.227; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.86; cohort_pct 0.840; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=10.86; cohort percentile 0.840
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.73; cohort_pct 0.975'
+        alignment: CONSISTENT
+        notes: val=0.73; cohort percentile 0.975
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 8.31'
+        alignment: CONSISTENT
+        notes: val=8.31
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 2.39'
+        alignment: DISCORDANT
+        notes: val=2.39
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 1.51'
+        alignment: DISCORDANT
+        notes: val=1.51
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 0.65'
+        alignment: DISCORDANT
+        notes: val=0.65
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 5.65'
+        alignment: DISCORDANT
+        notes: val=5.65
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.67'
+        alignment: DISCORDANT
+        notes: val=0.67
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 10.86; cohort_pct 0.840; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=10.86; cohort percentile 0.840
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 2.18; cohort_pct 0.546'
+        alignment: CONSISTENT
+        notes: val=2.18; cohort percentile 0.546
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 7.20; cohort_pct 0.966; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=7.20; cohort percentile 0.966
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 8
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.86
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.84
+        - gene: Chrna2
+          val: 0.73
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.975
+        - gene: Npy
+          val: 2.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.546
+        - gene: Pnoc
+          val: 7.2
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.966
+      region_fraction: 0.227
+      region_fraction_100um: 0.442
+      region_evidence: SELF
+  - id: edge_olm_hippocampus_to_CS20230722_CLUS_0770
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_CLUS_0770
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0770 Sst Gaba_3; region_fraction_100um=0.506; strict region_fraction=0.302.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=281 [painted]; Field CA1 [MBA:382] count_100um=174 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=173 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.506; strict region_fraction: 0.302; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.54; cohort_pct 0.807; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=10.54; cohort percentile 0.807
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.52; cohort_pct 0.941'
+        alignment: CONSISTENT
+        notes: val=0.52; cohort percentile 0.941
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 9.21'
+        alignment: CONSISTENT
+        notes: val=9.21
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 0.00'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1)
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 7.75'
+        alignment: DISCORDANT
+        notes: val=7.75
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 0.84'
+        alignment: DISCORDANT
+        notes: val=0.84
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 3.65'
+        alignment: DISCORDANT
+        notes: val=3.65
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.16'
+        alignment: DISCORDANT
+        notes: val=0.16
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 10.54; cohort_pct 0.807; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=10.54; cohort percentile 0.807
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 1.04; cohort_pct 0.353'
+        alignment: APPROXIMATE
+        notes: val=1.04; cohort percentile 0.353
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 6.98; cohort_pct 0.941; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=6.98; cohort percentile 0.941
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 7
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.54
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.807
+        - gene: Chrna2
+          val: 0.52
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.941
+        - gene: Npy
+          val: 1.04
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.353
+        - gene: Pnoc
+          val: 6.98
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.941
+      region_fraction: 0.302
+      region_fraction_100um: 0.506
+      region_evidence: SELF
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0216
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0216
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0216 Sst Gaba_3; region_fraction_100um=0.539; strict region_fraction=0.305.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: SUPPORT
+        run_ref: at_run_20260408_winterer_olm_mmc_wmbv1
+        source_cluster_label: Sst-OLM
+        target_atlas: WMBv1
+        method: MapMyCells (via at_metrics.compute_edge_metrics)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            coverage: 1.0
+            purity: 0.5111111111111111
+            f1_score: 0.676470588235294
+            n_cells_mapped: 23
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            coverage: 1.0
+            purity: 0.5111111111111111
+            f1_score: 0.676470588235294
+            n_cells_mapped: 23
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0216 Sst Gaba_3
+            best_target_accession: CS20230722_SUPT_0216
+            coverage: 0.9565217391304348
+            purity: 0.5116279069767442
+            f1_score: 0.6666666666666667
+            n_cells_mapped: 22
+            median_bootstrap: 1.0
+        explanation: AT transfer of Sst-OLM to CS20230722_SUPT_0216 — best F1 0.676 at class level; per-level metrics populated programmatically from at_results.yaml.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2145 [painted]; Field CA1 [MBA:382] count_100um=1559 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=1463 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.539; strict region_fraction: 0.305; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 11.44; cohort_pct 0.905; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.44; cohort percentile 0.905; child-cluster coverage 1.000
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.61; cohort_pct 0.952; child-coverage 0.667'
+        alignment: CONSISTENT
+        notes: val=0.61; cohort percentile 0.952; child-cluster coverage 0.667
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 9.33'
+        alignment: CONSISTENT
+        notes: val=9.33
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 1.48'
+        alignment: DISCORDANT
+        notes: val=1.48
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 5.56'
+        alignment: DISCORDANT
+        notes: val=5.56
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 1.28'
+        alignment: DISCORDANT
+        notes: val=1.28
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 2.94'
+        alignment: DISCORDANT
+        notes: val=2.94
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.42'
+        alignment: DISCORDANT
+        notes: val=0.42
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 11.44; cohort_pct 0.905; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.44; cohort percentile 0.905; child-cluster coverage 1.000
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 5.07; cohort_pct 0.794; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.07; cohort percentile 0.794; child-cluster coverage 1.000
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 3.69; cohort_pct 0.667; child-coverage 0.889'
+        alignment: CONSISTENT
+        notes: val=3.69; cohort percentile 0.667; child-cluster coverage 0.889
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 10
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 8
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.44
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.905
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.61
+          reliable: true
+          raw_tier: 2
+          applied_score: 1.633
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.952
+          coverage: 0.667
+        - gene: Npy
+          val: 5.07
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.794
+          coverage: 1.0
+        - gene: Pnoc
+          val: 3.69
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.943
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.667
+          coverage: 0.889
+      region_fraction: 0.305
+      region_fraction_100um: 0.539
+      region_evidence: SELF
+      at_signal:
+        f1: 0.6666666666666667
+        n_cells: 22
+        target_level: supertype
+        target_name: 0216 Sst Gaba_3
+        score: 3
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0226
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0226
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0226 Sst Gaba_13; region_fraction_100um=0.016; strict region_fraction=0.008.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Isocortex [MBA:315] count_100um=1021 [painted]; Cortical subplate [MBA:703] count_100um=312 [painted]; Endopiriform nucleus, dorsal part [MBA:952] count_100um=224 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.016; strict region_fraction: 0.008; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 12.08; cohort_pct 0.968; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=12.08; cohort percentile 0.968; child-cluster coverage 1.000
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.61; cohort_pct 0.952; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.61; cohort percentile 0.952; child-cluster coverage 1.000
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 9.72'
+        alignment: CONSISTENT
+        notes: val=9.72
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 0.25'
+        alignment: DISCORDANT
+        notes: val=0.25
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 9.20'
+        alignment: DISCORDANT
+        notes: val=9.20
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 0.97'
+        alignment: DISCORDANT
+        notes: val=0.97
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 1.92'
+        alignment: DISCORDANT
+        notes: val=1.92
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.50'
+        alignment: DISCORDANT
+        notes: val=0.50
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 12.08; cohort_pct 0.968; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=12.08; cohort percentile 0.968; child-cluster coverage 1.000
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 9.70; cohort_pct 0.952; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.70; cohort percentile 0.952; child-cluster coverage 1.000
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 1.93; cohort_pct 0.508; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.93; cohort percentile 0.508; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 8
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 8
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.08
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.61
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.952
+          coverage: 1.0
+        - gene: Npy
+          val: 9.7
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.952
+          coverage: 1.0
+        - gene: Pnoc
+          val: 1.93
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.508
+          coverage: 1.0
+      region_fraction: 0.008
+      region_fraction_100um: 0.016
+      region_evidence: SELF
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0217
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0217
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0217 Sst Gaba_4; region_fraction_100um=0.015; strict region_fraction=0.009.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Isocortex [MBA:315] count_100um=4066 [painted]; Secondary motor area [MBA:993] count_100um=583 [painted]; Primary motor area [MBA:985] count_100um=494 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.015; strict region_fraction: 0.009; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.79; cohort_pct 0.841; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.79; cohort percentile 0.841; child-cluster coverage 1.000
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 1.90; cohort_pct 0.984; child-coverage 1.000; atlas category: DEFINING_SCOPED'
+        alignment: CONSISTENT
+        notes: val=1.90; cohort percentile 0.984; child-cluster coverage 1.000
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 9.86'
+        alignment: CONSISTENT
+        notes: val=9.86
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 0.37'
+        alignment: DISCORDANT
+        notes: val=0.37
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 8.19'
+        alignment: DISCORDANT
+        notes: val=8.19
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 0.24'
+        alignment: DISCORDANT
+        notes: val=0.24
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 0.50'
+        alignment: DISCORDANT
+        notes: val=0.50
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.47'
+        alignment: DISCORDANT
+        notes: val=0.47
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 10.79; cohort_pct 0.841; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.79; cohort percentile 0.841; child-cluster coverage 1.000
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 3.82; cohort_pct 0.698; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=3.82; cohort percentile 0.698; child-cluster coverage 1.000
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 0.51; cohort_pct 0.365; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.51; cohort percentile 0.365; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 6
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 8
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.79
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.841
+          coverage: 1.0
+        - gene: Chrna2
+          val: 1.9
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.984
+          coverage: 1.0
+        - gene: Npy
+          val: 3.82
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.698
+          coverage: 1.0
+        - gene: Pnoc
+          val: 0.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.365
+          coverage: 1.0
+      region_fraction: 0.009
+      region_fraction_100um: 0.015
+      region_evidence: SELF
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0241
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0241
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0241 Sst Chodl Gaba_4; region_fraction_100um=0.021; strict region_fraction=0.008.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Isocortex [MBA:315] count_100um=1377 [painted]; lateral forebrain bundle system [MBA:983] count_100um=467 [painted]; corpus callosum [MBA:776] count_100um=460 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.021; strict region_fraction: 0.008; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 12.33; cohort_pct 0.984; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=12.33; cohort percentile 0.984; child-cluster coverage 1.000
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.00; cohort_pct 0.000'
+        alignment: DISCORDANT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 9.35'
+        alignment: CONSISTENT
+        notes: val=9.35
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 0.03'
+        alignment: CONSISTENT
+        notes: val=0.03; below MIN_DETECTABLE (0.1)
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 1.21'
+        alignment: DISCORDANT
+        notes: val=1.21
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 4.98'
+        alignment: DISCORDANT
+        notes: val=4.98
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 11.26'
+        alignment: DISCORDANT
+        notes: val=11.26
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.27'
+        alignment: DISCORDANT
+        notes: val=0.27
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 12.33; cohort_pct 0.984; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=12.33; cohort percentile 0.984; child-cluster coverage 1.000
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 12.08; cohort_pct 0.984; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=12.08; cohort percentile 0.984; child-cluster coverage 1.000
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 0.35; cohort_pct 0.333; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.35; cohort percentile 0.333; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, marker_Chrna2, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 8
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.33
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.984
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: Npy
+          val: 12.08
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.984
+          coverage: 1.0
+        - gene: Pnoc
+          val: 0.35
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.333
+          coverage: 1.0
+      region_fraction: 0.008
+      region_fraction_100um: 0.021
+      region_evidence: SELF
+  - id: edge_olm_hippocampus_to_CS20230722_SUPT_0224
+    lit_type: olm_hippocampus
+    taxonomy_type: CS20230722_SUPT_0224
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0224 Sst Gaba_11; region_fraction_100um=0.032; strict region_fraction=0.010.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Isocortex [MBA:315] count_100um=1077 [painted]; Hippocampal formation [MBA:1089] count_100um=200 [painted]; Supplemental somatosensory area [MBA:378] count_100um=119 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.032; strict region_fraction: 0.010; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.65; cohort_pct 0.825; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.65; cohort percentile 0.825; child-cluster coverage 1.000
+      - property: marker_Chrna2
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.10; cohort_pct 0.905; child-coverage 0.500'
+        alignment: CONSISTENT
+        notes: val=0.10; cohort percentile 0.905; child-cluster coverage 0.500
+      - property: marker_mGluR1
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 8.91'
+        alignment: CONSISTENT
+        notes: val=8.91
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 1.84'
+        alignment: DISCORDANT
+        notes: val=1.84
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 9.86'
+        alignment: DISCORDANT
+        notes: val=9.86
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 1.05'
+        alignment: DISCORDANT
+        notes: val=1.05
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 4.04'
+        alignment: DISCORDANT
+        notes: val=4.04
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.48'
+        alignment: DISCORDANT
+        notes: val=0.48
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 10.65; cohort_pct 0.825; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.65; cohort percentile 0.825; child-cluster coverage 1.000
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 8.60; cohort_pct 0.921; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.60; cohort percentile 0.921; child-cluster coverage 1.000
+      - property: neuropeptide_Pnoc
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 0.29; cohort_pct 0.317; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.29; cohort percentile 0.317; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_PV, negative_marker_CB, negative_marker_CR, negative_marker_NOS, negative_marker_VIP. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 8
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.65
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.825
+          coverage: 1.0
+        - gene: Chrna2
+          val: 0.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.707
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.905
+          coverage: 0.5
+        - gene: Npy
+          val: 8.6
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.921
+          coverage: 1.0
+        - gene: Pnoc
+          val: 0.29
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.317
+          coverage: 1.0
+      region_fraction: 0.01
+      region_fraction_100um: 0.032
+      region_evidence: SELF
