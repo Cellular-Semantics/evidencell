@@ -251,6 +251,131 @@ is NOT rendered in the user-facing report.
 
 ---
 
+## Voice and style (mandatory — applies to ALL body prose)
+
+Write like a biology paper, not like a process executing. A
+biologist reading the report should learn the cells the mapping is
+about, the experiments that produced the evidence, and the
+biological reading of the result — *not* the orchestrator's
+internal steps, schema field names, or the agent's reasoning
+machinery.
+
+### Opening sentence shape
+
+Each per-survivor paragraph AND the Results opener follows the same
+shape: **evidence types → source modality (with experimental
+provenance) → conclusion → inline figure/table references for
+detail**. The conclusion comes early; the methodology phrase
+qualifies the strength of evidence; figure/table refs replace
+restating numbers in prose.
+
+**Good** (the model to write toward):
+
+> Marker expression alignment and annotation transfer evidence from
+> Cre-driver-targeted cells with OLM morphology and
+> electrophysiology (Winterer 2019) supports mapping to the
+> supertype 0216 Sst Gaba_3 [CS20230722_SUPT_0216] (F1=0.97; see
+> figure and property comparison table). The same annotation
+> transfer evidence shows distributed transfer across child clusters
+> within Sst Gaba_3, with 0768 Sst Gaba_3 [CS20230722_CLUS_0768] as
+> the top cluster candidate (Purity=1.00, Coverage=0.48, F1=0.65).
+
+**Bad** (anti-patterns to avoid):
+
+- *"Under the Acts 1–3 evidence-hierarchy rubric, one candidate
+  survives the filter…"* — process vocabulary in body prose.
+- *"…is a lit-derived pooling call confirmed by the indistinguishable
+  AT distributions of the two cohorts."* — talks about how the call
+  was made, not what it is. The biology is "Winterer reports no
+  distinguishing properties between the two Cre-marked cohorts";
+  the AT confirmation is implicit in the figure.
+- *"The mapping is encoded as `skos:broadMatch + mapping_cardinality:
+  1:n` onto CS20230722_SUPT_0216 rather than as a 1:1 to any
+  specific child."* — schema vocabulary in narrative. Write the
+  biology ("OLM cells distribute across several Sst Gaba_3 child
+  clusters; the supportable mapping is at supertype level"). The
+  SSSOM encoding lives in the verdict-block YAML, not in body
+  prose.
+- *"Five candidate WMBv1 clusters were assessed. The primary
+  mapping is to CLUS_0769 at MODERATE confidence."* — opens with a
+  process count and an enum, not with the biology.
+
+### Banned vocabulary in body prose
+
+These words/phrases name the orchestrator's mechanism and MUST NOT
+appear in any user-facing body text (Introduction, Results,
+Methods, Discussion, References, or any per-survivor paragraph).
+They're fine inside the verdict-block YAML (which is not rendered).
+
+| Banned | Reason | Use instead |
+|---|---|---|
+| Act 1 / Act 2 / Act 3 | internal pass label | (omit) |
+| filter / filter step / filter pass | mechanism | "the candidates assessed" or rephrase |
+| rubric / evidence-hierarchy rubric | mechanism | (state the biological reasoning directly) |
+| tier / `[tier:STRONGEST\|NEXT\|WEAKEST\|CUT]` | audit token | use confidence badge + verdict-column text |
+| survivor / cut / cut-tier / cut candidate | mechanism | "primary candidate" / "eliminated (reason)" |
+| lit-derived / quote-derived call | meta-statement | state the lit finding directly with a citation |
+| rationale (as a noun referring to the report) | report-internal | (omit; just write the reasoning) |
+| encoded as / is read as / is best read as `skos:…` | schema vocabulary | describe the biological relationship; SSSOM lives in YAML |
+| reconciliation_note / unresolved_questions (as field names) | schema vocabulary | write the substance directly |
+
+The `[tier:…]` token MUST still appear at the head of every
+verdict-block YAML `rationale` string (the rationale-writeback tool
+needs it for audit). It MUST NOT appear in any other context.
+
+### Figure legend rule
+
+The legend tells the reader **what the figure is, how to read it,
+and what to take from it** — never the numbers the figure already
+shows. Pull metric values into the legend only when they don't
+appear on the figure axes / annotations (e.g. an n_cells count
+absent from the rendered F1 panel).
+
+**Good legend (concise; tells reader what to look at):**
+
+> F1 across taxonomy levels for the Winterer 2019 OLM cohort
+> (Sst-OLM + Htr3a-OLM pooled to a single OLM group; n=46 source
+> cells). Coverage = fraction of source-group cells landing on the
+> target; Purity = fraction of target cells from the source group.
+> With a single pooled source, Purity is 1.0 at every target and
+> only Coverage discriminates. Cluster-level scatter across multiple
+> Sst Gaba_3 children is consistent with within-OLM subcluster
+> heterogeneity reported by Thulin et al. 2025 [9].
+
+**Bad legend (restates figure metrics in prose):**
+
+> …Best target per level: CLASS CS20230722_CLAS_07 F1=0.99 (Cov=0.98
+> / n=45); SUBCLASS CS20230722_SUBC_053 F1=0.99 (Cov=0.98 / n=45);
+> SUPERTYPE CS20230722_SUPT_0216 F1=0.97 (Cov=0.93 / n=43); CLUSTER
+> CS20230722_CLUS_0768 F1=0.65 (Cov=0.48 / n=22).
+
+Pool composition lives in the legend (one sentence naming the
+pseudo-source's members; pulled from
+`source_groups[*].label` and `source_groups[*].members`); pool
+*rationale* lives in the Methods table's "Source pooling" row or
+in `SourceGroup.rationale` write-back, NOT in the Results opener
+or the per-survivor paragraph.
+
+### Reference, don't restate
+
+When a property comparison appears in Table 1 and a figure metric
+appears in the AT figure, prose paragraphs should *cite* the table
+or figure ("see property comparison table" / "see figure"), not
+re-list every value. Specific numbers in prose are reserved for the
+single most consequential claim (typically the headline F1 + the
+best-cluster F1) and per-claim citations needed by the
+anti-hallucination check (accession + run_ref + the F1 value).
+
+### Conclusion-first sentence ordering
+
+Within each survivor paragraph, lead with the conclusion and then
+back it up. Don't bury the call in three sentences of methodology.
+The first sentence of the survivor paragraph names what the cluster
+is, the strongest evidence for the call, and the confidence. Detail
+follows.
+
+---
+
 ## Report structure (paper-style — follow exactly, in this order)
 
 The report uses paper-style top-level sections so it can be screenshotted
@@ -362,34 +487,19 @@ Discussion's Best candidate + caveats section (do not duplicate it here).
 
 This top-level section bundles the AT figure, per-survivor property
 alignment + Evidence support tables, the per-survivor paragraph(s),
-and an under-fold candidates audit table at the end. **Lead with
-biology.** Open with a 2–4 sentence summary that names the primary
-mapping in biological terms, says what evidence anchors the call
-(citing the source-paper modality — e.g. "Cre-driver targeting +
-patch-seq morphology recovery in [author year]"), and notes the
-single most important caveat. Do NOT open with a candidate count or
-mention "filter", "rubric", "act", "tier", "cut", "survivor", or any
-other process vocabulary — the reader does not need to know how the
-shortlist was assembled.
+and an under-fold candidates audit table at the end. Apply the
+"Voice and style" rules to all prose in this section (and the rest
+of the body). Two sentences are enough for the Results opener:
+one stating the primary mapping with the strongest evidence inline
+(evidence types → source-modality phrase → conclusion → cited
+figure/table refs); one acknowledging the cluster-level scatter or
+caveat if relevant, with inline ref to the figure for detail. Do
+NOT open with a candidate count, with the orchestrator's mechanism
+("filter", "rubric", "act", "tier", "cut", "survivor"), or with a
+schema-vocabulary verdict ("encoded as `skos:broadMatch + 1:n`").
 
-Good opening (biology-led):
-
-> Oriens-Lacunosum Moleculare (OLM) cells map onto the Sst Gaba_3
-> supertype [CS20230722_SUPT_0216] at MODERATE confidence. The
-> primary evidence is annotation transfer from Winterer 2019, whose
-> source cohort was Cre-driver-targeted in CA1 oriens with
-> patch-clamp morphology confirmation [7] — placing the call on
-> directly identified OLM cells rather than on generic Sst+ marker
-> convergence. The signal is robust at supertype but scatters
-> across sibling clusters at the cluster level (best child
-> CS20230722_CLUS_0768 pooled F1=0.65), so the call is best read as
-> OLM ↔ Sst Gaba_3 supertype.
-
-Bad opening (process-led — do not write this):
-
-> Five candidate WMBv1 clusters were assessed against the OLM
-> classical definition. Under the Acts 1–3 evidence-hierarchy
-> rubric, one candidate survives the filter…
+The Voice section's worked example serves as the model — match its
+shape, not the substance verbatim.
 
 **Annotation-transfer overview figure (run-level, filtered)**
 
