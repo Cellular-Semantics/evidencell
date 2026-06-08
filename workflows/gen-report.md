@@ -219,6 +219,37 @@ Cap survivors at 3. Cuts are not capped — they all go in the
 candidates table at the end of Results. Sub-3 survivors is honest
 signal that few candidates merit detailed treatment.
 
+**Supertype + best-child-within-supertype pattern.** When the
+canonical mapping resolution is a supertype broadMatch + a single
+best-cluster-within-it (the OLM-style scatter-across-children
+pattern: AT lands on a supertype with F1 > 0.7 and one of the
+supertype's children clearly leads the cluster-level F1
+distribution), count them as **two survivors** (parent + best
+child), not one. Both get full per-survivor paragraphs. The verdict
+blocks should encode the relationship explicitly: the supertype
+edge gets `skos:broadMatch + 1:n` to the supertype accession; the
+best-child edge gets `skos:closeMatch + 1:1` to the cluster
+accession; both should cite the other in `reconciliation_note` so
+the reader sees they're paired. The candidates table at the end of
+Results lists them in their natural rank order (supertype row +
+cluster row); cuts (other children of the same supertype that
+didn't lead) collapse into the cuts section of the table normally.
+
+**Legacy / fresh-emit edge ID duplicates.** When two edges in the
+graph target the same `taxonomy_type` accession but have different
+edge IDs (typically a legacy lowercase-ID edge from a pre-emitter
+curator pass alongside a fresh-emit uppercase-ID edge from
+`emit-stage-b`), dedupe by `taxonomy_type` and **prefer the edge
+that carries substantive structured evidence** —
+`property_comparisons` with populated `node_b_value`s and curator-
+authored `caveats[]` typically beat a fresh-emit edge that only
+carries `discovery_score` and a stub property_comparison. Surface
+the impoverished duplicate as an explicit follow-up
+(`unresolved_questions[]`: "curator removal of duplicate edge
+{edge_id} — legacy/fresh-emit ID collision on taxonomy_type X").
+Do NOT silently keep both; the reader sees a confusing
+duplication.
+
 For audit purposes only, every verdict block (survivor or cut)
 records a `[tier:STRONGEST|NEXT|WEAKEST|CUT]` token at the head of
 its rationale string. **The token MUST NOT appear in body prose**
@@ -862,17 +893,56 @@ For each marker/neuropeptide on the classical node, assess the evidence chain:
   metadata), note the discrepancy factually. Do not explain it away — present
   both values and flag for investigation.
 - **Atlas annotation vs. expression discrepancy (mandatory check)**: For each
-  marker or neuropeptide listed as DEFINING, DEFINING_SCOPED, or NEUROPEPTIDE in
-  the atlas node's metadata, check whether the corresponding precomputed expression
-  value (from `property_comparisons[*].node_b_value`) is near-zero (< 0.5) or
-  absent. If so, flag explicitly:
+  marker or neuropeptide listed as DEFINING, DEFINING_SCOPED, NEUROPEPTIDE,
+  TF, or MERFISH in the atlas node's metadata, check whether the corresponding
+  precomputed expression value (from `property_comparisons[*].node_b_value`)
+  is near-zero (< 0.5) or absent. If so, flag explicitly:
   > ⚠ **Atlas annotation/expression discrepancy**: {gene} is listed as a {DEFINING /
-  > NEUROPEPTIDE} marker in WMBv1 atlas metadata for {accession} but shows
-  > precomputed mean expression = {value}. This may reflect a neuropeptide annotation
-  > derived from a different dataset or resolution level, or a marker that is
-  > expressed in a subset of cells below the atlas-level mean. Flag for investigation.
-  This is most common for neuropeptides, which are often low-expressed or cell-sparse.
-  The discrepancy should also appear in the Concerns list for that candidate.
+  > NEUROPEPTIDE / TF / MERFISH} marker in WMBv1 atlas metadata for {accession}
+  > but shows precomputed mean expression = {value}. This may reflect a marker
+  > annotation derived from a different dataset or resolution level, or a marker
+  > that is expressed in a subset of cells below the atlas-level mean. Flag for
+  > investigation.
+  This is most common for neuropeptides, which are often low-expressed or cell-sparse,
+  and for MERFISH-panel markers, which are present in the atlas team's MERFISH probe
+  set but not necessarily discriminating at the cluster level. The discrepancy should
+  also appear in the Concerns list for that candidate.
+
+  **Atlas marker category narrative guidance.** The five category tags
+  carry different weight in the report:
+  - `DEFINING`: the atlas team's primary discriminator for this cluster.
+    Cite directly in the marker-narrative ("Sst is a defining marker
+    on this cluster per atlas curation").
+  - `DEFINING_SCOPED`: discriminates within-subclass but not across.
+    Mention with the scope caveat.
+  - `NEUROPEPTIDE`: atlas-side neuropeptide annotation (may come from
+    a packed metadata column rather than per-cell expression; treat
+    presence as informational, not as a discriminator on its own).
+  - `TF`: transcription factor on the atlas TF marker panel. Useful
+    context but rarely the primary biological argument; note its
+    presence but don't lead with it unless the classical-side marker
+    list explicitly names TFs.
+  - `MERFISH`: gene is in the atlas team's MERFISH probe panel. This
+    is a panel-selection signal, not an expression-quality signal —
+    do NOT narrate MERFISH-tag presence as evidence of marker
+    importance. Use only as supporting context for why the figure /
+    spatial data exists.
+
+- **Supertype-name circularity check**: When the atlas supertype's name
+  contains the gene symbol of one of the classical node's defining_markers
+  (e.g. supertype "Lamp5 Lhx6 Gaba_1" being a candidate for a classical
+  type whose defining_markers include Lamp5), AND that marker on the
+  classical node has no primary citation in its `sources[]` (only review
+  citations or no sources at all), surface the circularity explicitly:
+  > ⚠ **Marker concordance circularity**: classical marker {gene} matches
+  > the atlas supertype's name ({supertype label}), but {gene} on the
+  > classical node lacks a primary citation. The marker concordance is
+  > therefore partially nominal — flag for curator review to anchor
+  > {gene} to a primary study before treating this concordance as
+  > supporting evidence.
+
+  This belongs in the marker-provenance bullets, not in the Concerns
+  list (it's an upstream curation gap, not a candidate-specific caveat).
 - **Quantitative cross-check**: If precomputed stats values are available in
   `property_comparisons[*].node_b_value`, note where they confirm or
   challenge the expected marker profile. For negative markers, note any
@@ -1182,9 +1252,23 @@ Do not invent PMIDs or query URLs.
 7. Every anatomical location (soma location, layer, region) must be written as:
    `Name [PREFIX:ID]`
    using the `id` field from `facts.classical_nodes[].anatomical_location`. Do not invent IDs.
-8. Every atlas cluster accession must be written as:
+8. Every atlas **cluster** or **supertype** accession (CLUS_/SUPT_)
+   in body prose must be written as:
    `Cluster name [accession]`
-   using the `node_b_accession` field from `facts.edges`. Do not invent accessions.
+   using the `node_b_accession` field from `facts.edges`. Do not
+   invent accessions.
+
+   **Class- and subclass-level accessions are NOT written in
+   bracketed form in body prose.** They surface in AT
+   `metrics_by_level` rows (e.g. `CS20230722_CLAS_07`,
+   `CS20230722_SUBC_053`) but are not registered as KB
+   nodes — the pre-edit hook will reject them as unknown
+   accessions if you bracket them. Reference class/subclass levels
+   by name only (e.g. "07 CTX-MGE GABA class" or "Sst Gaba
+   subclass"); they may appear bracketed only inside the Methods
+   fold's AT table, the figure legend, and the verdict-block
+   YAML rationale (which has its own structured-data-grounded
+   accession check).
 
 ## Phase 3 — Verdict block (emit at the end of the report)
 
