@@ -1062,44 +1062,35 @@ edges:
           SUPT_0486 spans a broader preoptic zone than the AVPV/PeN.
     property_comparisons:
       - property: nt_type
-        node_a_value: "GABAergic / dopaminergic (Th co-expression)"
-        node_b_value: "GABAergic (Gaba_5 label)"
-        alignment: APPROXIMATE
-        notes: >
-          GABAergic concordant; dopaminergic component present at supertype level
-          (Th=2.72) but diluted. Resolved at cluster level by CLUS_1915 (nt_type=Dopa).
-      - property: location_MBA272
-        node_a_value: "MBA:272 (AVPV)"
-        node_b_value: "MBA:272 (AVPV) n=16; MBA:133 PVpo n=64; MBA:515 MPN n=37"
-        alignment: APPROXIMATE
-        notes: Direct AVPV location match (n=16); supertype spans broader preoptic zone.
-      - property: marker_Kiss1
-        node_a_value: "POSITIVE (transcript, defining marker)"
-        node_b_value: "precomputed mean_expression=0.62"
-        alignment: APPROXIMATE
-        notes: Present but low-moderate at supertype level; consistent with subset expression.
-      - property: marker_Esr1
-        node_a_value: "POSITIVE (transcript, defining marker)"
-        node_b_value: "precomputed mean_expression=7.72 (DEFINING atlas marker)"
-        alignment: CONSISTENT
-      - property: marker_Th
-        node_a_value: "POSITIVE (protein, co-expressed with Kiss1)"
-        node_b_value: "precomputed mean_expression=2.72"
-        alignment: APPROXIMATE
-      - property: sex_ratio
-        node_a_value: "female-biased (AVPV Kiss1 neurons strongly female-biased)"
-        node_b_value: "child CLUS_1915 male_female_ratio=0.02 (extreme female bias)"
-        alignment: CONSISTENT
-        notes: >
-          Sex ratio confirmed at child-cluster level. CLUS_1915 (Kiss1=2.51, Th=6.6, Esr1=9.55)
-          is the only child cluster co-expressing both Kiss1 and Th at high levels and the most
-          strongly female-biased cluster in SUPT_0486 (MFR=0.02). Supertype-level sex ratio
-          not available in DB.
-      - property: annotation_transfer_f1
-        node_a_value: "not applicable"
-        node_b_value: "NOT_ASSESSED"
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: not asserted
         alignment: NOT_ASSESSED
-        notes: Annotation transfer not yet run for avpv_kiss1_neuron. Priority experiment.
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=381 [painted]; Periventricular hypothalamic nucleus, preoptic part [MBA:133] count_100um=354 [painted]; Medial preoptic nucleus [MBA:515] count_100um=276 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.061; strict region_fraction: 0.043; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
     caveats:
       - caveat_type: AMBIGUOUS_MAPPING
         description: >
@@ -1129,6 +1120,32 @@ edges:
 
     mapping_justification: semapv:UnreviewedManualMapping
     mapping_cardinality: "1:1"
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail:
+        - gene: Esr1
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.043
+      region_fraction_100um: 0.061
+      region_evidence: SELF
   - id: edge_avpv_th_neuron_to_cs20230722_supt_0486
     lit_type: avpv_th_neuron
     taxonomy_type: CS20230722_SUPT_0486

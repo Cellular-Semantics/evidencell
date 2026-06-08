@@ -3051,33 +3051,34 @@ edges:
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
-        node_b_value: GABA
-        alignment: CONSISTENT
-      - property: location_CA1_stratum_pyramidale
-        node_a_value: CA1 stratum pyramidale (UBERON:0014548) — soma
-        node_b_value: CA1 stratum oriens (MBA:399, 818 cells) — no pyramidal layer listed
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2145 [painted]; Field CA1 [MBA:382] count_100um=1559 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=1463 [painted]
         alignment: APPROXIMATE
-        notes: Dominant hippocampal signal in CA1 SO, not pyramidale. Bistratified cell soma classically in/near stratum pyramidale.
+        notes: 'region_fraction_100um: 0.153; strict region_fraction: 0.030; region_evidence: SELF'
       - property: marker_Pvalb
-        node_a_value: Pvalb — defining marker (co-expressed with Sst)
-        node_b_value: 'Sst subclass, not Pvalb; Pvalb not in supertype markers; precomputed stats mean: 1.48'
-        alignment: DISCORDANT
-        notes: 'Bistratified cells co-express Pvalb and Sst (PMID:37467748). The Sst subclass placement is consistent with the Sst component but the Pvalb component is not captured. High transcriptomic similarity within Sst subclass may place bistratified closer to OLM cells than PV basket cells at transcriptomic level.
-
-          '
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 1.48; cohort_pct 0.806; child-coverage 0.889'
+        alignment: CONSISTENT
+        notes: val=1.48; cohort percentile 0.806; child-cluster coverage 0.889
       - property: marker_Sst
         node_a_value: Sst — defining marker
-        node_b_value: 'Sst subclass; precomputed stats mean: 11.44'
+        node_b_value: 'Sst: 11.44; cohort_pct 0.968; child-coverage 1.000'
         alignment: CONSISTENT
+        notes: val=11.44; cohort percentile 0.968; child-cluster coverage 1.000
       - property: marker_Tac1
-        node_a_value: Tac1 — defining marker (Sst;;Tac1 intersection targets bistratified cells)
-        node_b_value: 'Tac1 in DEFINING_SCOPED markers; precomputed stats mean: 0.55'
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 0.55; cohort_pct 0.742; child-coverage 0.667'
         alignment: CONSISTENT
-        notes: Tac1 DEFINING_SCOPED in this supertype is directly consistent with bistratified cell identity.
+        notes: val=0.55; cohort percentile 0.742; child-cluster coverage 0.667
       - property: neuropeptide_Sst
-        node_a_value: Sst — neuropeptide
-        node_b_value: 'Sst subclass defining; precomputed stats mean: 11.44'
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 11.44; cohort_pct 0.968; child-coverage 1.000'
         alignment: CONSISTENT
+        notes: val=11.44; cohort percentile 0.968; child-cluster coverage 1.000
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: 'Sst Gaba_3 supertype contains at least three classical hippocampal types: OLM cells (Sst+/Chrna2+), bistratified cells (Sst+/Pvalb+/Tac1+), and HS cells (Sst+, long-range projecting). These are not separable at supertype level. This edge and the olm_cell_ca1 edge to the same supertype reflect this overlap explicitly.
@@ -3099,6 +3100,54 @@ edges:
       - Does a Sst-dominant Pvalb-low bistratified subpopulation exist, and if so does it map to CS20230722_SUPT_0216 specifically? Requires a Sst-Cre × Tac1-Flp × Pvalb-negative intersectional scRNA-seq + morphology dataset.
     rationale_source_hash: 52a58fa9
     mapping_cardinality: "1:1"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 1.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.943
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.806
+          coverage: 0.889
+        - gene: Sst
+          val: 11.44
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: Tac1
+          val: 0.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.816
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.742
+          coverage: 0.667
+      region_fraction: 0.03
+      region_fraction_100um: 0.153
+      region_evidence: SELF
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_SUPT_0206
@@ -3152,25 +3201,34 @@ edges:
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
-        node_b_value: GABA
-        alignment: CONSISTENT
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1558 [painted]; Field CA1 [MBA:382] count_100um=922 [painted]; Cortical subplate [MBA:703] count_100um=824 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.160; strict region_fraction: 0.032; region_evidence: SELF'
       - property: marker_Pvalb
         node_a_value: Pvalb — defining marker
-        node_b_value: 'Pvalb subclass; CLUS_0739 MERFISH: Pvalb present'
+        node_b_value: 'Pvalb: 8.74; cohort_pct 0.968; child-coverage 1.000'
         alignment: CONSISTENT
-      - property: location_CA1_SO_SR
-        node_a_value: Axon in CA1 stratum oriens (UBERON:0014552) + CA1 stratum radiatum (UBERON:0014554)
-        node_b_value: 'CLUS_0737: CA1 SO (361), CA1 SR (72), CA3 SO (72) — bilaminar axon pattern'
-        alignment: CONSISTENT
-        notes: Bilaminar axon territory of CLUS_0737 directly matches bistratified cell definition.
+        notes: val=8.74; cohort percentile 0.968; child-cluster coverage 1.000
       - property: marker_Sst
-        node_a_value: Sst co-expressed in bistratified cells
-        node_b_value: 'CLUS_0737 NP: Sst:4.4'
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 2.72; cohort_pct 0.774; child-coverage 1.000'
         alignment: CONSISTENT
+        notes: val=2.72; cohort percentile 0.774; child-cluster coverage 1.000
       - property: marker_Tac1
-        node_a_value: Tac1 co-expressed
-        node_b_value: 'CLUS_0737 NP: Tac1:7.3'
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 5.36; cohort_pct 0.935; child-coverage 1.000'
         alignment: CONSISTENT
+        notes: val=5.36; cohort percentile 0.935; child-cluster coverage 1.000
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 2.72; cohort_pct 0.774; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=2.72; cohort percentile 0.774; child-cluster coverage 1.000
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: SUPT_0206 contains both PV basket cells (CLUS_0739) and PV bistratified cells (CLUS_0737). Not separable at supertype level; see CLUS_0737 edge for cluster-level mapping.
@@ -3187,6 +3245,54 @@ edges:
       - Whether CS20230722_SUPT_0206 provides morphologically informative substructure beyond the CS20230722_CLUS_0737 / CLUS_0739 BIC/BC cluster-level split.
     rationale_source_hash: 8c722d22
     mapping_cardinality: "1:1"
+    discovery_score:
+      score: 6
+      rank_in_cohort: 1
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.74
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: Sst
+          val: 2.72
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.774
+          coverage: 1.0
+        - gene: Tac1
+          val: 5.36
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.935
+          coverage: 1.0
+      region_fraction: 0.032
+      region_fraction_100um: 0.16
+      region_evidence: SELF
   - id: edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737
     lit_type: bistratified_cell_hippocampus
     taxonomy_type: CS20230722_CLUS_0737
@@ -3286,24 +3392,32 @@ edges:
         node_a_value: GABAergic
         node_b_value: GABA
         alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=995 [painted]; Field CA1 [MBA:382] count_100um=668 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=614 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.224; strict region_fraction: 0.040; region_evidence: SELF'
       - property: marker_Pvalb
         node_a_value: Pvalb — defining marker
-        node_b_value: Pvalb subclass; scoped marker Ednra (vs CLUS_0739 which has Pvalb in MERFISH)
+        node_b_value: 'Pvalb: 8.27; cohort_pct 0.956'
         alignment: CONSISTENT
-        notes: Pvalb not in CLUS_0737 MERFISH but present in parent subclass; bistratified Pvalb expression confirmed by patch-seq.
-      - property: location_CA1_SO_SR
-        node_a_value: 'Axon: CA1 stratum oriens (UBERON:0014552) + CA1 stratum radiatum (UBERON:0014554)'
-        node_b_value: 'CLUS_0737: CA1 SO (361), CA1 SR (72) — bilaminar'
-        alignment: CONSISTENT
-        notes: CLUS_0737 has highest CA1 SO cell count of any Pvalb cluster (361) with significant CA1 SR — bilaminar pattern is the anatomical definition of bistratified cells.
+        notes: val=8.27; cohort percentile 0.956
       - property: marker_Sst
-        node_a_value: Sst co-expressed
-        node_b_value: 'CLUS_0737 NP: Sst:4.4'
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 4.39; cohort_pct 0.706; atlas category: NEUROPEPTIDE'
         alignment: CONSISTENT
+        notes: val=4.39; cohort percentile 0.706
       - property: marker_Tac1
-        node_a_value: Tac1 co-expressed
-        node_b_value: 'CLUS_0737 NP: Tac1:7.3'
+        node_a_value: Tac1 — defining marker
+        node_b_value: 'Tac1: 7.26; cohort_pct 0.956; atlas category: NEUROPEPTIDE'
         alignment: CONSISTENT
+        notes: val=7.26; cohort percentile 0.956
+      - property: neuropeptide_Sst
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 4.39; cohort_pct 0.706; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.39; cohort percentile 0.706
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: Sst-expressing bistratified subpopulation may distribute toward SUPT_0216 (see edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0216). CLUS_0737 captures the PV-primary bistratified population.
@@ -3322,6 +3436,51 @@ edges:
       - Robustness of CS20230722_CLUS_0737 assignment to raw-counts vs TPM-pseudo-counts normalization in GEO:GSE142546.
     rationale_source_hash: '65ac6f7a'
     mapping_cardinality: "1:1"
+    discovery_score:
+      score: 7
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.27
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.956
+        - gene: Sst
+          val: 4.39
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.706
+        - gene: Tac1
+          val: 7.26
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.956
+      region_fraction: 0.04
+      region_fraction_100um: 0.224
+      region_evidence: SELF
   - id: edge_olm_cell_ca1_to_CS20230722_SUPT_0216
     lit_type: olm_cell_ca1
     taxonomy_type: CS20230722_SUPT_0216
@@ -3862,47 +4021,49 @@ edges:
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
-        node_b_value: GABA
-        alignment: CONSISTENT
-      - property: location_sp
-        node_a_value: CA1 stratum pyramidale (UBERON:0014548) — SOMA
-        node_b_value: DG mol layer (263), CA3 SO (179), CA3 SR (235) — no CA1 SP
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=3175 [painted]; Dentate gyrus [MBA:726] count_100um=1220 [painted]; Field CA3 [MBA:463] count_100um=1179 [painted]
         alignment: DISCORDANT
-        notes: 'Classical Ivy cell soma is in or near CA1 stratum pyramidale. This supertype has no CA1 pyramidal layer representation. CA3 is enriched — may reflect species difference or subregional bias in the atlas dataset.
-
-          '
-      - property: marker_Lamp5
-        node_a_value: Lamp5 — defining marker (transcript)
-        node_b_value: 'Lamp5 — DEFINING_SCOPED marker of SUPT_0203; precomputed stats mean: 4.4'
-        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.090; strict region_fraction: 0.014; region_evidence: SELF'
       - property: marker_Nos1
-        node_a_value: Nos1 (nNOS) — defining marker (IHC and transcript)
-        node_b_value: 'not present in SUPT_0203 markers; precomputed stats mean: 7.79'
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 7.78; cohort_pct 0.968; child-coverage 1.000'
         alignment: CONSISTENT
-        notes: 'Nos1 expected for Ivy cells (Bhatt 2023: Grin3a expressed in both IvyC Lamp5+/Lhx6+ and NGC.M subsets). Absence from atlas markers does not rule out expression — may not be a defining marker at this resolution.
-
-          '
+        notes: val=7.78; cohort percentile 0.968; child-cluster coverage 1.000
       - property: marker_Npy
-        node_a_value: Npy — defining marker (IHC)
-        node_b_value: 'not present in SUPT_0203 markers; precomputed stats mean: 4.62'
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 4.62; cohort_pct 0.710; child-coverage 1.000'
         alignment: CONSISTENT
-      - property: neuropeptide_Npy
-        node_a_value: Npy neuropeptide present
-        node_b_value: 'not present in supertype neuropeptide list; precomputed stats mean: 4.62'
+        notes: val=4.62; cohort percentile 0.710; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 6.73; cohort_pct 0.968; child-coverage 1.000; atlas category: DEFINING_SCOPED'
         alignment: CONSISTENT
-      - property: negative_marker_Sst
-        node_a_value: Sst — negative marker
-        node_b_value: 'Sst not listed in SUPT_0203 markers; precomputed stats mean: 1.52'
-        alignment: CONSISTENT
+        notes: val=6.73; cohort percentile 0.968; child-cluster coverage 1.000
       - property: negative_marker_Pvalb
-        node_a_value: Pvalb — negative marker
-        node_b_value: 'Pvalb not listed in SUPT_0203 markers; precomputed stats mean: 0.43'
-        alignment: CONSISTENT
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.43; cohort_pct 0.516'
+        alignment: DISCORDANT
+        notes: val=0.43; cohort percentile 0.516
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.52; cohort_pct 0.677'
+        alignment: DISCORDANT
+        notes: val=1.52; cohort percentile 0.677
       - property: negative_marker_Calb2
-        node_a_value: Calb2 — negative marker
-        node_b_value: 'Calb2 mean_expression=0.37'
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.37; cohort_pct 0.419'
+        alignment: DISCORDANT
+        notes: val=0.37; cohort percentile 0.419
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 4.62; cohort_pct 0.710; child-coverage 1.000'
         alignment: CONSISTENT
-        notes: Calb2 low/absent (0.37) in atlas type.
+        notes: val=4.62; cohort percentile 0.710; child-cluster coverage 1.000
     caveats:
       - caveat_type: OTHER
         description: 'Ivy cells and nNOS+ NGCs (NGFC.M) are reported to share completely overlapping developmental, electrophysiological, morphological, and neurochemical properties (Tricoire 2011), suggesting they may constitute a single interneuron subtype distinguished only by laminar position. Edge 2b (NGC→SUPT_0203) and this edge may therefore overlap the same atlas population; see edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203.
@@ -3927,6 +4088,81 @@ edges:
     report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
     rationale_source_hash: 64ae2ece
     mapping_cardinality: "1:1"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 7.78
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: Npy
+          val: 4.62
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.71
+          coverage: 1.0
+        - gene: Lamp5
+          val: 6.73
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.43
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.516
+        - gene: -Sst
+          val: 1.52
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.677
+        - gene: -Calb2
+          val: 0.37
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.419
+      region_fraction: 0.014
+      region_fraction_100um: 0.09
+      region_evidence: SELF
   - id: edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179
     lit_type: is_interneuron_hippocampus
     taxonomy_type: CS20230722_SUPT_0179

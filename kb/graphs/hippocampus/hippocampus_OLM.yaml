@@ -578,43 +578,69 @@ edges:
     property_comparisons:
       - property: nt_type
         node_a_value: "GABAergic"
-        node_b_value: "GABA"
+        node_b_value: GABA
         alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
       - property: location
-        node_a_value: "stratum oriens (UBERON:0005371); SLM (UBERON:0007640)"
-        node_b_value: "CA1 SO (MBA:399, 87 cells); prosubiculum; posterior amygdala"
+        node_a_value: hippocampus stratum oriens [UBERON:0005371]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=289 [painted]; Cortical subplate [MBA:703] count_100um=186 [painted]; Field CA1 [MBA:382] count_100um=179 [painted]
         alignment: APPROXIMATE
-        notes: "CA1 SO matches — strongest CA1 signal. SLM absent. Extra-hippocampal spread."
+        notes: 'region_fraction_100um: 0.377; strict region_fraction: 0.193; region_evidence: SELF'
       - property: marker_Sst
-        node_a_value: "Sst — defining marker"
-        node_b_value: "Sst subclass"
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.97; cohort_pct 0.857; atlas category: NEUROPEPTIDE'
         alignment: CONSISTENT
+        notes: val=10.97; cohort percentile 0.857
       - property: marker_Chrna2
-        node_a_value: "Chrna2 — defining marker"
-        node_b_value: "Chrna2 expressed (scattered) in Sst Gaba_3 supertype per ABC Atlas"
-        alignment: APPROXIMATE
-        notes: >
-          ABC Atlas filter (HPF/GABA/Chrna2) retains Sst Gaba_3 but eliminates Sst Gaba_6.
-          Expression scattered across clusters of this supertype — not a defining marker
-          at cluster level, but present. https://tinyurl.com/a4f3kd4v
+        node_a_value: Chrna2 — defining marker
+        node_b_value: 'Chrna2: 0.00; cohort_pct 0.000'
+        alignment: DISCORDANT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
       - property: marker_mGluR1
-        node_a_value: "mGluR1 (Grm1) — confirmed 96% detection in OLM scRNA-seq (GSE124847)"
-        node_b_value: "Grm1 mean_expression=8.29"
-        alignment: NOT_ASSESSED
-        notes: "Source-side Grm1 expression now quantified (44/46 OLM cells). Atlas-side still unresolvable — Grm1 not in cluster-level defining_markers or neuropeptides."
+        node_a_value: mGluR1 — defining marker
+        node_b_value: 'mGluR1: 8.29'
+        alignment: CONSISTENT
+        notes: val=8.29
+      - property: negative_marker_PV
+        node_a_value: PV — ABSENT (classical negative marker)
+        node_b_value: 'PV: 0.17'
+        alignment: DISCORDANT
+        notes: val=0.17
+      - property: negative_marker_CB
+        node_a_value: CB — ABSENT (classical negative marker)
+        node_b_value: 'CB: 8.86'
+        alignment: DISCORDANT
+        notes: val=8.86
+      - property: negative_marker_CR
+        node_a_value: CR — ABSENT (classical negative marker)
+        node_b_value: 'CR: 0.29'
+        alignment: DISCORDANT
+        notes: val=0.29
+      - property: negative_marker_NOS
+        node_a_value: NOS — ABSENT (classical negative marker)
+        node_b_value: 'NOS: 4.07'
+        alignment: DISCORDANT
+        notes: val=4.07
+      - property: negative_marker_VIP
+        node_a_value: VIP — ABSENT (classical negative marker)
+        node_b_value: 'VIP: 0.25'
+        alignment: DISCORDANT
+        notes: val=0.25
       - property: neuropeptide_Sst
-        node_a_value: "Sst"
-        node_b_value: "present"
+        node_a_value: Sst — neuropeptide (classical)
+        node_b_value: 'Sst: 10.97; cohort_pct 0.857; atlas category: NEUROPEPTIDE'
         alignment: CONSISTENT
+        notes: val=10.97; cohort percentile 0.857
       - property: neuropeptide_Npy
-        node_a_value: "Npy"
-        node_b_value: "present"
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 7.91; cohort_pct 0.891; atlas category: NEUROPEPTIDE'
         alignment: CONSISTENT
+        notes: val=7.91; cohort percentile 0.891
       - property: neuropeptide_Pnoc
-        node_a_value: "Pnoc"
-        node_b_value: "present"
+        node_a_value: Pnoc — neuropeptide (classical)
+        node_b_value: 'Pnoc: 3.23; cohort_pct 0.563; atlas category: NEUROPEPTIDE'
         alignment: CONSISTENT
-        notes: "Full neuropeptide triad match."
+        notes: val=3.23; cohort percentile 0.563
     caveats:
       - caveat_type: MARKER_NOT_SPECIFIC
         description: "mGluR1 (Grm1) not resolvable from atlas metadata."
@@ -646,6 +672,60 @@ edges:
     rationale_generated_at: '2026-05-20T12:34:37+00:00'
     report_path: reports/hippocampus/olm_hippocampus_summary.md
     rationale_source_hash: 3d3f7d04
+    discovery_score:
+      score: 4
+      rank_in_cohort: 48
+      cohort_size: 50
+      next_best_score: 9
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.97
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.857
+        - gene: Chrna2
+          val: 0.0
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: Npy
+          val: 7.91
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.891
+        - gene: Pnoc
+          val: 3.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.563
+      region_fraction: 0.193
+      region_fraction_100um: 0.377
+      region_evidence: SELF
   - id: edge_olm_to_wmb_clus_0788
     lit_type: olm_hippocampus
     taxonomy_type: CS20230722_CLUS_0788
