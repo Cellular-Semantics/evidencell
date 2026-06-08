@@ -1,124 +1,414 @@
 # ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron — WMBv1 (CCN20230722) Mapping Report
-*draft · 2026-04-27 · Source: `kb/draft/hippocampus/hippocampus_glutamatergic.yaml`*
-
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+*2026-04-27 · Source: `/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml`*
 
 ---
 
-## 1. Classical type
+## Introduction
+
+Ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neurons are a topographically organised population of vCA1 and ventral subiculum (vSub) projection neurons expressing the D1 or D2 dopamine receptors (Drd1, Drd2). Unlike dorsal hippocampus — where D1/D2 expression is restricted to interneurons — the ventral subfields contain a substantial pyramidal-cell population expressing dopamine receptors, representing approximately 45% of all dopamine receptor-positive cells in ventral hippocampus (Godino et al., 2023) [1].
+
+### Classical type table
 
 | Property | Value | References |
 |---|---|---|
-| CL term | pyramidal neuron (CL:0000598) | |
-| Soma location | ventral CA1 / ventral subiculum [UBERON:0002421] | [1] |
+| Soma location | hippocampal formation [UBERON:0002421] (ventral CA1 / ventral subiculum) | [1] |
 | NT | glutamatergic | [1] |
-| Defining markers | Drd1 (D1 dopamine receptor), Drd2 (D2 dopamine receptor) | [1][2] |
-| Negative markers | — | |
-| Neuropeptides | — | |
+| Defining markers | Drd1 (D1 dopamine receptor); Drd2 (D2 dopamine receptor) | [1], [2] |
+
+<details>
+<summary>Details — source evidence for classical type properties</summary>
+
+- **Soma location:** Godino et al. 2023 · ventral hippocampus topography · [1]
+  > these neurons are transcriptionally distinct and topographically organized across vHipp subfields and cell types. In the ventral subicu
+  > — Godino et al. 2023, abstract · [1] <!-- quote_key: 260336826_67252bb8 -->
+
+  > In the vCA1 pyramidal cell layer, gradual enrichment of both D1 and D2 cells emerges ventral to the rhinal fissure, along with the diffuse 21 transition from vCA1 to vSub. Together, these semiquantitative observations indicate a precise topographical organization of D1 and D2 cells across vHipp subfields and layers, most notably in the DG and in the caudal-most parts of vCA1/vSub.
+  > — Godino et al. 2023, D1-and D2-expressing cells are topographically organized in vHipp · [1] <!-- quote_key: 260336826_acc436ad -->
+
+- **NT type / Drd1, Drd2 markers:** Godino et al. 2023 · molecular characterisation in vHipp · [1]
+  > We here study dopaminoceptive neurons in mouse ventral hippocampus (vHipp), molecularly distinguished by their expression of dopamine D1 or D2 receptors
+  > — Godino et al. 2023, abstract · [1] <!-- quote_key: 260336826_f0ffda84 -->
+
+- **Drd1 marker (additional support):** Puighermanal et al. 2016 · BAC transgenic D1R-EGFP characterisation in dorsal hippocampus CA1 · [2]
+  > Using BAC transgenic mice expressing enhanced green fluorescent protein under the control of D1R promoter, we examined the molecular identity of D1R-containing neurons within the CA1 subfield of the dorsal hippocampus
+  > — Puighermanal et al. 2016, abstract · [2] <!-- quote_key: 1711204_2c89b7e1 -->
+
+</details>
+
+Cell Ontology mapping: pyramidal neuron [[CL:0000598](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0000598)] (BROAD).
 
 ---
 
-## 2. Mapping candidates
+## Results
 
-| Rank | WMBv1 supertype | Supertype | Cells | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|---|
-| 1 | 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] | CA1-ProS Glut | — | 🔴 LOW | NT CONSISTENT · Drd1/Drd2 DISCORDANT | Speculative |
+Annotation transfer from the Yao 2021 hippocampal formation SMART-Seq v4 dataset places CA1-ProS source cells onto supertype 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] (F1=0.74 at supertype level) but with both defining dopamine receptors at near-absent atlas mean expression on that supertype, leaving the mapping provisional pending a ventral-CA1-targeted, D1R/D2R-labelled dataset (see figure and property comparison tables). Cohort-derived candidates with strong Drd1/Drd2 expression sit in non-pyramidal-CA1 territories (cortical subplate / endopiriform, entorhinal cortex, dentate gyrus) and are eliminated on regional grounds (see candidates audited table).
 
-Total: 1 edge. Relationship type: PARTIAL_OVERLAP (provisional; Drd1/Drd2-expressing cells are a ventral-specific subpopulation within CA1/SUB; SUPT_0069 captures the full CA1-ProS range without ventral enrichment).
+![Filtered AT figure for ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron](figures/f1_for_hpc_glu_dopa_receptor_pyramidal_hippocampus.png)
 
----
+*F1 across taxonomy levels for the Yao 2021 CA1-ProS source group (n=1574 cells reaching the CA1-ProS subclass). Coverage = fraction of source-group cells landing on the target; Purity = fraction of this target's cells coming from the source group. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution. CA1-ProS source cells consolidate cleanly onto the CA1-ProS subclass (Pur=1.00, Cov=0.99) and onto supertype 0069 CA1-ProS Glut_1 (Pur=1.00, Cov=0.65, F1=0.79); at cluster level the signal disperses across CA1-ProS children, with 0262 CA1-ProS Glut_1 [CS20230722_CLUS_0262] as the top child (Pur=1.00, Cov=0.28). The source group represents CA1-ProS pyramidal cells broadly; it does NOT separately label the Drd1/Drd2-expressing subset, so the AT result does not by itself identify which supertype enriches for dopamine receptor expression in ventral hippocampus.*
 
-## 3. Candidate paragraphs
+### 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] · 🔴 LOW
 
-## 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] · 🔴 LOW
+**Property comparison**
+
+| Property | Classical | Supertype | Best cluster | Alignment |
+|---|---|---|---|---|
+| Soma location | hippocampal formation [UBERON:0002421] (ventral CA1 / vSub) | CA1-ProS Glut subclass (dorsal + ventral CA1) | not assessed | APPROXIMATE |
+| NT type | glutamatergic | glutamatergic (CA1-ProS Glut subclass) | not assessed | CONSISTENT |
+| Drd1 expression | defining marker | mean_expression=0.09 (effectively absent) | not assessed | DISCORDANT |
+| Drd2 expression | defining marker | mean_expression=0.02 (effectively absent) | not assessed | DISCORDANT |
+
+*(Child-cluster breakdown not assessed — see proposed experiments.)*
+
+**Evidence support**
+
+| Evidence | Type | Supports | Headline | Source |
+|---|---|---|---|---|
+| Yao 2021 CA1-ProS MapMyCells AT | Annotation transfer | PARTIAL | F1=0.74 at supertype | — |
 
 **Supporting evidence**
 
-- **NT type — CONSISTENT.** SUPT_0069 belongs to subclass SUBC_016 CA1-ProS Glut, the dedicated CA1/ProSubiculum glutamatergic subclass in WMBv1. The classical ventral hippocampal dopamine receptor-expressing pyramidal neuron is glutamatergic [1]; this identity is consistent at both the supertype and subclass level.
-
-- **Annotation transfer — PARTIAL.** MapMyCells local annotation transfer of Yao 2021 (GEO:GSE185862) mouse hippocampus SSv4 scRNA-seq CA1-ProS subclass labels onto WMBv1 (CCN20230722): of 1704 CA1-ProS cells, 1011 (59.3%) map to SUPT_0069. F1 = 0.744, coverage = 0.593, purity = 0.999. Target_purity = 0.999 confirms SUPT_0069 is exclusively populated by CA1-ProS cells, but the Yao 2021 CA1-ProS subclass is not annotated for Drd1/Drd2 expression. This annotation transfer reflects the correspondence between Yao 2021 CA1-ProS labels and SUPT_0069, not a confirmation that dopamine receptor-expressing cells specifically map here. The support is therefore PARTIAL — it establishes the ventral CA1 subfield correspondence at a supertype level but does not resolve the Drd1/Drd2 subpopulation identity.
-
-- **Location — APPROXIMATE.** The dopamine receptor-expressing pyramidal cells are described as specifically enriched in ventral hippocampus (vCA1 and ventral subiculum) [1]. SUPT_0069 captures the full CA1-ProS range (dorsal + ventral CA1); WMBv1 does not clearly separate dorsal and ventral CA1 at the supertype level from atlas metadata alone. The ventral-specific enrichment of the classical node within the broader CA1 supertype means the location alignment is APPROXIMATE rather than CONSISTENT.
+- Annotation transfer of Yao 2021 CA1-ProS subclass cells (n=1704) onto WMBv1 via MapMyCells (local cell_type_mapper, default parameters) lands 59.3% on supertype 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] (purity 0.999, F1=0.74 at supertype level; `run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1`). This is the highest-confidence supertype assignment for CA1 pyramidal cells in WMBv1 and the only supertype with direct AT evidence connecting to ventral CA1 origin.
+- NT type is concordant: the CA1-ProS Glut subclass (CS20230722_SUBC_016) is glutamatergic, matching the classical type's NT designation [1].
 
 **Marker evidence provenance**
 
-- **Drd1** [1][2]: Godino et al. 2023 [1] characterises dopamine D1 and D2 receptor-expressing neurons in mouse ventral hippocampus using BAC transgenic Drd1-EGFP and Drd2-EGFP mice combined with single-cell transcriptomics. Cell identity is established by the Drd1/Drd2 transgenic labelling combined with pyramidal layer location in vCA1. Puighermanal et al. 2016 [2] uses BAC transgenic mice expressing EGFP under D1R promoter to characterise D1R-containing neurons in CA1 of dorsal hippocampus. Together these citations provide transcript- and protein-level evidence at the BAC transgenic level — strong specificity for dopamine receptor-expressing cells. However, the precomputed expression stats for SUPT_0069 reveal Drd1 mean expression = 0.09 and Drd2 mean expression = 0.02, both effectively absent at the supertype level. This is a direct discrepancy between the classical node marker definition and the atlas supertype profile: if SUPT_0069 captures the classical type's cells, dopamine receptor expression should be detectable above background.
-
-- **Discrepancy explanation — ventral subpopulation dilution.** The near-zero Drd1/Drd2 expression in SUPT_0069 is most likely explained by the fact that SUPT_0069 captures the entire CA1-ProS Glut population (dorsal + ventral), of which the Drd1/Drd2-expressing cells represent only a small ventral subset. Averaging expression across all cells in the supertype would dilute the signal from this minority subpopulation to near-zero. This interpretation is consistent with the Godino et al. description of gradual ventral enrichment [1]. However, this dilution hypothesis remains unverified without Drd1/Drd2 expression data at the CLUSTER level (sub-supertype level) for ventral CA1-enriched clusters. *(note: this is an interpretation beyond stated facts.)*
+- **Drd1**: classical-side evidence is transcript-level (Godino et al. 2023 hybridisation chain reaction in vHipp [1]; Puighermanal et al. 2016 D1R-EGFP BAC transgenic with anatomical/molecular characterisation in dorsal hippocampus CA1 [2]). Both studies established Drd1 as a sparse-but-present hippocampal pyramidal marker.
+- **Drd2**: classical-side evidence from Godino et al. 2023 [1] in vHipp (transcript-level co-detection with Drd1). Atlas-side precomputed mean = 0.02 on SUPT_0069 — effectively absent at the supertype level. ⚠ **Atlas annotation/expression discrepancy**: Drd1 and Drd2 are both classical defining markers in the ventral hippocampus literature but neither is listed in the WMBv1 SUPT_0069 defining marker panel; precomputed mean expression at the supertype level is near zero. This is consistent with the classical type being a *sparse subpopulation* (D1R/D2R cells are ~45% of dopamine receptor-positive cells but a much smaller fraction of all CA1-ProS pyramidal cells [1]); the supertype-level mean dilutes their signal. Per-cluster `add-expression` on the CA1-ProS supertypes (SUPT_0069–0074) would reveal whether any child cluster enriches for Drd1/Drd2.
 
 **Concerns**
 
-- **Marker Drd1 — DISCORDANT.** Drd1 mean expression = 0.09 in SUPT_0069, effectively absent from the supertype-level precomputed stats. This is the primary counter-evidence to the mapping. The classical node is defined by Drd1 expression, which is not detectable at the supertype level in SUPT_0069.
-
-- **Marker Drd2 — DISCORDANT.** Drd2 mean expression = 0.02 in SUPT_0069, also effectively absent. Both defining markers fail the atlas-level cross-check.
-
-- **Curation decision unresolved: distinct type vs. property annotation.** The facts file records an unresolved curation decision: whether hpc_glu_dopa_receptor_pyramidal_hippocampus is best treated as a distinct cell type or as a property annotation (Drd1/Drd2 expression) to be added to the existing CA1 and subicular pyramidal cell nodes. If resolved as a property annotation, this edge should be replaced by Drd1/Drd2 expression entries on the CA1 and subicular pyramidal cell nodes rather than a separate mapping edge.
-
-- **Location APPROXIMATE — no dorsal/ventral CA1 separation in atlas.** WMBv1 does not explicitly resolve dorsal vs. ventral CA1 at the supertype level in the available metadata. If a ventral-enriched supertype exists within SUBC_016, it would be a stronger candidate than SUPT_0069 for this classical type.
+- **Location APPROXIMATE.** SUPT_0069 captures the full dorsoventral extent of CA1-ProS; WMBv1 does not split dorsal vs. ventral CA1 at the supertype level without per-cell MERFISH soma breakdown. The classical type is specifically a ventral subpopulation [1] *(note: the AT-source dataset is also dorsoventrally unrestricted, so the supertype-level scatter is not informative about ventral-specific enrichment)*.
+- **Drd1 / Drd2 DISCORDANT at supertype level.** Both defining markers show near-zero precomputed mean expression on SUPT_0069 (Drd1=0.09; Drd2=0.02). This is the dominant counter-signal. Whether it refutes the mapping or reflects subpopulation dilution is the central unresolved question.
+- **AMBIGUOUS_MAPPING caveat.** The dopamine receptor-expressing pyramidal cells may be better captured as a *property annotation* on the existing CA1 / subicular pyramidal cell nodes rather than as a distinct cell type. The classical-type / property-annotation curation decision is unresolved.
+- **Stale-edge flag.** This edge fell outside the current Stage A top-50 cohort and its property_comparisons were not refreshed in the most recent discovery pass. See open question 1.
 
 **What would upgrade confidence**
 
-- **Resolve the type vs. property curation decision:** The first step is to determine whether this node is a distinct cell type or a property annotation. If it is a property, the appropriate action is to annotate Drd1/Drd2 expression on the CA1 and subicular pyramidal cell KB nodes and retire this mapping edge, rather than invest in annotation transfer evidence. This curation decision should precede any experimental follow-up.
+- Run `add-expression` for Drd1 and Drd2 on the CA1-ProS supertypes SUPT_0069–0074 to identify any ventral-enriched supertype or child cluster (proposed in edge YAML).
+- Targeted MapMyCells annotation transfer from a ventral-hippocampus dataset with D1R/D2R-positive cells specifically labelled (e.g. via Drd1-Cre or Drd2-Cre driver lines) onto WMBv1, with F1 ≥ 0.50 at supertype level to confirm or refute the SUPT_0069 assignment.
+- Curator resolution of whether this is a distinct classical type or a property annotation on existing CA1 / subicular nodes (see open question 2 and the `validation_notes.json` curation decision).
 
-- **Drd1 and Drd2 expression at CLUSTER level in CA1-ProS supertypes:** Running add-expression for Drd1 and Drd2 across all CA1-ProS supertypes (SUPT_0069–0074) at the atlas level would identify whether any specific supertype shows elevated dopamine receptor expression, suggesting ventral CA1 enrichment. This can be done without new experiments and directly addresses the marker DISCORDANT issue.
+<details>
+<summary>### Candidates audited (full top-K)</summary>
 
-- **Annotation transfer from ventral hippocampus D1R/D2R-labelled dataset:** If the node is retained as a distinct type, running annotation transfer from a Drd1-EGFP or Drd2-EGFP ventral hippocampus dataset onto WMBv1 (CCN20230722) would provide direct AnnotationTransferEvidence. Target: F1 ≥ 0.70 at SUPERTYPE level for Drd1+ or Drd2+ cells. Expected output: AnnotationTransferEvidence entries resolving both marker DISCORDANT alignments and potentially identifying a ventral-specific CA1 supertype.
+| WMBv1 target | Supertype | Cells (10x) | Confidence | Key evidence | Verdict |
+|---|---|---:|---|---|---|
+| `0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069]` | (self) | 19061 | 🔴 LOW | CA1-ProS AT F1=0.74 to supertype; Drd1/Drd2 absent at supertype mean | Primary |
+| `0007 IT EP-CLA Glut_1 [CS20230722_CLUS_0007]` | 0003 IT EP-CLA Glut_1 | 9681 | 🔴 LOW | Drd1+Drd2 high; soma in cortical subplate / endopiriform | Eliminated (non-hippocampal soma) |
+| `0014 IT EP-CLA Glut_2 [CS20230722_CLUS_0014]` | 0004 IT EP-CLA Glut_2 | 849 | 🔴 LOW | Drd1+Drd2 high; entorhinal L5/6 IT, not CA1/SUB pyramidal | Eliminated (wrong subclass) |
+| `0015 IT EP-CLA Glut_2 [CS20230722_CLUS_0015]` | 0004 IT EP-CLA Glut_2 | 304 | 🔴 LOW | Drd1+Drd2 high; entorhinal L5/6 IT, not CA1/SUB pyramidal | Eliminated (wrong subclass) |
+| `0032 L5/6 IT TPE-ENT Glut_6 [CS20230722_CLUS_0032]` | 0012 L5/6 IT TPE-ENT Glut_6 | 193 | 🔴 LOW | Drd1+Drd2 high; presubiculum / parasubiculum L5/6 IT | Eliminated (wrong subclass) |
+| `0253 ENTmv-PA-COAp Glut_1 [CS20230722_CLUS_0253]` | 0066 ENTmv-PA-COAp Glut_1 | 395 | 🔴 LOW | Drd2 high; soma in posterior amygdala + medial ventral entorhinal | Eliminated (wrong subclass) |
+| `0012 L5/6 IT TPE-ENT Glut_6 [CS20230722_SUPT_0012]` | (self) | 193 | 🔴 LOW | Drd1+Drd2 high; L5/6 IT entorhinal, not CA1/SUB pyramidal | Eliminated (wrong subclass) |
+| `0067 ENTmv-PA-COAp Glut_2 [CS20230722_SUPT_0067]` | (self) | 943 | 🔴 LOW | Drd2 high; medial ventral entorhinal + amygdala soma | Eliminated (wrong subclass) |
+| `0079 CA3 Glut_5 [CS20230722_SUPT_0079]` | (self) | 318 | 🔴 LOW | Drd2 high; soma in dentate gyrus / DG polymorph layer | Eliminated (wrong CA subfield) |
+| `0004 IT EP-CLA Glut_2 [CS20230722_SUPT_0004]` | (self) | 3433 | 🔴 LOW | Drd1+Drd2 high; cortical subplate / endopiriform / olfactory areas | Eliminated (non-hippocampal soma) |
+| `0003 IT EP-CLA Glut_1 [CS20230722_SUPT_0003]` | (self) | 19918 | 🔴 LOW | Drd1+Drd2 high; isocortex / cortical subplate / endopiriform | Eliminated (non-hippocampal soma) |
 
----
-
-## 4. Proposed experiments
-
-### 1 — Curation decision (type vs. property annotation)
-
-**What:** Review the unresolved curation decision (validation_notes.json) on whether this node is a distinct cell type or a Drd1/Drd2 property annotation for CA1/subicular pyramidal cells.
-
-**Target:** Curation decision documented and acted upon.
-
-**Expected output:** Either (a) node retained with updated evidence; or (b) node deprecated and Drd1/Drd2 expression added to CA1 and subicular pyramidal cell nodes.
-
-**Resolves:** Open question 1 (fundamental identity of this node).
-
-### 2 — Atlas expression query (add-expression)
-
-**What:** Run add-expression for Drd1 and Drd2 on CCN20230722 precomputed stats across all SUBC_016 CA1-ProS supertypes (SUPT_0069–0074).
-
-**Target:** Identify any supertype with Drd1 or Drd2 mean expression above background (> 1 UMI), suggesting ventral CA1 enrichment.
-
-**Expected output:** PrecomputedExpression entries for Drd1/Drd2 across CA1-ProS supertypes; identification of ventral-enriched candidate supertype if present.
-
-**Resolves:** Open question 2 (whether any CA1-ProS supertype enriches for ventral CA1); potentially resolves marker DISCORDANT alignments if a ventral-specific supertype is identified.
-
-### 3 — MapMyCells / Annotation transfer (D1R/D2R-labelled ventral hippocampus cells)
-
-**What:** Run annotation transfer from a dataset containing Drd1-EGFP or Drd2-EGFP ventral hippocampal cells (e.g. from Godino et al. 2023 data if available, or from a similar BAC transgenic dataset) onto WMBv1 (CCN20230722).
-
-**Target:** F1 ≥ 0.70 at SUPERTYPE level for Drd1+ or Drd2+ cells.
-
-**Expected output:** AnnotationTransferEvidence entries; identification of the specific supertype(s) that capture dopamine receptor-expressing ventral CA1 pyramidal cells.
-
-**Resolves:** Open question 2; marker DISCORDANT alignments for Drd1 and Drd2; would enable confidence upgrade to MODERATE.
+</details>
 
 ---
 
-## 5. Open questions
+### Methods
 
-1. Is hpc_glu_dopa_receptor_pyramidal_hippocampus a distinct cell type or a property annotation (Drd1/Drd2 expression) for vCA1/vSubiculum pyramidal cells? The curation decision referenced in validation_notes.json must be resolved before further evidence investment is appropriate.
+<details>
+<summary>Data sources, analyses, and reproducibility receipts</summary>
 
-2. Does any CA1-ProS supertype (SUPT_0069–0074) specifically enrich for ventral CA1 neurons, which would provide a stronger candidate for the Drd1/Drd2-expressing population? Running add-expression for Drd1 and Drd2 across CA1-ProS supertypes would resolve this.
+**Classical type definition.** The ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron is defined by Drd1 and Drd2 expression on glutamatergic pyramidal-cell-layer neurons of ventral CA1 and ventral subiculum (Godino et al., 2023) [1], with additional D1R characterisation in dorsal CA1 (Puighermanal et al., 2016) [2]. Definition basis: `CLASSICAL_MULTIMODAL` (transcript-level RNA detection + transgenic reporter characterisation).
+
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the WMBv1 (CCN20230722) taxonomy at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match against MBA:1089 hippocampal formation, NT type glutamatergic, defining markers Drd1 and Drd2). Full scoring rules: `workflows/map-cell-type.md`.
+
+**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster/supertype (taxonomy reference store) and from MERFISH spatial registration for soma location.
+
+**Annotation transfer.**
+
+| Field | Value |
+|---|---|
+| Source dataset | GEO:GSE185862 (CA1-ProS, Yao 2021 subclass) |
+| Source species | NCBITaxon:10090 |
+| Target atlas | WMBv1 (CCN20230722) |
+| Method | MapMyCells local (cell_type_mapper, default parameters, raw normalization, 100 bootstrap iterations). Per-cell labels aggregated by source_cluster_label and target taxonomy level for F1 scoring. |
+| Tool version | cell_type_mapper |
+| Bootstrap threshold | 0.0 |
+| n cells | 6398 (filtered to 6398) |
+| Run record | [`kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml) |
+| Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
+| F1 matrix | [`f1_scores_best.csv`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/f1_scores_best.csv) |
+
+**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
+
+*Generated by evidencell `25c2b32` at 2026-06-08T18:37:58+00:00 from [kb/graphs/hippocampus/hippocampus_glutamatergic.yaml](kb/graphs/hippocampus/hippocampus_glutamatergic.yaml).*
+
+**Evidence base table**
+
+| Edge ID | Evidence types | Supports | Source |
+| --- | --- | --- | --- |
+| edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069 | ANNOTATION_TRANSFER | PARTIAL | — |
+| edge_..._CS20230722_CLUS_0007 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_CLUS_0014 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_CLUS_0015 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_CLUS_0032 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_CLUS_0253 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_SUPT_0012 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_SUPT_0067 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_SUPT_0079 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_SUPT_0004 | ATLAS_METADATA | PARTIAL | — |
+| edge_..._CS20230722_SUPT_0003 | ATLAS_METADATA | PARTIAL | — |
+
+</details>
 
 ---
 
-## 6. Evidence base table
+## Discussion
 
-| Edge ID | Evidence types | Supports |
-|---|---|---|
-| edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069 | ANNOTATION_TRANSFER (MapMyCells; GEO:GSE185862) | PARTIAL — F1=0.744; purity=0.999; maps CA1-ProS (not Drd1/Drd2-specific) cells to SUPT_0069; Drd1 mean=0.09 and Drd2 mean=0.02 in SUPT_0069 (DISCORDANT) |
+**Primary mapping:** ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron → 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] at LOW confidence. Key support: annotation transfer from Yao 2021 CA1-ProS cells (F1=0.74 at supertype level). Key caveats: AMBIGUOUS_MAPPING (classical-type vs. property-annotation curation decision unresolved); DISCORDANT_ANATOMY (the classical type is a ventral subpopulation but the supertype spans dorsoventral CA1-ProS).
+
+The Cell Ontology has no specific term for ventral hippocampal dopamine receptor-expressing pyramidal neurons; pyramidal neuron [[CL:0000598](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0000598)] is the closest ancestor. Ventral hippocampal D1R/D2R-expressing glutamatergic pyramidal neurons represent ~45% of all dopamine receptor-positive cells in ventral hippocampus (Godino et al., 2023), contrasting with dorsal hippocampus where D1/D2 are interneuron-restricted. Likely correspond to projection-specific ventral CA1/vSubiculum populations. CL:0000598 is the best available mapping.
+
+### Proposed experiments and follow-ups
+
+**Targeted Drd1/Drd2 precomputed-expression enrichment.**
+- *What:* run `add-expression` on the CA1-ProS supertypes (SUPT_0069 through SUPT_0074) and their child clusters for Drd1 and Drd2.
+- *Target:* identify any supertype or child cluster with mean Drd1 or Drd2 expression in the top decile of the CA1-ProS cohort.
+- *Expected output:* `PrecomputedExpression` blocks on the relevant taxonomy nodes; refined property comparisons on this edge.
+- *Resolves:* open question 2.
+
+**Ventral-CA1 D1R/D2R-targeted annotation transfer.**
+- *What:* MapMyCells annotation transfer onto WMBv1 from a ventral hippocampus dataset with Drd1-Cre and/or Drd2-Cre lineage labelling.
+- *Target:* F1 ≥ 0.50 at supertype level on a labelled D1R+/D2R+ pyramidal subset; F1 ≥ 0.30 at cluster level.
+- *Expected output:* `AnnotationTransferEvidence` on the edge, replacing the current CA1-ProS-wide AT signal with a D1R/D2R-specific signal.
+- *Resolves:* open questions 1 and 2.
+
+**Curator decision on type vs. property annotation.**
+- *What:* curator review of `validation_notes.json` curation decision: is this a distinct classical type or a Drd1/Drd2 expression annotation on the existing vCA1 / vSubiculum pyramidal cell nodes?
+- *Expected output:* either retention of this node or replacement of this edge by marker annotations on the CA1 and subicular pyramidal cell nodes.
+- *Resolves:* open question 3.
+
+### Open questions
+
+1. SUPT_0069 fell outside current Stage A top-50 and warrants curator review (#111) — the existing edge's property_comparisons were not refreshed in the most recent discovery pass and the SUPT_0069 assignment depends on the prior cohort definition.
+2. Does any CA1-ProS supertype specifically enrich for ventral CA1 (which would provide a candidate for Drd1/Drd2-expressing cells)?
+3. Is hpc_glu_dopa_receptor_pyramidal_hippocampus a distinct cell type or a property of vCA1/vSubiculum pyramidal cells? See `curation_decisions_needed` in `validation_notes.json`.
 
 ---
 
-## 7. References
+## References
 
 | # | Citation | PMID | Used for |
-|---|---|---|---|
-| [1] | Godino et al. 2023 · PMID:37546856 | [37546856](https://pubmed.ncbi.nlm.nih.gov/37546856/) | Soma location; NT type; Drd1/Drd2 markers |
-| [2] | Puighermanal et al. 2016 · PMID:27678395 | [27678395](https://pubmed.ncbi.nlm.nih.gov/27678395/) | Drd1 marker |
+|---:|---|---|---|
+| [1] | Godino et al. 2023 | [37546856](https://pubmed.ncbi.nlm.nih.gov/37546856) | soma location, NT type, Drd1/Drd2 markers, vHipp topography |
+| [2] | Puighermanal et al. 2016 | [27678395](https://pubmed.ncbi.nlm.nih.gov/27678395) | Drd1 marker (dorsal CA1 D1R-EGFP characterisation) |
+
+---
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.35
+  relationship: skos:closeMatch
+  mapping_cardinality: "1:n"
+  mapping_justification: semapv:ManualMappingCuration
+  rationale: >
+    [tier:STRONGEST] CA1-ProS annotation transfer (F1=0.74 at supertype
+    on at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) anchors
+    CS20230722_SUPT_0069 as the highest-confidence CA1-pyramidal
+    supertype, but 0 of 2 markers CONSISTENT — Drd1 mean=0.09 and
+    Drd2 mean=0.02 on the supertype are effectively absent. The
+    discordance is consistent with the classical type being a sparse
+    ventral subpopulation diluted by dorsal CA1-ProS at the
+    supertype level (Godino et al., 2023 [1]).
+  reconciliation_note: >
+    close vs. broad — the AT signal targets CA1-ProS broadly without
+    Drd1/Drd2-labelled cells, so the supertype assignment cannot
+    distinguish whether ventral D1R/D2R pyramidals enrich for any
+    specific CA1-ProS child. closeMatch with 1:n is the cautious call;
+    a Drd1/Drd2-targeted AT run would either upgrade to closeMatch 1:1
+    on a single child cluster or push the predicate to broadMatch.
+  caveats:
+    - caveat_type: AMBIGUOUS_MAPPING
+      description: >
+        The dopamine receptor-expressing pyramidal cells are described
+        as a ventral-specific subpopulation (Godino et al., 2023)
+        within vCA1/vSubiculum. The curation decision (distinct type
+        vs. property annotation on existing nodes) is unresolved. If
+        resolved as a property annotation, this edge should be
+        replaced by Drd1/Drd2 expression annotations on the CA1 and
+        subicular pyramidal cell nodes.
+    - caveat_type: DISCORDANT_ANATOMY
+      description: >
+        The classical type is specifically ventral (vCA1 / vSub) but
+        CS20230722_SUPT_0069 captures the full dorsoventral CA1-ProS
+        range. WMBv1 does not split dorsal vs. ventral CA1 at the
+        supertype level without per-cell MERFISH soma breakdown.
+    - caveat_type: MARKER_NOT_SPECIFIC
+      description: >
+        Drd1 (mean=0.09) and Drd2 (mean=0.02) on CS20230722_SUPT_0069
+        are effectively absent at supertype-level mean expression.
+        This is consistent with sparse-subpopulation dilution but
+        precludes marker-based confirmation at this taxonomy level.
+    - caveat_type: OTHER
+      description: >
+        Edge fell outside the current Stage A top-50 cohort and
+        property_comparisons were not refreshed in the most recent
+        discovery pass; curator review recommended (#111).
+  proposed_experiments:
+    - >
+      Run add-expression for Drd1 and Drd2 on the CA1-ProS supertypes
+      (CS20230722_SUPT_0069 through SUPT_0074) and their child
+      clusters to identify any ventral-enriched supertype or cluster
+      whose Drd1/Drd2 mean is in the top decile of the CA1-ProS
+      cohort.
+    - >
+      Targeted MapMyCells annotation transfer from a ventral
+      hippocampus dataset with Drd1-Cre and/or Drd2-Cre lineage
+      labelling onto WMBv1 (CCN20230722); target F1 >= 0.50 at
+      supertype and F1 >= 0.30 at cluster level on the
+      D1R+/D2R+ pyramidal subset; output AnnotationTransferEvidence
+      replacing the current CA1-ProS-wide AT signal.
+    - >
+      Curator review of validation_notes.json curation decision —
+      distinct classical type vs. Drd1/Drd2 expression annotation on
+      the existing vCA1/vSubiculum pyramidal cell nodes.
+  unresolved_questions:
+    - >
+      SUPT_0069 fell outside current Stage A top-50 and warrants
+      curator review (#111); the existing edge's property_comparisons
+      were not refreshed in the most recent discovery pass.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0007 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.1
+  rationale: >
+    [tier:CUT] CS20230722_CLUS_0007 (0007 IT EP-CLA Glut_1) sits in
+    cortical subplate / endopiriform nucleus / corpus callosum
+    (region_fraction_100um: 0.170; strict region_fraction: 0.090);
+    despite high Drd1/Drd2 expression these are not CA1/subicular
+    pyramidal cells, eliminating the candidate on regional grounds.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0014 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    [tier:CUT] CS20230722_CLUS_0014 (0014 IT EP-CLA Glut_2) is an
+    entorhinal-area L5/6 IT cluster (region_fraction_100um: 0.770
+    weighted toward lateral entorhinal layer 6a), not a CA1/SUB
+    pyramidal cell; eliminated on subclass grounds despite
+    Drd1/Drd2 concordance.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0015 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    [tier:CUT] CS20230722_CLUS_0015 (0015 IT EP-CLA Glut_2) is a
+    sibling of CLUS_0014 in the IT EP-CLA Glut_2 supertype, sharing
+    the lateral entorhinal L5/6 IT identity
+    (region_fraction_100um: 0.698); not a CA1/SUB pyramidal cell.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0032 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    [tier:CUT] CS20230722_CLUS_0032 (0032 L5/6 IT TPE-ENT Glut_6) is a
+    presubiculum / parasubiculum / entorhinal L5/6 IT cluster
+    (region_fraction_100um: 1.000 within HPF rollup but soma
+    distribution is parahippocampal, not CA1/SUB pyramidal); wrong
+    subclass.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0253 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    [tier:CUT] CS20230722_CLUS_0253 (0253 ENTmv-PA-COAp Glut_1) sits
+    in posterior amygdalar nucleus + medial ventral entorhinal +
+    cortical subplate (region_fraction_100um: 0.646); not a
+    CA1/SUB pyramidal cell; wrong subclass.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0012 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    [tier:CUT] CS20230722_SUPT_0012 (0012 L5/6 IT TPE-ENT Glut_6) is
+    a parahippocampal L5/6 IT supertype (presubiculum /
+    parasubiculum / entorhinal); not a CA1/SUB pyramidal supertype;
+    wrong subclass.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0067 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    [tier:CUT] CS20230722_SUPT_0067 (0067 ENTmv-PA-COAp Glut_2) is a
+    medial ventral entorhinal + posterior amygdala supertype
+    (region_fraction_100um: 0.864 within HPF rollup but soma
+    distribution dominated by ENTmv layer 6); not a CA1/SUB
+    pyramidal supertype.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0079 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.15
+  rationale: >
+    [tier:CUT] CS20230722_SUPT_0079 (0079 CA3 Glut_5) sits in
+    dentate gyrus / DG polymorph layer
+    (region_fraction_100um: 0.994); wrong hippocampal subfield —
+    the classical type is vCA1 / vSubiculum, not DG / CA3.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0004 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.1
+  rationale: >
+    [tier:CUT] CS20230722_SUPT_0004 (0004 IT EP-CLA Glut_2) sits in
+    cortical subplate / endopiriform / olfactory areas
+    (region_fraction_100um: 0.264; strict region_fraction: 0.151);
+    not a CA1/SUB pyramidal supertype; wrong subclass.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0003 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.1
+  rationale: >
+    [tier:CUT] CS20230722_SUPT_0003 (0003 IT EP-CLA Glut_1) sits in
+    isocortex / cortical subplate / endopiriform nucleus
+    (region_fraction_100um: 0.126; strict region_fraction: 0.065);
+    not a CA1/SUB pyramidal supertype.
+```
+<!-- verdict-block-end -->

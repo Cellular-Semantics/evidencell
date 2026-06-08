@@ -1,0 +1,59 @@
+{
+  "run_id": "at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "L2/3 IT ENTl"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "L2/3 IT ENTl": {
+      "class": [
+        {
+          "target_name": "04 DG-IMN Glut",
+          "node_id": "CS20230722_CLAS_04",
+          "n_cells": 2,
+          "f1": 0.0016,
+          "purity": 0.0008,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "037 DG Glut",
+          "node_id": "CS20230722_SUBC_037",
+          "n_cells": 2,
+          "f1": 0.0016,
+          "purity": 0.0008,
+          "coverage": 1.0
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0136 DG Glut_1",
+          "node_id": "CS20230722_SUPT_0136",
+          "n_cells": 2,
+          "f1": 0.087,
+          "purity": 0.0455,
+          "coverage": 1.0
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0504 DG Glut_1",
+          "node_id": "CS20230722_CLUS_0504",
+          "n_cells": 2,
+          "f1": 0.6667,
+          "purity": 0.5,
+          "coverage": 1.0
+        }
+      ]
+    }
+  }
+}

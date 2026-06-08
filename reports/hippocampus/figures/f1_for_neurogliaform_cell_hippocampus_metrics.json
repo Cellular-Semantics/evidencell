@@ -1,0 +1,102 @@
+{
+  "run_id": "at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "Lamp5",
+    "Sncg"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "Lamp5": {
+      "class": [
+        {
+          "target_name": "07 CTX-MGE GABA",
+          "node_id": "CS20230722_CLAS_07",
+          "n_cells": 705,
+          "f1": 0.7405,
+          "purity": 0.6759,
+          "coverage": 0.8188
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "050 Lamp5 Lhx6 Gaba",
+          "node_id": "CS20230722_SUBC_050",
+          "n_cells": 710,
+          "f1": 0.8976,
+          "purity": 0.9916,
+          "coverage": 0.8199
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0203 Lamp5 Lhx6 Gaba_1",
+          "node_id": "CS20230722_SUPT_0203",
+          "n_cells": 711,
+          "f1": 0.8983,
+          "purity": 0.9889,
+          "coverage": 0.8229
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0726 Lamp5 Lhx6 Gaba_1",
+          "node_id": "CS20230722_CLUS_0726",
+          "n_cells": 260,
+          "f1": 0.5339,
+          "purity": 1.0,
+          "coverage": 0.3641
+        }
+      ]
+    },
+    "Sncg": {
+      "class": [
+        {
+          "target_name": "06 CTX-CGE GABA",
+          "node_id": "CS20230722_CLAS_06",
+          "n_cells": 383,
+          "f1": 0.5479,
+          "purity": 0.3777,
+          "coverage": 0.9974
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "048 RHP-COA Ndnf Gaba",
+          "node_id": "CS20230722_SUBC_048",
+          "n_cells": 219,
+          "f1": 0.7591,
+          "purity": 0.9955,
+          "coverage": 0.6134
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0197 RHP-COA Ndnf Gaba_5",
+          "node_id": "CS20230722_SUPT_0197",
+          "n_cells": 82,
+          "f1": 0.3612,
+          "purity": 0.988,
+          "coverage": 0.221
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0701 RHP-COA Ndnf Gaba_5",
+          "node_id": "CS20230722_CLUS_0701",
+          "n_cells": 28,
+          "f1": 0.1605,
+          "purity": 0.9655,
+          "coverage": 0.0875
+        }
+      ]
+    }
+  }
+}

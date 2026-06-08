@@ -1,0 +1,59 @@
+{
+  "run_id": "at_run_20260508_que2021_pvin_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_aggregated_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "BC"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "BC": {
+      "class": [
+        {
+          "target_name": "07 CTX-MGE GABA",
+          "node_id": "CS20230722_CLAS_07",
+          "n_cells": 53,
+          "f1": 0.8217,
+          "purity": 0.6974,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "052 Pvalb Gaba",
+          "node_id": "CS20230722_SUBC_052",
+          "n_cells": 52,
+          "f1": 0.7761,
+          "purity": 0.6933,
+          "coverage": 0.8814
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0206 Pvalb Gaba_2",
+          "node_id": "CS20230722_SUPT_0206",
+          "n_cells": 53,
+          "f1": 0.7852,
+          "purity": 0.6974,
+          "coverage": 0.8983
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0739 Pvalb Gaba_2",
+          "node_id": "CS20230722_CLUS_0739",
+          "n_cells": 31,
+          "f1": 0.8267,
+          "purity": 0.8611,
+          "coverage": 0.7949
+        }
+      ]
+    }
+  }
+}
