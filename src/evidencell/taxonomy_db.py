@@ -712,6 +712,27 @@ def _parse_np_markers(np_markers: str | None) -> list[dict]:
     return entries
 
 
+def _parse_np_markers_symbols(np_markers: str | None) -> list[str]:
+    """Extract just the gene symbols from a packed np_markers string."""
+    return [e["symbol"] for e in _parse_np_markers(np_markers) if e.get("symbol")]
+
+
+def _parse_json_list(value: str | None) -> list[str]:
+    """Parse a JSON-encoded list-of-strings column (used by the marker
+    columns on the nodes table). Empty list when value is None / empty
+    / unparseable.
+    """
+    if not value:
+        return []
+    try:
+        out = json.loads(value)
+    except (TypeError, ValueError):
+        return []
+    if not isinstance(out, list):
+        return []
+    return [str(x) for x in out if x]
+
+
 def _node_to_dict(n: TaxonomyNode, meta: TaxonomyMeta, name_lookup: dict[str, str]) -> dict:
     """Convert a TaxonomyNode to a schema-compliant CellTypeNode dict.
 
@@ -1201,12 +1222,22 @@ CREATE TABLE IF NOT EXISTS anat (
   cell_count_completeness  TEXT
 );
 
+CREATE TABLE IF NOT EXISTS node_expression (
+  node_id         TEXT NOT NULL REFERENCES nodes(node_id),
+  symbol          TEXT NOT NULL,
+  ensembl_id      TEXT,
+  mean_expression REAL NOT NULL,
+  PRIMARY KEY (node_id, symbol)
+);
+
 CREATE INDEX IF NOT EXISTS idx_nodes_level  ON nodes(taxonomy_level);
 CREATE INDEX IF NOT EXISTS idx_nodes_rank   ON nodes(taxonomy_rank);
 CREATE INDEX IF NOT EXISTS idx_nodes_cl     ON nodes(cl_id);
 CREATE INDEX IF NOT EXISTS idx_nodes_nt     ON nodes(nt_type);
 CREATE INDEX IF NOT EXISTS idx_anat_node    ON anat(node_id);
 CREATE INDEX IF NOT EXISTS idx_anat_region  ON anat(anat_id);
+CREATE INDEX IF NOT EXISTS idx_node_expr_node    ON node_expression(node_id);
+CREATE INDEX IF NOT EXISTS idx_node_expr_symbol  ON node_expression(symbol);
 """
 
 _CLOSURE_DDL = """\
@@ -1584,38 +1615,37 @@ def _neg_expression_score(mean_expr: float) -> int:
     return -_expression_score(mean_expr)
 
 
-def load_expression_data(taxonomy_id: str, level: str) -> dict[str, dict[str, float]]:
-    """Load precomputed_expression from a taxonomy YAML level file.
+def load_expression_data(
+    taxonomy_id: str,
+    level: str,
+    symbols: list[str] | None = None,
+) -> dict[str, dict[str, float]]:
+    """Load precomputed mean expression from the taxonomy DB.
 
     Returns ``{cell_set_accession: {gene_symbol: mean_expression}}``.
-    Returns an empty dict if the YAML or precomputed_expression data is absent.
+    Returns an empty dict when the DB has no expression rows for the
+    queried level / symbols.
+
+    Pre-2026-06: this function loaded the taxonomy YAML directly
+    (cluster.yaml.gz, supertype.yaml, ...). Parsing the cluster file
+    via pure-Python PyYAML cost ~4 minutes per call. As of the
+    ``node_expression`` table refactor it queries the DB instead;
+    the call is now milliseconds.
+
+    Pass ``symbols`` to restrict the panel (the typical Stage A call
+    passes the union of classical-node markers). Omit to return every
+    enriched gene at the level.
+
+    YAML edit interface is unchanged — ``add_expression`` and
+    ``reingest`` still write into the YAML; ``just build-taxonomy-db``
+    propagates those writes into the ``node_expression`` DB table.
     """
-    from evidencell.paths import open_taxonomy_yaml, taxonomy_yaml_path
-
-    yaml_path = taxonomy_yaml_path(taxonomy_id, level)
-    if not yaml_path.exists():
+    from evidencell.paths import taxonomy_db_path
+    db_path = taxonomy_db_path(taxonomy_id)
+    if not db_path.exists():
         return {}
-
-    try:
-        with open_taxonomy_yaml(yaml_path) as fh:
-            data = yaml.safe_load(fh) or {}
-    except Exception:
-        return {}
-
-    result: dict[str, dict[str, float]] = {}
-    for node in data.get("nodes", []):
-        acc = node.get("cell_set_accession")
-        expr_block = node.get("precomputed_expression")
-        if not acc or not expr_block:
-            continue
-        genes = expr_block.get("genes", [])
-        if genes:
-            result[acc] = {
-                g["symbol"]: float(g.get("mean_expression", 0.0))
-                for g in genes
-                if isinstance(g, dict) and g.get("symbol")
-            }
-    return result
+    db = TaxonomyDB(db_path)
+    return db.get_expression_for_level(level, symbols=symbols)
 
 
 # Registry of optional scoring criteria for find_candidates().
@@ -1658,7 +1688,11 @@ class TaxonomyDB:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         con = sqlite3.connect(self.db_path)
         try:
-            con.executescript("DROP TABLE IF EXISTS anat; DROP TABLE IF EXISTS nodes;")
+            con.executescript(
+                "DROP TABLE IF EXISTS node_expression;"
+                "DROP TABLE IF EXISTS anat;"
+                "DROP TABLE IF EXISTS nodes;"
+            )
             con.executescript(_DDL)
             for yaml_file in iter_taxonomy_level_files(taxonomy_dir):
                 with open_taxonomy_yaml(yaml_file) as fh:
@@ -1799,6 +1833,29 @@ class TaxonomyDB:
                     a.get("count_in_or_near_100um"),
                     a.get("ratio_in_or_near_100um"),
                     a.get("cell_count_completeness"),
+                ),
+            )
+
+        # Precomputed expression: mirror PrecomputedExpression.genes[] into
+        # node_expression. YAML stays the edit interface for these
+        # enrichment values (curators write via add_expression); the DB
+        # is the query interface for downstream consumers (Stage A
+        # scoring, Stage B emit, refresh-expression-pcs, gen-report).
+        expr_block = nd.get("precomputed_expression") or {}
+        for gene_entry in expr_block.get("genes") or []:
+            if not isinstance(gene_entry, dict):
+                continue
+            sym = gene_entry.get("symbol")
+            mean = gene_entry.get("mean_expression")
+            if not sym or mean is None:
+                continue
+            con.execute(
+                "INSERT OR REPLACE INTO node_expression VALUES (?, ?, ?, ?)",
+                (
+                    node_id,
+                    sym,
+                    gene_entry.get("ensembl_id"),
+                    float(mean),
                 ),
             )
 
@@ -1943,6 +2000,143 @@ class TaxonomyDB:
             })
             cur = parent
         return chain
+
+    def get_node_expression(
+        self,
+        accession: str,
+        symbols: list[str] | None = None,
+    ) -> dict[str, float]:
+        """Look up precomputed mean expression for an atlas node.
+
+        Returns ``{symbol: mean_expression}``. Empty dict if the node
+        has no precomputed_expression rows (i.e. not yet enriched via
+        ``add_expression`` for any of the queried symbols), if the
+        accession is unknown, or if the DB predates the
+        ``node_expression`` table (older builds gracefully degrade).
+
+        Pass ``symbols`` to restrict the query; otherwise all enriched
+        symbols on the node are returned.
+        """
+        if not accession:
+            return {}
+        node_id = accession.split(":", 1)[-1] if ":" in accession else accession
+        try:
+            with self._connect() as con:
+                if symbols:
+                    placeholders = ",".join("?" * len(symbols))
+                    rows = con.execute(
+                        f"SELECT symbol, mean_expression FROM node_expression "
+                        f"WHERE node_id = ? AND symbol IN ({placeholders})",
+                        (node_id, *symbols),
+                    ).fetchall()
+                else:
+                    rows = con.execute(
+                        "SELECT symbol, mean_expression FROM node_expression "
+                        "WHERE node_id = ?",
+                        (node_id,),
+                    ).fetchall()
+        except sqlite3.OperationalError:
+            # node_expression table missing (legacy DB pre-2026-06).
+            # Rebuild via `just build-taxonomy-db {taxonomy_id}`.
+            return {}
+        return {r[0]: float(r[1]) for r in rows}
+
+    def get_expression_for_level(
+        self,
+        level: str,
+        symbols: list[str] | None = None,
+    ) -> dict[str, dict[str, float]]:
+        """Return ``{accession: {symbol: mean_expression}}`` for every
+        node at the given taxonomy level.
+
+        Replaces the YAML-based ``load_expression_data`` for Stage A's
+        percentile computation. Pass ``symbols`` to restrict the panel;
+        omit for everything currently enriched (the typical Stage A
+        call passes the union of classical-node markers across the
+        cohort).
+        """
+        result: dict[str, dict[str, float]] = {}
+        try:
+            with self._connect() as con:
+                if symbols:
+                    placeholders = ",".join("?" * len(symbols))
+                    query = (
+                        f"SELECT n.short_form, e.symbol, e.mean_expression "
+                        f"FROM node_expression e JOIN nodes n ON n.node_id = e.node_id "
+                        f"WHERE n.taxonomy_level = ? AND e.symbol IN ({placeholders})"
+                    )
+                    params: tuple = (level, *symbols)
+                else:
+                    query = (
+                        "SELECT n.short_form, e.symbol, e.mean_expression "
+                        "FROM node_expression e JOIN nodes n ON n.node_id = e.node_id "
+                        "WHERE n.taxonomy_level = ?"
+                    )
+                    params = (level,)
+                for short_form, sym, mean in con.execute(query, params):
+                    result.setdefault(short_form, {})[sym] = float(mean)
+        except sqlite3.OperationalError:
+            # Legacy DB pre-2026-06 — node_expression table missing.
+            return {}
+        return result
+
+    def get_node_marker_categories(
+        self,
+        accession: str,
+    ) -> dict[str, str]:
+        """Return ``{symbol: category}`` for an atlas node, where
+        category is one of ``DEFINING`` / ``DEFINING_SCOPED`` / ``TF``
+        / ``MERFISH`` / ``NEUROPEPTIDE``.
+
+        Sourced from the JSON-encoded marker columns on the ``nodes``
+        row (defining_markers, defining_markers_scoped, tf_markers,
+        merfish_markers) plus the packed ``np_markers`` string. When a
+        symbol appears in multiple categories, the highest-priority
+        category wins (DEFINING > DEFINING_SCOPED > TF > MERFISH >
+        NEUROPEPTIDE).
+        """
+        if not accession:
+            return {}
+        node = self.get_node_by_accession(accession)
+        if not node:
+            return {}
+        out: dict[str, str] = {}
+        # Lower-priority categories first; later assignments overwrite.
+        for sym in _parse_np_markers_symbols(node.get("np_markers")):
+            out[sym] = "NEUROPEPTIDE"
+        for sym in _parse_json_list(node.get("merfish_markers")):
+            out[sym] = "MERFISH"
+        for sym in _parse_json_list(node.get("tf_markers")):
+            out[sym] = "TF"
+        for sym in _parse_json_list(node.get("defining_markers_scoped")):
+            out[sym] = "DEFINING_SCOPED"
+        for sym in _parse_json_list(node.get("defining_markers")):
+            out[sym] = "DEFINING"
+        return out
+
+    def get_node_anat_rows(self, accession: str) -> list[dict]:
+        """Return per-(anat_term) rows for an atlas node.
+
+        Each entry: ``{anat_id, anat_label, cell_count, cell_ratio,
+        count_in_or_near_100um, ratio_in_or_near_100um,
+        cell_count_completeness}``. Empty list when the node has no
+        recorded anatomy.
+
+        This is the DB-side replacement for reading
+        ``atlas.anatomical_location`` from the taxonomy YAML — same
+        data, indexed and fast.
+        """
+        if not accession:
+            return []
+        node_id = accession.split(":", 1)[-1] if ":" in accession else accession
+        with self._connect() as con:
+            rows = con.execute(
+                "SELECT anat_id, anat_label, cell_count, cell_ratio, "
+                "count_in_or_near_100um, ratio_in_or_near_100um, "
+                "cell_count_completeness FROM anat WHERE node_id = ?",
+                (node_id,),
+            ).fetchall()
+        return [dict(r) for r in rows]
 
     def build_anat_closure(self, mba_json: Path) -> None:
         """Populate anat_terms, anat_hierarchy, and anat_closure from an MBA OBO JSON file.
