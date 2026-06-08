@@ -1,0 +1,157 @@
+{
+  "graph": "kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml",
+  "node_id": "avpv_kiss1_neuron",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_1301",
+          "CS20230722_CLUS_1876",
+          "CS20230722_CLUS_1891",
+          "CS20230722_CLUS_1895",
+          "CS20230722_CLUS_1507"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml avpv_kiss1_neuron CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/sexually_dimorphic/refresh_20260608_avpv_kiss1_neuron/discovery_candidates_rank0.json",
+          "  emit-stage-b: skipped 5 existing edge(s): edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1301, edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1876, edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1891, edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1895, edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1507",
+          "  emit-stage-b: nothing to write (all edges already present)."
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 7,
+        "skipped_details": [
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_cs20230722_supt_0486",
+            "taxonomy_type": "CS20230722_SUPT_0486"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_cs20230722_clus_1915",
+            "taxonomy_type": "CS20230722_CLUS_1915"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0411",
+            "taxonomy_type": "CS20230722_SUPT_0411"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0494",
+            "taxonomy_type": "CS20230722_SUPT_0494"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0550",
+            "taxonomy_type": "CS20230722_SUPT_0550"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0249",
+            "taxonomy_type": "CS20230722_SUPT_0249"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0486",
+            "taxonomy_type": "CS20230722_SUPT_0486"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1301",
+            "taxonomy_type": "CS20230722_CLUS_1301"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1876",
+            "taxonomy_type": "CS20230722_CLUS_1876"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1891",
+            "taxonomy_type": "CS20230722_CLUS_1891"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1895",
+            "taxonomy_type": "CS20230722_CLUS_1895"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1507",
+            "taxonomy_type": "CS20230722_CLUS_1507"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_SUPT_0411",
+          "CS20230722_SUPT_0494",
+          "CS20230722_SUPT_0550",
+          "CS20230722_SUPT_0249",
+          "CS20230722_SUPT_0486"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml avpv_kiss1_neuron CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/sexually_dimorphic/refresh_20260608_avpv_kiss1_neuron/discovery_candidates_rank1.json",
+          "  emit-stage-b: skipped 5 existing edge(s): edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0411, edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0494, edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0550, edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0249, edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0486",
+          "  emit-stage-b: nothing to write (all edges already present)."
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 6,
+        "edges_skipped_taxtype_not_in_topk": 6,
+        "skipped_details": [
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_cs20230722_clus_1915",
+            "taxonomy_type": "CS20230722_CLUS_1915"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1301",
+            "taxonomy_type": "CS20230722_CLUS_1301"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1876",
+            "taxonomy_type": "CS20230722_CLUS_1876"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1891",
+            "taxonomy_type": "CS20230722_CLUS_1891"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1895",
+            "taxonomy_type": "CS20230722_CLUS_1895"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1507",
+            "taxonomy_type": "CS20230722_CLUS_1507"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_cs20230722_supt_0486",
+            "taxonomy_type": "CS20230722_SUPT_0486"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0411",
+            "taxonomy_type": "CS20230722_SUPT_0411"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0494",
+            "taxonomy_type": "CS20230722_SUPT_0494"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0550",
+            "taxonomy_type": "CS20230722_SUPT_0550"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0249",
+            "taxonomy_type": "CS20230722_SUPT_0249"
+          },
+          {
+            "edge_id": "edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0486",
+            "taxonomy_type": "CS20230722_SUPT_0486"
+          }
+        ]
+      }
+    }
+  }
+}

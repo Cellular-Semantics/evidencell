@@ -1,148 +1,312 @@
 # Ventral premammillary nucleus (PMv) oxytocin receptor neuron — WMBv1 Mapping Report
-*draft · 2026-04-25 · Source: `kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml`*
-
-**⚠ Draft mappings. Evidence is atlas-metadata only unless otherwise noted. All edges require expert review before use.**
+*2026-04-25 · Source: `kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml`*
 
 ---
 
 ## Introduction
 
-### Classical type
+The ventral premammillary nucleus (PMv) is a well-established sexually
+dimorphic hypothalamic nucleus implicated in maternal aggression,
+reproductive control, male social behaviour, and intermale aggression,
+and is one of two hypothalamic regions identified by recent spatial
+transcriptomic mapping as exhibiting significant male/female cellular
+abundance differences [1]. Within the PMv, multiple molecularly defined
+neuronal populations have been described, including dopamine-transporter
+(Slc6a3) expressing neurons (PMv-DAT), PACAP (Adcyap1) expressing neurons
+(PMv-PACAP), and oxytocin receptor (Oxtr) expressing neurons, whose
+sexually dimorphic OTR expression was demonstrated by OTR-Venus reporter
+mice across postnatal development with significantly higher PMv OTR in
+males than in females from P14 to P56 [2]. The classical type addressed
+here aggregates these intersecting marker-defined PMv subpopulations
+under a single male-biased OTR+ entity; whether the OTR+, DAT+, and
+PACAP+ subsets fully overlap inside the PMv is an open biological
+question that bears directly on the resolution at which this type can
+be mapped onto the WMBv1 taxonomy.
 
-**Ventral premammillary nucleus (PMv) oxytocin receptor neuron** is a male-biased
-sexually dimorphic population in the ventral premammillary nucleus, defined by
-neurochemical criteria (Oxtr, Slc6a3, Adcyap1). The classical node aggregates
-three molecularly defined subpopulations of the PMv that may not fully overlap:
-PMv-OTR (Oxtr+), PMv-DAT (Slc6a3+, dopaminergic), and PMv-PACAP (Adcyap1+).
-No CL term currently maps this population — it is a candidate for new term creation.
+### Classical type table
 
 | Property | Value | References |
 |---|---|---|
 | Soma location | Ventral premammillary nucleus [MBA:1004] | [1], [2] |
-| Defining markers | Oxtr (transcript), Slc6a3, Adcyap1 | [1], [2] |
+| Defining markers | Oxtr [2]; Slc6a3 [1]; Adcyap1 | [1], [2] |
+| Sex bias | Male-biased (males > females) | [2] |
+| Definition basis | CLASSICAL_NEUROCHEMICAL | — |
+| Notes | Aggregates potentially distinct PMv-OTR, PMv-DAT, PMv-PACAP subpopulations; candidate for new CL term | — |
 
 <details>
-<summary>Literature support — expand for verbatim quotes</summary>
+<summary>Details — source evidence for classical type properties</summary>
 
-**[2] Newmaster et al. 2019 · PMID:32313029 — Neuronal Markers and Molecular Characteristics**
+- **Soma location (PMv) and sex-biased OTR expression:** OTR-Venus
+  reporter immunolabelling across postnatal development, N=5 male and
+  female brains per timepoint · [2]
+  > Sexual dimorphism of OTR expression. OTR is expressed in a sexually
+  > dimorphic manner as a part of neural circuit mechanism to generate
+  > behavioral differences in males and females. […] The ventral
+  > premammillary nucleus (PMv) showed significantly higher OTR
+  > expression in males compared to females between P14 and P56.
+  > — Newmaster et al. 2019, Neuronal Markers and Molecular
+  > Characteristics · [2] <!-- quote_key: 201207691_ff444c30 -->
 
-> Sexual dimorphism of OTR expression. OTR is expressed in a sexually dimorphic manner as a part of neural circuit mechanism to generate behavioral differences in males and females 34,35 . Therefore, we compared OTR-Venus expression in male and female mice (N = 5 in male and female brains at different ages) to determine if there were any regions showing strong sexual dimorphism. Across the entire brain region throughout the postnatal development, we found significant sexual dimorphism in two hypothalamic regions (Fig. 7). The ventral premammillary nucleus (PMv) showed significantly higher OTR expression in males compared to females between P14 and P56 (Fig. 7a-d). In contrast, the anteroventral periventricular nucleus (AVPV) near the medial preoptic area showed higher OTR expression in females than males at P56, but not before (Fig. 7e-h). A recent study identified abundant estrogen- dependent OTR-expressing cells in the AVPV, co-expressing estrogen receptor in female mice 36 . This result suggests a potential role of OTR in sexual behavior [36][37][38] .
-> — Newmaster et al. 2019, Neuronal Markers and Molecular Characteristics · [2] <!-- quote_key: 201207691_ff444c30 -->
+- **PMv sexual dimorphism and named subpopulations (PMv-DAT,
+  PMv-PACAP):** spatial single-cell mapping across genetic backgrounds,
+  prior PMv subpopulation literature · [1]
+  > Region 2, the PMv, is a well- established sexually dimorphic region,
+  > with roles in maternal aggression 38 , reproductive control 39 , male
+  > social behavior 40 , and intermale aggression 41 . Previous studies
+  > identified sexually dimorphic neuron populations within the PMv
+  > (e.g., PMv-DAT 42 , PMv- PACAP 43 ), complementing our systematic
+  > identification of subclass-level abundance changes.
+  > — Hemminger et al. 2024, Sexually Dimorphic Brain Regions and
+  > Structures · [1] <!-- quote_key: 273240437_af6642f9 -->
 
-**[1] Hemminger et al. 2024 · PMID:39416191 — Sexually Dimorphic Brain Regions and Structures**
-
-> We identified two adjacent regions within the hypothalamus that exhibited significant sexual dimorphism. Region 1 overlaps with the anterior hypothalamic nucleus (AHN), while Region 2 primarily overlaps with the ventral premammillary nucleus (PMv). Both regions are known to be sexually dimorphic (Vries et al., 2002) , though they have been studied to different extents
-> — Hemminger et al. 2024, Sexually Dimorphic Brain Regions and Structures · [1] <!-- quote_key: 273240437_ed3a4faa -->
-
-**[1] Hemminger et al. 2024 · PMID:39416191 — Sexually Dimorphic Brain Regions and Structures**
-
-> Our findings of specific neuronal subclass differences help further refine the molecular resolution of its dimorphic nature and providing a cellular basis for its role in sex-specific behaviors like aggression and parental care. Region 2, the PMv, is a well- established sexually dimorphic region, with roles in maternal aggression 38 , reproductive control 39 , male social behavior 40 , and intermale aggression 41 . Previous studies identified sexually dimorphic neuron populations within the PMv (e.g., PMv-DAT 42 , PMv- PACAP 43 ), complementing our systematic identification of subclass-level abundance changes.
-> — Hemminger et al. 2024, Sexually Dimorphic Brain Regions and Structures · [1] <!-- quote_key: 273240437_af6642f9 -->
+- **PMv as a sexually dimorphic region (corroborating):** spatial
+  registration to MBA · [1]
+  > Region 2 primarily overlaps with the ventral premammillary nucleus
+  > (PMv). Both regions are known to be sexually dimorphic (Vries et al.,
+  > 2002) , though they have been studied to different extents
+  > — Hemminger et al. 2024, Sexually Dimorphic Brain Regions and
+  > Structures · [1] <!-- quote_key: 273240437_ed3a4faa -->
 
 </details>
+
+### Cell Ontology mapping
+
+No Cell Ontology term currently covers this type — candidate for a new
+CL term. The classical definition spans multiple intersecting
+marker-defined PMv subpopulations (Oxtr+, Slc6a3+/DAT+, Adcyap1+/PACAP+)
+that do not yet have dedicated CL representatives.
 
 ---
 
 ## Results
 
-### Mapping candidates
+Soma-location concordance with the queried PMv (MBA:1004) and atlas-side
+co-expression of all three classical defining markers identify the PMv
+hypothalamic glutamatergic supertype 0607 PMv-TMv Pitx2 Glut_3
+[CS20230722_SUPT_0607] as the supertype-level match (see candidate
+audit table and property comparison tables below), with its child
+cluster 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] as the
+cluster-level lead (the largest PMv-resident child of the supertype,
+concentrating Oxtr, Slc6a3, and Adcyap1 expression). The supertype
+co-expresses all three classical markers simultaneously, indicating
+that this WMBv1 type aggregates neurons the classical taxonomy treats
+as potentially distinct PMv-OTR / PMv-DAT / PMv-PACAP subpopulations;
+the supertype-level mapping is therefore committed as a broader,
+many-to-one relationship while the cluster-level call is held at low
+confidence pending male-bias and finer subpopulation confirmation.
 
-Two mapping edges are recorded for pmv_otr_neuron: a supertype-level edge to SUPT_0607
-(the highest-DB-scoring candidate at any rank, expressing all three classical defining
-markers) and a child-cluster edge to CLUS_2470 (the PMv-dominant child cluster with
-the highest expression of all three markers).
+### 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] · 🟡 MODERATE
 
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|---|
-| 1 | 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] | 0607 PMv-TMv Pitx2 Glut_3 | 284 | 🔴 LOW | Oxtr/Slc6a3/Adcyap1 CONSISTENT; sex ratio NOT_ASSESSED | Speculative |
-| 2 | 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] | (self) | 547 | 🔴 LOW | Oxtr/Slc6a3/Adcyap1 CONSISTENT; nt_type APPROXIMATE | Speculative |
-2 edges total. Relationship type: PARTIAL_OVERLAP (CLUS_2470) and CROSS_CUTTING (SUPT_0607).
-
-### Property alignment — primary candidate (CLUS_2470)
-
-**Table 1 — Property comparison.**
+**Property comparison (supertype).**
 
 | Property | Classical | Supertype | Best cluster | Alignment |
 |---|---|---|---|---|
-| Soma location | MBA:1004 (Ventral premammillary nucleus) | MBA:1004 (PMv) n=347 (dominant location) | MBA:1004 (PMv) n=192 (primary soma — dominant location) | CONSISTENT |
-| Oxtr expression | POSITIVE (transcript, defining marker) | precomputed mean_expression=2.0 (DEFINING_SCOPED atlas marker) | precomputed mean_expression=4.45 (vs supertype mean 2.0) | CONSISTENT |
-| Slc6a3 expression | POSITIVE (transcript, defining marker) | precomputed mean_expression=3.07 (DEFINING atlas marker) | precomputed mean_expression=6.02 (vs supertype mean 3.07) | CONSISTENT |
-| Adcyap1 expression | POSITIVE (defining marker) | precomputed mean_expression=4.8 | precomputed mean_expression=8.13 (vs supertype mean 4.8) | CONSISTENT |
-| NT type | not specified; DAT+ subpopulation implies dopaminergic co-release | Glutamatergic (PMv-TMv Pitx2 Glut) | not assessed | SUPT: APPROXIMATE |
-| Sex ratio | male-biased (PMv OTR expression higher in males, P14–P56) | not available | NOT_ASSESSED — MFR absent from DB for CLUS_2470 | NOT_ASSESSED |
-| Annotation transfer F1 | not applicable | NOT_ASSESSED | NOT_ASSESSED | NOT_ASSESSED |
+| Soma location | Ventral premammillary nucleus [MBA:1004] | PMv 473/1165 cells at 100µm (region_fraction_100um=0.865; strict=0.634) | PMv 255/451 cells (region_fraction_100um=0.898; strict=0.676) at CLUS_2470 | CONSISTENT |
+| NT type | not asserted on classical | not asserted at supertype | Glut at CLUS_2470 | NOT_ASSESSED (classical side) |
+| Oxtr expression | Defining marker | mean=2.0 (DEFINING_SCOPED on atlas) | mean=4.45 at CLUS_2470 | CONSISTENT (both sides positive) |
+| Slc6a3 expression | Defining marker | mean=3.07 (DEFINING on atlas) | mean=6.02 at CLUS_2470 | CONSISTENT |
+| Adcyap1 expression | Defining marker | mean=4.8 | mean=8.13 at CLUS_2470 | CONSISTENT |
+| Sex ratio | Male-biased | not available at supertype | not available — MFR absent from DB for CLUS_2470 | NOT_ASSESSED |
 
-**Table 2 — Evidence support.**
+*(All five named PMv-resident child clusters of SUPT_0607 carry PMv as
+the dominant or co-dominant soma location; CLUS_2470 leads on every
+defining marker simultaneously. Within the supertype, the OTR / DAT /
+PACAP marker signatures co-occur rather than segregate across children,
+indicating supertype-level aggregation of the three classical
+subpopulations. Best child: CLUS_2470.)*
+
+**Evidence support.**
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| Atlas precomputed expression (CLUS_2470 Oxtr/Slc6a3/Adcyap1) | Atlas metadata | SUPPORT | Oxtr=4.45, Slc6a3=6.02, Adcyap1=8.13; PMv n=192; MFR absent | atlas-internal |
-| SUPT_0607 atlas metadata (top DB score across all ranks) | Atlas metadata | SUPPORT | DB score=4 (top); Oxtr=2.0, Slc6a3=3.07, Adcyap1=4.8; Tac1=8.95; PMv n=347 | atlas-internal |
+| Atlas precomputed expression + region painting | Atlas metadata | SUPPORT | PMv region_fraction_100um=0.865; Oxtr=2.0, Slc6a3=3.07, Adcyap1=4.8 co-expressed | atlas-internal |
 
-*(1 of multiple SUPT_0607 child clusters — CLUS_2470 — concentrates the Oxtr/Slc6a3/Adcyap1 co-expression at PMv (n=192) with all three markers substantially above supertype means; sister supertype SUPT_0605 may capture an additional portion of the OTR+ population. MFR is absent at both supertype level and for CLUS_2470. Best match: CLUS_2470.)*
+**Supporting evidence.**
 
----
+- The PMv-TMv Pitx2 Glut_3 supertype is the highest-scoring candidate
+  at any rank for this classical type. Of its 1165 cells, 473 (proximity
+  count at 100µm) sit in PMv; the dominant atlas anatomical labels are
+  Hypothalamus (count=546), Ventral premammillary nucleus
+  [MBA:1004] (count=473), and Dorsomedial nucleus of the hypothalamus
+  [MBA:830] (count=206), giving region_fraction_100um=0.865 (strict
+  region_fraction=0.634).
+- All three classical defining markers are detected at the supertype
+  level (Oxtr=2.0, tagged DEFINING_SCOPED on the atlas annotation;
+  Slc6a3=3.07, tagged DEFINING; Adcyap1=4.8).
 
+**Marker evidence provenance.**
 
+- **Oxtr:** classical-side evidence is OTR-Venus reporter
+  immunolabelling across postnatal development in PMv [2] — a
+  protein-level readout tied to a defined hypothalamic region, with
+  explicit demonstration of male-biased PMv expression. Atlas-side
+  Oxtr=2.0 is consistent with detectable expression but is tagged
+  DEFINING_SCOPED, meaning it discriminates within the relevant atlas
+  subclass rather than across the full taxonomy; the alignment is
+  therefore supportive at the supertype level but not a strong
+  cluster-level discriminator on its own.
+- **Slc6a3:** referenced through prior PMv-DAT subpopulation literature
+  [1] (which cites Slc6a3 as the PMv-DAT marker without re-deriving it
+  in the cited study). Atlas-side Slc6a3=3.07 is tagged DEFINING for
+  this supertype, providing transcript-level corroboration that the
+  classical PMv-DAT signature is part of this WMBv1 type.
+- **Adcyap1:** carries no primary citation on the classical node (the
+  PMv-PACAP subpopulation is named in [1] only as a previously
+  identified subpopulation, without an original-study citation
+  available in the gathered corpus). Atlas-side Adcyap1=4.8 is the
+  highest mean among the three defining markers but cannot currently
+  be anchored to a primary study from the gathered references — a
+  targeted literature search for PMv PACAP / Adcyap1 primary
+  characterisation would close the provenance gap.
+- **Unexpected high-expressing marker (Tac1):** Tac1 is tagged DEFINING
+  on the atlas for this supertype with mean=8.95 — substantially higher
+  than any of the three classical defining markers — and is absent from
+  the classical pmv_otr_neuron definition. This is informational rather
+  than disqualifying; it suggests the supertype may be more accurately
+  characterised at the atlas level as a Tac1+ PMv glutamatergic
+  population with OTR / DAT / PACAP signatures as co-expressed
+  subtype-level features, and is recorded as a curator-facing follow-up
+  caveat (see Discussion).
+
+**Concerns.**
+
+- **Cross-cutting marker aggregation.** SUPT_0607 simultaneously
+  expresses Oxtr, Slc6a3, and Adcyap1, the three markers that the
+  classical definition treats as potentially labelling distinct PMv
+  subpopulations. If the OTR+, DAT+, and PACAP+ subsets are functionally
+  separable populations, the supertype-level mapping inherently
+  aggregates them; finer (cluster-level or sub-cluster) resolution is
+  required to test whether they segregate. This is the basis for the
+  many-to-one (broader) supertype call rather than an exact match.
+- **Sister supertype 0605 PMv-TMv Pitx2 Glut_1 [CS20230722_SUPT_0605]**
+  also resides predominantly in PMv (region_fraction_100um=0.631;
+  strict=0.307) but did not surface co-expression of all three classical
+  markers in the gathered facts. It may capture an additional portion
+  of the OTR+ male-biased population not absorbed by SUPT_0607; it
+  appears in the candidate audit table as a lower-ranked PMv-resident
+  glutamatergic supertype.
+- **Tac1 atlas DEFINING marker not in classical definition** — see
+  marker provenance above.
+
+**What would upgrade confidence.**
+
+- Annotation transfer of published PMv transcriptomic datasets
+  (e.g. Oxtr-targeted, DAT-Cre, or PACAP-Cre lineage RNA profiling)
+  against WMBv1, with F1 ≥ 0.7 to SUPT_0607 at supertype level, would
+  add an AnnotationTransferEvidence anchor for the classical → atlas
+  relationship.
+- Curator decision on whether to split `pmv_otr_neuron` into separate
+  `pmv_otr`, `pmv_dat`, and `pmv_pacap` sub-nodes would clarify whether
+  the natural mapping resolution is one supertype to one classical type
+  (current) or three classical types to one supertype (cross-cutting).
 
 ### 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] · 🔴 LOW
 
-### Supporting evidence
+**Property comparison (cluster, child of SUPT_0607).**
 
-- **All three classical defining markers reach CONSISTENT alignment at cluster level.** CLUS_2470 shows substantially higher expression than the supertype mean for all three: Oxtr = 4.45 (vs supertype 2.0), Slc6a3 = 6.02 (vs 3.07), Adcyap1 = 8.13 (vs 4.8). Expression concentrates the marker-expressing PMv cells of SUPT_0607 into this cluster.
-- **PMv soma location is the dominant annotation.** MBA:1004 (Ventral premammillary nucleus) is the primary soma for n=192 cells in CLUS_2470 — the largest PMv cluster in SUPT_0607, providing a direct anatomical link to the classical type.
-- **Cluster was identified as the best PMv child within the top-DB supertype.** SUPT_0607 received the highest DB score (4) of any candidate at any rank for pmv_otr_neuron [1], [2]; CLUS_2470 is the child cluster within SUPT_0607 that concentrates all three classical marker signals at PMv.
+| Property | Classical | Supertype | Best cluster | Alignment |
+|---|---|---|---|---|
+| Soma location | Ventral premammillary nucleus [MBA:1004] | PMv region_fraction_100um=0.865 at SUPT_0607 | PMv 255/451 cells (region_fraction_100um=0.898; strict=0.676) at CLUS_2470 | CONSISTENT |
+| NT type | not asserted on classical | not asserted at SUPT_0607 | Glut at CLUS_2470 | NOT_ASSESSED (classical side) |
+| Oxtr expression | Defining marker | mean=2.0 at SUPT_0607 | mean=4.45 at CLUS_2470 | CONSISTENT |
+| Slc6a3 expression | Defining marker | mean=3.07 at SUPT_0607 | mean=6.02 at CLUS_2470 | CONSISTENT |
+| Adcyap1 expression | Defining marker | mean=4.8 at SUPT_0607 | mean=8.13 at CLUS_2470 | CONSISTENT |
+| Sex ratio | Male-biased | not available | MFR absent from precomputed-stats DB for CLUS_2470 | NOT_ASSESSED |
 
-### Marker evidence provenance
+*(CLUS_2470 is the PMv-leading child of SUPT_0607: of the supertype's
+children, it has the largest count of PMv-resident cells (n=192 at
+strict region match within the precomputed location data) and the
+highest mean expression of all three classical defining markers.)*
 
-- **Oxtr** — at CLUS_2470, Oxtr = 4.45 and is annotated as DEFINING_SCOPED at supertype level (mean = 2.0). Classical evidence is transcript-based ([2] Newmaster 2019, OTR-Venus reporter expression). Atlas precomputed values are transcript-based (10x Chromium). No data-source discrepancy.
-- **Slc6a3** — CLUS_2470 Slc6a3 = 6.02 and is a DEFINING atlas marker at supertype level (mean = 3.07). Classical evidence comes from [1] Hemminger 2024, identifying PMv-DAT as a sexually dimorphic PMv subpopulation. Both classical and atlas signals are transcript-based — no data-source discrepancy.
-- **Adcyap1** — CLUS_2470 Adcyap1 = 8.13 (vs supertype 4.8). Classical evidence in the facts file lacks a specific PMID citation on the Adcyap1 marker (`refs: []` on the classical node). This is a gap: PMv-PACAP is referenced via [1] Hemminger 2024 in the broader sexually-dimorphic-PMv-subpopulations narrative, but a primary citation establishing Adcyap1 as a defining marker for this classical type is not in the facts. *(note: a targeted cite-traverse for "Adcyap1 PACAP PMv" may resolve this).*
+**Evidence support.**
 
-### Concerns
+| Evidence | Type | Supports | Headline | Source |
+|---|---|---|---|---|
+| Atlas precomputed expression + region painting | Atlas metadata | SUPPORT | Oxtr=4.45, Slc6a3=6.02, Adcyap1=8.13; PMv region_fraction_100um=0.898 | atlas-internal |
 
-- **Sex bias cannot be confirmed at cluster level.** male_female_ratio is absent from the DB for CLUS_2470 (n=192). Until sex bias is confirmed, confidence is capped at LOW. The absent MFR may reflect a DB ingest gap rather than a genuine absence in the precomputed stats. CLUS_2473 (PMv, n=86) has MFR=2.23 (mild male bias) but very low marker expression — it is a distinct PMv subtype, not a surrogate. *(note: source-side sex bias is well established at population level in [2]; target-side still unresolvable from atlas metadata until MFR is recovered or annotation transfer is run.)*
-- **Marker co-expression may conflate three classical subpopulations.** CLUS_2470 co-expresses Oxtr, Slc6a3, and Adcyap1 at levels suggesting it captures the PMv-OTR, PMv-DAT, and PMv-PACAP subpopulations simultaneously. If these are functionally distinct cell types, a single cluster-level edge conflates them. Node splitting (pmv_otr, pmv_dat, pmv_pacap) may be required before a higher-confidence cluster assignment can be made.
-- **Annotation transfer not yet performed.** No independent, data-driven cell-level mapping of published PMv scRNA-seq or Oxtr-Cre / Slc6a3-Cre lineage data has been run against WMBv1. This is the most important remaining gap in the evidence base.
+**Supporting evidence.**
 
-### What would upgrade confidence
+- CLUS_2470 carries the highest expression of all three classical
+  defining markers among the children of SUPT_0607: Oxtr=4.45,
+  Slc6a3=6.02, Adcyap1=8.13 — each substantially above the supertype
+  means. The cluster concentrates the marker-expressing PMv cells
+  inside its parent supertype.
+- The cluster's soma location is dominantly PMv: of its 451 cells, 255
+  fall within the 100µm proximity of PMv (region_fraction_100um=0.898;
+  strict region_fraction=0.676), with the next-largest atlas labels
+  being the umbrella Hypothalamus [MBA:1097] and Dorsomedial nucleus of
+  the hypothalamus [MBA:830] — adjacent to PMv and consistent with
+  registration-boundary scatter rather than off-target placement.
+- NT type at this cluster is Glut, consistent with the glutamatergic
+  identity expected of PMv-DAT / PMv-PACAP / PMv-OTR neurons described
+  in the cited literature [1], though the classical node does not
+  itself assert an NT type.
 
-- **Direct precomputed-HDF5 query** for CLUS_2470 male_female_ratio (proposed in this edge) would distinguish a DB ingest gap from a genuine absence in the precomputed stats and immediately address the primary uncertainty cap on this edge.
-- **MapMyCells annotation transfer** of published PMv scRNA-seq or Oxtr-Cre / Slc6a3-Cre lineage data against WMBv1 at cluster resolution; F1 ≥ 0.80 against CLUS_2470 would substantially support upgrading to MODERATE/HIGH confidence and would add `AnnotationTransferEvidence`.
-- **Single-cell co-expression analysis within CLUS_2470** to determine whether Oxtr, Slc6a3, and Adcyap1 mark separable subpopulations or co-localise within individual cells. Resolution informs whether pmv_otr_neuron should be split into separate sub-nodes.
+**Concerns.**
+
+- **Male-bias (MFR) not retrievable for CLUS_2470.** The classical
+  definition is explicitly male-biased ([2]), and the survey cohort
+  filter that surfaced this candidate was `sex_bias=male`. However,
+  the male/female ratio is currently absent from the precomputed-stats
+  DB for CLUS_2470. Confidence at cluster level is capped at LOW until
+  the male bias is confirmed. The absence may reflect a DB ingest gap
+  rather than genuine absence in the underlying precomputed stats —
+  a direct query of the precomputed HDF5 is the recommended check.
+- **Single-cluster aggregation of three potentially distinct
+  subpopulations.** CLUS_2470 co-expresses all three classical defining
+  markers at high levels. If PMv-OTR, PMv-DAT, and PMv-PACAP are
+  functionally distinct cell types within PMv, a single cluster-level
+  edge conflates them. Resolution at sub-cluster level (single-cell
+  inspection within the cluster) would test whether the three marker
+  signatures co-localise per cell or label distinct populations within
+  CLUS_2470. This is also the basis for keeping the relationship
+  cluster-level call non-exact (close, not exact).
+- **Sister cluster CLUS_2471 in the same supertype** also sits in PMv
+  but with lower proximity (region_fraction_100um=0.676;
+  strict=0.341) and weaker marker co-expression in the gathered
+  facts — it may capture additional PMv-resident OTR+ cells not in
+  CLUS_2470, contributing to the supertype-level aggregation story.
+
+**What would upgrade confidence.**
+
+- Direct query of the precomputed HDF5 for CLUS_2470 male/female ratio
+  to confirm whether the male bias documented at PMv tissue level [2]
+  is reflected at this cluster. Confirmed male bias would lift cluster
+  confidence to MODERATE.
+- Within-cluster single-cell inspection (or cluster-resolved gene
+  co-expression analysis) for Oxtr, Slc6a3, and Adcyap1 to determine
+  whether the three classical subpopulations co-occur in individual
+  cells or segregate within CLUS_2470.
+- Cluster annotation transfer of published PMv lineage transcriptomic
+  data (Oxtr-Cre, Slc6a3-Cre, or Adcyap1-Cre profiled cells) against
+  WMBv1, with F1 ≥ 0.7 to CLUS_2470 at cluster level, would add a
+  direct experimental anchor.
 
 ---
 
-### 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] · 🔴 LOW
+<details>
+<summary>Candidates audited (full top-K)</summary>
 
-### Supporting evidence
+| WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key evidence | Verdict |
+|---|---|---:|---|---|---|
+| 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] | — | 1165 | 🟡 MODERATE | PMv region_fraction_100um=0.865; all 3 markers co-expressed | Primary (supertype) |
+| 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] | 0607 PMv-TMv Pitx2 Glut_3 | 451 | 🔴 LOW | Highest Oxtr/Slc6a3/Adcyap1 child; PMv region_fraction_100um=0.898; MFR missing | Secondary (best child of primary supertype) |
+| 2471 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2471] | 0607 PMv-TMv Pitx2 Glut_3 | 274 | ⚪ UNCERTAIN | PMv region_fraction_100um=0.676; sibling of CLUS_2470 | Eliminated (weaker PMv proximity and marker support than sister CLUS_2470) |
+| 2314 VMH Nr5a1 Glut_4 [CS20230722_CLUS_2314] | 0569 VMH Nr5a1 Glut_4 | 231 | 🔴 LOW | region_fraction_100um=0.018; dominant in VMH not PMv | Eliminated (wrong region — VMH, not PMv) |
+| 2575 MM Foxb1 Glut_2 [CS20230722_CLUS_2575] | 0631 MM Foxb1 Glut_2 | 487 | 🔴 LOW | region_fraction_100um=0.029; dominant in medial mammillary | Eliminated (wrong region — medial mammillary) |
+| 2395 PH-ant-LHA Otp Bsx Glut_2 [CS20230722_CLUS_2395] | 0592 PH-ant-LHA Otp Bsx Glut_2 | 105 | ⚪ UNCERTAIN | PMv region_fraction_100um=0.596 but no marker support gathered | Eliminated (lower PMv proximity than primary supertype's children; no marker confirmation) |
+| 0605 PMv-TMv Pitx2 Glut_1 [CS20230722_SUPT_0605] | — | 1202 | ⚪ UNCERTAIN | PMv region_fraction_100um=0.631; sister of primary supertype | Eliminated (no atlas marker support gathered; may carry residual OTR+ population — see Discussion) |
+| 0557 ARH-PVp Tbx3 Glut_4 [CS20230722_SUPT_0557] | — | 246 | 🔴 LOW | region_fraction_100um=0.067; dominant in VMH | Eliminated (wrong region) |
+| 0429 TMv-PMv Tbx3 Hist-Gaba_1 [CS20230722_SUPT_0429] | — | 534 | ⚪ UNCERTAIN | region_fraction_100um=0.247; histaminergic GABA | Eliminated (boundary PMv overlap; histaminergic GABA identity, not glutamatergic) |
+| 0430 TMv-PMv Tbx3 Hist-Gaba_2 [CS20230722_SUPT_0430] | — | 321 | ⚪ UNCERTAIN | region_fraction_100um=0.157; histaminergic GABA | Eliminated (boundary PMv overlap; histaminergic GABA identity) |
 
-- **Highest DB candidate score across all ranks.** SUPT_0607 received the top DB score (4) of any candidate at any rank for pmv_otr_neuron — the single best supertype hit by atlas-metadata scoring.
-- **Direct PMv anatomical match.** MBA:1004 (Ventral premammillary nucleus) is the dominant soma location with n=347 cells in SUPT_0607.
-- **All three classical defining markers are present.** Precomputed mean expression: Oxtr = 2.0 (DEFINING_SCOPED atlas marker), Slc6a3 = 3.07 (DEFINING atlas marker), Adcyap1 = 4.8. The supertype simultaneously expresses all three markers corresponding to the potentially distinct PMv subpopulations (PMv-OTR, PMv-DAT, PMv-PACAP).
-- **Child cluster CLUS_2470 concentrates the marker-expressing PMv cells.** Within SUPT_0607, CLUS_2470 (n=192 PMv) shows substantially higher Oxtr (4.45), Slc6a3 (6.02), and Adcyap1 (8.13) than the supertype means — see CLUS_2470 edge above.
+A fresh-emit duplicate edge targets each of SUPT_0607 and CLUS_2470 with
+only `discovery_score` and stub property comparisons (no curator-
+authored caveats). The substantive structured evidence lives on the
+legacy edges narrated above; the fresh-emit duplicates are recorded
+for curator removal — see Discussion open questions.
 
-### Marker evidence provenance
-
-- **Oxtr** — DEFINING_SCOPED at supertype level (mean = 2.0). Classical evidence transcript-based via OTR-Venus reporter [2]. Atlas value transcript-based (10x Chromium). Moderate atlas value at supertype level is expected for a marker concentrated in a child cluster (CLUS_2470 = 4.45).
-- **Slc6a3** — DEFINING atlas marker (mean = 3.07). Classical evidence via PMv-DAT subpopulation [1]. Both transcript-based — no data-source discrepancy.
-- **Adcyap1** — atlas mean = 4.8. Classical evidence on the node lacks a specific PMID (`refs: []`); PMv-PACAP is referenced in [1] but without a primary citation in the facts. Flag as weak source-side evidence.
-- **Tac1 — atlas annotation/literature discrepancy.** Tac1 = 8.95 is the *highest-expressing* DEFINING atlas marker for SUPT_0607 but is absent from the classical pmv_otr_neuron definition. SUPT_0607 may be more accurately characterised as a Tac1+ PMv population with OTR/DAT/PACAP as co-expressed subtype markers. *(note: this suggests the classical definition may underspecify Tac1 — a candidate for a targeted literature search on Tac1 in PMv).*
-
-### Concerns
-
-- **Supertype is glutamatergic, not dopaminergic.** SUPT_0607 carries a Glut_3 (glutamatergic) label (PMv-TMv Pitx2 Glut). The classical node's PMv-DAT subpopulation implies dopaminergic co-release, which is captured only APPROXIMATEly at supertype level. Glutamatergic identity is likely for the OTR+ and PACAP+ populations; dopaminergic co-release is possible for the Slc6a3+ subset. *(adjacent NT phenotype — weak counter-evidence; co-release is biologically plausible).*
-- **Cross-cutting marker pattern conflates three classical subpopulations.** SUPT_0607 expresses all three marker signatures (Oxtr, Slc6a3, Adcyap1) simultaneously, indicating the supertype aggregates neurons the classical taxonomy may treat as distinct subtypes (PMv-OTR, PMv-DAT, PMv-PACAP). Sister supertype SUPT_0605 (PMv-TMv Pitx2 Glut_1, DB score = 2) may capture an additional portion of the OTR+ male-biased population.
-- **Tac1 as the strongest atlas marker is unaccounted for.** Tac1 = 8.95 (DEFINING) is higher than any of the three classical markers at supertype level, but is not in the classical node definition. This is a marker mismatch flagged for investigation.
-- **Sex ratio not available at supertype level.** MFR is computed only at rank 0 (cluster); the male-biased dimorphism — a defining feature of pmv_otr_neuron [2] — cannot be assessed from supertype metadata.
-- **Annotation transfer NOT_ASSESSED.**
-
-### What would upgrade confidence
-
-- **Child-cluster expression query for SUPT_0607.** Query Oxtr, Slc6a3, Adcyap1, Tac1 expression in all child clusters of SUPT_0607 to determine whether subpopulations are resolvable at cluster level — partially addressed for CLUS_2470 above.
-- **Annotation transfer** (MapMyCells) of published PMv scRNA-seq data against WMBv1; F1 ≥ 0.50 at SUPT_0607 level would upgrade this edge; F1 ≥ 0.80 at CLUS_2470 level would support the cluster-level edge. Expected output: `AnnotationTransferEvidence`.
-- **Targeted literature search** for primary citations on Adcyap1 (PMv-PACAP) and Tac1 in PMv to resolve the marker provenance gap.
-- **Node split decision.** Decide whether pmv_otr_neuron should be split into pmv_otr, pmv_dat, and pmv_pacap sub-nodes prior to final mapping, given that SUPT_0607 cross-cuts the three subpopulations.
+</details>
 
 ---
 
@@ -151,17 +315,57 @@ the highest expression of all three markers).
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** See classical type table in Introduction; defining_basis on the classical node and per-property literature support are listed there. The KB-side definition lives at the source graph file linked in the reproducibility footer.
+**Classical type definition.** The classical node `pmv_otr_neuron`
+(definition basis: CLASSICAL_NEUROCHEMICAL) is defined by Oxtr [2],
+Slc6a3 [1], and Adcyap1 expression, with soma in the Ventral
+premammillary nucleus [MBA:1004] [1, 2] and a male-biased sex ratio
+documented at the level of OTR+ PMv tissue by OTR-Venus reporter
+immunolabelling [2]. The node carries an explicit curator note that
+the three marker-defined subpopulations (PMv-OTR, PMv-DAT, PMv-PACAP)
+may not fully overlap and could be split into separate sub-nodes
+before final mapping. No CL term is currently assigned.
 
-**Atlas mapping query.** Candidate atlas clusters were retrieved from CCN20230722 at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match, NT type, defining markers, sex bias). Full scoring rules: `workflows/map-cell-type.md`.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from
+the WMBv1 taxonomy (CS20230722) at ranks 0 (cluster) and 1 (supertype)
+using metadata-based scoring (region match against MBA:1004, NT type,
+defining markers Oxtr / Slc6a3 / Adcyap1, sex bias filter for
+`male`). Full scoring rules: `workflows/map-cell-type.md`.
 
-**Property alignment.** Each defining property was compared to the corresponding atlas-side value via the `property_comparisons` schema; alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
+**Property alignment.** Each defining property of the classical type
+was compared to the corresponding atlas-side value via the
+`property_comparisons` schema, with alignments graded
+CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side
+numerical values came from precomputed expression on the cluster
+and from MERFISH spatial registration for soma location.
 
+**Anti-hallucination.** All citations, atlas accessions, ontology
+CURIEs, and verbatim literature quotes in this report are validated
+against the evidencell knowledge base at write time. Authored-prose
+evidence narratives are validated against their source
+`evidence_items[*].explanation` fields. The pre-write hook rejects
+any unresolvable identifier or unattributed blockquote. Specific
+mapping limitations and caveats are documented per-candidate in the
+Discussion section.
 
+*Generated by evidencell `25c2b32` at 2026-06-08T18:14:10+00:00 from
+[kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml](kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml).*
 
-**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote.
+**Evidence base table.**
 
-*Generated by evidencell `0c97cfa` from [`kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml`](../../kb/draft/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml).*
+| Edge ID | Evidence types | Supports | Source |
+| --- | --- | --- | --- |
+| edge_pmv_otr_neuron_to_cs20230722_supt_0607 | ATLAS_METADATA | SUPPORT | atlas-internal |
+| edge_pmv_otr_neuron_to_cs20230722_clus_2470 | ATLAS_METADATA | SUPPORT | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_CLUS_2471 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_CLUS_2470 (fresh-emit duplicate) | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_CLUS_2314 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_CLUS_2575 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_CLUS_2395 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_SUPT_0607 (fresh-emit duplicate) | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_SUPT_0605 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_SUPT_0557 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_SUPT_0429 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_pmv_otr_neuron_to_CS20230722_SUPT_0430 | ATLAS_METADATA | PARTIAL | atlas-internal |
 
 </details>
 
@@ -169,72 +373,99 @@ the highest expression of all three markers).
 
 ## Discussion
 
-**Primary mapping:** → 2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] at LOW confidence. Key support: ATLAS_METADATA (PMv-localised Pitx2 Glut subclass; Oxtr expression annotated on parent SUPT_0607). Key caveats: `MARKER_NOT_SPECIFIC` (Oxtr expression not directly resolvable at cluster rank); `LOW_CELL_COUNT`.
+**Primary mapping:** Ventral premammillary nucleus (PMv) oxytocin
+receptor neuron → 0607 PMv-TMv Pitx2 Glut_3 [CS20230722_SUPT_0607] at
+MODERATE confidence, with the supertype's PMv-resident child cluster
+2470 PMv-TMv Pitx2 Glut_3 [CS20230722_CLUS_2470] held at LOW confidence
+as the best cluster-level resolution available. Key support: atlas
+precomputed expression of all three classical defining markers (Oxtr,
+Slc6a3, Adcyap1) on a PMv-dominant glutamatergic supertype, with PMv
+soma proximity at region_fraction_100um=0.865 at supertype level and
+0.898 at the cluster. Key caveats: the supertype aggregates the three
+marker-defined PMv subpopulations the classical definition treats as
+potentially distinct (cross-cutting many-to-one); and male-bias at the
+cluster level remains unconfirmed (MFR missing from the precomputed-
+stats DB for CLUS_2470).
 
-No Cell Ontology term currently assigned for this classical type.
+No Cell Ontology term currently covers this classical type. The
+intersecting marker-defined PMv subpopulations described in the
+literature (PMv-OTR, PMv-DAT, PMv-PACAP) do not yet have CL
+representatives, and the type is flagged as a candidate for a new CL
+term — the natural prerequisite is the curator decision (see open
+questions) on whether the three subpopulations are one type or three.
 
 ### Proposed experiments and follow-ups
 
-### 1. Direct precomputed-HDF5 query for CLUS_2470 male_female_ratio
+**Within-cluster marker co-expression resolution.**
+- **What:** Single-cell inspection of Oxtr, Slc6a3, and Adcyap1
+  co-expression within CLUS_2470 (and to a lesser extent CLUS_2471) to
+  determine whether the three classical subpopulations co-localise per
+  cell or segregate into separable subclusters.
+- **Target:** Identify whether ≥ 90% of marker-positive cells co-express
+  all three markers (one population) or whether the markers label
+  largely non-overlapping cells (three populations within one cluster).
+- **Expected output:** MarkerAnalysisEvidence on the cluster edge; if
+  separation is found, basis for splitting `pmv_otr_neuron` into
+  `pmv_otr`, `pmv_dat`, `pmv_pacap` sub-nodes.
+- **Resolves:** open questions 1, 3.
 
-**What:** Query the precomputed HDF5 stats directly for CLUS_2470 male_female_ratio, bypassing the DB ingest layer.
+**Cluster annotation transfer from PMv lineage datasets.**
+- **What:** Cluster-level annotation transfer of published PMv
+  transcriptomic data targeting PMv-OTR (via Oxtr-Cre or
+  OTR-reporter-sorted cells), PMv-DAT (Slc6a3-Cre), or PMv-PACAP
+  (Adcyap1-Cre) against WMBv1.
+- **Target:** F1 ≥ 0.7 to SUPT_0607 at supertype level; F1 ≥ 0.6 to
+  CLUS_2470 at cluster level.
+- **Expected output:** AnnotationTransferEvidence on the supertype and
+  cluster edges; direct experimental anchor for the classical → atlas
+  identity at both resolutions.
+- **Resolves:** open questions 1, 2, 4.
 
-**Target:** Recover MFR for CLUS_2470 (n=192 cells) and confirm whether sex bias matches the classical male-biased dimorphism.
+**Direct precomputed-stats query for cluster-level male/female ratio.**
+- **What:** Direct HDF5 query of CLUS_2470 male/female cell counts to
+  confirm whether the male bias documented for PMv OTR+ tissue [2] is
+  reflected at this cluster, and whether the DB-level MFR absence is
+  a genuine signal or an ingest gap.
+- **Target:** Recover MFR; confirm male predominance consistent with
+  [2] (males > females from P14–P56).
+- **Expected output:** Sex-ratio property comparison populated; if
+  confirmed, lifts cluster confidence to MODERATE.
+- **Resolves:** open question 4.
 
-**Expected output:** Updated property_comparison on the CLUS_2470 edge with sex_ratio alignment resolved (CONSISTENT / DISCORDANT / NOT_ASSESSED if genuinely absent in the source HDF5).
-
-**Resolves:** Open question 1 (the primary cap on confidence for the CLUS_2470 edge). Distinguishes a DB ingest gap from a genuine absence.
-
-### 2. MapMyCells annotation transfer of an external PMv scRNA-seq dataset against WMBv1
-
-**What:** Retrieve a published scRNA-seq dataset enriched for PMv neurons (e.g. Oxtr-Cre, Slc6a3-Cre, or PMv-DAT lineage preparations; sex-stratified hypothalamic atlases). Run MapMyCells against WMBv1 at cluster resolution.
-
-**Target:** F1 ≥ 0.50 at SUPT_0607 level; F1 ≥ 0.80 at CLUS_2470 level for Oxtr+/Slc6a3+/Adcyap1+ cells.
-
-**Expected output:** `AnnotationTransferEvidence` entries on both edges (edge_pmv_otr_neuron_to_cs20230722_supt_0607 and edge_pmv_otr_neuron_to_cs20230722_clus_2470). Atlas: WMBv1. Tool: MapMyCells. Output format: F1 matrix per cluster, fed back as `AnnotationTransferEvidence` YAML.
-
-**Resolves:** Open questions 2 and 3. Addresses the `annotation_transfer_f1` NOT_ASSESSED gap on both edges.
-
-### 3. Single-cell marker co-expression analysis within CLUS_2470
-
-**What:** Within-cluster re-clustering of CLUS_2470 cells, stratified by Oxtr+/Slc6a3+/Adcyap1+ profiles. Determine whether the three markers co-localise within individual cells or mark separable subpopulations.
-
-**Target:** Detection of separable PMv-OTR, PMv-DAT, and PMv-PACAP sub-populations within CLUS_2470, or formal demonstration that they are co-extensive at this resolution.
-
-**Expected output:** Additional `MarkerAnalysisEvidence` records and a node-split decision (pmv_otr / pmv_dat / pmv_pacap as separate classical nodes, or retain as a single aggregated node).
-
-**Resolves:** Open questions 2 and 4 (node splitting decision).
-
-### 4. Targeted literature search for Adcyap1 and Tac1 in PMv
-
-**What:** Cite-traverse for primary citations establishing Adcyap1 as a defining marker for the classical PMv-PACAP population, and for Tac1 expression in PMv.
-
-**Target:** Recover primary PMID(s) supporting Adcyap1 as a PMv-PACAP defining marker; assess whether Tac1 should be added to the classical node definition.
-
-**Expected output:** Additional `LiteratureEvidence` entries; updated classical node definition if Tac1 is supported.
-
-**Resolves:** Adcyap1 marker provenance gap; Tac1 atlas/literature discrepancy (open question 5).
-
----
+**Curator decision on splitting `pmv_otr_neuron`.**
+- **What:** Curator review of whether the classical node should be
+  split into separate `pmv_otr`, `pmv_dat`, and `pmv_pacap` sub-nodes
+  prior to committing a final mapping.
+- **Expected output:** Either (a) confirmation that the aggregated type
+  is the correct unit and the supertype-level broader call is the
+  natural resolution, or (b) three classical nodes mapping into the
+  same supertype as a cross-cutting many-to-one.
+- **Resolves:** open questions 1, 3.
 
 ### Open questions
 
-1. Why is MFR absent for CLUS_2470 (n=192 cells)? Is this a DB ingest gap or a genuine absence in precomputed stats? *(Appears on the cluster edge.)*
-2. Do Oxtr, Slc6a3, and Adcyap1 co-localise within individual CLUS_2470 cells, or do they mark distinct subpopulations within the cluster? *(Appears on the cluster edge.)*
-3. Do individual clusters within SUPT_0607 segregate by marker (Oxtr-high, Slc6a3-high, Adcyap1-high), allowing sub-resolution mapping? *(Appears on the supertype edge; partially addressed by CLUS_2470 ATLAS_METADATA evidence.)*
-4. Should pmv_otr_neuron be split into separate pmv_otr, pmv_dat, pmv_pacap sub-nodes prior to final mapping? *(Appears on the supertype edge.)*
-5. What is the role of Tac1 (mean = 8.95, highest DEFINING atlas marker in SUPT_0607) relative to the classical pmv_otr_neuron definition? Should it be added as a co-expressed marker or treated as a distinguishing feature of a related but distinct supertype? *(Appears on the supertype edge.)*
-
----
-
-### Evidence base
-
-| Edge ID | Evidence type | Supports |
-|---|---|---|
-| edge_pmv_otr_neuron_to_cs20230722_supt_0607 | ATLAS_METADATA | SUPPORT — DB top score=4; Oxtr=2.0 (DEFINING_SCOPED), Slc6a3=3.07 (DEFINING), Adcyap1=4.8; Tac1=8.95 unexpected; MBA:1004 PMv n=347 |
-| edge_pmv_otr_neuron_to_cs20230722_clus_2470 | ATLAS_METADATA | SUPPORT — Oxtr=4.45, Slc6a3=6.02, Adcyap1=8.13 (all above supertype means); MBA:1004 PMv n=192 (largest PMv cluster); MFR absent |
-
-All evidence is atlas-metadata only. No literature, annotation transfer, or direct experimental evidence has been incorporated at this stage.
+1. Do the PMv-OTR, PMv-DAT, and PMv-PACAP marker signatures co-localise
+   in individual cells within CLUS_2470, or do they label distinct
+   subpopulations within the cluster?
+2. Do individual child clusters within SUPT_0607 segregate by marker
+   (Oxtr-high, Slc6a3-high, Adcyap1-high), allowing higher-resolution
+   sub-supertype mapping?
+3. Should `pmv_otr_neuron` be split into separate `pmv_otr`, `pmv_dat`,
+   and `pmv_pacap` sub-nodes prior to final mapping?
+4. Why is MFR (male/female ratio) absent in the precomputed-stats DB
+   for CLUS_2470 (n=192 PMv cells)? Is this a DB ingest gap or a
+   genuine absence in the precomputed stats?
+5. Does sister supertype 0605 PMv-TMv Pitx2 Glut_1 [CS20230722_SUPT_0605]
+   capture an additional portion of the OTR+ male-biased PMv population
+   not absorbed by SUPT_0607?
+6. Is the atlas DEFINING marker Tac1 (mean=8.95 on SUPT_0607) a
+   feature that should be added to the classical definition, or is it
+   a co-expressed but classically irrelevant marker?
+7. Curator removal of duplicate fresh-emit edges
+   `edge_pmv_otr_neuron_to_CS20230722_SUPT_0607` and
+   `edge_pmv_otr_neuron_to_CS20230722_CLUS_2470` — legacy/fresh-emit
+   ID collisions on the same `taxonomy_type` accessions; the legacy
+   edges carry the substantive evidence and should be retained.
 
 ---
 
@@ -242,5 +473,296 @@ All evidence is atlas-metadata only. No literature, annotation transfer, or dire
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Hemminger et al. 2024 | [PMID:39416191](https://pubmed.ncbi.nlm.nih.gov/39416191/) | Soma location (PMv); PMv-DAT and PMv-PACAP sexually dimorphic subpopulations |
-| [2] | Newmaster et al. 2019 | [PMID:32313029](https://pubmed.ncbi.nlm.nih.gov/32313029/) | Soma location (PMv); Oxtr (OTR) marker; male-biased PMv OTR expression P14–P56 |
+| [1] | Hemminger et al. 2024. Spatial Single-Cell Mapping of Transcriptional Differences Across Genetic Backgrounds in Mouse Brains. | [39416191](https://pubmed.ncbi.nlm.nih.gov/39416191) | PMv soma location; PMv-DAT and PMv-PACAP subpopulation naming |
+| [2] | Newmaster et al. 2019. (PMID 32313029) | [32313029](https://pubmed.ncbi.nlm.nih.gov/32313029) | OTR-Venus reporter demonstration of male-biased PMv OTR expression P14–P56; Oxtr marker; PMv soma location |
+
+---
+
+## Verdict blocks
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_cs20230722_supt_0607 -->
+```yaml
+verdict:
+  confidence: MODERATE
+  confidence_score: 0.62
+  relationship: skos:broadMatch
+  mapping_cardinality: "1:n"
+  mapping_justification: semapv:ManualMappingCuration
+  rationale: >
+    [tier:STRONGEST] PMv-resident glutamatergic supertype 0607
+    PMv-TMv Pitx2 Glut_3 (region_fraction_100um=0.865; strict=0.634)
+    co-expresses all three classical defining markers (Oxtr=2.0,
+    Slc6a3=3.07, Adcyap1=4.8) and is the highest-scoring candidate
+    at any rank; the broader 1:n call reflects supertype aggregation
+    of the three classical PMv-OTR / PMv-DAT / PMv-PACAP subpopulations
+    rather than a clean 1:1.
+  reconciliation_note: >
+    Supertype-level call (CS20230722_SUPT_0607) paired with cluster-level
+    secondary CS20230722_CLUS_2470 (LOW); the supertype absorbs marker
+    signatures that the classical definition treats as potentially
+    distinct subpopulations, so the natural resolution is broader at
+    supertype level and uncertain at cluster level pending male-bias
+    and within-cluster co-expression resolution.
+  caveats:
+    - caveat_type: AMBIGUOUS_MAPPING
+      description: >
+        Cross-cutting marker aggregation — SUPT_0607 simultaneously
+        expresses Oxtr, Slc6a3, and Adcyap1, the three markers the
+        classical definition treats as potentially labelling distinct
+        PMv subpopulations (PMv-OTR, PMv-DAT, PMv-PACAP); the
+        supertype-level mapping inherently aggregates them and a
+        sub-supertype split may be required if curator decides the
+        subpopulations are functionally distinct.
+    - caveat_type: MARKER_NOT_SPECIFIC
+      description: >
+        Tac1 is tagged DEFINING on the atlas for this supertype with
+        mean=8.95 — substantially higher than any of the three
+        classical defining markers — and is absent from the classical
+        pmv_otr_neuron definition; the supertype may be more
+        accurately characterised at the atlas level as a Tac1+ PMv
+        glutamatergic population with OTR / DAT / PACAP signatures
+        as co-expressed subtype-level features.
+    - caveat_type: OTHER
+      description: >
+        Sister supertype 0605 PMv-TMv Pitx2 Glut_1 also resides
+        predominantly in PMv (region_fraction_100um=0.631; strict=0.307)
+        and may capture an additional portion of the OTR+ male-biased
+        population not absorbed by SUPT_0607.
+  proposed_experiments:
+    - >
+      Cluster annotation transfer of published PMv lineage
+      transcriptomic data (Oxtr-Cre, Slc6a3-Cre, or Adcyap1-Cre
+      profiled cells) against WMBv1, with F1 >= 0.7 to SUPT_0607
+      at supertype level, to provide an AnnotationTransferEvidence
+      anchor for the classical-to-atlas relationship.
+    - >
+      Query Oxtr, Slc6a3, Adcyap1, and Tac1 expression across the
+      child clusters of SUPT_0607 to test whether the three classical
+      marker signatures segregate at cluster level (suggesting
+      sub-supertype splitting) or co-occur across children (supporting
+      the aggregated broader call).
+    - >
+      Curator decision on whether to split pmv_otr_neuron into
+      separate pmv_otr, pmv_dat, and pmv_pacap sub-nodes, which would
+      reframe this edge as a cross-cutting many-to-one mapping into
+      SUPT_0607 rather than a single broader 1:n mapping.
+  unresolved_questions:
+    - >
+      Do individual child clusters within SUPT_0607 segregate by
+      marker (Oxtr-high, Slc6a3-high, Adcyap1-high), allowing
+      sub-supertype resolution mapping?
+    - >
+      Should pmv_otr_neuron be split into separate pmv_otr, pmv_dat,
+      pmv_pacap sub-nodes prior to final mapping?
+    - >
+      Is the atlas DEFINING marker Tac1 (mean=8.95 on SUPT_0607) a
+      feature that should be added to the classical definition, or a
+      co-expressed but classically irrelevant marker?
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_cs20230722_clus_2470 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.38
+  relationship: skos:closeMatch
+  mapping_cardinality: "1:1"
+  mapping_justification: semapv:ManualMappingCuration
+  rationale: >
+    [tier:NEXT] CLUS_2470 is the PMv-leading child of SUPT_0607
+    (region_fraction_100um=0.898; strict=0.676; 255/451 cells in PMv)
+    and concentrates the supertype's classical-marker expression
+    (Oxtr=4.45, Slc6a3=6.02, Adcyap1=8.13); confidence held at LOW
+    pending male-bias confirmation (MFR missing from precomputed-stats
+    DB) and within-cluster co-expression resolution of the three
+    putative subpopulations.
+  reconciliation_note: >
+    Cluster-level secondary to the supertype primary
+    (CS20230722_SUPT_0607, MODERATE broadMatch); the cluster call
+    is non-exact (close, not exact) because the cluster appears to
+    aggregate the three classical marker-defined subpopulations into
+    a single transcriptomic unit.
+  caveats:
+    - caveat_type: OTHER
+      description: >
+        Male-bias (MFR) not retrievable for CLUS_2470 — the classical
+        definition is explicitly male-biased ([2]) but the male/female
+        ratio is currently absent from the precomputed-stats DB for
+        this cluster; absence may reflect a DB ingest gap rather than
+        a genuine signal, and confidence is capped at LOW until the
+        male bias is confirmed.
+    - caveat_type: AMBIGUOUS_MAPPING
+      description: >
+        Single-cluster aggregation of three potentially distinct
+        subpopulations — CLUS_2470 co-expresses Oxtr, Slc6a3, and
+        Adcyap1 at high levels, and if PMv-OTR, PMv-DAT, and PMv-PACAP
+        are functionally distinct cell types within PMv, a single
+        cluster-level edge conflates them; resolution at sub-cluster
+        level would test whether the three marker signatures
+        co-localise per cell or label distinct populations within
+        the cluster.
+    - caveat_type: OTHER
+      description: >
+        Sister cluster CLUS_2471 in the same supertype also sits in
+        PMv but with lower proximity (region_fraction_100um=0.676;
+        strict=0.341) and weaker marker co-expression in the gathered
+        facts — it may capture additional PMv-resident OTR+ cells not
+        in CLUS_2470, contributing to the supertype-level aggregation.
+  proposed_experiments:
+    - >
+      Direct query of the precomputed HDF5 for CLUS_2470 male/female
+      ratio to confirm whether the male bias documented for PMv OTR+
+      tissue [2] is reflected at this cluster, and whether the
+      DB-level MFR absence is a genuine signal or an ingest gap;
+      confirmed male predominance would lift cluster confidence to
+      MODERATE.
+    - >
+      Within-cluster single-cell inspection (or cluster-resolved gene
+      co-expression analysis) for Oxtr, Slc6a3, and Adcyap1 to
+      determine whether the three classical subpopulations co-occur
+      in individual cells or segregate within CLUS_2470.
+    - >
+      Cluster annotation transfer of published PMv lineage
+      transcriptomic data (Oxtr-Cre, Slc6a3-Cre, or Adcyap1-Cre
+      profiled cells) against WMBv1, with F1 >= 0.6 to CLUS_2470
+      at cluster level, to add a direct experimental anchor.
+  unresolved_questions:
+    - >
+      Do Oxtr, Slc6a3, and Adcyap1 co-localise within individual
+      CLUS_2470 cells, or do they mark distinct subpopulations within
+      the cluster?
+    - >
+      Why is MFR absent for CLUS_2470 (n=192 PMv cells)? DB ingest
+      gap or genuine absence in precomputed stats?
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_CLUS_2471 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.22
+  rationale: >
+    [tier:CUT] Sibling cluster of CLUS_2470 in SUPT_0607 with lower
+    PMv proximity (region_fraction_100um=0.676; strict=0.341) and
+    weaker marker support than its sister; eliminated in favour of
+    CLUS_2470 as the best PMv-resident child.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_CLUS_2314 -->
+```yaml
+verdict:
+  confidence: REFUTED
+  confidence_score: 0.05
+  rationale: >
+    [tier:CUT] Wrong region — CS20230722_CLUS_2314 is a VMH Nr5a1
+    glutamatergic cluster dominant in the ventromedial hypothalamic
+    nucleus (region_fraction_100um=0.018 against PMv), not PMv.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_CLUS_2575 -->
+```yaml
+verdict:
+  confidence: REFUTED
+  confidence_score: 0.05
+  rationale: >
+    [tier:CUT] Wrong region — CS20230722_CLUS_2575 is a medial
+    mammillary Foxb1 glutamatergic cluster (region_fraction_100um=0.029
+    against PMv), not PMv.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_CLUS_2395 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.18
+  rationale: >
+    [tier:CUT] PH-ant-LHA Otp Bsx glutamatergic cluster with moderate
+    PMv proximity (region_fraction_100um=0.596) but no atlas-side
+    confirmation of the classical defining markers; weaker than the
+    PMv-TMv Pitx2 Glut_3 lineage and eliminated.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_SUPT_0607 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.10
+  rationale: >
+    [tier:CUT] Fresh-emit duplicate of the legacy supertype edge
+    edge_pmv_otr_neuron_to_cs20230722_supt_0607, carrying only
+    discovery_score and stub property comparisons; the substantive
+    evidence lives on the legacy edge and this duplicate is recorded
+    for curator removal.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_SUPT_0605 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.25
+  rationale: >
+    [tier:CUT] Sister supertype to SUPT_0607 with PMv residency
+    (region_fraction_100um=0.631; strict=0.307) but no atlas-side
+    confirmation of the classical defining markers in the gathered
+    facts; flagged as a possible carrier of additional OTR+ population
+    but eliminated at this round pending direct marker evidence.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_SUPT_0557 -->
+```yaml
+verdict:
+  confidence: REFUTED
+  confidence_score: 0.05
+  rationale: >
+    [tier:CUT] Wrong region — ARH-PVp Tbx3 glutamatergic supertype
+    dominant in VMH (region_fraction_100um=0.067 against PMv), not PMv.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_SUPT_0429 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.12
+  rationale: >
+    [tier:CUT] TMv-PMv histaminergic GABAergic supertype with boundary
+    PMv overlap (region_fraction_100um=0.247) and a histaminergic
+    GABA identity inconsistent with the glutamatergic PMv-OTR / DAT /
+    PACAP populations described in the literature.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_SUPT_0430 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.12
+  rationale: >
+    [tier:CUT] TMv-PMv histaminergic GABAergic supertype with boundary
+    PMv overlap (region_fraction_100um=0.157) and a histaminergic
+    GABA identity inconsistent with the glutamatergic PMv-OTR / DAT /
+    PACAP populations described in the literature.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_pmv_otr_neuron_to_CS20230722_CLUS_2470 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.10
+  rationale: >
+    [tier:CUT] Fresh-emit duplicate of the legacy cluster edge
+    edge_pmv_otr_neuron_to_cs20230722_clus_2470, carrying only
+    discovery_score and stub property comparisons; the substantive
+    evidence lives on the legacy edge and this duplicate is recorded
+    for curator removal.
+```
+<!-- verdict-block-end -->
