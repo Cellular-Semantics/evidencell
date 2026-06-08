@@ -28,6 +28,7 @@ import yaml
 from ruamel.yaml import YAML
 
 from evidencell.at_metrics import compute_edge_metrics
+from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
 from evidencell.paths import repo_root
 from evidencell.taxonomy_db import (
     MIN_DETECTABLE,
@@ -65,29 +66,16 @@ _RANK_TO_LEVEL_NAME: dict[int, str] = {
     3: "class",
 }
 
-# Common classical-marker abbreviation → canonical mouse gene symbol.
-# Lets the emitter resolve negative-marker absences that classical nodes
-# express as immunological / Greek-letter abbreviations rather than gene
-# names. Extend in this dict (preferred) or fix the classical-node YAML
-# to use the canonical gene symbol (better long-term).
-_CANONICAL_GENE_ALIAS: dict[str, str] = {
-    "PV": "Pvalb",
-    "CB": "Calb1",
-    "CR": "Calb2",
-    "NOS": "Nos1",
-    "VIP": "Vip",
-    "NPY": "Npy",
-    "SST": "Sst",
-    "CCK": "Cck",
-    "5HT3a": "Htr3a",
-    "5HT3aR": "Htr3a",
-}
-
-
 def _resolve_symbol(sym: str) -> str:
-    """Map a marker symbol to its canonical gene symbol via the alias
-    table. Returns the symbol verbatim if no alias is registered."""
-    return _CANONICAL_GENE_ALIAS.get(sym, sym)
+    """Map a marker symbol to its canonical gene symbol via the shared
+    alias table (:data:`marker_aliases.PROTEIN_TO_GENE_ALIASES`).
+    Returns the symbol verbatim if no alias is registered.
+
+    Used by ``_property_comparisons`` to translate classical-node
+    symbols (mGluR1, PV, GFAP, …) to the gene symbols actually used
+    on the atlas side (Grm1, Pvalb, Gfap, …).
+    """
+    return resolve_to_canonical_gene_symbol(sym)
 
 
 # ─── public entry ────────────────────────────────────────────────────────────
