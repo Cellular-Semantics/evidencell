@@ -96,6 +96,17 @@ yourself reading the subagent's input files in the parent context to "help" the
 subagent reason, you are skipping the isolation — stop, dispatch, and let the
 subagent read on its own.
 
+**"Orchestrator" = the Claude session that opened the workflow.** In production this is
+normally the top-level user-facing Claude Code session. If you yourself were dispatched
+as a subagent by a harness (test runs, multi-node batching, etc.) and Agent-tool
+dispatch is not available in your environment, **abort with a clear diagnostic — do not
+inline.** The dispatch rule exists to keep subagent contexts clean, and silent
+inline fallback produces results that won't reproduce when the workflow runs from
+a top-level session. Diagnostic template: *"workflow Step N requires Agent-tool
+dispatch; this environment does not expose it. Re-invoke from a Claude session with
+Agent-tool access, or pass an explicit `allow_inline=true` parameter (debug-only
+override)."*
+
 ---
 
 ## KB data management principles

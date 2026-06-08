@@ -99,7 +99,10 @@ Sst-OLM / Htr3a-OLM case and #62 for the related ingest-side prevention.
 
 ## Step 3 — Synthesis subagent
 
-The orchestrator MUST dispatch this step as an **isolated subagent**
+**Who is "the orchestrator"?** The orchestrator is the Claude session
+that opened this workflow file. In production that's the top-level
+user-facing Claude Code session ("run gen-report on OLM"). The
+orchestrator MUST dispatch this step as an **isolated subagent**
 via the Agent tool (`subagent_type: general-purpose` or equivalent),
 NOT execute the prompt inline in the parent context. Context
 isolation is the point: the synthesis call must see only the
@@ -113,9 +116,21 @@ to "help" the synthesis agent reason, you are doing it wrong —
 stop, dispatch via Agent, and let the subagent read the facts on
 its own.
 
-The one exception: when the user has explicitly asked for an inline
-iteration ("let's draft this one ourselves to debug the prompt"),
-inline is fine; default behaviour is always dispatch.
+**Environment check.** If you are running as the orchestrator and
+the Agent tool is *not* available in your environment (e.g. you
+yourself were dispatched as a subagent by a harness that doesn't
+support nested dispatch), **abort with a clear diagnostic — do not
+inline.** The dispatch rule exists to keep the synthesis subagent
+context-clean, and silently falling back to inline execution
+produces results that won't reproduce in production. Diagnostic
+template: *"gen-report.md Step 3 requires Agent-tool dispatch; this
+environment does not expose it. Re-invoke gen-report from a Claude
+session with Agent-tool access, or pass an explicit
+`allow_inline=true` parameter (override sentinel for debugging only)."*
+
+The one user-driven exception: when the user has explicitly asked
+for an inline iteration ("let's draft this one ourselves to debug
+the prompt"), inline is fine; default behaviour is always dispatch.
 
 Spawn the synthesis subagent with this exact prompt (substitute values
 for `{node_id}`, `{facts_file}`, `{pool_candidates_file}`,
@@ -1543,11 +1558,14 @@ Write the report now.
 
 ## Step 4 — Validation subagent
 
-The orchestrator MUST dispatch this step as an isolated subagent
-via the Agent tool, NOT execute inline. The independent-reviewer
-property — validation catching things the writer was blind to — is
-defeated if the validator inherits the synthesis context. Same
-dispatch discipline as Step 3.
+The orchestrator (same definition as in Step 3 — the Claude session
+that opened this workflow) MUST dispatch this step as an isolated
+subagent via the Agent tool, NOT execute inline. The
+independent-reviewer property — validation catching things the
+writer was blind to — is defeated if the validator inherits the
+synthesis context. Same dispatch discipline and environment-check
+rules as Step 3 (abort with a clear diagnostic if Agent-tool
+dispatch isn't available; do not inline).
 
 Spawn the validation subagent with this exact prompt (substitute values):
 
@@ -1786,9 +1804,9 @@ from `references/{region}/references.json` and a flat evidence summary table. Co
 
 ### Step DD-2 — Drill-down synthesis subagent
 
-The orchestrator MUST dispatch this step as an isolated subagent
-via the Agent tool, NOT execute inline. Same dispatch discipline as
-Step 3.
+The orchestrator (same definition as in Step 3) MUST dispatch this
+step as an isolated subagent via the Agent tool, NOT execute inline.
+Same dispatch discipline and environment-check rules as Step 3.
 
 Spawn the drill-down synthesis subagent with this exact prompt
 (substitute values for `{scaffold_file}`, `{facts_file}`,
