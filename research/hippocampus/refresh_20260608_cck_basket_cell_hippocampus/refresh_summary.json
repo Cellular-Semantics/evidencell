@@ -1,0 +1,132 @@
+{
+  "graph": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml",
+  "node_id": "cck_basket_cell_hippocampus",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_0681",
+          "CS20230722_CLUS_0651",
+          "CS20230722_CLUS_0655",
+          "CS20230722_CLUS_0705",
+          "CS20230722_CLUS_0637"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml cck_basket_cell_hippocampus CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_cck_basket_cell_hippocampus/discovery_candidates_rank0.json",
+          "  emit-stage-b: wrote 5 edge(s) + 2 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 2,
+        "skipped_details": [
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179",
+            "taxonomy_type": "CS20230722_SUPT_0179"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187",
+            "taxonomy_type": "CS20230722_SUPT_0187"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0681",
+            "taxonomy_type": "CS20230722_CLUS_0681"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0651",
+            "taxonomy_type": "CS20230722_CLUS_0651"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0655",
+            "taxonomy_type": "CS20230722_CLUS_0655"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0705",
+            "taxonomy_type": "CS20230722_CLUS_0705"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0637",
+            "taxonomy_type": "CS20230722_CLUS_0637"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 30,
+        "top5": [
+          "CS20230722_SUPT_0179",
+          "CS20230722_SUPT_0196",
+          "CS20230722_SUPT_0219",
+          "CS20230722_SUPT_0189",
+          "CS20230722_SUPT_0198"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml cck_basket_cell_hippocampus CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_cck_basket_cell_hippocampus/discovery_candidates_rank1.json",
+          "  emit-stage-b: skipped 1 existing edge(s): edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179",
+          "  emit-stage-b: wrote 4 edge(s) + 2 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 6,
+        "edges_skipped_taxtype_not_in_topk": 5,
+        "skipped_details": [
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0681",
+            "taxonomy_type": "CS20230722_CLUS_0681"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0651",
+            "taxonomy_type": "CS20230722_CLUS_0651"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0655",
+            "taxonomy_type": "CS20230722_CLUS_0655"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0705",
+            "taxonomy_type": "CS20230722_CLUS_0705"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0637",
+            "taxonomy_type": "CS20230722_CLUS_0637"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179",
+            "taxonomy_type": "CS20230722_SUPT_0179"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187",
+            "taxonomy_type": "CS20230722_SUPT_0187"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0196",
+            "taxonomy_type": "CS20230722_SUPT_0196"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0219",
+            "taxonomy_type": "CS20230722_SUPT_0219"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0189",
+            "taxonomy_type": "CS20230722_SUPT_0189"
+          },
+          {
+            "edge_id": "edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0198",
+            "taxonomy_type": "CS20230722_SUPT_0198"
+          }
+        ]
+      }
+    }
+  }
+}

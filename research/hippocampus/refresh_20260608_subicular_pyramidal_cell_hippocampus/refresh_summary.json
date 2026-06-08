@@ -1,0 +1,127 @@
+{
+  "graph": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml",
+  "node_id": "subicular_pyramidal_cell_hippocampus",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_0256",
+          "CS20230722_CLUS_0277",
+          "CS20230722_CLUS_0282",
+          "CS20230722_CLUS_0283",
+          "CS20230722_CLUS_0294"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml subicular_pyramidal_cell_hippocampus CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_subicular_pyramidal_cell_hippocampus/discovery_candidates_rank0.json",
+          "  emit-stage-b: wrote 5 edge(s) + 5 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 1,
+        "skipped_details": [
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_supt_0096",
+            "taxonomy_type": "CS20230722_SUPT_0096"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0256",
+            "taxonomy_type": "CS20230722_CLUS_0256"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0277",
+            "taxonomy_type": "CS20230722_CLUS_0277"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0282",
+            "taxonomy_type": "CS20230722_CLUS_0282"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0283",
+            "taxonomy_type": "CS20230722_CLUS_0283"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0294",
+            "taxonomy_type": "CS20230722_CLUS_0294"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_SUPT_0096",
+          "CS20230722_SUPT_0128",
+          "CS20230722_SUPT_0121",
+          "CS20230722_SUPT_1181",
+          "CS20230722_SUPT_0172"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml subicular_pyramidal_cell_hippocampus CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_subicular_pyramidal_cell_hippocampus/discovery_candidates_rank1.json",
+          "  emit-stage-b: wrote 5 edge(s) + 4 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 6,
+        "edges_skipped_taxtype_not_in_topk": 5,
+        "skipped_details": [
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0256",
+            "taxonomy_type": "CS20230722_CLUS_0256"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0277",
+            "taxonomy_type": "CS20230722_CLUS_0277"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0282",
+            "taxonomy_type": "CS20230722_CLUS_0282"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0283",
+            "taxonomy_type": "CS20230722_CLUS_0283"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0294",
+            "taxonomy_type": "CS20230722_CLUS_0294"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_supt_0096",
+            "taxonomy_type": "CS20230722_SUPT_0096"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0096",
+            "taxonomy_type": "CS20230722_SUPT_0096"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0128",
+            "taxonomy_type": "CS20230722_SUPT_0128"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0121",
+            "taxonomy_type": "CS20230722_SUPT_0121"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_1181",
+            "taxonomy_type": "CS20230722_SUPT_1181"
+          },
+          {
+            "edge_id": "edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0172",
+            "taxonomy_type": "CS20230722_SUPT_0172"
+          }
+        ]
+      }
+    }
+  }
+}
