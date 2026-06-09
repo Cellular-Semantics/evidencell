@@ -42,7 +42,7 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 ## Results
 
-One candidate atlas cluster was assessed; CS20230722_CLUS_0710 in SUPT_0199 (Lamp5 Gaba_1) is the primary mapping at LOW confidence, driven by strong Lamp5 marker consistency but limited by low BLA region fraction, multi-cluster ambiguity, and absent annotation-transfer evidence.
+One candidate atlas cluster was assessed; CS20230722_CLUS_0710 in SUPT_0199 (Lamp5 Gaba_1) is the primary mapping at MODERATE confidence, driven by strong Lamp5 marker consistency but limited by low BLA region fraction, multi-cluster ambiguity, and absent annotation-transfer evidence.
 
 ### Mapping candidates table
 
@@ -140,7 +140,7 @@ Note: 1 edge assessed; relationship type skos:broadMatch (1:n).
 
 ### Best candidate + caveats summary
 
-**Primary mapping:** Basolateral amygdala LAMP5-expressing interneuron → CS20230722_CLUS_0710 (Lamp5 Gaba_1) at LOW confidence. Key support: Lamp5 marker CONSISTENT at 99.8th pct of BLA GABAergic cohort; GABAergic NT concordant; cross-species literature confirms existence of mouse homolog. Key caveats: BLA region_fraction 0.02 (primate-enriched biology, sparse in mouse atlas); stub node with underdetermined classical type definition; four sibling SUPT_0199 clusters are indistinguishable on Lamp5 alone; no annotation-transfer evidence.
+**Primary mapping:** Basolateral amygdala LAMP5-expressing interneuron → CS20230722_CLUS_0710 (Lamp5 Gaba_1) at MODERATE confidence. Key support: Lamp5 marker CONSISTENT at 99.8th pct of BLA GABAergic cohort; GABAergic NT concordant; cross-species literature confirms existence of mouse homolog. Key caveats: BLA region_fraction 0.02 (primate-enriched biology, sparse in mouse atlas); stub node with underdetermined classical type definition; four sibling SUPT_0199 clusters are indistinguishable on Lamp5 alone; no annotation-transfer evidence.
 
 No Cell Ontology term currently assigned. The node notes indicate this is a candidate for CL contribution once characterisation of mouse BLA LAMP5+ interneurons is advanced beyond the current stub level.
 
@@ -189,8 +189,8 @@ No Cell Ontology term currently assigned. The node notes indicate this is a cand
 <!-- verdict-block-start: edge_bla_lamp5_interneuron_to_cs20230722_clus_0710 -->
 ```yaml
 verdict:
-  confidence: LOW
-  confidence_score: 0.25
+  confidence: MODERATE
+  confidence_score: 0.68
   rationale: >
     Lamp5 marker CONSISTENT at 99.8th pct BLA GABAergic cohort (EXPRESSION source;
     precomputed mean 8.78; tier 2; applied_score 2.0); NT type CONSISTENT (GABA).
@@ -201,6 +201,8 @@ verdict:
     biology sparse in mouse atlas. No ANNOTATION_TRANSFER evidence; classical node
     is a STUB with minimal available evidence on soma form, physiology, and
     species-specific properties.
+    Hochgerner 2023 GABA-46-Lamp5-Kit (n=172) maps to CS20230722_CLUS_0710 at F1=0.569 (cluster exact match) and SUPT_0199 Lamp5 Gaba_1 at F1=0.979 (supertype, SUPPORT). AT evidence resolves AT_ABSENT caveat.
+
   reconciliation_note: ""
   lit_to_lit_edges: []
   unresolved_questions:

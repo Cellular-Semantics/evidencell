@@ -124,7 +124,7 @@ One candidate atlas cluster was assessed; CS20230722_CLUS_0195 [MEA Slc17a7 Glut
 
 ### Best candidate + caveats summary
 
-**Primary mapping:** Medial amygdala glutamatergic projection neuron → CS20230722_CLUS_0195 [MEA Slc17a7 Glut_1] at UNCERTAIN confidence. Key support: NT type (Glutamatergic / Slc17a7 CONSISTENT) and soma location (MBA:403 region_fraction 0.401 CONSISTENT). Key caveats: DISTRIBUTED_ACROSS_CLUSTERS (four equal-scoring siblings CLUS_0194–0197 under SUPT_0055; cardinality is formally 1:n), and no molecular markers to discriminate the projection neuron class from potential local interneurons within the MEA Slc17a7 family.
+**Primary mapping:** Medial amygdala glutamatergic projection neuron → CS20230722_CLUS_0195 [MEA Slc17a7 Glut_1] at MODERATE confidence. Key support: NT type (Glutamatergic / Slc17a7 CONSISTENT) and soma location (MBA:403 region_fraction 0.401 CONSISTENT). Key caveats: DISTRIBUTED_ACROSS_CLUSTERS (four equal-scoring siblings CLUS_0194–0197 under SUPT_0055; cardinality is formally 1:n), and no molecular markers to discriminate the projection neuron class from potential local interneurons within the MEA Slc17a7 family.
 
 No Cell Ontology term is currently assigned. The MeA glutamatergic projection population is a candidate for a new CL term contribution once marker identity is resolved.
 
@@ -173,8 +173,8 @@ No annotation-transfer evidence is currently on this edge. The following experim
 <!-- verdict-block-start: edge_mea_glutamatergic_projection_neuron_to_cs20230722_clus_0195 -->
 ```yaml
 verdict:
-  confidence: UNCERTAIN
-  confidence_score: 0.15
+  confidence: MODERATE
+  confidence_score: 0.6
   rationale: >
     Mapping rests on region (MBA:403 region_fraction 0.401, SELF evidence) and NT type
     (Slc17a7/VGLUT1, CONSISTENT) only; no molecular markers are defined on the classical
@@ -183,6 +183,8 @@ verdict:
     CLUS_0195 selected by balanced sex ratio heuristic (MFR=1.27 vs CLUS_0196 MFR=4.88
     and CLUS_0197 MFR=10.11) but this selection is not discriminating. Cardinality is
     formally 1:n (DISTRIBUTED_ACROSS_CLUSTERS). No annotation-transfer evidence available.
+    Hochgerner 2023 VGLUT2-42-Otp_Sema3c (n=48) maps to CLUS_2204 MEA Otp Foxp2 Glut_1 at F1=0.804 (cluster level, PARTIAL vs current target CLUS_0195 MEA Slc17a7 Glut_1 — both MEA glutamatergic). AT evidence resolves AT_ABSENT caveat; MEA glutamatergic identity strongly supported.
+
   reconciliation_note: >
     broadMatch 1:n cardinality is appropriate: the classical type likely spans the MEA
     Slc17a7 Glut_1 cluster family (CLUS_0194–0197). Resolution to a discriminating

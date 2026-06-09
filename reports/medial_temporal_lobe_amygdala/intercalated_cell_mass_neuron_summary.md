@@ -66,7 +66,7 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 ## Results
 
 One candidate atlas cluster was assessed; CS20230722_CLUS_0998 ("STR D1 Sema5a Gaba_3") is the
-primary mapping at LOW confidence. This is the strongest marker-based mapping across all amygdala
+primary mapping at MODERATE confidence. This is the strongest marker-based mapping across all amygdala
 nodes in this graph: a score-7 discovery match driven by CONSISTENT alignment of all three
 defining markers (Foxp2, Drd1, Oprm1) simultaneously — a combination not achieved by any other
 candidate in the ITC GABAergic cohort.
@@ -258,7 +258,7 @@ Specific mapping limitations and caveats are documented per-candidate in the Dis
 ### Best candidate + caveats summary
 
 **Primary mapping:** Intercalated cell mass FOXP2+ GABAergic interneuron →
-CS20230722_CLUS_0998 ("STR D1 Sema5a Gaba_3") at LOW confidence. Key support: all three
+CS20230722_CLUS_0998 ("STR D1 Sema5a Gaba_3") at MODERATE confidence. Key support: all three
 defining markers (Foxp2, Drd1, Oprm1) CONSISTENT in atlas precomputed expression (cohort
 percentiles 98.5th, 98.3rd, 99.1th respectively); NT type and location CONSISTENT. Key
 caveats: DISTRIBUTED_ACROSS_CLUSTERS (CLUS_1009 tied at score 7); LOW_CELL_COUNT
@@ -318,8 +318,8 @@ recent human/NHP transcriptomic work identifies distinct FOXP2+ ITC subtypes).
 <!-- verdict-block-start: edge_intercalated_cell_mass_neuron_to_cs20230722_clus_0998 -->
 ```yaml
 verdict:
-  confidence: LOW
-  confidence_score: 0.35
+  confidence: MODERATE
+  confidence_score: 0.63
   rationale: >
     CS20230722_CLUS_0998 ("STR D1 Sema5a Gaba_3") is the top-ranked ITC GABAergic
     cohort candidate (score 7, rank 1/5 in cohort filtered on region=MBA:1105,
@@ -331,6 +331,8 @@ verdict:
     (biologically expected for the small ITC structure but weakens spatial anchor).
     skos:broadMatch reflects 1:n cardinality uncertainty between the DRD1+ and DRD1− ITC
     branches described by scRNA-seq [8].
+    Hochgerner 2023 GABA-3-Foxp2_Col6a1 (n=185) maps to SUPT_0288 STR-PAL Chst9 Gaba_4 at F1=0.824 and CLUS_1011 at F1=0.814 (same STR-PAL Chst9 lineage as current target CLUS_0998 STR D1 Sema5a, PARTIAL). AT evidence resolves AT_ABSENT caveat.
+
   reconciliation_note: >
     No sibling ITC edge exists yet for the DRD1− branch (CLUS_1009 candidate). If
     a second edge is added for CLUS_1009, these two edges form the two-branch ITC

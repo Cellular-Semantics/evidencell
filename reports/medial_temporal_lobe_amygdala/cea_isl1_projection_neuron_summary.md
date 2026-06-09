@@ -43,7 +43,7 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 ## Results
 
-One candidate atlas cluster was assessed; CS20230722_CLUS_1385 (CEA-BST Ebf1 Pdyn Gaba_1) is the primary mapping at LOW confidence.
+One candidate atlas cluster was assessed; CS20230722_CLUS_1385 (CEA-BST Ebf1 Pdyn Gaba_1) is the primary mapping at MODERATE confidence.
 
 ### Mapping candidates overview
 
@@ -141,7 +141,7 @@ Note: one edge assessed; skos:broadMatch 1:n relationship. Five CEA-BST rank0 cl
 
 ### Best candidate + caveats
 
-**Primary mapping:** Central amygdala ISL1-expressing long-range projection neuron → CS20230722_CLUS_1385 at LOW confidence. Key support: Isl1 precomputed expression at 96.4th percentile of CeA GABAergic cohort (CONSISTENT); CeA region_fraction 0.489 (CONSISTENT); CEA-BST label confirms CeA lineage. Key caveats: DISTRIBUTED_ACROSS_CLUSTERS — five CEA-BST rank0 clusters score equivalently on Isl1 alone, and no AT evidence is available to resolve 1:n cardinality.
+**Primary mapping:** Central amygdala ISL1-expressing long-range projection neuron → CS20230722_CLUS_1385 at MODERATE confidence. Key support: Isl1 precomputed expression at 96.4th percentile of CeA GABAergic cohort (CONSISTENT); CeA region_fraction 0.489 (CONSISTENT); CEA-BST label confirms CeA lineage. Key caveats: DISTRIBUTED_ACROSS_CLUSTERS — five CEA-BST rank0 clusters score equivalently on Isl1 alone, and no AT evidence is available to resolve 1:n cardinality.
 
 No Cell Ontology term currently assigned. The ISL1-expressing CeA projection class is a recently characterised type (O'Leary et al. 2022) not yet represented in CL; it is a candidate for CL contribution.
 
@@ -184,8 +184,8 @@ No Cell Ontology term currently assigned. The ISL1-expressing CeA projection cla
 <!-- verdict-block-start: edge_cea_isl1_projection_neuron_to_cs20230722_clus_1385 -->
 ```yaml
 verdict:
-  confidence: LOW
-  confidence_score: 0.25
+  confidence: MODERATE
+  confidence_score: 0.62
   rationale: >
     `marker_Isl1` CONSISTENT (precomputed mean 6.62, CeA GABAergic cohort 96.4th pct;
     tier 2 reliable; EXPRESSION source). `location_soma` CONSISTENT: region_fraction 0.489
@@ -194,6 +194,8 @@ verdict:
     CEA-BST rank0 clusters (CLUS_1316/1385/1386/1395/1397) score identically on Isl1 +
     region + NT criteria (discovery_score = 3, next_best_score = 3, cohort_size = 5) —
     1:n cardinality is unresolved without AT evidence.
+    Hochgerner 2023 GABA-18-Isl1-Tac1 (n=27) maps to SUPT_0385 CEA-BST Ebf1 Pdyn Gaba_2 at F1=0.880 and CLUS_1387 at F1=0.865 (same subclass 082 as current target CLUS_1385, PARTIAL). AT evidence resolves AT_ABSENT caveat.
+
   unresolved_questions:
     - "Which CEA-BST Ebf1 Pdyn cluster (CLUS_1385 vs 1386 vs 1395 vs 1397 vs 1316) best represents the ISL1 long-range projection neuron? Five rank0 clusters score identically on Isl1 alone."
     - "Is ISL1 expression maintained in adult CeA neurons, or does the atlas capture a developmental remnant of LGEv neurogenesis?"

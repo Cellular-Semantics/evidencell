@@ -42,7 +42,7 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 ## Results
 
-One candidate atlas cluster was assessed; CS20230722_CLUS_0765 is the primary mapping at LOW confidence. The candidate is tied with CLUS_0774 in discovery score; a second parallel edge is required before confidence can be elevated.
+One candidate atlas cluster was assessed; CS20230722_CLUS_0765 is the primary mapping at MODERATE confidence. The candidate is tied with CLUS_0774 in discovery score; a second parallel edge is required before confidence can be elevated.
 
 ### Mapping candidates table
 
@@ -165,7 +165,7 @@ Note: `n_cells` is null for this edge — the taxonomy DB pre-dates the n_cells 
 
 ### Best candidate + caveats summary
 
-**Primary mapping:** Basolateral amygdala somatostatin-positive dendrite-targeting interneuron → CS20230722_CLUS_0765 at LOW confidence. Key support: LiteratureEvidence (EM dendrite-targeting morphology [4]; BLA SST+/Calb1+ class characterisation [1]) and CONSISTENT precomputed expression of both Calb1 (mean 9.57; cohort 96.5th pct) and Sst (mean 11.92; cohort 96.7th pct). Key caveats: TIED_CANDIDATES (CLUS_0765 and CLUS_0774 both score 5/5 in the 5-member regional GABAergic cohort; no tie-breaking evidence available); MORPHOLOGY_NOT_RESOLVABLE (dendrite-targeting cannot be confirmed from transcriptomics alone); AT_ABSENT (no annotation-transfer evidence).
+**Primary mapping:** Basolateral amygdala somatostatin-positive dendrite-targeting interneuron → CS20230722_CLUS_0765 at MODERATE confidence. Key support: LiteratureEvidence (EM dendrite-targeting morphology [4]; BLA SST+/Calb1+ class characterisation [1]) and CONSISTENT precomputed expression of both Calb1 (mean 9.57; cohort 96.5th pct) and Sst (mean 11.92; cohort 96.7th pct). Key caveats: TIED_CANDIDATES (CLUS_0765 and CLUS_0774 both score 5/5 in the 5-member regional GABAergic cohort; no tie-breaking evidence available); MORPHOLOGY_NOT_RESOLVABLE (dendrite-targeting cannot be confirmed from transcriptomics alone); AT_ABSENT (no annotation-transfer evidence).
 
 No Cell Ontology term currently assigned. This type represents a candidate for CL contribution as a BLA-specific somatostatin/calbindin dendrite-targeting interneuron distinct from hippocampal or cortical Sst+ counterparts.
 
@@ -222,8 +222,8 @@ No Cell Ontology term currently assigned. This type represents a candidate for C
 <!-- verdict-block-start: edge_bla_som_dendrite_targeting_interneuron_to_cs20230722_clus_0765 -->
 ```yaml
 verdict:
-  confidence: LOW
-  confidence_score: 0.32
+  confidence: MODERATE
+  confidence_score: 0.62
   rationale: >
     `marker_Calb1` CONSISTENT (precomputed mean 9.57; cohort 96.5th pct) and
     `neuropeptide_Sst` CONSISTENT (precomputed mean 11.92; cohort 96.7th pct) in
@@ -233,6 +233,8 @@ verdict:
     dendrite-targeting axonal pattern is not resolvable from transcriptomics.
     2 of 2 markers CONSISTENT; broadMatch reflects unresolved 1:n ambiguity
     with CLUS_0774.
+    Hochgerner 2023 GABA-38-Sst-Tmtc4 (n=53) maps to SUPT_0215 Sst Gaba_2 at F1=0.762 (supertype level, SUPPORT). Neighbouring cluster CLUS_0764 F1=0.633. AT evidence resolves AT_ABSENT caveat.
+
   reconciliation_note: >
     TIED_CANDIDATES: CLUS_0765 and CLUS_0774 both score 5 in the 5-member
     GABAergic/MBA:295 cohort. A parallel edge to CLUS_0774 is required before

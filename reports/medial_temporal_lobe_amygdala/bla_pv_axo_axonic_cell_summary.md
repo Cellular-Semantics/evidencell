@@ -56,7 +56,7 @@ Cell Ontology mapping: CL:4023036 [[CL:4023036](https://www.ebi.ac.uk/ols4/ontol
 ## Results
 
 One candidate atlas cluster was assessed; CS20230722_CLUS_0733 ("Pvalb chandelier
-Gaba_1") is the primary mapping at LOW confidence, supported by literature evidence
+Gaba_1") is the primary mapping at MODERATE confidence, supported by literature evidence
 for PVALB+ AIS-targeting identity and a direct atlas cluster label match, but lacking
 annotation-transfer confirmation.
 
@@ -237,7 +237,7 @@ documented per-candidate in the Discussion section.
 ### Best candidate + caveats summary
 
 **Primary mapping:** Basolateral amygdala parvalbumin-positive axo-axonic (chandelier)
-cell → CS20230722_CLUS_0733 at LOW confidence. Key support: explicit "chandelier"
+cell → CS20230722_CLUS_0733 at MODERATE confidence. Key support: explicit "chandelier"
 cluster label in WMBv1, high Pvalb expression (mean 6.38, 97.8th pct in BLA GABAergic
 cohort), and two independent literature sources confirming AIS-targeting identity in
 mouse and rat amygdala. Key caveats: no annotation-transfer evidence (AT_ABSENT),
@@ -302,8 +302,8 @@ is the closest ancestor. Auto-proposed by asta-report-ingest; requires expert re
 <!-- verdict-block-start: edge_bla_pv_axo_axonic_cell_to_cs20230722_clus_0733 -->
 ```yaml
 verdict:
-  confidence: LOW
-  confidence_score: 0.35
+  confidence: MODERATE
+  confidence_score: 0.72
   rationale: >
     CS20230722_CLUS_0733 ("Pvalb chandelier Gaba_1") is the strongest BLA GABAergic candidate
     by explicit atlas label correspondence (chandelier designation in both cluster and parent
@@ -314,6 +314,8 @@ verdict:
     Location APPROXIMATE: region_fraction 0.042 in MBA:295 — cluster is not BLA-restricted
     (dominant cortical subplate distribution). AT_ABSENT: no annotation-transfer evidence; confidence
     capped at closeMatch ceiling. Unexpected Cck co-expression (mean 7.68) is unresolved.
+    Hochgerner 2023 (E-MTAB-12096) GABA-44-Pthlh-Pvalb (n=92) maps to CS20230722_CLUS_0733 at F1=0.994 (cluster level, SUPPORT). AT evidence resolves AT_ABSENT caveat.
+
   reconciliation_note: >
     No pool candidates identified. Predicate skos:closeMatch reflects AIS-targeting label
     match with documented location scatter and AT_ABSENT caveat per predicate rubric.

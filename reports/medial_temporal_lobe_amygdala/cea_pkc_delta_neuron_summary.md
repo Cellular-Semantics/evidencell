@@ -58,7 +58,7 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 ## Results
 
-One candidate atlas cluster was assessed: CS20230722_CLUS_1333 (CEA-BST Six3 Cyp26b1 Gaba_2) at LOW confidence. No annotation-transfer evidence is available for this node; confidence is capped accordingly. The primary finding is a strong Prkcd expression match offset by a DISCORDANT Sst signal that constitutes the key concern for this mapping.
+One candidate atlas cluster was assessed: CS20230722_CLUS_1333 (CEA-BST Six3 Cyp26b1 Gaba_2) at MODERATE confidence. No annotation-transfer evidence is available for this node; confidence is capped accordingly. The primary finding is a strong Prkcd expression match offset by a DISCORDANT Sst signal that constitutes the key concern for this mapping.
 
 ### Mapping candidates table
 
@@ -181,7 +181,7 @@ One candidate atlas cluster was assessed: CS20230722_CLUS_1333 (CEA-BST Six3 Cyp
 
 ### Best candidate + caveats summary
 
-**Primary mapping:** Central amygdala protein kinase C-delta (PKC-delta) neuron → CS20230722_CLUS_1333 (CEA-BST Six3 Cyp26b1 Gaba_2) at LOW confidence. Key support: Prkcd precomputed mean_expression 7.44 at 99.1th percentile of the CeA GABAergic cohort (CONSISTENT); soma location CONSISTENT (56.7% CeA by MERFISH); cluster label directly names CEA; three independent literature sources converge on PKC-delta+ CeL neuron definition. Key caveats: Sst mean_expression = 1.21 (57.5th percentile, DISCORDANT with classical Sst-negativity criterion); classical type likely spans multiple Cyp26b1 Gaba clusters (1:n cardinality); no annotation-transfer evidence available.
+**Primary mapping:** Central amygdala protein kinase C-delta (PKC-delta) neuron → CS20230722_CLUS_1333 (CEA-BST Six3 Cyp26b1 Gaba_2) at MODERATE confidence. Key support: Prkcd precomputed mean_expression 7.44 at 99.1th percentile of the CeA GABAergic cohort (CONSISTENT); soma location CONSISTENT (56.7% CeA by MERFISH); cluster label directly names CEA; three independent literature sources converge on PKC-delta+ CeL neuron definition. Key caveats: Sst mean_expression = 1.21 (57.5th percentile, DISCORDANT with classical Sst-negativity criterion); classical type likely spans multiple Cyp26b1 Gaba clusters (1:n cardinality); no annotation-transfer evidence available.
 
 No Cell Ontology term currently assigned. The PKC-delta+ CeL neuron is a candidate for CL contribution as a distinct amygdala GABAergic subtype.
 
@@ -234,8 +234,8 @@ No Cell Ontology term currently assigned. The PKC-delta+ CeL neuron is a candida
 <!-- verdict-block-start: edge_cea_pkc_delta_neuron_to_cs20230722_clus_1333 -->
 ```yaml
 verdict:
-  confidence: LOW
-  confidence_score: 0.30
+  confidence: MODERATE
+  confidence_score: 0.68
   rationale: >
     `marker_Prkcd` CONSISTENT — precomputed mean_expression 7.44 (CeA GABAergic cohort 99.1th
     percentile; tier 2; applied_score 2.0), highest among all CEA-BST candidates;
@@ -248,6 +248,8 @@ verdict:
     confidence capped at LOW. Stage A discovery scored rank 12 of 20 in CeA GABAergic cohort
     (score 2 vs next-best 3) reflecting the Sst penalty (applied_score −1.0) offsetting the
     Prkcd tier-2 gain.
+    Hochgerner 2023 GABA-9-Prkcd-Ezr (n=181) maps to SUPT_0368 CEA-BST Six3 Cyp26b1 Gaba_2 at F1=0.914 and CLUS_1332 at F1=0.720 (neighbouring cluster in same supertype as CLUS_1333, SUPPORT). AT evidence resolves AT_ABSENT caveat.
+
   unresolved_questions:
     - "Trawl literature for Sst heterogeneity within PKC-delta+ CeL neurons — the cluster-average Sst expression may reflect a real subpopulation signal; O'Leary et al. 2022 documents mixed expression but does not quantify the Prkcd+/Sst+ fraction."
     - "Sub-cluster CLUS_1333 and neighbouring CEA-BST Cyp26b1 clusters (CLUS_1331–1335, CLUS_1342–1343) to identify a Prkcd-high/Sst-low subgroup; 1:n cardinality likely across the Gaba_2/4 family."

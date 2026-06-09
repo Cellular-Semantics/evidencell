@@ -156,7 +156,7 @@ This edge nominates CS20230722_CLUS_0628 as a representative member of the Vip G
 
 ### Best candidate + caveats summary
 
-**Primary mapping:** Basolateral amygdala VIP/calretinin-expressing interneuron-selective interneuron → CS20230722_CLUS_0628 (representative of five equal Vip Gaba clusters) at LOW confidence. Key support: Calb2 CONSISTENT (98.3rd pct in BLA GABAergic cohort) and Vip CONSISTENT (96.9th pct); two independent primary literature sources confirm the IS interneuron class. Key caveats: broadMatch 1:n — all five Vip Gaba clusters score equally with no AT evidence to resolve cardinality; Cck expression is APPROXIMATE (tier 1 only in CLUS_0628), raising the possibility that a CCK-dominant IS subset aligns better to the Sncg Gaba family.
+**Primary mapping:** Basolateral amygdala VIP/calretinin-expressing interneuron-selective interneuron → CS20230722_CLUS_0628 (representative of five equal Vip Gaba clusters) at MODERATE confidence. Key support: Calb2 CONSISTENT (98.3rd pct in BLA GABAergic cohort) and Vip CONSISTENT (96.9th pct); two independent primary literature sources confirm the IS interneuron class. Key caveats: broadMatch 1:n — all five Vip Gaba clusters score equally with no AT evidence to resolve cardinality; Cck expression is APPROXIMATE (tier 1 only in CLUS_0628), raising the possibility that a CCK-dominant IS subset aligns better to the Sncg Gaba family.
 
 No Cell Ontology term currently assigned. This type is a strong candidate for a new CL term describing the calretinin+VIP+CCK IS interneuron of the BLA.
 
@@ -204,8 +204,8 @@ No Cell Ontology term currently assigned. This type is a strong candidate for a 
 <!-- verdict-block-start: edge_bla_vip_cr_interneuron_selective_interneuron_to_cs20230722_clus_0628 -->
 ```yaml
 verdict:
-  confidence: LOW
-  confidence_score: 0.30
+  confidence: MODERATE
+  confidence_score: 0.6
   rationale: >
     skos:broadMatch 1:n over five Vip Gaba clusters; all five score equally in a 5-member
     BLA GABAergic cohort (score 6, next_best_score 6). CS20230722_CLUS_0628 is
@@ -213,6 +213,8 @@ verdict:
     CONSISTENT (96.9th pct, tier 2) anchor the Vip Gaba family assignment;
     neuropeptide_Cck APPROXIMATE (tier 1, 41.7th pct). No ANNOTATION_TRANSFER evidence
     available; confidence capped at LOW per predicate rubric step iv.
+    Hochgerner 2023 GABA-51-Vip-Crh (n=78) maps to CS20230722_CLUS_0628 at F1=0.542 (cluster level, SUPPORT). Subclass Vip Gaba F1=0.652. AT evidence resolves AT_ABSENT caveat.
+
   reconciliation_note: ""
   lit_to_lit_edges: []
   unresolved_questions:
