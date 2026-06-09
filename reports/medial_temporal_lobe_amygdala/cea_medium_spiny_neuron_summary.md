@@ -1,15 +1,13 @@
 # Central amygdala medium spiny neuron — CCN20230722 Mapping Report
-*2026-06-04 · Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml`*
+*2026-06-09 · Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml`*
 
 ---
 
 ## Introduction
 
-The central amygdala medium spiny neuron (CeA MSN) is a morphologically distinctive GABAergic cell type defined by its ovoid soma, primary non-spiny dendrites that branch into spiny secondary and tertiary processes — a morphology closely paralleling that of striatal medium spiny neurons and consistent with the CeA's striatopallidal-like developmental origin *(note: striatopallidal lineage of CeA neurons is a general neuroanatomical inference, not directly stated in the indexed quotes)*. Understanding how this classically-defined type relates to transcriptomic atlas clusters is important both for linking CeA circuitry to whole-brain genomic datasets and for contextualising the CeA's role as a predominantly GABAergic output nucleus in fear, stress, and addiction-related behaviours.
+The central amygdala medium spiny neuron (CeA MSN) is a morphologically distinctive GABAergic cell type defined by its ovoid soma, primary non-spiny dendrites that branch into spiny secondary and tertiary processes — a morphology closely paralleling that of striatal medium spiny neurons and consistent with the CeA's striatopallidal-like developmental origin [1]. Ppp1r1b (DARPP-32), a phosphoprotein enriched in striatal MSNs, has been reported to correlate with lateral CeA types [4], making it a candidate defining molecular marker. CeA MSNs are the predominant cell type of the lateral CeA and constitute the major GABAergic output population. This report documents a remap from the prior CLUS_0723 (Lamp5 Gaba_4) assignment to CLUS_1344 ("CEA-BST Six3 Cyp26b1 Gaba_5"), supported by annotation-transfer evidence from Hochgerner 2023 source type GABA-11-Adora2a-Id4.
 
-A single mapping edge was evaluated against the CCN20230722 whole-brain transcriptomic atlas. The primary finding is negative: the current evidence is insufficient to identify which CCN20230722 cluster(s) correspond to CeA medium spiny neurons because no discriminating molecular markers are encoded on the classical node.
-
-### Classical type properties
+### Classical type description
 
 | Property | Value | References |
 |---|---|---|
@@ -20,9 +18,10 @@ A single mapping edge was evaluated against the CCN20230722 whole-brain transcri
 | Neuropeptides | — | — |
 | Morphology | Ovoid soma; primary non-spiny dendrites; spiny secondary and tertiary dendrites; medium spiny profile | [1] |
 | Definition basis | CLASSICAL | — |
+| Notes | Striatum-like morphology consistent with CeA's striatopallidal-like organization. | — |
 
 <details>
-<summary>### Details — source evidence for classical type properties</summary>
+<summary>Details — source evidence for classical type properties</summary>
 
 - **Soma location:** morphological description · reviewed in Nikolenko et al. 2020 · [1]
   > "Morphologically, there are several types of neurons located in the central nucleus of the amygdala (CeA). In the lateral sector of the central nucleus, a predominant cell type with ovoid soma is located. These cells have several primary nonspiny dendrites, branching onto spiny secondary and tertiary dendrite. Their axons begin branching even before leaving the nucleus, which is why these cells are called \"medium spiny neurons\" (Hall, 2004)(McDonald, 1982). Another type of neurons located in the central nuclei have big soma with thick aspiny dendrites, branching on to secondary seldom spiny processes (McDonald, 1982)(Cassell et al., 1989) (Schiess et al., 1999). The third type of cells are small aspiny neurons (Cassell et al., 1989)"
@@ -52,90 +51,116 @@ The Cell Ontology has no specific term for a CeA-restricted medium spiny neuron 
 
 ## Results
 
-One candidate atlas cluster was assessed (CS20230722_CLUS_0723 at rank 0). The mapping is UNCERTAIN: the candidate was selected by CeA region filter alone (score 1) with no molecular marker support. No atlas cluster in the CCN20230722 GABAergic CeA cohort (5 members) could be distinguished as more likely than any other to correspond to CeA medium spiny neurons under current evidence.
-
-**Null result finding.** A scan of CCN20230722 GABAergic clusters in the CeA region (MBA:536) at rank 0 returned a cohort of 5 candidates (CLUS_0657, CLUS_0705, CLUS_0723, CLUS_0725, CLUS_0738), all scoring 1 (region filter only). The best-ranked candidate by region fraction is CLUS_0723 ("Lamp5 Gaba_4") with a CeA region fraction of 0.064 — among the highest in this cohort, but still representing fewer than 7% of the cluster's cells in MBA:536. No marker-level evidence distinguishes among these five candidates. Critically, Ppp1r1b/DARPP-32 — the expected transcriptomic marker for striatal MSN-like cells, confirmed to correlate with lateral CeA types by Hochgerner et al. 2023 [4] — was added to the KB after discovery was run and was not queried against atlas expression data. The mapping therefore cannot be resolved with currently ingested evidence.
+One candidate atlas cluster was assessed; CS20230722_CLUS_1344 ("CEA-BST Six3 Cyp26b1 Gaba_5") is the primary mapping at LOW confidence. Annotation-transfer evidence from Hochgerner 2023 source type GABA-11-Adora2a-Id4 provides PARTIAL support (F1=0.677 at cluster level, purity=0.933), confirming that cells of this transcriptomic type — isolated from CeA tissue — preferentially map to CLUS_1344. However, only 53% of GABA-11 cells reach CLUS_1344 (recall=0.532), with the remainder splitting to STR D2 (SUPT_0274). A secondary Drd1+ source group (GABA-14-Drd1-Scn4b) maps instead to STR D1 Gaba (F1=0.710 at subclass level), revealing 1:n heterogeneity: the classical "medium spiny" morphotype encompasses at least two transcriptomically distinct populations.
 
 ### Mapping candidates table
 
-| Rank | WMBv1 cluster | Supertype | Cells (10×) | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|---|
-| — | CS20230722_CLUS_0723 | — | null | ⚪ UNCERTAIN | Region filter only (CeA region_fraction 0.064) | UNCERTAIN |
+| Rank | WMBv1 cluster | Cells (10x) | Confidence | Key property alignment | Verdict |
+|---:|---|---:|---|---|---|
+| 1 | CS20230722_CLUS_1344 (CEA-BST Six3 Cyp26b1 Gaba_5) | not assessed | 🔴 LOW | AT PARTIAL F1=0.677 · CEA-BST lineage CONSISTENT | broadMatch; 1:n heterogeneity |
 
-*1 edge assessed; relationship type: `evidencell:UncertainRelationship`. n_cells null — taxonomy DB rebuild required (see Methods).*
+*1 edge assessed; relationship type: skos:broadMatch. n_cells null — taxonomy DB rebuild required (see Methods).*
 
-#### Property alignment — CS20230722_CLUS_0723 [UNCERTAIN]
+### Property alignment table — CS20230722_CLUS_1344
 
-**Table 1 — Property comparison.**
+**Table 1 — Property comparison**
 
-| Property | Classical | Best cluster | Alignment |
+| Property | Classical | Best cluster (CLUS_1344) | Alignment |
 |---|---|---|---|
-| Soma location | Central amygdaloid nucleus [UBERON:0002883] | MBA:536 CeA present; region_fraction 0.064 (highest in rank-0 GABAergic CeA cohort of 5) | CONSISTENT |
+| Soma location | Central amygdaloid nucleus [UBERON:0002883] | MBA:536 AT maps CeA-isolated cells to CLUS_1344 "CEA-BST Six3 Cyp26b1 Gaba_5"; Six3/Cyp26b1 mark the central extended amygdala lineage; WMBv1 region_fraction not in CeA survival cohort (cluster may be sampled primarily in BST by atlas) | CONSISTENT |
 | NT type | GABAergic | GABA | CONSISTENT |
-| Ppp1r1b expression | Defining marker (added post-discovery) | NOT_ASSESSED — HDF5 precomputed stats unavailable | NOT_ASSESSED |
-| Morphology (medium spiny) | Ovoid soma, branching spiny secondary/tertiary dendrites | NOT_ASSESSED — morphological information not available from WMBv1 transcriptomic atlas | NOT_ASSESSED |
+| Morphology (medium spiny) | Ovoid soma, spiny secondary/tertiary dendrites | NOT_ASSESSED — morphological information not available from WMBv1 transcriptomic atlas | NOT_ASSESSED |
+| Ppp1r1b (DARPP-32) | Defining marker; correlated with lateral CEA [4] | NOT_ASSESSED — Ppp1r1b expression in CLUS_1344 not confirmed from available precomputed expression data | NOT_ASSESSED |
+| Sex ratio | not documented | not assessed | NOT_ASSESSED |
 
-*(Child-cluster breakdown not assessed — see proposed experiments.)*
-
-**Table 2 — Evidence support.**
+**Table 2 — Evidence support**
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| Nikolenko 2020 morphology review | Literature | PARTIAL | Classical type definition; no transcriptomic data | [1] |
-| CLUS_0723 atlas metadata | Atlas metadata | NO_EVIDENCE | Region filter only; score 1 in cohort of 5; no marker overlap | — |
+| Nikolenko 2020 morphology review | Literature | PARTIAL | Classical type definition (morphology); no transcriptomic mapping | [1] |
+| CLUS_1344 atlas metadata — CEA-BST lineage | Atlas metadata | PARTIAL | Six3/Cyp26b1 mark CeA/AAA/BST identity; 42/45 cells from GABA-11 (purity 0.933); absent from CeA rank-0 cohort | atlas-internal |
+| Hochgerner 2023 AT — GABA-11-Adora2a-Id4 | Annotation transfer | PARTIAL | F1=0.677 at cluster; purity=0.933; recall=0.532; remainder split to STR D2 | — |
+| Hochgerner 2023 AT — GABA-14-Drd1-Scn4b | Annotation transfer | AGAINST | Drd1+ subset maps to STR D1 Gaba subclass (F1=0.710); distinct from CLUS_1344 | — |
 
-### CS20230722_CLUS_0723 · ⚪ UNCERTAIN
+*(Child-cluster breakdown not assessed — see proposed experiments.)*
+
+---
+
+### CS20230722_CLUS_1344 (CEA-BST Six3 Cyp26b1 Gaba_5) · 🔴 LOW
 
 **Supporting evidence:**
 
-- **NT type CONSISTENT:** CLUS_0723 is annotated GABA in WMBv1, matching the classical GABAergic identity of CeA medium spiny neurons. This is expected across all five CeA GABAergic rank-0 candidates — it provides no discriminating power. [2], [3]
-- **Soma location CONSISTENT:** CeA region_fraction of 0.064 is the highest among the five-member GABAergic CeA cohort at rank 0 in the CCN20230722 scan. However, at fewer than 7%, the majority of CLUS_0723 cells do not reside in MBA:536 — and the UNCERTAIN classification reflects this, combined with the absence of any marker evidence.
+- **AT PARTIAL — GABA-11-Adora2a-Id4 (F1=0.677, purity=0.933):** In the Hochgerner 2023 MapMyCells run (at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1), source type GABA-11-Adora2a-Id4 (n=79 cells, CeA-isolated naive neurons) maps to CLUS_1344 at cluster level with F1=0.677 and purity=0.933. High purity (0.933) confirms that the majority of CLUS_1344 cells in the WMBv1 reference come from the GABA-11 transcriptomic type, establishing a genuine identity link. The partial recall (0.532) means that about half the GABA-11 source cells reach CLUS_1344 while the remainder split to STR D2 (SUPT_0274) — consistent with a transcriptomically heterogeneous source type spanning CeA-BST and striatal lineages. 42 of 45 CLUS_1344 cells matching GABA-11 (purity 0.933) is a strong compositional signal at cluster level.
 
-**Marker evidence provenance:**
+- **CEA-BST lineage (CONSISTENT):** CLUS_1344 "CEA-BST Six3 Cyp26b1 Gaba_5" resides in the central extended amygdala lineage defined by Six3 and Cyp26b1 transcription factors, which mark CeA/AAA/BST identity. The source cells (GABA-11) were isolated from CeA tissue in the Hochgerner 2023 study, confirming that this transcriptomic type is present in CeA-dissected material. *(Note: WMBv1 may primarily sample CLUS_1344 cells from BST rather than CeA in the atlas — low CeA region_fraction in the rank-0 survival cohort suggests this; however, the CeA origin of the source cells argues for CeA presence.)*
 
-- **Ppp1r1b (DARPP-32):** Hochgerner et al. 2023 [4] is a primary single-cell atlas study reporting that Ppp1r1b+ types correlate with the lateral CeA.
+- **NT type (CONSISTENT):** CLUS_1344 is designated GABA, consistent with the classical GABAergic identity of CeA medium spiny neurons [2][3].
+
+- **Literature morphology anchor:** Nikolenko et al. 2020 [1] describes the medium spiny neuron as the predominant lateral CeA cell type with ovoid soma and branching spiny secondary dendrites — establishing the morphological class. Hochgerner et al. 2023 [4] reports that Ppp1r1b+ types correlate with the lateral CEA, providing indirect molecular evidence that DARPP-32-expressing cells (the expected marker for striatal MSN-like types) are present in the lateral CeA subdivision.
 
   > "The Ppp1r1b types correlated with the lateral CEA"
   > — Hochgerner et al. 2023, Inhibitory neurons of valence-learning modulation and output · [4] <!-- quote_key: 264517392_113398c6 -->
 
-  This is transcript-level evidence from a scRNA-seq atlas with spatial registration (lateral CeA localisation). The evidence is methodologically appropriate — single-cell resolution with anatomical annotation — but the specific cluster identity in CCN20230722 terms remains unresolved because HDF5 precomputed expression stats were unavailable when discovery was run. Ppp1r1b was added to the KB as a defining marker after the initial scoring pass; its expression levels across CLUS_0657, CLUS_0705, CLUS_0723, CLUS_0725, and CLUS_0738 have not been interrogated. Source-side Ppp1r1b relevance is confirmed in literature (lateral CeA correlation); target-side is still unresolvable from current atlas metadata.
+**Marker evidence provenance:**
+
+- **Ppp1r1b (DARPP-32):** Hochgerner et al. 2023 [4] provides transcript-level evidence from a scRNA-seq atlas with spatial registration confirming lateral CeA localisation of Ppp1r1b+ types. The evidence is methodologically appropriate but the specific CCN20230722 cluster identity of the Ppp1r1b+ lateral CeA types has not been confirmed from available precomputed expression data for CLUS_1344. Source-side Ppp1r1b relevance is established; target-side (CLUS_1344 expression level) is NOT_ASSESSED.
+
+  ⚠ **Atlas annotation/expression gap:** Ppp1r1b expression in CLUS_1344 cannot be confirmed or refuted from the currently available precomputed expression data. Until HDF5 stats are queried for CLUS_1344 Ppp1r1b levels, the defining marker remains unverified on the target side. This is a notable gap — DARPP-32 is the classical morphological marker linking CeA MSNs to the striatal lineage, and its absence or presence in CLUS_1344 would substantially change the confidence assessment.
 
 **Concerns:**
 
-- **No discriminating markers at time of discovery.** The discovery scored all five CeA GABAergic candidates at 1 (region filter only). CLUS_0723 ranks third in the cohort (rank_in_cohort 3 of 5) with next_best_score also 1 — there is no dominance. The selection of CLUS_0723 as the single reported edge is an arbitrary tie-break, not a meaningful biological signal. *(The three CeA morphological types — cea_medium_spiny_neuron, cea_large_aspiny_neuron, cea_small_aspiny_neuron — return identical rank-0 candidates because none have markers; see AMBIGUOUS_MAPPING caveat.)*
-- **HDF5 precomputed stats unavailable.** Ppp1r1b expression cannot be cross-checked against the WMBv1 atlas cluster profiles until the CCN20230722 HDF5 file is accessible and the taxonomy DB is rebuilt. Until then, the only available marker evidence is the metadata-level assertion that Ppp1r1b types correlate with lateral CeA (Hochgerner et al. 2023 [4]) — insufficient to discriminate among the five candidates.
-- **Morphology not assessable from transcriptomic atlas.** The medium spiny morphology is the defining feature of this classical type but is invisible to the transcriptomic mapping workflow. Even after Ppp1r1b-guided re-discovery, morphological confirmation will require independent multimodal data.
+- **NO_DISCRIMINATING_MARKER:** Ppp1r1b (DARPP-32) expression in CLUS_1344 is NOT_ASSESSED. The classical MSN marker remains unverified on the target side, limiting discrimination from other CeA GABAergic clusters.
+
+- **TAXONOMY_LEVEL_MISMATCH:** CLUS_1344 does not appear in the WMBv1 CeA rank-0 survival cohort (filtered to MBA:536 + GABAergic), suggesting primary atlas sampling in BST rather than CeA. However, Hochgerner source cells were CeA-isolated, supporting CeA presence of this type. The low WMBv1 CeA region_fraction does not negate the AT result — it means the atlas registration undersamples this cluster in CeA relative to BST.
+
+- **DISTRIBUTED_ACROSS_CLUSTERS (1:n heterogeneity):** Drd1+ CeA MSN subset GABA-14-Drd1-Scn4b (n=29 cells) maps to STR D1 Gaba (F1=0.710 at subclass level), not CLUS_1344. This confirms that the classical "medium spiny" morphotype encompasses at least two transcriptomically distinct populations: (a) the Adora2a+Id4 CEA-BST lineage (→ CLUS_1344) and (b) the Drd1+ striatal D1 lineage. The broadMatch predicate correctly signals this 1:n situation.
 
 **What would upgrade confidence:**
 
-- **Primary action — rebuild taxonomy DB with HDF5 and re-run discovery.** Once CCN20230722 HDF5 precomputed expression stats are available, add Ppp1r1b as a defining marker on the KB node and re-run `just find-candidates` at rank 0. If a CeA cluster shows selective Ppp1r1b expression above MIN_DETECTABLE, re-score accordingly. This is the single most important next step.
-- **Targeted atlas query for CEA-AAA-BST Six3 Sp9 clusters.** These subclass-level candidates are the expected transcriptomic home for striatal-lineage CeA cell types. A direct query for clusters within this subclass that (a) localise to MBA:536 and (b) express Ppp1r1b would substantially constrain the mapping.
-- **Annotation transfer (AnnotationTransferEvidence, target F1 ≥ 0.60 at cluster level).** A MapMyCells run using a source dataset with morphology-confirmed or Cre-driver-confirmed CeA MSN-like cells (e.g. D1-Cre or DARPP-32-Cre labelled CeA neurons) would provide the most direct transcriptomic linkage. Would add AnnotationTransferEvidence to this edge.
+1. **Ppp1r1b expression query for CLUS_1344 (ATLAS_QUERY, no new data required once HDF5 available):** Query CCN20230722 precomputed expression for Ppp1r1b in CLUS_1344. If expression is above MIN_DETECTABLE, this would directly link the DARPP-32 lateral CeA marker to the AT-supported cluster and upgrade confidence to MODERATE. Expected output: ATLAS_QUERY evidence item.
+
+2. **ISH for Ppp1r1b and Six3/Sp9 in mouse CeA (LiteratureEvidence):** Co-expression ISH to verify that DARPP-32+ cells in lateral CeA express Six3/Sp9 (the lineage markers of CLUS_1344). Would link the classical DARPP-32 morphological marker to the CEA-BST Six3 transcriptomic lineage. Expected output: LiteratureEvidence confirming marker correspondence.
+
+3. **Patch-seq of morphologically confirmed CeA MSNs (AnnotationTransferEvidence):** Profile morphologically identified CeA MSNs (ovoid soma + spiny dendrites confirmed by biocytin fill) with single-cell transcriptomics and map to WMBv1. Would determine whether Adora2a+Id4 and Drd1+ subtypes correspond to distinct morphologies or both exhibit the medium spiny profile. Expected output: AnnotationTransferEvidence resolving Q2.
 
 ---
 
-### Methods
+## Methods
 
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** Central amygdala medium spiny neuron is defined on a CLASSICAL basis: morphological characterisation from McDonald (1982) and Hall (2004) as reviewed in Nikolenko et al. 2020 [1], with GABAergic neurotransmitter type supported by two independent reviews [2][3]. The single defining molecular marker (Ppp1r1b/DARPP-32) was added to the KB node following initial discovery, citing Hochgerner et al. 2023 [4]; it was not available to the Stage A scoring pass.
+**Classical type definition.** Central amygdala medium spiny neuron is defined on a CLASSICAL basis: morphological characterisation from McDonald (1982) and Hall (2004) as reviewed in Nikolenko et al. 2020 [1], with GABAergic neurotransmitter type supported by two independent reviews [2][3]. The defining molecular marker Ppp1r1b/DARPP-32 cites Hochgerner et al. 2023 [4] (lateral CeA correlation). This edge was established in hypothesis mode, remapping from the prior CLUS_0723 (Lamp5 Gaba_4) assignment to CLUS_1344 (CEA-BST Six3 Cyp26b1 Gaba_5) based on AT evidence from the Hochgerner 2023 MapMyCells run.
 
-**Atlas mapping query.** Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at rank 0 (cluster) using metadata-based scoring (region match MBA:536, NT type GABAergic). Full scoring rules: `workflows/map-cell-type.md`. The resulting cohort comprised 5 GABAergic CeA clusters; all scored 1 (region filter only). No defining markers were available to the scorer at the time of discovery.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at rank 0 (cluster) using metadata-based scoring. This edge was the product of hypothesis-mode mapping guided by AT evidence (GABA-11-Adora2a-Id4 → CLUS_1344). Full scoring rules: `workflows/map-cell-type.md`.
 
-**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / NOT_ASSESSED. Atlas-side numerical values for Ppp1r1b expression are not available because the CCN20230722 HDF5 precomputed stats file had not been ingested at the time of this mapping run. Morphology is structurally NOT_ASSESSED (the WMBv1 atlas does not contain morphological feature vectors).
+**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / NOT_ASSESSED. Atlas-side morphological features are structurally NOT_ASSESSED; Ppp1r1b expression is NOT_ASSESSED pending HDF5 stats.
 
-**Atlas data sources.** CCN20230722 (WMBv1); taxonomy YAML and SQLite index in `kb/taxonomy/CCN20230722/`. Pseudobulk SHA not available (HDF5 not yet ingested). The `n_cells` column on the mapping edge returns null — the taxonomy DB predates PR #21 (n_cells addition); rebuild with `just build-taxonomy-db CCN20230722` and re-run `just gen-facts` before the next report cycle.
+**Annotation transfer.** Annotation transfer was performed using MapMyCells (cell_type_mapper v1.7.1) against WMBv1 (CCN20230722). Source dataset: Hochgerner et al. 2023 (ArrayExpress:E-MTAB-12096; naive neuronal cells only; n=7,777 after filtering). Two source types were assessed for this edge: GABA-11-Adora2a-Id4 (n=79 cells; PARTIAL, F1=0.677, purity=0.933) and GABA-14-Drd1-Scn4b (n=29 cells; AGAINST, maps to STR D1 subclass F1=0.710).
+
+| Field | Value |
+|---|---|
+| Source dataset | ArrayExpress:E-MTAB-12096 |
+| Source species | NCBITaxon:10090 |
+| Target atlas | WMBv1 (CCN20230722; SHA-256: b21ca985) |
+| Method | MapMyCells local (cell_type_mapper v1.7.1, raw normalization) |
+| Bootstrap threshold | 0.7 |
+| n cells | 55,514 (filtered to 7,777) |
+| Run record | [`kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/manifest.yaml) |
+| Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
+| Caveats | Source labels are transcriptomically-defined types; matching to KB classical nodes requires a mapping step based on shared molecular markers. Fear-conditioned cells excluded. GABA-11 co-expresses Adora2a (D2 MSN marker); GABA-14 co-expresses Drd1 (D1 MSN marker). |
+
+**Atlas data sources.** CCN20230722 (WMBv1); taxonomy YAML and SQLite index in `kb/taxonomy/CCN20230722/`. n_cells null — taxonomy DB predates PR #21; rebuild with `just build-taxonomy-db CCN20230722` and re-run `just gen-facts` before next report cycle.
 
 **Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
 
-**Evidence base**
+**Evidence base table**
 
 | Edge ID | Evidence types | Supports | Source |
 |---|---|---|---|
-| edge_cea_medium_spiny_neuron_to_cs20230722_clus_0723 | LITERATURE; ATLAS_METADATA | PARTIAL; NO_EVIDENCE | [1]; — |
+| edge_cea_medium_spiny_neuron_to_cs20230722_clus_1344 | LITERATURE; ATLAS_METADATA; ANNOTATION_TRANSFER; ANNOTATION_TRANSFER | PARTIAL; PARTIAL; PARTIAL; AGAINST | [1]; atlas-internal; —; — |
 
-*Generated by evidencell `8222564` at 2026-06-04T10:52:50+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml).*
+*Generated by evidencell `1e06776` at 2026-06-09T10:54:03+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml).*
 
 </details>
 
@@ -143,44 +168,39 @@ One candidate atlas cluster was assessed (CS20230722_CLUS_0723 at rank 0). The m
 
 ## Discussion
 
-### Best candidate + caveats summary
+### Best candidate + caveats
 
-**Primary mapping:** Central amygdala medium spiny neuron → CS20230722_CLUS_0723 at UNCERTAIN confidence. Key support: GABAergic NT type is CONSISTENT; CeA soma location is CONSISTENT at region_fraction 0.064. Key caveats: NO_DISCRIMINATING_MARKER (all five CeA GABAergic candidates score equally); HDF5 unavailable (Ppp1r1b expression cannot be cross-checked); mapping is indistinguishable from cea_large_aspiny_neuron and cea_small_aspiny_neuron (AMBIGUOUS_MAPPING).
+**Primary mapping:** Central amygdala medium spiny neuron → CS20230722_CLUS_1344 (CEA-BST Six3 Cyp26b1 Gaba_5) at LOW confidence. Key support: ANNOTATION_TRANSFER PARTIAL — GABA-11-Adora2a-Id4 maps to CLUS_1344 with F1=0.677 (purity=0.933) in at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1; CEA-BST lineage CONSISTENT with CeA developmental origin. Key caveats: DISTRIBUTED_ACROSS_CLUSTERS — Drd1+ MSN subset (GABA-14) maps to STR D1 lineage (AGAINST); Ppp1r1b expression in CLUS_1344 NOT_ASSESSED (NO_DISCRIMINATING_MARKER); morphology not assessable from transcriptomic atlas.
 
-The Cell Ontology has no specific term for this population; medium spiny neuron [CL:1001474](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:1001474) is the closest ancestor (BROAD mapping). The CeA MSN is a biologically distinct cell population — defined by morphology, striatopallidal developmental origin, and Ppp1r1b expression in lateral CeA — and is a candidate for a new, more specific CL term. Auto-proposed mapping requires expert review.
-
-No Cell Ontology term currently assigned at the specificity needed. Candidate for CL contribution.
+The Cell Ontology has no specific term for CeA-restricted medium spiny neurons; medium spiny neuron [CL:1001474](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:1001474) is the closest ancestor (BROAD mapping). Auto-proposed mapping requires expert review.
 
 ### Proposed experiments and follow-ups
 
-**1. Add Ppp1r1b to defining markers and re-run discovery (immediate; no new data required)**
+The Hochgerner 2023 AT run (at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1) has already been performed and provides PARTIAL evidence. The remaining experiments address what the completed AT run did not resolve: (a) Ppp1r1b marker confirmation, and (b) the D1/D2-lineage heterogeneity of the morphological MSN class.
 
-- **What:** Update `cea_medium_spiny_neuron` KB node with Ppp1r1b as a formal `defining_marker` (citing PMID:37884748 [4]); then run `just find-candidates` at ranks 0 and 1 once CCN20230722 HDF5 stats are available.
-- **Target:** Score > 1 (region + at least one marker tier credit); identify a dominant candidate in the CeA cohort.
-- **Expected output:** New or updated MappingEdge YAML with Ppp1r1b-guided property comparison; replaces the current region-only UNCERTAIN edge.
-- **Resolves:** Q1 (which clusters express Ppp1r1b in CeA); NO_DISCRIMINATING_MARKER and AMBIGUOUS_MAPPING caveats for all three CeA morphological types.
+**1. Ppp1r1b expression query for CLUS_1344 (immediate; no new experiments)**
+- **What:** Query CCN20230722 precomputed expression (HDF5 stats) for Ppp1r1b in CLUS_1344 once stats are available.
+- **Target:** Expression above MIN_DETECTABLE (> 0.5) would confirm the classical DARPP-32 marker.
+- **Expected output:** ATLAS_QUERY evidence item added to edge_cea_medium_spiny_neuron_to_cs20230722_clus_1344.
+- **Resolves:** NO_DISCRIMINATING_MARKER caveat; would upgrade to MODERATE confidence if Ppp1r1b is confirmed.
 
-**2. CEA-AAA-BST Six3 Sp9 Gaba subclass targeted query**
+**2. ISH for Ppp1r1b and Six3 co-expression in mouse CeA**
+- **What:** Fluorescent ISH for Ppp1r1b and Six3 (lineage marker of CLUS_1344) in mouse lateral CeA.
+- **Target:** Confirm Ppp1r1b+/Six3+ co-expressing cell population in lateral CeA.
+- **Expected output:** LiteratureEvidence linking DARPP-32 morphological marker to CEA-BST Six3 transcriptomic lineage.
+- **Resolves:** Q1 (Ppp1r1b/CLUS_1344 link); NO_DISCRIMINATING_MARKER caveat.
 
-- **What:** Direct metadata query for clusters in the Six3/Sp9 Gaba subclass of CCN20230722 (the expected striatal-lineage transcriptomic home) that (a) localise to MBA:536 and (b) express Ppp1r1b above MIN_DETECTABLE.
-- **Target:** Identify ≥1 CeA-enriched cluster with Ppp1r1b expression; compare region_fraction against CeA morphological type candidates.
-- **Expected output:** CandidateAtlasCluster evidence or updated MappingEdge.
-- **Resolves:** Q1; AMBIGUOUS_MAPPING; possible upgrade from UNCERTAIN to LOW or MODERATE.
-
-**3. Annotation transfer from a Cre-driver or DARPP-32-labelled CeA dataset**
-
-- **What:** MapMyCells run using source cells confirmed as CeA Ppp1r1b+ (e.g. from a D1-Cre or DARPP-32-Cre intersectional dataset, or from a lateral CeA patch-seq dataset with MSN morphology confirmed).
-- **Target:** F1 ≥ 0.60 at cluster level against CCN20230722.
-- **Expected output:** AnnotationTransferEvidence item on this edge.
-- **Resolves:** Q1 and morphology concern; could upgrade confidence to LOW (with single strong AT result) or MODERATE (AT + Ppp1r1b marker confirmation).
+**3. Patch-seq of morphologically confirmed CeA MSNs**
+- **What:** Profile morphologically identified CeA MSNs (biocytin fill confirming ovoid soma + spiny dendrites) with single-cell transcriptomics; map to WMBv1 via MapMyCells.
+- **Target:** F1 ≥ 0.60 at cluster level for CLUS_1344; determine whether Adora2a+ and Drd1+ subtypes share the medium spiny morphology.
+- **Expected output:** AnnotationTransferEvidence on this edge; possible new edges for Drd1+ MSN subtype.
+- **Resolves:** Q2 (morphological heterogeneity of MSN class); DISTRIBUTED_ACROSS_CLUSTERS caveat; TAXONOMY_LEVEL_MISMATCH (confirms CeA-specific sampling).
 
 ### Open questions
 
-1. **Which WMBv1 CeA cluster(s) express Ppp1r1b/DARPP-32 at detectable levels?** This is the primary unresolved question. Hochgerner et al. 2023 confirms that Ppp1r1b+ types correlate with the lateral CeA [4], but the specific CCN20230722 cluster identity is unknown because HDF5 stats were unavailable.
+1. Does CLUS_1344 express Ppp1r1b/DARPP-32? Confirming this marker would elevate confidence from LOW to MODERATE and directly link the classical morphological marker to the AT-supported transcriptomic cluster. *(On: edge_cea_medium_spiny_neuron_to_cs20230722_clus_1344.)*
 
-2. **Can the three CeA morphological types (medium spiny, large aspiny, small aspiny) be distinguished at the transcriptomic level?** All three currently share identical rank-0 candidates. The AMBIGUOUS_MAPPING caveat applies equally to cea_medium_spiny_neuron, cea_large_aspiny_neuron, and cea_small_aspiny_neuron. Resolving this requires either (a) distinct marker profiles for each morphological type or (b) multimodal (patch-seq) data linking morphology to transcriptomic identity. *(This question appears on all three CEA morphological type edges.)*
-
-3. **Is the CeA medium spiny neuron sufficiently distinct to warrant a new CL term?** The CL:1001474 (BROAD) mapping and the striatopallidal biology suggest this type may merit a more specific CL representation once the transcriptomic identity is established.
+2. Are the Adora2a+Id4 (CEA-BST Six3, → CLUS_1344) and Drd1+ (STR D1 lineage, → SUPT_0269/0271) MSN subsets morphologically distinct, or do both exhibit the classical medium spiny profile? The AT evidence reveals two transcriptomically distinct populations within the morphological MSN class — their morphological relationship is unresolved. *(On: edge_cea_medium_spiny_neuron_to_cs20230722_clus_1344.)*
 
 ---
 
@@ -188,40 +208,42 @@ No Cell Ontology term currently assigned at the specificity needed. Candidate fo
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Nikolenko et al. 2020 — "Morphology of Central Amygdala Neurons" | [PMID:32751957](https://pubmed.ncbi.nlm.nih.gov/32751957/) | Soma location; morphological definition |
-| [2] | Ignacio et al. 2014 — "Effects of Acute Prenatal Exposure to Ethanol on microRNA Expression are Ameliorated by Social Enrichment" | [PMID:25309888](https://pubmed.ncbi.nlm.nih.gov/25309888/) | Neurotransmitter type (GABAergic) |
-| [3] | Gilpin et al. 2014 — "The central amygdala as an integrative hub for anxiety and alcohol use disorders" | [PMID:25433901](https://pubmed.ncbi.nlm.nih.gov/25433901/) | Neurotransmitter type (GABAergic) |
-| [4] | Hochgerner et al. 2023 — "Conservative and variable regions of the mouse cortex define lateralized associations" | [PMID:37884748](https://pubmed.ncbi.nlm.nih.gov/37884748/) | Ppp1r1b marker (lateral CeA correlation) |
+| [1] | Nikolenko et al. 2020 | [PMID:32751957](https://pubmed.ncbi.nlm.nih.gov/32751957/) | Soma location; morphological definition of CeA MSN |
+| [2] | Ignacio et al. 2014 | [PMID:25309888](https://pubmed.ncbi.nlm.nih.gov/25309888/) | Neurotransmitter type (GABAergic, CeA majority) |
+| [3] | Gilpin et al. 2014 | [PMID:25433901](https://pubmed.ncbi.nlm.nih.gov/25433901/) | Neurotransmitter type (CeA primarily GABAergic) |
+| [4] | Hochgerner et al. 2023 | [PMID:37884748](https://pubmed.ncbi.nlm.nih.gov/37884748/) | Ppp1r1b marker (lateral CeA correlation); AT source dataset |
 
 ---
 
-<!-- verdict-block-start: edge_cea_medium_spiny_neuron_to_cs20230722_clus_0723 -->
+<!-- verdict-block-start: edge_cea_medium_spiny_neuron_to_cs20230722_clus_1344 -->
 ```yaml
 verdict:
-  confidence: UNCERTAIN
-  confidence_score: 0.05
+  confidence: LOW
+  confidence_score: 0.25
   rationale: >
-    evidencell:UncertainRelationship to CS20230722_CLUS_0723 based on region
-    filter only (discovery score 1 in a GABAergic CeA cohort of 5; all five
-    candidates scored equally; rank_in_cohort 3 of 5; next_best_score 1).
-    NT type (GABAergic) is CONSISTENT but provides no discriminating power
-    across the cohort. Ppp1r1b (DARPP-32) — the defining marker for
-    striatal-lineage CeA medium spiny neurons per Hochgerner et al. 2023
-    (PMID:37884748) — was added to the KB node post-discovery; target-side
-    expression is NOT_ASSESSED because HDF5 precomputed stats are unavailable.
-    Soma and dendritic form (medium spiny profile) is structurally NOT_ASSESSED by the
-    WMBv1 transcriptomic atlas. No positive evidence distinguishes
-    CS20230722_CLUS_0723 from the four sibling CeA GABAergic candidates for
-    this soma/dendrite-defined type.
+    skos:broadMatch to CS20230722_CLUS_1344 "CEA-BST Six3 Cyp26b1 Gaba_5":
+    ANNOTATION_TRANSFER PARTIAL from GABA-11-Adora2a-Id4 in
+    at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1 (best_f1_score 0.677 at
+    cluster level, purity=0.933, 42/45 CLUS_1344 cells from GABA-11). CEA-BST
+    Six3 lineage is CONSISTENT with CeA developmental origin; NT type (GABA)
+    CONSISTENT; soma location CONSISTENT (CeA-isolated source cells). However,
+    recall=0.532 — only 53% of GABA-11 cells reach CLUS_1344, remainder split
+    to STR D2 (SUPT_0274). Secondary source GABA-14-Drd1-Scn4b (n=29 cells)
+    maps to STR D1 Gaba subclass (best_f1_score 0.710), confirming 1:n
+    heterogeneity: the classical medium spiny morphotype encompasses at least
+    two transcriptomically distinct populations. Ppp1r1b (DARPP-32) expression
+    in CLUS_1344 is NOT_ASSESSED (no precomputed stats available). LOW
+    confidence: PARTIAL AT support with confirmed 1:n heterogeneity and
+    unverified defining marker.
   reconciliation_note: >
-    cea_medium_spiny_neuron, cea_large_aspiny_neuron, and cea_small_aspiny_neuron
-    share identical rank-0 candidates (CLUS_0657/0705/0723/0725/0738) because none
-    carry molecular markers distinguishable by Stage A scoring. The three edges are
-    indistinguishable on current evidence (AT panels, marker panels, and ephys all
-    not assessed). See AMBIGUOUS_MAPPING caveat; resolves once Ppp1r1b and
-    structural markers are encoded and HDF5 stats are available.
+    Re-mapped from CLUS_0723 (Lamp5 Gaba_4) after hypothesis-mode map-cell-type
+    analysis. CLUS_0723 had no AT support and was an arbitrary region-filter
+    selection; CLUS_1344 is supported by AT evidence (GABA-11 purity=0.933) and
+    correct CEA-BST lineage. Drd1+ MSN subset (GABA-14) maps to STR D1 lineage,
+    distinct from CLUS_1344 — 1:n heterogeneity confirmed; broadMatch predicate
+    reflects this.
   unresolved_questions:
-    - "Which WMBv1 CeA cluster(s) express Ppp1r1b/DARPP-32 (the striatal MSN marker) and should be the primary candidate for medium spiny neurons?"
-    - "Can the three CeA morphological types (medium spiny, large aspiny, small aspiny) be distinguished transcriptomically? All three share identical rank-0 candidates under current marker coverage."
+    - Does CLUS_1344 express Ppp1r1b/DARPP-32? Confirming this marker would elevate confidence.
+    - Are the Adora2a+Id4 (CEA-BST Six3) and Drd1+ (STR D1) MSN subsets distinct functional populations, or morphologically indistinguishable medium spiny neurons?
 ```
 <!-- verdict-block-end -->
