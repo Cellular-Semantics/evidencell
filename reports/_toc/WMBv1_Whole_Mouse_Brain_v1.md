@@ -73,9 +73,12 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 
 #### Supertype — 0069 CA1-ProS Glut_1
 
+- [ca1_radiatum_giant_cell](../hippocampus/ca1_radiatum_giant_cell_summary.md) — skos:broadMatch · MODERATE
+
 ##### Cluster — 0262 CA1-ProS Glut_1
 
 - [ca1_pc_hippocampus](../hippocampus/ca1_pc_hippocampus_summary.md) — skos:closeMatch · MODERATE
+- [ca1_radiatum_giant_cell](../hippocampus/ca1_radiatum_giant_cell_summary.md) — skos:closeMatch · MODERATE
 
 ### Subclass — 017 CA3 Glut
 
@@ -110,6 +113,18 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 #### Supertype — 0128 NP SUB Glut_2
 
 - [subicular_pyramidal_cell_hippocampus](../hippocampus/subicular_pyramidal_cell_hippocampus_summary.md) — skos:broadMatch · MODERATE
+
+## Class — 03 OB-CR Glut
+
+### Subclass — 036 HPF CR Glut
+
+#### Supertype — 0135 HPF CR Glut_1
+
+- [hpc_cajal_retzius_cell](../hippocampus/hpc_cajal_retzius_cell_summary.md) — skos:broadMatch · MODERATE
+
+##### Cluster — 0497 HPF CR Glut_1
+
+- [hpc_cajal_retzius_cell](../hippocampus/hpc_cajal_retzius_cell_summary.md) — skos:closeMatch · MODERATE
 
 ## Class — 04 DG-IMN Glut
 

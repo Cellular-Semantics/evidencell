@@ -1,46 +1,70 @@
 # medial septal / diagonal band of Broca glutamatergic neuron — WMBv1 (CCN20230722) Mapping Report
-*2026-04-27 · Source: `/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
+*2026-04-27 · Source: `kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml`*
 
 ---
 
 ## Introduction
 
-Medial septal / diagonal band of Broca (MS-DBB) glutamatergic neurons are a minority projection population of the basal forebrain septal complex — roughly a quarter of the septohippocampal projection — defined by vesicular glutamate transporter expression and an absence of cholinergic and GABAergic markers, with a striking electrophysiological diversity that includes a unique cluster-firing subgroup not seen in other septal cell classes [1]. Their somata sit outside the hippocampal formation proper; the relevance of the type to hippocampal taxonomies lies in their dense, layer-specific axonal projection onto stratum oriens interneurons, where they contribute to hippocampal theta pacing [1][2].
+Medial septal / diagonal band of Broca (MS-DBB) glutamatergic neurons are VGluT2-expressing (with some VGluT1) projection neurons whose somata sit in the medial septum and the diagonal band of Broca — i.e. *outside* the hippocampal formation — and whose axons project to hippocampal interneurons in stratum oriens near the alveus [1]. They are thought to participate in pacing hippocampal theta and discharge preferentially during locomotion [1, 2]. Electrophysiologically they form a heterogeneous population of fast-spiking, cluster-firing, burst-firing and slow-firing subgroups, with the cluster-firing phenotype reported as unique among MS-DBB cell classes and a candidate substrate for theta pacing [1, 2]. The cell type is retained in this hippocampus-centric graph because its synaptic targets lie in the hippocampal formation, even though its soma does not — the UBERON soma assignment (`UBERON:0002421` hippocampal formation) is used here as the nearest available umbrella term and is approximate.
 
 ### Classical type table
 
 | Property | Value | References |
 |---|---|---|
-| Soma location | medial septum / diagonal band of Broca (extrahippocampal soma; UBERON term hippocampal formation [UBERON:0002421] used as nearest umbrella term); synaptic target on interneurons in hippocampus stratum oriens near alveus [UBERON:0005371] | [1] |
-| NT | glutamatergic | [1] |
+| Soma location | medial septum / diagonal band of Broca (extrahippocampal; UBERON:0002421 hippocampal formation used as nearest umbrella term); axonal target in hippocampus stratum oriens [UBERON:0005371] | [1] |
+| Neurotransmitter | glutamatergic | [1] |
 | Defining markers | Slc17a7 (VGluT1), Slc17a6 (VGluT2) | [1], [2] |
-| Negative markers | Chat, Gad1 | [1] |
-| Electrophysiology | Four VGluT2+ subgroups: fast-spiking, cluster-firing, burst-firing, slow-firing; cluster firing is unique to the glutamatergic population (not GABAergic) | [1], [2] |
+| Negative markers | Chat, Gad1 (i.e. neither cholinergic nor GABAergic) | [1] |
+| Electrophysiology | Four VGluT2+ subgroups: fast-spiking, cluster-firing, burst-firing, slow-firing; cluster firing is unique to the glutamatergic population | [1], [2] |
 
 <details>
-<summary>Details — source evidence for classical type properties</summary>
+<summary>### Details — source evidence for classical type properties</summary>
 
-- **Markers + NT identity + negative markers:** review (Müller & Remy 2017) summarising Sotty et al. 2003 single-cell RT-PCR results · [1]
+- **Defining markers / negative markers / electrophysiology:** review of MS-DBB cellular composition · mouse · [1]
   > Glutamatergic neurons account for approximately 23% of the projections from the medial septum to the hippocampus (Colom et al. 2005). They are characterized by the expression of VGluT1 and/or VGluT2 and by the lack of expression of either ChAT or GAD (Sotty et al. 2003). Electrophysiologically, medial septal glutamatergic neurons form a highly diverse group (Huh et al. 2010; Sotty et al. 2003). The VGluT2 expressing medial septal neurons can be separated into four groups. The first and largest group is formed by the fast spiking neurons, showing only little action potential accommodation and sometimes spontaneous action potential firing (Huh et al. 2010). Remarkably, some of the fast-spiking glutamatergic neurons show a pronounced sag in response to a hyperpolarizing current injection. Similar intrinsic properties can be observed in GABAergic medial septal neurons (Huh et al. 2010). The second group of VGluT2-positive medial septal neurons exhibit a quite specific firing pattern. These neurons fire clusters of action potentials, which cannot be observed in other cell types of the medial septum. In these neurons, subthreshold intrinsic membrane oscillations, only a small or no sag and strong action potential accommodation is seen. The third group is formed by burst firing glutamatergic neurons, exhibiting a small or no sag (Huh et al. 2010). The neurons of the fourth group are slow firing. Following somatic current injection, they discharge at low rates with accommodating action potentials
   > — Müller & Remy 2017, Electrophysiological Properties and Firing Patterns · [1] <!-- quote_key: 21358766_0c242fdc -->
-- **Soma + projection target:** review (Müller & Remy 2017) summarising hippocampal-targeting septal anatomy · [1]
+
+- **Axonal target / behavioural correlate:** review of MS-DBB cellular composition · mouse · [1]
   > Glutamatergic medial septal neurons mainly project to hippocampal interneurons (see Fig. 1) with their somata located in stratum oriens near the alveus. In vivo, the activity of glutamatergic medial septal neurons increases before the mouse initiates locomotion and is higher during running, when compared to resting phases.
   > — Müller & Remy 2017, Electrophysiological Properties and Firing Patterns · [1] <!-- quote_key: 21358766_01840c4a -->
-- **Slc17a6 marker + theta-pacing context:** review (Senova et al. 2020) on basal forebrain circuitry · [2]
+
+- **Slc17a6 marker / firing properties:** review of medial septum in theta generation · [2]
   > Medial septal glutamatergic neurons expressing type 2 vesicular glutamate transporters (VGluT2) are likely involved in hippocampal theta generation. 132,135,140 They display a heterogeneous firing pattern, including fast, slow, burs, and clusterfiring (8-14 Hz, half of glutamatergic neurons) properties in slice. 135,137 Glutamatergic neurons also have intrinsic firing properties that may play an important role in pacing the hippocampus in vivo: they can discharge in recurrent clusters of action potentials, interspersed with intrinsically generated subthreshold membrane potential oscillations. 135
   > — Senova et al. 2020, Electrophysiological Properties and Firing Patterns · [2] <!-- quote_key: 212418354_02349d4e -->
 
 </details>
 
-No Cell Ontology term currently covers this type — candidate for a new CL term. *(note: CL:0000679 "glutamatergic neuron" is too broad to capture the septal projection identity, the cluster-firing electrophysiology, or the stratum oriens interneuron projection target.)*
+### Cell Ontology mapping
+
+No Cell Ontology term currently covers this type — candidate for a new CL term. CL:0000679 (glutamatergic neuron) is too broad; no extant CL term names the medial septal / diagonal band of Broca glutamatergic projection neuron specifically.
 
 ---
 
 ## Results
 
-No candidate WMBv1 atlas edges have been emitted for this classical node. The graph currently carries the classical type definition (markers, negative markers, electrophysiology, projection target) but no mapping edges, so no per-candidate paragraphs, property comparison tables, or candidate audit tables are rendered.
+A scan of WMBv1 (CCN20230722) at ranks 0 and 1, restricted to glutamatergic clusters with cells in hippocampal formation (MBA:1089), yielded no atlas cluster whose soma distribution falls within the medial septum or diagonal band of Broca. The ten candidates emitted by the discovery cohort are all hippocampal / entorhinal pyramidal populations or off-target thalamic / non-neuronal clusters whose somata sit *inside* the hippocampal formation or in neighbouring regions; none of them are extrahippocampal septal projection neurons of the kind defined by the classical literature. The atlas's MS-DBB glutamatergic population, if present, would be expected outside this region-filtered cohort, and no current evidence in this graph supports promotion of any candidate above UNCERTAIN.
 
-The biological barrier to mapping is that the somata of this type sit in the medial septum / diagonal band of Broca — an extrahippocampal region — and the graph is curated to the hippocampal formation. The hippocampus-side anatomy on this node refers to the axonal projection target (stratum oriens of the hippocampus near the alveus), not the soma. Because the WMBv1 taxonomy stores soma-position location data and the hippocampal candidate cohort is queried on hippocampal anat terms, no candidate atlas clusters were assembled for this node in this graph. A targeted query against septal complex atlas cohorts is the appropriate next step *(note: this graph was curated for hippocampal types; the MS-DBB glutamatergic candidate set belongs to a septal-complex assessment that has not yet been run)*.
+Defining-marker evidence cannot be evaluated at this resolution: neither Slc17a7 (VGluT1) nor Slc17a6 (VGluT2) appears in the precomputed expression matrix or in Stage A's expression detail for any of the ten candidates, so the canonical VGluT1/VGluT2 signature cannot be tested. The only marker-based discriminator available is the classical *negative* marker Gad1, which serves as a coarse Glut-vs-GABA filter rather than as a positive identifier of MS-DBB cells. Several rank-0 entorhinal clusters (CLUS_0122, CLUS_0132, CLUS_0133) and rank-1 entorhinal supertypes (SUPT_0010, SUPT_0012, SUPT_0068) carry detectable Gad1 (0.59–0.92), which is inconsistent with a strictly non-GABAergic projection class and pushes them further from the classical type.
+
+No candidates rise above UNCERTAIN. There are no survivor paragraphs — the cohort does not contain a credible MS-DBB representative. The full audit set is listed below.
+
+<details>
+<summary>### Candidates audited (full top-K)</summary>
+
+| WMBv1 cluster / supertype | Cells (10x) | Confidence | Key evidence | Verdict |
+|---|---:|---|---|---|
+| `0332 L2/3 IT PPP Glut_1 [CS20230722_CLUS_0332]` | 82 | ⚪ UNCERTAIN | Hippocampal-formation L2/3 IT pyramidal cell; Gad1 = 0.00 | Eliminated (wrong cell class — local pyramidal, not septal projection) |
+| `2689 TH Prkcd Grin2c Glut_14 [CS20230722_CLUS_2689]` | 942 | 🔴 LOW | Thalamic submedial / rhomboid nucleus; almost no hippocampal cells | Eliminated (extrahippocampal but wrong region — thalamus) |
+| `0122 L2/3 IT ENT Glut_1 [CS20230722_CLUS_0122]` | 579 | 🔴 LOW | Entorhinal L2/3 IT pyramidal; Gad1 = 0.59 (cohort 30th pct) | Eliminated (wrong cell class; Gad1 detected) |
+| `0132 L2/3 IT ENT Glut_4 [CS20230722_CLUS_0132]` | 5159 | 🔴 LOW | Entorhinal L2/3 IT pyramidal; Gad1 = 0.77 (cohort 55th pct) | Eliminated (wrong cell class; Gad1 detected) |
+| `0133 L2/3 IT ENT Glut_5 [CS20230722_CLUS_0133]` | 903 | 🔴 LOW | Entorhinal L2/3 IT pyramidal; Gad1 = 0.71 (cohort 48th pct) | Eliminated (wrong cell class; Gad1 detected) |
+| `0673 MG-POL-SGN Nts Glut_2 [CS20230722_SUPT_0673]` | 593 | 🔴 LOW | Thalamic / midbrain (suprageniculate); very few hippocampal cells | Eliminated (wrong region — thalamus/midbrain) |
+| `1170 Astroependymal NN_2 [CS20230722_SUPT_1170]` | 66 | 🔴 REFUTED | Non-neuronal astroependymal supertype; cerebellum/medulla | Eliminated (non-neuronal; wrong region) |
+| `0012 L5/6 IT TPE-ENT Glut_6 [CS20230722_SUPT_0012]` | 193 | 🔴 LOW | Presubiculum / parasubiculum L5/6 IT pyramidal; Gad1 = 0.23 | Eliminated (wrong cell class — local pyramidal) |
+| `0010 L5/6 IT TPE-ENT Glut_4 [CS20230722_SUPT_0010]` | 1791 | 🔴 LOW | Entorhinal L5/6 IT pyramidal; Gad1 = 0.92 (cohort 71st pct) | Eliminated (wrong cell class; Gad1 detected) |
+| `0068 ENTmv-PA-COAp Glut_3 [CS20230722_SUPT_0068]` | 963 | 🔴 LOW | Entorhinal medial / piriform-amygdalar Glut supertype; Gad1 = 0.60 | Eliminated (wrong cell class; Gad1 detected) |
+
+</details>
 
 ---
 
@@ -49,15 +73,13 @@ The biological barrier to mapping is that the somata of this type sit in the med
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** The classical node draws on a CLASSICAL_MULTIMODAL definition basis combining electrophysiology, marker expression, and projection anatomy. VGluT1 (Slc17a7) and VGluT2 (Slc17a6) are the defining transcript-level identity markers; Chat and Gad1 are the defining negatives that distinguish the type from the cholinergic and GABAergic septal populations [1], [2]. The neurotransmitter assignment is glutamatergic [1], and the soma is recorded as extrahippocampal with a synaptic target in stratum oriens near the alveus [1].
+**Classical type definition.** MS-DBB glutamatergic neurons are defined here as VGluT1+ and/or VGluT2+ (Slc17a7, Slc17a6) projection neurons that lack Chat and Gad1, with somata in the medial septum and diagonal band of Broca and axonal targets on hippocampal interneurons in stratum oriens near the alveus [1, 2]. The `definition_basis` is `CLASSICAL_MULTIMODAL`: marker, neurotransmitter, electrophysiological, and connectivity criteria all draw on classical anatomy and slice-physiology literature. Cluster-firing in the 8–14 Hz range is reported as a discriminating intrinsic property of the glutamatergic subgroup [1, 2].
 
-**Atlas mapping query.** Candidate atlas clusters were retrieved from the WMBv1 (CCN20230722) taxonomy (CCN20230722) at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match, NT type, defining markers, sex bias when applicable). Full scoring rules: `workflows/map-cell-type.md`.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the WMBv1 (CCN20230722) taxonomy at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match against MBA:1089 hippocampal formation, glutamatergic NT type, and defining-marker presence where available). Full scoring rules: `workflows/map-cell-type.md`. Note that the region filter is anchored to the hippocampal formation (the axonal target), not to the medial septum (the somatic location), because MBA does not register septal nuclei into the hippocampal-formation hierarchy.
 
-**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
+**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Slc17a7 and Slc17a6 were NOT_ASSESSED at all candidates because they are absent from the precomputed expression matrix and Stage A expression detail. Gad1 was the only marker with usable atlas-side numerics.
 
-**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
-
-*Generated by evidencell `25c2b32` at 2026-06-08T18:37:23+00:00 from [kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml](kb/graphs/hippocampus/20260427_hippocampus_glutamatergic_report_ingest.yaml).*
+**Evidence base.** Ten candidates were assessed (5 rank-0 clusters + 5 rank-1 supertypes). All carry a single PARTIAL `ATLAS_METADATA` evidence item recording the candidate's hippocampal-formation `region_fraction_100um`. No annotation-transfer, bulk-correlation, patch-seq, or targeted-transcriptomic evidence is available for this node.
 
 </details>
 
@@ -65,38 +87,211 @@ The biological barrier to mapping is that the somata of this type sit in the med
 
 ## Discussion
 
-**Primary mapping:** none. No atlas candidate edges have been emitted against the MS-DBB glutamatergic node in this graph. The classical type is well-characterised at the marker, negative-marker, and electrophysiological level by review literature [1], [2], but the soma location (medial septum / diagonal band of Broca) falls outside the curated hippocampal target region; the hippocampus-side anatomy on the node reflects the axonal projection target only. A candidate cohort against the WMBv1 basal forebrain / septal complex partition has not been run.
+**Best candidate.** None. No candidate in the current cohort represents the medial septal / diagonal band of Broca glutamatergic projection neuron defined by the classical literature. The strongest *structural* match (CLUS_0332, hippocampal-formation L2/3 IT PPP with Gad1 = 0.00) is wrong on cell class — it is a local pyramidal cell, not a septal projection neuron — and the other candidates are either intrahippocampal/entorhinal pyramidal populations, off-target thalamic/midbrain clusters, or non-neuronal supertypes.
 
-No Cell Ontology term currently covers this type. CL:0000679 (glutamatergic neuron) is the closest ancestor but is too broad to capture the septal-projection identity or the cluster-firing electrophysiology; this node is a candidate for a new CL term contribution.
+**Why the cohort lacks a credible candidate.** The discovery query is anchored on the *target* region of the classical type (hippocampal formation, MBA:1089) because that is where the cell's axons synapse, but the somata sit outside this region in medial septum / diagonal band of Broca. WMBv1 candidates are scored on soma location (the MERFISH spatial signal records soma position only — axonal projection targets are not represented), so the query as constructed cannot surface MS-DBB cells. The mapping is fundamentally limited by this query/biology mismatch, not by absence of an MS-DBB cluster in WMBv1 per se.
 
-### Proposed experiments and follow-ups
-
-- **What:** generate WMBv1 candidate edges for MS-DBB glutamatergic neurons by querying the taxonomy at ranks 0 and 1 against atlas regions corresponding to the medial septal nucleus and diagonal band of Broca (rather than against hippocampal formation).
-  - **Target:** at least one candidate cluster with Slc17a6 / Slc17a7 expression CONSISTENT, Chat absent, Gad1 absent, and soma localisation in the septal complex.
-  - **Expected output:** new MappingEdges against the septal complex partition of WMBv1; PropertyComparison entries for each of the four defining markers and two negative markers; downstream cluster-level electrophysiology comparison against the four-subgroup profile reported by [1].
-  - **Resolves:** the absence of any atlas candidate set for this node.
-
-- **What:** patch-seq or Cre-driver-targeted (Vglut2-Cre / Slc17a6-Cre) annotation transfer of MS-DBB glutamatergic neurons onto WMBv1.
-  - **Target:** F1 ≥ 0.75 at SUPERTYPE level on the candidate septal-complex supertype, with cluster-level coverage that recapitulates the four electrophysiological subgroups described by Huh et al. 2010 and summarised in [1].
-  - **Expected output:** AnnotationTransferEvidence on the new MappingEdges, enabling a supertype-level closeMatch or broadMatch verdict and a child-cluster discussion of the cluster-firing subgroup specifically.
-  - **Resolves:** open questions 1 and 2 below.
-
-- **What:** draft a new CL term request for "medial septal / diagonal band of Broca glutamatergic projection neuron" defined by Slc17a6/Slc17a7 expression, Chat and Gad1 absence, soma in the medial septum / diagonal band of Broca, and axonal projection onto hippocampal stratum oriens interneurons.
-  - **Target:** definition + parent term (CL:0000679 glutamatergic neuron) + projection relation onto a hippocampal-interneuron CL term, following `docs/LLM_prompt_guidelines_for_CL_definitions.md`.
-  - **Expected output:** issue-ready markdown for CL new term request via `workflows/cl-term-request.md`.
-  - **Resolves:** open question 3.
-
-### Open questions
-
-1. Which WMBv1 cluster(s) and supertype(s) in the basal forebrain / septal complex partition correspond to the VGluT2+ glutamatergic population described by [1]?
-2. Does the cluster-firing electrophysiological subgroup [1], [2] correspond to a distinct WMBv1 child cluster, or does it represent an electrophysiologically-defined subpopulation within a transcriptomically homogeneous supertype?
-3. Should a new CL term be created for this type, and what should its parent and projection relations be?
+**What would change the picture.** A targeted re-query against the medial septum and diagonal band of Broca (MBA ancestors of the septal nuclear group) at ranks 0 and 1, restricted to glutamatergic NT type and screened for Slc17a6 expression where available, would surface the appropriate cohort. Patch-seq evidence linking electrophysiology (the cluster-firing / fast-spiking / burst-firing / slow-firing subgroup structure reported by Huh et al. 2010 and reviewed in [1, 2]) to transcriptomic identity would then be the most direct evidence to anchor the mapping. Cre-driver targeting of VGluT2+ septal projection neurons followed by transcriptomic profiling and cluster annotation transfer (e.g. against WMBv1) would provide the canonical direct-evidence path.
 
 ---
 
 ## References
 
-| # | Citation | PMID | Used for |
-|---|---|---|---|
-| [1] | Müller & Remy 2017 | [29250747](https://pubmed.ncbi.nlm.nih.gov/29250747/) | soma location, markers, negatives, NT, electrophysiology |
-| [2] | Senova et al. 2020 | [32132227](https://pubmed.ncbi.nlm.nih.gov/32132227/) | Slc17a6 marker, theta-pacing electrophysiology context |
+[1] Müller & Remy 2017 · PMID:29250747 · doi:10.1007/s00441-017-2745-2
+[2] Senova et al. 2020 · PMID:32132227 · doi:10.1136/jnnp-2019-322375
+
+---
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0332 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0332
+  confidence: UNCERTAIN
+  confidence_score: 0.15
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] CLUS_0332 (0332 L2/3 IT PPP Glut_1) is a hippocampal-formation L2/3 intratelencephalic pyramidal cluster with soma fully inside the hippocampal formation; the classical MS-DBB glutamatergic projection neuron has its soma in the medial septum / diagonal band of Broca, projecting *to* hippocampal interneurons in stratum oriens. The classical cell class is therefore wrong, despite Gad1 being correctly near-zero and region_fraction_100um = 1.0 (the latter is misleading because the discovery query anchors on the axonal target rather than the soma).
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Atlas cluster soma is intrahippocampal (L2/3 IT PPP); classical type soma is in medial septum / diagonal band of Broca."
+    - caveat_type: NO_DISCRIMINATING_MARKER
+      description: "Defining markers Slc17a7 and Slc17a6 are not available in precomputed expression; Gad1 is the only marker checked and only weakly discriminates."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2689 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2689
+  confidence: LOW
+  confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] CLUS_2689 (2689 TH Prkcd Grin2c Glut_14) is a thalamic submedial / rhomboid nucleus cluster (region_fraction_100um = 0.011); essentially no cells sit in hippocampal formation and none in medial septum. Wrong region and wrong cell class for an MS-DBB projection neuron.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Cluster soma in thalamus (submedial / rhomboid nucleus); classical type soma in medial septum / diagonal band of Broca."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0122 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0122
+  confidence: LOW
+  confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] CLUS_0122 (0122 L2/3 IT ENT Glut_1) is an entorhinal lateral L2/3 IT pyramidal cluster. Gad1 = 0.59 (cohort 30th percentile) is inconsistent with the classical non-GABAergic negative marker. Soma is intrahippocampal/entorhinal, not in medial septum.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca."
+    - caveat_type: MARKER_NOT_SPECIFIC
+      description: "Gad1 detected at 0.59 contradicts the classical negative-marker assertion."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0132 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0132
+  confidence: LOW
+  confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] CLUS_0132 (0132 L2/3 IT ENT Glut_4) is an entorhinal medial-dorsal L2/3 IT pyramidal cluster. Gad1 = 0.77 (cohort 55th percentile) contradicts the classical Gad1-negative criterion. Soma is intrahippocampal/entorhinal.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca."
+    - caveat_type: MARKER_NOT_SPECIFIC
+      description: "Gad1 detected at 0.77 contradicts the classical negative-marker assertion."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0133 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0133
+  confidence: LOW
+  confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] CLUS_0133 (0133 L2/3 IT ENT Glut_5) is an entorhinal lateral L2/3 IT pyramidal cluster. Gad1 = 0.71 (cohort 48th percentile) contradicts the Gad1-negative criterion. Soma is intrahippocampal/entorhinal, not septal.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca."
+    - caveat_type: MARKER_NOT_SPECIFIC
+      description: "Gad1 detected at 0.71 contradicts the classical negative-marker assertion."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0673 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0673
+  confidence: LOW
+  confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] SUPT_0673 (0673 MG-POL-SGN Nts Glut_2) is a thalamic / midbrain (suprageniculate / posterior medial) supertype with very few cells in hippocampal formation (region_fraction_100um = 0.12). NT type was not asserted on the atlas side, so glutamatergic alignment could not be checked at supertype level. Wrong region for an MS-DBB neuron.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Supertype soma in thalamus / midbrain; classical type soma in medial septum / diagonal band of Broca."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_1170 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_1170
+  confidence: REFUTED
+  confidence_score: 0.01
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] SUPT_1170 (1170 Astroependymal NN_2) is a non-neuronal astroependymal supertype concentrated in cerebellum, medulla, and area postrema (region_fraction_100um = 0.02). Wrong cell class (non-neuronal) and wrong region; cannot represent an MS-DBB glutamatergic projection neuron under any reading.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Non-neuronal supertype localised to cerebellum/medulla/area postrema; classical type is a neuron in medial septum / diagonal band of Broca."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0012 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0012
+  confidence: LOW
+  confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] SUPT_0012 (0012 L5/6 IT TPE-ENT Glut_6) is a presubiculum / parasubiculum L5/6 IT pyramidal supertype. Gad1 = 0.23 is in the discordant tier on the Gad1-negative criterion. Soma is intrahippocampal (parahippocampal subdivisions), not septal.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Supertype soma in presubiculum / parasubiculum; classical type soma in medial septum / diagonal band of Broca."
+    - caveat_type: MARKER_NOT_SPECIFIC
+      description: "Gad1 = 0.23 weakly contradicts the classical Gad1-negative criterion."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0010 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0010
+  confidence: LOW
+  confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] SUPT_0010 (0010 L5/6 IT TPE-ENT Glut_4) is an entorhinal lateral L5/6 IT pyramidal supertype. Gad1 = 0.92 (cohort 71st percentile) strongly contradicts the Gad1-negative criterion. Soma is in entorhinal cortex, not medial septum.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Supertype soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca."
+    - caveat_type: MARKER_NOT_SPECIFIC
+      description: "Gad1 = 0.92 contradicts the classical Gad1-negative criterion."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0068 -->
+```yaml
+verdict:
+  edge_id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0068
+  confidence: LOW
+  confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
+  mapping_cardinality: "1:1"
+  rationale: |
+    [tier:CUT] SUPT_0068 (0068 ENTmv-PA-COAp Glut_3) is an entorhinal medial / piriform-amygdalar / cortical-amygdalar Glut supertype. Gad1 = 0.60 (cohort 24th percentile) contradicts the Gad1-negative criterion. Soma is in entorhinal / piriform-amygdalar cortex, not medial septum.
+  caveats:
+    - caveat_type: DISCORDANT_ANATOMY
+      description: "Supertype soma in entorhinal medial / piriform-amygdalar / cortical-amygdalar cortex; classical type soma in medial septum / diagonal band of Broca."
+    - caveat_type: MARKER_NOT_SPECIFIC
+      description: "Gad1 = 0.60 contradicts the classical Gad1-negative criterion."
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->

@@ -9,6 +9,7 @@
 | Axo-axonic (chandelier) cell | pvalb chandelier GABAergic interneuron (CL:4023036) | 0204 Pvalb chandelier Gaba_1 | 🟡 MODERATE | 11 (2 MODERATE, 3 LOW, 6 UNCERTAIN) | [report](axo_axonic_cell_hippocampus_summary.md) |
 | Bistratified cell | bistratified cell (CL:0004247) | 0206 Pvalb Gaba_2 | 🟡 MODERATE | 10 (2 MODERATE, 1 LOW) | [report](bistratified_cell_hippocampus_summary.md) |
 | CA1 pyramidal cell | hippocampal pyramidal neuron (CL:1001571) | 0069 CA1-ProS Glut_1 | 🟡 MODERATE | 11 (2 MODERATE, 8 LOW, 1 UNCERTAIN) | [report](ca1_pc_hippocampus_summary.md) |
+| CA1 radiatum giant cell | — | 0262 CA1-ProS Glut_1 | 🟡 MODERATE | 10 (2 MODERATE, 7 LOW, 1 UNCERTAIN) | [report](ca1_radiatum_giant_cell_summary.md) |
 | CA2 pyramidal cell | — | 0100 CA2-FC-IG Glut_1 | 🟡 MODERATE | 11 (2 MODERATE, 8 LOW, 1 UNCERTAIN) | [report](ca2_pc_hippocampus_summary.md) |
 | CA3 pyramidal cell | hippocampal pyramidal neuron (CL:1001571) | 0078 CA3 Glut_4 | 🟡 MODERATE | 11 (1 MODERATE, 9 UNCERTAIN) | [report](ca3_pc_hippocampus_summary.md) |
 | Cholecystokinin-positive basket cell | basket cell (CL:0000118) | 0187 Sncg Gaba_3 | 🟡 MODERATE | 11 (2 MODERATE, 9 LOW) | [report](cck_basket_cell_hippocampus_summary.md) |
@@ -27,6 +28,7 @@
 | entorhinal cortex layer II calbindin-positive pyramidal cell | pyramidal neuron (CL:0000598) | 0052 L2 IT ENT-po Glut_2 | 🟡 MODERATE | 11 (2 MODERATE, 1 LOW, 8 UNCERTAIN) | [report](ec_layer2_pyramidal_cell_hippocampus_summary.md) |
 | entorhinal cortex layer II stellate cell | glutamatergic neuron (CL:0000679) | 0042 L2/3 IT PIR-ENTl Glut_4 | 🟡 MODERATE | 11 (2 MODERATE, 4 LOW, 5 UNCERTAIN) | [report](ec_layer2_stellate_cell_hippocampus_summary.md) |
 | entorhinal cortex layer III PCP4-positive pyramidal cell | pyramidal neuron (CL:0000598) | 0024 L5/6 IT TPE-ENT Glut_1 | 🟡 MODERATE | 10 (3 MODERATE, 1 LOW, 4 UNCERTAIN) | [report](ec_layer3_pyramidal_cell_hippocampus_summary.md) |
+| hippocampal Cajal-Retzius cell | Cajal-Retzius cell (CL:0000695) | 0497 HPF CR Glut_1 | 🟡 MODERATE | 10 (2 MODERATE, 8 LOW) | [report](hpc_cajal_retzius_cell_summary.md) |
 | subicular pyramidal cell | pyramidal neuron (CL:0000598) | 0096 SUB-ProS Glut_1 | 🟡 MODERATE | 11 (3 MODERATE, 5 LOW, 1 UNCERTAIN) | [report](subicular_pyramidal_cell_hippocampus_summary.md) |
 | Low-threshold high-Ih (LTH) cell | — | 0768 Sst Gaba_3 | 🔴 LOW | 10 (6 LOW, 1 UNCERTAIN) | [report](lth_cell_hippocampus_summary.md) |
 | Ndnf::Nkx2-1-IN (Ndnf-OLM, Chamberland 2024) | — | 0216 Sst Gaba_3 | 🔴 LOW | 11 (9 LOW, 2 UNCERTAIN) | [report](ndnf_nkx2_1_olm_subfamily_chamberland_summary.md) |
@@ -36,7 +38,5 @@
 | Trilaminar cell | — | 0206 Pvalb Gaba_2 | 🔴 LOW | 10 (2 LOW, 4 UNCERTAIN) | [report](trilaminar_cell_hippocampus_summary.md) |
 | VIP-positive basket cell | — | 0179 Vip Gaba_7 | 🔴 LOW | 11 (2 LOW, 7 UNCERTAIN) | [report](vip_basket_cell_hippocampus_summary.md) |
 | hippocampal calretinin-positive glutamatergic neuron | glutamatergic neuron (CL:0000679) | 0135 HPF CR Glut_1 | 🔴 LOW | 11 (1 LOW, 8 UNCERTAIN) | [report](hpc_calretinin_glu_neuron_hippocampus_summary.md) |
+| medial septal / diagonal band of Broca glutamatergic neuron | — | 2689 TH Prkcd Grin2c Glut_14 | 🔴 LOW | 10 (8 LOW, 1 UNCERTAIN) | [report](ms_dbb_glutamatergic_neuron_summary.md) |
 | ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron | pyramidal neuron (CL:0000598) | 0069 CA1-ProS Glut_1 | 🔴 LOW | 11 (11 LOW) | [report](hpc_glu_dopa_receptor_pyramidal_hippocampus_summary.md) |
-| CA1 radiatum giant cell | — | — | — | 0 () | [report](ca1_radiatum_giant_cell_summary.md) |
-| hippocampal Cajal-Retzius cell | Cajal-Retzius cell (CL:0000695) | — | — | 0 () | [report](hpc_cajal_retzius_cell_summary.md) |
-| medial septal / diagonal band of Broca glutamatergic neuron | — | — | — | 0 () | [report](ms_dbb_glutamatergic_neuron_summary.md) |
