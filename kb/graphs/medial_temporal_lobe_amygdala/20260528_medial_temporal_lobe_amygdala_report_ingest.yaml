@@ -1616,9 +1616,9 @@ edges:
     relationship: skos:broadMatch
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
-    confidence_score: 0.38
-    rationale: "VGLUT1-25-Plcxd3_Reln maps with F1=0.60 (SUPERTYPE) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_SUPT_0057; 0 of 1 markers CONSISTENT (marker_LHX9 NOT_ASSESSED). Moderate AT support at supertype level; no marker validation possible from available precomputed data.\n"
-    rationale_generated_at: '2026-06-10T13:43:00+00:00'
+    confidence_score: 0.25
+    rationale: "AT (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) maps VGLUT1-25-Plcxd3_Reln to CS20230722_SUPT_0057 at supertype level (F1=0.60); nt_type CONSISTENT and location_medial_amygdala CONSISTENT (MBA:403; two independent MERFISH registrations). 0 of 1 markers CONSISTENT: marker_LHX9 is NOT_ASSESSED (Lhx9 absent from atlas metadata; no precomputed scRNA-seq expression). broadMatch reflects 5-member MEA Glut cohort ambiguity; confidence ceiling is LOW until Lhx9 expression data resolves the supertype assignment.\n"
+    rationale_generated_at: '2026-06-10T15:44:19+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/medial_amygdala_lhx9_glutamatergic_neuron_summary.md
     property_comparisons:
       - property: nt_type
@@ -1689,6 +1689,7 @@ edges:
       - Which of 5 MEA Slc17a7 Glut supertypes (SUPT_0055-0057 and siblings) specifically corresponds to Lhx9+ ventral pallial-derived neurons? LHX9 expression data is needed.
       - Can LHX9 expression be confirmed in CS20230722_SUPT_0057 from RNA-seq or in-situ data?
       - Does VGLUT1-25-Plcxd3_Reln specifically correspond to Lhx9+ MEA neurons, or is it a broader MEA glutamatergic cluster?
+      - Query CCN20230722 precomputed stats for Lhx9 across all MEA Slc17a7 Glut supertypes to determine which supertype hosts Lhx9+ neurons and resolve the broadMatch ambiguity.
     proposed_experiments:
       - Run Lhx9-ISH co-stained with MERFISH probes for SUPT_0057 defining markers (Trabd2b, Zic5, Dab1, Ntf3) in mouse medial amygdala to directly test co-expression.
       - Obtain precomputed expression for CCN20230722 and query LHX9 across all 5 MEA Slc17a7 Glut supertypes.
@@ -1710,19 +1711,19 @@ edges:
       region_fraction: 0.588
       region_evidence: SELF
     mapping_cardinality: 1:n
-    reconciliation_note: "Edge was previously marked skos:exactMatch in error. Corrected to skos:broadMatch 1:n per 2026-05-26 rubric: the classical defining marker LHX9 is NOT_ASSESSED on CS20230722_SUPT_0057 (absent from atlas metadata; no precomputed expression available). Concordance on NT+location alone does not meet exactMatch threshold. The five MEA Slc17a7 Glut supertypes are indistinguishable in Stage A discovery (all tied at score 1, cohort_size 5); SUPT_0057 selected by region_fraction 0.588 only.\n"
-    rationale_source_hash: db641f75
+    reconciliation_note: ""
+    rationale_source_hash: 9eaaf084
   - id: edge_central_amygdala_gabaergic_projection_neuron_to_cs20230722_supt_0249
     lit_type: central_amygdala_gabaergic_projection_neuron
     taxonomy_type: CS20230722_SUPT_0249
     relationship: skos:broadMatch
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
-    confidence_score: 0.38
-    rationale: 'GABA-25-Lhx8-Th maps with F1=0.86 (SUBCLASS) and F1=0.57 (SUPERTYPE) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_SUPT_0249; 0 of 3 markers CONSISTENT (marker_GBX1, marker_TH, marker_NR4A2 all NOT_ASSESSED). AT provides molecular anchor at subclass but supertype-level F1 is moderate; marker validation required.
+    confidence_score: 0.25
+    rationale: 'AT (GABA-25-Lhx8-Th, `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) yields F1=0.57 at SUPERTYPE (CS20230722_SUPT_0249) with coverage=0.40; subclass anchor is strong (F1=0.86). MERFISH places 85 cells at MBA:536 (region_fraction=0.14), confirming a genuine CeA subpopulation but the supertype spans NDB/SI/STRv/Pallidum. NT is CONSISTENT; 0 of 3 markers CONSISTENT (marker_GBX1, marker_TH, marker_NR4A2 all NOT_ASSESSED: no defining markers on classical node). broadMatch reflects the 1:n spatial scope mismatch and absence of molecular discriminators.
 
       '
-    rationale_generated_at: '2026-06-10T13:43:00+00:00'
+    rationale_generated_at: '2026-06-10T15:44:19+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/central_amygdala_gabaergic_projection_neuron_summary.md
     property_comparisons:
       - property: nt_type
@@ -1803,6 +1804,8 @@ edges:
       - Does Th expression in SUPT_0249 reflect genuine TH co-expression in CeA neurons, or is it driven by the non-CeA majority?
       - Can GBX1, TH, or NR4A2 expression be confirmed in CS20230722_SUPT_0249 from precomputed stats or in-situ data?
       - Does GABA-25-Lhx8-Th specifically capture long-range CeA projection neurons, or does it mix with local CeA interneurons?
+      - Which of the 5 ranked CeA GABAergic supertypes best captures the classical molecular profile? Query CCN20230722 for Prkcd, Sst, Crh, Isl1, Calcrl, Htr2a, Tac2 at supertype rank across CS20230722_SUPT_0249, SUPT_0255, SUPT_0252, SUPT_0238, SUPT_0235.
+      - Does Th expression in CS20230722_SUPT_0249 reflect genuine TH co-expression in CeA neurons, or is it driven by the non-CeA majority (NDB/SI/STRv)?
     proposed_experiments:
       - Query CCN20230722 for supertype-level expression of Prkcd, Sst, Crh, Isl1 across all 5 MBA:536 GABAergic supertype candidates.
       - Apply MERFISH spatial filtering to restrict SUPT_0249 to MBA:536 cells and compare marker profile to the full supertype.
@@ -1824,18 +1827,19 @@ edges:
       region_fraction: 0.14
       region_evidence: SELF
     mapping_cardinality: 1:n
-    rationale_source_hash: 2d917a9c
+    rationale_source_hash: b7247204
+    reconciliation_note: "Five equally-scored CeA GABAergic supertypes (score=1 each, cohort_size=5); CS20230722_SUPT_0249 ranked first by cohort order only. SUPT_0255, SUPT_0252, SUPT_0238, SUPT_0235 remain equally viable until canonical CeA markers (Prkcd, Sst, Crh, Isl1) are queried at supertype rank.\n"
   - id: edge_bla_glutamatergic_principal_neuron_to_cs20230722_supt_0005
     lit_type: bla_glutamatergic_principal_neuron
     taxonomy_type: CS20230722_SUPT_0005
     relationship: skos:broadMatch
     mapping_justification: semapv:UnreviewedManualMapping
     confidence: LOW
-    confidence_score: 0.28
-    rationale: 'VGLUT2-23-Nov_Gpr83 maps with F1=0.30 (SUPERTYPE) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_SUPT_0005 (PARTIAL; n=3 cells); 0 of 2 markers CONSISTENT (marker_SLC17A7, marker_CAMK2A both NOT_ASSESSED). Very weak AT from undersampled excitatory population in this dataset; mapping requires dedicated BLA excitatory neuron dataset.
+    confidence_score: 0.22
+    rationale: 'NT type CONSISTENT (Glut subclass); location APPROXIMATE (region_fraction=0.042 in BLA, SUPERTYPE_SCOPE_MISMATCH); AT evidence PARTIAL — F1=0.30 at supertype level (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`, source VGLUT2-23-Nov_Gpr83, n=3 cells, severely limited, not a reliable quantitative anchor); 0 of 2 markers CONSISTENT (marker_SLC17A7 NOT_ASSESSED, marker_CAMK2A NOT_ASSESSED); three LA-BLA-BMA-PA supertypes with region_fraction 0.40–0.71 unassessed (skos:broadMatch appropriate pending hypothesis-mode evaluation of CS20230722_SUPT_0005 alternatives).
 
       '
-    rationale_generated_at: '2026-06-10T13:43:02+00:00'
+    rationale_generated_at: '2026-06-10T15:44:19+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
     property_comparisons:
       - property: nt_type
@@ -1914,6 +1918,8 @@ edges:
       - Do defining markers of SUPT_0005 (Abca8a, Npsr1, Adam33) label a genuine EP/claustrum-homologous BLA subpopulation?
       - Does VGLUT2-23-Nov_Gpr83 specifically correspond to BLA principal neurons, or is this spurious mapping from a dataset that undersamples excitatory cells?
       - Is CS20230722_SUPT_0005 the correct supertype for BLA glutamatergic principal neurons, or are they distributed across multiple IT supertypes?
+      - Do LA-BLA-BMA-PA supertypes SUBT_0063/0064/0065 account for the full transcriptomic diversity of BLA glutamatergic principal neurons? Hypothesis-mode assessment required.
+      - Precomputed expression for Slc17a7 and Camk2a across BLA Glut supertypes needed to resolve 0 of 2 markers assessed.
     proposed_experiments:
       - Run hypothesis-mode map-cell-type targeting SUBT_0063, SUBT_0064, SUBT_0065 (LA-BLA-BMA-PA Glut supertypes) directly for bla_glutamatergic_principal_neuron.
       - Obtain precomputed expression and query SLC17A7, CAMK2A across all BLA Glut supertypes.
@@ -1935,7 +1941,8 @@ edges:
       region_fraction: 0.042
       region_evidence: SELF
     mapping_cardinality: 1:n
-    rationale_source_hash: 80e944e0
+    rationale_source_hash: d95c0c26
+    reconciliation_note: ''
   - id: edge_medial_amygdala_gabaergic_neuron_to_cs20230722_supt_0256
     lit_type: medial_amygdala_gabaergic_neuron
     taxonomy_type: CS20230722_SUPT_0256
@@ -1946,7 +1953,7 @@ edges:
     rationale: 'NT type CONSISTENT (GABAergic label on CS20230722_SUPT_0256); location APPROXIMATE (region_fraction 0.06 at MBA:403; dominant distribution striatopallidal MBA:477/803; 1 of 1 property comparisons assessed CONSISTENT, 1 APPROXIMATE, 1 NOT_ASSESSED). No defining markers on classical node; 5 equally-scoring MeA GABAergic supertypes in discovery cohort (score 1, cohort_size 5, next_best_score 1) — SUPT_0256 ranked first by cohort order only. BROAD_CLASSICAL_NODE caveat applies.
 
       '
-    rationale_generated_at: '2026-06-04T12:21:38+00:00'
+    rationale_generated_at: '2026-06-10T15:44:20+00:00'
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -2012,13 +2019,13 @@ edges:
     relationship: evidencell:UncertainRelationship
     mapping_justification: semapv:UnspecifiedMatching
     confidence: UNCERTAIN
-    confidence_score: 0.07
-    rationale: 'Paralaminar immature neurons are a primate-enriched population defined by DCX/BCL2/NES/VIM immaturity markers absent from adult mouse brain. Cross-species snRNA-seq (PMID:36788214) explicitly confirms this population is absent from mouse datasets. Location is DISCORDANT (paralaminar nucleus has no MBA CCF equivalent; SUPT_0005 maps to Cortical subplate EP/CLA territory). Classical defining markers are incompatible with any adult mouse transcriptomic type. This edge records the closest available type by regional/NT filter only and does not represent a biological equivalence. MapMyCells on published human paralaminar snRNA-seq data is the decisive experiment.
+    confidence_score: 0.05
+    rationale: 'Paralaminar immature neurons are a primate-enriched type (SPECIES_BARRIER caveat); atlas-internal metadata evidence confirms absence from mouse datasets, removing any basis for biological equivalence to adult mouse atlas types. CS20230722_SUPT_0005 (0005 IT EP-CLA Glut_3, 798 cells) is the sole survivor in a 5-member MBA:295 cohort (discovery score 1, rank 1 of 5, next-best score 1) but shows marker_DCX DISCORDANT and location_soma DISCORDANT; marker_BCL2 NOT_ASSESSED. All 11 defining markers are immaturity/progenitor-state proteins absent from adult mouse transcriptomics; no precomputed expression comparison or annotation-transfer F1 is available. Edge retained as placeholder only.
 
       '
-    rationale_generated_at: '2026-06-02T12:18:19+00:00'
+    rationale_generated_at: '2026-06-10T15:44:20+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/paralaminar_immature_neuron_summary.md
-    reconciliation_note: 'Paralaminar neurons are primate-enriched (human-prominent), defined by DCX/BCL2/NES/VIM immaturity markers absent from adult mouse brain. WMBv1 (CCN20230722) is derived from adult mouse brain and contains no equivalent persistent immature neuronal state in the amygdala. SUPT_0005 (IT EP-CLA Glut_3) was surfaced by regional/NT survival-cohort filter only — not by any shared biological property or marker overlap. Published cross-species snRNA-seq (PMID:36788214) explicitly confirms absence of this population from mouse datasets. This edge records the closest available transcriptomic type by broad anatomical proximity; it is not a biological equivalence claim.
+    reconciliation_note: 'No pool-candidate indistinguishability applies (pool_candidates empty). UNCERTAIN confidence reflects an absolute species barrier, not a graded evidence gap. Upgrading would require cross-species MapMyCells AT with F1 >= 0.40 at rank 1, or IHC confirming a DCX+ population in adult mouse amygdala.
 
       '
     property_comparisons:
@@ -2073,6 +2080,7 @@ edges:
       expression_detail: []
       region_fraction: 0.042
       region_evidence: SELF
+    rationale_source_hash: b8885322
   - id: edge_basal_amygdala_fear_neuron_to_cs20230722_supt_0005
     lit_type: basal_amygdala_fear_neuron
     taxonomy_type: CS20230722_SUPT_0005
@@ -2083,7 +2091,7 @@ edges:
     rationale: 'Fear neurons are a purely activity-defined functional ensemble; no NT type, markers, or expression profile are encoded on this classical node. Stage A discovery returned a 5-member tied cohort (all score=1; next_best_score=1; cohort_size=5) with no basis for discrimination; CS20230722_SUPT_0005 is the top-ranked entry by position only, not by evidence. The single ATLAS_METADATA evidence item is rated NO_EVIDENCE. Location comparison is APPROXIMATE (MBA:1105, 2.2% of supertype); NT comparison is NOT_ASSESSED. No atlas cluster in CCN20230722 corresponds to a fear-conditioning activity state. Molecular characterisation (e.g. Fos-TRAP followed by single-nucleus sequencing) is required before a meaningful mapping can be assessed.
 
       '
-    rationale_generated_at: '2026-06-04T12:17:33+00:00'
+    rationale_generated_at: '2026-06-10T15:44:20+00:00'
     reconciliation_note: 'Fear neurons are a circuit-level functional concept defined by activity during Pavlovian fear conditioning, not by molecular markers. They are likely a subpopulation within BLA glutamatergic principal neurons but cannot be mapped to a specific atlas transcriptomic type without molecular characterisation. See also edge_basal_amygdala_extinction_neuron_to_cs20230722_supt_0005 for the parallel extinction neuron case; both share the same absence-of-molecular-identity blocker.
 
       '
@@ -2135,8 +2143,8 @@ edges:
     rationale: 'Extinction neurons are a circuit-level functional concept defined by activity during fear extinction, not by molecular identity. No defining markers are encoded on the classical node; `marker_nt_type` alignment is NOT_ASSESSED. The sole discovery-mode candidate (CS20230722_SUPT_0005; score=1 of 5-member GABAergic cohort, tied next_best_score=1) carries NO_EVIDENCE support. `location_soma` is APPROXIMATE only (MBA:1105, 2.2% of supertype). No molecular basis for mapping exists until activity-dependent transcriptomic profiling defines a marker signature.
 
       '
-    rationale_generated_at: '2026-06-04T12:16:59+00:00'
-    reconciliation_note: 'Extinction neurons are a functional circuit-level concept defined by activity during fear extinction, not by molecular markers. Like fear neurons, they are likely a subpopulation within BLA glutamatergic principal neurons. No specific molecular atlas type corresponds to this functional identity; molecular characterisation is needed.
+    rationale_generated_at: '2026-06-10T15:44:21+00:00'
+    reconciliation_note: 'Extinction neurons are a functional circuit-level concept defined by activity during fear extinction, not by molecular markers. Like fear neurons, they are likely a subpopulation within BLA glutamatergic principal neurons. No specific molecular atlas type corresponds to this functional identity; molecular characterisation is needed. See also edge_basal_amygdala_fear_neuron_to_cs20230722_supt_0005 for the parallel fear neuron case; both share the same absence-of-molecular-identity blocker.
 
       '
     property_comparisons:
@@ -2175,7 +2183,7 @@ edges:
     unresolved_questions:
       - Does a molecularly distinct transcriptomic signature exist for BLA extinction neurons, or do they represent a transient activity state within the BLA glutamatergic principal neuron population?
       - Has activity-dependent transcriptomic profiling (TRAP-seq or equivalent) of BLA extinction-active neurons been published with a gene expression signature that can be mapped to CCN20230722?
-    rationale_source_hash: b38e1656
+    rationale_source_hash: 808468da
   - id: edge_bla_axo_axonic_cell_to_cs20230722_clus_0733
     lit_type: bla_axo_axonic_cell
     taxonomy_type: CS20230722_CLUS_0733
@@ -2400,6 +2408,7 @@ edges:
       - Do bla_cck_basket_cell and bla_cck_cb1_basket_cell represent overlapping populations that should be merged?
       - Is CS20230722_CLUS_0664 the correct cluster target, or does the CCK basket cell correspond to a broader subclass/supertype in CCN20230722?
       - Can Pvalb absence be confirmed in CS20230722_CLUS_0664 from precomputed stats?
+      - Which Sncg Gaba_1 sibling cluster has the highest BLA (MBA:295) region_fraction?
     proposed_experiments:
       - MapMyCells AT on BLA CCK basket cell transcriptomes to resolve 1:N.
     discovery_score:
@@ -2429,16 +2438,16 @@ edges:
       region_fraction: 0.031
       region_evidence: SELF
     confidence: LOW
-    confidence_score: 0.32
-    rationale: 'GABA-54-Scng-Kcnc2 maps with F1=0.59 (SUBCLASS) and F1=0.06 (CLUSTER) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_CLUS_0664 (PARTIAL); 1 of 2 markers CONSISTENT (neuropeptide_Cck CONSISTENT; negative_marker_Pvalb NOT_ASSESSED). Cluster-level AT very weak (F1=0.06); closeMatch predicate requires review given weak cluster specificity.
+    confidence_score: 0.25
+    rationale: 'Sncg Gaba subclass confirmed by MapMyCells AT (F1=0.59 at SUBCLASS level in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`); neuropeptide_Cck CONSISTENT (precomputed mean 11.15, 98.3rd pct, tier-2 reliable). 1 of 2 markers CONSISTENT (neuropeptide_Cck CONSISTENT; negative_marker_Pvalb NOT_ASSESSED). CLUSTER-level F1=0.06 reflects dispersal across 5 Sncg Gaba_1 sibling clusters; CS20230722_CLUS_0664 nomination is speculative pending targeted AT. region_fraction=0.031 confirms BLA presence (SELF evidence, boundary-low).
 
       '
-    reconciliation_note: 'Both bla_cck_basket_cell and bla_cck_cb1_basket_cell map to CS20230722_CLUS_0664; Calb1 (defining marker on bla_cck_basket_cell) is NOT_ASSESSED in the current atlas build. Curator review of node distinctiveness recommended before upgrading confidence.
+    reconciliation_note: 'CLASS-level AT overlap with bla_vip_calretinin_interneuron (06 CTX-CGE GABA class F1=0.23 for both source groups); panels assessed: anat and nt only (Case B — insufficient evidence for indistinguishability call; CCK basket cells and VIP/CR interneurons are molecularly distinct by marker profile).
 
       '
-    rationale_generated_at: '2026-06-10T13:43:02+00:00'
+    rationale_generated_at: '2026-06-10T15:44:18+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_cck_basket_cell_summary.md
-    rationale_source_hash: 10073bf3
+    rationale_source_hash: 24da090e
   - id: edge_bla_sst_interneuron_to_cs20230722_clus_0765
     lit_type: bla_sst_interneuron
     taxonomy_type: CS20230722_CLUS_0765
@@ -2535,6 +2544,8 @@ edges:
       - Run annotation transfer on a mouse BLA SST+ source dataset to confirm cluster assignment and resolve CLUS_0765 vs CLUS_0774 ambiguity.
       - Is CS20230722_CLUS_0765 specifically the dendrite-targeting SST subtype, or does GABA-38-Sst-Tmtc4 span multiple Sst+ subtypes in the BLA?
       - Can Pvalb absence be confirmed in CS20230722_CLUS_0765 from precomputed stats?
+      - "Confirm Pvalb near-zero expression in CS20230722_CLUS_0765 from taxonomy reference YAML — NOT_ASSESSED at present.\n"
+      - "Determine whether a sibling cluster within CS20230722_SUPT_0215 is a better primary cluster anchor by auditing Calb1 expression and BLA region_fraction; a parallel edge may be warranted.\n"
     proposed_experiments:
       - smFISH with Sst+Calb1 in mouse BLA.
     discovery_score:
@@ -2573,14 +2584,16 @@ edges:
       region_fraction: 0.289
       region_evidence: SELF
     confidence: LOW
-    confidence_score: 0.45
-    rationale: 'GABA-38-Sst-Tmtc4 maps with F1=0.76 (SUPERTYPE) and F1=0.30 (CLUSTER) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_CLUS_0765; 2 of 3 markers CONSISTENT (neuropeptide_Sst, marker_Calb1 CONSISTENT; negative_marker_Pvalb NOT_ASSESSED). Supertype AT meets threshold but cluster-level AT is weak; broadMatch retained.
+    confidence_score: 0.35
+    rationale: 'Sst (neuropeptide_Sst CONSISTENT; precomputed mean 11.92, 96.7th pct) and Calb1 (marker_Calb1 CONSISTENT; precomputed mean 9.57, 96.5th pct) anchor the match to CS20230722_SUPT_0215; 2 of 3 markers CONSISTENT (negative_marker_Pvalb NOT_ASSESSED). AT (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`, scRNA-seq source GABA-38-Sst-Tmtc4) gives F1=0.76 at SUPERTYPE but only F1=0.30 at CLUSTER for CS20230722_CLUS_0765; AT cells disperse across siblings within CS20230722_SUPT_0215. BLA region_fraction = 0.289 is in the boundary band. Cluster-level dispersion and boundary-band region_fraction jointly prevent confidence above LOW.
 
       '
-    reconciliation_note: ''
-    rationale_generated_at: '2026-06-10T13:43:01+00:00'
+    reconciliation_note: 'Pool-candidate scan flagged CLASS-level AT overlap with bla_pv_basket_cell (shared target CS20230722_CLAS_07; F1=0.32 SST vs 0.34 PV). This is Case B (AT-only, CLASS level only): at SUBCLASS and finer the types diverge entirely (SST to CS20230722_SUBC_053; PV to Pvalb subclasses — inference from WMBv1 taxonomy structure; bla_pv_basket_cell AT metrics not in these facts). Defining markers (Sst/Calb1 vs Pvalb) are mutually exclusive. No lit_to_lit_edges warranted.
+
+      '
+    rationale_generated_at: '2026-06-10T15:44:16+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_sst_interneuron_summary.md
-    rationale_source_hash: 21efb6b6
+    rationale_source_hash: 56fc322d
   - id: edge_bla_vip_calretinin_interneuron_to_cs20230722_clus_0628
     lit_type: bla_vip_calretinin_interneuron
     taxonomy_type: CS20230722_CLUS_0628
@@ -2685,6 +2698,9 @@ edges:
       - Determine whether the VIP/calretinin population maps to one cluster or multiple (1:N / CrossCuttingMatch) given acknowledged molecular heterogeneity.
       - Does the VIP/calretinin BLA population span multiple atlas clusters, and if so, which clusters correspond to the interneuron-selective subtype?
       - Can Pvalb and Sst absence be confirmed in CS20230722_CLUS_0628 from precomputed data?
+      - "Which of the five Vip Gaba rank-0 clusters best matches the BLA VIP/calretinin IS interneuron — resolve by patch-seq annotation transfer targeting F1 >= 0.50 at CLUSTER level.\n"
+      - "Determine whether the VIP/calretinin population maps to one cluster or multiple (1:N / CrossCuttingMatch) given acknowledged molecular heterogeneity.\n"
+      - "Which Vip Gaba cluster captures the IS morphological specialisation (bipolar/bitufted, interneuron-targeting)?\n"
     proposed_experiments:
       - MapMyCells AT on IS interneuron patch-seq transcriptomes.
     discovery_score:
@@ -2723,13 +2739,14 @@ edges:
       region_fraction: 0.049
       region_evidence: SELF
     confidence: LOW
-    confidence_score: 0.38
-    rationale: 'GABA-51-Vip-Crh maps with F1=0.65 (SUBCLASS) and F1=0.54 (CLUSTER) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_CLUS_0628; 2 of 5 markers CONSISTENT (marker_Calb2, neuropeptide_Vip CONSISTENT; neuropeptide_Cck APPROXIMATE; negative_marker_Pvalb, negative_marker_Sst NOT_ASSESSED). Moderate AT; heterogeneous classical type likely spans multiple clusters; broadMatch retained.
+    confidence_score: 0.25
+    rationale: 'Calb2 (marker_Calb2 CONSISTENT; precomputed mean 8.12, 98.3rd pct tier-2) and Vip (neuropeptide_Vip CONSISTENT; 96.9th pct tier-2) anchor the broadMatch to CS20230722_CLUS_0628; 2 of 5 markers CONSISTENT. AT (GABA-51-Vip-Crh, `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) reaches F1=0.65 at SUBCLASS and F1=0.54 at CLUSTER — below the 0.75 threshold for HIGH confidence. Coverage at CLUSTER is 0.37; scatter across five co-equal Vip Gaba clusters (DISTRIBUTED_ACROSS_CLUSTERS). region_fraction=0.049 is very low (BLA-minority cluster). Cck is APPROXIMATE (tier 1 only).
 
       '
-    rationale_generated_at: '2026-06-10T13:43:01+00:00'
+    rationale_generated_at: '2026-06-10T15:44:18+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_vip_calretinin_interneuron_summary.md
-    rationale_source_hash: c4578ef5
+    rationale_source_hash: 8953ea03
+    reconciliation_note: "Pool-candidates flagged CLASS-level AT overlap with bla_cck_basket_cell (both map to CS20230722_CLAS_06 with identical F1=0.23, Coverage=1.0). This is a coarse CLASS-level coincidence only; anat and NT panels assessed, markers/morphology/ephys not assessed — CASE B, no lit_to_lit_edges emitted. The two types are biologically distinct (IS interneurons vs. perisomatic basket cells).\n"
   - id: edge_bla_pv_basket_cell_to_cs20230722_clus_0738
     lit_type: bla_pv_basket_cell
     taxonomy_type: CS20230722_CLUS_0738
@@ -2827,6 +2844,8 @@ edges:
       - Do additional Pvalb clusters in CCN20230722 contribute to the basket-cell population in BLA? AT evidence needed to resolve the 1:n cardinality call.
       - Can Sst absence be confirmed in CS20230722_CLUS_0738 from precomputed stats, distinguishing PV basket from PV+ chandelier cells in BLA?
       - Is the BLA component (~4%?) of CS20230722_CLUS_0738 specifically perisomatic-targeting basket cells or does it include chandelier cells?
+      - Sst precomputed mean for CS20230722_CLUS_0738 NOT_ASSESSED — retrieve from taxonomy reference store.
+      - Does CLUS_0738 contain predominantly basket vs. axo-axonic cells in BLA? AnkG co-staining needed.
     proposed_experiments:
       - AnkG co-staining in mouse BLA to distinguish AIS-targeting (CLUS_0733) vs soma-targeting (CLUS_0738) Pvalb cells.
     discovery_score:
@@ -2856,16 +2875,16 @@ edges:
       region_fraction: 0.178
       region_evidence: SELF
     confidence: LOW
-    confidence_score: 0.45
-    rationale: 'GABA-41-Moxd1-Pvalb maps with F1=0.74 (CLUSTER) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_CLUS_0738; 1 of 2 markers CONSISTENT (marker_Pvalb CONSISTENT; negative_marker_Sst NOT_ASSESSED). Cluster-level AT near threshold (F1=0.74); broadMatch retained pending pan-cortical cluster specificity review.
+    confidence_score: 0.35
+    rationale: 'MapMyCells AT (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) maps Hochgerner 2023 GABA-41-Moxd1-Pvalb to CS20230722_CLUS_0738 at F1=0.74 (CLUSTER level; Purity=0.96, Coverage=0.60); `marker_Pvalb` CONSISTENT (precomputed mean 10.86, 99.8th pct BLA GABAergic cohort); 1 of 2 markers CONSISTENT (`negative_marker_Sst` NOT_ASSESSED). Coverage=0.60 and Sst-cluster leakage indicate source-label heterogeneity or basket/axo-axonic co-segregation; basket-cell identity vs. axo-axonic not resolvable from scRNA-seq alone — AnkG co-staining required.
 
       '
-    reconciliation_note: 'No pool candidates identified. Predicate skos:broadMatch with 1:n cardinality reflects that the basket-cell population likely spans multiple Pvalb clusters in CCN20230722; CLUS_0738 is the best single-cluster proxy by region_fraction but the 1:1 resolution requires AT evidence.
+    reconciliation_note: 'Pool-candidates pass flagged shared CLASS-level target 07 CTX-MGE GABA with bla_sst_interneuron (F1 0.34 vs 0.32 at CLASS level; within 5% tolerance). This is a CLASS-level artefact — both Pvalb and Sst BLA interneurons are MGE-derived GABAergic cells sharing the same atlas class. At SUBCLASS level bla_pv_basket_cell maps to 052 Pvalb Gaba (F1=0.61) while bla_sst_interneuron maps to Sst subclass clusters; markers (Pvalb vs Sst) are distinguishing. Case B (AT-only sharing at CLASS level; markers and subclass AT distinguish); no lit_to_lit_edges emitted.
 
       '
-    rationale_generated_at: '2026-06-10T13:43:01+00:00'
+    rationale_generated_at: '2026-06-10T15:44:16+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_pv_basket_cell_summary.md
-    rationale_source_hash: ab494059
+    rationale_source_hash: f28afaf0
   - id: edge_amygdala_intercalated_cell_to_cs20230722_clus_0998
     lit_type: amygdala_intercalated_cell
     taxonomy_type: CS20230722_CLUS_0998
@@ -2944,6 +2963,8 @@ edges:
       - Are CS20230722_CLUS_0998 and CS20230722_CLUS_1009 both genuine ITC transcriptomic types?
       - Can a dedicated ITC-enriched dataset resolve GABA-3-Foxp2_Col6a1 to CS20230722_CLUS_0998 at cluster level (F1 ≥ 0.70)?
       - Are there additional clusters within the Foxp2+ class that also correspond to ITC subtypes (dorsal vs. ventral ICMs)?
+      - "Are CS20230722_CLUS_0998 and CS20230722_CLUS_1009 both genuine ITC transcriptomic types? AT subclass mismatch (STR-PAL Chst9 vs STR D1 Sema5a at subclass) raises the question of whether ITC neurons span multiple atlas subtypes.\n"
+      - "Trawl literature for FOXP2 protein-level (IHC) evidence in intercalated cell masses — current Foxp2 marker support is transcript-level only.\n"
     proposed_experiments:
       - smFISH with Foxp2+Drd1+Oprm1 in mouse amygdala.
     discovery_score:
@@ -2991,14 +3012,14 @@ edges:
       region_fraction: 0.001
       region_evidence: SELF
     confidence: LOW
-    confidence_score: 0.42
-    rationale: 'GABA-3-Foxp2_Col6a1 maps with F1=0.56 (CLASS) and F1=0.10 (SUBCLASS) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_CLUS_0998 (PARTIAL); 3 of 3 markers CONSISTENT (marker_Foxp2, marker_Drd1, marker_Oprm1). Strong marker convergence but AT resolves only to CLASS level; broadMatch retained pending cluster-level AT resolution.
+    confidence_score: 0.25
+    rationale: 'Three-marker convergence at high percentile: marker_Foxp2 CONSISTENT (precomputed mean 11.35, 98.5th pct), marker_Drd1 CONSISTENT (mean 7.07, 98.3rd pct), marker_Oprm1 CONSISTENT (mean 8.31, 99.1th pct) — 3 of 3 markers CONSISTENT. GABAergic NT CONSISTENT. MapMyCells scRNA-seq AT (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) on GABA-3-Foxp2_Col6a1 (n=165 naive cells) reaches F1=0.56 at CLASS level (coverage=0.98); SUBCLASS F1=0.10 for the STR D1 Sema5a subclass containing CS20230722_CLUS_0998; AT support is PARTIAL due to this subclass-level mismatch. region_fraction=0.001 is consistent with small ITC structure. LOW confidence reflects AT subclass mismatch and absence of ITC-specific validated AT source.
 
       '
     reconciliation_note: ''
-    rationale_generated_at: '2026-06-10T13:43:02+00:00'
+    rationale_generated_at: '2026-06-10T15:44:17+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/amygdala_intercalated_cell_summary.md
-    rationale_source_hash: 44c2840d
+    rationale_source_hash: 5b82db5f
   - id: edge_bla_gabaergic_projection_neuron_to_cs20230722_clus_0850
     lit_type: bla_gabaergic_projection_neuron
     taxonomy_type: CS20230722_CLUS_0850
@@ -3094,6 +3115,7 @@ edges:
       - Which of CLUS_0850, CLUS_0858, CLUS_0860 best represents the BLA long-range SST/nNOS projection neuron — retrograde tracing plus atlas cross-reference needed to discriminate.
       - Is CS20230722_CLUS_0850 specifically the long-range projection subtype, or does GABA-37-Sst-Npy include multiple functional subtypes?
       - Can Nos1 expression be confirmed at protein level in the target cluster from atlas precomputed data?
+      - Does the Hochgerner 2023 GABA-37-Sst-Npy label (Npy+) primarily correspond to the SST/nNOS projection neuron population or capture a different BLA Sst+ subtype?
     proposed_experiments:
       - Retrograde tracing + SST/NOS1 intersectional labelling to confirm projection identity.
     discovery_score:
@@ -3141,21 +3163,25 @@ edges:
       region_fraction: 0.035
       region_evidence: SELF
     confidence: LOW
-    confidence_score: 0.45
-    rationale: 'GABA-37-Sst-Npy maps with F1=0.92 (SUBCLASS) and F1=0.22 (CLUSTER) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_CLUS_0850; 3 of 3 markers CONSISTENT (marker_Sst, marker_Nos1, negative_marker_Pvalb). Cluster-level AT weak (F1=0.22); broadMatch retained: classical type likely broader than this specific cluster.
+    confidence_score: 0.3
+    rationale: 'scRNA-seq annotation transfer (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) maps Hochgerner 2023 GABA-37-Sst-Npy to Sst Chodl Gaba subclass with F1=0.92 at SUBCLASS but F1=0.22 at CLUSTER for CS20230722_CLUS_0850; 3 of 3 markers CONSISTENT (marker_Sst, marker_Nos1, negative_marker_Pvalb). skos:broadMatch reflects 1:n cardinality: CS20230722_CLUS_0850, 0858, and 0860 score identically on the Sst/Nos1/Pvalb panel and no discriminating property has been identified.
 
       '
-    reconciliation_note: ''
-    rationale_generated_at: '2026-06-10T13:43:00+00:00'
+    reconciliation_note: 'Three Sst Chodl clusters (CS20230722_CLUS_0850, 0858 Sst Chodl Gaba_4, 0860 Sst Chodl Gaba_5) score identically on the Sst/Nos1/Pvalb panel; no discriminating property available in current evidence. broadMatch predicate and LOW confidence appropriate until retrograde tracing or higher-resolution AT resolves the 1:n cardinality.
+
+      '
+    rationale_generated_at: '2026-06-10T15:44:17+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_gabaergic_projection_neuron_summary.md
-    rationale_source_hash: c8ea904a
+    rationale_source_hash: 1c466245
   - id: edge_bla_npy_neurogliaform_cell_to_cs20230722_clus_0710
     lit_type: bla_npy_neurogliaform_cell
     taxonomy_type: CS20230722_CLUS_0710
     relationship: evidencell:UncertainRelationship
     mapping_justification: semapv:UnspecifiedMatching
     mapping_cardinality: 1:n
-    reconciliation_note: ''
+    reconciliation_note: 'The inherited predicate evidencell:UncertainRelationship may be inconsistent with the AT evidence strength: F1=0.98 at supertype CS20230722_SUPT_0199 and F1=0.57 at cluster CS20230722_CLUS_0710 in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` are stronger than UNCERTAIN typically implies. However, the Sst DISCORDANT negative-marker flag (val=1.0) and the indirect nature of the AT source (transcriptomically defined GABA-46-Lamp5-Kit, not morphologically confirmed NPY neurogliaform cells) together justify retaining UNCERTAIN until Sst co-expression is resolved. If multiplexed smFISH confirms Sst-negativity in Npy+/Lamp5+ BLA cells, the predicate should be upgraded to skos:closeMatch or skos:exactMatch at MODERATE confidence — curator review required.
+
+      '
     property_comparisons:
       - property: nt_type
         node_a_value: GABAergic
@@ -3251,6 +3277,8 @@ edges:
       - Acquire CCN20230722 HDF5 and re-run Stage A discovery with explicit Npy+/Sst- scoring to test for a better-fitting BLA cluster.
       - Does the BLA component of CS20230722_CLUS_0710 correspond to NPY neurogliaform cells? Predicate should be upgraded to broadMatch if confirmed.
       - Why is negative_marker_Sst DISCORDANT? Is there Sst co-expression in the Lamp5-Kit cluster?
+      - Trawl literature for Sst expression in BLA NPY neurogliaform cells — the CS20230722_CLUS_0710 Sst val=1.0 may reflect cluster heterogeneity not captured in classical single-marker studies.
+      - Confirm Pvalb-negativity assertion for BLA NPY neurogliaform cells with a primary citation.
     proposed_experiments:
       - Multiplexed smFISH with Npy+Lamp5+Sst probes in mouse BLA.
       - Acquire CCN20230722 HDF5 and re-run discovery with Npy+/-Sst scoring.
@@ -3298,11 +3326,11 @@ edges:
               pct: 0.333
       region_fraction: 0.02
       region_evidence: SELF
-    confidence: LOW
-    confidence_score: 0.4
-    rationale: 'GABA-46-Lamp5-Kit maps with F1=0.98 (SUPERTYPE) and F1=0.57 (CLUSTER) in `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_CLUS_0710; 2 of 3 markers CONSISTENT (neuropeptide_Npy, negative_marker_Pvalb CONSISTENT; negative_marker_Sst DISCORDANT). Predicate `evidencell:UncertainRelationship` retained pending review; cluster-level AT moderate (F1=0.57).
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: 'MapMyCells (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) maps GABA-46-Lamp5-Kit to CS20230722_SUPT_0199 at F1=0.98 and to CS20230722_CLUS_0710 at F1=0.57; 2 of 3 markers CONSISTENT (neuropeptide_Npy CONSISTENT; negative_marker_Pvalb CONSISTENT); negative_marker_Sst DISCORDANT (Sst val=1.0 above MIN_DETECTABLE) is the primary disqualifying signal. Region fraction 0.02 in MBA:295 is low. Predicate evidencell:UncertainRelationship retained pending Sst co-expression resolution.
 
       '
-    rationale_generated_at: '2026-06-10T13:42:59+00:00'
+    rationale_generated_at: '2026-06-10T15:44:18+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_npy_neurogliaform_cell_summary.md
-    rationale_source_hash: 'a4f1d10f'
+    rationale_source_hash: 'd5d464eb'
