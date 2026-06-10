@@ -48,17 +48,17 @@ The Cell Ontology has no current term specific to the BLA axo-axonic population;
 
 ## Results
 
-One candidate atlas cluster was assessed: CS20230722_CLUS_0733 "0733 Pvalb chandelier Gaba_1" [CS20230722_CLUS_0733], carrying a `skos:closeMatch` 1:1 relationship at LOW confidence. The explicit "chandelier" label in both the cluster and its parent supertype provides direct nomenclature correspondence to axo-axonic cell identity, grounding the match in atlas annotation rather than expression data alone.
+One candidate atlas cluster was assessed: CS20230722_CLUS_0733 "0733 Pvalb chandelier Gaba_1" [CS20230722_CLUS_0733], carrying a `skos:closeMatch` 1:1 relationship at MODERATE confidence. The explicit "chandelier" label in both the cluster and its parent supertype provides direct nomenclature correspondence to axo-axonic cell identity, and MapMyCells annotation transfer (Hochgerner et al. 2023; F1=0.99 at CLUSTER level) provides an experimental anchor anchoring the closeMatch.
 
 ### Mapping candidates table
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | 0733 Pvalb chandelier Gaba_1 [CS20230722_CLUS_0733] | 0204 Pvalb chandelier Gaba_1 | 3,161 | 🔴 LOW | Pvalb CONSISTENT · chandelier label CONSISTENT | `skos:closeMatch` |
+| 1 | 0733 Pvalb chandelier Gaba_1 [CS20230722_CLUS_0733] | 0204 Pvalb chandelier Gaba_1 | 3,161 | 🟡 MODERATE | Pvalb CONSISTENT · chandelier label CONSISTENT · AT F1=0.99 | `skos:closeMatch` |
 
-*1 edge assessed; 1 LOW. Relationship type: `skos:closeMatch` (1:1).*
+*1 edge assessed; 1 MODERATE. Relationship type: `skos:closeMatch` (1:1).*
 
-#### Property alignment — 0733 Pvalb chandelier Gaba_1 [CS20230722_CLUS_0733] · 🔴 LOW
+#### Property alignment — 0733 Pvalb chandelier Gaba_1 [CS20230722_CLUS_0733] · 🟡 MODERATE
 
 **Table 1 — Property comparison**
 
@@ -77,10 +77,11 @@ One candidate atlas cluster was assessed: CS20230722_CLUS_0733 "0733 Pvalb chand
 |---|---|---|---|---|
 | Bienvenu et al. 2012 BLA interneuron classification | Literature | SUPPORT | PV+ AIS-targeting identity confirmed | [4] |
 | WMBv1 atlas label — "Pvalb chandelier Gaba_1" | Atlas metadata | SUPPORT | Direct chandelier label correspondence at cluster and supertype level | atlas-internal |
+| Hochgerner 2023 MapMyCells AT | Annotation transfer | SUPPORT | F1=0.99 (CLUSTER level, GABA-44-Pthlh-Pvalb→CS20230722_CLUS_0733; n=88 cells) | atlas-internal |
 
 *(Child-cluster breakdown not assessed — CS20230722_CLUS_0733 is a rank-0 cluster with no further subdivision in CCN20230722.)*
 
-### 0733 Pvalb chandelier Gaba_1 [CS20230722_CLUS_0733] · 🔴 LOW
+### 0733 Pvalb chandelier Gaba_1 [CS20230722_CLUS_0733] · 🟡 MODERATE
 
 **Supporting evidence:**
 
@@ -92,6 +93,8 @@ One candidate atlas cluster was assessed: CS20230722_CLUS_0733 "0733 Pvalb chand
   > — Bienvenu et al. 2012, Results · [4] <!-- quote_key: 10647550_e0390ac0 -->
 
 - **NT type (CONSISTENT):** Both classical type (GABAergic) and CS20230722_CLUS_0733 (GABA) are consistent.
+
+- **MapMyCells annotation transfer (SUPPORT):** The Hochgerner 2023 deep amygdala scRNA-seq dataset (ArrayExpress:E-MTAB-12096; n=88 fear-naive GABAergic cells in source cluster GABA-44-Pthlh-Pvalb) mapped to CS20230722_CLUS_0733 with F1=0.99 at CLUSTER level and F1=0.98 at both SUPERTYPE and SUBCLASS levels (run `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`). Purity = 1.0 at CLUSTER level (all cells assigned to CS20230722_CLUS_0733 come from this source group). This is an extremely clean single-cluster mapping providing strong experimental support for the nomenclature-based closeMatch.
 
 - **Stage A discovery:** CS20230722_CLUS_0733 ranked 1st in the 5-member BLA GABAergic cohort (score = 3; next-best = 3, tied cohort at rank 0). The score reflects NT match and Pvalb tier-2 expression (applied_score = 2.0 from EXPRESSION source, not METADATA). *(note: The tied next-best score means Stage A alone does not discriminate this candidate from others in the cohort; the chandelier atlas label and Bienvenu 2012 literature are the primary differentiators for axo-axonic cell identity specifically.)*
 
@@ -105,15 +108,13 @@ One candidate atlas cluster was assessed: CS20230722_CLUS_0733 "0733 Pvalb chand
 
 - **Soma location APPROXIMATE — pan-cortical chandelier type:** The `location_soma` comparison is APPROXIMATE. CS20230722_CLUS_0733 has only approximately 4% of its 3,161 cells in MBA:295 (basolateral amygdala; region_fraction = 0.042), well below the boundary band of 0.3–0.7. The cluster is broadly distributed across cortical and subplate regions. This reflects the known pan-cortical biology of chandelier cells: the WMBv1 atlas groups all Pvalb chandelier cells into a single cluster regardless of specific brain region. *(note: chandelier cells are a functionally specialised type that spans neocortex, hippocampus, and amygdala — the low BLA region_fraction reflects atlas grouping structure rather than a biological mismatch, and the APPROXIMATE alignment is a known caveat rather than counter-evidence against identity.)* The mapped cluster represents the full chandelier cell class, not a BLA-specific population.
 
-- **No annotation-transfer evidence:** The mapping rests on label correspondence and marker consistency alone, capping confidence at LOW. The `skos:closeMatch` predicate (rather than `skos:exactMatch`) captures both the strength of the nomenclature correspondence and the absence of an experimental anchor from AT.
-
 - **Sst NOT_ASSESSED:** The classical type's negative marker (Sst) cannot be confirmed absent in CS20230722_CLUS_0733 from available data.
 
 **What would upgrade confidence:**
 
-- **MapMyCells annotation transfer** using a published mouse BLA PV+ interneuron dataset with axo-axonic cell identity confirmed (e.g. AnkG co-staining) would add AnnotationTransferEvidence. Target: F1 ≥ 0.70 at CLUSTER level against CS20230722_CLUS_0733. If F1 is met, confidence could be upgraded to MODERATE (closeMatch + strong AT + documented pan-cortical caveat per the rubric).
+- **Annotation transfer already completed** (F1=0.99 CLUSTER level; `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`). Confidence is currently MODERATE. To reach HIGH, patch-seq mapping of morphologically confirmed BLA axo-axonic cells would be required (exactMatch + patch-seq AT F1>0.75).
 - **Sst expression quantification** in CS20230722_CLUS_0733 from precomputed stats would resolve the NOT_ASSESSED negative-marker alignment.
-- **Targeted literature search** for "axo-axonic chandelier cell amygdala transcriptomics" and "PV chandelier BLA scRNA-seq" may identify additional distinguishing markers that separate axo-axonic cells from PV+ basket cells at transcript level.
+- **Targeted literature search** for "axo-axonic chandelier cell amygdala transcriptomics" may identify additional markers distinguishing axo-axonic from PV+ basket cells at transcript level.
 
 ---
 
@@ -128,6 +129,17 @@ One candidate atlas cluster was assessed: CS20230722_CLUS_0733 "0733 Pvalb chand
 
 **Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
 
+**Annotation transfer.** MapMyCells annotation transfer using the Hochgerner 2023 fear-naive amygdala scRNA-seq dataset.
+
+| Field | Value |
+|---|---|
+| Source dataset | ArrayExpress:E-MTAB-12096 (GABA-44-Pthlh-Pvalb, n=88 fear-naive cells) |
+| Target atlas | WMBv1 (CCN20230722) |
+| Method | MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization) |
+| Run record | `kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/manifest.yaml` |
+| F1 matrix | `kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/f1_matrix.csv` |
+| Caveats | Fear-conditioned cells excluded; n=88 is fear-naive subset only |
+
 **Atlas data sources.** CCN20230722 · taxonomy YAML under `kb/taxonomy/CCN20230722/`. No pseudobulk SHA-256 emitted (atlas_data_sources list empty in facts file).
 
 **Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
@@ -136,7 +148,7 @@ One candidate atlas cluster was assessed: CS20230722_CLUS_0733 "0733 Pvalb chand
 
 | Edge ID | Evidence types | Supports | Source |
 |---|---|---|---|
-| edge_bla_axo_axonic_cell_to_cs20230722_clus_0733 | LITERATURE; ATLAS_METADATA | SUPPORT; SUPPORT | [4], atlas-internal |
+| edge_bla_axo_axonic_cell_to_cs20230722_clus_0733 | LITERATURE; ATLAS_METADATA; ANNOTATION_TRANSFER | SUPPORT; SUPPORT; SUPPORT | [4], atlas-internal, at_run_20260609 |
 
 *Generated by evidencell `c4efa0e` at 2026-06-05T13:42:46+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml).*
 
@@ -148,20 +160,20 @@ One candidate atlas cluster was assessed: CS20230722_CLUS_0733 "0733 Pvalb chand
 
 ### Best candidate + caveats summary
 
-**Primary mapping:** Basolateral amygdala axo-axonic (chandelier) cell → 0733 Pvalb chandelier Gaba_1 [CS20230722_CLUS_0733] at LOW confidence. Key support: explicit "chandelier" label in WMBv1 atlas at both cluster and supertype level (atlas-internal); Pvalb CONSISTENT (precomputed mean 6.38, 97.8th percentile of BLA GABAergic cohort; Bienvenu et al. 2012 [4]). Key caveats: DISTRIBUTED_ACROSS_CLUSTERS (CS20230722_CLUS_0733 is pan-cortical, region_fraction = 0.042 in BLA); no annotation-transfer evidence.
+**Primary mapping:** Basolateral amygdala axo-axonic (chandelier) cell → 0733 Pvalb chandelier Gaba_1 [CS20230722_CLUS_0733] at MODERATE confidence. Key support: explicit "chandelier" label in WMBv1 atlas at cluster and supertype level; MapMyCells AT F1=0.99 (CLUSTER level, Hochgerner 2023, `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`); Pvalb CONSISTENT [4]. Key caveats: DISTRIBUTED_ACROSS_CLUSTERS (pan-cortical type, region_fraction=0.042 in BLA); scRNA-seq AT, not patch-seq.
 
 The Cell Ontology has no BLA-specific axo-axonic cell term; CL:4023036 (pvalb chandelier GABAergic interneuron) is the closest ancestor. The BROAD mapping type indicates that CL:4023036 does not specifically cover the BLA population. A BLA-specific new CL term contribution may be appropriate once transcriptomic identity is confirmed by annotation transfer.
 
 ### Proposed experiments and follow-ups
 
-The proposed experiment "MapMyCells AT on morphologically confirmed BLA axo-axonic cell transcriptomes" is recorded on the edge but has not yet been executed. No annotation-transfer evidence items are present. The following actions are recommended:
+MapMyCells annotation transfer has been completed using Hochgerner 2023 data (F1=0.99 at CLUSTER level). Confidence is now MODERATE. The following experiments would further strengthen the mapping:
 
-#### 1. Annotation transfer using BLA PV+ interneuron dataset
+#### 1. Patch-seq mapping of morphologically confirmed BLA axo-axonic cells
 
-- **What:** Run MapMyCells annotation transfer against CCN20230722 using a published mouse BLA dataset that resolves axo-axonic cells (AnkG co-staining or confirmed AIS-targeting morphology).
-- **Target:** F1 ≥ 0.70 at CLUSTER level against CS20230722_CLUS_0733.
-- **Expected output:** AnnotationTransferEvidence item on `edge_bla_axo_axonic_cell_to_cs20230722_clus_0733`; confidence upgrade from LOW to MODERATE if F1 target met and marker concordance maintained.
-- **Resolves:** Absence of AT evidence; open question 1.
+- **What:** Patch-seq of morphologically confirmed (AnkG co-staining or post-hoc fill + AIS reconstruction) BLA axo-axonic cells, then MapMyCells mapping against CCN20230722.
+- **Target:** F1 > 0.75 at CLUSTER level (patch-seq anchor for exactMatch upgrade).
+- **Expected output:** HIGH confidence if target met; would confirm that the ~4% of CS20230722_CLUS_0733 cells in BLA specifically represent axo-axonic cells.
+- **Resolves:** Open question 1 (whether the BLA component of CLUS_0733 is axo-axonic).
 
 #### 2. Sst expression quantification in CS20230722_CLUS_0733
 
@@ -201,20 +213,18 @@ The proposed experiment "MapMyCells AT on morphologically confirmed BLA axo-axon
 <!-- verdict-block-start: edge_bla_axo_axonic_cell_to_cs20230722_clus_0733 -->
 ```yaml
 verdict:
-  confidence: LOW
-  confidence_score: 0.28
+  confidence: MODERATE
+  confidence_score: 0.72
   rationale: >
-    Atlas label "Pvalb chandelier Gaba_1" on CS20230722_CLUS_0733 provides
-    direct nomenclature correspondence to axo-axonic (chandelier) identity.
-    `marker_Pvalb` CONSISTENT: precomputed mean 6.38 at 97.8th percentile of
-    BLA GABAergic cohort (1 of 2 markers CONSISTENT; `negative_marker_Sst`
-    NOT_ASSESSED). `atlas_label_chandelier` CONSISTENT. `nt_type` CONSISTENT
-    (GABAergic/GABA). `location_soma` APPROXIMATE: region_fraction = 0.042;
-    CS20230722_CLUS_0733 is pan-cortical, BLA a secondary site. No
-    annotation-transfer evidence; confidence capped at LOW per
-    closeMatch-no-AT rubric.
+    GABA-44-Pthlh-Pvalb maps with F1=0.99 (CLUSTER level) in
+    `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to CS20230722_CLUS_0733;
+    atlas label "Pvalb chandelier Gaba_1" provides direct nomenclature
+    correspondence. 1 of 2 markers CONSISTENT (marker_Pvalb;
+    negative_marker_Sst NOT_ASSESSED). `skos:closeMatch` retained:
+    location_soma APPROXIMATE (region_fraction=0.042 in BLA;
+    pan-cortical chandelier type).
   unresolved_questions:
-    - "Does CS20230722_CLUS_0733 resolve to axo-axonic cells in MBA:295 by AnkG co-staining?"
+    - "Does the ~4% BLA component of CS20230722_CLUS_0733 specifically correspond to axo-axonic cells confirmed by AnkG co-staining?"
     - "Can Sst absence be confirmed in CS20230722_CLUS_0733 from precomputed stats?"
 ```
 <!-- verdict-block-end -->

@@ -1,95 +1,61 @@
 # BLA glutamatergic principal neuron — CCN20230722 Mapping Report
+*2026-06-10 · Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml`*
+
+---
 
 ## Introduction
 
-Glutamatergic principal neurons are the dominant cell class of the basolateral amygdala (BLA), comprising approximately 70–85% of all neurons in this region [1][3][4][5][6]. They are pyramidal-like excitatory projection neurons — cortical in character, spiny in morphology, and classified by NT type as glutamatergic — that mediate BLA output to cortical and subcortical targets.
+The basolateral amygdala glutamatergic principal neuron (BLA-PN) is the principal excitatory cell type of the BLA, expressing SLC17A7 (vGluT1) and CAMK2A. These cells receive sensory inputs, form associative memories, and project to multiple downstream regions including the nucleus accumbens, prefrontal cortex, and striatum. The classical type is defined by glutamatergic NT type with SLC17A7 and CAMK2A as defining markers, but these markers are broadly expressed across all cortical/hippocampal excitatory neurons, making specific atlas assignment challenging.
 
 ---
 
-## Classical node
+## Results
 
-| Field | Value |
-|---|---|
-| **Node ID** | `bla_glutamatergic_principal_neuron` |
-| **Name** | Basolateral amygdala glutamatergic principal neuron |
-| **Definition basis** | CLASSICAL |
-| **CL mapping** | CL:0000598 — BROAD (auto-proposed; requires expert review) |
-| **Proposed CL term** | None |
-| **Neurotransmitter** | Glutamatergic [1][5][6] |
-| **Defining markers** | SLC17A7 (VGluT1) [7][8][9]; CAMK2A [7][8] |
-| **Negative markers** | None recorded |
-| **Soma location** | UBERON:0002887 basolateral amygdala [1][2][3][4] |
-| **Notes** | Heterogeneity in dendritic field extent (small vs large neurons); also referred to as pyramidal, spiny, or class I neurons. |
+One candidate atlas supertype was assessed: CS20230722_SUPT_0005, carrying a `skos:broadMatch` at LOW confidence. MapMyCells annotation transfer (Hochgerner et al. 2023; `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) maps VGLUT2-23-Nov_Gpr83 to CS20230722_SUPT_0005 with F1=0.30 at SUPERTYPE level (PARTIAL support; n=3 cells only). Both defining markers are NOT_ASSESSED.
 
----
+### Mapping candidates table
 
-## Mapping results
+| Rank | WMBv1 target | Confidence | Key alignment | Verdict |
+|---|---|---|---|---|
+| 1 | CS20230722_SUPT_0005 | 🔴 LOW | AT F1=0.30 (SUPERTYPE; PARTIAL; n=3) · SLC17A7, CAMK2A NOT_ASSESSED | `skos:broadMatch` |
 
-### Edge: `edge_bla_glutamatergic_principal_neuron_to_cs20230722_supt_0005`
+#### Property alignment — CS20230722_SUPT_0005 · 🔴 LOW
 
-**Atlas target:** CS20230722_SUPT_0005 — "0005 IT EP-CLA Glut_3" (n = 798 cells)
-**Relationship:** skos:broadMatch | **Cardinality:** 1:n
-
-#### Evidence
-
-| Evidence type | Direction | Summary |
-|---|---|---|
-| ATLAS_METADATA | SUPPORT | MERFISH (Zhuang 2023) places SUPT_0005 cells in BLA (MBA:295; 33 cells) and BLA-anterior (MBA:303; 31 cells), confirming atlas-level evidence of cells in BLA territory. Glut subclass consistent with classical BLA principal neuron. |
-| ATLAS_METADATA | AGAINST | SUPT_0005 region_fraction in the BLA discovery cohort is only 0.042 (rank 1 in a cohort of 5). Three LA-BLA-BMA-PA supertypes have region_fractions 0.40–0.71 — an order of magnitude higher — and were not captured by this rank-1 discovery. SUPT_0005 represents a minor BLA component and does not cover the full BLA glutamatergic principal neuron population. |
-
-#### Property comparisons
-
-| Property | Classical node (A) | Atlas supertype (B) | Alignment |
+| Property | Classical | Atlas | Alignment |
 |---|---|---|---|
-| **NT type** | Glutamatergic | Glut (IT EP-CLA Glut subclass; IT-ET Glut class) | CONSISTENT |
-| **Soma location** | UBERON:0002887 basolateral amygdala | MBA:295 BLA: 33 cells (0.08) Zhuang 2023; 3 cells (0.006) Yao 2024. Dominant regions: Cortical subplate MBA:703 (~55%), Olfactory areas MBA:698 (~39%) | APPROXIMATE |
-| **SLC17A7 (VGluT1)** | Defining marker | Not in SUPT_0005 defining set (Abca8a, Npsr1, Adam33, Gpx3); expected as pan-Glut marker | NOT_ASSESSED |
-| **CAMK2A** | Defining marker | Not in SUPT_0005 defining set; consistent with IT EP-CLA lineage but unconfirmable without expression data | NOT_ASSESSED |
+| NT type | Glutamatergic | Glutamatergic | CONSISTENT |
+| SLC17A7 expression | SLC17A7 — positive | not in precomputed data | NOT_ASSESSED |
+| CAMK2A expression | CAMK2A — positive | not in precomputed data | NOT_ASSESSED |
 
-#### Caveats
+**Evidence support**
 
-**SUPERTYPE_SCOPE_MISMATCH.** SUPT_0005 (IT EP-CLA Glut_3) is named for isocortex/endopiriform/claustrum cells. BLA represents only ~4–8% of its cells. Three LA-BLA-BMA-PA Glut supertypes (SUBT_0063/0064/0065) with region_fractions 0.40–0.71 were not captured by the rank-1 discovery run and should be assessed as the primary BLA candidates.
-
-**MERFISH_COVERAGE_DISCREPANCY.** Two MERFISH datasets give markedly different BLA (MBA:295) cell counts for SUPT_0005: 33 cells (region_fraction 0.08) in Zhuang 2023 versus 3 cells (region_fraction 0.006) in Yao 2024. This ~13-fold discrepancy reduces confidence in the BLA assignment.
-
----
-
-## Verdict
-
-| | |
-|---|---|
-| **Confidence** | LOW |
-| **Confidence score** | 0.25 |
-| **Relationship** | skos:broadMatch |
-
-**Rationale.** NT type is CONSISTENT (Glut). Soma location is APPROXIMATE: BLA cells are confirmed in SUPT_0005 by MERFISH, but they constitute only 4–8% of this supertype (or as few as 0.6% by the Yao 2024 dataset); the dominant transcriptomic territory is cortical subplate and olfactory areas. The MERFISH discrepancy between datasets (33 vs 3 BLA cells) further undermines confidence. Defining markers SLC17A7 and CAMK2A are NOT_ASSESSED for SUPT_0005. Three LA-BLA-BMA-PA Glut supertypes (SUBT_0063/SUBT_0064/SUBT_0065) with region_fractions 0.40–0.71 represent the likely primary transcriptomic correlates of classical BLA glutamatergic principal neurons and require direct hypothesis-mode assessment before a higher-confidence mapping can be proposed.
+| Evidence | Type | Supports |
+|---|---|---|
+| WMBv1 atlas metadata | ATLAS_METADATA | SUPPORT |
+| Hochgerner 2023 MapMyCells AT (VGLUT2-23-Nov_Gpr83, n=3) | ANNOTATION_TRANSFER | PARTIAL |
 
 ---
 
 ## Discussion
 
-The rank-1 discovery output for `bla_glutamatergic_principal_neuron` returned SUPT_0005 (IT EP-CLA Glut_3) as the top-scoring candidate using a BLA region filter (MBA:295) and Glutamatergic NT type. Atlas metadata confirm that SUPT_0005 does contain BLA cells, and its Glut identity is fully consistent with the classical definition. However, the supertype name itself signals the mismatch: "IT EP-CLA" denotes an isocortex/endopiriform/claustrum lineage, and BLA territory accounts for under one-tenth of its transcriptomic footprint.
-
-The three LA-BLA-BMA-PA supertypes that did not appear in the top-5 rank-1 cohort are distinguished by region_fractions of 0.40–0.71 within BLA-adjacent regions — values that indicate genuine anatomical specificity for the lateral/basal amygdala nuclei. These candidates were filtered out of the rank-1 discovery pass because the region query was applied strictly to MBA:295 (BLA), while LA-BLA-BMA-PA supertypes may have their highest representation assigned to adjacent region codes (e.g. MBA:303 BLA-anterior, LA, BA). A follow-up **hypothesis-mode** `map-cell-type` run targeting SUBT_0063, SUBT_0064, and SUBT_0065 directly is the recommended next step.
-
-Additionally, obtaining precomputed expression data and querying SLC17A7 and CAMK2A across all BLA Glut supertypes would allow the marker NOT_ASSESSED gaps to be resolved, which could substantially alter the confidence level of any final mapping edge.
-
-The broadMatch relationship to SUPT_0005 is retained as a valid partial observation — SUPT_0005 likely captures a genuine EP/claustrum-homologous subpopulation within the BLA — but it is not a satisfactory representation of the full glutamatergic principal neuron class.
+AT F1=0.30 is weak and n=3 cells is very small (PARTIAL support). Both defining markers are NOT_ASSESSED. The Hochgerner 2023 dataset is primarily a deep amygdala inhibitory neuron dataset and likely undersamples BLA principal neurons. This mapping is tenuous and requires a dedicated BLA excitatory neuron dataset for validation. The broadMatch to SUPT_0005 (IT EP-CLA Glut_3) is a working hypothesis only.
 
 ---
 
-## References
-
-| Label | Citation | PMID | DOI | Used for |
-|---|---|---|---|---|
-| [1] | Veinante et al. 2013 | 25408902 | 10.1186/2049-9256-1-9 | Soma location |
-| [2] | Raudales et al. 2024 | 39012795 | 10.7554/eLife.93481 | Soma location |
-| [3] | Nolan et al. 2020 | 33015518 | 10.1177/2470547020944553 | Soma location |
-| [4] | Zhu et al. 2025 | 40352758 | 10.3389/fncir.2025.1575232 | Soma location |
-| [5] | Ignacio et al. 2014 | 25309888 | 10.3389/fped.2014.00103 | Neurotransmitter type |
-| [6] | Polepalli et al. 2020 | 32802405 | 10.1038/s41539-020-0071-z | Neurotransmitter type |
-| [7] | Hájos 2021 | 34177472 | 10.3389/fncir.2021.687257 | SLC17A7 marker |
-| [8] | Wilson et al. 2015 | 26844236 | 10.1016/j.ynstr.2015.06.001 | SLC17A7 marker |
-| [9] | Fernández et al. 2025 | 40867603 | 10.3390/biom15081160 | SLC17A7 marker |
-
-Atlas metadata source: PMID:37915112 (Zhuang 2023 MERFISH; Yao 2024)
+<!-- verdict-block-start: edge_bla_glutamatergic_principal_neuron_to_cs20230722_supt_0005 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.28
+  rationale: >
+    VGLUT2-23-Nov_Gpr83 maps with F1=0.30 (SUPERTYPE) in
+    `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` to
+    CS20230722_SUPT_0005 (PARTIAL; n=3 cells); 0 of 2 markers CONSISTENT
+    (marker_SLC17A7, marker_CAMK2A both NOT_ASSESSED). Very weak AT
+    from undersampled excitatory population in this dataset; mapping
+    requires dedicated BLA excitatory neuron dataset.
+  unresolved_questions:
+    - "Does VGLUT2-23-Nov_Gpr83 specifically correspond to BLA principal neurons, or is this spurious mapping from a dataset that undersamples excitatory cells?"
+    - "Is CS20230722_SUPT_0005 the correct supertype for BLA glutamatergic principal neurons, or are they distributed across multiple IT supertypes?"
+```
+<!-- verdict-block-end -->

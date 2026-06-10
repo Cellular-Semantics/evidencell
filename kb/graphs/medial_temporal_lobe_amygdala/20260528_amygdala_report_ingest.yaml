@@ -1037,6 +1037,44 @@ edges:
         n_cells_total: 92
         best_f1_score: 0.994
         best_mapping_rank: 0
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            coverage: 0.9772727272727273
+            purity: 0.30824372759856633
+            f1_score: 0.4686648501362398
+            n_cells_mapped: 86
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 051 Pvalb chandelier Gaba
+            best_target_accession: CS20230722_SUBC_051
+            coverage: 0.9662921348314607
+            purity: 1.0
+            f1_score: 0.9828571428571428
+            n_cells_mapped: 86
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0204 Pvalb chandelier Gaba_1
+            best_target_accession: CS20230722_SUPT_0204
+            coverage: 0.967032967032967
+            purity: 1.0
+            f1_score: 0.9832402234636871
+            n_cells_mapped: 88
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0733 Pvalb chandelier Gaba_1
+            best_target_accession: CS20230722_CLUS_0733
+            coverage: 0.9880952380952381
+            purity: 1.0
+            f1_score: 0.9940119760479043
+            n_cells_mapped: 83
+            median_bootstrap: 1.0
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: BROAD_DISTRIBUTION
         description: CLUS_0733 is not BLA-restricted. Dominant distribution in cortical subplate and piriform/entorhinal areas. The chandelier cell type is pan-cortical; BLA is a secondary site.
@@ -1137,6 +1175,44 @@ edges:
         n_cells_total: 72
         best_f1_score: 0.637
         best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            coverage: 1.0
+            purity: 0.12844036697247707
+            f1_score: 0.22764227642276422
+            n_cells_mapped: 70
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 047 Sncg Gaba
+            best_target_accession: CS20230722_SUBC_047
+            coverage: 0.9180327868852459
+            purity: 0.43410852713178294
+            f1_score: 0.5894736842105263
+            n_cells_mapped: 56
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0185 Sncg Gaba_1
+            best_target_accession: CS20230722_SUPT_0185
+            coverage: 0.22641509433962265
+            purity: 0.2926829268292683
+            f1_score: 0.2553191489361702
+            n_cells_mapped: 12
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0664 Sncg Gaba_1
+            best_target_accession: CS20230722_CLUS_0664
+            coverage: 0.03333333333333333
+            purity: 0.5
+            f1_score: 0.0625
+            n_cells_mapped: 1
+            median_bootstrap: 1.0
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: CARDINALITY_1_N
         description: Five Sncg Gaba_1 clusters (0664/0665/0666/0672/0677) all score 5/5 with high Cnr1 and Cck. Classical type likely spans multiple Sncg clusters.
@@ -1240,6 +1316,44 @@ edges:
         n_cells_total: 61
         best_f1_score: 0.762
         best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            coverage: 0.9636363636363636
+            purity: 0.18996415770609318
+            f1_score: 0.31736526946107785
+            n_cells_mapped: 53
+            median_bootstrap: 0.98
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            coverage: 0.9672131147540983
+            purity: 0.48760330578512395
+            f1_score: 0.6483516483516484
+            n_cells_mapped: 59
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0215 Sst Gaba_2
+            best_target_accession: CS20230722_SUPT_0215
+            coverage: 0.8571428571428571
+            purity: 0.6857142857142857
+            f1_score: 0.7619047619047619
+            n_cells_mapped: 48
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0765 Sst Gaba_2
+            best_target_accession: CS20230722_CLUS_0765
+            coverage: 0.1951219512195122
+            purity: 0.6153846153846154
+            f1_score: 0.29629629629629634
+            n_cells_mapped: 8
+            median_bootstrap: 0.905
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: TIED_CANDIDATES
         description: CLUS_0765 and CLUS_0774 (Sst Gaba_3, parent SUPT_0216) both score 5/5. A parallel edge to CLUS_0774 is needed.
@@ -1447,6 +1561,44 @@ edges:
         n_cells_total: 78
         best_f1_score: 0.652
         best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            coverage: 1.0
+            purity: 0.12844036697247707
+            f1_score: 0.22764227642276422
+            n_cells_mapped: 70
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 046 Vip Gaba
+            best_target_accession: CS20230722_SUBC_046
+            coverage: 0.972972972972973
+            purity: 0.4897959183673469
+            f1_score: 0.65158371040724
+            n_cells_mapped: 72
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0174 Vip Gaba_2
+            best_target_accession: CS20230722_SUPT_0174
+            coverage: 0.4
+            purity: 1.0
+            f1_score: 0.5714285714285715
+            n_cells_mapped: 22
+            median_bootstrap: 0.985
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0628 Vip Gaba_2
+            best_target_accession: CS20230722_CLUS_0628
+            coverage: 0.37142857142857144
+            purity: 1.0
+            f1_score: 0.5416666666666666
+            n_cells_mapped: 13
+            median_bootstrap: 0.98
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: Five Vip Gaba clusters (0628/0630/0638/0649/0656) all score 6/6 on Calb2+Vip, spanning four supertypes (SUPT_0174/0176/0179/0181). Classical type likely maps to multiple Vip Gaba clusters; broadMatch reflects 1:n cardinality.
@@ -1560,6 +1712,44 @@ edges:
         n_cells_total: 172
         best_f1_score: 0.979
         best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            coverage: 1.0
+            purity: 0.30091743119266057
+            f1_score: 0.46262341325811
+            n_cells_mapped: 164
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 049 Lamp5 Gaba
+            best_target_accession: CS20230722_SUBC_049
+            coverage: 0.9881656804733728
+            purity: 0.9226519337016574
+            f1_score: 0.9542857142857143
+            n_cells_mapped: 167
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0199 Lamp5 Gaba_1
+            best_target_accession: CS20230722_SUPT_0199
+            coverage: 0.9766081871345029
+            purity: 0.9823529411764705
+            f1_score: 0.9794721407624634
+            n_cells_mapped: 167
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0710 Lamp5 Gaba_1
+            best_target_accession: CS20230722_CLUS_0710
+            coverage: 0.3977272727272727
+            purity: 1.0
+            f1_score: 0.5691056910569106
+            n_cells_mapped: 35
+            median_bootstrap: 0.93
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: Five Lamp5 Gaba clusters (0710/0711/0712/0713/0723) all score 3/3 on Lamp5. CLUS_0710-0713 are under SUPT_0199 (Lamp5 Gaba_1); CLUS_0723 under SUPT_0202 (Lamp5 Gaba_4). Classical type may span both Lamp5 Gaba supertypes.
@@ -1666,6 +1856,44 @@ edges:
         n_cells_total: 181
         best_f1_score: 0.914
         best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 11 CNU-HYa GABA
+            best_target_accession: CS20230722_CLAS_11
+            coverage: 1.0
+            purity: 0.12736535662299855
+            f1_score: 0.22595222724338282
+            n_cells_mapped: 175
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 079 CEA-BST Six3 Cyp26b1 Gaba
+            best_target_accession: CS20230722_SUBC_079
+            coverage: 1.0
+            purity: 0.48257372654155495
+            f1_score: 0.650994575045208
+            n_cells_mapped: 180
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0368 CEA-BST Six3 Cyp26b1 Gaba_2
+            best_target_accession: CS20230722_SUPT_0368
+            coverage: 1.0
+            purity: 0.8411214953271028
+            f1_score: 0.9137055837563453
+            n_cells_mapped: 180
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 1333 CEA-BST Six3 Cyp26b1 Gaba_2
+            best_target_accession: CS20230722_CLUS_1333
+            coverage: 0.07407407407407407
+            purity: 0.47619047619047616
+            f1_score: 0.1282051282051282
+            n_cells_mapped: 10
+            median_bootstrap: 0.995
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: OTHER
         description: Sst expression at cluster average level (1.21, 57.5th pct) conflicts with the Sst-negativity criterion. The CLUS_1333 mean may reflect population heterogeneity — some cells expressing Sst and others not — rather than universal co-expression in all PKC-delta neurons.
@@ -1772,6 +2000,44 @@ edges:
         n_cells_total: 23
         best_f1_score: 0.552
         best_mapping_rank: 0
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            coverage: 0.6153846153846154
+            purity: 0.02867383512544803
+            f1_score: 0.054794520547945195
+            n_cells_mapped: 8
+            median_bootstrap: 0.985
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            coverage: 0.5652173913043478
+            purity: 0.10743801652892562
+            f1_score: 0.18055555555555555
+            n_cells_mapped: 13
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0230 Sst Gaba_17
+            best_target_accession: CS20230722_SUPT_0230
+            coverage: 0.6190476190476191
+            purity: 0.30952380952380953
+            f1_score: 0.41269841269841273
+            n_cells_mapped: 13
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0823 Sst Gaba_17
+            best_target_accession: CS20230722_CLUS_0823
+            coverage: 0.6153846153846154
+            purity: 0.5
+            f1_score: 0.5517241379310345
+            n_cells_mapped: 8
+            median_bootstrap: 1.0
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: Five Sst Gaba clusters score equally (score 4). CLUS_0765 (already used for BLA SST DTI), CLUS_0823, CLUS_0850, CLUS_0860, and CLUS_1312 all match. CeA SST neurons likely span multiple clusters.
@@ -1955,6 +2221,26 @@ edges:
         n_cells_total: 27
         best_f1_score: 0.88
         best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 11 CNU-HYa GABA
+            best_target_accession: CS20230722_CLAS_11
+            coverage: 1.0
+            purity: 0.016739446870451237
+            f1_score: 0.0329277022190408
+            n_cells_mapped: 23
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 082 CEA-BST Ebf1 Pdyn Gaba
+            best_target_accession: CS20230722_SUBC_082
+            coverage: 0.8888888888888888
+            purity: 0.09561752988047809
+            f1_score: 0.1726618705035971
+            n_cells_mapped: 24
+            median_bootstrap: 1.0
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: Five CEA-BST clusters all score 3/3 on Isl1 alone (CLUS_1316/1385/1386/1395/1397). Classical type spans multiple CEA-BST cluster subtypes; 1:n cardinality at rank0.
@@ -2050,6 +2336,44 @@ edges:
         best_f1_score: 0.677
         best_mapping_rank: 0
         notes: 'F1=0.677 at cluster level (purity=0.933, recall=0.532). PARTIAL support: high purity but only 53% of GABA-11 cells map to CLUS_1344; remainder split to STR D2 (SUPT_0274).'
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 11 CNU-HYa GABA
+            best_target_accession: CS20230722_CLAS_11
+            coverage: 0.8064516129032258
+            purity: 0.018195050946142648
+            f1_score: 0.03558718861209964
+            n_cells_mapped: 25
+            median_bootstrap: 0.92
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 079 CEA-BST Six3 Cyp26b1 Gaba
+            best_target_accession: CS20230722_SUBC_079
+            coverage: 0.5641025641025641
+            purity: 0.11796246648793565
+            f1_score: 0.1951219512195122
+            n_cells_mapped: 44
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0371 CEA-BST Six3 Cyp26b1 Gaba_5
+            best_target_accession: CS20230722_SUPT_0371
+            coverage: 0.5714285714285714
+            purity: 0.8888888888888888
+            f1_score: 0.6956521739130435
+            n_cells_mapped: 40
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 1344 CEA-BST Six3 Cyp26b1 Gaba_5
+            best_target_accession: CS20230722_CLUS_1344
+            coverage: 0.75
+            purity: 1.0
+            f1_score: 0.8571428571428571
+            n_cells_mapped: 21
+            median_bootstrap: 1.0
+        f1_source_relpath: at_results.yaml
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
         supports: AGAINST
@@ -2305,6 +2629,26 @@ edges:
         n_cells_total: 185
         best_f1_score: 0.824
         best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 09 CNU-LGE GABA
+            best_target_accession: CS20230722_CLAS_09
+            coverage: 0.9821428571428571
+            purity: 0.3891509433962264
+            f1_score: 0.5574324324324325
+            n_cells_mapped: 165
+            median_bootstrap: 0.98
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 063 STR D1 Sema5a Gaba
+            best_target_accession: CS20230722_SUBC_063
+            coverage: 0.05421686746987952
+            purity: 1.0
+            f1_score: 0.10285714285714286
+            n_cells_mapped: 9
+            median_bootstrap: 0.94
+        f1_source_relpath: at_results.yaml
     caveats:
       - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
         description: Two clusters tie at score 7 (CLUS_0998 STR D1 Sema5a Gaba_3 and CLUS_1009 STR-PAL Chst9 Gaba_3); both express all three markers at tier-2 levels. ITC population may span both cluster families (D1 striatal and STR-PAL pallidum-like).
