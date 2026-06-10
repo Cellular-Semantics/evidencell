@@ -4,7 +4,7 @@
 | Classical type | CL term | Best atlas hit | Best confidence | Candidates | Link |
 |---|---|---|---|---|---|
 | Hilar mossy cell | dentate gyrus neuron (CL:4023062) | 0079 CA3 Glut_5 | 🟢 HIGH | 12 (2 HIGH, 1 MODERATE, 9 LOW) | [report](hilar_mossy_cell_hippocampus_summary.md) |
-| Sst::Nos1-IN (long-range projecting, Chamberland 2024) | — | 0859 Sst Chodl Gaba_4 | 🟢 HIGH | 11 (2 HIGH, 9 LOW) | [report](sst_nos1_subfamily_chamberland_summary.md) |
+| Sst::Nos1-IN (long-range projecting, Chamberland 2024) | — | 0859 Sst Chodl Gaba_4 | 🟢 HIGH | 11 (2 HIGH, 8 LOW) | [report](sst_nos1_subfamily_chamberland_summary.md) |
 | entorhinal cortex layer III PCP4-positive pyramidal cell | pyramidal neuron (CL:0000598) | 0036 L2/3 IT ENT Glut_4 | 🟢 HIGH | 12 (1 HIGH, 1 MODERATE, 10 UNCERTAIN) | [report](ec_layer3_pyramidal_cell_hippocampus_summary.md) |
 | Axo-axonic (chandelier) cell | pvalb chandelier GABAergic interneuron (CL:4023036) | 0204 Pvalb chandelier Gaba_1 | 🟡 MODERATE | 11 (2 MODERATE, 3 LOW, 6 UNCERTAIN) | [report](axo_axonic_cell_hippocampus_summary.md) |
 | Bistratified cell | bistratified cell (CL:0004247) | 0206 Pvalb Gaba_2 | 🟡 MODERATE | 10 (2 MODERATE, 1 LOW) | [report](bistratified_cell_hippocampus_summary.md) |
@@ -13,7 +13,7 @@
 | CA2 pyramidal cell | — | 0100 CA2-FC-IG Glut_1 | 🟡 MODERATE | 11 (2 MODERATE, 8 LOW, 1 UNCERTAIN) | [report](ca2_pc_hippocampus_summary.md) |
 | CA3 pyramidal cell | hippocampal pyramidal neuron (CL:1001571) | 0078 CA3 Glut_4 | 🟡 MODERATE | 11 (1 MODERATE, 9 UNCERTAIN) | [report](ca3_pc_hippocampus_summary.md) |
 | Cholecystokinin-positive basket cell | basket cell (CL:0000118) | 0187 Sncg Gaba_3 | 🟡 MODERATE | 11 (2 MODERATE, 9 LOW) | [report](cck_basket_cell_hippocampus_summary.md) |
-| Chrna2-IN (Chrna2-OLM, Chamberland 2024) | — | 0771 Sst Gaba_3 | 🟡 MODERATE | 11 (2 MODERATE, 9 LOW) | [report](chrna2_olm_subfamily_chamberland_summary.md) |
+| Chrna2-IN (Chrna2-OLM, Chamberland 2024) | — | 0771 Sst Gaba_3 | 🟡 MODERATE | 10 (2 MODERATE, 8 LOW) | [report](chrna2_olm_subfamily_chamberland_summary.md) |
 | Dentate gyrus granule cell | — | 0137 DG Glut_2 | 🟡 MODERATE | 11 (2 MODERATE, 9 LOW) | [report](dg_granule_cell_hippocampus_summary.md) |
 | Hippocampo-septal (HS) cell | sst chodl GABAergic interneuron (CL:4023121) | 0216 Sst Gaba_3 | 🟡 MODERATE | 10 (1 MODERATE, 6 LOW) | [report](hippocampo_septal_cell_ca1_summary.md) |
 | Interneuron-specific (IS) interneuron | VIP GABAergic interneuron (CL:4023016) | 0179 Vip Gaba_7 | 🟡 MODERATE | 10 (1 MODERATE, 8 LOW) | [report](is_interneuron_hippocampus_summary.md) |
@@ -30,7 +30,7 @@
 | hippocampal Cajal-Retzius cell | Cajal-Retzius cell (CL:0000695) | 0497 HPF CR Glut_1 | 🟡 MODERATE | 10 (2 MODERATE, 8 LOW) | [report](hpc_cajal_retzius_cell_summary.md) |
 | subicular pyramidal cell | pyramidal neuron (CL:0000598) | 0096 SUB-ProS Glut_1 | 🟡 MODERATE | 11 (3 MODERATE, 5 LOW, 1 UNCERTAIN) | [report](subicular_pyramidal_cell_hippocampus_summary.md) |
 | Low-threshold high-Ih (LTH) cell | — | 0768 Sst Gaba_3 | 🔴 LOW | 10 (6 LOW, 1 UNCERTAIN) | [report](lth_cell_hippocampus_summary.md) |
-| Ndnf::Nkx2-1-IN (Ndnf-OLM, Chamberland 2024) | — | 0216 Sst Gaba_3 | 🔴 LOW | 11 (9 LOW, 2 UNCERTAIN) | [report](ndnf_nkx2_1_olm_subfamily_chamberland_summary.md) |
+| Ndnf::Nkx2-1-IN (Ndnf-OLM, Chamberland 2024) | — | 0767 Sst Gaba_3 | 🔴 LOW | 11 (2 LOW, 9 UNCERTAIN) | [report](ndnf_nkx2_1_olm_subfamily_chamberland_summary.md) |
 | Oriens-oriens (O-O) cell | — | 0219 Sst Gaba_6 | 🔴 LOW | 11 (2 LOW, 2 UNCERTAIN) | [report](oriens_oriens_cell_hippocampus_summary.md) |
 | Pyramidale-lacunosum moleculare (P-LM) cell | — | 0768 Sst Gaba_3 | 🔴 LOW | 10 (2 LOW, 7 UNCERTAIN) | [report](p_lm_cell_hippocampus_summary.md) |
 | Radiatum-lacunosum moleculare (R-LM) cell | — | 0216 Sst Gaba_3 | 🔴 LOW | 10 (6 LOW, 3 UNCERTAIN) | [report](r_lm_cell_hippocampus_summary.md) |

@@ -242,13 +242,13 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 
 ### Subclass — 052 Pvalb Gaba
 
-- [sst_tac1_subfamily_chamberland](../hippocampus/sst_tac1_subfamily_chamberland_summary.md) — skos:closeMatch · MODERATE
+- [sst_tac1_subfamily_chamberland](../hippocampus/sst_tac1_subfamily_chamberland_summary.md) — skos:broadMatch · MODERATE
 
 #### Supertype — 0206 Pvalb Gaba_2
 
 - [bistratified_cell_hippocampus](../hippocampus/bistratified_cell_hippocampus_summary.md) — skos:closeMatch · MODERATE
 - [pv_basket_cell_hippocampus](../hippocampus/pv_basket_cell_hippocampus_summary.md) — skos:broadMatch · MODERATE
-- [sst_tac1_subfamily_chamberland](../hippocampus/sst_tac1_subfamily_chamberland_summary.md) — skos:closeMatch · MODERATE
+- [sst_tac1_subfamily_chamberland](../hippocampus/sst_tac1_subfamily_chamberland_summary.md) — skos:broadMatch · MODERATE
 
 ##### Cluster — 0737 Pvalb Gaba_2
 
@@ -276,6 +276,10 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 
 - [bistratified_cell_hippocampus](../hippocampus/bistratified_cell_hippocampus_summary.md) — evidencell:UncertainRelationship · verdict pending
 - [olm_cell_ca1](../hippocampus/olm_cell_ca1_summary.md) — skos:closeMatch · MODERATE
+
+##### Cluster — 0771 Sst Gaba_3
+
+- [chrna2_olm_subfamily_chamberland](../hippocampus/chrna2_olm_subfamily_chamberland_summary.md) — skos:closeMatch · MODERATE
 
 ##### Cluster — 0772 Sst Gaba_3
 
