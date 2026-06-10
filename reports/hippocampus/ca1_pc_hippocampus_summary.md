@@ -1,71 +1,50 @@
 # CA1 pyramidal cell — WMBv1 (CCN20230722) Mapping Report
-*2026-04-27 · Source: `kb/graphs/hippocampus/hippocampus_glutamatergic.yaml`*
+*2026-04-27 · Source: `/Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml`*
 
 ---
 
 ## Introduction
 
-CA1 pyramidal cells are the dominant glutamatergic projection population of Ammon's
-horn area CA1, with somata in the pyramidal layer of CA1 [UBERON:0014548] and a major
-axonal output via the subiculum to entorhinal cortex. They constitute one of the
-classical principal-cell populations of the hippocampal formation [UBERON:0002421] —
-together with CA2/CA3 pyramidal cells, mossy cells, and granule cells — and
-collectively these glutamatergic principal cells dominate hippocampal cytoarchitecture.
+CA1 pyramidal cells are the principal excitatory output neurons of Ammon's horn, sitting at the final relay of the canonical hippocampal trisynaptic circuit. Their somata occupy the CA1 stratum pyramidale; basal dendrites extend into stratum oriens and apical dendrites into stratum radiatum, with the dominant axonal projection running through the subiculum to entorhinal cortex. They form one of the five excitatory cell populations of the mouse hippocampus alongside dentate granule cells, dentate mossy cells, and CA2/CA3 pyramidal cells.
 
-> Glutamatergic neurons dominate the hippocampal architecture, accounting for over
-> 90% of all hippocampal neurons, with pyramidal layers being densely packed with
-> these excitatory cells (Mancini et al., 2022).
-> — Mancini et al. 2022, Classical Hippocampal Circuit Organization · [5] <!-- quote_key: 252086716_9d46d627 -->
+> The hippocampus is grossly comprised of five excitatory cell populations; namely, granule and mossy cells of the dentate gyrus (DG), and pyramidal cells of CA3, CA2, and CA1.
+> — Cembrowski et al. 2016, Major Glutamatergic Cell Types in Hippocampal Subfields · [1] <!-- quote_key: 4875295_002a714a -->
 
 ### Classical type table
 
 | Property | Value | References |
 |---|---|---|
-| Soma location | pyramidal layer of CA1 [UBERON:0014548] | [1], [2], [3], [4], [5] |
-| Neurotransmitter | glutamatergic | [4] |
-| Defining markers | Wfs1 | [6], [7], [8], [9], [10] |
+| Soma location | pyramidal layer of CA1 [UBERON:0014548]; apical dendrites in hippocampus stratum radiatum [UBERON:0005372]; basal dendrites in hippocampus stratum oriens [UBERON:0005371]; axonal projection to subiculum [UBERON:0002191] | [1] [2] [3] [4] [5] [6] [7] |
+| Neurotransmitter | glutamatergic | [4] [1] [8] |
+| Defining markers | Wfs1; Gria1; Gria2; Nptn; Slc17a7 | [9] [7] [10] [11] [12] [13] |
+| Negative markers | Drd1 | — |
+| Neuropeptides | (none reported) | — |
 
 <details>
 <summary>Details — source evidence for classical type properties</summary>
 
-- **Soma location:** classical anatomical and molecular characterisation of CA1
-  pyramidal cells in mouse · [1], [2], [3], [4], [5]
-  > we used next-generation RNA sequencing (RNA-seq) to produce a quantitative,
-  > whole genome characterization of gene expression for the major excitatory
-  > neuronal classes of the hippocampus; namely, granule cells and mossy cells of
-  > the dentate gyrus, and pyramidal cells of areas CA3, CA2, and CA1
-  > — Cembrowski et al. 2016, abstract · [1] <!-- quote_key: 4875295_4a456257 -->
+- **Soma location:** classical literature on hippocampal subfield architecture and pyramidal-cell topography · [1] [2] [3] [4] [5] [6] [7]
+  > The hippocampal formation consists of GCs in the dentate gyrus and pyramidal cells in the CA1 and CA3 areas
+  > — Munster-Wandowski et al. 2013, Major Glutamatergic Cell Types in Hippocampal Subfields · [6] <!-- quote_key: 7458943_d6507595 -->
 
-  > The Cornu Ammonis‐1 (CA1) subfield and subiculum (SUB) serve as major output
-  > structures of the hippocampal formation
-  > — Müller & Remy 2017, abstract · [2] <!-- quote_key: 2171766_537d45ba -->
+  > These include granule cells and mossy cells in the dentate gyrus (DG), and pyramidal cells in the CA3, CA2, and CA1 regions (Cembrowski et al., 2016)(Dale et al., 2015).
+  > — Dale et al. 2015, Major Glutamatergic Cell Types in Hippocampal Subfields · [4] <!-- quote_key: 2281033_0422472c -->
 
-- **Neurotransmitter:** glutamatergic identity established across the major
-  hippocampal pyramidal populations · [4]
-  > There are 2 types of principal cells in the hippocampal circuit: glutamatergic
-  > pyramidal cells in the Ammon's horn and subiculum regions, and glutamatergic
-  > granule cells in the DG (Figure 1). They generally have excitatory effects on
-  > the neurons to which they send axon terminals including other glutamatergic
-  > and GABAergic, as well monoaminergic [5-HT, norepinephrine (NE), dopamine
-  > (DA)], cholinergic, and histaminergic (HA) cells.
+  > Glutamatergic neurons dominate the hippocampal architecture, accounting for over 90% of all hippocampal neurons, with pyramidal layers being densely packed with these excitatory cells (Mancini et al., 2022).
+  > — Mancini et al. 2022, Classical Hippocampal Circuit Organization · [5] <!-- quote_key: 252086716_9d46d627 -->
+- **Neurotransmitter (glutamatergic):** classical / direct assessment from the principal-cell literature · [4] [1] [8]
+  > There are 2 types of principal cells in the hippocampal circuit: glutamatergic pyramidal cells in the Ammon's horn and subiculum regions, and glutamatergic granule cells in the DG (Figure 1).
   > — Dale et al. 2015, Major Glutamatergic Cell Types in Hippocampal Subfields · [4] <!-- quote_key: 2281033_5b9805ff -->
-
-- **Wfs1 marker:** wolframin is a CA1-enriched membrane protein used as a
-  CA1 / deep-sublayer pyramidal cell marker · [6], [7], [8], [9], [10]
-  > Virtually all projection neurons across hippocampal subfields contain subunits
-  > from the AMPA/kainate, kainate, and NMDA receptor families, with these
-  > receptors being broadly colocalized in hippocampal neurons and even at
-  > individual dendritic spines (Siegel et al., 1995).
-  > — Siegel et al. 1995, Synaptic Properties and Neurotransmitter Systems · [6] <!-- quote_key: 5468451_9958f302 -->
-
-  > Neuroplastin-65 positive glutamatergic neurons: These include granule neurons
-  > of the dentate gyrus, pyramidal neurons of CA1, CA2-3, subiculum, and specific
-  > layers of entorhinal cortex (Herrera-Molina et al., 2017)(Langnaese et al.,
-  > 1997). Neuroplastin-65 is abundant at membranes of cell bodies, dendrites, and
-  > in punctate structures within the neuropil, and plays important roles in
-  > regulating excitatory synapse number and function (Herrera-Molina et al.,
-  > 2017)(Herrera-Molina et al., 2014).
-  > — Herrera-Molina et al. 2017, Specialized Glutamatergic Populations · [8] <!-- quote_key: 3288675_d83802d0 -->
+- **Wfs1 marker:** classical protein/transcript-level marker for deep-sublayer CA1 pyramidal cells · [9] [7] [10] [11] [12]
+- **Gria1 / Gria2 markers:** AMPA-receptor subunit immunoreactivity localising to CA1 pyramidal-layer somata · [7]
+  > The CA1 showed strong dense immunoreactivity within the str. oriens and str. radiatum, with relatively decreased staining within the str. pyramidale cells.
+  > — Yeung et al. 2020, Synaptic Properties and Neurotransmitter Systems · [7] <!-- quote_key: 210181642_7ac40176 -->
+- **Nptn (neuroplastin-65) marker:** identifies pyramidal neurons of CA1 alongside CA2/CA3 and subiculum · [10]
+  > Neuroplastin-65 positive glutamatergic neurons: These include granule neurons of the dentate gyrus, pyramidal neurons of CA1, CA2-3, subiculum, and specific layers of entorhinal cortex (Herrera-Molina et al., 2017)(Langnaese et al., 1997).
+  > — Herrera-Molina et al. 2017, Specialized Glutamatergic Populations · [10] <!-- quote_key: 3288675_d83802d0 -->
+- **Slc17a7 (vGLUT1) marker:** principal vesicular glutamate transporter on hippocampal glutamatergic terminals · [13]
+  > From the three known vesicular glutamate transporters (vGLUT1-3), vGLUT1 is the main subtype expressed in the hippocampus (Fremeau et al., 2004). It packs glutamate into synaptic vesicles of the glutamatergic axon terminals.
+  > — Sarvari et al. 2016, Synaptic Properties and Neurotransmitter Systems · [13] <!-- quote_key: 14854554_ed1bdc00 -->
 
 </details>
 
@@ -73,186 +52,116 @@ collectively these glutamatergic principal cells dominate hippocampal cytoarchit
 
 Cell Ontology mapping: hippocampal pyramidal neuron [[CL:1001571](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:1001571)] (BROAD).
 
-**Proposed CL term:** *CA1 pyramidal cell* (SUBMITTED). Candidate-definition prose: A hippocampal pyramidal neuron with soma located in the pyramidal layer of hippocampal area CA1 (UBERON:0014548) (Cembrowski et al., 2016; Müller & Remy, 2017), forming the dominant excitatory projection population of the CA1 subfield. As the primary output cell of Ammon's horn, it projects via the subiculum to entorhinal cortex and is capable of glutamate secretion as a neurotransmitter (Dale et al., 2015). In mouse, it is distinguished from CA2 and CA3 pyramidal neurons by soma position within the CA1 stratum pyramidale and by expression of wolframin (Wfs1), an endoplasmic reticulum-resident membrane protein enriched in deep-sublayer CA1 cells (Cembrowski et al., 2016).
+**Proposed CL term:** *CA1 pyramidal cell* (SUBMITTED; parent CL:1001571 hippocampal pyramidal neuron)
+
+Definition: A hippocampal pyramidal neuron with soma located in the pyramidal layer of hippocampal area CA1 (UBERON:0014548) (Cembrowski et al., 2016; Müller & Remy, 2017), forming the dominant excitatory projection population of the CA1 subfield. As the primary output cell of Ammon's horn, it projects via the subiculum to entorhinal cortex and is capable of glutamate secretion as a neurotransmitter (Dale et al., 2015). In mouse, it is distinguished from CA2 and CA3 pyramidal neurons by soma position within the CA1 stratum pyramidale and by expression of wolframin (Wfs1), an endoplasmic reticulum-resident membrane protein enriched in deep-sublayer CA1 cells (Cembrowski et al., 2016).
 
 ---
 
 ## Results
 
-Marker (Wfs1) concordance, region alignment, and annotation transfer of Yao et al.
-CA1-ProS labels support mapping the CA1 pyramidal cell to the dedicated CA1-ProS
-glutamatergic supertype 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069]
-(F1=0.79 at supertype level; see figure and property comparison table). Within that
-supertype, 0262 CA1-ProS Glut_1 [CS20230722_CLUS_0262] is the AT-leading and
-region-best child cluster; the broader CA1 pyramidal population scatters across
-all four CA1-ProS Glut supertypes (SUPT_0069 through SUPT_0072) and across multiple
-clusters within them, consistent with the well-documented sublayer (deep vs.
-superficial) and proximo-distal heterogeneity of CA1.
+Annotation transfer of the Yao 2021 mouse hippocampal formation SMART-Seq v4 CA1-ProS source label onto WMBv1 (CCN20230722) and supertype-level Wfs1 expression jointly support a broad mapping of the classical CA1 pyramidal cell onto supertype 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] within subclass 016 CA1-ProS Glut (see figure and property comparison tables below). Source-cell coverage distributes across four sibling CA1-ProS Glut supertypes within the same subclass, so the cleanest mapping resolution is the subclass / supertype level rather than any single cluster; the best child cluster within SUPT_0069 by region painting is 0262 CA1-ProS Glut_1 [CS20230722_CLUS_0262].
 
-**Annotation-transfer overview figure (Yao 2021 hippocampal formation → WMBv1)**
+### Annotation transfer overview
 
-![Filtered AT figure for CA1 pyramidal cell](figures/f1_for_ca1_pc_hippocampus.png)
+![Annotation transfer F1 tree for CA1-ProS source label (Yao 2021 SSv4 → WMBv1)](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/figures/f1_tree.png)
 
-*F1 across taxonomy levels for the Yao 2021 (GSE185862) CA1-ProS source group
-(n=1590 cells reaching the class level after filtering). Coverage = fraction of
-source-group cells landing on the target; Purity = fraction of this target's
-cells coming from the source group. With a single source group in the figure,
-Purity is 1.0 at every target and only Coverage discriminates. F1 ≥ 0.5 at a
-level indicates a clean mapping at that resolution; the subclass-level value
-(016 CA1-ProS Glut, F1=0.99) shows the CA1-ProS branch is essentially
-encapsulated by one WMBv1 subclass, while the cluster-level drop (0262 CA1-ProS
-Glut_1, F1=0.44) reflects distribution of CA1-ProS cells across several CA1-ProS
-clusters.*
+*F1 across taxonomy levels for the Yao 2021 (GEO:GSE185862) CA1-ProS source group (n=1590 cells mapped). Coverage = fraction of source-group cells landing on the target; Purity = fraction of target cells from the source group. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution. The CA1-ProS label maps cleanly at the subclass level (016 CA1-ProS Glut, F1=0.99) and at the class level (01 IT-ET Glut, F1=0.89); at the supertype level the leading target is CS20230722_SUPT_0069 (F1=0.79) with the remaining coverage distributing across sibling CA1-ProS Glut supertypes 0070–0073.*
 
-The cluster-level scatter is the expected fingerprint of CA1 sublayer
-heterogeneity rather than a mapping failure; resolving sublayer correspondence
-across SUPT_0069 – SUPT_0072 requires a sublayer-resolved source dataset (see
-Discussion).
+### 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] · 🟡 MODERATE
 
-### 0069 CA1-ProS Glut_1 · 🟡 MODERATE
-
-**Property alignment (Table 1):**
+**Property alignment table.** Table 1 — Property comparison:
 
 | Property | Classical | Supertype | Best cluster | Alignment |
 |---|---|---|---|---|
-| Soma location | pyramidal layer of CA1 [UBERON:0014548] | Field CA1, pyramidal layer [MBA:407] (27305 of 28476 cells within 100µm) | Field CA1, pyramidal layer [MBA:407] (CLUS_0262: 19403 of 19886 cells within 100µm) | CONSISTENT |
-| NT type | glutamatergic | not asserted | Glut (CLUS_0262) | NOT_ASSESSED (supertype); CONSISTENT (cluster) |
-| Wfs1 expression | defining marker | mean 3.97 (cohort percentile 0.83; child-cluster coverage 1.00) | mean 7.68 (cohort percentile 0.98) on CLUS_0262 | CONSISTENT |
+| NT type | glutamatergic | not asserted | Glut (CLUS_0262) | SUPT: NOT_ASSESSED; CLUS: CONSISTENT |
+| Soma location | pyramidal layer of CA1 [UBERON:0014548] | Field CA1, pyramidal layer [MBA:407] count_100um=27305 (region_fraction_100um=0.959) | Field CA1, pyramidal layer [MBA:407] count_100um=19403 (region_fraction_100um=0.975, CLUS_0262) | CONSISTENT |
+| Wfs1 expression | defining marker | mean 3.97; cohort percentile 0.828; child-cluster coverage 1.000 | mean 7.68; cohort percentile 0.975 (CLUS_0262) | CONSISTENT |
 
-*(All 5 child clusters of SUPT_0069 show Wfs1 expression above the cohort median
-(child-cluster coverage 1.00); CLUS_0262 leads with Wfs1=7.68 (cohort percentile
-0.98) and the highest in-region cell count of any CA1-ProS cluster.)*
+*(4 of 5 SUPT_0069 child clusters surfaced in the candidate set show Wfs1 concordant with the classical type — CLUS_0262 (7.68), CLUS_0263 (7.75), CLUS_0261 (4.29), CLUS_0266 (2.69); CLUS_0262 leads on within-CA1 pyramidal-layer cell count. Best match: CS20230722_CLUS_0262.)*
 
-**Evidence support (Table 2):**
+Table 2 — Evidence support:
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| Atlas precomputed expression + region painting (SUPT_0069) | Atlas metadata | SUPPORT | Wfs1=3.97; 27305 cells in CA1 pyramidal layer | atlas-internal |
-| Annotation transfer (Yao 2021 → WMBv1) | Annotation transfer | SUPPORT | F1=0.79 (supertype); F1=0.99 (subclass 016 CA1-ProS Glut) | atlas-internal |
+| Atlas precomputed metadata | Atlas metadata | SUPPORT | SUPT_0069 in CA1-ProS Glut subclass; 2553 cells in MBA:407 | atlas-internal |
+| Yao 2021 cluster annotation transfer | Annotation transfer | SUPPORT | F1=0.79 (supertype); F1=0.99 (subclass 016 CA1-ProS Glut) | atlas-internal |
 
-**Supporting evidence**
+**Supporting evidence:**
 
-- 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] is the highest-scoring WMBv1
-  supertype in the CA1-pyramidal-layer × glutamatergic cohort (Stage A
-  cohort-rank 1 of 29; tied score with SUPT_0072, SUPT_0073, SUPT_0074 at the
-  supertype level, but SUPT_0069 carries the largest CA1-pyramidal-layer cell
-  count and the highest annotation-transfer coverage from CA1-ProS source
-  labels). Region alignment is strong: `region_fraction_100um: 0.959` against
-  MBA:407 (Field CA1, pyramidal layer).
+- SUPT_0069 sits inside the dedicated CA1-ProS glutamatergic subclass 016 CA1-ProS Glut, with the dominant soma painting in Field CA1, pyramidal layer [MBA:407] (region_fraction_100um=0.959) — the classical CA1 stratum pyramidale [UBERON:0014548] location is recovered.
+- Cluster annotation transfer of the Yao 2021 hippocampus dataset (GEO:GSE185862) onto WMBv1 lands the CA1-ProS source label cleanly at the subclass level (016 CA1-ProS Glut, F1=0.99) and at the class level (01 IT-ET Glut, F1=0.89). At supertype level SUPT_0069 is the leading correspondence (F1=0.79; coverage=0.65; purity=1.00). Target-side purity of 1.00 confirms that SUPT_0069 is populated exclusively by CA1-ProS source cells in this transfer.
+- Wfs1, the classical deep-CA1 marker, is expressed at supertype mean 3.97 (cohort percentile 0.83) on SUPT_0069 and reaches mean 7.68 (cohort percentile 0.98) on the leading child cluster CLUS_0262, consistent with literature placement of Wfs1 on deep-sublayer CA1 pyramidal cells.
 
-- Annotation transfer from Yao 2021 (GSE185862) hippocampal formation labels
-  onto CCN20230722 places 0.99 of the CA1-ProS source-cell coverage onto the
-  016 CA1-ProS Glut subclass (F1=0.99 at subclass level; n=1574 cells), and
-  0.65 of that coverage onto SUPT_0069 specifically (F1=0.79). Purity at the
-  supertype is 1.0 — every SUPT_0069 target cell that received a label in this
-  annotation transfer run came from CA1-ProS. The remainder of the CA1-ProS
-  coverage distributes across SUPT_0070, SUPT_0071, SUPT_0072, and SUPT_0073,
-  all within the same subclass.
+**Marker evidence provenance:**
 
-- Wfs1 expression is consistent at the supertype mean and present across all
-  child clusters (child-cluster coverage 1.000). In the classical literature
-  Wfs1 marks deep-sublayer CA1 pyramidal cells; the elevated cohort percentile
-  on CLUS_0262 (0.98) and CLUS_0263 (0.99) is the expected fingerprint of the
-  deep-CA1 children of this supertype.
+- **Wfs1:** primary protein-level evidence anchored by Wfs1-targeted studies in CA1 pyramidal neurons (Siegel et al. 1995 [9]; Herrera-Molina et al. 2017 [10]; Langnaese et al. 1997 [11]; Herrera-Molina et al. 2014 [12]; Yeung et al. 2020 [7]). Cross-checks against atlas precomputed expression confirm Wfs1 at the supertype mean above the cohort median (cohort percentile 0.83 at SUPT_0069), supporting it as a transcript-level discriminator at this resolution.
+- **Gria1 / Gria2:** AMPA receptor subunit immunoreactivity in CA1 pyramidal layer (Yeung et al. 2020 [7]); protein-level evidence on the broader pyramidal population rather than on individually filled and morphology-confirmed cells.
+- **Nptn (neuroplastin-65):** protein-level evidence in CA1 pyramidal neurons (Herrera-Molina et al. 2017 [10]; Langnaese et al. 1997 [11]; Herrera-Molina et al. 2014 [12]). *(note: Np65-positive glutamatergic neurons extend beyond CA1 to CA2/CA3 and subiculum, so Nptn is informative for excitatory identity but not CA1-specific.)*
+- **Slc17a7 (vGLUT1):** transcript and protein-level vesicular glutamate transporter on hippocampal glutamatergic terminals (Sarvari et al. 2016 [13]) — supports glutamatergic identity but is not CA1-specific.
 
-**Concerns**
+**Concerns:**
 
-- The classical CA1 pyramidal cell type encompasses *at least four* WMBv1
-  supertypes (SUPT_0069 through SUPT_0072) within subclass 016 CA1-ProS Glut.
-  SUPT_0069 is the primary correspondence by annotation-transfer coverage and
-  Wfs1 percentile, but a complete mapping of the classical population requires
-  sibling edges to SUPT_0070, SUPT_0071, and SUPT_0072 (and possibly SUPT_0073,
-  SUPT_0074), which the wider CA1 PC population also touches. The relationship
-  is therefore one classical type → many atlas supertypes.
-
-- No CA1-specific Cell Ontology term currently exists; CL:1001571 (hippocampal
-  pyramidal neuron) is the closest ancestor and covers CA1, CA2, and CA3
-  pyramidal populations together.
+- The classical CA1 pyramidal cell spans at least four WMBv1 supertypes (CS20230722_SUPT_0069 through CS20230722_SUPT_0072) inside subclass 016 CA1-ProS Glut: AMBIGUOUS_MAPPING. SUPT_0069 absorbs the majority of the CA1-ProS coverage at supertype rank, but a complete mapping requires sibling broadMatch edges to SUPT_0070, SUPT_0071, and SUPT_0072 (whose Wfs1 means 3.84, not assessed, and 4.78 respectively all sit above the cohort median).
+- Cluster-level annotation transfer evidence is not carried on this edge; supertype-level coverage distributes across multiple SUPT_0069 child clusters (CLUS_0261, CLUS_0262, CLUS_0263, CLUS_0266), so the supertype-level mapping is cleaner than any single cluster call: DISTRIBUTED_ACROSS_CLUSTERS.
 
 **What would upgrade confidence:**
 
-- Annotation transfer using a sublayer-resolved CA1 pyramidal cell source dataset
-  (Cembrowski 2016 deep vs. superficial CA1 PC labels, or Zeisel 2018 dorsal CA1
-  pyramidal cell labels) onto WMBv1, with a per-supertype coverage breakdown
-  across SUPT_0069 – SUPT_0072. Expected evidence type: AnnotationTransferEvidence
-  with sublayer-resolved source labels; threshold F1 ≥ 0.80 at supertype level
-  for the leading sublayer mapping.
+- Sublayer-resolved cluster annotation transfer of a deep-vs-superficial CA1 pyramidal source dataset (Cembrowski 2016 or Zeisel 2018) onto WMBv1 CCN20230722, with per-supertype coverage breakdown across SUPT_0069 through SUPT_0072 (target supertype F1 ≥ 0.80 for the leading sublayer) — would resolve whether SUPT_0069 corresponds to deep CA1, superficial CA1, or a proximo-distal axis subpopulation, and would feed back as AnnotationTransferEvidence.
 
-### 0262 CA1-ProS Glut_1 · 🟡 MODERATE
+### 0262 CA1-ProS Glut_1 [CS20230722_CLUS_0262] · 🟡 MODERATE
 
-**Property alignment (Table 1):**
+**Property alignment table.** Table 1 — Property comparison:
 
-| Property | Classical | Supertype (SUPT_0069) | Best cluster (CLUS_0262) | Alignment |
+| Property | Classical | Supertype | Best cluster | Alignment |
 |---|---|---|---|---|
-| Soma location | pyramidal layer of CA1 [UBERON:0014548] | 27305 of 28476 cells within 100µm of MBA:407 | 19403 of 19886 cells within 100µm of MBA:407 | CONSISTENT |
-| NT type | glutamatergic | not asserted | Glut | CONSISTENT |
-| Wfs1 expression | defining marker | mean 3.97 (cohort percentile 0.83) on SUPT_0069 | mean 7.68 (cohort percentile 0.98) on CLUS_0262 | CONSISTENT |
+| NT type | glutamatergic | not asserted | Glut (CLUS_0262) | CONSISTENT |
+| Soma location | pyramidal layer of CA1 [UBERON:0014548] | not available | Field CA1, pyramidal layer [MBA:407] count_100um=19403 (region_fraction_100um=0.975, CLUS_0262) | CONSISTENT |
+| Wfs1 expression | defining marker | not available | mean 7.68; cohort percentile 0.975 (CLUS_0262) | CONSISTENT |
 
-*(Of the 5 SUPT_0069 child clusters, CLUS_0262 leads in both Wfs1 expression
-(7.68, cohort percentile 0.98) and CA1-pyramidal-layer cell count (19403 within
-100µm). CLUS_0263 is the immediate runner-up (Wfs1=7.75, percentile 0.99; 5398
-cells in MBA:407). Cluster-level Yao-CA1-ProS annotation transfer places
-CLUS_0262 as the best-cluster target at F1=0.44 (purity 1.0; coverage 0.28).)*
+*Subcluster note: CLUS_0262 is the leading child of SUPT_0069 by region painting in MBA:407 (count_100um=19403). Sibling CLUS_0263 within the same supertype carries marginally higher Wfs1 (7.75, cohort percentile 0.988) but fewer cells in the pyramidal layer (count_100um=5398).*
 
-**Evidence support (Table 2):**
+Table 2 — Evidence support:
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| Atlas precomputed expression + region painting (CLUS_0262) | Atlas metadata | PARTIAL | Wfs1=7.68; 19403 cells in CA1 pyramidal layer | atlas-internal |
+| Atlas precomputed metadata | Atlas metadata | PARTIAL | region_fraction_100um=0.975; strict region_fraction=0.468 | atlas-internal |
 
-**Supporting evidence**
+**Supporting evidence:**
 
-- CLUS_0262 is the leading cluster in its 50-member CA1-pyramidal-layer ×
-  glutamatergic cohort (Stage A cohort-rank 1 of 50). Region alignment is
-  excellent (`region_fraction_100um: 0.975`); the strict in-region fraction
-  (`region_fraction: 0.468`) reflects boundary scatter at the pyramidal-layer
-  border rather than off-target placement.
+- CLUS_0262 is the largest CA1-ProS Glut_1 cluster within SUPT_0069 by cells painted to Field CA1, pyramidal layer [MBA:407] (count_100um=19403; region_fraction_100um=0.975) — soma location is concordant with classical CA1 stratum pyramidale [UBERON:0014548].
+- Cluster-level Wfs1 expression at mean 7.68 (cohort percentile 0.975) places CLUS_0262 in the top decile of the glutamatergic Field-CA1-pyramidal-layer cohort for the classical deep-CA1 marker.
+- Cluster NT annotation is Glut, consistent with the classical glutamatergic identity.
 
-- Wfs1 expression is at the cohort 98th percentile, matching the classical
-  "deep-sublayer CA1" expression signature.
+**Marker evidence provenance:**
 
-- This cluster is the leading cluster within SUPT_0069 from the Yao 2021
-  CA1-ProS source group (F1=0.44, purity 1.0, coverage 0.28; the four other
-  SUPT_0069 children and other CA1-ProS supertypes absorb the remaining
-  coverage).
+- **Wfs1:** primary literature support is the same set anchoring SUPT_0069 (Siegel et al. 1995 [9]; Herrera-Molina et al. 2017 [10]; Langnaese et al. 1997 [11]; Herrera-Molina et al. 2014 [12]; Yeung et al. 2020 [7]). On CLUS_0262 the atlas-side precomputed mean (7.68) places the gene at cohort percentile 0.975 — directly assessed transcript-level evidence on this specific cluster.
 
-**Concerns**
+**Concerns:**
 
-- The cluster-level F1 (0.44) is well below the supertype-level F1 (0.79),
-  indicating that CA1-ProS source cells distribute across multiple CA1-ProS Glut
-  clusters rather than collapsing cleanly onto CLUS_0262. CLUS_0263 carries
-  even higher Wfs1 expression (7.75 vs. 7.68); CLUS_0262 leads by sheer cell
-  count and slight annotation-transfer advantage, not by an unambiguous marker
-  signature.
-
-- No sublayer-resolved source dataset has yet been mapped onto WMBv1, so the
-  question of whether CLUS_0262 corresponds to deep-CA1, superficial-CA1, or
-  some other sublayer / proximo-distal axis remains unresolved.
+- Classical CA1 pyramidal source coverage distributes across CLUS_0262 and sibling clusters within SUPT_0069; CS20230722_CLUS_0263 carries marginally higher Wfs1 (mean 7.75) and CLUS_0262 wins on region cell count rather than on an unambiguous marker signature: DISTRIBUTED_ACROSS_CLUSTERS. Cluster-level annotation-transfer evidence is not carried on this edge.
+- The cleanest mapping resolution for the classical CA1 pyramidal cell is the supertype (SUPT_0069), where annotation-transfer evidence is carried; the cluster-level call is held provisionally pending sublayer-resolved annotation transfer: TAXONOMY_LEVEL_MISMATCH.
 
 **What would upgrade confidence:**
 
-- A sublayer-resolved CA1 PC annotation transfer (Cembrowski 2016 or Zeisel
-  2018) onto WMBv1 to resolve which of SUPT_0069's child clusters
-  (CLUS_0261 – CLUS_0266) corresponds to which CA1 sublayer / proximo-distal
-  position. Expected evidence type: AnnotationTransferEvidence with sublayer
-  labels; threshold F1 ≥ 0.80 at cluster level for the leading sublayer.
+- Sublayer-resolved annotation transfer (Cembrowski 2016 deep vs. superficial CA1 pyramidal cell labels) onto WMBv1 CCN20230722 with target cluster-level F1 ≥ 0.70 for the leading sublayer within CS20230722_SUPT_0069 — would feed back as AnnotationTransferEvidence and resolve whether CLUS_0262 captures the deep-CA1, superficial-CA1, or a proximo-distal axis subpopulation.
 
 <details>
 <summary>Candidates audited (full top-K)</summary>
 
-| WMBv1 target | Supertype | Cells (10x) | Confidence | Key evidence | Verdict |
+| WMBv1 cluster / supertype | Supertype | Cells (10x) | Confidence | Key evidence | Verdict |
 |---|---|---:|---|---|---|
-| `0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069]` (curator-built edge) | — | 19061 | 🟡 MODERATE | CA1-ProS AT F1=0.79; Wfs1 percentile 0.83 | Primary |
-| `0262 CA1-ProS Glut_1 [CS20230722_CLUS_0262]` | 0069 CA1-ProS Glut_1 | 12018 | 🟡 MODERATE | Wfs1=7.68 (cohort percentile 0.98); leading SUPT_0069 child by region + AT | Secondary (best child within SUPT_0069) |
-| `0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069]` (fresh-emit edge) | — | 19061 | ⚪ UNCERTAIN | Duplicate of curator-built edge (same accession) | Eliminated (duplicate edge ID on same accession; curator-built edge prevails) |
-| `0263 CA1-ProS Glut_1 [CS20230722_CLUS_0263]` | 0069 CA1-ProS Glut_1 | 4105 | 🔴 LOW | Wfs1=7.75; in CA1 pyramidal layer | Supports broader mapping (sibling within SUPT_0069) |
-| `0072 CA1-ProS Glut_4 [CS20230722_SUPT_0072]` | — | 3493 | 🔴 LOW | Wfs1=4.78; 0.88 in CA1 pyramidal layer | Supports broader mapping (sibling supertype within CA1-ProS subclass) |
-| `0070 CA1-ProS Glut_2 [CS20230722_SUPT_0070]` | — | 4609 | 🔴 LOW | Wfs1=3.84; soma in CA1 stratum oriens | Supports broader mapping (sibling supertype, stratum oriens children) |
-| `0073 CA1-ProS Glut_5 [CS20230722_SUPT_0073]` | — | 898 | 🔴 LOW | Wfs1=2.41; soma in CA1 stratum oriens | Supports broader mapping (sibling supertype, lower Wfs1) |
-| `0074 CA1-ProS Glut_6 [CS20230722_SUPT_0074]` | — | 1921 | 🔴 LOW | Wfs1=6.79 but only 0.41 in CA1 pyramidal layer | Eliminated (predominantly prosubicular, not CA1 pyramidal layer) |
-| `0293 CA1-ProS Glut_6 [CS20230722_CLUS_0293]` | 0074 CA1-ProS Glut_6 | 983 | 🔴 LOW | Wfs1=6.75; only 0.50 in CA1 pyramidal layer | Eliminated (predominantly prosubicular) |
-| `0261 CA1-ProS Glut_1 [CS20230722_CLUS_0261]` | 0069 CA1-ProS Glut_1 | 215 | 🔴 LOW | Wfs1=4.29; 0.71 in CA1, soma in stratum oriens | Eliminated (stratum oriens, not pyramidal layer; smallest sibling) |
-| `0266 CA1-ProS Glut_1 [CS20230722_CLUS_0266]` | 0069 CA1-ProS Glut_1 | 130 | 🔴 LOW | Wfs1=2.69 (cohort percentile 0.53); soma in stratum oriens | Eliminated (low Wfs1; stratum oriens) |
+| 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] | — | 19061 | 🟡 MODERATE | CA1-ProS cluster annotation transfer F1=0.79 to supertype; Wfs1 percentile 0.83 | Primary (supertype-level) |
+| 0262 CA1-ProS Glut_1 [CS20230722_CLUS_0262] | 0069 CA1-ProS Glut_1 | 12018 | 🟡 MODERATE | Largest SUPT_0069 child in MBA:407; Wfs1 percentile 0.975 | Secondary (best child cluster) |
+| 0263 CA1-ProS Glut_1 [CS20230722_CLUS_0263] | 0069 CA1-ProS Glut_1 | 4105 | 🔴 LOW | Wfs1 percentile 0.988 but fewer pyramidal-layer cells | Supports broader mapping |
+| 0293 CA1-ProS Glut_6 [CS20230722_CLUS_0293] | 0074 CA1-ProS Glut_6 | 983 | 🔴 LOW | Predominantly prosubicular cluster | Eliminated (mostly prosubiculum) |
+| 0261 CA1-ProS Glut_1 [CS20230722_CLUS_0261] | 0069 CA1-ProS Glut_1 | 215 | 🔴 LOW | Soma in CA1 stratum oriens, not pyramidal layer | Eliminated (wrong CA1 layer) |
+| 0266 CA1-ProS Glut_1 [CS20230722_CLUS_0266] | 0069 CA1-ProS Glut_1 | 130 | 🔴 LOW | Soma in CA1 stratum oriens; very small | Eliminated (wrong CA1 layer, low n) |
+| 0074 CA1-ProS Glut_6 [CS20230722_SUPT_0074] | — | 1921 | 🔴 LOW | Dominant soma in prosubiculum | Eliminated (prosubicular) |
+| 0073 CA1-ProS Glut_5 [CS20230722_SUPT_0073] | — | 898 | 🔴 LOW | Dominant soma in CA1 stratum oriens | Eliminated (wrong CA1 layer) |
+| 0072 CA1-ProS Glut_4 [CS20230722_SUPT_0072] | — | 3493 | 🔴 LOW | Sibling CA1-ProS Glut supertype absorbing residual CA1-ProS coverage | Supports broader mapping |
+| 0070 CA1-ProS Glut_2 [CS20230722_SUPT_0070] | — | 4609 | 🔴 LOW | Sibling CA1-ProS Glut; soma in CA1 stratum oriens | Supports broader mapping |
+| 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] (legacy duplicate) | — | 19061 | ⚪ UNCERTAIN | Duplicate edge on same taxonomy_type as the curator-built primary | Eliminated (duplicate edge) |
 
 </details>
 
@@ -263,66 +172,46 @@ CLUS_0262 as the best-cluster target at F1=0.44 (purity 1.0; coverage 0.28).)*
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** The CA1 pyramidal cell node is defined under
-`CLASSICAL_MULTIMODAL`: glutamatergic neurotransmitter identity [4], soma in
-pyramidal layer of CA1 [UBERON:0014548] [1], [2], [3], [4], [5], and Wfs1 as a
-defining marker [6], [7], [8], [9], [10].
+**Classical type definition.** The CA1 pyramidal cell classical node sits on a CLASSICAL_MULTIMODAL evidence base: glutamatergic neurotransmitter identity (refs [4] [1] [8]), soma in the pyramidal layer of CA1 [UBERON:0014548] with dendritic arborisations in stratum radiatum [UBERON:0005372] and stratum oriens [UBERON:0005371] and axonal projection to subiculum [UBERON:0002191] (refs [1] [2] [3] [4] [5] [6] [7]), and a defining-marker set of Wfs1, Gria1, Gria2, Nptn, and Slc17a7 (refs [9] [7] [10] [11] [12] [13]). Drd1 is recorded as a negative marker for dorsal CA1 pyramidal cells, with the ambiguity noted on the node that ventral CA1 carries a D1R-positive subpopulation.
 
-**Atlas mapping query.** Candidate atlas clusters were retrieved from the WMBv1
-taxonomy (CCN20230722) at ranks 0 (cluster) and 1 (supertype) using
-metadata-based scoring (region match against MBA:407 Field CA1 pyramidal layer,
-glutamatergic NT filter, and Wfs1 expression). Full scoring rules:
-`workflows/map-cell-type.md`.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the WMBv1 taxonomy (CCN20230722) at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match against MBA:407 Field CA1 pyramidal layer, NT-type filter glutamatergic, defining-marker percentiles in the survival cohort). Full scoring rules: `workflows/map-cell-type.md`.
 
-**Property alignment.** Each defining property of the classical type was
-compared to the corresponding atlas-side value via the `property_comparisons`
-schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT /
-NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on
-each candidate cluster / supertype (taxonomy reference store) and from MERFISH
-spatial registration for soma location.
+**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster and supertype and from MERFISH spatial registration for soma location.
 
 **Annotation transfer.**
 
 | Field | Value |
 |---|---|
-| Source dataset | GEO:GSE185862 (CA1-ProS) |
+| Source dataset | GEO:GSE185862 (Yao 2021 mouse HPF SMART-Seq v4 cell type labels) |
 | Source species | NCBITaxon:10090 |
 | Target atlas | WMBv1 (CCN20230722) |
-| Method | MapMyCells (default parameters) |
+| Method | MapMyCells local (cell_type_mapper, default parameters, raw normalization, 100 bootstrap iterations) |
 | Tool version | cell_type_mapper |
 | Bootstrap threshold | 0.0 |
 | n cells | 6398 (filtered to 6398) |
 | Run record | [`kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/manifest.yaml) |
-| Script (external) | README.md |
 | Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
 | F1 matrix | [`f1_scores_best.csv`](../../kb/annotation_transfer_runs/at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1/f1_scores_best.csv) |
 
-**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and
-verbatim literature quotes in this report are validated against the evidencell
-knowledge base at write time. Authored-prose evidence narratives are validated
-against their source `evidence_items[*].explanation` fields. The pre-write hook
-rejects any unresolvable identifier or unattributed blockquote. Specific
-mapping limitations and caveats are documented per-candidate in the Discussion
-section.
+**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
 
-*Generated by evidencell `25c2b32` at 2026-06-08T18:37:48+00:00 from
-[kb/graphs/hippocampus/hippocampus_glutamatergic.yaml](kb/graphs/hippocampus/hippocampus_glutamatergic.yaml).*
+*Generated by evidencell `b95d284` at 2026-06-10T13:04:41+00:00 from [kb/graphs/hippocampus/hippocampus_glutamatergic.yaml](kb/graphs/hippocampus/hippocampus_glutamatergic.yaml).*
 
-**Evidence base table**
+**Evidence base table.**
 
 | Edge ID | Evidence types | Supports | Source |
-| --- | --- | --- | --- |
+|---|---|---|---|
 | edge_ca1_pc_hippocampus_to_supt_0069 | ATLAS_METADATA; ANNOTATION_TRANSFER | SUPPORT | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0262 | ATLAS_METADATA | PARTIAL | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0263 | ATLAS_METADATA | PARTIAL | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0293 | ATLAS_METADATA | PARTIAL | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0261 | ATLAS_METADATA | PARTIAL | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0266 | ATLAS_METADATA | PARTIAL | atlas-internal |
-| edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0069 | ATLAS_METADATA | PARTIAL | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0074 | ATLAS_METADATA | PARTIAL | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0073 | ATLAS_METADATA | PARTIAL | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0072 | ATLAS_METADATA | PARTIAL | atlas-internal |
 | edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0070 | ATLAS_METADATA | PARTIAL | atlas-internal |
+| edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0069 (legacy duplicate) | ATLAS_METADATA | PARTIAL | atlas-internal |
 
 </details>
 
@@ -330,51 +219,25 @@ section.
 
 ## Discussion
 
-**Primary mapping:** CA1 pyramidal cell → 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069]
-at MODERATE confidence. Key support: annotation transfer of Yao 2021 (GSE185862)
-CA1-ProS source labels (F1=0.79 at supertype, F1=0.99 at the parent CA1-ProS Glut
-subclass) and consistent Wfs1 expression on all SUPT_0069 children. Key caveats:
-AMBIGUOUS_MAPPING (the classical CA1 PC type spans SUPT_0069 – SUPT_0072 within
-subclass 016 CA1-ProS Glut, with SUPT_0069 as the primary correspondence); the
-best-child cluster within SUPT_0069 is CLUS_0262 by joint region + AT + Wfs1
-criteria, but no sublayer-resolved source data have yet been transferred to resolve
-which of CLUS_0261 – CLUS_0266 corresponds to which CA1 sublayer. The Cell
-Ontology has no specific term for CA1 pyramidal cells; hippocampal pyramidal neuron
-[[CL:1001571](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:1001571)]
-is the closest ancestor (BROAD). CA1 pyramidal cells are a subpopulation of
-hippocampal pyramidal neurons; CL:1001571 covers all hippocampal pyramidal neurons
-and is therefore a BROAD match. No CA1-specific CL term currently exists.
+### Best candidate + caveats summary
+
+**Primary mapping:** CA1 pyramidal cell → 0069 CA1-ProS Glut_1 [CS20230722_SUPT_0069] at MODERATE confidence. Key support: cluster annotation transfer of the Yao 2021 CA1-ProS source label (subclass F1=0.99, supertype F1=0.79; target purity=1.00) and atlas precomputed Wfs1 expression at supertype cohort percentile 0.83. Key caveats: AMBIGUOUS_MAPPING (classical type spans SUPT_0069 through SUPT_0072 within subclass 016 CA1-ProS Glut, and a complete mapping requires sibling broadMatch edges) and DISTRIBUTED_ACROSS_CLUSTERS (supertype coverage distributes across SUPT_0069 child clusters with no single cluster carrying decisive lit-anchored signal). The best child cluster within SUPT_0069 by region painting and Wfs1 percentile is 0262 CA1-ProS Glut_1 [CS20230722_CLUS_0262], also at MODERATE confidence; the cluster-level call is held provisionally pending sublayer-resolved cluster annotation transfer.
+
+The Cell Ontology has no specific term for this population; hippocampal pyramidal neuron [[CL:1001571](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:1001571)] is the closest ancestor. CA1 pyramidal cells are a subpopulation of hippocampal pyramidal neurons; CL:1001571 covers all hippocampal pyramidal neurons and is therefore a BROAD match. No CA1-specific CL term currently exists. A new CL term *CA1 pyramidal cell* has been drafted (status: SUBMITTED) with CL:1001571 as parent.
 
 ### Proposed experiments and follow-ups
 
-- **What:** Annotation transfer of a sublayer-resolved CA1 PC source dataset
-  (Cembrowski 2016 deep vs. superficial CA1 PCs, or Zeisel 2018 dorsal CA1 PC
-  labels) onto WMBv1 CCN20230722, with per-supertype and per-cluster coverage
-  reporting across SUPT_0069 – SUPT_0074.
-  **Target:** F1 ≥ 0.80 at SUPERTYPE level for the leading sublayer; F1 ≥ 0.70 at
-  CLUSTER level for the leading cluster within that supertype.
-  **Expected output:** AnnotationTransferEvidence with sublayer source labels on
-  the SUPT_0069 / CLUS_0262 edges (and sibling edges as appropriate).
-  **Resolves:** open questions 1 and 2 below; what was already done — Yao 2021
-  CA1-ProS subclass-level annotation transfer (this report) — confirmed the
-  CA1-ProS branch encapsulation at the subclass level (F1=0.99) and identified
-  SUPT_0069 + CLUS_0262 as the leading targets, but the Yao 2021 source labels
-  are not sublayer-resolved and so cannot answer the deep / superficial question.
+- **What:** sublayer-resolved cluster annotation transfer of a deep-vs-superficial CA1 pyramidal cell source dataset (Cembrowski 2016 or Zeisel 2018) onto WMBv1 CCN20230722, with per-supertype coverage breakdown across CS20230722_SUPT_0069 through CS20230722_SUPT_0072 and per-cluster breakdown within SUPT_0069.
+  - **Target:** supertype F1 ≥ 0.80 for the leading sublayer; cluster F1 ≥ 0.70 for the leading sublayer within SUPT_0069.
+  - **Expected output:** AnnotationTransferEvidence on the SUPT_0069 edge and on the CLUS_0262 edge, plus sibling broadMatch edges to SUPT_0070 / SUPT_0071 / SUPT_0072 with their per-sublayer coverage breakdowns.
+  - **Resolves:** open questions 1–3 below — deep vs. superficial CA1 correspondence across the four CA1-ProS Glut supertypes, and the proximo-distal / sublayer identity of the SUPT_0069 child clusters.
 
 ### Open questions
 
-1. Which of SUPT_0069 – SUPT_0072 correspond to deep vs. superficial CA1
-   pyramidal cell sublayers? Wfs1 marks deep-layer CA1 PCs in the classical
-   literature; checking which supertype carries the highest Wfs1 percentile in
-   the atlas (the current data place this on SUPT_0069 / CLUS_0262 / CLUS_0263)
-   suggests SUPT_0069 represents the deep-layer population, but this needs
-   direct confirmation via sublayer-resolved annotation transfer.
-2. Which of the SUPT_0069 child clusters (CLUS_0261, CLUS_0262, CLUS_0263,
-   CLUS_0266) correspond to deep vs. superficial CA1, and which capture the
-   proximo-distal axis? CLUS_0262 leads on combined region + annotation-transfer
-   + Wfs1 evidence, but CLUS_0263 carries higher Wfs1 expression; CLUS_0261 and
-   CLUS_0266 are stratum-oriens-leaning and likely represent a non-pyramidal-
-   layer subpopulation.
+1. Which of CS20230722_SUPT_0069 through CS20230722_SUPT_0072 corresponds to deep vs. superficial CA1 pyramidal cell sublayers? Wfs1 marks deep-layer CA1 pyramidal cells in the literature; checking which supertype carries Wfs1 most strongly in the atlas would resolve the sublayer correspondence.
+2. Which of the SUPT_0069 child clusters (CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0266) captures the deep-CA1, superficial-CA1, and proximo-distal axes?
+3. Does CS20230722_CLUS_0262 correspond to deep-layer CA1, superficial-layer CA1, or a proximo-distal subpopulation?
+4. Should the legacy duplicate edge on CS20230722_SUPT_0069 (UNCERTAIN, no curator-authored evidence) be removed in favour of the authoritative curator-built edge?
 
 ---
 
@@ -382,16 +245,19 @@ and is therefore a BROAD match. No CA1-specific CL term currently exists.
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Cembrowski et al. 2016 | [27113915](https://pubmed.ncbi.nlm.nih.gov/27113915) | soma location |
-| [2] | Müller & Remy 2017 | [29250747](https://pubmed.ncbi.nlm.nih.gov/29250747) | soma location |
+| [1] | Cembrowski et al. 2016 · [PMID:27113915](https://pubmed.ncbi.nlm.nih.gov/27113915/) | 27113915 | soma location |
+| [2] | Müller & Remy 2017 · [PMID:29250747](https://pubmed.ncbi.nlm.nih.gov/29250747/) | 29250747 | soma location |
 | [3] | https://doi.org/10.1038/s41598-017-11268-z | — | soma location |
-| [4] | Dale et al. 2015 | [26346726](https://pubmed.ncbi.nlm.nih.gov/26346726) | soma location |
-| [5] | Mancini et al. 2022 | [37011759](https://pubmed.ncbi.nlm.nih.gov/37011759) | soma location |
-| [6] | Siegel et al. 1995 | [7722624](https://pubmed.ncbi.nlm.nih.gov/7722624) | Wfs1 marker |
-| [7] | Yeung et al. 2020 | [32009891](https://pubmed.ncbi.nlm.nih.gov/32009891) | Wfs1 marker |
-| [8] | Herrera-Molina et al. 2017 | [28779130](https://pubmed.ncbi.nlm.nih.gov/28779130) | Wfs1 marker |
-| [9] | Langnaese et al. 1997 | [8995369](https://pubmed.ncbi.nlm.nih.gov/8995369) | Wfs1 marker |
-| [10] | Herrera-Molina et al. 2014 | [24554721](https://pubmed.ncbi.nlm.nih.gov/24554721) | Wfs1 marker |
+| [4] | Dale et al. 2015 · [PMID:26346726](https://pubmed.ncbi.nlm.nih.gov/26346726/) | 26346726 | soma location |
+| [5] | Mancini et al. 2022 · [PMID:37011759](https://pubmed.ncbi.nlm.nih.gov/37011759/) | 37011759 | soma location |
+| [6] | Munster-Wandowski et al. 2013 · [PMID:24319410](https://pubmed.ncbi.nlm.nih.gov/24319410/) | 24319410 | soma location |
+| [7] | Yeung et al. 2020 · [PMID:32009891](https://pubmed.ncbi.nlm.nih.gov/32009891/) | 32009891 | soma location |
+| [8] | Wheeler et al. 2015 · [PMID:26402459](https://pubmed.ncbi.nlm.nih.gov/26402459/) | 26402459 | neurotransmitter type |
+| [9] | Siegel et al. 1995 · [PMID:7722624](https://pubmed.ncbi.nlm.nih.gov/7722624/) | 7722624 | Wfs1 marker |
+| [10] | Herrera-Molina et al. 2017 · [PMID:28779130](https://pubmed.ncbi.nlm.nih.gov/28779130/) | 28779130 | Wfs1 marker |
+| [11] | Langnaese et al. 1997 · [PMID:8995369](https://pubmed.ncbi.nlm.nih.gov/8995369/) | 8995369 | Wfs1 marker |
+| [12] | Herrera-Molina et al. 2014 · [PMID:24554721](https://pubmed.ncbi.nlm.nih.gov/24554721/) | 24554721 | Wfs1 marker |
+| [13] | Sarvari et al. 2016 · [PMID:27375434](https://pubmed.ncbi.nlm.nih.gov/27375434/) | 27375434 | Slc17a7 marker |
 
 ---
 
@@ -399,50 +265,53 @@ and is therefore a BROAD match. No CA1-specific CL term currently exists.
 ```yaml
 verdict:
   confidence: MODERATE
-  confidence_score: 0.7
+  confidence_score: 0.65
   relationship: skos:broadMatch
   mapping_cardinality: "1:n"
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    [tier:STRONGEST] Annotation transfer of Yao 2021 (GSE185862) CA1-ProS
-    source labels onto WMBv1 places F1=0.99 at the 016 CA1-ProS Glut subclass
-    and F1=0.79 at CS20230722_SUPT_0069 (run_ref
-    at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1); 1 of 1 markers CONSISTENT
-    (Wfs1 mean 3.97, cohort percentile 0.83, child-cluster coverage 1.00);
-    region_fraction_100um 0.959 against MBA:407 Field CA1 pyramidal layer.
-    The classical CA1 PC population spans CS20230722_SUPT_0069 through
-    CS20230722_SUPT_0072 within subclass 016 CA1-ProS Glut, so the mapping
-    is one classical type to many atlas supertypes (broad, 1:n).
+    [tier:STRONGEST] Cluster annotation transfer of the Yao 2021 CA1-ProS source
+    label (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) lands cleanly at the
+    subclass 016 CA1-ProS Glut (F1=0.99) and identifies CS20230722_SUPT_0069 as
+    the leading supertype correspondence (F1=0.79; target purity=1.00); atlas
+    Wfs1 expression at supertype cohort percentile 0.83 and dominant soma
+    painting in Field CA1 pyramidal layer (region_fraction_100um=0.96) anchor
+    the broad match; classical CA1 pyramidal cell spans CS20230722_SUPT_0069
+    through CS20230722_SUPT_0072 inside the subclass so the cardinality is 1:n.
   reconciliation_note: >
     Paired with the best-child cluster edge to CS20230722_CLUS_0262
-    (closeMatch, 1:1) - CLUS_0262 leads SUPT_0069 children on combined
-    region + annotation transfer + Wfs1 cohort percentile; see report.
+    (skos:closeMatch + 1:1) — the supertype broadMatch is the authoritative
+    resolution, the cluster edge is the leading within-supertype child by
+    region painting and Wfs1 percentile; pending sublayer-resolved cluster
+    annotation transfer.
   caveats:
     - caveat_type: AMBIGUOUS_MAPPING
       description: >
         Classical CA1 pyramidal cell spans at least four WMBv1 supertypes
         (CS20230722_SUPT_0069 through CS20230722_SUPT_0072) within subclass
-        016 CA1-ProS Glut; SUPT_0069 is the primary correspondence by
-        annotation-transfer coverage and Wfs1 cohort percentile (0.83), but
-        a complete mapping requires sibling edges to SUPT_0070, SUPT_0071,
-        and SUPT_0072.
+        016 CA1-ProS Glut; CS20230722_SUPT_0069 is the primary correspondence
+        by transfer coverage and Wfs1 cohort percentile (0.83), but a complete
+        mapping requires sibling broadMatch edges to CS20230722_SUPT_0070, and CS20230722_SUPT_0072.
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
-        CA1-ProS source coverage distributes across multiple SUPT_0069 child
-        clusters (CLUS_0261, CLUS_0262, CLUS_0263, CLUS_0266) and across
-        sibling supertypes; cluster-level F1 falls to 0.44 on the leading
-        child (CS20230722_CLUS_0262).
+        CA1-ProS source coverage distributes across multiple
+        CS20230722_SUPT_0069 child clusters (CS20230722_CLUS_0261,
+        CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0266) and
+        across sibling supertypes; cluster-level transfer evidence is not
+        carried on this edge.
   proposed_experiments:
     - >
-      Annotation transfer of a sublayer-resolved CA1 pyramidal source dataset
-      (Cembrowski 2016 or Zeisel 2018 deep vs. superficial CA1 PC labels) onto
-      WMBv1 CCN20230722, with per-supertype coverage breakdown across
+      Sublayer-resolved cluster annotation transfer of a deep-vs-superficial
+      CA1 pyramidal source dataset (Cembrowski 2016 or Zeisel 2018) onto WMBv1
+      CCN20230722, with per-supertype coverage breakdown across
       CS20230722_SUPT_0069 through CS20230722_SUPT_0072; target F1 >= 0.80 at
       the supertype level for the leading sublayer.
   unresolved_questions:
-    - Which of CS20230722_SUPT_0069 through CS20230722_SUPT_0072 corresponds
-      to deep vs. superficial CA1 pyramidal cell sublayers?
-    - Which of the SUPT_0069 child clusters (CS20230722_CLUS_0261,
+    - >
+      Which of CS20230722_SUPT_0069 through CS20230722_SUPT_0072 corresponds to
+      deep vs. superficial CA1 pyramidal cell sublayers?
+    - >
+      Which of the CS20230722_SUPT_0069 child clusters (CS20230722_CLUS_0261,
       CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0266)
       captures the deep-CA1, superficial-CA1, and proximo-distal axes?
 ```
@@ -452,46 +321,48 @@ verdict:
 ```yaml
 verdict:
   confidence: MODERATE
-  confidence_score: 0.6
+  confidence_score: 0.55
   relationship: skos:closeMatch
   mapping_cardinality: "1:1"
   mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    [tier:NEXT] CS20230722_CLUS_0262 is the leading CA1-ProS supertype child
-    by region cell count within CS20230722_SUPT_0069: region_fraction_100um
-    0.975 against MBA:407 and Wfs1 mean 7.68 (cohort percentile 0.98). 1 of
-    1 markers CONSISTENT. Cluster-level AT evidence is not carried on this
-    edge (ATLAS_METADATA only); supertype-level AT is reported on the
-    parent SUPT_0069 edge.
+    [tier:NEXT] CS20230722_CLUS_0262 is the leading child of CS20230722_SUPT_0069
+    by cells painted to Field CA1 pyramidal layer (region_fraction_100um=0.98)
+    and by atlas Wfs1 expression at cohort percentile 0.98; cluster NT
+    annotation is glutamatergic; cluster-level annotation transfer evidence is
+    not carried on this edge so the call is provisional pending sublayer-
+    resolved transfer.
   reconciliation_note: >
-    Paired with the parent supertype edge to CS20230722_SUPT_0069
-    (broadMatch, 1:n); CLUS_0262 is the leading CA1-ProS supertype child by
-    region cell count within SUPT_0069, but the supertype level is the
-    cleaner anchor because CA1-ProS source cells distribute across multiple
-    SUPT_0069 children.
+    Paired with CS20230722_SUPT_0069 supertype broadMatch (1:n) — the cleanest
+    resolution for the classical CA1 pyramidal cell is the supertype, this
+    cluster edge captures the leading within-supertype child by region
+    painting; CS20230722_CLUS_0263 carries marginally higher Wfs1 but fewer
+    pyramidal-layer cells.
   caveats:
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
         CA1-ProS source cells distribute across CS20230722_CLUS_0262 and
-        sibling clusters within SUPT_0069; CS20230722_CLUS_0263 carries
-        marginally higher Wfs1 (mean 7.75, cohort percentile 0.99), and
-        CLUS_0262 wins on region cell count rather than on an unambiguous
-        marker signature. Cluster-level AT evidence is not carried on this
-        edge.
+        sibling clusters within CS20230722_SUPT_0069; CS20230722_CLUS_0263
+        carries marginally higher Wfs1 (mean 7.75, cohort percentile 0.99),
+        and CS20230722_CLUS_0262 wins on region cell count rather than on an
+        unambiguous marker signature. Cluster-level transfer evidence is not
+        carried on this edge.
     - caveat_type: TAXONOMY_LEVEL_MISMATCH
       description: >
         The cleanest mapping resolution for the classical CA1 pyramidal cell
-        is the supertype (SUPT_0069), where annotation-transfer evidence is
-        carried; the cluster-level call is held provisionally pending
-        sublayer-resolved annotation transfer.
+        is the supertype (CS20230722_SUPT_0069), where cluster annotation
+        transfer evidence is carried; the cluster-level call is held
+        provisionally pending sublayer-resolved cluster annotation transfer.
   proposed_experiments:
     - >
-      Sublayer-resolved annotation transfer (Cembrowski 2016 deep vs.
-      superficial CA1 PC labels) onto WMBv1 CCN20230722; target F1 >= 0.70
-      at cluster level for the leading sublayer within CS20230722_SUPT_0069.
+      Sublayer-resolved cluster annotation transfer (Cembrowski 2016 deep vs.
+      superficial CA1 pyramidal cell labels) onto WMBv1 CCN20230722; target
+      F1 >= 0.70 at cluster level for the leading sublayer within
+      CS20230722_SUPT_0069.
   unresolved_questions:
-    - Does CS20230722_CLUS_0262 correspond to deep-layer CA1, superficial-layer
-      CA1, or a proximo-distal subpopulation?
+    - >
+      Does CS20230722_CLUS_0262 correspond to deep-layer CA1, superficial-
+      layer CA1, or a proximo-distal subpopulation?
 ```
 <!-- verdict-block-end -->
 
@@ -499,21 +370,24 @@ verdict:
 ```yaml
 verdict:
   confidence: LOW
-  confidence_score: 0.4
+  confidence_score: 0.3
   rationale: >
-    [tier:WEAKEST] Sibling cluster within CS20230722_SUPT_0069 (Wfs1 mean
-    7.75, cohort percentile 0.99; region_fraction_100um 0.973 against
-    MBA:407). Supports the broader CA1 pyramidal cell to SUPT_0069 mapping
-    but trails CS20230722_CLUS_0262 on annotation-transfer coverage and
-    in-region cell count. Held as a supporting sibling, not the primary
-    cluster-level call.
+    [tier:WEAKEST] CS20230722_CLUS_0263 carries the highest within-supertype
+    Wfs1 expression (mean 7.75, cohort percentile 0.99) inside
+    CS20230722_SUPT_0069 but holds only a fraction of the pyramidal-layer
+    cell count of CS20230722_CLUS_0262; cluster-level transfer evidence is
+    not carried; supports the broader supertype mapping rather than a
+    standalone close match.
   caveats:
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
-        Wfs1 expression on CS20230722_CLUS_0263 (7.75) is marginally above
-        CS20230722_CLUS_0262 (7.68), but CLUS_0263 carries fewer cells in
-        MBA:407 (5398 vs. 19403); both clusters absorb CA1-ProS source
-        coverage within SUPT_0069.
+        Wfs1 expression on CS20230722_CLUS_0263 (mean 7.75) is marginally
+        above CS20230722_CLUS_0262 (mean 7.68), but CS20230722_CLUS_0263
+        carries fewer cells in Field CA1 pyramidal layer (region_fraction_100um=0.97
+        on a smaller cell count); both clusters absorb CA1-ProS source
+        coverage within CS20230722_SUPT_0069.
+  proposed_experiments: []
+  unresolved_questions: []
 ```
 <!-- verdict-block-end -->
 
@@ -521,19 +395,18 @@ verdict:
 ```yaml
 verdict:
   confidence: LOW
-  confidence_score: 0.2
+  confidence_score: 0.15
   rationale: >
-    [tier:CUT] CS20230722_CLUS_0293 sits predominantly in prosubiculum
-    (region_fraction_100um 0.500; strict region_fraction 0.110 against
-    MBA:407 Field CA1 pyramidal layer); only half of its cells fall within
-    100 microns of the CA1 pyramidal layer. Wfs1 expression is high
-    (mean 6.75, cohort percentile 0.95) but the location is off-target for
-    a classical CA1 pyramidal cell.
+    [tier:CUT] CS20230722_CLUS_0293 is a predominantly prosubicular cluster
+    (region_fraction=0.11 strict in Field CA1 pyramidal layer, dominant soma
+    painting in Prosubiculum MBA:484682470); not a CA1 pyramidal cell match.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY
       description: >
         Predominantly prosubicular cluster; only 110 of 1000 cells fall
         strictly within MBA:407 (Field CA1, pyramidal layer).
+  proposed_experiments: []
+  unresolved_questions: []
 ```
 <!-- verdict-block-end -->
 
@@ -541,15 +414,12 @@ verdict:
 ```yaml
 verdict:
   confidence: LOW
-  confidence_score: 0.25
+  confidence_score: 0.2
   rationale: >
-    [tier:CUT] CS20230722_CLUS_0261 is a small sibling within
-    CS20230722_SUPT_0069 (215 cells) with soma painting predominantly in
-    CA1 stratum oriens, not the pyramidal layer
-    (region_fraction_100um 0.707, strict region_fraction 0.178 against
-    MBA:407). Wfs1 expression is modest (mean 4.29, cohort percentile
-    0.79). Likely represents a stratum-oriens subpopulation rather than a
-    classical CA1 pyramidal cell.
+    [tier:CUT] CS20230722_CLUS_0261 has dominant soma painting in Field CA1
+    stratum oriens (MBA:399) rather than the pyramidal layer (region_fraction=0.18
+    strict in MBA:407), only 215 cells, and modest Wfs1 (mean 4.29, cohort
+    percentile 0.79); does not anchor a clean CA1 pyramidal cell call.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY
       description: >
@@ -557,8 +427,10 @@ verdict:
         than Field CA1 pyramidal layer (MBA:407).
     - caveat_type: LOW_CELL_COUNT
       description: >
-        Only 215 cells in this cluster - at the threshold for robust
+        Only 215 cells in this cluster — at the threshold for robust
         cluster-level analysis.
+  proposed_experiments: []
+  unresolved_questions: []
 ```
 <!-- verdict-block-end -->
 
@@ -568,40 +440,20 @@ verdict:
   confidence: LOW
   confidence_score: 0.15
   rationale: >
-    [tier:CUT] CS20230722_CLUS_0266 carries low Wfs1 (mean 2.69, cohort
-    percentile 0.53 - at the cohort median, not elevated) and soma
-    painting predominantly in CA1 stratum oriens
-    (region_fraction_100um 0.584; strict region_fraction 0.032 against
-    MBA:407). Does not match the classical CA1 pyramidal cell signature.
+    [tier:CUT] CS20230722_CLUS_0266 has dominant soma painting in Field CA1
+    stratum oriens (MBA:399), only 32 of 1000 cells strictly in pyramidal
+    layer (region_fraction=0.03), only 130 cells total, and Wfs1 at mid-cohort
+    percentile 0.53; does not match the classical CA1 pyramidal cell.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY
       description: >
-        Dominant soma painting in Field CA1 stratum oriens (MBA:399);
-        only 32 of 1000 cells fall strictly within MBA:407.
+        Dominant soma painting in Field CA1 stratum oriens (MBA:399); only 32
+        of 1000 cells fall strictly within MBA:407.
     - caveat_type: LOW_CELL_COUNT
       description: >
         Only 130 cells in this cluster.
-```
-<!-- verdict-block-end -->
-
-<!-- verdict-block-start: edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0069 -->
-```yaml
-verdict:
-  confidence: UNCERTAIN
-  confidence_score: 0.3
-  rationale: >
-    [tier:CUT] Duplicate edge ID targeting CS20230722_SUPT_0069 - the
-    curator-built edge (edge_ca1_pc_hippocampus_to_supt_0069) carries
-    substantive annotation-transfer evidence and a populated property-
-    comparison set against the same accession; this fresh-emit edge
-    carries only a Stage A discovery_score and a stub property
-    comparison. Held as a duplicate pending curator removal.
-  caveats:
-    - caveat_type: AMBIGUOUS_MAPPING
-      description: >
-        Duplicate edge on the same taxonomy_type accession
-        (CS20230722_SUPT_0069) as edge_ca1_pc_hippocampus_to_supt_0069;
-        the curator-built edge is the authoritative mapping.
+  proposed_experiments: []
+  unresolved_questions: []
 ```
 <!-- verdict-block-end -->
 
@@ -609,19 +461,19 @@ verdict:
 ```yaml
 verdict:
   confidence: LOW
-  confidence_score: 0.2
+  confidence_score: 0.25
   rationale: >
-    [tier:CUT] CS20230722_SUPT_0074 sits predominantly in prosubiculum
-    (region_fraction_100um 0.409; strict region_fraction 0.090 against
-    MBA:407); Wfs1 is high (mean 6.79, cohort percentile 0.97) but the
-    cells are not in the CA1 pyramidal layer. Represents a CA1-ProS Glut
-    sibling supertype anchored on the prosubicular side rather than the
-    classical CA1 PC population.
+    [tier:CUT] CS20230722_SUPT_0074 has dominant soma in Prosubiculum
+    (MBA:484682470) with only region_fraction_100um=0.41 proximity to Field
+    CA1 pyramidal layer; Wfs1 (mean 6.79, cohort percentile 0.97) is high but
+    the anatomy is discordant with the classical CA1 pyramidal cell.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY
       description: >
         Dominant soma location in Prosubiculum (MBA:484682470) rather than
         Field CA1 pyramidal layer (MBA:407).
+  proposed_experiments: []
+  unresolved_questions: []
 ```
 <!-- verdict-block-end -->
 
@@ -629,19 +481,19 @@ verdict:
 ```yaml
 verdict:
   confidence: LOW
-  confidence_score: 0.3
+  confidence_score: 0.2
   rationale: >
-    [tier:WEAKEST] CS20230722_SUPT_0073 is a CA1-ProS Glut sibling
-    supertype with predominant soma painting in CA1 stratum oriens
-    (region_fraction_100um 0.545; strict region_fraction 0.102 against
-    MBA:407) and low Wfs1 (mean 2.41, cohort percentile 0.52). Supports
-    the broader classical CA1 PC to subclass 016 CA1-ProS Glut mapping
-    only at the subclass level; not a primary supertype-level call.
+    [tier:CUT] CS20230722_SUPT_0073 has dominant soma in Field CA1 stratum
+    oriens (MBA:399), modest Wfs1 (mean 2.41, cohort percentile 0.52), and
+    only region_fraction=0.10 strict in pyramidal layer; supports the broader
+    CA1-ProS Glut family but not the CA1 pyramidal cell call specifically.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY
       description: >
-        Dominant soma location in Field CA1 stratum oriens (MBA:399), not
-        the pyramidal layer.
+        Dominant soma location in Field CA1 stratum oriens (MBA:399), not the
+        pyramidal layer.
+  proposed_experiments: []
+  unresolved_questions: []
 ```
 <!-- verdict-block-end -->
 
@@ -649,21 +501,22 @@ verdict:
 ```yaml
 verdict:
   confidence: LOW
-  confidence_score: 0.4
+  confidence_score: 0.35
   rationale: >
-    [tier:WEAKEST] CS20230722_SUPT_0072 is a CA1-ProS Glut sibling
-    supertype with strong region alignment (region_fraction_100um 0.877;
-    strict region_fraction 0.299 against MBA:407) and elevated Wfs1
-    (mean 4.78, cohort percentile 0.90). Supports the broader CA1
-    pyramidal cell to subclass 016 CA1-ProS Glut mapping (1:n) but is
-    not the primary supertype-level call (SUPT_0069 leads on
-    annotation-transfer coverage).
+    [tier:WEAKEST] CS20230722_SUPT_0072 is a sibling CA1-ProS Glut supertype
+    within subclass 016 CA1-ProS Glut; region_fraction_100um=0.88 in Field CA1
+    pyramidal layer and Wfs1 at cohort percentile 0.90 — absorbs a fraction of
+    the CA1-ProS coverage not captured by CS20230722_SUPT_0069; contributes to
+    the 1:n mapping of the classical type onto multiple CA1-ProS Glut
+    supertypes.
   caveats:
     - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
       description: >
         Sibling CA1-ProS Glut supertype that absorbs a fraction of the
         CA1-ProS annotation-transfer coverage not captured by
         CS20230722_SUPT_0069.
+  proposed_experiments: []
+  unresolved_questions: []
 ```
 <!-- verdict-block-end -->
 
@@ -671,20 +524,43 @@ verdict:
 ```yaml
 verdict:
   confidence: LOW
-  confidence_score: 0.3
+  confidence_score: 0.25
   rationale: >
-    [tier:WEAKEST] CS20230722_SUPT_0070 is a CA1-ProS Glut sibling
-    supertype with predominant soma in CA1 stratum oriens
-    (region_fraction_100um 0.684; strict region_fraction 0.186 against
-    MBA:407) and modest Wfs1 (mean 3.84, cohort percentile 0.79).
-    Absorbs roughly a fifth of CA1-ProS annotation-transfer coverage in
-    the Yao 2021 run;
-    supports the broader 1:n mapping at subclass level.
+    [tier:CUT] CS20230722_SUPT_0070 is a sibling CA1-ProS Glut supertype with
+    dominant soma in Field CA1 stratum oriens (MBA:399); Wfs1 at cohort
+    percentile 0.79; the stratum-oriens-leaning anatomy weakens the
+    correspondence to a pyramidal-layer CA1 pyramidal cell.
   caveats:
     - caveat_type: DISCORDANT_ANATOMY
       description: >
-        Dominant soma location in Field CA1 stratum oriens (MBA:399)
-        rather than the pyramidal layer; likely a stratum-oriens-leaning
-        CA1-ProS Glut population.
+        Dominant soma location in Field CA1 stratum oriens (MBA:399) rather
+        than the pyramidal layer; likely a stratum-oriens-leaning CA1-ProS
+        Glut population.
+  proposed_experiments: []
+  unresolved_questions: []
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0069 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.05
+  rationale: >
+    [tier:CUT] Duplicate edge on the same taxonomy_type accession
+    (CS20230722_SUPT_0069) as the curator-authoritative edge
+    edge_ca1_pc_hippocampus_to_supt_0069; this edge carries only a stub
+    discovery score and no curator-authored evidence — flag for removal.
+  caveats:
+    - caveat_type: AMBIGUOUS_MAPPING
+      description: >
+        Duplicate edge on the same taxonomy_type accession
+        (CS20230722_SUPT_0069) as edge_ca1_pc_hippocampus_to_supt_0069; the
+        curator-built edge is the authoritative mapping.
+  proposed_experiments: []
+  unresolved_questions:
+    - >
+      Curator removal of duplicate edge edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0069
+      — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0069.
 ```
 <!-- verdict-block-end -->

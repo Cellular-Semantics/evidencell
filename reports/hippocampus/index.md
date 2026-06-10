@@ -1,5 +1,5 @@
 # Hippocampus Cell Type Mapping Index
-*41 classical types · 2026-06-09*
+*37 classical types · 2026-06-10*
 
 | Classical type | CL term | Best atlas hit | Best confidence | Candidates | Link |
 |---|---|---|---|---|---|
@@ -37,10 +37,6 @@
 | VIP-positive basket cell | — | 0179 Vip Gaba_7 | 🔴 LOW | 11 (2 LOW, 7 UNCERTAIN) | [report](vip_basket_cell_hippocampus_summary.md) |
 | hippocampal calretinin-positive glutamatergic neuron | glutamatergic neuron (CL:0000679) | 0135 HPF CR Glut_1 | 🔴 LOW | 11 (1 LOW, 8 UNCERTAIN) | [report](hpc_calretinin_glu_neuron_hippocampus_summary.md) |
 | ventral hippocampal dopamine receptor-expressing glutamatergic pyramidal neuron | pyramidal neuron (CL:0000598) | 0069 CA1-ProS Glut_1 | 🔴 LOW | 11 (11 LOW) | [report](hpc_glu_dopa_receptor_pyramidal_hippocampus_summary.md) |
-| CA1 pyramidal cell | hippocampal pyramidal neuron (CL:1001571) | — | — | 0 () | [report](ca1_pyramidal_cell_summary.md) |
 | CA1 radiatum giant cell | — | — | — | 0 () | [report](ca1_radiatum_giant_cell_summary.md) |
-| CA3 pyramidal cell | hippocampal pyramidal neuron (CL:1001571) | — | — | 0 () | [report](ca3_pyramidal_cell_summary.md) |
-| dentate gyrus granule cell | dentate gyrus granule cell (CL:2000089) | — | — | 0 () | [report](dg_granule_cell_summary.md) |
-| hilar mossy cell | — | — | — | 0 () | [report](dg_mossy_cell_summary.md) |
 | hippocampal Cajal-Retzius cell | Cajal-Retzius cell (CL:0000695) | — | — | 0 () | [report](hpc_cajal_retzius_cell_summary.md) |
 | medial septal / diagonal band of Broca glutamatergic neuron | — | — | — | 0 () | [report](ms_dbb_glutamatergic_neuron_summary.md) |
