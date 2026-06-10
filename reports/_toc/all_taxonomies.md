@@ -272,13 +272,12 @@ See [`docs/mapping_schema_2026-05-12.md`](../docs/mapping_schema_2026-05-12.md) 
 - [chrna2_olm_subfamily_chamberland](../hippocampus/chrna2_olm_subfamily_chamberland_summary.md) — skos:broadMatch · MODERATE
 - [hippocampo_septal_cell_ca1](../hippocampus/hippocampo_septal_cell_ca1_summary.md) — skos:broadMatch · MODERATE
 - [olm_cell_ca1](../hippocampus/olm_cell_ca1_summary.md) — skos:broadMatch · MODERATE
-- [olm_hippocampus](../hippocampus/olm_hippocampus_summary.md) — skos:broadMatch · MODERATE
+- olm_hippocampus — skos:broadMatch · MODERATE _(no report file)_
 
 ###### Cluster — 0768 Sst Gaba_3
 
 - [bistratified_cell_hippocampus](../hippocampus/bistratified_cell_hippocampus_summary.md) — evidencell:UncertainRelationship · verdict pending
 - [olm_cell_ca1](../hippocampus/olm_cell_ca1_summary.md) — skos:closeMatch · MODERATE
-- [olm_hippocampus](../hippocampus/olm_hippocampus_summary.md) — skos:closeMatch · MODERATE
 
 ###### Cluster — 0772 Sst Gaba_3
 

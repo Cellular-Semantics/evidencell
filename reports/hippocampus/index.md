@@ -1,5 +1,5 @@
 # Hippocampus Cell Type Mapping Index
-*37 classical types · 2026-06-10*
+*36 classical types · 2026-06-10*
 
 | Classical type | CL term | Best atlas hit | Best confidence | Candidates | Link |
 |---|---|---|---|---|---|
@@ -19,9 +19,8 @@
 | Interneuron-specific (IS) interneuron | VIP GABAergic interneuron (CL:4023016) | 0179 Vip Gaba_7 | 🟡 MODERATE | 10 (1 MODERATE, 8 LOW) | [report](is_interneuron_hippocampus_summary.md) |
 | Ivy cell (IvC) | — | 0203 Lamp5 Lhx6 Gaba_1 | 🟡 MODERATE | 10 (1 MODERATE, 1 LOW, 7 UNCERTAIN) | [report](ivy_cell_hippocampus_summary.md) |
 | Neurogliaform cell (NGC) | neurogliaform cell (CL:0000693) | 0203 Lamp5 Lhx6 Gaba_1 | 🟡 MODERATE | 11 (1 MODERATE, 1 LOW, 2 UNCERTAIN) | [report](neurogliaform_cell_hippocampus_summary.md) |
-| Oriens-Lacunosum Moleculare (O-LM) cell | — | 0216 Sst Gaba_3 | 🟡 MODERATE | 10 (2 MODERATE, 6 LOW) | [report](olm_cell_ca1_summary.md) |
+| Oriens-Lacunosum Moleculare (O-LM) cell | — | 0216 Sst Gaba_3 | 🟡 MODERATE | 16 (2 MODERATE, 8 LOW) | [report](olm_cell_ca1_summary.md) |
 | Oriens-Lacunosum Moleculare (O-LM) interneuron | — | 0216 Sst Gaba_3 | 🟡 MODERATE | 10 (1 MODERATE, 5 LOW, 3 UNCERTAIN) | [report](olm_hippocampus_summary.md) |
-| Oriens-Lacunosum Moleculare (O-LM) interneuron | — | 0768 Sst Gaba_3 | 🟡 MODERATE | 15 (2 MODERATE, 9 LOW) | [report](olm_hippocampus_summary.md) |
 | Parvalbumin-positive basket cell | basket cell (CL:0000118) | 0206 Pvalb Gaba_2 | 🟡 MODERATE | 11 (2 MODERATE, 9 UNCERTAIN) | [report](pv_basket_cell_hippocampus_summary.md) |
 | Sst::Tac1-IN (bistratified-like, Chamberland 2024) | — | 052 Pvalb Gaba | 🟡 MODERATE | 11 (2 MODERATE, 7 LOW) | [report](sst_tac1_subfamily_chamberland_summary.md) |
 | dentate gyrus semilunar granule cell | dentate gyrus granule cell (CL:2000089) | 0137 DG Glut_2 | 🟡 MODERATE | 12 (2 MODERATE, 7 LOW) | [report](dg_semilunar_granule_cell_hippocampus_summary.md) |
