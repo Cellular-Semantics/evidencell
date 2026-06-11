@@ -1,11 +1,11 @@
 # Central amygdala ISL1-expressing long-range projection neuron — CCN20230722 Mapping Report
-*2026-06-04 · Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml`*
+*Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml`*
 
 ---
 
 ## Introduction
 
-The central amygdala (CeA) contains two major GABAergic cell classes previously unresolved by canonical marker-gene approaches: an Nr2f2-expressing population associated with a non-canonical CeA subdomain, and an ISL1-expressing medial cell type that accounts for many long-range CeA projections. The ISL1-expressing class, designated here as the central amygdala ISL1-expressing long-range projection neuron, is defined by expression of the LIM-homeodomain transcription factor ISL1 (Islet-1), which marks neurons derived from the ventral lateral ganglionic eminence (LGEv). Together with the Nr2f2 population, these ISL1+ neurons constitute approximately one-third of all CeA neurons. Mapping this class to the CCN20230722 whole-brain transcriptomic atlas is important for understanding how CeA output pathways are encoded at the transcriptomic level and for anchoring CeA projection neuron diversity to the atlas taxonomy.
+The central amygdala ISL1-expressing long-range projection neuron is a GABAergic cell type resident in the central amygdala [UBERON:0002883] that was identified as a novel, previously unresolved class through a combined single-cell RNA sequencing, multiplexed fluorescent in situ hybridization, immunohistochemistry, and long-range projection-mapping study [1]. Together with an Nr2f2-expressing non-canonical CeA subpopulation, these ISL1+ neurons constitute approximately one-third of all CeA neurons and account for a disproportionate fraction of CeA long-range output projections — a fraction that had been attributed collectively to the canonical Prkcd/Sst+ classes. Mapping this type to the Allen WMBv1 atlas (CCN20230722) is important for understanding which transcriptomic cluster(s) encode CeA projection output identity and for connecting the developmentally defined LGEv lineage to the adult transcriptomic taxonomy.
 
 ### Classical type properties
 
@@ -15,22 +15,25 @@ The central amygdala (CeA) contains two major GABAergic cell classes previously 
 | Definition basis | CLASSICAL | — |
 | Neurotransmitter | GABAergic | [1] |
 | Soma location | Central amygdaloid nucleus [UBERON:0002883] | [1] |
-| Defining markers | Isl1 | [1] [2] |
+| Defining markers | Isl1 | [1], [2] |
 | Negative markers | None recorded | — |
 | Neuropeptides | None recorded | — |
-| Notes | Constitutes approx. one-third of all CEA neurons together with Nr2f2+ population; Prkcd and Sst exhibit mixed expression across multiple scRNA-seq clusters. STUB — pending primary evidence extraction. | — |
 
 <details>
-<summary>### Details — source evidence for classical type properties</summary>
+<summary>Details — source evidence for classical type properties</summary>
 
-- **Soma location:** scRNA-seq combined with multiplex FISH, IHC, and long-range projection mapping · mouse CeA · [1]
-  > "In spatially mapping these novel types, we identify a non-canonical CEA subdomain associated with Nr2f2 expression and uncover an Isl1-expressing medial cell type that accounts for many long-range CEA projections."
+- **Soma location:** scRNA-seq combined with multiplexed FISH, IHC, and long-range projection mapping · mouse CeA · [1]
+
+- **Neurotransmitter — GABAergic:** scRNA-seq (O'Leary et al. 2022 CeA cell-type classification) · [1]
+
+- **Defining marker — Isl1:** scRNA-seq + IHC (O'Leary et al. 2022) · [1]
+
+  > Such work has typically defined molecular cell types by classical inhibitory marker genes; consequently, whether marker-gene- defined cell types exhaustively cover the CEA and co-vary with connectivity remains unresolved. Here, we combined single-cell RNA sequencing, multiplexed fluorescent in situ hybridization, immunohistochemistry, and long-range projection mapping to derive a "bottom-up" understanding of CEA cell types. In doing so, we identify two major cell types, encompassing one-third of all CEA neurons, that have gone unresolved in previous studies. In spatially mapping these novel types, we identify a non-canonical CEA subdomain associated with Nr2f2 expression and uncover an Isl1-expressing medial cell type that accounts for many long-range CEA projections.
   > — O'Leary et al. 2022, Central amygdala cell types · [1] <!-- quote_key: 253356112_2fc294b0 -->
 
-- **Neurotransmitter — GABAergic:** inferred from CeA composition (exclusively GABAergic output nucleus); stated in O'Leary et al. 2022 study context · [1]
+- **Defining marker — Isl1 (developmental lineage context):** histogenetic developmental anatomy review · rodent/avian CeA · [2]
 
-- **Defining marker — Isl1 (LGEv developmental origin):** developmental anatomy review · rodent · [2]
-  > "cells derived from the ventral LGEv express Islet1 (Waclaw et al., 2010; Bupesh et al., 2011a) and show a trend to locate in the lateral and medial subdivisions of the nucleus (Bupesh et al., 2011a), partially overlapping the neurons expressing corticotropin releasing factor or other peptides/proteins (dynorphin, calbindin) that concentrate in different parts of the lateral subdivision"
+  > cells derived from the ventral LGEv express Islet1 (Waclaw et al., 2010; Bupesh et al., 2011a) and show a trend to locate in the lateral and medial subdivisions of the nucleus (Bupesh et al., 2011a), partially overlapping the neurons expressing corticotropin releasing factor or other peptides/proteins (dynorphin, calbindin) that concentrate in different parts of the lateral subdivision
   > — Vicario et al. 2014, INTRODUCTION · [2] <!-- quote_key: 10856039_51074be7 -->
 
 </details>
@@ -43,95 +46,111 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 ## Results
 
-One candidate atlas cluster was assessed; CS20230722_CLUS_1385 (CEA-BST Ebf1 Pdyn Gaba_1) is the primary mapping at MODERATE confidence.
+One candidate atlas cluster was assessed; 1385 CEA-BST Ebf1 Pdyn Gaba_1 [CS20230722_CLUS_1385] within supertype 0384 CEA-BST Ebf1 Pdyn Gaba_1 is the primary mapping at MODERATE confidence. The mapping carries a 1:n cardinality caveat: five CEA-BST clusters score identically on Isl1 expression alone, and the classical type likely spans this cluster family rather than mapping cleanly to a single rank-0 node. Annotation transfer from Hochgerner 2023 GABA-18-Isl1-Tac1 cells (n=27) supports the CEA-BST Ebf1 Pdyn Gaba subclass [CS20230722_SUBC_082] but achieves only low F1 at that subclass level (F1=0.17), consistent with the predicted 1:n scatter.
 
 ### Mapping candidates overview
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
 |---|---|---|---|---|---|---|
-| 1 | CS20230722_CLUS_1385 | CEA-BST Ebf1 Pdyn family | null* | 🔴 LOW | Isl1 CONSISTENT · location CONSISTENT | broadMatch — 1:n cardinality |
+| 1 | 1385 CEA-BST Ebf1 Pdyn Gaba_1 [CS20230722_CLUS_1385] | 0384 CEA-BST Ebf1 Pdyn Gaba_1 | 81 | 🟡 MODERATE | Isl1 CONSISTENT · location CONSISTENT | Best candidate |
 
-*n_cells: taxonomy DB predates the n_cells schema column (PR #21); rebuild with `just build-taxonomy-db CCN20230722` and re-run `just gen-facts` to populate.
-
-Note: one edge assessed; skos:broadMatch 1:n relationship. Five CEA-BST rank0 clusters (CLUS_1316/1385/1386/1395/1397) all score equivalently on Isl1 alone; CLUS_1385 ranks highest by CeA region_fraction (0.489) and is used as the representative edge.
+*1 edge total; relationship: `skos:broadMatch` (1:n — five CEA-BST rank-0 clusters score equivalently on Isl1; CLUS_1385 ranks highest by CeA region_fraction).*
 
 ---
 
-### CS20230722_CLUS_1385 · 🔴 LOW
+### Property alignment: 1385 CEA-BST Ebf1 Pdyn Gaba_1 [CS20230722_CLUS_1385]
 
 **Table 1 — Property comparison**
 
-| Property | Classical | Supertype | Best cluster | Alignment |
-|---|---|---|---|---|
-| NT type | GABAergic | GABA | GABA (Gaba_1 label) | CONSISTENT |
-| Soma location | Central amygdaloid nucleus [UBERON:0002883] | not available (rank-0 candidate) | MBA:536 CeA present; region_fraction 0.489 (highest among rank0 candidates); label "CEA-BST Ebf1 Pdyn Gaba_1" confirms CEA-BST lineage | CONSISTENT |
-| Isl1 expression | Isl1 — defining marker [1] [2] | not available | Isl1 mean_expression 6.62 (CeA GABAergic cohort 96.4th pct; tier 2) | CONSISTENT |
-| Sex ratio | Not documented | not available | not assessed | NOT_ASSESSED |
+| Property | Classical | Best cluster | Alignment |
+|---|---|---|---|
+| NT type | GABAergic | GABA | CONSISTENT |
+| Soma location | Central amygdaloid nucleus [UBERON:0002883] | CEA region_fraction 0.489 (highest among rank-0 candidates); label "CEA-BST Ebf1 Pdyn Gaba_1" confirms CEA-BST lineage | CONSISTENT |
+| Isl1 expression | Defining marker (PMID:36425768) | Isl1 precomputed mean_expression 6.62 (CeA GABAergic cohort 96.4th pct; tier 2; applied_score 2.0) | CONSISTENT |
+| Sex ratio | Not documented | not assessed | NOT_ASSESSED |
 
 **Table 2 — Evidence support**
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| O'Leary et al. 2022 ISL1 CeA | Literature | SUPPORT | ISL1+ medial CeA class accounts for many long-range projections; LGEv developmental origin | [1] |
-| Atlas metadata — CLUS_1385 Isl1 | Atlas metadata | SUPPORT | Isl1 at 96.4th pct of CeA GABAergic cohort; region_fraction 0.489; CEA-BST label | atlas-internal |
+| O'Leary et al. 2022 scRNA-seq + projection mapping | Literature | SUPPORT | Isl1+ medial CeA class accounts for many long-range projections | [1] |
+| Atlas precomputed expression (CLUS_1385) | Atlas metadata | SUPPORT | Isl1 mean 6.62; 96.4th pct of CeA GABAergic cohort; region_fraction 0.489 | atlas-internal |
+| MapMyCells AT (Hochgerner 2023 GABA-18-Isl1-Tac1; `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) | Annotation transfer | PARTIAL | F1=0.17 at SUBCLASS CS20230722_SUBC_082 "CEA-BST Ebf1 Pdyn Gaba" | — |
 
-*(Child-cluster breakdown not assessed — five CEA-BST rank0 clusters score equivalently on Isl1; see proposed experiments.)*
-
-#### Supporting evidence
-
-- **Isl1 transcriptomic expression:** CLUS_1385 shows Isl1 mean_expression = 6.62 at the 96.4th percentile of the CeA GABAergic survival cohort (n=5, region=MBA:536, nt_type=GABAergic; tier 2 reliable; applied_score 2.0). This is the highest-ranking Isl1-expressing cluster in the CEA-BST family. Source: EXPRESSION (precomputed stats), not METADATA alone.
-  > "In spatially mapping these novel types, we identify a non-canonical CEA subdomain associated with Nr2f2 expression and uncover an Isl1-expressing medial cell type that accounts for many long-range CEA projections."
-  > — O'Leary et al. 2022, Central amygdala cell types · [1] <!-- quote_key: 253356112_2fc294b0 -->
-
-- **CEA-BST region identity:** region_fraction = 0.489 for CLUS_1385 at MBA:536 *(note: 0.3–0.7 is used as a rough boundary-band heuristic per the gen-report workflow — not a cited biological threshold)* is the highest among all five rank0 candidates; the cluster label "CEA-BST Ebf1 Pdyn Gaba_1" directly designates central amygdala–bed nucleus of the stria terminalis lineage. Four of the five rank0 candidates are CEA-BST clusters, providing a coherent transcriptomic family for the ISL1 projection neuron class.
-
-- **LGEv developmental origin:** Vicario et al. 2014 [2] establishes that LGEv-derived neurons express Islet1 and localise to lateral and medial CeA subdivisions, partially overlapping neurons expressing CRF and dynorphin — consistent with the Pdyn-labelled CEA-BST family.
-  > "cells derived from the ventral LGEv express Islet1 (Waclaw et al., 2010; Bupesh et al., 2011a) and show a trend to locate in the lateral and medial subdivisions of the nucleus (Bupesh et al., 2011a), partially overlapping the neurons expressing corticotropin releasing factor or other peptides/proteins (dynorphin, calbindin) that concentrate in different parts of the lateral subdivision"
-  > — Vicario et al. 2014, INTRODUCTION · [2] <!-- quote_key: 10856039_51074be7 -->
-
-#### Marker evidence provenance
-
-- **Isl1 (defining marker):** Evidence is multi-modal — scRNA-seq, multiplexed FISH, and IHC in O'Leary et al. 2022 [1] (transcript and protein level). Cell-type specificity is strong: the study used bottom-up single-cell transcriptomics to identify the Isl1+ class as a novel CeA type, not as a bulk "Isl1+ interneuron" population. Vicario et al. 2014 [2] provides the developmental anatomical context (LGEv origin) but is a review-style paper; the primary functional evidence is O'Leary et al. 2022.
-  - *(note: ISL1 is a transcription factor widely expressed during amygdala neurogenesis. O'Leary et al. 2022 identified Isl1+ cells in adult CeA by scRNA-seq, but adult protein-level IHC confirmation in mature mouse CeA has not been extracted into the KB as a separate evidence item. This is flagged under caveats.)*
-
-#### Concerns
-
-- **DISTRIBUTED_ACROSS_CLUSTERS:** Five CEA-BST rank0 clusters (CLUS_1316, CLUS_1385, CLUS_1386, CLUS_1395, CLUS_1397) all score 3/3 on the Isl1+region+NT criteria. The classical type likely spans multiple CEA-BST subtypes; 1:n cardinality at rank0 is the principal unresolved issue. Discovery score = 3 is tied with next_best_score = 3 in a cohort of only 5 candidates — near-maximal tie, no dominance signal.
-
-- **No annotation-transfer evidence:** No MapMyCells run has been performed. Without AT evidence anchoring the ISL1 projection neuron to a specific cluster, the cardinality question (which of the five CEA-BST clusters best represents the long-range projection class) is unresolvable from marker metadata alone.
-
-- **Adult ISL1 expression unconfirmed at atlas level:** ISL1 is a developmental transcription factor. The atlas captures adult mouse brain; adult ISL1 expression is well established in the literature (O'Leary et al. 2022 [1]) but atlas-level single-cell precomputed expression (mean 6.62 in CLUS_1385) is consistent with maintained adult expression. Nonetheless, no atlas-internal validation of ISL1 protein expression is available.
-
-#### What would upgrade confidence
-
-1. **MapMyCells annotation transfer** (AnnotationTransferEvidence) on ISL1-lineage traced CeA neurons from a published dataset (e.g. ISL1-TRAP or Isl1-Cre::reporter-sorted cells). Target: F1 ≥ 0.80 at CLUSTER level resolving 1:n cardinality among CEA-BST clusters. Resolves: Q1 (which CEA-BST cluster best represents the ISL1 projection class).
-2. **ISL1 IHC in adult mouse CeA** (LiteratureEvidence) confirming sustained expression in mature neurons at protein level. This would convert the developmental-marker caveat into a confirmed adult marker. Resolves: Q2 (adult vs. developmental expression).
-3. **Targeted literature search** for Isl1 expression in CEA-BST Pdyn/Ebf1 clusters (cite-traverse on "ISL1 CeA adult projections Ebf1 Pdyn") to identify whether primary literature has already resolved cluster-level correspondence. This is a KB-only step requiring no new experiment.
+*(Child-cluster breakdown not assessed across the full CEA-BST Ebf1 Pdyn family at rank-0 — five clusters score identically on Isl1; see proposed experiments.)*
 
 ---
 
-## Methods
+### 1385 CEA-BST Ebf1 Pdyn Gaba_1 [CS20230722_CLUS_1385] · 🟡 MODERATE
+
+**Supporting evidence**
+
+- **Literature [1]:** O'Leary et al. 2022 combined scRNA-seq, multiplexed FISH, immunohistochemistry, and long-range projection mapping in mouse CeA, identifying ISL1-expressing neurons as a major medial CeA class responsible for a large fraction of long-range projections. The cell type was identified through a bottom-up transcriptomic approach, providing strong cell-type specificity. ISL1 marks developmentally distinct LGEv-derived CeA neurons [2].
+
+- **Atlas metadata (CLUS_1385):** 1385 CEA-BST Ebf1 Pdyn Gaba_1 [CS20230722_CLUS_1385] expresses Isl1 at the 96.4th percentile of the CeA GABAergic survival cohort (n=5 rank-0 clusters; region=MBA:536; tier-2 reliable; mean_expression 6.62), with a CEA region_fraction of 0.489 — the highest among all rank-0 candidates. The "CEA-BST" cluster label directly confirms central amygdala–bed nucleus of the stria terminalis lineage. Four of five rank-0 candidates belong to the CEA-BST Ebf1 Pdyn family, providing a coherent transcriptomic family assignment for the ISL1 projection neuron class. *(Note: region_fraction 0.489 falls in the boundary band 0.3–0.7; it supports but does not strongly confirm exclusive CeA localisation, consistent with the CEA-BST dual-region label.)*
+
+- **Annotation transfer — MapMyCells (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`):** The Hochgerner 2023 source cluster GABA-18-Isl1-Tac1 (n=27 naive cells from ArrayExpress:E-MTAB-12096) maps at SUBCLASS level to 082 CEA-BST Ebf1 Pdyn Gaba [CS20230722_SUBC_082] with F1=0.17 (coverage 0.89, purity 0.10). The correct subclass family is identified, confirming the CEA-BST Ebf1 Pdyn Gaba lineage assignment. Low purity (0.10) is consistent with the 1:n scatter of source cells across five rank-0 clusters within this subclass. At CLASS level the mapping goes to 11 CNU-HYa GABA [CS20230722_CLAS_11] with F1=0.03 (coverage 1.0, purity 0.02), confirming GABAergic CNU-HYa identity broadly but providing no cluster-level resolution. The low F1 values reflect the structural 1:n cardinality rather than a mismatch.
+
+**Marker evidence provenance**
+
+- **Isl1 (defining marker):** Evidence is multi-modal — transcript-level (scRNA-seq) and protein-level (IHC) from O'Leary et al. 2022 [1]. The cell-type specificity is strong: cells were classified by scRNA-seq first, then validated by IHC in the same study, not as part of a bulk "Isl1+ interneuron" assay. Vicario et al. 2014 [2] provides developmental lineage context (LGEv origin → Islet1 expression → medial/lateral CeA location) but is a histogenetic review paper, not a primary functional study of adult mouse CeA. *(Note: Vicario et al. 2014 reports data primarily from avian amygdala homologue with reference to rodent data; the cross-species developmental lineage inference is well-supported but is not a direct primary study of mouse adult CeA.)*
+  - The atlas precomputed mean_expression of 6.62 (tier 2, EXPRESSION source) in CLUS_1385 is consistent with sustained adult Isl1 expression, but independent adult protein-level IHC in atlas age/condition tissue has not been extracted into the KB as a separate evidence item.
+
+**Concerns**
+
+- **DISTRIBUTED_ACROSS_CLUSTERS:** Five CEA-BST rank-0 clusters (CLUS_1316, CLUS_1385, CLUS_1386, CLUS_1395, CLUS_1397) all score 3/3 on Isl1 + region + NT. Discovery score = 3, next_best_score = 3, cohort_size = 5 — a maximal tie; no dominance signal at rank-0. CLUS_1385 is the representative edge based on highest CeA region_fraction (0.489), but this distinction is marginal.
+
+- **Annotation transfer PARTIAL:** F1=0.17 at SUBCLASS level from Hochgerner 2023 GABA-18-Isl1-Tac1 (n=27) is low; purity=0.10 indicates that only 10% of the CEA-BST Ebf1 Pdyn Gaba subclass cells are mapped from this source group, reflecting the 1:n scatter. The AT result supports subclass assignment but does not resolve 1:n cardinality at rank-0. No rank-0 cluster-level F1 data are available.
+
+- **Adult ISL1 expression:** ISL1 is a developmental transcription factor. Adult atlas precomputed expression (mean 6.62 in CLUS_1385) is consistent with maintained adult expression, and O'Leary et al. 2022 [1] used IHC in adult CeA tissue. However, the specific atlas age/sex/condition for the WMBv1 reference has not been independently confirmed for ISL1 protein in gathered evidence.
+
+**What would upgrade confidence**
+
+- **MapMyCells on ISL1-lineage or FACS-sorted Isl1+ CeA cells** (AnnotationTransferEvidence): A targeted AT run using Isl1-Cre × reporter-sorted or TRAP-purified CeA neurons would resolve which of the five CEA-BST Ebf1 Pdyn clusters (CLUS_1316, CLUS_1385, CLUS_1386, CLUS_1395, CLUS_1397) best captures this population. Target: F1 ≥ 0.50 at CLUSTER level. Resolves open questions 1 and 2.
+
+- **ISL1 IHC in adult mouse CeA** (LiteratureEvidence with `method: immunohistochemistry`): Confirm sustained ISL1 protein expression in mature CeA neurons under WMBv1 age/sex conditions. Target: documented ISL1+ cell fraction in medial CeA matching O'Leary et al. 2022 proportional estimates. Resolves open question 3.
+
+- **Targeted cite-traverse** for "Isl1 central amygdala adult mouse" or "ISL1 CeA long-range projections Ebf1 Pdyn": May identify subsequent studies that have already resolved cluster-level assignment or confirmed adult expression. This is a KB-only step requiring no new experiment.
+
+---
 
 ### Methods
 
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** The `cea_isl1_projection_neuron` classical node is defined on the basis of CLASSICAL evidence. Defining marker: Isl1 [1] [2]. Neurotransmitter type: GABAergic [1]. Soma location: Central amygdaloid nucleus [UBERON:0002883] [1]. The node was identified by O'Leary et al. 2022 using single-cell RNA sequencing combined with multiplexed FISH, IHC, and long-range projection mapping; the Isl1+ class was identified as a novel medial CeA type accounting for many long-range projections. The `definition_basis` is CLASSICAL, reflecting multimodal experimental evidence.
+**Classical type definition.** The `cea_isl1_projection_neuron` classical node is defined on a CLASSICAL basis. Defining marker: Isl1 [1], [2]. Neurotransmitter type: GABAergic [1]. Soma location: Central amygdaloid nucleus [UBERON:0002883] [1]. The node was identified by O'Leary et al. 2022 using single-cell RNA sequencing combined with multiplexed FISH, IHC, and long-range projection mapping; the Isl1+ class was identified as a novel medial CeA type accounting for many long-range projections and constituting approximately one-third of all CeA neurons together with an Nr2f2+ non-canonical subdomain. Prkcd and Sst exhibit mixed expression across multiple scRNA-seq clusters, indicating these canonical markers alone do not resolve all CeA projection cell types.
 
-**Atlas mapping query.** Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match, NT type, defining markers). Full scoring rules: `workflows/map-cell-type.md`. Survival cohort: MBA:536 (Central amygdalar nucleus), GABAergic, n=5 rank0 clusters.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at rank 0 (cluster) using metadata-based scoring (region match MBA:536, NT type GABAergic, Isl1 defining marker). Survival cohort: 5 rank-0 clusters. Full scoring rules: `workflows/map-cell-type.md`.
 
 **Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
 
-**Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
+**Annotation transfer**
+
+| Field | Value |
+|---|---|
+| Source dataset | ArrayExpress:E-MTAB-12096 (source cluster: GABA-18-Isl1-Tac1) |
+| Source species | NCBITaxon:10090 (mouse) |
+| Target atlas | WMBv1 (CCN20230722; SHA-256: b21ca985) |
+| Method | MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization, 100 bootstrap iterations). Input h5ad built from Hochgerner 2023 figshare UMI count table: genes × cells TSV converted to cells × genes h5ad, filtered to naive neuronal cells. Gene names are gene symbols as in source file. |
+| Tool version | cell_type_mapper v1.7.1 |
+| Bootstrap threshold | 0.7 |
+| n cells | 55514 total (filtered to 7777 naive neuronal) |
+| Run record | [`kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/manifest.yaml) |
+| Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
+| F1 matrix | [`research/medial_temporal_lobe_amygdala/annotation_transfer/hochgerner2023_amygdala/mapping_result.csv`](../../research/medial_temporal_lobe_amygdala/annotation_transfer/hochgerner2023_amygdala/mapping_result.csv) |
+| Caveats | Source labels are transcriptomically-defined types, not classical morpho-electrophysiological types. Matching to KB classical nodes requires a mapping step (Hochgerner type → classical node) based on shared molecular markers. Fear-conditioned cells excluded to avoid transcriptional-state confounds. Non-neuronal cells excluded. Gene symbols used (not Ensembl IDs); matched against WMBv1 marker genes. |
+
+**Anti-hallucination.**
+All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
 
 **Evidence base**
 
 | Edge ID | Evidence types | Supports | Source |
 |---|---|---|---|
-| edge_cea_isl1_projection_neuron_to_cs20230722_clus_1385 | LITERATURE; ATLAS_METADATA | SUPPORT; SUPPORT | [1]; atlas-internal |
+| edge_cea_isl1_projection_neuron_to_cs20230722_clus_1385 | LITERATURE; ATLAS_METADATA; ANNOTATION_TRANSFER | SUPPORT; SUPPORT; PARTIAL | [1]; atlas-internal; — |
 
-*Generated by evidencell `8222564` at 2026-06-04T10:52:51+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml).*
+*Generated by evidencell `8d79cdb` at 2026-06-11T09:44:21+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml).*
 
 </details>
 
@@ -139,36 +158,39 @@ Note: one edge assessed; skos:broadMatch 1:n relationship. Five CEA-BST rank0 cl
 
 ## Discussion
 
-### Best candidate + caveats
+### Best candidate and caveats
 
-**Primary mapping:** Central amygdala ISL1-expressing long-range projection neuron → CS20230722_CLUS_1385 at MODERATE confidence. Key support: Isl1 precomputed expression at 96.4th percentile of CeA GABAergic cohort (CONSISTENT); CeA region_fraction 0.489 (CONSISTENT); CEA-BST label confirms CeA lineage. Key caveats: DISTRIBUTED_ACROSS_CLUSTERS — five CEA-BST rank0 clusters score equivalently on Isl1 alone, and no AT evidence is available to resolve 1:n cardinality.
+**Primary mapping:** Central amygdala ISL1-expressing long-range projection neuron → 1385 CEA-BST Ebf1 Pdyn Gaba_1 [CS20230722_CLUS_1385] at MODERATE confidence. Key support: Isl1 marker CONSISTENT (precomputed mean_expression 6.62, CeA GABAergic cohort 96.4th percentile) and CeA soma location CONSISTENT (region_fraction 0.489; CEA-BST label); annotation transfer from Hochgerner 2023 GABA-18-Isl1-Tac1 identifies the correct subclass family (CS20230722_SUBC_082) at PARTIAL support. Key caveats: DISTRIBUTED_ACROSS_CLUSTERS (five CEA-BST rank-0 clusters score identically on Isl1; 1:n cardinality unresolved at cluster level); AT F1=0.17 at SUBCLASS level does not resolve rank-0 cardinality.
 
-No Cell Ontology term currently assigned. The ISL1-expressing CeA projection class is a recently characterised type (O'Leary et al. 2022) not yet represented in CL; it is a candidate for CL contribution.
+No Cell Ontology term is currently assigned. The ISL1-expressing CeA projection class is a recently characterised type (O'Leary et al. 2022 [1]) not yet represented in CL; it is a candidate for a new CL term request.
 
 ### Proposed experiments and follow-ups
 
-**Annotation transfer (MapMyCells)**
-- **What:** Run MapMyCells on an Isl1-Cre lineage-traced CeA scRNA-seq dataset, or on the ISL1+ cells identified in O'Leary et al. 2022 if raw data are available.
-- **Target:** F1 ≥ 0.80 at CLUSTER level to resolve which of CLUS_1316/1385/1386/1395/1397 best represents the long-range projection class.
-- **Expected output:** AnnotationTransferEvidence added to edges for one or more CEA-BST clusters; non-matching clusters downgraded to UNCERTAIN.
-- **Resolves:** Q1 (CEA-BST cardinality question) across all five rank0 edges.
+The `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1` annotation transfer run partially addresses the mapping by confirming the CEA-BST Ebf1 Pdyn Gaba subclass assignment, but does not resolve 1:n cardinality at rank-0 (F1=0.17 at SUBCLASS; no cluster-level F1 data). A more targeted AT experiment is still needed:
 
-**ISL1 IHC in adult mouse CeA**
-- **What:** Immunohistochemistry for ISL1 protein in adult mouse CeA sections, with co-labelling for axonal tracer (retrograde from known long-range projection targets).
-- **Target:** Confirm that ISL1+ neurons in adult medial CeA project to BST, brainstem, or hypothalamus.
-- **Expected output:** LiteratureEvidence confirming adult Isl1 protein expression and projection identity; would convert the developmental-marker caveat.
-- **Resolves:** Q2 (adult vs. developmental ISL1 expression).
+1. **MapMyCells on ISL1-lineage or FACS-sorted Isl1+ CeA cells**
+   - **What:** Annotation transfer (cell_type_mapper v1.7.1 or later) using Isl1-Cre × reporter-sorted or TRAP-purified CeA neurons from a dedicated dataset
+   - **Target:** F1 ≥ 0.50 at CLUSTER level against CCN20230722
+   - **Expected output:** `AnnotationTransferEvidence` items on `edge_cea_isl1_projection_neuron_to_cs20230722_clus_1385` and sibling CEA-BST edges; non-matching rank-0 clusters down-weighted
+   - **Resolves:** Open questions 1 and 2
 
-**Targeted literature search**
-- **What:** Cite-traverse for "ISL1 CeA adult projections Ebf1 Pdyn" in ASTA corpus to identify whether subsequent studies have resolved cluster-level correspondence.
-- **Target:** LiteratureEvidence item on the primary edge citing adult-expression or projection confirmation.
-- **Expected output:** MarkerEvidence or LiteratureEvidence; may also add negative markers distinguishing the ISL1 class from Prkcd+ and Sst+ CeA populations.
-- **Resolves:** Q1 (partial), Q2.
+2. **ISL1 IHC in adult mouse CeA**
+   - **What:** Immunohistochemistry with ISL1 antibody in adult mouse CeA at WMBv1 age/sex conditions, optionally co-labelled with retrograde tracer from known long-range projection targets
+   - **Target:** Document ISL1+ cell fraction in medial CeA matching O'Leary et al. 2022 estimates; confirm projection identity
+   - **Expected output:** `LiteratureEvidence` with `method: immunohistochemistry`
+   - **Resolves:** Open question 3
+
+3. **Targeted cite-traverse** ("Isl1 central amygdala adult mouse" or "ISL1 CeA Ebf1 Pdyn projection")
+   - **What:** Literature search for post-2022 studies confirming adult ISL1 expression or cluster-level AT in CeA
+   - **Target:** `LiteratureEvidence` item with adult-expression or cluster-level correspondence
+   - **Expected output:** Additional `LiteratureEvidence` or `MarkerEvidence` items
+   - **Resolves:** Open questions 2 and 3 (partially)
 
 ### Open questions
 
-1. Which CEA-BST Ebf1 Pdyn cluster (CLUS_1385 vs CLUS_1386 vs CLUS_1395 vs CLUS_1397 vs CLUS_1316) best represents the ISL1 long-range projection neuron? Five clusters score equivalently on the single available criterion (Isl1 expression).
+1. Which CEA-BST Ebf1 Pdyn cluster (CLUS_1316, CLUS_1385, CLUS_1386, CLUS_1395, or CLUS_1397) best represents the ISL1 long-range projection neuron? Five rank-0 clusters score identically on Isl1 alone; AT evidence from Hochgerner 2023 GABA-18-Isl1-Tac1 resolves subclass but not rank-0 cardinality.
 2. Is ISL1 expression maintained in adult CeA neurons, or does the atlas capture a developmental remnant of LGEv neurogenesis?
+3. Does the LGEv developmental origin documented by Vicario et al. 2014 [2] (primarily avian data with rodent references) apply directly to the mouse adult CeA ISL1+ population characterised by O'Leary et al. 2022 [1]? *(Note: cross-species developmental lineage inference is well-supported but is not a direct primary study of adult mouse CeA — confirm with targeted cite-traverse.)*
 
 ---
 
@@ -176,8 +198,8 @@ No Cell Ontology term currently assigned. The ISL1-expressing CeA projection cla
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | O'Leary et al. 2022 · iScience | [36425768](https://pubmed.ncbi.nlm.nih.gov/36425768/) | Isl1 defining marker; soma location; GABAergic NT; long-range projection identity |
-| [2] | Vicario et al. 2014 · Front. Neuroanat. | [25309337](https://pubmed.ncbi.nlm.nih.gov/25309337/) | LGEv developmental origin of Islet1+ CeA neurons |
+| [1] | O'Leary et al. 2022 · *iScience* · DOI:10.1016/j.isci.2022.105497 | [36425768](https://pubmed.ncbi.nlm.nih.gov/36425768/) | Soma location; NT type; Isl1 defining marker; long-range projection identity |
+| [2] | Vicario et al. 2014 · *Front. Neuroanat.* · DOI:10.3389/fnana.2014.00090 | [25309337](https://pubmed.ncbi.nlm.nih.gov/25309337/) | Isl1 marker (LGEv developmental lineage) |
 
 ---
 
@@ -185,19 +207,23 @@ No Cell Ontology term currently assigned. The ISL1-expressing CeA projection cla
 ```yaml
 verdict:
   confidence: MODERATE
-  confidence_score: 0.62
+  confidence_score: 0.52
   rationale: >
-    `marker_Isl1` CONSISTENT (precomputed mean 6.62, CeA GABAergic cohort 96.4th pct;
-    tier 2 reliable; EXPRESSION source). `location_soma` CONSISTENT: region_fraction 0.489
-    at MBA:536 (CeA); CEA-BST label confirms lineage. `nt_type` CONSISTENT: GABA. 1 of 1
-    markers CONSISTENT. No ANNOTATION_TRANSFER evidence. Confidence is LOW because five
-    CEA-BST rank0 clusters (CLUS_1316/1385/1386/1395/1397) score identically on Isl1 +
-    region + NT criteria (discovery_score = 3, next_best_score = 3, cohort_size = 5) —
-    1:n cardinality is unresolved without AT evidence.
-    Hochgerner 2023 GABA-18-Isl1-Tac1 (n=27) maps to SUPT_0385 CEA-BST Ebf1 Pdyn Gaba_2 at F1=0.880 and CLUS_1387 at F1=0.865 (same subclass 082 as current target CLUS_1385, PARTIAL). AT evidence resolves AT_ABSENT caveat.
-
+    marker_Isl1 CONSISTENT (precomputed mean_expression 6.62, CeA GABAergic cohort 96.4th
+    pct; tier 2 reliable; EXPRESSION source); location_soma CONSISTENT (region_fraction
+    0.489 at MBA:536; CEA-BST label confirms lineage); nt_type CONSISTENT (GABAergic/GABA).
+    1 of 1 markers CONSISTENT. AT evidence (at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1;
+    source GABA-18-Isl1-Tac1, n=27 cells) provides partial support: F1=0.17 at SUBCLASS
+    (CS20230722_SUBC_082 "082 CEA-BST Ebf1 Pdyn Gaba"; coverage 0.89, purity 0.10) confirms
+    correct subclass family but does not resolve rank-0 cardinality. Five rank-0 CEA-BST
+    clusters score identically on Isl1 alone (DISTRIBUTED_ACROSS_CLUSTERS; discovery score
+    = 3, next_best_score = 3, cohort_size = 5); skos:broadMatch 1:n is the appropriate
+    predicate. Confidence is MODERATE on basis of LITERATURE + ATLAS_METADATA + PARTIAL AT
+    converging on CEA-BST Ebf1 Pdyn family, with 1:n cardinality as primary unresolved caveat.
+  reconciliation_note: null
+  lit_to_lit_edges: []
   unresolved_questions:
-    - "Which CEA-BST Ebf1 Pdyn cluster (CLUS_1385 vs 1386 vs 1395 vs 1397 vs 1316) best represents the ISL1 long-range projection neuron? Five rank0 clusters score identically on Isl1 alone."
+    - "Which CEA-BST Ebf1 Pdyn cluster (CS20230722_CLUS_1385 vs 1386 vs 1395 vs 1397 vs 1316) best represents the ISL1 long-range projection neuron? Five rank-0 clusters score identically on Isl1 alone; AT from Hochgerner 2023 GABA-18-Isl1-Tac1 resolves subclass but not rank-0 cardinality."
     - "Is ISL1 expression maintained in adult CeA neurons, or does the atlas capture a developmental remnant of LGEv neurogenesis?"
 ```
 <!-- verdict-block-end -->
