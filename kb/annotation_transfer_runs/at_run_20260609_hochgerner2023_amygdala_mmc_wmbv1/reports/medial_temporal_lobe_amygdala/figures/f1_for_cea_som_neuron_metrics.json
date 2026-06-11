@@ -1,0 +1,107 @@
+{
+  "run_id": "at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "/Users/andrea/Documents/GitHub/evidencell/research/medial_temporal_lobe_amygdala/annotation_transfer/hochgerner2023_amygdala/f1_matrix.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "GABA-39-Sst-Nek7"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "GABA-39-Sst-Nek7": {
+      "class": [
+        {
+          "target_name": "08 CNU-MGE GABA",
+          "node_id": "CS20230722_CLAS_08",
+          "n_cells": 5,
+          "f1": 0.0588,
+          "purity": 0.0318,
+          "coverage": 0.3846
+        },
+        {
+          "target_name": "07 CTX-MGE GABA",
+          "node_id": "CS20230722_CLAS_07",
+          "n_cells": 8,
+          "f1": 0.0548,
+          "purity": 0.0287,
+          "coverage": 0.6154
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "053 Sst Gaba",
+          "node_id": "CS20230722_SUBC_053",
+          "n_cells": 13,
+          "f1": 0.1806,
+          "purity": 0.1074,
+          "coverage": 0.5652
+        },
+        {
+          "target_name": "054 STR Prox1 Lhx6 Gaba",
+          "node_id": "CS20230722_SUBC_054",
+          "n_cells": 9,
+          "f1": 0.1782,
+          "purity": 0.1154,
+          "coverage": 0.3913
+        },
+        {
+          "target_name": "052 Pvalb Gaba",
+          "node_id": "CS20230722_SUBC_052",
+          "n_cells": 1,
+          "f1": 0.0227,
+          "purity": 0.0154,
+          "coverage": 0.0435
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0235 STR Prox1 Lhx6 Gaba_3",
+          "node_id": "CS20230722_SUPT_0235",
+          "n_cells": 7,
+          "f1": 0.4242,
+          "purity": 0.5833,
+          "coverage": 0.3333
+        },
+        {
+          "target_name": "0230 Sst Gaba_17",
+          "node_id": "CS20230722_SUPT_0230",
+          "n_cells": 13,
+          "f1": 0.4127,
+          "purity": 0.3095,
+          "coverage": 0.619
+        },
+        {
+          "target_name": "0206 Pvalb Gaba_2",
+          "node_id": "CS20230722_SUPT_0206",
+          "n_cells": 1,
+          "f1": 0.037,
+          "purity": 0.0303,
+          "coverage": 0.0476
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0823 Sst Gaba_17",
+          "node_id": "CS20230722_CLUS_0823",
+          "n_cells": 8,
+          "f1": 0.5517,
+          "purity": 0.5,
+          "coverage": 0.6154
+        },
+        {
+          "target_name": "0837 STR Prox1 Lhx6 Gaba_3",
+          "node_id": "CS20230722_CLUS_0837",
+          "n_cells": 5,
+          "f1": 0.5263,
+          "purity": 0.8333,
+          "coverage": 0.3846
+        }
+      ]
+    }
+  }
+}

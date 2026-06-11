@@ -1,0 +1,67 @@
+{
+  "run_id": "at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "/Users/andrea/Documents/GitHub/evidencell/research/medial_temporal_lobe_amygdala/annotation_transfer/hochgerner2023_amygdala/f1_matrix.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "VGLUT2-42-Otp_Sema3c"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "VGLUT2-42-Otp_Sema3c": {
+      "class": [
+        {
+          "target_name": "13 CNU-HYa Glut",
+          "node_id": "CS20230722_CLAS_13",
+          "n_cells": 40,
+          "f1": 0.0719,
+          "purity": 0.0373,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "120 MEA Otp Foxp2 Glut",
+          "node_id": "CS20230722_SUBC_120",
+          "n_cells": 42,
+          "f1": 0.7636,
+          "purity": 0.6176,
+          "coverage": 1.0
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0538 MEA Otp Foxp2 Glut_1",
+          "node_id": "CS20230722_SUPT_0538",
+          "n_cells": 46,
+          "f1": 0.7302,
+          "purity": 0.5823,
+          "coverage": 0.9787
+        },
+        {
+          "target_name": "0507 MEA-COA-BMA Ccdc42 Glut_3",
+          "node_id": "CS20230722_SUPT_0507",
+          "n_cells": 1,
+          "f1": 0.011,
+          "purity": 0.0075,
+          "coverage": 0.0213
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "2204 MEA Otp Foxp2 Glut_1",
+          "node_id": "CS20230722_CLUS_2204",
+          "n_cells": 37,
+          "f1": 0.8043,
+          "purity": 0.6727,
+          "coverage": 1.0
+        }
+      ]
+    }
+  }
+}
