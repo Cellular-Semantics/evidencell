@@ -54,6 +54,14 @@ Cell Ontology mapping: [CL:1001474](https://www.ebi.ac.uk/ols4/ontologies/cl/cla
 
 One candidate atlas cluster was assessed; 1344 CEA-BST Six3 Cyp26b1 Gaba_5 [CS20230722_CLUS_1344] in supertype 0371 CEA-BST Six3 Cyp26b1 Gaba_5 is the primary mapping at LOW confidence (skos:broadMatch).
 
+### Annotation transfer overview
+
+![Filtered AT figure for Central amygdala medium spiny neuron](figures/f1_for_cea_medium_spiny_neuron.png)
+
+*F1 across taxonomy levels for two Hochgerner 2023 source groups relevant to the Central amygdala medium spiny neuron: GABA-11-Adora2a-Id4 (n=79 cells; 25 retained after filter) and GABA-14-Drd1-Scn4b (n=29 cells; 28 retained after filter). Each panel row is a source-cell group; nodes are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown inline. Coverage = fraction of source-group cells landing on this target; Purity = fraction of this target's cells coming from the source group. With multiple source groups in the figure, cross-group Purity comparisons reveal which source contributes most selectively to each target. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
+
+AT was performed with MapMyCells (cell_type_mapper v1.7.1) mapping Hochgerner 2023 amygdala naive cells (ArrayExpress:E-MTAB-12096) to WMBv1. The D2-type source GABA-11-Adora2a-Id4 maps to the CEA-BST Six3 Cyp26b1 Gaba subclass (079 CEA-BST Six3 Cyp26b1 Gaba, CS20230722_SUBC_079) and achieves CLUSTER-level F1=0.86 (Purity=1.00, Coverage=0.75) for 1344 CEA-BST Six3 Cyp26b1 Gaba_5 [CS20230722_CLUS_1344], supporting the nominated mapping target. The D1-type source GABA-14-Drd1-Scn4b maps instead to the STR D1 Gaba subclass (061 STR D1 Gaba, CS20230722_SUBC_061) with SUBCLASS-level F1=0.71 (Purity=0.63, Coverage=0.81), reflecting a distinct D1 striatal lineage. The divergence between the two source groups is consistent with the MSN heterogeneity documented in the classical type and supports CLUS_1344 (D2-type) as the primary mapping while flagging D1-type MSN admixture as a secondary component.
+
 ### Mapping candidates table
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |

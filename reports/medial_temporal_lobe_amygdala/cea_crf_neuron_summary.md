@@ -47,6 +47,14 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 One candidate atlas supertype was assessed; CS20230722_SUPT_0393 ("CEA-BST Rai14 Pdyn Crh Gaba_2") is the primary mapping at LOW confidence, reflecting strong Crh neuropeptide alignment and correct CEA-BST lineage, but confounded by AGAINST annotation-transfer evidence: GABA-13-Adora2a-Crh (the Hochgerner 2023 source type) maps to STR D2 Gaba_5 (SUPT_0278, F1=0.800 at supertype level) rather than SUPT_0393, suggesting that Adora2a co-expression drives the AT signal away from the expected CeA target.
 
+### Annotation transfer overview
+
+![Filtered AT figure for Central amygdala corticotropin-releasing factor (CRF) neuron](figures/f1_for_cea_crf_neuron.png)
+
+*F1 across taxonomy levels for the Hochgerner 2023 source group GABA-13-Adora2a-Crh (n=16 cells; 16 retained after filter) relevant to the Central amygdala corticotropin-releasing factor (CRF) neuron. Each panel row is a source-cell group; nodes are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown inline. Coverage = fraction of source-group cells landing on this target; Purity = fraction of this target's cells coming from the source group. With a single source group in the figure, Purity differentiates among candidate targets; Coverage discriminates how cleanly the source lands. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
+
+AT was performed with MapMyCells (cell_type_mapper v1.7.1) mapping Hochgerner 2023 amygdala naive cells (ArrayExpress:E-MTAB-12096) to WMBv1. The source cluster GABA-13-Adora2a-Crh maps to the STR D2 Gaba subclass (062 STR D2 Gaba, CS20230722_SUBC_062) with SUBCLASS-level F1=0.23 (Purity=0.13, Coverage=0.94), and SUPERTYPE-level F1 reaches 0.80 (Purity=0.83, Coverage=0.77) for the 0278 STR D2 Gaba_5 supertype [CS20230722_SUPT_0278]. This constitutes AGAINST evidence for the nominated SUPT_0393 target: the Hochgerner Adora2a/Crh co-expressing cells are transcriptomically placed in the striatal D2 lineage rather than the CEA-BST Rai14 Pdyn lineage, consistent with the interpretation that Adora2a expression in this source group overrides the Crh signal and drives placement toward STR D2.
+
 ### Mapping candidates table
 
 | Rank | WMBv1 supertype | Cells (10x) | Confidence | Key property alignment | Verdict |

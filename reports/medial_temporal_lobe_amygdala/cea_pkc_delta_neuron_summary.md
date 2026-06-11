@@ -58,6 +58,14 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 One candidate atlas cluster was assessed: 1333 CEA-BST Six3 Cyp26b1 Gaba_2 [CS20230722_CLUS_1333] at MODERATE confidence. Annotation-transfer evidence from Hochgerner et al. 2023 (ArrayExpress:E-MTAB-12096; GABA-9-Prkcd-Ezr, n=181 naive cells) shows F1=0.91 mapping to the parent supertype 0368 CEA-BST Six3 Cyp26b1 Gaba_2 [CS20230722_SUPT_0368]; cluster-level resolution is limited (F1=0.13 at rank 0). A DISCORDANT Sst signal at cluster level is the primary concern.
 
+### Annotation transfer overview
+
+![Filtered AT figure for Central amygdala protein kinase C-delta (PKC-delta) neuron](figures/f1_for_cea_pkc_delta_neuron.png)
+
+*F1 across taxonomy levels for the Hochgerner 2023 source group GABA-9-Prkcd-Ezr (n=181 cells; 175 retained after filter) relevant to the Central amygdala protein kinase C-delta (PKC-delta) neuron. Each panel row is a source-cell group; nodes are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown inline. Coverage = fraction of source-group cells landing on this target; Purity = fraction of this target's cells coming from the source group. With a single source group in the figure, Purity differentiates among candidate targets; Coverage discriminates how cleanly the source lands. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
+
+AT was performed with MapMyCells (cell_type_mapper v1.7.1) mapping Hochgerner 2023 amygdala naive cells (ArrayExpress:E-MTAB-12096) to WMBv1. The source cluster GABA-9-Prkcd-Ezr maps to the CEA-BST Six3 Cyp26b1 Gaba subclass (079 CEA-BST Six3 Cyp26b1 Gaba, CS20230722_SUBC_079) with SUBCLASS-level F1=0.65 (Purity=0.48, Coverage=1.00). SUPERTYPE-level F1 reaches 0.91 (Purity=0.84, Coverage=1.00) for the 0368 CEA-BST Six3 Cyp26b1 Gaba_2 supertype [CS20230722_SUPT_0368], indicating a highly specific assignment at supertype resolution. CLUSTER-level F1 drops to 0.13 for 1333 CEA-BST Six3 Cyp26b1 Gaba_2 [CS20230722_CLUS_1333] (Purity=0.48, Coverage=0.07), consistent with dispersal of source cells across multiple child clusters within the 0368 supertype.
+
 ### Mapping candidates table
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |

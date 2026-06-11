@@ -70,6 +70,14 @@ type is expected to distribute across a sibling cluster family (CLUS_0194–0197
 under the same supertype; the relationship is coded `skos:broadMatch` (1:n) because the
 classical node cannot yet be resolved to a single cluster.
 
+### Annotation transfer overview
+
+![Filtered AT figure for Medial amygdala glutamatergic projection neuron](figures/f1_for_mea_glutamatergic_projection_neuron.png)
+
+*F1 across taxonomy levels for the Hochgerner 2023 source group VGLUT2-42-Otp_Sema3c (n=48 cells; 40 retained after filter) relevant to the Medial amygdala glutamatergic projection neuron. Each panel row is a source-cell group; nodes are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown inline. Coverage = fraction of source-group cells landing on this target; Purity = fraction of this target's cells coming from the source group. With a single source group in the figure, Purity differentiates among candidate targets; Coverage discriminates how cleanly the source lands. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
+
+AT was performed with MapMyCells (cell_type_mapper v1.7.1) mapping Hochgerner 2023 amygdala naive cells (ArrayExpress:E-MTAB-12096) to WMBv1. The source cluster VGLUT2-42-Otp_Sema3c maps to the MEA Otp Foxp2 Glut subclass (120 MEA Otp Foxp2 Glut, CS20230722_SUBC_120) with SUBCLASS-level F1=0.76 (Purity=0.62, Coverage=1.00), indicating a clean glutamatergic MEA assignment. SUPERTYPE-level F1 is 0.73 (Purity=0.58, Coverage=0.98) for the 0538 MEA Otp Foxp2 Glut_1 supertype [CS20230722_SUPT_0538], and CLUSTER-level F1 reaches 0.80 (Purity=0.67, Coverage=1.00) for 2204 MEA Otp Foxp2 Glut_1 [CS20230722_CLUS_2204]. Note that the AT best cluster (CLUS_2204, MEA Otp Foxp2 Glut_1 subclass) differs from the nominated mapping edge target (CLUS_0195, MEA Slc17a7 Glut_1 subclass) — the two clusters belong to distinct MEA glutamatergic subclasses, and the AT evidence supports reassigning the primary mapping to CLUS_2204 or the 120 MEA Otp Foxp2 Glut subclass.
+
 ### Candidate overview
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |

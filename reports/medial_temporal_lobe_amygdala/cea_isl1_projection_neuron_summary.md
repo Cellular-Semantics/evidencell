@@ -48,6 +48,14 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 One candidate atlas cluster was assessed; 1385 CEA-BST Ebf1 Pdyn Gaba_1 [CS20230722_CLUS_1385] within supertype 0384 CEA-BST Ebf1 Pdyn Gaba_1 is the primary mapping at MODERATE confidence. The mapping carries a 1:n cardinality caveat: five CEA-BST clusters score identically on Isl1 expression alone, and the classical type likely spans this cluster family rather than mapping cleanly to a single rank-0 node. Annotation transfer from Hochgerner 2023 GABA-18-Isl1-Tac1 cells (n=27) supports the CEA-BST Ebf1 Pdyn Gaba subclass [CS20230722_SUBC_082] but achieves only low F1 at that subclass level (F1=0.17), consistent with the predicted 1:n scatter.
 
+### Annotation transfer overview
+
+![Filtered AT figure for Central amygdala ISL1-expressing long-range projection neuron](figures/f1_for_cea_isl1_projection_neuron.png)
+
+*F1 across taxonomy levels for the Hochgerner 2023 source group GABA-18-Isl1-Tac1 (n=27 cells; 23 retained after filter) relevant to the Central amygdala ISL1-expressing long-range projection neuron. Each panel row is a source-cell group; nodes are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown inline. Coverage = fraction of source-group cells landing on this target; Purity = fraction of this target's cells coming from the source group. With a single source group in the figure, Purity differentiates among candidate targets; Coverage discriminates how cleanly the source lands. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
+
+AT was performed with MapMyCells (cell_type_mapper v1.7.1) mapping Hochgerner 2023 amygdala naive cells (ArrayExpress:E-MTAB-12096) to WMBv1. The source cluster GABA-18-Isl1-Tac1 maps to the CEA-BST Ebf1 Pdyn Gaba subclass (082 CEA-BST Ebf1 Pdyn Gaba, CS20230722_SUBC_082) with SUBCLASS-level F1=0.17 (Purity=0.10, Coverage=0.89). SUPERTYPE-level F1 rises to 0.88 (Purity=0.88, Coverage=0.88) for the 0385 CEA-BST Ebf1 Pdyn Gaba_2 supertype [CS20230722_SUPT_0385]. CLUSTER-level F1 is 0.87 for 1387 CEA-BST Ebf1 Pdyn Gaba_2 [CS20230722_CLUS_1387] (Purity=1.00, Coverage=0.76), indicating a clean assignment at the highest resolution. Note that the AT best cluster is 1387 while the nominated edge target is the adjacent 1385 — both belong to the same 0385 supertype and the subclass-level scatter is consistent with the predicted 1:n cardinality.
+
 ### Mapping candidates overview
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |

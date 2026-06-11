@@ -57,6 +57,14 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 One candidate atlas cluster was assessed; 0823 Sst Gaba_17 [CS20230722_CLUS_0823] in supertype 0230 Sst Gaba_17 [CS20230722_SUPT_0230] is the primary mapping at LOW confidence, reflecting a clean property-level convergence across NT type, Sst expression, and Prkcd negativity, but constrained by a five-way tie in the CeA GABAergic discovery cohort and a partial annotation-transfer result (F1=0.55 at cluster level).
 
+### Annotation transfer overview
+
+![Filtered AT figure for Central amygdala somatostatin-positive neuron](figures/f1_for_cea_som_neuron.png)
+
+*F1 across taxonomy levels for the Hochgerner 2023 source group GABA-39-Sst-Nek7 (n=23 cells; 8 retained after filter) relevant to the Central amygdala somatostatin-positive neuron. Each panel row is a source-cell group; nodes are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown inline. Coverage = fraction of source-group cells landing on this target; Purity = fraction of this target's cells coming from the source group. With a single source group in the figure, Purity differentiates among candidate targets; Coverage discriminates how cleanly the source lands. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
+
+AT was performed with MapMyCells (cell_type_mapper v1.7.1) mapping Hochgerner 2023 amygdala naive cells (ArrayExpress:E-MTAB-12096) to WMBv1. The source cluster GABA-39-Sst-Nek7 is a small group (n=23 total; 8 cells retained at CLASS level). Assignment converges on the Sst Gaba subclass (053 Sst Gaba, CS20230722_SUBC_053) with SUBCLASS-level F1=0.18 (Purity=0.11, Coverage=0.57). SUPERTYPE-level F1 rises to 0.41 for the 0230 Sst Gaba_17 supertype [CS20230722_SUPT_0230] (Purity=0.31, Coverage=0.62), and CLUSTER-level F1 reaches 0.55 for 0823 Sst Gaba_17 [CS20230722_CLUS_0823] (Purity=0.50, Coverage=0.62), indicating the best-available resolution for this small source group despite the low absolute cell count.
+
 ### Mapping candidates table
 
 | Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
