@@ -1296,6 +1296,10 @@ nodes:
       method: asta_report
       scope: amygdala/hippocampus literature synthesis
       quote_key: 259201574_70036ef8
+    - ref: PMID:35841648
+      method: asta_report
+      scope: human paralaminar nucleus immature excitatory neuron development across puberty
+      quote_key: 250411527_03961399
   defining_markers:
   - symbol: Dcx
     ncbi_gene_id:
@@ -1505,6 +1509,24 @@ nodes:
   name: Basal amygdala fear neuron
   definition_basis: CLASSICAL
   species:
+  nt_type:
+    name_in_source: glutamatergic
+    sources:
+    - ref: PMID:27053114
+      method: asta_report
+      scope: mouse BLA principal neuron synthesis — BLA enriched in glutamatergic principal neurons
+      quote_key: 3103554_aec310ea
+  electrophysiology:
+    description: Functionally defined by activity timing during Pavlovian conditioning — fear neurons among BLA principal cells are activated by the conditioned stimulus and form a non-overlapping population with extinction neurons; single-cell transcriptomics confirms that only a subset of amygdalar neuronal types is transcriptionally responsive to fear learning and retrieval.
+    sources:
+    - ref: PMID:31193505
+      method: asta_report
+      scope: BLA principal neuron fear/extinction circuit synthesis (mouse)
+      quote_key: 4940771_cb8fa215
+    - ref: PMID:37884748
+      method: asta_report
+      scope: mouse whole-amygdala scRNA-seq across naive and fear-conditioned mice
+      quote_key: 264517392_cf983fc0
   anatomical_location:
   - id: UBERON:0002887
     name: basal amygdala
@@ -1534,6 +1556,22 @@ nodes:
   name: Basal amygdala extinction neuron
   definition_basis: CLASSICAL
   species:
+  defining_markers:
+  - symbol: Ntsr2
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: mouse BLA, Thy1-eYFP/Cre RNA-seq + behavioural characterisation of 'Fear-Off' population
+      quote_key: 104297085_20a79f85
+      marker_type: TRANSCRIPT
+  electrophysiology:
+    description: Functionally defined by activity timing during Pavlovian conditioning — extinction neurons become active only after repeated unreinforced presentations of the conditioned stimulus and uniquely receive reciprocal mPFC input, distinguishing them from the non-overlapping fear neuron population among BLA principal cells.
+    sources:
+    - ref: PMID:31193505
+      method: asta_report
+      scope: BLA principal neuron fear/extinction circuit synthesis (mouse)
+      quote_key: 4940771_cb8fa215
   anatomical_location:
   - id: UBERON:0002887
     name: basal amygdala
@@ -1582,6 +1620,11 @@ nodes:
       method: asta_snippet
       scope: mouse LA interneuron review
       quote_key: 212579559_81debee5
+      marker_type: PROTEIN
+    - ref: PMID:28453642
+      method: asta_report
+      scope: mouse BLA, immunolabeling during fear extinction
+      quote_key: 17860491_f1ffddb9
       marker_type: PROTEIN
   morphology:
     description: Calbindin-positive interneurons targeting dendrites of BLA principal cells; characterized in vivo as a distinct dendrite-targeting class separable by marker content from somatostatin dendrite-targeting cells.
@@ -1912,6 +1955,18 @@ nodes:
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: 267685584_678b0ee4
+    - ref: PMID:40686779
+      method: asta_report
+      scope: amygdala single-cell transcriptomics synthesis
+      quote_key: 280092907_397d9bdc
+    - ref: PMID:32858950
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 221366115_070b0504
+    - ref: PMID:20484636
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 17223544_db418703
   species:
   anatomical_location:
   - id: UBERON:0002883
@@ -1951,6 +2006,18 @@ nodes:
       method: asta_report
       scope: amygdala literature synthesis
       quote_key: 267685584_678b0ee4
+    - ref: PMID:32858950
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 221366115_197a5821
+    - ref: PMID:20484636
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 17223544_4fda1404
+    - ref: PMID:40686779
+      method: asta_report
+      scope: amygdala single-cell transcriptomics synthesis
+      quote_key: 280092907_397d9bdc
   species:
   anatomical_location:
   - id: UBERON:0002883
