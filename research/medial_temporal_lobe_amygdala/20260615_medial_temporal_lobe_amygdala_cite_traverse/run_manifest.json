@@ -1,0 +1,41 @@
+[
+  {
+    "step": "fetch_depth_0",
+    "asta_snippets_returned": 0,
+    "asta_snippets_filtered_title": 0,
+    "asta_snippets_filtered_peer_review": 0,
+    "asta_snippets_used": 0,
+    "asta_error": "HTTP 403 Forbidden — all 12 papers treated as gap papers",
+    "gap_papers_count": 12,
+    "fallback_attempted": 12,
+    "fallback_success": 10,
+    "fallback_fetch_failed": 2,
+    "fallback_failed_details": [
+      {"corpus_id": "CorpusId:17223544", "pmid": "20484636", "pmcid": "PMC2882074", "reason": "europepmc_fulltext returned empty response"},
+      {"corpus_id": "CorpusId:232283078", "pmid": "33837051", "pmcid": "PMC8260245", "reason": "europepmc_fulltext returned empty response"}
+    ],
+    "report_summaries_merged": 0,
+    "total_summaries": 12,
+    "paper_ids_queried": 12,
+    "papers_with_high_relevance": 7,
+    "papers_with_moderate_relevance": 1,
+    "papers_with_low_relevance": 4,
+    "note_vereczki_2021": "CorpusId:232283078 (Vereczki et al. 2021, J Neurosci) is the primary source for NPY neurogliaform cell proportions; full text unavailable from Europe PMC — its data is cited indirectly via PMID:40686779. Recommend targeting for separate retrieval.",
+    "node_coverage": {
+      "bla_npy_neurogliaform_cell": ["CorpusId:280092907", "CorpusId:281382725", "CorpusId:264517392", "CorpusId:4940771"],
+      "paralaminar_immature_neuron": ["CorpusId:250411527"],
+      "basal_amygdala_fear_neuron": ["CorpusId:17860491", "CorpusId:4940771", "CorpusId:104297085"],
+      "basal_amygdala_extinction_neuron": ["CorpusId:104297085", "CorpusId:17860491", "CorpusId:4940771"],
+      "bla_calbindin_dendrite_targeting_interneuron": ["CorpusId:17860491", "CorpusId:280092907", "CorpusId:4940771", "CorpusId:281382725"],
+      "cea_large_aspiny_neuron": ["CorpusId:281382725", "CorpusId:264517392"],
+      "cea_small_aspiny_neuron": ["CorpusId:281382725", "CorpusId:264517392"]
+    }
+  },
+  {
+    "step": "selection_depth_0",
+    "candidates_evaluated": 0,
+    "selected": 0,
+    "deselected": 0,
+    "note": "No candidate_refs were produced at depth 0 — citation traversal returned an empty candidate list. Zero papers available for selection. See depth_0_refs.json for details and follow-up recommendation."
+  }
+]
