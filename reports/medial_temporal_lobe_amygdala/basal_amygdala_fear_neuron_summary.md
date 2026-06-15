@@ -1,36 +1,45 @@
 # Basal amygdala fear neuron — CCN20230722 Mapping Report
-*2026-06-10 · Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml`*
+*2026-05-28 · Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml`*
 
 ---
 
 ## Introduction
 
-The basal amygdala fear neuron is a functionally defined ensemble within the basal nucleus of the amygdala, distinguished from extinction neurons by its activation pattern during Pavlovian fear conditioning rather than by a stable molecular identity. The two populations — fear neurons and extinction neurons — are described as opposing functional classes residing within the same nucleus [1]. Because this type is defined entirely by circuit activity rather than by markers or transcriptomic signature, a transcriptomic atlas mapping is expected to be indeterminate until molecular correlates of fear-active neurons are established.
+Basal amygdala fear neurons are functionally defined principal neurons of the basal nucleus of the amygdala (basolateral amygdala, BLA) [UBERON:0002887] whose activity is triggered by conditioned stimuli during fear expression [1][2].
 
-### Classical Type Properties
+> Recent advances in neuroscience give us a better view of the inner structure of the amygdala, of its relations with other regions in the Medial Temporal Lobe (MTL) and of the prominent role of neuromodulation. They have particularly shed light on two kinds of neurons in the basal nucleus of the amygdala, the so-called fear neurons and extinction neurons.
+> — Carrere & Alexandre 2015, Cell-type diversity maps and specialized functional neuron classes · [1] <!-- quote_key: 14375617_d7af88e4 -->
+
+Fear neurons are paired with extinction neurons as opposing functional populations within the same nucleus [2]. They are classically characterised by their response to conditioned stimuli, their BLA soma location, and their glutamatergic identity [3]; however, no molecular markers have been established that uniquely identify this population at the transcript level in the current KB node. This absence of defining molecular markers represents the central obstacle for atlas mapping at this time.
+
+### Classical type table
 
 | Property | Value | References |
 |---|---|---|
-| Node ID | `basal_amygdala_fear_neuron` | — |
-| Definition basis | CLASSICAL (functionally defined) | — |
-| Neurotransmitter | Not defined | — |
-| Soma location | Basal amygdala [UBERON:0002887] | [1] |
-| Defining markers | None encoded | — |
-| Negative markers | None encoded | — |
-| Neuropeptides | None encoded | — |
-| Morphology | Not defined by markers or morphology; active during fear states | [1] |
-| CL mapping | None assigned | — |
+| Soma location | Basal nucleus of the amygdala (basolateral amygdala) [UBERON:0002887] | [1][2] |
+| Neurotransmitter type | Glutamatergic | [3] |
+| Defining markers | None documented | — |
+| Negative markers | None documented | — |
+| Neuropeptides | None documented | — |
 
 <details>
-<summary>Details — source evidence for classical type properties</summary>
+<summary>### Details — source evidence for classical type properties</summary>
 
-- **Soma location & type identity:** asta_report · amygdala/hippocampus literature synthesis · [1]
-  > "Recent advances in neuroscience give us a better view of the inner structure of the amygdala, of its relations with other regions in the Medial Temporal Lobe (MTL) and of the prominent role of neuromodulation. They have particularly shed light on two kinds of neurons in the basal nucleus of the amygdala, the so-called fear neurons and extinction neurons."
+- **Soma location:** Literature review · Basal nucleus of the amygdala · [1]
+
+  > Recent advances in neuroscience give us a better view of the inner structure of the amygdala, of its relations with other regions in the Medial Temporal Lobe (MTL) and of the prominent role of neuromodulation. They have particularly shed light on two kinds of neurons in the basal nucleus of the amygdala, the so-called fear neurons and extinction neurons.
   > — Carrere & Alexandre 2015, Cell-type diversity maps and specialized functional neuron classes · [1] <!-- quote_key: 14375617_d7af88e4 -->
+
+- **Soma location:** Literature review · BLA principal neurons · [2]
+
+  > With respect to fear expression, BLA principal neurons can be divided into two functionally distinct, non-overlapping populations. Activation of "fear" neurons is triggered by the conditioned stimulus, while "extinction" neurons become active only after repetitive presentations of the conditioned stimulus that are not followed by the unconditioned stimulus (Herry et al., 2008). Both types of neurons project to the mPFC but only extinction neurons receive reciprocal input from the mPFC, which makes their activity susceptible to mPFC modulation (Herry et al., 2008).
+  > — Cardenas et al. 2019, Basal amygdala fear neurons and extinction neurons · [2] <!-- quote_key: 4940771_cb8fa215 -->
+
+- **Neurotransmitter type:** Literature · BLA glutamatergic composition · [3]
 
 </details>
 
-### Cell Ontology Mapping
+### Cell Ontology mapping
 
 No Cell Ontology term currently covers this type — candidate for a new CL term.
 
@@ -38,54 +47,20 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 ## Results
 
-One candidate atlas supertype was assessed (rank 1, CCN20230722); all edges are UNCERTAIN. **A complete scan of the BLA GABAergic survival cohort (5 supertypes at rank 1) yielded no discriminating evidence.** Because the basal amygdala fear neuron carries no molecular markers and is defined purely by functional activity during fear conditioning, no transcriptomic atlas type can be specifically matched to this node at present. The best available candidate (CS20230722_SUPT_0005) is retained as a placeholder only; it does not represent a positive mapping.
+A complete scan of CCN20230722 GABAergic supertypes with representation in the basolateral amygdala region (MBA:295, proximity 100 µm) returned five candidates at supertype rank (rank 1), all scoring equally (score = 1.0). No marker-based discrimination was possible: the basal amygdala fear neuron node currently carries no defining molecular markers, preventing any expression-based ranking or alignment. The single top-ranked candidate, 0005 IT EP-CLA Glut_3 [CS20230722_SUPT_0005], has only 2.2% of its cells in the BLA-adjacent intercalated amygdalar nucleus (MBA:1105), with the dominant representation in striatum and cortical subplate — a poor anatomical match. No annotation transfer evidence and no literature-evidence mapping are available for this node. No candidates meet the evidence threshold for a supported mapping verdict.
 
-### Mapping Candidates Overview
+*(note: The BLA [UBERON:0002887] is the primary nucleus targeted in fear-conditioning studies. The WMBv1 intercalated amygdalar nucleus (MBA:1105) and the broader amygdala region (MBA:295) are anatomically adjacent but not synonymous with the classical BLA used in the fear-conditioning literature; the 2.2% regional representation of CS20230722_SUPT_0005 in MBA:1105 does not constitute meaningful anatomical alignment.)*
 
-| Rank | WMBv1 supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
-|---:|---|---:|---|---|---|
-| — | 0005 IT EP-CLA Glut_3 [CS20230722_SUPT_0005] | 798 | ⚪ UNCERTAIN | NT NOT_ASSESSED · location APPROXIMATE | Eliminated |
+<details>
+<summary>### Candidates audited (full top-K)</summary>
 
-*1 edge assessed; all UNCERTAIN. Relationship type: `evidencell:UncertainRelationship`.*
+| WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key evidence | Verdict |
+|---|---|---:|---|---|---|
+| 0005 IT EP-CLA Glut_3 [CS20230722_SUPT_0005] | — | 798 | ⚪ UNCERTAIN | No molecular markers; poor BLA representation | Eliminated (no defining markers; poor anatomical match) |
 
----
+*1 edge assessed (rank 1 supertype); 0 survivors.*
 
-**Null-result statement.** The basal amygdala fear neuron carries no encoding of neurotransmitter type, no defining molecular markers, and no quantitative expression profile. Stage A discovery used a survival cohort filter (region: MBA:295, NT: GABAergic) and returned 5 rank-1 supertypes each scoring 1.0 — a tied cohort with no basis for discrimination. The top-ranked candidate (CS20230722_SUPT_0005, 0005 IT EP-CLA Glut_3) was selected as a cohort representative only; the `discovery_score` of 1 in a 5-member tied cohort (next-best score also 1) carries no candidate-specific weight. No atlas cluster in CCN20230722 corresponds to a "fear-active" functional state.
-
----
-
-### Property Alignment — Primary Candidate
-
-**Table 1 — Property comparison**
-
-| Property | Classical | Supertype | Best cluster | Alignment |
-|---|---|---|---|---|
-| Soma location | Basal amygdala [UBERON:0002887] | MBA:1105 Intercalated amygdalar nucleus (2.2% of supertype); dominant Striatum/Cortical subplate | Not assessed | APPROXIMATE |
-| NT type | Not defined (functional type) | GABA (inferred from supertype label STR Prox1 Lhx6 Gaba_3) | Not assessed | NOT_ASSESSED |
-| Sex ratio | Not documented | Not available | Not available | NOT_ASSESSED |
-
-*(Note: the supertype label "0005 IT EP-CLA Glut_3" names a Glutamatergic type (Glut_3), yet the property comparison records a GABAergic NT annotation inferred from a different supertype label. This internal inconsistency in the discovery record is noted for curator review — the NT_type comparison may apply to a different entry in the BLA GABAergic cohort rather than to SUPT_0005 itself.)*
-
-**Table 2 — Evidence support**
-
-| Evidence | Type | Supports | Headline | Source |
-|---|---|---|---|---|
-| Atlas cohort filter | Atlas metadata | NO_EVIDENCE | 5 BLA GABAergic rank-1 supertypes, all score=1.0; top-ranked entry only | atlas-internal |
-
-*(Child-cluster breakdown not assessed — see proposed experiments.)*
-
----
-
-## Eliminated Candidates
-
-All edges are UNCERTAIN. There is a single shared disqualifying signal: the classical node carries **no molecular identity whatsoever** — no NT type, no markers, no neuropeptides. A functional-activity concept cannot be matched to a transcriptomic atlas type without a molecular bridge.
-
-### 0005 IT EP-CLA Glut_3 [CS20230722_SUPT_0005] ⚪ UNCERTAIN
-
-- **Cohort tie:** Stage A scored all 5 BLA GABAergic rank-1 supertypes equally at score=1.0; CS20230722_SUPT_0005 is the top-ranked entry by position only. No marker evidence was available to discriminate between cohort members.
-- **Location is only approximate:** The location comparison notes that MBA:1105 (Intercalated amygdalar nucleus) accounts for 2.2% of the supertype, with dominant representation in Striatum and Cortical subplate. *(note: MBA:1105 is adjacent to the basal amygdala but is not the basal nucleus proper — this reflects approximate rather than exact anatomical concordance; weak counter-evidence.)*
-- **NT annotation inconsistency:** The property comparison records a GABAergic annotation "inferred from supertype label STR Prox1 Lhx6 Gaba_3", but the node name for CS20230722_SUPT_0005 is "0005 IT EP-CLA Glut_3" — a glutamatergic designation. This mismatch suggests the NT comparison was carried over from a different candidate in the discovery pipeline, or that the internal naming is inconsistent. Either way, no meaningful NT comparison can be made for this edge.
-- **No molecular bridge:** *(note: Fear neurons are an activity-defined ensemble. They are conceptually a subpopulation within BLA principal neurons — likely glutamatergic — but no specific molecular markers distinguishing fear-active from non-fear-active neurons are encoded on this classical node. Atlas transcriptomics captures stable cell-type identity, not transient activity states.)*
+</details>
 
 ---
 
@@ -94,21 +69,21 @@ All edges are UNCERTAIN. There is a single shared disqualifying signal: the clas
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** The `basal_amygdala_fear_neuron` node is defined as CLASSICAL with a purely functional basis: a neuron ensemble in the basal nucleus of the amygdala [UBERON:0002887] that is active during fear conditioning and has been contrasted with extinction neurons in the same nucleus [1]. No NT type, no molecular markers, and no morphological descriptor are encoded. The `definition_basis` value is CLASSICAL, reflecting that this type is established in the neuroscience literature as a functionally defined population rather than a transcriptomically or morphologically characterised cell class.
+**Classical type definition.** The basal amygdala fear neuron is defined on a `CLASSICAL` basis: soma location in the basal nucleus of the amygdala (BLA) [UBERON:0002887] [1][2], glutamatergic neurotransmitter type [3], and functional identity (conditioned stimulus-triggered activity during fear expression). No molecular markers define this population at the transcript level in the current KB node. The absence of defining_markers is the primary limitation for atlas-level mapping under the CCN20230722 framework.
 
-**Atlas mapping query.** Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at rank 1 (supertype) using a survival cohort filter (region: MBA:295, NT: GABAergic). The filter returned 5 supertypes, all scoring equally at score=1.0. Full scoring rules: `workflows/map-cell-type.md`.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at rank 1 (supertype) using metadata-based scoring (region match MBA:295/MBA:1105, NT type). Full scoring rules: `workflows/map-cell-type.md`.
 
-**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Because the classical node carries no markers and no NT type, only the soma location property was assessed; the alignment was APPROXIMATE (minor supertype representation at the amygdala-adjacent intercalated nucleus, with dominant striatal/cortical subplate distribution).
+**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
 
 **Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
 
-*Generated by evidencell `f1aa396` at 2026-06-10T14:09:31+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml).*
-
-**Evidence base**
+**Evidence base table:**
 
 | Edge ID | Evidence types | Supports | Source |
 |---|---|---|---|
-| edge_basal_amygdala_fear_neuron_to_cs20230722_supt_0005 | ATLAS_METADATA | NO_EVIDENCE | atlas-internal |
+| edge_basal_amygdala_fear_neuron_to_cs20230722_supt_0005 | ATLAS_METADATA | NO_EVIDENCE | — |
+
+*Generated by evidencell `bfdb7f1` at 2026-06-15T10:48:32+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml).*
 
 </details>
 
@@ -116,31 +91,33 @@ All edges are UNCERTAIN. There is a single shared disqualifying signal: the clas
 
 ## Discussion
 
-### Best Candidate + Caveats
+### Best candidate + caveats summary
 
-**Primary mapping:** Basal amygdala fear neuron → 0005 IT EP-CLA Glut_3 [CS20230722_SUPT_0005] at UNCERTAIN confidence. Key support: none — the single evidence item is rated NO_EVIDENCE; the candidate was selected as the top-ranked entry in a 5-way tied cohort with no discriminating signal. Key caveats: (1) this type is defined by functional activity state, not molecular identity, making any transcriptomic atlas correspondence fundamentally indeterminate without a molecular bridge; (2) all 5 BLA GABAergic rank-1 supertypes scored equally and the cohort assignment carries no biological weight.
+**Primary mapping:** No supported mapping. The basal amygdala fear neuron currently lacks the molecular marker profile required for atlas-level transcriptomic assignment. The single candidate returned by the discovery pipeline, 0005 IT EP-CLA Glut_3 [CS20230722_SUPT_0005], was ranked purely by region proximity with no marker-based discrimination (all five GABAergic amygdala supertypes scored equally at 1.0). Anatomical alignment is poor (2.2% of the supertype in the BLA-adjacent intercalated nucleus). A supported mapping verdict requires first establishing defining molecular markers for this functional population, most likely through activity-dependent transcriptomic profiling of fear-conditioned BLA neurons.
 
-No Cell Ontology term currently assigned. Fear neurons are a functional circuit-level concept; no CL term for an activity-defined neuronal ensemble currently exists in the Cell Ontology.
+No Cell Ontology term currently assigned. The node is a candidate for a new CL term once molecular characterisation is available.
 
-### Proposed Experiments and Follow-Ups
+### Proposed experiments and follow-ups
 
-**Molecular characterisation of fear-active BLA neurons (prerequisite for any atlas mapping)**
-- **What:** Activity-dependent labelling coupled with transcriptomic profiling to identify molecular markers co-expressed in fear-conditioned BLA neurons. Suitable approaches include Fos-TRAP (targeted recombination in active populations), TRAP2-seq, or activity-dependent viral capture followed by single-nucleus sequencing.
-- **Target:** Identification of at least 2–3 consistently enriched gene markers across fear-conditioning paradigms, enabling formal encoding of `defining_markers` on the classical node.
-- **Expected output:** `LiteratureEvidence` items with a defined marker panel added to the `basal_amygdala_fear_neuron` KB node; subsequently enables re-running `map-cell-type` with a marker-guided query.
-- **Resolves:** All unresolved questions on `edge_basal_amygdala_fear_neuron_to_cs20230722_supt_0005`; prerequisite for annotation-transfer or cluster-level mapping.
+**Activity-dependent marker discovery (highest priority)**
 
-**Literature survey — molecular correlates of fear conditioning in the BLA**
-- **What:** Targeted cite-traverse for "fear-conditioned basal amygdala neuron transcriptomics" or "amygdala fear engram cell molecular identity" to surface any published marker profiles for fear-active BLA neurons.
-- **Target:** Identify any primary study reporting transcript-level markers for fear-active versus fear-inactive BLA neurons.
-- **Expected output:** `LiteratureEvidence` items added to the KB node; may enable encoding of provisional `defining_markers`.
-- **Resolves:** Open question #1 (see below).
+- **What:** Combine fear conditioning with activity-dependent cell labelling (e.g. TRAP2/Fos-TRAP, CaMKII-IRES-Cre driven by immediate-early gene activation) followed by single-cell RNA sequencing on isolated, labelled BLA neurons.
+- **Target:** Identify ≥ 3 molecular markers (transcript-level) that discriminate fear-activated from extinction-activated or non-conditioned BLA principal neurons.
+- **Expected output:** Defining markers encoded as `defining_markers[]` on the KB node, enabling re-run of `map-cell-type` and expression-based atlas candidate ranking.
+- **Resolves:** All open questions 1 and 2; enables a meaningful atlas mapping pass.
 
-### Open Questions
+**Neurotransmitter type confirmation**
 
-1. Have any published studies (e.g. activity-dependent labelling + transcriptomics in the BLA) identified molecular markers that reliably distinguish fear-conditioned BLA neurons from the surrounding principal neuron population? If so, these should be extracted and encoded as `defining_markers` on this node.
-2. Are fear neurons a subpopulation within the BLA glutamatergic principal neuron population (as implied by their anatomical location and the principal-cell majority in the basal nucleus), or can they also include inhibitory interneurons? The absence of an NT type annotation is a fundamental gap.
-3. The NT annotation in the single edge's property comparison references a GABAergic supertype label (STR Prox1 Lhx6 Gaba_3) that does not match the node name (0005 IT EP-CLA Glut_3) assigned to CS20230722_SUPT_0005. Curator review is needed to confirm whether this reflects a data entry error in the discovery pipeline or a genuine ambiguity in the candidate set.
+- **What:** Confirm glutamatergic identity of fear neurons by targeted literature search or primary experiments (in-situ hybridisation for Slc17a7/vGluT1 or Slc17a6/vGluT2 on fear-conditioned cells).
+- **Target:** Confirm or refute glutamatergic NT type; update `nt_type` on the KB node if currently misannotated.
+- **Expected output:** `nt_type` with a primary citation; enables NT-type-filtered cohort queries in subsequent atlas mapping passes.
+- **Resolves:** Open question 2; note also that the current edge's NT comparison references a GABAergic supertype label (STR Prox1 Lhx6 Gaba_3) inconsistent with the SUPT_0005 node name (0005 IT EP-CLA Glut_3 — glutamatergic), which should be resolved by curator review of the discovery pipeline output (open question 3).
+
+### Open questions
+
+1. What molecular markers co-express specifically in fear-conditioned BLA neurons? Activity-dependent labelling + transcriptomics (e.g. Fos-TRAP) would identify defining_markers to enable atlas mapping.
+2. Is the glutamatergic NT annotation confirmed by primary literature? Absence of NT type is a fundamental gap for cohort-level filtering.
+3. Curator review needed: the NT annotation in the edge property_comparison references a GABAergic label (STR Prox1 Lhx6 Gaba_3) inconsistent with the SUPT_0005 node name (0005 IT EP-CLA Glut_3); this may reflect a discovery pipeline data entry issue.
 
 ---
 
@@ -148,7 +125,9 @@ No Cell Ontology term currently assigned. Fear neurons are a functional circuit-
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Carrere & Alexandre 2015 — "A pavlovian model of the amygdala and its influence within the medial temporal lobe" | [25852499](https://pubmed.ncbi.nlm.nih.gov/25852499/) | Soma location; type identity |
+| [1] | Carrere & Alexandre 2015 | [25852499](https://pubmed.ncbi.nlm.nih.gov/25852499/) | Soma location |
+| [2] | Cardenas et al. 2019 | [31193505](https://pubmed.ncbi.nlm.nih.gov/31193505/) | Soma location; functional definition |
+| [3] | Chung et al. 2016 | [27053114](https://pubmed.ncbi.nlm.nih.gov/27053114/) | Neurotransmitter type |
 
 ---
 
@@ -157,14 +136,66 @@ No Cell Ontology term currently assigned. Fear neurons are a functional circuit-
 verdict:
   confidence: UNCERTAIN
   confidence_score: 0.05
+  relationship: evidencell:UncertainRelationship
   rationale: >
-    Fear neurons are a purely activity-defined functional ensemble; no NT type, markers, or expression profile are encoded on this classical node. Stage A discovery returned a 5-member tied cohort (all score=1; next_best_score=1; cohort_size=5) with no basis for discrimination; CS20230722_SUPT_0005 is the top-ranked entry by position only, not by evidence. The single ATLAS_METADATA evidence item is rated NO_EVIDENCE. Location comparison is APPROXIMATE (MBA:1105, 2.2% of supertype); NT comparison is NOT_ASSESSED. No atlas cluster in CCN20230722 corresponds to a fear-conditioning activity state. Molecular characterisation (e.g. Fos-TRAP followed by single-nucleus sequencing) is required before a meaningful mapping can be assessed.
-  reconciliation_note: >
-    Fear neurons are a circuit-level functional concept defined by activity during Pavlovian fear conditioning, not by molecular markers. They are likely a subpopulation within BLA glutamatergic principal neurons but cannot be mapped to a specific atlas transcriptomic type without molecular characterisation. See also edge_basal_amygdala_extinction_neuron_to_cs20230722_supt_0005 for the parallel extinction neuron case; both share the same absence-of-molecular-identity blocker.
-  lit_to_lit_edges: []
+    [tier:CUT] No molecular markers are defined on the classical node, preventing
+    any expression-based alignment with atlas supertypes. The single discovery-mode
+    candidate CS20230722_SUPT_0005 (0005 IT EP-CLA Glut_3) was returned by region
+    proximity filter only (all 5 GABAergic amygdala supertypes scored score=1 in a
+    cohort of 5, rank 1 tied); anatomical overlap is poor (region_fraction: 0.022
+    in MBA:1105, with dominant representation in striatum/cortical subplate). No
+    ANNOTATION_TRANSFER evidence and no LITERATURE evidence support this edge.
+    Mapping is not possible without first establishing defining molecular markers
+    via activity-dependent transcriptomics (e.g. Fos-TRAP + scRNA-seq on
+    fear-conditioned BLA neurons). A data entry issue is also flagged: the NT
+    property_comparison references a GABAergic supertype label (STR Prox1 Lhx6
+    Gaba_3) inconsistent with the SUPT_0005 node name (0005 IT EP-CLA Glut_3 —
+    glutamatergic); curator review needed.
+  caveats:
+    - caveat_type: NO_DISCRIMINATING_MARKER
+      description: >
+        No defining molecular markers are recorded on the basal_amygdala_fear_neuron
+        node. Without transcript-level markers, atlas candidate scoring relies solely
+        on region and NT type, producing a flat, uninformative cohort (all 5 supertypes
+        tied at score=1). This is the primary blocker for a supported mapping verdict.
+    - caveat_type: DISCORDANT_ANATOMY
+      description: >
+        CS20230722_SUPT_0005 has only 2.2% of its cells (region_fraction: 0.022) in
+        MBA:1105 (intercalated amygdalar nucleus, BLA-adjacent), with dominant
+        representation in striatum and cortical subplate. The classical type's soma
+        location is the basolateral amygdala (UBERON:0002887); this supertype is not
+        BLA-specific.
+    - caveat_type: OTHER
+      description: >
+        The edge property_comparison for nt_type references a GABAergic label (STR
+        Prox1 Lhx6 Gaba_3) inconsistent with SUPT_0005's own name (0005 IT EP-CLA
+        Glut_3, glutamatergic). This appears to be a discovery pipeline data entry
+        issue. Curator review is needed before re-running the mapping query.
+  proposed_experiments:
+    - >
+      Activity-dependent labelling (Fos-TRAP2 or CaMKII-driven IEG reporter) combined
+      with single-cell RNA sequencing on fear-conditioned BLA neurons to identify ≥ 3
+      transcript-level defining markers for the fear neuron population. Encode results
+      as defining_markers[] on the KB node; re-run map-cell-type at rank 0 and rank 1.
+    - >
+      Confirm glutamatergic identity (Slc17a7/Slc17a6 expression) by targeted ISH or
+      re-analysis of available BLA transcriptomic datasets; update nt_type with a
+      primary citation.
+    - >
+      Curator review of the discovery pipeline output: resolve the NT-label discrepancy
+      (GABAergic label vs. glutamatergic SUPT name) for edge
+      edge_basal_amygdala_fear_neuron_to_cs20230722_supt_0005 before next mapping run.
   unresolved_questions:
-    - Identify molecular markers co-expressed in fear-conditioned BLA neurons via activity-dependent labelling + transcriptomics (e.g. Fos-TRAP); encode as defining_markers to enable atlas mapping.
-    - Confirm NT type of fear neurons (glutamatergic vs. GABAergic) from primary literature; absence of NT type is a fundamental gap for cohort-level filtering.
-    - Curator review needed — NT annotation in edge property_comparison references GABAergic label (STR Prox1 Lhx6 Gaba_3) inconsistent with SUPT_0005 node name (0005 IT EP-CLA Glut_3); may reflect a discovery pipeline data entry issue.
+    - >
+      What molecular markers co-express specifically in fear-conditioned BLA neurons?
+      Activity-dependent labelling + transcriptomics (e.g. Fos-TRAP) would identify
+      defining_markers to enable atlas mapping.
+    - >
+      Is the glutamatergic NT annotation confirmed by primary literature? Absence of a
+      confirmed NT type is a fundamental gap for cohort-level filtering.
+    - >
+      Curator review needed: NT annotation in the edge property_comparison references a
+      GABAergic label (STR Prox1 Lhx6 Gaba_3) inconsistent with SUPT_0005 node name
+      (0005 IT EP-CLA Glut_3); may reflect a discovery pipeline data entry issue.
 ```
 <!-- verdict-block-end -->

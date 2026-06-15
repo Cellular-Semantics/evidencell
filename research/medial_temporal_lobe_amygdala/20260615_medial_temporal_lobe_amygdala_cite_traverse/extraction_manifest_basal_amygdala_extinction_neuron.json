@@ -1,0 +1,83 @@
+{
+  "node_id": "basal_amygdala_extinction_neuron",
+  "added_by": "evidence_extraction_basal_amygdala_extinction_neuron_20260615",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/depth_0_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_corpus_ids": ["221366115", "252477669", "17223544", "232283078"],
+  "existing_refs": [
+    "PMID:25852499",
+    "PMID:27767183",
+    "PMID:31193505",
+    "PMID:31636080"
+  ],
+  "entries_processed": [
+    {
+      "source_corpus_id": "280092907",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for BLA GABAergic interneuron subtypes (NPY, PV, CB, SST proportions) but no content specific to extinction neurons"
+    },
+    {
+      "source_corpus_id": "281382725",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for primate amygdala transcriptomic diversity (SST, PVALB, CCK subtypes) but no content specific to extinction neurons"
+    },
+    {
+      "source_corpus_id": "4940771",
+      "decision": "SKIP",
+      "reason": "Ref PMID:31193505 already in existing refs for this node"
+    },
+    {
+      "source_corpus_id": "17860491",
+      "decision": "EXTRACTED",
+      "reason": "HIGH relevance — directly defines extinction neurons as a functionally distinct BLA population overlapping with IL-projecting BLA neurons; quote not yet present on this node",
+      "field": "electrophysiology.sources",
+      "ref": "PMID:28453642",
+      "quote_key": "17860491_748a5fb1",
+      "quote": "Distinct populations of BLA neurons encode fear conditioning and extinction processes (Herry et al., 2008). These cell populations, functionally defined as \"fear neurons\" and \"extinction neurons,\" overlap with 2 different anatomically defined subtypes of BLA neurons projecting to prelimbic medial prefrontal cortex (PL) or IL, respectively"
+    },
+    {
+      "source_corpus_id": "250411527",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for paralaminar_immature_neuron, not for basal_amygdala_extinction_neuron"
+    },
+    {
+      "source_corpus_id": "104297085",
+      "decision": "SKIP",
+      "reason": "Ref PMID:27767183 already in existing refs for this node"
+    },
+    {
+      "source_corpus_id": "264517392",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for amygdala scRNA-seq cell type taxonomy but no content specific to extinction neurons"
+    },
+    {
+      "source_corpus_id": "3103554",
+      "decision": "SKIP",
+      "reason": "MODERATE relevance — about CeA GABAergic neurons and IP3K-A, no direct content on extinction neurons"
+    },
+    {
+      "source_corpus_id": "221366115",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "252477669",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "17223544",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "232283078",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    }
+  ],
+  "propertysource_entries_written": 1,
+  "fields_updated": ["electrophysiology.sources"],
+  "gaps": ["nt_type.sources (no eligible source with NT-type content for extinction neurons)", "anatomical_location[].sources (no new non-excluded source)", "morphology.sources (no new non-excluded source)", "defining_markers (Ntsr2 already sourced; no additional marker data in eligible summaries)"]
+}

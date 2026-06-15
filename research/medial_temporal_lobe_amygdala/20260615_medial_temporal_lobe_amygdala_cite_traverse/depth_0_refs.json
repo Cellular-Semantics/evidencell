@@ -1,9 +1,99 @@
 {
   "depth": 0,
-  "all_candidate_ids": [],
-  "selected_corpus_ids": [],
-  "selection_rationale": [],
-  "total_candidates": 0,
-  "total_selected": 0,
-  "note": "No candidate_refs were returned at depth 0. The ASTA snippet fetch returned HTTP 403 and all 12 source papers were treated as gap papers. The Europe PMC fallback successfully retrieved full text for 10/12 papers and generated summaries, but the citation-traversal step produced no outgoing candidates to evaluate. Two papers (CorpusId:17223544, CorpusId:232283078) had empty Europe PMC full-text responses and also yielded no candidates. Recommend targeting CorpusId:232283078 (Vereczki et al. 2021, J Neurosci — primary source for NPY neurogliaform cell proportions) via a direct PMID lookup (PMID:33837051) as a follow-up step."
+  "all_candidate_ids": [
+    "264517392",
+    "232283078",
+    "17223544",
+    "281382725",
+    "3103554",
+    "250411527",
+    "221366115",
+    "252477669",
+    "4940771"
+  ],
+  "selected_corpus_ids": [
+    "264517392",
+    "232283078",
+    "281382725",
+    "3103554",
+    "250411527",
+    "4940771",
+    "104297085"
+  ],
+  "selection_rationale": [
+    {
+      "corpus_id": "264517392",
+      "title": "Neuronal types in the mouse amygdala and their transcriptional response to fear conditioning",
+      "selected": true,
+      "reason": "4 HIGH-relevance snippets; scRNA-seq atlas of 130 mouse amygdala neuronal types covering BLA (VGLUT1/VGLUT2 excitatory and GABAergic interneurons) and CeA; directly relevant to all seven nodes. Traversing its citations is likely to yield additional molecular marker and functional papers."
+    },
+    {
+      "corpus_id": "232283078",
+      "title": "Total Number and Ratio of GABAergic Neuron Types in the Mouse Lateral and Basal Amygdala",
+      "selected": true,
+      "reason": "4 HIGH + 1 MODERATE snippets; core quantitative and electrophysiology evidence for bla_npy_neurogliaform_cell (NPY marker, CB-/PV-/SST- profile, neurogliaform morphology confirmed) and bla_calbindin_dendrite_targeting_interneuron. Citations likely to include foundational BLA interneuron anatomy papers."
+    },
+    {
+      "corpus_id": "281382725",
+      "title": "Transcriptomic diversity of amygdalar subdivisions across humans and nonhuman primates",
+      "selected": true,
+      "reason": "1 HIGH snippet; cross-species snRNA-seq atlas of five amygdala subdivisions including excitatory and inhibitory subtypes in BLA and CeA across primates. Citations likely to include major rodent and primate amygdala transcriptomic references relevant to all nodes."
+    },
+    {
+      "corpus_id": "3103554",
+      "title": "Facilitation of Contextual Fear Extinction by Orexin-1 Receptor Antagonism Is Associated with the Activation of Specific Amygdala Cell Subpopulations",
+      "selected": true,
+      "reason": "1 HIGH snippet; directly demonstrates calbindin+ (PV-negative) GABAergic interneurons in BLA are activated during fear extinction consolidation — functional evidence for bla_calbindin_dendrite_targeting_interneuron. Citations likely to include BLA calbindin interneuron identity and fear circuit papers."
+    },
+    {
+      "corpus_id": "250411527",
+      "title": "Immature excitatory neurons in the amygdala come of age during puberty",
+      "selected": true,
+      "reason": "2 HIGH snippets; scRNA-seq identifies DCX, BCL-2, MAP2, ROBO1, BCL11B, SOX11 markers in paralaminar immature neuron cluster and confirms excitatory identity (TBR1+/VGLUT2+) — core evidence for paralaminar_immature_neuron. Citations likely to include foundational DCX+ paralaminar nucleus papers."
+    },
+    {
+      "corpus_id": "4940771",
+      "title": "Molecular characterization of Thy1 expressing fear-inhibiting neurons within the basolateral amygdala",
+      "selected": true,
+      "reason": "1 HIGH snippet; whole-genome RNA-seq of Thy1-eYFP+ BLA neurons confirms these are fear-inhibiting (extinction) neurons; directly characterises basal_amygdala_extinction_neuron molecular identity. Citations likely to yield additional Thy1/Rspo2/Ntsr2 extinction neuron papers."
+    },
+    {
+      "corpus_id": "104297085",
+      "title": "Persistent pain intensifies recall of consolidated fear memories",
+      "selected": true,
+      "reason": "1 MODERATE snippet; describes calbindin interneurons targeting dendrites of BLA pyramidal cells and BLA fear/extinction neuron classification — contributes to bla_calbindin_dendrite_targeting_interneuron and basal_amygdala_fear_neuron. Fills the 7th slot as it covers multiple nodes with specific anatomical details not present elsewhere."
+    },
+    {
+      "corpus_id": "17223544",
+      "title": "Developmental origin of the neuronal subtypes that comprise the amygdalar fear circuit in the mouse",
+      "selected": false,
+      "reason": "2 MODERATE snippets; developmental fate-mapping study establishing VP origin of BLA projection neurons and vLGE origin of CeA; useful background but no specific molecular markers for target nodes. Deprioritised relative to papers with direct marker evidence."
+    },
+    {
+      "corpus_id": "221366115",
+      "title": "Rho GTPases in the Amygdala—A Switch for Fears?",
+      "selected": false,
+      "reason": "1 LOW-relevance snippet; general review of Rho GTPases in amygdala fear circuits with only broad anatomical context (GABAergic CeA, glutamatergic BLA); no specific molecular markers for any target node."
+    },
+    {
+      "corpus_id": "252477669",
+      "title": "New Insights into the Pivotal Role of the Amygdala in Inflammation-Related Depression and Anxiety Disorder",
+      "selected": false,
+      "reason": "1 MODERATE snippet; general anatomical review of BLA and CeA cellular composition; no cell-type-specific markers or electrophysiology. Unlikely to yield informative citations beyond standard anatomy references."
+    },
+    {
+      "corpus_id": "17860491",
+      "title": "The role of inositol 1,4,5-trisphosphate 3-kinase A in regulating emotional behavior and amygdala function",
+      "selected": false,
+      "reason": "1 LOW-relevance snippet; study of IP3K-A enzyme expression in CeA GABAergic neurons and BLA CAMKIIα+ neurons; no morphological or interneuron-specific characterisation relevant to target nodes. Enzyme-focused study unlikely to yield useful cell-type citations."
+    },
+    {
+      "corpus_id": "280092907",
+      "title": "Neuronal physiology of amygdala neurons in the context of injury and pain",
+      "selected": false,
+      "reason": "1 MODERATE snippet; electrophysiology review citing Vereczki et al. (2021) (already in corpus as 232283078) and Bienvenu et al. for interneuron classes. Already-traversed sources reduce expected citation yield; pain-context focus limits direct relevance to node characterisation."
+    }
+  ],
+  "total_candidates": 9,
+  "total_selected": 7
 }

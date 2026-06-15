@@ -1,34 +1,39 @@
 # Central amygdala large aspiny neuron — CCN20230722 Mapping Report
-*Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml`*
+* · Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml`*
 
 ---
 
 ## Introduction
 
-The central amygdala large aspiny neuron is one of three morphologically defined neuronal classes in the central nucleus of the amygdala [UBERON:0002883], distinguished by large soma size and thick, aspiny primary dendrites that branch into secondary processes with sparse spines. This type was originally delineated alongside medium spiny and small aspiny neurons using classical histological and Golgi methods. Establishing a transcriptomic atlas correspondence for this type matters because the CeA is a major output hub for fear, pain, and autonomic circuits, and disaggregating its morphological classes into molecularly defined clusters would open access to Cre-line tools and projection targeting strategies.
+Central amygdala large aspiny neurons are a classical morphological class of the central nucleus of the amygdala (CeA), distinguished from the better-known medium spiny neurons by their large soma and thick aspiny primary dendrites [1]. Like all CeA neurons, they are GABAergic [2][3][4][5][6][7] — the CeA as a whole is organised along striatum-like lines with a predominance of inhibitory projection neurons. Mapping this morphological class to a transcriptomic atlas cluster matters because the CeA is the primary output station of the amygdala for fear and threat responses, and precise circuit dissection requires linking classical anatomical cell types to the molecular profiles now available in single-cell and MERFISH datasets. At present, no molecular markers have been established for the large aspiny class, which severely limits the ability to anchor it in any transcriptomic atlas.
 
-### Classical type
+### Classical type properties
 
 | Property | Value | References |
 |---|---|---|
-| Soma location | Central amygdaloid nucleus [UBERON:0002883] | [1] |
-| Neurotransmitter | GABAergic | [2] |
-| Defining markers | None recorded | — |
-| Negative markers | None recorded | — |
-| Neuropeptides | None recorded | — |
-| Morphology | Large soma; thick aspiny primary dendrites; secondary processes seldom spiny | [1] |
-| Definition basis | CLASSICAL | — |
-| Notes | Classical morphological class described alongside medium spiny and small aspiny neurons | — |
+| Soma location | Central nucleus of the amygdala [UBERON:0002883] | [1][2] |
+| NT type | GABAergic | [2][3][4][5][6][7] |
+| Morphology | Large soma, thick aspiny primary dendrites; seldom-spiny secondary processes | [1] |
+| Defining molecular markers | None established | — |
 
 <details>
-<summary>### Details — source evidence for classical type properties</summary>
+<summary>Details — source evidence for classical type properties</summary>
 
-- **Soma location / Morphology:** Morphological description from review of CeA cell types · [1]
-
-  > "Morphologically, there are several types of neurons located in the central nucleus of the amygdala (CeA). In the lateral sector of the central nucleus, a predominant cell type with ovoid soma is located. These cells have several primary nonspiny dendrites, branching onto spiny secondary and tertiary dendrite. Their axons begin branching even before leaving the nucleus, which is why these cells are called "medium spiny neurons" (Hall, 2004)(McDonald, 1982). Another type of neurons located in the central nuclei have big soma with thick aspiny dendrites, branching on to secondary seldom spiny processes (McDonald, 1982)(Cassell et al., 1989) (Schiess et al., 1999). The third type of cells are small aspiny neurons (Cassell et al., 1989)"
+- **Soma location / Morphology:** Nikolenko et al. 2020 · [1]
+  > Morphologically, there are several types of neurons located in the central nucleus of the amygdala (CeA). In the lateral sector of the central nucleus, a predominant cell type with ovoid soma is located. These cells have several primary nonspiny dendrites, branching onto spiny secondary and tertiary dendrite. Their axons begin branching even before leaving the nucleus, which is why these cells are called "medium spiny neurons" (Hall, 2004)(McDonald, 1982). Another type of neurons located in the central nuclei have big soma with thick aspiny dendrites, branching on to secondary seldom spiny processes (McDonald, 1982)(Cassell et al., 1989) (Schiess et al., 1999). The third type of cells are small aspiny neurons (Cassell et al., 1989)
   > — Nikolenko et al. 2020, Central amygdala cell types · [1] <!-- quote_key: 220976356_f1fe3fe1 -->
 
-- **Neurotransmitter:** CeA neurons described as predominantly GABAergic based on their subpallial, striatal-like organisation · [2]
+- **NT type:** Waclaw et al. 2010 · [2]
+
+- **NT type:** Yeh et al. 2024 · [3]
+
+- **NT type:** Paul et al. 2025 · [4]
+
+- **NT type:** Sarowar & Grabrucker 2020 · [5]
+
+- **NT type:** Chung et al. 2016 · [6]
+
+- **NT type:** Hochgerner et al. 2023 · [7]
 
 </details>
 
@@ -40,33 +45,18 @@ No Cell Ontology term currently covers this type — candidate for a new CL term
 
 ## Results
 
-**Null result.** A scan of CCN20230722 at rank 0 (cluster) within the GABAergic-CeA cohort confirmed that no candidate cluster can be positively mapped to the central amygdala large aspiny neuron: no molecular markers are defined for this type, all five surviving candidates scored identically (score = 1, region filter only), and the returned candidate pool is identical to that returned for `cea_medium_spiny_neuron` and `cea_small_aspiny_neuron`. One edge was retained at UNCERTAIN confidence as a placeholder; it carries no positive mapping evidence.
+The current evidence base is insufficient to support any specific atlas cluster assignment for the central amygdala large aspiny neuron. No molecular markers are defined for this morphological class, and every candidate in the GABAergic CeA cohort received an identical discovery score of 1 — the bottom of the scoring range — because region co-localisation was the only evaluable criterion. Under these conditions the candidate set is entirely uninformative: the same five clusters would be ranked identically for any of the three CeA morphological classes (large aspiny, medium spiny, small aspiny). The sole candidate carried forward by the atlas query — 0705 RHP-COA Ndnf Gaba_6 [CS20230722_CLUS_0705] — was selected by region filter only, with no supporting marker overlap, and is assigned NO_EVIDENCE support.
 
-A complete scan of CCN20230722 (rank 0) at MBA:536 (Central amygdalar nucleus) with a GABAergic filter produced a survival cohort of 5 clusters, all scoring identically. CS20230722_CLUS_0705 ("RHP-COA Ndnf Gaba_6") appeared at rank 2 of 5 in cohort ordering with a region_fraction of 0.014. This is not positive evidence for the mapping — the selection is rank-order only among ties, not a biological signal.
+The null finding is the primary result. A validated mapping requires molecular data that does not yet exist for this morphological class.
 
-### Mapping candidates overview
+<details>
+<summary>### Candidates audited (full top-K)</summary>
 
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|---|
-| — | 0705 RHP-COA Ndnf Gaba_6 [CS20230722_CLUS_0705] | 0198 RHP-COA Ndnf Gaba_6 | 61 | ⚪ UNCERTAIN | NT CONSISTENT; region filter only; no markers | Eliminated |
+| WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key evidence | Verdict |
+|---|---|---:|---|---|---|
+| 0705 RHP-COA Ndnf Gaba_6 [CS20230722_CLUS_0705] | 0198 RHP-COA Ndnf Gaba_6 | 61 | ⚪ UNCERTAIN | No markers; region filter only | Eliminated (no molecular anchor) |
 
-*1 edge assessed; all UNCERTAIN. Relationship type: evidencell:UncertainRelationship.*
-
----
-
-## Eliminated candidates
-
-All candidates in the CeA GABAergic cohort share an identical disqualifying signal: no molecular markers are defined on `cea_large_aspiny_neuron`, making every candidate equally uninformative. The score-1 result reflects a region filter contribution only — it is not evidence of identity.
-
-### CS20230722_CLUS_0705 ("RHP-COA Ndnf Gaba_6") ⚪ UNCERTAIN
-
-- NT type comparison: GABAergic (classical) vs. GABA (atlas label) — CONSISTENT, but NT consistency is uninformative here because all five CeA cohort clusters are GABAergic.
-- Location comparison: UBERON:0002883 classical vs. MBA:536 CeA present at region_fraction 0.014 — CONSISTENT in kind but very low fraction (rank 2 of 5 in cohort), suggesting CeA is a minor component of this cluster.
-- Morphology / markers: NOT_ASSESSED — WMBv1 provides no morphological or electrophysiological annotations; no molecular markers are defined on the classical node to test against atlas expression.
-- Discovery score = 1, cohort_size = 5, all five candidates tied at score = 1. CLUS_0705 is assigned rank 2 by cohort ordering only.
-- ATLAS_METADATA evidence: NO_EVIDENCE — selected by region filter only; no expression markers matched.
-
-**Shared caveat across all three CeA morphological types:** The candidate pool for `cea_large_aspiny_neuron` is identical to the candidate pools for `cea_medium_spiny_neuron` and `cea_small_aspiny_neuron`. All three classical morphological classes are transcriptomically indistinguishable with currently available evidence; no molecular markers separate them.
+</details>
 
 ---
 
@@ -75,23 +65,21 @@ All candidates in the CeA GABAergic cohort share an identical disqualifying sign
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.** The central amygdala large aspiny neuron is defined on a CLASSICAL basis — morphological description from Golgi and light-microscopic studies. Defining features are large soma and thick aspiny primary dendrites (Nikolenko et al. 2020 [1]; citing McDonald 1982, Cassell et al. 1989, Schiess et al. 1999). The NT type (GABAergic) follows from the general CeA striatal-like organisation documented by Yeh et al. 2024 [2]. No molecular markers, neuropeptides, or electrophysiological properties are recorded on this node; definition_basis = CLASSICAL.
+**Classical type definition.** The central amygdala large aspiny neuron is defined on a CLASSICAL morphological basis: large soma with thick, primarily aspiny dendrites, as described by McDonald 1982, Cassell et al. 1989, and Schiess et al. 1999 (referenced in Nikolenko et al. 2020 [1]). The definition_basis is CLASSICAL and no molecular markers are currently attached to this node. Neurotransmitter identity (GABAergic) is established by multiple independent studies [2][3][4][5][6][7]; the CeA as a whole is a GABAergic structure with striatum-like projection neurons.
 
-**Atlas mapping query.** Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at rank 0 (cluster) using metadata-based scoring (region match, NT type, defining markers, sex bias when applicable). Full scoring rules: `workflows/map-cell-type.md`.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at rank 0 (cluster) using metadata-based scoring (region match MBA:536, NT type GABAergic). Full scoring rules: `workflows/map-cell-type.md`. Only five candidates survived the region + NT filter (cohort size = 5). All received a discovery score of 1, indicating no marker overlap contributed any additional signal.
 
-**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
-
-**Atlas data sources.** CCN20230722 taxonomy; pseudobulk source and SHA-256 not populated in this edge's metadata.
+**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. NT type alignment for CLUS_0705 is CONSISTENT (GABA vs. GABAergic). Soma location alignment is CONSISTENT on the nominal criterion (CeA present) but the region_fraction for CLUS_0705 is 0.014, reflecting a very small fraction of this cluster's cells in the queried region. Morphology is NOT_ASSESSED — WMBv1 does not provide morphological descriptors at the cluster level.
 
 **Anti-hallucination.** All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
 
-**Evidence base**
+**Evidence base table**
 
 | Edge ID | Evidence types | Supports | Source |
 |---|---|---|---|
-| edge_cea_large_aspiny_neuron_to_cs20230722_clus_0705 | LITERATURE; ATLAS_METADATA | PARTIAL; NO_EVIDENCE | [1]; atlas-internal |
+| edge_cea_large_aspiny_neuron_to_cs20230722_clus_0705 | LITERATURE; ATLAS_METADATA | PARTIAL; NO_EVIDENCE | [1]; — |
 
-*Generated by evidencell `8d79cdb` at 2026-06-11T09:44:20+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml](kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml).*
+*Generated by evidencell `bfdb7f1` at 2026-06-15T10:48:33+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml).*
 
 </details>
 
@@ -99,29 +87,30 @@ All candidates in the CeA GABAergic cohort share an identical disqualifying sign
 
 ## Discussion
 
-### Best candidate and caveats
+### Best candidate + caveats summary
 
-**Primary mapping:** Central amygdala large aspiny neuron → CS20230722_CLUS_0705 at UNCERTAIN confidence. Key support: none — region filter only. Key caveats: NO_DISCRIMINATING_MARKER (no molecular markers defined on the classical node); AMBIGUOUS_MAPPING (identical candidate pool to `cea_medium_spiny_neuron` and `cea_small_aspiny_neuron`).
+**Primary mapping:** Central amygdala large aspiny neuron → no assignable cluster at current evidence level. The single candidate assessed — 0705 RHP-COA Ndnf Gaba_6 [CS20230722_CLUS_0705] — was retrieved on region and NT criteria only; no molecular markers distinguish this morphological class from the other two CeA morphological classes (medium spiny, small aspiny), and the candidate carries NO_EVIDENCE support. The mapping is genuinely UNCERTAIN and cannot be resolved without new molecular data.
 
-No Cell Ontology term currently assigned. This type lacks molecular definition and is a candidate for CL contribution if molecular identity is established.
+No Cell Ontology term is currently assigned. The large aspiny CeA neuron is a candidate for CL contribution once molecular markers are established.
 
 ### Proposed experiments and follow-ups
 
 **Patch-seq of morphologically identified large aspiny CeA neurons**
-- **What:** Whole-cell patch-clamp with post-hoc biocytin fill and morphological reconstruction, followed by single-cell RNA-seq (patch-seq) to simultaneously profile morphology, electrophysiology, and transcriptome.
-- **Target:** WMBv1 cluster assignment with sufficient cells (at least 10 morphologically confirmed large aspiny neurons) to identify the corresponding atlas cluster unambiguously.
-- **Expected output:** Defining molecular markers for `cea_large_aspiny_neuron`; AnnotationTransferEvidence linking to a specific WMBv1 cluster; a property_comparison entry for morphology_aspiny_large.
-- **Resolves:** edge_cea_large_aspiny_neuron_to_cs20230722_clus_0705 (upgrades from UNCERTAIN); disambiguates from `cea_medium_spiny_neuron` and `cea_small_aspiny_neuron`.
+- **What:** Patch-clamp recording followed by single-cell RNA sequencing (patch-seq) on neurons in the lateral CeA confirmed post-hoc as large aspiny by biocytin fill and morphological reconstruction.
+- **Target:** Transcriptome sufficient for MapMyCells atlas assignment; F1 ≥ 0.60 at CLUSTER level in CCN20230722 would constitute positive evidence.
+- **Expected output:** AnnotationTransferEvidence on the cluster edge, defining_markers on the classical node.
+- **Resolves:** Open question 1 (electrophysiological class identity); breaks the marker-ambiguity deadlock shared with cea_medium_spiny_neuron and cea_small_aspiny_neuron.
 
-**Targeted literature search for CeA large aspiny neuron markers**
-- **What:** Cite-traverse for "large aspiny neuron central amygdala" and "CeA interneuron fast-spiking PV" to assess whether any published single-cell studies have characterised this morphological class transcriptomically or linked it to known marker genes.
-- **Target:** Identification of at least one defining marker supported by a primary study with confirmed morphology.
-- **Expected output:** LiteratureEvidence items with quote_keys; updated `defining_markers` on the classical node if supported.
-- **Resolves:** Open question 1 (below).
+**Targeted molecular profiling — fast-spiking interneuron marker screen**
+- **What:** Literature trawl and targeted immunohistochemistry / smFISH for fast-spiking interneuron markers (Pvalb, Kcnc1, Kcnc2) on morphologically confirmed large aspiny CeA neurons. The electrophysiological heterogeneity reported for this class raises the possibility that a subset corresponds to fast-spiking internuncial neurons.
+- **Target:** Establish or exclude Pvalb/Kcnc1/Kcnc2 as positive or negative markers; confirm or refute putative overlap with atlas Pvalb-class clusters.
+- **Expected output:** LiteratureEvidence or MarkerAnalysisEvidence entries on the classical node; updated property_comparisons on candidate edges.
+- **Resolves:** Open question 1.
 
 ### Open questions
 
-1. Do large aspiny CeA neurons correspond to the fast-spiking internuncial class described electrophysiologically, and if so, do they share markers with PV or other known fast-spiking interneuron clusters? *(from edge_cea_large_aspiny_neuron_to_cs20230722_clus_0705)*
+1. Do large aspiny CeA neurons correspond to the fast-spiking internuncial class described electrophysiologically, and if so, do they share markers with Pvalb or other known fast-spiking interneuron clusters? This question appears on the sole assessed edge and is the primary blocker for atlas assignment.
+2. Are the three classical CeA morphological classes (large aspiny, medium spiny, small aspiny) distinguishable at the transcriptomic level at all? If they share molecular identity (as implied by their shared striatal-like GABAergic character), they may resolve to overlapping atlas clusters — a finding with implications for how all three nodes are curated.
 
 ---
 
@@ -129,8 +118,13 @@ No Cell Ontology term currently assigned. This type lacks molecular definition a
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | Nikolenko et al. 2020 | [32751957](https://pubmed.ncbi.nlm.nih.gov/32751957/) | Soma location; morphological class definition |
-| [2] | Yeh et al. 2024 | [38419794](https://pubmed.ncbi.nlm.nih.gov/38419794/) | Neurotransmitter type (CeA GABAergic) |
+| [1] | Nikolenko et al. 2020 | [32751957](https://pubmed.ncbi.nlm.nih.gov/32751957/) | soma location, morphology |
+| [2] | Waclaw et al. 2010 | [20484636](https://pubmed.ncbi.nlm.nih.gov/20484636/) | soma location, NT type |
+| [3] | Yeh et al. 2024 | [38419794](https://pubmed.ncbi.nlm.nih.gov/38419794/) | NT type |
+| [4] | Paul et al. 2025 | [40686779](https://pubmed.ncbi.nlm.nih.gov/40686779/) | NT type |
+| [5] | Sarowar & Grabrucker 2020 | [32858950](https://pubmed.ncbi.nlm.nih.gov/32858950/) | NT type |
+| [6] | Chung et al. 2016 | [27053114](https://pubmed.ncbi.nlm.nih.gov/27053114/) | NT type |
+| [7] | Hochgerner et al. 2023 | [37884748](https://pubmed.ncbi.nlm.nih.gov/37884748/) | NT type |
 
 ---
 
@@ -140,25 +134,38 @@ verdict:
   confidence: UNCERTAIN
   confidence_score: 0.05
   rationale: >
-    No molecular markers are defined on cea_large_aspiny_neuron; discovery returned
-    score 1 for all 5 candidates in the GABAergic-CeA cohort (cohort_size=5,
-    rank_in_cohort=2, all tied at score=1). CS20230722_CLUS_0705 was selected by
-    region filter only (region_fraction=0.014 at MBA:536; region_evidence=SELF).
-    NT type is CONSISTENT (GABAergic/GABA) but uninformative given all cohort
-    members are GABAergic. Soma/dendrite comparison (aspiny large form) is
-    NOT_ASSESSED — WMBv1 provides no soma/dendrite annotations. The ATLAS_METADATA
-    evidence item explicitly records NO_EVIDENCE. The candidate pool is identical to
-    cea_medium_spiny_neuron and cea_small_aspiny_neuron; the three CeA soma-defined
-    types are transcriptomically indistinguishable without molecular markers.
-  reconciliation_note: >
-    Indistinguishable from cea_medium_spiny_neuron and cea_small_aspiny_neuron
-    across all available panels (no markers, identical region filter, no AT data);
-    all three return the same 5-member GABAergic-CeA candidate pool at score=1.
-    Patch-seq of histologically confirmed cells is the only path to resolution.
+    [tier:CUT] No molecular markers are defined for the central amygdala large aspiny
+    neuron; the sole candidate CS20230722_CLUS_0705 was selected by region filter
+    only (region_fraction 0.014; GABAergic NT CONSISTENT) with ATLAS_METADATA
+    support=NO_EVIDENCE and LITERATURE support=PARTIAL (classical soma-size
+    description only, no transcriptomic data). Discovery score 1 (rank 2 of 5;
+    cohort_size 5; all cohort members tied at score 1). Mapping is entirely
+    uninformative without defining markers.
+  caveats:
+    - caveat_type: NO_DISCRIMINATING_MARKER
+      description: >
+        No molecular markers defined for cea_large_aspiny_neuron. Discovery
+        returned score 1 for all candidates. Mapping is entirely uninformative.
+    - caveat_type: AMBIGUOUS_MAPPING
+      description: >
+        Identical candidate pool to cea_medium_spiny_neuron and
+        cea_small_aspiny_neuron; three classical CeA soma-type classes are
+        indistinguishable without markers.
+  proposed_experiments:
+    - >
+      Single-cell transcriptomics of large aspiny CeA neurons identified
+      by soma size and aspiny dendritic architecture, with post-recording
+      cellular labeling for cell-type confirmation and WMBv1 cluster
+      assignment. Target: F1 >= 0.60 at CLUSTER level in CCN20230722.
   unresolved_questions:
     - >
-      Do large aspiny CeA neurons correspond to the fast-spiking internuncial class
-      described electrophysiologically, and if so, do they share markers with PV or
-      other known fast-spiking interneuron clusters?
+      Do large aspiny CeA neurons correspond to the fast-spiking internuncial
+      class described electrophysiologically, and if so, do they share markers
+      with Pvalb or other known fast-spiking interneuron clusters?
+    - >
+      Are the three classical CeA soma-type classes (large aspiny, medium
+      spiny, small aspiny) distinguishable at the transcriptomic level? They
+      may resolve to overlapping atlas clusters given their shared GABAergic
+      striatal-like character.
 ```
 <!-- verdict-block-end -->

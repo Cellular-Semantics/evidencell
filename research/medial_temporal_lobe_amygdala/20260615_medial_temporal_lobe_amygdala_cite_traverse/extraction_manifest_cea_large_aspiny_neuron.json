@@ -1,0 +1,91 @@
+{
+  "node_id": "cea_large_aspiny_neuron",
+  "added_by": "evidence_extraction_cea_large_aspiny_neuron_20260615",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/depth_0_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_corpus_ids": ["221366115", "252477669", "17223544", "232283078"],
+  "existing_refs": [
+    "PMID:20484636",
+    "PMID:32751957",
+    "PMID:32858950",
+    "PMID:38419794",
+    "PMID:40686779"
+  ],
+  "entries_processed": [
+    {
+      "source_corpus_id": "280092907",
+      "decision": "SKIP",
+      "reason": "PMID:40686779 (Paul et al. 2025) is already in existing refs for this node."
+    },
+    {
+      "source_corpus_id": "281382725",
+      "decision": "SKIP",
+      "reason": "HIGH relevance flag included cea_large_aspiny_neuron because of CeA LGE-derived clusters (PRKCD, DLK1) and aspiny morphology mention. However, the aspiny morphology in the summary refers specifically to TSHZ1+ intercalated cells (ITC), not CeA large aspiny neurons. No quote distinguishes large aspiny CeA morphology."
+    },
+    {
+      "source_corpus_id": "4940771",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for BLA interneuron markers (CB, PV, SST, NPY). No content on CeA large aspiny cell morphology or nt_type."
+    },
+    {
+      "source_corpus_id": "17860491",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for calbindin+ BLA interneurons in extinction circuits. No content on CeA large aspiny neurons."
+    },
+    {
+      "source_corpus_id": "250411527",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for paralaminar_immature_neuron. Not relevant to cea_large_aspiny_neuron."
+    },
+    {
+      "source_corpus_id": "104297085",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for Thy1+/NTSR2+ BLA fear-inhibiting neurons. No content on CeA large aspiny morphology."
+    },
+    {
+      "source_corpus_id": "264517392",
+      "decision": "SKIP",
+      "reason": "HIGH relevance because CeA types (GABA-5 to GABA-21) are described as MSN-like with Ppp1r1b+. The available quotes address BLA canonical interneurons (GABA-35 to GABA-56) and a CeA SST+ type (GABA-17). None of the quotes specifically address large aspiny morphology or add to nt_type beyond existing refs. PMID:37884748 is not in existing refs but quotes do not provide actionable new PropertySource evidence specific to large aspiny identity."
+    },
+    {
+      "source_corpus_id": "3103554",
+      "decision": "EXTRACT",
+      "reason": "MODERATE relevance — CeA-specific GABAergic identity confirmed via GAD67 co-localization in immunohistochemistry. Quote 'In the CeA, IP3K-A primarily colocalized with GAD67-positive GABAergic interneurons' provides independent IHC-based support for GABAergic nt_type. PMID:27053114 not in existing refs.",
+      "field": "nt_type.sources",
+      "quote": "In the CeA, IP3K-A primarily colocalized with GAD67-positive GABAergic interneurons, whereas most IP3K-A in the BLA was in CAMKIIα-positive excitatory pyramidal neurons",
+      "quote_key": "3103554_3b15be02",
+      "ref": "PMID:27053114",
+      "method": "immunohistochemistry",
+      "scope": "mouse, adult, brain sections"
+    },
+    {
+      "source_corpus_id": "221366115",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "252477669",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "17223544",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "232283078",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    }
+  ],
+  "propertysource_entries_written": 1,
+  "fields_updated": ["nt_type.sources"],
+  "gaps": [
+    "morphology.sources — no eligible summary specifically addresses large aspiny soma/dendrite morphology beyond existing PMID:32751957 source",
+    "markers (positive/negative) — none recorded; no eligible summary provides CeA large aspiny-specific positive or negative marker data",
+    "electrophysiology.sources — already covered by PMID:32751957; no new eligible summary adds to electrophysiology evidence",
+    "anatomical_location[].sources — already covered by PMID:32751957"
+  ]
+}

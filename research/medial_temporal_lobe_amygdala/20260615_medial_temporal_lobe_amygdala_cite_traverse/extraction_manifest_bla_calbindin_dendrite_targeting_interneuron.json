@@ -1,0 +1,94 @@
+{
+  "node_id": "bla_calbindin_dendrite_targeting_interneuron",
+  "added_by": "evidence_extraction_bla_calbindin_dendrite_targeting_interneuron_20260615",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/depth_0_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_corpus_ids": ["221366115", "252477669", "17223544", "232283078"],
+  "existing_refs": [
+    "PMID:22726836",
+    "PMID:28453642",
+    "PMID:32144495"
+  ],
+  "entries_processed": [
+    {
+      "source_corpus_id": "280092907",
+      "decision": "EXTRACT",
+      "field": "morphology.sources",
+      "ref": "PMID:40686779",
+      "quote_key": "280092907_59d9ef89",
+      "quote": "This categorization resulted in four classes of LA-BLA interneurons: axo-axonic, CB+ (calbindin-positive) dendrite-targeting, AStria (amygdalo-striatal transition area), and PV+ (parvalbumin-positive).",
+      "reason": "HIGH relevance; directly classifies CB+ (calbindin-positive) dendrite-targeting as one of four physiological LA-BLA interneuron classes — independently confirms the morphological/functional class identity of the target node"
+    },
+    {
+      "source_corpus_id": "281382725",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for primate amygdala inhibitory neuron taxonomy; CALB1 mentioned as distinguishing PVALB+ subtypes, not as a marker of CB+ dendrite-targeting interneurons specifically — not directly relevant to this node"
+    },
+    {
+      "source_corpus_id": "4940771",
+      "decision": "EXTRACT",
+      "field": "defining_markers[Calb1].sources",
+      "ref": "PMID:31193505",
+      "quote_key": "4940771_ef80657d",
+      "quote": "Almost all of these Parv-ir neurons also contained Calb-ir, but the two groups of mice showed the same average number of Calb-ir positive neurons in the BLA",
+      "reason": "HIGH relevance; directly immunostains BLA for calbindin protein (Calb-ir) and counts calbindin-positive neurons in mouse BLA — supports PROTEIN-level evidence for Calb1 marker in BLA interneurons"
+    },
+    {
+      "source_corpus_id": "17860491",
+      "decision": "SKIP",
+      "reason": "CorpusId:17860491 maps to PMID:28453642, which is already in the existing refs list for this node"
+    },
+    {
+      "source_corpus_id": "250411527",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for paralaminar immature neurons; no content on calbindin+ BLA interneurons or dendrite-targeting interneuron class"
+    },
+    {
+      "source_corpus_id": "104297085",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for BLA fear-inhibiting Thy1+/Ntsr2+ neurons; no content on calbindin+ dendrite-targeting interneurons"
+    },
+    {
+      "source_corpus_id": "264517392",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for mouse amygdala scRNA-seq taxonomy (BLA interneurons as GABA-35 to GABA-56); does not specifically characterise CB+ dendrite-targeting interneurons or Calb1 in this context"
+    },
+    {
+      "source_corpus_id": "3103554",
+      "decision": "SKIP",
+      "reason": "MODERATE relevance for CeA GABAergic neurons; no content on BLA calbindin+ dendrite-targeting interneurons"
+    },
+    {
+      "source_corpus_id": "221366115",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "252477669",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "17223544",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "232283078",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    }
+  ],
+  "propertysource_entries_written": 2,
+  "fields_updated": [
+    "morphology.sources",
+    "defining_markers[Calb1].sources"
+  ],
+  "gaps": [
+    "nt_type.sources — no new eligible summary provides GABAergic NT type evidence beyond existing refs",
+    "electrophysiology.sources — no new eligible summary contains electrophysiology data (theta coupling, firing properties) for this interneuron type",
+    "anatomical_location[].sources — no new eligible summary adds independent location evidence beyond existing refs"
+  ],
+  "notes": "Two PropertySource entries written: (1) morphology.sources from PMID:40686779 (CorpusId:280092907, Neuronal physiology of amygdala neurons), which explicitly names CB+ dendrite-targeting as one of four LA-BLA interneuron classes; (2) defining_markers[Calb1].sources from PMID:31193505 (CorpusId:4940771, Persistent pain intensifies recall of consolidated fear memories), which directly immunostains BLA for calbindin protein. CorpusId:17860491 (Flores et al. 2017) was skipped as it maps to PMID:28453642, already in existing refs."
+}
