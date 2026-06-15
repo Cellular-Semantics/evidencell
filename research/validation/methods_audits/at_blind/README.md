@@ -45,8 +45,9 @@ query.
 3. Load `precomputed_expression` for the queried rank AND rank 0
    (needed for coverage descent).
 4. Call `find_candidates` with the above + `at_hits=None`,
-   `at_bypass=None`. Region expansion enabled
-   (`region_expand_levels=1`).
+   `at_bypass=None`. Region filter uses the permissive rule
+   (strict `cell_count > 0` OR proximity `count_in_or_near_100um > 0`
+   in the curator-literal anat terms; no MBA-tree expansion).
 5. Look up the AT target accession in the returned candidates list.
 
 ### Outcome categorisation
@@ -82,6 +83,9 @@ preflight outcomes, and per-case raw data.
 | 2026-05-10 | `db4d2e1` (pre-expansion) | top-K 10, F1 floor 0.2 | 12/19 (63%) | First run on cohort-relative scoring; strict region match only. |
 | 2026-05-10 | `5bb6c3d` (post-expansion) | top-K 10, F1 floor 0.2 | 16/19 (84%) | Region expansion + exact-match bonus (commit E). |
 | 2026-05-11 | `5bb6c3d` (audit script fixed) | top-K 10, F1 floor 0.2 | 16/19 (84%) | Same code; audit-driver gained UBERON name-fallback so the OLM case is region-filtered properly. Headline rate unchanged but per-case rank diagnoses are now accurate. |
+| 2026-05-31 | `main` (pre-#95) | top-K 10, F1 floor 0.2 | 50/77 (64.9%) | KB grew (77 AT cases vs 19); legacy `expanded_anat` walk + flat region-survival bonus. Baseline for #95. **filter_loss=2.6%, topk_loss=32.5%.** Sole filter losses are `negative_score_or_other`; 0 `region_drop` because `expanded_anat` rescues everything. |
+| 2026-05-31 | issue #95 (literal anat, no KG closure update) | top-K 10, F1 floor 0.2 | 54/77 (70.1%) | Permissive filter (strict ‖ 100µm proximity), graded region score, `expanded_anat` walk removed. **filter_loss=7.8%, topk_loss=22.1%** — graded score helps real candidates rise; +5pp filter_loss reflects 3 EC supertype cases the old expansion was rescuing via taxonomic adjacency. |
+| 2026-06-02 | issue #95 + KG update (`cellCountCompleteness` tags + materialised rollups) | top-K 10, F1 floor 0.2 | 54/77 (70.1%) | brain_cell_KG now materialises `exact` rollup edges at non-painted parent terms (e.g. SUPT_0042 → MBA:909 *Entorhinal area* now present). **filter_loss=3.9%, topk_loss=26.0%.** The 3 EC supertypes moved from `region_drop` → `below_topk` (now in the candidate pool but below top-10). Net survival unchanged because they don't score high enough to overtake other candidates; visible to a curator who increases top-K. Pipeline now diagnoses these as ranking-stage losses (curator-actionable) rather than filter losses (silent drops). 402K anat rows (was 247K) reflecting new rollup edges. |
 
 ## Findings
 
@@ -150,17 +154,34 @@ evidence the marker pipeline is doing real work there.
 
 ## Decisions informed
 
-- **Default `region_expand_levels=1` in `find_candidates`** (commit
+- **`region_expand_levels=1` default in `find_candidates`** (commit
   E on the Phase 1 branch). The 63%→84% jump in this audit was the
-  primary evidence; without expansion we'd be losing high-F1 cases
-  for no benefit.
+  primary evidence at the time; without taxonomic expansion the audit
+  was losing high-F1 cases. **Superseded (issue #95):** the parameter
+  and the `expanded_anat` walk were removed when find_candidates
+  switched to a permissive `cell_count > 0` OR
+  `count_in_or_near_100um > 0` filter against curator-literal anat
+  terms. The 100µm proximity data captures the boundary / sibling-
+  sublayer cases the MBA-tree walk was rescuing; the brain_cell_KG
+  update on 2026-06-02 materialised `exact` rollup edges at
+  non-painted parent terms (e.g. SUPT_0042 → MBA:909 *Entorhinal
+  area*) so curator queries at any MBA level hit the right edge
+  directly. **`cell_count_completeness`** flags rollups that
+  include non-painted descendants as `lower_bound` so Stage B and
+  report-time agents can caveat citations.
+- **Validation metric exposed** — `summary_stats.at_target_survival`
+  now reports `filter_loss_rate` + `topk_loss_rate` + `survival_rate`
+  alongside the existing `pass_rate`. The split lets the write-up
+  distinguish "found vs missed" from "filter-stage loss vs ranking-
+  stage loss" — the actionable diagnosis is different for each.
 - **LLM adjacency wiring reverted** (commit A on the Phase 1 branch).
   Originally region-pending candidates went through a batched LLM
   call. Audit-driven cost/benefit (~500 candidates per query at
   rank 1; few interesting cases) plus the v1 audit showing
   programmatic-only expansion already rescued the high-F1 misses,
-  led to the revert. The `llm_adjacency` module is retained as
-  dormant infrastructure.
+  led to the revert. The `llm_adjacency` module was finally
+  deleted in issue #95 alongside the region-filter overhaul —
+  proximity-based filtering subsumes its intended use case.
 - **Top-K default 10 (rather than 5)** (commit D). The audit
   measured rank distribution of valid AT hits to set a sensible K;
   at 10 we capture meaningful below-the-top cases without diluting

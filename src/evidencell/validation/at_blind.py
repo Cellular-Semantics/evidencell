@@ -483,7 +483,9 @@ class ATBlindAudit(AuditDriver):
         """Extend base summary with per-AT-level and per-monotonicity
         breakdowns. Also tally how many results survived the region
         filter via the rank-0-descendant fallback (the BCKG workaround;
-        see :func:`evidencell.taxonomy_db.find_candidates`).
+        see :func:`evidencell.taxonomy_db.find_candidates`), and emit
+        explicit filter_loss / topk_loss / survival rates so the JSON
+        is self-describing for downstream write-up.
         """
         base = super()._summarise(run)
         by_level: dict[str, dict[str, int]] = {}
@@ -506,12 +508,39 @@ class ATBlindAudit(AuditDriver):
         base["by_level"] = by_level
         base["by_monotonicity"] = by_mono
         base["region_descendant_fallback_hits"] = region_fb_hits
+
+        # Explicit headline rates for the write-up. `by_reason` carries the
+        # raw counts; these are derived so consumers don't have to re-derive.
+        # A target can be lost at two distinct checkpoints — the find_candidates
+        # filter (region or NT prerequisite, or unhandled negative-score case)
+        # vs the top-K cut after scoring. Split them.
+        by_reason = base.get("by_reason") or {}
+        n_cases = base.get("n_cases") or 0
+        filter_drops = (
+            (by_reason.get("region_drop") or 0)
+            + (by_reason.get("nt_drop") or 0)
+            + (by_reason.get("negative_score_or_other") or 0)
+        )
+        topk_drops = by_reason.get("below_topk") or 0
+        found = by_reason.get("found") or 0
+        base["at_target_survival"] = {
+            "n_at_targets": n_cases,
+            "found": found,
+            "filter_loss": filter_drops,
+            "topk_loss": topk_drops,
+            "survival_rate": (found / n_cases) if n_cases else None,
+            "filter_loss_rate": (filter_drops / n_cases) if n_cases else None,
+            "topk_loss_rate": (topk_drops / n_cases) if n_cases else None,
+        }
         return base
 
-    def _descendant_anat(self, db: TaxonomyDB, node_acc: str) -> set[str]:
-        """Union of `anat.anat_id` rows across all rank-0 descendants of
-        ``node_acc``. Used by the audit's miss-categoriser to mirror the
-        region-filter fallback in :meth:`TaxonomyDB.find_candidates`.
+    def _descendant_anat(self, db: TaxonomyDB, node_acc: str) -> set[tuple[str, int, int]]:
+        """Anat rows across all rank-0 descendants of ``node_acc``,
+        returned as ``(anat_id, cell_count, count_in_or_near_100um)``
+        triples. Used by the audit's miss-categoriser to mirror the
+        permissive region-filter fallback in
+        :meth:`TaxonomyDB.find_candidates`.
+
         Returns an empty set if ``node_acc`` has no rank-0 descendants
         (e.g. when called on a rank-0 node itself).
         """
@@ -539,13 +568,20 @@ class ATBlindAudit(AuditDriver):
                 leaves.append(n)
             else:
                 stack.extend(children.get(n, []))
-        out: set[str] = set()
+        out: set[tuple[str, int, int]] = set()
         with db._connect() as con:
             for leaf in leaves:
                 for row in con.execute(
-                    "SELECT anat_id FROM anat WHERE node_id = ?", (leaf,)
+                    "SELECT anat_id, cell_count, count_in_or_near_100um "
+                    "FROM anat WHERE node_id = ?",
+                    (leaf,),
                 ).fetchall():
-                    out.add(row[0])
+                    d = dict(row)
+                    out.add((
+                        d["anat_id"],
+                        d.get("cell_count") or 0,
+                        d.get("count_in_or_near_100um") or 0,
+                    ))
         return out
 
     def _get_db(self) -> TaxonomyDB:
@@ -625,36 +661,38 @@ class ATBlindAudit(AuditDriver):
         candidate-side filter.
         """
 
-        # Region check: did target lose to the region filter?
+        # Region check: did target lose to the region filter? Mirror
+        # find_candidates' permissive rule — qualify on strict
+        # `cell_count > 0` OR proximity `count_in_or_near_100um > 0`
+        # at any of the curator-literal anat terms (no descendant
+        # expansion; the KG already closure-aggregates upstream).
         if queried_mba_ids:
-            effective: set[str] = set()
-            try:
-                for root in queried_mba_ids:
-                    effective.update(db.get_descendants(root, include_self=True))
-                expanded: set[str] = set(effective)
-                for seed in queried_mba_ids:
-                    for parent in db.get_anat_parents(seed):
-                        expanded.update(
-                            db.get_descendants(parent, include_self=True)
-                        )
-            except RuntimeError:
-                expanded = set()
-
+            effective = set(queried_mba_ids)
             with db._connect() as con:
                 target_anat_rows = con.execute(
-                    "SELECT anat_id FROM anat WHERE node_id = ?",
+                    "SELECT anat_id, cell_count, count_in_or_near_100um "
+                    "FROM anat WHERE node_id = ?",
                     (target_acc,),
                 ).fetchall()
-            target_anat = {r[0] for r in target_anat_rows}
-            if expanded and target_anat and not (target_anat & expanded):
+            own_hit = any(
+                (dict(r).get("anat_id") in effective)
+                and (
+                    (dict(r).get("cell_count") or 0) > 0
+                    or (dict(r).get("count_in_or_near_100um") or 0) > 0
+                )
+                for r in target_anat_rows
+            )
+            if not own_hit:
                 # Mirror find_candidates' rank-0-descendant fallback at
                 # rank ≥ 1 (BCKG workaround). Only conclude region_drop
-                # when descendants also fail.
+                # when descendants also fail the permissive rule.
                 descendant_hit = False
                 if target_rank >= 1:
-                    descendant_anat = self._descendant_anat(db, target_acc)
-                    if descendant_anat & expanded:
-                        descendant_hit = True
+                    descendant_rows = self._descendant_anat(db, target_acc)
+                    descendant_hit = any(
+                        aid in effective and (cc > 0 or cp > 0)
+                        for (aid, cc, cp) in descendant_rows
+                    )
                 if not descendant_hit:
                     return "region_drop"
 

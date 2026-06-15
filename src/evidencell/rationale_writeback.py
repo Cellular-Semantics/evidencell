@@ -79,8 +79,64 @@ _VERDICT_START_RE = re.compile(
     r"<!--\s*verdict-block-start:\s*(?P<edge_id>[A-Za-z0-9_\-]+)\s*-->"
 )
 _VERDICT_END = "<!-- verdict-block-end -->"
+_SOURCE_GROUPS_START_RE = re.compile(
+    r"<!--\s*source-groups-rationale-start:\s*(?P<edge_id>[A-Za-z0-9_\-]+)\s*-->"
+)
+_SOURCE_GROUPS_END = "<!-- source-groups-rationale-end -->"
 _YAML_FENCE_START = "```yaml"
 _YAML_FENCE_END = "```"
+
+
+# ─── Schema enums (mirrored from schema/celltype_mapping.yaml) ──────────────
+#
+# Kept in sync with the schema by code-review. The writer validates enum
+# values before any YAML edit; a violation fails the edge's write-back
+# atomically rather than letting an invalid value through to the
+# pre-edit hook.
+
+_MAPPING_RELATIONSHIP_VALUES = frozenset({
+    "skos:exactMatch",
+    "skos:closeMatch",
+    "skos:broadMatch",
+    "skos:narrowMatch",
+    "evidencell:PartialOverlapMatch",  # deprecated but still permitted
+    "evidencell:CrossCuttingMatch",
+    "evidencell:NoCorrespondence",
+    "evidencell:UncertainRelationship",
+})
+
+_MAPPING_CARDINALITY_VALUES = frozenset({"1:1", "1:n", "n:1"})
+
+_MAPPING_JUSTIFICATION_VALUES = frozenset({
+    "semapv:ManualMappingCuration",
+    "semapv:UnreviewedManualMapping",
+    "semapv:LexicalMatching",
+    "semapv:CompositeMatching",
+    "semapv:LogicalReasoning",
+    "semapv:UnspecifiedMatching",
+})
+
+_CAVEAT_TYPE_VALUES = frozenset({
+    "MERFISH_REGISTRATION_UNCERTAINTY",
+    "LOW_CELL_COUNT",
+    "DISTRIBUTED_ACROSS_CLUSTERS",
+    "TAXONOMY_LEVEL_MISMATCH",
+    "MARKER_NOT_SPECIFIC",
+    "CROSS_SPECIES_EXTRAPOLATION",
+    "SINGLE_DATASET",
+    "NT_PREDICTION_UNCERTAIN",
+    "PRIOR_MAPPING_ASSUMED",
+    "AMBIGUOUS_MAPPING",
+    "SINGLE_STUDY",
+    "NO_DISCRIMINATING_MARKER",
+    "DISCORDANT_ANATOMY",
+    "ELECTROPHYSIOLOGY_ONLY_DEFINITION",
+    "OTHER",
+})
+
+_MAPPING_CONFIDENCE_VALUES = frozenset({
+    "HIGH", "MODERATE", "LOW", "UNCERTAIN", "REFUTED",
+})
 
 
 # ─── Parsing ────────────────────────────────────────────────────────────────
@@ -125,6 +181,121 @@ def parse_verdict_blocks(report_text: str) -> list[dict[str, Any]]:
             out.append({"edge_id": edge_id, "verdict": verdict})
         pos = end_idx + len(_VERDICT_END)
     return out
+
+
+def parse_source_groups_rationale_blocks(
+    report_text: str,
+) -> list[dict[str, Any]]:
+    """Extract ``source-groups-rationale`` blocks from the report.
+
+    Each block is wrapped in HTML-comment delimiters identifying the
+    edge id, with a fenced YAML body shaped like::
+
+        source_groups_rationale:
+          - run_ref: at_run_...        # optional; disambiguates when
+                                        # multiple AT evidence items
+                                        # exist on the edge
+            source_group_label: ...    # required; matches
+                                        # SourceGroup.label
+            rationale: >
+              ...prose...
+
+    Returns a list of dicts with ``edge_id`` and ``entries`` (list of
+    per-source-group dicts). Malformed blocks are skipped silently.
+    """
+    out: list[dict[str, Any]] = []
+    pos = 0
+    while True:
+        m = _SOURCE_GROUPS_START_RE.search(report_text, pos)
+        if m is None:
+            break
+        edge_id = m.group("edge_id")
+        end_idx = report_text.find(_SOURCE_GROUPS_END, m.end())
+        if end_idx == -1:
+            break
+        block_inner = report_text[m.end():end_idx]
+        fence_start = block_inner.find(_YAML_FENCE_START)
+        if fence_start == -1:
+            pos = end_idx + len(_SOURCE_GROUPS_END)
+            continue
+        yaml_start = block_inner.find("\n", fence_start) + 1
+        fence_end = block_inner.find(_YAML_FENCE_END, yaml_start)
+        if fence_end == -1:
+            pos = end_idx + len(_SOURCE_GROUPS_END)
+            continue
+        yaml_body = block_inner[yaml_start:fence_end]
+        try:
+            parsed = yaml.safe_load(yaml_body) or {}
+        except Exception:
+            pos = end_idx + len(_SOURCE_GROUPS_END)
+            continue
+        entries = parsed.get("source_groups_rationale")
+        if isinstance(entries, list):
+            out.append({"edge_id": edge_id, "entries": entries})
+        pos = end_idx + len(_SOURCE_GROUPS_END)
+    return out
+
+
+def validate_verdict_enums(verdict: dict[str, Any]) -> list[str]:
+    """Check that any controlled-vocabulary fields on a verdict block
+    carry schema-permitted values. Returns a list of human-readable
+    error strings; empty list = all enum claims valid.
+
+    Validated fields:
+    - ``confidence`` (MappingConfidence enum)
+    - ``relationship`` (MappingRelationship enum)
+    - ``mapping_cardinality`` (MappingCardinality enum)
+    - ``mapping_justification`` (MappingJustification enum)
+    - ``caveats[*].caveat_type`` (CaveatType enum)
+    """
+    errors: list[str] = []
+    conf = verdict.get("confidence")
+    if conf is not None and conf not in _MAPPING_CONFIDENCE_VALUES:
+        errors.append(
+            f"confidence={conf!r} is not a valid MappingConfidence value. "
+            f"Expected one of: {sorted(_MAPPING_CONFIDENCE_VALUES)}."
+        )
+    rel = verdict.get("relationship")
+    if rel is not None and rel not in _MAPPING_RELATIONSHIP_VALUES:
+        errors.append(
+            f"relationship={rel!r} is not a valid MappingRelationship "
+            f"value. Expected one of: "
+            f"{sorted(_MAPPING_RELATIONSHIP_VALUES)}."
+        )
+    card = verdict.get("mapping_cardinality")
+    if card is not None and str(card) not in _MAPPING_CARDINALITY_VALUES:
+        errors.append(
+            f"mapping_cardinality={card!r} is not a valid value. "
+            f"Expected one of: {sorted(_MAPPING_CARDINALITY_VALUES)}."
+        )
+    just = verdict.get("mapping_justification")
+    if just is not None and just not in _MAPPING_JUSTIFICATION_VALUES:
+        errors.append(
+            f"mapping_justification={just!r} is not a valid value. "
+            f"Expected one of: {sorted(_MAPPING_JUSTIFICATION_VALUES)}."
+        )
+    for i, cav in enumerate(verdict.get("caveats") or []):
+        if not isinstance(cav, dict):
+            errors.append(
+                f"caveats[{i}] is not a mapping; expected an object with "
+                f"caveat_type + description."
+            )
+            continue
+        ct = cav.get("caveat_type")
+        if ct is None:
+            errors.append(
+                f"caveats[{i}] missing required field caveat_type."
+            )
+        elif ct not in _CAVEAT_TYPE_VALUES:
+            errors.append(
+                f"caveats[{i}].caveat_type={ct!r} is not a valid CaveatType "
+                f"value. Expected one of: {sorted(_CAVEAT_TYPE_VALUES)}."
+            )
+        if not cav.get("description"):
+            errors.append(
+                f"caveats[{i}] missing required field description."
+            )
+    return errors
 
 
 # ─── Anti-hallucination check (Q5) ──────────────────────────────────────────
@@ -354,6 +525,33 @@ def _collect_node_methods(node: dict | None) -> list[str]:
                 if isinstance(src, dict) and isinstance(src.get("method"), str):
                     out.append(src["method"].lower())
     return out
+
+
+def collect_verdict_prose(verdict: dict[str, Any]) -> str:
+    """Concatenate every free-text field on a verdict block whose
+    quantitative claims should be checked: ``rationale``,
+    ``reconciliation_note``, each ``caveats[*].description``, and each
+    ``proposed_experiments[*]`` string.
+
+    Joined with ``\\n`` so the regex patterns (F1=, accessions, etc.)
+    each match within their owning sentence; the antihallucination
+    check is whole-text rather than per-field, which is fine because a
+    failure message naming "rationale-suite prose" remains actionable.
+    """
+    parts: list[str] = []
+    for k in ("rationale", "reconciliation_note"):
+        v = verdict.get(k)
+        if isinstance(v, str) and v:
+            parts.append(v)
+    for cav in verdict.get("caveats") or []:
+        if isinstance(cav, dict):
+            d = cav.get("description")
+            if isinstance(d, str) and d:
+                parts.append(d)
+    for exp in verdict.get("proposed_experiments") or []:
+        if isinstance(exp, str) and exp:
+            parts.append(exp)
+    return "\n".join(parts)
 
 
 def check_rationale_against_edge(
@@ -678,15 +876,19 @@ def write_back(
     """
     report_text = report_path.read_text(encoding="utf-8")
     verdicts = parse_verdict_blocks(report_text)
+    source_groups_blocks = parse_source_groups_rationale_blocks(report_text)
 
     yaml_rt, doc = _load_yaml_rt(graph_path)
     summary: dict[str, Any] = {
         "report": str(report_path),
         "graph": str(graph_path),
         "parsed": len(verdicts),
+        "source_groups_blocks_parsed": len(source_groups_blocks),
         "verified": 0,
         "written": 0,
         "lit_to_lit_created": 0,
+        "source_group_rationales_written": 0,
+        "source_group_rationales_skipped": 0,
         "errors": [],
     }
 
@@ -704,11 +906,17 @@ def write_back(
             )
             continue
 
+        enum_errs = validate_verdict_enums(verdict)
+        if enum_errs:
+            for e in enum_errs:
+                summary["errors"].append(f"[{edge_id}] {e}")
+            continue
+
         if verify:
             lit_id = edge.get("lit_type")
             tax_id = edge.get("taxonomy_type")
             errs = check_rationale_against_edge(
-                verdict.get("rationale") or "",
+                collect_verdict_prose(verdict),
                 edge,
                 _find_node(doc, lit_id) if lit_id else None,
                 _find_node(doc, tax_id) if tax_id else None,
@@ -738,6 +946,25 @@ def write_back(
         edge["rationale"] = verdict.get("rationale") or ""
         if "reconciliation_note" in verdict:
             edge["reconciliation_note"] = verdict["reconciliation_note"]
+        # SSSOM trio + typed lists: write when present; leave existing
+        # edge fields untouched when absent. caveats[] and
+        # proposed_experiments[] are REPLACE semantics (the agent emits
+        # the canonical post-synth set); unresolved_questions[] is
+        # append-only below to preserve cross-run accumulation.
+        if "relationship" in verdict:
+            edge["relationship"] = verdict["relationship"]
+        if "mapping_cardinality" in verdict:
+            edge["mapping_cardinality"] = _safe_cardinality(
+                str(verdict["mapping_cardinality"])
+            )
+        if "mapping_justification" in verdict:
+            edge["mapping_justification"] = verdict["mapping_justification"]
+        if "caveats" in verdict:
+            edge["caveats"] = list(verdict["caveats"] or [])
+        if "proposed_experiments" in verdict:
+            edge["proposed_experiments"] = list(
+                verdict["proposed_experiments"] or []
+            )
         edge["rationale_generated_at"] = _now_iso()
         edge["report_path"] = str(
             report_path.relative_to(report_path.parent.parent.parent)
@@ -805,10 +1032,101 @@ def write_back(
             edges_list.append(new_edge)
         summary["lit_to_lit_created"] += 1
 
-    if not dry_run and (summary["written"] or summary["lit_to_lit_created"]):
+    # Fourth pass: populate source_groups[*].rationale on AT evidence
+    # items per the source-groups-rationale blocks. Only fills when the
+    # target rationale is currently empty (per the schema's
+    # "never overwrite without curator review" rule).
+    for sgb in source_groups_blocks:
+        edge_id = sgb["edge_id"]
+        edge = _find_edge(doc, edge_id)
+        if edge is None:
+            summary["errors"].append(
+                f"source-groups-rationale block names edge_id={edge_id!r} "
+                f"but no such edge in {graph_path.name}."
+            )
+            continue
+        for entry in sgb["entries"]:
+            if not isinstance(entry, dict):
+                continue
+            label = entry.get("source_group_label")
+            rationale = entry.get("rationale")
+            run_ref_filter = entry.get("run_ref")
+            if not label or not rationale:
+                summary["errors"].append(
+                    f"[{edge_id}] source-groups-rationale entry missing "
+                    f"source_group_label or rationale: {entry!r}"
+                )
+                continue
+            wrote = _apply_source_group_rationale(
+                edge, label, rationale, run_ref_filter
+            )
+            if wrote == "written":
+                summary["source_group_rationales_written"] += 1
+            elif wrote == "skipped_existing":
+                summary["source_group_rationales_skipped"] += 1
+            else:
+                summary["errors"].append(
+                    f"[{edge_id}] no source_groups entry with "
+                    f"label={label!r}"
+                    + (f" and run_ref={run_ref_filter!r}"
+                       if run_ref_filter else "")
+                    + " found on any AT evidence item."
+                )
+
+    if summary["errors"] and not dry_run:
+        # Source-groups errors are non-fatal for the verdict writes
+        # already queued; report them but only block the actual file
+        # write when something is wrong.
+        # (Verdict errors already returned above; reaching here means
+        # the failures are source-groups-only.)
+        pass
+
+    if not dry_run and (
+        summary["written"]
+        or summary["lit_to_lit_created"]
+        or summary["source_group_rationales_written"]
+    ):
         _dump_yaml_rt(yaml_rt, doc, graph_path)
 
     return summary
+
+
+def _apply_source_group_rationale(
+    edge: dict,
+    label: str,
+    rationale: str,
+    run_ref_filter: str | None,
+) -> str:
+    """Locate the source_groups entry on an AT evidence item of this
+    edge and populate its ``rationale`` if currently empty.
+
+    Returns one of:
+    - ``"written"`` — populated an empty rationale
+    - ``"skipped_existing"`` — entry already has a rationale; left alone
+    - ``"not_found"`` — no matching evidence item / source_group
+
+    When ``run_ref_filter`` is provided, only evidence items with that
+    ``run_ref`` are considered (disambiguates between multiple AT
+    evidence items on the same edge). When None, the first AT evidence
+    item carrying a matching source_groups entry wins.
+    """
+    for ev in edge.get("evidence") or []:
+        if not isinstance(ev, dict):
+            continue
+        if ev.get("evidence_type") != "ANNOTATION_TRANSFER":
+            continue
+        if run_ref_filter and ev.get("run_ref") != run_ref_filter:
+            continue
+        for sg in ev.get("source_groups") or []:
+            if not isinstance(sg, dict):
+                continue
+            if sg.get("label") != label:
+                continue
+            if sg.get("rationale"):
+                return "skipped_existing"
+            sg["rationale"] = rationale
+            return "written"
+    return "not_found"
 
 
 # ─── CLI ────────────────────────────────────────────────────────────────────

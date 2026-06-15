@@ -45,6 +45,10 @@ from typing import Any
 
 from ruamel.yaml import YAML
 
+# Protein → gene alias map lives in :mod:`marker_aliases`. Import the
+# canonical mapping so the two refreshers (this module and
+# stage_b_emit) stay in sync.
+from .marker_aliases import PROTEIN_TO_GENE_ALIASES as _PROTEIN_TO_GENE_ALIASES
 from .paths import repo_root
 
 
@@ -54,25 +58,6 @@ _ACCESSION_PREFIX_TO_YAML = {
     "SUBC_": "subclass.yaml",
     "SUPT_": "supertype.yaml",
     "CLUS_": "cluster.yaml",
-}
-
-# Common protein-name → mouse-gene-symbol aliases. Add as new clashes
-# emerge.
-_PROTEIN_TO_GENE_ALIASES: dict[str, str] = {
-    "mGluR1": "Grm1",
-    "mGluR5": "Grm5",
-    "GFAP":   "Gfap",
-    "PV":     "Pvalb",
-    "GAD67":  "Gad1",
-    "GAD65":  "Gad2",
-    "CR":     "Calb2",
-    "CB":     "Calb1",
-    "CCK":    "Cck",
-    "NPY":    "Npy",
-    "VIP":    "Vip",
-    "SST":    "Sst",
-    "NOS":    "Nos1",
-    "5-HT3a": "Htr3a",
 }
 
 
@@ -145,34 +130,29 @@ def _load_precomputed_expression(
     taxonomy_yaml_path: Path, accession: str
 ) -> dict[str, float] | None:
     """Load ``{gene_symbol: mean_expression}`` for a single
-    atlas-taxonomy node from its level's YAML file. None if not found
-    or the node has no precomputed_expression panel."""
-    yaml_safe = YAML(typ="safe")
-    yaml_safe.allow_duplicate_keys = True
-    doc = yaml_safe.load(taxonomy_yaml_path.read_text(encoding="utf-8")) or {}
-    nodes = doc.get("nodes") or []
-    for node in nodes:
-        if not isinstance(node, dict):
-            continue
-        if node.get("cell_set_accession") != accession:
-            continue
-        pe = node.get("precomputed_expression")
-        if not isinstance(pe, dict):
-            return None
-        genes = pe.get("genes") or []
-        out: dict[str, float] = {}
-        for g in genes:
-            if not isinstance(g, dict):
-                continue
-            sym = g.get("symbol")
-            mean = g.get("mean_expression")
-            if isinstance(sym, str) and mean is not None:
-                try:
-                    out[sym] = float(mean)
-                except (TypeError, ValueError):
-                    pass
-        return out
-    return None
+    atlas-taxonomy node.
+
+    Routes through the taxonomy SQLite DB's ``node_expression`` table
+    (millisecond lookup) rather than re-parsing the level YAML file
+    (~minutes for cluster.yaml.gz). The ``taxonomy_yaml_path``
+    argument is retained in the signature for backwards-compat but
+    used only to derive the taxonomy_id.
+
+    Returns ``{symbol: mean_expression}``, or None if the DB doesn't
+    exist / has no rows for this node.
+    """
+    from evidencell.paths import taxonomy_db_path
+    from evidencell.taxonomy_db import TaxonomyDB
+
+    # Path shape: kb/taxonomy/{taxonomy_id}/{level}.yaml(.gz).
+    # Extract the taxonomy_id from the parent dir name.
+    taxonomy_id = taxonomy_yaml_path.parent.name
+    db_path = taxonomy_db_path(taxonomy_id)
+    if not db_path.exists():
+        return None
+    db = TaxonomyDB(db_path)
+    expr = db.get_node_expression(accession)
+    return expr or None
 
 
 def _format_expression_value(gene: str, mean: float) -> str:

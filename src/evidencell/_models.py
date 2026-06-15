@@ -669,6 +669,23 @@ class DiscoveryRegionEvidence(str, Enum):
     """
 
 
+class CellCountCompleteness(str, Enum):
+    """
+    Provenance class for `cell_count` / `count_in_or_near_100um` on a spatial-annotation anat row. Mirrors brain_cell_KG's `cellCountCompleteness` edge property (see issue #95). Painted CCF2020 leaf domains carry no completeness tag (count is the authoritative spatial registration); rollup edges are tagged.
+
+    """
+    exact = "exact"
+    """
+    Rollup whose descendants are all CCF2020 painted domains (or descendants thereof); the count is an exact sum and can be cited without caveat.
+
+    """
+    lower_bound = "lower_bound"
+    """
+    Rollup that includes some non-painted descendants whose cells are not captured; the count is a floor. Non-zero values mean "at least this many cells in the region"; zero is uninformative. Cite with explicit caveat in mapping rationales.
+
+    """
+
+
 
 class OntologyTerm(ConfiguredBaseModel):
     """
@@ -732,6 +749,16 @@ class AnatomicalLocation(OntologyTerm):
     count_in_or_near_100um: Optional[int] = Field(default=None, description="""Count of cells of this type with soma in or within 100µm of this anatomical region. Per-source contribution (one AnatomicalLocation entry per (region, source DOI) — see `sources`). Currently the authoritative spatial count; `cell_count` is restricted to soma strictly in-region. Populated from upstream brain_cell_KG `countInOrNear100um` spatial-edge property.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation']} })
     ratio_in_or_near_100um: Optional[float] = Field(default=None, description="""Fraction of cluster cells with soma in or within 100µm of this region (= count_in_or_near_100um / cluster total cell count). The active region-inclusion cutoff is applied upstream against this value; evidencell does no further thresholding. Prefer this over `cell_ratio` for new region-presence logic.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation']} })
+    cell_count_completeness: Optional[CellCountCompleteness] = Field(default=None, description="""Provenance of `cell_count` / `count_in_or_near_100um` rollup on this anat term. brain_cell_KG materialises three classes of spatial-annotation edges: (a) painted CCF2020 leaf domains carry no completeness tag
+    — counts are authoritative spatial registrations;
+(b) `exact` rollups group only painted domains (or their
+    descendants); counts are exact sums and are trustworthy;
+(c) `lower_bound` rollups include some non-painted
+    descendants whose cells aren't captured; counts are
+    floors — non-zero means \"at least this many cells here,
+    probably more\"; zero is uninformative.
+Stage B mapping subagents + report-time agents should caveat `lower_bound` rollup citations accordingly. Leave absent for painted-domain entries.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation']} })
     sources: Optional[list[PropertySource]] = Field(default=None, description="""Evidence sources for this specific anatomical location assertion. Populate for classical and prior-transcriptomic nodes, especially for sub-regional claims where location is specific or contested. scope is critical where location is context-dependent. Leave empty for atlas terminal nodes (provenance implicit from atlas + cell_set_accession).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
@@ -1976,8 +2003,12 @@ class DiscoveryScore(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
     rank: Optional[int] = Field(default=None, description="""Taxonomy rank queried at Stage A (0 = leaf cluster, 1 = supertype, 2 = subclass, …). Determines whether GeneDiscoveryDetail.coverage is populated (only at rank ≥ 1).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryContext', 'DiscoveryScore']} })
-    region_fraction: Optional[float] = Field(default=None, description="""cells-in-queried-region / total annotated cells at this candidate. 1.0 = candidate sits entirely inside the queried region. Low values may push the predicate toward PartialOverlapMatch (see §1.7 of the confidence review).
+    region_fraction: Optional[float] = Field(default=None, description="""Strict in-region fraction: the candidate's `cell_count` on the curator-queried anat term ÷ the candidate's total spatially-registered cells (= MAX cell_count across the candidate's anat rows, which under KG closure aggregation is the broadest rollup, typically MBA:997 \"brain\"). NOT normalised against `n_cells` — the 10x transcriptomic count and the MERFISH spatial count are different samples and aren't directly comparable. With closure aggregation upstream the numerator is computed against the *highest* matching anat term to avoid double-counting parent + descendant rows. Retained for audit / continuity; new region-presence logic should prefer `region_fraction_100um`.
 """, ge=0.0, le=1.0, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    region_fraction_100um: Optional[float] = Field(default=None, description="""Proximity fraction: the candidate's `count_in_or_near_100um` on the queried anat term ÷ the candidate's total spatially-registered cells (= MAX count_in_or_near_100um across its anat rows). The canonical \"what fraction of this candidate's spatial cells sit in or near the target region?\" signal — handles registration-edge cases (CA1 ↔ subiculum etc.) without LLM judgement. Drives the graded region score at Stage A: ≥ 0.5 → +2, ≥ 0.1 → +1, > 0 → +0.5, else 0. None when the candidate has no proximity rows in `effective_anat` (e.g. DESCENDANT_ONLY rescue path) or no spatial registration at all.
+""", ge=0.0, le=1.0, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
+    region_count_completeness: Optional[CellCountCompleteness] = Field(default=None, description="""Provenance of the anat row that produced `region_fraction_100um` (the winning row under MAX-over-matched-rows). Painted CCF2020 leaf domains have no tag here (count is authoritative spatial registration). `exact` flags a trustworthy upstream rollup. `lower_bound` flags a rollup that includes non-painted descendants whose cells aren't counted — the fraction is a floor; downstream agents should caveat citations explicitly.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
     region_evidence: Optional[DiscoveryRegionEvidence] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })
     contexts: Optional[list[DiscoveryContext]] = Field(default=None, description="""Registry of percentile contexts referenced by expression_detail[*].percentiles[*].context_id. Today only SURVIVAL_COHORT (id='cohort') is emitted; future passes may add ATLAS_UNIVERSAL or ANATOMICAL_RESTRICTION. Each context captures the cohort definition so a reader can interpret a percentile correctly.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['DiscoveryScore']} })

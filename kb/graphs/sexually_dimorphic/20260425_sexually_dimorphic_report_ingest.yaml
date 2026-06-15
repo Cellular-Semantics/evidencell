@@ -1043,6 +1043,51 @@ nodes:
     definition_references:
       - "PMID:35143761"
 
+  - id: CS20230722_CLUS_1301
+    name: 1301 MEA-BST Lhx6 Nfib Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1301
+  - id: CS20230722_CLUS_1876
+    name: 1876 PVpo-VMPO-MPN Hmx2 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1876
+  - id: CS20230722_CLUS_1891
+    name: 1891 PVpo-VMPO-MPN Hmx2 Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1891
+  - id: CS20230722_CLUS_1895
+    name: 1895 PVpo-VMPO-MPN Hmx2 Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1895
+  - id: CS20230722_CLUS_1507
+    name: 1507 PVR Six3 Sox3 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1507
+  - id: CS20230722_SUPT_0411
+    name: 0411 PVR Six3 Sox3 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0411
+  - id: CS20230722_SUPT_0494
+    name: 0494 ARH-PVp Tbx3 Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0494
+  - id: CS20230722_SUPT_0550
+    name: 0550 MPN-MPO-PVpo Hmx2 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0550
+  - id: CS20230722_SUPT_0249
+    name: 0249 NDB-SI-MA-STRv Lhx8 Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0249
 edges:
 
   - id: edge_avpv_kiss1_neuron_to_cs20230722_supt_0486
@@ -1062,44 +1107,35 @@ edges:
           SUPT_0486 spans a broader preoptic zone than the AVPV/PeN.
     property_comparisons:
       - property: nt_type
-        node_a_value: "GABAergic / dopaminergic (Th co-expression)"
-        node_b_value: "GABAergic (Gaba_5 label)"
-        alignment: APPROXIMATE
-        notes: >
-          GABAergic concordant; dopaminergic component present at supertype level
-          (Th=2.72) but diluted. Resolved at cluster level by CLUS_1915 (nt_type=Dopa).
-      - property: location_MBA272
-        node_a_value: "MBA:272 (AVPV)"
-        node_b_value: "MBA:272 (AVPV) n=16; MBA:133 PVpo n=64; MBA:515 MPN n=37"
-        alignment: APPROXIMATE
-        notes: Direct AVPV location match (n=16); supertype spans broader preoptic zone.
-      - property: marker_Kiss1
-        node_a_value: "POSITIVE (transcript, defining marker)"
-        node_b_value: "precomputed mean_expression=0.62"
-        alignment: APPROXIMATE
-        notes: Present but low-moderate at supertype level; consistent with subset expression.
-      - property: marker_Esr1
-        node_a_value: "POSITIVE (transcript, defining marker)"
-        node_b_value: "precomputed mean_expression=7.72 (DEFINING atlas marker)"
-        alignment: CONSISTENT
-      - property: marker_Th
-        node_a_value: "POSITIVE (protein, co-expressed with Kiss1)"
-        node_b_value: "precomputed mean_expression=2.72"
-        alignment: APPROXIMATE
-      - property: sex_ratio
-        node_a_value: "female-biased (AVPV Kiss1 neurons strongly female-biased)"
-        node_b_value: "child CLUS_1915 male_female_ratio=0.02 (extreme female bias)"
-        alignment: CONSISTENT
-        notes: >
-          Sex ratio confirmed at child-cluster level. CLUS_1915 (Kiss1=2.51, Th=6.6, Esr1=9.55)
-          is the only child cluster co-expressing both Kiss1 and Th at high levels and the most
-          strongly female-biased cluster in SUPT_0486 (MFR=0.02). Supertype-level sex ratio
-          not available in DB.
-      - property: annotation_transfer_f1
-        node_a_value: "not applicable"
-        node_b_value: "NOT_ASSESSED"
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: not asserted
         alignment: NOT_ASSESSED
-        notes: Annotation transfer not yet run for avpv_kiss1_neuron. Priority experiment.
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=381 [painted]; Periventricular hypothalamic nucleus, preoptic part [MBA:133] count_100um=354 [painted]; Medial preoptic nucleus [MBA:515] count_100um=276 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.061; strict region_fraction: 0.043; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
     caveats:
       - caveat_type: AMBIGUOUS_MAPPING
         description: >
@@ -1129,6 +1165,32 @@ edges:
 
     mapping_justification: semapv:UnreviewedManualMapping
     mapping_cardinality: "1:1"
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail:
+        - gene: Esr1
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.043
+      region_fraction_100um: 0.061
+      region_evidence: SELF
   - id: edge_avpv_th_neuron_to_cs20230722_supt_0486
     lit_type: avpv_th_neuron
     taxonomy_type: CS20230722_SUPT_0486
@@ -2272,3 +2334,641 @@ edges:
         Slc6a3-Cre lineage data against WMBv1 for F1-based evidence on CLUS_2470.
     mapping_justification: semapv:UnreviewedManualMapping
     mapping_cardinality: "1:1"
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1301
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_CLUS_1301
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1301 MEA-BST Lhx6 Nfib Gaba_4; region_fraction_100um=0.051; strict region_fraction=0.026.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=78 [painted]; Medial preoptic nucleus [MBA:515] count_100um=59 [painted]; Periventricular hypothalamic nucleus, preoptic part [MBA:133] count_100um=43 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.051; strict region_fraction: 0.026; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail:
+        - gene: Th
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.026
+      region_fraction_100um: 0.051
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1876
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_CLUS_1876
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1876 PVpo-VMPO-MPN Hmx2 Gaba_1; region_fraction_100um=0.629; strict region_fraction=0.517.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=61 [painted]; Anteroventral periventricular nucleus [MBA:272] count_100um=39 [painted]; Periventricular hypothalamic nucleus, preoptic part [MBA:133] count_100um=24 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.629; strict region_fraction: 0.517; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail:
+        - gene: Th
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.517
+      region_fraction_100um: 0.629
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1891
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_CLUS_1891
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1891 PVpo-VMPO-MPN Hmx2 Gaba_2; region_fraction_100um=0.074; strict region_fraction=0.059.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=88 [painted]; Periventricular hypothalamic nucleus, preoptic part [MBA:133] count_100um=81 [painted]; Medial preoptic nucleus [MBA:515] count_100um=53 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.074; strict region_fraction: 0.059; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail: []
+      region_fraction: 0.059
+      region_fraction_100um: 0.074
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1895
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_CLUS_1895
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1895 PVpo-VMPO-MPN Hmx2 Gaba_2; region_fraction_100um=0.010; strict region_fraction=0.010.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=103 [painted]; Periventricular hypothalamic nucleus, preoptic part [MBA:133] count_100um=91 [painted]; Medial preoptic nucleus [MBA:515] count_100um=86 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.010; strict region_fraction: 0.010; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail: []
+      region_fraction: 0.01
+      region_fraction_100um: 0.01
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_CLUS_1507
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_CLUS_1507
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1507 PVR Six3 Sox3 Gaba_1; region_fraction_100um=0.669; strict region_fraction=0.391.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=289 [painted]; Anteroventral periventricular nucleus [MBA:272] count_100um=202 [painted]; third ventricle [MBA:129] count_100um=96 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.669; strict region_fraction: 0.391; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail: []
+      region_fraction: 0.391
+      region_fraction_100um: 0.669
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0411
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_SUPT_0411
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0411 PVR Six3 Sox3 Gaba_1; region_fraction_100um=0.550; strict region_fraction=0.324.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=367 [painted]; Anteroventral periventricular nucleus [MBA:272] count_100um=225 [painted]; Pallidum [MBA:803] count_100um=177 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.550; strict region_fraction: 0.324; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail: []
+      region_fraction: 0.324
+      region_fraction_100um: 0.55
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0494
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_SUPT_0494
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0494 ARH-PVp Tbx3 Gaba_2; region_fraction_100um=0.557; strict region_fraction=0.433.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=97 [painted]; third ventricle [MBA:129] count_100um=56 [painted]; Periventricular hypothalamic nucleus, posterior part [MBA:126] count_100um=54 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.557; strict region_fraction: 0.433; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail: []
+      region_fraction: 0.433
+      region_fraction_100um: 0.557
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0550
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_SUPT_0550
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0550 MPN-MPO-PVpo Hmx2 Glut_5; region_fraction_100um=0.733; strict region_fraction=0.612.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=144 [painted]; Anteroventral periventricular nucleus [MBA:272] count_100um=107 [painted]; third ventricle [MBA:129] count_100um=79 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.733; strict region_fraction: 0.612; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail: []
+      region_fraction: 0.612
+      region_fraction_100um: 0.733
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0249
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_SUPT_0249
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0249 NDB-SI-MA-STRv Lhx8 Gaba_6; region_fraction_100um=0.019; strict region_fraction=0.009.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Pallidum [MBA:803] count_100um=320 [painted]; Striatum [MBA:477] count_100um=282 [painted]; Hypothalamus [MBA:1097] count_100um=224 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.019; strict region_fraction: 0.009; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail:
+        - gene: Th
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.009
+      region_fraction_100um: 0.019
+      region_evidence: SELF
+  - id: edge_avpv_kiss1_neuron_to_CS20230722_SUPT_0486
+    lit_type: avpv_kiss1_neuron
+    taxonomy_type: CS20230722_SUPT_0486
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0486 PVpo-VMPO-MPN Hmx2 Gaba_5; region_fraction_100um=0.061; strict region_fraction=0.043.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic / dopaminergic (TH co-expression)"
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: Anteroventral periventricular nucleus [MBA:272]; Periventricular hypothalamic nucleus, posterior part [MBA:126]
+        node_b_value: Hypothalamus [MBA:1097] count_100um=381 [painted]; Periventricular hypothalamic nucleus, preoptic part [MBA:133] count_100um=354 [painted]; Medial preoptic nucleus [MBA:515] count_100um=276 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.061; strict region_fraction: 0.043; region_evidence: SELF'
+      - property: marker_Kiss1
+        node_a_value: Kiss1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Th
+        node_a_value: Th — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Esr1
+        node_a_value: Esr1 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: neuropeptide_Kiss1
+        node_a_value: Kiss1 — neuropeptide (classical)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:272,MBA:126
+            - nt_type=GABAergic / dopaminergic (TH co-expression)
+            - sex_bias=female
+      expression_detail:
+        - gene: Esr1
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.043
+      region_fraction_100um: 0.061
+      region_evidence: SELF

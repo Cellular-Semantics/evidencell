@@ -17,7 +17,13 @@ from typing import Any
 
 import yaml
 
-from evidencell.paths import taxonomy_dir, taxonomy_yaml_path, at_runs_dir, at_run_index_path
+from evidencell.paths import (
+    at_run_index_path,
+    at_runs_dir,
+    open_taxonomy_yaml,
+    taxonomy_dir,
+    taxonomy_yaml_path,
+)
 from evidencell.taxonomy_db import ingest_to_yaml, ingest_cas_to_yaml, _is_cas_format
 
 log = logging.getLogger(__name__)
@@ -67,19 +73,31 @@ def load_taxonomy_level(taxonomy_id: str, level: str) -> dict[str, Any]:
     """Load a TaxonomyNodeList YAML file and return the raw dict.
 
     Returns dict with keys: taxonomy_id, taxonomy_level, taxonomy_rank, nodes.
+    Handles both `.yaml` and `.yaml.gz` paths via the shared helper.
     """
     path = taxonomy_yaml_path(taxonomy_id, level)
     if not path.exists():
         raise FileNotFoundError(f"Taxonomy file not found: {path}")
-    with path.open(encoding="utf-8") as fh:
+    with open_taxonomy_yaml(path) as fh:
         return yaml.safe_load(fh) or {}
 
 
 def save_taxonomy_level(taxonomy_id: str, level: str, data: dict[str, Any]) -> Path:
-    """Write a TaxonomyNodeList dict back to YAML."""
+    """Write a TaxonomyNodeList dict back to YAML.
+
+    Preserves on-disk compression: if the existing file at the resolved
+    path is `.yaml.gz`, the rewrite stays gzipped; otherwise plain
+    `.yaml`. (`taxonomy_yaml_path` returns the `.gz` variant when it
+    exists, so existing-gzipped-stays-gzipped is automatic.)
+    """
+    import gzip
     path = taxonomy_yaml_path(taxonomy_id, level)
-    with path.open("w", encoding="utf-8") as fh:
-        yaml.dump(data, fh, allow_unicode=True, sort_keys=False, default_flow_style=False)
+    if str(path).endswith(".gz"):
+        with gzip.open(path, "wt", encoding="utf-8") as fh:
+            yaml.dump(data, fh, allow_unicode=True, sort_keys=False, default_flow_style=False)
+    else:
+        with path.open("w", encoding="utf-8") as fh:
+            yaml.dump(data, fh, allow_unicode=True, sort_keys=False, default_flow_style=False)
     return path
 
 

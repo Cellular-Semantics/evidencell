@@ -142,12 +142,22 @@ validate-at-results-all:
 validate-all:
     #!/usr/bin/env bash
     set -euo pipefail
-    files=$(find {{kb_dir}} -name "*.yaml" 2>/dev/null)
+    files=$(find {{kb_dir}} \( -name "*.yaml" -o -name "*.yaml.gz" \) 2>/dev/null)
     if [ -z "$files" ]; then echo "No files in {{kb_dir}} yet."; exit 0; fi
     failed=0
+    tmpdir=$(mktemp -d)
+    trap "rm -rf $tmpdir" EXIT
     for f in $files; do
         echo "Validating $f..."
-        uv run linkml-validate -s {{schema}} "$f" || failed=1
+        if [[ "$f" == *.yaml.gz ]]; then
+            # linkml-validate doesn't read gzip; gunzip to a tempfile
+            # preserving the .yaml suffix so its parser is happy.
+            tmp="$tmpdir/$(basename "$f" .gz)"
+            gunzip -c "$f" > "$tmp"
+            uv run linkml-validate -s {{schema}} "$tmp" || failed=1
+        else
+            uv run linkml-validate -s {{schema}} "$f" || failed=1
+        fi
     done
     [ $failed -eq 0 ] && echo "All KB files valid." || { echo "Validation failed."; exit 1; }
 
@@ -210,7 +220,7 @@ smoke:
 # Run all tests except those marked integration (OAK DB / network)
 [group('testing')]
 test-fast:
-    uv run pytest -m "not integration" --no-cov
+    uv run pytest -m "not integration and not slow" --no-cov
 
 # ── Workflows ──────────────────────────────────────────────────────────────────
 
@@ -370,6 +380,27 @@ generate-gene-mapping stats_h5 output:
 [group('workflows')]
 find-candidates graph_file node_id taxonomy_id rank="1" top_k="10":
     uv run python -m evidencell.taxonomy_db find-candidates {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}}
+
+# Mechanical Stage B emit — replaces the per-candidate mapping subagent
+# with structural-only MappingEdge generation (issue #96). Reads the
+# Stage A discovery JSON, appends edges + taxonomy-ref stubs to the
+# graph file. Idempotent (skips existing edge ids).
+# Usage: just emit-stage-b kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 5
+[group('workflows')]
+emit-stage-b graph_file node_id taxonomy_id rank="0" top_k="5" *ARGS:
+    uv run python -m evidencell.stage_b_emit {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{top_k}} {{ARGS}}
+
+# Refresh property_comparisons + discovery_score on existing edges using
+# the current Stage A + Stage B rules. Matches edges by (lit_type,
+# taxonomy_type) biological identity (not by edge.id), so legacy
+# lowercase-accession edges are picked up. Leaves byte-identical:
+# evidence[], rationale-suite, caveats, proposed_experiments,
+# unresolved_questions, curator, reviewed_by. Closes #103.
+# Usage: just refresh-property-comparisons kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0
+#        just refresh-property-comparisons {{graph}} {{node}} {{tax}} {{rank}} --dry-run
+[group('workflows')]
+refresh-property-comparisons graph_file node_id taxonomy_id rank *ARGS:
+    uv run python -m evidencell.refresh_property_comparisons {{graph_file}} {{node_id}} {{taxonomy_id}} {{rank}} {{ARGS}}
 
 # Backfill MappingEdge.discovery_score from on-disk discovery JSONs.
 # Walks the graph file's edges; for each edge missing discovery_score,
