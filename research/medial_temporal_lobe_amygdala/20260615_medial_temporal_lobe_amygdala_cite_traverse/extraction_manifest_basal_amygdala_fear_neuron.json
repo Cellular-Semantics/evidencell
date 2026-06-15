@@ -1,70 +1,67 @@
 {
   "node_id": "basal_amygdala_fear_neuron",
   "added_by": "evidence_extraction_basal_amygdala_fear_neuron_20260615",
-  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/depth_0_summaries.json",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/all_summaries.json",
   "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
   "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
   "excluded_corpus_ids": ["221366115", "252477669", "17223544", "232283078"],
   "existing_refs": [
     "PMID:25852499",
     "PMID:27053114",
+    "PMID:27767183",
+    "PMID:28453642",
     "PMID:31193505",
     "PMID:37884748",
     "https://doi.org/10.1101/2022.10.25.513733"
   ],
+  "summaries_read": 20,
+  "skipped_excluded": 8,
+  "skipped_duplicate_ref": 9,
+  "skipped_low_relevance": 1,
+  "entries_written": 1,
   "entries_processed": [
     {
-      "source_corpus_id": "280092907",
+      "source_corpus_id": "264517392",
+      "ref": "PMID:37884748",
       "decision": "SKIP",
-      "reason": "HIGH relevance but content is about BLA GABAergic interneuron subtypes (NPY, PV, CB, SST proportions), not about fear neurons specifically"
+      "reason": "Ref PMID:37884748 already in existing refs (4 summary entries skipped as duplicate)"
+    },
+    {
+      "source_corpus_id": "232283078",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list (5 summary entries)"
     },
     {
       "source_corpus_id": "281382725",
-      "decision": "SKIP",
-      "reason": "HIGH relevance for BLA interneuron taxonomy (SST, PVALB, CCK, VIP, LAMP5 subtypes in primates), not about fear neurons specifically"
-    },
-    {
-      "source_corpus_id": "4940771",
-      "decision": "SKIP",
-      "reason": "Ref PMID:31193505 already in existing refs for this node"
-    },
-    {
-      "source_corpus_id": "17860491",
+      "ref": "PMID:40961182",
       "decision": "EXTRACTED",
-      "reason": "HIGH relevance — directly defines fear neurons and extinction neurons as functionally distinct BLA populations overlapping with PL- and IL-projecting subtypes respectively",
-      "field": "electrophysiology.sources",
-      "ref": "PMID:28453642",
-      "quote_key": "17860491_748a5fb1",
-      "quote": "Distinct populations of BLA neurons encode fear conditioning and extinction processes (Herry et al., 2008). These cell populations, functionally defined as \"fear neurons\" and \"extinction neurons,\" overlap with 2 different anatomically defined subtypes of BLA neurons projecting to prelimbic medial prefrontal cortex (PL) or IL, respectively"
-    },
-    {
-      "source_corpus_id": "250411527",
-      "decision": "SKIP",
-      "reason": "HIGH relevance for paralaminar_immature_neuron, not for basal_amygdala_fear_neuron"
-    },
-    {
-      "source_corpus_id": "104297085",
-      "decision": "EXTRACTED",
-      "reason": "HIGH relevance — proposes NTSR1 marks fear-expressing BLA neurons (vs NTSR2 in fear-inhibiting extinction neurons), directly characterising the fear neuron molecular identity",
-      "field": "electrophysiology.sources",
-      "ref": "PMID:27767183",
-      "quote_key": "104297085_b77db2a2",
-      "quote": "we propose that NTSR1 supports fear expression and NTSR2 supports fear inhibition via their differential expression within the BLA"
-    },
-    {
-      "source_corpus_id": "264517392",
-      "decision": "SKIP",
-      "reason": "Ref PMID:37884748 already in existing refs for this node"
+      "reason": "HIGH relevance — primate snRNA-seq abstract reports BLC subdivisions contain distinct classes of glutamatergic neurons, directly supporting the glutamatergic principal-neuron NT identity of the fear neuron",
+      "field": "nt_type.sources",
+      "quote_key": "281382725_21119bdb",
+      "quote": "Compositional analyses revealed that subdivisions of the primate basolateral complex contain distinct classes of glutamatergic neurons and divergent gene expression profiles for parvalbumin and somatostatin GABAergic neurons."
     },
     {
       "source_corpus_id": "3103554",
+      "ref": "PMID:28453642",
       "decision": "SKIP",
-      "reason": "MODERATE relevance — about CeA GABAergic neurons and IP3K-A, no direct content on fear neurons"
+      "reason": "Ref PMID:28453642 already in existing refs for this node"
     },
     {
-      "source_corpus_id": "221366115",
+      "source_corpus_id": "250411527",
+      "ref": "PMID:35841648",
       "decision": "SKIP",
-      "reason": "In excluded corpus IDs list"
+      "reason": "HIGH relevance for paralaminar_immature_neuron, not basal_amygdala_fear_neuron"
+    },
+    {
+      "source_corpus_id": "4940771",
+      "ref": "PMID:27767183",
+      "decision": "SKIP",
+      "reason": "Ref PMID:27767183 already in existing refs; also describes extinction (fear-inhibiting) neurons, not fear neurons"
+    },
+    {
+      "source_corpus_id": "17223544",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list (2 summary entries)"
     },
     {
       "source_corpus_id": "252477669",
@@ -72,17 +69,31 @@
       "reason": "In excluded corpus IDs list"
     },
     {
-      "source_corpus_id": "17223544",
+      "source_corpus_id": "221366115",
       "decision": "SKIP",
       "reason": "In excluded corpus IDs list"
     },
     {
-      "source_corpus_id": "232283078",
+      "source_corpus_id": "104297085",
+      "ref": "PMID:31193505",
       "decision": "SKIP",
-      "reason": "In excluded corpus IDs list"
+      "reason": "Ref PMID:31193505 already in existing refs for this node"
+    },
+    {
+      "source_corpus_id": "17860491",
+      "ref": "PMID:27053114",
+      "decision": "SKIP",
+      "reason": "Ref PMID:27053114 already in existing refs for this node"
+    },
+    {
+      "source_corpus_id": "280092907",
+      "ref": "PMID:40686779",
+      "decision": "SKIP",
+      "reason": "MODERATE relevance but provided quotes describe LA-BLA interneuron subtypes (axo-axonic, CB+, NPY+ neurogliaform), no verbatim quote supports the glutamatergic fear neuron specifically"
     }
   ],
-  "propertysource_entries_written": 2,
-  "fields_updated": ["electrophysiology.sources"],
-  "gaps": ["nt_type.sources (no new non-excluded source)", "anatomical_location[].sources (no new non-excluded source)", "morphology.sources (no new non-excluded source)", "defining_markers (none recorded, no marker data in eligible summaries)"]
+  "fields_populated": ["nt_type"],
+  "fields_with_no_evidence": ["defining_markers", "morphology", "anatomical_location", "electrophysiology"],
+  "synonyms_found": ["fear neuron", "fear-On neurons", "Fear-On circuitry"],
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json"
 }
