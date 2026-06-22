@@ -2529,6 +2529,21 @@ nodes:
     definition_basis: ATLAS_TRANSCRIPTOMIC
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0288
+  - id: CS20230722_CLUS_0018
+    name: 0018 IT EP-CLA Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0018
+  - id: CS20230722_CLUS_0241
+    name: 0241 LA-BLA-BMA-PA Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0241
+  - id: CS20230722_CLUS_0204
+    name: 0204 MEA Slc17a7 Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0204
 edges:
   - id: edge_medial_amygdala_lhx9_glutamatergic_neuron_to_cs20230722_supt_0057
     lit_type: medial_amygdala_lhx9_glutamatergic_neuron
@@ -2752,14 +2767,14 @@ edges:
   - id: edge_bla_glutamatergic_principal_neuron_to_cs20230722_supt_0005
     lit_type: bla_glutamatergic_principal_neuron
     taxonomy_type: CS20230722_SUPT_0005
-    relationship: skos:broadMatch
-    mapping_justification: semapv:UnreviewedManualMapping
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnspecifiedMatching
     confidence: LOW
-    confidence_score: 0.22
-    rationale: 'NT type CONSISTENT (Glut subclass); location APPROXIMATE (region_fraction=0.042 in BLA, SUPERTYPE_SCOPE_MISMATCH); AT evidence PARTIAL — F1=0.30 at supertype level (`at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`, source VGLUT2-23-Nov_Gpr83, n=3 cells, severely limited, not a reliable quantitative anchor); 0 of 2 markers CONSISTENT (marker_SLC17A7 NOT_ASSESSED, marker_CAMK2A NOT_ASSESSED); three LA-BLA-BMA-PA supertypes with region_fraction 0.40–0.71 unassessed (skos:broadMatch appropriate pending hypothesis-mode evaluation of CS20230722_SUPT_0005 alternatives).
+    confidence_score: 0.1
+    rationale: '[tier:CUT] SUPT_0005 (IT EP-CLA Glut_3) is a cortical/claustral supertype whose primary location is Cortical subplate and Olfactory areas; BLA cells represent only 4–8% of this supertype, and AT evidence (F1=0.30 at supertype, 3 cells mapped) is too weak and from too small a cell count to support a meaningful mapping.
 
       '
-    rationale_generated_at: '2026-06-10T15:44:19+00:00'
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
     report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
     property_comparisons:
       - property: nt_type
@@ -2840,6 +2855,7 @@ edges:
       - Is CS20230722_SUPT_0005 the correct supertype for BLA glutamatergic principal neurons, or are they distributed across multiple IT supertypes?
       - Do LA-BLA-BMA-PA supertypes SUBT_0063/0064/0065 account for the full transcriptomic diversity of BLA glutamatergic principal neurons? Hypothesis-mode assessment required.
       - Precomputed expression for Slc17a7 and Camk2a across BLA Glut supertypes needed to resolve 0 of 2 markers assessed.
+      - "Does SUPT_0005 mark a genuine IT EP-CLA homologous subpopulation within BLA (anterior BLA neurons projecting to prefrontal cortex)? This would constitute a separate, minor edge rather than a match to the dominant BLA principal neuron.\n"
     proposed_experiments:
       - Run hypothesis-mode map-cell-type targeting SUBT_0063, SUBT_0064, SUBT_0065 (LA-BLA-BMA-PA Glut supertypes) directly for bla_glutamatergic_principal_neuron.
       - Obtain precomputed expression and query SLC17A7, CAMK2A across all BLA Glut supertypes.
@@ -2860,8 +2876,8 @@ edges:
       expression_detail: []
       region_fraction: 0.042
       region_evidence: SELF
-    mapping_cardinality: 1:n
-    rationale_source_hash: d95c0c26
+    mapping_cardinality: "1:n"
+    rationale_source_hash: f4eb0e9c
     reconciliation_note: ''
   - id: edge_medial_amygdala_gabaergic_neuron_to_cs20230722_supt_0256
     lit_type: medial_amygdala_gabaergic_neuron
@@ -7448,3 +7464,690 @@ edges:
     unresolved_questions:
       - "Does the atlas DEFINING Calb1 annotation for this STR-PAL supertype reflect convergent evolution of Calb1 expression in striatal and amygdaloid interneurons or a shared transcriptomic ancestry?\n"
     rationale_source_hash: e1a237a1
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_SUPT_0065
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_SUPT_0065
+    relationship: skos:closeMatch
+    mapping_justification: semapv:CompositeMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0065 LA-BLA-BMA-PA Glut_6; region_fraction_100um=0.719; strict region_fraction=0.485.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=832 [painted]; Basolateral amygdalar nucleus [MBA:295] count_100um=607 [painted]; Lateral amygdalar nucleus [MBA:131] count_100um=567 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.719; strict region_fraction: 0.485; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: 'Slc17a7: 9.69; cohort_pct 0.763'
+        alignment: CONSISTENT
+        notes: val=9.69; cohort percentile 0.763
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: 'Camk2a: 10.16; cohort_pct 0.789'
+        alignment: CONSISTENT
+        notes: val=10.16; cohort percentile 0.789
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: "Atlas metadata only; no annotation transfer. NT type on node_b is not formally asserted in the taxonomy YAML.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Lateral amygdalar nucleus [MBA:131] features prominently in the location profile; SUPT_0065 may skew toward LA rather than BA subdivision, meaning it may not cover the full BLA principal neuron spatial extent.\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 10
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 9.69
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.763
+        - gene: Camk2a
+          val: 10.16
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.789
+      region_fraction: 0.485
+      region_fraction_100um: 0.719
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.5
+    rationale: "[tier:NEXT] SUPT_0065 (LA-BLA-BMA-PA Glut_6) shows strong Camk2a expression (cohort_pct 0.789, highest in cohort) and consistent Slc17a7 (cohort_pct 0.763), with region_fraction_100um 0.719 placing most cells in BLA territory; atlas metadata supports a BLA principal neuron identity as part of the 1:n mapping alongside SUPT_0064.\n"
+    reconciliation_note: "Paired with SUPT_0064 as a co-primary candidate within the 1:n mapping. The LA prominence in the location profile (Lateral amygdalar nucleus [MBA:131] as third-highest count) suggests SUPT_0065 may preferentially represent LA rather than BA subdivision principal neurons, potentially complementing SUPT_0064. See SUPT_0064 reconciliation_note for shared context.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Annotation transfer from BLA-targeted excitatory cell dataset to SUPT_0065 alongside SUPT_0064 to resolve LA vs. BA subdivision attribution.\n"
+      - "Comparison of defining cluster-level markers of SUPT_0065 vs. SUPT_0064 to determine whether the two supertypes differ in any molecular feature that maps to a known BLA principal neuron subtype distinction (e.g. projection target, firing pattern).\n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    unresolved_questions:
+      - "Is SUPT_0065 specifically the LA subdivision principal neuron counterpart of SUPT_0064 (BA subdivision), or do the two supertypes overlap in the same nuclei and reflect a purely molecular subdivision without anatomical correspondence?\n"
+    rationale_source_hash: 1a31ccd8
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_SUPT_0064
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_SUPT_0064
+    relationship: skos:closeMatch
+    mapping_justification: semapv:CompositeMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0064 LA-BLA-BMA-PA Glut_5; region_fraction_100um=0.881; strict region_fraction=0.716.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=1827 [painted]; Basolateral amygdalar nucleus [MBA:295] count_100um=1652 [painted]; Basolateral amygdalar nucleus, anterior part [MBA:303] count_100um=1380 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.881; strict region_fraction: 0.716; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: 'Slc17a7: 10.00; cohort_pct 0.895'
+        alignment: CONSISTENT
+        notes: val=10.00; cohort percentile 0.895
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: 'Camk2a: 9.99; cohort_pct 0.684'
+        alignment: CONSISTENT
+        notes: val=9.99; cohort percentile 0.684
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: "Evidence is limited to atlas metadata (region fraction and precomputed expression); no annotation transfer experiment using a well-characterised BLA principal neuron dataset is available for this edge, limiting confidence to MODERATE.\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "The classical type population is broader than any single supertype; SUPT_0064 captures a portion of the BLA Glut population alongside SUPT_0061, 0063, and 0065. The 1:n mapping cardinality is the more accurate representation.\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 10
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 10.0
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.895
+        - gene: Camk2a
+          val: 9.99
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.684
+      region_fraction: 0.716
+      region_fraction_100um: 0.881
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:STRONGEST] SUPT_0064 (LA-BLA-BMA-PA Glut_5) shows the highest BLA region_fraction_100um (0.881) and top-decile Slc17a7 expression (cohort_pct 0.895) among all BLA Glut candidates, with Camk2a also CONSISTENT; atlas metadata alone supports this mapping pending annotation transfer. The classical BLA glutamatergic principal neuron maps to multiple LA-BLA-BMA-PA Glut supertypes (1:n); SUPT_0064 is the best individual representative.\n"
+    reconciliation_note: "The BLA glutamatergic principal neuron population distributes across at least SUPT_0061, SUPT_0063, SUPT_0064, and SUPT_0065 in the atlas. No single supertype captures the full classical type. SUPT_0064 is the strongest individual candidate by both region fraction and Slc17a7 expression, but sister supertypes should be considered jointly in any downstream analysis. Annotation transfer from a BLA-targeted excitatory dataset is the priority experiment to resolve this 1:n ambiguity.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Annotation transfer using a BLA excitatory cell dataset (e.g. Camk2a-Cre or Slc17a7-Cre driver line scRNA-seq from BLA) to SUPT_0061–0065 to directly determine which supertypes receive the strongest mapping signal.\n"
+      - "Precomputed expression at the cluster level within SUPT_0064 for Slc17a7 and Camk2a to confirm whether marker enrichment is uniform across this supertype or concentrated in specific sub-clusters.\n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    unresolved_questions:
+      - "Does SUPT_0064 predominantly represent BA (basal amygdala) principal neurons, while SUPT_0065 represents LA (lateral amygdala) principal neurons? The location profiles suggest this subdivision, which has functional implications.\n"
+      - "Are there precomputed expression values at cluster level within SUPT_0064 for Slc17a7 and Camk2a that would confirm within-supertype homogeneity?\n"
+    rationale_source_hash: 0b332a2a
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_SUPT_0063
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_SUPT_0063
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnspecifiedMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0063 LA-BLA-BMA-PA Glut_4; region_fraction_100um=0.634; strict region_fraction=0.328.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=1657 [painted]; Basolateral amygdalar nucleus [MBA:295] count_100um=1129 [painted]; Basomedial amygdalar nucleus [MBA:319] count_100um=1033 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.634; strict region_fraction: 0.328; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: 'Slc17a7: 9.06; cohort_pct 0.316'
+        alignment: APPROXIMATE
+        notes: val=9.06; cohort percentile 0.316
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: 'Camk2a: 9.96; cohort_pct 0.658'
+        alignment: CONSISTENT
+        notes: val=9.96; cohort percentile 0.658
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: "Atlas metadata only; Slc17a7 expression below cohort median reduces confidence in a VGluT1-positive BLA principal neuron identity for this supertype.\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 10
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 9.06
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.316
+        - gene: Camk2a
+          val: 9.96
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.658
+      region_fraction: 0.328
+      region_fraction_100um: 0.634
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:CUT] SUPT_0063 (LA-BLA-BMA-PA Glut_4) has Slc17a7 at cohort_pct 0.316 (APPROXIMATE, below cohort median) with strict region_fraction 0.328, making it the weakest of the four BLA Glut supertypes; insufficient evidence to assign a confident mapping above the 1:n parent.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Precomputed expression for Slc17a7 and Camk2a at cluster level within SUPT_0063 to determine whether the low cohort percentile reflects within-supertype heterogeneity or genuine lower Slc17a7 expression.\n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    unresolved_questions:
+      - "Does SUPT_0063 represent a BMA-enriched or PA-enriched subpopulation of the LA-BLA-BMA-PA Glut group (its location profile shows Basomedial amygdalar nucleus [MBA:319] as third- highest location count), reducing its relevance to the BLA-specific classical type?\n"
+    rationale_source_hash: 97f6a140
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_SUPT_0061
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_SUPT_0061
+    relationship: skos:closeMatch
+    mapping_justification: semapv:CompositeMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0061 LA-BLA-BMA-PA Glut_2; region_fraction_100um=0.766; strict region_fraction=0.541.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=3336 [painted]; Basolateral amygdalar nucleus [MBA:295] count_100um=2755 [painted]; Basolateral amygdalar nucleus, posterior part [MBA:311] count_100um=2256 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.766; strict region_fraction: 0.541; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: 'Slc17a7: 9.46; cohort_pct 0.526'
+        alignment: CONSISTENT
+        notes: val=9.46; cohort percentile 0.526
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: 'Camk2a: 9.79; cohort_pct 0.526'
+        alignment: CONSISTENT
+        notes: val=9.79; cohort percentile 0.526
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: "Atlas metadata only; no annotation transfer. Marker expression cohort percentiles (0.526) are at the cohort median rather than distinctly elevated.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Posterior BLA location profile (BLA posterior [MBA:311] prominent) suggests SUPT_0061 may skew toward posterior BA neurons. The large cell count may also reflect inclusion of BMA and PA neurons (the supertype spans LA-BLA-BMA-PA).\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 5
+      cohort_size: 10
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val: 9.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.526
+        - gene: Camk2a
+          val: 9.79
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.526
+      region_fraction: 0.541
+      region_fraction_100um: 0.766
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.45
+    rationale: "[tier:NEXT] SUPT_0061 (LA-BLA-BMA-PA Glut_2) has the largest cell count (6,385) and strong BLA region fraction (region_fraction_100um 0.766), with both Slc17a7 and Camk2a at cohort median (cohort_pct 0.526); the large cell population suggests it captures a substantial portion of the BLA Glut atlas representation, consistent with the classical type's numerical dominance.\n"
+    reconciliation_note: "Median-level cohort percentiles for both markers reduce differentiation from non-BLA Glut supertypes; the large cell count and high region fraction are the primary supporting signals. Part of the 1:n mapping alongside SUPT_0064 and SUPT_0065.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Annotation transfer from BLA excitatory dataset to SUPT_0061 to determine whether this large supertype maps specifically to BLA principal neurons or receives signal from multiple amygdala subdivisions.\n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    unresolved_questions:
+      - "Does the large cell count of SUPT_0061 (6,385) reflect a genuinely abundant BLA principal neuron subtype, or does it arise from the supertype spanning multiple amygdala subdivisions (LA, BLA, BMA, PA) with heterogeneous cell type composition?\n"
+    rationale_source_hash: 9212da61
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_CLUS_0018
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_CLUS_0018
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnspecifiedMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0018 IT EP-CLA Glut_3; region_fraction_100um=0.296; strict region_fraction=0.166.
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: PARTIAL
+        run_ref: at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1
+        source_cluster_label: VGLUT2-23-Nov_Gpr83
+        target_atlas: WMBv1
+        method: MapMyCells (via at_metrics.compute_edge_metrics)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
+            coverage: 0.3333333333333333
+            purity: 0.0008789920890711983
+            f1_score: 0.0017533606078316772
+            n_cells_mapped: 3
+            median_bootstrap: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 002 IT EP-CLA Glut
+            best_target_accession: CS20230722_SUBC_002
+            coverage: 0.23076923076923078
+            purity: 0.1875
+            f1_score: 0.20689655172413793
+            n_cells_mapped: 3
+            median_bootstrap: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0005 IT EP-CLA Glut_3
+            best_target_accession: CS20230722_SUPT_0005
+            coverage: 0.25
+            purity: 0.375
+            f1_score: 0.3
+            n_cells_mapped: 3
+            median_bootstrap: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0018 IT EP-CLA Glut_3
+            best_target_accession: CS20230722_CLUS_0018
+            coverage: 0.4
+            purity: 0.4
+            f1_score: 0.4000000000000001
+            n_cells_mapped: 2
+            median_bootstrap: 1.0
+        explanation: AT transfer of VGLUT2-23-Nov_Gpr83 to CS20230722_CLUS_0018 — best F1 0.400 at cluster level; per-level metrics populated programmatically from at_results.yaml.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=150 [painted]; Basomedial amygdalar nucleus, anterior part [MBA:327] count_100um=96 [painted]; Basomedial amygdalar nucleus [MBA:319] count_100um=96 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.296; strict region_fraction: 0.166; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: AT cluster-level F1 = 0.400 is below the 0.5 threshold — source cells are scattered across multiple atlas clusters rather than concentrated here. Cleaner AT signal may live at a coarser taxonomy level.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 10
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail: []
+      region_fraction: 0.166
+      region_fraction_100um: 0.296
+      region_evidence: SELF
+      at_signal:
+        f1: 0.4000000000000001
+        n_cells: 2
+        target_level: cluster
+        target_name: 0018 IT EP-CLA Glut_3
+        score: 2
+    confidence: LOW
+    confidence_score: 0.08
+    rationale: "[tier:CUT] CLUS_0018 (IT EP-CLA Glut_3 cluster) is the best-F1 child of SUPT_0005 from the AT run (F1=0.40, 2 cells); BLA region fraction is low (0.296/0.166) and the cortical/claustral supertype context makes this an unlikely match to the dominant BLA principal neuron population.\n"
+    mapping_cardinality: "1:n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    unresolved_questions:
+      - "Curator should confirm removal or retention of this cluster-level edge — it duplicates the SUPT_0005 cortical-lineage story at cluster resolution without adding discriminating evidence.\n"
+    rationale_source_hash: 06a7e5cf
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_CLUS_0201
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_CLUS_0201
+    relationship: evidencell:NoCorrespondence
+    mapping_justification: semapv:UnspecifiedMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0201 MEA Slc17a7 Glut_2; region_fraction_100um=0.621; strict region_fraction=0.345.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=108 [painted]; Basomedial amygdalar nucleus [MBA:319] count_100um=86 [painted]; Basomedial amygdalar nucleus, anterior part [MBA:327] count_100um=79 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.621; strict region_fraction: 0.345; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 10
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.345
+      region_fraction_100um: 0.621
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0201 belongs to supertype 0056 MEA Slc17a7 Glut_2 (medial amygdala), not the BLA; Slc17a7 name inclusion in the supertype reflects medial amygdala Slc17a7+ neurons which are a distinct population from BLA principal neurons.\n"
+    mapping_cardinality: "1:n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    rationale_source_hash: 450655f5
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_CLUS_0241
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_CLUS_0241
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnspecifiedMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0241 LA-BLA-BMA-PA Glut_4; region_fraction_100um=0.651; strict region_fraction=0.281.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=517 [painted]; Basomedial amygdalar nucleus [MBA:319] count_100um=418 [painted]; Basomedial amygdalar nucleus, posterior part [MBA:334] count_100um=417 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.651; strict region_fraction: 0.281; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 10
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.281
+      region_fraction_100um: 0.651
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CLUS_0241 is a cluster within SUPT_0063 (LA-BLA-BMA-PA Glut_4); cluster-level assessment is premature without marker data, and the parent supertype SUPT_0063 is already weakly supported; no additional evidence justifies a cluster-level mapping at this stage.\n"
+    mapping_cardinality: "1:n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    rationale_source_hash: 4c6996a8
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_CLUS_0142
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_CLUS_0142
+    relationship: evidencell:NoCorrespondence
+    mapping_justification: semapv:UnspecifiedMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0142 L2/3 IT PIR-ENTl Glut_1; region_fraction_100um=0.646; strict region_fraction=0.384.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=431 [painted]; Basolateral amygdalar nucleus [MBA:295] count_100um=350 [painted]; Basolateral amygdalar nucleus, ventral part [MBA:451] count_100um=346 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.646; strict region_fraction: 0.384; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 10
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail: []
+      region_fraction: 0.384
+      region_fraction_100um: 0.646
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0142 (L2/3 IT PIR-ENTl Glut_1) belongs to the piriform/entorhinal cortex lineage, not BLA; presence of BLA cells in the 100 µm painted region reflects spatial proximity, not genuine cell type correspondence.\n"
+    mapping_cardinality: "1:n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    rationale_source_hash: 54a844ec
+  - id: edge_bla_glutamatergic_principal_neuron_to_CS20230722_CLUS_0204
+    lit_type: bla_glutamatergic_principal_neuron
+    taxonomy_type: CS20230722_CLUS_0204
+    relationship: evidencell:NoCorrespondence
+    mapping_justification: semapv:UnspecifiedMatching
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0204 MEA Slc17a7 Glut_2; region_fraction_100um=0.245; strict region_fraction=0.132.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: Glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: '? [UBERON:0002887]'
+        node_b_value: Cortical subplate [MBA:703] count_100um=70 [painted]; Striatum [MBA:477] count_100um=55 [painted]; Basomedial amygdalar nucleus [MBA:319] count_100um=54 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.245; strict region_fraction: 0.132; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Camk2a
+        node_a_value: Camk2a — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 10
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 10
+          filters:
+            - region=MBA:295
+            - nt_type=Glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+      region_fraction: 0.132
+      region_fraction_100um: 0.245
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0204 belongs to supertype 0056 MEA Slc17a7 Glut_2 (medial amygdala); region_fraction_100um of 0.245 is low and the top painted location is Cortical subplate [MBA:703] with Striatum [MBA:477] second — inconsistent with BLA principal neuron identity.\n"
+    mapping_cardinality: "1:n"
+    rationale_generated_at: '2026-06-22T13:08:17+00:00'
+    report_path: reports/medial_temporal_lobe_amygdala/bla_glutamatergic_principal_neuron_summary.md
+    rationale_source_hash: 9a89a060
