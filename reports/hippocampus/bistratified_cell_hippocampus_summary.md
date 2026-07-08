@@ -9,7 +9,8 @@ Hippocampal bistratified cells are a fast-spiking GABAergic interneuron subtype 
 
 | Property | Value | References |
 |---|---|---|
-| Soma location | CA1 stratum pyramidale [UBERON:0014548], CA1 stratum oriens [UBERON:0014552], CA1 stratum radiatum [UBERON:0014554] | [1][2][3] |
+| Soma location | CA1 stratum pyramidale [UBERON:0014548] (some at SP/SO border) | [1][2][3] |
+| Axon territory (defining bilaminar pattern) | CA1 stratum oriens [UBERON:0014552] + CA1 stratum radiatum [UBERON:0014554] | [1] |
 | Neurotransmitter | GABAergic | [4] |
 | Defining markers | Pvalb, Sst, Tac1 | Pvalb [5][6][7][8]; Sst, Tac1 [9] |
 | Neuropeptides | Sst | [9] |
