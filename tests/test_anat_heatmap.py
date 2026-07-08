@@ -323,7 +323,7 @@ def test_count_rows_counts_reachable_kept_nodes():
     assert count_rows(["MBA:567"], children, keep) == 4
 
 
-def test_node_depths_shortest_hops_to_root():
+def test_node_depths_counts_hops_to_root():
     parents = _toy_parents()
     keep = {"MBA:567", "MBA:698", "MBA:754", "MBA:477"}
     depths = node_depths(keep, parents)
@@ -331,6 +331,23 @@ def test_node_depths_shortest_hops_to_root():
     assert depths["MBA:698"] == 1
     assert depths["MBA:754"] == 2
     assert depths["MBA:477"] == 1
+
+
+def test_node_depths_uses_longest_path_through_dag_shortcuts():
+    # The anatomy hierarchy is a DAG: a deep region also links directly to a
+    # shallow scaffold node (SCAF). Depth must follow the LONGEST path (the real
+    # structural embedding), not collapse through the shortcut.
+    #   SCAF(0) -> A(1) -> B(2) -> DEEP(3), plus a shortcut SCAF -> DEEP.
+    parents = {
+        "A": {"SCAF"},
+        "B": {"A"},
+        "DEEP": {"B", "SCAF"},  # shortcut to scaffold would give depth 1
+        "SCAF": set(),
+    }
+    keep = {"SCAF", "A", "B", "DEEP"}
+    depths = node_depths(keep, parents)
+    assert depths["DEEP"] == 3  # longest path, not 1 via the shortcut
+    assert depths["DEEP"] > depths["A"]  # child deeper than its ancestor
 
 
 # ── summarize_distribution / suggest_cutoff ───────────────────────────────────

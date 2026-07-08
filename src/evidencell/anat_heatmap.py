@@ -200,7 +200,18 @@ def count_rows(
 def node_depths(
     keep: set[str], parents: dict[str, set[str]]
 ) -> dict[str, int]:
-    """Depth (shortest hops to a kept root) for each kept node."""
+    """Depth (LONGEST hops to a kept root) for each kept node.
+
+    Longest, not shortest, because the anatomy hierarchy is a DAG: deep regions
+    carry shortcut edges to shallow scaffold nodes (e.g. MBA:8 "Basic cell
+    groups and regions" is a direct parent of Field CA1). Shortest-path depth
+    collapses through those shortcuts and under-reports how specific a region is
+    — making the `finest_dominant_region` focality signal pick a shallow region
+    over a genuinely deep one (e.g. Cortical plate over Field CA1 stratum
+    oriens). Longest-path depth reflects the deepest structural embedding and is
+    robust to the shortcuts. The `stack` set only breaks cycles; for the acyclic
+    ontology it never excludes a real parent.
+    """
     depth: dict[str, int] = {}
 
     def of(n: str, stack: frozenset[str]) -> int:
@@ -210,7 +221,7 @@ def node_depths(
         if not kept_parents:
             depth[n] = 0
         else:
-            depth[n] = 1 + min(of(p, stack | {n}) for p in kept_parents)
+            depth[n] = 1 + max(of(p, stack | {n}) for p in kept_parents)
         return depth[n]
 
     for n in keep:

@@ -812,8 +812,7 @@ anatomy ontology can support the Soma location row of Table 1 — but ONLY when
 the distribution is spatially specific enough to be identity-informative. A
 broadly-distributed cluster produces a huge, uninformative figure; do not
 render one blindly. For each survivor whose target accession is set
-(`edges[*].node_b_accession` + `edges[*].node_b_taxonomy_id`) and when
-`graph_meta.has_merfish_location` is true:
+(`edges[*].node_b_accession` + `edges[*].node_b_taxonomy_id`):
 
 1. **Read the distribution summary first (no render):**
 
@@ -821,9 +820,18 @@ render one blindly. For each survivor whose target accession is set
    just anat-heatmap {node_b_accession} {node_b_taxonomy_id} --root MBA:567 --summary
    ```
 
-   This emits JSON: `finest_dominant_region` (deepest region holding ≥ 50% of
-   cells), `max_region`, `region_counts` at rising cutoffs, `figure_rows_by_cutoff`,
-   and a `recommended_cutoff` that keeps the figure within the row budget.
+   This is also the gate: if the command **errors** (no soma-distribution data
+   for this accession, or a stale/unbuilt taxonomy DB — the `anat` table has no
+   usable `cell_ratio`), the atlas target carries no MERFISH soma distribution;
+   **skip the heat-map** for this survivor and do not mention it. Do NOT gate on
+   `graph_meta.has_merfish_location` — that flag reports classical-side
+   (stub-level) location data, not whether the atlas target has soma
+   distribution in the taxonomy DB, which is what this figure draws on.
+
+   On success it emits JSON: `finest_dominant_region` (deepest region holding
+   ≥ 50% of cells), `max_region`, `region_counts` at rising cutoffs,
+   `figure_rows_by_cutoff`, and a `recommended_cutoff` that keeps the figure
+   within the row budget.
 
 2. **Decide whether a figure is informative.** Use the summary, not a render:
    - **Focal / discriminating** — `finest_dominant_region` is a deep region
