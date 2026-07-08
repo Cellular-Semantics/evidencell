@@ -1,0 +1,102 @@
+{
+  "run_id": "at_run_20260427_hochgerner2018_dg_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "Mossy-Adcyap1",
+    "Mossy-Cyp26b1"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "Mossy-Adcyap1": {
+      "class": [
+        {
+          "target_name": "01 IT-ET Glut",
+          "node_id": "CS20230722_CLAS_01",
+          "n_cells": 28,
+          "f1": 0.4211,
+          "purity": 0.2667,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "017 CA3 Glut",
+          "node_id": "CS20230722_SUBC_017",
+          "n_cells": 27,
+          "f1": 0.5625,
+          "purity": 0.403,
+          "coverage": 0.931
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0079 CA3 Glut_5",
+          "node_id": "CS20230722_SUPT_0079",
+          "n_cells": 20,
+          "f1": 0.8333,
+          "purity": 0.9524,
+          "coverage": 0.7407
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0317 CA3 Glut_5",
+          "node_id": "CS20230722_CLUS_0317",
+          "n_cells": 15,
+          "f1": 0.7895,
+          "purity": 0.9375,
+          "coverage": 0.6818
+        }
+      ]
+    },
+    "Mossy-Cyp26b1": {
+      "class": [
+        {
+          "target_name": "01 IT-ET Glut",
+          "node_id": "CS20230722_CLAS_01",
+          "n_cells": 33,
+          "f1": 0.4783,
+          "purity": 0.3143,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "017 CA3 Glut",
+          "node_id": "CS20230722_SUBC_017",
+          "n_cells": 35,
+          "f1": 0.6863,
+          "purity": 0.5224,
+          "coverage": 1.0
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0078 CA3 Glut_4",
+          "node_id": "CS20230722_SUPT_0078",
+          "n_cells": 33,
+          "f1": 0.9429,
+          "purity": 0.9167,
+          "coverage": 0.9706
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0315 CA3 Glut_4",
+          "node_id": "CS20230722_CLUS_0315",
+          "n_cells": 20,
+          "f1": 0.8333,
+          "purity": 1.0,
+          "coverage": 0.7143
+        }
+      ]
+    }
+  }
+}

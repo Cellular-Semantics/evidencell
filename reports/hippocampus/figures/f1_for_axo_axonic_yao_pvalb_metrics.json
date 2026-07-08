@@ -1,0 +1,59 @@
+{
+  "run_id": "at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "Pvalb"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "Pvalb": {
+      "class": [
+        {
+          "target_name": "07 CTX-MGE GABA",
+          "node_id": "CS20230722_CLAS_07",
+          "n_cells": 66,
+          "f1": 0.119,
+          "purity": 0.0633,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "051 Pvalb chandelier Gaba",
+          "node_id": "CS20230722_SUBC_051",
+          "n_cells": 25,
+          "f1": 0.5882,
+          "purity": 1.0,
+          "coverage": 0.4167
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0204 Pvalb chandelier Gaba_1",
+          "node_id": "CS20230722_SUPT_0204",
+          "n_cells": 26,
+          "f1": 0.6118,
+          "purity": 1.0,
+          "coverage": 0.4407
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0732 Pvalb chandelier Gaba_1",
+          "node_id": "CS20230722_CLUS_0732",
+          "n_cells": 23,
+          "f1": 0.6216,
+          "purity": 1.0,
+          "coverage": 0.451
+        }
+      ]
+    }
+  }
+}

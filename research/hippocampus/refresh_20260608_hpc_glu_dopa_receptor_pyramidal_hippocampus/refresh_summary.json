@@ -1,0 +1,127 @@
+{
+  "graph": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml",
+  "node_id": "hpc_glu_dopa_receptor_pyramidal_hippocampus",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_0007",
+          "CS20230722_CLUS_0014",
+          "CS20230722_CLUS_0015",
+          "CS20230722_CLUS_0032",
+          "CS20230722_CLUS_0253"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml hpc_glu_dopa_receptor_pyramidal_hippocampus CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_hpc_glu_dopa_receptor_pyramidal_hippocampus/discovery_candidates_rank0.json",
+          "  emit-stage-b: wrote 5 edge(s) + 3 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 1,
+        "skipped_details": [
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069",
+            "taxonomy_type": "CS20230722_SUPT_0069"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0007",
+            "taxonomy_type": "CS20230722_CLUS_0007"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0014",
+            "taxonomy_type": "CS20230722_CLUS_0014"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0015",
+            "taxonomy_type": "CS20230722_CLUS_0015"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0032",
+            "taxonomy_type": "CS20230722_CLUS_0032"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0253",
+            "taxonomy_type": "CS20230722_CLUS_0253"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_SUPT_0012",
+          "CS20230722_SUPT_0067",
+          "CS20230722_SUPT_0079",
+          "CS20230722_SUPT_0004",
+          "CS20230722_SUPT_0003"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml hpc_glu_dopa_receptor_pyramidal_hippocampus CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_hpc_glu_dopa_receptor_pyramidal_hippocampus/discovery_candidates_rank1.json",
+          "  emit-stage-b: wrote 5 edge(s) + 3 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 6,
+        "skipped_details": [
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069",
+            "taxonomy_type": "CS20230722_SUPT_0069"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0007",
+            "taxonomy_type": "CS20230722_CLUS_0007"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0014",
+            "taxonomy_type": "CS20230722_CLUS_0014"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0015",
+            "taxonomy_type": "CS20230722_CLUS_0015"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0032",
+            "taxonomy_type": "CS20230722_CLUS_0032"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_CLUS_0253",
+            "taxonomy_type": "CS20230722_CLUS_0253"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0012",
+            "taxonomy_type": "CS20230722_SUPT_0012"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0067",
+            "taxonomy_type": "CS20230722_SUPT_0067"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0079",
+            "taxonomy_type": "CS20230722_SUPT_0079"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0004",
+            "taxonomy_type": "CS20230722_SUPT_0004"
+          },
+          {
+            "edge_id": "edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_CS20230722_SUPT_0003",
+            "taxonomy_type": "CS20230722_SUPT_0003"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "run_id": "at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "Sst"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "Sst": {
+      "class": [
+        {
+          "target_name": "07 CTX-MGE GABA",
+          "node_id": "CS20230722_CLAS_07",
+          "n_cells": 272,
+          "f1": 0.4134,
+          "purity": 0.2608,
+          "coverage": 0.9963
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "053 Sst Gaba",
+          "node_id": "CS20230722_SUBC_053",
+          "n_cells": 265,
+          "f1": 0.9833,
+          "purity": 0.9779,
+          "coverage": 0.9888
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0219 Sst Gaba_6",
+          "node_id": "CS20230722_SUPT_0219",
+          "n_cells": 161,
+          "f1": 0.7594,
+          "purity": 0.9641,
+          "coverage": 0.6265
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0786 Sst Gaba_6",
+          "node_id": "CS20230722_CLUS_0786",
+          "n_cells": 28,
+          "f1": 0.2305,
+          "purity": 1.0,
+          "coverage": 0.1302
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Evidence Drill-down: Winterer et al. 2019
-*Supporting: olm_hippocampus → 0727 Lamp5 Lhx6 Gaba_1; olm_hippocampus → 0785 Sst Gaba_6; olm_hippocampus → 0769 Sst Gaba_3; olm_hippocampus → 0788 Sst Gaba_6; olm_hippocampus → 0789 Sst Gaba_6*
-*[← Back to summary report](olm_hippocampus_summary.md)*
+*Supporting: olm_cell_ca1 → 0727 Lamp5 Lhx6 Gaba_1; olm_cell_ca1 → 0785 Sst Gaba_6; olm_cell_ca1 → 0769 Sst Gaba_3; olm_cell_ca1 → 0788 Sst Gaba_6; olm_cell_ca1 → 0789 Sst Gaba_6*
+*[← Back to summary report](olm_cell_ca1_summary.md)*
 
 ---
 

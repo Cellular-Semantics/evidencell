@@ -1,0 +1,141 @@
+{
+  "graph": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml",
+  "node_id": "ivy_cell_hippocampus",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_0651",
+          "CS20230722_CLUS_0731",
+          "CS20230722_CLUS_0655",
+          "CS20230722_CLUS_0695",
+          "CS20230722_CLUS_0705"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml ivy_cell_hippocampus CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_ivy_cell_hippocampus/discovery_candidates_rank0.json",
+          "  emit-stage-b: skipped 5 existing edge(s): edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0651, edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0731, edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0655, edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0695, edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0705",
+          "  emit-stage-b: nothing to write (all edges already present)."
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 5,
+        "skipped_details": [
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203",
+            "taxonomy_type": "CS20230722_SUPT_0203"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0179",
+            "taxonomy_type": "CS20230722_SUPT_0179"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_1196",
+            "taxonomy_type": "CS20230722_SUPT_1196"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0181",
+            "taxonomy_type": "CS20230722_SUPT_0181"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0173",
+            "taxonomy_type": "CS20230722_SUPT_0173"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0651",
+            "taxonomy_type": "CS20230722_CLUS_0651"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0731",
+            "taxonomy_type": "CS20230722_CLUS_0731"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0655",
+            "taxonomy_type": "CS20230722_CLUS_0655"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0695",
+            "taxonomy_type": "CS20230722_CLUS_0695"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0705",
+            "taxonomy_type": "CS20230722_CLUS_0705"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 29,
+        "top5": [
+          "CS20230722_SUPT_0179",
+          "CS20230722_SUPT_1196",
+          "CS20230722_SUPT_0203",
+          "CS20230722_SUPT_0181",
+          "CS20230722_SUPT_0173"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml ivy_cell_hippocampus CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_ivy_cell_hippocampus/discovery_candidates_rank1.json",
+          "  emit-stage-b: skipped 5 existing edge(s): edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0179, edge_ivy_cell_hippocampus_to_CS20230722_SUPT_1196, edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203, edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0181, edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0173",
+          "  emit-stage-b: nothing to write (all edges already present)."
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 5,
+        "skipped_details": [
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0651",
+            "taxonomy_type": "CS20230722_CLUS_0651"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0731",
+            "taxonomy_type": "CS20230722_CLUS_0731"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0655",
+            "taxonomy_type": "CS20230722_CLUS_0655"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0695",
+            "taxonomy_type": "CS20230722_CLUS_0695"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0705",
+            "taxonomy_type": "CS20230722_CLUS_0705"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203",
+            "taxonomy_type": "CS20230722_SUPT_0203"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0179",
+            "taxonomy_type": "CS20230722_SUPT_0179"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_1196",
+            "taxonomy_type": "CS20230722_SUPT_1196"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0181",
+            "taxonomy_type": "CS20230722_SUPT_0181"
+          },
+          {
+            "edge_id": "edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0173",
+            "taxonomy_type": "CS20230722_SUPT_0173"
+          }
+        ]
+      }
+    }
+  }
+}

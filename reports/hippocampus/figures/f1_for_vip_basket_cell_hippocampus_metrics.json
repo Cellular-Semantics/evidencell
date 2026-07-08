@@ -1,0 +1,59 @@
+{
+  "run_id": "at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "Vip"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "Vip": {
+      "class": [
+        {
+          "target_name": "06 CTX-CGE GABA",
+          "node_id": "CS20230722_CLAS_06",
+          "n_cells": 475,
+          "f1": 0.638,
+          "purity": 0.4684,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "046 Vip Gaba",
+          "node_id": "CS20230722_SUBC_046",
+          "n_cells": 463,
+          "f1": 0.9686,
+          "purity": 0.9527,
+          "coverage": 0.9851
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0177 Vip Gaba_5",
+          "node_id": "CS20230722_SUPT_0177",
+          "n_cells": 101,
+          "f1": 0.3969,
+          "purity": 1.0,
+          "coverage": 0.2475
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0644 Vip Gaba_5",
+          "node_id": "CS20230722_CLUS_0644",
+          "n_cells": 54,
+          "f1": 0.2693,
+          "purity": 1.0,
+          "coverage": 0.1556
+        }
+      ]
+    }
+  }
+}
