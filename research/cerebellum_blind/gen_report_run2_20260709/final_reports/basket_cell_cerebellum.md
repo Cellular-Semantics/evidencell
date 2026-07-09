@@ -53,13 +53,20 @@ Cerebellar basket cells are GABAergic interneurons of the molecular layer of the
 
 Cell Ontology mapping: cerebellar basket cell [[CL:2000027](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:2000027)] (EXACT).
 
+**Transcriptomic-type correspondence.** The source annotated cluster MLI1_1 in the Kozareva 2021 dataset (GEO:GSE165371) corresponds to this classical type, per Osorno et al. 2022:
+
+> MLI1_1 and MLI1_2 correspond to basket cells and stellate cells, respectively, which have distinctive morphologies, synapse distribution, and locations in the molecular layer.
+> — Osorno et al. 2022, Molecular insights into cerebellar cortex interneurons <!-- quote_key: 248832318_1ab0e04b -->
+
 ---
 
 ## Results
 
 Annotation-transfer evidence from Kozareva et al. 2021 basket-cell source nuclei (MLI1_1; GEO:GSE165371) and marker alignment support mapping cerebellar basket cells to the supertype 1149 CBX MLI Megf11 Gaba_1 [CS20230722_SUPT_1149], with the single child cluster 5188 CBX MLI Megf11 Gaba_1 [CS20230722_CLUS_5188] as the best cluster-level target (F1=0.51 at cluster; see property comparison tables). A critical caveat shapes this mapping: MLI1_1 (basket) and MLI1_2 (stellate) both transfer predominantly to CLUS_5188 with nearly identical coverage (~1.0) but low purity for each source (~0.34 for basket), indicating that WMBv1 does not resolve the basket–stellate transcriptomic boundary at the cluster level — a well-documented biological feature of cerebellar MLI organisation.
 
-*(No filtered AT figure was generated in this run; embed a node-scoped figure using `just gen-at-figure at_run_20260709_kozareva_cerebellum_mmc_wmbv1 --source MLI1_1` when pipeline tooling is available.)*
+![Annotation-transfer F1 for Cerebellar basket cell](../../kb/annotation_transfer_runs/at_run_20260709_kozareva_cerebellum_mmc_wmbv1/figures/f1_for_basket_cell_cerebellum.png)
+
+*F1 across taxonomy levels for the MLI1_1 source group (Kozareva 2021 snRNA-seq, mapped to WMBv1 via annotation transfer). F1 ≥ 0.5 indicates a clean mapping at that level.*
 
 ---
 

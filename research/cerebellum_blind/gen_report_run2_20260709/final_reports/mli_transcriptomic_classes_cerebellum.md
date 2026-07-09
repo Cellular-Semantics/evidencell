@@ -46,9 +46,18 @@ Cell Ontology mapping: molecular layer interneuron [[CL:4042035](https://www.ebi
 
 No Cell Ontology term currently exists for the MLI1/MLI2 class split; CL:4042035 (molecular layer interneuron) is the closest parent. Both MLI1 and MLI2 are candidates for new CL term contributions as distinct subtypes.
 
+**Transcriptomic-type correspondence.** The source annotated clusters MLI1_1, MLI1_2, MLI2 in the Kozareva 2021 dataset (GEO:GSE165371) correspond to this classical type, per Osorno et al. 2022:
+
+> MLI1_1 and MLI1_2 correspond to basket cells and stellate cells, respectively, which have distinctive morphologies, synapse distribution, and locations in the molecular layer.
+> — Osorno et al. 2022, Molecular insights into cerebellar cortex interneurons <!-- quote_key: 248832318_1ab0e04b -->
+
 ---
 
 ## Results
+
+![Annotation-transfer F1 for Molecular layer interneuron transcriptomic classes MLI1/MLI2](../../kb/annotation_transfer_runs/at_run_20260709_kozareva_cerebellum_mmc_wmbv1/figures/f1_for_mli_transcriptomic_classes_cerebellum.png)
+
+*F1 across taxonomy levels for the MLI1_1/MLI1_2/MLI2 source groups (Kozareva 2021 snRNA-seq, mapped to WMBv1 via annotation transfer). F1 ≥ 0.5 indicates a clean mapping at that level.*
 
 Annotation transfer from the Kozareva et al. 2021 mouse cerebellar snRNA-seq dataset (GEO:GSE165371; `at_run_20260709_kozareva_cerebellum_mmc_wmbv1`) reveals a clean two-way split: the MLI2 transcriptomic cluster (n=10,544 source cells) maps with extraordinary precision to 5192 CBX MLI Cdh22 Gaba_1 [CS20230722_CLUS_5192] (F1=1.00 at cluster level; see property comparison table), while the MLI1 cluster (represented by both morphological subforms MLI1_1 and MLI1_2) maps to 5188 CBX MLI Megf11 Gaba_1 [CS20230722_CLUS_5188] with high specificity for the MLI1_2 source cells (F1=0.79 at cluster level). The two transcriptomic classes thus resolve cleanly onto two distinct WMBv1 clusters distinguished by their defining atlas markers — Cdh22 for MLI2 and Megf11 for MLI1.
 

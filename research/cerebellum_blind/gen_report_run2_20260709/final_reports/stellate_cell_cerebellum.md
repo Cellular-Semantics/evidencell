@@ -53,9 +53,18 @@ Cerebellar stellate cells are GABAergic molecular layer interneurons (MLIs) that
 
 Cell Ontology mapping: cerebellar stellate cell [[CL:0010010](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0010010)] (EXACT).
 
+**Transcriptomic-type correspondence.** The source annotated cluster MLI1_2 in the Kozareva 2021 dataset (GEO:GSE165371) corresponds to this classical type, per Osorno et al. 2022:
+
+> MLI1_1 and MLI1_2 correspond to basket cells and stellate cells, respectively, which have distinctive morphologies, synapse distribution, and locations in the molecular layer.
+> — Osorno et al. 2022, Molecular insights into cerebellar cortex interneurons <!-- quote_key: 248832318_1ab0e04b -->
+
 ---
 
 ## Results
+
+![Annotation-transfer F1 for Cerebellar stellate cell](../../kb/annotation_transfer_runs/at_run_20260709_kozareva_cerebellum_mmc_wmbv1/figures/f1_for_stellate_cell_cerebellum.png)
+
+*F1 across taxonomy levels for the MLI1_2 source group (Kozareva 2021 snRNA-seq, mapped to WMBv1 via annotation transfer). F1 ≥ 0.5 indicates a clean mapping at that level.*
 
 Annotation transfer of Kozareva et al. 2021 stellate source cells (MLI1_2, n=21,571; GEO:GSE165371) via MapMyCells against WMBv1 places the cerebellar stellate cell within the 311 CBX MLI Megf11 Gaba subclass (F1=0.796; see figure and property comparison table). Within this subclass, transfer concentrates on the supertype 1149 CBX MLI Megf11 Gaba_1 [CS20230722_SUPT_1149] (F1=0.795) and its dominant cluster 5188 CBX MLI Megf11 Gaba_1 [CS20230722_CLUS_5188] (F1=0.794). However, the purity of the MLI1_2→CLUS_5188 transfer is 0.659, reflecting the fundamental biology: stellate and basket cells are not transcriptomically separated in WMBv1, and MLI1_1 (basket cells) also map to CLUS_5188 with high coverage. The supportable mappings are at supertype level (acknowledging the cross-cutting biology) and at cluster level as the best available resolution within that shared space.
 

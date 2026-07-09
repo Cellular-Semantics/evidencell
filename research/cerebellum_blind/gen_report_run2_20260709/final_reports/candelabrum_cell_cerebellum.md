@@ -37,13 +37,20 @@ The cerebellar candelabrum cell (CC) is a molecularly and anatomically distinct 
 
 Cell Ontology mapping: candelabrum cell [[CL:4042030](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:4042030)] (EXACT).
 
+**Transcriptomic-type correspondence.** The source annotated cluster PLI_1 in the Kozareva 2021 dataset (GEO:GSE165371) corresponds to this classical type, per Osorno et al. 2022:
+
+> This suggests that CCs might correspond to the remaining cell type, PLI1.
+> — Osorno et al. 2022, Molecular insights into cerebellar cortex interneurons <!-- quote_key: 248832318_50826f1c -->
+
 ---
 
 ## Results
 
 Annotation-transfer evidence from the Kozareva et al. 2021 mouse cerebellar snRNA-seq dataset (PLI_1 source group, n=1,176 cells; GEO:GSE165371; MapMyCells against WMBv1 CCN20230722) places the candelabrum cell unambiguously on cluster 5178 CB PLI Gly-Gaba_1 [CS20230722_CLUS_5178] (F1=0.94, Purity=0.95, Coverage=0.94; `at_run_20260709_kozareva_cerebellum_mmc_wmbv1`), with concordant support from the parent supertype 1144 CB PLI Gly-Gaba_1 [CS20230722_SUPT_1144] (F1=0.72 at supertype level; see property comparison tables). Stage A discovery dominated a 50-member GABAergic-cerebellar cohort (score 6 vs next-best 3), confirming there is no viable competing cluster.
 
-*(Note: the AT run figure (`figures/f1_for_candelabrum_cell_cerebellum.png`) was not generated at report time — run `just gen-at-figure at_run_20260709_kozareva_cerebellum_mmc_wmbv1 --source PLI_1 --output reports/cerebellum_blind/figures/f1_for_candelabrum_cell_cerebellum.png --emit-metrics reports/cerebellum_blind/figures/f1_for_candelabrum_cell_cerebellum_metrics.json` to produce it.)*
+![Annotation-transfer F1 for Candelabrum cell](../../kb/annotation_transfer_runs/at_run_20260709_kozareva_cerebellum_mmc_wmbv1/figures/f1_for_candelabrum_cell_cerebellum.png)
+
+*F1 across taxonomy levels for the PLI_1 source group (Kozareva 2021 snRNA-seq, mapped to WMBv1 via annotation transfer). Fill = F1; Purity and Coverage shown per node. F1 ≥ 0.5 indicates a clean mapping at that level.*
 
 ---
 

@@ -44,13 +44,18 @@ Lugaro cells are rare GABAergic/glycinergic inhibitory interneurons of the cereb
 
 **Cell Ontology mapping:** Lugaro cell [[CL:0011006](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0011006)] (EXACT).
 
+**Transcriptomic-type correspondence.** The source annotated cluster PLI_3 in the Kozareva 2021 dataset (GEO:GSE165371) corresponds to this classical type, per Osorno et al. 2022:
+
+> The expression of Htr2a that encodes the 5-HT2A receptor, and Slc6a5 that encodes the glycine transporter, by PLI3 suggests that this cell type corresponds to Lugaro cells, that are glycinergic and excited by serotonin
+> — Osorno et al. 2022, Molecular insights into cerebellar cortex interneurons <!-- quote_key: 248832318_68baa5be -->
+
 ---
 
 ## Results
 
 Annotation transfer of the transcriptomically defined Lugaro cell source group (PLI_3; n=531 cells from Kozareva/Osorno 2021 cerebellar snRNA-seq, GEO:GSE165371) maps with exceptional precision to the supertype 1145 CB PLI Gly-Gaba_2 [CS20230722_SUPT_1145] (F1=0.96; Purity=0.98, Coverage=0.94; see figure and property comparison table), supporting the primary mapping at supertype resolution. At cluster resolution, PLI_3 cells distribute across multiple child clusters of this supertype, with 5180 CB PLI Gly-Gaba_2 [CS20230722_CLUS_5180] showing the strongest individual cluster signal (F1=0.65; see figure and candidates table).
 
-![Filtered AT figure for Lugaro cell (cerebellum)](../../kb/annotation_transfer_runs/at_run_20260709_kozareva_cerebellum_mmc_wmbv1/reports/cerebellum_blind/figures/f1_for_lugaro_cell_cerebellum.png)
+![Annotation-transfer F1 for Lugaro cell (cerebellum)](../../kb/annotation_transfer_runs/at_run_20260709_kozareva_cerebellum_mmc_wmbv1/figures/f1_for_lugaro_cell_cerebellum.png)
 
 *F1 across taxonomy levels for the PLI_3 source group (Kozareva et al. 2021 cerebellar cortex snRNA-seq; n=531 Lugaro cell nuclei). Each panel row is a source-cell group; nodes are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown inline. Coverage = fraction of source-group cells landing on this target; Purity = fraction of this target's cells coming from the source group. The supertype-level result (F1=0.96) is the dominant signal; cluster-level scatter (best F1=0.65 at CLUS_5180) reflects PLI_3 nuclei distributing across three child clusters within the supertype. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
 

@@ -45,9 +45,18 @@ Globular cells (also called glycinergic Lugaro cells / GLCs) are a rare inhibito
 
 No Cell Ontology term currently covers this type — candidate for a new CL term.
 
+**Transcriptomic-type correspondence.** The source annotated cluster PLI_2 in the Kozareva 2021 dataset (GEO:GSE165371) corresponds to this classical type, per Osorno et al. 2022:
+
+> PLI2s also express Slc6a5, which suggests that they correspond to globular cells (GLCs) that are glycinergic, located near or below the PCL, and inhibited by PCs
+> — Osorno et al. 2022, Molecular insights into cerebellar cortex interneurons <!-- quote_key: 248832318_ca915184 -->
+
 ---
 
 ## Results
+
+![Annotation-transfer F1 for Globular cell](../../kb/annotation_transfer_runs/at_run_20260709_kozareva_cerebellum_mmc_wmbv1/figures/f1_for_globular_cell_cerebellum.png)
+
+*F1 across taxonomy levels for the PLI_2 source group (Kozareva 2021 snRNA-seq, mapped to WMBv1 via annotation transfer). F1 ≥ 0.5 indicates a clean mapping at that level.*
 
 Marker expression alignment and annotation transfer (AT) evidence from the Kozareva et al. 2021 PLI_2 (globular) source cluster (GEO:GSE165371, MapMyCells local, `at_run_20260709_kozareva_cerebellum_mmc_wmbv1`) supports a clean mapping to the cluster 5177 CB PLI Gly-Gaba_1 [CS20230722_CLUS_5177] (F1=0.88 at cluster level; see property comparison table). At supertype level, PLI_2 distributes across the children of supertype 1144 CB PLI Gly-Gaba_1 [CS20230722_SUPT_1144] (F1=0.55), with CLUS_5177 as the leading cluster child; the supportable narrow mapping is therefore to CLUS_5177 specifically, within the broader context of SUPT_1144.
 
