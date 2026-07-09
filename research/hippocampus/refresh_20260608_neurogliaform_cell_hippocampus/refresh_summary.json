@@ -1,0 +1,132 @@
+{
+  "graph": "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml",
+  "node_id": "neurogliaform_cell_hippocampus",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_0707",
+          "CS20230722_CLUS_0708",
+          "CS20230722_CLUS_0721",
+          "CS20230722_CLUS_0687",
+          "CS20230722_CLUS_0729"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml neurogliaform_cell_hippocampus CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_neurogliaform_cell_hippocampus/discovery_candidates_rank0.json",
+          "  emit-stage-b: wrote 5 edge(s) + 5 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 2,
+        "skipped_details": [
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0193",
+            "taxonomy_type": "CS20230722_SUPT_0193"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203",
+            "taxonomy_type": "CS20230722_SUPT_0203"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0707",
+            "taxonomy_type": "CS20230722_CLUS_0707"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0708",
+            "taxonomy_type": "CS20230722_CLUS_0708"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0721",
+            "taxonomy_type": "CS20230722_CLUS_0721"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0687",
+            "taxonomy_type": "CS20230722_CLUS_0687"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0729",
+            "taxonomy_type": "CS20230722_CLUS_0729"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 36,
+        "top5": [
+          "CS20230722_SUPT_0199",
+          "CS20230722_SUPT_0203",
+          "CS20230722_SUPT_0201",
+          "CS20230722_SUPT_0179",
+          "CS20230722_SUPT_1194"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml neurogliaform_cell_hippocampus CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_neurogliaform_cell_hippocampus/discovery_candidates_rank1.json",
+          "  emit-stage-b: skipped 1 existing edge(s): edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203",
+          "  emit-stage-b: wrote 4 edge(s) + 3 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 6,
+        "edges_skipped_taxtype_not_in_topk": 5,
+        "skipped_details": [
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0707",
+            "taxonomy_type": "CS20230722_CLUS_0707"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0708",
+            "taxonomy_type": "CS20230722_CLUS_0708"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0721",
+            "taxonomy_type": "CS20230722_CLUS_0721"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0687",
+            "taxonomy_type": "CS20230722_CLUS_0687"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_CLUS_0729",
+            "taxonomy_type": "CS20230722_CLUS_0729"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0193",
+            "taxonomy_type": "CS20230722_SUPT_0193"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203",
+            "taxonomy_type": "CS20230722_SUPT_0203"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0199",
+            "taxonomy_type": "CS20230722_SUPT_0199"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0201",
+            "taxonomy_type": "CS20230722_SUPT_0201"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0179",
+            "taxonomy_type": "CS20230722_SUPT_0179"
+          },
+          {
+            "edge_id": "edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_1194",
+            "taxonomy_type": "CS20230722_SUPT_1194"
+          }
+        ]
+      }
+    }
+  }
+}

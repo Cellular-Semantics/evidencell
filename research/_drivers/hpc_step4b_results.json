@@ -1,0 +1,340 @@
+{
+  "dg_granule_cell": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "dg_mossy_cell": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "ca3_pyramidal_cell": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "ca1_pyramidal_cell": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "ms_dbb_glutamatergic_neuron": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "hpc_cajal_retzius_cell": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "ca1_radiatum_giant_cell": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "_demo_ec_l3_20260607": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "_demo_olm_20260607": {
+    "parsed": 10,
+    "verified": 9,
+    "errors": 3,
+    "error_samples": [
+      "[edge_olm_hippocampus_to_CS20230722_SUPT_0216] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim.",
+      "[edge_olm_hippocampus_to_CS20230722_SUPT_0216] rationale cites modality 'immunohistochemistry' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['ihc', 'immunohistochemistry']. This may be a hallucinated modality claim."
+    ]
+  },
+  "pv_basket_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 11,
+    "errors": 0,
+    "error_samples": []
+  },
+  "cck_basket_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 9,
+    "errors": 11,
+    "error_samples": [
+      "[edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187] rationale cites F1=0.46 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.08', '.21', '.77', '0.08', '0.21', '0.77'].",
+      "[edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187] rationale cites accession CS20230722_CLUS_0676 but it appears nowhere on this edge or in the surrounding graph (taxonomy_type / property_comparisons / evidence metrics_by_level / sibling nodes)."
+    ]
+  },
+  "axo_axonic_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 8,
+    "errors": 6,
+    "error_samples": [
+      "[edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0739] rationale cites F1=0.83 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none).",
+      "[edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0739] rationale cites run_ref at_run_20260508_que2021_pvin_mmc_wmbv1 but no evidence item on this edge carries it. Edge run_refs: (none)."
+    ]
+  },
+  "bistratified_cell_hippocampus": {
+    "parsed": 0,
+    "verified": 0,
+    "errors": 0,
+    "error_samples": []
+  },
+  "olm_cell_ca1": {
+    "parsed": 10,
+    "verified": 8,
+    "errors": 3,
+    "error_samples": [
+      "[edge_olm_cell_ca1_to_CS20230722_SUPT_0216] rationale claims 7 of 8 markers CONSISTENT but PropertyComparisons on this edge show 6 of 7 marker_-prefixed CONSISTENT alignments.",
+      "[edge_olm_cell_ca1_to_CS20230722_CLUS_0768] rationale claims 6 of 8 markers CONSISTENT but PropertyComparisons on this edge show 5 of 7 marker_-prefixed CONSISTENT alignments."
+    ]
+  },
+  "hippocampo_septal_cell_ca1": {
+    "parsed": 10,
+    "verified": 9,
+    "errors": 3,
+    "error_samples": [
+      "[edge_hippocampo_septal_cell_ca1_to_CS20230722_SUPT_0216] rationale cites F1=0.49 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.41', '.98', '0.41', '0.98'].",
+      "[edge_hippocampo_septal_cell_ca1_to_CS20230722_SUPT_0216] rationale cites F1=0.67 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.41', '.98', '0.41', '0.98']."
+    ]
+  },
+  "neurogliaform_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 8,
+    "errors": 6,
+    "error_samples": [
+      "[edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203] rationale cites modality 'biocytin' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['biocytin']. This may be a hallucinated modality claim.",
+      "[edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203] rationale cites modality 'morphology' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['biocytin', 'morphological', 'morphology']. This may be a hallucinated modality claim."
+    ]
+  },
+  "ivy_cell_hippocampus": {
+    "parsed": 10,
+    "verified": 8,
+    "errors": 16,
+    "error_samples": [
+      "[edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203] rationale cites F1=0.53 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.20', '.74', '.81', '.82', '.90', '0.20', '0.74', '0.81', '0.82', '0.90'].",
+      "[edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203] rationale cites F1=0.21 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.20', '.74', '.81', '.82', '.90', '0.20', '0.74', '0.81', '0.82', '0.90']."
+    ]
+  },
+  "is_interneuron_hippocampus": {
+    "parsed": 10,
+    "verified": 6,
+    "errors": 5,
+    "error_samples": [
+      "[edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179] rationale cites accession CS20230722_CLUS_0650 but it appears nowhere on this edge or in the surrounding graph (taxonomy_type / property_comparisons / evidence metrics_by_level / sibling nodes).",
+      "[edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim."
+    ]
+  },
+  "oriens_oriens_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 9,
+    "errors": 2,
+    "error_samples": [
+      "[edge_oriens_oriens_cell_hippocampus_to_CS20230722_SUPT_0219] rationale cites modality 'morphological' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['biocytin', 'morphological', 'morphology']. This may be a hallucinated modality claim.",
+      "[edge_oriens_oriens_cell_hippocampus_to_CS20230722_CLUS_0768] rationale cites modality 'morphological' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['biocytin', 'morphological', 'morphology']. This may be a hallucinated modality claim."
+    ]
+  },
+  "trilaminar_cell_hippocampus": {
+    "parsed": 10,
+    "verified": 7,
+    "errors": 5,
+    "error_samples": [
+      "[edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0206] rationale cites F1=0.32 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.12', '0.12'].",
+      "[edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0206] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim."
+    ]
+  },
+  "vip_basket_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 9,
+    "errors": 4,
+    "error_samples": [
+      "[edge_vip_basket_cell_hippocampus_to_CS20230722_SUPT_0179] rationale cites F1=0.38 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.64', '.97', '0.64', '0.97'].",
+      "[edge_vip_basket_cell_hippocampus_to_CS20230722_SUPT_0179] rationale cites modality 'morphology' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['biocytin', 'morphological', 'morphology']. This may be a hallucinated modality claim."
+    ]
+  },
+  "r_lm_cell_hippocampus": {
+    "parsed": 10,
+    "verified": 7,
+    "errors": 8,
+    "error_samples": [
+      "[edge_r_lm_cell_hippocampus_to_CS20230722_SUPT_0216] rationale cites F1=0.49 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.41', '.98', '0.41', '0.98'].",
+      "[edge_r_lm_cell_hippocampus_to_CS20230722_SUPT_0216] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim."
+    ]
+  },
+  "p_lm_cell_hippocampus": {
+    "parsed": 10,
+    "verified": 8,
+    "errors": 9,
+    "error_samples": [
+      "[edge_p_lm_cell_hippocampus_to_CS20230722_SUPT_0216] rationale cites run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1 but no evidence item on this edge carries it. Edge run_refs: (none).",
+      "[edge_p_lm_cell_hippocampus_to_CS20230722_SUPT_0216] rationale cites modality 'scrna-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['rna-seq', 'scrna seq', 'scrna-seq', 'single-cell rna']. This may be a hallucinated modality claim."
+    ]
+  },
+  "lth_cell_hippocampus": {
+    "parsed": 10,
+    "verified": 7,
+    "errors": 9,
+    "error_samples": [
+      "[edge_lth_cell_hippocampus_to_CS20230722_SUPT_0216] rationale cites F1=0.76 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none).",
+      "[edge_lth_cell_hippocampus_to_CS20230722_SUPT_0216] rationale cites F1=0.76 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none)."
+    ]
+  },
+  "olm_hippocampus": {
+    "parsed": 15,
+    "verified": 9,
+    "errors": 19,
+    "error_samples": [
+      "[edge_olm_hippocampus_to_CS20230722_SUPT_0216] rationale cites F1=0.97 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.67', '.68', '0.67', '0.68'].",
+      "[edge_olm_hippocampus_to_CS20230722_SUPT_0216] rationale cites F1=0.99 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.67', '.68', '0.67', '0.68']."
+    ]
+  },
+  "chrna2_olm_subfamily_chamberland": {
+    "parsed": 11,
+    "verified": 8,
+    "errors": 6,
+    "error_samples": [
+      "[edge_chrna2_olm_to_CS20230722_CLUS_0771] rationale claims 4 of 4 markers CONSISTENT but PropertyComparisons on this edge show 2 of 2 marker_-prefixed CONSISTENT alignments.",
+      "[edge_chrna2_olm_to_CS20230722_CLUS_0771] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim."
+    ]
+  },
+  "ndnf_nkx2_1_olm_subfamily_chamberland": {
+    "parsed": 11,
+    "verified": 8,
+    "errors": 12,
+    "error_samples": [
+      "[edge_ndnf_nkx2_1_olm_to_CS20230722_SUPT_0216] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim.",
+      "[edge_ndnf_nkx2_1_olm_to_CS20230722_SUPT_0216] rationale cites modality 'morphology' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['biocytin', 'morphological', 'morphology']. This may be a hallucinated modality claim."
+    ]
+  },
+  "sst_nos1_subfamily_chamberland": {
+    "parsed": 11,
+    "verified": 9,
+    "errors": 8,
+    "error_samples": [
+      "[edge_sst_nos1_to_CS20230722_CLUS_0859] rationale claims 4 of 4 markers CONSISTENT but PropertyComparisons on this edge show 2 of 2 marker_-prefixed CONSISTENT alignments.",
+      "[edge_sst_nos1_to_CS20230722_CLUS_0859] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim."
+    ]
+  },
+  "sst_tac1_subfamily_chamberland": {
+    "parsed": 11,
+    "verified": 3,
+    "errors": 17,
+    "error_samples": [
+      "[edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0206] rationale cites F1=0.57 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none).",
+      "[edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0206] rationale cites F1=0.58 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none)."
+    ]
+  },
+  "ca1_pc_hippocampus": {
+    "parsed": 11,
+    "verified": 9,
+    "errors": 4,
+    "error_samples": [
+      "[edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0262] rationale cites F1=0.44 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none).",
+      "[edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0262] rationale cites F1=0.44 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none)."
+    ]
+  },
+  "ca2_pc_hippocampus": {
+    "parsed": 11,
+    "verified": 9,
+    "errors": 4,
+    "error_samples": [
+      "[edge_ca2_pc_hippocampus_to_supt_0100] rationale cites F1=0.95 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.02', '.97', '0.02', '0.97'].",
+      "[edge_ca2_pc_hippocampus_to_supt_0100] rationale cites F1=0.95 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.02', '.97', '0.02', '0.97']."
+    ]
+  },
+  "ca3_pc_hippocampus": {
+    "parsed": 11,
+    "verified": 6,
+    "errors": 5,
+    "error_samples": [
+      "[edge_ca3_pc_hippocampus_to_supt_0078] rationale cites F1=0.70 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.28', '.77', '.99', '0.28', '0.77', '0.99'].",
+      "[edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0075] rationale cites run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1 but no evidence item on this edge carries it. Edge run_refs: (none)."
+    ]
+  },
+  "dg_granule_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 9,
+    "errors": 5,
+    "error_samples": [
+      "[edge_dg_granule_cell_hippocampus_to_supt_0137] rationale cites F1=0.60 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.58', '.70', '0.58', '0.70'].",
+      "[edge_dg_granule_cell_hippocampus_to_supt_0137] rationale cites accession CS20230722_CLUS_0506 but it appears nowhere on this edge or in the surrounding graph (taxonomy_type / property_comparisons / evidence metrics_by_level / sibling nodes)."
+    ]
+  },
+  "hilar_mossy_cell_hippocampus": {
+    "parsed": 12,
+    "verified": 9,
+    "errors": 5,
+    "error_samples": [
+      "[edge_hilar_mossy_cell_hippocampus_to_supt_0079] rationale cites F1=0.31 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.42', '.56', '.83', '0.42', '0.56', '0.83'].",
+      "[edge_hilar_mossy_cell_hippocampus_to_CS20230722_CLUS_0317] rationale cites F1=0.79 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none)."
+    ]
+  },
+  "dg_semilunar_granule_cell_hippocampus": {
+    "parsed": 12,
+    "verified": 8,
+    "errors": 4,
+    "error_samples": [
+      "[edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_SUPT_0138] rationale cites run_ref at_run_20260508_bhatt2025_dg_mmc_wmbv1 but no evidence item on this edge carries it. Edge run_refs: (none).",
+      "[edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_SUPT_0137] rationale cites run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1 but no evidence item on this edge carries it. Edge run_refs: (none)."
+    ]
+  },
+  "subicular_pyramidal_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 8,
+    "errors": 3,
+    "error_samples": [
+      "[edge_subicular_pyramidal_cell_hippocampus_to_supt_0096] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim.",
+      "[edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0128] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim."
+    ]
+  },
+  "ec_layer2_stellate_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 10,
+    "errors": 2,
+    "error_samples": [
+      "[edge_ec_layer2_stellate_cell_hippocampus_to_CS20230722_CLUS_0155] rationale cites F1=0.96 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none).",
+      "[edge_ec_layer2_stellate_cell_hippocampus_to_CS20230722_CLUS_0155] rationale cites F1=0.96 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: (none)."
+    ]
+  },
+  "ec_layer2_pyramidal_cell_hippocampus": {
+    "parsed": 11,
+    "verified": 8,
+    "errors": 6,
+    "error_samples": [
+      "[edge_ec_layer2_pyramidal_cell_hippocampus_to_supt_0052] rationale claims 2 of 3 markers CONSISTENT but PropertyComparisons on this edge show 1 of 1 marker_-prefixed CONSISTENT alignments.",
+      "[edge_ec_layer2_pyramidal_cell_hippocampus_to_supt_0052] rationale cites modality 'patch-seq' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['patch clamp', 'patch seq', 'patch-seq']. This may be a hallucinated modality claim."
+    ]
+  },
+  "ec_layer3_pyramidal_cell_hippocampus": {
+    "parsed": 12,
+    "verified": 10,
+    "errors": 4,
+    "error_samples": [
+      "[edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0036] rationale cites F1=0.18 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.94', '0.94'].",
+      "[edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0036] rationale cites F1=0.18 but no AT metrics_by_level entry on this edge carries that value (rounded to 2dp). Edge F1s: ['.94', '0.94']."
+    ]
+  },
+  "hpc_calretinin_glu_neuron_hippocampus": {
+    "parsed": 11,
+    "verified": 10,
+    "errors": 2,
+    "error_samples": [
+      "[edge_hpc_calretinin_glu_neuron_hippocampus_to_supt_0135] rationale cites accession CS20230722_CLUS_0497 but it appears nowhere on this edge or in the surrounding graph (taxonomy_type / property_comparisons / evidence metrics_by_level / sibling nodes).",
+      "[edge_hpc_calretinin_glu_neuron_hippocampus_to_supt_0135] rationale cites modality 'morphology' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['biocytin', 'morphological', 'morphology']. This may be a hallucinated modality claim."
+    ]
+  },
+  "hpc_glu_dopa_receptor_pyramidal_hippocampus": {
+    "parsed": 11,
+    "verified": 10,
+    "errors": 1,
+    "error_samples": [
+      "[edge_hpc_glu_dopa_receptor_pyramidal_hippocampus_to_supt_0069] rationale cites modality 'cre line' but no evidence item, property-source method, or endpoint-node source method on this edge mentions any of: ['cre driver', 'cre line', 'cre transgenic', 'cre-line', 'flp transgenic', 'intersectional cre', 'intersectional genetics']. This may be a hallucinated modality claim."
+    ]
+  }
+}

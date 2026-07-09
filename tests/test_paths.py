@@ -68,13 +68,15 @@ def test_research_dir_for_region():
 
 def test_find_node_file_known_node():
     """find_node_file returns a YAML path containing the requested node."""
-    path = find_node_file("olm_hippocampus")
+    # olm_cell_ca1 lives in hippocampus_GABAergic_interneurons.yaml after the
+    # 2026-06-10 olm_hippocampus → olm_cell_ca1 merge (PR #114, GH #116).
+    path = find_node_file("olm_cell_ca1")
     assert path.exists()
     assert path.suffix == ".yaml"
     import yaml
     data = yaml.safe_load(path.read_text())
     node_ids = [n.get("id") for n in data.get("nodes", []) if isinstance(n, dict)]
-    assert "olm_hippocampus" in node_ids
+    assert "olm_cell_ca1" in node_ids
 
 
 def test_find_node_file_missing_node():

@@ -1,0 +1,127 @@
+{
+  "graph": "kb/graphs/hippocampus/hippocampus_glutamatergic.yaml",
+  "node_id": "hpc_calretinin_glu_neuron_hippocampus",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_0316",
+          "CS20230722_CLUS_0317",
+          "CS20230722_CLUS_2659",
+          "CS20230722_CLUS_0014",
+          "CS20230722_CLUS_0015"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml hpc_calretinin_glu_neuron_hippocampus CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_hpc_calretinin_glu_neuron_hippocampus/discovery_candidates_rank0.json",
+          "  emit-stage-b: wrote 5 edge(s) + 1 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 1,
+        "skipped_details": [
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_supt_0135",
+            "taxonomy_type": "CS20230722_SUPT_0135"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0316",
+            "taxonomy_type": "CS20230722_CLUS_0316"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0317",
+            "taxonomy_type": "CS20230722_CLUS_0317"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_2659",
+            "taxonomy_type": "CS20230722_CLUS_2659"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0014",
+            "taxonomy_type": "CS20230722_CLUS_0014"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0015",
+            "taxonomy_type": "CS20230722_CLUS_0015"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_SUPT_0079",
+          "CS20230722_SUPT_0010",
+          "CS20230722_SUPT_0066",
+          "CS20230722_SUPT_0099",
+          "CS20230722_SUPT_0085"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml hpc_calretinin_glu_neuron_hippocampus CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_hpc_calretinin_glu_neuron_hippocampus/discovery_candidates_rank1.json",
+          "  emit-stage-b: wrote 5 edge(s) + 3 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_glutamatergic.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 6,
+        "edges_skipped_taxtype_not_in_topk": 5,
+        "skipped_details": [
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0316",
+            "taxonomy_type": "CS20230722_CLUS_0316"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0317",
+            "taxonomy_type": "CS20230722_CLUS_0317"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_2659",
+            "taxonomy_type": "CS20230722_CLUS_2659"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0014",
+            "taxonomy_type": "CS20230722_CLUS_0014"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0015",
+            "taxonomy_type": "CS20230722_CLUS_0015"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_supt_0135",
+            "taxonomy_type": "CS20230722_SUPT_0135"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0079",
+            "taxonomy_type": "CS20230722_SUPT_0079"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0010",
+            "taxonomy_type": "CS20230722_SUPT_0010"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0066",
+            "taxonomy_type": "CS20230722_SUPT_0066"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0099",
+            "taxonomy_type": "CS20230722_SUPT_0099"
+          },
+          {
+            "edge_id": "edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0085",
+            "taxonomy_type": "CS20230722_SUPT_0085"
+          }
+        ]
+      }
+    }
+  }
+}

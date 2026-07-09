@@ -1,0 +1,59 @@
+{
+  "run_id": "at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "CA2-IG-FC"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "CA2-IG-FC": {
+      "class": [
+        {
+          "target_name": "01 IT-ET Glut",
+          "node_id": "CS20230722_CLAS_01",
+          "n_cells": 19,
+          "f1": 0.0191,
+          "purity": 0.0096,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "025 CA2-FC-IG Glut",
+          "node_id": "CS20230722_SUBC_025",
+          "n_cells": 18,
+          "f1": 0.973,
+          "purity": 0.9474,
+          "coverage": 1.0
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0101 CA2-FC-IG Glut_2",
+          "node_id": "CS20230722_SUPT_0101",
+          "n_cells": 18,
+          "f1": 0.9474,
+          "purity": 0.9474,
+          "coverage": 0.9474
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0401 CA2-FC-IG Glut_2",
+          "node_id": "CS20230722_CLUS_0401",
+          "n_cells": 11,
+          "f1": 0.88,
+          "purity": 1.0,
+          "coverage": 0.7857
+        }
+      ]
+    }
+  }
+}

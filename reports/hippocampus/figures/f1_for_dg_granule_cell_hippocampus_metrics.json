@@ -1,0 +1,102 @@
+{
+  "run_id": "at_run_20260427_hochgerner2018_dg_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "f1_scores_best.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "Granule-immature",
+    "Granule-mature"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "Granule-immature": {
+      "class": [
+        {
+          "target_name": "04 DG-IMN Glut",
+          "node_id": "CS20230722_CLAS_04",
+          "n_cells": 262,
+          "f1": 0.5683,
+          "purity": 0.3994,
+          "coverage": 0.985
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "037 DG Glut",
+          "node_id": "CS20230722_SUBC_037",
+          "n_cells": 570,
+          "f1": 0.5834,
+          "purity": 0.4345,
+          "coverage": 0.8879
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0137 DG Glut_2",
+          "node_id": "CS20230722_SUPT_0137",
+          "n_cells": 437,
+          "f1": 0.6007,
+          "purity": 0.4994,
+          "coverage": 0.7534
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0507 DG Glut_2",
+          "node_id": "CS20230722_CLUS_0507",
+          "n_cells": 68,
+          "f1": 0.7196,
+          "purity": 0.9444,
+          "coverage": 0.5812
+        }
+      ]
+    },
+    "Granule-mature": {
+      "class": [
+        {
+          "target_name": "04 DG-IMN Glut",
+          "node_id": "CS20230722_CLAS_04",
+          "n_cells": 182,
+          "f1": 0.4242,
+          "purity": 0.2774,
+          "coverage": 0.901
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "037 DG Glut",
+          "node_id": "CS20230722_SUBC_037",
+          "n_cells": 716,
+          "f1": 0.703,
+          "purity": 0.5457,
+          "coverage": 0.9876
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0137 DG Glut_2",
+          "node_id": "CS20230722_SUPT_0137",
+          "n_cells": 433,
+          "f1": 0.5836,
+          "purity": 0.4949,
+          "coverage": 0.711
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "0506 DG Glut_2",
+          "node_id": "CS20230722_CLUS_0506",
+          "n_cells": 49,
+          "f1": 0.6901,
+          "purity": 0.5904,
+          "coverage": 0.8305
+        }
+      ]
+    }
+  }
+}

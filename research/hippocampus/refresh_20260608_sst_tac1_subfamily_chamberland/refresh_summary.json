@@ -1,0 +1,127 @@
+{
+  "graph": "kb/graphs/hippocampus/hippocampus_chamberland_subfamilies.yaml",
+  "node_id": "sst_tac1_subfamily_chamberland",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_0768",
+          "CS20230722_CLUS_0772",
+          "CS20230722_CLUS_0767",
+          "CS20230722_CLUS_0774",
+          "CS20230722_CLUS_0791"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_chamberland_subfamilies.yaml sst_tac1_subfamily_chamberland CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_sst_tac1_subfamily_chamberland/discovery_candidates_rank0.json",
+          "  emit-stage-b: wrote 5 edge(s) + 2 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_chamberland_subfamilies.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 1,
+        "skipped_details": [
+          {
+            "edge_id": "edge_sst_tac1_to_CS20230722_SUBC_052",
+            "taxonomy_type": "CS20230722_SUBC_052"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0768",
+            "taxonomy_type": "CS20230722_CLUS_0768"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0772",
+            "taxonomy_type": "CS20230722_CLUS_0772"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0767",
+            "taxonomy_type": "CS20230722_CLUS_0767"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0774",
+            "taxonomy_type": "CS20230722_CLUS_0774"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0791",
+            "taxonomy_type": "CS20230722_CLUS_0791"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_SUPT_0216",
+          "CS20230722_SUPT_0212",
+          "CS20230722_SUPT_0211",
+          "CS20230722_SUPT_0206",
+          "CS20230722_SUPT_0203"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_chamberland_subfamilies.yaml sst_tac1_subfamily_chamberland CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_sst_tac1_subfamily_chamberland/discovery_candidates_rank1.json",
+          "  emit-stage-b: wrote 5 edge(s) + 2 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_chamberland_subfamilies.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 6,
+        "skipped_details": [
+          {
+            "edge_id": "edge_sst_tac1_to_CS20230722_SUBC_052",
+            "taxonomy_type": "CS20230722_SUBC_052"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0768",
+            "taxonomy_type": "CS20230722_CLUS_0768"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0772",
+            "taxonomy_type": "CS20230722_CLUS_0772"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0767",
+            "taxonomy_type": "CS20230722_CLUS_0767"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0774",
+            "taxonomy_type": "CS20230722_CLUS_0774"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_CLUS_0791",
+            "taxonomy_type": "CS20230722_CLUS_0791"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0216",
+            "taxonomy_type": "CS20230722_SUPT_0216"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0212",
+            "taxonomy_type": "CS20230722_SUPT_0212"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0211",
+            "taxonomy_type": "CS20230722_SUPT_0211"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0206",
+            "taxonomy_type": "CS20230722_SUPT_0206"
+          },
+          {
+            "edge_id": "edge_sst_tac1_subfamily_chamberland_to_CS20230722_SUPT_0203",
+            "taxonomy_type": "CS20230722_SUPT_0203"
+          }
+        ]
+      }
+    }
+  }
+}

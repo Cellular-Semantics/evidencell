@@ -11,6 +11,7 @@ from pathlib import Path
 
 import pytest
 
+import evidencell.stage_b_emit as sbe
 from evidencell.stage_b_emit import (
     _atlas_location_summary,
     _caveats,
@@ -357,3 +358,132 @@ def test_emit_stage_b_idempotent(tmp_path, capsys):
     assert len(post2["edges"]) == 5  # unchanged
     captured = capsys.readouterr()
     assert "skipped" in (captured.err or "")
+
+
+# ── AT emission driven by at_source_sets (issue #126) ───────────────────────
+
+
+def _patch_at(monkeypatch, *, run_map, metrics_map):
+    """Patch resolve_run_for_source / compute_edge_metrics / load_run_manifest.
+
+    ``run_map``: {(dataset, source_label): run_ref or None}.
+    ``metrics_map``: {run_ref: compute_edge_metrics payload}.
+    """
+    def _resolve(dataset, taxonomy, source_label, **kw):
+        return run_map.get((dataset, source_label))
+
+    def _compute(*, run_ref, source_label, edge_target):
+        return metrics_map[run_ref]
+
+    monkeypatch.setattr(sbe, "resolve_run_for_source", _resolve)
+    monkeypatch.setattr(sbe, "compute_edge_metrics", _compute)
+    monkeypatch.setattr(sbe, "load_run_manifest", lambda r: {"target_atlas": "WMBv1"})
+
+
+def _at_items(evlist):
+    return [e for e in evlist if e["evidence_type"] == "ANNOTATION_TRANSFER"]
+
+
+def test_at_evidence_positive_carries_correspondence(monkeypatch):
+    _patch_at(
+        monkeypatch,
+        run_map={("GEO:GSE1", "Calb2-clus"): "at_run_x"},
+        metrics_map={"at_run_x": {
+            "metrics_by_level": [{"taxonomy_level": "CLUSTER", "f1_score": 0.8}],
+            "best_mapping_rank": 0, "best_f1_score": 0.8,
+            "supports_default": "SUPPORT", "f1_source_relpath": "at_results.yaml",
+        }},
+    )
+    item = sbe._at_evidence(
+        source_set={"dataset_accession": "GEO:GSE1", "source_label": "Calb2-clus",
+                    "correspondence": "SUBSET"},
+        taxonomy_id="CCN20230722",
+        edge_target="CS20230722_CLUS_0768",
+    )
+    assert item["evidence_type"] == "ANNOTATION_TRANSFER"
+    assert item["supports"] == "SUPPORT"
+    assert item["correspondence"] == "SUBSET"
+    assert item["source_dataset_accession"] == "GEO:GSE1"
+    assert item["source_cluster_label"] == "Calb2-clus"
+    assert item["run_ref"] == "at_run_x"
+    assert item["metrics_by_level"]
+
+
+def test_at_evidence_negative_when_source_does_not_transfer(monkeypatch):
+    """Declared source resolves to a run but has no metrics reaching this
+    candidate's lineage → NO_EVIDENCE (negative signal), not dropped."""
+    _patch_at(
+        monkeypatch,
+        run_map={("GEO:GSE1", "Vip-Crh"): "at_run_x"},
+        metrics_map={"at_run_x": {"metrics_by_level": [], "supports_default": "NO_EVIDENCE"}},
+    )
+    item = sbe._at_evidence(
+        source_set={"dataset_accession": "GEO:GSE1", "source_label": "Vip-Crh"},
+        taxonomy_id="CCN20230722",
+        edge_target="CS20230722_CLUS_0628",
+    )
+    assert item is not None
+    assert item["supports"] == "NO_EVIDENCE"
+    assert item["run_ref"] == "at_run_x"
+    assert "does not transfer" in item["explanation"]
+
+
+def test_at_evidence_unresolvable_dataset(monkeypatch):
+    _patch_at(monkeypatch, run_map={}, metrics_map={})
+    item = sbe._at_evidence(
+        source_set={"dataset_accession": "GEO:UNKNOWN", "source_label": "X"},
+        taxonomy_id="CCN20230722",
+        edge_target="CS20230722_CLUS_0768",
+    )
+    assert item["supports"] == "NO_EVIDENCE"
+    assert "run_ref" not in item
+    assert "could not be resolved" in item["explanation"]
+
+
+def test_at_evidence_malformed_source_set(monkeypatch):
+    _patch_at(monkeypatch, run_map={}, metrics_map={})
+    assert sbe._at_evidence(
+        source_set={"dataset_accession": "GEO:GSE1"},  # no source_label
+        taxonomy_id="CCN20230722",
+        edge_target="CS20230722_CLUS_0768",
+    ) is None
+
+
+def test_evidence_list_no_source_sets_emits_no_at(monkeypatch):
+    """Full cutover: a node without at_source_sets gets no AT evidence."""
+    _patch_at(monkeypatch, run_map={}, metrics_map={})
+    out = sbe._evidence_list(
+        atlas=None, candidate={"node_id": "CS20230722_CLUS_0768", "label": "x"},
+        ds={}, at_source_sets=[], taxonomy_id="CCN20230722",
+        taxonomy_type="CS20230722_CLUS_0768",
+    )
+    assert _at_items(out) == []
+    assert any(e["evidence_type"] == "ATLAS_METADATA" for e in out)
+
+
+def test_evidence_list_two_source_sets_positive_and_negative(monkeypatch):
+    """Two declared sources: one transfers (SUPPORT), one doesn't
+    (NO_EVIDENCE). Both surfaced as separate AT items."""
+    _patch_at(
+        monkeypatch,
+        run_map={("GEO:GSE1", "Calb2"): "run_pos", ("GEO:GSE1", "Vip-Crh"): "run_neg"},
+        metrics_map={
+            "run_pos": {"metrics_by_level": [{"taxonomy_level": "CLUSTER", "f1_score": 0.8}],
+                        "best_mapping_rank": 0, "best_f1_score": 0.8,
+                        "supports_default": "SUPPORT", "f1_source_relpath": "at_results.yaml"},
+            "run_neg": {"metrics_by_level": [], "supports_default": "NO_EVIDENCE"},
+        },
+    )
+    out = sbe._evidence_list(
+        atlas=None, candidate={"node_id": "CS20230722_CLUS_0768", "label": "x"},
+        ds={},
+        at_source_sets=[
+            {"dataset_accession": "GEO:GSE1", "source_label": "Calb2", "correspondence": "SUBSET"},
+            {"dataset_accession": "GEO:GSE1", "source_label": "Vip-Crh"},
+        ],
+        taxonomy_id="CCN20230722", taxonomy_type="CS20230722_CLUS_0768",
+    )
+    at = _at_items(out)
+    assert len(at) == 2
+    supports = {i["source_cluster_label"]: i["supports"] for i in at}
+    assert supports == {"Calb2": "SUPPORT", "Vip-Crh": "NO_EVIDENCE"}

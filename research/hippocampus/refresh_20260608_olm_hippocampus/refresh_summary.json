@@ -1,0 +1,181 @@
+{
+  "graph": "kb/graphs/hippocampus/hippocampus_OLM.yaml",
+  "node_id": "olm_hippocampus",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_0768",
+          "CS20230722_CLUS_0772",
+          "CS20230722_CLUS_0773",
+          "CS20230722_CLUS_0775",
+          "CS20230722_CLUS_0770"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_olm_hippocampus/discovery_candidates_rank0.json",
+          "  emit-stage-b: skipped 5 existing edge(s): edge_olm_hippocampus_to_CS20230722_CLUS_0768, edge_olm_hippocampus_to_CS20230722_CLUS_0772, edge_olm_hippocampus_to_CS20230722_CLUS_0773, edge_olm_hippocampus_to_CS20230722_CLUS_0775, edge_olm_hippocampus_to_CS20230722_CLUS_0770",
+          "  emit-stage-b: nothing to write (all edges already present)."
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 6,
+        "edges_skipped_taxtype_not_in_topk": 9,
+        "skipped_details": [
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0727",
+            "taxonomy_type": "CS20230722_CLUS_0727"
+          },
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0785",
+            "taxonomy_type": "CS20230722_CLUS_0785"
+          },
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0788",
+            "taxonomy_type": "CS20230722_CLUS_0788"
+          },
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0789",
+            "taxonomy_type": "CS20230722_CLUS_0789"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0216",
+            "taxonomy_type": "CS20230722_SUPT_0216"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0226",
+            "taxonomy_type": "CS20230722_SUPT_0226"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0217",
+            "taxonomy_type": "CS20230722_SUPT_0217"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0241",
+            "taxonomy_type": "CS20230722_SUPT_0241"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0224",
+            "taxonomy_type": "CS20230722_SUPT_0224"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0769",
+            "taxonomy_type": "CS20230722_CLUS_0769"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0768",
+            "taxonomy_type": "CS20230722_CLUS_0768"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0772",
+            "taxonomy_type": "CS20230722_CLUS_0772"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0773",
+            "taxonomy_type": "CS20230722_CLUS_0773"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0775",
+            "taxonomy_type": "CS20230722_CLUS_0775"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0770",
+            "taxonomy_type": "CS20230722_CLUS_0770"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_SUPT_0216",
+          "CS20230722_SUPT_0226",
+          "CS20230722_SUPT_0217",
+          "CS20230722_SUPT_0241",
+          "CS20230722_SUPT_0224"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/hippocampus/hippocampus_OLM.yaml olm_hippocampus CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/hippocampus/refresh_20260608_olm_hippocampus/discovery_candidates_rank1.json",
+          "  emit-stage-b: skipped 5 existing edge(s): edge_olm_hippocampus_to_CS20230722_SUPT_0216, edge_olm_hippocampus_to_CS20230722_SUPT_0226, edge_olm_hippocampus_to_CS20230722_SUPT_0217, edge_olm_hippocampus_to_CS20230722_SUPT_0241, edge_olm_hippocampus_to_CS20230722_SUPT_0224",
+          "  emit-stage-b: nothing to write (all edges already present)."
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 10,
+        "skipped_details": [
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0727",
+            "taxonomy_type": "CS20230722_CLUS_0727"
+          },
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0785",
+            "taxonomy_type": "CS20230722_CLUS_0785"
+          },
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0769",
+            "taxonomy_type": "CS20230722_CLUS_0769"
+          },
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0788",
+            "taxonomy_type": "CS20230722_CLUS_0788"
+          },
+          {
+            "edge_id": "edge_olm_to_wmb_clus_0789",
+            "taxonomy_type": "CS20230722_CLUS_0789"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0768",
+            "taxonomy_type": "CS20230722_CLUS_0768"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0772",
+            "taxonomy_type": "CS20230722_CLUS_0772"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0773",
+            "taxonomy_type": "CS20230722_CLUS_0773"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0775",
+            "taxonomy_type": "CS20230722_CLUS_0775"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_CLUS_0770",
+            "taxonomy_type": "CS20230722_CLUS_0770"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0216",
+            "taxonomy_type": "CS20230722_SUPT_0216"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0226",
+            "taxonomy_type": "CS20230722_SUPT_0226"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0217",
+            "taxonomy_type": "CS20230722_SUPT_0217"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0241",
+            "taxonomy_type": "CS20230722_SUPT_0241"
+          },
+          {
+            "edge_id": "edge_olm_hippocampus_to_CS20230722_SUPT_0224",
+            "taxonomy_type": "CS20230722_SUPT_0224"
+          }
+        ]
+      }
+    }
+  }
+}

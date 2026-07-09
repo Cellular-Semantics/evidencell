@@ -1,856 +1,2404 @@
 name: Hippocampal glutamatergic principal cells — draft classical types
-description: Draft evidence graph for classical hippocampal glutamatergic principal cell types extracted from ASTA deep research
-  report on glutamatergic-positive cells of the hippocampus. Node properties are synthesis-derived and require primary literature
-  verification. Edges empty pending mapping evidence.
+description: Draft evidence graph for classical hippocampal glutamatergic principal cell types extracted from ASTA deep research report on glutamatergic-positive cells of the hippocampus. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
 target_atlas: WMBv1 (CCN20230722)
 brain_region:
   id: UBERON:0002421
   label: hippocampal formation
   name_in_source: hippocampus
-species: null
+species:
 creation_date: '2026-04-27'
-notes: All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evidence is from rat and mouse; species must be
-  confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup. Quote provenance
-  lives in references/hippocampus/references.json; quote_keys reference verbatim text only.
+notes: All nodes are CLASSICAL_MULTIMODAL. Species field left null — most evidence is from rat and mouse; species must be confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup. Quote provenance lives in references/hippocampus/references.json; quote_keys reference verbatim text only.
 nodes:
-- id: dg_granule_cell
-  name: dentate gyrus granule cell
-  definition_basis: CLASSICAL_MULTIMODAL
-  species: null
-  anatomical_location:
-  - id: UBERON:0005381
-    label: dentate gyrus granule cell layer
-    name_in_source: dentate gyrus stratum granulosum (granule cell layer)
-    compartment: SOMA
-    sources:
-    - ref: PMID:24319410
-      quote_key: 7458943_efa15be5
-    - ref: PMID:23420672
-      quote_key: 11290620_48a528f1
-    - ref: PMID:24592213
-      quote_key: 11333153_7e2a7ff8
-  - id: UBERON:0014550
-    label: pyramidal layer of CA3
-    name_in_source: CA3 stratum lucidum (mossy fiber projection target)
-    compartment: AXON_TARGET
-    sources:
-    - ref: PMID:24319410
-      method: review
-      scope: rat hippocampus
-      quote_key: 7458943_efa15be5
-  nt_type:
-    name_in_source: glutamatergic
-    cl_terms:
-    - id: CL:0000679
-      label: glutamatergic neuron
+  - id: ms_dbb_glutamatergic_neuron
+    name: medial septal / diagonal band of Broca glutamatergic neuron
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0002421
+        label: hippocampal formation
+        name_in_source: medial septum / diagonal band of Broca (extrahippocampal soma — UBERON term used as nearest available; soma is not in hippocampal formation)
+        compartment: SOMA
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent septohippocampal system
+            quote_key: 21358766_0c242fdc
+      - id: UBERON:0005371
+        label: hippocampus stratum oriens
+        name_in_source: hippocampal stratum oriens near alveus (synaptic target on interneurons)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:29250747
+            quote_key: 21358766_01840c4a
+    nt_type:
       name_in_source: glutamatergic
-    sources:
-    - ref: PMID:24592213
-      quote_key: 11333153_7e2a7ff8
-    - ref: PMID:24319410
-      quote_key: 7458943_efa15be5
-    - ref: PMID:23420672
-      quote_key: 11290620_48a528f1
-  defining_markers:
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:27375434
-      method: review
-      scope: rat hippocampus
-      quote_key: 14854554_ed1bdc00
-      marker_type: PROTEIN
-  - symbol: Gria1
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:21927594
-      quote_key: 16383828_dc4eb8fc
-      marker_type: PROTEIN
-    - ref: PMID:32009891
-      quote_key: 210181642_7ac40176
-      marker_type: PROTEIN
-  - symbol: Gria2
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:32009891
-      method: immunohistochemistry
-      scope: rat hippocampus
-      quote_key: 210181642_88f001b0
-      marker_type: PROTEIN
-  - symbol: Grm1
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:27375434
-      method: review
-      scope: rat hippocampus
-      quote_key: 14854554_b6a5ffa0
-      marker_type: PROTEIN
-  - symbol: Nptn
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:28779130
-      method: immunohistochemistry
-      scope: human hippocampus
-      quote_key: 3288675_37ad1c13
-      marker_type: PROTEIN
-  negative_markers: []
-  neuropeptides: []
-  morphology:
-    description: Compact granule cell soma in stratum granulosum; thin unmyelinated mossy fiber axons project into stratum
-      lucidum of CA3. ~1 million GCs in adult rat dentate gyrus. 85% of GCs are generated postnatally; adult-born GCs receive
-      their first glutamatergic input on dendritic spines at the end of the second week after birth.
-    sources:
-    - ref: PMID:24592213
-      quote_key: 11333153_d0620f0a
-    - ref: PMID:21927594
-      quote_key: 16383828_d014308a
-    - ref: PMID:24319410
-      quote_key: 7458943_efa15be5
-  electrophysiology:
-    description: Lower firing threshold than typical cortical neurons; AMPA, kainate, and NMDA receptors broadly co-expressed.
-      Mossy fiber stimulation elicits mixed GABAergic and glutamatergic monosynaptic currents in CA3 principal cells in juvenile
-      animals.
-    sources:
-    - ref: PMID:24592213
-      quote_key: 11333153_abe1b682
-    - ref: PMID:37011759
-      quote_key: 252086716_f9c70b51
-    - ref: PMID:33132900
-      quote_key: 222135486_f65faa4b
-  cl_mapping:
-    cl_term:
-      id: CL:2000089
-      label: dentate gyrus granule cell
-      name_in_source: dentate gyrus granule cell
-    mapping_type: EXACT
-    mapping_notes: Exact label match to CL:2000089.
-  definition_references:
-  - PMID:17765709
-  - PMID:24319410
-  - PMID:24592213
-  - PMID:21927594
-  - PMID:32009891
-  is_terminal: false
-  notes: Adult-born immature granule cells form a distinct functional subpopulation with delayed maturation; dorsal vs. ventral
-    heterogeneity implied. Mossy fiber terminals co-express VGLUT1, VGLUT2, and VGAT (mixed transmission to CA3 in juvenile
-    animals) — co-release is developmental and does not redefine the granule cell as a non-glutamatergic principal cell.
-- id: dg_mossy_cell
-  name: hilar mossy cell
-  definition_basis: CLASSICAL_MULTIMODAL
-  species: null
-  anatomical_location:
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: dentate hilus (polymorph layer of dentate gyrus)
-    compartment: SOMA
-    sources:
-    - ref: PMID:33600026
-      quote_key: 231953329_132cf2e1
-    - ref: PMID:34214666
-      quote_key: 235678538_35b7c784
-    - ref: PMID:28451637
-      quote_key: 3583187_ea3794f5
-  - id: UBERON:0022347
-    label: dentate gyrus molecular layer inner
-    name_in_source: dentate gyrus inner molecular layer (IML; ipsilateral and contralateral commissural projection)
-    compartment: AXON_TARGET
-    sources:
-    - ref: PMID:33600026
-      quote_key: 231953329_132cf2e1
-    - ref: PMID:33600026
-      quote_key: 231953329_6269a191
-    - ref: PMID:33600026
-      quote_key: 231953329_54cbe1b7
-  - id: UBERON:0022346
-    label: dentate gyrus molecular layer middle
-    name_in_source: dentate gyrus middle molecular layer (MML; dorsal mossy cells only)
-    compartment: AXON_TARGET
-    sources:
-    - ref: PMID:33600026
-      method: Cre-dependent viral tracing
-      scope: Drd2-Cre and Crlr-Cre mouse
-      quote_key: 231953329_ceaf8acb
-  nt_type:
-    name_in_source: glutamatergic
-    cl_terms:
-    - id: CL:0000679
-      label: glutamatergic neuron
-      name_in_source: glutamatergic
-    sources:
-    - ref: PMID:23420672
-      quote_key: 11290620_c6e60ece
-    - ref: PMID:23420672
-      quote_key: 11290620_a475a601
-    - ref: PMID:33600026
-      quote_key: 231953329_132cf2e1
-  defining_markers:
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:27375434
-      method: review
-      scope: rat hippocampus
-      quote_key: 14854554_ed1bdc00
-      marker_type: PROTEIN
-  - symbol: Drd2
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:33600026
-      method: Cre-dependent viral labeling (Drd2-Cre)
-      scope: mouse
-      quote_key: 231953329_ceaf8acb
-      marker_type: PROTEIN
-    - ref: PMID:37546856
-      method: transcriptomics
-      scope: mouse ventral hippocampus
-      quote_key: 260336826_494cac70
-      marker_type: PROTEIN
-  - symbol: Calcrl
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:33600026
-      method: Cre-dependent viral labeling (Crlr-Cre)
-      scope: mouse
-      quote_key: 231953329_ceaf8acb
-      marker_type: PROTEIN
-  - symbol: Reln
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:25206826
-      method: immunohistochemistry
-      scope: mouse hippocampus
-      quote_key: 7981953_7f1ea74e
-      marker_type: PROTEIN
-  negative_markers:
-  - symbol: Gad1
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:23420672
-      method: review
-      scope: dentate hilus
-      quote_key: 11290620_c6e60ece
-      marker_type: PROTEIN
-  neuropeptides: []
-  morphology:
-    description: Large hilar somata with thick bushy proximal dendrites encrusted with thorny excrescences (complex spines)
-      receiving mossy fiber input from granule cells. Dendrites mainly in the hilus. ~25% of axon in hilar collaterals; >60%
-      of axon distal in the molecular layer, predominantly the inner molecular layer (IML), with commissural projection to
-      contralateral dentate gyrus. Dorsal MCs uniquely also project to the middle molecular layer (MML).
-    sources:
-    - ref: PMID:23420672
-      quote_key: 11290620_a475a601
-    - ref: PMID:33600026
-      quote_key: 231953329_132cf2e1
-    - ref: PMID:33600026
-      quote_key: 231953329_6269a191
-  electrophysiology:
-    description: Regular-spiking firing pattern in hilar cells with thorny excrescences. Mossy cells produce unitary EPSPs
-      in granule cells, confirming glutamatergic output.
-    sources:
-    - ref: PMID:23420672
-      method: patch-clamp recording in slice
-      scope: rat hippocampus
-      quote_key: 11290620_a475a601
-  definition_references:
-  - PMID:33600026
-  - PMID:34214666
-  - PMID:28451637
-  - PMID:23420672
-  - PMID:25206826
-  is_terminal: false
-  notes: 'Dorsal vs. ventral mossy cells differ in axonal projection (dorsal: IML+MML; ventral: IML only). Reelin-positive
-    mossy cells in the dentate hilus are predominantly glutamatergic (in contrast to GABAergic reelin+ cells in the molecular
-    layer). HETEROGENEITY: dorsal/ventral subtypes likely warrant separate atlas correspondence.
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:29250747
+          method: review
+          scope: rodent MS-DBB
+          quote_key: 21358766_0c242fdc
+    defining_markers:
+      - symbol: Slc17a7
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent MS-DBB
+            quote_key: 21358766_0c242fdc
+            marker_type: PROTEIN
+      - symbol: Slc17a6
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent MS-DBB
+            quote_key: 21358766_0c242fdc
+            marker_type: PROTEIN
+          - ref: PMID:32132227
+            method: review
+            scope: rodent fornix/septohippocampal
+            quote_key: 212418354_02349d4e
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: Chat
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent MS-DBB
+            quote_key: 21358766_0c242fdc
+            marker_type: PROTEIN
+      - symbol: Gad1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent MS-DBB
+            quote_key: 21358766_0c242fdc
+            marker_type: PROTEIN
+    neuropeptides: []
+    morphology:
+      description: Soma in medial septum/diagonal band of Broca; account for ~23% of MS projections to hippocampus; project preferentially to hippocampal interneurons with somata in stratum oriens near the alveus.
+      sources:
+        - ref: PMID:29250747
+          method: review
+          scope: rodent septohippocampal
+          quote_key: 21358766_0c242fdc
+        - ref: PMID:29250747
+          method: review
+          scope: rodent septohippocampal
+          quote_key: 21358766_01840c4a
+    electrophysiology:
+      description: 'Highly heterogeneous firing in four subtypes: (1) fast-spiking with little AP accommodation, occasional spontaneous firing, sometimes pronounced Ih sag; (2) cluster-firing (8-14 Hz) with subthreshold membrane oscillations and strong AP accommodation — UNIQUE to glutamatergic MS-DBB neurons; (3) burst-firing (distinct from GABAergic burst pattern) with little/no sag; (4) slow-firing with broad accommodating APs. Can spontaneously fire rhythmically at theta frequencies. Activity rises before locomotion onset and during running.'
+      sources:
+        - ref: PMID:29250747
+          quote_key: 21358766_0c242fdc
+        - ref: PMID:21106833
+          quote_key: 15897856_d5424e2a
+        - ref: PMID:21106833
+          quote_key: 15897856_5e7429ed
+    definition_references:
+      - PMID:29250747
+      - PMID:21106833
+      - PMID:32132227
+    is_terminal: false
+    notes: 'Four electrophysiologically distinct VGluT2+ subgroups (fast-spiking, cluster-firing, burst-firing, slow-firing). Cluster firing is a unique electrophysiological marker for glutamatergic (not GABAergic) MS-DBB neurons. Soma is extrahippocampal — node retained because the cell projects into hippocampal formation; UBERON soma assignment is approximate (hippocampal formation used as nearest umbrella term).
 
 
-    CL mapping note: No CL term found for hilar mossy cell. Children of CL:4023062 (dentate gyrus neuron) include granule
-    cell (CL:2000089), basket cell (CL:2000087), kisspeptin neuron (CL:4023124) and stellate cell (CL:2000090); none matches
-    mossy cell. Potential CL contribution.'
-- id: ca3_pyramidal_cell
-  name: CA3 pyramidal cell
-  definition_basis: CLASSICAL_MULTIMODAL
-  species: null
-  anatomical_location:
-  - id: UBERON:0014550
-    label: pyramidal layer of CA3
-    name_in_source: CA3 stratum pyramidale
-    compartment: SOMA
-    sources:
-    - ref: PMID:24319410
-      quote_key: 7458943_d6507595
-    - ref: PMID:24319410
-      quote_key: 7458943_efa15be5
-    - ref: PMID:32009891
-      quote_key: 210181642_7ac40176
-  - id: UBERON:0005372
-    label: hippocampus stratum radiatum
-    name_in_source: CA3 stratum radiatum / stratum oriens (apical and basal dendritic field)
-    compartment: DENDRITE
-    sources:
-    - ref: PMID:32009891
-      method: immunohistochemistry
-      scope: rat hippocampus
-      quote_key: 210181642_7ac40176
-  - id: UBERON:0014554
-    label: CA1 stratum radiatum
-    name_in_source: CA1 stratum radiatum (Schaffer collateral projection target)
-    compartment: AXON_TARGET
-    sources:
-    - ref: PMID:24319410
-      method: review
-      scope: rat hippocampus
-      quote_key: 7458943_efa15be5
-  nt_type:
-    name_in_source: glutamatergic
-    cl_terms:
-    - id: CL:0000679
-      label: glutamatergic neuron
+      CL mapping note: No CL term for medial septal / diagonal band of Broca glutamatergic neuron. CL:0000679 (glutamatergic neuron) too broad. Potential CL contribution.'
+  - id: hpc_cajal_retzius_cell
+    name: hippocampal Cajal-Retzius cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0014557
+        label: CA1 stratum lacunosum moleculare
+        name_in_source: CA1 stratum lacunosum-moleculare (SLM)
+        compartment: SOMA
+        sources:
+          - ref: PMID:25253849
+            method: optogenetic activation in slice
+            scope: mouse hippocampus
+            quote_key: 7165380_5e53cfc0
+          - ref: PMID:26582498
+            method: biocytin fill / morphological reconstruction
+            scope: mouse hippocampus
+            quote_key: 2565845_8c6a8b64
+          - ref: PMID:26402459
+            method: review
+            scope: rodent hippocampus
+            quote_key: 631148_85ae9bb1
+      - id: UBERON:0001885
+        label: dentate gyrus of hippocampal formation
+        name_in_source: outer molecular layer (OML) of dentate gyrus
+        compartment: SOMA
+        sources:
+          - ref: PMID:26582498
+            method: biocytin fill / morphological reconstruction
+            scope: mouse hippocampus
+            quote_key: 2565845_8c6a8b64
+    nt_type:
       name_in_source: glutamatergic
-    sources:
-    - ref: https://doi.org/10.3389/fnana.2012.00013
-      quote_key: 1115431_893575fd
-    - ref: PMID:26346726
-      quote_key: 2281033_5b9805ff
-    - ref: PMID:27113915
-      quote_key: 4875295_002a714a
-  defining_markers:
-  - symbol: Gria1
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:32009891
-      method: immunohistochemistry
-      scope: rat hippocampus
-      quote_key: 210181642_7ac40176
-      marker_type: PROTEIN
-  - symbol: Gria2
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:32009891
-      method: immunohistochemistry
-      scope: rat hippocampus
-      quote_key: 210181642_88f001b0
-      marker_type: PROTEIN
-  - symbol: Grm1
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:27375434
-      method: review
-      scope: rat hippocampus
-      quote_key: 14854554_b6a5ffa0
-      marker_type: PROTEIN
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:27375434
-      method: review
-      scope: rat hippocampus
-      quote_key: 14854554_ed1bdc00
-      marker_type: PROTEIN
-  - symbol: Nptn
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:28779130
-      method: immunohistochemistry
-      scope: human hippocampus
-      quote_key: 3288675_37ad1c13
-      marker_type: PROTEIN
-  - symbol: Gjd2
-    ncbi_gene_id: null
-    sources:
-    - ref: https://doi.org/10.3389/fnana.2012.00013
-      method: freeze-fracture replica immunolabeling
-      scope: adult rat CA3
-      quote_key: 1115431_08a02feb
-      marker_type: PROTEIN
-  negative_markers: []
-  neuropeptides: []
-  morphology:
-    description: Cell bodies in CA3 stratum pyramidale receive mossy fiber input from granule cells in stratum lucidum; form
-      Schaffer collateral projections to CA1. Form rare mixed electrical-chemical glutamatergic synapses with neuronal gap
-      junctions containing Cx36.
-    sources:
-    - ref: PMID:23271650
-      quote_key: 3153294_c37d3561
-    - ref: https://doi.org/10.3389/fnana.2012.00013
-      quote_key: 1115431_893575fd
-    - ref: https://doi.org/10.3389/fnana.2012.00013
-      quote_key: 1115431_623fc68d
-  electrophysiology:
-    description: Fast excitatory synaptic transmission via non-NMDA (AMPA/kainate) glutamate receptors; NMDA receptors serve
-      a slower modulatory role. AMPA, kainate, and NMDA receptor families are broadly co-localized.
-    sources:
-    - ref: PMID:7722624
-      quote_key: 5468451_656975dd
-    - ref: PMID:10864941
-      quote_key: 502543_02fe99f0
-    - ref: PMID:37011759
-      quote_key: 252086716_f9c70b51
-  cl_mapping:
-    cl_term:
-      id: CL:1001571
-      label: hippocampal pyramidal neuron
-      name_in_source: hippocampal pyramidal neuron
-    mapping_type: BROAD
-    mapping_notes: CA3-specific term absent from CL. Best available match is CL:1001571 (hippocampal pyramidal neuron); synonym
-      'hippocampus (CA) pyramidal cell' covers CA1–CA3 without subfield specificity.
-  definition_references:
-  - PMID:19342486
-  - DOI:10.3389/fnana.2012.00013
-  - PMID:32009891
-  - PMID:7722624
-  - PMID:23271650
-  is_terminal: false
-  notes: 'AMBIGUITY: Pioneer early-generated CA3 glutamatergic neurons (Marissal et al., 2012) form a morpho-functionally
-    distinct subpopulation with persistent features into adulthood — likely a separable subtype. GAP: no dedicated electrophysiology
-    quotes specific to CA3 pyramidal cells (vs. shared CA1/CA3 receptor descriptions); primary verification needed.'
-- id: ca1_pyramidal_cell
-  name: CA1 pyramidal cell
-  definition_basis: CLASSICAL_MULTIMODAL
-  species: null
-  anatomical_location:
-  - id: UBERON:0014548
-    label: pyramidal layer of CA1
-    name_in_source: CA1 stratum pyramidale
-    compartment: SOMA
-    sources:
-    - ref: PMID:24319410
-      quote_key: 7458943_d6507595
-    - ref: PMID:24319410
-      quote_key: 7458943_efa15be5
-    - ref: PMID:32009891
-      quote_key: 210181642_7ac40176
-  - id: UBERON:0005372
-    label: hippocampus stratum radiatum
-    name_in_source: CA1 stratum radiatum (apical dendritic field)
-    compartment: DENDRITE
-    sources:
-    - ref: PMID:32009891
-      method: immunohistochemistry
-      scope: rat hippocampus
-      quote_key: 210181642_7ac40176
-  - id: UBERON:0005371
-    label: hippocampus stratum oriens
-    name_in_source: CA1 stratum oriens (basal dendritic field)
-    compartment: DENDRITE
-    sources:
-    - ref: PMID:32009891
-      method: immunohistochemistry
-      scope: rat hippocampus
-      quote_key: 210181642_7ac40176
-  - id: UBERON:0002191
-    label: subiculum
-    name_in_source: subiculum (projection target)
-    compartment: AXON_TARGET
-    sources:
-    - ref: PMID:24319410
-      method: review
-      scope: rat hippocampus
-      quote_key: 7458943_efa15be5
-  nt_type:
-    name_in_source: glutamatergic
-    cl_terms:
-    - id: CL:0000679
-      label: glutamatergic neuron
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:25253849
+          quote_key: 7165380_5e53cfc0
+        - ref: PMID:25206826
+          quote_key: 7981953_ebaa6eee
+        - ref: PMID:26402459
+          quote_key: 631148_85ae9bb1
+    defining_markers:
+      - symbol: Reln
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:25253849
+            method: optogenetic activation in slice
+            scope: mouse hippocampus
+            quote_key: 7165380_5e53cfc0
+            marker_type: PROTEIN
+          - ref: PMID:25206826
+            method: immunohistochemistry
+            scope: mouse hippocampus
+            quote_key: 7981953_7f1ea74e
+            marker_type: PROTEIN
+    negative_markers: []
+    neuropeptides: []
+    morphology:
+      description: 'Soma in stratum lacunosum-moleculare (SLM) and outer molecular layer (OML) of the hippocampal formation. Three axonal subtypes: (1) layer-restricted local-projecting CR cells acting as glutamatergic interneurons; (2) local-projecting CR cells whose axons cross the hippocampal fissure between SLM and OML; (3) long-range projecting CR cells targeting distant subregions. CR cells are biased toward targeting dendritic shafts of GABAergic interneurons over spines, and produce large-amplitude glutamatergic unitary postsynaptic potentials on interneurons. Reelin-positive CR cells increase in density with age in adult hippocampus.'
+      sources:
+        - ref: PMID:26582498
+          quote_key: 2565845_ec963328
+        - ref: PMID:26582498
+          quote_key: 2565845_3bfe1a28
+        - ref: PMID:26582498
+          quote_key: 2565845_8c6a8b64
+    electrophysiology:
+      description: Optogenetic activation of CR cells in SLM elicits monosynaptic AMPA/NMDA receptor-mediated EPSCs in local interneurons (faster kinetics) and CA1 pyramidal cells (slower kinetics). Responses are blocked by TTX and rescued in interneurons by 4-AP, indicating direct monosynaptic CR cell-to-interneuron connection. Provides feedforward GABAergic input onto pyramidal cells via interneuron activation.
+      sources:
+        - ref: PMID:25253849
+          method: optogenetic activation in slice
+          scope: mouse hippocampus
+          quote_key: 7165380_5e53cfc0
+        - ref: PMID:26582498
+          method: patch-clamp recording in slice
+          scope: mouse hippocampus
+          quote_key: 2565845_ec963328
+    cl_mapping:
+      cl_term:
+        id: CL:0000695
+        label: Cajal-Retzius cell
+        name_in_source: Cajal-Retzius cell
+      mapping_type: BROAD
+      mapping_notes: CL:0000695 = Cajal-Retzius cell describes the general CR cell class across cortex and hippocampus; the proposed type is the specifically hippocampal, adult-persisting, glutamatergic subpopulation (reelin+/calretinin+/VGluT3+). The CL definition includes hippocampal SLM and OML localisation.
+    definition_references:
+      - PMID:25253849
+      - PMID:26582498
+      - PMID:25206826
+      - PMID:26402459
+      - DOI:10.1523/JNEUROSCI.1407-14.2014
+    is_terminal: false
+    notes: 'HETEROGENEITY: a substantial fraction of hippocampal CR cells are GABAergic; only the glutamatergic (reelin+/calretinin+/VGluT3+) subpopulation is captured here. Three axonal subtypes (layer-restricted local, cross-fissure local, long-range) likely warrant separate sub-nodes. AMBIGUITY: CR cells are more abundant in adult rat than previously assumed (Quattrocolo et al., 2014).'
+  - id: ca1_radiatum_giant_cell
+    name: CA1 radiatum giant cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0005372
+        label: hippocampus stratum radiatum
+        name_in_source: CA1 stratum radiatum
+        compartment: SOMA
+        sources:
+          - ref: PMID:10864941
+            method: patch-clamp recording in slice
+            scope: rat CA1
+            quote_key: 502543_4f78ac74
+    nt_type:
       name_in_source: glutamatergic
-    sources:
-    - ref: PMID:26346726
-      quote_key: 2281033_5b9805ff
-    - ref: PMID:27113915
-      quote_key: 4875295_002a714a
-    - ref: PMID:26402459
-      quote_key: 631148_96ad2908
-  defining_markers:
-  - symbol: Gria1
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:32009891
-      method: immunohistochemistry
-      scope: rat hippocampus
-      quote_key: 210181642_7ac40176
-      marker_type: PROTEIN
-  - symbol: Gria2
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:32009891
-      method: immunohistochemistry
-      scope: rat hippocampus
-      quote_key: 210181642_88f001b0
-      marker_type: PROTEIN
-  - symbol: Nptn
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:28779130
-      method: immunohistochemistry
-      scope: human hippocampus
-      quote_key: 3288675_37ad1c13
-      marker_type: PROTEIN
-    - ref: PMID:28779130
-      method: immunohistochemistry
-      scope: human hippocampus
-      quote_key: 3288675_d39d0506
-      marker_type: PROTEIN
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:27375434
-      method: review
-      scope: rat hippocampus
-      quote_key: 14854554_ed1bdc00
-      marker_type: PROTEIN
-  negative_markers:
-  - symbol: Drd1
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:27678395
-      method: transgenic Drd1-tdTomato reporter
-      scope: mouse dorsal CA1
-      quote_key: 1711204_08c527a1
-      marker_type: PROTEIN
-  neuropeptides: []
-  morphology:
-    description: Pyramidal cell bodies in CA1 stratum pyramidale; receive Schaffer collateral input from CA3 in stratum radiatum
-      and project to subiculum and entorhinal cortex. High Np65 (neuroplastin-65) immunoreactivity at cell body membranes
-      and dendrites. GluA1 strong dense immunoreactivity in str. oriens and radiatum; GluA2 localized to cell bodies in str.
-      pyramidale.
-    sources:
-    - ref: PMID:23180766
-      quote_key: 13358368_423cf3cc
-  electrophysiology:
-    description: Fast excitatory transmission via AMPA receptors; NMDA receptors serve a slower modulatory role. Np65 regulates
-      the number and function of excitatory synapses in CA1. AMPA/kainate and NMDA receptors are colocalized at individual
-      spines.
-    sources:
-    - ref: PMID:7722624
-      quote_key: 5468451_656975dd
-    - ref: PMID:24554721
-      quote_key: 34872919_c89ee15c
-    - ref: PMID:10864941
-      quote_key: 502543_02fe99f0
-  cl_mapping:
-    cl_term:
-      id: CL:1001571
-      label: hippocampal pyramidal neuron
-      name_in_source: hippocampal pyramidal neuron
-    mapping_type: BROAD
-    mapping_notes: CA1-specific term absent from CL. Same BROAD mapping to CL:1001571 as CA3.
-  definition_references:
-  - PMID:19342486
-  - PMID:28779130
-  - PMID:32009891
-  - PMID:27678395
-  - PMID:24319410
-  is_terminal: false
-  notes: 'AMBIGUITY: Ventral CA1 pyramidal neurons express D1/D2 dopamine receptors (45.1% of D1/D2 cells in vHipp are glutamatergic)
-    — likely projection-specific vCA1/vSubiculum subtypes; dorsal CA1 pyramidal cells are D1R-negative. Np65-positive glutamatergic
-    neurons are not CA1-specific (also CA2-3 and subiculum).'
-- id: ms_dbb_glutamatergic_neuron
-  name: medial septal / diagonal band of Broca glutamatergic neuron
-  definition_basis: CLASSICAL_MULTIMODAL
-  species: null
-  anatomical_location:
-  - id: UBERON:0002421
-    label: hippocampal formation
-    name_in_source: medial septum / diagonal band of Broca (extrahippocampal soma — UBERON term used as nearest available;
-      soma is not in hippocampal formation)
-    compartment: SOMA
-    sources:
-    - ref: PMID:29250747
-      method: review
-      scope: rodent septohippocampal system
-      quote_key: 21358766_0c242fdc
-  - id: UBERON:0005371
-    label: hippocampus stratum oriens
-    name_in_source: hippocampal stratum oriens near alveus (synaptic target on interneurons)
-    compartment: AXON_TARGET
-    sources:
-    - ref: PMID:29250747
-      quote_key: 21358766_01840c4a
-  nt_type:
-    name_in_source: glutamatergic
-    cl_terms:
-    - id: CL:0000679
-      label: glutamatergic neuron
-      name_in_source: glutamatergic
-    sources:
-    - ref: PMID:29250747
-      method: review
-      scope: rodent MS-DBB
-      quote_key: 21358766_0c242fdc
-  defining_markers:
-  - symbol: Slc17a7
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:29250747
-      method: review
-      scope: rodent MS-DBB
-      quote_key: 21358766_0c242fdc
-      marker_type: PROTEIN
-  - symbol: Slc17a6
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:29250747
-      method: review
-      scope: rodent MS-DBB
-      quote_key: 21358766_0c242fdc
-      marker_type: PROTEIN
-    - ref: PMID:32132227
-      method: review
-      scope: rodent fornix/septohippocampal
-      quote_key: 212418354_02349d4e
-      marker_type: PROTEIN
-  negative_markers:
-  - symbol: Chat
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:29250747
-      method: review
-      scope: rodent MS-DBB
-      quote_key: 21358766_0c242fdc
-      marker_type: PROTEIN
-  - symbol: Gad1
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:29250747
-      method: review
-      scope: rodent MS-DBB
-      quote_key: 21358766_0c242fdc
-      marker_type: PROTEIN
-  neuropeptides: []
-  morphology:
-    description: Soma in medial septum/diagonal band of Broca; account for ~23% of MS projections to hippocampus; project
-      preferentially to hippocampal interneurons with somata in stratum oriens near the alveus.
-    sources:
-    - ref: PMID:29250747
-      method: review
-      scope: rodent septohippocampal
-      quote_key: 21358766_0c242fdc
-    - ref: PMID:29250747
-      method: review
-      scope: rodent septohippocampal
-      quote_key: 21358766_01840c4a
-  electrophysiology:
-    description: 'Highly heterogeneous firing in four subtypes: (1) fast-spiking with little AP accommodation, occasional
-      spontaneous firing, sometimes pronounced Ih sag; (2) cluster-firing (8-14 Hz) with subthreshold membrane oscillations
-      and strong AP accommodation — UNIQUE to glutamatergic MS-DBB neurons; (3) burst-firing (distinct from GABAergic burst
-      pattern) with little/no sag; (4) slow-firing with broad accommodating APs. Can spontaneously fire rhythmically at theta
-      frequencies. Activity rises before locomotion onset and during running.'
-    sources:
-    - ref: PMID:29250747
-      quote_key: 21358766_0c242fdc
-    - ref: PMID:21106833
-      quote_key: 15897856_d5424e2a
-    - ref: PMID:21106833
-      quote_key: 15897856_5e7429ed
-  definition_references:
-  - PMID:29250747
-  - PMID:21106833
-  - PMID:32132227
-  is_terminal: false
-  notes: 'Four electrophysiologically distinct VGluT2+ subgroups (fast-spiking, cluster-firing, burst-firing, slow-firing).
-    Cluster firing is a unique electrophysiological marker for glutamatergic (not GABAergic) MS-DBB neurons. Soma is extrahippocampal
-    — node retained because the cell projects into hippocampal formation; UBERON soma assignment is approximate (hippocampal
-    formation used as nearest umbrella term).
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: rat CA1
+          quote_key: 502543_4f78ac74
+    defining_markers: []
+    negative_markers: []
+    neuropeptides: []
+    morphology:
+      description: Large triangular soma in upper CA1 stratum radiatum; one to two prominent thick apical dendrites bifurcating close to the soma and ascending to stratum lacunosum-moleculare, arborizing extensively with spiny second-order dendrites; myelinated axon. Axon arises vertically, traverses stratum pyramidale and bifurcates in stratum oriens — one branch toward subiculum, one toward fimbria (projecting ultimately to olfactory cortex). Axon collaterals in stratum oriens form asymmetric (excitatory) synapses. Three morphological subtypes — symmetrical two-dendrite form; one main dendrite plus shorter parallel dendrite; pyramidal-like single bifurcating apical dendrite. Soma and dendrites readily identified by DIC optics in living tissue (Christie et al. 2000). Morphology confirmed in adult mouse with same inverted triangular soma and two thick apical dendrites (Nasrallah et al. 2019).
+      sources:
+        - ref: PMID:10864941
+          method: biocytin fill + confocal reconstruction, patch-clamp recording in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_01caddaa
+        - ref: PMID:10864941
+          method: biocytin fill + confocal reconstruction
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_651f2f6e
+        - ref: PMID:10864941
+          method: biocytin fill + confocal reconstruction
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_7b22eb75
+        - ref: PMID:11153713
+          method: DIC optics + biocytin fill
+          scope: adult rat CA1 acute slice
+          quote_key: 16689152_6f562856
+        - ref: PMID:30943417
+          method: whole-cell patch-clamp + biocytin fill
+          scope: adult mouse CA1 acute slice
+          quote_key: 92998057_50a6488b
+    electrophysiology:
+      description: NMDA receptor-dependent burst firing in response to glutamatergic synaptic activation even after non-NMDA receptor blockade (CNQX-insensitive, APV-sensitive burst). EPSCs at least threefold larger than in CA1 pyramidal cells. Prominent spike afterdepolarization (ADP) and spike frequency accommodation (common but not universal). Lacks the pronounced fast afterhyperpolarization (fAHP) that characterises stratum radiatum interneurons. NMDA receptors active at resting membrane potential — Mg2+ block Kd ~0.42 mM at -60 mV (vs ~0.15 mM in CA1 PCs), less voltage-dependent (delta 0.80 vs 0.95 in PCs). NMDA EPSC decay slower (Af/As ~2.25 vs ~6.2 in PCs); rise times faster (9.6 +/- 0.7 ms vs 11.7 +/- 0.6 ms). NMDA-dependent LTP induced by 100-Hz stimulation (magnitude ~51% +/- 18%; blocked by APV; requires postsynaptic Ca2+ influx); 200-Hz stimuli do not induce LTP. Reversed HCN channel expression gradient vs other CA1 PNs (Bullis et al. 2007, via Nasrallah et al. 2019). NR2D (GRIN2D) subunit proposed as contributor to biophysical signature (Discussion-level inference).
+      sources:
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: rat CA1
+          quote_key: 502543_4f78ac74
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: rat CA1
+          quote_key: 502543_10e7f921
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_3d8cdf8d
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_89f231a8
+        - ref: PMID:11153713
+          method: whole-cell patch-clamp in slice, biocytin fill
+          scope: adult rat CA1 acute slice
+          quote_key: 16689152_399c08ed
+        - ref: PMID:11153713
+          method: whole-cell patch-clamp in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 16689152_9c3d2f1e
+        - ref: PMID:11153713
+          method: whole-cell patch-clamp in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 16689152_d0088250
+    definition_references:
+      - PMID:10864941
+      - PMID:11153713
+      - PMID:30943417
+    is_terminal: false
+    notes: 'Morphology and LTP properties independently replicated in Christie et al. (2000, PMID:11153713); RGC identity confirmed in mouse and CA2 pyramidal neurons identified as a strong presynaptic input by Nasrallah et al. (2019, PMID:30943417). GAP: defining molecular markers absent; reversed HCN channel expression gradient reported (Bullis et al. 2007) but not yet entered as a source. Modern transcriptomic characterisation needed.
 
 
-    CL mapping note: No CL term for medial septal / diagonal band of Broca glutamatergic neuron. CL:0000679 (glutamatergic
-    neuron) too broad. Potential CL contribution.'
-- id: hpc_cajal_retzius_cell
-  name: hippocampal Cajal-Retzius cell
-  definition_basis: CLASSICAL_MULTIMODAL
-  species: null
-  anatomical_location:
-  - id: UBERON:0014557
-    label: CA1 stratum lacunosum moleculare
-    name_in_source: CA1 stratum lacunosum-moleculare (SLM)
-    compartment: SOMA
-    sources:
-    - ref: PMID:25253849
-      method: optogenetic activation in slice
-      scope: mouse hippocampus
-      quote_key: 7165380_5e53cfc0
-    - ref: PMID:26582498
-      method: biocytin fill / morphological reconstruction
-      scope: mouse hippocampus
-      quote_key: 2565845_8c6a8b64
-    - ref: PMID:26402459
-      method: review
-      scope: rodent hippocampus
-      quote_key: 631148_85ae9bb1
-  - id: UBERON:0001885
-    label: dentate gyrus of hippocampal formation
-    name_in_source: outer molecular layer (OML) of dentate gyrus
-    compartment: SOMA
-    sources:
-    - ref: PMID:26582498
-      method: biocytin fill / morphological reconstruction
-      scope: mouse hippocampus
-      quote_key: 2565845_8c6a8b64
-  nt_type:
-    name_in_source: glutamatergic
-    cl_terms:
-    - id: CL:0000679
-      label: glutamatergic neuron
-      name_in_source: glutamatergic
-    sources:
-    - ref: PMID:25253849
-      quote_key: 7165380_5e53cfc0
-    - ref: PMID:25206826
-      quote_key: 7981953_ebaa6eee
-    - ref: PMID:26402459
-      quote_key: 631148_85ae9bb1
-  defining_markers:
-  - symbol: Reln
-    ncbi_gene_id: null
-    sources:
-    - ref: PMID:25253849
-      method: optogenetic activation in slice
-      scope: mouse hippocampus
-      quote_key: 7165380_5e53cfc0
-      marker_type: PROTEIN
-    - ref: PMID:25206826
-      method: immunohistochemistry
-      scope: mouse hippocampus
-      quote_key: 7981953_7f1ea74e
-      marker_type: PROTEIN
-  negative_markers: []
-  neuropeptides: []
-  morphology:
-    description: 'Soma in stratum lacunosum-moleculare (SLM) and outer molecular layer (OML) of the hippocampal formation.
-      Three axonal subtypes: (1) layer-restricted local-projecting CR cells acting as glutamatergic interneurons; (2) local-projecting
-      CR cells whose axons cross the hippocampal fissure between SLM and OML; (3) long-range projecting CR cells targeting
-      distant subregions. CR cells are biased toward targeting dendritic shafts of GABAergic interneurons over spines, and
-      produce large-amplitude glutamatergic unitary postsynaptic potentials on interneurons. Reelin-positive CR cells increase
-      in density with age in adult hippocampus.'
-    sources:
-    - ref: PMID:26582498
-      quote_key: 2565845_ec963328
-    - ref: PMID:26582498
-      quote_key: 2565845_3bfe1a28
-    - ref: PMID:26582498
-      quote_key: 2565845_8c6a8b64
-  electrophysiology:
-    description: Optogenetic activation of CR cells in SLM elicits monosynaptic AMPA/NMDA receptor-mediated EPSCs in local
-      interneurons (faster kinetics) and CA1 pyramidal cells (slower kinetics). Responses are blocked by TTX and rescued in
-      interneurons by 4-AP, indicating direct monosynaptic CR cell-to-interneuron connection. Provides feedforward GABAergic
-      input onto pyramidal cells via interneuron activation.
-    sources:
-    - ref: PMID:25253849
-      method: optogenetic activation in slice
-      scope: mouse hippocampus
-      quote_key: 7165380_5e53cfc0
-    - ref: PMID:26582498
-      method: patch-clamp recording in slice
-      scope: mouse hippocampus
-      quote_key: 2565845_ec963328
-  cl_mapping:
-    cl_term:
-      id: CL:0000695
-      label: Cajal-Retzius cell
-      name_in_source: Cajal-Retzius cell
-    mapping_type: BROAD
-    mapping_notes: CL:0000695 = Cajal-Retzius cell describes the general CR cell class across cortex and hippocampus; the
-      proposed type is the specifically hippocampal, adult-persisting, glutamatergic subpopulation (reelin+/calretinin+/VGluT3+).
-      The CL definition includes hippocampal SLM and OML localisation.
-  definition_references:
-  - PMID:25253849
-  - PMID:26582498
-  - PMID:25206826
-  - PMID:26402459
-  - DOI:10.1523/JNEUROSCI.1407-14.2014
-  is_terminal: false
-  notes: 'HETEROGENEITY: a substantial fraction of hippocampal CR cells are GABAergic; only the glutamatergic (reelin+/calretinin+/VGluT3+)
-    subpopulation is captured here. Three axonal subtypes (layer-restricted local, cross-fissure local, long-range) likely
-    warrant separate sub-nodes. AMBIGUITY: CR cells are more abundant in adult rat than previously assumed (Quattrocolo et
-    al., 2014).'
-- id: ca1_radiatum_giant_cell
-  name: CA1 radiatum giant cell
-  definition_basis: CLASSICAL_MULTIMODAL
-  species: null
-  anatomical_location:
-  - id: UBERON:0005372
-    label: hippocampus stratum radiatum
-    name_in_source: CA1 stratum radiatum
-    compartment: SOMA
-    sources:
-    - ref: PMID:10864941
-      method: patch-clamp recording in slice
-      scope: rat CA1
-      quote_key: 502543_4f78ac74
-  nt_type:
-    name_in_source: glutamatergic
-    cl_terms:
-    - id: CL:0000679
-      label: glutamatergic neuron
-      name_in_source: glutamatergic
-    sources:
-    - ref: PMID:10864941
-      method: patch-clamp recording in slice
-      scope: rat CA1
-      quote_key: 502543_4f78ac74
-  defining_markers: []
-  negative_markers: []
-  neuropeptides: []
-  morphology:
-    description: Large triangular soma in upper CA1 stratum radiatum; one to two prominent thick apical dendrites bifurcating close to the soma and ascending to stratum lacunosum-moleculare, arborizing extensively with spiny second-order dendrites; myelinated axon. Axon arises vertically, traverses stratum pyramidale and bifurcates in stratum oriens — one branch toward subiculum, one toward fimbria (projecting ultimately to olfactory cortex). Axon collaterals in stratum oriens form asymmetric (excitatory) synapses. Three morphological subtypes — symmetrical two-dendrite form; one main dendrite plus shorter parallel dendrite; pyramidal-like single bifurcating apical dendrite. Soma and dendrites readily identified by DIC optics in living tissue (Christie et al. 2000). Morphology confirmed in adult mouse with same inverted triangular soma and two thick apical dendrites (Nasrallah et al. 2019).
-    sources:
-    - ref: PMID:10864941
-      method: biocytin fill + confocal reconstruction, patch-clamp recording in slice
-      scope: adult rat CA1 acute slice
-      quote_key: 502543_01caddaa
-    - ref: PMID:10864941
-      method: biocytin fill + confocal reconstruction
-      scope: adult rat CA1 acute slice
-      quote_key: 502543_651f2f6e
-    - ref: PMID:10864941
-      method: biocytin fill + confocal reconstruction
-      scope: adult rat CA1 acute slice
-      quote_key: 502543_7b22eb75
-    - ref: PMID:11153713
-      method: DIC optics + biocytin fill
-      scope: adult rat CA1 acute slice
-      quote_key: 16689152_6f562856
-    - ref: PMID:30943417
-      method: whole-cell patch-clamp + biocytin fill
-      scope: adult mouse CA1 acute slice
-      quote_key: 92998057_50a6488b
-  electrophysiology:
-    description: NMDA receptor-dependent burst firing in response to glutamatergic synaptic activation even after non-NMDA receptor blockade (CNQX-insensitive, APV-sensitive burst). EPSCs at least threefold larger than in CA1 pyramidal cells. Prominent spike afterdepolarization (ADP) and spike frequency accommodation (common but not universal). Lacks the pronounced fast afterhyperpolarization (fAHP) that characterises stratum radiatum interneurons. NMDA receptors active at resting membrane potential — Mg2+ block Kd ~0.42 mM at -60 mV (vs ~0.15 mM in CA1 PCs), less voltage-dependent (delta 0.80 vs 0.95 in PCs). NMDA EPSC decay slower (Af/As ~2.25 vs ~6.2 in PCs); rise times faster (9.6 +/- 0.7 ms vs 11.7 +/- 0.6 ms). NMDA-dependent LTP induced by 100-Hz stimulation (magnitude ~51% +/- 18%; blocked by APV; requires postsynaptic Ca2+ influx); 200-Hz stimuli do not induce LTP. Reversed HCN channel expression gradient vs other CA1 PNs (Bullis et al. 2007, via Nasrallah et al. 2019). NR2D (GRIN2D) subunit proposed as contributor to biophysical signature (Discussion-level inference).
-    sources:
-    - ref: PMID:10864941
-      method: patch-clamp recording in slice
-      scope: rat CA1
-      quote_key: 502543_4f78ac74
-    - ref: PMID:10864941
-      method: patch-clamp recording in slice
-      scope: rat CA1
-      quote_key: 502543_10e7f921
-    - ref: PMID:10864941
-      method: patch-clamp recording in slice
-      scope: adult rat CA1 acute slice
-      quote_key: 502543_3d8cdf8d
-    - ref: PMID:10864941
-      method: patch-clamp recording in slice
-      scope: adult rat CA1 acute slice
-      quote_key: 502543_89f231a8
-    - ref: PMID:11153713
-      method: whole-cell patch-clamp in slice, biocytin fill
-      scope: adult rat CA1 acute slice
-      quote_key: 16689152_399c08ed
-    - ref: PMID:11153713
-      method: whole-cell patch-clamp in slice
-      scope: adult rat CA1 acute slice
-      quote_key: 16689152_9c3d2f1e
-    - ref: PMID:11153713
-      method: whole-cell patch-clamp in slice
-      scope: adult rat CA1 acute slice
-      quote_key: 16689152_d0088250
-  definition_references:
-  - PMID:10864941
-  - PMID:11153713
-  - PMID:30943417
-  is_terminal: false
-  notes: 'Morphology and LTP properties independently replicated in Christie et al. (2000, PMID:11153713); RGC identity confirmed in mouse and CA2 pyramidal neurons identified as a strong presynaptic input by Nasrallah et al. (2019, PMID:30943417). GAP: defining molecular markers absent; reversed HCN channel expression gradient reported (Bullis et al. 2007) but not yet entered as a source. Modern transcriptomic characterisation needed.
-
-
-    CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential CL contribution.'
-edges: []
+      CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential CL contribution.'
+  - id: CS20230722_CLUS_0497
+    name: 0497 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0497
+  - id: CS20230722_CLUS_0294
+    name: 0294 CA1-ProS Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0294
+  - id: CS20230722_CLUS_0316
+    name: 0316 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0316
+  - id: CS20230722_CLUS_0317
+    name: 0317 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0317
+  - id: CS20230722_CLUS_0323
+    name: 0323 L2 IT PPP-APr Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0323
+  - id: CS20230722_SUPT_0135
+    name: 0135 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0135
+  - id: CS20230722_SUPT_0079
+    name: 0079 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: CS20230722_SUPT_0139
+    name: 0139 DG Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0139
+  - id: CS20230722_SUPT_0138
+    name: 0138 DG Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0138
+  - id: CS20230722_SUPT_0137
+    name: 0137 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0137
+  - id: CS20230722_CLUS_0332
+    name: 0332 L2/3 IT PPP Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0332
+  - id: CS20230722_CLUS_2689
+    name: 2689 TH Prkcd Grin2c Glut_14
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_2689
+  - id: CS20230722_CLUS_0122
+    name: 0122 L2/3 IT ENT Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0122
+  - id: CS20230722_CLUS_0132
+    name: 0132 L2/3 IT ENT Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0132
+  - id: CS20230722_CLUS_0133
+    name: 0133 L2/3 IT ENT Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0133
+  - id: CS20230722_SUPT_0673
+    name: 0673 MG-POL-SGN Nts Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0673
+  - id: CS20230722_SUPT_1170
+    name: 1170 Astroependymal NN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1170
+  - id: CS20230722_SUPT_0012
+    name: 0012 L5/6 IT TPE-ENT Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0012
+  - id: CS20230722_SUPT_0010
+    name: 0010 L5/6 IT TPE-ENT Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0010
+  - id: CS20230722_SUPT_0068
+    name: 0068 ENTmv-PA-COAp Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0068
+  - id: CS20230722_CLUS_0261
+    name: 0261 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0261
+  - id: CS20230722_CLUS_0262
+    name: 0262 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0262
+  - id: CS20230722_CLUS_0263
+    name: 0263 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0263
+  - id: CS20230722_CLUS_0269
+    name: 0269 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0269
+  - id: CS20230722_CLUS_0271
+    name: 0271 CA1-ProS Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0271
+  - id: CS20230722_SUPT_0069
+    name: 0069 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0069
+  - id: CS20230722_SUPT_0074
+    name: 0074 CA1-ProS Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0074
+  - id: CS20230722_SUPT_0072
+    name: 0072 CA1-ProS Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0072
+  - id: CS20230722_SUPT_0070
+    name: 0070 CA1-ProS Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0070
+  - id: CS20230722_SUPT_0100
+    name: 0100 CA2-FC-IG Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0100
+edges:
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0497
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0497
+    relationship: skos:closeMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0497 HPF CR Glut_1; region_fraction_100um=0.694; strict region_fraction=0.559.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2880 [painted]; Dentate gyrus [MBA:726] count_100um=2360 [painted]; Dentate gyrus, molecular layer [MBA:10703] count_100um=2358 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.694; strict region_fraction: 0.559; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 12.42; cohort_pct 0.987'
+        alignment: CONSISTENT
+        notes: val=12.42; cohort percentile 0.987
+    caveats:
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: Classical soma definition includes both CA1 SLM and DG OML; cluster painted distribution centres on DG molecular layer with the CA1-SLM component not captured at this cluster's resolution.
+      - caveat_type: SINGLE_STUDY
+        description: Reln is the only marker evidenced at transcript level on the cluster; multi-marker concordance (Calb2, VGluT3) is not yet attached.
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 12.42
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.987
+      region_fraction: 0.559
+      region_fraction_100um: 0.694
+      region_evidence: SELF
+    confidence: MODERATE
+    rationale: "[tier:NEXT] Cluster 0497 HPF CR Glut_1 [CS20230722_CLUS_0497] is the dominant child of supertype SUPT_0135 (2498 of 3116 cells) and carries the highest cluster-level Reln signal in the hippocampal-glutamatergic rank-0 cohort (mean 12.42, cohort percentile 0.987). Painted soma distribution centres on dentate gyrus molecular layer (region_fraction_100um=0.694), aligning with the OML compartment of the classical soma description. NT annotation at cluster level is Glut, confirming glutamatergic identity. Confidence held at MODERATE because the evidence base is atlas-internal only; the CA1 stratum lacunosum-moleculare component of the classical soma definition is not reflected in the cluster's painted distribution and may map to a sibling cluster not surfaced in the candidate set."
+    reconciliation_note: Paired with supertype-level edge edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_0135 (parent supertype) which carries the broadMatch.
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - Annotation transfer from a hippocampal CR-targeted transcriptomic cohort against CCN20230722; F1 >= 0.80 at cluster rank would establish 1:1 mapping.
+      - Sibling-cluster query within SUPT_0135 for child clusters carrying CA1 stratum lacunosum-moleculare painted signal.
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    unresolved_questions:
+      - Is the CA1-SLM CR population captured by a distinct sibling cluster within SUPT_0135 not currently in the top-K candidate set?
+      - Do the multi-marker classical defining set (Reln + Calb2 + VGluT3) align quantitatively at cluster level?
+    rationale_source_hash: dc91dbee
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0294
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0294
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0294 CA1-ProS Glut_6; region_fraction_100um=0.582; strict region_fraction=0.111.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=320 [painted]; Prosubiculum [MBA:484682470] count_100um=252 [painted]; Subiculum [MBA:502] count_100um=247 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.582; strict region_fraction: 0.111; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 3.28; cohort_pct 0.791'
+        alignment: CONSISTENT
+        notes: val=3.28; cohort percentile 0.791
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Painted soma in prosubiculum / subiculum, not in classical CR soma compartments (CA1 SLM, DG OML).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 3.28
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.791
+      region_fraction: 0.111
+      region_fraction_100um: 0.582
+      region_evidence: SELF
+    confidence: LOW
+    rationale: '[tier:CUT] Cluster 0294 is a CA1-ProS pyramidal-class glutamatergic cluster with painted soma in prosubiculum / subiculum, not in CA1 SLM or DG OML; Reln expression (3.28, cohort percentile 0.791) is the second-highest in the rank-0 cohort but well below the dedicated CR cluster (CLUS_0497, mean 12.42), consistent with a different cell class that incidentally expresses Reln at moderate level. Cell class is wrong for hippocampal Cajal-Retzius cell.'
+    mapping_cardinality: "n:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    rationale_source_hash: a3e6f51a
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0316
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0316
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0316 CA3 Glut_5; region_fraction_100um=0.646; strict region_fraction=0.200.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=499 [painted]; Field CA3 [MBA:463] count_100um=461 [painted]; Field CA3, stratum radiatum [MBA:504] count_100um=389 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.646; strict region_fraction: 0.200; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 0.11; cohort_pct 0.138'
+        alignment: APPROXIMATE
+        notes: val=0.11; cohort percentile 0.138
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Painted soma in CA3 stratum radiatum, not in classical CR soma compartments.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Reln near-absent (mean 0.11, cohort percentile 0.138).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 0.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.138
+      region_fraction: 0.2
+      region_fraction_100um: 0.646
+      region_evidence: SELF
+    confidence: LOW
+    rationale: '[tier:CUT] Cluster 0316 is a CA3 pyramidal-class cluster with painted soma in field CA3 stratum radiatum; Reln expression is near-absent (0.11, cohort percentile 0.138). Cell class is wrong for hippocampal Cajal-Retzius cell, and the defining marker is not present at meaningful level.'
+    mapping_cardinality: "n:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    rationale_source_hash: 30830f81
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0317
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0317
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0317 CA3 Glut_5; region_fraction_100um=0.997; strict region_fraction=0.883.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1231 [painted]; Dentate gyrus [MBA:726] count_100um=1229 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1222 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.997; strict region_fraction: 0.883; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 0.21; cohort_pct 0.289'
+        alignment: APPROXIMATE
+        notes: val=0.21; cohort percentile 0.289
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Painted soma in DG polymorph layer (hilus), not in classical CR soma compartments (CA1 SLM, DG OML).
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Reln low (mean 0.21, cohort percentile 0.289).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 0.21
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.289
+      region_fraction: 0.883
+      region_fraction_100um: 0.997
+      region_evidence: SELF
+    confidence: LOW
+    rationale: '[tier:CUT] Cluster 0317 (CA3 Glut_5) has painted soma in dentate gyrus polymorph layer (hilar region) consistent with a hilar / CA3 lineage cell, not Cajal-Retzius. Reln expression is low (0.21, cohort percentile 0.289). Cell class is wrong.'
+    mapping_cardinality: "n:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    rationale_source_hash: a7fab10a
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0323
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_CLUS_0323
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0323 L2 IT PPP-APr Glut_2; region_fraction_100um=0.504; strict region_fraction=0.171.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=596 [painted]; Presubiculum [MBA:1084] count_100um=561 [painted]; Dentate gyrus, molecular layer [MBA:10703] count_100um=301 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.504; strict region_fraction: 0.171; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 0.20; cohort_pct 0.253'
+        alignment: APPROXIMATE
+        notes: val=0.20; cohort percentile 0.253
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Painted soma in presubiculum, not in classical CR soma compartments.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Reln low (mean 0.20, cohort percentile 0.253).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 0.2
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.253
+      region_fraction: 0.171
+      region_fraction_100um: 0.504
+      region_evidence: SELF
+    confidence: LOW
+    rationale: '[tier:CUT] Cluster 0323 is an L2 IT presubicular / area prostriata cluster (subclass L2 IT PPP-APr), painted predominantly in presubiculum; this is a cortical-type intratelencephalic projecting neuron class, not Cajal-Retzius. Reln low (0.20, cohort percentile 0.253).'
+    mapping_cardinality: "n:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    rationale_source_hash: 10f31898
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_0135
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_0135
+    relationship: skos:broadMatch
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0135 HPF CR Glut_1; region_fraction_100um=0.670; strict region_fraction=0.542.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2967 [painted]; Dentate gyrus [MBA:726] count_100um=2414 [painted]; Dentate gyrus, molecular layer [MBA:10703] count_100um=2410 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.670; strict region_fraction: 0.542; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 12.43; cohort_pct 0.990; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=12.43; cohort percentile 0.990; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: Classical type pools three axonal subtypes (layer-restricted local, cross-fissure local, long-range); supertype-level mapping does not resolve these subdivisions.
+      - caveat_type: SINGLE_STUDY
+        description: Reln is the single defining marker on the classical node; multi-marker concordance (Calb2, VGluT3) is not yet evidenced at transcript level on the atlas side.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Cell Ontology mapping CL:0000695 is BROAD; covers cortical+hippocampal, embryonic+adult, glutamatergic+GABAergic CR cells. A more specific term for the adult hippocampal glutamatergic subpopulation is currently unavailable.
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 12.43
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.99
+          coverage: 1.0
+      region_fraction: 0.542
+      region_fraction_100um: 0.67
+      region_evidence: SELF
+    confidence: MODERATE
+    rationale: '[tier:STRONGEST] Atlas supertype 0135 HPF CR Glut_1 [CS20230722_SUPT_0135] aligns with the classical hippocampal Cajal-Retzius cell on its primary defining marker (Reln mean 12.43, cohort percentile 0.990, child-coverage 1.000) and on painted soma distribution centred on dentate gyrus molecular layer (region_fraction_100um=0.670). The supertype name itself encodes a hippocampal CR glutamatergic identity matching the classical type. Confidence held at MODERATE because the evidence base is atlas-internal only; no cluster annotation transfer or targeted transcriptomic profiling evidence has been attached. The two named soma compartments of the classical type (CA1 SLM, DG OML) are pooled at supertype rank, and the classical-side within-type heterogeneity (three axonal subtypes; cross-fissure local projection) is not resolved at supertype granularity. Best child cluster CLUS_0497 holds the bulk of supertype cells (2498/3116) and carries the same Reln signal.'
+    reconciliation_note: Paired with cluster-level edge edge_hpc_cajal_retzius_cell_to_CS20230722_CLUS_0497 (best-child within this supertype) which carries the cluster-level closeMatch.
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - Annotation transfer from a hippocampal Cajal-Retzius-targeted transcriptomic cohort (Reln, Calb2, or Slc17a8 driver) against CCN20230722; target F1 >= 0.80 at supertype rank.
+      - Bulk-correlation analysis of sorted reelin+/calretinin+ adult hippocampal CR preparations against CCN20230722 pseudobulks.
+      - Targeted literature retrieval for primary Calb2 and Slc17a8 (VGluT3) citations on morphology-confirmed hippocampal CR cells to broaden the multi-marker classical definition.
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    unresolved_questions:
+      - Do the three axonal subtypes of hippocampal CR cells correspond to distinguishable child clusters within SUPT_0135?
+      - Does a separate child cluster within SUPT_0135 carry the CA1 stratum lacunosum-moleculare painted signal complementing the DG molecular layer dominance of CLUS_0497?
+    rationale_source_hash: e8d7605e
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_0079
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_0079
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0079 CA3 Glut_5; region_fraction_100um=0.953; strict region_fraction=0.711.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1619 [painted]; Dentate gyrus [MBA:726] count_100um=1552 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1524 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.953; strict region_fraction: 0.711; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 0.16; cohort_pct 0.155; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.16; cohort percentile 0.155; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Painted soma in CA3 / DG polymorph layer, not in classical CR soma compartments.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Reln near-absent (mean 0.16, cohort percentile 0.155).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 0.16
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.155
+          coverage: 1.0
+      region_fraction: 0.711
+      region_fraction_100um: 0.953
+      region_evidence: SELF
+    confidence: LOW
+    rationale: '[tier:CUT] Supertype 0079 CA3 Glut_5 is a CA3-lineage glutamatergic supertype with child clusters in CA3 stratum radiatum and DG polymorph layer; Reln near-absent (0.16, cohort percentile 0.155). Cell class is wrong for hippocampal Cajal-Retzius cell.'
+    mapping_cardinality: "n:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    rationale_source_hash: 787894ef
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_0139
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_0139
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0139 DG Glut_4; region_fraction_100um=0.853; strict region_fraction=0.729.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=9122 [painted]; Dentate gyrus [MBA:726] count_100um=7783 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=6998 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.853; strict region_fraction: 0.729; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 0.27; cohort_pct 0.330; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.27; cohort percentile 0.330; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Painted soma in DG polymorph layer (hilus), not in OML or SLM.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Reln low (mean 0.27, cohort percentile 0.330).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 0.27
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.33
+          coverage: 1.0
+      region_fraction: 0.729
+      region_fraction_100um: 0.853
+      region_evidence: SELF
+    confidence: LOW
+    rationale: '[tier:CUT] Supertype 0139 DG Glut_4 is a dentate gyrus polymorph-layer supertype (likely mossy-cell lineage) painted in DG polymorph layer; cell class is wrong for hippocampal Cajal-Retzius cell. Reln low (0.27, cohort percentile 0.330).'
+    mapping_cardinality: "n:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    rationale_source_hash: 0b390b5e
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_0138
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_0138
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0138 DG Glut_3; region_fraction_100um=0.995; strict region_fraction=0.973.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1024 [painted]; Dentate gyrus [MBA:726] count_100um=1021 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=1012 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.995; strict region_fraction: 0.973; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 0.61; cohort_pct 0.534; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.61; cohort percentile 0.534; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Painted soma in DG granule cell layer.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Reln modest (mean 0.61) but well below the dedicated CR supertype (12.43).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 0.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.534
+          coverage: 1.0
+      region_fraction: 0.973
+      region_fraction_100um: 0.995
+      region_evidence: SELF
+    confidence: LOW
+    rationale: '[tier:CUT] Supertype 0138 DG Glut_3 is a dentate gyrus granule-lineage supertype painted in DG granule cell layer; cell class is wrong for hippocampal Cajal-Retzius cell. Reln modest (0.61, cohort percentile 0.534) but well below the dedicated CR supertype.'
+    mapping_cardinality: "n:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    rationale_source_hash: 2842434b
+  - id: edge_hpc_cajal_retzius_cell_to_CS20230722_SUPT_0137
+    lit_type: hpc_cajal_retzius_cell
+    taxonomy_type: CS20230722_SUPT_0137
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0137 DG Glut_2; region_fraction_100um=0.996; strict region_fraction=0.974.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum lacunosum moleculare [UBERON:0014557]; dentate gyrus of hippocampal formation [UBERON:0001885]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=47494 [painted]; Dentate gyrus [MBA:726] count_100um=47391 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=47167 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.996; strict region_fraction: 0.974; region_evidence: SELF'
+      - property: marker_Reln
+        node_a_value: Reln — defining marker
+        node_b_value: 'Reln: 0.22; cohort_pct 0.282; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.22; cohort percentile 0.282; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Painted soma in DG granule cell layer, not in OML or SLM.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Reln low (mean 0.22, cohort percentile 0.282).
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:391,MBA:726
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Reln
+          val: 0.22
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.282
+          coverage: 1.0
+      region_fraction: 0.974
+      region_fraction_100um: 0.996
+      region_evidence: SELF
+    confidence: LOW
+    rationale: '[tier:CUT] Supertype 0137 DG Glut_2 is the dentate gyrus granule cell supertype (n=74950, painted in dentate gyrus granule cell layer); this is the principal excitatory neuron class of the dentate gyrus, not Cajal-Retzius. Reln low (0.22, cohort percentile 0.282).'
+    mapping_cardinality: "n:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:52+00:00'
+    report_path: reports/hippocampus/hpc_cajal_retzius_cell_summary.md
+    rationale_source_hash: 89b79927
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0332
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_0332
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0332 L2/3 IT PPP Glut_1; region_fraction_100um=1.000; strict region_fraction=1.000.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=223 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=217 [painted]; Entorhinal area, medial part, dorsal zone, layer 5 [MBA:727] count_100um=198 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 1.000; strict region_fraction: 1.000; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Atlas cluster soma is intrahippocampal (L2/3 IT PPP); classical type soma is in medial septum / diagonal band of Broca.
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: Defining markers Slc17a7 and Slc17a6 are not available in precomputed expression; Gad1 is the only marker checked and only weakly discriminates.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 1.0
+      region_fraction_100um: 1.0
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CLUS_0332 (0332 L2/3 IT PPP Glut_1) is a hippocampal-formation L2/3 intratelencephalic pyramidal cluster with soma fully inside the hippocampal formation; the classical MS-DBB glutamatergic projection neuron has its soma in the medial septum / diagonal band of Broca, projecting *to* hippocampal interneurons in stratum oriens. The classical cell class is therefore wrong, despite Gad1 being correctly near-zero and region_fraction_100um = 1.0 (the latter is misleading because the discovery query anchors on the axonal target rather than the soma).\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: aafd3a18
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2689
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_2689
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 2689 TH Prkcd Grin2c Glut_14; region_fraction_100um=0.011; strict region_fraction=0.008.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Thalamus [MBA:549] count_100um=262 [painted]; Submedial nucleus of the thalamus [MBA:366] count_100um=177 [painted]; Rhomboid nucleus [MBA:189] count_100um=109 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.011; strict region_fraction: 0.008; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.05; cohort_pct 0.016'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.016
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Cluster soma in thalamus (submedial / rhomboid nucleus); classical type soma in medial septum / diagonal band of Broca.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+        - gene: -Gad1
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.016
+      region_fraction: 0.008
+      region_fraction_100um: 0.011
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_2689 (2689 TH Prkcd Grin2c Glut_14) is a thalamic submedial / rhomboid nucleus cluster (region_fraction_100um = 0.011); essentially no cells sit in hippocampal formation and none in medial septum. Wrong region and wrong cell class for an MS-DBB projection neuron.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 252492d3
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0122
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_0122
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0122 L2/3 IT ENT Glut_1; region_fraction_100um=0.896; strict region_fraction=0.812.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=640 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=639 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=610 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.896; strict region_fraction: 0.812; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.59; cohort_pct 0.301'
+        alignment: DISCORDANT
+        notes: val=0.59; cohort percentile 0.301
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 detected at 0.59 contradicts the classical negative-marker assertion.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+        - gene: -Gad1
+          val: 0.59
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.301
+      region_fraction: 0.812
+      region_fraction_100um: 0.896
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0122 (0122 L2/3 IT ENT Glut_1) is an entorhinal lateral L2/3 IT pyramidal cluster. Gad1 = 0.59 (cohort 30th percentile) is inconsistent with the classical non-GABAergic negative marker. Soma is intrahippocampal/entorhinal, not in medial septum.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 4efdd76d
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0132
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_0132
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0132 L2/3 IT ENT Glut_4; region_fraction_100um=1.000; strict region_fraction=1.000.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=3965 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=3857 [painted]; Entorhinal area, medial part, dorsal zone, layer 5 [MBA:727] count_100um=3228 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 1.000; strict region_fraction: 1.000; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.77; cohort_pct 0.550'
+        alignment: DISCORDANT
+        notes: val=0.77; cohort percentile 0.550
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 detected at 0.77 contradicts the classical negative-marker assertion.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+        - gene: -Gad1
+          val: 0.77
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.55
+      region_fraction: 1.0
+      region_fraction_100um: 1.0
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0132 (0132 L2/3 IT ENT Glut_4) is an entorhinal medial-dorsal L2/3 IT pyramidal cluster. Gad1 = 0.77 (cohort 55th percentile) contradicts the classical Gad1-negative criterion. Soma is intrahippocampal/entorhinal.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: df797ec9
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0133
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_0133
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0133 L2/3 IT ENT Glut_5; region_fraction_100um=1.000; strict region_fraction=0.995.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=375 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=294 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=255 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 1.000; strict region_fraction: 0.995; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.71; cohort_pct 0.476'
+        alignment: DISCORDANT
+        notes: val=0.71; cohort percentile 0.476
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 detected at 0.71 contradicts the classical negative-marker assertion.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+        - gene: -Gad1
+          val: 0.71
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.476
+      region_fraction: 0.995
+      region_fraction_100um: 1.0
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0133 (0133 L2/3 IT ENT Glut_5) is an entorhinal lateral L2/3 IT pyramidal cluster. Gad1 = 0.71 (cohort 48th percentile) contradicts the Gad1-negative criterion. Soma is intrahippocampal/entorhinal, not septal.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: dc423d0b
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0673
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_0673
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0673 MG-POL-SGN Nts Glut_2; region_fraction_100um=0.120; strict region_fraction=0.006.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Thalamus [MBA:549] count_100um=182 [painted]; Midbrain [MBA:313] count_100um=140 [painted]; Suprageniculate nucleus [MBA:325] count_100um=103 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.120; strict region_fraction: 0.006; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.07; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Supertype soma in thalamus / midbrain; classical type soma in medial septum / diagonal band of Broca.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.006
+      region_fraction_100um: 0.12
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] SUPT_0673 (0673 MG-POL-SGN Nts Glut_2) is a thalamic / midbrain (suprageniculate / posterior medial) supertype with very few cells in hippocampal formation (region_fraction_100um = 0.12). NT type was not asserted on the atlas side, so glutamatergic alignment could not be checked at supertype level. Wrong region for an MS-DBB neuron.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: f50b5a92
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_1170
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_1170
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1170 Astroependymal NN_2; region_fraction_100um=0.020; strict region_fraction=0.016.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Cerebellum [MBA:512] count_100um=212 [painted]; Medulla [MBA:354] count_100um=211 [painted]; Area postrema [MBA:207] count_100um=210 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.020; strict region_fraction: 0.016; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.09; cohort_pct 0.005'
+        alignment: CONSISTENT
+        notes: val=0.09; below MIN_DETECTABLE (0.1); cohort percentile 0.005
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Non-neuronal supertype localised to cerebellum/medulla/area postrema; classical type is a neuron in medial septum / diagonal band of Broca.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.09
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.005
+      region_fraction: 0.016
+      region_fraction_100um: 0.02
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.01
+    rationale: "[tier:CUT] SUPT_1170 (1170 Astroependymal NN_2) is a non-neuronal astroependymal supertype concentrated in cerebellum, medulla, and area postrema (region_fraction_100um = 0.02). Wrong cell class (non-neuronal) and wrong region; cannot represent an MS-DBB glutamatergic projection neuron under any reading.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 9962b20d
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0012
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_0012
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0012 L5/6 IT TPE-ENT Glut_6; region_fraction_100um=1.000; strict region_fraction=1.000.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=10 [painted]; Presubiculum [MBA:1084] count_100um=9 [painted]; Parasubiculum [MBA:843] count_100um=6 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 1.000; strict region_fraction: 1.000; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.23; cohort_pct 0.067'
+        alignment: DISCORDANT
+        notes: val=0.23; cohort percentile 0.067
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Supertype soma in presubiculum / parasubiculum; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 = 0.23 weakly contradicts the classical Gad1-negative criterion.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.23
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.067
+      region_fraction: 1.0
+      region_fraction_100um: 1.0
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] SUPT_0012 (0012 L5/6 IT TPE-ENT Glut_6) is a presubiculum / parasubiculum L5/6 IT pyramidal supertype. Gad1 = 0.23 is in the discordant tier on the Gad1-negative criterion. Soma is intrahippocampal (parahippocampal subdivisions), not septal.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 2d742d44
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0010
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_0010
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0010 L5/6 IT TPE-ENT Glut_4; region_fraction_100um=0.867; strict region_fraction=0.849.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1280 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=1035 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=877 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.867; strict region_fraction: 0.849; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.92; cohort_pct 0.714'
+        alignment: DISCORDANT
+        notes: val=0.92; cohort percentile 0.714
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Supertype soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 = 0.92 contradicts the classical Gad1-negative criterion.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.92
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.714
+      region_fraction: 0.849
+      region_fraction_100um: 0.867
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] SUPT_0010 (0010 L5/6 IT TPE-ENT Glut_4) is an entorhinal lateral L5/6 IT pyramidal supertype. Gad1 = 0.92 (cohort 71st percentile) strongly contradicts the Gad1-negative criterion. Soma is in entorhinal cortex, not medial septum.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: f0d0bbc7
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0068
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_0068
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0068 ENTmv-PA-COAp Glut_3; region_fraction_100um=0.713; strict region_fraction=0.691.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=259 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=252 [painted]; Entorhinal area, medial part, dorsal zone, layer 5 [MBA:727] count_100um=203 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.713; strict region_fraction: 0.691; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.60; cohort_pct 0.243'
+        alignment: DISCORDANT
+        notes: val=0.60; cohort percentile 0.243
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Supertype soma in entorhinal medial / piriform-amygdalar / cortical-amygdalar cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 = 0.60 contradicts the classical Gad1-negative criterion.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.6
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.243
+      region_fraction: 0.691
+      region_fraction_100um: 0.713
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] SUPT_0068 (0068 ENTmv-PA-COAp Glut_3) is an entorhinal medial / piriform-amygdalar / cortical-amygdalar Glut supertype. Gad1 = 0.60 (cohort 24th percentile) contradicts the Gad1-negative criterion. Soma is in entorhinal / piriform-amygdalar cortex, not medial septum.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 05368f9b
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0261
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0261
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0261 CA1-ProS Glut_1; region_fraction_100um=0.558; strict region_fraction=0.072.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=528 [painted]; Field CA1 [MBA:382] count_100um=470 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=443 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.558; strict region_fraction: 0.072; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.072
+      region_fraction_100um: 0.558
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0261 is a small (n=215) CA1-ProS Glut_1 child of CS20230722_SUPT_0069 with region_fraction_100um=0.56 leaning to CA1 stratum oriens rather than the classical stratum radiatum location; weaker proximity than the best-child CS20230722_CLUS_0262.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: fcdfaa0b
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0262
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0262
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0262 CA1-ProS Glut_1; region_fraction_100um=0.969; strict region_fraction=0.266.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=19886 [painted]; Field CA1 [MBA:382] count_100um=19668 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=19403 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.969; strict region_fraction: 0.266; region_evidence: SELF'
+    caveats:
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "Selection of CS20230722_CLUS_0262 over the three sibling CA1-ProS Glut_1 children rests on location proximity only; no transcript or protein markers are available on the classical side to discriminate.\n"
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: "Atlas soma-position on CS20230722_CLUS_0262 is dominated by Field CA1, pyramidal layer; classical soma is in CA1 stratum radiatum (adjacent layer not separately registered).\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.266
+      region_fraction_100um: 0.969
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.45
+    rationale: "[tier:NEXT] CS20230722_CLUS_0262 has the highest CA1 proximity of any rank-0 candidate (region_fraction_100um=0.97; strict region_fraction=0.27) and is annotated Glut, consistent with the classical glutamatergic identity. Selected as the tentative best child within the primary supertype call (CS20230722_SUPT_0069) on location-proximity alone, given the absence of classical-side defining markers.\n"
+    reconciliation_note: "Paired with the supertype broadMatch on CS20230722_SUPT_0069 (edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0069, skos:broadMatch + 1:n) — this child-cluster closeMatch is provisional and should be re-assessed if any classical-side defining marker is established that distinguishes CS20230722_CLUS_0262 from siblings CS20230722_CLUS_0261, CS20230722_CLUS_0263, CS20230722_CLUS_0269.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - "A transcriptomic signature distinguishing CS20230722_CLUS_0262 from CS20230722_CLUS_0261, CS20230722_CLUS_0263, and CS20230722_CLUS_0269 that can be tested against CA1 radiatum giant cells (e.g. via sub-layer-resolved soma position or any targeting strategy that labels radiatum giant cells specifically).\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    unresolved_questions:
+      - "Selection of CS20230722_CLUS_0262 among CA1-ProS Glut_1 children is a tie-breaker on location proximity, not a biological identification.\n"
+    rationale_source_hash: 45764d9c
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0263
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0263
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0263 CA1-ProS Glut_1; region_fraction_100um=0.934; strict region_fraction=0.311.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=5547 [painted]; Field CA1 [MBA:382] count_100um=5495 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=5398 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.934; strict region_fraction: 0.311; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.311
+      region_fraction_100um: 0.934
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_CLUS_0263 is a sibling CA1-ProS Glut_1 child of CS20230722_SUPT_0069 with region_fraction_100um=0.93; covered by the supertype broadMatch and not preferred over CS20230722_CLUS_0262 in the absence of classical-side markers to discriminate.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: 9b081e1d
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0269
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0269
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0269 CA1-ProS Glut_1; region_fraction_100um=0.919; strict region_fraction=0.380.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1360 [painted]; Field CA1 [MBA:382] count_100um=1307 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=1253 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.919; strict region_fraction: 0.380; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.38
+      region_fraction_100um: 0.919
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_CLUS_0269 is a sibling CA1-ProS Glut_1 child of CS20230722_SUPT_0069 with region_fraction_100um=0.92; covered by the supertype broadMatch and not preferred in the absence of discriminating markers.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: c39023df
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0271
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0271
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0271 CA1-ProS Glut_2; region_fraction_100um=0.567; strict region_fraction=0.281.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=526 [painted]; Field CA1 [MBA:382] count_100um=524 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=422 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.567; strict region_fraction: 0.281; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.281
+      region_fraction_100um: 0.567
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0271 sits under CS20230722_SUPT_0070 (a different CA1-ProS Glut supertype from the primary supertype call), with region_fraction_100um=0.57 leaning to Field CA1 stratum oriens; outside the supertype that best covers the classical type.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: cf48e672
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0069
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0069
+    relationship: skos:broadMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0069 CA1-ProS Glut_1; region_fraction_100um=0.934; strict region_fraction=0.231.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=28476 [painted]; Field CA1 [MBA:382] count_100um=28032 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=27305 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.934; strict region_fraction: 0.231; region_evidence: SELF'
+    caveats:
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "No defining molecular markers, negative markers, or neuropeptides are currently entered for the CA1 radiatum giant cell; mapping rests on soma location and broad NT class only.\n"
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: "Atlas soma-position records CA1 pyramidal layer dominance on CS20230722_SUPT_0069; classical soma is in stratum radiatum, an adjacent CA1 layer not separately registered at this resolution.\n"
+      - caveat_type: OTHER
+        description: "nt_type is not asserted on CS20230722_SUPT_0069 (rank 1); Glut identity is inherited from the child clusters CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0269.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.231
+      region_fraction_100um: 0.934
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:STRONGEST] Soma-location concordance to Field CA1 places the CA1 radiatum giant cell within CS20230722_SUPT_0069 (region_fraction_100um=0.93; strict region_fraction=0.23); NT assertion is absent at rank 1 but Glut on all assessed children. Absent classical-side defining markers, the supportable call is at supertype level (1:n across the four CA1-ProS Glut_1 children CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0269).\n"
+    reconciliation_note: "Paired with the best-child call on CS20230722_CLUS_0262 (edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0262, skos:closeMatch + 1:1) — the supertype broadMatch covers the distribution across CA1-ProS Glut_1 children, while the cluster closeMatch records the highest- proximity child as a tentative best alignment.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Targeted literature trawl for transcriptomic, neuropeptide, or TF characterisation of the CA1 radiatum giant cell; expected output: LiteratureEvidence on the classical node with DEFINING_MARKER / NEUROPEPTIDE entries that can be tested against atlas children of CS20230722_SUPT_0069.\n"
+      - "Re-analysis of public hippocampal single-cell datasets retaining sub-layer soma position, to identify any transcript-level signature that distinguishes one CA1-ProS Glut_1 child cluster (CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0269) as a stratum-radiatum-resident population.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    unresolved_questions:
+      - "No primary transcriptomic characterisation of the CA1 radiatum giant cell is in the KB; markers and neuropeptide profile are unknown.\n"
+      - "Among the four CA1-ProS Glut_1 children of CS20230722_SUPT_0069, no available evidence selects one over the others.\n"
+      - "Per GH #80, two prior mapping edges to CS20230722_CLUS_0261 and CS20230722_SUPT_0069 were proposed on after_merge_20260508 and deferred during the PR #79 hippocampus port. The Stage A/B emission on 2026-06-10 generated a fresh top-K candidate set under proximity-aware scoring; curator should review whether the deferred candidates remain relevant or are superseded.\n"
+    rationale_source_hash: 3d54e32c
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0074
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0074
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0074 CA1-ProS Glut_6; region_fraction_100um=0.651; strict region_fraction=0.235.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1332 [painted]; Prosubiculum [MBA:484682470] count_100um=1062 [painted]; Field CA1 [MBA:382] count_100um=886 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.651; strict region_fraction: 0.235; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.235
+      region_fraction_100um: 0.651
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_SUPT_0074 (0074 CA1-ProS Glut_6) has region_fraction_100um=0.65 with Prosubiculum count_100um=1062 contributing substantially to the rollup; prosubiculum-leaning soma distribution is inconsistent with a CA1 stratum radiatum classical type.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: 8e466d19
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0072
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0072
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0072 CA1-ProS Glut_4; region_fraction_100um=0.873; strict region_fraction=0.437.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=3869 [painted]; Field CA1 [MBA:382] count_100um=3866 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=3413 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.873; strict region_fraction: 0.437; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.437
+      region_fraction_100um: 0.873
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0072 (0072 CA1-ProS Glut_4) has Field CA1 soma dominance (region_fraction_100um=0.87) but is not the supertype of the primary cluster cohort; no positive evidence selects it over CS20230722_SUPT_0069 and NT is not asserted at rank 1.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: 98f7e12e
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0070
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0070
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0070 CA1-ProS Glut_2; region_fraction_100um=0.682; strict region_fraction=0.329.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=4224 [painted]; Field CA1 [MBA:382] count_100um=4158 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=3118 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.682; strict region_fraction: 0.329; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.329
+      region_fraction_100um: 0.682
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.18
+    rationale: "[tier:CUT] CS20230722_SUPT_0070 (0070 CA1-ProS Glut_2) shows region_fraction_100um=0.68 with Field CA1 stratum oriens as the dominant sub-region; oriens-leaning soma distribution argues against a stratum-radiatum classical type.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: 72a6009c
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0100
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0100
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0100 CA2-FC-IG Glut_1; region_fraction_100um=0.555; strict region_fraction=0.086.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1809 [painted]; Field CA3 [MBA:463] count_100um=1354 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=1307 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.555; strict region_fraction: 0.086; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.086
+      region_fraction_100um: 0.555
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0100 (0100 CA2-FC-IG Glut_1) is dominated by Field CA3 cells (region_fraction_100um=0.56; strict region_fraction=0.09) and represents a CA2-FC-IG context rather than CA1; not a candidate for the CA1 radiatum giant cell.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: d26d52d2
