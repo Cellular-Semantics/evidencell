@@ -1252,6 +1252,24 @@ For each group:
 For annotation transfer experiments: include atlas, tool, expected output format,
 and how results would feed back as `AnnotationTransferEvidence`.
 
+**AT punts must be specific, never "run MapMyCells if available".** When an edge
+carries an `ANNOTATION_TRANSFER` evidence item with `supports: NO_EVIDENCE` whose
+`source_dataset_accession` / `source_cluster_label` are populated, the node has
+*declared* a source correspondence (`at_source_sets`, issue #126) for which no AT
+run resolved (or which did not transfer). Author the proposed experiment straight
+from those fields — name the exact dataset, source label, and taxonomy:
+
+> Before:  "Run MapMyCells on Kozareva/Osorno data if available."
+> After:   "Annotation transfer not yet run: retrieve {source_dataset_accession},
+>           score source cluster {source_cluster_label} against {taxonomy}, and
+>           attach the resulting AnnotationTransferEvidence to this edge
+>           ({just at-coverage} lists it UNRESOLVED; run workflows/annotation-transfer.md)."
+
+Do not invent an accession — use only what is on the NO_EVIDENCE item. If no
+`source_dataset_accession` is present (no dataset was ever declared), the honest
+follow-up is an evidence-extraction gap ("no external dataset identified for this
+type"), not an AT run.
+
 ### 8. Open questions
 
 Numbered list. Collect from `unresolved_questions[]` across all edges. Deduplicate.

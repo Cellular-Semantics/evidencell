@@ -744,3 +744,57 @@ def test_load_run_manifest(tmp_path):
     )
     assert manifest.get("target_atlas") == "WMBv2"
     assert at_metrics.load_run_manifest("nonexistent", runs_root=tmp_path) == {}
+
+
+# ─── at_coverage (pre-mapping trigger check, issue #126 follow-up) ────
+
+
+def _write_graph(tmp_path: Path, nodes: list[dict]) -> Path:
+    g = tmp_path / "graph.yaml"
+    _write(g, yaml.safe_dump({"name": "g", "nodes": nodes}))
+    return g
+
+
+def test_at_coverage_resolved_and_unresolved(tmp_path):
+    _make_run(tmp_path, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
+    graph = _write_graph(tmp_path, [
+        {"id": "classical_hit", "definition_basis": "CLASSICAL_MULTIMODAL",
+         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "Foo"}]},
+        {"id": "classical_miss", "definition_basis": "CLASSICAL_NEUROCHEMICAL",
+         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "NopeLabel"}]},
+        # atlas node with at_source_sets is ignored (not CLASSICAL)
+        {"id": "atlas_node", "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+         "at_source_sets": [{"dataset_accession": "GEO:GSE1", "source_label": "Foo"}]},
+        # classical node with no at_source_sets is skipped
+        {"id": "classical_nodecl", "definition_basis": "CLASSICAL_ANATOMICAL"},
+    ])
+    rows = at_metrics.at_coverage(graph, "CCN20230722", runs_root=tmp_path)
+    by_node = {r["node_id"]: r for r in rows}
+    assert set(by_node) == {"classical_hit", "classical_miss"}
+    assert by_node["classical_hit"]["run_ref"] == "at_run_20260101_a_mmc_wmbv1"
+    assert by_node["classical_miss"]["run_ref"] is None
+
+
+def test_at_coverage_empty_when_no_declarations(tmp_path):
+    graph = _write_graph(tmp_path, [
+        {"id": "c", "definition_basis": "CLASSICAL_MULTIMODAL"},
+        {"id": "a", "definition_basis": "ATLAS_TRANSCRIPTOMIC"},
+    ])
+    assert at_metrics.at_coverage(graph, "CCN20230722", runs_root=tmp_path) == []
+
+
+def test_format_at_coverage_flags_unresolved(tmp_path):
+    rows = [
+        {"node_id": "n1", "dataset_accession": "GEO:GSE1", "source_label": "Foo",
+         "run_ref": "at_run_x"},
+        {"node_id": "n2", "dataset_accession": "GEO:GSE1", "source_label": "Bar",
+         "run_ref": None},
+    ]
+    out = at_metrics.format_at_coverage(rows, "CCN20230722")
+    assert "UNRESOLVED" in out
+    assert "1 UNRESOLVED" in out
+    assert "at_run_x" in out
+
+
+def test_format_at_coverage_empty_message():
+    assert "Nothing to attempt" in at_metrics.format_at_coverage([], "CCN20230722")

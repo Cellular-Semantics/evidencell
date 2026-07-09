@@ -1191,6 +1191,99 @@ def print_refresh_report(summary: dict) -> None:
 # ─── CLI ──────────────────────────────────────────────────────────────
 
 
+def at_coverage(
+    graph_file: Path,
+    taxonomy_id: str,
+    *,
+    runs_root: Path | None = None,
+) -> list[dict]:
+    """Report AT-run coverage for a graph's classical nodes.
+
+    For each classical node (``definition_basis`` starting ``CLASSICAL``)
+    that declares ``at_source_sets``, resolve every declared
+    ``(dataset_accession, source_label)`` against ``taxonomy_id`` via
+    :func:`resolve_run_for_source`. This is the pre-mapping trigger check
+    (issue #126 follow-up): an UNRESOLVED row means a curator asserted a
+    dataset correspondence for which no AT run exists yet — the signal to
+    run ``workflows/annotation-transfer.md`` before programmatic mapping.
+
+    Report-only: it does not fetch, run AT, or gate mapping. Nodes with no
+    ``at_source_sets`` are skipped (that is an evidence-extraction gap, not
+    this check's concern).
+
+    Returns one row dict per declared source set:
+    ``{node_id, dataset_accession, source_label, run_ref}`` where
+    ``run_ref`` is the resolved run id or ``None`` (UNRESOLVED).
+    """
+    doc = yaml.safe_load(Path(graph_file).read_text(encoding="utf-8")) or {}
+    rows: list[dict] = []
+    for node in doc.get("nodes") or []:
+        if not isinstance(node, dict):
+            continue
+        basis = node.get("definition_basis") or ""
+        if not basis.startswith("CLASSICAL"):
+            continue
+        for src in node.get("at_source_sets") or []:
+            if not isinstance(src, dict):
+                continue
+            dataset_accession = src.get("dataset_accession")
+            source_label = src.get("source_label")
+            run_ref = None
+            if dataset_accession and source_label:
+                run_ref = resolve_run_for_source(
+                    dataset_accession, taxonomy_id, source_label,
+                    runs_root=runs_root,
+                )
+            rows.append({
+                "node_id": node.get("id"),
+                "dataset_accession": dataset_accession,
+                "source_label": source_label,
+                "run_ref": run_ref,
+            })
+    return rows
+
+
+def format_at_coverage(rows: list[dict], taxonomy_id: str) -> str:
+    """Render :func:`at_coverage` rows as a human-readable table."""
+    if not rows:
+        return (
+            f"No classical nodes declare at_source_sets (taxonomy "
+            f"{taxonomy_id}). Nothing to attempt."
+        )
+    unresolved = [r for r in rows if not r["run_ref"]]
+    w_node = max(len("node"), *(len(r["node_id"] or "") for r in rows))
+    w_ds = max(len("dataset_accession"),
+               *(len(r["dataset_accession"] or "") for r in rows))
+    w_lbl = max(len("source_label"),
+                *(len(r["source_label"] or "") for r in rows))
+    lines = [
+        f"AT coverage for {len(rows)} declared source set(s) "
+        f"(taxonomy {taxonomy_id}):",
+        "",
+        f"{'node':<{w_node}}  {'dataset_accession':<{w_ds}}  "
+        f"{'source_label':<{w_lbl}}  run",
+        f"{'─' * w_node}  {'─' * w_ds}  {'─' * w_lbl}  {'─' * 30}",
+    ]
+    for r in rows:
+        run = r["run_ref"] if r["run_ref"] else "✗ UNRESOLVED"
+        mark = "✓ " if r["run_ref"] else ""
+        lines.append(
+            f"{(r['node_id'] or ''):<{w_node}}  "
+            f"{(r['dataset_accession'] or ''):<{w_ds}}  "
+            f"{(r['source_label'] or ''):<{w_lbl}}  {mark}{run}"
+        )
+    lines.append("")
+    if unresolved:
+        lines.append(
+            f"{len(unresolved)} UNRESOLVED → run `annotation-transfer` for "
+            f"these datasets before mapping (retrieve_dataset preflight gates "
+            f"the load). Nodes with no at_source_sets are skipped."
+        )
+    else:
+        lines.append("All declared AT sources resolve to a run.")
+    return "\n".join(lines)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="python -m evidencell.at_metrics",
@@ -1246,6 +1339,16 @@ def main(argv: list[str] | None = None) -> int:
         help="Override the KB graphs root.",
     )
 
+    p_cov = sub.add_parser(
+        "at-coverage",
+        help=(
+            "Report AT-run coverage for a graph's classical nodes' declared "
+            "at_source_sets. Report-only; exits non-zero if any UNRESOLVED."
+        ),
+    )
+    p_cov.add_argument("graph_file", type=Path)
+    p_cov.add_argument("taxonomy_id")
+
     args = parser.parse_args(argv)
 
     if args.cmd == "migrate":
@@ -1272,6 +1375,13 @@ def main(argv: list[str] | None = None) -> int:
         mode = "APPLIED" if args.apply else "DRY-RUN (use --apply to write)"
         print(f"\n--- {n_edges} AT evidence items across {n_files} files. {mode}")
         return 0
+
+    if args.cmd == "at-coverage":
+        rows = at_coverage(args.graph_file, args.taxonomy_id)
+        print(format_at_coverage(rows, args.taxonomy_id))
+        # Non-zero when any declared source lacks a resolvable run, so the
+        # check can gate a scripted pipeline. Report-only otherwise.
+        return 1 if any(not r["run_ref"] for r in rows) else 0
 
     return 1
 

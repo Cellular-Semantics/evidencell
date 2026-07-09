@@ -50,10 +50,23 @@ relative paths into `kb/taxonomy/{taxonomy_id}/taxonomy_meta.yaml`.
 ## Steps
 
 ```
-Step 0  Dataset retrieval
-        Use .claude/skills/retrieve_dataset.md to obtain and convert the source
-        dataset to MapMyCells-ready h5ad + source labels JSON.
-        [GATE] Human confirms annotation column and any cell subset filters.
+Step 0  Dataset retrieval (driven by at_source_sets)
+        Input comes from the node, not a hand-pointed file: an UNRESOLVED row
+        from `just at-coverage {graph_file} {taxonomy_id}` gives you the
+        (dataset_accession, source_label) declared in a classical node's
+        at_source_sets (the issue-#126 correspondence — which annotated cell
+        set corresponds to this lit-type).
+        Use .claude/skills/retrieve_dataset.md with `dataset_accession` to
+        fetch + convert to MapMyCells-ready h5ad; use `source_label` as the
+        expected obs annotation column (and to pick the right matrix/subset
+        when the dataset ships several).
+        Let the freely-running agent handle retrieval failures (auth wall,
+        raw-reads-only, wrong file) and narrate the specific blocker — do not
+        pre-classify. Genuine blockers become a specific proposed_experiment
+        in the report (see gen-report.md), not a silent skip.
+        [GATE] The retrieve_dataset preflight (its Step 1) is the resource
+        gate — STOP if the load may exceed available RAM. Identity check:
+        confirm `source_label` is present in obs before mapping.
 
 Step 0.5 Backend resolution + subsample
         Load taxonomy spec; check preferred backend.
