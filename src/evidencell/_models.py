@@ -354,24 +354,6 @@ class MappingConfidence(str, Enum):
     """
 
 
-class EvidenceSupport(str, Enum):
-    SUPPORT = "SUPPORT"
-    REFUTE = "REFUTE"
-    PARTIAL = "PARTIAL"
-    """
-    Supports some aspects but not all
-    """
-    WEAK = "WEAK"
-    """
-    Non-zero but weak evidence — e.g. marker match with anatomical mismatch, or a speculative assignment retained as placeholder.
-
-    """
-    NO_EVIDENCE = "NO_EVIDENCE"
-    """
-    Assessed but no relevant evidence found
-    """
-
-
 class CorrespondenceType(str, Enum):
     """
     Nature of the correspondence declared by an AtSourceSet between an external dataset's annotated cell set and a classical cell type.
@@ -393,6 +375,24 @@ class CorrespondenceType(str, Enum):
     """
     Source cluster is one molecular subtype within the classical type (e.g. one of several Foxp2 ITC clusters within intercalated cell).
 
+    """
+
+
+class EvidenceSupport(str, Enum):
+    SUPPORT = "SUPPORT"
+    REFUTE = "REFUTE"
+    PARTIAL = "PARTIAL"
+    """
+    Supports some aspects but not all
+    """
+    WEAK = "WEAK"
+    """
+    Non-zero but weak evidence — e.g. marker match with anatomical mismatch, or a speculative assignment retained as placeholder.
+
+    """
+    NO_EVIDENCE = "NO_EVIDENCE"
+    """
+    Assessed but no relevant evidence found
     """
 
 
@@ -790,7 +790,8 @@ Stage B mapping subagents + report-time agents should caveat `lower_bound` rollu
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
-                       'NeurotransmitterType']} })
+                       'NeurotransmitterType',
+                       'AtSourceSet']} })
     id: str = Field(default=..., description="""Ontology CURIE from a recognised namespace. Pattern enforces a known prefix — add new prefixes here when new ontologies are adopted (e.g. HOMBA when released). Examples: CL:0000540, UBERON:0001950, NCBITaxon:10090, MBA:1031, HBA:12898, DHBA:10344.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['OntologyTerm',
                        'CellTypeNode',
@@ -869,7 +870,8 @@ class GeneDescriptor(ConfiguredBaseModel):
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
-                       'NeurotransmitterType']} })
+                       'NeurotransmitterType',
+                       'AtSourceSet']} })
 
     @field_validator('ncbi_gene_id')
     def pattern_ncbi_gene_id(cls, v):
@@ -913,7 +915,9 @@ class CellTypeColocation(ConfiguredBaseModel):
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
+                       'ManualCurationMarker',
                        'CellTypeMappingGraph',
+                       'AtSourceSet',
                        'BulkDataset']} })
 
 
@@ -972,7 +976,9 @@ class PropertySource(ConfiguredBaseModel):
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
+                       'ManualCurationMarker',
                        'CellTypeMappingGraph',
+                       'AtSourceSet',
                        'BulkDataset']} })
     support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Set by cite-traverse and evidence-extraction workflows. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
@@ -1015,7 +1021,8 @@ class TypeSynonym(ConfiguredBaseModel):
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
-                       'NeurotransmitterType']} })
+                       'NeurotransmitterType',
+                       'AtSourceSet']} })
 
 
 class MarkerSource(PropertySource, HasMarkerType):
@@ -1059,7 +1066,9 @@ class MarkerSource(PropertySource, HasMarkerType):
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
+                       'ManualCurationMarker',
                        'CellTypeMappingGraph',
+                       'AtSourceSet',
                        'BulkDataset']} })
     support: Optional[EvidenceSupport] = Field(default=None, description="""Whether this source supports, refutes, or is ambiguous for the property assertion. Set by cite-traverse and evidence-extraction workflows. Omit when support level is implicit (e.g. all sources on a property are assumed SUPPORT unless stated otherwise).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['PropertySource']} })
@@ -1105,7 +1114,8 @@ class ElectrophysiologyProfile(ConfiguredBaseModel):
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
-                       'NeurotransmitterType']} })
+                       'NeurotransmitterType',
+                       'AtSourceSet']} })
 
 
 class MorphologyProfile(ConfiguredBaseModel):
@@ -1129,7 +1139,8 @@ class MorphologyProfile(ConfiguredBaseModel):
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
-                       'NeurotransmitterType']} })
+                       'NeurotransmitterType',
+                       'AtSourceSet']} })
 
 
 class NeurotransmitterType(ConfiguredBaseModel):
@@ -1165,7 +1176,8 @@ class NeurotransmitterType(ConfiguredBaseModel):
                        'TypeSynonym',
                        'ElectrophysiologyProfile',
                        'MorphologyProfile',
-                       'NeurotransmitterType']} })
+                       'NeurotransmitterType',
+                       'AtSourceSet']} })
 
 
 class PropertyComparison(ConfiguredBaseModel):
@@ -1188,7 +1200,9 @@ class PropertyComparison(ConfiguredBaseModel):
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
+                       'ManualCurationMarker',
                        'CellTypeMappingGraph',
+                       'AtSourceSet',
                        'BulkDataset']} })
 
 
@@ -1228,24 +1242,6 @@ class ProposedCLTerm(ConfiguredBaseModel):
     xrefs: Optional[list[str]] = Field(default=None, description="""References — DOIs, PMIDs, atlas URLs, and CCN cell set accessions. The CCN accession of the terminal node(s) should always be included here.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm']} })
     status: Optional[str] = Field(default=None, description="""DRAFT | SUBMITTED | ACCEPTED""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm', 'AnnotationTransferDataset']} })
-
-
-class AtSourceSet(ConfiguredBaseModel):
-    """
-    A single (dataset, annotated-cell-set) correspondence declared on a CellTypeNode: an annotated cell set in an external dataset that corresponds to this classical cell type. Encodes the agentic judgement (recovered here; lost when candidate selection became programmatic in #96) of which source annotation maps to which literature type — a judgement that requires reading the dataset's describing paper, not transcriptomic overlap. `emit-stage-b` resolves the AT run operationally from (dataset_accession, target_taxonomy, source_label) and emits one ANNOTATION_TRANSFER evidence item per entry. A type may declare several entries (lumping across source clusters, or spanning datasets); each becomes an independent AT evidence item.
-
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
-
-    dataset_accession: str = Field(default=..., description="""Accession of the source dataset, e.g. \"ArrayExpress:E-MTAB-12096\", \"GEO:GSE142546\". Together with source_label this is stable biology from the paper; the AT run supplying the numbers is resolved at map time and is NOT recorded on the node.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet']} })
-    source_label: str = Field(default=..., description="""Annotated cluster label in the source dataset, as it appears in the paper and in the AT run's result rows, e.g. \"GABA-52-Calb2-Rgs12\". This is the real key used to disambiguate among AT runs of the same dataset against the same taxonomy.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet']} })
-    correspondence: Optional[CorrespondenceType] = Field(default=None, description="""Nature of the source-cluster → classical-type match, so a lumped or partial correspondence is not read as a clean identity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet', 'AnnotationTransferEvidence']} })
-    sources: Optional[list[PropertySource]] = Field(default=None, description="""Quote-backed provenance for the correspondence — the verbatim paper quote(s) justifying \"this annotated cell set corresponds to this classical type\". Same shape and validation as defining_markers / anatomical_location sources (hook-validated against references.json). The load-bearing justification lives here, not in notes.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet']} })
-    notes: Optional[str] = Field(default=None, description="""Free-text colour (heterogeneity observations, cross-references). Not the load-bearing justification — that belongs in sources.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation', 'PropertySource', 'PropertyComparison', 'CellTypeNode', 'CellTypeMappingGraph', 'AtSourceSet', 'BulkDataset']} })
 
 
 class CellTypeNode(ConfiguredBaseModel):
@@ -1356,7 +1352,9 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
+                       'ManualCurationMarker',
                        'CellTypeMappingGraph',
+                       'AtSourceSet',
                        'BulkDataset']} })
 
     @field_validator('prior_reference')
@@ -1392,6 +1390,8 @@ class EvidenceItem(ConfiguredBaseModel):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class LiteratureEvidence(EvidenceItem):
@@ -1418,6 +1418,8 @@ class LiteratureEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
     @field_validator('reference')
     def pattern_reference(cls, v):
@@ -1474,6 +1476,8 @@ class AtlasMetadataEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class AtlasQueryEvidence(EvidenceItem):
@@ -1507,6 +1511,8 @@ class AtlasQueryEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class AnnotationTransferLevelResult(ConfiguredBaseModel):
@@ -1544,7 +1550,7 @@ class AnnotationTransferMetricRow(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
 
-    source_label: str = Field(default=..., description="""Source cluster / cohort label as it appears in the AT run input.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow']} })
+    source_label: str = Field(default=..., description="""Source cluster / cohort label as it appears in the AT run input.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow', 'AtSourceSet']} })
     taxonomy_level: str = Field(default=..., description="""Taxonomy level (CLASS / SUBCLASS / SUPERTYPE / CLUSTER).""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode',
                        'AnnotationTransferLevelResult',
                        'AnnotationTransferMetricRow',
@@ -1635,7 +1641,7 @@ class AnnotationTransferEvidence(EvidenceItem):
     source_cluster_label: Optional[str] = Field(default=None, description="""Cluster label in the source dataset (e.g. \"PLI3\", \"MLI1\", \"5178 CB PLI Gly-Gaba_1\").
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
     correspondence: Optional[CorrespondenceType] = Field(default=None, description="""Nature of the source-cluster → classical-type correspondence, copied from the node's declaring `at_source_sets` entry (issue #126). Records whether the annotated source cell set is an EXACT match, a SUBSET (one molecular subtype within the classical type), a SUPERSET, or a PARTIAL overlap — so a lumped/partial correspondence is not read as a clean identity.
-""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet', 'AnnotationTransferEvidence']} })
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AtSourceSet']} })
     best_f1_score: Optional[float] = Field(default=None, description="""F1 score at the best-mapping taxonomy level. Minimum quality metric; use when full metrics_by_level is unavailable. Derive from metrics_by_level[best_mapping_level].f1_score when present.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence']} })
     best_mapping_level: Optional[str] = Field(default=None, description="""Taxonomy level name at which best_f1_score was achieved. E.g. \"SUPERTYPE\" for PLI3→1145 (F1=0.96) vs \"CLUSTER\" for PLI1→5178 (F1=0.94).
@@ -1674,6 +1680,8 @@ class AnnotationTransferEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class SourceGroup(ConfiguredBaseModel):
@@ -1734,6 +1742,8 @@ class SpatialColocationEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class PatchSeqEvidence(EvidenceItem):
@@ -1747,7 +1757,8 @@ class PatchSeqEvidence(EvidenceItem):
                        'ProjectionSeqEvidence',
                        'ElectrophysiologyEvidence',
                        'MorphologyEvidence',
-                       'MarkerAnalysisEvidence']} })
+                       'MarkerAnalysisEvidence',
+                       'AtSourceSet']} })
     n_cells_matched: Optional[int] = Field(default=None, description="""Number of patch-seq cells matching this type definition""", json_schema_extra = { "linkml_meta": {'domain_of': ['PatchSeqEvidence']} })
     transcriptomic_match_score: Optional[float] = Field(default=None, description="""Average transcriptomic correspondence score for matched cells""", json_schema_extra = { "linkml_meta": {'domain_of': ['PatchSeqEvidence']} })
     morphology_features: Optional[list[str]] = Field(default=None, description="""Morphological features consistent with the type, e.g. \"axonal arborisation in Purkinje layer\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['PatchSeqEvidence']} })
@@ -1765,6 +1776,8 @@ class PatchSeqEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class ProjectionSeqEvidence(EvidenceItem):
@@ -1778,7 +1791,8 @@ class ProjectionSeqEvidence(EvidenceItem):
                        'ProjectionSeqEvidence',
                        'ElectrophysiologyEvidence',
                        'MorphologyEvidence',
-                       'MarkerAnalysisEvidence']} })
+                       'MarkerAnalysisEvidence',
+                       'AtSourceSet']} })
     projection_target: Optional[OntologyTerm] = Field(default=None, description="""Brain region where axons project to""", json_schema_extra = { "linkml_meta": {'bindings': [{'binds_value_of': 'id',
                        'obligation_level': 'REQUIRED',
                        'range': 'AnatomyTerm'}],
@@ -1802,6 +1816,8 @@ class ProjectionSeqEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class ElectrophysiologyEvidence(EvidenceItem):
@@ -1814,7 +1830,8 @@ class ElectrophysiologyEvidence(EvidenceItem):
                        'ProjectionSeqEvidence',
                        'ElectrophysiologyEvidence',
                        'MorphologyEvidence',
-                       'MarkerAnalysisEvidence']} })
+                       'MarkerAnalysisEvidence',
+                       'AtSourceSet']} })
     etype_label: Optional[str] = Field(default=None, description="""E-type classification label""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyEvidence']} })
     key_features: Optional[list[str]] = Field(default=None, description="""Quantitative features matching the classical type""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyEvidence', 'MorphologyEvidence']} })
     evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1829,6 +1846,8 @@ class ElectrophysiologyEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class MorphologyEvidence(EvidenceItem):
@@ -1841,7 +1860,8 @@ class MorphologyEvidence(EvidenceItem):
                        'ProjectionSeqEvidence',
                        'ElectrophysiologyEvidence',
                        'MorphologyEvidence',
-                       'MarkerAnalysisEvidence']} })
+                       'MarkerAnalysisEvidence',
+                       'AtSourceSet']} })
     imaging_method: Optional[str] = Field(default=None, description="""Golgi stain, biocytin fill, EM, expansion microscopy""", json_schema_extra = { "linkml_meta": {'domain_of': ['MorphologyEvidence']} })
     key_features: Optional[list[str]] = Field(default=None, description="""Morphological features, e.g. \"ascending axon collateral\", \"beaded dendrites\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['ElectrophysiologyEvidence', 'MorphologyEvidence']} })
     evidence_type: EvidenceType = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
@@ -1856,6 +1876,8 @@ class MorphologyEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class MarkerAnalysisEvidence(EvidenceItem):
@@ -1869,7 +1891,8 @@ class MarkerAnalysisEvidence(EvidenceItem):
                        'ProjectionSeqEvidence',
                        'ElectrophysiologyEvidence',
                        'MorphologyEvidence',
-                       'MarkerAnalysisEvidence']} })
+                       'MarkerAnalysisEvidence',
+                       'AtSourceSet']} })
     markers_examined: Optional[list[str]] = Field(default=None, description="""Gene symbols examined""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerAnalysisEvidence']} })
     overlap_metric: Optional[str] = Field(default=None, description="""Jaccard index (top-50 DEGs), Fisher exact p, AUC, hypergeometric""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerAnalysisEvidence']} })
     overlap_value: Optional[float] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['MarkerAnalysisEvidence']} })
@@ -1891,6 +1914,8 @@ class MarkerAnalysisEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class BulkCorrelationEvidence(EvidenceItem):
@@ -1920,6 +1945,8 @@ class BulkCorrelationEvidence(EvidenceItem):
   - OLS/ontology browser entry screenshots
 Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). Allen Brain Cell Atlas browser URLs, OLS term pages, and Figshare/Zenodo figure links are all acceptable.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker (see ManualCurationMarker class). When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this evidence item verbatim rather than regenerating it. Use to lock a curator-authored evidence item (typically a LiteratureEvidence entry added manually) against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
 
 
 class Caveat(ConfiguredBaseModel):
@@ -1937,6 +1964,30 @@ class Caveat(ConfiguredBaseModel):
                        'DiscoveryContext',
                        'CellTypeMappingGraph',
                        'AnnotationTransferDataset',
+                       'BulkDataset']} })
+    manually_curated: Optional[ManualCurationMarker] = Field(default=None, description="""Optional human-curation marker. When present, downstream mechanical re-emits (e.g. emit-stage-b --rewrite-existing) MUST preserve this caveat verbatim rather than regenerating it. Use to lock a curator-authored caveat against future analysis-pipeline rewrites.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['EvidenceItem', 'Caveat']} })
+
+
+class ManualCurationMarker(ConfiguredBaseModel):
+    """
+    Provenance marker indicating that the containing item is human-authored and should be preserved by mechanical re-emit passes. Attached to mixed-source items (EvidenceItem, Caveat) where mechanical and manual entries can coexist in the same list. Today no curators are writing the KB directly, so this field is rarely populated; future reviewer / curator tooling will set it when committing manual edits.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    by: str = Field(default=..., description="""Curator name or ORCID URI (e.g. \"https://orcid.org/0000-0002-...\").
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['ManualCurationMarker']} })
+    committed_date: date = Field(default=..., description="""Date the manual edit was committed. (Renamed from `date` to avoid a Python name/type collision in the generated Pydantic models — a slot named `date` with `range: date` renders as the non-importable `date: date`.)
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['ManualCurationMarker']} })
+    notes: Optional[str] = Field(default=None, description="""Optional free-text rationale for the manual override. Useful when the manual entry contradicts what a mechanical re-emit would produce.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'PropertySource',
+                       'PropertyComparison',
+                       'CellTypeNode',
+                       'ManualCurationMarker',
+                       'CellTypeMappingGraph',
+                       'AtSourceSet',
                        'BulkDataset']} })
 
 
@@ -2165,7 +2216,9 @@ class CellTypeMappingGraph(ConfiguredBaseModel):
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
+                       'ManualCurationMarker',
                        'CellTypeMappingGraph',
+                       'AtSourceSet',
                        'BulkDataset']} })
     source_atlas: Optional[str] = Field(default=None, description="""When this graph represents cross-taxonomy annotation transfer, the atlas that nodes were transferred FROM (the source taxonomy). E.g. \"WMBv1 (CCN20230722)\" for WMB→CTX-HPF transfers.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeMappingGraph']} })
@@ -2207,6 +2260,43 @@ class AnnotationTransferDataset(ConfiguredBaseModel):
             err_msg = f"Invalid publication format: {v}"
             raise ValueError(err_msg)
         return v
+
+
+class AtSourceSet(ConfiguredBaseModel):
+    """
+    A single (dataset, annotated-cell-set) correspondence declared on a CellTypeNode: an annotated cell set in an external dataset that corresponds to this classical cell type. Encodes the agentic judgement (recovered here; lost when candidate selection became programmatic in #96) of which source annotation maps to which literature type — a judgement that requires reading the dataset's describing paper, not transcriptomic overlap. `emit-stage-b` resolves the AT run operationally from (dataset_accession, target_taxonomy, source_label) and emits one ANNOTATION_TRANSFER evidence item per entry. A type may declare several entries (lumping across source clusters, or spanning datasets); each becomes an independent AT evidence item.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    dataset_accession: str = Field(default=..., description="""Accession of the source dataset, e.g. \"ArrayExpress:E-MTAB-12096\", \"GEO:GSE142546\". Together with source_label this is stable biology from the paper; the AT run supplying the numbers is resolved at map time and is NOT recorded on the node.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['PatchSeqEvidence',
+                       'ProjectionSeqEvidence',
+                       'ElectrophysiologyEvidence',
+                       'MorphologyEvidence',
+                       'MarkerAnalysisEvidence',
+                       'AtSourceSet']} })
+    source_label: str = Field(default=..., description="""Annotated cluster label in the source dataset, as it appears in the paper and in the AT run's result rows, e.g. \"GABA-52-Calb2-Rgs12\". This is the real key used to disambiguate among AT runs of the same dataset against the same taxonomy.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferMetricRow', 'AtSourceSet']} })
+    correspondence: Optional[CorrespondenceType] = Field(default=None, description="""Nature of the source-cluster → classical-type match, so a lumped or partial correspondence is not read as a clean identity.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AtSourceSet']} })
+    sources: Optional[list[PropertySource]] = Field(default=None, description="""Quote-backed provenance for the correspondence — the verbatim paper quote(s) justifying \"this annotated cell set corresponds to this classical type\". Same shape and validation as defining_markers / anatomical_location sources (hook-validated against references.json). The load-bearing justification lives here, not in notes.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnatomicalLocation',
+                       'GeneDescriptor',
+                       'TypeSynonym',
+                       'ElectrophysiologyProfile',
+                       'MorphologyProfile',
+                       'NeurotransmitterType',
+                       'AtSourceSet']} })
+    notes: Optional[str] = Field(default=None, description="""Free-text colour (heterogeneity observations, cross-references). Not the load-bearing justification — that belongs in sources.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation',
+                       'PropertySource',
+                       'PropertyComparison',
+                       'CellTypeNode',
+                       'ManualCurationMarker',
+                       'CellTypeMappingGraph',
+                       'AtSourceSet',
+                       'BulkDataset']} })
 
 
 class PrecomputedExpression(ConfiguredBaseModel):
@@ -2321,7 +2411,9 @@ class BulkDataset(ConfiguredBaseModel):
                        'PropertySource',
                        'PropertyComparison',
                        'CellTypeNode',
+                       'ManualCurationMarker',
                        'CellTypeMappingGraph',
+                       'AtSourceSet',
                        'BulkDataset']} })
     metadata: Optional[str] = Field(default=None, description="""Free-form name:value map for ancillary properties not captured elsewhere. YAML-inline mapping; key names not enforced.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['BulkDataset',
@@ -2654,6 +2746,7 @@ MorphologyEvidence.model_rebuild()
 MarkerAnalysisEvidence.model_rebuild()
 BulkCorrelationEvidence.model_rebuild()
 Caveat.model_rebuild()
+ManualCurationMarker.model_rebuild()
 DiscoveryContext.model_rebuild()
 GenePercentile.model_rebuild()
 GeneDiscoveryDetail.model_rebuild()
@@ -2662,6 +2755,7 @@ DiscoveryScore.model_rebuild()
 MappingEdge.model_rebuild()
 CellTypeMappingGraph.model_rebuild()
 AnnotationTransferDataset.model_rebuild()
+AtSourceSet.model_rebuild()
 PrecomputedExpression.model_rebuild()
 ChildClusterExpression.model_rebuild()
 GeneExpression.model_rebuild()

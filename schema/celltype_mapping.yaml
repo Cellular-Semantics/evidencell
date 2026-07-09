@@ -2365,10 +2365,14 @@ classes:
         required: true
         description: >
           Curator name or ORCID URI (e.g. "https://orcid.org/0000-0002-...").
-      date:
+      committed_date:
         required: true
         range: date
-        description: Date the manual edit was committed.
+        description: >
+          Date the manual edit was committed. (Renamed from `date` to
+          avoid a Python name/type collision in the generated Pydantic
+          models — a slot named `date` with `range: date` renders as the
+          non-importable `date: date`.)
       notes:
         description: >
           Optional free-text rationale for the manual override. Useful
