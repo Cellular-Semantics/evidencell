@@ -120,6 +120,46 @@ manifest path.
 
 ---
 
+## Node-declared AT source correspondence (`at_source_sets`)
+
+Which annotated cell set in an external dataset corresponds to which
+**classical** cell type is an *agentic judgement* — it requires reading the
+dataset's describing paper and cannot be inferred from transcriptomic overlap
+(issue #126). That judgement lives **on the node**, in
+`CellTypeNode.at_source_sets`, consistent with "properties live on nodes; edges
+compare". Each entry is an `AtSourceSet`:
+
+- `dataset_accession` + `source_label` — stable biology from the paper (the
+  annotated cluster label, e.g. `GABA-52-Calb2-Rgs12`).
+- `correspondence` — `EXACT` / `PARTIAL` / `SUPERSET` / `SUBSET`, so a
+  lumped/partial correspondence is not read as a clean identity.
+- `sources[]` — quote-backed provenance (`quote_key` into `references.json`),
+  same machinery and hook-validation as `defining_markers[].sources`.
+
+The AT **run** that supplies numbers is deliberately *not* recorded on the
+node: re-running AT against a new atlas version must not churn KB YAML. At map
+time `stage_b_emit` resolves it via
+`at_metrics.resolve_run_for_source(dataset_accession, target_taxonomy, source_label)`:
+
+1. Scan `kb/annotation_transfer_runs/*/manifest.yaml` directly (not
+   `index.yaml`, so a stale index can't cause a silent miss) for a matching
+   `(source_dataset_accession, target_taxonomy_id)`.
+2. `(dataset, taxonomy)` is **not unique** (one dataset can back several runs
+   with different source labelings). The real key is `source_label`: keep only
+   runs whose `at_results.yaml` contains a row for it.
+3. One survivor → use it. Multiple → latest by date-stamped run id, with a
+   warning. Zero → `None`, and the emitter writes a loud `NO_EVIDENCE` item
+   rather than silently attaching a wrong source.
+
+`emit-stage-b` emits **one `ANNOTATION_TRANSFER` evidence item per declared
+source set per candidate** — including a `NO_EVIDENCE` item when a declared
+source does *not* transfer to a candidate (negative signal, symmetric with
+marker/location comparisons). Nodes with no `at_source_sets` get no AT evidence
+(full cutover from the former atlas-cluster-keyed attachment, which could cite a
+biologically wrong source as positive support).
+
+---
+
 ## Source-of-truth table
 
 Use this table when a consumer doesn't know which file to trust.
@@ -247,6 +287,17 @@ Two readings considered:
    at `kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db`. One lookup per
    level.
 
+**Level-aware `supports_default` (issue #126 pt 5).** Under lineage-aware,
+`metrics_by_level` can carry a strong F1 at a *coarse* ancestor level (e.g.
+subclass) while the edge's own level is weak. `compute_edge_metrics` therefore
+gates `SUPPORT` on the edge target's own rank or finer: `SUPPORT` only when an
+F1 ≥ 0.6 exists at a row whose `taxonomy_rank` ≤ the edge target's own rank; a
+coarse-only ≥ 0.6 match falls through to `PARTIAL`. The reported `best_f1_score`
+/ `best_mapping_rank` remain the global best across emitted rows — only the
+support verdict is level-gated. When the taxonomy DB is unavailable (no ancestor
+lineage resolved), the rank gate is skipped and the pre-#126 global-best
+threshold applies.
+
 **Naming issue, deferred.** Under lineage-aware, each row's
 `best_target_accession` is the *ancestor of B at that row's level*,
 not the "best" of anything. The slot name is misleading. We've
@@ -267,7 +318,7 @@ goes in its own slot. Tracked in [#TBD — to be filed].
 | Run AT pipeline | external (MapMyCells) | `mmc_results.csv`, `f1_*.csv` in run dir | source `.h5ad`, target taxonomy precomputed stats |
 | Register a new AT run | `just register-at-run` | `kb/annotation_transfer_runs/index.yaml` | manifest.yaml in each run dir |
 | Migrate raw CSV → structured YAML | `just migrate-at-metrics` (or `python -m evidencell.at_metrics migrate-all`) | `at_results.yaml` (or `_<variant>.yaml`) in each run dir | `f1_*.csv` + manifest in each run dir |
-| Stage B: create MappingEdge with AT evidence | LLM subagent via `workflows/map-cell-type.md` Step 3 | identifying fields only (`run_ref`, `source_cluster_label`, `method`, `target_atlas`, `explanation`) on the AT evidence item | classical node, atlas node, discovery_candidates.json |
+| Stage B: create MappingEdge with AT evidence | `just emit-stage-b` (mechanical) | one AT evidence item per declared `at_source_sets` entry per candidate: `run_ref` (resolved from `(dataset_accession, target_taxonomy, source_label)`), `source_dataset_accession`, `source_cluster_label`, `correspondence`, `target_atlas`, `supports` (level-aware default), `metrics_by_level`, `explanation`; a `NO_EVIDENCE` item when the source doesn't transfer or can't be resolved | classical node (`at_source_sets`), atlas node, discovery_candidates.json, `at_results.yaml` (via `compute_edge_metrics`) |
 | Populate metrics_by_level | `just refresh-at-metrics --apply` (or `python -m evidencell.at_metrics refresh --apply`) | `metrics_by_level`, `f1_source_relpath`, `supports` (suggested) on every AT evidence item with a `run_ref` | `at_results.yaml` (via `compute_edge_metrics`) |
 | Render figure for a report | `just gen-at-figure {run_id} ...` | `figures/*.png` + `figures/*_metrics.json` | `at_results.yaml` (or legacy CSV when YAML not yet migrated) |
 | Stage C: synthesise report verdict | LLM agent via `workflows/gen-report.md` | `confidence`, `confidence_score`, `rationale`, `report_path`, `rationale_source_hash`, `rationale_generated_at` (+ optionally `source_groups[*].rationale`) on the MappingEdge | edge YAML, gen-facts pre-pass, figure sidecars |

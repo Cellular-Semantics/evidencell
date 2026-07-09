@@ -597,6 +597,102 @@ def load_result_set(
     return AnnotationTransferResultSet(**doc)
 
 
+def load_run_manifest(
+    run_ref: str, *, runs_root: Path | None = None,
+) -> dict:
+    """Return the parsed ``manifest.yaml`` for ``run_ref`` (``{}`` if absent
+    or unreadable). Used to surface run-level provenance (e.g.
+    ``target_atlas``) without hardcoding it on the evidence item."""
+    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
+    manifest = runs_root / run_ref / "manifest.yaml"
+    if not manifest.is_file():
+        return {}
+    try:
+        return yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
+    except Exception:  # noqa: BLE001 — treat unreadable manifest as absent
+        return {}
+
+
+def resolve_run_for_source(
+    dataset_accession: str,
+    target_taxonomy: str,
+    source_label: str,
+    *,
+    runs_root: Path | None = None,
+) -> str | None:
+    """Resolve the AT run that supplies numbers for a node-declared
+    ``(dataset_accession, source_label)`` correspondence against
+    ``target_taxonomy``.
+
+    ``run_ref`` is deliberately kept off the node (issue #126 point 3):
+    re-running AT against a new atlas version must not churn KB YAML. This
+    helper does the operational lookup at map time.
+
+    Resolution is hardened against the three weak points of a naive
+    ``(dataset, taxonomy)`` match:
+
+      1. Scans ``{runs_root}/*/manifest.yaml`` **directly** (not
+         ``index.yaml``), so a stale index cannot cause a silent miss.
+      2. ``(dataset_accession, target_taxonomy)`` is only a coarse filter —
+         it is **not unique** (one dataset can back several runs with
+         different source labelings). The real key is ``source_label``:
+         among coarse matches, only runs whose ``at_results.yaml`` actually
+         contains a row for ``source_label`` survive.
+      3. Fails loud, never silent: multiple survivors → pick the latest by
+         date-stamped run id and warn with the alternatives; zero survivors
+         → return ``None`` (the caller emits a loud NO_EVIDENCE item rather
+         than attaching a wrong source).
+
+    Returns the resolved ``run_ref`` (run id / directory name) or ``None``.
+    """
+    runs_root = runs_root or (repo_root() / "kb" / "annotation_transfer_runs")
+    if not runs_root.is_dir():
+        return None
+
+    # 1 + 2a: coarse filter on (dataset_accession, target_taxonomy) by
+    # scanning manifests directly.
+    coarse: list[str] = []
+    for manifest in sorted(runs_root.glob("*/manifest.yaml")):
+        try:
+            data = yaml.safe_load(manifest.read_text(encoding="utf-8")) or {}
+        except Exception:  # noqa: BLE001 — skip unreadable manifest
+            continue
+        if (
+            data.get("source_dataset_accession") == dataset_accession
+            and data.get("target_taxonomy_id") == target_taxonomy
+        ):
+            run_id = data.get("id") or manifest.parent.name
+            coarse.append(run_id)
+
+    if not coarse:
+        return None
+
+    # 2b: keep only runs whose result set actually contains source_label.
+    survivors: list[str] = []
+    for run_ref in coarse:
+        try:
+            rs = load_result_set(run_ref, runs_root=runs_root)
+        except Exception:  # noqa: BLE001 — un-migrated / missing YAML
+            continue
+        if any(row.source_label == source_label for row in rs.rows):
+            survivors.append(run_ref)
+
+    if not survivors:
+        return None
+    if len(survivors) == 1:
+        return survivors[0]
+
+    # 3: multiple survivors — deterministic latest-by-date-stamped-id, warn.
+    chosen = sorted(survivors)[-1]
+    print(
+        f"WARNING: resolve_run_for_source({dataset_accession!r}, "
+        f"{target_taxonomy!r}, {source_label!r}) matched {len(survivors)} "
+        f"runs {sorted(survivors)}; using latest {chosen!r}.",
+        file=sys.stderr,
+    )
+    return chosen
+
+
 def lookup_metrics(
     result_set: AnnotationTransferResultSet,
     source_label: str,
@@ -726,9 +822,27 @@ def compute_edge_metrics(
             if row.target_accession == edge_target
         }
 
+    # The edge target's OWN rank (0 = cluster/leaf, incrementing toward
+    # root). Under lineage-aware mode `target_per_level` maps each level to
+    # the ancestor accession at that level; the level whose accession equals
+    # `edge_target` is the edge's own level. `SUPPORT` must be earned at that
+    # rank or finer — a coarse-level match (e.g. subclass) that is weaker at
+    # the edge's own cluster level must not read as SUPPORT (issue #126 pt 5).
+    _LEVEL_RANK = {"CLUSTER": 0, "SUPERTYPE": 1, "SUBCLASS": 2, "CLASS": 3}
+    edge_target_own_rank = next(
+        (_LEVEL_RANK[lvl] for lvl, acc in target_per_level.items()
+         if acc == edge_target and lvl in _LEVEL_RANK),
+        None,
+    )
+
     metrics_by_level: list[AnnotationTransferLevelResult] = []
     best_f1 = None
     best_rank = None
+    # Best F1 among rows at the edge target's own rank or finer — the
+    # signal that gates SUPPORT (issue #126 pt 5). Distinct from the global
+    # best_f1 (reported as best_f1_score / best_mapping_rank), which may sit
+    # at a coarser ancestor level.
+    qualifying_f1 = None
     # Emit in canonical rank order (root → leaf) for stable diffs.
     for level in ("CLASS", "SUBCLASS", "SUPERTYPE", "CLUSTER"):
         wanted_target = target_per_level.get(level)
@@ -743,10 +857,23 @@ def compute_edge_metrics(
         if best_f1 is None or f1 > best_f1:
             best_f1 = f1
             best_rank = row.taxonomy_rank
+        if (
+            edge_target_own_rank is not None
+            and row.taxonomy_rank is not None
+            and row.taxonomy_rank <= edge_target_own_rank
+            and (qualifying_f1 is None or f1 > qualifying_f1)
+        ):
+            qualifying_f1 = f1
 
+    # `SUPPORT` requires an F1 >= 0.6 at the edge target's own rank or finer —
+    # a coarse-level match (e.g. subclass) that is weaker at the edge's own
+    # level must not earn SUPPORT. When `edge_target_own_rank` is unknown
+    # (taxonomy-DB fallback left `target_per_level` without an edge-target
+    # row), fall back to the global best (pre-#126 behaviour).
+    support_f1 = qualifying_f1 if edge_target_own_rank is not None else best_f1
     if best_f1 is None:
         supports_default = "NO_EVIDENCE"
-    elif best_f1 >= 0.6:
+    elif support_f1 is not None and support_f1 >= 0.6:
         supports_default = "SUPPORT"
     elif best_f1 >= noise_floor:
         supports_default = "PARTIAL"

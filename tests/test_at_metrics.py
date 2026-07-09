@@ -618,3 +618,129 @@ def test_refresh_kb_skips_evidence_without_run_ref(tmp_path, shape_b_run):
     # Default `only_with_run_ref=True` → evidence without run_ref is
     # silently skipped and the file contributes no rows → summary empty.
     assert summary == {}
+
+
+# ─── Level-aware supports_default (issue #126 pt 5) ───────────────────
+
+
+def test_supports_default_downgraded_for_coarse_only_cluster_edge(
+    migrated_shape_b, fake_taxonomy_db, tmp_path
+):
+    """A cluster-level edge (rank 0) must NOT earn SUPPORT from a coarse
+    subclass/supertype match when its own cluster-level F1 is weak.
+
+    Sst-OLM → CLUS_0768: cluster F1 = 0.56 (< 0.6), while subclass = 0.68
+    and supertype = 0.67. Global best is 0.68 (subclass, rank 2), but no
+    row at the edge's own rank (0) clears 0.6 → PARTIAL, not SUPPORT.
+    """
+    payload = at_metrics.compute_edge_metrics(
+        run_ref=migrated_shape_b.name,
+        source_label="Sst-OLM",
+        edge_target="CS20230722_CLUS_0768",
+        runs_root=tmp_path,
+        lineage_aware=True,
+    )
+    # Global best is still reported at the coarser level.
+    assert payload["best_f1_score"] == pytest.approx(0.68)
+    # But SUPPORT is gated on the edge's own rank or finer.
+    assert payload["supports_default"] == "PARTIAL"
+
+
+def test_supports_default_support_when_own_level_strong(
+    migrated_shape_b, fake_taxonomy_db, tmp_path
+):
+    """A supertype-level edge (rank 1) whose own-level F1 clears 0.6 keeps
+    SUPPORT even though a marginally-higher coarser row exists.
+
+    Sst-OLM → SUPT_0216: supertype F1 = 0.67 (>= 0.6) → SUPPORT, despite
+    subclass = 0.68 being the global best.
+    """
+    payload = at_metrics.compute_edge_metrics(
+        run_ref=migrated_shape_b.name,
+        source_label="Sst-OLM",
+        edge_target="CS20230722_SUPT_0216",
+        runs_root=tmp_path,
+        lineage_aware=True,
+    )
+    assert payload["supports_default"] == "SUPPORT"
+
+
+# ─── Run resolution: resolve_run_for_source + load_run_manifest ───────
+
+
+def _make_run(
+    tmp_path: Path, run_id: str, dataset: str, taxonomy: str, source_label: str,
+    *, target_atlas: str = "WMBv1",
+) -> None:
+    """Create a minimal migrated AT run dir under tmp_path with a manifest
+    carrying (source_dataset_accession, target_taxonomy_id, target_atlas)
+    and one f1_matrix row for source_label."""
+    run = tmp_path / run_id
+    _write(
+        run / "manifest.yaml",
+        f"id: {run_id}\nrecord_type: AnnotationTransferRun\n"
+        f"target_taxonomy_id: {taxonomy}\n"
+        f"source_dataset_accession: {dataset}\n"
+        f"target_atlas: {target_atlas}\n",
+    )
+    _write(
+        run / "f1_matrix.csv",
+        "source_label,level,target_name,n_cells,coverage,purity,f1,mean_boot,median_boot\n"
+        f"{source_label},supertype,0216 Sst Gaba_3,22,0.96,0.51,0.67,0.99,1.0\n",
+    )
+    at_metrics.migrate_run(run)
+
+
+def test_resolve_run_for_source_unique(tmp_path):
+    _make_run(tmp_path, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
+    got = at_metrics.resolve_run_for_source(
+        "GEO:GSE1", "CCN20230722", "Foo", runs_root=tmp_path
+    )
+    assert got == "at_run_20260101_a_mmc_wmbv1"
+
+
+def test_resolve_run_for_source_disambiguates_by_label(tmp_path):
+    """One dataset backs two runs with different source labelings. The
+    (dataset, taxonomy) pair is non-unique — source_label is the real key."""
+    _make_run(tmp_path, "at_run_20260101_coarse_mmc_wmbv1", "GEO:GSE9", "CCN20230722", "Coarse")
+    _make_run(tmp_path, "at_run_20260202_fine_mmc_wmbv1", "GEO:GSE9", "CCN20230722", "Fine")
+    assert at_metrics.resolve_run_for_source(
+        "GEO:GSE9", "CCN20230722", "Fine", runs_root=tmp_path
+    ) == "at_run_20260202_fine_mmc_wmbv1"
+    assert at_metrics.resolve_run_for_source(
+        "GEO:GSE9", "CCN20230722", "Coarse", runs_root=tmp_path
+    ) == "at_run_20260101_coarse_mmc_wmbv1"
+
+
+def test_resolve_run_for_source_tie_break_latest(tmp_path, capsys):
+    """When two runs of the same dataset+taxonomy both contain the label,
+    pick the latest by date-stamped id and warn."""
+    _make_run(tmp_path, "at_run_20260101_v1_mmc_wmbv1", "GEO:GSE7", "CCN20230722", "Dup")
+    _make_run(tmp_path, "at_run_20260303_v2_mmc_wmbv1", "GEO:GSE7", "CCN20230722", "Dup")
+    got = at_metrics.resolve_run_for_source(
+        "GEO:GSE7", "CCN20230722", "Dup", runs_root=tmp_path
+    )
+    assert got == "at_run_20260303_v2_mmc_wmbv1"
+    assert "matched 2 runs" in capsys.readouterr().err
+
+
+def test_resolve_run_for_source_none_when_label_absent(tmp_path):
+    _make_run(tmp_path, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
+    # right dataset+taxonomy, wrong label
+    assert at_metrics.resolve_run_for_source(
+        "GEO:GSE1", "CCN20230722", "Missing", runs_root=tmp_path
+    ) is None
+    # wrong dataset
+    assert at_metrics.resolve_run_for_source(
+        "GEO:NOPE", "CCN20230722", "Foo", runs_root=tmp_path
+    ) is None
+
+
+def test_load_run_manifest(tmp_path):
+    _make_run(tmp_path, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722",
+              "Foo", target_atlas="WMBv2")
+    manifest = at_metrics.load_run_manifest(
+        "at_run_20260101_a_mmc_wmbv1", runs_root=tmp_path
+    )
+    assert manifest.get("target_atlas") == "WMBv2"
+    assert at_metrics.load_run_manifest("nonexistent", runs_root=tmp_path) == {}

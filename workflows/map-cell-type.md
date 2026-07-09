@@ -245,13 +245,25 @@ warning.
     auto-built from candidate atlas-side properties (n_cells,
     neighborhood, dominant anat term with completeness flag, key
     expression values).
-  - `ANNOTATION_TRANSFER` (only when the candidate's discovery_score
-    has an `at_signal`): uses
-    [`at_metrics.compute_edge_metrics`](../src/evidencell/at_metrics.py)
-    to populate `run_ref`, `source_cluster_label`, `target_atlas`,
-    `method`, `metrics_by_level`; `supports` defaults from
-    `supports_default` (SUPPORT ≥ 0.6 F1, PARTIAL ≥ noise floor,
-    else NO_EVIDENCE).
+  - `ANNOTATION_TRANSFER` (one item per entry in the classical
+    node's `at_source_sets`, per candidate — issue #126): the node
+    declares which external `(dataset_accession, source_label)`
+    corresponds to this classical type (an agentic judgement made in
+    evidence-extraction, quote-backed via `sources[]`). Stage B
+    resolves the AT run operationally with
+    [`at_metrics.resolve_run_for_source`](../src/evidencell/at_metrics.py)
+    (matching `(dataset_accession, target_taxonomy, source_label)`),
+    then [`compute_edge_metrics`](../src/evidencell/at_metrics.py)
+    populates `run_ref`, `source_dataset_accession`,
+    `source_cluster_label`, `correspondence`, `target_atlas`,
+    `method`, `metrics_by_level`. `supports` defaults from
+    `supports_default`, which is **level-aware**: SUPPORT only when an
+    F1 ≥ 0.6 exists at the edge target's own rank or finer (a
+    coarse-only match → PARTIAL), else PARTIAL ≥ noise floor, else
+    NO_EVIDENCE. A declared source that does **not** transfer to a
+    candidate (or whose run can't be resolved) still emits a
+    `NO_EVIDENCE` item — negative signal, not a silent drop. Nodes
+    without `at_source_sets` emit no AT evidence.
   - **LITERATURE evidence is NOT emitted by the mechanical
     Stage B** — verbatim `snippet:` matching against
     `references.json` belongs in gen-report's synthesis pass,

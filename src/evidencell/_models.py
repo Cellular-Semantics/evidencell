@@ -372,6 +372,30 @@ class EvidenceSupport(str, Enum):
     """
 
 
+class CorrespondenceType(str, Enum):
+    """
+    Nature of the correspondence declared by an AtSourceSet between an external dataset's annotated cell set and a classical cell type.
+
+    """
+    EXACT = "EXACT"
+    """
+    Source cluster is the classical type (clean identity).
+    """
+    PARTIAL = "PARTIAL"
+    """
+    Overlapping but imperfect correspondence.
+    """
+    SUPERSET = "SUPERSET"
+    """
+    Source cluster is broader than the classical type.
+    """
+    SUBSET = "SUBSET"
+    """
+    Source cluster is one molecular subtype within the classical type (e.g. one of several Foxp2 ITC clusters within intercalated cell).
+
+    """
+
+
 class EvidenceType(str, Enum):
     LITERATURE = "LITERATURE"
     """
@@ -1206,6 +1230,24 @@ class ProposedCLTerm(ConfiguredBaseModel):
     status: Optional[str] = Field(default=None, description="""DRAFT | SUBMITTED | ACCEPTED""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProposedCLTerm', 'AnnotationTransferDataset']} })
 
 
+class AtSourceSet(ConfiguredBaseModel):
+    """
+    A single (dataset, annotated-cell-set) correspondence declared on a CellTypeNode: an annotated cell set in an external dataset that corresponds to this classical cell type. Encodes the agentic judgement (recovered here; lost when candidate selection became programmatic in #96) of which source annotation maps to which literature type — a judgement that requires reading the dataset's describing paper, not transcriptomic overlap. `emit-stage-b` resolves the AT run operationally from (dataset_accession, target_taxonomy, source_label) and emits one ANNOTATION_TRANSFER evidence item per entry. A type may declare several entries (lumping across source clusters, or spanning datasets); each becomes an independent AT evidence item.
+
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://bican.org/schema/celltype-evidence/v0.5'})
+
+    dataset_accession: str = Field(default=..., description="""Accession of the source dataset, e.g. \"ArrayExpress:E-MTAB-12096\", \"GEO:GSE142546\". Together with source_label this is stable biology from the paper; the AT run supplying the numbers is resolved at map time and is NOT recorded on the node.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet']} })
+    source_label: str = Field(default=..., description="""Annotated cluster label in the source dataset, as it appears in the paper and in the AT run's result rows, e.g. \"GABA-52-Calb2-Rgs12\". This is the real key used to disambiguate among AT runs of the same dataset against the same taxonomy.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet']} })
+    correspondence: Optional[CorrespondenceType] = Field(default=None, description="""Nature of the source-cluster → classical-type match, so a lumped or partial correspondence is not read as a clean identity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet', 'AnnotationTransferEvidence']} })
+    sources: Optional[list[PropertySource]] = Field(default=None, description="""Quote-backed provenance for the correspondence — the verbatim paper quote(s) justifying \"this annotated cell set corresponds to this classical type\". Same shape and validation as defining_markers / anatomical_location sources (hook-validated against references.json). The load-bearing justification lives here, not in notes.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet']} })
+    notes: Optional[str] = Field(default=None, description="""Free-text colour (heterogeneity observations, cross-references). Not the load-bearing justification — that belongs in sources.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeColocation', 'PropertySource', 'PropertyComparison', 'CellTypeNode', 'CellTypeMappingGraph', 'AtSourceSet', 'BulkDataset']} })
+
+
 class CellTypeNode(ConfiguredBaseModel):
     """
     A named cell type at any level of description: classical, prior transcriptomic, atlas cluster, or emerging multimodal. Nodes are connected by MappingEdges to form the evidence graph. Terminal nodes are atlas cell sets.
@@ -1252,6 +1294,8 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
     negative_markers: Optional[list[GeneDescriptor]] = Field(default=None, description="""Markers explicitly shown to be absent (all node types).""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     neuropeptides: Optional[list[GeneDescriptor]] = Field(default=None, description="""Neuropeptide co-transmitters expressed by this cell type (all node types). For classical nodes: from literature (populate sources on each GeneDescriptor). For atlas nodes: from atlas np.markers column (sources left empty). Separate from defining_markers because neuropeptide identity is a distinct functional property — though a gene may appear in both lists (e.g. Sst as a defining marker AND as a neuropeptide co-transmitter). Examples: Sst, Vip, Cck, Npy, Pnoc.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
+    at_source_sets: Optional[list[AtSourceSet]] = Field(default=None, description="""Annotated cell set(s), in external dataset(s), that correspond to this classical cell type — the result of an agentic judgement made by reading the dataset's describing paper (NOT inferable from transcriptomic overlap alone). Authored by lit-ingest / evidence-extraction once a dataset's annotation labels are available. Each entry names a (dataset_accession, source_label) pair plus the nature of the correspondence, and carries quote-backed `sources` exactly like defining_markers. `emit-stage-b` iterates these to attach ANNOTATION_TRANSFER evidence, resolving the AT run operationally from (dataset_accession, target_taxonomy, source_label). Distinct from prior_dataset_accession/prior_cluster_label, which assert that the node *is* a prior transcriptomic cluster.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     nt_type: Optional[NeurotransmitterType] = Field(default=None, description="""Neurotransmitter type of this cell type. Applies to both classical and atlas terminal nodes (unified field, replaces atlas_nt_type). Carries the naming triple: name_in_source (verbatim source label), cl_terms (CL identifiers), sources (evidence provenance).
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode', 'AtlasMetadataEvidence']} })
     electrophysiology: Optional[ElectrophysiologyProfile] = Field(default=None, description="""Electrophysiological characterisation with nested evidence sources. Replaces former electrophysiology_class (string) + ephys_sources (list) pair.
@@ -1590,6 +1634,8 @@ class AnnotationTransferEvidence(EvidenceItem):
                        'AnnotationTransferRun']} })
     source_cluster_label: Optional[str] = Field(default=None, description="""Cluster label in the source dataset (e.g. \"PLI3\", \"MLI1\", \"5178 CB PLI Gly-Gaba_1\").
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence', 'AnnotationTransferRun']} })
+    correspondence: Optional[CorrespondenceType] = Field(default=None, description="""Nature of the source-cluster → classical-type correspondence, copied from the node's declaring `at_source_sets` entry (issue #126). Records whether the annotated source cell set is an EXACT match, a SUBSET (one molecular subtype within the classical type), a SUPERSET, or a PARTIAL overlap — so a lumped/partial correspondence is not read as a clean identity.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['AtSourceSet', 'AnnotationTransferEvidence']} })
     best_f1_score: Optional[float] = Field(default=None, description="""F1 score at the best-mapping taxonomy level. Minimum quality metric; use when full metrics_by_level is unavailable. Derive from metrics_by_level[best_mapping_level].f1_score when present.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['AnnotationTransferEvidence']} })
     best_mapping_level: Optional[str] = Field(default=None, description="""Taxonomy level name at which best_f1_score was achieved. E.g. \"SUPERTYPE\" for PLI3→1145 (F1=0.96) vs \"CLUSTER\" for PLI1→5178 (F1=0.94).

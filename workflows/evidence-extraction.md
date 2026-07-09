@@ -160,6 +160,22 @@ For marker claims, use MarkerSource (extends PropertySource):
   marker_type: PROTEIN   → IHC, immunofluorescence, Western blot
   marker_type: TRANSCRIPT → scRNA-seq, smFISH, ISH, qPCR
 
+For annotation-transfer source correspondence, use at_source_sets[].sources:
+  at_source_sets[].sources → per-correspondence evidence (nested on each
+  AtSourceSet entry). This is the home for the *agentic judgement* of which
+  annotated cell set in an external dataset corresponds to this classical type
+  (issue #126) — a judgement that requires reading the dataset's describing
+  paper, not transcriptomic overlap. Author an at_source_sets entry once the
+  dataset's annotation labels are available:
+    dataset_accession: e.g. "ArrayExpress:E-MTAB-12096"
+    source_label:      the annotated cluster label from the paper
+                       (e.g. "GABA-52-Calb2-Rgs12")
+    correspondence:    EXACT | PARTIAL | SUPERSET | SUBSET
+    sources[]:         quote-backed justification (same shape as markers)
+  Do NOT record a run_ref here — the AT run is resolved operationally at map
+  time from (dataset_accession, target_taxonomy, source_label). emit-stage-b
+  attaches one ANNOTATION_TRANSFER evidence item per declared source set.
+
 PropertySource fields:
   ref:       required — "PMID:xxxxxxxx" or "https://doi.org/..."
              Resolve from paper_catalogue.json externalIds (PubMed → PMID,
