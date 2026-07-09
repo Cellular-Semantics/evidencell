@@ -1,0 +1,172 @@
+{
+  "run": "run 2 (AT-augmented)",
+  "date": "2026-07-09",
+  "taxonomy": "CCN20230722",
+  "at_run": "at_run_20260709_kozareva_cerebellum_mmc_wmbv1 (GEO:GSE165371 Kozareva 2021; local MapMyCells)",
+  "per_type": {
+    "classical_basket": {
+      "difficulty": "biology-hard",
+      "curator_predicate": "evidencell:CrossCuttingMatch",
+      "cluster_targets": [
+        "CS20230722_CLUS_5188"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1149"
+      ],
+      "cluster_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_CLUS_5188",
+          "conf": "MODERATE",
+          "rel": "evidencell:CrossCuttingMatch",
+          "tier": "NEXT"
+        }
+      ],
+      "supertype_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_SUPT_1149",
+          "conf": "MODERATE",
+          "rel": "skos:broadMatch",
+          "tier": "STRONGEST"
+        }
+      ],
+      "primary": {
+        "tgt": "CS20230722_SUPT_1149",
+        "conf": "MODERATE",
+        "rel": "skos:broadMatch",
+        "tier": "STRONGEST"
+      }
+    },
+    "classical_stellate": {
+      "difficulty": "biology-hard",
+      "curator_predicate": "evidencell:UncertainRelationship",
+      "cluster_targets": [
+        "CS20230722_CLUS_5188",
+        "CS20230722_CLUS_5192"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1149",
+        "CS20230722_SUPT_1151"
+      ],
+      "cluster_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_CLUS_5188",
+          "conf": "MODERATE",
+          "rel": "skos:closeMatch",
+          "tier": "STRONGEST"
+        }
+      ],
+      "supertype_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_SUPT_1149",
+          "conf": "MODERATE",
+          "rel": "evidencell:CrossCuttingMatch",
+          "tier": "NEXT"
+        }
+      ],
+      "primary": {
+        "tgt": "CS20230722_CLUS_5188",
+        "conf": "MODERATE",
+        "rel": "skos:closeMatch",
+        "tier": "STRONGEST"
+      }
+    },
+    "classical_candelabrum": {
+      "difficulty": "clean",
+      "curator_predicate": "skos:exactMatch",
+      "cluster_targets": [
+        "CS20230722_CLUS_5178"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1144"
+      ],
+      "cluster_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_CLUS_5178",
+          "conf": "HIGH",
+          "rel": "skos:exactMatch",
+          "tier": "STRONGEST"
+        }
+      ],
+      "supertype_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_SUPT_1144",
+          "conf": "HIGH",
+          "rel": "skos:broadMatch",
+          "tier": "NEXT"
+        }
+      ],
+      "primary": {
+        "tgt": "CS20230722_CLUS_5178",
+        "conf": "HIGH",
+        "rel": "skos:exactMatch",
+        "tier": "STRONGEST"
+      }
+    },
+    "classical_globular": {
+      "difficulty": "distributed",
+      "curator_predicate": "skos:closeMatch",
+      "cluster_targets": [
+        "CS20230722_CLUS_5177"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1144"
+      ],
+      "cluster_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_CLUS_5177",
+          "conf": "HIGH",
+          "rel": "skos:exactMatch",
+          "tier": "STRONGEST"
+        }
+      ],
+      "supertype_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_SUPT_1144",
+          "conf": "MODERATE",
+          "rel": "skos:broadMatch",
+          "tier": "NEXT"
+        }
+      ],
+      "primary": {
+        "tgt": "CS20230722_CLUS_5177",
+        "conf": "HIGH",
+        "rel": "skos:exactMatch",
+        "tier": "STRONGEST"
+      }
+    },
+    "classical_lugaro": {
+      "difficulty": "supertype-level",
+      "curator_predicate": "skos:exactMatch",
+      "cluster_targets": [
+        "CS20230722_CLUS_5180",
+        "CS20230722_CLUS_5181",
+        "CS20230722_CLUS_5182"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1145"
+      ],
+      "cluster_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_CLUS_5180",
+          "conf": "MODERATE",
+          "rel": "skos:closeMatch",
+          "tier": "NEXT"
+        }
+      ],
+      "supertype_recovered_as_survivor": [
+        {
+          "tgt": "CS20230722_SUPT_1145",
+          "conf": "HIGH",
+          "rel": "skos:broadMatch",
+          "tier": "STRONGEST"
+        }
+      ],
+      "primary": {
+        "tgt": "CS20230722_SUPT_1145",
+        "conf": "HIGH",
+        "rel": "skos:broadMatch",
+        "tier": "STRONGEST"
+      }
+    }
+  }
+}

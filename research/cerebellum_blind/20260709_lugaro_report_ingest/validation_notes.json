@@ -1,0 +1,49 @@
+{
+  "node_id": "lugaro_cell_cerebellum",
+  "date": "2026-07-09",
+  "validate_result": "No issues found (uv run linkml-validate -s schema/celltype_mapping.yaml)",
+  "manual_checks": {
+    "quote_keys_resolve": true,
+    "pmids_resolve_in_references": true,
+    "cl_term": "CL:0011006 (Lugaro cell), mapping_type EXACT per cl_mappings.json"
+  },
+  "quotes_kept_and_claims_updated": {
+    "nt_type": ["219105292_3797906f", "233245440_9b6b19b2"],
+    "defining_markers": {
+      "Htr2a": ["233245440_685e2107"],
+      "Slc6a5": ["233245440_685e2107"],
+      "Kcnd3 (Kv4.3)": ["235419102_58b36aaf"],
+      "Grm1 (mGluR1a)": ["235419102_58b36aaf"]
+    },
+    "neuropeptides": {"Nrgn (neurogranin)": ["1394480_7612b706"]},
+    "morphology": ["14276970_0b2772de", "1394480_194fe57e", "219105292_3797906f"],
+    "electrophysiology": ["9985750_983d981c", "14276970_4dd4ada9"],
+    "anatomical_location": ["14276970_0b2772de", "233245440_9b6b19b2"],
+    "colocated_types": ["9985750_983d981c", "233245440_9b6b19b2", "14276970_4dd4ada9"]
+  },
+  "additional_claims_updated_in_references": [
+    "233245440_685e2107", "248832318_225d5b05", "235419102_fb897249",
+    "235419102_404105ba", "14276970_96d738d3", "14276970_4dd4ada9",
+    "248832318_c6f9d2fc", "265064966_2599cf29", "14276970_0ded592e"
+  ],
+  "pmid_map": {
+    "corpus_219105292": "PMID:32470477 (Compartmentalized input-output organization of Lugaro cells)",
+    "corpus_233245440": "biorxiv preprint (no PMID); published version PMID:35578131 used as ref for PLI3/Lugaro snRNAseq quotes",
+    "corpus_235419102": "PMID:34194302 (Monoamines and Perineuronal Nets on Purkinje output)",
+    "corpus_1394480": "PMID:23894597 (in utero electroporation Golgi/Lugaro labeling)",
+    "corpus_14276970": "PMID:22235322 (Cerebellar Globular Cells, monoaminergic excitation)",
+    "corpus_9985750": "PMID:10684885 (Serotonin-Driven Long-Range Inhibitory Connections)"
+  },
+  "dropped_markers": {
+    "Rat303": "non-gene immunolabel; mentioned in node notes",
+    "SMI311": "non-gene (neurofilament) immunolabel; mentioned in node notes",
+    "chondroitin sulfate proteoglycans (CSPGs)": "non-gene (perineuronal net) label; mentioned in node notes",
+    "Edil3": "putative fusiform-Lugaro marker per proposed_types subtypes note but no supporting quote in references; mentioned in node notes only, not asserted as defining_marker",
+    "Aldh1a3": "putative globular-cell marker per proposed_types subtypes note; mentioned in node notes only, not asserted as defining_marker"
+  },
+  "gene_symbol_canonicalization": {
+    "Kv4.3": "Kcnd3",
+    "mGluR1a": "Grm1"
+  },
+  "notes": "Quotes discarded as LOW/irrelevant were general MLI/Purkinje/network quotes that mention Lugaro only in passing (e.g. 15503971 developmental origin list, 9407361 birthdating, 2715384 PC collaterals, 214725795 MLI split). CL term CL:0011006 EXACT match confirmed against cl_mappings.json."
+}

@@ -1,0 +1,4523 @@
+{
+  "classical_node_id": "globular_cell_cerebellum",
+  "classical_node_name": "Globular Purkinje layer interneuron (globular cell / glycinergic globular cell)",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 50,
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_5177",
+      "label": "5177 CB PLI Gly-Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA-Glyc",
+      "parent_id": "CS20230722_SUPT_1144",
+      "male_female_ratio": 1.0,
+      "discovery_score": {
+        "score": 13,
+        "rank_in_cohort": 1,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 11.42,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.978
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 5.38,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.995
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 6.53,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.989
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.425,
+        "region_fraction_100um": 0.509,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF",
+        "at_signal": {
+          "f1": 0.8753138075313807,
+          "n_cells": 523,
+          "target_level": "cluster",
+          "target_name": "5177 CB PLI Gly-Gaba_1",
+          "score": 3
+        }
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5178",
+      "label": "5178 CB PLI Gly-Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1144",
+      "male_female_ratio": 0.82,
+      "discovery_score": {
+        "score": 9,
+        "rank_in_cohort": 2,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 11.87,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.989
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 2.96,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.989
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.29,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.823
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.68,
+        "region_fraction_100um": 0.768,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5189",
+      "label": "5189 CBX MLI Megf11 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1149",
+      "male_female_ratio": 0.67,
+      "discovery_score": {
+        "score": 9,
+        "rank_in_cohort": 3,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 9.59,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.672
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.96,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.978
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 2.51,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.968
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.764,
+        "region_fraction_100um": 0.861,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5185",
+      "label": "5185 CB PLI Gly-Gaba_4",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1147",
+      "male_female_ratio": 0.82,
+      "discovery_score": {
+        "score": 9,
+        "rank_in_cohort": 4,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 12.05,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.995
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.75,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.973
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.38,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.849
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.441,
+        "region_fraction_100um": 0.525,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5179",
+      "label": "5179 CB PLI Gly-Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA-Glyc",
+      "parent_id": "CS20230722_SUPT_1144",
+      "male_female_ratio": 0.89,
+      "discovery_score": {
+        "score": 7,
+        "rank_in_cohort": 5,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.67,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.887
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 7.43,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.995
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.783,
+        "region_fraction_100um": 0.88,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF",
+        "at_signal": {
+          "f1": 0.20227920227920226,
+          "n_cells": 71,
+          "target_level": "cluster",
+          "target_name": "5179 CB PLI Gly-Gaba_1",
+          "score": 1
+        }
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5300",
+      "label": "5300 VLMC NN_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1188",
+      "male_female_ratio": 0.89,
+      "discovery_score": {
+        "score": 7,
+        "rank_in_cohort": 6,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.26,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.075
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.66,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.968
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.1,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.672
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.085,
+        "region_fraction_100um": 0.121,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5184",
+      "label": "5184 CB PLI Gly-Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1146",
+      "male_female_ratio": 0.25,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 7,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.02,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.731
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.51,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.952
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 3.0,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.984
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 2.08,
+            "reliable": true,
+            "raw_tier": -2,
+            "applied_score": -2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.962
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.555,
+        "region_fraction_100um": 0.719,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3417",
+      "label": "3417 MRN-PPN-CUN Pax8 Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0796",
+      "male_female_ratio": 0.89,
+      "discovery_score": {
+        "score": 6,
+        "rank_in_cohort": 8,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 2.97,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.403
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.18,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.898
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.44,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.866
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.09,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.624
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.062,
+        "region_fraction_100um": 0.156,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4769",
+      "label": "4769 LDT-PCG St18 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1067",
+      "male_female_ratio": 1.04,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 9,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 5.34,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.484
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.49,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.946
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.11,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.683
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.017,
+        "region_fraction_100um": 0.033,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4763",
+      "label": "4763 LDT-PCG St18 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1067",
+      "male_female_ratio": 0.85,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 10,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 8.02,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.565
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 1.58,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.984
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.27,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.812
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.5,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.828
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.021,
+        "region_fraction_100um": 0.312,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5079",
+      "label": "5079 NTS-PARN Neurod2 Gly-Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1130",
+      "male_female_ratio": 0.56,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 11,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 8.87,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.629
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.12,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.855
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 1.93,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.952
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 2.61,
+            "reliable": true,
+            "raw_tier": -2,
+            "applied_score": -2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.973
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.333,
+        "region_fraction_100um": 0.559,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5146",
+      "label": "5146 SPVI-SPVC Sall3 Lhx1 Gly-Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1138",
+      "male_female_ratio": 0.61,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 12,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.85,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.925
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 2.98,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.973
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.08,
+        "region_fraction_100um": 0.214,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5188",
+      "label": "5188 CBX MLI Megf11 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1149",
+      "male_female_ratio": 0.61,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 13,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 2.09,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.36
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.2,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.774
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.02,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.478
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.72,
+        "region_fraction_100um": 0.841,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5190",
+      "label": "5190 CBX MLI Megf11 Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1150",
+      "male_female_ratio": 0.92,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 14,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 1.09,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.312
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.16,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.758
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.791,
+        "region_fraction_100um": 0.868,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5193",
+      "label": "5193 CBX Purkinje Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1152",
+      "male_female_ratio": 1.04,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 15,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 1.51,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.328
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.27,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.812
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.829,
+        "region_fraction_100um": 0.96,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5194",
+      "label": "5194 CBX Purkinje Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1152",
+      "male_female_ratio": 1.08,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 16,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.72,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.296
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.04,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.683
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.11,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.683
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.846,
+        "region_fraction_100um": 0.912,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5207",
+      "label": "5207 Astro-CB NN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1158",
+      "male_female_ratio": 1.0,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 17,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.55,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.253
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.12,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.855
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.02,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.419
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.567,
+        "region_fraction_100um": 0.723,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5302",
+      "label": "5302 VLMC NN_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1189",
+      "male_female_ratio": 1.13,
+      "discovery_score": {
+        "score": 5,
+        "rank_in_cohort": 18,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.39,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.188
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.61,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.962
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.086,
+        "region_fraction_100um": 0.216,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4741",
+      "label": "4741 LDT-PCG-CS Gata3 Lhx1 Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1057",
+      "male_female_ratio": 2.12,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 19,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 9.18,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.651
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.2,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.914
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.33,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.828
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_fraction_100um": 0.031,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5311",
+      "label": "5311 Endo NN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1193",
+      "male_female_ratio": 1.08,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 20,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.29,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.113
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.56,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.957
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.02,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.478
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.062,
+        "region_fraction_100um": 0.082,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4751",
+      "label": "4751 PDTg-PCG Pax6 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1061",
+      "male_female_ratio": 0.92,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 21,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.04,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.737
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.15,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.887
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.37,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.844
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.37,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.747
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.053,
+        "region_fraction_100um": 0.176,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4792",
+      "label": "4792 DTN-LDT-IPN Otp Pax3 Gaba_4",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1072",
+      "male_female_ratio": 0.64,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 22,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 7.29,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.543
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.44,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.866
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.008,
+        "region_fraction_100um": 0.21,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4793",
+      "label": "4793 DTN-LDT-IPN Otp Pax3 Gaba_4",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1072",
+      "male_female_ratio": 0.56,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 23,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 8.42,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.586
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.03,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.645
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.12,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.704
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.09,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.624
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.051,
+        "region_fraction_100um": 0.114,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5252",
+      "label": "5252 Ependymal NN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1175",
+      "male_female_ratio": 0.92,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 24,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.27,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.097
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.13,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.866
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.234,
+        "region_fraction_100um": 0.35,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5267",
+      "label": "5267 OPC NN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1179",
+      "male_female_ratio": 1.04,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 25,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.78,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.914
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.37,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.941
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.111,
+        "region_fraction_100um": 0.135,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3446",
+      "label": "3446 PAG-PPN Pax5 Sox21 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0802",
+      "male_female_ratio": 0.82,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 26,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.5,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.844
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.16,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.758
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.06,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.586
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.04,
+        "region_fraction_100um": 0.12,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3449",
+      "label": "3449 PAG-PPN Pax5 Sox21 Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0803",
+      "male_female_ratio": 0.75,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 27,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 9.16,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.64
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.04,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.683
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.76,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.903
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.03,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.527
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.017,
+        "region_fraction_100um": 0.117,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3489",
+      "label": "3489 IC Six3 En2 Gaba_4",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0810",
+      "male_female_ratio": 0.28,
+      "discovery_score": {
+        "score": 4,
+        "rank_in_cohort": 28,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 9.71,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.688
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.19,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.909
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.093,
+        "region_fraction_100um": 0.307,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4758",
+      "label": "4758 PDTg Otp Shroom3 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1065",
+      "male_female_ratio": 0.61,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 29,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 4.17,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.441
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.79,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.909
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.034,
+        "region_fraction_100um": 0.069,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4759",
+      "label": "4759 PDTg Otp Shroom3 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1065",
+      "male_female_ratio": 0.39,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 30,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 1.52,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.333
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.13,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.71
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.062,
+        "region_fraction_100um": 0.062,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5261",
+      "label": "5261 Ependymal NN_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1176",
+      "male_female_ratio": 0.85,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 31,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.55,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.253
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.25,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.801
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.015,
+        "region_fraction_100um": 0.05,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5303",
+      "label": "5303 VLMC NN_4",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1190",
+      "male_female_ratio": 0.12,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 32,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.31,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.145
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.32,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.935
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.037,
+        "region_fraction_100um": 0.041,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5309",
+      "label": "5309 Endo NN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1193",
+      "male_female_ratio": 1.22,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 33,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.32,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.151
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.21,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.919
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.04,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.5
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.06,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.586
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.052,
+        "region_fraction_100um": 0.071,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5310",
+      "label": "5310 Endo NN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1193",
+      "male_female_ratio": 1.17,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 34,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.24,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.065
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.13,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.866
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.03,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.527
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.042,
+        "region_fraction_100um": 0.056,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3495",
+      "label": "3495 IC Six3 En2 Gaba_5",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0811",
+      "male_female_ratio": 0.72,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 35,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 11.26,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.973
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.16,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.892
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.35,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.833
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 2.19,
+            "reliable": true,
+            "raw_tier": -2,
+            "applied_score": -2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.968
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.012,
+        "region_fraction_100um": 0.047,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3552",
+      "label": "3552 PAG-ND-PCG Onecut1 Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0820",
+      "male_female_ratio": 0.69,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 36,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 4.92,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.457
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.06,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.763
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.13,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.71
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.024,
+        "region_fraction_100um": 0.044,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3551",
+      "label": "3551 PAG-ND-PCG Onecut1 Gaba_3",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0820",
+      "male_female_ratio": 1.04,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 37,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 5.28,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.473
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.13,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.71
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.023,
+        "region_fraction_100um": 0.047,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4707",
+      "label": "4707 LDT Fgf7 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1049",
+      "male_female_ratio": 0.82,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 38,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 11.0,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.946
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.05,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.731
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.04,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.5
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.03,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.527
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.361,
+        "region_fraction_100um": 0.607,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4705",
+      "label": "4705 LDT Fgf7 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1049",
+      "male_female_ratio": 0.49,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 39,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.55,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.855
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.05,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.731
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.06,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.565
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.167,
+        "region_fraction_100um": 0.5,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5001",
+      "label": "5001 CBN Dmbx1 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1115",
+      "male_female_ratio": 7.33,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 40,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 8.95,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.634
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.14,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.882
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.04,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.565
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_fraction_100um": 0.333,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5191",
+      "label": "5191 CBX MLI Megf11 Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1150",
+      "male_female_ratio": 0.64,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 41,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.22,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.796
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.784,
+        "region_fraction_100um": 0.856,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5195",
+      "label": "5195 CBX Purkinje Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1153",
+      "male_female_ratio": 0.89,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 42,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 1.71,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.349
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.754,
+        "region_fraction_100um": 0.819,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5196",
+      "label": "5196 CBX Purkinje Gaba_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1153",
+      "male_female_ratio": 1.13,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 43,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 1.19,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.323
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.06,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.763
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.11,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.683
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.11,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.64
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.678,
+        "region_fraction_100um": 0.747,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5240",
+      "label": "5240 Astroependymal NN_2",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1170",
+      "male_female_ratio": 1.44,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 44,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.19,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.048
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.09,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.651
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.291,
+        "region_fraction_100um": 0.707,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5254",
+      "label": "5254 Ependymal NN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1175",
+      "male_female_ratio": 1.17,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 45,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.18,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.898
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.45,
+        "region_fraction_100um": 0.908,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_5255",
+      "label": "5255 Ependymal NN_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUPT_1175",
+      "male_female_ratio": 0.56,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 46,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 0.82,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.301
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.05,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.731
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.347,
+        "region_fraction_100um": 0.694,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3445",
+      "label": "3445 PAG-PPN Pax5 Sox21 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0802",
+      "male_female_ratio": 0.56,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 47,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.05,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.742
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.39,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.86
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_fraction_100um": 0.154,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_3503",
+      "label": "3503 IC Six3 En2 Gaba_6",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_0812",
+      "male_female_ratio": 1.27,
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 48,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 9.63,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.677
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.06,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.763
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.207,
+        "region_fraction_100um": 0.586,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4711",
+      "label": "4711 LDT-DTN Gata3 Nfix Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1050",
+      "male_female_ratio": 0.75,
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 49,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 10.24,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.806
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.06,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.763
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.15,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.753
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_fraction_100um": 0.013,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_4764",
+      "label": "4764 LDT-PCG St18 Gaba_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "GABA",
+      "parent_id": "CS20230722_SUPT_1067",
+      "male_female_ratio": 0.92,
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 50,
+        "cohort_size": 50,
+        "next_best_score": 9,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 50,
+            "filters": [
+              "region=MBA:1145,MBA:528",
+              "nt_type=GABAergic / glycinergic (Slc6a5/GlyT2+)"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Nxph1",
+            "val": 5.23,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.468
+              }
+            ]
+          },
+          {
+            "gene": "Aldh1a3",
+            "val": 0.23,
+            "reliable": true,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.925
+              }
+            ]
+          },
+          {
+            "gene": "Slc6a5",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          },
+          {
+            "gene": "-Oxtr",
+            "val": 0.0,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_fraction_100um": 0.096,
+        "region_count_completeness": "lower_bound",
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}

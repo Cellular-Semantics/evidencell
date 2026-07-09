@@ -1,0 +1,59 @@
+{
+  "node_id": "globular_cell_cerebellum",
+  "property_support": {
+    "nt_type": {
+      "value": "GABAergic / glycinergic (Slc6a5/GlyT2+)",
+      "quote_keys": ["233245440_4fadb9cd", "235419102_404105ba"],
+      "strength": "MODERATE",
+      "notes": "GABAergic/glycinergic inferred from Slc6a5 (GlyT2) expression in the GLC population (Osorno 2021 preprint) and PC GABAergic synapses onto Lugaro/globular cells (Hirono 2021)."
+    },
+    "defining_markers": {
+      "Nxph1": {"quote_keys": ["233245440_4fadb9cd"], "strength": "MODERATE", "type": "TRANSCRIPT"},
+      "Aldh1a3": {"quote_keys": ["233245440_4fadb9cd", "235419102_58b36aaf"], "strength": "HIGH", "type": "TRANSCRIPT"},
+      "Slc6a5": {"quote_keys": ["233245440_4fadb9cd", "235419102_58b36aaf"], "strength": "HIGH", "type": "TRANSCRIPT"},
+      "notes": "Three-marker GLC logic (Nxph1+, Aldh1a3+, Slc6a5+) from Osorno 2021 preprint; Aldh1a3/Slc6a5 corroborated as putative globular-cell markers by Hirono 2021 review citing Kozareva. Nxph1 is shared with CCs/MLI2/Lugaro, so it is the weakest of the three for discrimination."
+    },
+    "negative_markers": {
+      "Oxtr": {"quote_keys": ["248832318_c6f9d2fc"], "strength": "MODERATE", "notes": "Oxtr-Cre targets candelabrum cells, NOT glycinergic globular cells — globular cells are Oxtr-negative by contrast."}
+    },
+    "morphology": {
+      "quote_keys": ["14276970_0b2772de", "248832318_c6f9d2fc", "235419102_58b36aaf"],
+      "strength": "HIGH",
+      "notes": "Small rounded soma under PC layer extending into granular layer; long transverse axon spanning microzones; distinct from CC (sagittal ascending axon) and fusiform Lugaro cells."
+    },
+    "electrophysiology": {
+      "quote_keys": ["14276970_0ded592e", "14276970_4dd4ada9", "248832318_c6f9d2fc"],
+      "strength": "HIGH",
+      "notes": "Silent at rest; highest-frequency (~50-60 Hz) and largest-amplitude sIPSCs among small granular-layer interneurons; monosynaptic PC-collateral inhibition + likely mossy-fiber excitation; fires to 5-HT and NA; lower input resistance than CCs. All physiology from Hirono 2012 (mouse slice)."
+    },
+    "anatomical_location": {
+      "quote_keys": ["14276970_0b2772de", "248832318_c6f9d2fc"],
+      "strength": "HIGH",
+      "notes": "Position at underside of Purkinje cell layer with soma in granular layer — mapped to UBERON:0002979 (PCL) plus coarse UBERON:0002129 (cerebellar cortex) query term. Granular-layer position noted in name_in_source; no dedicated UBERON granular-layer entry added to avoid overstating (soma straddles PCL/granular border)."
+    },
+    "colocated_types": {
+      "quote_keys": ["14276970_4dd4ada9", "235419102_58b36aaf", "248832318_c6f9d2fc"],
+      "strength": "HIGH",
+      "notes": "Purkinje cell (feedback inhibition), Golgi cell (transverse axon target), candelabrum cell (contrast)."
+    },
+    "cl_mapping": {
+      "value": "OMITTED",
+      "notes": "cl_mappings.json returns cl_term_id null for globular_cell_cerebellum after exhaustive OLS4 search. No CL term invented; cl_mapping field omitted from node per instruction. Candidate CL contribution flagged in node notes."
+    }
+  },
+  "gaps": [
+    "neuropeptides: none reported in kept quotes (proposed_types neuropeptides_mentioned is empty) — no assertion made.",
+    "ncbi_gene_ids left null for all markers — require NodeNormalization lookup.",
+    "species left null — physiology from mouse (Hirono 2012 GAD67-GFP); some references frame globular/Lugaro grouping from rat historically; confirm per-source.",
+    "Aldh1a vs Aldh1a3: proposed_types lists 'Aldh1a' as a negative marker, but this is the CC-positive marker; globular cells are Aldh1a3-POSITIVE. Not asserted as a negative to avoid a symbol/marker contradiction; flagged for round 2.",
+    "Nxph1 as globular marker is non-specific (shared with CC, MLI2, Lugaro) — low discriminative value.",
+    "No positive discriminating protein-level (immuno) marker asserted; all defining markers are TRANSCRIPT-level from snRNAseq."
+  ],
+  "round2_targets": [
+    "Resolve preprint DOI 10.1101/2021.04.09.439172 (Osorno 2021) to its published PMID (35578131, Osorno 2022) and consolidate the GLC three-marker triple onto the peer-reviewed source if the marker table is present there.",
+    "Retrieve primary morphology sources (Lainé & Axelrad 2002; Simat et al. 2007; Schilling et al. 2008) for direct globular-cell axonal/dendritic reconstruction quotes.",
+    "Confirm Aldh1a3 vs Aldh1a distinction and whether globular cells are Aldh1a-negative (potential negative marker).",
+    "Assess protein-level (immunohistochemical) markers (Kv4.3, mGluR1a, Rat303, SMI311, CSPG) noted for Lugaro/globular cells in Hirono 2021 — determine if any are globular-specific.",
+    "Check Schilling 2025 (PMID:40019676) for human vs mouse PLI marker divergence relevant to Slc6a5/Aldh1a3."
+  ]
+}

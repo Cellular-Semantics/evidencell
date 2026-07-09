@@ -1,0 +1,37 @@
+{
+  "accession": "SCP795",
+  "source_urls": [
+    "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE165nnn/GSE165371/suppl/GSE165371_interneuron_joint.tar.gz",
+    "https://raw.githubusercontent.com/MacoskoLab/cerebellum-atlas-analysis/master/data/cluster_metadata.csv"
+  ],
+  "outcome": "SUCCESS",
+  "blocker_reason": null,
+  "n_cells_total": 60526,
+  "n_cells_after_subset": 45555,
+  "cluster_col": "subcluster",
+  "labels_found": [
+    "MLI1_1",
+    "MLI1_2",
+    "MLI2",
+    "PLI_1",
+    "PLI_2",
+    "PLI_3"
+  ],
+  "label_counts": {
+    "MLI1_1": 10998,
+    "MLI1_2": 21571,
+    "MLI2": 10544,
+    "PLI_1": 1176,
+    "PLI_2": 735,
+    "PLI_3": 531
+  },
+  "sha256": {
+    "GSE165371_interneuron_joint.tar.gz": "1046dccd8e24cb6a34c68a064d22480ea586ab7fd3c22a7b2f1a9dc224703f4b",
+    "kozareva_interneurons_mmc.h5ad": "64aa2e3d89a80851aefbc6118e3d27939c8019842225ad7de2819e904b5f6060"
+  },
+  "bytes": {
+    "GSE165371_interneuron_joint.tar.gz": 475861283,
+    "kozareva_interneurons_mmc.h5ad": 254397512
+  },
+  "tool_notes": "SCP795 Single Cell Portal bulk download requires signed-in Broad account (blocked for anon). GEO GSE165371 supplementary provides anonymous mtx bundles; interneuron_joint bundle (454MB) holds 60526 MLI+PLI nuclei as genes x cells integer mtx WITHOUT cluster labels. Cluster labels sourced from public MacoskoLab/cerebellum-atlas-analysis repo data/cluster_metadata.csv (barcode -> subcluster/cluster). 45555/60526 mtx barcodes matched final interneuron subclusters; 14971 unmatched (QC-removed / not-final-annotated). Golgi clusters absent from interneuron_joint bundle (separate golgi_joint.tar.gz); target at_source_sets are MLI/PLI only. NOTE spelling: dataset uses PLI_1/PLI_2/PLI_3 (underscore) not PLI1/PLI2/PLI3. PLI_1=1176(candelabrum), PLI_2=735(globular), PLI_3=531(Lugaro) counts match paper."
+}

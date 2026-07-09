@@ -1,0 +1,165 @@
+# Draft KB — cerebellum_blind (globular cell)
+# Source: ASTA deep research report — inputs/deepsearch/ASTA_MLI_PLI.pdf
+# Ingestion date: 2026-07-09
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/cerebellum_blind/references.json
+# Classical node proposed by: asta-report-ingest (globular_report_ingest run)
+name: Cerebellar globular cell (glycinergic Purkinje-layer interneuron) — draft classical type (blind)
+description: Draft evidence graph for the cerebellar globular cell (glycinergic globular cell / PLI2-like Purkinje-layer interneuron), a rare Slc6a5+/Nxph1+/Aldh1a3+ inhibitory interneuron distinct from candelabrum and Lugaro cells. Node properties are synthesis-derived from an ASTA deep research report and require primary literature verification. Edges empty pending mapping evidence.
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002037
+  label: cerebellum
+  name_in_source: cerebellar cortex
+species:
+creation_date: '2026-07-09'
+notes: Species field left null — evidence is from mouse and rat; species must be confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup. Globular cells have no CL term (see cl_mappings.json); cl_mapping omitted rather than invented. Quote provenance lives in references/cerebellum_blind/references.json; quote_keys reference verbatim text only.
+nodes:
+  - id: globular_cell_cerebellum
+    name: Globular Purkinje layer interneuron (globular cell / glycinergic globular cell)
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    is_terminal: false
+    nt_type:
+      name_in_source: GABAergic / glycinergic (Slc6a5/GlyT2+)
+      sources:
+        - ref: "https://doi.org/10.1101/2021.04.09.439172"
+          method: snRNAseq marker logic
+          scope: mouse cerebellar cortex (GLC population)
+          quote_key: "233245440_4fadb9cd"
+        - ref: "PMID:34194302"
+          method: review / anatomy
+          scope: mouse cerebellar cortex
+          quote_key: "235419102_404105ba"
+    defining_markers:
+      - symbol: Nxph1
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.1101/2021.04.09.439172"
+            method: snRNAseq (three-marker population logic)
+            scope: mouse cerebellar cortex (GLC = Nxph1+ Aldh1a3+ Slc6a5+)
+            quote_key: "233245440_4fadb9cd"
+            marker_type: TRANSCRIPT
+      - symbol: Aldh1a3
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.1101/2021.04.09.439172"
+            method: snRNAseq (three-marker population logic)
+            scope: mouse cerebellar cortex (GLC = Nxph1+ Aldh1a3+ Slc6a5+)
+            quote_key: "233245440_4fadb9cd"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:34194302"
+            method: review / transcriptomic marker attribution
+            scope: mouse cerebellar cortex (putative globular cell markers)
+            quote_key: "235419102_58b36aaf"
+            marker_type: TRANSCRIPT
+      - symbol: Slc6a5
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.1101/2021.04.09.439172"
+            method: snRNAseq (three-marker population logic)
+            scope: mouse cerebellar cortex (GLC = Nxph1+ Aldh1a3+ Slc6a5+)
+            quote_key: "233245440_4fadb9cd"
+            marker_type: TRANSCRIPT
+          - ref: "PMID:34194302"
+            method: review / transcriptomic marker attribution
+            scope: mouse cerebellar cortex (putative globular cell markers)
+            quote_key: "235419102_58b36aaf"
+            marker_type: TRANSCRIPT
+    negative_markers:
+      - symbol: Oxtr
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:35578131"
+            method: genetic targeting (Oxtr-Cre labels CCs, not globular cells)
+            scope: mouse cerebellar cortex
+            quote_key: "248832318_c6f9d2fc"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >-
+        Rare, small inhibitory interneuron with a small rounded (globular) soma
+        located underneath the Purkinje cell layer, with the soma extending into
+        the granular layer. Its most distinctive feature is a long axon projecting
+        mainly in the transverse direction (parallel to the folial axis), spanning
+        neighboring microzones — in contrast to candelabrum cells, whose axons
+        ascend locally in a sagittal plane. Small in number and intermingled with
+        small Golgi cells; historically grouped with Lugaro cells (as the
+        under-PC-layer subgroup) but morphologically distinct from fusiform Lugaro
+        cells, Golgi cells and molecular-layer basket/stellate cells.
+      sources:
+        - ref: "PMID:22235322"
+          method: morphological identification (GAD67-GFP mice) / slice electrophysiology
+          scope: mouse cerebellar cortex
+          quote_key: "14276970_0b2772de"
+        - ref: "PMID:35578131"
+          method: light microscopy / anatomy
+          scope: mouse cerebellar cortex
+          quote_key: "248832318_c6f9d2fc"
+        - ref: "PMID:34194302"
+          method: review / anatomy
+          scope: mouse cerebellar cortex
+          quote_key: "235419102_58b36aaf"
+    electrophysiology:
+      description: >-
+        Silent at rest. Receives prominent spontaneous IPSCs (highest frequency,
+        ~50–60 Hz, and largest amplitude among the small granular-layer
+        interneuron classes, versus small Golgi and small fusiform Lugaro cells),
+        including robust monosynaptic inhibitory input from Purkinje cell axon
+        collaterals, and likely excitatory monosynaptic mossy-fiber input. Fires
+        spike discharges in response to both serotonin (5-HT) and noradrenaline.
+        Has lower input resistance and is less excitable than candelabrum cells.
+        Sits in a Purkinje-cell feedback loop integrating PC collateral inhibition
+        with mossy-fiber excitation under monoaminergic modulation.
+      sources:
+        - ref: "PMID:22235322"
+          method: slice electrophysiology / pharmacology
+          scope: mouse cerebellar cortex
+          quote_key: "14276970_0ded592e"
+        - ref: "PMID:22235322"
+          method: slice electrophysiology (sIPSC frequency/amplitude comparison)
+          scope: mouse cerebellar cortex
+          quote_key: "14276970_4dd4ada9"
+        - ref: "PMID:35578131"
+          method: electrophysiology (input resistance comparison vs CCs)
+          scope: mouse cerebellar cortex
+          quote_key: "248832318_c6f9d2fc"
+    anatomical_location:
+      - id: UBERON:0002979
+        label: Purkinje cell layer of cerebellar cortex
+        name_in_source: underneath / at the underside of the Purkinje cell layer (soma extends into granular layer)
+        sources:
+          - ref: "PMID:22235322"
+            method: morphological identification (GAD67-GFP mice)
+            scope: mouse cerebellar cortex
+            quote_key: "14276970_0b2772de"
+          - ref: "PMID:35578131"
+            method: light microscopy / anatomy
+            scope: mouse cerebellar cortex
+            quote_key: "248832318_c6f9d2fc"
+      - id: UBERON:0002129
+        label: cerebellar cortex
+        name_in_source: 'Cerebellar cortex (curator-added coarse query term; atlas paints at regional not laminar resolution — see mapping_20260709/curator_interventions.md #1)'
+    colocated_types:
+      - neighboring_type: Purkinje cell
+        notes: robustly inhibited by monosynaptic Purkinje cell axon collateral input, forming a PC–globular cell feedback loop (PMID:22235322, quote_key 14276970_4dd4ada9)
+      - neighboring_type: Golgi cell
+        notes: transverse axons of Lugaro/globular cells innervate Golgi cells (~10 Lugaro/globular cells converge on one Golgi cell) (PMID:34194302, quote_key 235419102_58b36aaf)
+      - neighboring_type: candelabrum cell
+        notes: distinct from candelabrum cells — globular soma sits in granular layer with transverse axon and lower input resistance, vs CC somata in molecular layer with sagittal ascending axon and higher input resistance (PMID:35578131, quote_key 248832318_c6f9d2fc)
+    definition_references:
+      - "PMID:22235322"
+      - "PMID:35578131"
+      - "PMID:34194302"
+      - "DOI:10.1101/2021.04.09.439172"
+    notes: >-
+      Globular / glycinergic (GLC) cells are mapped by three-marker logic
+      (Nxph1+, Aldh1a3+, Slc6a5+) to the transcriptomic PLI2 / GLC-like class,
+      distinct from candelabrum cells (PLI1; Oxtr-Cre+, Aldh1a+, Slc6a5-) and
+      Lugaro cells (PLI3; Htr2a+, Slc6a5+). Historically the "globular cell" is
+      treated as the under-PC-layer subgroup of Lugaro/globular cells; markers
+      and mapping are provisional and should be verified against primary data.
+      No CL term exists for the glycinergic globular / PLI2-like Purkinje-layer
+      interneuron — candidate CL contribution. Physiology from Hirono et al. 2012
+      (mouse GAD67-GFP slice recordings); no subtypes of the globular cell itself
+      are described.
+edges: []

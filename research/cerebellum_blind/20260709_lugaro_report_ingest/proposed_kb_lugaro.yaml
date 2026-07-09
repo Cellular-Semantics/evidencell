@@ -1,0 +1,168 @@
+# Draft KB — cerebellum_blind (Lugaro cell single-node ingest)
+# Source: ASTA deep research report — inputs/deepsearch/ASTA_MLI_PLI.pdf
+# Ingestion date: 2026-07-09
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/cerebellum_blind/references.json
+name: Cerebellar Lugaro cell — draft classical type (blind)
+description: Draft evidence graph for the cerebellar Lugaro cell (a Purkinje-layer interneuron), extracted from an ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002037
+  label: cerebellum
+  name_in_source: cerebellar cortex
+species:
+creation_date: '2026-07-09'
+notes: Species field left null — most evidence is from mouse and rat; species must be confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup. Quote provenance lives in references/cerebellum_blind/references.json; quote_keys reference verbatim text only.
+nodes:
+  - id: lugaro_cell_cerebellum
+    name: Lugaro cell (cerebellum)
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    is_terminal: false
+    cl_mapping:
+      cl_term:
+        id: "CL:0011006"
+        label: Lugaro cell
+        name_in_source: Lugaro cell
+      mapping_type: EXACT
+    nt_type:
+      name_in_source: GABAergic/glycinergic (mixed)
+      sources:
+        - ref: "PMID:32470477"
+          method: neurochemical / genetic labeling
+          scope: mouse cerebellar cortex
+          quote_key: "219105292_3797906f"
+        - ref: "PMID:35578131"
+          method: snRNAseq / electrophysiology
+          scope: mouse cerebellar cortex
+          quote_key: "233245440_9b6b19b2"
+    defining_markers:
+      - symbol: Htr2a
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:35578131"
+            method: snRNAseq
+            scope: mouse cerebellar cortex (PLI3 / Lugaro cluster)
+            quote_key: "233245440_685e2107"
+            marker_type: TRANSCRIPT
+      - symbol: Slc6a5
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:35578131"
+            method: snRNAseq
+            scope: mouse cerebellar cortex (PLI3 / Lugaro cluster)
+            quote_key: "233245440_685e2107"
+            marker_type: TRANSCRIPT
+      - symbol: Kcnd3
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:34194302"
+            method: immunohistochemistry (Kv4.3)
+            scope: cerebellar Lugaro/globular cells
+            quote_key: "235419102_58b36aaf"
+            marker_type: PROTEIN
+      - symbol: Grm1
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:34194302"
+            method: immunohistochemistry (mGluR1alpha)
+            scope: cerebellar Lugaro/globular cells
+            quote_key: "235419102_58b36aaf"
+            marker_type: PROTEIN
+    neuropeptides:
+      - symbol: Nrgn
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:23894597"
+            method: immunohistochemistry (neurogranin)
+            scope: cerebellar Golgi/Lugaro cells
+            quote_key: "1394480_7612b706"
+            marker_type: PROTEIN
+    morphology:
+      description: >-
+        Small, morphologically distinctive inhibitory Purkinje-layer interneuron
+        of the cerebellar cortex. Classic fusiform Lugaro cells have a slender
+        spindle-shaped soma within the granule cell layer just beneath the
+        Purkinje cell layer with bipolar dendrites extending parallel to the
+        Purkinje cell layer; globular cells have a small rounded soma directly
+        under the Purkinje cell layer. Axons form a parasagittal plexus with long
+        transverse branches running parallel to the parallel fibers, projecting
+        into the molecular layer. Neighboring cells are interconnected as a
+        somatodendritic meshwork whose compartments align with zebrin II
+        (aldolase C) cerebellar compartments. Hard to distinguish from small
+        Golgi cells by morphology alone.
+      sources:
+        - ref: "PMID:22235322"
+          method: anatomy / electrophysiology (GAD67-GFP)
+          scope: mouse cerebellar cortex
+          quote_key: "14276970_0b2772de"
+        - ref: "PMID:23894597"
+          method: genetic labeling / anatomy
+          scope: mouse cerebellar cortex
+          quote_key: "1394480_194fe57e"
+        - ref: "PMID:32470477"
+          method: neurochemical / genetic labeling
+          scope: mouse cerebellar cortex
+          quote_key: "219105292_3797906f"
+    electrophysiology:
+      description: >-
+        Selectively excited by serotonin (5-HT), driven into sustained steady
+        firing in the ~5-15 Hz range; this monoaminergic excitation relays the
+        serotonergic signal into the local inhibitory network. Globular Lugaro
+        cells additionally respond to noradrenaline, receive robust monosynaptic
+        inhibitory input from Purkinje cell axon collaterals and excitatory
+        mossy-fiber input, forming a monoaminergically modulated feedback loop.
+        As an interneuron-selective interneuron the Lugaro cell inhibits Golgi
+        cells and molecular layer interneurons.
+      sources:
+        - ref: "PMID:10684885"
+          method: electrophysiology / pharmacology
+          scope: rat cerebellar vermis slices
+          quote_key: "9985750_983d981c"
+        - ref: "PMID:22235322"
+          method: electrophysiology / pharmacology
+          scope: mouse cerebellar cortex
+          quote_key: "14276970_4dd4ada9"
+    anatomical_location:
+      - id: UBERON:0002979
+        label: Purkinje cell layer of cerebellar cortex
+        name_in_source: cerebellar cortex, Purkinje cell layer (at/near the granule cell layer border)
+        sources:
+          - ref: "PMID:22235322"
+            method: anatomy
+            scope: mouse cerebellar cortex
+            quote_key: "14276970_0b2772de"
+          - ref: "PMID:35578131"
+            method: snRNAseq / electrophysiology
+            scope: mouse cerebellar cortex
+            quote_key: "233245440_9b6b19b2"
+      - id: UBERON:0002129
+        label: cerebellar cortex
+        name_in_source: 'Cerebellar cortex (curator-added coarse query term; atlas paints at regional not laminar resolution — see mapping_20260709/curator_interventions.md #1)'
+    colocated_types:
+      - neighboring_type: Golgi cell
+        notes: Lugaro cell locally inhibits Golgi cells; serotonin-driven Lugaro firing is presynaptic to Golgi cells (PMID:10684885, quote_key 9985750_983d981c; PMID:35578131, quote_key 233245440_9b6b19b2)
+      - neighboring_type: molecular layer interneuron
+        notes: Lugaro cell locally inhibits molecular layer interneurons (basket/stellate) (PMID:35578131, quote_key 233245440_9b6b19b2)
+      - neighboring_type: Purkinje cell
+        notes: Lugaro/globular cells receive monosynaptic inhibitory input from Purkinje cell axon collaterals (PMID:22235322, quote_key 14276970_4dd4ada9)
+    definition_references:
+      - "PMID:35578131"
+      - "PMID:10684885"
+      - "PMID:22235322"
+      - "PMID:32470477"
+      - "PMID:34194302"
+    notes: >-
+      Lugaro cells are commonly divided into two related anatomical/molecular
+      variants: fusiform Lugaro cells (elongated fusiform soma within the granule
+      cell layer, bipolar dendrites; putative markers Htr2a/Edil3) and globular
+      cells (small rounded soma directly beneath the Purkinje cell layer; putative
+      markers Aldh1a3/Slc6a5, responsive to both serotonin and noradrenaline).
+      Reviews treat these as closely related subgroups of one Lugaro/globular
+      class. The transcriptomic PLI3 cluster (Kozareva/Osorno) is identified as
+      Lugaro cells via Htr2a + Slc6a5. Non-gene immunolabels historically used
+      for anatomical study (Rat303, SMI311, chondroitin sulfate proteoglycans)
+      are markers of Lugaro/globular cells but are not asserted as defining_markers
+      here because they are not gene products (PMID:34194302, quote_key
+      235419102_58b36aaf).
+edges: []

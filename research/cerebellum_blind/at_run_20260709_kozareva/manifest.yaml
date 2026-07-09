@@ -1,0 +1,56 @@
+id: at_run_20260709_kozareva_cerebellum_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE165371"
+source_cluster_label: >
+  Kozareva et al. 2021 (Nature; PMID 34616064) mouse cerebellar cortex snRNA-seq
+  interneuron clusters. Expression matrix from GEO GSE165371 (interneuron_joint);
+  cluster labels from the MacoskoLab/cerebellum-atlas-analysis repo cluster_metadata.csv
+  (obs column 'subcluster'). Broad Single Cell Portal SCP795 is the auth-gated mirror.
+  Source labels scored: MLI1_1 (basket, n=10998), MLI1_2 (stellate, n=21571),
+  MLI2 (n=10544), PLI_1 (candelabrum, n=1176), PLI_2 (globular, n=735),
+  PLI_3 (Lugaro, n=531). Correspondence per Osorno et al. 2022 (PMID 35578131).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper 1.7.1, default parameters, 100 bootstrap
+  iterations). Gene symbols remapped to Ensembl IDs via conf/gene_mapping_CCN20230722.tsv
+  (20390/23203 genes mapped). Interneuron subset (45,555 of 60,526 joint-archive nuclei
+  with final subcluster annotation). BKP web backend was unavailable (HTTP 400) at run
+  time; local backend used.
+tool_version: "cell_type_mapper 1.7.1"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.0
+n_cells_total: 45555
+n_cells_after_filter: 45555
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.11"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "f4ce9b99657bf2be34f6a3f236ba9c45b0d22cce"
+
+output:
+  relpath: f1_scores_best.csv
+  format: csv
+
+caveats: >
+  Same-species (mouse) snRNA-seq → WMBv1. Source cluster labels are transcriptomic
+  (Kozareva/Osorno) with high marker validation → treat cluster-level F1 as informative
+  (pure-source expectation). PLI clusters are rare (candelabrum 1176, globular 735,
+  Lugaro 531 cells). MLI1_1 (basket) and MLI1_2 (stellate) both map to CLUS_5188 with
+  high coverage but MLI1_1 purity is low (0.34) — the two morphological types share the
+  MLI1 transcriptomic cluster (cross-cutting). MLI2 maps cleanly to CLUS_5192 (F1 0.996).
+  Blind-run note: this reproduces the curator ground-truth AT anchors (candelabrum 5178
+  F1 0.94, globular 5177 F1 0.88, Lugaro SUPT_1145 F1 0.96) without those targets ever
+  being supplied to the pipeline.
