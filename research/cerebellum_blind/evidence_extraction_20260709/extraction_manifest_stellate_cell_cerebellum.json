@@ -1,0 +1,24 @@
+{
+  "node_id": "stellate_cell_cerebellum",
+  "summaries_read": 27,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 3,
+  "skipped_low_relevance": 0,
+  "entries_written": 4,
+  "fields_populated": [
+    "morphology.sources",
+    "anatomical_location[].sources"
+  ],
+  "fields_with_no_evidence": [
+    "nt_type.sources",
+    "electrophysiology.sources",
+    "GeneDescriptor.sources",
+    "synonyms[N].sources"
+  ],
+  "synonyms_found": [
+    "SCs (stellate cells)",
+    "MLIs (molecular layer interneurons)"
+  ],
+  "refs_file": "references/cerebellum_blind/references.json",
+  "notes": "Node was already well-populated by asta-report-ingest. 3 duplicate-ref entries skipped (corpus 59945454=PMID:30742002, 267384488=PMID:38352514, 268857461=PMID:38585758 all in Existing refs). Added 4 new distinct stellate-specific PropertySource entries: 3 to morphology (Mann-Metzer PMID:10212289 stellate axons on PC dendritic trees; Schilling PMID:18677503 dendritic-shaft targeting distinction; Lowenstein PMID:35262281 Ascl1-dependent late-born development) and 1 to anatomical_location (Miyazaki PMID:34658339 upper MLIs/stellate innervate PC dendritic shafts). Remaining eligible summaries (candelabrum/basket/Purkinje/MLI1-MLI2-focused, or Pvalb/nt_type fields already saturated) added no distinct stellate-specific property evidence and were not written."
+}

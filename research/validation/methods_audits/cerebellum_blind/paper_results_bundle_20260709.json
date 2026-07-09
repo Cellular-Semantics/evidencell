@@ -1,0 +1,56 @@
+{
+  "section": "ICBO2026 \u00a74.1 \u2014 validation results bundle",
+  "generated": "2026-07-09",
+  "commit": "8e05bb57096bf2683e9a2449a8e4d57a4590f0eb",
+  "R2_Q1_stability": "NOT ASSESSED \u2014 single blind reconstruction pass (curator decision). No 5x sweep.",
+  "R2_Q2_correction_rate": "DROPPED (too hard to measure cleanly; curator decision).",
+  "primary_experiment_blind_reconstruction": {
+    "taxonomy": "CCN20230722 (WMBv1)",
+    "discovery_recall": "3/5 classical answer-key types proposed (basket, stellate, candelabrum); globular + lugaro not proposed by the ASTA report (source-report framing limitation).",
+    "anatomy_intervention": "1 logged curator coarsening (laminar->cerebellar cortex); without it the region filter returns 0 candidates (generalisable failure mode).",
+    "stage_a_deterministic_cluster_rank": {
+      "stellate": 1,
+      "mli_crosscut": 2,
+      "basket": 3,
+      "candelabrum": 4
+    },
+    "stage_a_deterministic_supertype_rank": {
+      "mli_crosscut": 1,
+      "stellate": 2,
+      "candelabrum": 5,
+      "basket": 19
+    },
+    "agent_final_pick": {
+      "candelabrum": "BOTH targets recovered as survivors (SUPT_1144 primary broadMatch + CLUS_5178 secondary closeMatch); cleanest end-to-end success",
+      "stellate": "cluster target CLUS_5188 recovered as PRIMARY (MODERATE, closeMatch)",
+      "mli_crosscut": "CLUS_5188 primary + SUPT_1151 secondary (both cross-cut targets), MODERATE",
+      "basket": "cluster target CLUS_5188 recovered only as weakest survivor; agent primary was SUPT_1151 (marker-reasoning demoted the true target in this cross-cutting case)"
+    },
+    "confidence_calibration": "no HIGH (no AT/experimental evidence; rule held); MODERATE for clean marker-driven cluster picks; LOW for marker-poor/ambiguous. Conservative, no over-claiming.",
+    "anti_hallucination": "guard caught real errors on 2/4 reports (quote truncation; hallucinated citations) and 3/4 verdict-block sets (invalid enums, ungrounded modality tokens, marker miscount); all fixed in <=1 synthesis retry + 1 focused-correction round."
+  },
+  "R2_b_deterministic_baseline_at_blind": {
+    "metric": "marker+region+NT coverage vs curated AT evidence (find-candidates alone, no agent)",
+    "overall_recovery_top_k10": "75.6% (59/78)",
+    "by_level": {
+      "cluster": "54.5%",
+      "subclass": "84.6%",
+      "supertype": "70.0%",
+      "class": "90.9%"
+    },
+    "source": "research/validation/methods_audits/at_blind/runs/latest.json @ 8e05bb57"
+  },
+  "R2_Q2_mapping_census": {
+    "total_verdicts": 363,
+    "note": "all hippocampus; other 5 regions have graphs but no gen-report verdicts yet",
+    "by_confidence": {
+      "HIGH": 5,
+      "MODERATE": 40,
+      "LOW": 168,
+      "UNCERTAIN": 102,
+      "REFUTED": 48
+    },
+    "source": "research/validation/methods_audits/cerebellum_blind/census.json"
+  },
+  "headline_for_paper": "Starting from a fresh ASTA deep-research PDF and a held-out curator ground truth, the blinded pipeline recovered the correct WMBv1 cluster target within the deterministic top-4 for all 4 discovered targets, and the agent promoted the correct target to a top-<=3 survivor for 3 of 4 (candelabrum recovered both parent supertype and child cluster). The one weak case (basket) is a genuinely cross-cutting morphology-vs-transcriptomics mismatch flagged by the curator's own CrossCuttingMatch label. Confidence was conservatively calibrated (no HIGH without experimental evidence), the anti-hallucination guard caught and corrected real synthesis errors before write-back, and a leakage audit confirmed the blind was uncompromised."
+}

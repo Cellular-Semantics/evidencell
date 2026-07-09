@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "commit": "8e05bb57096bf2683e9a2449a8e4d57a4590f0eb",
+    "date": "2026-07-09",
+    "taxonomy_id": "CCN20230722",
+    "run": "single blind reconstruction pass (R2.Q1: single-run, no 5x stability sweep \u2014 curator decision #2)",
+    "note": "top_k=50 Stage-A search; top_k=5 edges emitted/node/rank; gen-report filters to <=3 survivors."
+  },
+  "per_type": {
+    "classical_basket": {
+      "name": "Cerebellar basket cell",
+      "difficulty": "biology-hard",
+      "curator_predicate": "evidencell:CrossCuttingMatch",
+      "cluster_targets": [
+        "CS20230722_CLUS_5188"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1149"
+      ],
+      "discovered_node": "basket_cell_cerebellum",
+      "discovery_recall": "HIT",
+      "stage_a": {
+        "cluster": {
+          "accession": "CS20230722_CLUS_5188",
+          "rank_1indexed": 3,
+          "score": 7
+        },
+        "supertype": {
+          "accession": "CS20230722_SUPT_1149",
+          "rank_1indexed": 19,
+          "score": 4
+        }
+      },
+      "agent": {
+        "primary_survivor": {
+          "tgt": "CS20230722_SUPT_1151",
+          "conf": "LOW",
+          "rel": "evidencell:UncertainRelationship",
+          "tier": "STRONGEST"
+        },
+        "cluster_target_recovered_as_survivor": [
+          {
+            "tgt": "CS20230722_CLUS_5188",
+            "conf": "LOW",
+            "rel": "evidencell:UncertainRelationship",
+            "tier": "WEAKEST"
+          }
+        ],
+        "supertype_target_recovered_as_survivor": null,
+        "primary_is_cluster_target": false,
+        "primary_is_supertype_target": false
+      }
+    },
+    "classical_stellate": {
+      "name": "Cerebellar stellate cell",
+      "difficulty": "biology-hard",
+      "curator_predicate": "evidencell:UncertainRelationship",
+      "cluster_targets": [
+        "CS20230722_CLUS_5188",
+        "CS20230722_CLUS_5192"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1149",
+        "CS20230722_SUPT_1151"
+      ],
+      "discovered_node": "stellate_cell_cerebellum",
+      "discovery_recall": "HIT",
+      "stage_a": {
+        "cluster": {
+          "accession": "CS20230722_CLUS_5188",
+          "rank_1indexed": 1,
+          "score": 7
+        },
+        "supertype": {
+          "accession": "CS20230722_SUPT_1151",
+          "rank_1indexed": 2,
+          "score": 6
+        }
+      },
+      "agent": {
+        "primary_survivor": {
+          "tgt": "CS20230722_CLUS_5188",
+          "conf": "MODERATE",
+          "rel": "skos:closeMatch",
+          "tier": "STRONGEST"
+        },
+        "cluster_target_recovered_as_survivor": [
+          {
+            "tgt": "CS20230722_CLUS_5188",
+            "conf": "MODERATE",
+            "rel": "skos:closeMatch",
+            "tier": "STRONGEST"
+          }
+        ],
+        "supertype_target_recovered_as_survivor": null,
+        "primary_is_cluster_target": true,
+        "primary_is_supertype_target": false
+      }
+    },
+    "classical_candelabrum": {
+      "name": "Candelabrum cell",
+      "difficulty": "clean",
+      "curator_predicate": "skos:exactMatch",
+      "cluster_targets": [
+        "CS20230722_CLUS_5178"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1144"
+      ],
+      "discovered_node": "candelabrum_cell_cerebellum",
+      "discovery_recall": "HIT",
+      "stage_a": {
+        "cluster": {
+          "accession": "CS20230722_CLUS_5178",
+          "rank_1indexed": 4,
+          "score": 3
+        },
+        "supertype": {
+          "accession": "CS20230722_SUPT_1144",
+          "rank_1indexed": 5,
+          "score": 3
+        }
+      },
+      "agent": {
+        "primary_survivor": {
+          "tgt": "CS20230722_SUPT_1144",
+          "conf": "LOW",
+          "rel": "skos:broadMatch",
+          "tier": "STRONGEST"
+        },
+        "cluster_target_recovered_as_survivor": [
+          {
+            "tgt": "CS20230722_CLUS_5178",
+            "conf": "LOW",
+            "rel": "skos:closeMatch",
+            "tier": "NEXT"
+          }
+        ],
+        "supertype_target_recovered_as_survivor": [
+          {
+            "tgt": "CS20230722_SUPT_1144",
+            "conf": "LOW",
+            "rel": "skos:broadMatch",
+            "tier": "STRONGEST"
+          }
+        ],
+        "primary_is_cluster_target": false,
+        "primary_is_supertype_target": true
+      }
+    },
+    "classical_globular": {
+      "name": "Globular cell",
+      "difficulty": "distributed",
+      "curator_predicate": "skos:closeMatch",
+      "cluster_targets": [
+        "CS20230722_CLUS_5177"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1144"
+      ],
+      "discovered_node": null,
+      "discovery_recall": "MISS \u2014 no classical node proposed by blind ASTA report",
+      "stage_a": null,
+      "agent": null
+    },
+    "classical_lugaro": {
+      "name": "Lugaro cell",
+      "difficulty": "supertype-level",
+      "curator_predicate": "skos:exactMatch",
+      "cluster_targets": [
+        "CS20230722_CLUS_5180",
+        "CS20230722_CLUS_5181",
+        "CS20230722_CLUS_5182"
+      ],
+      "supertype_targets": [
+        "CS20230722_SUPT_1145"
+      ],
+      "discovered_node": null,
+      "discovery_recall": "MISS \u2014 no classical node proposed by blind ASTA report",
+      "stage_a": null,
+      "agent": null
+    }
+  },
+  "mli_crosscut_node": {
+    "targets_cluster_union": [
+      "CS20230722_CLUS_5192",
+      "CS20230722_CLUS_5188"
+    ],
+    "targets_supertype_union": [
+      "CS20230722_SUPT_1149",
+      "CS20230722_SUPT_1151"
+    ],
+    "stage_a": {
+      "answer_key_type": "MLI1/MLI2 cross-cut (basket+stellate union)",
+      "difficulty": "biology-hard",
+      "cluster": {
+        "accession": "CS20230722_CLUS_5188",
+        "rank_1indexed": 2,
+        "score": 8
+      },
+      "supertype": {
+        "accession": "CS20230722_SUPT_1151",
+        "rank_1indexed": 1,
+        "score": 8
+      }
+    },
+    "primary_survivor": {
+      "tgt": "CS20230722_CLUS_5188",
+      "conf": "MODERATE",
+      "rel": "skos:closeMatch",
+      "tier": "STRONGEST"
+    },
+    "cluster_target_survivors": [
+      {
+        "tgt": "CS20230722_CLUS_5188",
+        "conf": "MODERATE",
+        "rel": "skos:closeMatch",
+        "tier": "STRONGEST"
+      }
+    ],
+    "supertype_target_survivors": [
+      {
+        "tgt": "CS20230722_SUPT_1151",
+        "conf": "MODERATE",
+        "rel": "skos:closeMatch",
+        "tier": "NEXT"
+      }
+    ]
+  }
+}

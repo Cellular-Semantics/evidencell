@@ -1,0 +1,555 @@
+# Draft KB — cerebellum_blind
+# Source: ASTA deep research report — inputs/deepsearch/ASTA_MLI_PLI.pdf
+# Ingestion date: 2026-07-09
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/cerebellum_blind/references.json
+# Classical nodes proposed by: asta-report-ingest
+
+name: Cerebellar cortical interneurons and Purkinje cells — draft classical types (blind)
+description: Draft evidence graph for classical cerebellar cortical cell types (Purkinje cell, basket cell, stellate cell, candelabrum cell) plus the MLI1/MLI2 transcriptomic classes, extracted from an ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+target_atlas: WMBv1 (CCN20230722)
+brain_region:
+  id: UBERON:0002037
+  label: cerebellum
+  name_in_source: cerebellar cortex
+species:
+creation_date: '2026-07-09'
+notes: Species field left null — most evidence is from mouse and rat; species must be confirmed per-node from primary sources. Marker ncbi_gene_ids left null — require NodeNormalization lookup. Quote provenance lives in references/cerebellum_blind/references.json; quote_keys reference verbatim text only.
+nodes:
+  - id: purkinje_cell_cerebellum
+    name: Cerebellar Purkinje cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    is_terminal: false
+    cl_mapping:
+      cl_term:
+        id: "CL:0000121"
+        label: Purkinje cell
+        name_in_source: Purkinje cell
+      mapping_type: EXACT
+    nt_type:
+      name_in_source: GABAergic
+      sources:
+        - ref: "PMID:32390933"
+          method: review
+          scope: cerebellar cortex
+          quote_key: "216044470_e743c407"
+    defining_markers:
+      - symbol: Calb1
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:3199205"
+            method: in situ / Northern hybridization
+            scope: mature mouse cerebellum
+            quote_key: "17950457_01e4d1a0"
+            marker_type: TRANSCRIPT
+      - symbol: Pvalb
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:22492029"
+            method: immunostaining
+            scope: mouse cerebellar sections
+            quote_key: "41293753_2d217397"
+            marker_type: PROTEIN
+      - symbol: RORa
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:30742002"
+            method: immunolabel
+            scope: mouse cerebellum
+            quote_key: "59945454_b21703e0"
+            marker_type: PROTEIN
+    morphology:
+      description: >-
+        Soma located in the single-cell-thick Purkinje cell layer (a monolayer);
+        one of the most extensively branched, flattened planar dendritic arbors
+        in the brain projecting into the molecular layer; single inhibitory axon
+        projecting to the deep cerebellar nuclei and vestibular nuclei; axon
+        initial segment enwrapped by the basket-cell pinceau.
+      sources:
+        - ref: "PMID:26136256"
+          method: review
+          scope: mouse cerebellar cortex
+          quote_key: "15503971_069ce0d2"
+        - ref: "PMID:38352514"
+          method: review
+          scope: cerebellar cortex
+          quote_key: "267384488_3b6eedbd"
+        - ref: "PMID:38585758"
+          method: review
+          scope: mouse cerebellum
+          quote_key: "268857461_d94370f3"
+    electrophysiology:
+      description: >-
+        Sole output neuron of the cerebellar cortex; integrates up to ~200,000
+        parallel-fiber inputs plus climbing-fiber input that is pruned to a 1:1
+        ratio during development; generates simple spikes and climbing-fiber-driven
+        complex spikes; complex-spike activity shows ~10 Hz rhythmicity and
+        parasagittally organized synchrony; simple-spike pattern shaped by
+        stellate-cell inhibition and firing rate set by basket-cell inhibition.
+      sources:
+        - ref: "PMID:10087085"
+          method: in vivo multi-electrode recording
+          scope: awake rat crus 2a
+          quote_key: "36404032_d8cc22d5"
+        - ref: "PMID:38585758"
+          method: review
+          scope: mouse cerebellum
+          quote_key: "268857461_d94370f3"
+        - ref: "PMID:30742002"
+          method: in vivo recording
+          scope: mouse cerebellum
+          quote_key: "59945454_e6f6e5c8"
+    anatomical_location:
+      - id: UBERON:0002979
+        label: Purkinje cell layer of cerebellar cortex
+        name_in_source: cerebellar cortex, Purkinje cell layer
+        sources:
+          - ref: "PMID:26136256"
+            method: review
+            scope: cerebellar cortex
+            quote_key: "15503971_069ce0d2"
+          - ref: "PMID:32390933"
+            method: review
+            scope: cerebellar cortex
+            quote_key: "216044470_e743c407"
+    definition_references:
+      - "PMID:26136256"
+      - "PMID:38585758"
+      - "PMID:32390933"
+      - "PMID:3199205"
+      - "PMID:10087085"
+    notes: >-
+      ZebrinII (aldolase C) parasagittal zonation of Purkinje cells organizes
+      associated interneuron zones (Sillitoe 2008, Brown 2018). Pvalb and RORa
+      are shared with molecular layer interneurons and are not Purkinje-specific;
+      Calb1 is the specific Purkinje marker (negative in basket cells).
+
+  - id: basket_cell_cerebellum
+    name: Cerebellar basket cell (molecular layer interneuron)
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    is_terminal: false
+    cl_mapping:
+      cl_term:
+        id: "CL:2000027"
+        label: cerebellar basket cell
+        name_in_source: cerebellar basket cell
+      mapping_type: EXACT
+    nt_type:
+      name_in_source: GABAergic
+      sources:
+        - ref: "PMID:20711348"
+          method: review / anatomy
+          scope: mouse cerebellar molecular layer
+          quote_key: "1460508_88d765d5"
+    defining_markers:
+      - symbol: Pvalb
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:22492029"
+            method: immunostaining
+            scope: mouse cerebellum P10
+            quote_key: "41293753_2d217397"
+            marker_type: PROTEIN
+      - symbol: RORa
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:30742002"
+            method: immunolabel
+            scope: mouse cerebellum
+            quote_key: "59945454_b21703e0"
+            marker_type: PROTEIN
+      - symbol: HCN1
+        ncbi_gene_id: null
+        sources:
+          - ref: "https://doi.org/10.7554/eLife.55569"
+            method: immunohistochemistry
+            scope: mouse basket cell pinceaux
+            quote_key: "222167171_a9c43f32"
+            marker_type: PROTEIN
+      - symbol: Kcna1
+        ncbi_gene_id: null
+        sources:
+          - ref: "https://doi.org/10.7554/eLife.55569"
+            method: immunohistochemistry
+            scope: mouse basket cell pinceaux
+            quote_key: "222167171_a9c43f32"
+            marker_type: PROTEIN
+      - symbol: Grid1
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:24872547"
+            method: in situ / immunolabel
+            scope: mouse molecular layer interneurons
+            quote_key: "8585958_c30f821f"
+            marker_type: TRANSCRIPT
+    negative_markers:
+      - symbol: Calb1
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:22492029"
+            method: immunostaining
+            scope: mouse cerebellum
+            quote_key: "41293753_2d217397"
+            marker_type: PROTEIN
+    morphology:
+      description: >-
+        Early-born molecular-layer interneuron populating the lower/inner third
+        of the molecular layer; axons converge to enwrap Purkinje cell somata as
+        the perisomatic 'basket' and form specialized pinceau terminals around the
+        Purkinje axon initial segment (axon collaterals from 5-7 basket cells
+        contribute to each pinceau); each basket cell contacts multiple Purkinje
+        cells in the same sagittal plane. Basket-versus-stellate identity lies on
+        a morphological continuum.
+      sources:
+        - ref: "PMID:22492029"
+          method: immunostaining / anatomy
+          scope: mouse cerebellum
+          quote_key: "41293753_12d23e0a"
+        - ref: "PMID:30742002"
+          method: anatomy / genetic tracing
+          scope: mouse cerebellum
+          quote_key: "59945454_09563575"
+        - ref: "PMID:35701402"
+          method: morphological reconstruction / fate mapping
+          scope: mouse molecular layer interneurons
+          quote_key: "213840122_c2acdac4"
+    electrophysiology:
+      description: >-
+        Provides feed-forward and lateral GABAergic inhibition to Purkinje cell
+        somata/axon initial segment, setting Purkinje firing rate; loss of
+        basket-cell inhibition changes Purkinje firing rate and decreases
+        complex-spike rate; electrically and chemically coupled to other
+        molecular-layer interneurons with sagittally biased network structure.
+      sources:
+        - ref: "PMID:30742002"
+          method: optogenetics / recording
+          scope: mouse cerebellum
+          quote_key: "59945454_e6f6e5c8"
+        - ref: "PMID:24857665"
+          method: optogenetics / recording
+          scope: mouse cerebellum
+          quote_key: "17043664_253c8de1"
+    anatomical_location:
+      - id: UBERON:0002974
+        label: molecular layer of cerebellar cortex
+        name_in_source: cerebellar cortex, molecular layer (inner/lower third)
+        sources:
+          - ref: "PMID:35701402"
+            method: morphological reconstruction
+            scope: mouse molecular layer
+            quote_key: "213840122_c2acdac4"
+          - ref: "PMID:30742002"
+            method: anatomy
+            scope: mouse cerebellum
+            quote_key: "59945454_09563575"
+    colocated_types:
+      - neighboring_type: Purkinje cell
+        notes: axons form perisomatic baskets and pinceaux on Purkinje cell soma/AIS (PMID:30742002, quote_key 59945454_09563575)
+    definition_references:
+      - "PMID:35701402"
+      - "PMID:22492029"
+      - "PMID:30742002"
+      - "DOI:10.7554/eLife.55569"
+      - "PMID:20711348"
+    notes: >-
+      The basket/stellate division is a morphological continuum, not absolute
+      (Briatore 2010, Brown 2018, Wang 2020). Basket-cell pinceaux are further
+      organized into zonal modules of distinct pinceau sizes aligned with
+      Purkinje-cell functional zones, marked by HCN1/Kv1.1/PSD95/GAD67
+      (Zhou et al. 2020). Maps imperfectly onto transcriptomic MLI1/MLI2 classes.
+
+  - id: stellate_cell_cerebellum
+    name: Cerebellar stellate cell (molecular layer interneuron)
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    is_terminal: false
+    cl_mapping:
+      cl_term:
+        id: "CL:0010010"
+        label: cerebellar stellate cell
+        name_in_source: cerebellar stellate cell
+      mapping_type: EXACT
+    nt_type:
+      name_in_source: GABAergic
+      sources:
+        - ref: "PMID:20711348"
+          method: review / anatomy
+          scope: mouse cerebellar molecular layer
+          quote_key: "1460508_88d765d5"
+    defining_markers:
+      - symbol: Pvalb
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:30742002"
+            method: immunolabel
+            scope: mouse cerebellum
+            quote_key: "59945454_1c861584"
+            marker_type: PROTEIN
+      - symbol: RORa
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:30742002"
+            method: immunolabel
+            scope: mouse cerebellum
+            quote_key: "59945454_b21703e0"
+            marker_type: PROTEIN
+      - symbol: Grid1
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:24872547"
+            method: in situ / immunolabel
+            scope: mouse molecular layer interneurons
+            quote_key: "8585958_c30f821f"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >-
+        Later-born molecular-layer interneuron integrating into the upper/outer
+        third of the molecular layer; axons innervate the smooth shafts of
+        Purkinje cell distal dendrites exclusively; each stellate cell contacts
+        multiple Purkinje cells in the same sagittal plane. Shares a
+        ventricular-zone progenitor pool with basket cells and lies on the same
+        morphological continuum.
+      sources:
+        - ref: "PMID:30742002"
+          method: anatomy
+          scope: mouse cerebellum
+          quote_key: "59945454_5ca8f6ac"
+        - ref: "PMID:38352514"
+          method: review
+          scope: cerebellar cortex
+          quote_key: "267384488_3b6eedbd"
+        - ref: "PMID:38585758"
+          method: review
+          scope: mouse cerebellum
+          quote_key: "268857461_d94370f3"
+    electrophysiology:
+      description: >-
+        Provides GABAergic dendritic inhibition shaping Purkinje dendritic
+        integration and simple-spike patterning; loss of stellate-cell inhibition
+        alters simple-spike pattern and increases complex-spike rate; participates
+        in structured interneuron-interneuron chemical and electrical networks.
+      sources:
+        - ref: "PMID:30742002"
+          method: optogenetics / recording
+          scope: mouse cerebellum
+          quote_key: "59945454_e6f6e5c8"
+    anatomical_location:
+      - id: UBERON:0002974
+        label: molecular layer of cerebellar cortex
+        name_in_source: cerebellar cortex, molecular layer (outer/upper third)
+        sources:
+          - ref: "PMID:30742002"
+            method: anatomy
+            scope: mouse cerebellum
+            quote_key: "59945454_5ca8f6ac"
+          - ref: "PMID:38585758"
+            method: review
+            scope: mouse cerebellum
+            quote_key: "268857461_d94370f3"
+    colocated_types:
+      - neighboring_type: Purkinje cell
+        notes: axons terminate on smooth shafts of Purkinje cell distal dendrites (PMID:30742002, quote_key 59945454_5ca8f6ac)
+    definition_references:
+      - "PMID:30742002"
+      - "PMID:38585758"
+      - "PMID:35701402"
+      - "PMID:38352514"
+      - "PMID:20711348"
+    notes: >-
+      Classically distinguished from basket cells by upper-ML position and
+      dendritic (not somatic) targeting, but the division is a morphological
+      continuum (Briatore 2010, Wang 2020). Does not map cleanly onto
+      transcriptomic MLI1/MLI2 classes. Pvalb and RORa are shared with basket
+      cells and Purkinje cells; no stellate-specific marker is reported.
+
+  - id: candelabrum_cell_cerebellum
+    name: Cerebellar candelabrum cell (Purkinje-layer interneuron)
+    definition_basis: CLASSICAL_MULTIMODAL
+    species: null
+    is_terminal: false
+    cl_mapping:
+      cl_term:
+        id: "CL:4042030"
+        label: candelabrum cell
+        name_in_source: candelabrum cell
+      mapping_type: EXACT
+    nt_type:
+      name_in_source: GABAergic
+      sources:
+        - ref: "PMID:35578131"
+          method: snRNAseq / electrophysiology
+          scope: mouse cerebellar cortex
+          quote_key: "233245440_edf83720"
+    morphology:
+      description: >-
+        Molecularly distinct GABAergic interneuron with a small soma near the
+        Purkinje cell layer, dendrites extending pially through the molecular
+        layer, and local beaded axons ramifying within the molecular layer;
+        present across all cerebellar lobules and reported as the most abundant
+        Purkinje-layer interneuron; neither a molecular-layer interneuron nor a
+        Golgi cell.
+      sources:
+        - ref: "PMID:35578131"
+          method: light microscopy / snRNAseq / serial EM
+          scope: mouse cerebellar cortex
+          quote_key: "233245440_70215095"
+        - ref: "PMID:35578131"
+          method: electrophysiology / EM
+          scope: mouse cerebellar cortex
+          quote_key: "233245440_edf83720"
+    electrophysiology:
+      description: >-
+        High input resistance renders firing highly sensitive to synaptic inputs;
+        excited by mossy fibers and granule cells and strongly inhibited by
+        Purkinje cells; in turn inhibits molecular-layer interneurons, forming an
+        inhibitory ring (PC inhibits CC, CC inhibits MLI, leading to PC
+        disinhibition).
+      sources:
+        - ref: "PMID:35578131"
+          method: electrophysiology / serial EM
+          scope: mouse cerebellar cortex
+          quote_key: "233245440_9c1b350f"
+        - ref: "PMID:35578131"
+          method: electrophysiology
+          scope: mouse cerebellar cortex
+          quote_key: "233245440_edf83720"
+    anatomical_location:
+      - id: UBERON:0002979
+        label: Purkinje cell layer of cerebellar cortex
+        name_in_source: cerebellar cortex, Purkinje cell layer
+        sources:
+          - ref: "PMID:35578131"
+            method: light microscopy
+            scope: mouse cerebellar cortex
+            quote_key: "233245440_70215095"
+    colocated_types:
+      - neighboring_type: molecular layer interneuron
+        notes: candelabrum cell inhibits molecular-layer interneurons (part of inhibitory ring) (PMID:35578131, quote_key 233245440_9c1b350f)
+      - neighboring_type: Purkinje cell
+        notes: strongly inhibited by Purkinje cells (PMID:35578131, quote_key 233245440_9c1b350f)
+    definition_references:
+      - "PMID:35578131"
+      - "PMID:37745401"
+    notes: >-
+      Identified as a molecularly distinct type by snRNAseq (Kozareva et al.
+      2020; Osorno et al. 2021/2022), distinct from MLIs and Golgi cells.
+      No positive molecular markers reported in the ingested quotes (GAP).
+      Candelabrum cells preferentially receive Purkinje-collateral input and
+      target MLI1 over MLI2 (Lackey et al. 2025).
+
+  - id: mli_transcriptomic_classes_cerebellum
+    name: Molecular layer interneuron transcriptomic classes MLI1 / MLI2 (class I / class II)
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    species: null
+    is_terminal: false
+    cl_mapping:
+      cl_term:
+        id: "CL:4042035"
+        label: molecular layer interneuron
+        name_in_source: molecular layer interneuron
+      mapping_type: BROAD
+    nt_type:
+      name_in_source: GABAergic
+      sources:
+        - ref: "https://doi.org/10.1101/2020.03.04.976407"
+          method: snRNAseq / electrophysiology
+          scope: mouse cerebellum
+          quote_key: "214725795_3d3df51c"
+    defining_markers:
+      - symbol: Sorcs3
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:35262281"
+            method: snRNAseq
+            scope: mouse cerebellum (class I / MLI1)
+            quote_key: "247317953_380921bf"
+            marker_type: TRANSCRIPT
+      - symbol: Nxph1
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:35262281"
+            method: snRNAseq
+            scope: mouse cerebellum (class II / MLI2)
+            quote_key: "247317953_380921bf"
+            marker_type: TRANSCRIPT
+      - symbol: Pvalb
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:34446581"
+            method: snRNAseq / scATAC
+            scope: mouse cerebellum (MLI2)
+            quote_key: "237308705_5cd4bd6a"
+            marker_type: TRANSCRIPT
+    neuropeptides:
+      - symbol: Nxph1
+        ncbi_gene_id: null
+        sources:
+          - ref: "PMID:34446581"
+            method: snRNAseq
+            scope: mouse cerebellum
+            quote_key: "237308705_5cd4bd6a"
+            marker_type: TRANSCRIPT
+    morphology:
+      description: >-
+        Two molecularly and functionally distinct MLI types that both span a
+        continuous morphological gradient through the thickness of the molecular
+        layer, so they do not correspond one-to-one to the classical
+        basket/stellate shape categories.
+      sources:
+        - ref: "https://doi.org/10.1101/2020.03.04.976407"
+          method: snRNAseq / electrophysiology
+          scope: mouse cerebellum
+          quote_key: "214725795_3d3df51c"
+    electrophysiology:
+      description: >-
+        MLI1 (class I) primarily inhibit Purkinje cells, are electrically coupled
+        to each other, fire synchronously on the millisecond timescale in vivo,
+        and synchronously pause Purkinje firing; MLI2 (class II) are not
+        electrically coupled, primarily inhibit MLI1 (disinhibiting Purkinje
+        cells), and gate cerebellum-dependent learning. The two classes differ
+        markedly in spontaneous firing, excitability, and electrical coupling.
+      sources:
+        - ref: "PMID:38692278"
+          method: electrophysiology / serial EM / optogenetics
+          scope: mouse cerebellum
+          quote_key: "269458929_c5430ce6"
+        - ref: "PMID:37745401"
+          method: electrophysiology
+          scope: mouse cerebellum
+          quote_key: "262069620_9af08e3e"
+        - ref: "PMID:35262281"
+          method: review / snRNAseq
+          scope: mouse cerebellum
+          quote_key: "247317953_380921bf"
+    anatomical_location:
+      - id: UBERON:0002974
+        label: molecular layer of cerebellar cortex
+        name_in_source: cerebellar cortex, molecular layer (both classes span full thickness)
+        sources:
+          - ref: "https://doi.org/10.1101/2020.03.04.976407"
+            method: snRNAseq / electrophysiology
+            scope: mouse cerebellum
+            quote_key: "214725795_3d3df51c"
+    colocated_types:
+      - neighboring_type: Purkinje cell
+        notes: MLI1 inhibit Purkinje cells; MLI2 inhibit MLI1 leading to Purkinje disinhibition (PMID:38692278, quote_key 269458929_c5430ce6)
+    definition_references:
+      - "DOI:10.1101/2020.03.04.976407"
+      - "PMID:38692278"
+      - "PMID:37745401"
+      - "PMID:35262281"
+      - "PMID:34446581"
+    notes: >-
+      MLI1 and MLI2 (Kozareva et al. 2020) correspond to class I and class II
+      (Lowenstein et al. 2022); proposed as the underlying cell-type structure
+      that the basket/stellate morphological categories only partially capture.
+      No CL term exists for the class split; CL:4042035 is the closest (BROAD)
+      parent — candidate CL contribution for two new subtypes. Purkinje
+      collaterals preferentially target MLI2 over MLI1 (Lackey et al. 2025).
+      Nxph1 is expressed by both classes but at higher levels / with Pvalb in
+      MLI2; marker assignment to the two classes is subtype-dependent and should
+      be verified against primary data.
+
+edges: []

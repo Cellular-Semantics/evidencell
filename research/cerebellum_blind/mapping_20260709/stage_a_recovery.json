@@ -1,0 +1,66 @@
+{
+  "_note": "Stage-A find-candidates recovery: position of answer-key target in top-50 ranked candidates. top_k=50 search; edges emitted at top_k=5.",
+  "recovery": {
+    "basket_cell_cerebellum": {
+      "answer_key_type": "classical_basket",
+      "difficulty": "biology-hard",
+      "cluster": {
+        "accession": "CS20230722_CLUS_5188",
+        "rank_1indexed": 3,
+        "score": 7
+      },
+      "supertype": {
+        "accession": "CS20230722_SUPT_1149",
+        "rank_1indexed": 19,
+        "score": 4
+      }
+    },
+    "stellate_cell_cerebellum": {
+      "answer_key_type": "classical_stellate",
+      "difficulty": "biology-hard",
+      "cluster": {
+        "accession": "CS20230722_CLUS_5188",
+        "rank_1indexed": 1,
+        "score": 7
+      },
+      "supertype": {
+        "accession": "CS20230722_SUPT_1151",
+        "rank_1indexed": 2,
+        "score": 6
+      }
+    },
+    "candelabrum_cell_cerebellum": {
+      "answer_key_type": "classical_candelabrum",
+      "difficulty": "clean",
+      "cluster": {
+        "accession": "CS20230722_CLUS_5178",
+        "rank_1indexed": 4,
+        "score": 3
+      },
+      "supertype": {
+        "accession": "CS20230722_SUPT_1144",
+        "rank_1indexed": 5,
+        "score": 3
+      }
+    },
+    "mli_transcriptomic_classes_cerebellum": {
+      "answer_key_type": "MLI1/MLI2 cross-cut (basket+stellate union)",
+      "difficulty": "biology-hard",
+      "cluster": {
+        "accession": "CS20230722_CLUS_5188",
+        "rank_1indexed": 2,
+        "score": 8
+      },
+      "supertype": {
+        "accession": "CS20230722_SUPT_1151",
+        "rank_1indexed": 1,
+        "score": 8
+      }
+    }
+  },
+  "not_discovered": {
+    "classical_globular": "cluster 5177 / supt 1144 \u2014 no node proposed by blind report (discovery-recall miss)",
+    "classical_lugaro": "cluster 5180-5182 / supt 1145 \u2014 no node proposed by blind report (discovery-recall miss)"
+  },
+  "purkinje_cell_cerebellum": "mapped for completeness; not an answer-key target (principal neuron)"
+}

@@ -1,0 +1,21 @@
+{
+  "node_id": "basket_cell_cerebellum",
+  "summaries_read": 25,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 6,
+  "skipped_low_relevance": 1,
+  "entries_written": 3,
+  "fields_populated": [
+    "defining_markers[HCN1].sources",
+    "anatomical_location[UBERON:0002974].sources"
+  ],
+  "fields_with_no_evidence": [
+    "nt_type.sources",
+    "morphology.sources",
+    "electrophysiology.sources",
+    "synonyms[N].sources"
+  ],
+  "synonyms_found": ["BCs", "MLIs", "MLINs"],
+  "refs_file": "references/cerebellum_blind/references.json",
+  "notes": "Skipped duplicate-ref corpus IDs already in Existing refs: 213840122, 59945454, 222167171, 41293753, 8585958, 17043664. Skipped low-relevance: 255974302 (kainate-receptor review, only lists basket cells among 5 cerebellar types, no basket-specific marker/functional evidence). Many remaining HIGH/MODERATE summaries were about candelabrum cells (248832318, 233245440, 247245529), MLI1/MLI2 transcriptomic subtypes (262069620, 280548075, 214725795), or generic MLI/Purkinje function (212416931, 259169106, 207511102, 222815633, 267384488, 6066223) rather than basket-cell-specific additive evidence for existing/new fields; the three strongest basket-cell-specific additive quotes were selected. 213986526 (Zhou 2020 bioRxiv preprint, distinct DOI from the eLife version already cited) adds HCN1/Kv1.1/PSD95/GAD67 basket-cell pinceau marker evidence -> HCN1 MarkerSource. 239017682 (Miyazaki 2021) and 281405540 (Machado Filho 2025) add basket-cell location/pinceau evidence -> molecular-layer anatomical_location."
+}

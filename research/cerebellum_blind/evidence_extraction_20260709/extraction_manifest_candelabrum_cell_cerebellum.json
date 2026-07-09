@@ -1,0 +1,21 @@
+{
+  "node_id": "candelabrum_cell_cerebellum",
+  "summaries_read": 26,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 2,
+  "skipped_low_relevance": 20,
+  "entries_written": 4,
+  "fields_populated": [
+    "morphology.sources",
+    "nt_type.sources",
+    "electrophysiology.sources",
+    "anatomical_location[0].sources"
+  ],
+  "fields_with_no_evidence": [
+    "defining_markers (GeneDescriptor.sources)",
+    "synonyms[N].sources"
+  ],
+  "synonyms_found": ["CCs", "PLIs"],
+  "refs_file": "references/cerebellum_blind/references.json",
+  "notes": "Only candelabrum-specific evidence was extracted. Corpus 233245440 and 248832318 both resolve to PMID:35578131 (existing ref) and were skipped as duplicate_ref. The remaining ~20 summaries characterise MLIs / basket / stellate / Purkinje cells and do not mention candelabrum cells (skipped as not-relevant to this node). Synonyms CCs (candelabrum cells) and PLIs (Purkinje layer interneurons) were seen in candelabrum-relevant sources but no synonym[] entries exist on the node, so no synonym source was written."
+}

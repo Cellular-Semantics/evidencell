@@ -1,0 +1,272 @@
+{
+  "nodes": {
+    "purkinje_cell_cerebellum": {
+      "property_support": {
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["15503971_069ce0d2", "267384488_3b6eedbd", "268857461_d94370f3", "255974302_2e8874ce"],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["36404032_d8cc22d5", "268857461_d94370f3", "59945454_e6f6e5c8", "216044470_e52808fc"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["17950457_01e4d1a0", "41293753_2d217397", "59945454_b21703e0", "258488886_e28369f5"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Pvalb and RORa are shared with molecular layer interneurons and are NOT Purkinje-specific; several quotes explicitly note Parv/RORa label both PCs and MLIs. Calb1 (calbindin) is the specific PC marker and is absent in basket cells (41293753_2d217397).",
+              "quote_keys": ["41293753_2d217397", "232102613_4072bee5", "59945454_1c861584"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["216044470_e743c407", "255974302_2e8874ce"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["15503971_069ce0d2", "216044470_e743c407", "258488886_4d783ee6"],
+          "issues": []
+        }
+      },
+      "gaps": ["negative_markers — none proposed; colocated_types partially supported (basket/stellate target PC soma/dendrites, recurrent PC-PC collaterals in Witter 2016 / 2715384_aae5251c)"],
+      "overall_confidence": "HIGH"
+    },
+    "basket_cell_cerebellum": {
+      "property_support": {
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["41293753_12d23e0a", "59945454_09563575", "213840122_c2acdac4", "41293753_38669bcf"],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["59945454_e6f6e5c8", "17043664_253c8de1", "3834513_3e1157af"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "PARTIAL",
+          "quote_keys": ["41293753_2d217397", "59945454_b21703e0", "222167171_a9c43f32", "8585958_c30f821f"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "HCN1, Kv1.1, PSD95 and GAD67 are reported as markers of basket-cell PINCEAUX (subcellular structures) that map onto Purkinje zones (Zhou et al. 2020), not as whole-cell defining markers. Pvalb/RORa are pan-MLI + PC markers, not basket-specific. No basket-specific transcriptomic marker exists (see HETEROGENEITY below).",
+              "quote_keys": ["222167171_a9c43f32", "213986526_fa4fe329", "213840122_322ac0e3"]
+            }
+          ]
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["41293753_2d217397"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["1460508_88d765d5"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["213840122_c2acdac4", "59945454_09563575", "247245529_81a18a4d"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": ["59945454_09563575", "41293753_38669bcf"],
+          "issues": []
+        }
+      },
+      "gaps": ["neuropeptides — none identified in quotes"],
+      "overall_confidence": "HIGH"
+    },
+    "stellate_cell_cerebellum": {
+      "property_support": {
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["59945454_5ca8f6ac", "267384488_3b6eedbd", "268857461_d94370f3", "213840122_c2acdac4"],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["59945454_e6f6e5c8"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Ephys claims for stellate cells are drawn from studies contrasting stellate vs basket contributions to PC simple/complex spikes (Brown 2018); many recordings label cells only as 'MLIs' without resolving stellate vs basket identity.",
+              "quote_keys": ["3834513_3e1157af", "247245529_81a18a4d"]
+            }
+          ]
+        },
+        "defining_markers": {
+          "status": "PARTIAL",
+          "quote_keys": ["59945454_1c861584", "59945454_b21703e0", "8585958_c30f821f"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No stellate-specific positive marker exists. Pvalb, RORa, Grid1 are shared across all MLIs. Wang 2020 explicitly notes a lack of molecular markers to distinguish basket from stellate cells (213840122_322ac0e3).",
+              "quote_keys": ["213840122_322ac0e3"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["1460508_88d765d5"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["59945454_5ca8f6ac", "268857461_d94370f3", "258488886_4d783ee6"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": ["59945454_5ca8f6ac"],
+          "issues": []
+        }
+      },
+      "gaps": ["neuropeptides — none identified", "stellate-specific marker — none exists (see basket/stellate continuum)"],
+      "overall_confidence": "MODERATE"
+    },
+    "candelabrum_cell_cerebellum": {
+      "property_support": {
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["233245440_70215095", "233245440_edf83720"],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["233245440_9c1b350f", "233245440_edf83720", "233245440_fc07e047"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Candelabrum cells are described as 'molecularly distinct' by snRNAseq but the ingested quotes name no specific positive marker gene. Sarropoulos 2023 (237308705_5cd4bd6a) names Purkinje-layer interneurons as Nxph1/Klhl1 but does not resolve candelabrum-specific markers.",
+              "quote_keys": ["233245440_edf83720", "237308705_5cd4bd6a"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["233245440_edf83720"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["233245440_70215095"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": ["233245440_9c1b350f", "280548075_47fec7e6"],
+          "issues": []
+        }
+      },
+      "gaps": ["defining_markers — no specific positive marker gene in quotes", "neuropeptides — none identified"],
+      "overall_confidence": "MODERATE"
+    },
+    "mli_transcriptomic_classes_cerebellum": {
+      "property_support": {
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["214725795_3d3df51c"],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["269458929_c5430ce6", "262069620_9af08e3e", "247317953_380921bf", "280548075_47fec7e6"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "PARTIAL",
+          "quote_keys": ["247317953_380921bf", "237308705_5cd4bd6a"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Marker-to-class assignment is not fully consistent across quotes. Lowenstein 2022 assigns Sorcs3+ to class I (MLI1) and Nxph1+ to class II (MLI2). Sarropoulos 2023 assigns Sorcs3/Grm8 to 'type 1' and Nxph1/Pvalb to MLI2, but ALSO lists Nxph1/Klhl1 as Purkinje-layer interneuron markers — so Nxph1 is not unique to MLI2. Class-specific markers should be verified against primary transcriptomic data.",
+              "quote_keys": ["247317953_380921bf", "237308705_5cd4bd6a"]
+            },
+            {
+              "type": "HETEROGENEITY",
+              "description": "This node bundles two distinct transcriptomic types (MLI1/class I and MLI2/class II) with different markers, connectivity, and ephys. It is a candidate for splitting into two separate nodes and a CL new-term request (BROAD cl_mapping flag).",
+              "quote_keys": ["214725795_3d3df51c", "269458929_c5430ce6", "262069620_9af08e3e"]
+            }
+          ]
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": ["237308705_5cd4bd6a"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["214725795_3d3df51c"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["214725795_3d3df51c"],
+          "issues": []
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": ["269458929_c5430ce6", "280548075_47fec7e6"],
+          "issues": []
+        }
+      },
+      "gaps": ["No CL term for the MLI1/MLI2 split (BROAD mapping only)"],
+      "overall_confidence": "MODERATE"
+    }
+  },
+  "cross_node_issues": [
+    {
+      "type": "HETEROGENEITY",
+      "description": "The classical basket/stellate morphological categories (basket_cell_cerebellum, stellate_cell_cerebellum) map only imperfectly onto the transcriptomic MLI1/MLI2 classes (mli_transcriptomic_classes_cerebellum). Multiple sources state the basket/stellate distinction is a morphological continuum without clean molecular boundaries, while the two transcriptomic classes cut across that continuum. The relationship between these two node sets needs mapping edges backed by primary literature (deferred; edges left empty).",
+      "quote_keys": ["1460508_88d765d5", "213840122_c2acdac4", "59945454_c8f6cbe1", "214725795_3d3df51c", "247317953_380921bf"]
+    },
+    {
+      "type": "AMBIGUITY",
+      "description": "Pvalb (parvalbumin) is expressed by Purkinje cells AND all molecular-layer interneurons, so it cannot discriminate PC from basket from stellate. It is retained as a defining marker only in combination with layer/morphology, not as a discriminating marker.",
+      "quote_keys": ["41293753_2d217397", "232102613_4072bee5", "59945454_1c861584", "52897807_d86aec0f"]
+    }
+  ],
+  "round2_targets": [
+    {
+      "node_id": "candelabrum_cell_cerebellum",
+      "property": "defining_markers",
+      "issue": "No specific positive marker gene identified in ingested quotes",
+      "quote_keys": ["233245440_edf83720", "237308705_5cd4bd6a"],
+      "action": "Read Osorno et al. 2021/2022 (PMID:35578131) and Kozareva 2020 to extract candelabrum-specific transcriptomic markers"
+    },
+    {
+      "node_id": "mli_transcriptomic_classes_cerebellum",
+      "property": "defining_markers",
+      "issue": "Class-to-marker assignment (Sorcs3/MLI1 vs Nxph1/Pvalb/MLI2) inconsistent across quotes; Nxph1 also flagged as PLI marker",
+      "quote_keys": ["247317953_380921bf", "237308705_5cd4bd6a"],
+      "action": "Read Kozareva 2020 (DOI:10.1101/2020.03.04.976407) and Lowenstein 2022 (PMID:35262281) primary text to confirm class-specific marker panels and consider splitting node into MLI1 and MLI2"
+    },
+    {
+      "node_id": "stellate_cell_cerebellum",
+      "property": "defining_markers",
+      "issue": "No stellate-specific marker; Wang 2020 states markers to distinguish BC/SC are lacking",
+      "quote_keys": ["213840122_322ac0e3"],
+      "action": "Read Wang & Lefebvre 2020 (PMID:35701402) to confirm marker gap and any partial discriminators"
+    },
+    {
+      "node_id": "basket_cell_cerebellum",
+      "property": "defining_markers",
+      "issue": "HCN1/Kv1.1/PSD95/GAD67 are pinceau (subcellular) markers, not whole-cell defining markers",
+      "quote_keys": ["222167171_a9c43f32", "213986526_fa4fe329"],
+      "action": "Read Zhou et al. 2020 (DOI:10.7554/eLife.55569) to confirm scope of HCN1/Kv1.1 expression (pinceau vs whole basket cell)"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+[
+  {
+    "proposed_id": "purkinje_cell_cerebellum",
+    "name": "Cerebellar Purkinje cell",
+    "markers_mentioned": ["Calb1 (calbindin)", "Pvalb (parvalbumin)", "RORa", "Nfasc"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["cerebellar cortex Purkinje cell layer (monolayer)", "flattened planar dendritic tree in molecular layer", "single axon projecting to deep cerebellar nuclei and vestibular nuclei"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Soma in the single-cell Purkinje layer with one of the most extensively branched, flattened planar dendritic arbors in the brain projecting into the molecular layer; single inhibitory axon to the deep cerebellar nuclei; axon initial segment enwrapped by basket-cell pinceau; recurrent Purkinje-to-Purkinje collaterals in the parasagittal plane.",
+    "ephys_summary": "Sole output neuron of the cerebellar cortex; integrates ~200,000 parallel-fiber inputs plus 1:1 climbing-fiber input; generates simple spikes and climbing-fiber-driven complex spikes; complex-spike activity shows ~10 Hz rhythmicity and parasagittally organized synchrony; simple-spike pattern shaped by stellate-cell inhibition and firing rate set by basket-cell inhibition.",
+    "subtypes_noted": "Not subtyped in this report; discussed as a uniform principal cell, though zebrinII (aldolase C) parasagittal zonation of Purkinje cells is noted as organizing associated interneuron zones. Not a molecular-layer interneuron.",
+    "quote_count": 58
+  },
+  {
+    "proposed_id": "basket_cell_cerebellum",
+    "name": "Cerebellar basket cell (molecular layer interneuron)",
+    "markers_mentioned": ["Pvalb (parvalbumin)", "RORa", "HCN1", "Kv1.1", "PSD95", "GAD67", "Nfasc", "GluD1 (Grid1)"],
+    "negative_markers_mentioned": ["Calb1 (calbindin) negative in basket neurons"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["inner/lower third of the molecular layer", "perisomatic baskets around Purkinje cell somata", "pinceau around Purkinje cell axon initial segment"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Early-born molecular-layer interneuron populating the lower molecular layer; axons converge to enwrap Purkinje cell somata as the 'basket' and form specialized pinceau terminals around the Purkinje axon initial segment (5-7 basket axons per pinceau); each basket cell contacts multiple Purkinje cells in the same sagittal plane. Basket-versus-stellate identity lies on a morphological continuum.",
+    "ephys_summary": "Provides feed-forward and lateral GABAergic inhibition to Purkinje somata/AIS, controlling Purkinje firing rate; basket-cell inhibition loss changes Purkinje firing rate and decreases complex-spike rate; electrically and chemically coupled to other MLIs with sagittally biased network structure.",
+    "subtypes_noted": "Classically split from stellate cells by laminar position and axonal target, but the basket/stellate division is a morphological continuum, not absolute. Basket-cell pinceaux are further organized into zonal modules of distinct pinceau sizes aligned with Purkinje-cell functional zones (Zhou et al., 2020). Maps imperfectly onto transcriptomic MLI1/MLI2 classes.",
+    "quote_count": 31
+  },
+  {
+    "proposed_id": "stellate_cell_cerebellum",
+    "name": "Cerebellar stellate cell (molecular layer interneuron)",
+    "markers_mentioned": ["Pvalb (parvalbumin)", "RORa", "GluD1 (Grid1)"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["outer/upper third of the molecular layer", "axons terminate on smooth shafts of Purkinje cell dendrites"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Later-born molecular-layer interneuron integrating into the upper molecular layer; axons innervate Purkinje cell distal dendritic shafts exclusively; each stellate cell contacts multiple Purkinje cells in the same sagittal plane. Shares a ventricular-zone progenitor pool with basket cells and lies on the same morphological continuum.",
+    "ephys_summary": "Provides GABAergic dendritic inhibition shaping Purkinje dendritic integration and simple-spike patterning; loss of stellate-cell inhibition alters simple-spike pattern and increases complex-spike rate; participates in structured interneuron-interneuron chemical and electrical networks.",
+    "subtypes_noted": "Classically distinguished from basket cells by upper-ML position and dendritic (not somatic) targeting, but division is a continuum. Does not map cleanly onto transcriptomic MLI1/MLI2 classes.",
+    "quote_count": 22
+  },
+  {
+    "proposed_id": "candelabrum_cell_cerebellum",
+    "name": "Cerebellar candelabrum cell (Purkinje-layer interneuron)",
+    "markers_mentioned": [],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["Purkinje cell layer (small soma near PCL)", "dendrites extending toward the pial surface through the molecular layer", "beaded axons making local synapses within the molecular layer"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Molecularly distinct GABAergic interneuron with a small soma near the Purkinje cell layer, dendrites extending pially through the molecular layer, and local beaded axons ramifying within the molecular layer; present across all cerebellar lobules and reported as the most abundant Purkinje-layer interneuron; neither MLI nor Golgi cell.",
+    "ephys_summary": "High input resistance renders firing highly sensitive to synaptic inputs; excited by mossy fibers and granule cells and strongly inhibited by Purkinje cells; in turn inhibits molecular-layer interneurons, forming an inhibitory ring (PC inhibits CC, CC inhibits MLI, leading to PC disinhibition).",
+    "subtypes_noted": "Identified as a molecularly distinct type by snRNAseq (Kozareva et al., 2020; Osorno et al., 2021); distinct from MLIs and Golgi cells. No subtypes described.",
+    "quote_count": 7
+  },
+  {
+    "proposed_id": "mli_transcriptomic_classes_cerebellum",
+    "name": "Molecular layer interneuron transcriptomic classes MLI1 / MLI2 (class I / class II)",
+    "markers_mentioned": ["MLI1 / class I: Sorcs3, Nxph1", "MLI2 / class II: Nxph1, Pvalb"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": ["Nxph1 (neurexophilin-1)"],
+    "anatomy_mentioned": ["molecular layer (both classes span the full thickness as a morphological continuum)"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Two molecularly and functionally distinct MLI types that both span a continuous morphological gradient through the thickness of the molecular layer, so they do not correspond one-to-one to the classical basket/stellate shape categories.",
+    "ephys_summary": "MLI1 primarily inhibit Purkinje cells, are electrically coupled to each other, fire synchronously on the millisecond timescale in vivo, and synchronously pause Purkinje firing; MLI2 are not electrically coupled, primarily inhibit MLI1 (disinhibiting Purkinje cells), and gate cerebellum-dependent learning. The two classes differ markedly in spontaneous firing, excitability, and electrical coupling.",
+    "subtypes_noted": "MLI1 and MLI2 (Kozareva et al., 2020) correspond to class I and class II (Lowenstein et al., 2022); proposed as the underlying cell-type structure that the basket/stellate morphological categories only partially capture. Purkinje collaterals preferentially target MLI2 over MLI1 (Lackey et al., 2025).",
+    "quote_count": 6
+  }
+]

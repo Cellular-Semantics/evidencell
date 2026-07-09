@@ -1,0 +1,56 @@
+{
+  "_comment": "Held-out ground truth for the cerebellum blind reconstruction. Derived from the committed curator-reviewed graphs kb/graphs/cerebellum/CB_MLI_types.yaml and CB_PLI_types.yaml (curator: dosumis, 2026-02-25). Sealed copy of those graphs is in the session scratchpad cerebellum_answer_key/. The blind pipeline must NOT see these files. Recovery = blind-run top candidate matches the target accession at the stated rank. Cross-cutting / distributed cases are expected biology-hard, not system misses.",
+  "taxonomy_id": "CCN20230722",
+  "source_graphs": [
+    "kb/graphs/cerebellum/CB_MLI_types.yaml",
+    "kb/graphs/cerebellum/CB_PLI_types.yaml"
+  ],
+  "targets": [
+    {
+      "classical_type": "classical_basket",
+      "name": "Cerebellar basket cell",
+      "cluster_targets": ["CS20230722_CLUS_5188"],
+      "supertype_targets": ["CS20230722_SUPT_1149"],
+      "curator_predicate": "evidencell:CrossCuttingMatch",
+      "difficulty": "biology-hard",
+      "note": "Basket morphology is a positional subset of transcriptomic MLI1 (5188); MLI1/MLI2 cross-cut the basket/stellate boundary. AT F1 for MLI1->5188 = 0.999."
+    },
+    {
+      "classical_type": "classical_stellate",
+      "name": "Cerebellar stellate cell",
+      "cluster_targets": ["CS20230722_CLUS_5188", "CS20230722_CLUS_5192"],
+      "supertype_targets": ["CS20230722_SUPT_1149", "CS20230722_SUPT_1151"],
+      "curator_predicate": "evidencell:UncertainRelationship",
+      "difficulty": "biology-hard",
+      "note": "Distributed across BOTH MLI1 (5188) and MLI2 (5192) by location; no clean single target by design. Recovery = top candidate in either target set."
+    },
+    {
+      "classical_type": "classical_candelabrum",
+      "name": "Candelabrum cell",
+      "cluster_targets": ["CS20230722_CLUS_5178"],
+      "supertype_targets": ["CS20230722_SUPT_1144"],
+      "curator_predicate": "skos:exactMatch",
+      "difficulty": "clean",
+      "note": "PLI1=Candelabrum -> cluster 5178, AT F1=0.942 at cluster level."
+    },
+    {
+      "classical_type": "classical_globular",
+      "name": "Globular cell",
+      "cluster_targets": ["CS20230722_CLUS_5177"],
+      "supertype_targets": ["CS20230722_SUPT_1144"],
+      "curator_predicate": "skos:closeMatch",
+      "difficulty": "distributed",
+      "note": "PLI2=Globular -> cluster 5177 (F1=0.877) but distributes across PLI Gly-Gaba subclass; closeMatch."
+    },
+    {
+      "classical_type": "classical_lugaro",
+      "name": "Lugaro cell",
+      "cluster_targets": ["CS20230722_CLUS_5180", "CS20230722_CLUS_5181", "CS20230722_CLUS_5182"],
+      "supertype_targets": ["CS20230722_SUPT_1145"],
+      "curator_predicate": "skos:exactMatch",
+      "difficulty": "supertype-level",
+      "primary_rank": "SUPERTYPE",
+      "note": "PLI3=Lugaro maps cleanly at SUPERTYPE 1145 (F1=0.958); cluster-level is distributed across 5180-5182 (best 5180 F1=0.654). Score primarily at supertype rank."
+    }
+  ]
+}
