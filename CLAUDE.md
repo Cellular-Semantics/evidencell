@@ -312,6 +312,18 @@ parallel where possible (taxonomy ingest + report ingest are independent).
     # no paper selection gate for ASTA survey runs
     # run once per node_id
 
+── AT coverage (before mapping) ────────────────────────────────────────────────
+
+3.5 just at-coverage {graph_file} {taxonomy_id}  # declared at_source_sets → AT run?
+    # Report-only. Lists each classical node's at_source_sets correspondence
+    # (dataset_accession + source_label, authored in evidence-extraction) and
+    # whether an AT run already exists for it. For each UNRESOLVED row, run
+    # workflows/annotation-transfer.md (Step 0 consumes the same
+    # dataset_accession/source_label) BEFORE mapping — otherwise emit-stage-b
+    # emits NO_EVIDENCE and you re-map after. No new gate: the retrieve_dataset
+    # preflight is the single resource checkpoint. Nodes with no at_source_sets
+    # are skipped (proceed; AT simply absent).
+
 ── Mapping ────────────────────────────────────────────────────────────────────
 
 4.  workflows/map-cell-type.md                   # evidence + atlas metadata → MappingEdge top-K

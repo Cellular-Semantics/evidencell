@@ -96,6 +96,13 @@ migrate-at-metrics:
 refresh-at-metrics *ARGS:
     uv run python -m evidencell.at_metrics refresh {{ARGS}}
 
+# Pre-mapping check: which classical nodes' declared at_source_sets have an
+# AT run (resolved) vs not (UNRESOLVED). Report-only; exits non-zero if any
+# UNRESOLVED. Run before map-cell-type; for UNRESOLVED rows run annotation-transfer.
+[group('at_metrics')]
+at-coverage graph_file taxonomy_id:
+    uv run python -m evidencell.at_metrics at-coverage {{graph_file}} {{taxonomy_id}}
+
 # Regenerate src/evidencell/_models.py (Pydantic classes from LinkML schema)
 [group('schema')]
 gen-models:
