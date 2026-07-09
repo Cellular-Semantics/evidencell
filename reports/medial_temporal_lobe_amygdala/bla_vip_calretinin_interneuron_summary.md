@@ -1,282 +1,433 @@
-# Basolateral amygdala VIP/calretinin interneuron-selective interneuron — CCN20230722 Mapping Report
-*2026-06-10 · Source: `kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml`*
-
----
+# Basolateral amygdala VIP/calretinin interneuron-selective interneuron — WMBv1 (CCN20230722) Mapping Report
+*2026-07-09 · Source: `/Users/do12/Documents/GitHub/evidencell_too/kb/graphs/medial_temporal_lobe_amygdala/bla_vip_calretinin_interneuron.yaml`*
 
 ## Introduction
 
-VIP/calretinin-expressing interneuron-selective (IS) interneurons are the most abundant GABAergic subpopulation in the basolateral amygdala (BLA), constituting an estimated 29–38% of all GABAergic cells in the lateral and basal amygdala [2]. They are defined by co-expression of vasoactive intestinal peptide (VIP), calretinin (Calb2), and cholecystokinin (CCK), and are characterised by a small bipolar or bitufted morphology [1]. Their classification as "interneuron-selective" reflects their preferential synaptic targets — other interneurons rather than principal cells — placing them in a disinhibitory circuit role. Mapping this classical type to the Allen WMBv1 mouse atlas is important for integrating classical immunohistochemical cell-type work with transcriptomic taxonomy and for grounding fear-circuit models in a reference atlas.
+The basolateral amygdala VIP/calretinin interneuron-selective interneuron is a class of small bipolar and bitufted GABAergic cells that co-express calretinin, cholecystokinin and vasoactive intestinal peptide, and that preferentially innervate other interneurons rather than principal cells [1][2]. It is the numerically dominant GABAergic population of the basolateral amygdala — roughly a third of local inhibitory neurons — and so its transcriptomic placement matters for interpreting any amygdalar interneuron atlas [2].
 
-### Classical type properties
+### Classical type
 
 | Property | Value | References |
 |---|---|---|
-| Soma location | Basolateral amygdala [UBERON:0002887] | [1], [2] |
-| Neurotransmitter | GABAergic | [1], [2] |
-| Defining markers | Vip, Calb2, Cck | [1], [2], [3], [4] |
+| Soma location | basal amygdaloid nucleus [UBERON:0002887] | [1][2] |
+| NT type | GABAergic | [1][2] |
+| Defining markers | Vip, Calb2 (calretinin), Cck | [1][2][3][4] |
 | Negative markers | Pvalb, Sst | — |
-| Neuropeptides | Vip, Cck | [1], [2] |
+| Neuropeptides | Vip, Cck | [1][2] |
+| Cell Ontology | GABAergic interneuron (CL:0011005) | — |
 
-*The node-level annotation acknowledges molecular heterogeneity within this class: VIP and/or calretinin co-expression is the defining criterion; not all cells co-express all three markers at equal levels.*
+*Note on class composition:* this type is grouped as a single class but is acknowledged as molecularly mixed — cells expressing VIP and/or calretinin are pooled together.
 
 <details>
 <summary>Details — source evidence for classical type properties</summary>
 
-- **Soma location / NT / morphology / Calb2+Vip+Cck markers:** Immunohistochemical study (dual-labelling) · mouse / rat BLA · [1]
-  > The principal neurons in the CBL are pyramidal-like projection neurons with spiny dendrites that utilize glutamate as an excitatory neurotransmitter, whereas most non-pyramidal neurons in the CBL are spine-sparse interneurons that utilize GABA as an inhibitory neurotransmitter (McDonald, 1982)(McDonald, 1985)(McDonald, , 1992a(McDonald, ,b, 1996(McDonald, , 2003(Millhouse et al., 1983)(Fuller et al., 1987)(Carlsen et al., 1988)(McDonald et al., 1993). Dual-labeling immunohistochemical studies in the basolateral amygdala suggest that the CBL contains at least four distinct subpopulations of GABAergic non-pyramidal neurons that can be distinguished on the basis of their content of calcium-binding proteins and peptides. These subpopulations are: (1) PV+/CB+ neurons, (2) SOM+/CB+ neurons, (3) large multipolar cholecystokinin+ neurons that are often CB+, and (4) small bipolar and bitufted interneurons that exhibit extensive colocalization of calretinin, cholecystokinin, and vasoactive intestinal peptide (Kemppainen and Pitkänen, 2000;McDonald and Betette, 2001;Mascagni, 2001, 2002;
-  > — McDonald et al. 2012, Basolateral amygdala neuronal subtypes · [1] <!-- quote_key: 11544073_ea8d2bb3 -->
+**Defining markers / neuropeptides / NT / morphology:**
 
-- **Soma location / NT / defining markers / neuropeptides (cell count estimates):** Stereological cell-counting immunohistochemistry · mouse lateral and basal amygdala · [2]
-  > we estimated that the following cell types together compose the vast majority of GABAergic cells in the LA and BA: axo-axonic cells (5.5%-6%), basket cells expressing parvalbumin (17%-20%) or cholecystokinin (7%-9%), dendrite-targeting inhibitory cells expressing somatostatin (10%-16%), NPY-containing neurogliaform cells (14%-15%), VIP and/or calretinin-expressing interneuron-selective interneurons (29%-38%), and GABAergic projection neurons expressing somatostatin and neuronal nitric oxide synthase (5.5%-8%). Our results show that these amygdalar nuclei contain all major GABAergic neuron types as found in other cortical regions.
-  > — Vereczki et al. 2021, Basolateral amygdala neuronal subtypes · [2] <!-- quote_key: 232283078_d4238834 -->
+> The principal neurons in the CBL are pyramidal-like projection neurons with spiny dendrites that utilize glutamate as an excitatory neurotransmitter, whereas most non-pyramidal neurons in the CBL are spine-sparse interneurons that utilize GABA as an inhibitory neurotransmitter (McDonald, 1982)(McDonald, 1985)(McDonald, , 1992a(McDonald, ,b, 1996(McDonald, , 2003(Millhouse et al., 1983)(Fuller et al., 1987)(Carlsen et al., 1988)(McDonald et al., 1993). Dual-labeling immunohistochemical studies in the basolateral amygdala suggest that the CBL contains at least four distinct subpopulations of GABAergic non-pyramidal neurons that can be distinguished on the basis of their content of calcium-binding proteins and peptides. These subpopulations are: (1) PV+/CB+ neurons, (2) SOM+/CB+ neurons, (3) large multipolar cholecystokinin+ neurons that are often CB+, and (4) small bipolar and bitufted interneurons that exhibit extensive colocalization of calretinin, cholecystokinin, and vasoactive intestinal peptide (Kemppainen and Pitkänen, 2000;McDonald and Betette, 2001;Mascagni, 2001, 2002;
+> — McDonald et al. 2012, Basolateral amygdala neuronal subtypes · [1] <!-- quote_key: 11544073_ea8d2bb3 -->
 
-- **Vip marker (scRNA-seq context, Grpr co-expression):** scRNA-seq atlas (Hochgerner 2023 amygdala) · mouse amygdala · [3]
-  > sparse, but specific expression of Grpr in several GABAergic interneurons, such as Vip-expressing GABA-50 and GABA-51, Pvalb-type GABA-41
-  > — Hochgerner et al. 2023, Two classes of glutamatergic neurons par · [3] <!-- quote_key: 264517392_039d73c7 -->
+**Population fraction / marker panel:**
 
-- **Calb2 marker (primate cross-species):** Spatial transcriptomics / snRNA-seq · nonhuman primate amygdala · [4]
-  > both clusters showed increased expression of genes (Fig. 3B) encoding calretinin (CALB2), cholecystokinin (CCK), corticotropin releasing hormone (CRH), cannabinoid receptor 1 (CNR1)
-  > — Totty et al. 2024, GABAergic neuron types in the primate amygdala show distributed or subregion specific expression patterns · [4] <!-- quote_key: 273531817_447a3097 -->
+> we estimated that the following cell types together compose the vast majority of GABAergic cells in the LA and BA: axo-axonic cells (5.5%-6%), basket cells expressing parvalbumin (17%-20%) or cholecystokinin (7%-9%), dendrite-targeting inhibitory cells expressing somatostatin (10%-16%), NPY-containing neurogliaform cells (14%-15%), VIP and/or calretinin-expressing interneuron-selective interneurons (29%-38%), and GABAergic projection neurons expressing somatostatin and neuronal nitric oxide synthase (5.5%-8%). Our results show that these amygdalar nuclei contain all major GABAergic neuron types as found in other cortical regions.
+> — Vereczki et al. 2021, Basolateral amygdala neuronal subtypes · [2] <!-- quote_key: 232283078_d4238834 -->
+
+**Vip marker (transcriptomic context):**
+
+> sparse, but specific expression of Grpr in several GABAergic interneurons, such as Vip-expressing GABA-50 and GABA-51, Pvalb-type GABA-41
+> — Hochgerner et al. 2023, Two classes of glutamatergic neurons par · [3] <!-- quote_key: 264517392_039d73c7 -->
+
+**Calb2 / Cck co-expression (primate amygdala):**
+
+> both clusters showed increased expression of genes (Fig. 3B) encoding calretinin (CALB2), cholecystokinin (CCK), corticotropin releasing hormone (CRH), cannabinoid receptor 1 (CNR1)
+> — Totty et al. 2024, GABAergic neuron types in the primate amygdala show distributed or subregion specific expression patterns · [4] <!-- quote_key: 273531817_447a3097 -->
 
 </details>
 
-### Cell Ontology mapping
-
 Cell Ontology mapping: GABAergic interneuron [[CL:0011005](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0011005)] (BROAD).
-
-*(Note: this is an auto-proposed broad mapping requiring expert review. The BLA VIP/calretinin IS interneuron is a well-characterised type that may be eligible for a more specific CL term.)*
-
----
 
 ## Results
 
-One candidate atlas cluster was assessed; 0628 Vip Gaba_2 [CS20230722_CLUS_0628] in supertype 0174 Vip Gaba_2 (CS20230722_SUPT_0174) is the primary mapping at LOW confidence under a `skos:broadMatch` relationship. The broadMatch reflects the distributed nature of the source type across five co-equal Vip Gaba clusters at Stage A discovery and the low region_fraction of CS20230722_CLUS_0628 in the BLA.
+Strong, cohort-specific expression of the defining markers Vip and calretinin (Calb2) points to the Vip Gaba clusters of WMBv1, led by 0630 Vip Gaba_2 [CS20230722_CLUS_0630] (Vip 10.99, cohort-pct 0.960; Calb2 8.64, cohort-pct 0.980; see property comparison table), with its parent supertype 0174 Vip Gaba_2 [CS20230722_SUPT_0174] capturing the broader population. The support is marker-based only — no annotation-transfer evidence anchors any candidate — and soma proximity to the amygdala is weak throughout: the atlas Vip Gaba clusters distribute across isocortex, hippocampal formation and olfactory areas rather than concentrating in the basal amygdaloid nucleus, so the classical type corresponds to several distributed Vip Gaba clusters rather than one.
 
-### Annotation-transfer overview
+### 0630 Vip Gaba_2 · 🔴 LOW
 
-![Filtered AT figure for Basolateral amygdala VIP/calretinin IS interneuron](figures/f1_for_bla_vip_calretinin_interneuron.png)
-
-*F1 across taxonomy levels for the 1 source group relevant to the Basolateral amygdala VIP/calretinin IS interneuron (Hochgerner 2023 GABA-51-Vip-Crh, n=72 naive cells after filtering). Each panel row is a source-cell group; nodes are coloured by F1 with **Purity** (Pur) and **Coverage** (Cov) shown inline. Coverage = fraction of source-group cells landing on this target; Purity = fraction of this target's cells coming from the source group. With a single source group, Purity is high at every target and only Coverage discriminates. F1 ≥ 0.5 at a level indicates a clean mapping at that resolution.*
-
-At SUBCLASS level, GABA-51-Vip-Crh cells map to 046 Vip Gaba (CS20230722_SUBC_046; F1=0.65, Purity=0.49, Coverage=0.97), confirming the CGE/VIP lineage. At SUPERTYPE level, the best target is 0174 Vip Gaba_2 (CS20230722_SUPT_0174; F1=0.57, Coverage=0.40, Purity=1.0). At CLUSTER level, 0628 Vip Gaba_2 [CS20230722_CLUS_0628] is best (F1=0.54, Coverage=0.37, Purity=1.0).
-
-Caveat: GABA-51-Vip-Crh is a transcriptomically-defined label from the Hochgerner 2023 atlas and does not directly correspond to the classical morpho-electrophysiological IS interneuron definition; the source-to-KB matching is marker-based.
-
-### Mapping candidates table
-
-| Rank | WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key property alignment | Verdict |
-|---|---|---|---|---|---|---|
-| 1 | 0628 Vip Gaba_2 [CS20230722_CLUS_0628] | 0174 Vip Gaba_2 (CS20230722_SUPT_0174) | 1,401 | 🔴 LOW | Calb2 CONSISTENT · Vip CONSISTENT · Cck APPROXIMATE | Speculative — broadMatch across five co-equal Vip Gaba clusters |
-
-*1 edge assessed; relationship: `skos:broadMatch`.*
-
----
-
-### 0628 Vip Gaba_2 [CS20230722_CLUS_0628] · 🔴 LOW
+*Best-matching cluster; primary candidate.* The two canonical markers of the classical type are strongly and specifically expressed here, giving this cluster the top cohort score of its five-member GABAergic cohort (score 8 vs next-best 7). The call rests on marker expression alone.
 
 **Table 1 — Property comparison**
 
-| Property | Classical | Supertype | Best cluster | Alignment |
+| Property | Classical | Supertype (0174 Vip Gaba_2) | Best cluster (0630 Vip Gaba_2) | Alignment |
 |---|---|---|---|---|
-| Soma location | Basolateral amygdala [UBERON:0002887] | MBA:295 BLA present; region_fraction 0.049 | MBA:295 BLA present | CONSISTENT |
-| NT type | GABAergic | GABA | GABA | CONSISTENT |
-| Calb2 expression | Calb2 — defining marker | not available | Calb2 precomputed mean 8.12 (98.3rd pct; tier 2) | CONSISTENT |
-| Vip (neuropeptide) | Vip — neuropeptide | not available | Vip precomputed mean 11.11 (96.9th pct; tier 2) | CONSISTENT |
-| Cck (neuropeptide) | Cck — neuropeptide | not available | Cck mean 0.97 (41.7th pct; tier 1 — low reliability) | APPROXIMATE |
-| Pvalb (negative) | Pvalb — negative marker | not available | NOT_ASSESSED | NOT_ASSESSED |
-| Sst (negative) | Sst — negative marker | not available | NOT_ASSESSED | NOT_ASSESSED |
-| Sex ratio | not documented | not available | not assessed | NOT_ASSESSED |
+| Soma location | basal amygdaloid nucleus [UBERON:0002887] | Isocortex [MBA:315] / Hippocampal formation [MBA:1089] / Olfactory areas [MBA:698] (rf₁₀₀ 0.052) | Hippocampal formation [MBA:1089] / Cortical subplate [MBA:703] / Entorhinal area [MBA:918] (rf₁₀₀ 0.124) | SUPT: DISCORDANT; CLUS: APPROXIMATE |
+| NT type | GABAergic | not asserted | GABA | SUPT: NOT_ASSESSED; CLUS: CONSISTENT |
+| Vip expression | defining marker | 10.55 (cohort-pct 0.964) | 10.99 (cohort-pct 0.960) | CONSISTENT |
+| Calb2 expression | defining marker | 5.63 (cohort-pct 0.904) | 8.64 (cohort-pct 0.980) | CONSISTENT |
+| Cck expression | defining marker | 1.50 (cohort-pct 0.446) | 1.03 (cohort-pct 0.305) | APPROXIMATE |
+| Pvalb (negative) | ABSENT | 0.58 (cohort-pct 0.795) | 0.00 (cohort-pct 0.000) | SUPT: DISCORDANT; CLUS: CONSISTENT |
+| Sst (negative) | ABSENT | 0.87 (cohort-pct 0.145) | 0.83 (cohort-pct 0.159) | DISCORDANT |
+| Sex ratio | not documented | not available | not available | NOT_ASSESSED |
 
 **Table 2 — Evidence support**
 
 | Evidence | Type | Supports | Headline | Source |
 |---|---|---|---|---|
-| McDonald 2012 BLA subpopulations | Literature | SUPPORT | IS interneuron description; BLA Calb2/Vip/Cck co-expression | [1] |
-| CS20230722_CLUS_0628 atlas metadata | Atlas metadata | SUPPORT | Calb2 98.3rd pct, Vip 96.9th pct — both tier-2 | — |
-| Hochgerner 2023 MapMyCells AT | Annotation transfer | SUPPORT | F1=0.65 at SUBCLASS; F1=0.57 at SUPERTYPE; F1=0.54 at CLUSTER | — |
+| Atlas node 0630 Vip Gaba_2 | Atlas metadata | PARTIAL | Vip 10.99 / Calb2 8.64 cohort-high; region_fraction_100um=0.124 | atlas-internal |
 
-*(Child-cluster breakdown not assessed — five Vip Gaba rank-0 clusters score equally at Stage A discovery; see proposed experiments.)*
+*(2 of 2 sampled child clusters of the supertype — 0630 Vip Gaba_2 and 0628 Vip Gaba_2 — show Vip and Calb2 concordant with the classical type; both carry marginal Sst and 0628 additionally shows detectable Pvalb. Best match: CLUS_0630.)*
 
-**Supporting evidence**
+**Supporting evidence:**
+- Vip is a DEFINING atlas marker on this cluster (10.99, cohort-pct 0.960) and calretinin/Calb2 sits at cohort-pct 0.980 (8.64) — the two markers that name the classical type are both cohort-high on 0630 Vip Gaba_2 [CS20230722_CLUS_0630].
+- Parvalbumin, a classical negative marker, is undetectable (0.00), consistent with the interneuron-selective interneuron identity.
 
-- **Literature (McDonald 2012 [1]):** McDonald et al. characterise BLA VIP/calretinin cells as the IS subclass ("small bipolar and bitufted interneurons that exhibit extensive colocalization of calretinin, cholecystokinin, and vasoactive intestinal peptide"). This is an immunohistochemical (protein-level, dual-label immunofluorescence) study and constitutes the primary literature anchor for the classical type. Cell-type identity is grounded in morphological description (bipolar/bitufted) combined with marker co-expression at protein level.
+**Marker evidence provenance:**
+- **Vip / Calb2:** classical assertions rest on immunohistochemical co-localization studies [1][2] plus transcriptomic support [3][4]; both are cohort-specific transcript-level signals on the atlas cluster, so the concordance is genuine rather than nominal.
+- **Cck:** a classical defining marker but only marginally detectable here (1.03, cohort-pct 0.305; APPROXIMATE) — the fuller CCK co-expression described classically [1] is better matched by 0656 Vip Gaba_9 [CS20230722_CLUS_0656] (see below). *(note: CCK also marks a separate CCK basket-cell type in the BLA, so partial CCK is expected in a Vip/calretinin-selective cluster.)*
+- **Sst:** listed as a negative marker on the classical node without a primary citation; the atlas shows low-but-detectable Sst (0.83), a weak discordance discussed below.
 
-- **Literature (Vereczki 2021 [2]):** Independent stereological counting in mouse LA and BA confirms VIP and/or calretinin-expressing IS interneurons at 29–38% of the GABAergic population, consistent with McDonald 2012 and providing a quantitative abundance estimate. Also based on immunohistochemistry (protein level).
+**Concerns:**
+- Sst is detectable (0.83) despite being a classical negative marker, though at low cohort specificity (cohort-pct 0.159) — weak counter-evidence.
+- Location APPROXIMATE (`region_fraction_100um: 0.124`; boundary scatter into hippocampal formation and cortical subplate — could reflect that Vip/calretinin interneurons are a telencephalon-wide type not concentrated in the amygdala; weak counter-evidence).
+- No annotation-transfer evidence supports the mapping — the call is cohort-relative marker expression only.
 
-- **Atlas metadata (CS20230722_CLUS_0628):** CS20230722_CLUS_0628 "0628 Vip Gaba_2" shows both Calb2 (mean 8.12, 98.3rd percentile in the BLA/amygdala GABAergic cohort, tier-2) and Vip (mean 11.11, 96.9th percentile, tier-2) as defining high-expression markers. These precomputed values directly confirm the classical Calb2/Vip co-expression criterion at the transcript level. Cck is tier-1 only (mean 0.97, 41.7th pct), which is a partial match.
+**What would upgrade confidence:**
+- AnnotationTransferEvidence from an amygdala-targeted VIP/calretinin dataset scored against CS20230722 (target F1 ≥ 0.5 at cluster level) — establishing an `at_source_sets` source-annotation→type correspondence is the single largest missing anchor.
+- A targeted literature trawl for Sst co-expression within the amygdalar VIP/calretinin population, to decide whether the atlas-side detectable Sst is real heterogeneity or contamination.
 
-- **Annotation transfer (GABA-51-Vip-Crh → WMBv1, `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`):** MapMyCells (cell_type_mapper v1.7.1) applied to Hochgerner 2023 naive amygdala cells (n=72 GABA-51 cells after filtering from 55,514 total). At SUBCLASS level (046 Vip Gaba, CS20230722_SUBC_046): F1=0.65, Coverage=0.97, Purity=0.49 — strong subclass-level confirmation of the CGE/VIP lineage. At SUPERTYPE level (0174 Vip Gaba_2, CS20230722_SUPT_0174): F1=0.57, Coverage=0.40, Purity=1.0. At CLUSTER level (0628 Vip Gaba_2 [CS20230722_CLUS_0628]): F1=0.54, Coverage=0.37, Purity=1.0.
+### 0174 Vip Gaba_2 · 🔴 LOW
 
-**Marker evidence provenance**
+*Parent supertype; broader correspondence.* The amygdalar VIP/calretinin interneuron-selective interneuron corresponds broadly to the Vip Gaba_2 supertype 0174 Vip Gaba_2 [CS20230722_SUPT_0174], of which 0630 Vip Gaba_2 is the best-matching child. Because the population is distributed across many Vip Gaba clusters and no atlas node concentrates in the amygdala, the supportable correspondence at this resolution is broader-than, not one-to-one.
 
-- **Vip:** Evidence is both protein-level (immunohistochemistry: McDonald 2012 [1]; Vereczki 2021 [2]) and transcript-level (scRNA-seq, Hochgerner 2023 [3]). Both levels agree. Atlas precomputed expression for CS20230722_CLUS_0628 is Vip mean 11.11 (tier 2), confirming defining-marker status at the transcript level.
+**Supporting evidence:**
+- Vip (10.55, cohort-pct 0.964) and Calb2 (5.63, cohort-pct 0.904) are cohort-high across the supertype with child-cluster coverage 1.000, i.e. the marker signal is shared by all sampled children.
 
-- **Calb2:** Evidence is protein-level (IHC: McDonald 2012 [1]; Vereczki 2021 [2]) and transcript-level cross-species (primate snRNA-seq: Totty 2024 [4]). Atlas precomputed expression for CS20230722_CLUS_0628 is Calb2 mean 8.12 (tier 2), consistent with defining-marker status. *(Note: Totty 2024 [4] is from nonhuman primate amygdala; cross-species differences may exist, but Calb2 co-expression in the VIP/calretinin class appears conserved.)*
+**Concerns:**
+- Location DISCORDANT: the supertype spans Isocortex [MBA:315], Hippocampal formation [MBA:1089] and Olfactory areas [MBA:698] (`region_fraction_100um: 0.052`; distant from the basal amygdaloid nucleus — stronger counter-evidence; the classical type may be the amygdalar instance of this broader Vip Gaba population rather than the population as a whole).
+- Pvalb is detectable at supertype level (0.58, cohort-pct 0.795; DISCORDANT) — this dilutes at the child level (0.00 on 0630 Vip Gaba_2), a signature of within-supertype heterogeneity.
+- Sst detectable (0.87; DISCORDANT), as for the child cluster.
 
-- **Cck:** Evidence is protein-level only (IHC: McDonald 2012 [1]; Vereczki 2021 [2]). Atlas precomputed expression for CS20230722_CLUS_0628 is Cck mean 0.97 (41.7th percentile, tier 1 — low reliability). This is a discrepancy between protein-level literature evidence and atlas transcript-level expression.
+**What would upgrade confidence:**
+- Supertype-level AnnotationTransferEvidence testing whether the classical type maps broadly across Vip Gaba_2 or resolves to a single child cluster.
 
-  **Atlas annotation/expression discrepancy (Cck):** Cck is listed as a neuropeptide/defining marker for this classical type but CS20230722_CLUS_0628 shows precomputed mean expression = 0.97 (tier 1, 41.7th percentile — low reliability). This may reflect that CCK co-expression characterises a VIP/calretinin subset not well-captured by the GABA-51-Vip-Crh source label, that CCK is expressed heterogeneously below the cluster-level mean, or that a different Vip Gaba cluster better matches the classical Cck+ criterion. Flagged for investigation.
+### 0656 Vip Gaba_9 · 🔴 LOW
 
-- **Negative markers (Pvalb, Sst):** Not assessed at the atlas level for this edge. The classical definition excludes Pvalb+ and Sst+ cells; no precomputed expression check was performed on CS20230722_CLUS_0628 for these markers in this mapping pass.
+*Alternative cluster with fuller marker co-expression.* This cluster is the only candidate on which all three classical markers are cohort-high simultaneously — Vip (8.69, cohort-pct 0.927), calretinin/Calb2 (8.29, cohort-pct 0.967) and Cck (6.29, cohort-pct 0.815) — matching the full VIP+calretinin+CCK co-expression profile described classically [1] more completely than 0630 Vip Gaba_2, but it sits in a different Vip Gaba supertype (0181 Vip Gaba_9) and shares the same weak region signal.
 
-**Concerns**
+**Supporting evidence:**
+- All three defining markers CONSISTENT and cohort-high on 0656 Vip Gaba_9 [CS20230722_CLUS_0656]; parvalbumin undetectable (0.00).
 
-- **DISTRIBUTED_ACROSS_CLUSTERS:** Five Vip Gaba clusters tie at Stage A discovery score 6 in a cohort of 5 BLA GABAergic rank-0 clusters (next_best_score=6, rank_in_cohort=1). This means no single cluster dominates — the classical IS interneuron type may not resolve to a single WMBv1 cluster.
-- **Low region_fraction (0.049):** Only 4.9% of CS20230722_CLUS_0628 cells are in MBA:295 (BLA). This is well below the 0.30 lower boundary band, meaning CS20230722_CLUS_0628 is predominantly an extra-BLA cluster. The CONSISTENT location call reflects BLA presence, but the low fraction is a concern for specificity — CS20230722_CLUS_0628 may represent a broader cortical VIP population rather than a BLA-specific one.
-- **Cck APPROXIMATE:** Low atlas Cck expression (tier 1, 41.7th pct) partially undermines the classical Cck+ definition.
-- **AT coverage scatter:** At CLUSTER level, only 37% of GABA-51-Vip-Crh cells land on CS20230722_CLUS_0628; the remaining 63% distribute across eight other clusters, consistent with the broadMatch interpretation.
+**Concerns:**
+- Sst detectable (0.74; DISCORDANT) at low cohort specificity (cohort-pct 0.113).
+- Location APPROXIMATE (`region_fraction_100um: 0.119`; boundary scatter into hippocampal formation and cortical subplate).
+- No annotation-transfer evidence; the higher CCK here versus lower CCK on 0630 Vip Gaba_2 leaves open whether these are distinct subpopulations of the mixed classical class.
 
-**What would upgrade confidence**
+**What would upgrade confidence:**
+- AnnotationTransferEvidence discriminating the Vip/Calb2-dominant (0630) from the Vip/Calb2/Cck-high (0656) cluster against a BLA-targeted source dataset.
 
-- **Patch-seq annotation transfer:** Obtain patch-seq transcriptomes from morphologically verified BLA IS interneurons (Calb2+/Vip+, bipolar/bitufted morphology confirmed by post-hoc IHC or Cre-driver targeting). Run MapMyCells against WMBv1 targeting F1 ≥ 0.50 at CLUSTER level. This would add `AnnotationTransferEvidence` grounded in the classical morphological definition and could resolve the cluster-level scatter. *(The Hochgerner 2023 AT partially addresses this but lacks morphological confirmation.)*
-- **Cluster-level Cck expression check:** Query precomputed Cck expression across all child clusters of CS20230722_SUPT_0174 to identify whether any cluster shows tier-2 Cck, which would refine the primary edge target.
-- **Negative marker validation:** Confirm Pvalb and Sst expression at or near zero in CS20230722_CLUS_0628 using precomputed atlas statistics. This would resolve the two NOT_ASSESSED property comparisons.
-- **Targeted literature search:** A cite-traverse for "VIP calretinin interneuron amygdala electrophysiology" and "IS interneuron BLA patch-clamp" could surface papers with morpho-electrophysiological classification alongside molecular markers, strengthening the classical node definition.
+<details>
+<summary>Candidates audited (full top-K)</summary>
 
----
+| WMBv1 cluster | Supertype | Cells (10x) | Confidence | Key evidence | Verdict |
+|---|---|---:|---|---|---|
+| `0630 Vip Gaba_2 [CS20230722_CLUS_0630]` | `0174 Vip Gaba_2` | 761 | 🔴 LOW | Vip/Calb2 cohort-high; top score | Primary |
+| `0174 Vip Gaba_2 [CS20230722_SUPT_0174]` | — | 5710 | 🔴 LOW | Vip/Calb2 shared across children | Supports broader mapping |
+| `0656 Vip Gaba_9 [CS20230722_CLUS_0656]` | `0181 Vip Gaba_9` | 192 | 🔴 LOW | Vip/Calb2/Cck all cohort-high | Secondary |
+| `0628 Vip Gaba_2 [CS20230722_CLUS_0628]` | `0174 Vip Gaba_2` | 1401 | ⚪ UNCERTAIN | Pvalb+Sst detectable; distant region | Eliminated (Pvalb present) |
+| `0634 Vip Gaba_3 [CS20230722_CLUS_0634]` | `0175 Vip Gaba_3` | 1780 | ⚪ UNCERTAIN | Lower Calb2; Sst present | Eliminated (weaker calretinin) |
+| `0636 Vip Gaba_4 [CS20230722_CLUS_0636]` | `0176 Vip Gaba_4` | 750 | ⚪ UNCERTAIN | Leads no defining marker | Eliminated (distant region) |
+| `0175 Vip Gaba_3 [CS20230722_SUPT_0175]` | — | 7526 | ⚪ UNCERTAIN | Cortex/OLF/HPF spread | Eliminated (distant region) |
+| `0179 Vip Gaba_7 [CS20230722_SUPT_0179]` | — | 1083 | ⚪ UNCERTAIN | Hippocampal CA3/CA1 | Eliminated (hippocampal, not amygdala) |
+| `0181 Vip Gaba_9 [CS20230722_SUPT_0181]` | — | 1441 | ⚪ UNCERTAIN | Supertype Vip diluted (3.03) | Eliminated (Vip diluted at supertype) |
+| `0292 IA Mgp Gaba_3 [CS20230722_SUPT_0292]` | — | 443 | 🔴 REFUTED | Vip absent (0.26); high Sst | Eliminated (wrong type — intercalated Mgp) |
 
-### Pool candidates assessment (CASE B)
+</details>
 
-The pool-candidates pre-pass flags a CLASS-level AT overlap between `bla_cck_basket_cell` and `bla_vip_calretinin_interneuron`: both map to CS20230722_CLAS_06 (06 CTX-CGE GABA) with identical AT metrics (F1=0.23, Coverage=1.0, Purity=0.13). This overlap is at a very coarse taxonomic resolution (CLASS level, CGE-GABA class), and only anatomy and NT panels were assessed — markers, morphology, ephys, and developmental origin were not compared. The two types are biologically distinct: VIP/calretinin IS interneurons are small bipolar/bitufted cells targeting other interneurons, while CCK basket cells are large multipolar neurons targeting principal cell perisomatic compartments. No transcriptomic indistinguishability call is warranted (**CASE B** — AT-only, CLASS level only; `lit_to_lit_edges` not emitted).
-
----
-
-### Methods
+## Methods
 
 <details>
 <summary>Data sources, analyses, and reproducibility receipts</summary>
 
-**Classical type definition.**
-The BLA VIP/calretinin interneuron-selective interneuron is defined on a CLASSICAL evidentiary basis: small bipolar and bitufted non-pyramidal neurons in the basolateral amygdala [UBERON:0002887] characterised by immunohistochemical co-expression of calretinin (Calb2), VIP, and CCK [1], [2], [3], [4]. These cells are GABAergic [1], [2] and are negative for parvalbumin (Pvalb) and somatostatin (Sst). They constitute the largest GABAergic subclass in the BLA (29–38% of all GABAergic cells [2]).
+**Classical type definition.** The basolateral amygdala VIP/calretinin interneuron-selective interneuron is defined as a GABAergic (`definition_basis`: CLASSICAL_MULTIMODAL) population co-expressing Vip, calretinin (Calb2) and Cck, with somata in the basal amygdaloid nucleus [UBERON:0002887] [1][2], and negative for Pvalb and Sst. Marker and neuropeptide assertions draw on immunohistochemical co-localization studies [1][2] with additional transcriptomic context [3][4].
 
-**Atlas mapping query.**
-Candidate atlas clusters were retrieved from the CCN20230722 taxonomy at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match, NT type, defining markers, sex bias when applicable). Full scoring rules: `workflows/map-cell-type.md`.
+**Atlas mapping query.** Candidate atlas clusters were retrieved from the WMBv1 (CCN20230722) taxonomy at ranks 0 (cluster) and 1 (supertype) using metadata-based scoring (region match, NT type, defining markers, sex bias when applicable). Full scoring rules: `workflows/map-cell-type.md`.
 
-**Property alignment.**
-Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
+**Property alignment.** Each defining property of the classical type was compared to the corresponding atlas-side value via the `property_comparisons` schema, with alignments graded CONSISTENT / APPROXIMATE / DISCORDANT / NOT_ASSESSED. Atlas-side numerical values came from precomputed expression on the cluster (cluster.yaml in the taxonomy reference store) and from MERFISH spatial registration for soma location.
 
-**Annotation transfer.**
-
-| Field | Value |
-|---|---|
-| Source dataset | ArrayExpress:E-MTAB-12096 (GABA-51-Vip-Crh) |
-| Source species | NCBITaxon:10090 (Mus musculus) |
-| Target atlas | WMBv1 (CCN20230722; SHA-256: b21ca985) |
-| Method | MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization, 100 bootstrap iterations). Input h5ad built from Hochgerner 2023 figshare UMI count table: genes x cells TSV converted to cells x genes h5ad, filtered to naive neuronal cells. Gene names are gene symbols as in source file. F1 scoring against celltype source labels. |
-| Tool version | cell_type_mapper v1.7.1 |
-| Bootstrap threshold | 0.7 |
-| n cells | 55,514 (filtered to 7,777) |
-| Run record | [`kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/manifest.yaml`](../../kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/manifest.yaml) |
-| Code reference | [https://github.com/AllenInstitute/cell_type_mapper](https://github.com/AllenInstitute/cell_type_mapper) |
-| F1 matrix | [`kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/f1_matrix.csv`](../../kb/annotation_transfer_runs/at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1/f1_matrix.csv) |
-| Caveats | Source labels are transcriptomically-defined types, not classical morpho-electrophysiological types. Matching to KB classical nodes requires a mapping step (Hochgerner type -> classical node) based on shared molecular markers. Fear-conditioned cells excluded to avoid transcriptional-state confounds. Non-neuronal cells excluded. Gene symbols used (not Ensembl IDs); matched against WMBv1 marker genes. |
+**Annotation transfer.** No annotation-transfer runs are attached to this node. The node declares no `at_source_sets` source-annotation→type correspondence, so no MapMyCells transfer was scored; the mapping rests on atlas marker expression and region proximity alone.
 
 **Anti-hallucination.**
-All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
+> All citations, atlas accessions, ontology CURIEs, and verbatim literature quotes in this report are validated against the evidencell knowledge base at write time. Authored-prose evidence narratives are validated against their source `evidence_items[*].explanation` fields. The pre-write hook rejects any unresolvable identifier or unattributed blockquote. Specific mapping limitations and caveats are documented per-candidate in the Discussion section.
 
-**Evidence base table**
+<details>
+<summary>Evidence base table</summary>
 
 | Edge ID | Evidence types | Supports | Source |
-|---|---|---|---|
-| edge_bla_vip_calretinin_interneuron_to_cs20230722_clus_0628 | LITERATURE; ATLAS_METADATA; ANNOTATION_TRANSFER | SUPPORT; SUPPORT; SUPPORT | [1]; —; — |
-
-*Generated by evidencell `9d82411` at 2026-06-10T12:49:05+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml](../../kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml).*
+| --- | --- | --- | --- |
+| edge…CLUS_0630 | ATLAS_METADATA | PARTIAL | — |
+| edge…SUPT_0174 | ATLAS_METADATA | PARTIAL | — |
+| edge…CLUS_0656 | ATLAS_METADATA | PARTIAL | — |
+| edge…CLUS_0628 | ATLAS_METADATA | PARTIAL | — |
+| edge…CLUS_0634 | ATLAS_METADATA | PARTIAL | — |
+| edge…CLUS_0636 | ATLAS_METADATA | PARTIAL | — |
+| edge…SUPT_0175 | ATLAS_METADATA | PARTIAL | — |
+| edge…SUPT_0179 | ATLAS_METADATA | PARTIAL | — |
+| edge…SUPT_0181 | ATLAS_METADATA | PARTIAL | — |
+| edge…SUPT_0292 | ATLAS_METADATA | PARTIAL | — |
 
 </details>
 
----
+*Generated by evidencell `db6b114` at 2026-07-09T18:13:44+00:00 from [kb/graphs/medial_temporal_lobe_amygdala/bla_vip_calretinin_interneuron.yaml](kb/graphs/medial_temporal_lobe_amygdala/bla_vip_calretinin_interneuron.yaml).*
+
+</details>
 
 ## Discussion
 
-### Best candidate + caveats
+**Primary mapping:** Basolateral amygdala VIP/calretinin interneuron-selective interneuron → 0630 Vip Gaba_2 [CS20230722_CLUS_0630] at LOW confidence. Key support: cohort-high Vip and calretinin (Calb2) atlas expression. Key caveats: no annotation-transfer anchor (AMBIGUOUS_MAPPING) and a population distributed across several Vip Gaba clusters with weak amygdalar soma proximity (DISTRIBUTED_ACROSS_CLUSTERS). The broader correspondence is recorded on the parent supertype 0174 Vip Gaba_2 [CS20230722_SUPT_0174]; a fuller VIP+calretinin+CCK profile is matched by 0656 Vip Gaba_9 [CS20230722_CLUS_0656].
 
-**Primary mapping:** Basolateral amygdala VIP/calretinin interneuron-selective interneuron → 0628 Vip Gaba_2 [CS20230722_CLUS_0628] at LOW confidence. Key support: atlas precomputed expression confirms Calb2 (98.3rd pct, tier-2) and Vip (96.9th pct, tier-2) co-expression matching the classical defining-marker profile; annotation transfer (Hochgerner 2023 GABA-51-Vip-Crh via MapMyCells, `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`) reaches F1=0.65 at SUBCLASS and F1=0.54 at CLUSTER. Key caveats: five Vip Gaba clusters score equally at Stage A discovery (DISTRIBUTED_ACROSS_CLUSTERS), indicating a potential 1:N or cross-cutting mapping; region_fraction for CS20230722_CLUS_0628 is only 0.049 (BLA-minority cluster); and Cck expression is APPROXIMATE (tier 1) rather than CONSISTENT.
-
-The Cell Ontology has no specific term for this population; GABAergic interneuron [[CL:0011005](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0011005)] is the closest assigned ancestor. This auto-proposed broad mapping requires expert review — the BLA VIP/calretinin IS interneuron may be eligible for a more specific CL term.
+The Cell Ontology has no specific term for this population; GABAergic interneuron [[CL:0011005](https://www.ebi.ac.uk/ols4/ontologies/cl/classes?obo_id=CL:0011005)] is the closest ancestor. Auto-proposed by asta-report-ingest; requires expert review.
 
 ### Proposed experiments and follow-ups
 
-**1. Annotation transfer on IS interneuron patch-seq transcriptomes**
+No annotation-transfer evidence exists on any edge because this node declares no source-annotation→type correspondence.
 
-- **What:** Run MapMyCells on patch-seq transcriptomes from morphologically reconstructed and IHC-confirmed BLA IS interneurons (Calb2+/Vip+, bipolar/bitufted morphology).
-- **Target:** F1 ≥ 0.50 at CLUSTER level; resolve scatter across five Vip Gaba clusters.
-- **Expected output:** `AnnotationTransferEvidence` grounded in the classical morphological definition.
-- **Resolves:** Whether the mapping is 1:1 to CS20230722_CLUS_0628 or 1:N across multiple Vip Gaba clusters; addresses molecular heterogeneity open question.
-
-*(Partially addressed: the Hochgerner 2023 AT run used transcriptomically-defined source labels without morphological confirmation. A patch-seq run would provide the direct morphological bridge.)*
-
-**2. Cluster-level Cck expression investigation**
-
-- **What:** Query precomputed Cck expression across all child clusters of CS20230722_SUPT_0174 and sibling Vip Gaba supertypes using the taxonomy reference DB.
-- **Target:** Identify whether any cluster shows tier-2 Cck expression.
-- **Expected output:** Revised `neuropeptide_Cck` property comparison; possible edge target revision if a different cluster better matches the classical Cck+/Vip+/Calb2+ profile.
-- **Resolves:** Cck discrepancy between classical literature and atlas metadata.
-
-**3. Negative marker validation**
-
-- **What:** Query precomputed Pvalb and Sst expression in CS20230722_CLUS_0628 and sibling Vip Gaba clusters.
-- **Target:** Near-zero expression confirming negative marker criteria.
-- **Expected output:** Resolved NOT_ASSESSED alignments for `negative_marker_Pvalb` and `negative_marker_Sst`.
-- **Resolves:** Validates the exclusion criteria for CS20230722_CLUS_0628.
-
-**4. Targeted literature search**
-
-- **What:** Cite-traverse for "VIP calretinin interneuron amygdala electrophysiology" and "IS interneuron BLA patch-clamp".
-- **Expected output:** `LiteratureEvidence` items with morphology, electrophysiology, and developmental-origin snippets for the classical node.
-- **Resolves:** Fills morphology/ephys gaps on the classical node; clarifies whether CCK co-expression is universal or a subtype feature.
+- **Establish annotation-transfer support.** Identify an external amygdala-targeted VIP/calretinin dataset, declare an `at_source_sets` correspondence for this classical type, and run annotation transfer against CS20230722 (target F1 ≥ 0.5 at cluster level; F1 ≥ 0.7 at supertype). Expected output: `AnnotationTransferEvidence` attached to the 0630 Vip Gaba_2 and 0174 Vip Gaba_2 edges. Resolves open questions 1 and 2. *(note: no external dataset accession is currently declared on the node — the first step is an evidence-extraction gap, i.e. identifying a suitable source dataset, not re-running an existing punt.)*
+- **Targeted literature trawl for Sst co-expression** within the amygdalar VIP/calretinin population, to resolve whether the atlas-side detectable Sst (~0.8–1.2 across candidates) is genuine heterogeneity or contamination. Expected output: LiteratureEvidence. Resolves the recurring Sst discordance.
 
 ### Open questions
 
-1. Which of the five Vip Gaba rank-0 clusters best matches the BLA VIP/calretinin IS interneuron? Resolve by annotation transfer targeting F1 ≥ 0.50 at CLUSTER level.
-2. Which Vip Gaba cluster, if any, captures the IS morphological specialisation (bipolar/bitufted, interneuron-targeting synaptic targets)?
-3. Does the VIP/calretinin population map to one cluster or multiple (1:N / CrossCuttingMatch) given the acknowledged molecular heterogeneity?
-
----
+1. Does the amygdalar VIP/calretinin interneuron-selective interneuron correspond to a single Vip Gaba cluster or distribute across several (e.g. 0630 Vip Gaba_2 vs 0656 Vip Gaba_9)? *(applies across the cluster edges)*
+2. Is the classical class better represented at supertype (Vip Gaba_2) or cluster resolution, given no atlas node concentrates in the amygdala?
+3. Do the Vip/Calb2-high (0630) and Vip/Calb2/Cck-high (0656) clusters represent distinct subpopulations of the molecularly mixed classical class?
 
 ## References
 
 | # | Citation | PMID | Used for |
 |---|---|---|---|
-| [1] | McDonald et al. 2012 | [22837739](https://pubmed.ncbi.nlm.nih.gov/22837739/) | Soma location, NT, defining markers, morphology, neuropeptides |
-| [2] | Vereczki et al. 2021 | [33837051](https://pubmed.ncbi.nlm.nih.gov/33837051/) | Soma location, NT, defining markers, cell-count estimates |
-| [3] | Hochgerner et al. 2023 | [37884748](https://pubmed.ncbi.nlm.nih.gov/37884748/) | Vip marker (scRNA-seq); AT source dataset |
-| [4] | Totty et al. 2024 | [39463931](https://pubmed.ncbi.nlm.nih.gov/39463931/) | Calb2 marker (primate cross-species) |
+| [1] | McDonald et al. 2012 | [22837739](https://pubmed.ncbi.nlm.nih.gov/22837739) | soma location, markers, morphology, NT, neuropeptides |
+| [2] | Vereczki et al. 2021 | [33837051](https://pubmed.ncbi.nlm.nih.gov/33837051) | soma location, markers, population fraction |
+| [3] | Hochgerner et al. 2023 | [37884748](https://pubmed.ncbi.nlm.nih.gov/37884748) | Vip marker |
+| [4] | Totty et al. 2024 | [39463931](https://pubmed.ncbi.nlm.nih.gov/39463931) | Calb2 marker |
 
----
-
-<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_cs20230722_clus_0628 -->
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_CLUS_0630 -->
 ```yaml
 verdict:
   confidence: LOW
-  confidence_score: 0.25
+  confidence_score: 0.4
+  relationship: skos:closeMatch
+  mapping_cardinality: "1:1"
+  mapping_justification: semapv:ManualMappingCuration
   rationale: >
-    Calb2 (marker_Calb2 CONSISTENT; precomputed mean 8.12, 98.3rd pct tier-2)
-    and Vip (neuropeptide_Vip CONSISTENT; 96.9th pct tier-2) anchor the
-    broadMatch to CS20230722_CLUS_0628; 2 of 5 markers CONSISTENT.
-    AT (GABA-51-Vip-Crh, `at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1`)
-    reaches F1=0.65 at SUBCLASS and F1=0.54 at CLUSTER — below the 0.75
-    threshold for HIGH confidence. Coverage at CLUSTER is 0.37; scatter
-    across five co-equal Vip Gaba clusters (DISTRIBUTED_ACROSS_CLUSTERS).
-    region_fraction=0.049 is very low (BLA-minority cluster). Cck is
-    APPROXIMATE (tier 1 only).
+    [tier:STRONGEST] Vip (10.99, cohort-pct 0.960) and calretinin/Calb2 (8.64,
+    cohort-pct 0.980) are strongly and specifically expressed on
+    CS20230722_CLUS_0630, matching the two defining markers of the classical
+    type; the cluster narrowly led its 5-member GABAergic cohort (Stage A score
+    8 vs next-best 7). Support is marker-based only: no annotation-transfer
+    evidence anchors the call, soma proximity to the basal amygdaloid nucleus is
+    weak (region_fraction_100um: 0.124, boundary scatter into hippocampal
+    formation and cortical subplate), Cck is only marginally detectable (1.03),
+    and Sst is present above threshold (0.83) at low cohort-pct (0.159).
   reconciliation_note: >
-    Pool-candidates flagged CLASS-level AT overlap with bla_cck_basket_cell
-    (both map to CS20230722_CLAS_06 with identical F1=0.23, Coverage=1.0).
-    This is a coarse CLASS-level coincidence only; anat and NT panels assessed,
-    markers/morphology/ephys not assessed — CASE B, no lit_to_lit_edges emitted.
-    The two types are biologically distinct (IS interneurons vs. perisomatic
-    basket cells).
+    Paired with the broader supertype mapping on 0174 Vip Gaba_2; an alternative
+    cluster with fuller Cck co-expression is 0656 Vip Gaba_9.
+  caveats:
+    - caveat_type: AMBIGUOUS_MAPPING
+      description: >
+        Sst is detectable (0.83) on CS20230722_CLUS_0630 despite being a
+        classical negative marker, though at low cohort specificity (cohort-pct
+        0.159); no annotation-transfer evidence supports the mapping.
+    - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+      description: >
+        The classical VIP/calretinin population maps across several Vip Gaba
+        clusters rather than concentrating in CS20230722_CLUS_0630; soma
+        proximity to the basal amygdaloid nucleus is weak (region_fraction_100um:
+        0.124).
+  proposed_experiments:
+    - >
+      Establish a source-annotation to classical-type correspondence (an
+      at_source_sets entry) for the amygdalar VIP/calretinin interneuron and run
+      annotation transfer against CS20230722, attaching AnnotationTransferEvidence
+      to this edge — currently no annotation-transfer support exists.
+    - >
+      Trawl the literature for Sst co-expression within the amygdalar
+      VIP/calretinin population to determine whether the atlas-side detectable
+      Sst is genuine heterogeneity or contamination.
   unresolved_questions:
     - >
-      Which of the five Vip Gaba rank-0 clusters best matches the BLA
-      VIP/calretinin IS interneuron — resolve by patch-seq annotation transfer
-      targeting F1 >= 0.50 at CLUSTER level.
+      Does the amygdalar VIP/calretinin interneuron-selective interneuron
+      correspond to a single Vip Gaba cluster or distribute across several (e.g.
+      0630 vs 0656)?
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_SUPT_0174 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.35
+  relationship: skos:broadMatch
+  mapping_cardinality: "1:n"
+  mapping_justification: semapv:ManualMappingCuration
+  rationale: >
+    [tier:NEXT] The amygdalar VIP/calretinin interneuron corresponds broadly to
+    the Vip Gaba_2 supertype CS20230722_SUPT_0174, whose children carry the
+    defining Vip (10.55, cohort-pct 0.964) and Calb2 (5.63, cohort-pct 0.904)
+    signal with child-cluster coverage 1.000. The supertype spans isocortex,
+    hippocampal formation and olfactory areas rather than concentrating in the
+    amygdala (region_fraction_100um: 0.052), and detectable Pvalb (0.58) and Sst
+    (0.87) at supertype level reflect molecular heterogeneity; one classical type
+    maps to several distributed Vip Gaba clusters, so the correspondence is
+    broader-than and not 1:1.
+  reconciliation_note: >
+    Paired with the child-cluster mapping to 0630 Vip Gaba_2, the best-matching
+    leaf within this supertype.
+  caveats:
+    - caveat_type: AMBIGUOUS_MAPPING
+      description: >
+        Location is discordant — CS20230722_SUPT_0174 spans isocortex,
+        hippocampal formation and olfactory areas (region_fraction_100um: 0.052)
+        rather than the basal amygdaloid nucleus; detectable Pvalb (0.58) and Sst
+        (0.87) reflect molecular heterogeneity.
+    - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+      description: >
+        No annotation-transfer evidence anchors the supertype; the mapping rests
+        on cohort-relative marker expression only.
+  proposed_experiments:
     - >
-      Determine whether the VIP/calretinin population maps to one cluster or
-      multiple (1:N / CrossCuttingMatch) given acknowledged molecular
-      heterogeneity.
+      Attach annotation-transfer evidence by declaring a source correspondence
+      for the amygdalar VIP/calretinin interneuron and scoring it against the Vip
+      Gaba supertypes of CS20230722; a supertype-level transfer would test
+      whether the classical type maps broadly across Vip Gaba_2 or resolves to a
+      single child.
+  unresolved_questions:
     - >
-      Which Vip Gaba cluster captures the IS morphological specialisation
-      (bipolar/bitufted, interneuron-targeting)?
+      Is the classical VIP/calretinin class better represented at supertype (Vip
+      Gaba_2) or cluster resolution, given no atlas node concentrates in the
+      amygdala?
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_CLUS_0656 -->
+```yaml
+verdict:
+  confidence: LOW
+  confidence_score: 0.3
+  relationship: skos:closeMatch
+  mapping_cardinality: "1:1"
+  mapping_justification: semapv:ManualMappingCuration
+  rationale: >
+    [tier:WEAKEST] CS20230722_CLUS_0656 is the only candidate on which all three
+    defining markers are cohort-high simultaneously — Vip (8.69, cohort-pct
+    0.927), Calb2 (8.29, cohort-pct 0.967) and Cck (6.29, cohort-pct 0.815) —
+    matching the full VIP+calretinin+CCK co-expression profile of the classical
+    type more completely than 0630 Vip Gaba_2. It sits in a separate Vip Gaba
+    supertype and shares the weak region signal (region_fraction_100um: 0.119),
+    with Sst detectable (0.74); support is marker-based only.
+  reconciliation_note: >
+    Alternative to the 0630 Vip Gaba_2 mapping, with fuller Cck co-expression but
+    in a separate Vip Gaba supertype.
+  caveats:
+    - caveat_type: AMBIGUOUS_MAPPING
+      description: >
+        Sst detectable (0.74) on CS20230722_CLUS_0656 despite being a classical
+        negative marker; soma proximity to the basal amygdaloid nucleus is weak
+        (region_fraction_100um: 0.119) and no annotation-transfer evidence
+        supports the mapping.
+  proposed_experiments:
+    - >
+      Run annotation transfer from a BLA-targeted VIP/calretinin dataset against
+      CS20230722 to test whether the full Vip+Calb2+Cck profile of this cluster
+      corresponds to the classical type better than the Vip/Calb2-dominant
+      0630 Vip Gaba_2.
+  unresolved_questions:
+    - >
+      Do the Vip/Calb2-high (0630) and Vip/Calb2/Cck-high (0656) clusters
+      represent distinct subpopulations of the molecularly mixed classical class?
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_CLUS_0628 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.2
+  rationale: >
+    [tier:CUT] CS20230722_CLUS_0628 matches Vip (11.11) and Calb2 (8.12) but
+    carries detectable Pvalb (0.27) and Sst (0.87) and its soma distribute to
+    hippocampal, olfactory and isocortical territory (region_fraction_100um:
+    0.096, location discordant) — weaker than the sibling 0630 Vip Gaba_2.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_CLUS_0634 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.25
+  rationale: >
+    [tier:CUT] CS20230722_CLUS_0634 co-expresses Vip, Calb2 and Cck but with
+    lower calretinin specificity (Calb2 3.41) and detectable Sst (1.15); region
+    proximity to the basal amygdaloid nucleus is weak (region_fraction_100um:
+    0.109).
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_CLUS_0636 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.25
+  rationale: >
+    [tier:CUT] CS20230722_CLUS_0636 shows the Vip/Calb2/Cck profile but does not
+    lead on any defining marker and its soma sit in cortical subplate and
+    olfactory areas (region_fraction_100um: 0.142); covered by the retained Vip
+    Gaba mappings.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_SUPT_0175 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.2
+  rationale: >
+    [tier:CUT] CS20230722_SUPT_0175 spans isocortex, olfactory and hippocampal
+    territory (region_fraction_100um: 0.065) with lower Calb2 specificity (4.19);
+    its child 0634 Vip Gaba_3 is the relevant leaf but neither concentrates in
+    the amygdala.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_SUPT_0179 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.15
+  rationale: >
+    [tier:CUT] CS20230722_SUPT_0179 localizes to hippocampal formation and
+    fields CA3/CA1 (region_fraction_100um: 0.016), far from the basal amygdaloid
+    nucleus, despite carrying Vip (6.82); eliminated on location.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_SUPT_0181 -->
+```yaml
+verdict:
+  confidence: UNCERTAIN
+  confidence_score: 0.2
+  rationale: >
+    [tier:CUT] At supertype level CS20230722_SUPT_0181 shows diluted Vip (3.03)
+    driven by a minority of children, and soma sit outside the amygdala
+    (region_fraction_100um: 0.095); the marker-rich child 0656 Vip Gaba_9 carries
+    the signal instead.
+```
+<!-- verdict-block-end -->
+
+<!-- verdict-block-start: edge_bla_vip_calretinin_interneuron_to_CS20230722_SUPT_0292 -->
+```yaml
+verdict:
+  confidence: REFUTED
+  confidence_score: 0.1
+  rationale: >
+    [tier:CUT] Vip is essentially absent on CS20230722_SUPT_0292 (0.26), and this
+    intercalated-type Mgp Gaba_3 supertype shows high Sst (3.14) — inconsistent
+    with a VIP/calretinin interneuron-selective interneuron.
 ```
 <!-- verdict-block-end -->

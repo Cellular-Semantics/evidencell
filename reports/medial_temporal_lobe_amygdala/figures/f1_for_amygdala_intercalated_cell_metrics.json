@@ -1,10 +1,13 @@
 {
   "run_id": "at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1",
   "taxonomy_id": "CCN20230722",
-  "f1_matrix_relpath": "/Users/andrea/Documents/GitHub/evidencell/research/medial_temporal_lobe_amygdala/annotation_transfer/hochgerner2023_amygdala/f1_matrix.csv",
+  "f1_matrix_relpath": "f1_matrix.csv",
   "pool_spec": null,
   "source_filter": [
-    "GABA-3-Foxp2_Col6a1"
+    "GABA-1-Foxp2_Fmod",
+    "GABA-2-Foxp2_Adra2a",
+    "GABA-3-Foxp2_Col6a1",
+    "GABA-4-Foxp2_Htr1f"
   ],
   "level_order": [
     "class",
@@ -13,6 +16,242 @@
     "cluster"
   ],
   "rows_by_source_level": {
+    "GABA-1-Foxp2_Fmod": {
+      "class": [
+        {
+          "target_name": "09 CNU-LGE GABA",
+          "node_id": "CS20230722_CLAS_09",
+          "n_cells": 29,
+          "f1": 0.128,
+          "purity": 0.0684,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "065 IA Mgp Gaba",
+          "node_id": "CS20230722_SUBC_065",
+          "n_cells": 28,
+          "f1": 0.9032,
+          "purity": 0.8485,
+          "coverage": 0.9655
+        },
+        {
+          "target_name": "064 STR-PAL Chst9 Gaba",
+          "node_id": "CS20230722_SUBC_064",
+          "n_cells": 1,
+          "f1": 0.0065,
+          "purity": 0.0036,
+          "coverage": 0.0345
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0292 IA Mgp Gaba_3",
+          "node_id": "CS20230722_SUPT_0292",
+          "n_cells": 22,
+          "f1": 0.8462,
+          "purity": 0.9565,
+          "coverage": 0.7586
+        },
+        {
+          "target_name": "0291 IA Mgp Gaba_2",
+          "node_id": "CS20230722_SUPT_0291",
+          "n_cells": 5,
+          "f1": 0.2941,
+          "purity": 1.0,
+          "coverage": 0.1724
+        },
+        {
+          "target_name": "0289 STR-PAL Chst9 Gaba_5",
+          "node_id": "CS20230722_SUPT_0289",
+          "n_cells": 1,
+          "f1": 0.0267,
+          "purity": 0.0217,
+          "coverage": 0.0345
+        },
+        {
+          "target_name": "0505 MEA-COA-BMA Ccdc42 Glut_1",
+          "node_id": "CS20230722_SUPT_0505",
+          "n_cells": 1,
+          "f1": 0.0119,
+          "purity": 0.0072,
+          "coverage": 0.0345
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "1022 IA Mgp Gaba_3",
+          "node_id": "CS20230722_CLUS_1022",
+          "n_cells": 7,
+          "f1": 0.4667,
+          "purity": 1.0,
+          "coverage": 0.3043
+        },
+        {
+          "target_name": "1021 IA Mgp Gaba_3",
+          "node_id": "CS20230722_CLUS_1021",
+          "n_cells": 5,
+          "f1": 0.3571,
+          "purity": 1.0,
+          "coverage": 0.2174
+        },
+        {
+          "target_name": "1023 IA Mgp Gaba_3",
+          "node_id": "CS20230722_CLUS_1023",
+          "n_cells": 5,
+          "f1": 0.3571,
+          "purity": 1.0,
+          "coverage": 0.2174
+        },
+        {
+          "target_name": "1020 IA Mgp Gaba_2",
+          "node_id": "CS20230722_CLUS_1020",
+          "n_cells": 3,
+          "f1": 0.2308,
+          "purity": 1.0,
+          "coverage": 0.1304
+        },
+        {
+          "target_name": "1019 IA Mgp Gaba_2",
+          "node_id": "CS20230722_CLUS_1019",
+          "n_cells": 2,
+          "f1": 0.16,
+          "purity": 1.0,
+          "coverage": 0.087
+        },
+        {
+          "target_name": "1014 STR-PAL Chst9 Gaba_5",
+          "node_id": "CS20230722_CLUS_1014",
+          "n_cells": 1,
+          "f1": 0.0667,
+          "purity": 0.1429,
+          "coverage": 0.0435
+        }
+      ]
+    },
+    "GABA-2-Foxp2_Adra2a": {
+      "class": [
+        {
+          "target_name": "09 CNU-LGE GABA",
+          "node_id": "CS20230722_CLAS_09",
+          "n_cells": 92,
+          "f1": 0.3566,
+          "purity": 0.217,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "064 STR-PAL Chst9 Gaba",
+          "node_id": "CS20230722_SUBC_064",
+          "n_cells": 94,
+          "f1": 0.5,
+          "purity": 0.3345,
+          "coverage": 0.9895
+        },
+        {
+          "target_name": "049 Lamp5 Gaba",
+          "node_id": "CS20230722_SUBC_049",
+          "n_cells": 1,
+          "f1": 0.0072,
+          "purity": 0.0055,
+          "coverage": 0.0105
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0286 STR-PAL Chst9 Gaba_2",
+          "node_id": "CS20230722_SUPT_0286",
+          "n_cells": 87,
+          "f1": 0.9667,
+          "purity": 0.9886,
+          "coverage": 0.9457
+        },
+        {
+          "target_name": "0289 STR-PAL Chst9 Gaba_5",
+          "node_id": "CS20230722_SUPT_0289",
+          "n_cells": 3,
+          "f1": 0.0435,
+          "purity": 0.0652,
+          "coverage": 0.0326
+        },
+        {
+          "target_name": "0292 IA Mgp Gaba_3",
+          "node_id": "CS20230722_SUPT_0292",
+          "n_cells": 1,
+          "f1": 0.0174,
+          "purity": 0.0435,
+          "coverage": 0.0109
+        },
+        {
+          "target_name": "0288 STR-PAL Chst9 Gaba_4",
+          "node_id": "CS20230722_SUPT_0288",
+          "n_cells": 1,
+          "f1": 0.0104,
+          "purity": 0.01,
+          "coverage": 0.0109
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "1005 STR-PAL Chst9 Gaba_2",
+          "node_id": "CS20230722_CLUS_1005",
+          "n_cells": 41,
+          "f1": 0.8119,
+          "purity": 1.0,
+          "coverage": 0.6833
+        },
+        {
+          "target_name": "1007 STR-PAL Chst9 Gaba_2",
+          "node_id": "CS20230722_CLUS_1007",
+          "n_cells": 9,
+          "f1": 0.2609,
+          "purity": 1.0,
+          "coverage": 0.15
+        },
+        {
+          "target_name": "1004 STR-PAL Chst9 Gaba_2",
+          "node_id": "CS20230722_CLUS_1004",
+          "n_cells": 3,
+          "f1": 0.0952,
+          "purity": 1.0,
+          "coverage": 0.05
+        },
+        {
+          "target_name": "1006 STR-PAL Chst9 Gaba_2",
+          "node_id": "CS20230722_CLUS_1006",
+          "n_cells": 3,
+          "f1": 0.0952,
+          "purity": 1.0,
+          "coverage": 0.05
+        },
+        {
+          "target_name": "1014 STR-PAL Chst9 Gaba_5",
+          "node_id": "CS20230722_CLUS_1014",
+          "n_cells": 2,
+          "f1": 0.0597,
+          "purity": 0.2857,
+          "coverage": 0.0333
+        },
+        {
+          "target_name": "1015 STR-PAL Chst9 Gaba_5",
+          "node_id": "CS20230722_CLUS_1015",
+          "n_cells": 1,
+          "f1": 0.027,
+          "purity": 0.0714,
+          "coverage": 0.0167
+        },
+        {
+          "target_name": "1011 STR-PAL Chst9 Gaba_4",
+          "node_id": "CS20230722_CLUS_1011",
+          "n_cells": 1,
+          "f1": 0.0155,
+          "purity": 0.0145,
+          "coverage": 0.0167
+        }
+      ]
+    },
     "GABA-3-Foxp2_Col6a1": {
       "class": [
         {
@@ -236,6 +475,64 @@
           "f1": 0.0146,
           "purity": 0.0256,
           "coverage": 0.0102
+        }
+      ]
+    },
+    "GABA-4-Foxp2_Htr1f": {
+      "class": [
+        {
+          "target_name": "09 CNU-LGE GABA",
+          "node_id": "CS20230722_CLAS_09",
+          "n_cells": 14,
+          "f1": 0.0639,
+          "purity": 0.033,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "064 STR-PAL Chst9 Gaba",
+          "node_id": "CS20230722_SUBC_064",
+          "n_cells": 16,
+          "f1": 0.1077,
+          "purity": 0.0569,
+          "coverage": 1.0
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0289 STR-PAL Chst9 Gaba_5",
+          "node_id": "CS20230722_SUPT_0289",
+          "n_cells": 14,
+          "f1": 0.459,
+          "purity": 0.3043,
+          "coverage": 0.9333
+        },
+        {
+          "target_name": "0288 STR-PAL Chst9 Gaba_4",
+          "node_id": "CS20230722_SUPT_0288",
+          "n_cells": 1,
+          "f1": 0.0174,
+          "purity": 0.01,
+          "coverage": 0.0667
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "1015 STR-PAL Chst9 Gaba_5",
+          "node_id": "CS20230722_CLUS_1015",
+          "n_cells": 8,
+          "f1": 0.6957,
+          "purity": 0.5714,
+          "coverage": 0.8889
+        },
+        {
+          "target_name": "1014 STR-PAL Chst9 Gaba_5",
+          "node_id": "CS20230722_CLUS_1014",
+          "n_cells": 1,
+          "f1": 0.125,
+          "purity": 0.1429,
+          "coverage": 0.1111
         }
       ]
     }
