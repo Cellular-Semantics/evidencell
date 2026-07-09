@@ -476,6 +476,23 @@ enums:
       REFUTED:
         description: Preponderance of evidence argues against this mapping
 
+  # ── Source-cluster → classical-type correspondence ──────────────
+  CorrespondenceType:
+    description: >
+      Nature of the correspondence declared by an AtSourceSet between an
+      external dataset's annotated cell set and a classical cell type.
+    permissible_values:
+      EXACT:
+        description: Source cluster is the classical type (clean identity).
+      PARTIAL:
+        description: Overlapping but imperfect correspondence.
+      SUPERSET:
+        description: Source cluster is broader than the classical type.
+      SUBSET:
+        description: >
+          Source cluster is one molecular subtype within the classical type
+          (e.g. one of several Foxp2 ITC clusters within intercalated cell).
+
   # ── Evidence support ────────────────────────────────────────────
   EvidenceSupport:
     permissible_values:
@@ -1501,6 +1518,22 @@ classes:
           functional property — though a gene may appear in both lists (e.g. Sst as
           a defining marker AND as a neuropeptide co-transmitter).
           Examples: Sst, Vip, Cck, Npy, Pnoc.
+      at_source_sets:
+        range: AtSourceSet
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Annotated cell set(s), in external dataset(s), that correspond to this
+          classical cell type — the result of an agentic judgement made by reading
+          the dataset's describing paper (NOT inferable from transcriptomic overlap
+          alone). Authored by lit-ingest / evidence-extraction once a dataset's
+          annotation labels are available. Each entry names a (dataset_accession,
+          source_label) pair plus the nature of the correspondence, and carries
+          quote-backed `sources` exactly like defining_markers. `emit-stage-b`
+          iterates these to attach ANNOTATION_TRANSFER evidence, resolving the AT
+          run operationally from (dataset_accession, target_taxonomy, source_label).
+          Distinct from prior_dataset_accession/prior_cluster_label, which assert
+          that the node *is* a prior transcriptomic cluster.
       nt_type:
         range: NeurotransmitterType
         inlined: true
@@ -2007,6 +2040,15 @@ classes:
       source_cluster_label:
         description: >
           Cluster label in the source dataset (e.g. "PLI3", "MLI1", "5178 CB PLI Gly-Gaba_1").
+      correspondence:
+        range: CorrespondenceType
+        description: >
+          Nature of the source-cluster → classical-type correspondence, copied
+          from the node's declaring `at_source_sets` entry (issue #126). Records
+          whether the annotated source cell set is an EXACT match, a SUBSET
+          (one molecular subtype within the classical type), a SUPERSET, or a
+          PARTIAL overlap — so a lumped/partial correspondence is not read as a
+          clean identity.
       best_f1_score:
         range: float
         description: >
@@ -2323,10 +2365,14 @@ classes:
         required: true
         description: >
           Curator name or ORCID URI (e.g. "https://orcid.org/0000-0002-...").
-      date:
+      committed_date:
         required: true
         range: date
-        description: Date the manual edit was committed.
+        description: >
+          Date the manual edit was committed. (Renamed from `date` to
+          avoid a Python name/type collision in the generated Pydantic
+          models — a slot named `date` with `range: date` renders as the
+          non-importable `date: date`.)
       notes:
         description: >
           Optional free-text rationale for the manual override. Useful
@@ -2916,6 +2962,53 @@ classes:
         description: >
           Processing status, e.g. "pending_retrieval", "processed",
           "awaiting_sra_reprocessing". Free text.
+
+  AtSourceSet:
+    description: >
+      A single (dataset, annotated-cell-set) correspondence declared on a
+      CellTypeNode: an annotated cell set in an external dataset that corresponds
+      to this classical cell type. Encodes the agentic judgement (recovered here;
+      lost when candidate selection became programmatic in #96) of which source
+      annotation maps to which literature type — a judgement that requires reading
+      the dataset's describing paper, not transcriptomic overlap. `emit-stage-b`
+      resolves the AT run operationally from (dataset_accession, target_taxonomy,
+      source_label) and emits one ANNOTATION_TRANSFER evidence item per entry.
+      A type may declare several entries (lumping across source clusters, or
+      spanning datasets); each becomes an independent AT evidence item.
+    attributes:
+      dataset_accession:
+        required: true
+        description: >
+          Accession of the source dataset, e.g. "ArrayExpress:E-MTAB-12096",
+          "GEO:GSE142546". Together with source_label this is stable biology
+          from the paper; the AT run supplying the numbers is resolved at map
+          time and is NOT recorded on the node.
+      source_label:
+        required: true
+        description: >
+          Annotated cluster label in the source dataset, as it appears in the
+          paper and in the AT run's result rows, e.g. "GABA-52-Calb2-Rgs12".
+          This is the real key used to disambiguate among AT runs of the same
+          dataset against the same taxonomy.
+      correspondence:
+        range: CorrespondenceType
+        description: >
+          Nature of the source-cluster → classical-type match, so a lumped or
+          partial correspondence is not read as a clean identity.
+      sources:
+        range: PropertySource
+        multivalued: true
+        inlined_as_list: true
+        description: >
+          Quote-backed provenance for the correspondence — the verbatim paper
+          quote(s) justifying "this annotated cell set corresponds to this
+          classical type". Same shape and validation as defining_markers /
+          anatomical_location sources (hook-validated against references.json).
+          The load-bearing justification lives here, not in notes.
+      notes:
+        description: >
+          Free-text colour (heterogeneity observations, cross-references). Not
+          the load-bearing justification — that belongs in sources.
 
   PrecomputedExpression:
     description: >

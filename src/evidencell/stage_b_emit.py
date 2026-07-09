@@ -27,13 +27,14 @@ from pathlib import Path
 import yaml
 from ruamel.yaml import YAML
 
-from evidencell.at_metrics import compute_edge_metrics
+from evidencell.at_metrics import (
+    compute_edge_metrics,
+    load_run_manifest,
+    resolve_run_for_source,
+)
 from evidencell.marker_aliases import resolve_to_canonical_gene_symbol
 from evidencell.paths import repo_root
-from evidencell.taxonomy_db import (
-    MIN_DETECTABLE,
-    _load_at_artifact,
-)
+from evidencell.taxonomy_db import MIN_DETECTABLE
 
 
 def _yaml_rt() -> YAML:
@@ -123,9 +124,13 @@ def emit_stage_b(
     for c in candidates:
         c["_classical_cache"] = classical
 
-    at_artifact = _load_at_artifact(classical_node_id, taxonomy_id)
-    at_run_ref = at_artifact.get("source_run_id") if at_artifact else None
-    at_source_label = at_artifact.get("source_cluster_label") if at_artifact else None
+    # AT evidence is driven by the classical node's declared source-set
+    # correspondences (issue #126): (dataset_accession, source_label) pairs
+    # authored by lit-ingest after reading the dataset's describing paper.
+    # The AT run supplying the numbers is resolved operationally at map time
+    # (never stored on the node). Full cutover — nodes without at_source_sets
+    # emit no ANNOTATION_TRANSFER evidence.
+    at_source_sets = classical.get("at_source_sets") or []
 
     edges: list[dict] = []
     for cand in candidates:
@@ -135,8 +140,7 @@ def emit_stage_b(
             candidate=cand,
             atlas=atlas,
             taxonomy_id=taxonomy_id,
-            at_run_ref=at_run_ref,
-            at_source_label=at_source_label,
+            at_source_sets=at_source_sets,
         ))
 
     if write:
@@ -154,8 +158,7 @@ def _build_edge(
     candidate: dict,
     atlas: dict | None,
     taxonomy_id: str,
-    at_run_ref: str | None,
-    at_source_label: str | None,
+    at_source_sets: list[dict],
 ) -> dict:
     """Construct one MappingEdge dict from a Stage A candidate."""
     taxonomy_type = candidate["node_id"]
@@ -174,9 +177,8 @@ def _build_edge(
         atlas=atlas,
         candidate=candidate,
         ds=ds,
-        at_signal=at_signal,
-        at_run_ref=at_run_ref,
-        at_source_label=at_source_label,
+        at_source_sets=at_source_sets,
+        taxonomy_id=taxonomy_id,
         taxonomy_type=taxonomy_type,
     )
 
@@ -534,18 +536,21 @@ def _evidence_list(
     atlas: dict | None,
     candidate: dict,
     ds: dict,
-    at_signal: dict,
-    at_run_ref: str | None,
-    at_source_label: str | None,
+    at_source_sets: list[dict],
+    taxonomy_id: str,
     taxonomy_type: str,
 ) -> list[dict]:
     out: list[dict] = [
         _atlas_metadata_evidence(atlas=atlas, candidate=candidate, ds=ds),
     ]
-    if at_signal and at_run_ref and at_source_label:
+    # One ANNOTATION_TRANSFER item per declared source set — emitted whether
+    # or not the source transfers to this candidate. A source that does NOT
+    # land here yields a NO_EVIDENCE item (negative signal, issue #126 pt 4),
+    # never a silent drop.
+    for src in at_source_sets:
         at_item = _at_evidence(
-            run_ref=at_run_ref,
-            source_label=at_source_label,
+            source_set=src,
+            taxonomy_id=taxonomy_id,
             edge_target=taxonomy_type,
         )
         if at_item is not None:
@@ -588,13 +593,77 @@ def _atlas_metadata_evidence(
 
 
 def _at_evidence(
-    *, run_ref: str, source_label: str, edge_target: str,
+    *, source_set: dict, taxonomy_id: str, edge_target: str,
 ) -> dict | None:
-    """ANNOTATION_TRANSFER evidence item via at_metrics.compute_edge_metrics.
+    """ANNOTATION_TRANSFER evidence item for one declared ``at_source_sets``
+    entry against ``edge_target``.
 
-    Returns None if the AT run + source_label + edge_target combination
-    has no metrics (e.g. the source's lineage doesn't reach this target).
+    The AT run is resolved operationally from
+    ``(dataset_accession, taxonomy_id, source_label)`` — never taken from
+    the node. Always returns an item (never a silent drop):
+
+      * run cannot be resolved  → NO_EVIDENCE item (loud diagnostic).
+      * run resolved but the source's lineage does not reach this target
+        (no metrics rows) → NO_EVIDENCE item ("does not transfer here").
+      * otherwise → item with supports from the level-aware default.
+
+    Returns None only when the source set is malformed (no source_label).
     """
+    source_label = source_set.get("source_label")
+    dataset_accession = source_set.get("dataset_accession")
+    if not source_label or not dataset_accession:
+        print(
+            f"  WARNING: at_source_sets entry missing dataset_accession/"
+            f"source_label: {source_set!r}. Skipping.",
+            file=sys.stderr,
+        )
+        return None
+
+    correspondence = source_set.get("correspondence")
+
+    def _item(*, supports: str, run_ref: str | None, metrics: dict | None,
+              explanation: str) -> dict:
+        target_atlas = "WMBv1"
+        if run_ref:
+            target_atlas = load_run_manifest(run_ref).get("target_atlas") or "WMBv1"
+        item: dict = {
+            "evidence_type": "ANNOTATION_TRANSFER",
+            "supports": supports,
+            "source_dataset_accession": dataset_accession,
+            "source_cluster_label": source_label,
+            "target_atlas": target_atlas,
+            "method": "MapMyCells (via at_metrics.compute_edge_metrics)",
+            "explanation": explanation,
+        }
+        if correspondence:
+            item["correspondence"] = correspondence
+        if run_ref:
+            item["run_ref"] = run_ref
+        if metrics and metrics.get("metrics_by_level"):
+            item["metrics_by_level"] = metrics["metrics_by_level"]
+            best_rank = metrics.get("best_mapping_rank")
+            if best_rank is not None:
+                item["best_mapping_rank"] = best_rank
+        return item
+
+    run_ref = resolve_run_for_source(dataset_accession, taxonomy_id, source_label)
+    if run_ref is None:
+        print(
+            f"  WARNING: no AT run resolves ({dataset_accession}, {taxonomy_id}, "
+            f"{source_label}). Emitting NO_EVIDENCE.",
+            file=sys.stderr,
+        )
+        return _item(
+            supports="NO_EVIDENCE",
+            run_ref=None,
+            metrics=None,
+            explanation=(
+                f"Declared AT source {source_label!r} in {dataset_accession} "
+                f"could not be resolved to an AT run against {taxonomy_id}; "
+                f"no annotation-transfer numbers available for this edge."
+            ),
+        )
+
     try:
         metrics = compute_edge_metrics(
             run_ref=run_ref,
@@ -604,31 +673,46 @@ def _at_evidence(
     except Exception as exc:  # noqa: BLE001 — soft-skip on artifact issues
         print(
             f"  WARNING: compute_edge_metrics({run_ref}, {source_label}, "
-            f"{edge_target}) failed: {exc}. Skipping AT evidence.",
+            f"{edge_target}) failed: {exc}. Emitting NO_EVIDENCE.",
             file=sys.stderr,
         )
-        return None
+        return _item(
+            supports="NO_EVIDENCE",
+            run_ref=run_ref,
+            metrics=None,
+            explanation=(
+                f"AT metrics for {source_label} → {edge_target} could not be "
+                f"computed ({exc})."
+            ),
+        )
 
     if not metrics.get("metrics_by_level"):
-        return None
+        # Negative signal: the declared source does not transfer to this
+        # candidate's lineage (issue #126 pt 4) — emit, don't drop.
+        return _item(
+            supports="NO_EVIDENCE",
+            run_ref=run_ref,
+            metrics=metrics,
+            explanation=(
+                f"Declared AT source {source_label!r} does not transfer to "
+                f"{edge_target} — no metrics rows in {run_ref} reach this "
+                f"target's lineage."
+            ),
+        )
 
     best_rank = metrics.get("best_mapping_rank")
     best_level = _RANK_TO_LEVEL_NAME.get(best_rank) if best_rank is not None else "?"
-    return {
-        "evidence_type": "ANNOTATION_TRANSFER",
-        "supports": metrics.get("supports_default") or "NO_EVIDENCE",
-        "run_ref": run_ref,
-        "source_cluster_label": source_label,
-        "target_atlas": "WMBv1",
-        "method": "MapMyCells (via at_metrics.compute_edge_metrics)",
-        "metrics_by_level": metrics["metrics_by_level"],
-        "explanation": (
+    return _item(
+        supports=metrics.get("supports_default") or "NO_EVIDENCE",
+        run_ref=run_ref,
+        metrics=metrics,
+        explanation=(
             f"AT transfer of {source_label} to {edge_target} — best F1 "
             f"{metrics.get('best_f1_score'):.3f} at "
             f"{best_level} level; per-level metrics populated "
             f"programmatically from {metrics.get('f1_source_relpath') or run_ref}."
         ),
-    }
+    )
 
 
 # ─── caveats (rule-based) ────────────────────────────────────────────────────
@@ -944,9 +1028,7 @@ def _cli() -> None:
     for c in candidates:
         c["_classical_cache"] = classical
 
-    at_artifact = _load_at_artifact(args.classical_node_id, args.taxonomy_id)
-    at_run_ref = at_artifact.get("source_run_id") if at_artifact else None
-    at_source_label = at_artifact.get("source_cluster_label") if at_artifact else None
+    at_source_sets = classical.get("at_source_sets") or []
 
     edges: list[dict] = []
     for cand in candidates:
@@ -956,8 +1038,7 @@ def _cli() -> None:
             candidate=cand,
             atlas=atlas,
             taxonomy_id=args.taxonomy_id,
-            at_run_ref=at_run_ref,
-            at_source_label=at_source_label,
+            at_source_sets=at_source_sets,
         ))
 
     if args.dry_run:
