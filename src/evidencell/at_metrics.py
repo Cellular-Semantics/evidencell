@@ -924,74 +924,98 @@ def _yaml_relpath_for(rs: AnnotationTransferResultSet) -> str:
 # ─── research/{region}/at/{classical}_{taxonomy}_f1.json regen ────────
 
 
-def regen_at_hits_file(
-    *,
-    classical_node_id: str,
-    region: str,
+_LEVEL_TO_STR = {
+    "CLASS": "class",
+    "SUBCLASS": "subclass",
+    "SUPERTYPE": "supertype",
+    "CLUSTER": "cluster",
+}
+
+
+def _project_hit(row: AnnotationTransferMetricRow) -> dict:
+    """Project one AT result row into the ``{accession → hit}`` shape consumed
+    by ``find_candidates`` Stage A scoring / filter-bypass."""
+    return {
+        "target_accession": row.target_accession,
+        "target_level": _LEVEL_TO_STR.get(
+            row.taxonomy_level, row.taxonomy_level.lower()
+        ),
+        "target_name": row.target_name,
+        "f1": row.f1,
+        "n_cells": row.n_cells,
+        "coverage": row.coverage,
+        "purity": row.purity,
+    }
+
+
+def at_hits_for_node(
+    at_source_sets: list[dict],
     taxonomy_id: str,
-    run_ref: str,
-    source_label: str,
+    *,
     f1_floor: float = 0.2,
-    out_path: Path | None = None,
     runs_root: Path | None = None,
-) -> Path:
-    """Regenerate the legacy `research/{region}/at/{classical}_{taxonomy}_f1.json`
-    discovery-hint file from the canonical at_results.yaml.
+) -> dict[str, dict]:
+    """Build the ``{atlas_accession → hit}`` map for Stage A candidate
+    discovery from a classical node's curated ``at_source_sets``.
 
-    The file format (consumed by ``find_candidates`` Stage A scoring) is:
-        {
-          "classical_node_id": ..., "taxonomy_id": ...,
-          "source_run_id": ..., "source_cluster_label": ...,
-          "f1_floor": ..., "hits": [{target_accession, target_level,
-                                     target_name, f1, n_cells,
-                                     coverage, purity}]
-        }
+    This is the discovery-side counterpart to ``stage_b_emit``'s use of
+    ``at_source_sets``: the node declares *which* external cell sets
+    correspond to this type (``dataset_accession`` + ``source_label``); the
+    resolved AT run's F1 rows map each source cluster *to candidate atlas
+    nodes*. Replaces the legacy, hand-produced
+    ``research/{region}/at/{classical}_{taxonomy}_f1.json`` artifact — the
+    same computation, now derived directly from the curated correspondence
+    and the canonical ``at_results.yaml``.
 
-    The regenerated file is guaranteed to match at_results.yaml row-for-row
-    (filtered to F1 >= f1_floor for source_label across all levels).
-    Replaces any existing file at the destination path.
+    For each source set: resolve its run via :func:`resolve_run_for_source`
+    (``None`` → skip, loud), load the result set, and project every row for
+    that ``source_label`` with ``f1 >= f1_floor``. Merged across sources into
+    one ``{accession → hit}`` map; on collision the higher-F1 hit wins and the
+    driving ``source_label`` / ``dataset_accession`` are recorded on the hit.
+
+    Returns the same map shape ``find_candidates`` expects for ``at_hits`` /
+    ``at_bypass`` (``set(hits)``).
     """
-    import json
-
-    rs = load_result_set(run_ref, runs_root=runs_root)
-    level_to_str = {
-        "CLASS": "class",
-        "SUBCLASS": "subclass",
-        "SUPERTYPE": "supertype",
-        "CLUSTER": "cluster",
-    }
-    hits = []
-    for row in rs.rows:
-        if row.source_label != source_label:
+    hits: dict[str, dict] = {}
+    for src in at_source_sets or []:
+        if not isinstance(src, dict):
             continue
-        if (row.f1 or 0) < f1_floor:
+        dataset_accession = src.get("dataset_accession")
+        source_label = src.get("source_label")
+        if not dataset_accession or not source_label:
             continue
-        hits.append({
-            "target_accession": row.target_accession,
-            "target_level": level_to_str.get(row.taxonomy_level, row.taxonomy_level.lower()),
-            "target_name": row.target_name,
-            "f1": row.f1,
-            "n_cells": row.n_cells,
-            "coverage": row.coverage,
-            "purity": row.purity,
-        })
-    payload = {
-        "classical_node_id": classical_node_id,
-        "taxonomy_id": taxonomy_id,
-        "source_run_id": run_ref,
-        "source_cluster_label": source_label,
-        "f1_floor": f1_floor,
-        "hits": hits,
-    }
-    if out_path is None:
-        out_path = (
-            (runs_root.parent.parent if runs_root else repo_root())
-            / "research" / region / "at"
-            / f"{classical_node_id}_{taxonomy_id}_f1.json"
+        run_ref = resolve_run_for_source(
+            dataset_accession, taxonomy_id, source_label, runs_root=runs_root
         )
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    return out_path
+        if run_ref is None:
+            print(
+                f"WARNING: at_hits_for_node: no AT run resolves "
+                f"({dataset_accession}, {taxonomy_id}, {source_label}); "
+                f"skipping this source.",
+                file=sys.stderr,
+            )
+            continue
+        try:
+            rs = load_result_set(run_ref, runs_root=runs_root)
+        except Exception as exc:  # noqa: BLE001 — soft-skip on artifact issues
+            print(
+                f"WARNING: at_hits_for_node: load_result_set({run_ref}) "
+                f"failed: {exc}; skipping this source.",
+                file=sys.stderr,
+            )
+            continue
+        for row in rs.rows:
+            if row.source_label != source_label:
+                continue
+            if (row.f1 or 0) < f1_floor:
+                continue
+            hit = _project_hit(row)
+            hit["source_label"] = source_label
+            hit["source_dataset_accession"] = dataset_accession
+            prev = hits.get(row.target_accession)
+            if prev is None or (hit["f1"] or 0) > (prev["f1"] or 0):
+                hits[row.target_accession] = hit
+    return hits
 
 
 # ─── KB sweep / refresh ───────────────────────────────────────────────
