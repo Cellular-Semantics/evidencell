@@ -798,3 +798,84 @@ def test_format_at_coverage_flags_unresolved(tmp_path):
 
 def test_format_at_coverage_empty_message():
     assert "Nothing to attempt" in at_metrics.format_at_coverage([], "CCN20230722")
+
+
+# ─── at_hits_for_node (Stage A discovery, at_source_sets-driven) ──────
+
+
+def test_at_hits_for_node_single_source(tmp_path):
+    _make_run(tmp_path, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
+    hits = at_metrics.at_hits_for_node(
+        [{"dataset_accession": "GEO:GSE1", "source_label": "Foo"}],
+        "CCN20230722", runs_root=tmp_path,
+    )
+    # _make_run writes one supertype row (0216 Sst Gaba_3) at f1 0.67
+    assert "CS20230722_SUPT_0216" in hits
+    h = hits["CS20230722_SUPT_0216"]
+    assert h["f1"] == pytest.approx(0.67)
+    assert h["target_level"] == "supertype"
+    assert h["source_label"] == "Foo"
+    assert h["source_dataset_accession"] == "GEO:GSE1"
+
+
+def test_at_hits_for_node_merges_multi_source_best_f1_wins(tmp_path):
+    # Two sources, same dataset, that both land on the same accession at
+    # different F1 — the higher-F1 hit must win.
+    run = tmp_path / "at_run_20260101_multi_mmc_wmbv1"
+    _write(
+        run / "manifest.yaml",
+        "id: at_run_20260101_multi_mmc_wmbv1\nrecord_type: AnnotationTransferRun\n"
+        "target_taxonomy_id: CCN20230722\nsource_dataset_accession: GEO:GSE1\n",
+    )
+    _write(
+        run / "f1_matrix.csv",
+        "source_label,level,target_name,n_cells,coverage,purity,f1,mean_boot,median_boot\n"
+        "Lo,supertype,0216 Sst Gaba_3,10,0.5,0.5,0.30,0.9,0.9\n"
+        "Hi,supertype,0216 Sst Gaba_3,20,0.9,0.9,0.80,0.9,0.9\n",
+    )
+    at_metrics.migrate_run(run)
+    hits = at_metrics.at_hits_for_node(
+        [
+            {"dataset_accession": "GEO:GSE1", "source_label": "Lo"},
+            {"dataset_accession": "GEO:GSE1", "source_label": "Hi"},
+        ],
+        "CCN20230722", runs_root=tmp_path,
+    )
+    assert hits["CS20230722_SUPT_0216"]["f1"] == pytest.approx(0.80)
+    assert hits["CS20230722_SUPT_0216"]["source_label"] == "Hi"
+
+
+def test_at_hits_for_node_f1_floor_filters(tmp_path):
+    run = tmp_path / "at_run_20260101_floor_mmc_wmbv1"
+    _write(
+        run / "manifest.yaml",
+        "id: at_run_20260101_floor_mmc_wmbv1\nrecord_type: AnnotationTransferRun\n"
+        "target_taxonomy_id: CCN20230722\nsource_dataset_accession: GEO:GSE1\n",
+    )
+    _write(
+        run / "f1_matrix.csv",
+        "source_label,level,target_name,n_cells,coverage,purity,f1,mean_boot,median_boot\n"
+        "Foo,supertype,0216 Sst Gaba_3,10,0.5,0.5,0.30,0.9,0.9\n"
+        "Foo,cluster,0768 Sst Gaba_3,3,0.1,0.1,0.05,0.9,0.9\n",
+    )
+    at_metrics.migrate_run(run)
+    hits = at_metrics.at_hits_for_node(
+        [{"dataset_accession": "GEO:GSE1", "source_label": "Foo"}],
+        "CCN20230722", runs_root=tmp_path, f1_floor=0.2,
+    )
+    # 0.30 kept, 0.05 dropped by floor
+    assert set(hits) == {"CS20230722_SUPT_0216"}
+
+
+def test_at_hits_for_node_unresolved_source_skipped(tmp_path, capsys):
+    _make_run(tmp_path, "at_run_20260101_a_mmc_wmbv1", "GEO:GSE1", "CCN20230722", "Foo")
+    hits = at_metrics.at_hits_for_node(
+        [{"dataset_accession": "GEO:NOPE", "source_label": "Foo"}],
+        "CCN20230722", runs_root=tmp_path,
+    )
+    assert hits == {}
+    assert "no AT run resolves" in capsys.readouterr().err
+
+
+def test_at_hits_for_node_empty_when_no_source_sets(tmp_path):
+    assert at_metrics.at_hits_for_node([], "CCN20230722", runs_root=tmp_path) == {}

@@ -71,32 +71,31 @@ without the `at_run_` prefix; the `index.yaml` registers it under
 the prefixed ID for consistency. Rename if a future commit
 touches that run.
 
-### `research/{region}/at/{classical_node}_{taxonomy}_f1.json`
+### Stage A AT signal — from `at_source_sets`, not a file
 
-**Status: legacy / inconsistent.** Pre-dates the structured
-`at_results.yaml` convention. Currently exists in only one place:
-`research/hippocampus/at/olm_hippocampus_CCN20230722_f1.json`.
+**Removed:** the legacy `research/{region}/at/{classical}_{taxonomy}_f1.json`
+artifact (and its producer `just at-extract-f1`). It was a hand-made,
+source-agnostic cache of "AT hits above F1 floor" that Stage A
+`find_candidates` read as a discovery hint. It has been replaced by a
+direct derivation from the node's curated `at_source_sets` (see below),
+so there is no on-disk hint file to drift.
 
-Purpose (historical): per-classical-node "AT hits above F1 floor"
-filtered view, used by Stage A `find_candidates` as a discovery
-hint. Filters one source label (e.g. `Sst-OLM`) above an F1 floor
-(0.2) into a list of candidate targets.
-
-**Cleanup recommendation:** regenerate from `at_results.yaml` via
-a new `just refresh-at-research-hits {region} {classical_node}`
-recipe, or remove entirely if the discovery pipeline can now read
-`at_results.yaml` directly. Either way, the file's current contents
-are *correct* (every F1 row matches the canonical CSV/YAML), but
-its provenance is unrecorded and it can drift silently. Filed as
-a deferred follow-up; do not write new files in this shape.
+Stage A now builds its `at_hits` / `at_bypass` inputs via
+`at_metrics.at_hits_for_node(node.at_source_sets, taxonomy_id)`:
+for each declared `(dataset_accession, source_label)`, resolve the AT
+run with `resolve_run_for_source`, load `at_results.yaml`, and project
+every row for that source above the F1 floor into
+`{atlas_accession → hit}` (best-F1-wins on collision across multiple
+sources). `find_candidates` consumes that map exactly as before — an
+AT-hit atlas cluster gets the F1 score bonus (+3/+2/+1) and bypasses the
+region/NT hard filters. Nodes with no `at_source_sets` get no AT signal.
 
 ### `research/{region}/discovery_candidates*.json`
 
 Output of Stage A `just find-candidates`. Separate concern from AT
 results — these are the Stage A candidate shortlist (markers + region
-+ NT scoring), not the AT signal. AT signal feeds in via Stage A's
-optional consumption of `research/{region}/at/...f1.json` (currently
-disabled where the file is absent). Out of scope for this doc.
++ NT scoring, plus the `at_source_sets`-derived AT signal above). Out of
+scope for this doc.
 
 ### `kb/graphs/{region}/*.yaml` — MappingEdge.evidence[].metrics_by_level
 
@@ -151,12 +150,21 @@ time `stage_b_emit` resolves it via
    warning. Zero → `None`, and the emitter writes a loud `NO_EVIDENCE` item
    rather than silently attaching a wrong source.
 
-`emit-stage-b` emits **one `ANNOTATION_TRANSFER` evidence item per declared
-source set per candidate** — including a `NO_EVIDENCE` item when a declared
-source does *not* transfer to a candidate (negative signal, symmetric with
-marker/location comparisons). Nodes with no `at_source_sets` get no AT evidence
-(full cutover from the former atlas-cluster-keyed attachment, which could cite a
-biologically wrong source as positive support).
+`at_source_sets` drives **both pipeline stages**:
+
+- **Stage A (`find_candidates`)** — `at_metrics.at_hits_for_node` resolves each
+  declared source and projects its AT rows into the `at_hits` / `at_bypass`
+  inputs, so the atlas clusters a curated source maps to are surfaced as
+  candidates (F1 score bonus) and exempted from region/NT hard filters. This
+  replaces the removed legacy `_f1.json` hint file.
+- **Stage B (`emit-stage-b`)** — emits **one `ANNOTATION_TRANSFER` evidence item
+  per declared source set per candidate**, including a `NO_EVIDENCE` item when a
+  declared source does *not* transfer to a candidate (negative signal, symmetric
+  with marker/location comparisons).
+
+Nodes with no `at_source_sets` get no AT signal in either stage (full cutover
+from the former atlas-cluster-keyed attachment, which could cite a biologically
+wrong source as positive support).
 
 ---
 
@@ -318,6 +326,7 @@ goes in its own slot. Tracked in [#TBD — to be filed].
 | Run AT pipeline | external (MapMyCells) | `mmc_results.csv`, `f1_*.csv` in run dir | source `.h5ad`, target taxonomy precomputed stats |
 | Register a new AT run | `just register-at-run` | `kb/annotation_transfer_runs/index.yaml` | manifest.yaml in each run dir |
 | Migrate raw CSV → structured YAML | `just migrate-at-metrics` (or `python -m evidencell.at_metrics migrate-all`) | `at_results.yaml` (or `_<variant>.yaml`) in each run dir | `f1_*.csv` + manifest in each run dir |
+| Stage A: candidate discovery AT signal | `just find-candidates` (mechanical) | in-memory `at_hits` / `at_bypass` feeding the candidate shortlist + `at_signal` on `discovery_score` (no file) | classical node (`at_source_sets`), `at_results.yaml` (via `at_metrics.at_hits_for_node` → `resolve_run_for_source`) |
 | Stage B: create MappingEdge with AT evidence | `just emit-stage-b` (mechanical) | one AT evidence item per declared `at_source_sets` entry per candidate: `run_ref` (resolved from `(dataset_accession, target_taxonomy, source_label)`), `source_dataset_accession`, `source_cluster_label`, `correspondence`, `target_atlas`, `supports` (level-aware default), `metrics_by_level`, `explanation`; a `NO_EVIDENCE` item when the source doesn't transfer or can't be resolved | classical node (`at_source_sets`), atlas node, discovery_candidates.json, `at_results.yaml` (via `compute_edge_metrics`) |
 | Populate metrics_by_level | `just refresh-at-metrics --apply` (or `python -m evidencell.at_metrics refresh --apply`) | `metrics_by_level`, `f1_source_relpath`, `supports` (suggested) on every AT evidence item with a `run_ref` | `at_results.yaml` (via `compute_edge_metrics`) |
 | Render figure for a report | `just gen-at-figure {run_id} ...` | `figures/*.png` + `figures/*_metrics.json` | `at_results.yaml` (or legacy CSV when YAML not yet migrated) |
@@ -334,13 +343,9 @@ File an issue.
    to match the convention (one-line `git mv` + update `index.yaml`).
    Defer to a session that also regenerates the manifest path
    references.
-2. **Regenerate `research/hippocampus/at/olm_hippocampus_CCN20230722_f1.json`**
-   from `at_results.yaml`, or remove if Stage A no longer consumes it.
-   Adopt one shape (regenerate-on-demand recipe vs persistent file)
-   for all classical nodes, not just OLM.
-3. **Fix Bhatt 2025 DG run** — has a manifest but no F1 CSV; pipeline
+2. **Fix Bhatt 2025 DG run** — has a manifest but no F1 CSV; pipeline
    output incomplete. Re-run or remove the manifest.
-4. **Per-row slot rename** in `AnnotationTransferLevelResult` — see
+3. **Per-row slot rename** in `AnnotationTransferLevelResult` — see
    the lineage-aware decision record above. Coordinate with a
    report-time agent change that introduces a separate headline
    conclusion field.
