@@ -1250,65 +1250,6 @@ def test_find_candidates_at_hit_bypasses_region_and_nt_filters(populated_db):
     assert target["_at_hit"]["score"] == 3
 
 
-def test_load_at_artifact_returns_none_when_missing(tmp_path, monkeypatch):
-    """When no artifact exists for the (classical, taxonomy) pair, the
-    loader returns None and find-candidates proceeds without AT scoring."""
-    import evidencell.paths as paths_mod
-    from evidencell.taxonomy_db import _load_at_artifact
-
-    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
-    assert _load_at_artifact("nonexistent", "TEST_TAX") is None
-
-
-def test_load_at_artifact_parses_valid_json(tmp_path, monkeypatch):
-    """Loader returns the parsed dict when the canonical path exists."""
-    import json as _json
-    import evidencell.paths as paths_mod
-    from evidencell.taxonomy_db import _at_hits_from_artifact, _load_at_artifact
-
-    art_dir = tmp_path / "research" / "hippocampus" / "at"
-    art_dir.mkdir(parents=True)
-    artifact = {
-        "classical_node_id": "olm_hippocampus",
-        "taxonomy_id": "CCN20230722",
-        "source_run_id": "at_run_test",
-        "f1_floor": 0.2,
-        "hits": [
-            {
-                "target_accession": "CS20230722_SUPT_0216",
-                "target_level": "supertype",
-                "target_name": "0216 Sst Gaba_3",
-                "f1": 0.67,
-                "n_cells": 43,
-            }
-        ],
-    }
-    art_path = art_dir / "olm_hippocampus_CCN20230722_f1.json"
-    art_path.write_text(_json.dumps(artifact))
-
-    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
-    loaded = _load_at_artifact("olm_hippocampus", "CCN20230722")
-    assert loaded == artifact
-
-    hits = _at_hits_from_artifact(loaded)
-    assert "CS20230722_SUPT_0216" in hits
-    assert hits["CS20230722_SUPT_0216"]["f1"] == pytest.approx(0.67)
-
-
-def test_load_at_artifact_handles_malformed_json(tmp_path, monkeypatch):
-    """Malformed JSON is logged and the loader returns None (fail-permissive)."""
-    import evidencell.paths as paths_mod
-    from evidencell.taxonomy_db import _load_at_artifact
-
-    art_dir = tmp_path / "research" / "hippocampus" / "at"
-    art_dir.mkdir(parents=True)
-    art_path = art_dir / "olm_hippocampus_CCN20230722_f1.json"
-    art_path.write_text("{ not valid json")
-
-    monkeypatch.setattr(paths_mod, "repo_root", lambda: tmp_path)
-    assert _load_at_artifact("olm_hippocampus", "CCN20230722") is None
-
-
 # ── TaxonomyMeta ──────────────────────────────────────────────────────────────
 
 def test_taxonomy_meta_round_trip(tmp_path):

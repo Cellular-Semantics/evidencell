@@ -74,6 +74,17 @@ just find-candidates {classical_node_file} {classical_node_id} {taxonomy_id} {ra
 Default: `top_k=5` per rank. Adjust ranks based on the taxonomy's
 level_hierarchy — some taxonomies have more or fewer levels.
 
+**AT signal comes from the node's `at_source_sets`.** `find-candidates` reads the
+classical node's curated `at_source_sets` (the `(dataset_accession,
+source_label)` correspondences authored in evidence-extraction), resolves each to
+its AT run (`at_metrics.resolve_run_for_source`), and surfaces the atlas clusters
+that source maps to as candidates — they get the F1 score bonus and bypass the
+region/NT filters. There is no hand-made `research/{region}/at/*_f1.json` file
+anymore. Run `just at-coverage {classical_node_file} {taxonomy_id}` first: any
+`UNRESOLVED` row means a declared source has no AT run yet — run
+`workflows/annotation-transfer.md` for it before mapping, or discovery gets no AT
+signal for that node.
+
 Stage A scoring (see [planning/map_cell_type_redesign_roadmap.md](../planning/map_cell_type_redesign_roadmap.md) §3 for the full
 specification):
 
