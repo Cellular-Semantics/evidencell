@@ -663,6 +663,20 @@ nodes:
     name: Oriens-Lacunosum Moleculare (O-LM) cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+    at_source_sets:
+      - dataset_accession: GEO:GSE124847
+        source_label: Sst-OLM
+        correspondence: EXACT
+        notes: >
+          SstCre-collected OLM population from Winterer et al. 2019
+          (GEO:GSE124847), a scRNA-seq characterization of anatomically
+          identified OLM interneurons; OLMs form a homogeneous
+          transcriptomic population, so the Sst-OLM source cluster
+          corresponds to this classical O-LM type. Annotation transfer run:
+          at_run_20260408_winterer_olm_mmc_wmbv1. Quote-backed sources
+          pending a PMID/DOI for this reference (references.json currently
+          holds only its CorpusId, which the PropertySource.ref pattern
+          does not accept).
     anatomical_location:
       - id: UBERON:0014552
         label: CA1 stratum oriens
