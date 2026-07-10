@@ -1,0 +1,51 @@
+{
+  "node_id": "bla_calbindin_dendrite_targeting_interneuron",
+  "run_date": "2026-06-03",
+  "summaries_read": 80,
+  "skipped_excluded": 4,
+  "skipped_duplicate_ref": 0,
+  "skipped_low_relevance": 0,
+  "entries_written": 3,
+  "fields_populated": [
+    "electrophysiology.sources",
+    "morphology.sources",
+    "defining_markers.Calb1.sources"
+  ],
+  "sources_added": [
+    {
+      "corpus_id": "10647550",
+      "pmid": "PMID:22726836",
+      "quote_key": "10647550_86aa283c",
+      "quote_text": "Calbindin-Expressing Dendrite-Targeting Cells Fire Synchronously with Hippocampal Theta Oscillations",
+      "field": "electrophysiology.sources",
+      "section": "Results",
+      "note": "Same paper as existing ref but new quote key and new field (electrophysiology): theta-coupling of CB+ DT cells in vivo"
+    },
+    {
+      "corpus_id": "212579559",
+      "pmid": "PMID:32144495",
+      "quote_key": "212579559_e47ad3e6",
+      "quote_text": "SOM+ interneurons selectively target the dendrites of BLA principal neurons",
+      "field": "morphology.sources",
+      "section": "Introduction",
+      "note": "Dendrite-targeting morphology; CB/SOM overlap group consistent with CB+ DT class"
+    },
+    {
+      "corpus_id": "212579559",
+      "pmid": "PMID:32144495",
+      "quote_key": "212579559_81debee5",
+      "quote_text": "SOM positive interneurons constitute the other common interneuron population and they co-express markers such as neuropeptide Y (NPY) and calbindin",
+      "field": "defining_markers.Calb1.sources",
+      "section": "Introduction",
+      "marker_type": "PROTEIN",
+      "note": "Calbindin co-expression in SOM-CB+ interneuron population; supports Calb1 as marker of DT class"
+    }
+  ],
+  "fields_with_no_evidence": [
+    "anatomical_location.sources (existing via PMID:22726836)",
+    "nt_type.sources (existing via PMID:22726836)"
+  ],
+  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json",
+  "kb_file": "/Users/ar38/Documents/GitHub/evidencell/kb/graphs/medial_temporal_lobe_amygdala/20260528_amygdala_report_ingest.yaml",
+  "added_by": "evidence_extraction_bla_calbindin_dendrite_targeting_interneuron_2026-06-03"
+}

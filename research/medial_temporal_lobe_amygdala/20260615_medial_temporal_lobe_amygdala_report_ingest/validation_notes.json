@@ -1,0 +1,273 @@
+{
+  "_meta": {
+    "ingestion_run": "20260615_medial_temporal_lobe_amygdala_report_ingest",
+    "validation_date": "2026-06-15",
+    "target_corpus_ids": [
+      "104297085", "17223544", "17860491", "221366115", "232283078",
+      "250411527", "252477669", "264517392", "280092907", "281382725",
+      "3103554", "4940771"
+    ],
+    "notes": "This is a SUPPLEMENT validation. All 7 nodes already exist in 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml. Only properties with new quote evidence from the 12 target corpus IDs are included here."
+  },
+  "nodes": {
+    "basal_amygdala_fear_neuron": {
+      "canonical_id": "basal_amygdala_fear_neuron",
+      "proposed_id": "bla_fear_neuron",
+      "properties_supported": ["anatomical_location"],
+      "properties_partial": ["nt_type"],
+      "properties_gap": [
+        "defining_markers",
+        "morphology",
+        "electrophysiology"
+      ],
+      "best_quote_keys": {
+        "anatomical_location": ["4940771_cb8fa215"]
+      },
+      "issues": [
+        {
+          "type": "GAP",
+          "property": "defining_markers",
+          "detail": "No dedicated molecular markers for fear neurons (as opposed to extinction neurons) identified in any target-corpus quote. Thy1 labels Fear-Off (extinction) neurons, not fear neurons specifically. Fear neuron identity remains purely functional (CS-responsive activation)."
+        },
+        {
+          "type": "GAP",
+          "property": "electrophysiology",
+          "detail": "No intrinsic electrophysiological characterisation found in target corpus. The 'electrophysiology' claim on 4940771_cb8fa215 encodes functional activity (CS-triggered), not intrinsic membrane properties."
+        },
+        {
+          "type": "AMBIGUITY",
+          "property": "morphology",
+          "detail": "Fear neurons are described as BLA principal neurons (spiny, glutamatergic) in 4940771_cb8fa215 but the morphology assertion conflates the general class (principal neuron) with the functional subtype. No quote distinguishes fear-neuron morphology from extinction-neuron morphology."
+        }
+      ],
+      "round2_targets": ["Herry et al. 2008 (original fear/extinction neuron paper — not in current corpus)", "Bhattacherjee et al. 2023 for transcriptomic anchoring"]
+    },
+    "basal_amygdala_extinction_neuron": {
+      "canonical_id": "basal_amygdala_extinction_neuron",
+      "proposed_id": "bla_extinction_neuron",
+      "properties_supported": [
+        "defining_markers",
+        "anatomical_location",
+        "nt_type"
+      ],
+      "properties_partial": ["morphology"],
+      "properties_gap": ["electrophysiology_intrinsic"],
+      "best_quote_keys": {
+        "defining_markers": ["104297085_710ab8bc", "104297085_20a79f85", "104297085_cb656278"],
+        "anatomical_location": ["4940771_cb8fa215"],
+        "nt_type": ["4940771_cb8fa215"]
+      },
+      "issues": [
+        {
+          "type": "AMBIGUITY",
+          "property": "defining_markers",
+          "detail": "104297085_d5c2e82a and 104297085_2747518b are near-duplicate of 104297085_cb656278 and 104297085_20a79f85 respectively (same text, added by different pipeline passes). Claims already captured in earlier quotes; duplicate quotes should not be double-counted."
+        },
+        {
+          "type": "GAP",
+          "property": "electrophysiology_intrinsic",
+          "detail": "No intrinsic electrophysiology (firing patterns, input resistance, etc.) available in target corpus. Functional identity (repeated unreinforced CS presentation) is documented but not mapped to formal electrophysiology fields."
+        },
+        {
+          "type": "HETEROGENEITY",
+          "property": "defining_markers",
+          "detail": "Thy1 is used as a labelling strategy but is not a clean cell-type marker — Thy1+ cells include fear neurons in some experimental contexts. The specific Fear-Off molecular markers (Ntsr2, Dkk3, Rspo2, Wnt7a) from McCullough 2016 are the more reliable anchors."
+        }
+      ],
+      "round2_targets": ["Herry et al. 2008", "McCullough et al. 2016 full text for ephys data on Fear-Off neurons"]
+    },
+    "bla_npy_neurogliaform_cell": {
+      "canonical_id": "bla_npy_neurogliaform_cell",
+      "proposed_id": "bla_npy_neurogliaform_interneuron",
+      "properties_supported": [
+        "neuropeptides",
+        "morphology",
+        "nt_type",
+        "anatomical_location"
+      ],
+      "properties_partial": [],
+      "properties_gap": [
+        "defining_markers_transcriptomic",
+        "electrophysiology"
+      ],
+      "best_quote_keys": {
+        "neuropeptides": ["232283078_d4238834"],
+        "morphology": ["232283078_d4238834"],
+        "nt_type": ["232283078_d4238834"],
+        "anatomical_location": ["232283078_00bb8003"]
+      },
+      "issues": [
+        {
+          "type": "GAP",
+          "property": "defining_markers_transcriptomic",
+          "detail": "No dedicated scRNA-seq or patch-seq marker panel for NPY neurogliaform cells in the BLA identified in target corpus. Vereczki 2021 provides immunocytochemistry-level data (NPY+) but no transcriptomic marker panel."
+        },
+        {
+          "type": "GAP",
+          "property": "electrophysiology",
+          "detail": "No electrophysiology data specific to NPY neurogliaform cells found in target corpus. Unal et al. 2020 (corpus 212579559, NOT in target set) provides general BLA interneuron heterogeneity context only."
+        }
+      ],
+      "round2_targets": ["Rovira-Esteban et al. 2019 (corpus 204835327) for neurogliaform cell identity by CCK stimulation", "Hajos 2021 (corpus 235382885) for interneuron types review"]
+    },
+    "bla_calbindin_dendrite_targeting_interneuron": {
+      "canonical_id": "bla_calbindin_dendrite_targeting_interneuron",
+      "proposed_id": "bla_calbindin_dendrite_targeting_interneuron",
+      "properties_supported": [
+        "defining_markers",
+        "negative_markers",
+        "nt_type"
+      ],
+      "properties_partial": ["electrophysiology"],
+      "properties_gap": [
+        "morphology_detailed",
+        "colocated_types",
+        "electrophysiology_intrinsic"
+      ],
+      "best_quote_keys": {
+        "defining_markers": ["17860491_f1ffddb9"],
+        "negative_markers": ["17860491_f1ffddb9"],
+        "nt_type": ["17860491_f1ffddb9"]
+      },
+      "issues": [
+        {
+          "type": "AMBIGUITY",
+          "property": "electrophysiology",
+          "detail": "Flores 2017 (17860491_f1ffddb9) documents activation during fear extinction upon OX1R blockade — this is a circuit-level functional measurement, not intrinsic electrophysiology. The claim in references.json (bla_calbindin_dendrite_targeting_interneuron:electrophysiology:SUPPORT:HIGH) overstates intrinsic characterisation; should be treated as functional/connectivity evidence."
+        },
+        {
+          "type": "AMBIGUITY",
+          "property": "relationship_to_sst_dendrite_targeting",
+          "detail": "Vereczki 2021 identifies SST+ dendrite-targeting cells (10-16% of LA/BA GABAergic neurons) as a separate population; relationship to calbindin+ dendrite-targeting cells is unresolved. Some SST+ cells co-express calbindin (Unal et al. 2020: 212579559_81debee5). This represents a potential HETEROGENEITY issue for marker specificity."
+        },
+        {
+          "type": "GAP",
+          "property": "morphology_detailed",
+          "detail": "Bienvenu et al. 2012 (10647550) is the primary source for morphology (dendrite-targeting) but was ingested in the base 20260528 pass, not new here. No additional morphology data from target corpus."
+        }
+      ],
+      "round2_targets": ["Bienvenu et al. 2012 full text for calbindin dendrite-targeting ephys data", "Unal et al. 2020 for SST/calbindin colocalization clarification"]
+    },
+    "cea_large_aspiny_neuron": {
+      "canonical_id": "cea_large_aspiny_neuron",
+      "proposed_id": "cea_large_aspiny_neuron",
+      "properties_supported": ["nt_type", "anatomical_location"],
+      "properties_partial": [],
+      "properties_gap": [
+        "morphology_large_vs_small_distinction",
+        "defining_markers",
+        "electrophysiology"
+      ],
+      "best_quote_keys": {
+        "nt_type": ["17223544_4fda1404", "280092907_110b0323"],
+        "anatomical_location": ["17223544_4fda1404"]
+      },
+      "issues": [
+        {
+          "type": "GAP",
+          "property": "morphology_large_vs_small_distinction",
+          "detail": "The best morphological source distinguishing large aspiny from small aspiny neurons is Nikolenko et al. 2020 (corpus 220976356), which is NOT in the 12 target corpus IDs. The quote 220976356_f1fe3fe1 explicitly describes 'big soma with thick aspiny dendrites' for large aspiny and 'small aspiny neurons' as a third type. This critical distinction is already in the base KB from prior ingestion; target-corpus quotes do not add to it."
+        },
+        {
+          "type": "AMBIGUITY",
+          "property": "nt_type_via_class",
+          "detail": "3103554_aec310ea describes 'CeA primarily consists of GABAergic medium spiny neurons' — this is a class-level statement attributed to CEA overall. The claims file tags it for cea_large_aspiny_neuron and cea_small_aspiny_neuron, but the text technically supports cea_medium_spiny_neuron more directly. The MODERATE support level is appropriate."
+        },
+        {
+          "type": "GAP",
+          "property": "defining_markers",
+          "detail": "No molecular markers specifically distinguishing large aspiny neurons from other CeA neuron types identified in any target-corpus quote."
+        }
+      ],
+      "round2_targets": ["Nikolenko et al. 2020 (220976356) — already in base KB, not new", "Cassell et al. 1989 for original morphological classification"]
+    },
+    "cea_small_aspiny_neuron": {
+      "canonical_id": "cea_small_aspiny_neuron",
+      "proposed_id": "cea_small_aspiny_neuron",
+      "properties_supported": ["nt_type", "anatomical_location"],
+      "properties_partial": [],
+      "properties_gap": [
+        "morphology_small_vs_large_distinction",
+        "defining_markers",
+        "electrophysiology"
+      ],
+      "best_quote_keys": {
+        "nt_type": ["17223544_4fda1404", "280092907_110b0323"],
+        "anatomical_location": ["17223544_4fda1404"]
+      },
+      "issues": [
+        {
+          "type": "GAP",
+          "property": "morphology_small_vs_large_distinction",
+          "detail": "Same as cea_large_aspiny_neuron: best morphology source (220976356) is outside target corpus. Target-corpus quotes support CeA GABAergic identity only at class level."
+        },
+        {
+          "type": "GAP",
+          "property": "defining_markers",
+          "detail": "No molecular markers specifically distinguishing small aspiny neurons from large aspiny or medium spiny CeA neurons identified in any target-corpus quote."
+        },
+        {
+          "type": "AMBIGUITY",
+          "property": "relationship_to_medium_spiny",
+          "detail": "Chung 2016 (3103554_aec310ea) uses 'GABAergic medium spiny neurons' to describe the CeA, which conflicts with the aspiny classification in the classical morphological literature. These are likely referring to different levels of morphological resolution (medium vs large/small aspiny is a finer subdivision). The base KB should note this terminological inconsistency."
+        }
+      ],
+      "round2_targets": ["Nikolenko et al. 2020 (220976356)", "Cassell et al. 1989", "Schiess et al. 1999 for electrophysiology"]
+    },
+    "paralaminar_immature_neuron": {
+      "canonical_id": "paralaminar_immature_neuron",
+      "proposed_id": "pl_immature_excitatory_neuron",
+      "properties_supported": [
+        "morphology",
+        "anatomical_location"
+      ],
+      "properties_partial": ["electrophysiology"],
+      "properties_gap": [
+        "defining_markers_transcriptomic",
+        "electrophysiology_intrinsic",
+        "nt_type_molecular"
+      ],
+      "best_quote_keys": {
+        "morphology": ["250411527_03961399"],
+        "anatomical_location": ["250411527_03961399"]
+      },
+      "issues": [
+        {
+          "type": "GAP",
+          "property": "defining_markers_transcriptomic",
+          "detail": "Page 2022 does not provide a transcriptomic marker panel. Sorrells et al. 2019 (195246702) in the base KB provides DCX, PSA-NCAM, vimentin, nestin, SP8, COUP-TFII markers. No additional markers from target corpus."
+        },
+        {
+          "type": "GAP",
+          "property": "electrophysiology_intrinsic",
+          "detail": "250411527_03961399 encodes developmental immaturity but provides no patch-clamp or intrinsic electrophysiology data. The 'electrophysiology' claim assigned in references.json reflects developmental state inference, not measured values."
+        },
+        {
+          "type": "AMBIGUITY",
+          "property": "nt_type",
+          "detail": "Node is described as 'immature excitatory neuron' but no target-corpus quote provides direct molecular evidence of glutamatergic identity (e.g., Slc17a7/Slc17a6 expression). The excitatory classification rests on the node name and general developmental inference."
+        }
+      ],
+      "round2_targets": ["Sorrells et al. 2019 (PMID:31227709) — full text for transcriptomic markers", "Yu et al. 2023 (corpus 256832817) — 'SOX11/BCL2 cluster' in human/macaque amygdala", "Chareyron et al. 2021 (corpus 235715856) — DCX/Bcl-2 markers in paralaminar nucleus"]
+    }
+  },
+  "summary": {
+    "total_nodes_validated": 7,
+    "properties_supported": 17,
+    "properties_partial": 4,
+    "properties_gap": 18,
+    "issues_total": 14,
+    "issues_by_type": {
+      "GAP": 9,
+      "AMBIGUITY": 4,
+      "HETEROGENEITY": 1,
+      "CONTRADICTION": 0
+    },
+    "duplicate_quotes_flagged": 2,
+    "claims_updated_in_references_json": [
+      "221366115_070b0504 — added cea_large_aspiny_neuron:nt_type and cea_small_aspiny_neuron:nt_type",
+      "280092907_397d9bdc — added cea_large_aspiny_neuron:nt_type and cea_small_aspiny_neuron:nt_type",
+      "17223544_db418703 — added cea_large_aspiny_neuron:nt_type and cea_small_aspiny_neuron:nt_type"
+    ]
+  }
+}

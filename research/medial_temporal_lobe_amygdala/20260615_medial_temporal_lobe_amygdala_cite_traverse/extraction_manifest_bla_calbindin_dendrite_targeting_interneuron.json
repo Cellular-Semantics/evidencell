@@ -1,0 +1,105 @@
+{
+  "node_id": "bla_calbindin_dendrite_targeting_interneuron",
+  "added_by": "evidence_extraction_bla_calbindin_dendrite_targeting_interneuron_20260615",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/all_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "summaries_read": 21,
+  "skipped_excluded": 4,
+  "skipped_duplicate_ref": 5,
+  "skipped_low_relevance": 6,
+  "entries_written": 0,
+  "fields_populated": [],
+  "fields_with_no_evidence": [
+    "nt_type",
+    "defining_markers",
+    "negative_markers",
+    "morphology",
+    "electrophysiology",
+    "anatomical_location",
+    "synonyms"
+  ],
+  "synonyms_found": [],
+  "excluded_corpus_ids": ["221366115", "252477669", "17223544"],
+  "existing_refs": [
+    "PMID:22726836",
+    "PMID:28453642",
+    "PMID:31193505",
+    "PMID:32144495",
+    "PMID:33837051",
+    "PMID:40686779"
+  ],
+  "entries_processed": [
+    {
+      "source_corpus_id": "264517392",
+      "resolved_ref": "PMID:37884748",
+      "decision": "SKIP",
+      "reason": "HIGH relevance to overall mouse amygdala scRNA-seq taxonomy (130 neuronal types, 56 GABAergic types), but no quote asserts the node-distinguishing properties: calbindin/Calb1 expression, dendrite-targeting morphology, or Calb+/PV- fear-extinction activation. Generic atlas context, not node-specific evidence."
+    },
+    {
+      "source_corpus_id": "232283078",
+      "resolved_ref": "PMID:33837051",
+      "decision": "SKIP",
+      "reason": "Resolved ref PMID:33837051 already in existing refs for this node (duplicate ref)."
+    },
+    {
+      "source_corpus_id": "281382725",
+      "resolved_ref": "PMID:40961182",
+      "decision": "SKIP",
+      "reason": "HIGH relevance to primate amygdala atlas, but quotes concern parvalbumin and somatostatin GABAergic neurons and glutamatergic neurons; no calbindin or dendrite-targeting assertion for this node."
+    },
+    {
+      "source_corpus_id": "3103554",
+      "resolved_ref": "PMID:28453642",
+      "decision": "SKIP",
+      "reason": "Resolved ref PMID:28453642 already in existing refs for this node (duplicate ref). Note: this is the orexin/calbindin fear-extinction paper already cited on the node."
+    },
+    {
+      "source_corpus_id": "250411527",
+      "resolved_ref": "PMID:35841648",
+      "decision": "SKIP",
+      "reason": "About paralaminar immature excitatory neurons; explicitly excitatory (TBR1+/VGLUT2+), not a GABAergic calbindin dendrite-targeting interneuron. No node evidence."
+    },
+    {
+      "source_corpus_id": "4940771",
+      "resolved_ref": "PMID:27767183",
+      "decision": "SKIP",
+      "reason": "Thy1-expressing fear-inhibiting (extinction) BLA neurons; not the calbindin+ dendrite-targeting interneuron. Quotes contain no calbindin or dendrite-targeting assertion for this node."
+    },
+    {
+      "source_corpus_id": "104297085",
+      "resolved_ref": "PMID:31193505",
+      "decision": "SKIP",
+      "reason": "Resolved ref PMID:31193505 already in existing refs for this node (duplicate ref)."
+    },
+    {
+      "source_corpus_id": "17860491",
+      "resolved_ref": "PMID:27053114",
+      "decision": "SKIP",
+      "reason": "LOW relevance; IP3K-A in CeA GABAergic / BLA excitatory neurons. Node markers (Calb1), dendrite-targeting role, and the specific node are not mentioned. Skipped per LOW-relevance rule."
+    },
+    {
+      "source_corpus_id": "280092907",
+      "resolved_ref": "PMID:40686779",
+      "decision": "SKIP",
+      "reason": "Resolved ref PMID:40686779 already in existing refs for this node (duplicate ref). Note: this is the amygdala interneuron physiology review (CB+ dendrite-targeting class) already cited on the node morphology field."
+    },
+    {
+      "source_corpus_id": "221366115",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list."
+    },
+    {
+      "source_corpus_id": "252477669",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list."
+    },
+    {
+      "source_corpus_id": "17223544",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list."
+    }
+  ],
+  "notes": "No new PropertySource entries written. After excluding the 3 excluded corpus IDs (221366115, 252477669, 17223544) and the entries whose resolved refs are already on the node (PMID:33837051 / corpus 232283078; PMID:28453642 / corpus 3103554; PMID:31193505 / corpus 104297085; PMID:40686779 / corpus 280092907), the surviving non-duplicate candidates (264517392, 281382725, 250411527, 4940771->PMID:27767183, 17860491->PMID:27053114) contain no quote asserting this node's distinguishing properties (calbindin/Calb1 expression, dendrite-targeting morphology, or Calb+/PV- fear-extinction activation). All node-specific calbindin/dendrite-targeting evidence in this corpus resolves to refs already cited on the node. Corpus-to-ref resolution used the current paper_catalogue.json (corpusId key). A prior manifest version recorded under a different summaries file (depth_0_summaries.json) and a different corpus->PMID resolution; its two claimed writes (morphology PMID:40686779/quote 280092907_59d9ef89 and defining_markers[Calb1] PMID:31193505/quote 4940771_ef80657d) are already present in the KB YAML and were treated as existing state.",
+  "refs_file_": "references/medial_temporal_lobe_amygdala/references.json"
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "step": "fetch_depth_0",
+    "asta_snippets_returned": 20,
+    "asta_snippets_filtered_title": 1,
+    "asta_snippets_filtered_peer_review": 0,
+    "asta_snippets_used": 18,
+    "gap_papers_count": 3,
+    "fallback_attempted": 3,
+    "fallback_success": 3,
+    "report_summaries_merged": 0,
+    "total_summaries": 21,
+    "paper_ids_queried": 12,
+    "gap_papers": [
+      {"corpus_id": "CorpusId:104297085", "pmcid": "PMC6535623", "fallback_status": "success"},
+      {"corpus_id": "CorpusId:17860491", "pmcid": "PMC4823716", "fallback_status": "success"},
+      {"corpus_id": "CorpusId:280092907", "pmcid": "PMC12272620", "fallback_status": "success"}
+    ],
+    "papers_with_asta_snippets": [
+      "CorpusId:264517392",
+      "CorpusId:232283078",
+      "CorpusId:17223544",
+      "CorpusId:281382725",
+      "CorpusId:3103554",
+      "CorpusId:250411527",
+      "CorpusId:221366115",
+      "CorpusId:252477669",
+      "CorpusId:4940771"
+    ]
+  },
+  {
+    "step": "selection_depth_0",
+    "candidates_evaluated": 9,
+    "selected": 7,
+    "deselected": 2
+  },
+  {
+    "step": "depth_loop_stop",
+    "reason": "All 9 candidates from depth_0_candidate_refs.json are original corpus papers — extract_asta_refs returned source papers rather than their cited references (no genuinely new IDs). Proceeding directly to metadata resolve + synthesis with 21 depth-0 summaries.",
+    "depths_completed": 1,
+    "total_summaries_available": 21
+  },
+  {
+    "step": "synthesis",
+    "summaries_read": 18,
+    "papers_in_catalogue": 11,
+    "themes_identified": [
+      "Transcriptomic taxonomy and molecular identity of amygdala neurons",
+      "BLA principal neurons: the fear / extinction functional dichotomy",
+      "BLA GABAergic interneurons: NPY+ neurogliaform and Calb1+ dendrite-targeting cells",
+      "Central amygdala: striatum-like GABAergic organization",
+      "Paralaminar immature excitatory neurons"
+    ],
+    "papers_cited_in_report": 11,
+    "quotes_used_in_report": 27,
+    "schema_gaps": [
+      "basal_amygdala_fear_neuron:defining_markers",
+      "basal_amygdala_fear_neuron:electrophysiology_class",
+      "basal_amygdala_fear_neuron:morphology_notes",
+      "basal_amygdala_extinction_neuron:defining_markers",
+      "basal_amygdala_extinction_neuron:electrophysiology_class",
+      "basal_amygdala_extinction_neuron:morphology_notes",
+      "bla_npy_neurogliaform_cell:electrophysiology_class",
+      "bla_calbindin_dendrite_targeting_interneuron:defining_markers",
+      "bla_calbindin_dendrite_targeting_interneuron:electrophysiology_class",
+      "bla_calbindin_dendrite_targeting_interneuron:morphology_notes",
+      "cea_large_aspiny_neuron:defining_markers",
+      "cea_large_aspiny_neuron:electrophysiology_class",
+      "cea_large_aspiny_neuron:morphology_notes",
+      "cea_small_aspiny_neuron:defining_markers",
+      "cea_small_aspiny_neuron:electrophysiology_class",
+      "cea_small_aspiny_neuron:morphology_notes",
+      "paralaminar_immature_neuron:electrophysiology_class",
+      "paralaminar_immature_neuron:morphology_notes"
+    ],
+    "new_types_encountered": [
+      "VIP/CR interneuron-selective interneurons",
+      "PV+ basket cells / PV+ axo-axonic cells",
+      "CCK+ basket cells",
+      "SST+ dendrite-targeting interneurons",
+      "GABAergic projection neurons (SST+/nNOS+)",
+      "Intercalated cells (ITCs)",
+      "CeA SST+ and CRF+ neurons"
+    ]
+  }
+]

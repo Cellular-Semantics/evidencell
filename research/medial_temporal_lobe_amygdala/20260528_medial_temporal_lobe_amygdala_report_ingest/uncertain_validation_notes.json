@@ -1,0 +1,349 @@
+{
+  "nodes": {
+    "basal_amygdala_fear_neuron": {
+      "property_support": {
+        "nt_type": {
+          "status": "PARTIAL",
+          "quote_keys": ["4940771_cb8fa215"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Glutamatergic identity is inherited from the BLA principal-neuron class; the new quote characterizes fear vs extinction populations functionally and does not state NT type explicitly.",
+              "quote_keys": ["4940771_cb8fa215"]
+            }
+          ]
+        },
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["4940771_cb8fa215"],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["4940771_cb8fa215"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["4940771_cb8fa215"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No molecular marker is reported for the fear (Fear-On) population in the new PDF; only the extinction/Fear-Off population was molecularly resolved (Ntsr2/Dkk3/Rspo2/Wnt7a). Fear neuron remains functionally/circuit-defined.",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": ["defining_markers", "negative_markers", "neuropeptides", "colocated_types"],
+      "new_evidence_summary": "Cardenas et al. 2019 establishes the fear neuron as one of two functionally distinct, non-overlapping BLA principal-cell populations: activated by the conditioned stimulus, projecting to mPFC. No molecular marker for the fear-specific population.",
+      "overall_confidence": "MODERATE"
+    },
+    "basal_amygdala_extinction_neuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["104297085_710ab8bc", "104297085_20a79f85"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Markers (Ntsr2, Dkk3, Rspo2, Wnt7a) derive from activity-guided RNA-seq of a Thy1-labeled 'Fear-Off' population in mouse; Ntsr2 is the validated handle. Equating the Thy1/Fear-Off molecular population with the Herry 'extinction' neuron is a cross-study inference, not a single-paper identity.",
+              "quote_keys": ["104297085_710ab8bc", "104297085_20a79f85", "4940771_cb8fa215"]
+            }
+          ]
+        },
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["4940771_cb8fa215"],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["4940771_cb8fa215", "104297085_cb656278", "104297085_20a79f85"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["4940771_cb8fa215"],
+          "issues": []
+        },
+        "nt_type": {
+          "status": "PARTIAL",
+          "quote_keys": ["4940771_cb8fa215"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Glutamatergic identity inherited from BLA principal-neuron class; new quotes do not state NT type explicitly.",
+              "quote_keys": ["4940771_cb8fa215"]
+            }
+          ]
+        }
+      },
+      "gaps": ["negative_markers", "neuropeptides", "colocated_types"],
+      "new_evidence_summary": "McCullough et al. 2016 provides activity-guided RNA-seq markers (Ntsr2/Dkk3/Rspo2/Wnt7a) and Ntsr2 validation for a Thy1-labeled Fear-Off BLA population; Cardenas et al. 2019 supplies the functional/circuit definition (extinction-active, reciprocal mPFC input). Strong molecular + functional support, with a cross-study identity inference linking Fear-Off to extinction neurons.",
+      "overall_confidence": "MODERATE"
+    },
+    "bla_npy_neurogliaform_cell": {
+      "property_support": {
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": ["232283078_00bb8003"],
+          "issues": []
+        },
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["232283078_00bb8003"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Neurogliaform morphology is asserted by class name and proportion (14-15% of LA/BA GABAergic) rather than a detailed morphological description in the new quote.",
+              "quote_keys": ["232283078_00bb8003"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["232283078_00bb8003"],
+          "issues": []
+        },
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": ["232283078_00bb8003"],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No transcriptomic/scRNA-seq marker panel for this class in the new PDF; identity remains marker-based (NPY) and morpho-physiological.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "electrophysiology": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No electrophysiological characterization specific to BLA NPY neurogliaform cells in the new PDF.",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": ["electrophysiology", "defining_markers", "negative_markers", "colocated_types"],
+      "new_evidence_summary": "Vereczki et al. 2021 (now an asta_report quote, not just an extraction snippet) anchors the NPY-containing neurogliaform cell as 14-15% of LA/BA GABAergic neurons, with NPY as the defining peptide and GABAergic identity. No ephys or transcriptomic markers added.",
+      "overall_confidence": "MODERATE"
+    },
+    "bla_calbindin_dendrite_targeting_interneuron": {
+      "property_support": {
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["17860491_f1ffddb9"],
+          "issues": []
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": ["17860491_f1ffddb9"],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["17860491_f1ffddb9"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Evidence is activity-dependent recruitment (orexin-1 antagonism during extinction), not intrinsic membrane/firing properties; supports network recruitment rather than a classical ephys profile.",
+              "quote_keys": ["17860491_f1ffddb9"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "PARTIAL",
+          "quote_keys": ["232283078_00bb8003"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "GABAergic identity supported only at the broader LA/BA interneuron-class level (Vereczki 2021), not for a dedicated calbindin dendrite-targeting cluster.",
+              "quote_keys": ["232283078_00bb8003"]
+            }
+          ]
+        }
+      },
+      "gaps": ["morphology", "neuropeptides", "anatomical_location", "colocated_types"],
+      "new_evidence_summary": "Flores et al. 2017 directly supports calbindin (and not parvalbumin) as a marker and shows activity-dependent recruitment of calbindin+ BLA interneurons during fear extinction, strengthening defining and negative markers and providing an activity-linked ephys handle.",
+      "overall_confidence": "MODERATE"
+    },
+    "cea_large_aspiny_neuron": {
+      "property_support": {
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["280092907_110b0323", "17223544_4fda1404", "3103554_aec310ea", "221366115_197a5821"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "All NT support characterizes CeA as a whole (GABAergic / striatum-like), not the large-aspiny subtype specifically. Quotes describe the broader class.",
+              "quote_keys": ["280092907_110b0323", "17223544_4fda1404", "3103554_aec310ea", "221366115_197a5821"]
+            }
+          ]
+        },
+        "morphology": {
+          "status": "PARTIAL",
+          "quote_keys": ["17223544_4fda1404", "3103554_aec310ea"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Morphology support is at the CeA-class level (striatum-like medium spiny / GABAergic projection neurons); the large vs small aspiny distinction itself is not resolved by the new quotes.",
+              "quote_keys": ["17223544_4fda1404", "3103554_aec310ea"]
+            },
+            {
+              "type": "HETEROGENEITY",
+              "description": "Hochgerner et al. 2023 (130 neuronal types) and Paul 2025 indicate CeA contains many transcriptomic types; the large-aspiny morphological class is not mapped to a unique gene-defined type, so it may aggregate multiple molecular types.",
+              "quote_keys": ["264517392_57886ed9", "280092907_110b0323"]
+            }
+          ]
+        }
+      },
+      "gaps": ["electrophysiology", "defining_markers", "negative_markers", "neuropeptides", "anatomical_location", "colocated_types"],
+      "new_evidence_summary": "Multiple new reviews (Paul 2025, Chung 2016, Waclaw 2010, Sarowar 2020) plus the Hochgerner 2023 atlas converge on CeA being predominantly GABAergic / striatum-like medium spiny, but none resolves the large-aspiny subtype as a distinct molecular or electrophysiological type; the size/morphology distinction remains unanchored.",
+      "overall_confidence": "LOW"
+    },
+    "cea_small_aspiny_neuron": {
+      "property_support": {
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": ["280092907_110b0323", "17223544_4fda1404", "3103554_aec310ea", "221366115_197a5821"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "All NT support characterizes CeA as a whole (GABAergic / striatum-like), not the small-aspiny subtype specifically.",
+              "quote_keys": ["280092907_110b0323", "17223544_4fda1404", "3103554_aec310ea", "221366115_197a5821"]
+            }
+          ]
+        },
+        "morphology": {
+          "status": "PARTIAL",
+          "quote_keys": ["17223544_4fda1404", "3103554_aec310ea"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Morphology support is at the CeA-class level; the large vs small aspiny distinction is not resolved by the new quotes.",
+              "quote_keys": ["17223544_4fda1404", "3103554_aec310ea"]
+            },
+            {
+              "type": "HETEROGENEITY",
+              "description": "Hochgerner et al. 2023 (130 neuronal types) and Paul 2025 indicate CeA contains many transcriptomic types; the small-aspiny morphological class is not mapped to a unique gene-defined type.",
+              "quote_keys": ["264517392_57886ed9", "280092907_110b0323"]
+            }
+          ]
+        }
+      },
+      "gaps": ["electrophysiology", "defining_markers", "negative_markers", "neuropeptides", "anatomical_location", "colocated_types"],
+      "new_evidence_summary": "Same converging review/atlas evidence as the large-aspiny node supports CeA GABAergic/striatum-like identity; no new quote distinguishes the small-aspiny subtype molecularly or electrophysiologically.",
+      "overall_confidence": "LOW"
+    },
+    "paralaminar_immature_neuron": {
+      "property_support": {
+        "morphology": {
+          "status": "SUPPORTED",
+          "quote_keys": ["250411527_03961399"],
+          "issues": [
+            {
+              "type": "AMBIGUITY",
+              "description": "Defined by developmental state (immature excitatory neuron, protracted maturation) rather than a mature somatodendritic morphology.",
+              "quote_keys": ["250411527_03961399"]
+            }
+          ]
+        },
+        "electrophysiology": {
+          "status": "PARTIAL",
+          "quote_keys": ["250411527_03961399"],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No mature electrophysiological profile; the quote establishes immature developmental state but not intrinsic membrane properties.",
+              "quote_keys": ["250411527_03961399"]
+            }
+          ]
+        },
+        "nt_type": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "Excitatory (glutamatergic) identity is inferred from 'immature excitatory neurons'; no explicit NT-type assertion in the new quote.",
+              "quote_keys": []
+            }
+          ]
+        },
+        "defining_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            {
+              "type": "GAP",
+              "description": "No scRNA-seq or immunohistochemical marker panel supplied for this type in the new PDF.",
+              "quote_keys": []
+            }
+          ]
+        }
+      },
+      "gaps": ["nt_type", "defining_markers", "negative_markers", "neuropeptides", "anatomical_location", "colocated_types"],
+      "new_evidence_summary": "Page et al. 2022 establishes the paralaminar nucleus as containing a large population of immature excitatory neurons present at birth (some born from transient local progenitors) that persist with protracted maturation through childhood and adolescence. Developmental-state definition; no molecular markers.",
+      "overall_confidence": "MODERATE"
+    }
+  },
+  "round2_targets": [
+    {
+      "node_id": "basal_amygdala_fear_neuron",
+      "property": "defining_markers",
+      "issue": "GAP — no molecular marker for the Fear-On population; identity remains functional/circuit-based.",
+      "quote_keys": [],
+      "action": "Targeted cite-traverse from Herry et al. 2008 / Hochgerner 2023 fear-responsive engram clusters to seek a positive transcriptomic marker for the fear-activated BLA population."
+    },
+    {
+      "node_id": "basal_amygdala_extinction_neuron",
+      "property": "defining_markers",
+      "issue": "AMBIGUITY — Thy1/Fear-Off molecular markers (Ntsr2 etc.) equated with Herry 'extinction' neurons via cross-study inference.",
+      "quote_keys": ["104297085_710ab8bc", "104297085_20a79f85", "4940771_cb8fa215"],
+      "action": "Curator review: confirm whether the KB should treat Thy1/Fear-Off and extinction neuron as the same node or note the identity as a hypothesis; consider a notes field documenting the cross-study link."
+    },
+    {
+      "node_id": "cea_large_aspiny_neuron",
+      "property": "morphology",
+      "issue": "HETEROGENEITY/AMBIGUITY — large vs small aspiny distinction not anchored to any molecular or ephys type; Hochgerner 2023 implies the class may span multiple transcriptomic types.",
+      "quote_keys": ["264517392_57886ed9", "17223544_4fda1404", "3103554_aec310ea"],
+      "action": "map-cell-type against Hochgerner 2023 atlas to test whether large/small aspiny morphological classes correspond to distinct CeA transcriptomic clusters, or flag for possible node merge/deprecation."
+    },
+    {
+      "node_id": "cea_small_aspiny_neuron",
+      "property": "morphology",
+      "issue": "HETEROGENEITY/AMBIGUITY — same as large aspiny; size-based distinction lacks molecular/ephys anchor.",
+      "quote_keys": ["264517392_57886ed9", "17223544_4fda1404", "3103554_aec310ea"],
+      "action": "map-cell-type against Hochgerner 2023 atlas; resolve whether small-aspiny corresponds to a distinct transcriptomic type."
+    },
+    {
+      "node_id": "bla_npy_neurogliaform_cell",
+      "property": "electrophysiology",
+      "issue": "GAP — no ephys characterization specific to this class in the new PDF.",
+      "quote_keys": [],
+      "action": "cite-traverse for patch-clamp/late-spiking neurogliaform characterization in LA/BA, or accept morphological/marker-only definition."
+    },
+    {
+      "node_id": "paralaminar_immature_neuron",
+      "property": "defining_markers",
+      "issue": "GAP — developmental-state definition only; no positive molecular marker.",
+      "quote_keys": [],
+      "action": "cite-traverse / survey for paralaminar nucleus scRNA-seq (e.g., DCX/immature-neuron markers, Sorrells et al.) to add defining_markers and explicit nt_type."
+    }
+  ]
+}

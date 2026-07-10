@@ -1,0 +1,33 @@
+{
+  "node_id": "paralaminar_immature_neuron",
+  "added_by": "evidence_extraction_paralaminar_immature_neuron_20260612",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest/uncertain_all_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded": ["PMID:37315569", "https://doi.org/10.1101/2023.12.14.571621"],
+  "extractions": [
+    {
+      "source_corpus_id": "250411527",
+      "pmid": "PMID:35841648",
+      "doi": "10.1016/j.dcn.2022.101133",
+      "title": "Immature excitatory neurons in the amygdala come of age during puberty.",
+      "field": "anatomical_location[UBERON:0002887].sources",
+      "quote_key": "250411527_03961399",
+      "section": "Paralaminar nucleus immature excitatory neurons",
+      "source_method": "asta_report",
+      "quote": "The PL contains a large population of immature excitatory neurons at birth, some of which may continue to be born from local progenitors. These progenitors disappear rapidly in infancy, but the immature neurons persist throughout childhood and adolescent ages, indicating that they develop on a protracted timeline."
+    }
+  ],
+  "skipped": [
+    {"source_corpus_id": "232283078", "reason": "GABAergic interneuron counts in LA/BA; not PL immature excitatory neuron"},
+    {"source_corpus_id": "264517392", "reason": "general mouse amygdala atlas; no PL/immature-specific evidence"},
+    {"source_corpus_id": "221366115", "reason": "BLA spiny glutamatergic neurons generally; not PL-specific"},
+    {"source_corpus_id": "17223544", "reason": "LA/BLA developmental origin; not PL immature neuron"},
+    {"source_corpus_id": "3103554", "reason": "BLA glutamatergic principal neurons; not PL-specific"},
+    {"source_corpus_id": "280092907", "reason": "LA/BLA glutamatergic excitatory fraction; not PL-specific"},
+    {"source_corpus_id": "281382725", "reason": "primate basolateral complex glutamatergic classes generally; not PL immature-specific"},
+    {"source_corpus_id": "4940771", "reason": "BLA fear/extinction principal neurons; not relevant"},
+    {"source_corpus_id": "104297085", "reason": "Thy1 fear-off BLA neurons; not relevant"},
+    {"source_corpus_id": "17860491", "reason": "BLA GABAergic interneurons; not relevant"}
+  ]
+}

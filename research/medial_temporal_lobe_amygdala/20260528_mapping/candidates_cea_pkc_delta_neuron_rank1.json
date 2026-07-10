@@ -1,0 +1,305 @@
+{
+  "classical_node_id": "cea_pkc_delta_neuron",
+  "classical_node_name": "Central amygdala protein kinase C-delta (PKC-delta) neuron",
+  "taxonomy_id": "CCN20230722",
+  "rank": 1,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_SUPT_1149",
+      "label": "1149 CBX MLI Megf11 Gaba_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_311",
+      "discovery_score": {
+        "score": 3,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 2,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:536",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 3.83,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.959
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.04,
+            "reliable": false,
+            "raw_tier": 1,
+            "applied_score": 1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.0
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0368",
+      "label": "0368 CEA-BST Six3 Cyp26b1 Gaba_2",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_079",
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 2,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:536",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 6.4,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.988
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Sst",
+            "val": 1.45,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.665
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.502,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_0346",
+      "label": "0346 MEA-BST Sox6 Gaba_10",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_073",
+      "discovery_score": {
+        "score": 2,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 2,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:536",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 3.36,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.953
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Sst",
+            "val": 1.02,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.476
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.088,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_1152",
+      "label": "1152 CBX Purkinje Gaba_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_313",
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 2,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:536",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 5.32,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.971
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.41,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.065
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "node_id": "CS20230722_SUPT_1196",
+      "label": "1196 Monocytes NN_1",
+      "taxonomy_level": "supertype",
+      "taxonomy_rank": 1,
+      "nt_type": null,
+      "parent_id": "CS20230722_SUBC_336",
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 2,
+        "rank": 1,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 1,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:536",
+              "nt_type=GABAergic"
+            ]
+          }
+        ],
+        "expression_detail": [
+          {
+            "gene": "Prkcd",
+            "val": 5.75,
+            "reliable": true,
+            "raw_tier": 2,
+            "applied_score": 2.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.976
+              }
+            ],
+            "coverage": 1.0
+          },
+          {
+            "gene": "-Sst",
+            "val": 0.3,
+            "reliable": true,
+            "raw_tier": -1,
+            "applied_score": -1.0,
+            "source": "EXPRESSION",
+            "percentiles": [
+              {
+                "context_id": "cohort",
+                "pct": 0.047
+              }
+            ]
+          }
+        ],
+        "region_fraction": 0.0,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}

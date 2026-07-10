@@ -1,0 +1,93 @@
+[
+  {
+    "proposed_id": "bla_fear_neuron",
+    "name": "Basal amygdala fear neuron",
+    "markers_mentioned": ["Thy1"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["basal amygdala", "basolateral amygdala", "lateral amygdala"],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Spiny glutamatergic principal neuron in BA/BLA; projects to medial prefrontal cortex; does not receive reciprocal mPFC input (distinguishing it from extinction neurons)",
+    "ephys_summary": "Not described in supplied references; defined primarily by activity during conditioned stimulus presentation rather than intrinsic electrophysiological profile",
+    "subtypes_noted": "Functionally distinct from extinction neurons (non-overlapping populations; Herry et al., 2008 via Cardenas et al., 2019); molecular anchoring weak — no dedicated transcriptomic marker panel identified in supplied references",
+    "quote_count": 4
+  },
+  {
+    "proposed_id": "bla_extinction_neuron",
+    "name": "Basal amygdala extinction neuron (Fear-Off neuron)",
+    "markers_mentioned": ["Ntsr2", "Dkk3", "Rspo2", "Wnt7a", "Thy1"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["basal amygdala", "basolateral amygdala"],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Spiny glutamatergic principal neuron in BA/BLA; projects to medial prefrontal cortex and receives reciprocal mPFC input, unlike fear neurons",
+    "ephys_summary": "Not described in supplied references; defined primarily by activity during repeated unreinforced conditioned stimulus presentations (extinction) rather than intrinsic electrophysiology",
+    "subtypes_noted": "Ntsr2-expressing subpopulation validated as putative Fear-Off class (McCullough et al., 2016); Dkk3, Rspo2, Wnt7a co-enriched in Thy1-labeled Fear-Off neurons by RNA-seq",
+    "quote_count": 4
+  },
+  {
+    "proposed_id": "bla_npy_neurogliaform_interneuron",
+    "name": "BLA NPY neurogliaform interneuron",
+    "markers_mentioned": ["NPY"],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": ["NPY"],
+    "anatomy_mentioned": ["lateral amygdala", "basal amygdala", "basolateral amygdala"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Neurogliaform-like morphology; local GABAergic interneuron; constitutes approximately 14-15% of GABAergic cells in LA/BA (Vereczki et al., 2021)",
+    "ephys_summary": "Not described in supplied references",
+    "subtypes_noted": "Distinguished from PV basket cells, CCK basket cells, SST dendrite-targeting cells, and VIP/CR interneuron-selective interneurons in the quantitative LA/BA GABAergic census (Vereczki et al., 2021); no direct patch-seq or scRNA-seq marker panel in supplied references",
+    "quote_count": 1
+  },
+  {
+    "proposed_id": "bla_calbindin_dendrite_targeting_interneuron",
+    "name": "BLA calbindin-positive dendrite-targeting interneuron",
+    "markers_mentioned": ["calbindin", "CALB1"],
+    "negative_markers_mentioned": ["parvalbumin"],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["basolateral amygdala"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Local GABAergic interneuron with dendrite-focused innervation pattern; immunoreactive for calbindin (CB/CALB1); distinct from PV-expressing basket or axo-axonic cells",
+    "ephys_summary": "Not described in supplied references",
+    "subtypes_noted": "Recruited during fear extinction upon orexin-1 receptor blockade (Flores et al., 2017); activity distinct from parvalbumin-positive interneurons in same setting; SST-expressing dendrite-targeting cells (~10-16% of LA/BA GABAergic neurons) noted separately in Vereczki et al., 2021 — relationship to calbindin class not resolved in supplied references",
+    "quote_count": 1
+  },
+  {
+    "proposed_id": "cea_large_aspiny_neuron",
+    "name": "Central amygdala large aspiny neuron",
+    "markers_mentioned": [],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["central amygdala", "central lateral amygdala (CEl)", "central medial amygdala (CEm)"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Large aspiny neuron; morphologically classified striatum-like GABAergic projection neuron in CeA; aspiny (lacking dendritic spines) distinguishes it from glutamatergic principal cells of the BLA",
+    "ephys_summary": "Not described in supplied references",
+    "subtypes_noted": "Classical morphological distinction from small aspiny neurons; modern scRNA-seq (Hochgerner et al., 2023 — 130 neuronal types) provides framework for eventual molecular mapping, but one-to-one transcriptomic marker set not recovered from supplied references",
+    "quote_count": 7
+  },
+  {
+    "proposed_id": "cea_small_aspiny_neuron",
+    "name": "Central amygdala small aspiny neuron",
+    "markers_mentioned": [],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["central amygdala", "central lateral amygdala (CEl)", "central medial amygdala (CEm)"],
+    "nt_type": "GABAergic",
+    "morphology_summary": "Small aspiny neuron; morphologically classified striatum-like GABAergic projection neuron in CeA; size distinguishes it from large aspiny class",
+    "ephys_summary": "Not described in supplied references",
+    "subtypes_noted": "Classical morphological distinction from large aspiny neurons; modern scRNA-seq (Hochgerner et al., 2023) provides atlas framework but one-to-one transcriptomic marker set not recovered from supplied references",
+    "quote_count": 7
+  },
+  {
+    "proposed_id": "pl_immature_excitatory_neuron",
+    "name": "Paralaminar nucleus immature excitatory neuron",
+    "markers_mentioned": [],
+    "negative_markers_mentioned": [],
+    "neuropeptides_mentioned": [],
+    "anatomy_mentioned": ["paralaminar nucleus", "amygdala"],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "Immature excitatory neuron with protracted developmental timeline; persists through childhood and adolescence; born from local progenitors that disappear rapidly in infancy",
+    "ephys_summary": "Not described in supplied references; developmental immaturity implies likely immature electrophysiological properties but not quantified in supplied references",
+    "subtypes_noted": "Defined by developmental state (immature) rather than mature morphological or molecular class; some born from local progenitors present at birth; progenitors disappear in infancy while neurons persist into adolescence (Page et al., 2022); no scRNA-seq marker panel in supplied references",
+    "quote_count": 1
+  }
+]

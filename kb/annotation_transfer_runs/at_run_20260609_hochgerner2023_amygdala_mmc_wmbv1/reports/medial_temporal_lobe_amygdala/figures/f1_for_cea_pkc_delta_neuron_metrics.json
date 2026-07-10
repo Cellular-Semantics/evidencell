@@ -1,0 +1,83 @@
+{
+  "run_id": "at_run_20260609_hochgerner2023_amygdala_mmc_wmbv1",
+  "taxonomy_id": "CCN20230722",
+  "f1_matrix_relpath": "/Users/andrea/Documents/GitHub/evidencell/research/medial_temporal_lobe_amygdala/annotation_transfer/hochgerner2023_amygdala/f1_matrix.csv",
+  "pool_spec": null,
+  "source_filter": [
+    "GABA-9-Prkcd-Ezr"
+  ],
+  "level_order": [
+    "class",
+    "subclass",
+    "supertype",
+    "cluster"
+  ],
+  "rows_by_source_level": {
+    "GABA-9-Prkcd-Ezr": {
+      "class": [
+        {
+          "target_name": "11 CNU-HYa GABA",
+          "node_id": "CS20230722_CLAS_11",
+          "n_cells": 175,
+          "f1": 0.226,
+          "purity": 0.1274,
+          "coverage": 1.0
+        }
+      ],
+      "subclass": [
+        {
+          "target_name": "079 CEA-BST Six3 Cyp26b1 Gaba",
+          "node_id": "CS20230722_SUBC_079",
+          "n_cells": 180,
+          "f1": 0.651,
+          "purity": 0.4826,
+          "coverage": 1.0
+        }
+      ],
+      "supertype": [
+        {
+          "target_name": "0368 CEA-BST Six3 Cyp26b1 Gaba_2",
+          "node_id": "CS20230722_SUPT_0368",
+          "n_cells": 180,
+          "f1": 0.9137,
+          "purity": 0.8411,
+          "coverage": 1.0
+        }
+      ],
+      "cluster": [
+        {
+          "target_name": "1332 CEA-BST Six3 Cyp26b1 Gaba_2",
+          "node_id": "CS20230722_CLUS_1332",
+          "n_cells": 85,
+          "f1": 0.7203,
+          "purity": 0.8416,
+          "coverage": 0.6296
+        },
+        {
+          "target_name": "1334 CEA-BST Six3 Cyp26b1 Gaba_2",
+          "node_id": "CS20230722_CLUS_1334",
+          "n_cells": 39,
+          "f1": 0.4483,
+          "purity": 1.0,
+          "coverage": 0.2889
+        },
+        {
+          "target_name": "1333 CEA-BST Six3 Cyp26b1 Gaba_2",
+          "node_id": "CS20230722_CLUS_1333",
+          "n_cells": 10,
+          "f1": 0.1282,
+          "purity": 0.4762,
+          "coverage": 0.0741
+        },
+        {
+          "target_name": "1335 CEA-BST Six3 Cyp26b1 Gaba_2",
+          "node_id": "CS20230722_CLUS_1335",
+          "n_cells": 1,
+          "f1": 0.0147,
+          "purity": 1.0,
+          "coverage": 0.0074
+        }
+      ]
+    }
+  }
+}

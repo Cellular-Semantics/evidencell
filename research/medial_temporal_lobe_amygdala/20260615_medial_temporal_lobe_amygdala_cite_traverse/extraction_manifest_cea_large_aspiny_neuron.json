@@ -1,0 +1,39 @@
+{
+  "node_id": "cea_large_aspiny_neuron",
+  "added_by": "evidence_extraction_cea_large_aspiny_neuron_20260615",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/all_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_corpus_ids": ["221366115", "252477669", "17223544", "232283078"],
+  "existing_refs": [
+    "PMID:20484636",
+    "PMID:27053114",
+    "PMID:32751957",
+    "PMID:32858950",
+    "PMID:37884748",
+    "PMID:38419794",
+    "PMID:40686779"
+  ],
+  "summaries_read": 21,
+  "skipped_excluded": 9,
+  "skipped_duplicate_ref": 6,
+  "skipped_low_relevance": 6,
+  "entries_written": 0,
+  "fields_populated": [],
+  "fields_with_no_evidence": [
+    "anatomical_location[].sources",
+    "electrophysiology.sources",
+    "morphology.sources",
+    "nt_type.sources",
+    "markers"
+  ],
+  "synonyms_found": [],
+  "refs_file_note": "references/medial_temporal_lobe_amygdala/references.json",
+  "run_notes": [
+    "A prior run of this extraction task already wrote CeA-relevant evidence to the node and committed it. As a result PMID:27053114 (corpus 17860491 / mislabeled 3103554), PMID:37884748 (corpus 264517392) and PMID:40686779 (corpus 280092907) are now present in NODE CONTEXT existing refs and on cea_large_aspiny_neuron.nt_type.sources.",
+    "All evaluatable, CeA-relevant entries in all_summaries.json now resolve to a ref already on the node, so this run adds no new PropertySource entries (no duplicate-write).",
+    "Excluded by corpus id (9 entries): 221366115, 252477669, 17223544, 232283078.",
+    "Skipped as duplicate ref already on node (6 entries): corpus 264517392 x4 -> PMID:37884748; corpus 17860491 x1 -> PMID:27053114; corpus 280092907 x1 -> PMID:40686779.",
+    "Skipped as not relevant to cea_large_aspiny_neuron (6 entries): corpus 281382725 (primate basolateral complex, no CeA/aspiny content), 3103554 (orexin/calbindin BLA extinction), 250411527 x2 (paralaminar immature neurons), 4940771 (Thy1 BLA), 104297085 (calbindin BLA). None mention CeA, large/aspiny morphology, or CeA-specific markers."
+  ]
+}

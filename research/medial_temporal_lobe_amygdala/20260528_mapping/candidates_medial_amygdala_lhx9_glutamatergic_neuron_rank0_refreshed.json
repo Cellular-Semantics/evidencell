@@ -1,0 +1,174 @@
+uv run python -m evidencell.taxonomy_db find-candidates kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml medial_amygdala_lhx9_glutamatergic_neuron CCN20230722 0 5
+  Loaded expression data: 5322 nodes (merged across queried + leaf ranks where applicable)
+Classical node: medial_amygdala_lhx9_glutamatergic_neuron (Medial amygdala Lhx9+ ventral pallial-derived glutamatergic neuron)
+  NT type: Glutamatergic
+  Markers (defining + neuropeptides): ['LHX9']
+  Soma locations: ['UBERON:0002892']
+  Resolved MBA IDs: ['MBA:403']
+  Query rank: 0
+  Taxonomy: CCN20230722
+  AT artifact: not found (proceeding without AT scoring)
+{
+  "classical_node_id": "medial_amygdala_lhx9_glutamatergic_neuron",
+  "classical_node_name": "Medial amygdala Lhx9+ ventral pallial-derived glutamatergic neuron",
+  "taxonomy_id": "CCN20230722",
+  "rank": 0,
+  "n_candidates": 5,
+  "candidates": [
+    {
+      "node_id": "CS20230722_CLUS_0143",
+      "label": "0143 L2/3 IT PIR-ENTl Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0039",
+      "male_female_ratio": 1.13,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 1,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.001,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0194",
+      "label": "0194 MEA Slc17a7 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0055",
+      "male_female_ratio": 2.7,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 2,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.212,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0195",
+      "label": "0195 MEA Slc17a7 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0055",
+      "male_female_ratio": 1.27,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 3,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.401,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0196",
+      "label": "0196 MEA Slc17a7 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0055",
+      "male_female_ratio": 4.88,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 4,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.396,
+        "region_evidence": "SELF"
+      }
+    },
+    {
+      "node_id": "CS20230722_CLUS_0197",
+      "label": "0197 MEA Slc17a7 Glut_1",
+      "taxonomy_level": "cluster",
+      "taxonomy_rank": 0,
+      "nt_type": "Glut",
+      "parent_id": "CS20230722_SUPT_0055",
+      "male_female_ratio": 10.11,
+      "discovery_score": {
+        "score": 1,
+        "rank_in_cohort": 5,
+        "cohort_size": 5,
+        "next_best_score": 1,
+        "rank": 0,
+        "contexts": [
+          {
+            "id": "cohort",
+            "kind": "SURVIVAL_COHORT",
+            "rank": 0,
+            "n_members": 5,
+            "filters": [
+              "region=MBA:403",
+              "nt_type=Glutamatergic"
+            ]
+          }
+        ],
+        "expression_detail": [],
+        "region_fraction": 0.451,
+        "region_evidence": "SELF"
+      }
+    }
+  ]
+}
