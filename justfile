@@ -437,6 +437,17 @@ query-gene-expression taxonomy_id accessions genes:
 
 # ── Reports ────────────────────────────────────────────────────────────────────
 
+# Heat-map of a node's anatomical-location distribution painted onto the brain
+# anatomy ontology hierarchy. Regions clearing --cutoff (default 5%) are shown
+# with connecting ancestors; colour encodes the chosen --metric. Prints ANSI by
+# default; pass --figure-dir DIR to emit a content-hashed PNG (+ .meta.yaml) for
+# embedding in a report.
+# Usage: just anat-heatmap CS20230722_CLUS_0998 CCN20230722 --cutoff 0.05 --root MBA:567
+#        just anat-heatmap CS20230722_CLUS_0998 CCN20230722 --root MBA:567 --figure-dir reports/wmb/figures
+[group('reports')]
+anat-heatmap node_id taxonomy_id *ARGS:
+    uv run python -m evidencell.anat_heatmap {{node_id}} {{taxonomy_id}} {{ARGS}}
+
 # Extract structured report facts JSON (input to synthesis subagent in gen-report workflow)
 [group('reports')]
 gen-facts GRAPH_FILE NODE_ID:
