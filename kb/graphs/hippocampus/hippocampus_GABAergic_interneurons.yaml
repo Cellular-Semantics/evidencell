@@ -1638,47 +1638,439 @@ nodes:
     name: Trilaminar cell
     definition_basis: CLASSICAL_MULTIMODAL
     species:
+
     anatomical_location:
+      # Soma — oriens/alveus border. The previous single entry cited a quote that
+      # did NOT support it (a statement of ambiguity about unlabelled oriens cells).
       - id: UBERON:0014552
         label: CA1 stratum oriens
-        name_in_source: stratum oriens
+        name_in_source: stratum oriens, at the oriens/alveus border
         compartment: SOMA
         sources:
-          - ref: PMID:27997999
-            snippet: The group of unlabeled interneurons recorded in stratum oriens may include O-LM cells, horizontal bistratified, basket and axo-axonic cells and various long-range projecting GABAergic cell types
-            support: SUPPORT
-            source: cite_traverse_2026_04_10
+          - ref: PMID:7472426
+            method: in vivo intracellular labelling
+            scope: rat CA1
+            quote_key: 10664418_0ba8c6f5
+          - ref: PMID:16280590
+            method: in vivo recording and labelling + immunohistochemistry
+            scope: rat CA1 oriens/alveus
+            quote_key: 11109352_ce06dee5
+          - ref: PMID:30084021
+            method: review of morphological reconstructions
+            scope: hippocampal interneurons
+            quote_key: 51930579_fef66b77
+          - ref: PMID:33991454
+            method: whole-cell recording
+            scope: mouse CA1 stratum oriens
+            quote_key: 234597703_ce80332f
+      # Local axon — the three strata that give the type its name.
+      - id: UBERON:0014552
+        label: CA1 stratum oriens
+        name_in_source: stratum oriens (local axon collaterals, densest layer)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:7472426
+            method: in vivo intracellular labelling
+            scope: rat CA1
+            quote_key: 10664418_0ba8c6f5
+          - ref: PMID:30084021
+            method: review of quantitative axon reconstructions
+            scope: rat CA1
+            notes: 12.8% of axon length in stratum oriens.
+            quote_key: 51930579_fef66b77
+      - id: UBERON:0014548
+        label: pyramidal layer of CA1
+        name_in_source: stratum pyramidale (local axon collaterals)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:7472426
+            method: in vivo intracellular labelling
+            scope: rat CA1
+            quote_key: 10664418_0ba8c6f5
+          - ref: PMID:30084021
+            method: review of quantitative axon reconstructions
+            scope: rat CA1
+            notes: >
+              16.7% of axon length in stratum pyramidale; up to 19% of synapses
+              contact pyramidal cell somata.
+            quote_key: 51930579_fef66b77
+      - id: UBERON:0014554
+        label: CA1 stratum radiatum
+        name_in_source: stratum radiatum (local axon collaterals)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:7472426
+            method: in vivo intracellular labelling
+            scope: rat CA1
+            quote_key: 10664418_0ba8c6f5
+          - ref: PMID:30084021
+            method: review of quantitative axon reconstructions
+            scope: rat CA1
+            notes: 68.4% of axon length in stratum radiatum, biased toward proximal radiatum.
+            quote_key: 51930579_fef66b77
+      # Long-range output — the well-established one.
+      - id: UBERON:0002191
+        label: subiculum
+        name_in_source: subiculum (long-range projection via the alveus)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:16280590
+            method: in vivo axon reconstruction
+            scope: rat CA1 to subiculum
+            quote_key: 11109352_6e1a21e0
+          - ref: PMID:17699661
+            method: retrograde tracing + immunohistochemistry
+            scope: rat hippocampus to subiculum
+            quote_key: 12255434_a747f26d
+          - ref: PMID:32016558
+            method: review of own and prior anatomy
+            scope: rat and mouse CA1
+            quote_key: 211024938_f54179c3
+
     nt_type:
       name_in_source: GABAergic
       cl_terms:
         - id: CL:0000617
           label: GABAergic neuron
           name_in_source: GABAergic
-      sources: []
+      sources:
+        - ref: PMID:7472426
+          method: electron microscopy (symmetric synapses onto targets)
+          scope: rat CA1
+          quote_key: 10664418_0ba8c6f5
+        - ref: PMID:42268975
+          method: immunohistochemistry (Chrm2 colocalisation with Gad2)
+          scope: mouse CA1-CA3
+          quote_key: 289175303_54ac3e9e
+
     defining_markers:
-      - symbol: Pvalb
+      - symbol: Chrm2
         ncbi_gene_id:
-      - symbol: M2R
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry (somato-dendritic M2 receptor)
+            scope: rat and mouse CA1/CA3
+            notes: Described as a high level of somato-dendritic M2 receptor.
+            quote_key: 211024938_f54179c3
+          - marker_type: PROTEIN
+            ref: PMID:16280590
+            method: immunohistochemistry (M2 receptor) + in vivo labelling
+            scope: rat CA1 oriens/alveus
+            notes: >
+              Strongly M2-positive; the horizontal M2-immunoreactive oriens/alveus
+              neurons are the most prominent targets of mGluR8-positive synapses.
+            quote_key: 11109352_8a025008
+          - marker_type: PROTEIN
+            ref: PMID:17699661
+            method: immunohistochemistry
+            scope: rat CA1
+            quote_key: 12255434_9720be63
+          - marker_type: PROTEIN
+            ref: PMID:30487571
+            method: immunohistochemistry
+            scope: rat CA1 (cited comparison)
+            quote_key: 53861524_9630c54c
+          - marker_type: TRANSCRIPT
+            ref: PMID:42268975
+            method: in situ colocalisation (Chrm2 with Gad2)
+            scope: mouse CA1-CA3 stratum oriens and pyramidale
+            notes: Sparse Chrm2+ interneurons, a subpopulation negative for Sst and Pvalb.
+            quote_key: 289175303_54ac3e9e
+      - symbol: Ntng1
         ncbi_gene_id:
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: PMID:32016558
+            method: single-cell RNA-seq (cited from Harris et al. 2017)
+            scope: mouse CA1 stratum oriens
+            notes: >
+              TENTATIVE. Katona et al. describe a CGE-derived stratum oriens cluster
+              lacking Sst and Pvalb and expressing Chrm2 and Ntng1 as having a profile
+              "similar to that of trilaminar cells". This is an inference from shared
+              marker profile, not a measurement on morphologically identified cells —
+              no patch-seq or otherwise morphologically anchored transcriptome of this
+              type has been published. See node notes.
+            quote_key: 211024938_016867da
+
     negative_markers:
+      # Sst-negativity is the decisive feature against Sst+ long-range oriens cells
+      # (including CL:4023121 sst chodl GABAergic interneuron).
       - symbol: Sst
+        modifier: ABSENT
         ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry
+            scope: rat and mouse CA1/CA3
+            quote_key: 211024938_f54179c3
+          - marker_type: PROTEIN
+            ref: PMID:17699661
+            method: immunohistochemistry
+            scope: rat CA1
+            quote_key: 12255434_9720be63
+      # Pvalb was previously and incorrectly listed as a DEFINING marker — see node notes.
+      - symbol: Pvalb
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: PMID:32016558
+            method: single-cell RNA-seq (cited from Harris et al. 2017)
+            scope: mouse CA1 stratum oriens
+            notes: >
+              The associated transcriptomic cluster lacks Sst and Pvalb. Parvalbumin
+              in this literature marks the cell's postsynaptic TARGETS, not the cell.
+            quote_key: 211024938_016867da
+      - symbol: Vip
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry
+            scope: rat CA1
+            notes: Differentia against M2+ VIP-LRP (Type I) cells.
+            quote_key: 211024938_9161cd35
+      - symbol: Npy
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry
+            scope: rat CA1
+            notes: Differentia against M2+ VIP-LRP (Type I) cells.
+            quote_key: 211024938_9161cd35
+      - symbol: Calb1
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry
+            scope: rat CA1
+            notes: Calbindin absent from the soma; differentia against M2+ VIP-LRP cells.
+            quote_key: 211024938_9161cd35
+
     neuropeptides: []
+
     cl_mapping:
+
+    proposed_cl_term:
+      label: hippocampal trilaminar cell
+      parent_cl_term:
+        id: CL:1001569
+        label: hippocampal interneuron
+        name_in_source: hippocampal interneuron
+      definition: >
+        A GABAergic interneuron with soma at the stratum oriens/alveus border of
+        hippocampal CA1, whose dendrites remain largely confined to stratum oriens
+        while its local axon distributes across strata oriens, pyramidale and
+        radiatum — the arrangement for which the type is named — and which
+        additionally projects to the subiculum (Sik et al., 1995, PMID:7472426;
+        Ferraguti et al., 2005, PMID:16280590). It expresses a high level of
+        somato-dendritic muscarinic M2 acetylcholine receptor and lacks somatostatin,
+        parvalbumin, vasoactive intestinal peptide, neuropeptide Y and calbindin
+        (Katona et al., 2020, PMID:32016558). Its presynaptic inputs are unusually
+        densely decorated with mGluR8a-containing terminals (PMID:16280590;
+        PMID:32016558). Output synapses are strongly biased toward other interneurons,
+        including parvalbumin-expressing cells, while also contacting pyramidal cell
+        somata (PMID:32016558). Firing falls during movement and rises in prolonged
+        bursts above 200 Hz during slow-wave sleep (PMID:32016558).
+      comment: >
+        Second proposed parent CL:0011005 (GABAergic interneuron) is given in the term
+        request but cannot be expressed here — parent_cl_term is single-valued.
+      term_request_url: https://github.com/obophenotype/cell-ontology/issues/3744
+      status: SUBMITTED
+
     definition_references:
-      - PMID:28646648
+      - PMID:7472426
+      - PMID:16280590
+      - PMID:32016558
+      - PMID:17699661
+      - PMID:30084021
+
     is_terminal: false
-    notes: 'Stub from cite-traverse (2026-04-10). Well-documented by Somogyi lab (Katona et al. 2017). Long-range projection cell distinct from hippocampo-septal cell. PV+/M2R+/SOM-.
 
-      '
     morphology:
-      description: 'Long-range projecting GABAergic interneuron with axon spanning str. oriens, pyramidale, and radiatum (trilaminar). Projects to subiculum and medial septum. Distinguished from HS cell by firing pattern and PV+/M2R+ marker profile.
+      description: >
+        Oblong to elongated soma lying deep in CA1, usually at the stratum
+        oriens/alveus border. The defining feature is a mismatch between a
+        restricted dendritic tree and a broad three-layer axonal arbor: dendrites
+        are largely confined to stratum oriens — horizontally oriented in the
+        classic description, with radial variants reported — while the axon gives
+        collaterals in strata oriens, pyramidale and radiatum. The dendritic field is
+        among the largest sampled in CA1 (~930 um mediolaterally x 1500 um
+        anteroposteriorly), irregularly and sparsely spiny with drumstick-shaped
+        spines. The axon spans >3.3 mm rostrocaudally, is densest at the level of the
+        dendritic field and most widespread in stratum oriens passing into stratum
+        pyramidale; quantitative reconstruction gives ~56,000 um of axon bearing
+        15,767 boutons distributed 12.8% oriens / 16.7% pyramidale / 68.4% radiatum,
+        with up to 19% of synapses contacting pyramidal cell somata. Three main axon
+        branches travel caudally in the alveus and branch extensively across all
+        layers of the subiculum, including its molecular layer. Two Chrm2-positive
+        morphologies have been reported in mouse: one in upper stratum oriens with
+        horizontal dendrites, and one in or near stratum pyramidale with perpendicular
+        dendrites spanning oriens and radiatum.
+      sources:
+        - ref: PMID:7472426
+          method: in vivo intracellular labelling + electron microscopy
+          scope: rat CA1
+          quote_key: 10664418_0ba8c6f5
+        - ref: PMID:16280590
+          method: in vivo labelling + light microscopic reconstruction
+          scope: rat CA1
+          quote_key: 11109352_2c1e25bf
+        - ref: PMID:16280590
+          method: in vivo axon reconstruction
+          scope: rat CA1 to subiculum
+          quote_key: 11109352_6e1a21e0
+        - ref: PMID:30084021
+          method: review of quantitative reconstructions
+          scope: rat CA1
+          quote_key: 51930579_fef66b77
+        - ref: PMID:33991454
+          method: whole-cell recording + morphology
+          scope: mouse CA1 stratum oriens
+          quote_key: 234597703_ce80332f
+        - ref: PMID:42268975
+          method: immunohistochemistry (GAD2+/CHRM2+ morphologies)
+          scope: mouse CA1
+          quote_key: 289175303_007974ab
 
-        '
     electrophysiology:
-      description: 'Unique high-frequency burst firing pattern distinguishing it from other long-range projecting GABAergic cells.
+      description: >
+        Network-state-dependent firing rather than uniform activity across behaviour.
+        In vivo, identified cells fire complex spike bursts during theta oscillations
+        and discharge strongly during sharp wave/ripple events. Recordings in freely
+        moving rats show reduced firing during movement but a substantial increase in
+        activity during slow-wave sleep, including prolonged burst firing above 200 Hz.
+        Commissural stimulation evokes an early EPSP - IPSP - late depolarising
+        potential sequence, placing these cells at a convergence of excitatory and
+        inhibitory CA1 input. Unlike several other CA1 stratum oriens interneurons,
+        including OLM cells, they do not show a sag and rebound response to
+        hyperpolarisation, which serves as a practical discriminator in slice studies.
+      sources:
+        - ref: PMID:16280590
+          method: in vivo recording of an identified cell
+          scope: rat CA1
+          quote_key: 11109352_b3042925
+        - ref: PMID:32016558
+          method: recordings in freely moving rats
+          scope: rat CA1
+          quote_key: 211024938_ee0c9a57
+        - ref: PMID:7472426
+          method: in vivo intracellular recording (commissural stimulation)
+          scope: rat CA1
+          quote_key: 10664418_0ba8c6f5
+        - ref: PMID:33991454
+          method: whole-cell recording (sag/rebound absent)
+          scope: mouse CA1 stratum oriens
+          quote_key: 234597703_ce80332f
 
-        '
+    notes: >
+      Rewritten 2026-09-11 from the ASTA deep research report
+      (inputs/deepsearch/trilaminar_hippocampal_cells.pdf); run
+      asta_ingest_trilaminar_20260911. Previously a cite-traverse stub whose
+      assertions were almost entirely unsourced.
+
+
+      CORRECTION — Pvalb removed from defining_markers. The previous node listed
+      Pvalb as a defining marker with no sources. This is wrong: parvalbumin appears
+      in this literature as a marker of the cell's postsynaptic TARGETS ("a strong
+      bias towards interneurons as targets, including parvalbumin-expressing cells",
+      Katona et al. 2020), and the associated transcriptomic cluster is explicitly
+      Pvalb-negative. Pvalb now sits in negative_markers. The error had consequences:
+      it produced an incorrect CL parent-term proposal (CL:4023018 pvalb GABAergic
+      interneuron) during the 2026-09 CL survey before the report corrected it.
+
+
+      CORRECTION — PMID:28646648 removed from definition_references. It was this
+      node's only reference and is an orphan: absent from references.json and
+      matching none of the 18 corpus IDs linked from the ASTA report. It is not
+      Katona et al. 2017 (that is PMID:27997999).
+
+
+      NOMENCLATURE HAZARD. "Trilaminar cell" has been used for at least three
+      distinct things. (1) This type, as defined by Sik et al. 1995; Ferraguti et al.
+      2005, following Somogyi et al. 2005, stipulated that the name be reserved for
+      it "and not to other different cells that have axons in three layers".
+      (2) A deep CA1 PYRAMIDAL subpopulation expressing Ctip2, Sox5, muscarinic M1
+      receptor, somatostatin and neuropeptide Y, also termed "trilaminar cells"
+      (Slomianka et al. 2011, PMID:21597968) — glutamatergic, NOT this type.
+      (3) "Radial trilaminar cells", with perpendicular rather than horizontal
+      dendrites, possibly a variant of this type or a separate entity. Separately,
+      "trilaminar complex" denotes a BRAIN REGION in the avian literature
+      (PMID:27445724) and is unrelated — that paper is a retrieval false positive in
+      the source report, as are PMID:28066183 (SOD1 acetylation, incidental mention)
+      and, for identity purposes, PMID:42268975 (Rett syndrome; still useful for the
+      Chrm2/Gad2 colocalisation and the two-morphology observation).
+
+
+      CLOSEST CONFUSABLE TYPE. The M2+ VIP-LRP (Type I) cell of Francavilla et al.
+      2018 (PMID:30487571) shares soma position, horizontal dendrites,
+      Sst-negativity and mGluR8a+ inputs. Katona et al. 2020 separate the two by this
+      type's lack of VIP, NPY and calbindin, by a much higher density of mGluR8a+
+      input decoration, and by the three-layer axon (VIP-LRP local collaterals
+      concentrate in oriens/alveus with only a small proportion entering pyramidale
+      and radiatum).
+
+
+      mGluR8a IS AN INPUT PROPERTY, NOT EXPRESSION. The dense mGluR8a decoration
+      characterises the presynaptic terminals innervating these cells — including
+      GABAergic input from the medial septum — and must not be entered as a
+      defining_marker. No schema slot currently represents "presynaptic input
+      receptor decoration"; it is captured in the morphology/marker source notes and
+      in the CL term request only.
+
+
+      SEPTAL PROJECTION DIRECTION DISPUTED. Ferraguti et al. 2005 refer to "their
+      septal projection" and Slomianka et al. 2011 review reports of projections to
+      septum, olfactory bulb and hypothalamus; Katona et al. 2020 report that these
+      cells RECEIVE mGluR8a-enriched GABAergic input FROM the medial septum. Only the
+      CA1-to-subiculum projection is asserted in anatomical_location.
+
+
+      REGIONAL EXTENT. Defined in CA1, where all morphologically identified cells
+      were recovered. Katona et al. 2020 additionally report GABAergic neurons with
+      the molecular features of this type in both CA1 and CA3, in rat and mouse.
+
+
+      OUTPUT TARGET BIAS. Electron microscopy shows output synapses with specialised
+      postsynaptic densities and a strong bias toward interneurons, including
+      parvalbumin-expressing cells, while still contacting pyramidal cell somata and
+      dendrites — making this the fourth identified source of GABA onto pyramidal
+      somata. Ferraguti et al. proposed that strong ripple-associated firing combined
+      with interneuron targeting could silence interneuron classes themselves
+      suppressed during ripples, axo-axonic cells being the likeliest candidates. No
+      schema slot represents postsynaptic target cell class; recorded here only.
+
+
+      CANDIDATE TRANSCRIPTOMIC CORRESPONDENCE (not asserted as a mapping). The
+      Ntng1.Chrm2 class of Harris et al. 2017 (PMID:29912866, GEO:GSE99888) — already
+      ingested here as at_run_20260512_harris_class_mmc_wmbv1 — corresponds to WMBv1
+      supertype 0198 RHP-COA Ndnf Gaba_6 at F1=0.96 (n=66, group purity 0.96, target
+      purity 0.97) and cluster 0704 RHP-COA Ndnf Gaba_6 at F1=0.97, with class-level
+      assignment to 06 CTX-CGE GABA at 0.99 purity, consistent with the reported CGE
+      origin. Two caveats block authoring a mapping edge: the cluster-to-type
+      identification is Katona's inference from shared markers rather than a
+      measurement on identified cells, and the Allen subclass label is
+      retrohippocampal/cortical-amygdalar while the Harris cells are CA1 by
+      dissection. CL term request 3744 states both caveats and proposes no
+      cross-reference. Deciding whether to author an at_source_sets entry and run
+      map-cell-type is deliberately out of scope for this ingest.
+
+
+      CL TERM REQUEST. Filed as obophenotype/cell-ontology#3744 with two proposed
+      parents, CL:1001569 (hippocampal interneuron) and CL:0011005 (GABAergic
+      interneuron); only the first fits parent_cl_term. cl_mapping remains null — no
+      existing CL term is a suitable parent, and CL:4023121 (sst chodl GABAergic
+      interneuron) is excluded because these cells are Sst-negative. The request also
+      asks CL editors for the PRO identifier for CHRM2, which could not be resolved
+      locally.
+
   - id: vip_basket_cell_hippocampus
     name: VIP-positive basket cell
     definition_basis: CLASSICAL_MULTIMODAL
