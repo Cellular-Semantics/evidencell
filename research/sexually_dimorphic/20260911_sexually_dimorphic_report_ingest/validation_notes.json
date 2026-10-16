@@ -1,0 +1,661 @@
+{
+  "run": "20260911_sexually_dimorphic_report_ingest",
+  "region": "sexually_dimorphic",
+  "source_pdf": "inputs/deepsearch/dlBNST_CRF.pdf",
+  "validated_on": "2026-09-11",
+  "references_store": "references/sexually_dimorphic/references.json",
+  "references_store_state": {
+    "entries": 81,
+    "quotes": 171,
+    "quotes_tagged_this_run": 48,
+    "claim_tags_added": 122,
+    "quotes_discarded_as_LOW_relevance": [
+      "20682700_7c28bf32",
+      "20682700_2fe91168",
+      "215732537_10d93049",
+      "215732537_be365745",
+      "231848933_e709b505",
+      "53099693_eb3c9ac4",
+      "252922767_92afcaf8",
+      "274822000_0c9134d1",
+      "274822000_0d994672",
+      "12841367_43700756",
+      "271970510_acaee688",
+      "9464377_98fbfd49"
+    ],
+    "note": "Merge-only update: no quote text, quote_key, or existing claim tag was removed or altered."
+  },
+  "draft_kb": "research/sexually_dimorphic/20260911_sexually_dimorphic_report_ingest/proposed_kb_sexually_dimorphic.yaml",
+  "draft_kb_validation": {
+    "linkml_validate": "PASS (target_class CellTypeMappingGraph)",
+    "quote_key_check": "PASS — every quote_key emitted exists in references.json",
+    "ref_check": "PASS — every PMID:/DOI: ref corresponds to a references.json entry",
+    "ontology_terms_checked": {
+      "CL:4072021": "corticotropin-releasing neuron (cl.db)",
+      "CL:0000617": "GABAergic neuron (cl.db)",
+      "CL:0000679": "glutamatergic neuron (cl.db)",
+      "UBERON:0001880": "bed nucleus of stria terminalis (uberon.db)",
+      "UBERON:0002430": "lateral hypothalamic area (uberon.db)",
+      "UBERON:0001930": "paraventricular nucleus of hypothalamus (uberon.db)",
+      "MBA:351": "Bed nuclei of the stria terminalis — carried over from canonical KB; MBA OBO not cached locally (conf/oak_dbs/mbao.obo absent), so not re-verified this run"
+    }
+  },
+  "node_identity_decisions": [
+    {
+      "proposed_id": "dlbnst_crf_gabaergic_neuron",
+      "resolution": "MERGED_INTO_EXISTING",
+      "existing_id": "bnst_crf_neuron",
+      "rationale": "The proposed type is the same cell type as the existing canonical node bnst_crf_neuron in kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml. No duplicate node was created. The id is unchanged so that edge_bnst_crf_neuron_to_cs20230722_supt_0393 and edge_bnst_crf_neuron_to_cs20230722_supt_0358 remain resolvable."
+    },
+    {
+      "proposed_id": "bnstalg_type_iii_crf_neuron",
+      "resolution": "NEW_NODE",
+      "relationship": "SUBSET of bnst_crf_neuron"
+    },
+    {
+      "proposed_id": "anterior_bnst_crf_glutamatergic_neuron",
+      "resolution": "NEW_NODE",
+      "relationship": "SIBLING of bnst_crf_neuron (non-GABAergic CRF minority)"
+    }
+  ],
+  "corrections_applied_to_existing_node": [
+    {
+      "field": "electrophysiology.description",
+      "defect": "Stated that CRF increases excitability 'specifically in type II dlBNST neurons' (Ide et al. 2013), conflating cells that RESPOND to exogenous CRF with cells that EXPRESS Crh. Ide's type II cells were never shown to be Crh+.",
+      "fix": "Recast: the Ide/Takahashi results are labelled explicitly as local-circuit / pharmacological RESPONSE findings identifying CRF targets (quote_keys 14550592_657c9f06, 201756623_c60073e7, support: PARTIAL). The CRF-associated physiological class is stated separately as Type III (quote_keys 4940077_5b783374, 8615463_87500419), together with the Silberman heterogeneity finding (16233294_39d761a0).",
+      "severity": "HIGH"
+    },
+    {
+      "field": "notes",
+      "defect": "Repeated the same error ('Type II ephys classification within dlBNST').",
+      "fix": "Removed; replaced by an explicit PRIOR KB ERROR CORRECTED paragraph plus the Type III asymmetry caveat."
+    },
+    {
+      "field": "morphology",
+      "defect": "morphology.description held sexual-dimorphism prose (cell size, cell number, gonadal-hormone dependence) rather than morphology. No morphological reconstruction data exist for any of these types in the corpus.",
+      "fix": "morphology block dropped. Dimorphism content relocated to sex_bias: FEMALE_BIASED (structured) plus a SEXUAL DIMORPHISM paragraph in notes citing quote_keys 59307485_a26aefc1 and 279874350_b2b4adba. No morphology was invented.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "nodes": {
+    "bnst_crf_neuron": {
+      "status": "ENRICHED_EXISTING",
+      "overall_confidence": "MODERATE",
+      "property_support": {
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279874350_b2b4adba",
+            "14550592_292dccea",
+            "231848933_2ec86aed",
+            "8615463_e974a9fd",
+            "290417615_314a4bd1",
+            "290417615_819db380",
+            "49903082_10e9aec1"
+          ],
+          "issues": [
+            "Projection targets (LH, PVH) added as AXON_TARGET entries; VTA-projecting dlBNST neurons (234271264_0056cfb7) are reported without CRF-identity confirmation and were NOT added as an axon target."
+          ]
+        },
+        "nt_type": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "4940077_5b783374",
+            "53099693_f0c5c390",
+            "20682700_f320baf2"
+          ],
+          "issues": [
+            "CONTRADICTION-1 (see issues_flagged): only the Nguyen direction P(GABAergic|CRF+) is asserted.",
+            "The 98% figure reaches the KB only through a secondary restatement in Companion et al. 2018; the Nguyen et al. 2016 primary sentence is not in the quote store."
+          ]
+        },
+        "defining_markers": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "4940077_5b783374",
+            "215732537_b9bcb599",
+            "4940077_383bf7ef",
+            "215732537_a72b2aee"
+          ],
+          "issues": [
+            "Crh is well supported. Gad1 and the VGLUT negatives come from rat BNSTALG scRT-PCR (Dabrowska 2013) on a mouse node.",
+            "Oxtr was measured in Type III neurons specifically (18/19), i.e. in the subset, not across the whole CRF population — scope recorded in sources[].notes.",
+            "Grin2d rests on functional NMDAR-current evidence, not a transcript quantification.",
+            "ncbi_gene_id set only for Crh and Calb1 (carried from the canonical KB); left null elsewhere rather than guessed."
+          ]
+        },
+        "negative_markers": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "4940077_383bf7ef",
+            "4940077_5b783374"
+          ],
+          "issues": [
+            "Calb1 (preserved from the canonical KB) carries no sources and no quote_key — pre-existing provenance gap, not introduced here.",
+            "AMBIGUITY-2: Oxt-negativity discriminates against PVN parvocellular CRF neurons, NOT among BNST cell types; recorded as a scope limitation on the marker source and in notes."
+          ]
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "279874350_b2b4adba",
+            "14550592_292dccea",
+            "4940077_5b783374"
+          ],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "16233294_39d761a0",
+            "4940077_5b783374",
+            "8615463_87500419",
+            "14550592_657c9f06",
+            "201756623_c60073e7",
+            "255523774_37605a49"
+          ],
+          "issues": [
+            "Rewritten to correct the prior type II error (see corrections_applied_to_existing_node).",
+            "HETEROGENEITY-1: at least four electrophysiologically separable subtypes among identified mouse BNST CRF neurons — no single e-type can be asserted for this node.",
+            "AMBIGUITY-1: the Type III association is directional (see issues_flagged)."
+          ]
+        },
+        "morphology": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            "No morphological reconstruction data for this population anywhere in the corpus. The only morphology-adjacent datum is the female-biased soma-size difference (Uchida 2019), captured as sex_bias + notes. Nguyen et al. 2016 list marker/morphology correlation as future work."
+          ]
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "231848933_2ec86aed",
+            "49903082_10e9aec1",
+            "195329749_c3edb36b",
+            "231848933_229a693a",
+            "231848933_27d3cac4",
+            "201756623_e388bbee"
+          ],
+          "issues": [
+            "Cck (non-overlapping, medial), Prkcd (ovBNST) and a serotonin-modulated local-circuit Crf interneuron population recorded."
+          ]
+        },
+        "sex_bias": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "59307485_a26aefc1",
+            "279874350_b2b4adba"
+          ],
+          "issues": [
+            "FEMALE_BIASED. Newly added structured field; content relocated from the misfiled morphology block."
+          ]
+        }
+      },
+      "gaps": [
+        "No morphology data.",
+        "No direct Nguyen et al. 2016 quote in references.json — the 98.2% GABAergic figure and the ~8% of adBNST neurons figure are not verbatim-traceable.",
+        "No single-cell transcriptomic cluster identity: BNST scRNA-seq reports 41 transcriptionally distinct types with no dedicated dlBNST CRF cluster (279163821_e4ca09ec).",
+        "Calb1 negative marker has no quote-backed source (pre-existing)."
+      ]
+    },
+    "bnstalg_type_iii_crf_neuron": {
+      "status": "NEW",
+      "overall_confidence": "HIGH (for the rat BNSTALG Type III class as characterised); MODERATE as a subdivision of the mouse bnst_crf_neuron node",
+      "property_support": {
+        "anatomical_location": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "8615463_e974a9fd",
+            "4940077_5b783374"
+          ],
+          "issues": [
+            "Recording sites were mostly BNSTov, with some BNSTju and BNSTal — the class is not uniformly distributed across BNSTALG.",
+            "UBERON:0001880 used rather than MBA because the evidence is rat."
+          ]
+        },
+        "nt_type": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "4940077_5b783374"
+          ],
+          "issues": []
+        },
+        "defining_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "4940077_5b783374",
+            "4940077_383bf7ef",
+            "8615463_a14b307e",
+            "8615463_6a67aab1",
+            "8615463_bc844471",
+            "76666373_ccffc91d"
+          ],
+          "issues": [
+            "Channel subunits are recorded under current gene symbols (Cacna1i, Hcn4, Kcnd2, Kcnj12, Kcnj4) with the source protein names preserved in sources[].notes.",
+            "Kcnc4 (Kv3.4, 9% of Type III) was judged too low-prevalence to assert and is omitted.",
+            "ncbi_gene_id left null throughout — rat IDs were not verifiable offline."
+          ]
+        },
+        "negative_markers": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "4940077_383bf7ef",
+            "8615463_a14b307e",
+            "8615463_1de4a71c",
+            "8615463_3be541ed",
+            "4940077_5b783374"
+          ],
+          "issues": [
+            "Cacna1g, Kcna4 and Htr7 are genuinely discriminative within BNSTALG (they separate Type III from Type II/I). Oxt is not — see AMBIGUITY-2."
+          ]
+        },
+        "neuropeptides": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "4940077_5b783374"
+          ],
+          "issues": []
+        },
+        "electrophysiology": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "8615463_87500419",
+            "8615463_f9227d8a",
+            "8615463_5315ebbf",
+            "4940077_5b783374",
+            "76666373_c8d78753",
+            "201756623_c60073e7",
+            "14550592_657c9f06"
+          ],
+          "issues": [
+            "This is the defining property of the node.",
+            "HETEROGENEITY-2: Type I and III are genetically homogeneous, Type II subdivides into three genetically distinct subgroups."
+          ]
+        },
+        "morphology": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            "No morphological data; classification is physiological + molecular only."
+          ]
+        },
+        "colocated_types": {
+          "status": "SUPPORTED",
+          "quote_keys": [
+            "8615463_87500419",
+            "8615463_5315ebbf",
+            "8615463_a14b307e",
+            "14550592_657c9f06"
+          ],
+          "issues": []
+        },
+        "sex_bias": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            "No sex-difference data for the Type III class. The female-biased dimorphism documented for dlBNST CRF neurons has NOT been shown to apply to Type III specifically, so sex_bias was deliberately not set."
+          ]
+        }
+      },
+      "gaps": [
+        "No morphology.",
+        "No sex-difference data.",
+        "No mouse replication of the Type I-III scheme; all evidence is rat.",
+        "P(Type III | CRF+) unmeasured — see AMBIGUITY-1."
+      ]
+    },
+    "anterior_bnst_crf_glutamatergic_neuron": {
+      "status": "NEW",
+      "overall_confidence": "LOW",
+      "property_support": {
+        "anatomical_location": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "20682700_f320baf2",
+            "53099693_f0c5c390"
+          ],
+          "issues": [
+            "Location is inferred negatively: the population is 'anterior BNST outside dlBNST' because ~98% of dlBNST CRF+ cells are GABAergic. No positive anatomical localisation of glutamatergic CRF cells is reported."
+          ]
+        },
+        "nt_type": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "20682700_f320baf2",
+            "279163821_e4ca09ec"
+          ],
+          "issues": [
+            "Only one primary assertion (Nguyen 2016) that CRH+ BNST cells include a glutamatergic subpopulation. The Ly/Welch 14%-glutamatergic figure is BNST-wide and not CRF-linked."
+          ]
+        },
+        "defining_markers": {
+          "status": "PARTIAL",
+          "quote_keys": [
+            "20682700_f320baf2"
+          ],
+          "issues": [
+            "Crh only. No vesicular glutamate transporter gene is named for this population in the corpus, so none is asserted."
+          ]
+        },
+        "negative_markers": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            "Gad1-ABSENT was deliberately NOT asserted: it would be an inference from the GABAergic/glutamatergic partition, not a measurement."
+          ]
+        },
+        "neuropeptides": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            "Crh is recorded as a defining marker; no neuropeptide block asserted pending a source that characterises peptide content in this subset."
+          ]
+        },
+        "electrophysiology": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            "No recordings of this subset exist; BNST CRF ephys is dominated by the GABAergic dlBNST/BNSTALG population."
+          ]
+        },
+        "morphology": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": [
+            "No morphological data."
+          ]
+        },
+        "colocated_types": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": []
+        },
+        "sex_bias": {
+          "status": "GAP",
+          "quote_keys": [],
+          "issues": []
+        }
+      },
+      "gaps": [
+        "Entire node rests on one primary sentence (20682700_f320baf2).",
+        "Boundary with the GABAergic dlBNST population is undefined — the source report itself flags this.",
+        "No glutamatergic marker gene, no ephys, no morphology, no anatomy beyond 'anterior BNST'.",
+        "The Ly et al. 2025 anteromedial VGluT3 BNST type is NOT CRF-linked and must not be conflated with this node (that type transmits GABA)."
+      ]
+    }
+  },
+  "issues_flagged": [
+    {
+      "id": "AMBIGUITY-1",
+      "type": "AMBIGUITY",
+      "severity": "HIGH",
+      "title": "Type III / CRF asymmetry — Type III is a SUBSET of the CRF population, not a synonym",
+      "detail": "Dabrowska et al. 2013 (quote_key 4940077_5b783374) measure P(CRF mRNA+ | Type III) = 0.95 in rat BNSTALG. The converse, P(Type III | CRF+), is not measured anywhere in the corpus. Silberman et al. 2013 (quote_key 16233294_39d761a0) report AT LEAST FOUR electrophysiologically separable subtypes among identified mouse BNST CRF neurons. Therefore bnst_crf_neuron must NOT be described as 'the Type III population', and the Type III class is modelled as the separate subset node bnstalg_type_iii_crf_neuron.",
+      "affects": [
+        "bnst_crf_neuron.electrophysiology",
+        "bnstalg_type_iii_crf_neuron"
+      ],
+      "quote_keys": [
+        "4940077_5b783374",
+        "16233294_39d761a0",
+        "8615463_5315ebbf"
+      ],
+      "action_taken": "Recorded as an explicit caveat in both nodes' notes and in bnst_crf_neuron.electrophysiology.description; no synonymy asserted."
+    },
+    {
+      "id": "CONTRADICTION-1",
+      "type": "CONTRADICTION",
+      "severity": "HIGH",
+      "title": "Nguyen direction vs Companion converse — P(GABAergic|CRF+) vs P(CRF+|GABAergic)",
+      "detail": "Companion et al. 2018 quote_key 53099693_f0c5c390 states 'within the dlBNST, about 98% of CRF+ neurons are GABAergic (Nguyen et al., 2016)' — i.e. P(GABAergic | CRF+) ~ 0.98. The SAME paper, quote_key 53099693_aa80db1b, states the converse: '98% of GABAergic neurons in the dlBNST entail a CRF phenotype', i.e. P(CRF+ | GABAergic) ~ 0.98. The ASTA report reproduced both directions. These are not equivalent and cannot both hold: the converse would make CRF+ cells almost the entire dlBNST GABAergic population, which is inconsistent with the peptide-defined BNST mosaic (Pdyn, Penk, Nts, Npy, Pnoc, Sst, Tac1, Tac2, Avp; Pkcd/Drd1 in ovBNST — quote_key 231848933_2ec86aed) and with CRH+ cells being a minority of adBNST neurons.",
+      "affects": [
+        "bnst_crf_neuron.nt_type",
+        "anterior_bnst_crf_glutamatergic_neuron.nt_type"
+      ],
+      "quote_keys": [
+        "53099693_f0c5c390",
+        "53099693_aa80db1b",
+        "231848933_2ec86aed"
+      ],
+      "resolution": "Only the Nguyen direction (P(GABAergic | CRF+) ~ 98%) is asserted in the KB. quote_key 53099693_aa80db1b is tagged in references.json with claim 'contradiction_converse_direction' and is NOT used as a source for any property.",
+      "action_taken": "Documented in bnst_crf_neuron.nt_type sources[].notes and in node notes."
+    },
+    {
+      "id": "AMBIGUITY-2",
+      "type": "AMBIGUITY",
+      "severity": "MEDIUM",
+      "title": "Oxt-negative: real, but scoped to the PVN contrast",
+      "detail": "Dabrowska et al. 2013 (quote_key 4940077_383bf7ef) report 0/19 Type III BNSTALG CRF neurons co-expressing Oxt, versus 83% of PVN parvocellular CRF neurons, and conversely 95% OTR+ in Type III versus 0% in PVN. This establishes BNST CRF neurons as a distinct extra-hypothalamic CRF class but does NOT discriminate among BNST cell types — no BNST population is reported as Oxt+.",
+      "affects": [
+        "bnst_crf_neuron.negative_markers",
+        "bnstalg_type_iii_crf_neuron.negative_markers"
+      ],
+      "quote_keys": [
+        "4940077_383bf7ef"
+      ],
+      "action_taken": "Oxt recorded as a negative marker with an explicit SCOPE LIMITATION note on the marker source and in node notes. Downstream mapping should not score Oxt-negativity as discriminative within BNST."
+    },
+    {
+      "id": "AMBIGUITY-3",
+      "type": "AMBIGUITY",
+      "severity": "MEDIUM",
+      "title": "Species mismatch: rat Type I-III scheme applied to a mouse node",
+      "detail": "All Type I-III evidence (Hazra 2011, Dabrowska 2013, Daniel 2019) is rat; bnst_crf_neuron is a mouse node. Silberman et al. note their mouse CRF-neuron subtype count exceeds prior (rat) descriptions, possibly reflecting rat/mouse physiological differences, recording site, or recording conditions.",
+      "affects": [
+        "bnst_crf_neuron.defining_markers",
+        "bnst_crf_neuron.electrophysiology",
+        "bnstalg_type_iii_crf_neuron"
+      ],
+      "quote_keys": [
+        "16233294_39d761a0",
+        "8615463_87500419"
+      ],
+      "action_taken": "bnstalg_type_iii_crf_neuron carries species NCBITaxon:10116 (rat) and a SPECIES caveat in notes; rat-derived markers on the mouse node carry rat scope in sources[].scope."
+    },
+    {
+      "id": "AMBIGUITY-4",
+      "type": "AMBIGUITY",
+      "severity": "MEDIUM",
+      "title": "Untraceable quantitative figures in the ASTA report",
+      "detail": "The figures '98.2% of CRH neurons GABAergic in dorsal lateral BNST' and 'CRH+ cells ~8% of adBNST neurons' (attributed to Nguyen et al. 2016) have no verbatim quote in references.json — only the secondary restatement in Companion et al. 2018. They were therefore NOT written into the KB as numeric assertions.",
+      "affects": [
+        "bnst_crf_neuron.nt_type"
+      ],
+      "quote_keys": [
+        "53099693_f0c5c390"
+      ],
+      "action_taken": "Recorded as a gap and a round 2 retrieval target."
+    },
+    {
+      "id": "AMBIGUITY-5",
+      "type": "AMBIGUITY",
+      "severity": "HIGH",
+      "title": "Boundary between the GABAergic and glutamatergic CRF nodes is undefined",
+      "detail": "anterior_bnst_crf_glutamatergic_neuron is separated from bnst_crf_neuron only by transmitter phenotype, inferred from a single sentence in Nguyen et al. 2016 plus the complementary dlBNST 98% figure. No positive anatomical, molecular or physiological criterion distinguishes the two.",
+      "affects": [
+        "anterior_bnst_crf_glutamatergic_neuron"
+      ],
+      "quote_keys": [
+        "20682700_f320baf2",
+        "53099693_f0c5c390"
+      ],
+      "action_taken": "Node kept with LOW confidence and explicit caveats; no negative markers or NT-marker genes asserted."
+    },
+    {
+      "id": "HETEROGENEITY-1",
+      "type": "HETEROGENEITY",
+      "severity": "HIGH",
+      "title": "BNST CRF neurons are electrophysiologically heterogeneous",
+      "detail": "At least four separable subtypes among identified mouse BNST CRF neurons (Silberman 2013); four functional types among BNST-to-VTA projection neurons, possibly a continuum on a heatmap rather than discrete bins (Miura 2023).",
+      "affects": [
+        "bnst_crf_neuron.electrophysiology"
+      ],
+      "quote_keys": [
+        "16233294_39d761a0",
+        "255523774_37605a49",
+        "255523774_2ea98c72"
+      ],
+      "action_taken": "No single e-type asserted; heterogeneity stated in electrophysiology.description."
+    },
+    {
+      "id": "HETEROGENEITY-2",
+      "type": "HETEROGENEITY",
+      "severity": "LOW",
+      "title": "Type II subdivides; Type I and III do not",
+      "detail": "Hierarchical clustering of ion-channel alpha-subunit transcripts indicates Type I and Type III are genetically homogeneous populations, whereas Type II comprises three genetically distinct subgroups. This supports treating Type III as a coherent class.",
+      "affects": [
+        "bnstalg_type_iii_crf_neuron.electrophysiology"
+      ],
+      "quote_keys": [
+        "8615463_87500419"
+      ],
+      "action_taken": "Stated in electrophysiology.description; strengthens the case for the new node."
+    },
+    {
+      "id": "HETEROGENEITY-3",
+      "type": "HETEROGENEITY",
+      "severity": "MEDIUM",
+      "title": "No dedicated dlBNST CRF transcriptomic cluster",
+      "detail": "Mouse BNST scRNA-seq reports 41 transcriptionally distinct cell types (86% GABAergic, 14% glutamatergic) with no dedicated dlBNST CRF cluster; dBNST clustering recovers Pkcd, Sst, Npy and Lmo4 markers instead. The CRF population probably spans several transcriptomic states.",
+      "affects": [
+        "bnst_crf_neuron",
+        "anterior_bnst_crf_glutamatergic_neuron"
+      ],
+      "quote_keys": [
+        "279163821_e4ca09ec",
+        "231848933_229a693a"
+      ],
+      "action_taken": "Noted as a gap; relevant to the existing mapping edges (SUPT_0393 / SUPT_0358) which remain LOW confidence."
+    },
+    {
+      "id": "CORRECTION-1",
+      "type": "CORRECTION",
+      "severity": "HIGH",
+      "title": "Prior KB conflated CRF targets with CRF-expressing cells (type II error)",
+      "detail": "See corrections_applied_to_existing_node. Ide et al. 2013 type II dlBNST neurons RESPOND to bath-applied CRF and NPY; they are not shown to express Crh. The physiological class associated with CRF identity is Type III.",
+      "affects": [
+        "bnst_crf_neuron.electrophysiology",
+        "bnst_crf_neuron.notes"
+      ],
+      "quote_keys": [
+        "14550592_657c9f06",
+        "201756623_c60073e7",
+        "4940077_5b783374"
+      ],
+      "action_taken": "electrophysiology.description rewritten; notes rewritten; Ide/Takahashi sources carry support: PARTIAL and explanatory notes."
+    },
+    {
+      "id": "CORRECTION-2",
+      "type": "CORRECTION",
+      "severity": "MEDIUM",
+      "title": "Sexual dimorphism was stored in the morphology field",
+      "detail": "See corrections_applied_to_existing_node. Relocated to sex_bias: FEMALE_BIASED plus a notes paragraph; morphology block dropped rather than backfilled with invented content.",
+      "affects": [
+        "bnst_crf_neuron.morphology",
+        "bnst_crf_neuron.sex_bias",
+        "bnst_crf_neuron.notes"
+      ],
+      "quote_keys": [
+        "59307485_a26aefc1",
+        "279874350_b2b4adba"
+      ],
+      "action_taken": "Applied."
+    }
+  ],
+  "round2_targets": [
+    {
+      "target": "Nguyen et al. 2016 (PMID:26718312) full text",
+      "why": "Recover the verbatim primary sentences for (a) the 98.2% GABAergic figure among dlBNST CRH+ cells and (b) CRH+ cells as ~8% of adBNST neurons, and settle CONTRADICTION-1 at source. Currently both reach us only via Companion et al. 2018.",
+      "properties": [
+        "nt_type",
+        "defining_markers"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "target": "Silberman et al. 2013 (PMID:23325234) full text",
+      "why": "Determine whether any of the four CRF-neuron subtypes corresponds to Type III, which would give a first estimate of P(Type III | CRF+) and resolve AMBIGUITY-1.",
+      "properties": [
+        "electrophysiology"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "target": "Uchida et al. 2019 (PMID:30691514) full text",
+      "why": "Extract quantitative soma-size and cell-number statistics, developmental time course, and gonadectomy effects. Currently only the abstract is quoted, so sex_bias: FEMALE_BIASED rests on a summary sentence. May also yield the first genuine morphological measurements for this population.",
+      "properties": [
+        "sex_bias",
+        "morphology"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "target": "Nagano et al. 2015 (cited via Takahashi 2019) primary source",
+      "why": "The 'CRF increases inhibitory synaptic input onto type III neurons' result is currently second-hand.",
+      "properties": [
+        "electrophysiology"
+      ],
+      "priority": "MEDIUM"
+    },
+    {
+      "target": "Welch et al. 2019 (PMID:31178122) BNST scRNA-seq, sex-differential analysis",
+      "why": "Identify which of the 41 BNST transcriptomic types carry Crh and whether any shows sex-differential expression — directly relevant to the two existing LOW-confidence mapping edges and to HETEROGENEITY-3.",
+      "properties": [
+        "defining_markers",
+        "sex_bias",
+        "mapping"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "target": "Marcinkiewcz et al. 2016 (cited via Giardino 2021) primary source",
+      "why": "Characterise the serotonin-modulated local-circuit Crf interneuron population recorded in colocated_types.",
+      "properties": [
+        "colocated_types",
+        "electrophysiology"
+      ],
+      "priority": "LOW"
+    },
+    {
+      "target": "Species-specific NCBI Gene IDs for Gad1, Oxtr, Grin2d, Oxt, Slc17a6/7/8 and the rat channel-subunit genes",
+      "why": "ncbi_gene_id was left null wherever it could not be verified offline. Needed before canonical KB write for marker-based candidate scoring.",
+      "properties": [
+        "defining_markers",
+        "negative_markers"
+      ],
+      "priority": "MEDIUM"
+    },
+    {
+      "target": "Primary source for the Calb1-negative assertion on bnst_crf_neuron",
+      "why": "Pre-existing negative marker with no quote-backed source; it is also the discordant property on edge_bnst_crf_neuron_to_cs20230722_supt_0393 (Calb1=5.57).",
+      "properties": [
+        "negative_markers"
+      ],
+      "priority": "HIGH"
+    },
+    {
+      "target": "Any study reporting a positive glutamatergic marker (Slc17a6/Slc17a7) in BNST Crh+ cells",
+      "why": "anterior_bnst_crf_glutamatergic_neuron currently has no positive transmitter-marker gene; without one the node may not survive review (AMBIGUITY-5).",
+      "properties": [
+        "nt_type",
+        "defining_markers"
+      ],
+      "priority": "HIGH"
+    }
+  ],
+  "summary": {
+    "nodes_validated": 3,
+    "properties_supported": 11,
+    "properties_partial": 7,
+    "properties_gap": 9,
+    "issues_flagged_total": 11,
+    "issues_by_type": {
+      "AMBIGUITY": 5,
+      "CONTRADICTION": 1,
+      "HETEROGENEITY": 3,
+      "CORRECTION": 2
+    },
+    "round2_targets": 9
+  }
+}

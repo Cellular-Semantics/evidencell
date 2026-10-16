@@ -1,0 +1,26 @@
+{
+  "dlbnst_crf_gabaergic_neuron": {
+    "cl_term_id": "CL:4072021",
+    "label": "corticotropin-releasing neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MODERATE",
+    "definition_references": [],
+    "note": "No CL term specific to BNST/dlBNST CRF neurons or GABAergic CRF neurons exists. CL:4072021 'corticotropin-releasing neuron' is the closest existing parent (any CRH-secreting interneuron); its definition lists PVN, hippocampus, piriform area, central amygdalar nucleus, Barrington's nucleus, and inferior olivary complex as locations but does not mention BNST, so this is a BROAD parent mapping, not an exact match. Searches for 'bed nucleus of stria terminalis neuron', 'BNST', 'GABAergic neuron' (CL:0000617/CL:0011005), and 'Type III neuron' in CL returned no more specific candidate. CL:4072021's definition cites 'Peng et al., 2017' in prose only (no PMID/DOI xref exposed via OLS fetch), so no additional seed paper could be extracted. CANDIDATE for a new, more specific CL term (dlBNST/BNSTALG GABAergic CRF neuron) given the well-characterized marker/ephys profile (GAD67+, Oxtr+, VGLUT1-3-, Type III current signature) not captured by any existing term."
+  },
+  "bnstalg_type_iii_crf_neuron": {
+    "cl_term_id": "CL:4072021",
+    "label": "corticotropin-releasing neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "MODERATE",
+    "definition_references": [],
+    "note": "Same anchor as dlbnst_crf_gabaergic_neuron (this is effectively the rat BNSTALG instantiation of the same population, defined additionally by the classic Type III electrophysiological signature: Ih, IA, IT, IK(IR)). No CL term for 'Type III neuron' or any BNSTALG-specific class was found. BROAD mapping to CL:4072021 only; no exact or more specific existing term. No structured PMID/DOI reference recoverable from the CL:4072021 definition via OLS. CANDIDATE for a new term capturing the electrophysiologically-defined BNSTALG Type III CRF class, distinguished from PVN parvocellular CRF neurons by OTR+/Oxt- profile."
+  },
+  "anterior_bnst_crf_glutamatergic_neuron": {
+    "cl_term_id": "CL:4072021",
+    "label": "corticotropin-releasing neuron",
+    "mapping_type": "BROAD",
+    "mapping_confidence": "CANDIDATE",
+    "definition_references": [],
+    "note": "Only CL:4072021 (general CRH-secreting interneuron) is available as a broad parent; CL:0000679 'glutamatergic neuron' was also checked as a candidate second parent (transmitter-defined) but no term intersects CRF identity with glutamatergic phenotype in BNST specifically, and this proposed type is the least well-characterized of the three (no ephys, minimal morphology, inferred largely from transmitter co-labelling). Mapping confidence is CANDIDATE rather than MODERATE given the sparser evidentiary basis (quote_count: 3) and uncertain boundary with the GABAergic dlBNST population noted in the report itself. No structured PMID/DOI reference recoverable from the CL:4072021 definition via OLS."
+  }
+}
