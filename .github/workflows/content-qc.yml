@@ -1,0 +1,53 @@
+name: Content QC
+
+# Provenance sweep over kb/ + reports/: quote_keys, PMIDs, DOIs and AT run_refs
+# must resolve against the validated stores. These are the pre-edit hook's own
+# checks run corpus-wide, which is what catches content written by paths that
+# never fire the hook — scripts, bulk migrations, and PRs from other checkouts.
+#
+# Deliberately a separate workflow from ci.yml so it carries its own README
+# badge, and because it needs no OAK semsql DBs and so runs in seconds.
+#
+# The run is baselined: `qc_content_baseline.json` records the findings that
+# existed when the sweep was introduced, and the job fails only on findings
+# absent from it. That keeps the badge meaningful from day one while the
+# backlog is worked down. When the baseline reaches zero entries, drop the
+# --baseline flag here and delete the file.
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main", "*refactor*"]
+
+jobs:
+  content-qc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --all-groups
+
+      - name: Install just
+        uses: extractions/setup-just@v2
+
+      - name: Content provenance sweep
+        run: just qc-content --baseline
+
+      - name: Upload findings report
+        if: always()
+        run: uv run python -m evidencell.qc_content --json qc-content-findings.json || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qc-content-findings
+          path: qc-content-findings.json
+          if-no-files-found: ignore

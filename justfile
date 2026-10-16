@@ -206,9 +206,28 @@ validate-at-blind *ARGS:
 
 # ── QC (full suite) ────────────────────────────────────────────────────────────
 
+# Content provenance sweep over kb/ + reports/ — quote_keys, PMIDs, DOIs and AT
+# run_refs must resolve against the validated stores. These are the pre-edit
+# hook's checks run corpus-wide, so they also catch writes that bypassed the
+# hook (scripts, bulk migrations, PRs).
+# Usage: just qc-content
+#        just qc-content --kb-only
+#        just qc-content --strict          # warnings count as failures
+#        just qc-content --json report.json
+[group('qc')]
+qc-content *ARGS:
+    uv run python -m evidencell.qc_content {{ARGS}}
+
+# Re-accept all current content findings as the baseline. Run only when
+# deliberately resetting the backlog — never to silence a new failure.
+[group('qc')]
+qc-content-baseline:
+    uv run python -m evidencell.qc_content --write-baseline
+
 # QC gate for all KB graph files — must pass before committing
 [group('qc')]
 qc: validate-all validate-terms
+    just qc-content --baseline
     @echo "All QC checks passed."
 
 # ── Tests ──────────────────────────────────────────────────────────────────────
