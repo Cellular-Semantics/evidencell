@@ -4,12 +4,18 @@
 *Target: a fresh session that HAS `mcp__Asta_semanticscholar__*` available.*
 *Scope deliberately narrow: update `references/hippocampus/references.json` and rewrite ONE KB node. Nothing else.*
 
+> **STATUS: EXECUTED.** Steps 1–4 were carried out and landed in commit `b7cc8de`
+> ("Ingest trilaminar cell ASTA report into references and KB node"); `just qc`
+> passes. This file is retained as the record of what was decided and why — in
+> particular §6, whose out-of-scope items are still open. Two deviations from the
+> plan as written are noted inline at §3c.
+
 ---
 
 ## 0. Context — what already happened
 
 - **Input report:** `inputs/deepsearch/trilaminar_hippocampal_cells.pdf` (17 pp, untracked).
-- **Reference resolution is already done.** `trilaminar_reference_resolution.txt` at repo root holds a corpus-ID → DOI/PMID table for all
+- **Reference resolution is already done.** `reference_resolution.txt` (alongside this plan) holds a corpus-ID → DOI/PMID table for all
   18 corpus IDs linked from the PDF, resolved via the Asta MCP `get_paper_batch` on 2026-09-11. **Read it first —
   do not redo the resolution.** It also records which quoted passages cite Sik et al. 1995.
 - **A CL new term request has already been filed** from this report:
@@ -28,7 +34,7 @@
 |---|---|
 | 1 — deterministic PDF extraction | **RUN IT** |
 | 1b — proposed-types subagent | **SKIP** — the node already exists; no new types are being proposed |
-| 2 — reference resolution | **HALF** — resolution is done (`trilaminar_reference_resolution.txt`); run only the quote-merge half |
+| 2 — reference resolution | **HALF** — resolution is done (`reference_resolution.txt`); run only the quote-merge half |
 | 3 — CL lookup subagent | **SKIP** — done, NTR #3744 filed |
 | 3b — quote→property matching | **RUN, narrowed to one node** |
 | 4 — `[GATE]` human review | **RUN** — but it is now a small diff review |
@@ -87,7 +93,7 @@ differs from expectation — fall back to reading the PDF directly (same output 
 ### 3a. Author resolution (fallback: Asta batch call)
 
 `write_quote_to_refs()` takes `paper_meta` with `title, year, authors, pmid, doi, author_keys,
-resolution_confidence`. **`trilaminar_reference_resolution.txt` has everything except `authors`.** Author shape has broken this
+resolution_confidence`. **`reference_resolution.txt` has everything except `authors`.** Author shape has broken this
 pipeline before — see `planning/minirefs_author_rendering_fix.md` and
 `planning/asta_ingest_lessons_sexually_dimorphic.md` §1–2 — hence `_normalise_authors()`.
 
@@ -95,7 +101,7 @@ Make ONE batch call to fill the gap:
 
 ```
 mcp__Asta_semanticscholar__get_paper_batch(
-    ids=[<the 18 corpus IDs from trilaminar_reference_resolution.txt>],
+    ids=[<the 18 corpus IDs from reference_resolution.txt>],
     fields="title,authors,year,externalIds"
 )
 ```
@@ -115,7 +121,7 @@ published record (`234597703`, PMID:33991454) for citation; keep the preprint on
 
 Put it at `research/_drivers/merge_trilaminar_refs.py`. It should:
 
-1. Load `extracted_quotes.json`, `trilaminar_reference_resolution.txt`'s resolution table (or a small JSON you derive from it), and the
+1. Load `extracted_quotes.json`, `reference_resolution.txt`'s resolution table (or a small JSON you derive from it), and the
    author data from the batch call.
 2. For each quote, call:
    ```python
@@ -149,6 +155,21 @@ strings.
 The other **14 are new**, including the two papers carrying most of the definition:
 **Ferraguti et al. 2005 (PMID:16280590)** and **Katona et al. 2020 (PMID:32016558)**.
 
+> **As executed (2026-09-23), two deviations from this section — both open, neither blocking.**
+>
+> 1. **The Hewitt preprint `232081762` was ingested as its own paper entry** alongside the published
+>    `234597703`. The guidance above was to keep the preprint only if a quote is unique to it, and none
+>    is: its single quote is byte-identical to the published record's (both hash to `…_ce80332f`), so the
+>    store now holds a duplicate. The KB node cites the published key `234597703_ce80332f`; the preprint
+>    entry is unreferenced anywhere in `kb/`, `reports/` or `research/`.
+> 2. **Qian et al. 2018 `92215919` was ingested against the bioRxiv DOI `10.1101/431957` with an empty
+>    `pmid`**, rather than the published *Nature Methods* record PMID:31740815 that the §3 CORRECTION
+>    identified. Its one quote is likewise unreferenced by any node.
+>
+> Neither was fixed in place because `references.py` exposes no removal or amendment path and hard rule 1
+> forbids hand-editing the store. Both are reference-store hygiene, not KB correctness: no assertion in
+> `kb/` rests on either entry. Fix alongside whatever adds an amend/remove path to `references.py`.
+
 ### 3d. Three sources to down-weight
 
 These are retrieval false positives or incidental mentions. Ingest their quotes if you like, but do **not**
@@ -180,7 +201,7 @@ the bad data:
   explicitly *Pvalb-negative*. It almost certainly entered the node as a target-read-as-marker extraction
   error. It moves to `negative_markers`.
 - **`PMID:28646648` must leave `definition_references`.** It is the node's ONLY current reference and it is an
-  orphan: absent from `references.json`, and matching none of the 18 corpus IDs in `trilaminar_reference_resolution.txt`. (An earlier
+  orphan: absent from `references.json`, and matching none of the 18 corpus IDs in `reference_resolution.txt`. (An earlier
   session guessed it was Katona et al. 2017 — it is not; that paper is PMID:27997999.) Replace, don't augment.
 
 So: **delete the existing node, insert the rewritten one.** Write
@@ -351,7 +372,7 @@ Do not do these as part of this ingest. Each is a separate decision.
 
 | File | Why |
 |---|---|
-| `trilaminar_reference_resolution.txt` | corpus-ID → DOI/PMID resolution table; **do not redo this work** |
+| `reference_resolution.txt` | corpus-ID → DOI/PMID resolution table; **do not redo this work** |
 | `reports/hippocampus/cl_term_requests/trilaminar_cell_hippocampus_ntr.md` | what we told CL; the node must agree |
 | `src/evidencell/references.py` | `write_quote_to_refs()` — the only sanctioned path into references.json |
 | `research/_drivers/merge_ingest_into_mapping.py` | fold-driver precedent (note: additive; we need replace) |

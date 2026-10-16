@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Resolve paper metadata for the trilaminar ASTA report via the Europe PMC REST API.
 
-Reads the corpus-ID -> DOI/PMID table in trilaminar_reference_resolution.txt (produced
+Reads the corpus-ID -> DOI/PMID table in reference_resolution.txt (produced
 earlier from Semantic Scholar `get_paper_batch`), then queries Europe PMC for the one
 field that table lacks: full author lists.
 
@@ -18,7 +18,7 @@ Writes {output_dir}/paper_catalogue.json in the shape expected by
 
 Usage:
     python research/_drivers/resolve_trilaminar_refs.py \
-        --table trilaminar_reference_resolution.txt \
+        --table research/hippocampus/trilaminar_20260911/reference_resolution.txt \
         --output-dir research/hippocampus/trilaminar_20260911
 """
 from __future__ import annotations
