@@ -1,0 +1,128 @@
+[
+  {
+    "proposed_id": "dlbnst_crf_gabaergic_neuron",
+    "name": "dorsolateral BNST CRF-expressing GABAergic neuron",
+    "markers_mentioned": [
+      "Crh",
+      "CRF",
+      "Gad1",
+      "GAD67",
+      "Oxtr",
+      "OTR",
+      "Grin2d",
+      "GluN2D",
+      "Slc32a1",
+      "Vgat",
+      "calretinin (dlBNST-selective regional marker)",
+      "HCN1-4",
+      "Cav3.1-3.3",
+      "Kv1.4",
+      "Kv3.4",
+      "Kv4.1-4.3",
+      "Kir2.1-2.4"
+    ],
+    "negative_markers_mentioned": [
+      "Slc17a7 (VGLUT1)",
+      "Slc17a6 (VGLUT2)",
+      "Slc17a8 (VGLUT3)",
+      "Oxt (oxytocin peptide; absent unlike parvocellular PVN CRF neurons)",
+      "Cck (non-overlapping medial BNST population)",
+      "Pkcd (clusters in ovBNST rather than in CRF cells)",
+      "Drd1 (clusters in ovBNST)"
+    ],
+    "neuropeptides_mentioned": [
+      "CRF / corticotropin-releasing factor (Crh) — defining peptide"
+    ],
+    "anatomy_mentioned": [
+      "dorsolateral bed nucleus of the stria terminalis (dlBNST)",
+      "dorsal/lateral anterior BNST; lateral compartment adjacent to medial CCK cells",
+      "BNST anterolateral cell group (BNSTALG)",
+      "middle anterior-posterior BNST, approximately +0.2 to -0.2 mm from bregma in mouse",
+      "oval nucleus (ovBNST) is a discrete subnucleus within the larger dlBNST; Drd1/Pkcd cluster there rather than in CRF cells",
+      "projection targets: lateral hypothalamus (LH, including orexin/hypocretin neurons), paraventricular hypothalamic nucleus (PVH), ventral tegmental area (VTA)-linked pathways, tuberomammillary nucleus",
+      "afferents: CeA/CeL CRF neurons project onto BNSTDL CRF cells; broader amygdala, hypothalamic, hippocampal, prefrontal, insular, thalamic and perirhinal/ectorhinal input"
+    ],
+    "nt_type": "GABAergic (~98% of CRF+ neurons in dlBNST are GABAergic; all tested BNSTALG neurons expressed GAD67 and none expressed VGLUT1-3; a minor glutamatergic CRF subset exists elsewhere in anterior BNST)",
+    "morphology_summary": "No morphological reconstruction data are reported for this population in the report. The only morphology-adjacent statements are the expectation that BNST neurochemical markers may eventually correlate with morphology (Nguyen et al., 2016), and the proposal that some dlBNST neurons act as local-circuit interneurons contacting other dlBNST neuron types.",
+    "ephys_summary": "Not a single membrane-property class. Identified mouse BNST CRF neurons split into at least four electrophysiologically separable subtypes — more diversity than older schemes and notably more than CeA CRF neurons recorded under the same conditions (Silberman et al., 2013). In rat BNSTALG, CRF identity maps strongly onto the classic Type III physiological class (~95% of Type III neurons express CRF mRNA), defined by expression of Ih, IA, IT and IK(IR) and a correlated ion-channel alpha-subunit transcript profile. CRF signalling depolarizes type II dlBNST neurons and increases inhibitory synaptic input onto type III neurons; dopamine and beta-adrenergic stimulation depolarize BNST CRF neurons, and CRF increases excitatory drive onto VTA-projecting BNST neurons. Some apparent subtype structure may reflect different activation states rather than fixed classes.",
+    "subtypes_noted": [
+      "At least four electrophysiologically separable CRF-neuron subtypes in mouse BNST (Silberman et al., 2013)",
+      "Projection-defined subpopulations: LH-projecting Crf-BNST channel (non-overlapping with Cck-BNST), PVH-projecting, and VTA-projecting dlBNST GABAergic CRF cells",
+      "Local-circuit versus long-range projection roles: Crf interneurons modulated by serotonin regulate separate long-range BNST projection neurons",
+      "Transmitter-mixed: predominantly GABAergic in dlBNST/BNSTALG, with glutamatergic CRF subpopulations elsewhere in anterior BNST",
+      "Likely spans several related transcriptomic states rather than one cluster — BNST scRNA-seq identified 41 transcriptionally distinct cell types (~86% GABAergic, 14% glutamatergic); no dedicated dlBNST CRF single-cell cluster is reported",
+      "Embedded in a peptide-defined mosaic (Pdyn, Penk, Nts, Npy, Pnoc, Sst, Tac1, Tac2, Avp; Pkcd/Drd1 in ovBNST) rather than forming an isolated island",
+      "Report frames the population as possibly continuous rather than binned; combinatorial markers (Crh + transmitter genes + receptors + state genes) plus projection target and ephys are proposed for a future taxonomy"
+    ],
+    "quote_count": 41
+  },
+  {
+    "proposed_id": "bnstalg_type_iii_crf_neuron",
+    "name": "BNST anterolateral group Type III CRF neuron",
+    "markers_mentioned": [
+      "Crh",
+      "CRF",
+      "Gad1",
+      "GAD67",
+      "Oxtr",
+      "OTR",
+      "HCN1-4 (Ih)",
+      "Cav3.1-3.3 (IT)",
+      "Kv1.4",
+      "Kv3.4",
+      "Kv4.1-4.3 (IA)",
+      "Kir2.1-2.4 (IK(IR))"
+    ],
+    "negative_markers_mentioned": [
+      "Slc17a7 (VGLUT1)",
+      "Slc17a6 (VGLUT2)",
+      "Slc17a8 (VGLUT3)",
+      "Oxt (oxytocin; 0% co-expression, versus 83% in parvocellular PVN CRF neurons)"
+    ],
+    "neuropeptides_mentioned": [
+      "CRF / corticotropin-releasing factor (Crh)"
+    ],
+    "anatomy_mentioned": [
+      "anterolateral cell group of the bed nucleus of the stria terminalis (BNSTALG), rat",
+      "overlaps the dlBNST territory; explicitly contrasted with parvocellular CRF neurons of the paraventricular hypothalamic nucleus (PVN)"
+    ],
+    "nt_type": "GABAergic (all BNSTALG neurons tested expressed GAD67 mRNA; none expressed VGLUT1-3)",
+    "morphology_summary": "No morphological data reported. The classification is physiological and molecular (membrane currents plus ion-channel alpha-subunit transcripts), with the authors noting that neurochemical markers in BNST may in future be correlated with morphology.",
+    "ephys_summary": "One of three physiologically and genetically distinct BNSTALG subclasses (Type I-III) defined primarily by expression of four membrane currents: Ih, IA, IT and IK(IR). Hierarchical cluster analysis plus discriminant function analysis of ion-channel alpha-subunit mRNA segregated neurons into three groups matching the existing electrophysiological Type I-III classification. Type III neurons are the putative CRF class (~95% express CRF mRNA). Type III neurons receive increased inhibitory synaptic input under CRF signalling and, unlike type II, do not respond to CRF and NPY directly.",
+    "subtypes_noted": [
+      "Type I and Type III appear genetically homologous populations, whereas Type II can be further subdivided into three genetically distinct subgroups (Hazra et al., 2011)",
+      "Distinguished from parvocellular PVN CRF neurons by OTR expression (95% versus 0%) and absence of oxytocin co-expression — supports a separate extra-hypothalamic CRF cell class",
+      "Report notes functional types may lie on a continuum rather than in rigid bins; pairing physiology with transcriptomics is proposed to resolve this"
+    ],
+    "quote_count": 4
+  },
+  {
+    "proposed_id": "anterior_bnst_crf_glutamatergic_neuron",
+    "name": "anterior BNST CRF-expressing glutamatergic neuron",
+    "markers_mentioned": [
+      "Crh",
+      "CRF / corticotropin-releasing hormone",
+      "vesicular glutamate transporter expression (glutamatergic phenotype)"
+    ],
+    "negative_markers_mentioned": [
+      "Gad1 / GAD67 (GABAergic markers; this subset is the non-GABAergic minority)"
+    ],
+    "neuropeptides_mentioned": [
+      "CRF / corticotropin-releasing factor (Crh)"
+    ],
+    "anatomy_mentioned": [
+      "anterior bed nucleus of the stria terminalis (outside the dlBNST core)",
+      "glutamatergic neurons reported as ~14% of dorsal BNST and ~31% of ventral BNST",
+      "an anteromedial BNST VGluT3-expressing cell type was identified transcriptomically (Ly et al., 2025); not explicitly linked to CRF"
+    ],
+    "nt_type": "glutamatergic",
+    "morphology_summary": "No morphological data reported. The population is defined by genetic cell targeting plus immunochemical staining (Nguyen et al., 2016), with morphological correlation explicitly listed as future work.",
+    "ephys_summary": "No electrophysiological characterisation of this subset is reported. Its existence is inferred from transmitter-marker co-labelling rather than from recordings; ephys work on BNST CRF neurons is dominated by the GABAergic dlBNST/BNSTALG population.",
+    "subtypes_noted": [
+      "Minority subpopulation: within dlBNST ~98% of CRF+ neurons are GABAergic, so this glutamatergic subset is largely extra-dlBNST within anterior BNST",
+      "Parallel from PVN single-cell work: Crh+ neurons there split into five clusters, clusters 1/3/4 primarily glutamatergic and 2/5 GABAergic, with highly subtype-specific stress responses — an interpretive frame, not direct BNST evidence",
+      "Boundary with the GABAergic type is uncertain; the report treats CRF as only the first layer of identity and calls for combinatorial marker definitions"
+    ],
+    "quote_count": 3
+  }
+]
