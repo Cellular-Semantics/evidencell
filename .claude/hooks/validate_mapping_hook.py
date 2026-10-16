@@ -307,6 +307,30 @@ def main():
             if not ok_terms:
                 errors_found = True
 
+    # ── Coverage report ───────────────────────────────────────────────────
+    # Every provenance check in validate.py returns [] when its backing store
+    # is absent, so "passed" has meant anything from "all checks ran and were
+    # clean" to "no check could run at all". Three separate blind spots this
+    # week traced to that ambiguity — most sharply the regions with no
+    # references.json, where the anti-hallucination guard is wholly inert.
+    # Say which checks actually ran.
+    skipped: list[str] = []
+    if not refs_path.exists():
+        which = "quote_key, PMID/DOI, flat citations" if is_yaml else "quote_key, PMID"
+        skipped.append(f"{which} — no {refs_path.parent.name}/references.json")
+    if is_yaml and not at_run_index_path().exists():
+        skipped.append("AT run_ref — no annotation_transfer_runs/index.yaml")
+    if is_yaml and not schema_path.exists():
+        skipped.append("LinkML schema — schema file absent")
+    if is_report and not (refs_path.parent / "term_index.json").exists():
+        skipped.append("ontology CURIEs — no term_index.json (never generated)")
+
+    if skipped:
+        print("", file=sys.stderr)
+        print("Checks NOT run for this file:", file=sys.stderr)
+        for s in skipped:
+            print(f"  - {s}", file=sys.stderr)
+
     if errors_found:
         print("=" * 60, file=sys.stderr)
         print("BLOCKING EDIT: Validation failed", file=sys.stderr)
@@ -314,7 +338,12 @@ def main():
         print("=" * 60 + "\n", file=sys.stderr)
         sys.exit(2)
 
-    print("Validation passed - allowing edit", file=sys.stderr)
+    if skipped:
+        print("", file=sys.stderr)
+        print(f"Validation passed ({len(skipped)} check group(s) could not run "
+              f"— see above) - allowing edit", file=sys.stderr)
+    else:
+        print("Validation passed (all checks ran) - allowing edit", file=sys.stderr)
     print("=" * 60 + "\n", file=sys.stderr)
     sys.exit(0)
 

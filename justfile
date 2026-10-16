@@ -229,6 +229,13 @@ qc-content *ARGS:
 fetch-reference *ARGS:
     uv run python -m evidencell.fetch {{ARGS}}
 
+# Drop baseline entries whose findings no longer occur. Removes only — it can
+# never accept a new failure. Run after fixing content; a stale entry would
+# otherwise silently re-accept the same bad citation if it came back.
+[group('qc')]
+qc-content-prune:
+    uv run python -m evidencell.qc_content --prune-baseline
+
 # Re-accept all current content findings as the baseline. Run only when
 # deliberately resetting the backlog — never to silence a new failure.
 [group('qc')]

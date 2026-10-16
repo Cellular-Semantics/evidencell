@@ -1,12 +1,11 @@
 {
-  "_comment": "Known content-QC findings accepted at baseline time. `just qc-content --baseline` fails only on findings absent from this list, so CI catches regressions while the backlog is worked down. Remove entries as they are fixed; the goal is an empty list, at which point drop --baseline from CI.",
+  "_comment": "Known content-QC findings accepted at baseline time. `just qc-content --baseline` fails only on findings absent from this list, so CI catches regressions while the backlog is worked down. Remove entries as they are fixed (see `just qc-content-prune`); the goal is an empty list, at which point drop --baseline from CI.",
   "accepted": [
     "kb/graphs/BG/GPi_shell_neuron.yaml\tno_refs_store\treferences/BG/references.json does not exist, but this file carries 4 citation(s)/quote_key(s). Every provenance check is vacuous for region 'BG' \u2014 ingest the references to enable them.",
     "kb/graphs/BG/GPi_shell_neuron_Mmus.yaml\tno_refs_store\treferences/BG/references.json does not exist, but this file carries 5 citation(s)/quote_key(s). Every provenance check is vacuous for region 'BG' \u2014 ingest the references to enable them.",
     "kb/graphs/cerebellum/CB_PLI_types.yaml\tno_refs_store\treferences/cerebellum/references.json does not exist, but this file carries 15 citation(s)/quote_key(s). Every provenance check is vacuous for region 'cerebellum' \u2014 ingest the references to enable them.",
     "kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml\tflat_citation\tdefinition_references: 'PMID:29412992' not found in references.json. Either ingest the paper or remove the citation.",
     "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml\tflat_citation\tdefinition_references: 'PMID:10818134' not found in references.json. Either ingest the paper or remove the citation.",
-    "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml\tflat_citation\tdefinition_references: 'PMID:28646648' not found in references.json. Either ingest the paper or remove the citation.",
     "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml\tflat_citation\tdefinition_references: 'PMID:34250732' not found in references.json. Either ingest the paper or remove the citation.",
     "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml\trationale_stale\tEdge 'edge_bistratified_cell_hippocampus_to_CS20230722_CLUS_0737': rationale stale \u2014 stored hash 65ac6f7a, current e5140255. Regenerate report via just gen-report-node.",
     "kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml\trationale_stale\tEdge 'edge_bistratified_cell_hippocampus_to_CS20230722_SUPT_0206': rationale stale \u2014 stored hash 8c722d22, current 9b5f1014. Regenerate report via just gen-report-node.",

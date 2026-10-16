@@ -272,9 +272,19 @@ def load_baseline(path: Path) -> set[str]:
     return set(data.get("accepted", []))
 
 
-def write_baseline(path: Path, result: SweepResult) -> int:
-    """Record every current finding as accepted. Returns the count written."""
-    accepted = sorted({_fingerprint(f) for f in result.findings})
+def stale_baseline_entries(path: Path, result: SweepResult) -> set[str]:
+    """Baseline entries for findings that no longer occur.
+
+    A stale entry is a live regression hole: it keeps granting a fixed finding
+    permission to fail, so re-introducing it passes silently. PMID:28646648 —
+    a bacteriophage paper cited as a cell-type definition — became stale the
+    moment the trilaminar ingest corrected it, and would have been re-accepted
+    without complaint. Report these so the baseline shrinks instead of rotting.
+    """
+    return load_baseline(path) - {_fingerprint(f) for f in result.findings}
+
+
+def _write_baseline_file(path: Path, accepted: list[str]) -> int:
     path.write_text(
         json.dumps(
             {
@@ -282,10 +292,11 @@ def write_baseline(path: Path, result: SweepResult) -> int:
                     "Known content-QC findings accepted at baseline time. "
                     "`just qc-content --baseline` fails only on findings absent "
                     "from this list, so CI catches regressions while the backlog "
-                    "is worked down. Remove entries as they are fixed; the goal "
-                    "is an empty list, at which point drop --baseline from CI."
+                    "is worked down. Remove entries as they are fixed (see "
+                    "`just qc-content-prune`); the goal is an empty list, at "
+                    "which point drop --baseline from CI."
                 ),
-                "accepted": accepted,
+                "accepted": sorted(accepted),
             },
             indent=2,
         )
@@ -293,6 +304,16 @@ def write_baseline(path: Path, result: SweepResult) -> int:
         encoding="utf-8",
     )
     return len(accepted)
+
+
+def write_baseline(path: Path, result: SweepResult) -> int:
+    """Record every current finding as accepted. Returns the count written."""
+    return _write_baseline_file(path, sorted({_fingerprint(f) for f in result.findings}))
+
+
+def prune_baseline(path: Path, kept: list[str]) -> int:
+    """Rewrite the baseline with `kept` only. Removes; never accepts."""
+    return _write_baseline_file(path, kept)
 
 
 def _render(result: SweepResult, strict: bool) -> str:
@@ -351,6 +372,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--write-baseline", metavar="PATH", nargs="?",
                     const="qc_content_baseline.json",
                     help="record all current findings as accepted, then exit 0")
+    ap.add_argument("--prune-baseline", metavar="PATH", nargs="?",
+                    const="qc_content_baseline.json",
+                    help="drop baseline entries whose findings no longer occur "
+                         "(removes only; never accepts anything new)")
     args = ap.parse_args(argv)
 
     result = run_sweep(
@@ -379,6 +404,20 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Wrote {n} accepted finding(s) to {args.write_baseline}")
         return 0
 
+    if args.prune_baseline:
+        bl_path = Path(args.prune_baseline)
+        stale = stale_baseline_entries(bl_path, result)
+        if not stale:
+            print(f"{args.prune_baseline}: nothing stale — no change.")
+            return 0
+        kept = sorted(load_baseline(bl_path) - stale)
+        prune_baseline(bl_path, kept)
+        print(f"Pruned {len(stale)} fixed finding(s); {len(kept)} remain:")
+        for s in sorted(stale):
+            path, check, msg = s.split("\t")
+            print(f"  - [{check}] {path}: {msg[:72]}")
+        return 0
+
     if not args.as_json or args.as_json != "-":
         print(_render(result, args.strict))
 
@@ -386,17 +425,32 @@ def main(argv: list[str] | None = None) -> int:
                if f.severity == ERROR or (args.strict and f.severity == WARN)]
 
     if args.baseline:
-        accepted = load_baseline(Path(args.baseline))
+        bl_path = Path(args.baseline)
+        accepted = load_baseline(bl_path)
         known = [f for f in failing if _fingerprint(f) in accepted]
         failing = [f for f in failing if _fingerprint(f) not in accepted]
+        stale = stale_baseline_entries(bl_path, result)
         print(
             f"\nBaseline {args.baseline}: {len(accepted)} accepted, "
-            f"{len(known)} matched, {len(failing)} new"
+            f"{len(known)} matched, {len(failing)} new, {len(stale)} stale"
         )
         if failing:
             print("\nNEW findings not in baseline:")
             for f in failing:
                 print(f"  [{f.severity:5}] {f.path}: {f.check}: {f.message}")
+        if stale:
+            # Not a failure — the underlying content got fixed, which is the
+            # goal. But each stale entry is a hole until it is removed.
+            one = len(stale) == 1
+            print(
+                f"\n{len(stale)} baseline entr{'y' if one else 'ies'} no longer "
+                f"occur{'s' if one else ''} — fixed. Prune with "
+                f"`just qc-content-prune` so {'it cannot' if one else 'they cannot'} "
+                f"be silently re-accepted:"
+            )
+            for s in sorted(stale):
+                path, check, msg = s.split("\t")
+                print(f"  [{check}] {path}: {msg[:72]}")
 
     return 1 if failing else 0
 

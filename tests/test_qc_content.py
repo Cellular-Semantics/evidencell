@@ -13,7 +13,9 @@ from evidencell.qc_content import (
     Finding,
     _fingerprint,
     load_baseline,
+    prune_baseline,
     run_sweep,
+    stale_baseline_entries,
     sweep_kb_file,
     write_baseline,
 )
@@ -186,6 +188,66 @@ def test_baseline_does_not_absorb_a_new_finding(tmp_path):
     new = [f for f in run_sweep(root).errors if _fingerprint(f) not in accepted]
     assert len(new) == 1
     assert "77777777" in new[0].message
+
+
+def test_stale_entries_detected_when_content_is_fixed(tmp_path):
+    """A fixed finding leaves a baseline entry that would re-accept a regression."""
+    root = _mini_repo(
+        tmp_path,
+        refs=REFS_OK,
+        graph={"nodes": [{"id": "n1", "definition_references": ["PMID:99999999"]}]},
+    )
+    bl = tmp_path / "baseline.json"
+    write_baseline(bl, run_sweep(root))
+
+    # Content fixed: the bad citation is replaced with a resolvable one.
+    (root / "kb/graphs/hippocampus/graph.yaml").write_text(
+        yaml.safe_dump({"nodes": [{"id": "n1", "definition_references": ["PMID:12345678"]}]}),
+        encoding="utf-8",
+    )
+    stale = stale_baseline_entries(bl, run_sweep(root))
+    assert len(stale) == 1
+    assert "99999999" in next(iter(stale))
+
+
+def test_pruning_closes_the_regression_hole(tmp_path):
+    root = _mini_repo(
+        tmp_path,
+        refs=REFS_OK,
+        graph={"nodes": [{"id": "n1", "definition_references": ["PMID:99999999"]}]},
+    )
+    bl = tmp_path / "baseline.json"
+    write_baseline(bl, run_sweep(root))
+    good = {"nodes": [{"id": "n1", "definition_references": ["PMID:12345678"]}]}
+    gpath = root / "kb/graphs/hippocampus/graph.yaml"
+    gpath.write_text(yaml.safe_dump(good), encoding="utf-8")
+
+    stale = stale_baseline_entries(bl, run_sweep(root))
+    prune_baseline(bl, sorted(load_baseline(bl) - stale))
+
+    # The bad citation comes back; the pruned baseline must not absorb it.
+    gpath.write_text(
+        yaml.safe_dump({"nodes": [{"id": "n1", "definition_references": ["PMID:99999999"]}]}),
+        encoding="utf-8",
+    )
+    accepted = load_baseline(bl)
+    new = [f for f in run_sweep(root).errors if _fingerprint(f) not in accepted]
+    assert len(new) == 1
+    assert "99999999" in new[0].message
+
+
+def test_prune_never_accepts_anything_new(tmp_path):
+    """Pruning may only remove entries, never add them."""
+    root = _mini_repo(
+        tmp_path,
+        refs=REFS_OK,
+        graph={"nodes": [{"id": "n1", "definition_references": ["PMID:99999999"]}]},
+    )
+    bl = tmp_path / "baseline.json"
+    write_baseline(bl, run_sweep(root))
+    before = load_baseline(bl)
+    prune_baseline(bl, sorted(before - stale_baseline_entries(bl, run_sweep(root))))
+    assert load_baseline(bl) <= before
 
 
 def test_load_baseline_missing_file_is_empty(tmp_path):
