@@ -7,7 +7,10 @@ YAML checks (in order):
 2. Structural integrity (duplicate IDs, dangling edges, placeholder snippets, accessions)
 3. Quote key provenance: every quote_key must exist in references.json
 4. Reference PMID/DOI provenance: every PMID:/DOI: ref must exist in references.json
-5. LinkML schema conformance (subprocess; skipped if schema file absent)
+5. Flat citation lists (definition_references, xrefs, prior_reference) — same
+   provenance rule, for fields that hold bare citation strings rather than
+   `ref:`-keyed objects
+6. LinkML schema conformance (subprocess; skipped if schema file absent)
 
 Markdown report checks:
 1. Unannotated blockquotes (missing <!-- quote_key: X --> annotation)
@@ -35,6 +38,7 @@ from evidencell.validate import (  # noqa: E402
     simulate_edit,
     structural_checks,
     check_quote_keys,
+    check_flat_ref_pmids,
     check_ref_pmids,
     check_run_refs,
     linkml_validate,
@@ -255,6 +259,21 @@ def main():
             if ref_errors:
                 print("Reference provenance errors:", file=sys.stderr)
                 for e in ref_errors:
+                    print(f"  - {e}", file=sys.stderr)
+                errors_found = True
+
+        # 3a. Flat citation lists (definition_references, xrefs, prior_reference).
+        # _collect_refs only yields values keyed `ref:`, so these lists were
+        # invisible to check 3 above and citations could be written straight to
+        # disk unvalidated. That is how PMID:28646648 — a bacteriophage genomics
+        # paper — came to sit on trilaminar_cell_hippocampus for six months,
+        # while the correct PMID for the same corpus ID was already in
+        # references.json. Resolve corpus IDs with `just fetch-reference`.
+        if isinstance(doc, dict):
+            flat_errors = check_flat_ref_pmids(doc, refs_path)
+            if flat_errors:
+                print("Flat citation-list provenance errors:", file=sys.stderr)
+                for e in flat_errors:
                     print(f"  - {e}", file=sys.stderr)
                 errors_found = True
 
