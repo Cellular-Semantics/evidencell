@@ -1,0 +1,872 @@
+# Draft KB — sexually_dimorphic (dlBNST CRF neurons)
+# Source: ASTA deep research report — inputs/deepsearch/dlBNST_CRF.pdf
+#   plus targeted full-text retrieval (Hazra et al. 2011 body text; Daniel et al. 2019)
+# Ingestion date: 2026-09-11
+# Status: DRAFT — NOT for direct write into kb/. Human gate required.
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest (dlBNST_CRF run)
+#
+# Relationship to the canonical KB
+# --------------------------------
+# `bnst_crf_neuron` ALREADY EXISTS in
+#   kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml
+# and is referenced by two mapping edges
+#   (edge_bnst_crf_neuron_to_cs20230722_supt_0393, edge_bnst_crf_neuron_to_cs20230722_supt_0358).
+# The node below is an ENRICHMENT of that node: the id is unchanged and every
+# pre-existing property is preserved, except for two documented corrections
+# (see notes on the node and validation_notes.json):
+#   1. electrophysiology.description previously attributed CRF identity to
+#      'type II' dlBNST neurons (Ide et al. 2013). Ide's type II cells are cells
+#      that RESPOND to exogenous CRF; they are not shown to express Crh. Recast as
+#      a pharmacological/local-circuit result, with the Type III association
+#      (Dabrowska et al. 2013; Hazra et al. 2011) stated separately.
+#   2. morphology.description previously held sexual-dimorphism prose (cell size,
+#      cell number, gonadal-hormone dependence). That is not morphology and the
+#      corpus contains NO morphological reconstruction data for any of these
+#      types. The content moves to sex_bias + notes; the morphology block is dropped.
+#
+# Two new nodes are proposed:
+#   bnstalg_type_iii_crf_neuron           — child/subset of bnst_crf_neuron (rat)
+#   anterior_bnst_crf_glutamatergic_neuron — sibling; sparse evidence, LOW confidence
+
+name: "dlBNST CRF neurons — draft enrichment"
+description: >
+  Draft enrichment graph for corticotropin-releasing factor (CRF) neurons of the
+  dorsolateral / anterolateral bed nucleus of the stria terminalis, derived from
+  an ASTA deep-research report on dlBNST CRF neurons plus targeted full-text
+  retrieval. Contains one enriched existing node (bnst_crf_neuron) and two
+  proposed new nodes. No mapping edges are populated in this draft — the two
+  existing edges on bnst_crf_neuron live in the canonical graph and are not
+  restated here.
+
+brain_region:
+  id: MBA:351
+  label: "Bed nuclei of the stria terminalis"
+  name_in_source: "dorsolateral bed nucleus of the stria terminalis (dlBNST)"
+
+target_atlas: "WMBv1"
+
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (mouse evidence predominates; rat for the Type III / BNSTALG literature)"
+
+creation_date: "2026-09-11"
+
+nodes:
+
+  # ══════════════════════════════════════════════════════════════════
+  # ENRICHED EXISTING NODE — id MUST NOT CHANGE (two mapping edges depend on it)
+  # ══════════════════════════════════════════════════════════════════
+  - id: bnst_crf_neuron
+    name: "BNST (anterolateral) corticotropin-releasing factor (CRF) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    synonyms:
+      - term: "dlBNST CRF neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:32277042"
+            method: "primary label throughout"
+            quote_key: "215732537_b9bcb599"
+      - term: "BNSTDL CRF neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:28439099"
+            method: "primary label throughout"
+            quote_key: "3993060_25ec6d52"
+      - term: "BNSTALG CRF neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:24009552"
+            method: "primary label throughout (rat)"
+            quote_key: "4940077_5b783374"
+    anatomical_location:
+      # ── preserved from canonical KB ──
+      - id: MBA:351
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "dorsolateral bed nucleus of the stria terminalis (dlBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+          - ref: "PMID:33633549"
+            method: "literature review (anatomical distribution)"
+            scope: "mouse BNST, ~+0.2 to -0.2 mm from bregma; lateral compartment"
+            quote_key: "231848933_2ec86aed"
+      - id: MBA:351
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "oval nucleus of the BNST (ovBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+          - ref: "PMID:21310239"
+            method: "whole-cell patch-clamp + post-hoc recording-site reconstruction"
+            scope: "adult rat BNSTALG; most cells in BNSTov, some in BNSTju and BNSTal"
+            quote_key: "8615463_e974a9fd"
+      - id: MBA:351
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "anterolateral BNST (alBNST)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+      # ── added by this run: projection targets ──
+      - id: UBERON:0002430
+        label: "lateral hypothalamic area"
+        name_in_source: "lateral hypothalamus (LH)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:42549128"
+            method: "anterograde tracing (Cre-dependent synaptophysin-GFP)"
+            scope: "adult mouse BNST CRF neurons"
+            quote_key: "290417615_314a4bd1"
+          - ref: "PMID:30038273"
+            method: "circuit tracing + cell-type-specific optogenetics"
+            scope: "adult mouse; LH-projecting GABAergic BNST CRF subpopulation"
+            quote_key: "49903082_10e9aec1"
+      - id: UBERON:0001930
+        label: "paraventricular nucleus of hypothalamus"
+        name_in_source: "paraventricular hypothalamic nucleus (PVH)"
+        compartment: AXON_TARGET
+        sources:
+          - ref: "PMID:42549128"
+            method: "anterograde tracing (Cre-dependent synaptophysin-GFP)"
+            scope: "adult mouse BNST CRF neurons"
+            quote_key: "290417615_314a4bd1"
+          - ref: "PMID:42549128"
+            method: "histology (synaptophysin-GFP terminal fields)"
+            scope: "adult mouse"
+            quote_key: "290417615_819db380"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:24009552"
+          method: "single-cell RT-PCR (GAD67 and VGLUT1-3 transcripts)"
+          scope: "adult rat BNSTALG; all neurons tested expressed GAD67, none expressed VGLUT1-3"
+          quote_key: "4940077_5b783374"
+        - ref: "PMID:30362199"
+          method: "literature report of Nguyen et al. 2016 quantification"
+          scope: "mouse dlBNST; ~98% of CRF+ neurons are GABAergic"
+          quote_key: "53099693_f0c5c390"
+          notes: >
+            Direction matters. This source states P(GABAergic | CRF+) ≈ 98% in dlBNST,
+            which is the assertion used here. A second sentence in the same paper
+            (quote 53099693_aa80db1b) states the converse, P(CRF+ | GABAergic) ≈ 98%,
+            which is not supported by the cited primary source and is NOT used.
+        - ref: "PMID:26718312"
+          method: "genetic cell targeting + immunochemistry"
+          scope: "adult mouse BNST; CRH+ cells comprise GABAergic and glutamatergic subpopulations"
+          quote_key: "20682700_f320baf2"
+          support: PARTIAL
+          notes: >
+            Establishes that the CRF population as a whole is not purely GABAergic;
+            the glutamatergic minority is captured by the sibling node
+            anterior_bnst_crf_glutamatergic_neuron.
+    defining_markers:
+      - symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR"
+            scope: "adult rat BNSTALG Type III neurons (95% CRF mRNA+)"
+            quote_key: "4940077_5b783374"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:32277042"
+            method: "Crh-IRES-Cre driver + Cre-dependent viral labelling"
+            scope: "adult mouse dlBNST"
+            quote_key: "215732537_b9bcb599"
+      - symbol: Gad1
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR (GAD67)"
+            scope: "adult rat BNSTALG; all neurons tested, irrespective of physiological type"
+            quote_key: "4940077_5b783374"
+            notes: "Reported as GAD67; ncbi_gene_id left null pending species-specific ID assignment."
+      - symbol: Oxtr
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR"
+            scope: "adult rat BNSTALG Type III neurons, 18/19 (95%); 0% in PVN parvocellular CRF neurons"
+            quote_key: "4940077_383bf7ef"
+            notes: >
+              Measured in Type III neurons specifically, i.e. in the subset captured by
+              bnstalg_type_iii_crf_neuron — not in the whole BNST CRF population.
+      - symbol: Grin2d
+        ncbi_gene_id: null
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:32277042"
+            method: "electrophysiology (GluN2D-NMDAR currents) in CRF+ cells"
+            scope: "adult mouse dlBNST"
+            quote_key: "215732537_a72b2aee"
+            notes: "Functional (channel-level) evidence; not a transcript quantification."
+    negative_markers:
+      # ── preserved from canonical KB ──
+      - symbol: Calb1
+        modifier: ABSENT
+        ncbi_gene_id: "NCBIGene:12307"
+      # ── added by this run ──
+      - symbol: Oxt
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR"
+            scope: "adult rat BNSTALG Type III CRF neurons, 0/19; cf. 83% in PVN parvocellular CRF neurons"
+            quote_key: "4940077_383bf7ef"
+            notes: >
+              SCOPE LIMITATION: the evidential role of Oxt-negativity is CONTRAST WITH
+              PVN PARVOCELLULAR CRF NEURONS, not discrimination among BNST cell types.
+              No BNST population is reported as Oxt-positive, so this marker does not
+              separate this node from its BNST neighbours.
+      - symbol: Slc17a7
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR (VGLUT1)"
+            scope: "adult rat BNSTALG; no neuron tested expressed VGLUT1-3"
+            quote_key: "4940077_5b783374"
+      - symbol: Slc17a6
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR (VGLUT2)"
+            scope: "adult rat BNSTALG; no neuron tested expressed VGLUT1-3"
+            quote_key: "4940077_5b783374"
+      - symbol: Slc17a8
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR (VGLUT3)"
+            scope: "adult rat BNSTALG; no neuron tested expressed VGLUT1-3"
+            quote_key: "4940077_5b783374"
+    neuropeptides:
+      # ── preserved from canonical KB (sources unchanged) ──
+      - symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.3389/fncir.2025.1593443"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "279874350_b2b4adba"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:23554470"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14550592_292dccea"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR"
+            scope: "adult rat BNSTALG Type III neurons"
+            quote_key: "4940077_5b783374"
+    electrophysiology:
+      description: >
+        Not a single membrane-property class. In identified mouse BNST CRF neurons there
+        are AT LEAST FOUR electrophysiologically separable subtypes — more heterogeneity
+        than earlier schemes describe, and notably more than CeA CRF neurons recorded under
+        the same conditions (Silberman et al. 2013). In rat BNSTALG, CRF identity is
+        strongly associated with the classic Type III physiological class: ~95% of Type III
+        neurons express CRF mRNA, and Type III cells carry a characteristic membrane-current
+        and ion-channel alpha-subunit profile (little discernible Ih; Cav3.3+; Kir2.2/2.3
+        enriched) (Dabrowska et al. 2013; Hazra et al. 2011). NOTE the directionality: only
+        P(CRF+ | Type III) has been measured; P(Type III | CRF+) has not, so Type III is a
+        SUBSET of the CRF population and not a synonym for it (see the child node
+        bnstalg_type_iii_crf_neuron).
+        SEPARATELY, and not a statement about CRF-expressing cells: pharmacological studies
+        show that bath-applied CRF depolarizes / increases the excitability of 'type II'
+        dlBNST neurons, that NPY opposes this in the same type II cells, and that CRF
+        signalling increases inhibitory synaptic input onto type III neurons. These are
+        local-circuit RESPONSE results identifying CRF TARGETS; the type II cells concerned
+        were not shown to express Crh.
+      sources:
+        - ref: "PMID:23325234"
+          method: "whole-cell patch-clamp in identified CRF neurons (CRF reporter mouse)"
+          scope: "adult mouse BNST; at least four separable CRF-neuron subtypes"
+          quote_key: "16233294_39d761a0"
+        - ref: "PMID:24009552"
+          method: "whole-cell patch-clamp + single-cell RT-PCR"
+          scope: "adult rat BNSTALG; 95% of Type III neurons CRF mRNA+"
+          quote_key: "4940077_5b783374"
+        - ref: "PMID:21310239"
+          method: "whole-cell patch-clamp + single-cell RT-PCR (ion channel alpha subunits)"
+          scope: "adult rat BNSTALG Type I-III classification (Ih, IA, IT, IK(IR))"
+          quote_key: "8615463_87500419"
+        - ref: "PMID:23554470"
+          method: "whole-cell patch-clamp with bath-applied CRF and NPY"
+          scope: "adult rat dlBNST; CRF/NPY RESPONSE in type II neurons (targets, not CRF-expressing cells)"
+          quote_key: "14550592_657c9f06"
+          support: PARTIAL
+          notes: >
+            CORRECTION OF A PRIOR KB ERROR. The canonical KB previously read this result as
+            evidence that BNST CRF neurons are 'type II'. It is not: Ide et al. record the
+            response of dlBNST neurons to exogenous CRF, with no demonstration that the
+            responding type II cells express Crh.
+        - ref: "PMID:31451580"
+          method: "whole-cell patch-clamp (review of prior pharmacology)"
+          scope: "naive rat dlBNST; CRF depolarizes type II, increases inhibitory input to type III"
+          quote_key: "201756623_c60073e7"
+          support: PARTIAL
+        - ref: "PMID:36698552"
+          method: "whole-cell patch-clamp of projection-identified BNST neurons"
+          scope: "mouse BNST-to-VTA projection neurons; four functional types, possibly a continuum"
+          quote_key: "255523774_37605a49"
+          support: PARTIAL
+    colocated_types:
+      - neighboring_type: "BNST cholecystokinin (Cck) neuron"
+        spatial_relationship: ADJACENT
+        notes: >
+          Crf and Cck are non-overlapping GABAergic subpopulations occupying separate
+          lateral (Crf) vs medial (Cck) subdivisions, co-residing in adjacent compartments
+          through the middle of the BNST A/P axis (~+0.2 to -0.2 mm from bregma in mouse).
+          Evidence: quote_key 231848933_2ec86aed (PMID:33633549); the two LH-projecting
+          populations are also non-overlapping, quote_key 49903082_10e9aec1 (PMID:30038273).
+      - neighboring_type: "ovBNST protein kinase C-delta (Prkcd) neuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Prkcd-expressing neurons cluster in the oval region of the BNST rather than in
+          the CRF cells themselves. Evidence: quote_key 195329749_c3edb36b (PMID:31235690);
+          dBNST single-cell clusters marked by Pkcd, Sst, Npy, Lmo4 reported in
+          quote_key 231848933_229a693a (PMID:33633549).
+      - neighboring_type: "dlBNST local-circuit GABAergic interneuron (serotonin-modulated Crf interneuron)"
+        spatial_relationship: SAME_LAYER
+        notes: >
+          A BNST microcircuit comprising Crf interneurons modulated by serotonin that
+          regulate separate long-range BNST projection neurons — i.e. part of the Crf
+          population is local-circuit rather than long-range. Evidence: quote_key
+          231848933_27d3cac4 (PMID:33633549); quote_key 201756623_e388bbee (PMID:31451580).
+    sex_bias: FEMALE_BIASED
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "corticotropin-releasing neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4072021 covers all CRH-secreting neurons across brain regions (PVN,
+        hippocampus, BNST, etc.). BNST CRF neurons do secrete CRH, making this a valid
+        BROAD match. A BNST-specific child term does not yet exist — the female-biased
+        dlBNST CRF population is a potential CL contribution. The CL:4072021 definition
+        enumerates PVN, hippocampus, piriform area, central amygdalar nucleus,
+        Barrington's nucleus and inferior olivary complex as locations, and does not
+        mention BNST, reinforcing BROAD rather than EXACT.
+    is_terminal: false
+    definition_references:
+      # ── preserved ──
+      - "https://doi.org/10.3389/fncir.2025.1593443"
+      - "PMID:23554470"
+      - "PMID:33910083"
+      - "PMID:32848568"
+      # ── added by this run ──
+      - "PMID:24009552"
+      - "PMID:21310239"
+      - "PMID:23325234"
+      - "PMID:26718312"
+      - "PMID:30362199"
+      - "PMID:30691514"
+      - "PMID:32277042"
+      - "PMID:30038273"
+      - "PMID:42549128"
+      - "PMID:33633549"
+    notes: >
+      SEXUAL DIMORPHISM (relocated here from the former morphology block, which held
+      dimorphism prose rather than morphology). Female-biased: females have larger and
+      more numerous CRF neurons in the dorsolateral BNST than males; the difference is
+      not evident at postnatal day 5 and emerges by adulthood; ovariectomy reduces CRF
+      neuron number in females and orchiectomy increases it in males (quote_key
+      59307485_a26aefc1, PMID:30691514; quote_key 279874350_b2b4adba,
+      https://doi.org/10.3389/fncir.2025.1593443). Recorded structurally as
+      sex_bias: FEMALE_BIASED.
+
+      MORPHOLOGY GAP. No morphological reconstruction data exist for this population in
+      the corpus, so no morphology block is asserted. The only morphology-adjacent datum
+      is the female-biased soma-size difference above; Nguyen et al. 2016 explicitly list
+      correlation of BNST neurochemical markers with morphology as future work.
+
+      TYPE III ASYMMETRY (important caveat). ~95% of rat BNSTALG Type III neurons express
+      CRF mRNA — i.e. P(CRF+ | Type III) = 0.95 is measured. The converse,
+      P(Type III | CRF+), is NOT measured anywhere in this corpus, and Silberman et al.
+      2013 report at least four electrophysiologically separable subtypes among identified
+      BNST CRF neurons. Type III is therefore a SUBSET of the CRF population, and this node
+      must NOT be described as 'the Type III population'. The subset is modelled as the
+      separate node bnstalg_type_iii_crf_neuron.
+
+      PRIOR KB ERROR CORRECTED. The previous electrophysiology description and notes
+      attributed CRF identity to 'type II' dlBNST neurons on the basis of Ide et al. 2013.
+      Ide's type II cells are cells that RESPOND to exogenous CRF; they are not shown to
+      express Crh. The CRF-associated physiological class is Type III.
+
+      NT-DIRECTION CONTRADICTION IN THE LITERATURE. Nguyen et al. 2016 (as reported by
+      Companion et al. 2018, quote_key 53099693_f0c5c390) state that ~98% of CRF+ neurons
+      in dlBNST are GABAergic. Companion et al. also state the converse in a single sentence
+      ('98% of GABAergic neurons ... entail a CRF phenotype', quote_key 53099693_aa80db1b);
+      the ASTA report reproduced both directions. Only the Nguyen direction
+      (P(GABAergic | CRF+) ≈ 98%) is asserted here. The converse would imply CRF+ cells are
+      nearly the entire dlBNST GABAergic population, which is inconsistent with the
+      peptide-defined mosaic (Pdyn, Penk, Nts, Npy, Pnoc, Sst, Tac1, Tac2, Avp; Pkcd/Drd1
+      in ovBNST) described in quote_key 231848933_2ec86aed.
+
+      Also distinguished from the calbindin+ principal nucleus of BNST (Kiss1+,
+      male-biased). CL:4072021 is a BROAD match — a BNST-specific child term is a
+      candidate for a new CL contribution.
+
+  # ══════════════════════════════════════════════════════════════════
+  # NEW NODE — physiologically + molecularly defined subset of the above
+  # ══════════════════════════════════════════════════════════════════
+  - id: bnstalg_type_iii_crf_neuron
+    name: "BNST anterolateral group Type III CRF neuron"
+    definition_basis: CLASSICAL_ELECTROPHYSIOLOGICAL
+    species:
+      id: NCBITaxon:10116
+      label: "Rattus norvegicus"
+      name_in_source: "rat (Sprague-Dawley; BNSTALG slice recordings)"
+    synonyms:
+      - term: "Type III BNSTALG neuron"
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: "PMID:21310239"
+            method: "primary label throughout"
+            quote_key: "8615463_87500419"
+      - term: "putative CRF neuron of the BNSTALG"
+        synonym_type: INFORMAL
+        sources:
+          - ref: "PMID:24009552"
+            method: "term used when introducing the Type III / CRF association"
+            quote_key: "4940077_5b783374"
+    anatomical_location:
+      - id: UBERON:0001880
+        label: "bed nucleus of stria terminalis"
+        name_in_source: "anterolateral cell group of the bed nucleus of the stria terminalis (BNSTALG)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:21310239"
+            method: "whole-cell patch-clamp + recording-site reconstruction"
+            scope: >
+              adult rat; majority of recorded neurons within the oval nucleus (BNSTov),
+              some in the juxtacapsular (BNSTju) and anterolateral (BNSTal) nuclei
+            quote_key: "8615463_e974a9fd"
+          - ref: "PMID:24009552"
+            method: "whole-cell patch-clamp + single-cell RT-PCR"
+            scope: "adult rat BNSTALG; explicitly contrasted with PVN parvocellular CRF neurons"
+            quote_key: "4940077_5b783374"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:24009552"
+          method: "single-cell RT-PCR (GAD67 and VGLUT1-3 transcripts)"
+          scope: "adult rat BNSTALG; all neurons tested expressed GAD67, none expressed VGLUT1-3"
+          quote_key: "4940077_5b783374"
+    defining_markers:
+      - symbol: Crh
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR"
+            scope: "adult rat BNSTALG; 95% of Type III neurons express CRF mRNA"
+            quote_key: "4940077_5b783374"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:30878403"
+            method: "single-cell RT-PCR after chronic social stress"
+            scope: "adult rat BNSTALG; only Type III neurons increase Crf mRNA after CSS"
+            quote_key: "76666373_ccffc91d"
+      - symbol: Oxtr
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR"
+            scope: "adult rat; 18/19 (95%) Type III neurons OTR+; 0% of PVN parvocellular CRF neurons"
+            quote_key: "4940077_383bf7ef"
+      - symbol: Gad1
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR (GAD67)"
+            scope: "adult rat BNSTALG, all physiological types"
+            quote_key: "4940077_5b783374"
+      - symbol: Cacna1i
+        modifier: HIGH
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR (ion channel alpha subunits)"
+            scope: "adult rat BNSTALG; Cav3.3 mRNA in 100% of Type III (vs 47% Type II, 17% Type I)"
+            quote_key: "8615463_a14b307e"
+            notes: "Reported as Cav3.3 (IT channel alpha subunit)."
+      - symbol: Hcn4
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR + hierarchical cluster analysis"
+            scope: >
+              adult rat; a cluster expressing HCN4 alone (with Cav3.3, Kv4.2, Kir2.1/2.2/2.3)
+              corresponded to 9/11 of recorded Type III neurons
+            quote_key: "8615463_6a67aab1"
+            notes: "HCN4 is the only Ih alpha subunit in the Type III cluster profile."
+      - symbol: Kcnd2
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR + hierarchical cluster analysis"
+            scope: "adult rat; Kv4.2 in the Type III cluster profile (9/11 Type III neurons)"
+            quote_key: "8615463_6a67aab1"
+            notes: "Reported as Kv4.2 (IA channel alpha subunit)."
+      - symbol: Kcnj12
+        modifier: ENRICHED
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR"
+            scope: "adult rat; Kir2.2 highest in Type III (64%) vs Type II (20%) and Type I (0%)"
+            quote_key: "8615463_bc844471"
+            notes: "Reported as Kir2.2 (IK(IR) channel alpha subunit)."
+      - symbol: Kcnj4
+        modifier: ENRICHED
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR"
+            scope: "adult rat; Kir2.3 highest in Type III (72%) vs Type II (62%) and Type I (17%)"
+            quote_key: "8615463_bc844471"
+            notes: "Reported as Kir2.3 (IK(IR) channel alpha subunit)."
+    negative_markers:
+      - symbol: Oxt
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR"
+            scope: "adult rat; 0/19 Type III CRF neurons Oxt+, vs 83% of PVN parvocellular CRF neurons"
+            quote_key: "4940077_383bf7ef"
+            notes: >
+              SCOPE LIMITATION: contrast is with PVN parvocellular CRF neurons, not with
+              other BNST cell types.
+      - symbol: Cacna1g
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR"
+            scope: "adult rat; Cav3.1 in 91% of Type II but not expressed in Type I or Type III"
+            quote_key: "8615463_a14b307e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR (Table 3)"
+            scope: "adult rat; only Type II co-express the Cav3.1 IT channel subunit"
+            quote_key: "8615463_1de4a71c"
+      - symbol: Kcna4
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR"
+            scope: "adult rat; Kv1.4 expressed only in Type II neurons (6%)"
+            quote_key: "8615463_3be541ed"
+      - symbol: Htr7
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:21310239"
+            method: "single-cell RT-PCR (prior work cited in same paper)"
+            scope: "adult rat; Type I and II express 5-HT7 receptors, Type III does not"
+            quote_key: "8615463_1de4a71c"
+      - symbol: Slc17a7
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR (VGLUT1)"
+            scope: "adult rat BNSTALG; no neuron tested expressed VGLUT1-3"
+            quote_key: "4940077_5b783374"
+      - symbol: Slc17a6
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR (VGLUT2)"
+            scope: "adult rat BNSTALG; no neuron tested expressed VGLUT1-3"
+            quote_key: "4940077_5b783374"
+      - symbol: Slc17a8
+        modifier: ABSENT
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR (VGLUT3)"
+            scope: "adult rat BNSTALG; no neuron tested expressed VGLUT1-3"
+            quote_key: "4940077_5b783374"
+    neuropeptides:
+      - symbol: Crh
+        ncbi_gene_id: null
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:24009552"
+            method: "single-cell RT-PCR"
+            scope: "adult rat BNSTALG; 95% of Type III neurons"
+            quote_key: "4940077_5b783374"
+    electrophysiology:
+      description: >
+        One of three physiologically and genetically distinct BNSTALG subclasses (Type I-III)
+        defined primarily by the expression pattern of four membrane currents — Ih, IA, IT and
+        IK(IR). Type III neurons show little discernible Ih, and accounted for 21% of the
+        sampled BNSTALG population (Type I 11%, Type II 66%). Unbiased hierarchical cluster
+        analysis followed by discriminant function analysis of ion-channel alpha-subunit
+        transcripts segregated BNSTALG neurons into three groups that positively correlated
+        with the existing electrophysiological Type I-III classification; Type I and Type III
+        appear genetically homogeneous, whereas Type II subdivides into three genetically
+        distinct subgroups. Type III is the putative CRF class: ~95% express CRF mRNA. Type III
+        neurons receive increased inhibitory synaptic input under CRF signalling and, unlike
+        type II, do not respond directly to CRF or NPY. After chronic social stress, Type III
+        alone increases Crf mRNA and decreases Ptpn5 mRNA, marking it as the CRF population
+        most sensitive to chronic stress.
+      sources:
+        - ref: "PMID:21310239"
+          method: "whole-cell patch-clamp + single-cell RT-PCR; hierarchical clustering + DFA"
+          scope: "adult rat BNSTALG"
+          quote_key: "8615463_87500419"
+        - ref: "PMID:21310239"
+          method: "whole-cell patch-clamp"
+          scope: "adult rat; Type III shows little discernible Ih (cf. Hammack et al. 2007)"
+          quote_key: "8615463_f9227d8a"
+        - ref: "PMID:21310239"
+          method: "whole-cell patch-clamp"
+          scope: "adult rat; Type I 11%, Type II 66%, Type III 21% of sample"
+          quote_key: "8615463_5315ebbf"
+        - ref: "PMID:24009552"
+          method: "whole-cell patch-clamp + single-cell RT-PCR"
+          scope: "adult rat; ~95% of Type III neurons CRF mRNA+"
+          quote_key: "4940077_5b783374"
+        - ref: "PMID:30878403"
+          method: "whole-cell patch-clamp + single-cell RT-PCR after chronic social stress"
+          scope: "adult rat BNSTALG; Type III-selective transcriptomic change"
+          quote_key: "76666373_c8d78753"
+        - ref: "PMID:31451580"
+          method: "whole-cell patch-clamp (review of prior pharmacology)"
+          scope: "naive rat dlBNST; CRF increases inhibitory synaptic input onto type III neurons"
+          quote_key: "201756623_c60073e7"
+        - ref: "PMID:23554470"
+          method: "whole-cell patch-clamp with bath-applied CRF and NPY"
+          scope: "adult rat dlBNST; only type II, not type I or III, responded to CRF and NPY"
+          quote_key: "14550592_657c9f06"
+    colocated_types:
+      - neighboring_type: "BNSTALG Type I neuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Type I (11% of sample) and Type II (66%) are recorded from the same BNSTALG
+          territory; Type I and III are genetically homogeneous populations whereas Type II
+          subdivides into three genetically distinct subgroups. Evidence: quote_key
+          8615463_87500419, 8615463_5315ebbf (PMID:21310239).
+      - neighboring_type: "BNSTALG Type II neuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Type II is the majority class (66%), expresses Cav3.1 and Kv1.4 (absent in Type III)
+          and 5-HT7 receptors, and is the class that responds directly to CRF and NPY.
+          Evidence: quote_key 8615463_a14b307e, 8615463_3be541ed, 8615463_1de4a71c
+          (PMID:21310239); quote_key 14550592_657c9f06 (PMID:23554470).
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "corticotropin-releasing neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        No CL term exists for an electrophysiologically defined BNSTALG Type III class, nor
+        for any BNSTALG-specific cell class. BROAD parent mapping to CL:4072021 only.
+        Candidate for a new CL term capturing the BNSTALG Type III CRF class, distinguished
+        from PVN parvocellular CRF neurons by an OTR+/Oxt- profile and from sibling BNSTALG
+        types by the Cav3.3+/Cav3.1-/Kv1.4-/5-HT7- channel and receptor signature.
+    is_terminal: false
+    definition_references:
+      - "PMID:21310239"
+      - "PMID:24009552"
+      - "PMID:30878403"
+      - "PMID:23325234"
+      - "PMID:31451580"
+    notes: >
+      SUBSET RELATIONSHIP, NOT SYNONYMY. This node is a SUBSET of bnst_crf_neuron. The
+      measured quantity is P(CRF+ | Type III) = 0.95 (Dabrowska et al. 2013). The converse,
+      P(Type III | CRF+), is not measured in this corpus, and Silberman et al. 2013 report at
+      least four electrophysiologically separable subtypes among identified mouse BNST CRF
+      neurons (quote_key 16233294_39d761a0, PMID:23325234). Type III must therefore not be
+      treated as the whole CRF population, nor bnst_crf_neuron as 'the Type III population'.
+
+      SPECIES. All Type I-III evidence is rat (Hazra 2011, Dabrowska 2013, Daniel 2019),
+      whereas bnst_crf_neuron is a mouse node. The Type I-III scheme has not been shown to
+      transfer cleanly to mouse; Silberman et al. note that mouse BNST CRF neurons fall into
+      more categories than previously described, possibly because of rat/mouse physiological
+      differences, recording site, or recording conditions.
+
+      CHANNEL SUBUNIT NAMING. Marker symbols use current gene symbols; the source uses
+      protein/channel names (Cav3.3 = Cacna1i, Cav3.1 = Cacna1g, HCN4 = Hcn4, Kv4.2 = Kcnd2,
+      Kv1.4 = Kcna4, Kir2.2 = Kcnj12, Kir2.3 = Kcnj4). The mapping is recorded in each
+      source's notes field. Kv3.4 (Kcnc4) is expressed in only 9% of Type III neurons and is
+      not asserted as a marker (quote_key 8615463_3be541ed).
+
+      NO MORPHOLOGY. The classification is physiological and molecular; no morphological data
+      are reported.
+
+      Oxt-negativity and Oxtr-positivity are scoped to the contrast with PVN parvocellular CRF
+      neurons — they establish that this is a distinct extra-hypothalamic CRF class, but do
+      not discriminate among BNST cell types.
+
+  # ══════════════════════════════════════════════════════════════════
+  # NEW NODE — sparse evidence, LOW confidence
+  # ══════════════════════════════════════════════════════════════════
+  - id: anterior_bnst_crf_glutamatergic_neuron
+    name: "anterior BNST CRF-expressing glutamatergic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:351
+        label: "Bed nuclei of the stria terminalis"
+        name_in_source: "anterior bed nucleus of the stria terminalis (largely outside the dlBNST core)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:26718312"
+            method: "genetic cell targeting + immunochemical staining"
+            scope: "adult mouse BNST; CRH-expressing cells contain GABAergic and glutamatergic subpopulations"
+            quote_key: "20682700_f320baf2"
+          - ref: "PMID:30362199"
+            method: "literature report of Nguyen et al. 2016 quantification"
+            scope: >
+              mouse; CRF+ BNST neurons co-express glutamate and GABA markers, but within
+              dlBNST ~98% of CRF+ neurons are GABAergic — placing the glutamatergic subset
+              largely outside dlBNST
+            quote_key: "53099693_f0c5c390"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: "glutamatergic neuron"
+          name_in_source: "glutamatergic"
+      sources:
+        - ref: "PMID:26718312"
+          method: "genetic cell targeting + immunochemistry"
+          scope: "adult mouse BNST; CRH+ cells comprise GABAergic and glutamatergic subpopulations"
+          quote_key: "20682700_f320baf2"
+        - ref: "PMID:40484173"
+          method: "review of mouse BNST single-cell RNA-seq (Welch et al. 2019)"
+          scope: >
+            mouse BNST overall: 41 transcriptionally distinct cell types, 86% GABAergic and
+            14% glutamatergic — regional context only, not CRF-specific
+          quote_key: "279163821_e4ca09ec"
+          support: PARTIAL
+          notes: >
+            Provides the existence of a substantial glutamatergic BNST compartment but does
+            not link any glutamatergic cluster to Crh expression.
+    defining_markers:
+      - symbol: Crh
+        ncbi_gene_id: "NCBIGene:12918"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:26718312"
+            method: "genetic cell targeting (CRH reporter) + immunochemical staining"
+            scope: "adult mouse BNST"
+            quote_key: "20682700_f320baf2"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "corticotropin-releasing neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Only CL:4072021 (general CRH-secreting neuron) is available as a broad parent.
+        CL:0000679 (glutamatergic neuron) was considered as a transmitter-defined second
+        parent, but no existing term intersects CRF identity with a glutamatergic phenotype
+        in BNST. Mapping confidence is CANDIDATE rather than MODERATE given the sparse
+        evidence (3 quotes, no ephys, no morphology) and the uncertain boundary with the
+        GABAergic dlBNST population acknowledged in the source report itself.
+    is_terminal: false
+    definition_references:
+      - "PMID:26718312"
+      - "PMID:30362199"
+      - "PMID:40484173"
+    notes: >
+      LOW CONFIDENCE NODE. Existence rests on a single primary assertion — Nguyen et al. 2016
+      report that CRH-expressing BNST cells comprise GABAergic and glutamatergic
+      subpopulations (quote_key 20682700_f320baf2) — plus the complementary observation that
+      within dlBNST ~98% of CRF+ neurons are GABAergic (quote_key 53099693_f0c5c390), which
+      locates the glutamatergic minority largely outside dlBNST.
+
+      NO negative_markers are asserted. Marking this node Gad1-ABSENT would be an inference
+      from the GABAergic/glutamatergic partition rather than a direct measurement; no quote
+      reports a Gad1-negative assay in these cells.
+
+      NO vesicular glutamate transporter gene is named for this population in the corpus. The
+      transcriptomically defined anteromedial BNST VGluT3 (Slc17a8) cell type of Ly et al.
+      2025 (quote_key 279163821_eacca7d6) is NOT linked to CRF and must not be conflated with
+      this node — that type in fact transmits GABA.
+
+      NO electrophysiological or morphological data exist for this subset; ephys work on BNST
+      CRF neurons is dominated by the GABAergic dlBNST/BNSTALG population.
+
+      The PVN parallel (Crh+ neurons split into five clusters, 1/3/4 primarily glutamatergic
+      and 2/5 GABAergic, with highly subtype-specific stress responses; quote_key
+      245474064_d05aff0c) is an interpretive frame from a different brain region and is NOT
+      used as evidence for any property of this node.
+
+      The quantitative figures circulating in the source report — CRH+ cells as ~8% of adBNST
+      neurons, and 98.2% GABAergic — could not be traced to a verbatim quote from Nguyen et
+      al. 2016 in references.json; only the secondary restatement in Companion et al. 2018 is
+      available. Round 2 target: retrieve Nguyen et al. 2016 full text.
+
+edges: []
