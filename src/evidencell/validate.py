@@ -224,6 +224,92 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
     return errors
 
 
+# ── Flat citation-list check (definition_references, xrefs) ────────────────────
+
+# Node-level fields that hold a bare list of citation strings rather than a list
+# of objects with a `ref:` key. `_collect_refs` cannot see these (it only yields
+# values keyed `ref`), so they bypass check_ref_pmids entirely. See issues #81
+# and #133: 48/192 definition_references entries do not resolve, and some point
+# at unrelated papers.
+#
+# Kept separate from check_ref_pmids so the pre-edit hook's blocking behaviour is
+# unchanged while the backlog is remediated — `just qc-content` reports these as
+# warnings today, and they are promoted to hook/CI errors once the count is zero.
+_FLAT_CITATION_FIELDS = ("definition_references", "prior_reference", "xrefs")
+
+
+def _collect_flat_refs(
+    obj: object,
+    field_names: tuple[str, ...] = _FLAT_CITATION_FIELDS,
+    result: list[tuple[str, str]] | None = None,
+) -> list[tuple[str, str]]:
+    """Recursively collect (field_name, citation) pairs from flat citation lists.
+
+    Only string members are yielded. Non-citation members (CCN accessions such as
+    ``CS20230722_SUPT_0069``, which legitimately appear in ``xrefs``) are returned
+    too; filtering to PMID:/DOI: forms is the caller's job.
+    """
+    if result is None:
+        result = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k in field_names and isinstance(v, list):
+                for item in v:
+                    if isinstance(item, str) and item:
+                        result.append((k, item))
+            else:
+                _collect_flat_refs(v, field_names, result)
+    elif isinstance(obj, list):
+        for item in obj:
+            _collect_flat_refs(item, field_names, result)
+    return result
+
+
+def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
+    """Check PMID:/DOI: entries in flat citation lists against references.json.
+
+    Companion to :func:`check_ref_pmids` covering the fields listed in
+    ``_FLAT_CITATION_FIELDS``. Entries that are not PMID:/DOI: shaped are skipped
+    silently. Skips entirely when references.json is absent.
+
+    Returns a list of error strings; empty = OK.
+    """
+    if not refs_path.exists():
+        return []
+
+    try:
+        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return []
+
+    known_pmids: set[str] = set()
+    known_dois: set[str] = set()
+    for entry in refs.values():
+        if not isinstance(entry, dict):
+            continue
+        if pmid := entry.get("pmid"):
+            known_pmids.add(str(pmid))
+        if doi := entry.get("doi"):
+            known_dois.add(doi.lower())
+
+    errors: list[str] = []
+    for field, raw in _collect_flat_refs(doc):
+        ref = raw.strip()
+        if m := _PMID_RE.match(ref):
+            if m.group(1) not in known_pmids:
+                errors.append(
+                    f"{field}: 'PMID:{m.group(1)}' not found in {refs_path.name}. "
+                    "Either ingest the paper or remove the citation."
+                )
+        elif m := _DOI_RE.match(ref):
+            if m.group(1).lower() not in known_dois:
+                errors.append(
+                    f"{field}: 'DOI:{m.group(1)}' not found in {refs_path.name}. "
+                    "Either ingest the paper or remove the citation."
+                )
+    return errors
+
+
 # ── AT run_ref validation ──────────────────────────────────────────────────────
 
 def _collect_run_refs(obj: object, result: list[str] | None = None) -> list[str]:

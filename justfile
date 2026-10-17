@@ -206,9 +206,46 @@ validate-at-blind *ARGS:
 
 # ── QC (full suite) ────────────────────────────────────────────────────────────
 
+# Content provenance sweep over kb/ + reports/ — quote_keys, PMIDs, DOIs and AT
+# run_refs must resolve against the validated stores. These are the pre-edit
+# hook's checks run corpus-wide, so they also catch writes that bypassed the
+# hook (scripts, bulk migrations, PRs).
+# Usage: just qc-content
+#        just qc-content --kb-only
+#        just qc-content --strict          # warnings count as failures
+#        just qc-content --json report.json
+[group('qc')]
+qc-content *ARGS:
+    uv run python -m evidencell.qc_content {{ARGS}}
+
+# Resolve Semantic Scholar corpus IDs to PMID/DOI, offline-first (validated
+# reference stores, then cached paper catalogues, then the S2 API). Use this
+# instead of reading a catalogue by hand — it is the step that stops a
+# citation being typed from memory.
+# Usage: just fetch-reference CorpusId:10664418
+#        just fetch-reference CorpusId:10664418 --offline
+#        just fetch-reference --verify-pmid 29412992     # does this PMID exist?
+[group('references')]
+fetch-reference *ARGS:
+    uv run python -m evidencell.fetch {{ARGS}}
+
+# Drop baseline entries whose findings no longer occur. Removes only — it can
+# never accept a new failure. Run after fixing content; a stale entry would
+# otherwise silently re-accept the same bad citation if it came back.
+[group('qc')]
+qc-content-prune:
+    uv run python -m evidencell.qc_content --prune-baseline
+
+# Re-accept all current content findings as the baseline. Run only when
+# deliberately resetting the backlog — never to silence a new failure.
+[group('qc')]
+qc-content-baseline:
+    uv run python -m evidencell.qc_content --write-baseline
+
 # QC gate for all KB graph files — must pass before committing
 [group('qc')]
 qc: validate-all validate-terms
+    just qc-content --baseline
     @echo "All QC checks passed."
 
 # ── Tests ──────────────────────────────────────────────────────────────────────
