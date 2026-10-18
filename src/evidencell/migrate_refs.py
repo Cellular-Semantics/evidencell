@@ -15,6 +15,7 @@ the monolith produced. If it is not, nothing is deleted.
 from __future__ import annotations
 
 import argparse
+import json
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -189,3 +190,147 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+# ── Normalisation: bring stored records onto the schema ──────────────────────
+
+def normalise_paper(entry: dict) -> tuple[dict, list[str]]:
+    """Return (normalised entry, list of changes applied).
+
+    Two divergences accumulated before the store had a schema, both lossless to
+    correct:
+
+    * `authors` as a list of ``{"name": ...}`` objects in dentate_gyrus, where
+      every other region (and `_normalise_authors`, the canonical producer)
+      stores plain strings. The objects carry no key beyond ``name``.
+    * a top-level `pmcid` duplicating ``externalIds.PubMedCentral``. Every
+      stored value already appears in the block, so the top-level field is
+      redundant; `externalIds` is the single home for external identifiers.
+    """
+    changes: list[str] = []
+    out = dict(entry)
+
+    authors = out.get("authors")
+    if isinstance(authors, list) and any(isinstance(a, dict) for a in authors):
+        out["authors"] = [
+            a.get("name", "") if isinstance(a, dict) else a for a in authors
+        ]
+        changes.append("authors: objects -> names")
+
+    if "pmcid" in out:
+        pmcid = out.pop("pmcid")
+        if pmcid:
+            ext = dict(out.get("externalIds") or {})
+            if not ext.get("PubMedCentral"):
+                ext["PubMedCentral"] = pmcid
+                changes.append("pmcid -> externalIds.PubMedCentral")
+                out["externalIds"] = ext
+            else:
+                changes.append("pmcid dropped (already in externalIds)")
+        else:
+            changes.append("pmcid dropped (empty)")
+
+    return out, changes
+
+
+def normalise_store(root: Path | None = None, *, dry_run: bool = False) -> dict:
+    """Normalise every paper record in every region. Returns a change tally."""
+    root = root or repo_root()
+    tally: dict[str, int] = {}
+    touched = 0
+    for paper_file in sorted((root / "references").rglob("papers/*.json")):
+        entry = json.loads(paper_file.read_text(encoding="utf-8"))
+        out, changes = normalise_paper(entry)
+        if not changes:
+            continue
+        touched += 1
+        for c in changes:
+            tally[c] = tally.get(c, 0) + 1
+        if not dry_run:
+            _write_json(paper_file, out)
+    tally["_files_touched"] = touched
+    return tally
+
+
+# ── SourceDocument records + quote backfill ──────────────────────────────────
+
+_SOURCES_DIR = "sources"
+
+
+def _source_id(pdf_path: str) -> str:
+    """Stable id for a deepsearch document, derived from its filename."""
+    stem = Path(pdf_path).stem.lower()
+    slug = "".join(c if c.isalnum() else "_" for c in stem)
+    while "__" in slug:
+        slug = slug.replace("__", "_")
+    return slug.strip("_")
+
+
+def build_source_documents(root: Path | None = None, *, dry_run: bool = False) -> dict:
+    """Create SourceDocument records and link quotes to them.
+
+    The link from a quote to the document it came from currently exists only as
+    a naming convention: quote.added_by names a directory under research/ whose
+    run_config.json may name a pdf_file. Nothing validates that chain and it is
+    broken for most runs. This materialises the link that *can* be recovered as
+    first-class records, and leaves the rest visibly absent rather than
+    pretending the provenance exists.
+
+    A document whose PDF was never committed is still recorded, with
+    ``available: false`` — the quotes drawn from it remain attributed even
+    though the document cannot be re-read.
+    """
+    root = root or repo_root()
+
+    # run_id -> pdf path, from the run configs that name one
+    runs: dict[str, str] = {}
+    for rc in sorted((root / "research").rglob("run_config.json")):
+        try:
+            cfg = json.loads(rc.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        if cfg.get("pdf_file"):
+            runs[rc.parent.name] = cfg["pdf_file"]
+
+    # Which regions' quotes reference each run
+    docs: dict[tuple[str, str], dict] = {}
+    linked = unlinked = 0
+    for qfile in sorted((root / "references").rglob("quotes/*.json")):
+        region = qfile.parent.parent.name
+        quotes = json.loads(qfile.read_text(encoding="utf-8"))
+        changed = False
+        for q in quotes.values():
+            run = q.get("added_by")
+            pdf = runs.get(run) if run else None
+            if not pdf:
+                if (q.get("source_method") or "").lower() == "asta_report":
+                    unlinked += 1
+                continue
+            sid = _source_id(pdf)
+            doc = docs.setdefault((region, sid), {
+                "source_id": sid,
+                "path": pdf,
+                "available": (root / pdf).exists(),
+                "region": region,
+                "runs": [],
+            })
+            if run not in doc["runs"]:
+                doc["runs"].append(run)
+            if q.get("source_document") != sid:
+                q["source_document"] = sid
+                changed = True
+            linked += 1
+        if changed and not dry_run:
+            _write_json(qfile, quotes)
+
+    if not dry_run:
+        for (region, sid), doc in docs.items():
+            doc["runs"] = sorted(doc["runs"])
+            _write_json(root / "references" / region / _SOURCES_DIR / f"{sid}.json", doc)
+
+    return {
+        "documents": len(docs),
+        "available": sum(1 for d in docs.values() if d["available"]),
+        "quotes_linked": linked,
+        "asta_report_quotes_unlinked": unlinked,
+    }

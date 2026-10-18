@@ -354,6 +354,102 @@ def check_quote_key_integrity(store: dict) -> list[str]:
     return errors
 
 
+# ── Reference-store schema conformance ───────────────────────────────────────
+
+# The intended retrieval vocabulary. Held here rather than enforced as a schema
+# enum because 22 legacy quotes record an experimental method in this field;
+# mapping those onto retrieval values would invent provenance. Reported instead.
+SOURCE_METHODS = frozenset({
+    "asta_report", "asta_snippet", "europepmc_fulltext",
+    "targeted_fulltext_retrieval", "abstract_only", "primary",
+})
+
+
+def check_store_records(store: dict) -> list[str]:
+    """Validate paper and quote records against schema/references.yaml.
+
+    Uses the generated pydantic models, in process: linkml-validate costs ~1.5s
+    per subprocess, which across 540 store files would be minutes per sweep.
+    """
+    from pydantic import ValidationError
+
+    from evidencell._refs_models import Paper, Quote
+
+    errors: list[str] = []
+    for corpus_id, entry in store.items():
+        if corpus_id.startswith("_") or not isinstance(entry, dict):
+            continue
+        paper = {k: v for k, v in entry.items() if k != "quotes"}
+        try:
+            Paper.model_validate(paper)
+        except ValidationError as exc:
+            for e in exc.errors():
+                loc = ".".join(str(x) for x in e["loc"])
+                errors.append(f"paper '{corpus_id}': {loc}: {e['msg']}")
+        for quote_key, quote in (entry.get("quotes") or {}).items():
+            if not isinstance(quote, dict):
+                errors.append(f"quote '{quote_key}': not an object")
+                continue
+            try:
+                Quote.model_validate(quote)
+            except ValidationError as exc:
+                for e in exc.errors():
+                    loc = ".".join(str(x) for x in e["loc"])
+                    errors.append(f"quote '{quote_key}': {loc}: {e['msg']}")
+    return errors
+
+
+def check_source_methods(store: dict) -> list[str]:
+    """Flag source_method values outside the intended vocabulary."""
+    errors: list[str] = []
+    for corpus_id, entry in store.items():
+        if corpus_id.startswith("_") or not isinstance(entry, dict):
+            continue
+        for quote_key, quote in (entry.get("quotes") or {}).items():
+            if not isinstance(quote, dict):
+                continue
+            value = quote.get("source_method")
+            if value and str(value).strip().lower() not in SOURCE_METHODS:
+                errors.append(
+                    f"quote '{quote_key}': source_method {value!r} is not a retrieval "
+                    f"method. Expected one of {sorted(SOURCE_METHODS)}. Experimental "
+                    f"methods describe how a finding was made, not how the text was "
+                    f"obtained."
+                )
+    return errors
+
+
+def check_source_documents(store: dict, known_sources: set[str]) -> list[str]:
+    """Flag ASTA_REPORT quotes with no resolvable source document.
+
+    ASTA report text is ASTA's prose about a paper, not necessarily the paper's
+    own words, so knowing which report a passage came from is what makes it
+    checkable. Absence is reported rather than blocked: some early deepsearch
+    PDFs were never committed and may not be recoverable.
+    """
+    errors: list[str] = []
+    for corpus_id, entry in store.items():
+        if corpus_id.startswith("_") or not isinstance(entry, dict):
+            continue
+        for quote_key, quote in (entry.get("quotes") or {}).items():
+            if not isinstance(quote, dict):
+                continue
+            if (quote.get("source_method") or "").lower() != "asta_report":
+                continue
+            sid = quote.get("source_document")
+            if not sid:
+                errors.append(
+                    f"quote '{quote_key}': source_method is asta_report but no "
+                    f"source_document — the ASTA report it came from is unrecorded."
+                )
+            elif sid not in known_sources:
+                errors.append(
+                    f"quote '{quote_key}': source_document '{sid}' has no record "
+                    f"under references/{{region}}/sources/."
+                )
+    return errors
+
+
 # ── Reference-store append-only guard ─────────────────────────────────────────
 
 # Paper fields that identify *which* paper an entry is. A quote-adding write has

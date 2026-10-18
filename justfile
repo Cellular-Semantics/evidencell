@@ -109,6 +109,27 @@ gen-models:
     uv run gen-pydantic {{schema}} > src/evidencell/_models.py
     @echo "Regenerated src/evidencell/_models.py from {{schema}}"
 
+# Regenerate the reference-store Pydantic models from schema/references.yaml
+[group('schema')]
+gen-refs-models:
+    uv run gen-pydantic schema/references.yaml > src/evidencell/_refs_models.py
+    @echo "Regenerated src/evidencell/_refs_models.py from schema/references.yaml"
+
+# Check src/evidencell/_refs_models.py is up to date; fails if drift
+[group('schema')]
+check-refs-models:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    tmpfile=$(mktemp)
+    uv run gen-pydantic schema/references.yaml > "$tmpfile"
+    if diff -q "$tmpfile" src/evidencell/_refs_models.py >/dev/null; then
+        echo "src/evidencell/_refs_models.py is up to date."
+    else
+        echo "ERROR: src/evidencell/_refs_models.py is out of sync with schema/references.yaml."
+        echo "Run: just gen-refs-models"
+        exit 1
+    fi
+
 # Check src/evidencell/_models.py is up to date with the schema; fails if drift
 [group('schema')]
 check-models:

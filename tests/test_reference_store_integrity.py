@@ -373,3 +373,145 @@ def test_resolver_finds_stores_recursively(tmp_path):
     (d / "papers" / "77.json").write_text(json.dumps(
         {"corpus_id": "77", "pmid": "123", "doi": ""}))
     assert "77" in _from_references(tmp_path)
+
+
+# ── schema conformance (schema/references.yaml) ───────────────────────────────
+
+def _paper(**over):
+    base = {"corpus_id": "11290620", "title": "T", "year": 2012,
+            "authors": ["A. Author"], "author_keys": ["Author, 2012"],
+            "resolution_confidence": "HIGH"}
+    base.update(over)
+    return {"_meta": {"region": "r"}, "11290620": {**base, "quotes": {}}}
+
+
+def test_valid_paper_passes_schema():
+    from evidencell.validate import check_store_records
+    assert check_store_records(_paper()) == []
+
+
+def test_missing_required_paper_field_is_caught():
+    from evidencell.validate import check_store_records
+    s = _paper()
+    del s["11290620"]["title"]
+    errors = check_store_records(s)
+    assert any("title" in e for e in errors)
+
+
+def test_unmodelled_paper_field_is_caught():
+    """The 'banana' case — a brand-new record of arbitrary shape."""
+    from evidencell.validate import check_store_records
+    s = _paper(banana=True)
+    assert any("banana" in e for e in check_store_records(s))
+
+
+def test_authors_must_be_strings_not_objects():
+    """dentate_gyrus stored {'name': ...} objects; every other region stored names."""
+    from evidencell.validate import check_store_records
+    s = _paper(authors=[{"name": "A. Author"}])
+    assert any("authors" in e for e in check_store_records(s))
+
+
+def test_top_level_pmcid_is_rejected():
+    """PubMedCentral belongs in externalIds; a parallel field duplicates it."""
+    from evidencell.validate import check_store_records
+    assert any("pmcid" in e for e in check_store_records(_paper(pmcid="123")))
+
+
+def test_bad_resolution_confidence_is_caught():
+    from evidencell.validate import check_store_records
+    assert check_store_records(_paper(resolution_confidence="SORT_OF"))
+
+
+def test_quote_without_text_fails_schema():
+    from evidencell.validate import check_store_records
+    s = _paper()
+    s["11290620"]["quotes"] = {"11290620_abcd1234": {"section": "Results"}}
+    assert any("text" in e for e in check_store_records(s))
+
+
+# ── source_method vocabulary ──────────────────────────────────────────────────
+
+def _with_quote(**q):
+    s = _paper()
+    s["11290620"]["quotes"] = {"11290620_abcd1234": {"text": "t", **q}}
+    return s
+
+
+def test_canonical_source_methods_pass():
+    from evidencell.validate import SOURCE_METHODS, check_source_methods
+    for m in SOURCE_METHODS:
+        assert check_source_methods(_with_quote(source_method=m)) == []
+
+
+def test_experimental_method_in_source_method_is_flagged():
+    from evidencell.validate import check_source_methods
+    errors = check_source_methods(
+        _with_quote(source_method="patch-clamp (rat hippocampal slice)"))
+    assert len(errors) == 1
+    assert "not a retrieval method" in errors[0]
+
+
+def test_absent_source_method_is_not_flagged():
+    from evidencell.validate import check_source_methods
+    assert check_source_methods(_with_quote()) == []
+
+
+# ── source_document linkage ───────────────────────────────────────────────────
+
+def test_asta_report_quote_without_source_document_is_flagged():
+    from evidencell.validate import check_source_documents
+    errors = check_source_documents(_with_quote(source_method="asta_report"), set())
+    assert len(errors) == 1
+    assert "unrecorded" in errors[0]
+
+
+def test_asta_report_quote_with_known_source_passes():
+    from evidencell.validate import check_source_documents
+    s = _with_quote(source_method="asta_report", source_document="a_report")
+    assert check_source_documents(s, {"a_report"}) == []
+
+
+def test_source_document_pointing_at_nothing_is_flagged():
+    from evidencell.validate import check_source_documents
+    s = _with_quote(source_method="asta_report", source_document="ghost")
+    assert any("no record" in e for e in check_source_documents(s, {"a_report"}))
+
+
+def test_non_asta_quote_needs_no_source_document():
+    """Full-text quotes come from the paper itself; the paper is the source."""
+    from evidencell.validate import check_source_documents
+    s = _with_quote(source_method="europepmc_fulltext")
+    assert check_source_documents(s, set()) == []
+
+
+# ── normalisation ─────────────────────────────────────────────────────────────
+
+def test_normalise_converts_author_objects_losslessly():
+    from evidencell.migrate_refs import normalise_paper
+    out, changes = normalise_paper({"authors": [{"name": "A. Author"}, "B. Other"]})
+    assert out["authors"] == ["A. Author", "B. Other"]
+    assert any("authors" in c for c in changes)
+
+
+def test_normalise_folds_pmcid_into_external_ids():
+    from evidencell.migrate_refs import normalise_paper
+    out, _ = normalise_paper({"pmcid": "5266860", "externalIds": {"DOI": "10.1/x"}})
+    assert "pmcid" not in out
+    assert out["externalIds"]["PubMedCentral"] == "5266860"
+
+
+def test_normalise_drops_redundant_pmcid_without_overwriting():
+    from evidencell.migrate_refs import normalise_paper
+    out, _ = normalise_paper(
+        {"pmcid": "5266860", "externalIds": {"PubMedCentral": "5266860"}})
+    assert "pmcid" not in out
+    assert out["externalIds"]["PubMedCentral"] == "5266860"
+
+
+def test_normalise_is_idempotent():
+    from evidencell.migrate_refs import normalise_paper
+    once, _ = normalise_paper({"authors": [{"name": "A"}], "pmcid": "1"})
+    twice, changes = normalise_paper(once)
+    assert twice == once
+    assert changes == []

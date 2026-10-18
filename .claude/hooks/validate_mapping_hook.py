@@ -38,6 +38,7 @@ from evidencell.validate import (  # noqa: E402
     simulate_edit,
     structural_checks,
     check_quote_key_integrity,
+    check_store_records,
     check_store_append_only,
     check_quote_keys,
     check_flat_ref_pmids,
@@ -248,6 +249,13 @@ def main():
         else:
             new_store = payload
             old_store = on_disk if isinstance(on_disk, dict) else {}
+
+        schema_errors = check_store_records(new_store)
+        if schema_errors:
+            print("Schema conformance errors (schema/references.yaml):", file=sys.stderr)
+            for e in schema_errors:
+                print(f"  - {e}", file=sys.stderr)
+            _emit_block()
 
         errors = check_quote_key_integrity(new_store)
         if errors:

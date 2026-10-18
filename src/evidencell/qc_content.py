@@ -50,6 +50,9 @@ from evidencell.validate import (
     check_flat_ref_pmids,
     check_md_ids,
     check_quote_key_integrity,
+    check_source_documents,
+    check_source_methods,
+    check_store_records,
     check_quote_keys,
     check_rationale_currency,
     check_ref_pmids,
@@ -258,10 +261,25 @@ def sweep_reference_store(path: Path, root: Path) -> list[Finding]:
     if not isinstance(store, dict):
         return [Finding(rel, ERROR, "refs-parse", "store is not a JSON object")]
 
-    return [
+    findings = [
         Finding(rel, ERROR, "quote_key_integrity", msg)
         for msg in check_quote_key_integrity(store)
     ]
+    findings += [
+        Finding(rel, ERROR, "store_schema", msg)
+        for msg in check_store_records(store)
+    ]
+    findings += [
+        Finding(rel, ERROR, "source_method", msg)
+        for msg in check_source_methods(store)
+    ]
+    sources_dir = path if path.is_dir() else path.parent
+    known = {p.stem for p in (sources_dir / "sources").glob("*.json")}
+    findings += [
+        Finding(rel, WARN, "source_document", msg)
+        for msg in check_source_documents(store, known)
+    ]
+    return findings
 
 
 def run_sweep(
