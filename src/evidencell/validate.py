@@ -13,7 +13,7 @@ from pathlib import Path
 
 import yaml
 
-from evidencell.references import compute_quote_key
+from evidencell.references import compute_quote_key, load_store, store_exists
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -128,13 +128,13 @@ def check_quote_keys(doc: dict, refs_path: Path) -> list[str]:
     Returns a list of error strings; empty = OK.
     Skips silently if references.json does not exist (fresh graph with no refs yet).
     """
-    if not refs_path.exists():
+    if not store_exists(refs_path):
         return []
 
     try:
-        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+        refs: dict = load_store(refs_path)
     except (json.JSONDecodeError, OSError):
-        return [f"Could not read {refs_path.name} — ensure it is valid JSON"]
+        return [f"Could not read the {refs_path.parent.name} reference store"]
 
     # Build a flat set of all known quote keys across all corpus entries
     known: set[str] = set()
@@ -184,11 +184,11 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
 
     Skips silently if references.json does not exist.
     """
-    if not refs_path.exists():
+    if not store_exists(refs_path):
         return []
 
     try:
-        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+        refs: dict = load_store(refs_path)
     except (json.JSONDecodeError, OSError):
         return []  # Already flagged by check_quote_keys if called first
 
@@ -276,11 +276,11 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
 
     Returns a list of error strings; empty = OK.
     """
-    if not refs_path.exists():
+    if not store_exists(refs_path):
         return []
 
     try:
-        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+        refs: dict = load_store(refs_path)
     except (json.JSONDecodeError, OSError):
         return []
 
@@ -893,11 +893,11 @@ def check_md_ids(
 
     # Load references.json once if it exists
     refs: dict | None = None
-    if refs_path.exists():
+    if store_exists(refs_path):
         try:
-            refs = json.loads(refs_path.read_text(encoding="utf-8"))
+            refs = load_store(refs_path)
         except (json.JSONDecodeError, OSError):
-            errors.append(f"Could not read {refs_path.name} — ensure it is valid JSON")
+            errors.append(f"Could not read the {refs_path.parent.name} reference store")
 
     if refs is not None:
         # Build lookup sets

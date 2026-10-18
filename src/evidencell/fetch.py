@@ -39,6 +39,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from evidencell.paths import repo_root
+from evidencell.references import load_store
 
 _S2_BATCH = "https://api.semanticscholar.org/graph/v1/paper/batch"
 _S2_FIELDS = "externalIds,title,authors,year,venue"
@@ -86,9 +87,9 @@ def _from_references(root: Path) -> dict[str, Resolution]:
     refs_dir = root / "references"
     if not refs_dir.is_dir():
         return out
-    for rf in sorted(refs_dir.rglob("references.json")):
+    for region_dir in sorted(p for p in refs_dir.iterdir() if p.is_dir()):
         try:
-            data = json.loads(rf.read_text(encoding="utf-8"))
+            data = load_store(region_dir)
         except (json.JSONDecodeError, OSError):
             continue
         for cid, entry in data.items():

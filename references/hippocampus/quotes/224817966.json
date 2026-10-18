@@ -1,0 +1,26 @@
+{
+  "224817966_aea6e129": {
+    "text": "To investigate the effect of cell type on the dendritic transcriptome, we first characterized the cell-types present in our dataset using our somatic samples. Dimensionality reduction among somata revealed five neuron-types: two glutamatergic and three GABAergic ( Figure 1D). Figure S2A shows the most differentially expressed genes between identified cell types (adjusted p < 0.05, logistic regression model). The major differences in expression occurred between glutamatergic and GABAergic somata, however, significant differences between subtypes were also observed. Although glutamatergic types 1 and 2 largely co-expressed a majority of transcripts, a handful of mRNAs like Nptx2 and Grm5 allowed their distinction ( Figure 1E). GABAergic 1 neurons, the most abundant cell type in our dataset, were distinguished by their expression of Sst and other neuropeptides. Despite their clear inhibitory identity, GABAergic 3 neurons exhibited a very different transcriptomic profile from GABAergic 1, mainly distinguished by the expression of Cck and Cnr1. Finally, GABAergic 2 neurons showed similarities in their expression patterns to both GABAergic 1 and 3; their identity was best described by the co-expression of some GABAergic 3 markers, like Id2, but not others, like Cck ( Figure 1E and S2A). To benchmark the breadth of cell-types detected we compared our cell-types to those previously described in single- cell studies of the hippocampus. For this we used Seurat.v3 integration algorithm (Butler et al., 2018), which identifies shared populations between different single cell datasets and projects them into a common space. We compared our somata dataset with two CA1-derived scRNA-seq datasets. These studies sampled CA1 cells and profiled the transcriptome of 1314 CA1 cells (Zeisel et al., 2015) or 3,663 CA1 GABAergic neurons",
+    "section": "Transcriptomic Interneuron Classifications",
+    "claims": [],
+    "source_method": "asta_report",
+    "status": "pending",
+    "added_by": "20260409_hippocampus_report_ingest"
+  },
+  "224817966_79f4a500": {
+    "text": "The hippocampal cells they most resemble, Basket-bistratified, HS and OLM interneurons, have their somata in the stratum pyramidale (sp) of the hippocampus",
+    "section": "Identification of cell types based on the somatic transcriptome",
+    "claims": [],
+    "source_method": "asta_snippet",
+    "status": "pending",
+    "added_by": "evidence_extraction_bistratified_cell_hippocampus_2026-04-22"
+  },
+  "224817966_e829ad95": {
+    "text": "their transcriptomes were closest to RLMb and Neuroglialform interneurons whose somata are located at the border between the stratum radiatum (sr) and the slm and exhibit short dendrites",
+    "section": "Identification of cell types based on the somatic transcriptome",
+    "claims": [],
+    "source_method": "asta_snippet",
+    "status": "pending",
+    "added_by": "evidence_extraction_r_lm_cell_hippocampus_2026-04-22"
+  }
+}

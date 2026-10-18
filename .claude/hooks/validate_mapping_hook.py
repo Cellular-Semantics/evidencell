@@ -170,7 +170,14 @@ def main():
         "/reports/" in str(file_path)
         and file_path.suffix == ".md"
     )
-    is_refs = "/references/" in str(file_path) and file_path.name == "references.json"
+    # Reference-store writes, in either layout: the legacy monolith, a split
+    # quotes/ or papers/ file. Matching only "references.json" would have
+    # silently dropped this guard the moment the split landed.
+    _parts = file_path.parts
+    is_refs = "references" in _parts and (
+        file_path.name == "references.json"
+        or (file_path.suffix == ".json" and file_path.parent.name in ("papers", "quotes"))
+    )
 
     if not is_yaml and not is_report and not is_refs:
         sys.exit(0)
@@ -188,39 +195,62 @@ def main():
         print("=" * 60, file=sys.stderr)
         simulated = simulate_edit(tool_name, tool_input, file_path)
         try:
-            store = json.loads(simulated)
+            payload = json.loads(simulated)
         except json.JSONDecodeError as exc:
             print(f"JSON parse error: {exc}", file=sys.stderr)
             _emit_block()
-        if not isinstance(store, dict):
-            print("references.json must be a JSON object", file=sys.stderr)
+        if not isinstance(payload, dict):
+            print(f"{file_path.name} must be a JSON object", file=sys.stderr)
             _emit_block()
-        errors = check_quote_key_integrity(store)
+
+        on_disk = None
+        if file_path.exists():
+            try:
+                on_disk = json.loads(file_path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                on_disk = None
+
+        # Normalise all three file shapes to the store shape the checks expect:
+        #   quotes/{cid}.json  {quote_key: quote}        -> {cid: {"quotes": ...}}
+        #   papers/{cid}.json  one identity record       -> {cid: record}
+        #   references.json    the legacy monolith       -> itself
+        kind = file_path.parent.name
+        if kind in ("papers", "quotes"):
+            cid = file_path.stem
+            if kind == "quotes":
+                new_store = {cid: {"corpus_id": cid, "quotes": payload}}
+                old_store = ({cid: {"corpus_id": cid, "quotes": on_disk}}
+                             if isinstance(on_disk, dict) else {})
+            else:
+                new_store = {cid: dict(payload, quotes={})}
+                old_store = ({cid: dict(on_disk, quotes={})}
+                             if isinstance(on_disk, dict) else {})
+        else:
+            new_store = payload
+            old_store = on_disk if isinstance(on_disk, dict) else {}
+
+        errors = check_quote_key_integrity(new_store)
         if errors:
             print("Quote-key integrity errors:", file=sys.stderr)
             for e in errors:
                 print(f"  - {e}", file=sys.stderr)
             _emit_block()
 
-        # Append-only: compare against what is on disk. A write that drops a
-        # paper or quote, or edits a paper's identity, is rejected regardless
-        # of whether the resulting file is internally consistent.
-        if file_path.exists():
-            try:
-                on_disk = json.loads(file_path.read_text(encoding="utf-8"))
-            except (json.JSONDecodeError, OSError):
-                on_disk = None
-            if isinstance(on_disk, dict):
-                losses = check_store_append_only(on_disk, store)
-                if losses:
-                    print("Append-only violations:", file=sys.stderr)
-                    for e in losses:
-                        print(f"  - {e}", file=sys.stderr)
-                    print("", file=sys.stderr)
-                    print("Add quotes via references.write_quote_to_refs(), which is",
-                          file=sys.stderr)
-                    print("idempotent and never disturbs existing entries.", file=sys.stderr)
-                    _emit_block()
+        # Append-only: a write that drops a paper or quote, or edits a paper's
+        # identity, is rejected regardless of internal consistency.
+        if old_store:
+            losses = check_store_append_only(old_store, new_store)
+            if losses:
+                print("Append-only violations:", file=sys.stderr)
+                for e in losses:
+                    print(f"  - {e}", file=sys.stderr)
+                print("", file=sys.stderr)
+                print("Add quotes via references.append_quote() / write_quote_to_refs(),",
+                      file=sys.stderr)
+                print("which derive the key from the text and never disturb existing",
+                      file=sys.stderr)
+                print("entries. Paper identity is write-once.", file=sys.stderr)
+                _emit_block()
 
         print("Validation passed (integrity + append-only) - allowing edit", file=sys.stderr)
         print("=" * 60 + "\n", file=sys.stderr)

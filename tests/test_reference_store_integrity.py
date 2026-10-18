@@ -167,3 +167,125 @@ def test_re_adding_the_same_quote_changes_nothing(tmp_path):
     write_quote_to_refs(*args, "run2")
     after = json.loads(p.read_text())
     assert before["11290620"]["quotes"] == after["11290620"]["quotes"]
+
+
+# ── split layout: papers/ + quotes/ ───────────────────────────────────────────
+
+def _split_region(tmp_path, corpus_id="11290620"):
+    """Build a region in the split layout; returns the region dir."""
+    d = tmp_path / "references" / "hippocampus"
+    (d / "papers").mkdir(parents=True)
+    (d / "quotes").mkdir(parents=True)
+    (d / "papers" / f"{corpus_id}.json").write_text(json.dumps(
+        {"corpus_id": corpus_id, "title": "T", "pmid": "23420672"}))
+    k, q = _quote("A verbatim passage.")
+    (d / "quotes" / f"{corpus_id}.json").write_text(json.dumps({k: q}))
+    return d
+
+
+def test_load_store_reads_split_layout(tmp_path):
+    from evidencell.references import load_store
+    d = _split_region(tmp_path)
+    store = load_store(d)
+    assert store["11290620"]["pmid"] == "23420672"
+    assert len(store["11290620"]["quotes"]) == 1
+
+
+def test_load_store_reads_legacy_layout(tmp_path):
+    """Dual-layout reading must stay covered while the shim exists."""
+    from evidencell.references import load_store
+    d = tmp_path / "references" / "hippocampus"
+    d.mkdir(parents=True)
+    k, q = _quote("legacy passage")
+    (d / "references.json").write_text(json.dumps(_store(**{k: q})))
+    store = load_store(d / "references.json")
+    assert store["11290620"]["pmid"] == "23420672"
+
+
+def test_store_exists_true_for_both_layouts(tmp_path):
+    from evidencell.references import store_exists
+    split = _split_region(tmp_path)
+    assert store_exists(split)
+    legacy = tmp_path / "references" / "dg"
+    legacy.mkdir(parents=True)
+    (legacy / "references.json").write_text("{}")
+    assert store_exists(legacy / "references.json")
+
+
+def test_store_exists_false_when_absent(tmp_path):
+    """A bare Path.exists() here would silently disable every provenance check."""
+    from evidencell.references import store_exists
+    assert not store_exists(tmp_path / "references" / "nope")
+
+
+def test_save_paper_refuses_to_overwrite(tmp_path):
+    import pytest
+    from evidencell.references import save_paper
+    d = _split_region(tmp_path)
+    with pytest.raises(FileExistsError):
+        save_paper(d, "11290620", {"corpus_id": "11290620", "title": "Different"})
+
+
+def test_append_quote_is_idempotent(tmp_path):
+    from evidencell.references import append_quote
+    d = _split_region(tmp_path)
+    k, q = _quote("A second passage.")
+    assert append_quote(d, "11290620", k, q) is True
+    assert append_quote(d, "11290620", k, dict(q, text="hijacked")) is False
+    stored = json.loads((d / "quotes" / "11290620.json").read_text())
+    assert stored[k]["text"] == "A second passage."
+
+
+def test_writer_routes_to_split_and_never_recreates_the_monolith(tmp_path):
+    from evidencell.references import load_store, write_quote_to_refs
+    d = _split_region(tmp_path)
+    key = write_quote_to_refs(d / "references.json", "11290620",
+                              "Routed passage.", "Results", "ASTA_SNIPPET", "run")
+    assert not (d / "references.json").exists()
+    assert key in load_store(d)["11290620"]["quotes"]
+
+
+def test_writer_creates_a_new_paper_in_split_layout(tmp_path):
+    from evidencell.references import load_store, write_quote_to_refs
+    d = _split_region(tmp_path)
+    write_quote_to_refs(d / "references.json", "999", "New paper passage.",
+                        "Results", "ASTA_SNIPPET", "run",
+                        paper_meta={"title": "New", "pmid": "1"})
+    assert (d / "papers" / "999.json").exists()
+    assert load_store(d)["999"]["title"] == "New"
+
+
+def test_split_store_stays_integrity_clean_through_the_writer(tmp_path):
+    from evidencell.references import load_store, write_quote_to_refs
+    d = _split_region(tmp_path)
+    for i in range(3):
+        write_quote_to_refs(d / "references.json", "11290620", f"Passage {i}.",
+                            "Results", "ASTA_SNIPPET", f"run{i}")
+    assert check_quote_key_integrity(load_store(d)) == []
+
+
+# ── migration ─────────────────────────────────────────────────────────────────
+
+def test_migration_round_trips_exactly(tmp_path):
+    from evidencell.migrate_refs import migrate_region
+    from evidencell.references import load_store
+    d = tmp_path / "references" / "hippocampus"
+    d.mkdir(parents=True)
+    k1, q1 = _quote("first")
+    k2, q2 = _quote("second")
+    legacy = _store(**{k1: q1, k2: q2})
+    refs_path = d / "references.json"
+    refs_path.write_text(json.dumps(legacy))
+
+    before = load_store(refs_path)
+    r = migrate_region(refs_path)
+    assert r.papers == 1 and r.quotes == 2
+    assert not refs_path.exists()
+    assert load_store(d) == before
+
+
+def test_migration_is_idempotent(tmp_path):
+    from evidencell.migrate_refs import migrate_region
+    d = _split_region(tmp_path)
+    r = migrate_region(d / "references.json")
+    assert r.skipped == "already split"

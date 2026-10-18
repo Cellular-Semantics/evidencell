@@ -218,6 +218,15 @@ validate-at-blind *ARGS:
 qc-content *ARGS:
     uv run python -m evidencell.qc_content {{ARGS}}
 
+# One-time: split references.json into papers/ + quotes/ per region.
+# Round-trip is verified before the monolith is deleted; nothing is removed
+# unless the split store reloads to exactly what the monolith held.
+# Usage: just migrate-refs-split --dry-run
+#        just migrate-refs-split
+[group('references')]
+migrate-refs-split *ARGS:
+    uv run python -m evidencell.migrate_refs {{ARGS}}
+
 # Resolve Semantic Scholar corpus IDs to PMID/DOI, offline-first (validated
 # reference stores, then cached paper catalogues, then the S2 API). Use this
 # instead of reading a catalogue by hand — it is the step that stops a

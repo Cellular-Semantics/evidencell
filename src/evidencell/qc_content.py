@@ -42,6 +42,7 @@ from pathlib import Path
 import yaml
 
 from evidencell.paths import at_run_index_path, repo_root
+from evidencell.references import load_store, store_exists
 from evidencell.validate import (
     _collect_flat_refs,
     _collect_quote_keys,
@@ -178,7 +179,7 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
         # is absent, so a region without a reference store silently passes all
         # of them — in this sweep *and* in the pre-edit hook. A graph with no
         # citations yet is legitimately unbacked; one that cites papers is not.
-        if not refs_path.exists():
+        if not store_exists(refs_path):
             cited = len(_collect_refs(doc)) + len(_collect_quote_keys(doc)) + len(
                 _collect_flat_refs(doc)
             )
@@ -231,8 +232,11 @@ def sweep_report_file(path: Path, root: Path) -> list[Finding]:
 
 
 def _reference_stores(root: Path) -> list[Path]:
+    """Region store roots, in either layout."""
     refs = root / "references"
-    return sorted(refs.rglob("references.json")) if refs.is_dir() else []
+    if not refs.is_dir():
+        return []
+    return [d for d in sorted(refs.iterdir()) if d.is_dir() and store_exists(d)]
 
 
 def sweep_reference_store(path: Path, root: Path) -> list[Finding]:
@@ -245,7 +249,7 @@ def sweep_reference_store(path: Path, root: Path) -> list[Finding]:
     """
     rel = str(path.relative_to(root))
     try:
-        store = json.loads(path.read_text(encoding="utf-8"))
+        store = load_store(path)
     except json.JSONDecodeError as exc:
         return [Finding(rel, ERROR, "refs-parse", f"invalid JSON: {exc}")]
     except OSError as exc:
