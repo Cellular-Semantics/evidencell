@@ -1,6 +1,13 @@
 # evidencell
 
+[![CI](https://github.com/Cellular-Semantics/evidencell/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Cellular-Semantics/evidencell/actions/workflows/ci.yml)
+[![Content QC](https://github.com/Cellular-Semantics/evidencell/actions/workflows/content-qc.yml/badge.svg?branch=main)](https://github.com/Cellular-Semantics/evidencell/actions/workflows/content-qc.yml)
+
 A structured knowledge base for cell type mapping evidence, linking classical cell type descriptions to clusters in modern transcriptomic atlases.
+
+**CI** runs tests, lint, LinkML schema validation and ontology-term validation across the KB.
+**Content QC** sweeps the KB and reports for unsupported content — quote keys, PMIDs, DOIs and
+annotation-transfer run refs that do not resolve against the validated stores (`just qc-content`).
 
 Cell type classification is undergoing a transition. Classical neuroscience built up rich descriptions of cell types over decades — defined by morphology, electrophysiology, connectivity, neurotransmitter phenotype, and marker expression. Modern single-cell transcriptomics has produced large-scale atlases (BICCN, HMBA) with thousands of molecularly defined clusters. These two vocabularies do not map cleanly onto each other, and the mappings that do exist are rarely documented with explicit, traceable evidence.
 

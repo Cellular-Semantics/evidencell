@@ -7,7 +7,10 @@ YAML checks (in order):
 2. Structural integrity (duplicate IDs, dangling edges, placeholder snippets, accessions)
 3. Quote key provenance: every quote_key must exist in references.json
 4. Reference PMID/DOI provenance: every PMID:/DOI: ref must exist in references.json
-5. LinkML schema conformance (subprocess; skipped if schema file absent)
+5. Flat citation lists (definition_references, xrefs, prior_reference) — same
+   provenance rule, for fields that hold bare citation strings rather than
+   `ref:`-keyed objects
+6. LinkML schema conformance (subprocess; skipped if schema file absent)
 
 Markdown report checks:
 1. Unannotated blockquotes (missing <!-- quote_key: X --> annotation)
@@ -35,6 +38,7 @@ from evidencell.validate import (  # noqa: E402
     simulate_edit,
     structural_checks,
     check_quote_keys,
+    check_flat_ref_pmids,
     check_ref_pmids,
     check_run_refs,
     linkml_validate,
@@ -258,6 +262,21 @@ def main():
                     print(f"  - {e}", file=sys.stderr)
                 errors_found = True
 
+        # 3a. Flat citation lists (definition_references, xrefs, prior_reference).
+        # _collect_refs only yields values keyed `ref:`, so these lists were
+        # invisible to check 3 above and citations could be written straight to
+        # disk unvalidated. That is how PMID:28646648 — a bacteriophage genomics
+        # paper — came to sit on trilaminar_cell_hippocampus for six months,
+        # while the correct PMID for the same corpus ID was already in
+        # references.json. Resolve corpus IDs with `just fetch-reference`.
+        if isinstance(doc, dict):
+            flat_errors = check_flat_ref_pmids(doc, refs_path)
+            if flat_errors:
+                print("Flat citation-list provenance errors:", file=sys.stderr)
+                for e in flat_errors:
+                    print(f"  - {e}", file=sys.stderr)
+                errors_found = True
+
         # 3b. AT run_ref resolution (fast, local index.yaml lookup)
         if isinstance(doc, dict):
             run_ref_errors = check_run_refs(doc, at_run_index_path())
@@ -288,6 +307,30 @@ def main():
             if not ok_terms:
                 errors_found = True
 
+    # ── Coverage report ───────────────────────────────────────────────────
+    # Every provenance check in validate.py returns [] when its backing store
+    # is absent, so "passed" has meant anything from "all checks ran and were
+    # clean" to "no check could run at all". Three separate blind spots this
+    # week traced to that ambiguity — most sharply the regions with no
+    # references.json, where the anti-hallucination guard is wholly inert.
+    # Say which checks actually ran.
+    skipped: list[str] = []
+    if not refs_path.exists():
+        which = "quote_key, PMID/DOI, flat citations" if is_yaml else "quote_key, PMID"
+        skipped.append(f"{which} — no {refs_path.parent.name}/references.json")
+    if is_yaml and not at_run_index_path().exists():
+        skipped.append("AT run_ref — no annotation_transfer_runs/index.yaml")
+    if is_yaml and not schema_path.exists():
+        skipped.append("LinkML schema — schema file absent")
+    if is_report and not (refs_path.parent / "term_index.json").exists():
+        skipped.append("ontology CURIEs — no term_index.json (never generated)")
+
+    if skipped:
+        print("", file=sys.stderr)
+        print("Checks NOT run for this file:", file=sys.stderr)
+        for s in skipped:
+            print(f"  - {s}", file=sys.stderr)
+
     if errors_found:
         print("=" * 60, file=sys.stderr)
         print("BLOCKING EDIT: Validation failed", file=sys.stderr)
@@ -295,7 +338,12 @@ def main():
         print("=" * 60 + "\n", file=sys.stderr)
         sys.exit(2)
 
-    print("Validation passed - allowing edit", file=sys.stderr)
+    if skipped:
+        print("", file=sys.stderr)
+        print(f"Validation passed ({len(skipped)} check group(s) could not run "
+              f"— see above) - allowing edit", file=sys.stderr)
+    else:
+        print("Validation passed (all checks ran) - allowing edit", file=sys.stderr)
     print("=" * 60 + "\n", file=sys.stderr)
     sys.exit(0)
 
