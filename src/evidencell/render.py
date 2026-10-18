@@ -26,6 +26,8 @@ from pathlib import Path
 
 import yaml
 
+from evidencell.references import load_store, store_exists
+
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -2206,10 +2208,11 @@ def _load_graph_and_refs(graph_file: Path) -> tuple[dict, dict]:
     if not graph:
         raise ValueError(f"Empty or invalid YAML: {graph_file}")
     refs_file = refs_path_for_graph(graph_file)
-    if refs_file.exists():
-        refs = json.loads(refs_file.read_text(encoding="utf-8"))
+    if store_exists(refs_file):
+        refs = load_store(refs_file)
     else:
-        print(f"WARNING: references.json not found at {refs_file}; quotes will be unavailable", file=sys.stderr)
+        print(f"WARNING: no reference store for region '{refs_file.parent.name}'; "
+              f"quotes will be unavailable", file=sys.stderr)
         refs = {}
     return graph, refs
 
@@ -2338,7 +2341,7 @@ def main() -> None:
                 # Generate all drill-downs for this node
                 from evidencell.paths import refs_path_for_graph as _rfg
                 refs_file = _rfg(graph_file)
-                if refs_file.exists():
+                if store_exists(refs_file):
                     _gen_all_drilldowns(graph, refs, nid, out_dir, graph_file)
 
     elif args.cmd == "drilldowns":

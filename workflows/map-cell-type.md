@@ -277,7 +277,7 @@ warning.
     without `at_source_sets` emit no AT evidence.
   - **LITERATURE evidence is NOT emitted by the mechanical
     Stage B** — verbatim `snippet:` matching against
-    `references.json` belongs in gen-report's synthesis pass,
+    the reference store belongs in gen-report's synthesis pass,
     which sees the full literature context.
 - `caveats[]` — emit typed by rule:
   - `MERFISH_REGISTRATION_UNCERTAINTY` when the winning anat row

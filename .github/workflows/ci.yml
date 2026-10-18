@@ -29,6 +29,10 @@ jobs:
       - name: Lint (ruff)
         run: uv run ruff check src/ tests/
 
+      - name: Check generated models are in sync with their schemas
+        run: |
+          uv run gen-pydantic schema/references.yaml | diff - src/evidencell/_refs_models.py
+
       - name: Run fast tests (no OAK DB / network)
         run: uv run pytest -m "not integration" --no-cov -q
 

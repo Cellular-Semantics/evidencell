@@ -2,7 +2,7 @@
 
 You are an ASTA deep research report ingestion coordinator. You parse a pre-generated
 ASTA AI2 deep research PDF, propose classical CellTypeNode stubs with property metadata,
-and resolve all references. Quotes are stored in a shared per-region `references.json`
+and resolve all references. Quotes are stored in a shared per-region reference store
 with content-hashed keys — they are **not** promoted to KB evidence items. A validation
 round matches quotes to node properties and flags ambiguities for downstream
 `cite-traverse` to resolve against primary literature.
@@ -42,7 +42,7 @@ PDF
  ├─ Step 1b:  hyperlinks → pdf_corpus_ids.json (S2 corpus IDs from PDF links)
  │
  ├─ Step 2:   batch resolve + merge quotes
- │            → references/{region}/references.json  (shared, keyed by corpus_id)
+ │            → references/{region}/  (shared, keyed by corpus_id)
  │               quotes stored with content-hashed keys: {corpus_id}_{hash8}
  │
  ├─ Step 3:   CL lookup → cl_mappings.json
@@ -56,14 +56,14 @@ PDF
  └─ Step 5:   handoff to cite-traverse (Round 2 targets ambiguities + gaps)
 ```
 
-Quotes live in `references.json`, never in the KB YAML. The KB references
+Quotes live in the region's reference store, never in the KB YAML. The KB references
 quotes by key. Reports dereference keys to include snippets when needed.
 
 ---
 
-## references.json — shared quote store
+## The reference store — shared, per region
 
-`references/{region}/references.json` is the single source of truth for all
+`references/{region}/` is the single source of truth for all
 references and their associated quotes in a region. Multiple workflows
 (asta-report-ingest, cite-traverse, evidence-extraction) read and append to it.
 
@@ -104,17 +104,14 @@ references and their associated quotes in a region. Multiple workflows
 }
 ```
 
-**Quote key scheme:**
+**Quote key scheme:** `{corpus_id}_{sha256(normalised text)[:8]}`, where
+normalisation is lowercase plus whitespace collapse.
 
-```python
-import hashlib
-
-def quote_key(corpus_id: str, text: str) -> str:
-    """Content-hashed quote key. Deterministic, deduplicates across ingests."""
-    normalized = " ".join(text.lower().split())
-    h = hashlib.sha256(normalized.encode()).hexdigest()[:8]
-    return f"{corpus_id}_{h}"
-```
+Never reimplement this. `write_quote_to_refs()` derives the key for you, and
+`references.compute_quote_key()` is the single definition if you need it
+directly. The pre-edit hook recomputes the hash on every write and rejects a
+key that does not match its own text, so a hand-computed key that drifts from
+the canonical implementation is a blocked write, not a silent inconsistency.
 
 - Deterministic: same quote from two ASTA reports → same key, deduped
 - New quotes append: cite-traverse adds a quote, gets a new hash
@@ -130,7 +127,7 @@ def quote_key(corpus_id: str, text: str) -> str:
 | `superseded` | An ASTA quote that was found to be paraphrased; a `verified` quote exists |
 | `primary` | Quote extracted directly from primary literature (not via ASTA) |
 
-**Merge protocol:** when appending to an existing `references.json`:
+**Merge protocol:** when appending to an existing store:
 1. Read existing file (or start with empty `{}` if first ingest for this region)
 2. For each new reference: if corpus_id already exists, merge quotes (dedup by key)
 3. For new references: add full entry
@@ -274,19 +271,19 @@ DO NOT:
 ## Step 2: Reference resolution and quote store merge
 
 Resolve author_key references using the corpus IDs extracted in Step 1b,
-then merge extracted quotes into the shared `references.json` with
+then merge extracted quotes into the shared reference store with
 content-hashed keys.
 
 **Subagent config:** `subagent_type: "general-purpose"`, `model: {model}`
 
 ```
 You are a reference resolution agent. Resolve author_key references to real
-corpus IDs, then merge quotes into the shared references.json quote store.
+corpus IDs, then merge quotes into the shared reference store.
 You perform ONLY the steps listed below.
 
 OUTPUT DIRECTORY: {output_dir}
 REGION: {region}
-REFERENCES FILE: references/{region}/references.json
+REFERENCES FILE: references/{region}/
 
 TASK:
 
@@ -319,27 +316,36 @@ TASK:
    b. If still unresolved, mark resolution_confidence: UNRESOLVED.
       Do not guess.
 
-5. Merge into references/{region}/references.json:
+5. Merge into the region's reference store:
 
-   a. Read existing references.json (or start with {"_meta": {...}} if first
-      ingest for this region). Create references/{region}/ if needed.
+   **Do not read, hand-merge, or write the store directly.** It is split into
+   write-once `papers/{corpus_id}.json` and append-only
+   `quotes/{corpus_id}.json`, and the pre-edit hook rejects writes that drop a
+   paper, drop a quote, edit a paper's identity, or carry a quote key that is
+   not the hash of its own text. Go through `write_quote_to_refs()`, which
+   derives the key, is idempotent, and routes to the right files:
 
-   b. For each resolved reference, generate content-hashed quote keys:
-      ```python
-      import hashlib
-      def quote_key(corpus_id, text):
-          normalized = " ".join(text.lower().split())
-          h = hashlib.sha256(normalized.encode()).hexdigest()[:8]
-          return f"{corpus_id}_{h}"
-      ```
+   ```python
+   from pathlib import Path
+   from evidencell.references import write_quote_to_refs
 
-   c. For each reference:
-      - If corpus_id already exists in references.json: merge new quotes
-        (skip duplicates by key), append any new author_keys to the
-        author_keys list.
-      - If new: add full entry with metadata + quotes.
+   quote_key = write_quote_to_refs(
+       Path("references/{region}"),
+       corpus_id="<digits-only>",
+       quote_text="<exact verbatim quote>",
+       section="Anatomical Location and Morphology",
+       source_method="ASTA_REPORT",      # SourceMethod enum, not free text
+       added_by="{run_id}",
+       paper_meta=meta,                  # used only when the paper is new
+   )
+   ```
 
-   c1. Field shape contract — write each entry in this exact shape:
+   Call it once per quote. Re-adding an identical quote is a no-op and returns
+   the same key, so reruns are safe. Never compute a quote key by hand — it is
+   `{corpus_id}_{sha256(normalised text)[:8]}` and the hook recomputes it; a
+   key that does not match its text is rejected.
+
+   a. `paper_meta` field shape — this is what becomes the `papers/` record:
        {
          "corpus_id": "<digits-only>",
          "author_keys": ["Last et al., YYYY"],          // list[str]
@@ -353,8 +359,7 @@ TASK:
          "pmid": "<digits-only>",                        // NO 'PMID:' prefix
          "doi": "<bare path, e.g. 10.1111/ejn.14606>",   // NO 'DOI:' prefix,
                                                          // NO 'https://' URL
-         "resolution_confidence": "HIGH" | "MODERATE" | "UNRESOLVED",
-         "quotes": { ... }
+         "resolution_confidence": "HIGH" | "MODERATE" | "UNRESOLVED"
        }
        Semantic Scholar `get_paper_batch` returns authors as
        `[{"authorId": "...", "name": "..."}, ...]`. Extract `name` from each
@@ -364,19 +369,15 @@ TASK:
        planning/minirefs_author_rendering_fix.md) — every one was caught
        only after KB writes started failing.
 
-   d. Each quote entry:
-      {
-        "text": "<exact quote>",
-        "section": "Anatomical Location and Morphology",
-        "claims": [],
-        "source_method": "asta_report",
-        "status": "pending",
-        "added_by": "{run_id}"
-      }
-      (claims list is empty here — populated in Step 3b)
+       Identity is write-once. If the paper already exists, `paper_meta` is
+       ignored rather than overwriting it; correcting a stored identity is a
+       deliberate, reviewed change, not a side effect of adding a quote.
 
-   e. Update _meta.last_updated and _meta.last_updated_by.
-      Write back to references/{region}/references.json.
+   b. Resolve corpus IDs with `just fetch-reference CorpusId:NNN` rather than
+      reading a catalogue by hand. It resolves offline-first and reports an
+      unresolvable ID instead of guessing. A PMID typed from memory is how a
+      bacteriophage genomics paper came to sit on a hippocampal interneuron
+      node for six months.
 
 6. Write {output_dir}/resolution_report.md — summary:
    - Total references, HIGH/MODERATE/UNRESOLVED counts
@@ -385,14 +386,14 @@ TASK:
 
 RETURN:
 "Resolved {N}/{total} references. HIGH: X, MODERATE: Y, UNRESOLVED: Z.
-Merged {Q} quotes into references.json ({D} deduplicated).
+Merged {Q} quotes into the reference store ({D} deduplicated).
 See resolution_report.md."
 
 DO NOT:
 - Guess corpus IDs
 - Skip the batch step and go straight to search
 - Run more than 2 search attempts per fallback reference
-- Overwrite existing quotes in references.json (merge only)
+- Overwrite existing quotes in the reference store (append only)
 ```
 
 ---
@@ -456,7 +457,7 @@ DO NOT:
 
 ## Step 3b: Quote validation and KB proposal (Round 1)
 
-Spawn a **single subagent** that matches quotes from `references.json` to node
+Spawn a **single subagent** that matches quotes from the reference store to node
 property fields, writes the draft KB YAML (nodes with metadata + quote_keys on
 assertions), and flags ambiguities for Round 2.
 
@@ -467,7 +468,7 @@ properties, not dumped in bulk.
 
 ```
 You are a quote validation and KB proposal agent. You match quotes from the
-shared references.json to node property fields and produce a clean draft KB.
+shared reference store to node property fields and produce a clean draft KB.
 You perform ONLY the steps listed below.
 
 OUTPUT DIRECTORY: {output_dir}
@@ -475,7 +476,7 @@ REGION: {region}
 
 INPUT FILES:
 - {output_dir}/proposed_types.json                (node summaries from Step 1)
-- references/{region}/references.json               (shared quote store)
+- references/{region}/               (shared quote store)
 - {output_dir}/cl_mappings.json                   (CL term matches)
 
 PROPERTY CATEGORIES:
@@ -494,7 +495,7 @@ Quotes can validate these node property fields:
 1. Read all input files.
 
 2. For each proposed node in proposed_types.json, scan quotes in
-   references.json for claims about specific properties:
+   the reference store for claims about specific properties:
 
    For each quote, determine:
    a. Which property category does it address? (morphology, ephys, markers, etc.)
@@ -507,9 +508,15 @@ Quotes can validate these node property fields:
 
    Keep only HIGH and MODERATE relevance quotes. Discard LOW.
 
-3. For each kept quote, update its "claims" list in references.json with
-   the property categories it addresses (e.g. ["soma_location_so", "sst_positive"]).
-   Write back to references.json.
+3. For each kept quote, update its "claims" list with the property categories
+   it addresses (e.g. ["soma_location_so", "sst_positive"]). Quotes live in
+   `references/{region}/quotes/{corpus_id}.json`, keyed by quote_key.
+
+   Editing `claims` on an existing quote is allowed — it is curation metadata,
+   not provenance. Do not touch `text`: the quote key is a hash of it, so any
+   edit invalidates the key and the write is rejected. If the recorded text is
+   genuinely wrong, add the correct quote as a new entry rather than editing
+   the existing one.
 
 4. For each property category on each node, select the best supporting
    references and their quote keys:
@@ -554,10 +561,10 @@ Quotes can validate these node property fields:
        - ref: "PMID:20421280"
          method: "biocytin fill"
          scope: "adult rat CA1"
-         quote_key: "12345678_a3f2c1d0"  # → lookup in references.json
+         quote_key: "12345678_a3f2c1d0"  # → lookup in the reference store
    ```
 
-   The quote_key references a specific quote in references.json. Reports
+   The quote_key references a specific quote in the reference store. Reports
    can dereference to include the snippet text, or omit it for compact output.
 
    Do NOT inline quote text in the KB YAML. Use quote_keys only.
@@ -570,7 +577,7 @@ Quotes can validate these node property fields:
    # Source: ASTA deep research report — {pdf_file}
    # Ingestion date: {date}
    # Status: DRAFT — node metadata from ASTA report, pending primary verification
-   # Property assertions reference quotes in references/{region}/references.json
+   # Property assertions reference quotes in references/{region}/
    # Classical nodes proposed by: asta-report-ingest
    ```
 
@@ -616,7 +623,7 @@ Quotes can validate these node property fields:
 
    The round2_targets list feeds directly into cite-traverse as prioritised
    retrieval targets. cite-traverse reads the quote_keys, looks up the paper
-   in references.json, fetches the primary text, and adds verified quotes.
+   in the reference store, fetches the primary text, and adds verified quotes.
 
 RETURN:
 "Validated {N} node(s). Properties supported: {S}, partial: {P}, gaps: {G}.
@@ -686,7 +693,7 @@ INGEST COMPLETE
 Region: {region}
 Draft KB: kb/graphs/{region}/{kb_file}
 Nodes written: {N}
-References: references/{region}/references.json ({R} papers, {Q} quotes)
+References: references/{region}/ ({R} papers, {Q} quotes)
 Output dir: {output_dir}/
 
 Validation: {S} properties supported, {P} partial, {G} gaps
@@ -699,7 +706,7 @@ NEXT STEPS
 Option A — Targeted primary literature retrieval (recommended):
   Hand workflows/cite-traverse.md to Claude Code with:
     node_ids: {list of node IDs}
-    references_file: references/{region}/references.json
+    references_file: references/{region}/
     round2_targets: {output_dir}/validation_notes.json  ← prioritised issues
     output_dir: {output_dir}
     max_depth: 1    ← recommended when coming from an ASTA report; the report
@@ -727,10 +734,10 @@ Ask: "Which option would you like to proceed with?"
 ## Rules
 
 - **Classical nodes emerge here.** Do not require pre-existing KB nodes.
-- **Quotes live in references.json.** Content-hashed keys (`{corpus_id}_{hash8}`)
+- **Quotes live in the reference store.** Content-hashed keys (`{corpus_id}_{hash8}`)
   ensure dedup across ingests. The KB YAML references quotes by key only —
   never inline text.
-- **references.json is shared.** Multiple workflows append to the same file
+- **The reference store is shared.** Multiple workflows append to it
   per region. Always read-merge-write, never overwrite.
 - **No evidence items at ingest.** The draft KB has nodes with property fields
   and `*_sources` entries pointing to quote_keys. Actual LiteratureEvidence

@@ -1,0 +1,262 @@
+## Schema for the evidencell reference store.
+##
+## Covers references/{region}/ — the per-region store of papers, the verbatim
+## quotes drawn from them, and the deepsearch documents those quotes came from.
+## Separate from celltype_mapping.yaml (the KB schema) and workflow_schema.yaml
+## (workflow intermediates): the reference store is neither KB content nor a
+## transient workflow artefact. It is the provenance layer every KB citation
+## resolves against, and until now it had no schema at all.
+##
+## On-disk layout:
+##   references/{region}/
+##     _meta.json                 StoreMeta
+##     papers/{corpus_id}.json    Paper      — identity, write-once
+##     quotes/{corpus_id}.json    QuoteSet   — quote_key -> Quote, append-only
+##     sources/{source_id}.json   SourceDocument — deepsearch reports
+##
+## Version history:
+## Version: 0.1.0 (2026-10-18) — initial: Paper, Quote, QuoteSet, SourceDocument,
+##                               StoreMeta; SourceMethod + ResolutionConfidence
+##                               enums. Introduced with the papers/ + quotes/
+##                               split (#139).
+
+id: https://bican.org/schema/celltype-evidence/references/v0.1
+name: EvidencellReferences
+version: 0.1.0
+description: >
+  Schema for the evidencell reference store: papers, their verbatim quotes, and
+  the deepsearch documents quotes were extracted from.
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+
+default_range: string
+
+imports:
+  - linkml:types
+
+enums:
+
+  SourceMethod:
+    description: >
+      How a quote's text was obtained. This is an evidence-strength
+      distinction, not bookkeeping: ASTA_REPORT text is ASTA's prose about a
+      paper, whereas the full-text and abstract methods are text from the paper
+      itself. A quote whose method is ASTA_REPORT should carry a
+      source_document identifying which report it came from.
+    permissible_values:
+      ASTA_REPORT:
+        description: >
+          Taken from an ASTA deep-research PDF, which summarises and paraphrases
+          the cited paper. Not necessarily verbatim from the paper.
+      ASTA_SNIPPET:
+        description: Retrieved via Semantic Scholar snippet_search over the ASTA corpus.
+      EUROPEPMC_FULLTEXT:
+        description: Retrieved from the paper's full text via Europe PMC.
+      TARGETED_FULLTEXT_RETRIEVAL:
+        description: Retrieved from the paper's full text by a targeted follow-up fetch.
+      ABSTRACT_ONLY:
+        description: Taken from the paper's abstract, full text being unavailable.
+      PRIMARY:
+        description: >
+          Transcribed from the primary paper by a curator, where no automated
+          retrieval path was available.
+
+  ResolutionConfidence:
+    description: >
+      Confidence that this record identifies the paper the citation intended.
+      Set at ingest by the resolution step, not by later edits.
+    permissible_values:
+      HIGH:
+        description: Identifier matched exactly (DOI or PMID round-tripped).
+      MODERATE:
+        description: Matched on title and authors; identifiers absent or partial.
+      LOW:
+        description: Best-effort match; needs review before the record is trusted.
+      UNRESOLVED:
+        description: No confident match found. The citation should not be relied on.
+
+classes:
+
+  Paper:
+    description: >
+      One publication, keyed by Semantic Scholar corpus ID. Written once at
+      ingest and immutable thereafter — a quote-adding write must never alter
+      identity. Correcting a stored identifier is a deliberate, reviewed change.
+
+      Note corpus_id is the store key and the namespace for every quote_key on
+      this paper, so it must be the canonical Semantic Scholar record. S2 can
+      hold more than one record for the same paper; resolving by DOI alone has
+      already selected a secondary record once. Prefer the record carrying the
+      PubMed crosslink.
+    attributes:
+      corpus_id:
+        description: Semantic Scholar corpus ID, digits only. The file stem and store key.
+        identifier: true
+        required: true
+      title:
+        description: Paper title as resolved, without trailing punctuation.
+        required: true
+      year:
+        description: Publication year.
+        range: integer
+        required: true
+      authors:
+        description: >
+          Full author names, one per entry. Not a comma-joined string, and no
+          "et al." suffix — citation rendering reads these directly.
+          `references._normalise_authors()` is the canonical producer; it
+          accepts the Semantic Scholar object shape and flattens it here.
+        multivalued: true
+        required: true
+      author_keys:
+        description: >
+          Human-facing citation labels, e.g. "Hochgerner et al., 2018". Derived
+          from authors + year at ingest.
+        multivalued: true
+        required: true
+      doi:
+        description: Bare DOI path, no "DOI:" prefix and no https:// URL. Absent if unknown.
+      pmid:
+        description: PubMed ID, digits only, no "PMID:" prefix. Absent if unknown.
+      venue:
+        description: Journal or venue name, where recorded.
+      externalIds:
+        description: >
+          Identifier block as returned by the resolver — DOI, CorpusId, PubMed,
+          PubMedCentral, MAG. The single home for external identifiers; do not
+          add parallel top-level fields duplicating its members.
+        range: ExternalIds
+        inlined: true
+      resolution_confidence:
+        description: Confidence that this record is the intended paper.
+        range: ResolutionConfidence
+        required: true
+
+  ExternalIds:
+    description: >
+      External identifiers for a paper, as returned by Semantic Scholar.
+      PubMedCentral lives here rather than as a top-level pmcid field.
+    attributes:
+      DOI:
+        description: Bare DOI path.
+      PubMed:
+        description: PubMed ID, digits only.
+      PubMedCentral:
+        description: PMC ID, digits only, without the "PMC" prefix.
+      CorpusId:
+        description: Semantic Scholar corpus ID.
+        range: integer
+      MAG:
+        description: Microsoft Academic Graph ID, for older records.
+
+  Quote:
+    description: >
+      One passage attributed to a paper. The quote's key is
+      {corpus_id}_{sha256(normalised text)[:8]}, so the key is an assertion
+      about the text it indexes; altering text without re-deriving the key is
+      rejected at write time.
+    attributes:
+      text:
+        description: >
+          The passage, exactly as extracted. Immutable once written — the key
+          hashes it. If the recorded text is wrong, add a corrected quote rather
+          than editing this one.
+        required: true
+      section:
+        description: >
+          Where in the source document the passage appeared. Free text: values
+          are real headings from papers and ASTA reports, and no closed
+          vocabulary describes them honestly.
+      source_method:
+        description: >
+          How the text was obtained; see the SourceMethod enum for the intended
+          vocabulary. Deliberately typed as a string rather than the enum: 22
+          legacy quotes record an experimental method here instead of a
+          retrieval method (e.g. "patch-clamp (rat hippocampal slice)"), and
+          mapping those onto retrieval values would fabricate provenance that
+          was never recorded. `just qc-content` reports non-conforming values
+          so the backlog is visible and shrinks, while a newly written wrong
+          value fails immediately.
+      source_document:
+        description: >
+          Identifier of the SourceDocument this passage came from. Expected
+          whenever source_method is ASTA_REPORT. Optional because some early
+          deepsearch PDFs were never committed and may not be recoverable; the
+          content sweep reports absences rather than blocking on them.
+      claims:
+        description: >
+          Node property categories this passage supports, e.g. defining_markers
+          or anatomical_location. Deliberately unconstrained: the written
+          vocabulary has forked into near-duplicates and around half of quotes
+          carry none, so a consumer cannot assume the field is populated or
+          that two spellings mean different things. Treat it as advisory until
+          the vocabulary is settled.
+        multivalued: true
+      status:
+        description: Curation state of this quote. Free text pending a defined vocabulary.
+      added_by:
+        description: >
+          Identifier of the run that added this quote. The only per-quote link
+          back to the originating workflow run.
+      cell_type_hint:
+        description: >
+          Node this passage was extracted for, as judged at extraction time.
+          A hint for downstream selection, not an assertion about the node.
+      property_hint:
+        description: >
+          Node property this passage was judged to support at extraction time.
+          Advisory; `claims` is the curated equivalent.
+
+  QuoteSet:
+    description: >
+      The quotes recorded for one paper — the contents of
+      quotes/{corpus_id}.json, keyed by quote_key. Append-only.
+    attributes:
+      quotes:
+        description: quote_key -> Quote.
+        range: Quote
+        multivalued: true
+        inlined: true
+
+  SourceDocument:
+    description: >
+      A document that quotes were extracted from — at present always an ASTA
+      deep-research PDF. Makes the link from a quote to its originating document
+      a first-class record rather than a filename convention threaded through
+      run directories.
+    attributes:
+      source_id:
+        description: Stable identifier, derived from the document filename.
+        identifier: true
+        required: true
+      path:
+        description: >
+          Repository-relative path, e.g. inputs/deepsearch/trilaminar_cells.pdf.
+          May point at a file that was never committed; see `available`.
+        required: true
+      available:
+        description: >
+          Whether the document is present in the repository. False records a
+          known-missing source: the quotes remain valid and attributed, but the
+          document behind them cannot be re-read.
+        range: boolean
+        required: true
+      region:
+        description: Region whose store this document belongs to.
+      runs:
+        description: >
+          Workflow run identifiers that ingested this document. Matches the
+          added_by values on quotes drawn from it.
+        multivalued: true
+
+  StoreMeta:
+    description: Bookkeeping for one region's store — the contents of _meta.json.
+    attributes:
+      region:
+        description: Region name; matches the directory name.
+        required: true
+      last_updated:
+        description: ISO-8601 timestamp of the most recent write.
+      last_updated_by:
+        description: Identifier of the run that made the most recent write.

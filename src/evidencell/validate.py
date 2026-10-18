@@ -13,6 +13,8 @@ from pathlib import Path
 
 import yaml
 
+from evidencell.references import compute_quote_key, load_store, store_exists
+
 # ── Constants ──────────────────────────────────────────────────────────────────
 
 # Snippet values that look like placeholders rather than real verbatim text
@@ -126,13 +128,13 @@ def check_quote_keys(doc: dict, refs_path: Path) -> list[str]:
     Returns a list of error strings; empty = OK.
     Skips silently if references.json does not exist (fresh graph with no refs yet).
     """
-    if not refs_path.exists():
+    if not store_exists(refs_path):
         return []
 
     try:
-        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+        refs: dict = load_store(refs_path)
     except (json.JSONDecodeError, OSError):
-        return [f"Could not read {refs_path.name} — ensure it is valid JSON"]
+        return [f"Could not read the {refs_path.parent.name} reference store"]
 
     # Build a flat set of all known quote keys across all corpus entries
     known: set[str] = set()
@@ -182,11 +184,11 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
 
     Skips silently if references.json does not exist.
     """
-    if not refs_path.exists():
+    if not store_exists(refs_path):
         return []
 
     try:
-        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+        refs: dict = load_store(refs_path)
     except (json.JSONDecodeError, OSError):
         return []  # Already flagged by check_quote_keys if called first
 
@@ -274,11 +276,11 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
 
     Returns a list of error strings; empty = OK.
     """
-    if not refs_path.exists():
+    if not store_exists(refs_path):
         return []
 
     try:
-        refs: dict = json.loads(refs_path.read_text(encoding="utf-8"))
+        refs: dict = load_store(refs_path)
     except (json.JSONDecodeError, OSError):
         return []
 
@@ -307,6 +309,203 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
                     f"{field}: 'DOI:{m.group(1)}' not found in {refs_path.name}. "
                     "Either ingest the paper or remove the citation."
                 )
+    return errors
+
+
+# ── Quote-key integrity ───────────────────────────────────────────────────────
+
+def check_quote_key_integrity(store: dict) -> list[str]:
+    """Verify every quote_key is the content hash of the text it indexes.
+
+    A quote key is ``{corpus_id}_{sha256(normalised text)[:8]}``, so each key is
+    an assertion about its own value: *this exact text came from this paper*.
+    Recomputing the hash is therefore a complete integrity check on the quote
+    payload — it catches text edited after the key was minted, a key copied
+    between quotes, and a key authored by hand rather than derived.
+
+    That is not a hypothetical. The hippocampus store carried one such quote for
+    six months: key ``11290620_d7c0cc69`` over text hashing to ``128a9329``, a
+    curator-assembled composite whose key attested nothing. Splitting papers
+    from quotes stops a quote write corrupting *paper identity*; only this check
+    stops it corrupting *other quotes*.
+
+    Takes a parsed references store. Returns a list of error strings; empty = OK.
+    """
+    errors: list[str] = []
+    for corpus_id, entry in store.items():
+        if corpus_id.startswith("_") or not isinstance(entry, dict):
+            continue
+        for quote_key, quote in (entry.get("quotes") or {}).items():
+            text = quote.get("text") if isinstance(quote, dict) else quote
+            if not isinstance(text, str) or not text:
+                errors.append(
+                    f"quote '{quote_key}' has no text — the key cannot attest anything."
+                )
+                continue
+            expected = compute_quote_key(str(corpus_id), text)
+            if expected != quote_key:
+                errors.append(
+                    f"quote_key '{quote_key}' does not match its text "
+                    f"(text hashes to '{expected}'). The key is a content hash, so "
+                    f"either the text was altered after the key was minted or the key "
+                    f"was not derived from it. Re-add the quote via "
+                    f"references.write_quote_to_refs()."
+                )
+    return errors
+
+
+# ── Reference-store schema conformance ───────────────────────────────────────
+
+# The intended retrieval vocabulary. Held here rather than enforced as a schema
+# enum because 22 legacy quotes record an experimental method in this field;
+# mapping those onto retrieval values would invent provenance. Reported instead.
+SOURCE_METHODS = frozenset({
+    "asta_report", "asta_snippet", "europepmc_fulltext",
+    "targeted_fulltext_retrieval", "abstract_only", "primary",
+})
+
+
+def check_store_records(store: dict) -> list[str]:
+    """Validate paper and quote records against schema/references.yaml.
+
+    Uses the generated pydantic models, in process: linkml-validate costs ~1.5s
+    per subprocess, which across 540 store files would be minutes per sweep.
+    """
+    from pydantic import ValidationError
+
+    from evidencell._refs_models import Paper, Quote
+
+    errors: list[str] = []
+    for corpus_id, entry in store.items():
+        if corpus_id.startswith("_") or not isinstance(entry, dict):
+            continue
+        paper = {k: v for k, v in entry.items() if k != "quotes"}
+        try:
+            Paper.model_validate(paper)
+        except ValidationError as exc:
+            for e in exc.errors():
+                loc = ".".join(str(x) for x in e["loc"])
+                errors.append(f"paper '{corpus_id}': {loc}: {e['msg']}")
+        for quote_key, quote in (entry.get("quotes") or {}).items():
+            if not isinstance(quote, dict):
+                errors.append(f"quote '{quote_key}': not an object")
+                continue
+            try:
+                Quote.model_validate(quote)
+            except ValidationError as exc:
+                for e in exc.errors():
+                    loc = ".".join(str(x) for x in e["loc"])
+                    errors.append(f"quote '{quote_key}': {loc}: {e['msg']}")
+    return errors
+
+
+def check_source_methods(store: dict) -> list[str]:
+    """Flag source_method values outside the intended vocabulary."""
+    errors: list[str] = []
+    for corpus_id, entry in store.items():
+        if corpus_id.startswith("_") or not isinstance(entry, dict):
+            continue
+        for quote_key, quote in (entry.get("quotes") or {}).items():
+            if not isinstance(quote, dict):
+                continue
+            value = quote.get("source_method")
+            if value and str(value).strip().lower() not in SOURCE_METHODS:
+                errors.append(
+                    f"quote '{quote_key}': source_method {value!r} is not a retrieval "
+                    f"method. Expected one of {sorted(SOURCE_METHODS)}. Experimental "
+                    f"methods describe how a finding was made, not how the text was "
+                    f"obtained."
+                )
+    return errors
+
+
+def check_source_documents(store: dict, known_sources: set[str]) -> list[str]:
+    """Flag ASTA_REPORT quotes with no resolvable source document.
+
+    ASTA report text is ASTA's prose about a paper, not necessarily the paper's
+    own words, so knowing which report a passage came from is what makes it
+    checkable. Absence is reported rather than blocked: some early deepsearch
+    PDFs were never committed and may not be recoverable.
+    """
+    errors: list[str] = []
+    for corpus_id, entry in store.items():
+        if corpus_id.startswith("_") or not isinstance(entry, dict):
+            continue
+        for quote_key, quote in (entry.get("quotes") or {}).items():
+            if not isinstance(quote, dict):
+                continue
+            if (quote.get("source_method") or "").lower() != "asta_report":
+                continue
+            sid = quote.get("source_document")
+            if not sid:
+                errors.append(
+                    f"quote '{quote_key}': source_method is asta_report but no "
+                    f"source_document — the ASTA report it came from is unrecorded."
+                )
+            elif sid not in known_sources:
+                errors.append(
+                    f"quote '{quote_key}': source_document '{sid}' has no record "
+                    f"under references/{{region}}/sources/."
+                )
+    return errors
+
+
+# ── Reference-store append-only guard ─────────────────────────────────────────
+
+# Paper fields that identify *which* paper an entry is. A quote-adding write has
+# no business touching these; changing one silently re-points every citation
+# that resolves through this entry.
+_IDENTITY_FIELDS = ("corpus_id", "pmid", "doi", "title", "year")
+
+
+def check_store_append_only(old: dict, new: dict) -> list[str]:
+    """Verify a references.json write only adds — never drops or rewrites.
+
+    The reference store is append-only by design: papers are ingested once and
+    quotes accumulate as successive deepsearches surface them. Nothing in that
+    workflow legitimately removes a paper, removes a quote, or edits a paper's
+    identity. `write_quote_to_refs()` already behaves this way — it is
+    idempotent and leaves existing entries untouched — but nothing forced its
+    use, so a hand-edit or a careless whole-file rewrite could quietly discard
+    content. This makes the append-only contract enforceable at write time.
+
+    Returns a list of error strings; empty = OK.
+    """
+    errors: list[str] = []
+
+    for corpus_id, old_entry in old.items():
+        if corpus_id.startswith("_") or not isinstance(old_entry, dict):
+            continue
+
+        new_entry = new.get(corpus_id)
+        if new_entry is None:
+            errors.append(
+                f"paper '{corpus_id}' ({str(old_entry.get('title', ''))[:50]}) "
+                f"would be removed. The reference store is append-only."
+            )
+            continue
+        if not isinstance(new_entry, dict):
+            errors.append(f"paper '{corpus_id}' would be replaced by a non-object.")
+            continue
+
+        for fld in _IDENTITY_FIELDS:
+            before, after = old_entry.get(fld), new_entry.get(fld)
+            if before and before != after:
+                errors.append(
+                    f"paper '{corpus_id}': identity field '{fld}' would change "
+                    f"from {before!r} to {after!r}. Identity is set once at ingest; "
+                    f"a correction needs its own reviewed change, not a quote write."
+                )
+
+        old_quotes = old_entry.get("quotes") or {}
+        new_quotes = new_entry.get("quotes") or {}
+        for qk in old_quotes:
+            if qk not in new_quotes:
+                errors.append(
+                    f"paper '{corpus_id}': quote '{qk}' would be removed. "
+                    f"Quotes accumulate; they are not replaced."
+                )
+
     return errors
 
 
@@ -790,11 +989,11 @@ def check_md_ids(
 
     # Load references.json once if it exists
     refs: dict | None = None
-    if refs_path.exists():
+    if store_exists(refs_path):
         try:
-            refs = json.loads(refs_path.read_text(encoding="utf-8"))
+            refs = load_store(refs_path)
         except (json.JSONDecodeError, OSError):
-            errors.append(f"Could not read {refs_path.name} — ensure it is valid JSON")
+            errors.append(f"Could not read the {refs_path.parent.name} reference store")
 
     if refs is not None:
         # Build lookup sets

@@ -37,6 +37,9 @@ import yaml  # noqa: E402
 from evidencell.validate import (  # noqa: E402
     simulate_edit,
     structural_checks,
+    check_quote_key_integrity,
+    check_store_records,
+    check_store_append_only,
     check_quote_keys,
     check_flat_ref_pmids,
     check_ref_pmids,
@@ -131,6 +134,15 @@ def _emit_curation_rejection(file_path: Path, zone: str, user: str | None) -> No
     print("=" * 60 + "\n", file=sys.stderr)
 
 
+def _emit_block() -> None:
+    """Print the standard rejection banner and exit 2 (blocks the edit)."""
+    print("=" * 60, file=sys.stderr)
+    print("BLOCKING EDIT: Validation failed", file=sys.stderr)
+    print("Fix the issues above before proceeding.", file=sys.stderr)
+    print("=" * 60 + "\n", file=sys.stderr)
+    sys.exit(2)
+
+
 def main():
     data = json.load(sys.stdin)
     tool_name = data.get("tool_name", "")
@@ -159,8 +171,117 @@ def main():
         "/reports/" in str(file_path)
         and file_path.suffix == ".md"
     )
+    # Reference-store writes, in either layout: the legacy monolith, a split
+    # quotes/ or papers/ file. Matching only "references.json" would have
+    # silently dropped this guard the moment the split landed.
+    _parts = file_path.parts
+    is_refs = "references" in _parts and (
+        file_path.name == "references.json"
+        or (file_path.suffix == ".json" and file_path.parent.name in ("papers", "quotes"))
+    )
 
-    if not is_yaml and not is_report:
+    if not is_yaml and not is_report and not is_refs:
+        sys.exit(0)
+
+    # ── Reference-store integrity ─────────────────────────────────────────
+    # Until now the hook guarded kb/ and reports/ but not references/ — the
+    # one store every other check trusts was the only one anyone could write
+    # by hand. That is how a quote whose key hashed to something other than
+    # its own text survived six months. Quotes must be added through
+    # references.write_quote_to_refs(), which derives the key from the text
+    # and is idempotent; this check is what makes that non-optional.
+    if is_refs:
+        print("\n" + "=" * 60, file=sys.stderr)
+        print(f"Pre-Edit Validation: {file_path.name}", file=sys.stderr)
+        print("=" * 60, file=sys.stderr)
+        simulated = simulate_edit(tool_name, tool_input, file_path)
+        try:
+            payload = json.loads(simulated)
+        except json.JSONDecodeError as exc:
+            print(f"JSON parse error: {exc}", file=sys.stderr)
+            _emit_block()
+        if not isinstance(payload, dict):
+            print(f"{file_path.name} must be a JSON object", file=sys.stderr)
+            _emit_block()
+
+        on_disk = None
+        if file_path.exists():
+            try:
+                on_disk = json.loads(file_path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError) as exc:
+                # Treating an unreadable existing store as "no prior content"
+                # would silently disable the append-only guard for precisely
+                # the case it exists for: replacing a store corrupted by an
+                # earlier partial write, losing every paper and quote in it.
+                print(f"Existing {file_path.name} is unreadable ({exc}).", file=sys.stderr)
+                print("Refusing to overwrite a store whose contents cannot be "
+                      "compared. Repair or remove it deliberately first.",
+                      file=sys.stderr)
+                _emit_block()
+
+        # A quotes file with no matching paper record is invisible to
+        # load_store(), which enumerates papers/. The curator would see the
+        # file on disk while every quote_key in it reports "not found".
+        if file_path.parent.name == "quotes":
+            paper_file = file_path.parent.parent / "papers" / file_path.name
+            if not paper_file.exists():
+                print(f"No paper record at {paper_file}.", file=sys.stderr)
+                print("Quotes are attached to papers by corpus_id; a quotes file "
+                      "with no papers/ entry is never loaded. Ingest the paper "
+                      "first (references.save_paper).", file=sys.stderr)
+                _emit_block()
+
+        # Normalise all three file shapes to the store shape the checks expect:
+        #   quotes/{cid}.json  {quote_key: quote}        -> {cid: {"quotes": ...}}
+        #   papers/{cid}.json  one identity record       -> {cid: record}
+        #   references.json    the legacy monolith       -> itself
+        kind = file_path.parent.name
+        if kind in ("papers", "quotes"):
+            cid = file_path.stem
+            if kind == "quotes":
+                new_store = {cid: {"corpus_id": cid, "quotes": payload}}
+                old_store = ({cid: {"corpus_id": cid, "quotes": on_disk}}
+                             if isinstance(on_disk, dict) else {})
+            else:
+                new_store = {cid: dict(payload, quotes={})}
+                old_store = ({cid: dict(on_disk, quotes={})}
+                             if isinstance(on_disk, dict) else {})
+        else:
+            new_store = payload
+            old_store = on_disk if isinstance(on_disk, dict) else {}
+
+        schema_errors = check_store_records(new_store)
+        if schema_errors:
+            print("Schema conformance errors (schema/references.yaml):", file=sys.stderr)
+            for e in schema_errors:
+                print(f"  - {e}", file=sys.stderr)
+            _emit_block()
+
+        errors = check_quote_key_integrity(new_store)
+        if errors:
+            print("Quote-key integrity errors:", file=sys.stderr)
+            for e in errors:
+                print(f"  - {e}", file=sys.stderr)
+            _emit_block()
+
+        # Append-only: a write that drops a paper or quote, or edits a paper's
+        # identity, is rejected regardless of internal consistency.
+        if old_store:
+            losses = check_store_append_only(old_store, new_store)
+            if losses:
+                print("Append-only violations:", file=sys.stderr)
+                for e in losses:
+                    print(f"  - {e}", file=sys.stderr)
+                print("", file=sys.stderr)
+                print("Add quotes via references.append_quote() / write_quote_to_refs(),",
+                      file=sys.stderr)
+                print("which derive the key from the text and never disturb existing",
+                      file=sys.stderr)
+                print("entries. Paper identity is write-once.", file=sys.stderr)
+                _emit_block()
+
+        print("Validation passed (integrity + append-only) - allowing edit", file=sys.stderr)
+        print("=" * 60 + "\n", file=sys.stderr)
         sys.exit(0)
 
     schema_path = _project_root / "schema" / "celltype_mapping.yaml"

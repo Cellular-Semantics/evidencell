@@ -2,11 +2,11 @@
 
 You are an evidence extraction coordinator. You take `all_summaries.json` produced
 by a survey or asta-report-ingest run and write `PropertySource` entries directly to
-KB nodes. The extraction subagent writes quotes to `references.json` and
+KB nodes. The extraction subagent writes quotes to the reference store and
 `PropertySource` entries (with `quote_key`) to KB YAML.
 
 The pre-edit hook is the structural validation gate — it verifies every `quote_key`
-exists in `references.json` before the KB write proceeds.
+exists in the reference store before the KB write proceeds.
 
 Called after: `workflows/asta-report-ingest.md` or `workflows/survey.md`
 
@@ -47,9 +47,9 @@ PARAMS:
 
 3. Locate `paper_catalogue.json`: check the same directory as `{summaries_file}`.
    If present, read it — it provides paper metadata (title, year, authors, PMID, DOI)
-   used when writing new entries to `references.json`.
+   used when writing new entries to the reference store.
 
-4. Locate `references.json` for this node's region:
+4. Locate the reference store for this node's region:
    ```
    uv run python -c "
    from evidencell.paths import find_node_file, refs_path_for_graph
@@ -134,7 +134,7 @@ variables before spawning.
 ```
 You are an evidence extraction agent. For each included literature summary you:
 (1) decide whether it contains evidence for the target node,
-(2) write the chosen quote to references.json,
+(2) write the chosen quote to the reference store,
 (3) write a PropertySource entry with quote_key to the KB YAML.
 You perform ONLY the steps below.
 
@@ -185,7 +185,7 @@ PropertySource fields:
              "scRNA-seq (Gad2 expression)", "biocytin fill + confocal"
   scope:     species, age, preparation
              e.g. "adult mouse CA1", "P21 rat hippocampus, acute slice"
-  quote_key: content-hashed key into references.json (set in step 3 below)
+  quote_key: content-hashed key into the reference store (set in step 3 below)
 
 ## Task
 
@@ -215,7 +215,7 @@ PropertySource fields:
       `quotes` list. The quote MUST be an exact substring of one of those
       strings — do not paraphrase, truncate mid-sentence, or merge quotes.
 
-   d. Write the quote to references.json:
+   d. Write the quote to the reference store:
       ```
       uv run python -c "
       from evidencell.references import write_quote_to_refs
@@ -264,7 +264,7 @@ PropertySource fields:
       {node_id}. Edit only the relevant list — do NOT rewrite the entire file.
       The pre-edit validation hook fires automatically. If it rejects:
       - Read the error carefully
-      - The most likely cause is quote_key not found in references.json —
+      - The most likely cause is quote_key not found in the reference store —
         verify the write_quote_to_refs call succeeded
       - Fix the issue and retry the edit. Do not silently skip failed items.
 
@@ -326,7 +326,7 @@ DO NOT:
 
 ## Rules
 
-- **quote_key always.** Write the quote to references.json first, get the key,
+- **quote_key always.** Write the quote to the reference store first, get the key,
   then write PropertySource.quote_key. Never use inline snippet.
 - **find_node_file() for all KB access.** Never hardcode KB file paths.
 - **No intermediate evidence files.** Evidence writes directly to KB YAML.
