@@ -187,7 +187,7 @@ class Quote(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['Quote']} })
     source_document: Optional[str] = Field(default=None, description="""Identifier of the SourceDocument this passage came from. Expected whenever source_method is ASTA_REPORT. Optional because some early deepsearch PDFs were never committed and may not be recoverable; the content sweep reports absences rather than blocking on them.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['Quote']} })
-    claims: Optional[list[str]] = Field(default=None, description="""Node property categories this passage supports. Currently unconstrained — the written vocabulary has forked and is roughly half unpopulated. See issue #140 before relying on it.
+    claims: Optional[list[str]] = Field(default=None, description="""Node property categories this passage supports, e.g. defining_markers or anatomical_location. Deliberately unconstrained: the written vocabulary has forked into near-duplicates and around half of quotes carry none, so a consumer cannot assume the field is populated or that two spellings mean different things. Treat it as advisory until the vocabulary is settled.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['Quote']} })
     status: Optional[str] = Field(default=None, description="""Curation state of this quote. Free text pending a defined vocabulary.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Quote']} })
     added_by: Optional[str] = Field(default=None, description="""Identifier of the run that added this quote. The only per-quote link back to the originating workflow run.

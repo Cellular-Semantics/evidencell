@@ -186,9 +186,12 @@ classes:
           content sweep reports absences rather than blocking on them.
       claims:
         description: >
-          Node property categories this passage supports. Currently
-          unconstrained — the written vocabulary has forked and is roughly half
-          unpopulated. See issue #140 before relying on it.
+          Node property categories this passage supports, e.g. defining_markers
+          or anatomical_location. Deliberately unconstrained: the written
+          vocabulary has forked into near-duplicates and around half of quotes
+          carry none, so a consumer cannot assume the field is populated or
+          that two spellings mean different things. Treat it as advisory until
+          the vocabulary is settled.
         multivalued: true
       status:
         description: Curation state of this quote. Free text pending a defined vocabulary.
