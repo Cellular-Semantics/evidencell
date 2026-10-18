@@ -23,6 +23,23 @@ from evidencell.validate import _collect_flat_refs, check_flat_ref_pmids
 
 # ── fixtures ──────────────────────────────────────────────────────────────────
 
+def _split(region_dir, store):
+    """Write a store in the split layout from a legacy-shaped dict."""
+    (region_dir / "papers").mkdir(parents=True, exist_ok=True)
+    (region_dir / "quotes").mkdir(parents=True, exist_ok=True)
+    for cid, entry in store.items():
+        if cid == "_meta":
+            (region_dir / "_meta.json").write_text(json.dumps(entry))
+            continue
+        if not isinstance(entry, dict):
+            continue
+        paper = {k: v for k, v in entry.items() if k != "quotes"}
+        paper.setdefault("corpus_id", cid)
+        (region_dir / "papers" / f"{cid}.json").write_text(json.dumps(paper))
+        (region_dir / "quotes" / f"{cid}.json").write_text(
+            json.dumps(entry.get("quotes") or {}))
+
+
 def _mini_repo(tmp_path, *, region="hippocampus", refs=None, graph=None, report=None):
     """Build a minimal repo tree; returns the root path."""
     (tmp_path / "schema").mkdir(exist_ok=True)  # repo_root() marker
@@ -33,7 +50,7 @@ def _mini_repo(tmp_path, *, region="hippocampus", refs=None, graph=None, report=
     if refs is not None:
         rdir = tmp_path / "references" / region
         rdir.mkdir(parents=True, exist_ok=True)
-        (rdir / "references.json").write_text(json.dumps(refs), encoding="utf-8")
+        _split(rdir, refs)
     if report is not None:
         pdir = tmp_path / "reports" / region
         pdir.mkdir(parents=True, exist_ok=True)
@@ -60,8 +77,8 @@ def test_collect_flat_refs_recurses_into_nested_structures():
 
 
 def test_flat_check_flags_unresolvable_pmid(tmp_path):
-    refs = tmp_path / "references.json"
-    refs.write_text(json.dumps(REFS_OK))
+    _split(tmp_path, REFS_OK)
+    refs = tmp_path / "references.json"   # path form; store_dir() takes the parent
     doc = {"nodes": [{"definition_references": ["PMID:99999999"]}]}
     errors = check_flat_ref_pmids(doc, refs)
     assert len(errors) == 1
@@ -69,16 +86,16 @@ def test_flat_check_flags_unresolvable_pmid(tmp_path):
 
 
 def test_flat_check_accepts_resolvable_pmid(tmp_path):
-    refs = tmp_path / "references.json"
-    refs.write_text(json.dumps(REFS_OK))
+    _split(tmp_path, REFS_OK)
+    refs = tmp_path / "references.json"   # path form; store_dir() takes the parent
     doc = {"nodes": [{"definition_references": ["PMID:12345678"]}]}
     assert check_flat_ref_pmids(doc, refs) == []
 
 
 def test_flat_check_ignores_ccn_accessions_in_xrefs(tmp_path):
     """xrefs legitimately holds CCN accessions — they must not be flagged."""
-    refs = tmp_path / "references.json"
-    refs.write_text(json.dumps(REFS_OK))
+    _split(tmp_path, REFS_OK)
+    refs = tmp_path / "references.json"   # path form; store_dir() takes the parent
     doc = {"nodes": [{"proposed_cl_term": {"xrefs": ["CS20230722_SUPT_0069"]}}]}
     assert check_flat_ref_pmids(doc, refs) == []
 

@@ -39,7 +39,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from evidencell.paths import repo_root
-from evidencell.references import load_store
 
 _S2_BATCH = "https://api.semanticscholar.org/graph/v1/paper/batch"
 _S2_FIELDS = "externalIds,title,authors,year,venue"
@@ -83,33 +82,40 @@ class PmidRecord:
 # ── layer 1: the validated reference stores ───────────────────────────────────
 
 def _from_references(root: Path) -> dict[str, Resolution]:
+    """Build the resolver index from paper identity records.
+
+    Reads `references/**/papers/*.json` directly rather than going through
+    `load_store()`. The question this answers — which PMID or DOI does this
+    corpus ID denote — is answered entirely by identity, so pulling in every
+    quote on every paper was parsing roughly ten times more JSON than the
+    lookup needs.
+
+    Recursive by design: a store at any depth under references/ must reach the
+    index. Missing one silently pushes those corpus IDs to the rate-limited S2
+    API, which is a slow failure rather than an obvious one.
+    """
     out: dict[str, Resolution] = {}
     refs_dir = root / "references"
     if not refs_dir.is_dir():
         return out
-    # Recursive, matching the pre-split rglob: a store at any depth under
-    # references/ must still reach the offline resolver index. Missing one
-    # silently pushes those corpus IDs to the rate-limited S2 API.
-    region_dirs = {p.parent for p in refs_dir.rglob("references.json")}
-    region_dirs |= {p.parent for p in refs_dir.rglob("papers") if p.is_dir()}
-    for region_dir in sorted(region_dirs):
+
+    for paper_file in sorted(refs_dir.rglob("papers/*.json")):
         try:
-            data = load_store(region_dir)
+            entry = json.loads(paper_file.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             continue
-        for cid, entry in data.items():
-            # `_meta` is a bookkeeping block, not a paper.
-            if cid.startswith("_") or not isinstance(entry, dict):
-                continue
-            pmid = str(entry.get("pmid") or "")
-            doi = str(entry.get("doi") or "")
-            if pmid or doi:
-                out.setdefault(str(cid), Resolution(
-                    corpus_id=str(cid), pmid=pmid, doi=doi,
-                    title=str(entry.get("title") or ""),
-                    year=str(entry.get("year") or ""),
-                    source=SOURCE_REFERENCES,
-                ))
+        if not isinstance(entry, dict):
+            continue
+        corpus_id = str(entry.get("corpus_id") or paper_file.stem)
+        pmid = str(entry.get("pmid") or "")
+        doi = str(entry.get("doi") or "")
+        if pmid or doi:
+            out.setdefault(corpus_id, Resolution(
+                corpus_id=corpus_id, pmid=pmid, doi=doi,
+                title=str(entry.get("title") or ""),
+                year=str(entry.get("year") or ""),
+                source=SOURCE_REFERENCES,
+            ))
     return out
 
 

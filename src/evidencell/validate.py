@@ -13,7 +13,12 @@ from pathlib import Path
 
 import yaml
 
-from evidencell.references import compute_quote_key, load_store, store_exists
+from evidencell.references import (
+    compute_quote_key,
+    load_papers,
+    load_quotes,
+    store_exists,
+)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -132,15 +137,9 @@ def check_quote_keys(doc: dict, refs_path: Path) -> list[str]:
         return []
 
     try:
-        refs: dict = load_store(refs_path)
+        known: set[str] = set(load_quotes(refs_path))
     except (json.JSONDecodeError, OSError):
         return [f"Could not read the {refs_path.parent.name} reference store"]
-
-    # Build a flat set of all known quote keys across all corpus entries
-    known: set[str] = set()
-    for entry in refs.values():
-        if isinstance(entry, dict):
-            known.update(entry.get("quotes", {}).keys())
 
     errors: list[str] = []
     for qk in _collect_quote_keys(doc):
@@ -150,6 +149,18 @@ def check_quote_keys(doc: dict, refs_path: Path) -> list[str]:
                 "Add the quote through the validated ingest path before referencing it."
             )
     return errors
+
+
+def _known_identifiers(refs_path: Path) -> tuple[set[str], set[str]]:
+    """(pmids, lowercased dois) recorded for a region. Reads identity only."""
+    pmids: set[str] = set()
+    dois: set[str] = set()
+    for entry in load_papers(refs_path).values():
+        if pmid := entry.get("pmid"):
+            pmids.add(str(pmid))
+        if doi := entry.get("doi"):
+            dois.add(str(doi).lower())
+    return pmids, dois
 
 
 # ── Reference PMID/DOI check ───────────────────────────────────────────────────
@@ -188,20 +199,9 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
         return []
 
     try:
-        refs: dict = load_store(refs_path)
+        known_pmids, known_dois = _known_identifiers(refs_path)
     except (json.JSONDecodeError, OSError):
         return []  # Already flagged by check_quote_keys if called first
-
-    # Build lookup sets from references.json
-    known_pmids: set[str] = set()
-    known_dois: set[str] = set()
-    for entry in refs.values():
-        if not isinstance(entry, dict):
-            continue
-        if pmid := entry.get("pmid"):
-            known_pmids.add(str(pmid))
-        if doi := entry.get("doi"):
-            known_dois.add(doi.lower())
 
     errors: list[str] = []
     for ref in _collect_refs(doc):
@@ -280,19 +280,9 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
         return []
 
     try:
-        refs: dict = load_store(refs_path)
+        known_pmids, known_dois = _known_identifiers(refs_path)
     except (json.JSONDecodeError, OSError):
         return []
-
-    known_pmids: set[str] = set()
-    known_dois: set[str] = set()
-    for entry in refs.values():
-        if not isinstance(entry, dict):
-            continue
-        if pmid := entry.get("pmid"):
-            known_pmids.add(str(pmid))
-        if doi := entry.get("doi"):
-            known_dois.add(doi.lower())
 
     errors: list[str] = []
     for field, raw in _collect_flat_refs(doc):
@@ -987,33 +977,26 @@ def check_md_ids(
             f"Unannotated blockquote (missing '<!-- quote_key: X -->' annotation): {line[:80]}"
         )
 
-    # Load references.json once if it exists
-    refs: dict | None = None
-    if store_exists(refs_path):
+    # Identity answers the PMID questions, quote keys the attribution ones;
+    # neither needs quote text.
+    known_quote_keys: set[str] = set()
+    known_pmids: set[str] = set()
+    have_store = store_exists(refs_path)
+    if have_store:
         try:
-            refs = load_store(refs_path)
+            known_pmids, _ = _known_identifiers(refs_path)
+            known_quote_keys = set(load_quotes(refs_path))
         except (json.JSONDecodeError, OSError):
             errors.append(f"Could not read the {refs_path.parent.name} reference store")
+            have_store = False
 
-    if refs is not None:
-        # Build lookup sets
-        known_quote_keys: set[str] = set()
-        known_pmids: set[str] = set()
-        known_dois: set[str] = set()
-        for entry in refs.values():
-            if not isinstance(entry, dict):
-                continue
-            known_quote_keys.update(entry.get("quotes", {}).keys())
-            if pmid := entry.get("pmid"):
-                known_pmids.add(str(pmid))
-            if doi := entry.get("doi"):
-                known_dois.add(doi.lower())
-
+    if have_store:
         # 2. quote_keys
         for qk in annotations.get("quote_keys", []):
             if qk not in known_quote_keys:
                 errors.append(
-                    f"quote_key '{qk}' not found in {refs_path.name}. "
+                    f"quote_key '{qk}' not found in the "
+                    f"{refs_path.parent.name} reference store. "
                     "Add the quote through the validated ingest path before referencing it."
                 )
 
@@ -1021,7 +1004,8 @@ def check_md_ids(
         for pmid in annotations.get("pmids", []):
             if pmid not in known_pmids:
                 errors.append(
-                    f"PMID '{pmid}' not found in {refs_path.name}. "
+                    f"PMID '{pmid}' not found in the "
+                    f"{refs_path.parent.name} reference store. "
                     "Add the reference through the validated ingest path first."
                 )
 

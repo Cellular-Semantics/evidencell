@@ -308,6 +308,44 @@ def load_store(refs_path: Path) -> dict:
     return _load_split(d)
 
 
+def load_papers(refs_path: Path) -> dict[str, dict]:
+    """Paper identity records for a region, keyed by corpus_id.
+
+    Reads only papers/. Callers answering questions about *which paper* — is
+    this PMID known, what does this corpus ID resolve to — have no business
+    parsing quote text to do it.
+    """
+    d = store_dir(refs_path)
+    _reject_shadowed_store(d)
+    papers_dir = d / _PAPERS_DIR
+    if not papers_dir.is_dir():
+        return {}
+    out: dict[str, dict] = {}
+    for f in sorted(papers_dir.glob("*.json")):
+        entry = json.loads(f.read_text(encoding="utf-8"))
+        out[str(entry.get("corpus_id") or f.stem)] = entry
+    return out
+
+
+def load_quotes(refs_path: Path) -> dict[str, dict]:
+    """Every quote in a region, keyed by quote_key.
+
+    Reads only quotes/. The key already carries the corpus_id, so callers
+    needing the owning paper can derive it without loading identity records.
+    """
+    d = store_dir(refs_path)
+    _reject_shadowed_store(d)
+    quotes_dir = d / _QUOTES_DIR
+    if not quotes_dir.is_dir():
+        return {}
+    out: dict[str, dict] = {}
+    for f in sorted(quotes_dir.glob("*.json")):
+        payload = json.loads(f.read_text(encoding="utf-8"))
+        if isinstance(payload, dict):
+            out.update(payload)
+    return out
+
+
 def _load_split(d: Path) -> dict:
     """Read the split layout, without the shadowed-store check.
 
