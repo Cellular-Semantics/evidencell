@@ -207,8 +207,28 @@ def main():
         if file_path.exists():
             try:
                 on_disk = json.loads(file_path.read_text(encoding="utf-8"))
-            except (json.JSONDecodeError, OSError):
-                on_disk = None
+            except (json.JSONDecodeError, OSError) as exc:
+                # Treating an unreadable existing store as "no prior content"
+                # would silently disable the append-only guard for precisely
+                # the case it exists for: replacing a store corrupted by an
+                # earlier partial write, losing every paper and quote in it.
+                print(f"Existing {file_path.name} is unreadable ({exc}).", file=sys.stderr)
+                print("Refusing to overwrite a store whose contents cannot be "
+                      "compared. Repair or remove it deliberately first.",
+                      file=sys.stderr)
+                _emit_block()
+
+        # A quotes file with no matching paper record is invisible to
+        # load_store(), which enumerates papers/. The curator would see the
+        # file on disk while every quote_key in it reports "not found".
+        if file_path.parent.name == "quotes":
+            paper_file = file_path.parent.parent / "papers" / file_path.name
+            if not paper_file.exists():
+                print(f"No paper record at {paper_file}.", file=sys.stderr)
+                print("Quotes are attached to papers by corpus_id; a quotes file "
+                      "with no papers/ entry is never loaded. Ingest the paper "
+                      "first (references.save_paper).", file=sys.stderr)
+                _emit_block()
 
         # Normalise all three file shapes to the store shape the checks expect:
         #   quotes/{cid}.json  {quote_key: quote}        -> {cid: {"quotes": ...}}

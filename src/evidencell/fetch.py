@@ -87,7 +87,12 @@ def _from_references(root: Path) -> dict[str, Resolution]:
     refs_dir = root / "references"
     if not refs_dir.is_dir():
         return out
-    for region_dir in sorted(p for p in refs_dir.iterdir() if p.is_dir()):
+    # Recursive, matching the pre-split rglob: a store at any depth under
+    # references/ must still reach the offline resolver index. Missing one
+    # silently pushes those corpus IDs to the rate-limited S2 API.
+    region_dirs = {p.parent for p in refs_dir.rglob("references.json")}
+    region_dirs |= {p.parent for p in refs_dir.rglob("papers") if p.is_dir()}
+    for region_dir in sorted(region_dirs):
         try:
             data = load_store(region_dir)
         except (json.JSONDecodeError, OSError):

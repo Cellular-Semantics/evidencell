@@ -150,7 +150,7 @@ SNIPPET LIMIT:   {snippet_limit}
 DO NOT:
 - Paraphrase or merge quotes — exact verbatim substrings only
 - Fabricate snippets for gap papers — if no text available, skip
-- Write to KB YAML or references.json — this step is fetch only
+- Write to KB YAML or the reference store — this step is fetch only
 - Call snippet_search more than twice (batch all IDs into ≤2 calls)
 ```
 

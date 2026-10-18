@@ -86,7 +86,11 @@ def write_quote_to_refs(
     # rather than at every call site is what lets existing callers keep working
     # unchanged — see planning/pub_store_split_followup.md for the plan to
     # retire this shim and have callers use save_paper/append_quote directly.
-    if is_split_layout(refs_path):
+    # Split is the default for any store that does not exist yet. Falling
+    # through to the legacy branch would mint a fresh monolith for every region
+    # without a store (BG, cerebellum, immature_neurons all qualify today), and
+    # the migration is a one-time operation that has already run.
+    if is_split_layout(refs_path) or not store_exists(refs_path):
         d = store_dir(refs_path)
         paper_file = d / _PAPERS_DIR / f"{corpus_id}.json"
         if not paper_file.exists():
@@ -261,13 +265,39 @@ def store_exists(refs_path: Path) -> bool:
     return (d / _PAPERS_DIR).is_dir() or (d / "references.json").exists()
 
 
+class ShadowedStoreError(RuntimeError):
+    """A references.json exists alongside papers/ — two stores, one region."""
+
+
+def _reject_shadowed_store(d: Path) -> None:
+    """Refuse to read a region that has both layouts present.
+
+    Reading the split and ignoring the monolith would silently discard whatever
+    is in the monolith: a write lands, the file is visibly on disk, and the
+    content never appears. Workflow docs still mention references.json by name,
+    so this is reachable by an agent following current instructions. Fail loudly
+    instead of quietly preferring one copy.
+    """
+    legacy = d / "references.json"
+    if legacy.exists() and (d / _PAPERS_DIR).is_dir():
+        raise ShadowedStoreError(
+            f"{legacy} exists alongside {d / _PAPERS_DIR}. This region is split; "
+            f"references.json is no longer read and its contents would be "
+            f"silently ignored. Merge it in via references.write_quote_to_refs() "
+            f"(or delete it if redundant), then retry."
+        )
+
+
 def load_store(refs_path: Path) -> dict:
     """Read a region store in either layout, returning the legacy shape.
 
     Returns `{corpus_id: {...paper..., "quotes": {...}}, "_meta": {...}}` — what
     every current consumer expects. Returns `{}` when the region has no store.
+
+    Raises ShadowedStoreError if both layouts are present.
     """
     d = store_dir(refs_path)
+    _reject_shadowed_store(d)
 
     if not is_split_layout(refs_path):
         legacy = d / "references.json"
@@ -275,6 +305,18 @@ def load_store(refs_path: Path) -> dict:
             return {}
         return json.loads(legacy.read_text(encoding="utf-8"))
 
+    return _load_split(d)
+
+
+def _load_split(d: Path) -> dict:
+    """Read the split layout, without the shadowed-store check.
+
+    Migration legitimately produces a transient state where papers/ and
+    references.json coexist: it writes the split files, verifies them, and only
+    then removes the monolith. The public loader must reject that state; the
+    migration needs to read through it to confirm the split before deleting
+    the only other copy.
+    """
     store: dict = {}
     meta_path = d / _META_FILE
     if meta_path.exists():

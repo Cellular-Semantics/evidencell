@@ -141,20 +141,22 @@ def test_filling_a_previously_empty_identity_field_is_allowed():
 # ── the real writer satisfies both contracts ──────────────────────────────────
 
 def test_write_quote_to_refs_produces_integrity_clean_output(tmp_path):
+    from evidencell.references import load_store
     p = tmp_path / "references.json"
     write_quote_to_refs(p, "11290620", "A verbatim passage.", "Results",
                         "ASTA_SNIPPET", "test_run", paper_meta={"title": "T"})
-    assert check_quote_key_integrity(json.loads(p.read_text())) == []
+    assert check_quote_key_integrity(load_store(p)) == []
 
 
 def test_write_quote_to_refs_is_append_only(tmp_path):
     p = tmp_path / "references.json"
+    from evidencell.references import load_store
     write_quote_to_refs(p, "11290620", "First passage.", "Results",
                         "ASTA_SNIPPET", "run1", paper_meta={"title": "T"})
-    before = json.loads(p.read_text())
+    before = load_store(p)
     write_quote_to_refs(p, "11290620", "Second passage, later deepsearch.", "Methods",
                         "ASTA_SNIPPET", "run2")
-    after = json.loads(p.read_text())
+    after = load_store(p)
     assert check_store_append_only(before, after) == []
     assert len(after["11290620"]["quotes"]) == 2
 
@@ -162,10 +164,11 @@ def test_write_quote_to_refs_is_append_only(tmp_path):
 def test_re_adding_the_same_quote_changes_nothing(tmp_path):
     p = tmp_path / "references.json"
     args = (p, "11290620", "A verbatim passage.", "Results", "ASTA_SNIPPET")
+    from evidencell.references import load_store
     write_quote_to_refs(*args, "run1", paper_meta={"title": "T"})
-    before = json.loads(p.read_text())
+    before = load_store(p)
     write_quote_to_refs(*args, "run2")
-    after = json.loads(p.read_text())
+    after = load_store(p)
     assert before["11290620"]["quotes"] == after["11290620"]["quotes"]
 
 
@@ -289,3 +292,84 @@ def test_migration_is_idempotent(tmp_path):
     d = _split_region(tmp_path)
     r = migrate_region(d / "references.json")
     assert r.skipped == "already split"
+
+
+# ── review findings: migration safety ─────────────────────────────────────────
+
+def _legacy(tmp_path, payload):
+    d = tmp_path / "references" / "r"
+    d.mkdir(parents=True)
+    (d / "references.json").write_text(json.dumps(payload))
+    return d
+
+
+def test_failed_round_trip_writes_nothing(tmp_path, monkeypatch):
+    """A split that would not round-trip must not be left shadowing the monolith.
+
+    Writing first and asserting afterwards leaves a proven-wrong split store on
+    disk; is_split_layout() flips True and every later read silently prefers the
+    bad copy over the intact references.json.
+    """
+    import evidencell.migrate_refs as m
+    d = _legacy(tmp_path, {"_meta": {"region": "r"}, "111": {"corpus_id": "111"}})
+    monkeypatch.setattr(m, "load_store", lambda p: {"deliberately": "different"})
+    try:
+        m.migrate_region(d / "references.json")
+    except AssertionError:
+        pass
+    assert (d / "references.json").exists(), "monolith must survive"
+    assert not (d / "papers").exists(), "nothing may be written on failure"
+
+
+def test_entry_without_quotes_key_migrates(tmp_path):
+    """No 'quotes' key is semantically identical to an empty one."""
+    from evidencell.migrate_refs import migrate_region
+    from evidencell.references import load_store
+    d = _legacy(tmp_path, {"_meta": {"region": "r"},
+                           "111": {"corpus_id": "111", "title": "No quotes key"}})
+    r = migrate_region(d / "references.json")
+    assert r.papers == 1
+    assert load_store(d)["111"]["quotes"] == {}
+
+
+def test_empty_monolith_is_not_deleted(tmp_path):
+    """Otherwise verification is tautological and the region loses its store."""
+    from evidencell.migrate_refs import migrate_region
+    d = _legacy(tmp_path, {"_meta": {"region": "r"}})
+    r = migrate_region(d / "references.json")
+    assert "no paper entries" in r.skipped
+    assert (d / "references.json").exists()
+
+
+# ── review findings: store resolution ─────────────────────────────────────────
+
+def test_monolith_beside_papers_is_rejected_not_ignored(tmp_path):
+    """Silently preferring the split would discard whatever the monolith holds."""
+    import pytest
+    from evidencell.references import ShadowedStoreError, load_store
+    d = tmp_path / "references" / "r"
+    (d / "papers").mkdir(parents=True)
+    (d / "papers" / "1.json").write_text('{"corpus_id": "1"}')
+    (d / "references.json").write_text('{"2": {"corpus_id": "2"}}')
+    with pytest.raises(ShadowedStoreError):
+        load_store(d)
+
+
+def test_new_region_is_born_split(tmp_path):
+    """A storeless region must not mint a fresh monolith post-migration."""
+    from evidencell.references import write_quote_to_refs
+    d = tmp_path / "references" / "BG"
+    write_quote_to_refs(d / "references.json", "123", "A passage.", "Results",
+                        "ASTA_SNIPPET", "run", paper_meta={"title": "T"})
+    assert (d / "papers" / "123.json").exists()
+    assert not (d / "references.json").exists()
+
+
+def test_resolver_finds_stores_recursively(tmp_path):
+    """Discovery narrowed from rglob to iterdir would silently drop nested stores."""
+    from evidencell.fetch import _from_references
+    d = tmp_path / "references" / "group" / "r"
+    (d / "papers").mkdir(parents=True)
+    (d / "papers" / "77.json").write_text(json.dumps(
+        {"corpus_id": "77", "pmid": "123", "doi": ""}))
+    assert "77" in _from_references(tmp_path)

@@ -1,7 +1,7 @@
 # Report Generation Orchestrator
 
 You are a report coordinator for the evidencell knowledge base. You generate
-high-quality human-readable mapping reports from KB YAML + references.json and
+high-quality human-readable mapping reports from KB YAML + the reference store and
 verify them for factual accuracy before delivering them to the curator.
 
 The pipeline has three stages:
@@ -31,7 +31,7 @@ PARAMS:
 
 Read `graph_file` using `yaml.safe_load()`. Confirm:
 - File exists and is valid YAML
-- `references/{region}/references.json` exists (warn if absent — drill-downs require it)
+- `references/{region}/` exists (warn if absent — drill-downs require it)
 - If `node_id` is specified: confirm it exists in `graph.nodes[]` as a non-terminal node
   (i.e. `is_terminal` is false or absent)
 
@@ -42,7 +42,7 @@ Atlas: {target_atlas}
 Region: {brain_region}
 Nodes: {N total} ({M classical}, {K atlas terminals})
 Edges: {E edges} ({counts by confidence tier})
-references/{region}/references.json: {found | MISSING}
+references/{region}/: {found | MISSING}
 ```
 
 Fail with a clear error message if inputs are invalid. Do not proceed.
@@ -159,7 +159,7 @@ metadata) MUST NOT leak into user-facing prose.
 INPUTS YOU READ:
 - FACTS FILE: {facts_file}
 - POOL CANDIDATES: {pool_candidates_file} (may be empty)
-- References corpus: references/{region}/references.json (for quote_keys)
+- References corpus: references/{region}/ (for quote_keys)
 
 INPUTS YOU MUST NOT READ (Phase 3 loop avoidance):
 - The edge's existing `rationale`, `confidence`, `confidence_score`,
@@ -1507,7 +1507,7 @@ When a marker is inconsistent (a defining_marker scored DISCORDANT,
 or a negative_marker present at ≥ MIN_DETECTABLE):
 
 1. **Check the literature already gathered** (LiteratureEvidence
-   items on the classical node, references.json snippets) for any
+   items on the classical node, reference-store snippets) for any
    record of marker heterogeneity within the classical type.
 2. **If heterogeneity is documented** — cite the snippet in
    `rationale`; the contradiction is a known biological feature
@@ -1937,7 +1937,7 @@ Determine whether failures are:
 - **Fixable by re-running synthesis**: hallucinated reference, fabricated quote, missing
   interpretation marker → re-run Step 3 with an added instruction to the synthesis agent
   highlighting the specific failure. Limit to 1 retry.
-- **Fixable by updating YAML or references.json**: quote_key missing from references/{region}/references.json,
+- **Fixable by updating YAML or the reference store**: quote_key missing from references/{region}/,
   PMID mismatch in YAML → inform curator of the specific YAML field to fix, then stop.
 - **Systematic / unclear**: stop and ask the curator what to do.
 
@@ -1959,7 +1959,7 @@ just gen-drilldown-pmid {graph_file} {node_id} {pmid}
 ```
 
 This writes `reports/{region}/{node_id}_drilldown_{AuthorYear}.md` with verbatim quotes
-from `references/{region}/references.json` and a flat evidence summary table. Confirm the file exists.
+from `references/{region}/` and a flat evidence summary table. Confirm the file exists.
 
 ### Step DD-2 — Drill-down synthesis subagent
 
@@ -2115,7 +2115,7 @@ Write 1–3 sentences:
 ```
 ---
 
-*Drill-down generated from: references.json (corpus_id: {corpus_id})*
+*Drill-down generated from: the reference store (corpus_id: {corpus_id})*
 *Quotes: {source_method}, {status} (added {date})*
 ```
 

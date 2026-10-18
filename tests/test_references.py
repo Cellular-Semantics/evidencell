@@ -6,6 +6,7 @@ import pytest
 from evidencell.references import (
     _normalise_authors,
     compute_quote_key,
+    load_store,
     write_quote_to_refs,
 )
 
@@ -110,8 +111,10 @@ def test_write_quote_creates_file(tmp_refs):
         source_method="asta_snippet",
         added_by="test_run",
     )
-    assert tmp_refs.exists()
-    data = json.loads(tmp_refs.read_text())
+    # A region with no store is created in the split layout: papers/ + quotes/.
+    assert (tmp_refs.parent / "papers" / "100.json").exists()
+    assert not tmp_refs.exists(), "must not mint a new monolith"
+    data = load_store(tmp_refs)
     assert "100" in data
     assert key in data["100"]["quotes"]
     assert data["100"]["quotes"][key]["text"] == "A new quote from the paper."
@@ -141,7 +144,7 @@ def test_write_quote_idempotent(tmp_refs):
     key1 = write_quote_to_refs(**kwargs)
     key2 = write_quote_to_refs(**kwargs)
     assert key1 == key2
-    data = json.loads(tmp_refs.read_text())
+    data = load_store(tmp_refs)
     assert len(data["300"]["quotes"]) == 1
 
 
@@ -154,7 +157,7 @@ def test_write_quote_preserves_existing_paper(existing_refs):
         source_method="asta_snippet",
         added_by="test_run",
     )
-    data = json.loads(existing_refs.read_text())
+    data = load_store(existing_refs)
     # Existing quote still present
     assert "42_abc12345" in data["42"]["quotes"]
     # New quote also added
@@ -171,7 +174,7 @@ def test_write_quote_preserves_existing_entries(existing_refs):
         source_method="asta_snippet",
         added_by="test_run",
     )
-    data = json.loads(existing_refs.read_text())
+    data = load_store(existing_refs)
     # Original paper still present
     assert "42" in data
     assert data["42"]["title"] == "Existing paper"
@@ -193,7 +196,7 @@ def test_write_quote_uses_paper_meta(tmp_refs):
         added_by="test_run",
         paper_meta=meta,
     )
-    data = json.loads(tmp_refs.read_text())
+    data = load_store(tmp_refs)
     entry = data["500"]
     assert entry["title"] == "A Great Paper"
     assert entry["year"] == 2023
@@ -211,7 +214,7 @@ def test_write_quote_status_pending(tmp_refs):
         source_method="asta_snippet",
         added_by="test_run",
     )
-    data = json.loads(tmp_refs.read_text())
+    data = load_store(tmp_refs)
     assert data["600"]["quotes"][key]["status"] == "pending"
 
 
@@ -224,7 +227,7 @@ def test_write_quote_meta_updated(tmp_refs):
         source_method="asta_snippet",
         added_by="my_extraction_run",
     )
-    data = json.loads(tmp_refs.read_text())
+    data = load_store(tmp_refs)
     assert data["_meta"]["last_updated_by"] == "my_extraction_run"
     assert data["_meta"]["last_updated"] != ""
 

@@ -23,6 +23,7 @@ from evidencell.references import (
     _META_FILE,
     _PAPERS_DIR,
     _QUOTES_DIR,
+    _load_split,
     _write_json,
     is_split_layout,
     load_store,
@@ -66,8 +67,46 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
 
     result.papers = len(papers)
     result.quotes = sum(len(q) for q in quotes.values())
+
+    # A monolith with no paper entries would otherwise write no papers/ dir, so
+    # is_split_layout() stays False, the verification below re-reads the
+    # monolith and trivially passes, and the unlink leaves the region with no
+    # store in either layout — silently disabling every provenance check for it.
+    if not papers:
+        result.skipped = "no paper entries — left as-is"
+        return result
+
     if dry_run:
         return result
+
+    # Verify BEFORE touching disk. Reconstruct what load_store() will return
+    # from the split files and require it to equal the monolith. Writing first
+    # and asserting afterwards leaves a proven-wrong split store shadowing an
+    # intact references.json — is_split_layout() flips to True the moment
+    # papers/ exists, so every later read would silently prefer the bad copy.
+    reconstructed: dict = {}
+    if meta:
+        reconstructed["_meta"] = meta
+    for corpus_id in sorted(papers):
+        reconstructed[corpus_id] = {**papers[corpus_id], "quotes": quotes[corpus_id]}
+
+    # An entry with no "quotes" key is semantically identical to one with an
+    # empty dict; normalise before comparing so real data migrates instead of
+    # tripping a spurious mismatch.
+    normalised_before = {
+        k: (v if k == "_meta" or not isinstance(v, dict) else {**v, "quotes": v.get("quotes") or {}})
+        for k, v in before.items()
+    }
+    if reconstructed != normalised_before:
+        missing = set(normalised_before) - set(reconstructed)
+        extra = set(reconstructed) - set(normalised_before)
+        differing = [k for k in set(normalised_before) & set(reconstructed)
+                     if normalised_before[k] != reconstructed[k]]
+        raise AssertionError(
+            f"{region}: split would not round-trip; nothing written. "
+            f"missing={sorted(missing)[:5]} extra={sorted(extra)[:5]} "
+            f"differing={sorted(differing)[:5]}"
+        )
 
     for corpus_id, payload in papers.items():
         _write_json(d / _PAPERS_DIR / f"{corpus_id}.json", payload)
@@ -76,15 +115,12 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
     if meta:
         _write_json(d / _META_FILE, meta)
 
-    # Verify before destroying anything: the split store must reload to exactly
-    # what the monolith held.
-    after = load_store(refs_path)
-    if after != before:
-        missing = set(before) - set(after)
-        extra = set(after) - set(before)
+    # Belt and braces: confirm the files on disk actually reload as expected
+    # before removing the only other copy.
+    if _load_split(d) != normalised_before:
         raise AssertionError(
-            f"{region}: round-trip mismatch, refusing to delete references.json. "
-            f"missing={sorted(missing)[:5]} extra={sorted(extra)[:5]}"
+            f"{region}: split files written but do not reload correctly; "
+            f"references.json left in place. Inspect {d} before retrying."
         )
 
     refs_path.unlink()
@@ -120,8 +156,16 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  {d.name:<22} already split")
 
     total_p = total_q = 0
+    failures = 0
     for refs_path in stores:
-        r = migrate_region(refs_path, dry_run=args.dry_run)
+        try:
+            r = migrate_region(refs_path, dry_run=args.dry_run)
+        except Exception as exc:
+            # Keep going: an earlier region may already be migrated, and the
+            # operator needs the full picture to know which is which.
+            failures += 1
+            print(f"  {refs_path.parent.name:<22} FAILED — {exc}")
+            continue
         if r.skipped:
             print(f"  {r.region:<22} skipped — {r.skipped}")
             continue
@@ -136,6 +180,10 @@ def main(argv: list[str] | None = None) -> int:
               f"across {len(stores)} region(s).")
         if not args.dry_run:
             print("Round-trip verified; references.json removed per region.")
+    if failures:
+        print(f"\n{failures} region(s) FAILED — see above. "
+              f"Their references.json is intact and nothing was written for them.")
+        return 1
     return 0
 
 
