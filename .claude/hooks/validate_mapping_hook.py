@@ -37,6 +37,8 @@ import yaml  # noqa: E402
 from evidencell.validate import (  # noqa: E402
     simulate_edit,
     structural_checks,
+    check_quote_key_integrity,
+    check_store_append_only,
     check_quote_keys,
     check_flat_ref_pmids,
     check_ref_pmids,
@@ -131,6 +133,15 @@ def _emit_curation_rejection(file_path: Path, zone: str, user: str | None) -> No
     print("=" * 60 + "\n", file=sys.stderr)
 
 
+def _emit_block() -> None:
+    """Print the standard rejection banner and exit 2 (blocks the edit)."""
+    print("=" * 60, file=sys.stderr)
+    print("BLOCKING EDIT: Validation failed", file=sys.stderr)
+    print("Fix the issues above before proceeding.", file=sys.stderr)
+    print("=" * 60 + "\n", file=sys.stderr)
+    sys.exit(2)
+
+
 def main():
     data = json.load(sys.stdin)
     tool_name = data.get("tool_name", "")
@@ -159,8 +170,60 @@ def main():
         "/reports/" in str(file_path)
         and file_path.suffix == ".md"
     )
+    is_refs = "/references/" in str(file_path) and file_path.name == "references.json"
 
-    if not is_yaml and not is_report:
+    if not is_yaml and not is_report and not is_refs:
+        sys.exit(0)
+
+    # ── Reference-store integrity ─────────────────────────────────────────
+    # Until now the hook guarded kb/ and reports/ but not references/ — the
+    # one store every other check trusts was the only one anyone could write
+    # by hand. That is how a quote whose key hashed to something other than
+    # its own text survived six months. Quotes must be added through
+    # references.write_quote_to_refs(), which derives the key from the text
+    # and is idempotent; this check is what makes that non-optional.
+    if is_refs:
+        print("\n" + "=" * 60, file=sys.stderr)
+        print(f"Pre-Edit Validation: {file_path.name}", file=sys.stderr)
+        print("=" * 60, file=sys.stderr)
+        simulated = simulate_edit(tool_name, tool_input, file_path)
+        try:
+            store = json.loads(simulated)
+        except json.JSONDecodeError as exc:
+            print(f"JSON parse error: {exc}", file=sys.stderr)
+            _emit_block()
+        if not isinstance(store, dict):
+            print("references.json must be a JSON object", file=sys.stderr)
+            _emit_block()
+        errors = check_quote_key_integrity(store)
+        if errors:
+            print("Quote-key integrity errors:", file=sys.stderr)
+            for e in errors:
+                print(f"  - {e}", file=sys.stderr)
+            _emit_block()
+
+        # Append-only: compare against what is on disk. A write that drops a
+        # paper or quote, or edits a paper's identity, is rejected regardless
+        # of whether the resulting file is internally consistent.
+        if file_path.exists():
+            try:
+                on_disk = json.loads(file_path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError):
+                on_disk = None
+            if isinstance(on_disk, dict):
+                losses = check_store_append_only(on_disk, store)
+                if losses:
+                    print("Append-only violations:", file=sys.stderr)
+                    for e in losses:
+                        print(f"  - {e}", file=sys.stderr)
+                    print("", file=sys.stderr)
+                    print("Add quotes via references.write_quote_to_refs(), which is",
+                          file=sys.stderr)
+                    print("idempotent and never disturbs existing entries.", file=sys.stderr)
+                    _emit_block()
+
+        print("Validation passed (integrity + append-only) - allowing edit", file=sys.stderr)
+        print("=" * 60 + "\n", file=sys.stderr)
         sys.exit(0)
 
     schema_path = _project_root / "schema" / "celltype_mapping.yaml"

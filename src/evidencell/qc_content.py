@@ -48,6 +48,7 @@ from evidencell.validate import (
     _collect_refs,
     check_flat_ref_pmids,
     check_md_ids,
+    check_quote_key_integrity,
     check_quote_keys,
     check_rationale_currency,
     check_ref_pmids,
@@ -81,6 +82,7 @@ class SweepResult:
     findings: list[Finding] = field(default_factory=list)
     kb_files: int = 0
     report_files: int = 0
+    ref_stores: int = 0
     skipped: list[str] = field(default_factory=list)
 
     @property
@@ -228,11 +230,42 @@ def sweep_report_file(path: Path, root: Path) -> list[Finding]:
     ]
 
 
+def _reference_stores(root: Path) -> list[Path]:
+    refs = root / "references"
+    return sorted(refs.rglob("references.json")) if refs.is_dir() else []
+
+
+def sweep_reference_store(path: Path, root: Path) -> list[Finding]:
+    """Check a reference store's internal integrity.
+
+    Everything else in this sweep validates KB and report content *against* the
+    reference store. Nothing validated the store itself — it is the most trusted
+    file in the repo and the only one with no write guard, which is how a quote
+    whose key attested nothing survived six months.
+    """
+    rel = str(path.relative_to(root))
+    try:
+        store = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return [Finding(rel, ERROR, "refs-parse", f"invalid JSON: {exc}")]
+    except OSError as exc:
+        return [Finding(rel, ERROR, "read", str(exc))]
+
+    if not isinstance(store, dict):
+        return [Finding(rel, ERROR, "refs-parse", "store is not a JSON object")]
+
+    return [
+        Finding(rel, ERROR, "quote_key_integrity", msg)
+        for msg in check_quote_key_integrity(store)
+    ]
+
+
 def run_sweep(
     root: Path | None = None,
     *,
     kb: bool = True,
     reports: bool = True,
+    references: bool = True,
 ) -> SweepResult:
     """Sweep the corpus and return every finding."""
     root = root or repo_root()
@@ -250,6 +283,11 @@ def run_sweep(
         for p in _report_files(root):
             result.report_files += 1
             result.findings.extend(sweep_report_file(p, root))
+
+    if references:
+        for p in _reference_stores(root):
+            result.ref_stores += 1
+            result.findings.extend(sweep_reference_store(p, root))
 
     return result
 
@@ -336,7 +374,8 @@ def _render(result: SweepResult, strict: bool) -> str:
     lines.append("")
     lines.append("=" * 72)
     lines.append(
-        f"Swept {result.kb_files} KB YAML + {result.report_files} reports — "
+        f"Swept {result.kb_files} KB YAML + {result.report_files} reports "
+        f"+ {result.ref_stores} reference stores — "
         f"{len(result.errors)} errors, {len(result.warnings)} warnings"
     )
     for s in result.skipped:
@@ -361,6 +400,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     ap.add_argument("--kb-only", action="store_true", help="skip reports/")
     ap.add_argument("--reports-only", action="store_true", help="skip kb/")
+    ap.add_argument("--no-references", action="store_true",
+                    help="skip reference-store integrity checks")
     ap.add_argument("--strict", action="store_true",
                     help="treat warnings as errors (exit 1 on any finding)")
     ap.add_argument("--json", dest="as_json", metavar="PATH", nargs="?", const="-",
@@ -381,6 +422,7 @@ def main(argv: list[str] | None = None) -> int:
     result = run_sweep(
         kb=not args.reports_only,
         reports=not args.kb_only,
+        references=not args.no_references,
     )
 
     if args.as_json:

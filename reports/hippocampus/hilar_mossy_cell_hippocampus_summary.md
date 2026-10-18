@@ -20,7 +20,7 @@ Hilar mossy cells are large glutamatergic projection neurons resident in the den
 
 - **Soma location & morphology:** Scharfman & Myers 2013 · practical definition · [3]
   > A cell body in the hilus, defined as zone 4 of Amaral (1978). Glutamate as the primary transmitter (other markers are less valuable, as discussed below). An axon that innervates the inner molecular layer.
-  > — Scharfman & Myers 2013, WHAT IS A MOSSY CELL? A PRACTICAL DEFINITION · [3] <!-- quote_key: 11290620_d7c0cc69 -->
+  > — Scharfman & Myers 2013, WHAT IS A MOSSY CELL? A PRACTICAL DEFINITION · [3] <!-- quote_key: 11290620_128a9329 -->
 - **Soma location & morphology:** Botterill et al. 2021 · viral axon labelling · [1]
   > Hilar mossy cells (MCs) are large glutamatergic neurons that innervate both GCs and inhibitory GABAergic neurons within the DG (Scharfman, 2016)(Scharfman et al., 2013). MCs make up the majority of hilar neurons, and are known for their complex spines called thorny excrescences (Scharfman, 2016)(Scharfman et al., 2013). They have dendrites mainly in the hilus and their axon projects to locations within the DG. Near the cell body the axon makes collaterals that terminate mainly in the hilus. Distal to the cell body the axon terminates at many septotemporal levels. There is also a commissural projection that terminates in the contralateral DG (Scharfman et al., 2013)
   > — Botterill et al. 2021, Mossy Cells: Specialized Glutamatergic Neurons · [1] <!-- quote_key: 231953329_132cf2e1 -->

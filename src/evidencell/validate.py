@@ -13,6 +13,8 @@ from pathlib import Path
 
 import yaml
 
+from evidencell.references import compute_quote_key
+
 # ── Constants ──────────────────────────────────────────────────────────────────
 
 # Snippet values that look like placeholders rather than real verbatim text
@@ -307,6 +309,107 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
                     f"{field}: 'DOI:{m.group(1)}' not found in {refs_path.name}. "
                     "Either ingest the paper or remove the citation."
                 )
+    return errors
+
+
+# ── Quote-key integrity ───────────────────────────────────────────────────────
+
+def check_quote_key_integrity(store: dict) -> list[str]:
+    """Verify every quote_key is the content hash of the text it indexes.
+
+    A quote key is ``{corpus_id}_{sha256(normalised text)[:8]}``, so each key is
+    an assertion about its own value: *this exact text came from this paper*.
+    Recomputing the hash is therefore a complete integrity check on the quote
+    payload — it catches text edited after the key was minted, a key copied
+    between quotes, and a key authored by hand rather than derived.
+
+    That is not a hypothetical. The hippocampus store carried one such quote for
+    six months: key ``11290620_d7c0cc69`` over text hashing to ``128a9329``, a
+    curator-assembled composite whose key attested nothing. Splitting papers
+    from quotes stops a quote write corrupting *paper identity*; only this check
+    stops it corrupting *other quotes*.
+
+    Takes a parsed references store. Returns a list of error strings; empty = OK.
+    """
+    errors: list[str] = []
+    for corpus_id, entry in store.items():
+        if corpus_id.startswith("_") or not isinstance(entry, dict):
+            continue
+        for quote_key, quote in (entry.get("quotes") or {}).items():
+            text = quote.get("text") if isinstance(quote, dict) else quote
+            if not isinstance(text, str) or not text:
+                errors.append(
+                    f"quote '{quote_key}' has no text — the key cannot attest anything."
+                )
+                continue
+            expected = compute_quote_key(str(corpus_id), text)
+            if expected != quote_key:
+                errors.append(
+                    f"quote_key '{quote_key}' does not match its text "
+                    f"(text hashes to '{expected}'). The key is a content hash, so "
+                    f"either the text was altered after the key was minted or the key "
+                    f"was not derived from it. Re-add the quote via "
+                    f"references.write_quote_to_refs()."
+                )
+    return errors
+
+
+# ── Reference-store append-only guard ─────────────────────────────────────────
+
+# Paper fields that identify *which* paper an entry is. A quote-adding write has
+# no business touching these; changing one silently re-points every citation
+# that resolves through this entry.
+_IDENTITY_FIELDS = ("corpus_id", "pmid", "doi", "title", "year")
+
+
+def check_store_append_only(old: dict, new: dict) -> list[str]:
+    """Verify a references.json write only adds — never drops or rewrites.
+
+    The reference store is append-only by design: papers are ingested once and
+    quotes accumulate as successive deepsearches surface them. Nothing in that
+    workflow legitimately removes a paper, removes a quote, or edits a paper's
+    identity. `write_quote_to_refs()` already behaves this way — it is
+    idempotent and leaves existing entries untouched — but nothing forced its
+    use, so a hand-edit or a careless whole-file rewrite could quietly discard
+    content. This makes the append-only contract enforceable at write time.
+
+    Returns a list of error strings; empty = OK.
+    """
+    errors: list[str] = []
+
+    for corpus_id, old_entry in old.items():
+        if corpus_id.startswith("_") or not isinstance(old_entry, dict):
+            continue
+
+        new_entry = new.get(corpus_id)
+        if new_entry is None:
+            errors.append(
+                f"paper '{corpus_id}' ({str(old_entry.get('title', ''))[:50]}) "
+                f"would be removed. The reference store is append-only."
+            )
+            continue
+        if not isinstance(new_entry, dict):
+            errors.append(f"paper '{corpus_id}' would be replaced by a non-object.")
+            continue
+
+        for fld in _IDENTITY_FIELDS:
+            before, after = old_entry.get(fld), new_entry.get(fld)
+            if before and before != after:
+                errors.append(
+                    f"paper '{corpus_id}': identity field '{fld}' would change "
+                    f"from {before!r} to {after!r}. Identity is set once at ingest; "
+                    f"a correction needs its own reviewed change, not a quote write."
+                )
+
+        old_quotes = old_entry.get("quotes") or {}
+        new_quotes = new_entry.get("quotes") or {}
+        for qk in old_quotes:
+            if qk not in new_quotes:
+                errors.append(
+                    f"paper '{corpus_id}': quote '{qk}' would be removed. "
+                    f"Quotes accumulate; they are not replaced."
+                )
+
     return errors
 
 
