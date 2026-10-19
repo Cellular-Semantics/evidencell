@@ -50,6 +50,7 @@ from evidencell.validate import (  # noqa: E402
     check_md_ids,
 )
 from evidencell.paths import at_run_index_path  # noqa: E402
+from evidencell.references import store_exists  # noqa: E402
 
 # ── Curation-mode gate ───────────────────────────────────────────────────────
 # Users whose writes bypass the curation-mode zone check. Non-trusted users
@@ -310,12 +311,12 @@ def main():
         # reports/{region}/*.md → references/{region}/references.json
         region = file_path.parent.name
         inferred_root = _repo_root_from_path(file_path, "reports")
-        refs_path = inferred_root / "references" / region / "references.json"
+        refs_path = inferred_root / "references" / region
     else:
         # kb/graphs/{region}/*.yaml → references/{region}/references.json
         region = file_path.parent.name
         inferred_root = _repo_root_from_path(file_path, "kb")
-        refs_path = inferred_root / "references" / region / "references.json"
+        refs_path = inferred_root / "references" / region
 
     if is_report:
         # ── Markdown report validation ─────────────────────────────────────
@@ -436,14 +437,14 @@ def main():
     # references.json, where the anti-hallucination guard is wholly inert.
     # Say which checks actually ran.
     skipped: list[str] = []
-    if not refs_path.exists():
+    if not store_exists(refs_path):
         which = "quote_key, PMID/DOI, flat citations" if is_yaml else "quote_key, PMID"
-        skipped.append(f"{which} — no {refs_path.parent.name}/references.json")
+        skipped.append(f"{which} — no reference store for region '{region}'")
     if is_yaml and not at_run_index_path().exists():
         skipped.append("AT run_ref — no annotation_transfer_runs/index.yaml")
     if is_yaml and not schema_path.exists():
         skipped.append("LinkML schema — schema file absent")
-    if is_report and not (refs_path.parent / "term_index.json").exists():
+    if is_report and not (refs_path / "term_index.json").exists():
         skipped.append("ontology CURIEs — no term_index.json (never generated)")
 
     if skipped:

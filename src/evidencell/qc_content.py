@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -63,6 +64,19 @@ from evidencell.validate import (
 
 ERROR = "ERROR"
 WARN = "WARN"
+# A gap is something this repository cannot currently close by editing content:
+# a deepsearch PDF that was never committed cannot be conjured back. Kept out of
+# the baseline entirely — mixing it with fixable findings is what made
+# "0 new / 0 stale" stop meaning anything, since three quarters of the baseline
+# could never clear.
+#
+# "Cannot currently close" is deliberately weaker than "unfixable". The missing
+# artefact is the ASTA *report*; the *paper* it summarises is still reachable,
+# and verifying a quote against the paper would make the lost PDF irrelevant —
+# a stronger check than the one it replaces, since the report is one remove
+# from the source. See issue #143. Until then these are gaps; afterwards most
+# of them should become checkable.
+GAP = "GAP"
 
 # kb/ subtrees that carry no region and therefore no references.json. Bulk atlas
 # content (taxonomy levels) is excluded outright: the files are enormous, are
@@ -88,6 +102,7 @@ class SweepResult:
     report_files: int = 0
     ref_stores: int = 0
     skipped: list[str] = field(default_factory=list)
+    unavailable: list[str] = field(default_factory=list)
 
     @property
     def errors(self) -> list[Finding]:
@@ -96,6 +111,15 @@ class SweepResult:
     @property
     def warnings(self) -> list[Finding]:
         return [f for f in self.findings if f.severity == WARN]
+
+    @property
+    def gaps(self) -> list[Finding]:
+        return [f for f in self.findings if f.severity == GAP]
+
+    @property
+    def trackable(self) -> list[Finding]:
+        """Findings the baseline covers — everything that could be fixed."""
+        return [f for f in self.findings if f.severity != GAP]
 
 
 def _region_of(path: Path, root: Path) -> str | None:
@@ -177,25 +201,25 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
 
     region = _region_of(path, root)
     if region is not None:
-        refs_path = root / "references" / region / "references.json"
+        refs_dir = root / "references" / region
         # Every provenance check in validate.py returns [] when references.json
         # is absent, so a region without a reference store silently passes all
         # of them — in this sweep *and* in the pre-edit hook. A graph with no
         # citations yet is legitimately unbacked; one that cites papers is not.
-        if not store_exists(refs_path):
+        if not store_exists(refs_dir):
             cited = len(_collect_refs(doc)) + len(_collect_quote_keys(doc)) + len(
                 _collect_flat_refs(doc)
             )
             if cited:
                 findings.append(Finding(
                     rel, ERROR, "no_refs_store",
-                    f"references/{region}/references.json does not exist, but this file "
+                    f"references/{region}/ has no store (no papers/), but this file "
                     f"carries {cited} citation(s)/quote_key(s). Every provenance check is "
                     f"vacuous for region '{region}' — ingest the references to enable them.",
                 ))
-        for msg in check_quote_keys(doc, refs_path):
+        for msg in check_quote_keys(doc, refs_dir):
             findings.append(Finding(rel, ERROR, "quote_key", msg))
-        for msg in check_ref_pmids(doc, refs_path):
+        for msg in check_ref_pmids(doc, refs_dir):
             findings.append(Finding(rel, ERROR, "ref_pmid", msg))
         # ERROR, not WARN: #133 proposed warn-only so the 13-entry backlog
         # wouldn't block every subsequent edit, but the baseline file does that
@@ -203,7 +227,7 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
         # *newly* hallucinated definition_references PMID pass CI, which is
         # precisely what this sweep exists to stop. The pre-edit hook is
         # unaffected — it does not call check_flat_ref_pmids.
-        for msg in check_flat_ref_pmids(doc, refs_path):
+        for msg in check_flat_ref_pmids(doc, refs_dir):
             findings.append(Finding(rel, ERROR, "flat_citation", msg))
 
     for msg in check_rationale_currency(doc):
@@ -224,13 +248,13 @@ def sweep_report_file(path: Path, root: Path) -> list[Finding]:
     if region is None:
         return []
 
-    refs_path = root / "references" / region / "references.json"
+    refs_dir = root / "references" / region
     annotations = parse_md_annotations(text)
     kb_nodes = _kb_nodes_for_region(root, region)
 
     return [
         Finding(rel, ERROR, "markdown", msg)
-        for msg in check_md_ids(annotations, refs_path, kb_nodes)
+        for msg in check_md_ids(annotations, refs_dir, kb_nodes)
     ]
 
 
@@ -275,11 +299,57 @@ def sweep_reference_store(path: Path, root: Path) -> list[Finding]:
     ]
     sources_dir = path if path.is_dir() else path.parent
     known = {p.stem for p in (sources_dir / "sources").glob("*.json")}
-    findings += [
-        Finding(rel, WARN, "source_document", msg)
-        for msg in check_source_documents(store, known)
-    ]
+    for msg in check_source_documents(store, known):
+        # "paper 'X': N quotes with no source_document" is a gap — the PDF was
+        # never committed. "source_document 'Y' has no record" is a broken
+        # reference, which is fixable here.
+        severity = GAP if msg.startswith("paper '") else ERROR
+        findings.append(Finding(rel, severity, "source_document", msg))
     return findings
+
+
+def _coverage_gaps(root: Path, kb_paths: list[Path], report_paths: list[Path]) -> list[str]:
+    """Which checks could not run, and over how much of the corpus.
+
+    Every provenance check returns [] when its backing store is absent, so a
+    missing input turns into silence rather than an error. The pre-edit hook
+    reports this per file; without the same report here the corpus-wide sweep —
+    the one CI runs and the badge reflects — could pass with checks inert
+    across the whole repository and say nothing.
+    """
+    gaps: list[str] = []
+
+    storeless: dict[str, int] = {}
+    for p in kb_paths + report_paths:
+        region = _region_of(p, root)
+        if region and not store_exists(root / "references" / region):
+            storeless[region] = storeless.get(region, 0) + 1
+    if storeless:
+        total = sum(storeless.values())
+        where = ", ".join(f"{r} ({n})" for r, n in sorted(storeless.items()))
+        gaps.append(
+            f"quote_key / PMID / DOI / flat citations — no reference store for "
+            f"{where}; {total} file(s) unchecked"
+        )
+
+    if kb_paths and not at_run_index_path().exists():
+        gaps.append(
+            f"AT run_ref — no {at_run_index_path().name} under "
+            f"kb/annotation_transfer_runs/; {len(kb_paths)} KB file(s) unchecked"
+        )
+
+    regions = {r for r in (_region_of(p, root) for p in report_paths) if r}
+    without_index = sorted(
+        r for r in regions if not (root / "references" / r / "term_index.json").exists()
+    )
+    if without_index:
+        n = sum(1 for p in report_paths if _region_of(p, root) in set(without_index))
+        gaps.append(
+            f"ontology CURIEs — no term_index.json for {', '.join(without_index)}; "
+            f"{n} report(s) unchecked"
+        )
+
+    return gaps
 
 
 def run_sweep(
@@ -293,8 +363,11 @@ def run_sweep(
     root = root or repo_root()
     result = SweepResult()
 
+    kb_paths = _kb_files(root) if kb else []
+    report_paths = _report_files(root) if reports else []
+
     if kb:
-        for p in _kb_files(root):
+        for p in kb_paths:
             result.kb_files += 1
             result.findings.extend(sweep_kb_file(p, root))
         for sub in _EXCLUDED_SUBTREES:
@@ -302,7 +375,7 @@ def run_sweep(
                 result.skipped.append(f"kb/{sub}/ (bulk atlas content, no provenance fields)")
 
     if reports:
-        for p in _report_files(root):
+        for p in report_paths:
             result.report_files += 1
             result.findings.extend(sweep_report_file(p, root))
 
@@ -311,17 +384,65 @@ def run_sweep(
             result.ref_stores += 1
             result.findings.extend(sweep_reference_store(p, root))
 
+    result.unavailable = _coverage_gaps(root, kb_paths, report_paths)
     return result
+
+
+# What identifies a finding *within* a (path, check), independent of the prose
+# around it. Keyed by check name; the pattern's first group is the subject.
+#
+# Fingerprinting on the whole message means improving wording is
+# indistinguishable from "one finding fixed, one new finding appeared". That
+# happened three times while removing the compat shim — each needed a manual
+# 1-new/1-stale check before re-baselining, and skipping that check once would
+# absorb a real regression. The subject is the durable part; the sentence
+# built around it is not.
+# A check may emit several message shapes; the first pattern that matches wins.
+_SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
+    "quote_key_integrity": (r"quote_key '([^']+)'",),
+    "quote_key":           (r"quote_key '([^']+)'",),
+    "flat_citation":       (r"'((?:PMID|DOI):[^']+)'",),
+    "ref_pmid":            (r"'((?:PMID|DOI):[^']+)'",),
+    "run_ref":             (r"run_ref '([^']+)'",),
+    "source_method":       (r"quote '([^']+)'",),
+    "source_document":     (r"quote '([^']+)'", r"paper '([^']+)'"),
+    "store_schema":        (r"(?:paper|quote) '([^']+)'",),
+    "rationale_stale":     (r"Edge '([^']+)'",),
+    "structural":          (r"'([^']+)'",),
+    "markdown": (
+        r"(?:Atlas accession|PMID|quote_key|Ontology term) '([^']+)'",
+        # Unannotated blockquote: the quoted line itself is the subject.
+        r"annotation\): (.+)$",
+    ),
+}
+
+# Checks that emit at most one finding per file, so (path, check) already
+# identifies them and no subject is needed.
+_SUBJECTLESS_CHECKS = frozenset({"no_refs_store", "yaml-parse", "read", "refs-parse"})
+
+
+def _subject(f: Finding) -> str:
+    """The durable identity of a finding within its (path, check)."""
+    for pattern in _SUBJECT_PATTERNS.get(f.check, ()):
+        m = re.search(pattern, f.message)
+        if m:
+            return m.group(1)
+    if f.check in _SUBJECTLESS_CHECKS:
+        return ""
+    # No rule for this check: fall back to the full message. Correct, just
+    # churn-prone — tests/test_qc_content.py asserts every check the sweep
+    # currently emits has a rule, so this is reachable only by a new check.
+    return f.message
 
 
 def _fingerprint(f: Finding) -> str:
     """Stable identity for a finding, used for baseline matching.
 
-    Deliberately excludes nothing — path + check + message together are what
-    makes a finding distinct. Line numbers are not part of any finding, so
-    reformatting a file does not churn the baseline.
+    (path, check, subject) — deliberately *not* the rendered message, so the
+    wording of a finding can be improved without the baseline treating it as a
+    fix plus a new failure.
     """
-    return f"{f.path}\t{f.check}\t{f.message}"
+    return f"{f.path}\t{f.check}\t{_subject(f)}"
 
 
 def load_baseline(path: Path) -> set[str]:
@@ -341,7 +462,7 @@ def stale_baseline_entries(path: Path, result: SweepResult) -> set[str]:
     moment the trilaminar ingest corrected it, and would have been re-accepted
     without complaint. Report these so the baseline shrinks instead of rotting.
     """
-    return load_baseline(path) - {_fingerprint(f) for f in result.findings}
+    return load_baseline(path) - {_fingerprint(f) for f in result.trackable}
 
 
 def _write_baseline_file(path: Path, accepted: list[str]) -> int:
@@ -368,7 +489,7 @@ def _write_baseline_file(path: Path, accepted: list[str]) -> int:
 
 def write_baseline(path: Path, result: SweepResult) -> int:
     """Record every current finding as accepted. Returns the count written."""
-    return _write_baseline_file(path, sorted({_fingerprint(f) for f in result.findings}))
+    return _write_baseline_file(path, sorted({_fingerprint(f) for f in result.trackable}))
 
 
 def prune_baseline(path: Path, kept: list[str]) -> int:
@@ -379,7 +500,7 @@ def prune_baseline(path: Path, kept: list[str]) -> int:
 def _render(result: SweepResult, strict: bool) -> str:
     """Human-readable grouped report."""
     lines: list[str] = []
-    sev_order = {ERROR: 0, WARN: 1}
+    sev_order = {ERROR: 0, WARN: 1, GAP: 2}
     by_file: dict[str, list[Finding]] = {}
     for f in result.findings:
         by_file.setdefault(f.path, []).append(f)
@@ -387,8 +508,9 @@ def _render(result: SweepResult, strict: bool) -> str:
     for path in sorted(by_file):
         fs = sorted(by_file[path], key=lambda f: (sev_order[f.severity], f.check))
         n_err = sum(1 for f in fs if f.severity == ERROR)
-        n_warn = len(fs) - n_err
-        lines.append(f"\n{path}  ({n_err} error, {n_warn} warn)")
+        n_gap = sum(1 for f in fs if f.severity == GAP)
+        n_warn = len(fs) - n_err - n_gap
+        lines.append(f"\n{path}  ({n_err} error, {n_warn} warn, {n_gap} gap)")
         for f in fs:
             sev = ERROR if (strict and f.severity == WARN) else f.severity
             lines.append(f"  [{sev:5}] {f.check}: {f.message}")
@@ -398,10 +520,18 @@ def _render(result: SweepResult, strict: bool) -> str:
     lines.append(
         f"Swept {result.kb_files} KB YAML + {result.report_files} reports "
         f"+ {result.ref_stores} reference stores — "
-        f"{len(result.errors)} errors, {len(result.warnings)} warnings"
+        f"{len(result.errors)} errors, {len(result.warnings)} warnings, "
+        f"{len(result.gaps)} known gaps"
     )
     for s in result.skipped:
         lines.append(f"  skipped: {s}")
+    if result.unavailable:
+        lines.append("")
+        lines.append("  CHECKS THAT COULD NOT RUN — these pass vacuously:")
+        for u in result.unavailable:
+            lines.append(f"    - {u}")
+    else:
+        lines.append("  all checks had their backing stores available")
 
     by_check: dict[str, int] = {}
     for f in result.findings:
@@ -452,8 +582,10 @@ def main(argv: list[str] | None = None) -> int:
             "kb_files": result.kb_files,
             "report_files": result.report_files,
             "skipped": result.skipped,
+            "unavailable": result.unavailable,
             "errors": len(result.errors),
             "warnings": len(result.warnings),
+            "gaps": len(result.gaps),
             "findings": [asdict(f) for f in result.findings],
         }
         text = json.dumps(payload, indent=2)

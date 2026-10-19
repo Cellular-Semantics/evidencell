@@ -172,8 +172,25 @@ def test_invalid_yaml_syntax_blocked():
 # ── Quote key and PMID provenance checks ─────────────────────────────────────
 
 
+def _split(region_dir, store):
+    """Write a store in the split layout from a legacy-shaped dict."""
+    (region_dir / "papers").mkdir(parents=True, exist_ok=True)
+    (region_dir / "quotes").mkdir(parents=True, exist_ok=True)
+    for cid, entry in store.items():
+        if cid == "_meta":
+            (region_dir / "_meta.json").write_text(json.dumps(entry))
+            continue
+        if not isinstance(entry, dict):
+            continue
+        paper = {k: v for k, v in entry.items() if k != "quotes"}
+        paper.setdefault("corpus_id", cid)
+        (region_dir / "papers" / f"{cid}.json").write_text(json.dumps(paper))
+        (region_dir / "quotes" / f"{cid}.json").write_text(
+            json.dumps(entry.get("quotes") or {}))
+
+
 def _make_refs_and_yaml(tmp_path: Path, yaml_content: str) -> tuple[str, dict]:
-    """Create kb/graphs/{region}/ with YAML + references/{region}/references.json."""
+    """Create kb/graphs/{region}/ with YAML plus a split reference store."""
     region = "test_region"
     kb_dir = tmp_path / "kb" / "graphs" / region
     kb_dir.mkdir(parents=True)
@@ -189,7 +206,7 @@ def _make_refs_and_yaml(tmp_path: Path, yaml_content: str) -> tuple[str, dict]:
             },
         }
     }
-    (refs_dir / "references.json").write_text(json.dumps(refs))
+    _split(refs_dir, refs)
     yaml_path = kb_dir / "test.yaml"
     yaml_path.write_text(yaml_content)
     return str(yaml_path), _write_payload(yaml_content, file_path=str(yaml_path))
@@ -252,7 +269,7 @@ edges:
 
 
 def _make_refs_and_md(tmp_path: Path, md_content: str) -> dict:
-    """Create reports/{region}/ dir with references/{region}/references.json; return payload."""
+    """Create reports/{region}/ plus a split reference store; return payload."""
     region = "test_region"
     reports_dir = tmp_path / "reports" / region
     reports_dir.mkdir(parents=True)
@@ -268,7 +285,7 @@ def _make_refs_and_md(tmp_path: Path, md_content: str) -> dict:
             },
         }
     }
-    (refs_dir / "references.json").write_text(json.dumps(refs))
+    _split(refs_dir, refs)
     md_path = reports_dir / "test_report.md"
     md_path.write_text(md_content)
     return _write_payload(md_content, file_path=str(md_path))

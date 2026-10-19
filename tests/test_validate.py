@@ -1,6 +1,6 @@
 """Unit tests for evidencell.validate structural checks and edit simulation."""
 
-import json
+
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -363,7 +363,7 @@ def test_linkml_validate_skips_paths_with_no_schema_class(tmp_path: Path):
 
 
 @pytest.fixture()
-def refs_file(tmp_path: Path) -> Path:
+def refs_file(tmp_path: Path, write_store) -> Path:
     refs = {
         "201041756": {
             "corpus_id": "201041756",
@@ -393,9 +393,8 @@ def refs_file(tmp_path: Path) -> Path:
             "quotes": {},
         },
     }
-    p = tmp_path / "references.json"
-    p.write_text(json.dumps(refs))
-    return p
+    write_store(tmp_path, refs)
+    return tmp_path
 
 
 # ── _collect_quote_keys ───────────────────────────────────────────────────────

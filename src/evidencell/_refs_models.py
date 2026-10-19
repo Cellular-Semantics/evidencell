@@ -30,7 +30,7 @@ from pydantic import (
 
 
 metamodel_version = "1.12.0"
-version = "0.1.0"
+version = "0.1.1"
 
 
 class ConfiguredBaseModel(BaseModel):
@@ -222,6 +222,8 @@ class SourceDocument(ConfiguredBaseModel):
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument']} })
     region: Optional[str] = Field(default=None, description="""Region whose store this document belongs to.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument', 'StoreMeta']} })
     runs: Optional[list[str]] = Field(default=None, description="""Workflow run identifiers that ingested this document. Matches the added_by values on quotes drawn from it.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument']} })
+    recovery_notes: Optional[str] = Field(default=None, description="""For an unavailable document: where it was looked for and what was concluded. A negative result is expensive to establish and cheap to lose — without it the same search gets repeated, or worse, absence is assumed to be an oversight that someone can simply correct.
 """, json_schema_extra = { "linkml_meta": {'domain_of': ['SourceDocument']} })
 
 

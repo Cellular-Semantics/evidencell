@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Merge trilaminar ASTA report quotes into references/{region}/references.json.
+"""Merge trilaminar ASTA report quotes into references/{region}/.
 
 Every write goes through `evidencell.references.write_quote_to_refs()`, which is
 idempotent, computes the content-hashed `{corpus_id}_{sha256[:8]}` quote key, and
 builds paper entries via `_build_paper_entry()` so the field shape is enforced in
-code rather than by an agent's care. Do not hand-edit references.json — three prior
+code rather than by an agent's care. Do not hand-edit the store — three prior
 asta-ingest pilots shipped wrong field shapes doing exactly that (see
 planning/asta_ingest_lessons_sexually_dimorphic.md, planning/minirefs_author_rendering_fix.md).
 
@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--quotes", type=pathlib.Path, default=RUN_DIR / "extracted_quotes.json")
     ap.add_argument("--catalogue", type=pathlib.Path, default=RUN_DIR / "paper_catalogue.json")
     ap.add_argument(
-        "--refs", type=pathlib.Path, default=ROOT / "references" / "hippocampus" / "references.json"
+        "--refs", type=pathlib.Path, default=ROOT / "references" / "hippocampus"
     )
     ap.add_argument("--added-by", default=ADDED_BY)
     ap.add_argument("--dry-run", action="store_true")
@@ -97,7 +97,7 @@ def main(argv: list[str] | None = None) -> int:
     ]
 
     total_instances = sum(len(b.get("quotes", [])) for b in quotes.values())
-    print(f"references.json      : {args.refs.relative_to(ROOT)} ({len(existing) - 1} papers before)")
+    print(f"reference store      : {args.refs.relative_to(ROOT)} ({len(existing) - 1} papers before)")
     print(f"quote instances      : {total_instances}")
     print(f"unique (corpus,quote): {len(plan)}")
     print(f"already present      : {len(plan) - len(new_quotes)}")
@@ -121,7 +121,7 @@ def main(argv: list[str] | None = None) -> int:
     written = 0
     for p in plan:
         write_quote_to_refs(
-            refs_path=args.refs,
+            region_dir=args.refs,
             corpus_id=p["corpus_id"],
             quote_text=p["text"],
             section=p["section"],
@@ -133,7 +133,7 @@ def main(argv: list[str] | None = None) -> int:
 
     after = json.loads(args.refs.read_text())
     n_quotes = sum(len(v.get("quotes") or {}) for k, v in after.items() if k != "_meta")
-    print(f"\nWrote {written} quote calls. references.json now has {len(after) - 1} papers, {n_quotes} quotes.")
+    print(f"\nWrote {written} quote calls. The store now has {len(after) - 1} papers, {n_quotes} quotes.")
     return 0
 
 

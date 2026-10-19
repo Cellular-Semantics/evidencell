@@ -37,7 +37,7 @@ def compute_quote_key(corpus_id: str, text: str) -> str:
 
 
 def write_quote_to_refs(
-    refs_path: Path,
+    region_dir: Path,
     corpus_id: str,
     quote_text: str,
     section: str,
@@ -45,34 +45,39 @@ def write_quote_to_refs(
     added_by: str,
     paper_meta: dict | None = None,
 ) -> str:
-    """Add a quote to references.json if not already present. Returns quote_key.
+    """Add a quote to a region's store, creating the paper if it is new.
 
-    Idempotent: if the quote_key already exists (same normalised text), the
-    existing entry is left unchanged and the key is returned.
-
-    If the corpus_id entry does not exist in references.json, a new paper entry
-    is created using paper_meta. If paper_meta is None and the paper is not
-    already in references.json, a minimal stub entry is created.
+    The single supported write path. It derives the quote key from the text, so
+    the key always attests what it indexes, and it is idempotent: re-adding the
+    same passage returns the same key and changes nothing. Paper identity is
+    written once and never overwritten — `paper_meta` is ignored when the paper
+    already exists.
 
     Args:
-        refs_path: Path to the region's references.json file.
+        region_dir: The region's store directory, e.g. `references/hippocampus`.
+            Use `paths.refs_dir_for_region()` or `refs_dir_for_graph()`.
         corpus_id: Semantic Scholar numerical corpus ID (string).
-        quote_text: Verbatim quote text (exact substring from source).
-        section: Paper section where quote was found.
-        source_method: How the quote was retrieved (e.g. "asta_snippet",
-            "europepmc_fulltext"). Use SourceMethod enum values from workflow_schema.
-        added_by: Identifier for the workflow run adding this quote
-            (e.g. "evidence_extraction_olm_hippocampus_20260421").
-        paper_meta: Optional dict with paper metadata from paper_catalogue.json.
-            Used to populate the paper entry if it doesn't exist yet.
-            Expected keys (all optional): title, year, authors, pmid, doi,
-            author_keys, resolution_confidence.
+        quote_text: Verbatim quote text.
+        section: Section of the source document the passage came from.
+        source_method: How the text was obtained; see SourceMethod in
+            schema/references.yaml.
+        added_by: Identifier of the run adding this quote.
+        paper_meta: Metadata used only when creating a new paper record.
 
     Returns:
-        The quote_key (e.g. "201041756_a3f8c291").
+        The quote_key, e.g. "201041756_a3f8c291".
     """
-    quote_key = compute_quote_key(corpus_id, quote_text)
+    # The store used to be a single references.json. Passing that old path now
+    # would create a *directory* of that name under the region, and every
+    # later read would raise ShadowedStoreError. Fail clearly instead.
+    if region_dir.name == "references.json":
+        raise ValueError(
+            f"{region_dir} is the retired monolith path. Pass the region "
+            f"directory instead ({region_dir.parent}); the store is papers/ + "
+            f"quotes/, not a single file."
+        )
 
+    quote_key = compute_quote_key(corpus_id, quote_text)
     quote_record = {
         "text": quote_text,
         "section": section,
@@ -82,63 +87,17 @@ def write_quote_to_refs(
         "added_by": added_by,
     }
 
-    # Split layout: write identity and quote to their own files. Routing here
-    # rather than at every call site is what lets existing callers keep working
-    # unchanged — see planning/pub_store_split_followup.md for the plan to
-    # retire this shim and have callers use save_paper/append_quote directly.
-    # Split is the default for any store that does not exist yet. Falling
-    # through to the legacy branch would mint a fresh monolith for every region
-    # without a store (BG, cerebellum, immature_neurons all qualify today), and
-    # the migration is a one-time operation that has already run.
-    if is_split_layout(refs_path) or not store_exists(refs_path):
-        d = store_dir(refs_path)
-        paper_file = d / _PAPERS_DIR / f"{corpus_id}.json"
-        if not paper_file.exists():
-            save_paper(refs_path, corpus_id, _build_paper_entry(corpus_id, paper_meta or {}))
-        append_quote(refs_path, corpus_id, quote_key, quote_record)
-        meta_path = d / _META_FILE
-        meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
-        meta.setdefault("region", d.name)
-        meta["last_updated"] = datetime.now(timezone.utc).isoformat()
-        meta["last_updated_by"] = added_by
-        _write_json(meta_path, meta)
-        return quote_key
+    paper_file = region_dir / _PAPERS_DIR / f"{corpus_id}.json"
+    if not paper_file.exists():
+        save_paper(region_dir, corpus_id, _build_paper_entry(corpus_id, paper_meta or {}))
+    append_quote(region_dir, corpus_id, quote_key, quote_record)
 
-    refs: dict = {}
-    if refs_path.exists():
-        with refs_path.open() as fh:
-            refs = json.load(fh)
-
-    # Ensure _meta exists
-    if "_meta" not in refs:
-        refs["_meta"] = {
-            "region": refs_path.parent.name,
-            "last_updated": "",
-            "last_updated_by": "",
-        }
-
-    # Ensure paper entry exists
-    if corpus_id not in refs:
-        meta = paper_meta or {}
-        refs[corpus_id] = _build_paper_entry(corpus_id, meta)
-
-    paper_entry = refs[corpus_id]
-    if "quotes" not in paper_entry:
-        paper_entry["quotes"] = {}
-
-    # Add quote if not already present (idempotent)
-    if quote_key not in paper_entry["quotes"]:
-        paper_entry["quotes"][quote_key] = quote_record
-
-    # Update _meta timestamp
-    refs["_meta"]["last_updated"] = datetime.now(timezone.utc).isoformat()
-    refs["_meta"]["last_updated_by"] = added_by
-
-    refs_path.parent.mkdir(parents=True, exist_ok=True)
-    with refs_path.open("w") as fh:
-        json.dump(refs, fh, indent=2, ensure_ascii=False)
-        fh.write("\n")
-
+    meta_path = region_dir / _META_FILE
+    meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
+    meta.setdefault("region", region_name(region_dir))
+    meta["last_updated"] = datetime.now(timezone.utc).isoformat()
+    meta["last_updated_by"] = added_by
+    _write_json(meta_path, meta)
     return quote_key
 
 
@@ -240,29 +199,25 @@ _QUOTES_DIR = "quotes"
 _META_FILE = "_meta.json"
 
 
-def store_dir(refs_path: Path) -> Path:
-    """Region store directory, given either layout's path.
+def region_name(region_dir: Path) -> str:
+    """Region a store directory denotes. Message text should use this rather
+    than reaching for `.name` directly, so the spelling stays in one place."""
+    return region_dir.name
 
-    Accepts `references/{region}/references.json` or `references/{region}/`.
+
+def store_exists(region_dir: Path) -> bool:
+    """True when the region has a store.
+
+    Readers must use this rather than `Path.exists()`. Every provenance check
+    treats a missing store as "nothing to check" and returns [], so a bare
+    existence test against the wrong path silently disables the entire
+    anti-hallucination guard for the region.
+
+    Deliberately agrees with `load_store()`: a stray references.json with no
+    papers/ is *not* a store. Reporting one would let checks run against an
+    empty view and declare every citation unresolvable.
     """
-    return refs_path.parent if refs_path.name == "references.json" else refs_path
-
-
-def is_split_layout(refs_path: Path) -> bool:
-    """True when the region has been migrated to papers/ + quotes/."""
-    return (store_dir(refs_path) / _PAPERS_DIR).is_dir()
-
-
-def store_exists(refs_path: Path) -> bool:
-    """True when the region has a store in *either* layout.
-
-    Readers must use this rather than `refs_path.exists()`. Every provenance
-    check treats a missing store as "nothing to check" and returns [], so once
-    references.json is gone a bare existence test would silently disable the
-    entire anti-hallucination guard for every migrated region.
-    """
-    d = store_dir(refs_path)
-    return (d / _PAPERS_DIR).is_dir() or (d / "references.json").exists()
+    return (region_dir / _PAPERS_DIR).is_dir()
 
 
 class ShadowedStoreError(RuntimeError):
@@ -289,23 +244,60 @@ def _reject_shadowed_store(d: Path) -> None:
 
 
 def load_store(refs_path: Path) -> dict:
-    """Read a region store in either layout, returning the legacy shape.
+    """Read a whole region: identity with each paper's quotes attached.
 
-    Returns `{corpus_id: {...paper..., "quotes": {...}}, "_meta": {...}}` — what
-    every current consumer expects. Returns `{}` when the region has no store.
+    Returns `{corpus_id: {...paper..., "quotes": {...}}, "_meta": {...}}`, or
+    `{}` when the region has no store.
 
-    Raises ShadowedStoreError if both layouts are present.
+    This is the *whole-region* view, and it is the expensive one — it reads
+    every paper and every quote. Two callers legitimately want it:
+    `render`, which needs identity for citations and text for blockquotes, and
+    `qc_content`, which validates the store end to end. Anything asking a
+    narrower question should use `load_papers()` or `load_quotes()` instead.
+
+    Raises ShadowedStoreError if a stray references.json sits beside papers/.
     """
-    d = store_dir(refs_path)
+    d = refs_path
     _reject_shadowed_store(d)
-
-    if not is_split_layout(refs_path):
-        legacy = d / "references.json"
-        if not legacy.exists():
-            return {}
-        return json.loads(legacy.read_text(encoding="utf-8"))
-
     return _load_split(d)
+
+
+def load_papers(refs_path: Path) -> dict[str, dict]:
+    """Paper identity records for a region, keyed by corpus_id.
+
+    Reads only papers/. Callers answering questions about *which paper* — is
+    this PMID known, what does this corpus ID resolve to — have no business
+    parsing quote text to do it.
+    """
+    d = refs_path
+    _reject_shadowed_store(d)
+    papers_dir = d / _PAPERS_DIR
+    if not papers_dir.is_dir():
+        return {}
+    out: dict[str, dict] = {}
+    for f in sorted(papers_dir.glob("*.json")):
+        entry = json.loads(f.read_text(encoding="utf-8"))
+        out[str(entry.get("corpus_id") or f.stem)] = entry
+    return out
+
+
+def load_quotes(refs_path: Path) -> dict[str, dict]:
+    """Every quote in a region, keyed by quote_key.
+
+    Reads only quotes/. The key already carries the corpus_id, so callers
+    needing the owning paper can derive it without loading identity records.
+    """
+    d = refs_path
+    _reject_shadowed_store(d)
+    quotes_dir = d / _QUOTES_DIR
+    if not quotes_dir.is_dir():
+        return {}
+    out: dict[str, dict] = {}
+    for f in sorted(quotes_dir.glob("*.json")):
+        payload = json.loads(f.read_text(encoding="utf-8"))
+        if isinstance(payload, dict):
+            out.update(payload)
+    return out
 
 
 def _load_split(d: Path) -> dict:
@@ -349,7 +341,7 @@ def save_paper(refs_path: Path, corpus_id: str, entry: dict) -> Path:
     corpus_id re-key) is a deliberate, reviewed act — it should not be reachable
     by a function whose job is adding papers.
     """
-    path = store_dir(refs_path) / _PAPERS_DIR / f"{corpus_id}.json"
+    path = refs_path / _PAPERS_DIR / f"{corpus_id}.json"
     if path.exists():
         raise FileExistsError(
             f"paper {corpus_id} already exists at {path}. Identity is write-once; "
@@ -367,7 +359,7 @@ def append_quote(refs_path: Path, corpus_id: str, quote_key: str, quote: dict) -
     Append-only and idempotent: an existing key is left exactly as it is, so a
     later deepsearch surfacing the same passage cannot alter what is recorded.
     """
-    path = store_dir(refs_path) / _QUOTES_DIR / f"{corpus_id}.json"
+    path = refs_path / _QUOTES_DIR / f"{corpus_id}.json"
     quotes = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     if quote_key in quotes:
         return False

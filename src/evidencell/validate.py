@@ -13,7 +13,13 @@ from pathlib import Path
 
 import yaml
 
-from evidencell.references import compute_quote_key, load_store, store_exists
+from evidencell.references import (
+    compute_quote_key,
+    load_papers,
+    load_quotes,
+    region_name,
+    store_exists,
+)
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -132,24 +138,30 @@ def check_quote_keys(doc: dict, refs_path: Path) -> list[str]:
         return []
 
     try:
-        refs: dict = load_store(refs_path)
+        known: set[str] = set(load_quotes(refs_path))
     except (json.JSONDecodeError, OSError):
-        return [f"Could not read the {refs_path.parent.name} reference store"]
-
-    # Build a flat set of all known quote keys across all corpus entries
-    known: set[str] = set()
-    for entry in refs.values():
-        if isinstance(entry, dict):
-            known.update(entry.get("quotes", {}).keys())
+        return [f"Could not read the {region_name(refs_path)} reference store"]
 
     errors: list[str] = []
     for qk in _collect_quote_keys(doc):
         if qk not in known:
             errors.append(
-                f"quote_key '{qk}' not found in {refs_path.name}. "
+                f"quote_key '{qk}' not found in the {region_name(refs_path)} reference store. "
                 "Add the quote through the validated ingest path before referencing it."
             )
     return errors
+
+
+def _known_identifiers(refs_path: Path) -> tuple[set[str], set[str]]:
+    """(pmids, lowercased dois) recorded for a region. Reads identity only."""
+    pmids: set[str] = set()
+    dois: set[str] = set()
+    for entry in load_papers(refs_path).values():
+        if pmid := entry.get("pmid"):
+            pmids.add(str(pmid))
+        if doi := entry.get("doi"):
+            dois.add(str(doi).lower())
+    return pmids, dois
 
 
 # ── Reference PMID/DOI check ───────────────────────────────────────────────────
@@ -188,20 +200,9 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
         return []
 
     try:
-        refs: dict = load_store(refs_path)
+        known_pmids, known_dois = _known_identifiers(refs_path)
     except (json.JSONDecodeError, OSError):
         return []  # Already flagged by check_quote_keys if called first
-
-    # Build lookup sets from references.json
-    known_pmids: set[str] = set()
-    known_dois: set[str] = set()
-    for entry in refs.values():
-        if not isinstance(entry, dict):
-            continue
-        if pmid := entry.get("pmid"):
-            known_pmids.add(str(pmid))
-        if doi := entry.get("doi"):
-            known_dois.add(doi.lower())
 
     errors: list[str] = []
     for ref in _collect_refs(doc):
@@ -210,7 +211,7 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
             pmid = m.group(1)
             if pmid not in known_pmids:
                 errors.append(
-                    f"ref 'PMID:{pmid}' not found in {refs_path.name}. "
+                    f"ref 'PMID:{pmid}' not found in the {region_name(refs_path)} reference store. "
                     "Add the reference through the validated ingest path first."
                 )
             continue
@@ -219,7 +220,7 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
             doi = m.group(1).lower()
             if doi not in known_dois:
                 errors.append(
-                    f"ref 'DOI:{m.group(1)}' not found in {refs_path.name}. "
+                    f"ref 'DOI:{m.group(1)}' not found in the {region_name(refs_path)} reference store. "
                     "Add the reference through the validated ingest path first."
                 )
 
@@ -280,19 +281,9 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
         return []
 
     try:
-        refs: dict = load_store(refs_path)
+        known_pmids, known_dois = _known_identifiers(refs_path)
     except (json.JSONDecodeError, OSError):
         return []
-
-    known_pmids: set[str] = set()
-    known_dois: set[str] = set()
-    for entry in refs.values():
-        if not isinstance(entry, dict):
-            continue
-        if pmid := entry.get("pmid"):
-            known_pmids.add(str(pmid))
-        if doi := entry.get("doi"):
-            known_dois.add(doi.lower())
 
     errors: list[str] = []
     for field, raw in _collect_flat_refs(doc):
@@ -300,13 +291,13 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
         if m := _PMID_RE.match(ref):
             if m.group(1) not in known_pmids:
                 errors.append(
-                    f"{field}: 'PMID:{m.group(1)}' not found in {refs_path.name}. "
+                    f"{field}: 'PMID:{m.group(1)}' not found in the {region_name(refs_path)} reference store. "
                     "Either ingest the paper or remove the citation."
                 )
         elif m := _DOI_RE.match(ref):
             if m.group(1).lower() not in known_dois:
                 errors.append(
-                    f"{field}: 'DOI:{m.group(1)}' not found in {refs_path.name}. "
+                    f"{field}: 'DOI:{m.group(1)}' not found in the {region_name(refs_path)} reference store. "
                     "Either ingest the paper or remove the citation."
                 )
     return errors
@@ -420,14 +411,29 @@ def check_source_methods(store: dict) -> list[str]:
 
 
 def check_source_documents(store: dict, known_sources: set[str]) -> list[str]:
-    """Flag ASTA_REPORT quotes with no resolvable source document.
+    """Report ASTA_REPORT quotes whose source document is unrecorded.
 
     ASTA report text is ASTA's prose about a paper, not necessarily the paper's
     own words, so knowing which report a passage came from is what makes it
-    checkable. Absence is reported rather than blocked: some early deepsearch
-    PDFs were never committed and may not be recoverable.
+    checkable at all.
+
+    Reports **one finding per affected paper**, not one per quote. The
+    distinction matters for the baseline: 241 quotes are affected, and those
+    deepsearch PDFs were never committed, so a per-quote finding fills three
+    quarters of the baseline. Collapsed, the same fact costs one line per paper
+    and the count tracks papers still needing provenance.
+
+    Note the PDF is not the only possible oracle: verifying the quote against
+    the *paper* would make the missing report irrelevant, and is the stronger
+    check since the report only paraphrases the paper (issue #143).
+
+    A `source_document` pointing at a record that does not exist is a different
+    problem — a broken reference rather than a missing one — so it stays
+    per-quote.
     """
     errors: list[str] = []
+    unrecorded: dict[str, int] = {}
+
     for corpus_id, entry in store.items():
         if corpus_id.startswith("_") or not isinstance(entry, dict):
             continue
@@ -438,15 +444,18 @@ def check_source_documents(store: dict, known_sources: set[str]) -> list[str]:
                 continue
             sid = quote.get("source_document")
             if not sid:
-                errors.append(
-                    f"quote '{quote_key}': source_method is asta_report but no "
-                    f"source_document — the ASTA report it came from is unrecorded."
-                )
+                unrecorded[corpus_id] = unrecorded.get(corpus_id, 0) + 1
             elif sid not in known_sources:
                 errors.append(
                     f"quote '{quote_key}': source_document '{sid}' has no record "
                     f"under references/{{region}}/sources/."
                 )
+
+    for corpus_id, n in sorted(unrecorded.items()):
+        errors.append(
+            f"paper '{corpus_id}': {n} asta_report quote(s) with no "
+            f"source_document — the ASTA report they came from is unrecorded."
+        )
     return errors
 
 
@@ -987,33 +996,26 @@ def check_md_ids(
             f"Unannotated blockquote (missing '<!-- quote_key: X -->' annotation): {line[:80]}"
         )
 
-    # Load references.json once if it exists
-    refs: dict | None = None
-    if store_exists(refs_path):
+    # Identity answers the PMID questions, quote keys the attribution ones;
+    # neither needs quote text.
+    known_quote_keys: set[str] = set()
+    known_pmids: set[str] = set()
+    have_store = store_exists(refs_path)
+    if have_store:
         try:
-            refs = load_store(refs_path)
+            known_pmids, _ = _known_identifiers(refs_path)
+            known_quote_keys = set(load_quotes(refs_path))
         except (json.JSONDecodeError, OSError):
-            errors.append(f"Could not read the {refs_path.parent.name} reference store")
+            errors.append(f"Could not read the {region_name(refs_path)} reference store")
+            have_store = False
 
-    if refs is not None:
-        # Build lookup sets
-        known_quote_keys: set[str] = set()
-        known_pmids: set[str] = set()
-        known_dois: set[str] = set()
-        for entry in refs.values():
-            if not isinstance(entry, dict):
-                continue
-            known_quote_keys.update(entry.get("quotes", {}).keys())
-            if pmid := entry.get("pmid"):
-                known_pmids.add(str(pmid))
-            if doi := entry.get("doi"):
-                known_dois.add(doi.lower())
-
+    if have_store:
         # 2. quote_keys
         for qk in annotations.get("quote_keys", []):
             if qk not in known_quote_keys:
                 errors.append(
-                    f"quote_key '{qk}' not found in {refs_path.name}. "
+                    f"quote_key '{qk}' not found in the "
+                    f"{region_name(refs_path)} reference store. "
                     "Add the quote through the validated ingest path before referencing it."
                 )
 
@@ -1021,12 +1023,13 @@ def check_md_ids(
         for pmid in annotations.get("pmids", []):
             if pmid not in known_pmids:
                 errors.append(
-                    f"PMID '{pmid}' not found in {refs_path.name}. "
+                    f"PMID '{pmid}' not found in the "
+                    f"{region_name(refs_path)} reference store. "
                     "Add the reference through the validated ingest path first."
                 )
 
     # 4. curie_ids — checked against term_index.json if present
-    term_index_path = refs_path.parent / "term_index.json"
+    term_index_path = refs_path / "term_index.json"
     if term_index_path.exists() and annotations.get("curie_ids"):
         try:
             term_index: dict = json.loads(term_index_path.read_text(encoding="utf-8"))

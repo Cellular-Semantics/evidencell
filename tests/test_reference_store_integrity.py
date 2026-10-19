@@ -142,14 +142,14 @@ def test_filling_a_previously_empty_identity_field_is_allowed():
 
 def test_write_quote_to_refs_produces_integrity_clean_output(tmp_path):
     from evidencell.references import load_store
-    p = tmp_path / "references.json"
+    p = tmp_path
     write_quote_to_refs(p, "11290620", "A verbatim passage.", "Results",
                         "ASTA_SNIPPET", "test_run", paper_meta={"title": "T"})
     assert check_quote_key_integrity(load_store(p)) == []
 
 
 def test_write_quote_to_refs_is_append_only(tmp_path):
-    p = tmp_path / "references.json"
+    p = tmp_path
     from evidencell.references import load_store
     write_quote_to_refs(p, "11290620", "First passage.", "Results",
                         "ASTA_SNIPPET", "run1", paper_meta={"title": "T"})
@@ -162,7 +162,7 @@ def test_write_quote_to_refs_is_append_only(tmp_path):
 
 
 def test_re_adding_the_same_quote_changes_nothing(tmp_path):
-    p = tmp_path / "references.json"
+    p = tmp_path
     args = (p, "11290620", "A verbatim passage.", "Results", "ASTA_SNIPPET")
     from evidencell.references import load_store
     write_quote_to_refs(*args, "run1", paper_meta={"title": "T"})
@@ -194,25 +194,29 @@ def test_load_store_reads_split_layout(tmp_path):
     assert len(store["11290620"]["quotes"]) == 1
 
 
-def test_load_store_reads_legacy_layout(tmp_path):
-    """Dual-layout reading must stay covered while the shim exists."""
+def test_load_store_ignores_a_bare_legacy_file(tmp_path):
+    """load_store is split-only: a monolith with no papers/ reads as empty.
+
+    It cannot silently *prefer* a monolith — _reject_shadowed_store() raises
+    when both are present — so the only way to see one is a region that was
+    never migrated, which no longer exists in the repo.
+    """
     from evidencell.references import load_store
     d = tmp_path / "references" / "hippocampus"
     d.mkdir(parents=True)
     k, q = _quote("legacy passage")
     (d / "references.json").write_text(json.dumps(_store(**{k: q})))
-    store = load_store(d / "references.json")
-    assert store["11290620"]["pmid"] == "23420672"
+    assert load_store(d) == {}
 
 
-def test_store_exists_true_for_both_layouts(tmp_path):
+def test_store_exists_only_for_the_split_layout(tmp_path):
     from evidencell.references import store_exists
     split = _split_region(tmp_path)
     assert store_exists(split)
     legacy = tmp_path / "references" / "dg"
     legacy.mkdir(parents=True)
     (legacy / "references.json").write_text("{}")
-    assert store_exists(legacy / "references.json")
+    assert not store_exists(legacy)  # a bare monolith is no longer a store
 
 
 def test_store_exists_false_when_absent(tmp_path):
@@ -242,7 +246,7 @@ def test_append_quote_is_idempotent(tmp_path):
 def test_writer_routes_to_split_and_never_recreates_the_monolith(tmp_path):
     from evidencell.references import load_store, write_quote_to_refs
     d = _split_region(tmp_path)
-    key = write_quote_to_refs(d / "references.json", "11290620",
+    key = write_quote_to_refs(d, "11290620",
                               "Routed passage.", "Results", "ASTA_SNIPPET", "run")
     assert not (d / "references.json").exists()
     assert key in load_store(d)["11290620"]["quotes"]
@@ -251,7 +255,7 @@ def test_writer_routes_to_split_and_never_recreates_the_monolith(tmp_path):
 def test_writer_creates_a_new_paper_in_split_layout(tmp_path):
     from evidencell.references import load_store, write_quote_to_refs
     d = _split_region(tmp_path)
-    write_quote_to_refs(d / "references.json", "999", "New paper passage.",
+    write_quote_to_refs(d, "999", "New paper passage.",
                         "Results", "ASTA_SNIPPET", "run",
                         paper_meta={"title": "New", "pmid": "1"})
     assert (d / "papers" / "999.json").exists()
@@ -262,7 +266,7 @@ def test_split_store_stays_integrity_clean_through_the_writer(tmp_path):
     from evidencell.references import load_store, write_quote_to_refs
     d = _split_region(tmp_path)
     for i in range(3):
-        write_quote_to_refs(d / "references.json", "11290620", f"Passage {i}.",
+        write_quote_to_refs(d, "11290620", f"Passage {i}.",
                             "Results", "ASTA_SNIPPET", f"run{i}")
     assert check_quote_key_integrity(load_store(d)) == []
 
@@ -280,7 +284,7 @@ def test_migration_round_trips_exactly(tmp_path):
     refs_path = d / "references.json"
     refs_path.write_text(json.dumps(legacy))
 
-    before = load_store(refs_path)
+    before = json.loads(refs_path.read_text())
     r = migrate_region(refs_path)
     assert r.papers == 1 and r.quotes == 2
     assert not refs_path.exists()
@@ -312,7 +316,8 @@ def test_failed_round_trip_writes_nothing(tmp_path, monkeypatch):
     """
     import evidencell.migrate_refs as m
     d = _legacy(tmp_path, {"_meta": {"region": "r"}, "111": {"corpus_id": "111"}})
-    monkeypatch.setattr(m, "load_store", lambda p: {"deliberately": "different"})
+    # Force the post-write verification to disagree with what was written.
+    monkeypatch.setattr(m, "_load_split", lambda p: {"deliberately": "different"})
     try:
         m.migrate_region(d / "references.json")
     except AssertionError:
@@ -359,7 +364,7 @@ def test_new_region_is_born_split(tmp_path):
     """A storeless region must not mint a fresh monolith post-migration."""
     from evidencell.references import write_quote_to_refs
     d = tmp_path / "references" / "BG"
-    write_quote_to_refs(d / "references.json", "123", "A passage.", "Results",
+    write_quote_to_refs(d, "123", "A passage.", "Results",
                         "ASTA_SNIPPET", "run", paper_meta={"title": "T"})
     assert (d / "papers" / "123.json").exists()
     assert not (d / "references.json").exists()
@@ -515,3 +520,47 @@ def test_normalise_is_idempotent():
     twice, changes = normalise_paper(once)
     assert twice == once
     assert changes == []
+
+
+# ── review findings: the directory cutover ────────────────────────────────────
+
+def test_retired_monolith_path_is_rejected_not_silently_honoured(tmp_path):
+    """Passing the old path used to create a DIRECTORY named references.json.
+
+    `save_paper` builds `<arg>/papers/...` and mkdirs parents, so the old
+    argument produced `references/{region}/references.json/papers/`. Every
+    later read then raised ShadowedStoreError, because the monolith path
+    existed — as a directory.
+    """
+    import pytest
+    from evidencell.references import write_quote_to_refs
+    d = tmp_path / "references" / "hippocampus"
+    with pytest.raises(ValueError, match="retired monolith path"):
+        write_quote_to_refs(d / "references.json", "123", "A passage.",
+                            "Results", "ASTA_SNIPPET", "run")
+    assert not (d / "references.json").exists()
+
+
+def test_term_index_is_looked_up_inside_the_region(tmp_path):
+    """`refs_path.parent / term_index.json` resolved to references/ after the
+    cutover, so a per-region index would never have been found."""
+    from evidencell.validate import check_md_ids
+    d = _split_region(tmp_path)
+    (d / "term_index.json").write_text(json.dumps({"CL:0000540": "neuron"}))
+    errors = check_md_ids({"curie_ids": ["UBERON:0000955"]}, d)
+    assert any("UBERON:0000955" in e for e in errors), (
+        "a term_index.json beside papers/ must be consulted")
+
+
+def test_migration_refuses_a_partially_split_region(tmp_path):
+    """Rollback used to rmtree papers/ and quotes/ wholesale, which would
+    delete pre-existing content the migration never wrote."""
+    from evidencell.migrate_refs import migrate_region
+    d = tmp_path / "references" / "r"
+    (d / "quotes").mkdir(parents=True)
+    (d / "quotes" / "999.json").write_text("{}")
+    (d / "references.json").write_text(json.dumps(
+        {"_meta": {"region": "r"}, "111": {"corpus_id": "111"}}))
+    r = migrate_region(d / "references.json")
+    assert "partially split" in r.skipped
+    assert (d / "quotes" / "999.json").exists(), "pre-existing data must survive"

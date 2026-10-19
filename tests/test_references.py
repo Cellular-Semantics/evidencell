@@ -1,6 +1,5 @@
 """Unit tests for src/evidencell/references.py"""
 
-import json
 import pytest
 
 from evidencell.references import (
@@ -67,13 +66,13 @@ def test_compute_quote_key_known_value():
 
 @pytest.fixture
 def tmp_refs(tmp_path):
-    """Return a path to a temporary references.json (does not exist yet)."""
-    return tmp_path / "references.json"
+    """Return a region store directory with no store in it yet."""
+    return tmp_path
 
 
 @pytest.fixture
-def existing_refs(tmp_path):
-    """Return a path to a references.json with one existing paper + quote."""
+def existing_refs(tmp_path, write_store):
+    """Return the region dir of a store with one existing paper + quote."""
     refs = {
         "_meta": {"region": "test", "last_updated": "", "last_updated_by": ""},
         "42": {
@@ -97,14 +96,13 @@ def existing_refs(tmp_path):
             },
         },
     }
-    p = tmp_path / "references.json"
-    p.write_text(json.dumps(refs, indent=2))
-    return p
+    write_store(tmp_path, refs)
+    return tmp_path
 
 
 def test_write_quote_creates_file(tmp_refs):
     key = write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="100",
         quote_text="A new quote from the paper.",
         section="Results",
@@ -112,8 +110,8 @@ def test_write_quote_creates_file(tmp_refs):
         added_by="test_run",
     )
     # A region with no store is created in the split layout: papers/ + quotes/.
-    assert (tmp_refs.parent / "papers" / "100.json").exists()
-    assert not tmp_refs.exists(), "must not mint a new monolith"
+    assert (tmp_refs / "papers" / "100.json").exists()
+    assert not (tmp_refs / "references.json").exists(), "must not mint a monolith"
     data = load_store(tmp_refs)
     assert "100" in data
     assert key in data["100"]["quotes"]
@@ -122,7 +120,7 @@ def test_write_quote_creates_file(tmp_refs):
 
 def test_write_quote_returns_correct_key(tmp_refs):
     key = write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="200",
         quote_text="Quote for key check.",
         section="Methods",
@@ -134,7 +132,7 @@ def test_write_quote_returns_correct_key(tmp_refs):
 
 def test_write_quote_idempotent(tmp_refs):
     kwargs = dict(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="300",
         quote_text="Same quote written twice.",
         section="Discussion",
@@ -150,7 +148,7 @@ def test_write_quote_idempotent(tmp_refs):
 
 def test_write_quote_preserves_existing_paper(existing_refs):
     write_quote_to_refs(
-        refs_path=existing_refs,
+        region_dir=existing_refs,
         corpus_id="42",
         quote_text="New quote for existing paper.",
         section="Introduction",
@@ -167,7 +165,7 @@ def test_write_quote_preserves_existing_paper(existing_refs):
 
 def test_write_quote_preserves_existing_entries(existing_refs):
     write_quote_to_refs(
-        refs_path=existing_refs,
+        region_dir=existing_refs,
         corpus_id="99",
         quote_text="New paper entry.",
         section="Results",
@@ -188,7 +186,7 @@ def test_write_quote_uses_paper_meta(tmp_refs):
         "externalIds": {"PubMed": "99887766", "DOI": "10.9999/great"},
     }
     write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="500",
         quote_text="Quote with metadata.",
         section="Results",
@@ -207,7 +205,7 @@ def test_write_quote_uses_paper_meta(tmp_refs):
 
 def test_write_quote_status_pending(tmp_refs):
     key = write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="600",
         quote_text="Status check quote.",
         section="Results",
@@ -220,7 +218,7 @@ def test_write_quote_status_pending(tmp_refs):
 
 def test_write_quote_meta_updated(tmp_refs):
     write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="700",
         quote_text="Meta update check.",
         section="Results",
