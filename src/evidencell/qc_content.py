@@ -89,6 +89,10 @@ _NO_REGION_SUBTREES = ("datasets", "correlation_runs", "annotation_transfer_runs
 # summary is the right place to say it, and saying it once beats saying it 53
 # times.
 _CURIE_COVERAGE: dict[str, dict] = {}
+
+# Atlas accessions per region, cached for the duration of one sweep. Cleared in
+# run_sweep() so a caller sweeping twice over changed content sees the change.
+_KB_NODES_CACHE: dict[tuple[str, str], dict] = {}
 _EXCLUDED_SUBTREES = ("taxonomy",)
 
 
@@ -167,7 +171,17 @@ def _kb_nodes_for_region(root: Path, region: str) -> dict:
     """Collect {cell_set_accession: node} across a region's graphs.
 
     Mirrors what the pre-edit hook builds for report accession checks.
+
+    Cached per (root, region) for the duration of a sweep. Without it this
+    re-parsed every graph YAML in the region once per report: 1.7 MB of YAML
+    read 37 times for hippocampus alone, 41 s of a 52 s sweep. The hook calls
+    the equivalent once per edit and does not need the cache; the sweep calls
+    it 64 times and does.
     """
+    key = (str(root.resolve()), region)
+    if key in _KB_NODES_CACHE:
+        return _KB_NODES_CACHE[key]
+
     nodes: dict = {}
     region_dir = root / "kb" / "graphs" / region
     if not region_dir.is_dir():
@@ -182,6 +196,7 @@ def _kb_nodes_for_region(root: Path, region: str) -> dict:
         for node in (doc or {}).get("nodes", []) or []:
             if isinstance(node, dict) and (acc := node.get("cell_set_accession")):
                 nodes[acc] = node
+    _KB_NODES_CACHE[key] = nodes
     return nodes
 
 
@@ -371,6 +386,7 @@ def run_sweep(
     root = root or repo_root()
     result = SweepResult()
     _CURIE_COVERAGE.clear()
+    _KB_NODES_CACHE.clear()
 
     kb_paths = _kb_files(root) if kb else []
     report_paths = _report_files(root) if reports else []

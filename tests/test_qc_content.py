@@ -493,3 +493,46 @@ def test_real_ontology_lookup_resolves_and_rejects(tmp_path):
     assert unavailable == {}
     assert len(errors) == 1
     assert "CL:9999999" in errors[0]
+
+
+# ── region node cache ─────────────────────────────────────────────────────────
+
+def test_region_nodes_are_cached_within_a_sweep(tmp_path):
+    """Re-parsing every graph YAML once per report cost 41s of a 52s sweep."""
+    from evidencell.qc_content import _KB_NODES_CACHE, _kb_nodes_for_region
+    root = _mini_repo(tmp_path, refs=REFS_OK,
+                      graph={"nodes": [{"id": "n1", "cell_set_accession": "CS1"}]})
+    _KB_NODES_CACHE.clear()
+    first = _kb_nodes_for_region(root, "hippocampus")
+    assert "CS1" in first
+    assert _KB_NODES_CACHE, "second call must not re-read the YAML"
+    assert _kb_nodes_for_region(root, "hippocampus") is first
+
+
+def test_cache_does_not_leak_between_sweeps(tmp_path):
+    """A cache that survives the sweep would report findings about content
+    that no longer exists — worse than the cost it saves."""
+    from evidencell.qc_content import _kb_nodes_for_region
+    root = _mini_repo(tmp_path, refs=REFS_OK,
+                      graph={"nodes": [{"id": "n1", "cell_set_accession": "CS1"}]})
+    run_sweep(root)
+    (root / "kb/graphs/hippocampus/graph.yaml").write_text(
+        yaml.safe_dump({"nodes": [{"id": "n1", "cell_set_accession": "CS_CHANGED"}]}),
+        encoding="utf-8")
+    run_sweep(root)
+    nodes = _kb_nodes_for_region(root, "hippocampus")
+    assert "CS_CHANGED" in nodes and "CS1" not in nodes
+
+
+def test_cache_is_keyed_by_region(tmp_path):
+    from evidencell.qc_content import _KB_NODES_CACHE, _kb_nodes_for_region
+    root = _mini_repo(tmp_path, refs=REFS_OK,
+                      graph={"nodes": [{"id": "n1", "cell_set_accession": "CS1"}]})
+    d = root / "kb" / "graphs" / "dentate_gyrus"
+    d.mkdir(parents=True)
+    (d / "g.yaml").write_text(yaml.safe_dump(
+        {"nodes": [{"id": "n2", "cell_set_accession": "CS2"}]}), encoding="utf-8")
+    _KB_NODES_CACHE.clear()
+    assert "CS1" in _kb_nodes_for_region(root, "hippocampus")
+    assert "CS2" in _kb_nodes_for_region(root, "dentate_gyrus")
+    assert "CS1" not in _kb_nodes_for_region(root, "dentate_gyrus")
