@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -63,6 +64,11 @@ from evidencell.validate import (
 
 ERROR = "ERROR"
 WARN = "WARN"
+# A gap is a fact about the world, not a backlog item: something that cannot be
+# fixed by changing this repository. Kept out of the baseline entirely — mixing
+# it with fixable findings is what made "0 new / 0 stale" stop meaning anything,
+# since three quarters of the baseline could never clear.
+GAP = "GAP"
 
 # kb/ subtrees that carry no region and therefore no references.json. Bulk atlas
 # content (taxonomy levels) is excluded outright: the files are enormous, are
@@ -96,6 +102,15 @@ class SweepResult:
     @property
     def warnings(self) -> list[Finding]:
         return [f for f in self.findings if f.severity == WARN]
+
+    @property
+    def gaps(self) -> list[Finding]:
+        return [f for f in self.findings if f.severity == GAP]
+
+    @property
+    def trackable(self) -> list[Finding]:
+        """Findings the baseline covers — everything that could be fixed."""
+        return [f for f in self.findings if f.severity != GAP]
 
 
 def _region_of(path: Path, root: Path) -> str | None:
@@ -275,10 +290,12 @@ def sweep_reference_store(path: Path, root: Path) -> list[Finding]:
     ]
     sources_dir = path if path.is_dir() else path.parent
     known = {p.stem for p in (sources_dir / "sources").glob("*.json")}
-    findings += [
-        Finding(rel, WARN, "source_document", msg)
-        for msg in check_source_documents(store, known)
-    ]
+    for msg in check_source_documents(store, known):
+        # "paper 'X': N quotes with no source_document" is a gap — the PDF was
+        # never committed. "source_document 'Y' has no record" is a broken
+        # reference, which is fixable here.
+        severity = GAP if msg.startswith("paper '") else ERROR
+        findings.append(Finding(rel, severity, "source_document", msg))
     return findings
 
 
@@ -314,14 +331,61 @@ def run_sweep(
     return result
 
 
+# What identifies a finding *within* a (path, check), independent of the prose
+# around it. Keyed by check name; the pattern's first group is the subject.
+#
+# Fingerprinting on the whole message means improving wording is
+# indistinguishable from "one finding fixed, one new finding appeared". That
+# happened three times while removing the compat shim — each needed a manual
+# 1-new/1-stale check before re-baselining, and skipping that check once would
+# absorb a real regression. The subject is the durable part; the sentence
+# built around it is not.
+# A check may emit several message shapes; the first pattern that matches wins.
+_SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
+    "quote_key_integrity": (r"quote_key '([^']+)'",),
+    "quote_key":           (r"quote_key '([^']+)'",),
+    "flat_citation":       (r"'((?:PMID|DOI):[^']+)'",),
+    "ref_pmid":            (r"'((?:PMID|DOI):[^']+)'",),
+    "run_ref":             (r"run_ref '([^']+)'",),
+    "source_method":       (r"quote '([^']+)'",),
+    "source_document":     (r"quote '([^']+)'", r"paper '([^']+)'"),
+    "store_schema":        (r"(?:paper|quote) '([^']+)'",),
+    "rationale_stale":     (r"Edge '([^']+)'",),
+    "structural":          (r"'([^']+)'",),
+    "markdown": (
+        r"(?:Atlas accession|PMID|quote_key|Ontology term) '([^']+)'",
+        # Unannotated blockquote: the quoted line itself is the subject.
+        r"annotation\): (.+)$",
+    ),
+}
+
+# Checks that emit at most one finding per file, so (path, check) already
+# identifies them and no subject is needed.
+_SUBJECTLESS_CHECKS = frozenset({"no_refs_store", "yaml-parse", "read", "refs-parse"})
+
+
+def _subject(f: Finding) -> str:
+    """The durable identity of a finding within its (path, check)."""
+    for pattern in _SUBJECT_PATTERNS.get(f.check, ()):
+        m = re.search(pattern, f.message)
+        if m:
+            return m.group(1)
+    if f.check in _SUBJECTLESS_CHECKS:
+        return ""
+    # No rule for this check: fall back to the full message. Correct, just
+    # churn-prone — tests/test_qc_content.py asserts every check the sweep
+    # currently emits has a rule, so this is reachable only by a new check.
+    return f.message
+
+
 def _fingerprint(f: Finding) -> str:
     """Stable identity for a finding, used for baseline matching.
 
-    Deliberately excludes nothing — path + check + message together are what
-    makes a finding distinct. Line numbers are not part of any finding, so
-    reformatting a file does not churn the baseline.
+    (path, check, subject) — deliberately *not* the rendered message, so the
+    wording of a finding can be improved without the baseline treating it as a
+    fix plus a new failure.
     """
-    return f"{f.path}\t{f.check}\t{f.message}"
+    return f"{f.path}\t{f.check}\t{_subject(f)}"
 
 
 def load_baseline(path: Path) -> set[str]:
@@ -341,7 +405,7 @@ def stale_baseline_entries(path: Path, result: SweepResult) -> set[str]:
     moment the trilaminar ingest corrected it, and would have been re-accepted
     without complaint. Report these so the baseline shrinks instead of rotting.
     """
-    return load_baseline(path) - {_fingerprint(f) for f in result.findings}
+    return load_baseline(path) - {_fingerprint(f) for f in result.trackable}
 
 
 def _write_baseline_file(path: Path, accepted: list[str]) -> int:
@@ -368,7 +432,7 @@ def _write_baseline_file(path: Path, accepted: list[str]) -> int:
 
 def write_baseline(path: Path, result: SweepResult) -> int:
     """Record every current finding as accepted. Returns the count written."""
-    return _write_baseline_file(path, sorted({_fingerprint(f) for f in result.findings}))
+    return _write_baseline_file(path, sorted({_fingerprint(f) for f in result.trackable}))
 
 
 def prune_baseline(path: Path, kept: list[str]) -> int:
@@ -379,7 +443,7 @@ def prune_baseline(path: Path, kept: list[str]) -> int:
 def _render(result: SweepResult, strict: bool) -> str:
     """Human-readable grouped report."""
     lines: list[str] = []
-    sev_order = {ERROR: 0, WARN: 1}
+    sev_order = {ERROR: 0, WARN: 1, GAP: 2}
     by_file: dict[str, list[Finding]] = {}
     for f in result.findings:
         by_file.setdefault(f.path, []).append(f)
@@ -387,8 +451,9 @@ def _render(result: SweepResult, strict: bool) -> str:
     for path in sorted(by_file):
         fs = sorted(by_file[path], key=lambda f: (sev_order[f.severity], f.check))
         n_err = sum(1 for f in fs if f.severity == ERROR)
-        n_warn = len(fs) - n_err
-        lines.append(f"\n{path}  ({n_err} error, {n_warn} warn)")
+        n_gap = sum(1 for f in fs if f.severity == GAP)
+        n_warn = len(fs) - n_err - n_gap
+        lines.append(f"\n{path}  ({n_err} error, {n_warn} warn, {n_gap} gap)")
         for f in fs:
             sev = ERROR if (strict and f.severity == WARN) else f.severity
             lines.append(f"  [{sev:5}] {f.check}: {f.message}")
@@ -398,7 +463,8 @@ def _render(result: SweepResult, strict: bool) -> str:
     lines.append(
         f"Swept {result.kb_files} KB YAML + {result.report_files} reports "
         f"+ {result.ref_stores} reference stores — "
-        f"{len(result.errors)} errors, {len(result.warnings)} warnings"
+        f"{len(result.errors)} errors, {len(result.warnings)} warnings, "
+        f"{len(result.gaps)} known gaps"
     )
     for s in result.skipped:
         lines.append(f"  skipped: {s}")

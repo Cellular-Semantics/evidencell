@@ -411,14 +411,27 @@ def check_source_methods(store: dict) -> list[str]:
 
 
 def check_source_documents(store: dict, known_sources: set[str]) -> list[str]:
-    """Flag ASTA_REPORT quotes with no resolvable source document.
+    """Report ASTA_REPORT quotes whose source document is unrecorded.
 
     ASTA report text is ASTA's prose about a paper, not necessarily the paper's
     own words, so knowing which report a passage came from is what makes it
-    checkable. Absence is reported rather than blocked: some early deepsearch
-    PDFs were never committed and may not be recoverable.
+    checkable at all.
+
+    Reports **one finding per affected paper**, not one per quote. The
+    distinction matters for the baseline: 241 quotes are affected, and those
+    deepsearch PDFs were never committed and may never be recovered, so a
+    per-quote finding fills three quarters of the baseline with entries that
+    can never clear. Collapsed, the same fact costs one line per paper and the
+    count tracks papers still needing provenance — a number that can actually
+    go down.
+
+    A `source_document` pointing at a record that does not exist is a different
+    problem — a broken reference rather than a missing one — so it stays
+    per-quote.
     """
     errors: list[str] = []
+    unrecorded: dict[str, int] = {}
+
     for corpus_id, entry in store.items():
         if corpus_id.startswith("_") or not isinstance(entry, dict):
             continue
@@ -429,15 +442,18 @@ def check_source_documents(store: dict, known_sources: set[str]) -> list[str]:
                 continue
             sid = quote.get("source_document")
             if not sid:
-                errors.append(
-                    f"quote '{quote_key}': source_method is asta_report but no "
-                    f"source_document — the ASTA report it came from is unrecorded."
-                )
+                unrecorded[corpus_id] = unrecorded.get(corpus_id, 0) + 1
             elif sid not in known_sources:
                 errors.append(
                     f"quote '{quote_key}': source_document '{sid}' has no record "
                     f"under references/{{region}}/sources/."
                 )
+
+    for corpus_id, n in sorted(unrecorded.items()):
+        errors.append(
+            f"paper '{corpus_id}': {n} asta_report quote(s) with no "
+            f"source_document — the ASTA report they came from is unrecorded."
+        )
     return errors
 
 

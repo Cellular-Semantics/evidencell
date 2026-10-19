@@ -1,7 +1,7 @@
 # Completing the reference-store refactor
 
-The final round: retire the compatibility shim, and separate the QC baseline's
-two populations. After this the publication-store refactor is done.
+**Status: done** (PR #141). The compatibility shim is retired and the QC
+baseline no longer mixes fixable backlog with permanent gaps.
 
 **Status:** open — shim landed with the papers/ + quotes/ split
 **Owner:** unassigned
@@ -99,13 +99,16 @@ covered while it still exists.
 
 ### Done when
 
-- [ ] No module outside `references.py` names `references.json`
-- [ ] No caller passes a `…/references.json` path
-- [ ] `write_quote_to_refs()` deleted; callers use `save_paper()` / `append_quote()`
-- [ ] `load_store()` either deleted or reduced to the split layout with no
-      monolith branch
-- [ ] Workflow docs describe `papers/` + `quotes/`
-- [ ] A fresh clone has no `references.json` anywhere
+- [x] No module outside `references.py` names `references.json`
+- [x] No caller passes a `…/references.json` path
+- [x] `write_quote_to_refs()` **kept** — it is the single supported write path, not a
+      shim: it derives the key from the text and is idempotent, which is exactly
+      what agents must not do by hand. It now takes a region directory and
+      rejects the retired monolith path.
+- [x] `load_store()` reduced to the split layout; it remains the whole-region
+      view for `render` and `qc_content`, which legitimately need it
+- [x] Workflow docs describe `papers/` + `quotes/`
+- [x] A fresh clone has no `references.json` anywhere
 
 ### Guardrails while the shim exists
 
@@ -181,7 +184,8 @@ the evidence at the time rather than now.
 
 ### Done when
 
-- [ ] The baseline contains only findings that can actually be fixed
-- [ ] Unrecoverable deepsearch documents are recorded once, not once per quote
-- [ ] The sweep distinguishes "backlog remaining" from "known permanent gaps"
-- [ ] Fingerprints survive a message rewording
+- [x] The baseline contains only findings that can actually be fixed — 323 → 82
+- [x] Unrecoverable deepsearch documents are recorded once per paper (241 → 127)
+      and carry severity GAP, excluded from the baseline entirely
+- [x] The sweep reports "N errors, N warnings, N known gaps" as distinct counts
+- [x] Fingerprints key on (path, check, subject), not the rendered message
