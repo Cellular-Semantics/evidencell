@@ -17,6 +17,7 @@ from evidencell.references import (
     compute_quote_key,
     load_papers,
     load_quotes,
+    region_name,
     store_exists,
 )
 
@@ -139,13 +140,13 @@ def check_quote_keys(doc: dict, refs_path: Path) -> list[str]:
     try:
         known: set[str] = set(load_quotes(refs_path))
     except (json.JSONDecodeError, OSError):
-        return [f"Could not read the {refs_path.parent.name} reference store"]
+        return [f"Could not read the {region_name(refs_path)} reference store"]
 
     errors: list[str] = []
     for qk in _collect_quote_keys(doc):
         if qk not in known:
             errors.append(
-                f"quote_key '{qk}' not found in {refs_path.name}. "
+                f"quote_key '{qk}' not found in the {region_name(refs_path)} reference store. "
                 "Add the quote through the validated ingest path before referencing it."
             )
     return errors
@@ -210,7 +211,7 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
             pmid = m.group(1)
             if pmid not in known_pmids:
                 errors.append(
-                    f"ref 'PMID:{pmid}' not found in {refs_path.name}. "
+                    f"ref 'PMID:{pmid}' not found in the {region_name(refs_path)} reference store. "
                     "Add the reference through the validated ingest path first."
                 )
             continue
@@ -219,7 +220,7 @@ def check_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
             doi = m.group(1).lower()
             if doi not in known_dois:
                 errors.append(
-                    f"ref 'DOI:{m.group(1)}' not found in {refs_path.name}. "
+                    f"ref 'DOI:{m.group(1)}' not found in the {region_name(refs_path)} reference store. "
                     "Add the reference through the validated ingest path first."
                 )
 
@@ -290,13 +291,13 @@ def check_flat_ref_pmids(doc: dict, refs_path: Path) -> list[str]:
         if m := _PMID_RE.match(ref):
             if m.group(1) not in known_pmids:
                 errors.append(
-                    f"{field}: 'PMID:{m.group(1)}' not found in {refs_path.name}. "
+                    f"{field}: 'PMID:{m.group(1)}' not found in the {region_name(refs_path)} reference store. "
                     "Either ingest the paper or remove the citation."
                 )
         elif m := _DOI_RE.match(ref):
             if m.group(1).lower() not in known_dois:
                 errors.append(
-                    f"{field}: 'DOI:{m.group(1)}' not found in {refs_path.name}. "
+                    f"{field}: 'DOI:{m.group(1)}' not found in the {region_name(refs_path)} reference store. "
                     "Either ingest the paper or remove the citation."
                 )
     return errors
@@ -987,7 +988,7 @@ def check_md_ids(
             known_pmids, _ = _known_identifiers(refs_path)
             known_quote_keys = set(load_quotes(refs_path))
         except (json.JSONDecodeError, OSError):
-            errors.append(f"Could not read the {refs_path.parent.name} reference store")
+            errors.append(f"Could not read the {region_name(refs_path)} reference store")
             have_store = False
 
     if have_store:
@@ -996,7 +997,7 @@ def check_md_ids(
             if qk not in known_quote_keys:
                 errors.append(
                     f"quote_key '{qk}' not found in the "
-                    f"{refs_path.parent.name} reference store. "
+                    f"{region_name(refs_path)} reference store. "
                     "Add the quote through the validated ingest path before referencing it."
                 )
 
@@ -1005,7 +1006,7 @@ def check_md_ids(
             if pmid not in known_pmids:
                 errors.append(
                     f"PMID '{pmid}' not found in the "
-                    f"{refs_path.parent.name} reference store. "
+                    f"{region_name(refs_path)} reference store. "
                     "Add the reference through the validated ingest path first."
                 )
 

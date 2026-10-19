@@ -60,15 +60,19 @@ def region_from_graph(graph_file: Path) -> str:
     raise ValueError(f"Cannot extract region from graph path: {graph_file}")
 
 
-def refs_path_for_graph(graph_file: Path) -> Path:
-    """Return the references.json path for a given graph YAML file."""
-    region = region_from_graph(graph_file)
-    return repo_root() / "references" / region / "references.json"
+def refs_dir_for_graph(graph_file: Path) -> Path:
+    """Return the reference-store directory for a given graph YAML file.
+
+    The store is a directory (papers/ + quotes/ + sources/), not a file. Use
+    `references.load_papers()` / `load_quotes()` to read it, and
+    `references.store_exists()` — never `Path.exists()` — to test for it.
+    """
+    return refs_dir_for_region(region_from_graph(graph_file))
 
 
-def refs_path_for_region(region: str) -> Path:
-    """Return the references.json path for a named region."""
-    return repo_root() / "references" / region / "references.json"
+def refs_dir_for_region(region: str) -> Path:
+    """Return the reference-store directory for a named region."""
+    return repo_root() / "references" / region
 
 
 def reports_dir_for_region(region: str) -> Path:

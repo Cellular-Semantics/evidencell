@@ -112,7 +112,7 @@ def write_quote_to_refs(
     # Ensure _meta exists
     if "_meta" not in refs:
         refs["_meta"] = {
-            "region": refs_path.parent.name,
+            "region": region_name(refs_path),
             "last_updated": "",
             "last_updated_by": "",
         }
@@ -246,6 +246,13 @@ def store_dir(refs_path: Path) -> Path:
     Accepts `references/{region}/references.json` or `references/{region}/`.
     """
     return refs_path.parent if refs_path.name == "references.json" else refs_path
+
+
+def region_name(refs_path: Path) -> str:
+    """Region a store path denotes, accepting either the directory or a path
+    inside it. Message text should use this rather than reaching for `.name`
+    or `.parent.name`, which mean different things for the two forms."""
+    return store_dir(refs_path).name
 
 
 def is_split_layout(refs_path: Path) -> bool:

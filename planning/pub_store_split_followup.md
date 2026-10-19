@@ -148,6 +148,22 @@ the world*. Three consequences:
 - The stated goal — an empty baseline, at which point `--baseline` comes out of
   CI — becomes unreachable, which quietly makes the whole mechanism permanent.
 
+### Also: fingerprints key on rendered message text
+
+`_fingerprint()` is `path \t check \t message`, so **any wording change to a
+finding looks identical to the finding being fixed and a new one appearing.**
+This bit twice during the shim removal — once renaming "references.json" to the
+region's store in one message, once in five — each time showing N new / N stale
+with the total unchanged.
+
+Both were verified as renames before re-baselining, but that verification is
+manual and easy to skip. The risk is re-baselining reflexively after a wording
+change and absorbing a real regression in the same step.
+
+Key fingerprints on something stable instead: path + check + a finding-specific
+identifier (the offending quote_key, PMID, or edge id) rather than the prose
+built around it. Message text can then be improved freely.
+
 ### Two candidate shapes
 
 1. **Collapse the finding.** Emit one `source_document` finding per *missing
@@ -168,3 +184,4 @@ the evidence at the time rather than now.
 - [ ] The baseline contains only findings that can actually be fixed
 - [ ] Unrecoverable deepsearch documents are recorded once, not once per quote
 - [ ] The sweep distinguishes "backlog remaining" from "known permanent gaps"
+- [ ] Fingerprints survive a message rewording

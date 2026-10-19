@@ -52,8 +52,8 @@ PARAMS:
 4. Locate the reference store for this node's region:
    ```
    uv run python -c "
-   from evidencell.paths import find_node_file, refs_path_for_graph
-   print(refs_path_for_graph(find_node_file('{node_id}')))
+   from evidencell.paths import find_node_file, refs_dir_for_graph
+   print(refs_dir_for_graph(find_node_file('{node_id}')))
    "
    ```
    Store as `REFS_FILE`.
@@ -141,7 +141,7 @@ You perform ONLY the steps below.
 NODE ID:              {node_id}
 NODE CONTEXT:         {node_context}
 KB FILE:              {kb_file}
-REFS FILE:            {refs_file}
+REFS FILE:            {refs_dir}
 SUMMARIES FILE:       {summaries_file}
 EXCLUDED CORPUS IDS:  {excluded_ids}   (comma-separated, or "none")
 PAPER CATALOGUE:      {paper_catalogue_path}   (path, or "none" if absent)
@@ -234,7 +234,7 @@ PropertySource fields:
                   break
 
       key = write_quote_to_refs(
-          refs_path=Path('{refs_file}'),
+          refs_path=Path('{refs_dir}'),
           corpus_id='{source_corpus_id}',
           quote_text='''{quote_text}''',
           section='{section}',
@@ -280,7 +280,7 @@ PropertySource fields:
      "fields_populated": ["anatomical_location.sources", "morphology.sources"],
      "fields_with_no_evidence": ["electrophysiology.sources", "nt_type.sources"],
      "synonyms_found": ["OLM", "O-LM interneuron"],
-     "refs_file": "{refs_file}"
+     "reference_store": "{refs_dir}"
    }
    ```
 
@@ -308,7 +308,7 @@ DO NOT:
    ===================
    Node:     {node_id}
    Written:  {N} PropertySource entries → {kb_file}
-   Refs:     {N} quotes added → {refs_file}
+   Refs:     {N} quotes added → {refs_dir}
    Fields:   {populated list}
    Gaps:     {no-evidence list}
    Synonyms: {synonyms_found or "none"}

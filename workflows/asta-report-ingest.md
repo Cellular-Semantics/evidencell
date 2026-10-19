@@ -283,7 +283,7 @@ You perform ONLY the steps listed below.
 
 OUTPUT DIRECTORY: {output_dir}
 REGION: {region}
-REFERENCES FILE: references/{region}/
+REFERENCE STORE: references/{region}/
 
 TASK:
 
@@ -706,7 +706,7 @@ NEXT STEPS
 Option A — Targeted primary literature retrieval (recommended):
   Hand workflows/cite-traverse.md to Claude Code with:
     node_ids: {list of node IDs}
-    references_file: references/{region}/
+    reference_store: references/{region}/
     round2_targets: {output_dir}/validation_notes.json  ← prioritised issues
     output_dir: {output_dir}
     max_depth: 1    ← recommended when coming from an ASTA report; the report

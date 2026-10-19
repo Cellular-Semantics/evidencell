@@ -7,8 +7,8 @@ import pytest
 from evidencell.paths import (
     find_node_file,
     region_from_graph,
-    refs_path_for_graph,
-    refs_path_for_region,
+    refs_dir_for_graph,
+    refs_dir_for_region,
     repo_root,
     reports_dir_for_region,
     research_dir_for_region,
@@ -44,16 +44,16 @@ def test_region_from_graph_invalid():
         region_from_graph(Path("/tmp/not_a_kb/file.yaml"))
 
 
-def test_refs_path_for_graph():
+def test_refs_dir_for_graph():
     root = repo_root()
     gf = root / "kb" / "graphs" / "hippocampus" / "test.yaml"
-    expected = root / "references" / "hippocampus" / "references.json"
-    assert refs_path_for_graph(gf) == expected
+    expected = root / "references" / "hippocampus"
+    assert refs_dir_for_graph(gf) == expected
 
 
-def test_refs_path_for_region():
+def test_refs_dir_for_region():
     root = repo_root()
-    assert refs_path_for_region("hippocampus") == root / "references" / "hippocampus" / "references.json"
+    assert refs_dir_for_region("hippocampus") == root / "references" / "hippocampus"
 
 
 def test_reports_dir_for_region():

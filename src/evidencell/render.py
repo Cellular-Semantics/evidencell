@@ -2202,16 +2202,16 @@ def render_index(region: str, kb_root: Path, out_path: Path) -> None:
 # ── CLI entry point ───────────────────────────────────────────────────────────
 
 def _load_graph_and_refs(graph_file: Path) -> tuple[dict, dict]:
-    from evidencell.paths import refs_path_for_graph
+    from evidencell.paths import refs_dir_for_graph
 
     graph = yaml.safe_load(graph_file.read_text(encoding="utf-8"))
     if not graph:
         raise ValueError(f"Empty or invalid YAML: {graph_file}")
-    refs_file = refs_path_for_graph(graph_file)
-    if store_exists(refs_file):
-        refs = load_store(refs_file)
+    refs_dir = refs_dir_for_graph(graph_file)
+    if store_exists(refs_dir):
+        refs = load_store(refs_dir)
     else:
-        print(f"WARNING: no reference store for region '{refs_file.parent.name}'; "
+        print(f"WARNING: no reference store for region '{refs_dir.name}'; "
               f"quotes will be unavailable", file=sys.stderr)
         refs = {}
     return graph, refs
@@ -2339,9 +2339,8 @@ def main() -> None:
             render_summary(graph, refs, nid, out_path, graph_file)
             if args.drilldowns:
                 # Generate all drill-downs for this node
-                from evidencell.paths import refs_path_for_graph as _rfg
-                refs_file = _rfg(graph_file)
-                if store_exists(refs_file):
+                from evidencell.paths import refs_dir_for_graph as _rfg
+                if store_exists(_rfg(graph_file)):
                     _gen_all_drilldowns(graph, refs, nid, out_dir, graph_file)
 
     elif args.cmd == "drilldowns":
