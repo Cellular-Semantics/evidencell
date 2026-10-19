@@ -209,7 +209,7 @@ def test_load_store_ignores_a_bare_legacy_file(tmp_path):
     assert load_store(d) == {}
 
 
-def test_store_exists_true_for_both_layouts(tmp_path):
+def test_store_exists_only_for_the_split_layout(tmp_path):
     from evidencell.references import store_exists
     split = _split_region(tmp_path)
     assert store_exists(split)
@@ -520,3 +520,47 @@ def test_normalise_is_idempotent():
     twice, changes = normalise_paper(once)
     assert twice == once
     assert changes == []
+
+
+# ── review findings: the directory cutover ────────────────────────────────────
+
+def test_retired_monolith_path_is_rejected_not_silently_honoured(tmp_path):
+    """Passing the old path used to create a DIRECTORY named references.json.
+
+    `save_paper` builds `<arg>/papers/...` and mkdirs parents, so the old
+    argument produced `references/{region}/references.json/papers/`. Every
+    later read then raised ShadowedStoreError, because the monolith path
+    existed — as a directory.
+    """
+    import pytest
+    from evidencell.references import write_quote_to_refs
+    d = tmp_path / "references" / "hippocampus"
+    with pytest.raises(ValueError, match="retired monolith path"):
+        write_quote_to_refs(d / "references.json", "123", "A passage.",
+                            "Results", "ASTA_SNIPPET", "run")
+    assert not (d / "references.json").exists()
+
+
+def test_term_index_is_looked_up_inside_the_region(tmp_path):
+    """`refs_path.parent / term_index.json` resolved to references/ after the
+    cutover, so a per-region index would never have been found."""
+    from evidencell.validate import check_md_ids
+    d = _split_region(tmp_path)
+    (d / "term_index.json").write_text(json.dumps({"CL:0000540": "neuron"}))
+    errors = check_md_ids({"curie_ids": ["UBERON:0000955"]}, d)
+    assert any("UBERON:0000955" in e for e in errors), (
+        "a term_index.json beside papers/ must be consulted")
+
+
+def test_migration_refuses_a_partially_split_region(tmp_path):
+    """Rollback used to rmtree papers/ and quotes/ wholesale, which would
+    delete pre-existing content the migration never wrote."""
+    from evidencell.migrate_refs import migrate_region
+    d = tmp_path / "references" / "r"
+    (d / "quotes").mkdir(parents=True)
+    (d / "quotes" / "999.json").write_text("{}")
+    (d / "references.json").write_text(json.dumps(
+        {"_meta": {"region": "r"}, "111": {"corpus_id": "111"}}))
+    r = migrate_region(d / "references.json")
+    assert "partially split" in r.skipped
+    assert (d / "quotes" / "999.json").exists(), "pre-existing data must survive"

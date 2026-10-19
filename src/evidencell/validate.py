@@ -1011,7 +1011,7 @@ def check_md_ids(
                 )
 
     # 4. curie_ids — checked against term_index.json if present
-    term_index_path = refs_path.parent / "term_index.json"
+    term_index_path = refs_path / "term_index.json"
     if term_index_path.exists() and annotations.get("curie_ids"):
         try:
             term_index: dict = json.loads(term_index_path.read_text(encoding="utf-8"))

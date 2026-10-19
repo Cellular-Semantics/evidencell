@@ -26,7 +26,7 @@ from evidencell.references import (
     _QUOTES_DIR,
     _load_split,
     _write_json,
-    is_split_layout,
+    store_exists,
 )
 
 
@@ -43,11 +43,18 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
     region = refs_path.parent.name
     result = RegionResult(region=region)
 
-    if is_split_layout(refs_path.parent):
+    if store_exists(refs_path.parent):
         result.skipped = "already split"
         return result
     if not refs_path.exists():
         result.skipped = "no references.json"
+        return result
+    d_pre = refs_path.parent
+    if (d_pre / _QUOTES_DIR).is_dir() or (d_pre / _META_FILE).exists():
+        result.skipped = (
+            "partially split — quotes/ or _meta.json already present alongside "
+            "references.json; resolve by hand"
+        )
         return result
 
     # Read the monolith directly. load_store() is split-only now; the
@@ -72,7 +79,7 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
     result.quotes = sum(len(q) for q in quotes.values())
 
     # A monolith with no paper entries would otherwise write no papers/ dir, so
-    # is_split_layout() stays False, the verification below re-reads the
+    # store_exists() stays False, the verification below re-reads the
     # monolith and trivially passes, and the unlink leaves the region with no
     # store in either layout — silently disabling every provenance check for it.
     if not papers:
@@ -85,7 +92,7 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
     # Verify BEFORE touching disk. Reconstruct what load_store() will return
     # from the split files and require it to equal the monolith. Writing first
     # and asserting afterwards leaves a proven-wrong split store shadowing an
-    # intact references.json — is_split_layout() flips to True the moment
+    # intact references.json — store_exists() flips to True the moment
     # papers/ exists, so every later read would silently prefer the bad copy.
     reconstructed: dict = {}
     if meta:
@@ -115,18 +122,29 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
         _write_json(d / _PAPERS_DIR / f"{corpus_id}.json", payload)
     for corpus_id, payload in quotes.items():
         _write_json(d / _QUOTES_DIR / f"{corpus_id}.json", payload)
+    wrote_meta = bool(meta) and not (d / _META_FILE).exists()
     if meta:
         _write_json(d / _META_FILE, meta)
 
     # Belt and braces: confirm the files on disk actually reload as expected
     # before removing the only other copy. If they do not, remove what was
-    # written — leaving them would make is_split_layout() true and every later
+    # written — leaving them would make store_exists() true and every later
     # read would silently prefer the bad copy over the intact monolith.
     if _load_split(d) != normalised_before:
-        import shutil
+        # Remove only the files this run created. A blanket rmtree of papers/
+        # and quotes/ would delete pre-existing content in a region that had a
+        # partial split — destroying data the migration did not write.
+        for corpus_id in papers:
+            (d / _PAPERS_DIR / f"{corpus_id}.json").unlink(missing_ok=True)
+        for corpus_id in quotes:
+            (d / _QUOTES_DIR / f"{corpus_id}.json").unlink(missing_ok=True)
+        if wrote_meta:
+            (d / _META_FILE).unlink(missing_ok=True)
         for sub in (_PAPERS_DIR, _QUOTES_DIR):
-            shutil.rmtree(d / sub, ignore_errors=True)
-        (d / _META_FILE).unlink(missing_ok=True)
+            try:
+                (d / sub).rmdir()          # only succeeds if now empty
+            except OSError:
+                pass
         raise AssertionError(
             f"{region}: split files did not reload correctly; they have been "
             f"removed and references.json is untouched. Inspect {refs_path} "
@@ -162,7 +180,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # Regions already split have no references.json to glob, so report them too.
     for d in sorted(p for p in refs_root.iterdir() if p.is_dir()):
-        if is_split_layout(d) and not (d / "references.json").exists():
+        if store_exists(d) and not (d / "references.json").exists():
             print(f"  {d.name:<22} already split")
 
     total_p = total_q = 0

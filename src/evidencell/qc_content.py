@@ -189,7 +189,7 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
             if cited:
                 findings.append(Finding(
                     rel, ERROR, "no_refs_store",
-                    f"references/{region}/references.json does not exist, but this file "
+                    f"references/{region}/ has no store (no papers/), but this file "
                     f"carries {cited} citation(s)/quote_key(s). Every provenance check is "
                     f"vacuous for region '{region}' — ingest the references to enable them.",
                 ))

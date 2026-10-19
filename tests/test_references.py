@@ -66,8 +66,8 @@ def test_compute_quote_key_known_value():
 
 @pytest.fixture
 def tmp_refs(tmp_path):
-    """Return a path to a temporary references.json (does not exist yet)."""
-    return tmp_path / "references.json"
+    """Return a region store directory with no store in it yet."""
+    return tmp_path
 
 
 @pytest.fixture
@@ -102,7 +102,7 @@ def existing_refs(tmp_path, write_store):
 
 def test_write_quote_creates_file(tmp_refs):
     key = write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="100",
         quote_text="A new quote from the paper.",
         section="Results",
@@ -120,7 +120,7 @@ def test_write_quote_creates_file(tmp_refs):
 
 def test_write_quote_returns_correct_key(tmp_refs):
     key = write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="200",
         quote_text="Quote for key check.",
         section="Methods",
@@ -132,7 +132,7 @@ def test_write_quote_returns_correct_key(tmp_refs):
 
 def test_write_quote_idempotent(tmp_refs):
     kwargs = dict(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="300",
         quote_text="Same quote written twice.",
         section="Discussion",
@@ -148,7 +148,7 @@ def test_write_quote_idempotent(tmp_refs):
 
 def test_write_quote_preserves_existing_paper(existing_refs):
     write_quote_to_refs(
-        refs_path=existing_refs,
+        region_dir=existing_refs,
         corpus_id="42",
         quote_text="New quote for existing paper.",
         section="Introduction",
@@ -165,7 +165,7 @@ def test_write_quote_preserves_existing_paper(existing_refs):
 
 def test_write_quote_preserves_existing_entries(existing_refs):
     write_quote_to_refs(
-        refs_path=existing_refs,
+        region_dir=existing_refs,
         corpus_id="99",
         quote_text="New paper entry.",
         section="Results",
@@ -186,7 +186,7 @@ def test_write_quote_uses_paper_meta(tmp_refs):
         "externalIds": {"PubMed": "99887766", "DOI": "10.9999/great"},
     }
     write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="500",
         quote_text="Quote with metadata.",
         section="Results",
@@ -205,7 +205,7 @@ def test_write_quote_uses_paper_meta(tmp_refs):
 
 def test_write_quote_status_pending(tmp_refs):
     key = write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="600",
         quote_text="Status check quote.",
         section="Results",
@@ -218,7 +218,7 @@ def test_write_quote_status_pending(tmp_refs):
 
 def test_write_quote_meta_updated(tmp_refs):
     write_quote_to_refs(
-        refs_path=tmp_refs,
+        region_dir=tmp_refs,
         corpus_id="700",
         quote_text="Meta update check.",
         section="Results",

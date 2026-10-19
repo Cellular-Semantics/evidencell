@@ -56,7 +56,7 @@ PARAMS:
    print(refs_dir_for_graph(find_node_file('{node_id}')))
    "
    ```
-   Store as `REFS_FILE`.
+   Store as `REFS_DIR`.
 
 Build `NODE_CONTEXT`:
 ```
@@ -234,7 +234,7 @@ PropertySource fields:
                   break
 
       key = write_quote_to_refs(
-          refs_path=Path('{refs_dir}'),
+          region_dir=Path('{refs_dir}'),
           corpus_id='{source_corpus_id}',
           quote_text='''{quote_text}''',
           section='{section}',
