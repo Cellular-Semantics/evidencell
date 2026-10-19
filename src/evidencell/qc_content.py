@@ -177,12 +177,12 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
 
     region = _region_of(path, root)
     if region is not None:
-        refs_path = root / "references" / region / "references.json"
+        refs_dir = root / "references" / region
         # Every provenance check in validate.py returns [] when references.json
         # is absent, so a region without a reference store silently passes all
         # of them — in this sweep *and* in the pre-edit hook. A graph with no
         # citations yet is legitimately unbacked; one that cites papers is not.
-        if not store_exists(refs_path):
+        if not store_exists(refs_dir):
             cited = len(_collect_refs(doc)) + len(_collect_quote_keys(doc)) + len(
                 _collect_flat_refs(doc)
             )
@@ -193,9 +193,9 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
                     f"carries {cited} citation(s)/quote_key(s). Every provenance check is "
                     f"vacuous for region '{region}' — ingest the references to enable them.",
                 ))
-        for msg in check_quote_keys(doc, refs_path):
+        for msg in check_quote_keys(doc, refs_dir):
             findings.append(Finding(rel, ERROR, "quote_key", msg))
-        for msg in check_ref_pmids(doc, refs_path):
+        for msg in check_ref_pmids(doc, refs_dir):
             findings.append(Finding(rel, ERROR, "ref_pmid", msg))
         # ERROR, not WARN: #133 proposed warn-only so the 13-entry backlog
         # wouldn't block every subsequent edit, but the baseline file does that
@@ -203,7 +203,7 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
         # *newly* hallucinated definition_references PMID pass CI, which is
         # precisely what this sweep exists to stop. The pre-edit hook is
         # unaffected — it does not call check_flat_ref_pmids.
-        for msg in check_flat_ref_pmids(doc, refs_path):
+        for msg in check_flat_ref_pmids(doc, refs_dir):
             findings.append(Finding(rel, ERROR, "flat_citation", msg))
 
     for msg in check_rationale_currency(doc):
@@ -224,13 +224,13 @@ def sweep_report_file(path: Path, root: Path) -> list[Finding]:
     if region is None:
         return []
 
-    refs_path = root / "references" / region / "references.json"
+    refs_dir = root / "references" / region
     annotations = parse_md_annotations(text)
     kb_nodes = _kb_nodes_for_region(root, region)
 
     return [
         Finding(rel, ERROR, "markdown", msg)
-        for msg in check_md_ids(annotations, refs_path, kb_nodes)
+        for msg in check_md_ids(annotations, refs_dir, kb_nodes)
     ]
 
 

@@ -78,7 +78,7 @@ def test_collect_flat_refs_recurses_into_nested_structures():
 
 def test_flat_check_flags_unresolvable_pmid(tmp_path):
     _split(tmp_path, REFS_OK)
-    refs = tmp_path / "references.json"   # path form; store_dir() takes the parent
+    refs = tmp_path
     doc = {"nodes": [{"definition_references": ["PMID:99999999"]}]}
     errors = check_flat_ref_pmids(doc, refs)
     assert len(errors) == 1
@@ -87,7 +87,7 @@ def test_flat_check_flags_unresolvable_pmid(tmp_path):
 
 def test_flat_check_accepts_resolvable_pmid(tmp_path):
     _split(tmp_path, REFS_OK)
-    refs = tmp_path / "references.json"   # path form; store_dir() takes the parent
+    refs = tmp_path
     doc = {"nodes": [{"definition_references": ["PMID:12345678"]}]}
     assert check_flat_ref_pmids(doc, refs) == []
 
@@ -95,7 +95,7 @@ def test_flat_check_accepts_resolvable_pmid(tmp_path):
 def test_flat_check_ignores_ccn_accessions_in_xrefs(tmp_path):
     """xrefs legitimately holds CCN accessions — they must not be flagged."""
     _split(tmp_path, REFS_OK)
-    refs = tmp_path / "references.json"   # path form; store_dir() takes the parent
+    refs = tmp_path
     doc = {"nodes": [{"proposed_cl_term": {"xrefs": ["CS20230722_SUPT_0069"]}}]}
     assert check_flat_ref_pmids(doc, refs) == []
 

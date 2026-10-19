@@ -1,6 +1,5 @@
 """Unit tests for src/evidencell/references.py"""
 
-import json
 import pytest
 
 from evidencell.references import (
@@ -72,8 +71,8 @@ def tmp_refs(tmp_path):
 
 
 @pytest.fixture
-def existing_refs(tmp_path):
-    """Return a path to a references.json with one existing paper + quote."""
+def existing_refs(tmp_path, write_store):
+    """Return the region dir of a store with one existing paper + quote."""
     refs = {
         "_meta": {"region": "test", "last_updated": "", "last_updated_by": ""},
         "42": {
@@ -97,9 +96,8 @@ def existing_refs(tmp_path):
             },
         },
     }
-    p = tmp_path / "references.json"
-    p.write_text(json.dumps(refs, indent=2))
-    return p
+    write_store(tmp_path, refs)
+    return tmp_path
 
 
 def test_write_quote_creates_file(tmp_refs):
@@ -112,8 +110,8 @@ def test_write_quote_creates_file(tmp_refs):
         added_by="test_run",
     )
     # A region with no store is created in the split layout: papers/ + quotes/.
-    assert (tmp_refs.parent / "papers" / "100.json").exists()
-    assert not tmp_refs.exists(), "must not mint a new monolith"
+    assert (tmp_refs / "papers" / "100.json").exists()
+    assert not (tmp_refs / "references.json").exists(), "must not mint a monolith"
     data = load_store(tmp_refs)
     assert "100" in data
     assert key in data["100"]["quotes"]

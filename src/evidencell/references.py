@@ -91,7 +91,7 @@ def write_quote_to_refs(
     # without a store (BG, cerebellum, immature_neurons all qualify today), and
     # the migration is a one-time operation that has already run.
     if is_split_layout(refs_path) or not store_exists(refs_path):
-        d = store_dir(refs_path)
+        d = refs_path
         paper_file = d / _PAPERS_DIR / f"{corpus_id}.json"
         if not paper_file.exists():
             save_paper(refs_path, corpus_id, _build_paper_entry(corpus_id, paper_meta or {}))
@@ -240,36 +240,30 @@ _QUOTES_DIR = "quotes"
 _META_FILE = "_meta.json"
 
 
-def store_dir(refs_path: Path) -> Path:
-    """Region store directory, given either layout's path.
-
-    Accepts `references/{region}/references.json` or `references/{region}/`.
-    """
-    return refs_path.parent if refs_path.name == "references.json" else refs_path
+def region_name(region_dir: Path) -> str:
+    """Region a store directory denotes. Message text should use this rather
+    than reaching for `.name` directly, so the spelling stays in one place."""
+    return region_dir.name
 
 
-def region_name(refs_path: Path) -> str:
-    """Region a store path denotes, accepting either the directory or a path
-    inside it. Message text should use this rather than reaching for `.name`
-    or `.parent.name`, which mean different things for the two forms."""
-    return store_dir(refs_path).name
-
-
-def is_split_layout(refs_path: Path) -> bool:
+def is_split_layout(region_dir: Path) -> bool:
     """True when the region has been migrated to papers/ + quotes/."""
-    return (store_dir(refs_path) / _PAPERS_DIR).is_dir()
+    return (region_dir / _PAPERS_DIR).is_dir()
 
 
-def store_exists(refs_path: Path) -> bool:
-    """True when the region has a store in *either* layout.
+def store_exists(region_dir: Path) -> bool:
+    """True when the region has a store.
 
-    Readers must use this rather than `refs_path.exists()`. Every provenance
-    check treats a missing store as "nothing to check" and returns [], so once
-    references.json is gone a bare existence test would silently disable the
-    entire anti-hallucination guard for every migrated region.
+    Readers must use this rather than `Path.exists()`. Every provenance check
+    treats a missing store as "nothing to check" and returns [], so a bare
+    existence test against the wrong path silently disables the entire
+    anti-hallucination guard for the region.
+
+    Deliberately agrees with `load_store()`: a stray references.json with no
+    papers/ is *not* a store. Reporting one would let checks run against an
+    empty view and declare every citation unresolvable.
     """
-    d = store_dir(refs_path)
-    return (d / _PAPERS_DIR).is_dir() or (d / "references.json").exists()
+    return (region_dir / _PAPERS_DIR).is_dir()
 
 
 class ShadowedStoreError(RuntimeError):
@@ -296,22 +290,21 @@ def _reject_shadowed_store(d: Path) -> None:
 
 
 def load_store(refs_path: Path) -> dict:
-    """Read a region store in either layout, returning the legacy shape.
+    """Read a whole region: identity with each paper's quotes attached.
 
-    Returns `{corpus_id: {...paper..., "quotes": {...}}, "_meta": {...}}` — what
-    every current consumer expects. Returns `{}` when the region has no store.
+    Returns `{corpus_id: {...paper..., "quotes": {...}}, "_meta": {...}}`, or
+    `{}` when the region has no store.
 
-    Raises ShadowedStoreError if both layouts are present.
+    This is the *whole-region* view, and it is the expensive one — it reads
+    every paper and every quote. Two callers legitimately want it:
+    `render`, which needs identity for citations and text for blockquotes, and
+    `qc_content`, which validates the store end to end. Anything asking a
+    narrower question should use `load_papers()` or `load_quotes()` instead.
+
+    Raises ShadowedStoreError if a stray references.json sits beside papers/.
     """
-    d = store_dir(refs_path)
+    d = refs_path
     _reject_shadowed_store(d)
-
-    if not is_split_layout(refs_path):
-        legacy = d / "references.json"
-        if not legacy.exists():
-            return {}
-        return json.loads(legacy.read_text(encoding="utf-8"))
-
     return _load_split(d)
 
 
@@ -322,7 +315,7 @@ def load_papers(refs_path: Path) -> dict[str, dict]:
     this PMID known, what does this corpus ID resolve to — have no business
     parsing quote text to do it.
     """
-    d = store_dir(refs_path)
+    d = refs_path
     _reject_shadowed_store(d)
     papers_dir = d / _PAPERS_DIR
     if not papers_dir.is_dir():
@@ -340,7 +333,7 @@ def load_quotes(refs_path: Path) -> dict[str, dict]:
     Reads only quotes/. The key already carries the corpus_id, so callers
     needing the owning paper can derive it without loading identity records.
     """
-    d = store_dir(refs_path)
+    d = refs_path
     _reject_shadowed_store(d)
     quotes_dir = d / _QUOTES_DIR
     if not quotes_dir.is_dir():
@@ -394,7 +387,7 @@ def save_paper(refs_path: Path, corpus_id: str, entry: dict) -> Path:
     corpus_id re-key) is a deliberate, reviewed act — it should not be reachable
     by a function whose job is adding papers.
     """
-    path = store_dir(refs_path) / _PAPERS_DIR / f"{corpus_id}.json"
+    path = refs_path / _PAPERS_DIR / f"{corpus_id}.json"
     if path.exists():
         raise FileExistsError(
             f"paper {corpus_id} already exists at {path}. Identity is write-once; "
@@ -412,7 +405,7 @@ def append_quote(refs_path: Path, corpus_id: str, quote_key: str, quote: dict) -
     Append-only and idempotent: an existing key is left exactly as it is, so a
     later deepsearch surfacing the same passage cannot alter what is recorded.
     """
-    path = store_dir(refs_path) / _QUOTES_DIR / f"{corpus_id}.json"
+    path = refs_path / _QUOTES_DIR / f"{corpus_id}.json"
     quotes = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
     if quote_key in quotes:
         return False

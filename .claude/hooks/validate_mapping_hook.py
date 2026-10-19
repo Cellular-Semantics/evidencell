@@ -310,12 +310,12 @@ def main():
         # reports/{region}/*.md → references/{region}/references.json
         region = file_path.parent.name
         inferred_root = _repo_root_from_path(file_path, "reports")
-        refs_path = inferred_root / "references" / region / "references.json"
+        refs_path = inferred_root / "references" / region
     else:
         # kb/graphs/{region}/*.yaml → references/{region}/references.json
         region = file_path.parent.name
         inferred_root = _repo_root_from_path(file_path, "kb")
-        refs_path = inferred_root / "references" / region / "references.json"
+        refs_path = inferred_root / "references" / region
 
     if is_report:
         # ── Markdown report validation ─────────────────────────────────────

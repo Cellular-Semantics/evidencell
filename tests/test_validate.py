@@ -394,7 +394,7 @@ def refs_file(tmp_path: Path, write_store) -> Path:
         },
     }
     write_store(tmp_path, refs)
-    return tmp_path / "references.json"   # path form still accepted by store_dir()
+    return tmp_path
 
 
 # ── _collect_quote_keys ───────────────────────────────────────────────────────

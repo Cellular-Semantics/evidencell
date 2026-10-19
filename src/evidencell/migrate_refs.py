@@ -27,7 +27,6 @@ from evidencell.references import (
     _load_split,
     _write_json,
     is_split_layout,
-    load_store,
 )
 
 
@@ -44,14 +43,17 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
     region = refs_path.parent.name
     result = RegionResult(region=region)
 
-    if is_split_layout(refs_path):
+    if is_split_layout(refs_path.parent):
         result.skipped = "already split"
         return result
     if not refs_path.exists():
         result.skipped = "no references.json"
         return result
 
-    before = load_store(refs_path)
+    # Read the monolith directly. load_store() is split-only now; the
+    # migration is the single place that still knows the old format, which is
+    # where that knowledge belongs.
+    before = json.loads(refs_path.read_text(encoding="utf-8"))
     d = refs_path.parent
 
     papers: dict[str, dict] = {}
@@ -117,11 +119,18 @@ def migrate_region(refs_path: Path, *, dry_run: bool = False) -> RegionResult:
         _write_json(d / _META_FILE, meta)
 
     # Belt and braces: confirm the files on disk actually reload as expected
-    # before removing the only other copy.
+    # before removing the only other copy. If they do not, remove what was
+    # written — leaving them would make is_split_layout() true and every later
+    # read would silently prefer the bad copy over the intact monolith.
     if _load_split(d) != normalised_before:
+        import shutil
+        for sub in (_PAPERS_DIR, _QUOTES_DIR):
+            shutil.rmtree(d / sub, ignore_errors=True)
+        (d / _META_FILE).unlink(missing_ok=True)
         raise AssertionError(
-            f"{region}: split files written but do not reload correctly; "
-            f"references.json left in place. Inspect {d} before retrying."
+            f"{region}: split files did not reload correctly; they have been "
+            f"removed and references.json is untouched. Inspect {refs_path} "
+            f"before retrying."
         )
 
     refs_path.unlink()

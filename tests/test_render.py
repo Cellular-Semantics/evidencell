@@ -4,7 +4,9 @@ Unit tests for src/evidencell/render.py
 Run with: just test-fast (no OAK DB, no network)
 """
 
+import json
 import tempfile
+
 import yaml
 from pathlib import Path
 from unittest.mock import patch
@@ -715,18 +717,33 @@ def test_gen_all_drilldowns_deduplicates():
 
 # ── CLI main() tests ──────────────────────────────────────────────────────────
 
+def _split(region_dir, store):
+    """Write a store in the split layout from a legacy-shaped dict."""
+    (region_dir / "papers").mkdir(parents=True, exist_ok=True)
+    (region_dir / "quotes").mkdir(parents=True, exist_ok=True)
+    for cid, entry in store.items():
+        if cid == "_meta":
+            (region_dir / "_meta.json").write_text(json.dumps(entry))
+            continue
+        if not isinstance(entry, dict):
+            continue
+        paper = {k: v for k, v in entry.items() if k != "quotes"}
+        paper.setdefault("corpus_id", cid)
+        (region_dir / "papers" / f"{cid}.json").write_text(json.dumps(paper))
+        (region_dir / "quotes" / f"{cid}.json").write_text(
+            json.dumps(entry.get("quotes") or {}))
+
+
 def _write_kb_files(tmp_path: Path, region: str = "testregion") -> tuple[Path, Path]:
-    """Write a minimal KB YAML + references.json with proper directory layout."""
-    import json
+    """Write a minimal KB YAML + split reference store in the proper layout."""
     kb_dir = tmp_path / "kb" / "graphs" / region
     kb_dir.mkdir(parents=True)
     refs_dir = tmp_path / "references" / region
     refs_dir.mkdir(parents=True)
     graph_file = kb_dir / "test.yaml"
-    refs_file = refs_dir / "references.json"
     graph_file.write_text(yaml.dump(MINIMAL_GRAPH), encoding="utf-8")
-    refs_file.write_text(json.dumps(MINIMAL_REFS), encoding="utf-8")
-    return graph_file, refs_file
+    _split(refs_dir, MINIMAL_REFS)
+    return graph_file, refs_dir
 
 
 def test_cli_summary(tmp_path):
