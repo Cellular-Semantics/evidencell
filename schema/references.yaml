@@ -15,6 +15,8 @@
 ##     sources/{source_id}.json   SourceDocument — deepsearch reports
 ##
 ## Version history:
+## Version: 0.1.1 (2026-10-19) — SourceDocument.recovery_notes, for recording
+##                               where an unavailable document was searched for
 ## Version: 0.1.0 (2026-10-18) — initial: Paper, Quote, QuoteSet, SourceDocument,
 ##                               StoreMeta; SourceMethod + ResolutionConfidence
 ##                               enums. Introduced with the papers/ + quotes/
@@ -22,7 +24,7 @@
 
 id: https://bican.org/schema/celltype-evidence/references/v0.1
 name: EvidencellReferences
-version: 0.1.0
+version: 0.1.1
 description: >
   Schema for the evidencell reference store: papers, their verbatim quotes, and
   the deepsearch documents quotes were extracted from.
@@ -249,6 +251,12 @@ classes:
           Workflow run identifiers that ingested this document. Matches the
           added_by values on quotes drawn from it.
         multivalued: true
+      recovery_notes:
+        description: >
+          For an unavailable document: where it was looked for and what was
+          concluded. A negative result is expensive to establish and cheap to
+          lose — without it the same search gets repeated, or worse, absence is
+          assumed to be an oversight that someone can simply correct.
 
   StoreMeta:
     description: Bookkeeping for one region's store — the contents of _meta.json.

@@ -5,5 +5,6 @@
   "region": "hippocampus",
   "runs": [
     "20260427_hippocampus_glutamatergic_report_ingest"
-  ]
+  ],
+  "recovery_notes": "Searched 2026-10-19 and not found; treat as lost rather than mislaid. Never committed: git log over inputs/deepsearch/ across all branches shows ten PDFs ever added and this is not among them, so it was not deleted — the 2026-04-27 run wrote its run_config naming the file without the PDF itself being copied into the repo. Absent from the three other local checkouts (evidencell, evidencell_too, BICAN_agentic_framework_planning/evidencell) and from the whole home directory (no *glutamatergic*.pdf). One plausible lookalike, Downloads/'Rodent Hippocampal Cell Types_ Classification Schemes, Properties, and Mappings.pdf', was ruled out: only 7 of this run's 81 quotes appear in its text, consistent with shared phrasing rather than a renamed copy. The 81 quotes remain attributed to their papers, which are reachable; verifying them against the papers would make this document's absence moot (issue #143)."
 }
