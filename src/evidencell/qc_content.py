@@ -94,6 +94,7 @@ class SweepResult:
     report_files: int = 0
     ref_stores: int = 0
     skipped: list[str] = field(default_factory=list)
+    unavailable: list[str] = field(default_factory=list)
 
     @property
     def errors(self) -> list[Finding]:
@@ -299,6 +300,50 @@ def sweep_reference_store(path: Path, root: Path) -> list[Finding]:
     return findings
 
 
+def _coverage_gaps(root: Path, kb_paths: list[Path], report_paths: list[Path]) -> list[str]:
+    """Which checks could not run, and over how much of the corpus.
+
+    Every provenance check returns [] when its backing store is absent, so a
+    missing input turns into silence rather than an error. The pre-edit hook
+    reports this per file; without the same report here the corpus-wide sweep —
+    the one CI runs and the badge reflects — could pass with checks inert
+    across the whole repository and say nothing.
+    """
+    gaps: list[str] = []
+
+    storeless: dict[str, int] = {}
+    for p in kb_paths + report_paths:
+        region = _region_of(p, root)
+        if region and not store_exists(root / "references" / region):
+            storeless[region] = storeless.get(region, 0) + 1
+    if storeless:
+        total = sum(storeless.values())
+        where = ", ".join(f"{r} ({n})" for r, n in sorted(storeless.items()))
+        gaps.append(
+            f"quote_key / PMID / DOI / flat citations — no reference store for "
+            f"{where}; {total} file(s) unchecked"
+        )
+
+    if kb_paths and not at_run_index_path().exists():
+        gaps.append(
+            f"AT run_ref — no {at_run_index_path().name} under "
+            f"kb/annotation_transfer_runs/; {len(kb_paths)} KB file(s) unchecked"
+        )
+
+    regions = {r for r in (_region_of(p, root) for p in report_paths) if r}
+    without_index = sorted(
+        r for r in regions if not (root / "references" / r / "term_index.json").exists()
+    )
+    if without_index:
+        n = sum(1 for p in report_paths if _region_of(p, root) in set(without_index))
+        gaps.append(
+            f"ontology CURIEs — no term_index.json for {', '.join(without_index)}; "
+            f"{n} report(s) unchecked"
+        )
+
+    return gaps
+
+
 def run_sweep(
     root: Path | None = None,
     *,
@@ -310,8 +355,11 @@ def run_sweep(
     root = root or repo_root()
     result = SweepResult()
 
+    kb_paths = _kb_files(root) if kb else []
+    report_paths = _report_files(root) if reports else []
+
     if kb:
-        for p in _kb_files(root):
+        for p in kb_paths:
             result.kb_files += 1
             result.findings.extend(sweep_kb_file(p, root))
         for sub in _EXCLUDED_SUBTREES:
@@ -319,7 +367,7 @@ def run_sweep(
                 result.skipped.append(f"kb/{sub}/ (bulk atlas content, no provenance fields)")
 
     if reports:
-        for p in _report_files(root):
+        for p in report_paths:
             result.report_files += 1
             result.findings.extend(sweep_report_file(p, root))
 
@@ -328,6 +376,7 @@ def run_sweep(
             result.ref_stores += 1
             result.findings.extend(sweep_reference_store(p, root))
 
+    result.unavailable = _coverage_gaps(root, kb_paths, report_paths)
     return result
 
 
@@ -468,6 +517,13 @@ def _render(result: SweepResult, strict: bool) -> str:
     )
     for s in result.skipped:
         lines.append(f"  skipped: {s}")
+    if result.unavailable:
+        lines.append("")
+        lines.append("  CHECKS THAT COULD NOT RUN — these pass vacuously:")
+        for u in result.unavailable:
+            lines.append(f"    - {u}")
+    else:
+        lines.append("  all checks had their backing stores available")
 
     by_check: dict[str, int] = {}
     for f in result.findings:
@@ -518,8 +574,10 @@ def main(argv: list[str] | None = None) -> int:
             "kb_files": result.kb_files,
             "report_files": result.report_files,
             "skipped": result.skipped,
+            "unavailable": result.unavailable,
             "errors": len(result.errors),
             "warnings": len(result.warnings),
+            "gaps": len(result.gaps),
             "findings": [asdict(f) for f in result.findings],
         }
         text = json.dumps(payload, indent=2)

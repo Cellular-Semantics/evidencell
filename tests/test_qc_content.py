@@ -389,3 +389,42 @@ def test_gaps_do_not_fail_the_sweep(tmp_path):
     assert result.gaps
     assert all(f.severity == GAP for f in result.gaps)
     assert not [f for f in result.errors if f.check == "source_document"]
+
+
+# ── coverage reporting: silence must be visible ───────────────────────────────
+
+def test_sweep_reports_regions_with_no_reference_store(tmp_path):
+    """Those files' provenance checks return [] — the sweep must say so.
+
+    The pre-edit hook already reports this per file. Without the same report
+    here, the corpus-wide sweep (the one CI runs) could pass with checks inert
+    across the whole repository and say nothing.
+    """
+    root = _mini_repo(tmp_path, refs=None, graph={"nodes": [{"id": "n1"}]})
+    result = run_sweep(root)
+    assert any("no reference store" in u for u in result.unavailable)
+    assert any("1 file(s) unchecked" in u for u in result.unavailable)
+
+
+def test_sweep_reports_missing_term_index(tmp_path):
+    """The CURIE check has never fired in this repo; make that visible."""
+    root = _mini_repo(tmp_path, refs=REFS_OK, graph={"nodes": []},
+                      report="# r\n\ntext\n")
+    result = run_sweep(root)
+    assert any("term_index.json" in u for u in result.unavailable)
+
+
+def test_sweep_reports_nothing_when_all_stores_are_present(tmp_path):
+    root = _mini_repo(tmp_path, refs=REFS_OK, graph={"nodes": []})
+    (root / "references" / "hippocampus" / "term_index.json").write_text("{}")
+    result = run_sweep(root)
+    assert result.unavailable == []
+
+
+def test_coverage_gap_is_not_a_finding(tmp_path):
+    """Coverage is about what ran, not about the content. It must not be
+    baselined, counted as an error, or make the sweep fail."""
+    root = _mini_repo(tmp_path, refs=None, graph={"nodes": [{"id": "n1"}]})
+    result = run_sweep(root)
+    assert result.unavailable
+    assert not [f for f in result.findings if "unchecked" in f.message]
