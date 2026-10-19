@@ -64,10 +64,18 @@ from evidencell.validate import (
 
 ERROR = "ERROR"
 WARN = "WARN"
-# A gap is a fact about the world, not a backlog item: something that cannot be
-# fixed by changing this repository. Kept out of the baseline entirely — mixing
-# it with fixable findings is what made "0 new / 0 stale" stop meaning anything,
-# since three quarters of the baseline could never clear.
+# A gap is something this repository cannot currently close by editing content:
+# a deepsearch PDF that was never committed cannot be conjured back. Kept out of
+# the baseline entirely — mixing it with fixable findings is what made
+# "0 new / 0 stale" stop meaning anything, since three quarters of the baseline
+# could never clear.
+#
+# "Cannot currently close" is deliberately weaker than "unfixable". The missing
+# artefact is the ASTA *report*; the *paper* it summarises is still reachable,
+# and verifying a quote against the paper would make the lost PDF irrelevant —
+# a stronger check than the one it replaces, since the report is one remove
+# from the source. See issue #143. Until then these are gaps; afterwards most
+# of them should become checkable.
 GAP = "GAP"
 
 # kb/ subtrees that carry no region and therefore no references.json. Bulk atlas

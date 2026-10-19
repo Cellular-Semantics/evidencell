@@ -419,11 +419,13 @@ def check_source_documents(store: dict, known_sources: set[str]) -> list[str]:
 
     Reports **one finding per affected paper**, not one per quote. The
     distinction matters for the baseline: 241 quotes are affected, and those
-    deepsearch PDFs were never committed and may never be recovered, so a
-    per-quote finding fills three quarters of the baseline with entries that
-    can never clear. Collapsed, the same fact costs one line per paper and the
-    count tracks papers still needing provenance — a number that can actually
-    go down.
+    deepsearch PDFs were never committed, so a per-quote finding fills three
+    quarters of the baseline. Collapsed, the same fact costs one line per paper
+    and the count tracks papers still needing provenance.
+
+    Note the PDF is not the only possible oracle: verifying the quote against
+    the *paper* would make the missing report irrelevant, and is the stronger
+    check since the report only paraphrases the paper (issue #143).
 
     A `source_document` pointing at a record that does not exist is a different
     problem — a broken reference rather than a missing one — so it stays
