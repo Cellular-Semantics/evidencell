@@ -27,7 +27,7 @@ Agent attempts Edit/Write
               → unannotated blockquote detection
               → quote_key existence in references.json
               → PMID existence in references.json
-              → ontology CURIE existence in term_index.json (if present)
+              → ontology CURIEs resolve via OAK (prefixes without data are reported)
               → atlas accession existence in sibling KB nodes (if discoverable)
         │
         ▼

@@ -16,7 +16,7 @@ Markdown report checks:
 1. Unannotated blockquotes (missing <!-- quote_key: X --> annotation)
 2. Quote key existence in references.json
 3. PMID existence in references.json
-4. Ontology CURIE existence in term_index.json (if present)
+4. Ontology CURIEs resolve via OAK (per-prefix; skipped prefixes are reported)
 5. Atlas accession existence in KB nodes (if discoverable)
 
 Returns exit code 2 to BLOCK the edit if any check fails.
@@ -48,6 +48,7 @@ from evidencell.validate import (  # noqa: E402
     validate_terms,
     parse_md_annotations,
     check_md_ids,
+    check_ontology_terms,
 )
 from evidencell.paths import at_run_index_path  # noqa: E402
 from evidencell.references import store_exists  # noqa: E402
@@ -342,6 +343,16 @@ def main():
             kb_nodes = None
 
         md_errors = check_md_ids(annotations, refs_path, kb_nodes)
+
+        # Ontology CURIEs, resolved against the live ontologies via OAK. This
+        # replaces a term_index.json lookup that had no writer and so never
+        # ran (#142). Prefixes whose data is absent are reported below rather
+        # than passing silently.
+        term_errors, _curie_unavailable = check_ontology_terms(
+            annotations.get("curie_ids") or [],
+            _project_root / "conf" / "oak_config.yaml",
+        )
+        md_errors = list(md_errors) + term_errors
         if md_errors:
             print("Markdown annotation errors:", file=sys.stderr)
             for e in md_errors:
@@ -444,8 +455,12 @@ def main():
         skipped.append("AT run_ref — no annotation_transfer_runs/index.yaml")
     if is_yaml and not schema_path.exists():
         skipped.append("LinkML schema — schema file absent")
-    if is_report and not (refs_path / "term_index.json").exists():
-        skipped.append("ontology CURIEs — no term_index.json (never generated)")
+    if is_report:
+        for prefix, info in sorted(_curie_unavailable.items()):
+            skipped.append(
+                f"ontology CURIEs for {prefix} ({len(info['terms'])} term(s)) — "
+                f"{info['reason']}"
+            )
 
     if skipped:
         print("", file=sys.stderr)

@@ -6,6 +6,8 @@ known content rather than the live KB.
 
 import json
 
+import pytest
+
 import yaml
 
 from evidencell.qc_content import (
@@ -406,17 +408,24 @@ def test_sweep_reports_regions_with_no_reference_store(tmp_path):
     assert any("1 file(s) unchecked" in u for u in result.unavailable)
 
 
-def test_sweep_reports_missing_term_index(tmp_path):
-    """The CURIE check has never fired in this repo; make that visible."""
-    root = _mini_repo(tmp_path, refs=REFS_OK, graph={"nodes": []},
-                      report="# r\n\ntext\n")
-    result = run_sweep(root)
-    assert any("term_index.json" in u for u in result.unavailable)
+def test_sweep_reports_ontology_prefixes_it_could_not_check(tmp_path):
+    """A prefix whose OAK data is absent must be reported, not passed over.
+
+    Per prefix, not all-or-nothing: a missing MBA file must not silently
+    disable CL and UBERON checking too.
+    """
+    from evidencell.validate import check_ontology_terms
+    cfg = tmp_path / "conf" / "oak_config.yaml"
+    cfg.parent.mkdir(parents=True)
+    cfg.write_text("ontology_adapters:\n  MBA: simpleobo:conf/oak_dbs/absent.obo\n")
+    errors, unavailable = check_ontology_terms(["MBA:126", "MBA:351"], cfg)
+    assert errors == []
+    assert "MBA" in unavailable
+    assert unavailable["MBA"]["terms"] == ["MBA:126", "MBA:351"]
 
 
 def test_sweep_reports_nothing_when_all_stores_are_present(tmp_path):
     root = _mini_repo(tmp_path, refs=REFS_OK, graph={"nodes": []})
-    (root / "references" / "hippocampus" / "term_index.json").write_text("{}")
     result = run_sweep(root)
     assert result.unavailable == []
 
@@ -428,3 +437,59 @@ def test_coverage_gap_is_not_a_finding(tmp_path):
     result = run_sweep(root)
     assert result.unavailable
     assert not [f for f in result.findings if "unchecked" in f.message]
+
+
+# ── ontology CURIEs in reports (#142) ─────────────────────────────────────────
+
+def _oak_cfg(tmp_path, adapters: str):
+    cfg = tmp_path / "conf" / "oak_config.yaml"
+    cfg.parent.mkdir(parents=True, exist_ok=True)
+    cfg.write_text(f"ontology_adapters:\n{adapters}")
+    return cfg
+
+
+def test_unlisted_prefix_is_not_treated_as_an_ontology(tmp_path):
+    """Report CURIE syntax matches PMID:12345678 as readily as CL:0000540.
+
+    32 PMID mentions are picked up by the CURIE regex; they must not be
+    reported as unresolvable ontology terms.
+    """
+    from evidencell.validate import check_ontology_terms
+    cfg = _oak_cfg(tmp_path, "  CL: sqlite:obo:cl\n")
+    errors, unavailable = check_ontology_terms(["PMID:12345678"], cfg)
+    assert errors == []
+    assert unavailable == {}
+
+
+def test_empty_adapter_means_deliberately_unvalidated(tmp_path):
+    """oak_config documents '' as skip-without-warning."""
+    from evidencell.validate import check_ontology_terms
+    cfg = _oak_cfg(tmp_path, '  GEO: ""\n')
+    errors, unavailable = check_ontology_terms(["GEO:1234"], cfg)
+    assert errors == [] and unavailable == {}
+
+
+def test_missing_oak_config_is_reported_not_silent(tmp_path):
+    from evidencell.validate import check_ontology_terms
+    errors, unavailable = check_ontology_terms(["CL:0000540"], tmp_path / "nope.yaml")
+    assert errors == []
+    assert unavailable, "absence of the config must be visible"
+
+
+def test_no_curies_means_no_work(tmp_path):
+    """The OAK import is ~1.3s warm; a file with no CURIEs must not pay it."""
+    from evidencell.validate import check_ontology_terms
+    assert check_ontology_terms([], tmp_path / "nope.yaml") == ([], {})
+
+
+@pytest.mark.integration
+def test_real_ontology_lookup_resolves_and_rejects(tmp_path):
+    """Against the live CL adapter: a real term resolves, an invented one does not."""
+    from evidencell.validate import _adapter_available, check_ontology_terms
+    cfg = _oak_cfg(tmp_path, "  CL: sqlite:obo:cl\n")
+    if not _adapter_available("sqlite:obo:cl", tmp_path):
+        pytest.skip("CL semsql DB not cached; run `just fetch-oak-dbs`")
+    errors, unavailable = check_ontology_terms(["CL:0000540", "CL:9999999"], cfg)
+    assert unavailable == {}
+    assert len(errors) == 1
+    assert "CL:9999999" in errors[0]

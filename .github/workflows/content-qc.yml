@@ -6,7 +6,11 @@ name: Content QC
 # never fire the hook — scripts, bulk migrations, and PRs from other checkouts.
 #
 # Deliberately a separate workflow from ci.yml so it carries its own README
-# badge, and because it needs no OAK semsql DBs and so runs in seconds.
+# badge. It does need the OAK ontologies: report CURIEs are resolved against
+# the live ontologies (#142), and MBA alone is over half of them, so skipping
+# the setup would leave the majority of the check unrun — visible in the
+# coverage report, but unrun. The semsql DBs are restored from cache; the
+# file-adapter OBOs are ~20 MB fetched fresh.
 #
 # The run is baselined: `qc_content_baseline.json` records the findings that
 # existed when the sweep was introduced, and the job fails only on findings
@@ -37,6 +41,24 @@ jobs:
 
       - name: Install just
         uses: extractions/setup-just@v2
+
+      - name: Restore OAK semsql cache
+        id: cache-oak
+        uses: actions/cache@v4
+        with:
+          path: ~/.data/oaklib
+          key: oak-semsql-${{ hashFiles('conf/oak_config.yaml') }}-v2
+          restore-keys: |
+            oak-semsql-
+
+      - name: Pre-cache CL and UBERON semsql DBs (on cache miss)
+        if: steps.cache-oak.outputs.cache-hit != 'true'
+        run: |
+          uv run runoak -i sqlite:obo:cl info CL:0000000 >/dev/null
+          uv run runoak -i sqlite:obo:uberon info UBERON:0000955 >/dev/null
+
+      - name: Fetch file-adapter OBOs (NCBITaxon slim, MBA, DHBA, HOMBA)
+        run: just fetch-oak-dbs
 
       - name: Content provenance sweep
         run: just qc-content --baseline

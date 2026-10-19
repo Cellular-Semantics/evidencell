@@ -50,6 +50,7 @@ from evidencell.validate import (
     _collect_refs,
     check_flat_ref_pmids,
     check_md_ids,
+    check_ontology_terms,
     check_quote_key_integrity,
     check_source_documents,
     check_source_methods,
@@ -82,6 +83,12 @@ GAP = "GAP"
 # content (taxonomy levels) is excluded outright: the files are enormous, are
 # machine-generated from taxonomy ingest, and carry no provenance fields.
 _NO_REGION_SUBTREES = ("datasets", "correlation_runs", "annotation_transfer_runs")
+
+# Ontology prefixes whose backing data was missing during the current sweep.
+# Module-level because the per-file checker discovers it but only the sweep
+# summary is the right place to say it, and saying it once beats saying it 53
+# times.
+_CURIE_COVERAGE: dict[str, dict] = {}
 _EXCLUDED_SUBTREES = ("taxonomy",)
 
 
@@ -252,10 +259,22 @@ def sweep_report_file(path: Path, root: Path) -> list[Finding]:
     annotations = parse_md_annotations(text)
     kb_nodes = _kb_nodes_for_region(root, region)
 
-    return [
+    findings = [
         Finding(rel, ERROR, "markdown", msg)
         for msg in check_md_ids(annotations, refs_dir, kb_nodes)
     ]
+
+    # Ontology CURIEs, resolved against OAK. Unavailable prefixes are returned
+    # separately and surfaced as coverage, never as silence.
+    errors, unavailable = check_ontology_terms(
+        annotations.get("curie_ids") or [], root / "conf" / "oak_config.yaml"
+    )
+    findings += [Finding(rel, ERROR, "ontology_term", m) for m in errors]
+    for prefix, info in unavailable.items():
+        seen = _CURIE_COVERAGE.setdefault(
+            prefix, {"adapter": info["adapter"], "reason": info["reason"], "terms": set()})
+        seen["terms"].update(info["terms"])
+    return findings
 
 
 def _reference_stores(root: Path) -> list[Path]:
@@ -338,17 +357,6 @@ def _coverage_gaps(root: Path, kb_paths: list[Path], report_paths: list[Path]) -
             f"kb/annotation_transfer_runs/; {len(kb_paths)} KB file(s) unchecked"
         )
 
-    regions = {r for r in (_region_of(p, root) for p in report_paths) if r}
-    without_index = sorted(
-        r for r in regions if not (root / "references" / r / "term_index.json").exists()
-    )
-    if without_index:
-        n = sum(1 for p in report_paths if _region_of(p, root) in set(without_index))
-        gaps.append(
-            f"ontology CURIEs — no term_index.json for {', '.join(without_index)}; "
-            f"{n} report(s) unchecked"
-        )
-
     return gaps
 
 
@@ -362,6 +370,7 @@ def run_sweep(
     """Sweep the corpus and return every finding."""
     root = root or repo_root()
     result = SweepResult()
+    _CURIE_COVERAGE.clear()
 
     kb_paths = _kb_files(root) if kb else []
     report_paths = _report_files(root) if reports else []
@@ -385,6 +394,11 @@ def run_sweep(
             result.findings.extend(sweep_reference_store(p, root))
 
     result.unavailable = _coverage_gaps(root, kb_paths, report_paths)
+    for prefix, info in sorted(_CURIE_COVERAGE.items()):
+        result.unavailable.append(
+            f"ontology terms — {prefix} ({len(info['terms'])} distinct term(s) across "
+            f"the corpus) — {info['adapter']}: {info['reason']}"
+        )
     return result
 
 
