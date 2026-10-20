@@ -348,11 +348,21 @@ def main():
         # replaces a term_index.json lookup that had no writer and so never
         # ran (#142). Prefixes whose data is absent are reported below rather
         # than passing silently.
-        term_errors, _curie_unavailable = check_ontology_terms(
-            annotations.get("curie_ids") or [],
-            _project_root / "conf" / "oak_config.yaml",
-        )
-        md_errors = list(md_errors) + term_errors
+        # EVIDENCELL_SKIP_TERM_CHECK is documented in CLAUDE.md and
+        # anti-hallucination-hooks.md as *the* emergency bypass for term
+        # validation. It was only consulted in the YAML branch, so a curator
+        # citing a term newer than their cached semsql snapshot had no escape
+        # at all — pystow never re-downloads an existing cl.db.
+        _curie_unavailable: dict = {}
+        if os.environ.get("EVIDENCELL_SKIP_TERM_CHECK"):
+            print("Report CURIE check bypassed via EVIDENCELL_SKIP_TERM_CHECK=1",
+                  file=sys.stderr)
+        else:
+            term_errors, _curie_unavailable = check_ontology_terms(
+                annotations.get("curie_ids") or [],
+                _project_root / "conf" / "oak_config.yaml",
+            )
+            md_errors = list(md_errors) + term_errors
         if md_errors:
             print("Markdown annotation errors:", file=sys.stderr)
             for e in md_errors:

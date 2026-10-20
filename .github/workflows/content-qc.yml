@@ -42,6 +42,13 @@ jobs:
       - name: Install just
         uses: extractions/setup-just@v2
 
+      # NOTE: restore-keys prefix-matches, and oaklib/pystow will not
+      # re-download a cl.db that already exists, so the semsql snapshot is
+      # effectively frozen until the key changes. Its only input is
+      # conf/oak_config.yaml, which does not change when CL or UBERON release.
+      # Consequence now that report CURIEs depend on it: a legitimately new
+      # term fails as "does not resolve". To refresh, bump the -vN suffix
+      # below (do the same in ci.yml, which shares this key).
       - name: Restore OAK semsql cache
         id: cache-oak
         uses: actions/cache@v4

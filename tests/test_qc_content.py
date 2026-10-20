@@ -314,10 +314,21 @@ def test_fingerprint_still_separates_files_and_checks():
 
 def test_every_emitted_check_has_a_subject_rule():
     """A new check without a rule silently falls back to the full message and
-    reintroduces the churn. Fail here instead, where the fix is one line."""
+    reintroduces the churn. Fail here instead, where the fix is one line.
+
+    Covers checks the sweep can emit, not merely those the current corpus
+    happens to produce — `ontology_term` shipped with no rule precisely
+    because the live corpus emits none of them, so this passed vacuously.
+    """
     from evidencell.qc_content import _SUBJECT_PATTERNS, _SUBJECTLESS_CHECKS, run_sweep
     emitted = {f.check for f in run_sweep().findings}
-    missing = emitted - set(_SUBJECT_PATTERNS) - _SUBJECTLESS_CHECKS
+    # Every check name constructed anywhere in the module, found by reading it.
+    import re as _re
+    from pathlib import Path as _Path
+    import evidencell.qc_content as _qc
+    src = _Path(_qc.__file__).read_text(encoding="utf-8")
+    declared = set(_re.findall(r'Finding\([^,]+,\s*\w+,\s*"([a-z_-]+)"', src))
+    missing = (emitted | declared) - set(_SUBJECT_PATTERNS) - _SUBJECTLESS_CHECKS
     assert not missing, f"checks with no subject rule: {sorted(missing)}"
 
 
@@ -536,3 +547,75 @@ def test_cache_is_keyed_by_region(tmp_path):
     assert "CS1" in _kb_nodes_for_region(root, "hippocampus")
     assert "CS2" in _kb_nodes_for_region(root, "dentate_gyrus")
     assert "CS1" not in _kb_nodes_for_region(root, "dentate_gyrus")
+
+
+# ── review findings on the CURIE check ────────────────────────────────────────
+
+def test_malformed_oak_config_does_not_raise(tmp_path):
+    """A traceback out of the hook is not an allow/block verdict, and would
+    abort a whole sweep on the first report carrying a CURIE."""
+    from evidencell.validate import check_ontology_terms
+    cfg = tmp_path / "conf" / "oak_config.yaml"
+    cfg.parent.mkdir(parents=True)
+    cfg.write_text("ontology_adapters: [this, is, a, list\n")   # invalid YAML
+    errors, unavailable = check_ontology_terms(["CL:0000540"], cfg)
+    assert errors == []
+    assert unavailable, "an unreadable config must be reported, not raised"
+
+
+def test_config_listing_no_adapters_is_reported(tmp_path):
+    """A renamed key or truncated file parses fine and validates nothing —
+    exactly the vacuous pass this check exists to remove."""
+    from evidencell.validate import check_ontology_terms
+    cfg = tmp_path / "conf" / "oak_config.yaml"
+    cfg.parent.mkdir(parents=True)
+    cfg.write_text("ontology_adaptors:\n  CL: sqlite:obo:cl\n")   # misspelled key
+    errors, unavailable = check_ontology_terms(["CL:0000540"], cfg)
+    assert errors == []
+    assert unavailable, "nothing configured must be visible, not assumed deliberate"
+
+
+def test_unknown_adapter_scheme_is_not_reported_as_missing_data(tmp_path):
+    """`run just fetch-oak-dbs` is wrong and unactionable for a remote adapter."""
+    from evidencell.validate import _adapter_available
+    assert _adapter_available("ols:cl", tmp_path)
+    assert _adapter_available("ubergraph:", tmp_path)
+    assert not _adapter_available("simpleobo:conf/oak_dbs/absent.obo", tmp_path)
+
+
+def test_lookup_failure_discards_that_prefix_findings(tmp_path, monkeypatch):
+    """Keeping findings gathered before a failure would present a partial scan
+    as authoritative while the rest of the prefix went unexamined."""
+    import evidencell.validate as v
+    cfg = tmp_path / "conf" / "oak_config.yaml"
+    cfg.parent.mkdir(parents=True)
+    cfg.write_text("ontology_adapters:\n  CL: ols:cl\n")
+
+    class Flaky:
+        def __init__(self): self.n = 0
+        def label(self, curie):
+            self.n += 1
+            if self.n > 1:
+                raise RuntimeError("transient sqlite error")
+            return None          # first term looks unresolvable
+
+    monkeypatch.setattr(v, "_adapter_available", lambda *a: True)
+    import oaklib
+    monkeypatch.setattr(oaklib, "get_adapter", lambda *a, **k: Flaky())
+    errors, unavailable = v.check_ontology_terms(
+        ["CL:0000001", "CL:0000002", "CL:0000003"], cfg)
+    assert errors == [], "a partial scan must not be reported as findings"
+    assert "CL" in unavailable
+    assert "no term of this prefix was checked" in unavailable["CL"]["reason"]
+
+
+def test_sweep_state_can_be_reset_outside_run_sweep(tmp_path):
+    """sweep_report_file is a module-level callable; its caches are not."""
+    from evidencell.qc_content import (_KB_NODES_CACHE, _kb_nodes_for_region,
+                                       reset_sweep_state)
+    root = _mini_repo(tmp_path, refs=REFS_OK,
+                      graph={"nodes": [{"id": "n1", "cell_set_accession": "CS1"}]})
+    _kb_nodes_for_region(root, "hippocampus")
+    assert _KB_NODES_CACHE
+    reset_sweep_state()
+    assert not _KB_NODES_CACHE

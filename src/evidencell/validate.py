@@ -870,11 +870,18 @@ def _oak_adapters(oak_config_path: Path) -> dict[str, str] | None:
     """
     if not oak_config_path.exists():
         return None
-    cfg = yaml.safe_load(oak_config_path.read_text(encoding="utf-8")) or {}
-    return {
-        k: v for k, v in (cfg.get("ontology_adapters") or {}).items()
-        if isinstance(v, str) and v.strip()
-    }
+    try:
+        cfg = yaml.safe_load(oak_config_path.read_text(encoding="utf-8")) or {}
+        adapters = cfg.get("ontology_adapters") or {}
+        # Empty values are kept: `GEO: ""` means "declared, deliberately not
+        # validated", which is different from the key being absent entirely.
+        return {k: (v or "") for k, v in adapters.items() if isinstance(v, str)}
+    except (yaml.YAMLError, OSError, AttributeError):
+        # Unreadable or wrong-shaped config. Treated as absent so the caller
+        # reports it as unchecked; raising here would put a traceback where
+        # the hook owes an allow/block verdict, and would abort a whole sweep
+        # on the first report carrying a CURIE.
+        return None
 
 
 def _adapter_available(adapter: str, project_root: Path) -> bool:
@@ -884,7 +891,11 @@ def _adapter_available(adapter: str, project_root: Path) -> bool:
             return (project_root / adapter.split(":", 1)[1]).exists()
     if adapter.startswith(_SQLITE_OBO_PREFIX):
         return _semsql_db_path(adapter[len(_SQLITE_OBO_PREFIX):]).exists()
-    return False
+    # Unknown scheme (ols:, ubergraph:, bioportal:, an absolute sqlite path…).
+    # Assume reachable and let the lookup decide, matching oak_dbs_available()
+    # above — reporting "run `just fetch-oak-dbs`" for a remote adapter would
+    # be both wrong and unactionable.
+    return True
 
 
 def check_ontology_terms(
@@ -913,7 +924,12 @@ def check_ontology_terms(
         return [], {"*": {"adapter": "", "terms": sorted(set(curies)),
                           "reason": f"{oak_config_path} not found"}}
     if not adapters:
-        return [], {}  # config present, nothing configured to validate
+        # Parsed but lists no usable adapter — a renamed key or a truncated
+        # file looks exactly like this. Report it: silently checking nothing
+        # is the failure mode this check exists to remove.
+        return [], {"*": {"adapter": "", "terms": sorted(set(curies)),
+                          "reason": f"{oak_config_path} lists no usable "
+                                    f"ontology_adapters"}}
 
     project_root = oak_config_path.parent.parent
     by_prefix: dict[str, list[str]] = {}
@@ -926,8 +942,10 @@ def check_ontology_terms(
 
     for prefix, terms in sorted(by_prefix.items()):
         adapter_str = adapters.get(prefix)
-        if adapter_str is None:
-            continue  # not an ontology prefix (PMID, GEO, …) — nothing to check
+        if not adapter_str:
+            # Absent from the config: not an ontology prefix at all (PMID …).
+            # Present but empty: declared and deliberately not validated.
+            continue
         if not _adapter_available(adapter_str, project_root):
             unavailable[prefix] = {
                 "adapter": adapter_str, "terms": sorted(set(terms)),
@@ -946,20 +964,27 @@ def check_ontology_terms(
             }
             continue
 
+        prefix_errors: list[str] = []
         for curie in sorted(set(terms)):
             try:
                 label = adapter.label(curie)
             except Exception as exc:  # noqa: BLE001
+                # Discard this prefix's findings entirely. Keeping the ones
+                # gathered before the failure would present a partial scan as
+                # authoritative while the rest of the prefix went unexamined.
+                prefix_errors = []
                 unavailable[prefix] = {
                     "adapter": adapter_str, "terms": sorted(set(terms)),
-                    "reason": f"lookup failed for {curie}: {exc}",
+                    "reason": f"lookup failed at {curie}: {exc}; "
+                              f"no term of this prefix was checked",
                 }
                 break
             if not label:
-                errors.append(
+                prefix_errors.append(
                     f"Ontology term '{curie}' does not resolve in {adapter_str}. "
                     f"Verify it against the live ontology before citing it."
                 )
+        errors.extend(prefix_errors)
     return errors, unavailable
 
 

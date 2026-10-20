@@ -258,8 +258,25 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
     return findings
 
 
+def reset_sweep_state() -> None:
+    """Clear state scoped to one sweep.
+
+    `_CURIE_COVERAGE` and `_KB_NODES_CACHE` exist to make a whole-corpus sweep
+    affordable, but they are module globals and the per-file functions are
+    callable directly. A caller driving `sweep_report_file()` itself would
+    otherwise accumulate coverage across unrelated runs and hold a node cache
+    that never notices edits under kb/graphs/.
+    """
+    _CURIE_COVERAGE.clear()
+    _KB_NODES_CACHE.clear()
+
+
 def sweep_report_file(path: Path, root: Path) -> list[Finding]:
-    """Run markdown annotation + provenance checks on one report."""
+    """Run markdown annotation + provenance checks on one report.
+
+    Uses sweep-scoped caches; call `reset_sweep_state()` when invoking this
+    outside `run_sweep()`.
+    """
     rel = str(path.relative_to(root))
     try:
         text = path.read_text(encoding="utf-8")
@@ -385,8 +402,7 @@ def run_sweep(
     """Sweep the corpus and return every finding."""
     root = root or repo_root()
     result = SweepResult()
-    _CURIE_COVERAGE.clear()
-    _KB_NODES_CACHE.clear()
+    reset_sweep_state()
 
     kb_paths = _kb_files(root) if kb else []
     report_paths = _report_files(root) if reports else []
@@ -439,8 +455,9 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "store_schema":        (r"(?:paper|quote) '([^']+)'",),
     "rationale_stale":     (r"Edge '([^']+)'",),
     "structural":          (r"'([^']+)'",),
+    "ontology_term": (r"Ontology term '([^']+)'",),
     "markdown": (
-        r"(?:Atlas accession|PMID|quote_key|Ontology term) '([^']+)'",
+        r"(?:Atlas accession|PMID|quote_key) '([^']+)'",
         # Unannotated blockquote: the quoted line itself is the subject.
         r"annotation\): (.+)$",
     ),
