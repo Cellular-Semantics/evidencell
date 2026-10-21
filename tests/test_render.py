@@ -72,6 +72,7 @@ MINIMAL_GRAPH = {
             "definition_basis": "ATLAS_TRANSCRIPTOMIC",
             "is_terminal": True,
             "atlas": "WMBv1",
+            "taxonomy_id": "CCN20230722",
             "n_cells": 100,
             "anatomical_location": [{"id": "MBA:399", "label": "CA1", "name_in_source": "CA1 SO"}],
         },
@@ -81,6 +82,7 @@ MINIMAL_GRAPH = {
             "definition_basis": "ATLAS_TRANSCRIPTOMIC",
             "is_terminal": True,
             "atlas": "WMBv1",
+            "taxonomy_id": "CCN20230722",
             "n_cells": 50,
             "anatomical_location": [],
         },
@@ -314,33 +316,69 @@ def test_build_reference_index_citation_line():
 
 # ── Structural helper tests ───────────────────────────────────────────────────
 
+def _graph_mapping_to(taxonomy_id, **stub_extra):
+    """One classical node mapped to one atlas stub in `taxonomy_id`."""
+    return {
+        "target_atlas": "irrelevant",
+        "nodes": [
+            {"id": "classical", "definition_basis": "CLASSICAL_MULTIMODAL"},
+            {
+                "id": "atlas_x",
+                "definition_basis": "ATLAS_TRANSCRIPTOMIC",
+                "is_terminal": True,
+                "taxonomy_id": taxonomy_id,
+                **stub_extra,
+            },
+        ],
+        "edges": [{"id": "e1", "lit_type": "classical", "taxonomy_type": "atlas_x"}],
+    }
+
+
 def test_location_note_present():
-    """Graph with terminal node + anatomical_location → returns location note."""
+    """Mapping into a MERFISH-registered taxonomy → location note."""
     note = _location_note(MINIMAL_GRAPH)
+    assert note is not None
+    assert "soma position" in note
+    assert "WMBv1" in note
+
+
+def test_location_note_absent_without_edges():
+    """No edges means nothing maps into an atlas → no note."""
+    assert _location_note({"nodes": [{"id": "classical"}], "edges": []}) is None
+
+
+def test_location_note_absent_for_non_merfish_taxonomy():
+    """CS202106160 (Yao 2021 SSv4) is dissociated scRNA-seq, not MERFISH.
+
+    Regression guard: the note used to fire on any terminal node carrying
+    anatomical_location, so a stub in a non-MERFISH taxonomy would wrongly
+    claim the location came from MERFISH registration.
+    """
+    graph = _graph_mapping_to(
+        "CS202106160",
+        anatomical_location=[{"id": "MBA:399", "label": "CA1"}],
+    )
+    assert _location_note(graph) is None
+
+
+def test_location_note_independent_of_stub_fields():
+    """A MERFISH target still gets the note with no location on the stub.
+
+    Atlas anatomy is canonical in kb/taxonomy/, so the note must not depend on
+    whether a stub happens to carry anatomical_location -- that dependency made
+    report content a function of stub-convention violations.
+    """
+    note = _location_note(_graph_mapping_to("CCN20230722"))
     assert note is not None
     assert "soma position" in note
 
 
-def test_location_note_absent():
-    """Graph with no terminal nodes → returns None."""
-    graph_no_terminal = {
-        "nodes": [
-            {"id": "classical", "is_terminal": False},
-        ],
-        "edges": [],
-    }
-    assert _location_note(graph_no_terminal) is None
-
-
-def test_location_note_terminal_no_location():
-    """Terminal node with empty anatomical_location → no note."""
-    graph = {
-        "nodes": [
-            {"id": "atlas_x", "is_terminal": True, "anatomical_location": []},
-        ],
-        "edges": [],
-    }
-    assert _location_note(graph) is None
+def test_location_note_restricted_to_node():
+    """Scoped to one node, only that node's own edge targets count."""
+    graph = _graph_mapping_to("CCN20230722")
+    graph["nodes"].append({"id": "other", "definition_basis": "CLASSICAL_MULTIMODAL"})
+    assert _location_note(graph, "classical") is not None
+    assert _location_note(graph, "other") is None
 
 
 def test_candidate_verdict_moderate():

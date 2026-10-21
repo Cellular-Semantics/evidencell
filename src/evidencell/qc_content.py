@@ -352,6 +352,98 @@ def _coverage_gaps(root: Path, kb_paths: list[Path], report_paths: list[Path]) -
     return gaps
 
 
+ATLAS_BASIS = "ATLAS_TRANSCRIPTOMIC"
+
+
+def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
+    """Checks that no single-file pass can make.
+
+    These are corpus-wide on purpose. `_kb_nodes_for_region` is region-scoped,
+    and the duplicates that actually exist span regions -- `dg_neuroblast` and
+    its two siblings are defined in both `dentate_gyrus/` and
+    `immature_neurons/` -- so a per-region index would never see them.
+    """
+    findings: list[Finding] = []
+    canonical: dict[str, list[str]] = {}
+    taxonomy_ids: dict[str, set[str]] = {}
+    per_file: list[tuple[str, dict, list[dict], list[dict]]] = []
+
+    for path in kb_paths:
+        rel = str(path.relative_to(root))
+        try:
+            doc = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        except Exception:
+            continue  # the per-file sweep already reported the parse failure
+        if not isinstance(doc, dict):
+            continue
+        nodes = [n for n in doc.get("nodes") or [] if isinstance(n, dict) and n.get("id")]
+        edges = [e for e in doc.get("edges") or [] if isinstance(e, dict)]
+        per_file.append((rel, doc, nodes, edges))
+
+        for node in nodes:
+            node_id = node["id"]
+            if node.get("definition_basis") != ATLAS_BASIS:
+                canonical.setdefault(node_id, []).append(rel)
+            tax_id = node.get("taxonomy_id")
+            if tax_id:
+                taxonomy_ids.setdefault(str(tax_id), set()).add(rel)
+
+    # 1. A node id canonically defined in more than one file. Which copy is
+    #    authoritative is a curator decision, so this is an ERROR, not a merge.
+    for node_id, files in sorted(canonical.items()):
+        if len(files) > 1:
+            findings.append(Finding(
+                sorted(files)[0], ERROR, "duplicate_node_id",
+                f"Node '{node_id}' is canonically defined in {len(files)} files: "
+                f"{', '.join(sorted(files))}",
+            ))
+
+    # 2. A taxonomy_id with no directory under kb/taxonomy/. Every DB lookup for
+    #    such a node fails, and the failures are swallowed (render._node_b_info
+    #    catches broadly so a missing DB never blocks a report), so nothing
+    #    surfaces without this check.
+    tax_root = root / "kb" / "taxonomy"
+    for tax_id, files in sorted(taxonomy_ids.items()):
+        if not (tax_root / tax_id).is_dir():
+            findings.append(Finding(
+                sorted(files)[0], ERROR, "unknown_taxonomy_id",
+                f"taxonomy_id '{tax_id}' has no directory under kb/taxonomy/ "
+                f"(referenced in {len(files)} file(s): {', '.join(sorted(files))})",
+            ))
+
+    # No `dangling_endpoint` check here, deliberately. While
+    # validate.structural_checks requires both endpoints to resolve *within the
+    # same document*, every endpoint is resolvable by construction and a
+    # cross-file version could never fire. It becomes meaningful only if that
+    # rule is relaxed to cross-file resolution (the stub-retirement follow-on);
+    # adding it now would ship a check that silently never runs.
+
+    # 4. A node that no edge *in its own file* references. Scoped per file, not
+    #    corpus-wide, because that is what a component split acts on: a node
+    #    unreferenced in its own document belongs to no component and is
+    #    dropped, regardless of whether some other file's edge names it. Pooling
+    #    endpoints across files hides 21 of the 39 such nodes.
+    #
+    #    Atlas stubs exist only to satisfy edge endpoints, so an unreferenced
+    #    one is dead weight. An unreferenced non-atlas node is an unmapped
+    #    literature type -- legitimate content that must survive the split.
+    for rel, _doc, nodes, edges in per_file:
+        endpoints = {
+            x for e in edges
+            for x in (e.get("lit_type"), e.get("taxonomy_type")) if x
+        }
+        for node in nodes:
+            if node["id"] in endpoints:
+                continue
+            kind = "atlas stub" if node.get("definition_basis") == ATLAS_BASIS else "node"
+            findings.append(Finding(
+                rel, WARN, "orphan_node",
+                f"{kind.capitalize()} '{node['id']}' is referenced by no edge",
+            ))
+
+    return findings
+
+
 def run_sweep(
     root: Path | None = None,
     *,
@@ -370,6 +462,7 @@ def run_sweep(
         for p in kb_paths:
             result.kb_files += 1
             result.findings.extend(sweep_kb_file(p, root))
+        result.findings.extend(sweep_cross_file(root, kb_paths))
         for sub in _EXCLUDED_SUBTREES:
             if (root / "kb" / sub).is_dir():
                 result.skipped.append(f"kb/{sub}/ (bulk atlas content, no provenance fields)")
@@ -409,6 +502,9 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "store_schema":        (r"(?:paper|quote) '([^']+)'",),
     "rationale_stale":     (r"Edge '([^']+)'",),
     "structural":          (r"'([^']+)'",),
+    "duplicate_node_id":   (r"Node '([^']+)'",),
+    "unknown_taxonomy_id": (r"taxonomy_id '([^']+)'",),
+    "orphan_node":         (r"'([^']+)' is referenced by no edge",),
     "markdown": (
         r"(?:Atlas accession|PMID|quote_key|Ontology term) '([^']+)'",
         # Unannotated blockquote: the quoted line itself is the subject.

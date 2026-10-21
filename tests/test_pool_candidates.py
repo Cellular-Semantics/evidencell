@@ -208,3 +208,48 @@ def test_find_for_node_filters_to_relevant_candidates():
     # C is in no candidate.
     c_candidates = find_pool_candidates_for_node(graph, "lit_C")
     assert c_candidates == []
+
+
+# ── Region scoping ────────────────────────────────────────────────────────────
+
+def test_load_region_graph_merges_sibling_files(tmp_path):
+    """Pool detection is pairwise across lit_types, so it must see the region.
+
+    Once each file holds one component, a per-file view yields one lit_type,
+    zero pairs, and silently returns no candidates.
+    """
+    import yaml as _yaml
+
+    from evidencell.pool_candidates import load_region_graph
+
+    (tmp_path / "a.yaml").write_text(
+        _yaml.safe_dump({"edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "x"}]})
+    )
+    (tmp_path / "b.yaml").write_text(
+        _yaml.safe_dump({"edges": [{"id": "e2", "lit_type": "b", "taxonomy_type": "y"}]})
+    )
+    merged = load_region_graph(tmp_path / "a.yaml")
+    assert sorted(e["id"] for e in merged["edges"]) == ["e1", "e2"]
+
+
+def test_load_region_graph_dedupes_shared_edge_ids(tmp_path):
+    import yaml as _yaml
+
+    from evidencell.pool_candidates import load_region_graph
+
+    edge = {"id": "e1", "lit_type": "a", "taxonomy_type": "x"}
+    (tmp_path / "a.yaml").write_text(_yaml.safe_dump({"edges": [edge]}))
+    (tmp_path / "b.yaml").write_text(_yaml.safe_dump({"edges": [edge]}))
+    assert len(load_region_graph(tmp_path / "a.yaml")["edges"]) == 1
+
+
+def test_load_region_graph_tolerates_unparseable_sibling(tmp_path):
+    import yaml as _yaml
+
+    from evidencell.pool_candidates import load_region_graph
+
+    (tmp_path / "a.yaml").write_text(
+        _yaml.safe_dump({"edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "x"}]})
+    )
+    (tmp_path / "broken.yaml").write_text("{[not valid yaml", encoding="utf-8")
+    assert [e["id"] for e in load_region_graph(tmp_path / "a.yaml")["edges"]] == ["e1"]

@@ -673,13 +673,26 @@ Present to the user for review and approval before writing to the canonical KB l
    > Edit directly if needed (correct node names, adjust markers,
    > add missing refs). Then confirm to write to kb/graphs/{region}/."
 
-6. After confirmation, write the approved file:
+6. After confirmation, write the approved file.
+
+   **Use the Write tool, not `cp`.** The pre-edit validation hook is a
+   PreToolUse hook on `Write`/`Edit`; a shell `cp` is not intercepted, so
+   copying the draft into `kb/graphs/` writes it entirely unvalidated. Past
+   ingest rounds used `cp` here, and that is how an unresolvable
+   `taxonomy_id` reached 44 nodes across six files without the hook firing
+   once.
+
+   - Read `{output_dir}/proposed_kb_{region}.yaml`.
+   - Write its contents with the **Write** tool to
+     `kb/graphs/{region}/{YYYYMMDD}_{region}_report_ingest.yaml`
+     (create `kb/graphs/{region}/` first with `mkdir -p` if absent).
+   - If the hook blocks the write, fix the reported problem in the draft and
+     retry. Never work around a block by writing through a shell command.
+
+   Then confirm the file validates:
    ```bash
-   mkdir -p kb/graphs/{region}
-   cp {output_dir}/proposed_kb_{region}.yaml \
-      kb/graphs/{region}/{YYYYMMDD}_{region}_report_ingest.yaml
+   just validate kb/graphs/{region}/{YYYYMMDD}_{region}_report_ingest.yaml
    ```
-   Pre-edit validation hook fires automatically on write.
 
 ---
 

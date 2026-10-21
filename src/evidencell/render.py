@@ -76,12 +76,54 @@ REL_LABELS = {
     "CANDIDATE_SYNONYM":  "≈ closeMatch (unreviewed)",
 }
 
-MERFISH_LOCATION_NOTE = (
-    "> **Location note.** WMBv1 location data derives from MERFISH spatial\n"
-    "> registration and records **soma position** only. Axonal and dendritic\n"
-    "> projection targets are not reflected in atlas cluster location fields and\n"
-    "> are not used in mapping assessments."
-)
+# Taxonomies whose cluster-level anatomical_location comes from MERFISH spatial
+# registration (soma position only). The location note describes how MERFISH
+# registration works, so it must not be emitted for atlases located by other
+# means -- CS202106160 (Yao 2021 SSv4) is dissociated scRNA-seq, and
+# HMBA_BG_Consensus is dissection-based.
+#
+# Keyed on taxonomy_id rather than the atlas name because the atlas name is
+# free text and WMBv1 alone is spelled four ways across the corpus ("WMBv1",
+# "WMBv1 (CCN20230722)", "Allen Brain Cell Atlas", "Allen Brain Cell Atlas
+# CCN202307220").
+#
+# Derived from the taxonomy, not from node fields: anatomical_location on an
+# atlas stub is a KB-convention violation (taxonomy YAML is canonical for atlas
+# properties), so keying the note off stub contents made report *content*
+# depend on which stubs happened to carry extra fields.
+MERFISH_REGISTERED_TAXONOMIES = frozenset({"CCN20230722"})
+
+ATLAS_DISPLAY_NAMES = {"CCN20230722": "WMBv1"}
+
+
+def merfish_location_note(atlas: str) -> str:
+    return (
+        f"> **Location note.** {atlas} location data derives from MERFISH spatial\n"
+        "> registration and records **soma position** only. Axonal and dendritic\n"
+        "> projection targets are not reflected in atlas cluster location fields and\n"
+        "> are not used in mapping assessments."
+    )
+
+
+def merfish_taxonomies(graph: dict, node_id: str | None = None) -> list[str]:
+    """MERFISH-registered taxonomies that this graph -- or one node's edges --
+    maps into."""
+    nodes_by_id = {
+        n["id"]: n
+        for n in graph.get("nodes", []) or []
+        if isinstance(n, dict) and n.get("id")
+    }
+    found: set[str] = set()
+    for edge in graph.get("edges", []) or []:
+        if not isinstance(edge, dict):
+            continue
+        if node_id is not None and edge.get("lit_type") != node_id:
+            continue
+        target = nodes_by_id.get(edge.get("taxonomy_type", "")) or {}
+        tax_id = target.get("taxonomy_id")
+        if tax_id in MERFISH_REGISTERED_TAXONOMIES:
+            found.add(tax_id)
+    return sorted(found)
 
 
 # ── Data class ────────────────────────────────────────────────────────────────
@@ -983,14 +1025,14 @@ def build_reference_index(
 
 # ── Structural helpers ────────────────────────────────────────────────────────
 
-def _location_note(graph: dict) -> str | None:
-    """
-    Return the MERFISH soma-only location note if any terminal node has anatomical_location.
-    """
-    for node in graph.get("nodes", []):
-        if node.get("is_terminal") and node.get("anatomical_location"):
-            return MERFISH_LOCATION_NOTE
-    return None
+def _location_note(graph: dict, node_id: str | None = None) -> str | None:
+    """Return the MERFISH soma-only location note, if this graph maps to a
+    MERFISH-registered atlas."""
+    taxonomies = merfish_taxonomies(graph, node_id)
+    if not taxonomies:
+        return None
+    tax_id = taxonomies[0]
+    return merfish_location_note(ATLAS_DISPLAY_NAMES.get(tax_id, tax_id))
 
 
 def _cl_introduction(cn: dict) -> list[str]:
@@ -1155,7 +1197,11 @@ def _open_taxonomy_db(taxonomy_id: str) -> "object | None":
     except Exception:
         return None
     db_path = taxonomy_dir(taxonomy_id) / f"{taxonomy_id}.db"
-    if not db_path.exists():
+    # Not `.exists()`: a 0-byte DB left behind by an earlier sqlite3.connect()
+    # would pass that check and then fail on every query (see kb_io.usable_sqlite).
+    from evidencell.kb_io import usable_sqlite
+
+    if not usable_sqlite(db_path):
         return None
 
     # Freshness check (one warning per taxonomy_id per process)
@@ -1307,11 +1353,9 @@ def extract_node_facts(
         key=lambda e: CONF_ORDER.get(e.get("confidence", "UNCERTAIN"), 99),
     )
 
-    # Check for MERFISH location data
-    has_merfish = any(
-        n.get("is_terminal") and n.get("anatomical_location")
-        for n in graph.get("nodes", [])
-    )
+    # Does this node map into a MERFISH-registered atlas? Drives the
+    # soma-position-only caveat in the generated report.
+    has_merfish = bool(merfish_taxonomies(graph, node_id))
 
     # Build reference index
     ref_index = build_reference_index(graph, refs, node_id)

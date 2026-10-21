@@ -1,0 +1,319 @@
+##
+# Cerebellar Purkinje Layer Interneurons — WMBv1 mapping
+#
+# Brain region: Cerebellar cortex (Purkinje layer interneurons)
+# Target atlas: WMBv1 (Yao et al. 2023, Nature 624:317-332)
+# Curation date: 2026-02-25
+# Curator: dosumis
+# Source analysis: https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+#
+# Evidence graph (current):
+#
+#   classical_candelabrum ──[EQUIVALENT, Osorno 2022]──► pli1_osorno
+#   classical_globular    ──[EQUIVALENT, Osorno 2022]──► pli2_osorno
+#   classical_lugaro      ──[EQUIVALENT, Osorno 2022]──► pli3_osorno
+#                                                            │
+#   pli1_osorno ──[EQUIVALENT, F1≈0.94, MapMyCells]────► wmb_cluster_5178   (terminal)
+#   pli2_osorno ──[PARTIAL_OVERLAP, F1≈0.87, MapMyCells]► wmb_cluster_5177  (terminal)
+#   pli3_osorno ──[EQUIVALENT, F1≈0.96, MapMyCells]────► wmb_supertype_1145 (terminal)
+#
+# Cross-Allen-taxonomy transfer (future / illustrative):
+# If a BICAN or other Allen taxonomy with CCN accessions existed for cerebellum,
+# a direct cross-atlas edge could be added, e.g.:
+#
+#   wmb_supertype_1145 ──[EQUIVALENT, cross-atlas MapMyCells]──► bican_cb_cluster_X  (terminal)
+#   (source_cell_set_accession: CS20230722_SUPT_1145,
+#    target_cell_set_accession: CS20250101_CLUS_XXXX)
+##
+
+name: "Cerebellar Purkinje Layer Interneurons — WMBv1"
+description: >
+  Evidence graph mapping classically defined Purkinje layer interneuron (PLI) types
+  — Candelabrum, Globular, and Lugaro cells — to cell sets in the WMBv1 atlas.
+  Mapping was performed by annotation transfer of transcriptomic data from
+  Osorno et al. 2022 (SCP795) to WMBv1 using MapMyCells.
+brain_region:
+  id: MBA:1145
+  label: "Cerebellar cortex, Purkinje layer"
+  name_in_source: "Cerebellar cortex, Purkinje layer"
+
+target_atlas: WMBv1
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus"
+
+creation_date: "2026-02-25"
+nodes:
+  - id: classical_candelabrum
+    name: "Candelabrum cell"
+    definition_basis: CLASSICAL_MORPHOLOGICAL
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1145
+        label: "Cerebellar cortex, Purkinje layer"
+        name_in_source: "Cerebellar cortex, Purkinje layer"
+    cl_mapping:
+      cl_term: {id: CL:4042030, label: candelabrum cell, name_in_source: "candelabrum cell"}
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:4042030 (candelabrum cell) was created based on Osorno et al. 2022 and
+        describes exactly this type. The CL definition notes "A GABAergic interneuron
+        located in the Purkinje layer of the cerebellar cortex... beaded axons that
+        make local synapses contacts within the molecular layer."
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    defining_markers:
+      # smFISH-validated on tissue-localised cells matching CC morphology and
+      # distribution (Osorno 2022, Fig 3). Bridge: Oxtr-Cre×Ai14 labels
+      # morphologically confirmed CCs; smFISH PLI1 profile co-localises with
+      # these cells in the PCL. These are therefore independently confirmed
+      # on the classical type, not just inferred from the snRNA-seq cluster.
+      - symbol: Nxph1
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "smFISH on cerebellar tissue (Fig 3A-E)"
+            scope: "adult mouse cerebellar cortex, PCL cells matching CC distribution"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); smFISH-identified PLI1s match distribution of morphologically confirmed tdTomato+ CCs in Oxtr-Cre×Ai14 mice"
+            ref: "PMID:35578131"
+      - symbol: Aldh1a3
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "smFISH on cerebellar tissue (Fig 3A-E)"
+            scope: "adult mouse cerebellar cortex, PCL cells matching CC distribution"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); smFISH-identified PLI1s match distribution of morphologically confirmed tdTomato+ CCs in Oxtr-Cre×Ai14 mice"
+            ref: "PMID:35578131"
+    negative_markers:
+      - symbol: Slc6a5
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "smFISH on cerebellar tissue (Fig 3A-E)"
+            scope: "adult mouse cerebellar cortex, PLI1 vs PLI2/PLI3"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); Slc6a5 distinguishes PLI1/CC from PLI2/Globular and PLI3/Lugaro"
+            ref: "PMID:35578131"
+    morphology:
+      description: >
+        Small soma (~10 μm diameter) in the Purkinje cell layer. 1–2 primary
+        dendrites ascend to the pia and branch in the upper molecular layer;
+        secondary dendrites extend to the upper granular layer. Dendrites
+        confined to a parasagittal plane. Beaded axon emanates near soma,
+        branches and extends in the molecular layer; 92% of synapses onto MLIs
+        (preferentially MLI1s; Lackey et al. 2024, Osorno et al. 2022).
+        Expresses high levels of Nrp1 (neuropilin-1), yet unlike basket cells
+        does not target PC axon initial segments — targets MLIs instead
+        (Schilling 2023, citing Telley et al. 2016 re Nrp1/Sema3a mechanism).
+        Most abundant PLI (approximately 80% as many as Golgi1 cells). Present
+        in all cerebellar lobules. Originally described by Lainé & Axelrad 1994
+        (PMID:8300903); comprehensively characterised by Osorno et al. 2022.
+    electrophysiology:
+      description: >
+        Extremely high input resistance; mostly silent with occasional low-frequency
+        spontaneous firing. Highly sensitive to current injection relative to MLI
+        subtypes. Excited by mossy fibres (monosynaptic, ~1.45 ms latency) and
+        granule cell parallel fibres (facilitating). Strongly inhibited by Purkinje
+        cells (~42% of spontaneous IPSCs). Single CC firing at ~60 spikes/s reduces
+        IPSC charge in nearby PCs by ~24% (disinhibition via MLI1 inhibition).
+        PC collaterals preferentially target MLI2s; CCs preferentially inhibit
+        MLI1s — together with PC-PC synapses these form a negative feedback
+        loop (Lackey et al. 2024).
+    definition_references:
+      - "PMID:8300903"
+      - "PMID:35578131"
+      - "PMID:34616064"
+      - "PMID:37940705"  # Schilling 2023 — review confirming PLI classification
+      # Lackey et al. 2024 (CorpusId:280548075) — CC→MLI1 circuit refinement
+    is_terminal: false
+    proposed_cl_term:
+      cl_id: CL:4042030
+      label: candelabrum cell
+      definition: >
+        A GABAergic interneuron of the cerebellar cortex Purkinje layer with an
+        ascending axon collateral projecting into the molecular layer.
+        Reference transcriptomic data for this type can be found in WMBv1 in
+        cell set CS20230722_CLUS_5178.
+      status: ACCEPTED
+
+  - id: pli1_osorno
+    name: "PLI1 (Osorno 2022 / Candelabrum)"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    prior_dataset_accession: "SCP:SCP795"
+    prior_cluster_label: "PLI1"
+    prior_reference: "PMID:35578131"
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    defining_markers:
+      - symbol: Nxph1
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "snRNA-seq (snDrop-seq, SCP795)"
+            scope: "adult mouse cerebellar cortex, PLI1 cluster"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−)"
+            ref: "PMID:35578131"
+      - symbol: Aldh1a3
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "snRNA-seq (snDrop-seq, SCP795)"
+            scope: "adult mouse cerebellar cortex, PLI1 cluster"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−)"
+            ref: "PMID:35578131"
+      - symbol: Klhl1
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "snRNA-seq"
+            scope: "adult mouse cerebellar cortex, PLI class"
+            snippet: "canonical PLI marker Klhl1; MLIs branch from each other later than from PLIs"
+            ref: "PMID:34616064"
+    negative_markers:
+      - symbol: Slc6a5
+        sources:
+          - marker_type: TRANSCRIPT
+            method: "snRNA-seq (snDrop-seq, SCP795)"
+            scope: "adult mouse cerebellar cortex, PLI1 vs PLI2/PLI3"
+            snippet: "PLI1s (Nxph1+, Aldh1a3+, Slc6a5−); Slc6a5 absent in CCs but present in PLI2s"
+            ref: "PMID:35578131"
+    is_terminal: false
+
+  - id: wmb_cluster_5178
+    name: "5178 CB PLI Gly-Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_5178
+    taxonomy_level: CLUSTER
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "CB PLI Gly-Gaba_1 (1144)", cell_set_accession: CS20230722_SUPT_1144}
+      - {level: SUBCLASS, name: "CB PLI Gly-Gaba (309)", cell_set_accession: CS20230722_SUBC_309}
+      - {level: CLASS, name: "CB GABA (28)", cell_set_accession: CS20230722_CLAS_28}
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1145
+        label: "Cerebellar cortex, Purkinje layer"
+        name_in_source: "CBX"
+        # WMBv1 annotation lacks laminar resolution — "CBX" = cerebellar cortex.
+        # Manual inspection of MERFISH spatial data on the Allen Brain Cell Atlas
+        # confirms cluster 5178 cells are located in close proximity to Purkinje
+        # cells, consistent with Purkinje layer placement (Yao et al. 2023).
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    n_cells: 3066
+    defining_markers:
+      - {symbol: Cdh1}
+      - {symbol: Bhlhe22}
+      - {symbol: Aldh1a3}
+    merfish_markers:
+      - {symbol: Skor1}
+      - {symbol: Ntn1}
+      - {symbol: Adra1b}
+      - {symbol: Pvalb, ncbi_gene_id: "NCBIGene:19293"}
+      - {symbol: Spon1}
+    is_terminal: true
+
+edges:
+  - id: edge_candelabrum_to_pli1
+    lit_type: classical_candelabrum
+    taxonomy_type: pli1_osorno
+    relationship: skos:exactMatch
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:35578131"
+        snippet: >
+          "The combination of the tdTomato+ labelling of PLIs in Oxtr-Cre × Ai14
+          mice, fluorescent labelling and 2P imaging of these cells, and in situ
+          labelling of 3 genes...establishes that tdTomato+ PLIs are CCs that
+          correspond to PLI1s."
+        explanation: >
+          Osorno 2022 establishes PLI1 = Candelabrum cell via three converging lines
+          of evidence: (1) Oxtr-Cre×Ai14 transgenic labels cells with confirmed CC
+          morphology (small soma ~10 μm in PCL, dendrites to pia, beaded axon in ML;
+          Fig 1, 2-photon fill with Alexa-594). (2) snRNA-seq identifies PLI1 as
+          Nxph1+/Aldh1a3+/Slc6a5−, distinct from PLI2 (Globular) and PLI3 (Lugaro)
+          which both express Slc6a5. (3) smFISH on tissue (Fig 3) confirms PLI1
+          molecular profile co-localises with tdTomato+ CC distribution in the PCL.
+          PLI2 and PLI3 are excluded by morphology (different soma shape/location)
+          and by Slc6a5 expression. Additional molecular validation: Grin1/Grin2b
+          expression in PLI1 confirmed by NMDA receptor currents in electrophysiology
+          on Oxtr-Cre-labelled CCs (Fig 4).
+        study_type: MULTIMODAL
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:37940705"
+        snippet: >
+          "PLI1 cells correspond to candelabrum cells, PLI2 cells represent
+          globular cells, and PLI3 cells are Lugaro cells."
+        explanation: >
+          Schilling 2023 review independently confirms PLI1=CC correspondence,
+          citing both Kozareva 2021 and Osorno 2022. Also notes CCs are "purely
+          GABAergic (i.e., not using glycine as a (co-) transmitter)" (citing
+          Simat 2007), and raises Nrp1 expression as an open developmental
+          question distinguishing CC axon targeting from basket cell targeting.
+        study_type: REVIEW
+
+    mapping_justification: semapv:UnreviewedManualMapping
+  - id: edge_pli1_to_wmb5178
+    lit_type: pli1_osorno
+    taxonomy_type: wmb_cluster_5178
+    relationship: skos:exactMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: SUPPORT
+        explanation: >
+          MapMyCells annotation transfer of PLI1 cells (Osorno SCP795) to WMBv1.
+          Near one-to-one correspondence with cluster 5178 (GABA), with high
+          group and target purity. NT prediction (GABA) is consistent with
+          classical Candelabrum NT type.
+        source_dataset_accession: "SCP:SCP795"
+        source_cluster_label: PLI1
+        n_cells_total: 1175
+        target_atlas: WMBv1
+        method: "MapMyCells (default parameters)"
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 1059
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            best_target_name: "28 CB GABA"
+            f1_score: 0.050
+            n_cells_mapped: 1175
+            median_bootstrap: 1.0
+            coverage: 1.000
+            purity: 0.026
+          - taxonomy_level: SUBCLASS
+            best_target_name: "309 CB PLI Gly-Gaba"
+            best_target_accession: CS20230722_SUBC_309
+            f1_score: 0.633
+            n_cells_mapped: 1117
+            median_bootstrap: 1.0
+            coverage: 0.998
+            purity: 0.463
+          - taxonomy_level: SUPERTYPE
+            best_target_name: "1144 CB PLI Gly-Gaba_1"
+            best_target_accession: CS20230722_SUPT_1144
+            f1_score: 0.717
+            n_cells_mapped: 1059
+            median_bootstrap: 1.0
+            coverage: 0.953
+            purity: 0.575
+          - taxonomy_level: CLUSTER
+            best_target_name: "5178 CB PLI Gly-Gaba_1"
+            best_target_accession: CS20230722_CLUS_5178
+            f1_score: 0.942
+            n_cells_mapped: 903
+            median_bootstrap: 1.0
+            coverage: 0.937
+            purity: 0.947
+        code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
+
+    mapping_justification: semapv:UnreviewedManualMapping

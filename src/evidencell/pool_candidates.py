@@ -291,6 +291,43 @@ def find_pool_candidates_for_node(
     return [c for c in all_candidates if node_id in c["source_groups"]]
 
 
+def load_region_graph(graph_file: Path) -> dict:
+    """Merge every KB graph YAML in ``graph_file``'s directory into one graph.
+
+    Pool detection compares lit_types pairwise, so it must see the whole
+    region. A per-file view was adequate while one file held many lit_types;
+    once each file holds a single component it yields one lit_type, zero
+    pairs, and would silently return no candidates.
+
+    Edges are de-duplicated by id. Falls back to the single file if it is not
+    inside a region directory.
+    """
+    graph_file = Path(graph_file)
+    region_dir = graph_file.parent
+    if not region_dir.is_dir():
+        return yaml.safe_load(graph_file.read_text(encoding="utf-8")) or {}
+
+    edges: list[dict] = []
+    seen: set[str] = set()
+    for path in sorted(region_dir.glob("*.yaml")):
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(data, dict):
+            continue
+        for edge in data.get("edges") or []:
+            if not isinstance(edge, dict):
+                continue
+            edge_id = edge.get("id")
+            if edge_id:
+                if edge_id in seen:
+                    continue
+                seen.add(edge_id)
+            edges.append(edge)
+    return {"edges": edges}
+
+
 # ─── CLI ─────────────────────────────────────────────────────────────────────
 
 
@@ -330,9 +367,20 @@ def main(argv: list[str] | None = None) -> int:
             f"Default {DEFAULT_PR_TOLERANCE}."
         ),
     )
+    parser.add_argument(
+        "--this-file-only",
+        action="store_true",
+        help=(
+            "Restrict to edges in GRAPH_FILE instead of the whole region. "
+            "Pool detection is cross-file by default."
+        ),
+    )
     args = parser.parse_args(argv)
 
-    graph = yaml.safe_load(args.graph_file.read_text(encoding="utf-8"))
+    if args.this_file_only:
+        graph = yaml.safe_load(args.graph_file.read_text(encoding="utf-8"))
+    else:
+        graph = load_region_graph(args.graph_file)
     if args.node:
         candidates = find_pool_candidates_for_node(
             graph,

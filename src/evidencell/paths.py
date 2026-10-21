@@ -21,31 +21,87 @@ def repo_root() -> Path:
     raise RuntimeError("Cannot locate repo root (no schema/ directory found)")
 
 
+ATLAS_BASIS = "ATLAS_TRANSCRIPTOMIC"
+
+# Cache of the kb/graphs node index, invalidated when any file's mtime changes.
+_NODE_INDEX: tuple[tuple, dict[str, list[tuple[Path, bool]]]] | None = None
+
+
+class AmbiguousNodeError(RuntimeError):
+    """A node_id is canonically defined in more than one KB graph file."""
+
+
+def _node_index() -> dict[str, list[tuple[Path, bool]]]:
+    """Map node_id -> [(file, is_stub), ...], canonical definitions first.
+
+    A node carrying definition_basis ATLAS_TRANSCRIPTOMIC is a *stub* — a local
+    placeholder that exists only so edge endpoints resolve in-document (see
+    validate.structural_checks). Canonical atlas data lives in kb/taxonomy/.
+    Any other definition_basis is a canonical definition.
+    """
+    global _NODE_INDEX
+    kb_dir = repo_root() / "kb" / "graphs"
+    files = sorted(kb_dir.rglob("*.yaml")) if kb_dir.exists() else []
+    stamp = tuple((str(f), f.stat().st_mtime_ns) for f in files)
+    if _NODE_INDEX is not None and _NODE_INDEX[0] == stamp:
+        return _NODE_INDEX[1]
+
+    canonical: dict[str, list[Path]] = {}
+    stubs: dict[str, list[Path]] = {}
+    for yaml_file in files:
+        try:
+            with yaml_file.open() as fh:
+                data = yaml.safe_load(fh)
+        except Exception:
+            continue
+        nodes = data.get("nodes", []) if isinstance(data, dict) else []
+        for node in nodes:
+            if not isinstance(node, dict):
+                continue
+            node_id = node.get("id")
+            if not node_id:
+                continue
+            bucket = stubs if node.get("definition_basis") == ATLAS_BASIS else canonical
+            bucket.setdefault(node_id, []).append(yaml_file)
+
+    index: dict[str, list[tuple[Path, bool]]] = {
+        k: [(p, False) for p in v] for k, v in canonical.items()
+    }
+    for node_id, paths in stubs.items():
+        index.setdefault(node_id, []).extend((p, True) for p in paths)
+    _NODE_INDEX = (stamp, index)
+    return index
+
+
 def find_node_file(node_id: str) -> Path:
-    """Return the YAML file that contains the CellTypeNode with this node_id.
+    """Return the YAML file that canonically defines this node_id.
 
     Workflows should always call this rather than constructing paths directly.
-    Scans kb/graphs/ for a YAML containing the node_id.
 
-    Raises FileNotFoundError if no YAML in the KB contains the node_id.
+    A node_id defined canonically in exactly one file resolves to that file,
+    even if atlas stubs for the same id exist elsewhere. An id that appears
+    only as a stub resolves to the first such file.
+
+    Raises FileNotFoundError if no YAML under kb/graphs/ defines the id, and
+    AmbiguousNodeError if more than one file canonically defines it.
     """
+    index = _node_index()
+    matches = index.get(node_id)
+    if not matches:
+        raise FileNotFoundError(
+            f"Node '{node_id}' not found in any KB YAML under kb/graphs/. "
+            "Check node_id spelling or run 'just qc' to validate the KB."
+        )
     root = repo_root()
-    kb_dir = root / "kb" / "graphs"
-    if kb_dir.exists():
-        for yaml_file in sorted(kb_dir.rglob("*.yaml")):
-            try:
-                with yaml_file.open() as fh:
-                    data = yaml.safe_load(fh)
-            except Exception:
-                continue
-            nodes = data.get("nodes", []) if isinstance(data, dict) else []
-            for node in nodes:
-                if isinstance(node, dict) and node.get("id") == node_id:
-                    return yaml_file
-    raise FileNotFoundError(
-        f"Node '{node_id}' not found in any KB YAML under kb/graphs/. "
-        "Check node_id spelling or run 'just qc' to validate the KB."
-    )
+    canonical = [path for path, is_stub in matches if not is_stub]
+    if len(canonical) > 1:
+        listed = ", ".join(str(p.relative_to(root)) for p in canonical)
+        raise AmbiguousNodeError(
+            f"Node '{node_id}' is canonically defined in {len(canonical)} files: "
+            f"{listed}. Exactly one file must define it; resolve the duplicate "
+            "before continuing."
+        )
+    return canonical[0] if canonical else matches[0][0]
 
 
 def region_from_graph(graph_file: Path) -> str:
