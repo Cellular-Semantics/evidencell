@@ -1,0 +1,298 @@
+# Supplement draft — medial_temporal_lobe_amygdala
+# Source: ASTA deep research report — inputs/deepsearch/Amygdala Cell Types, Molecular Identity, and Transcriptomic Characterization.pdf
+# Ingestion date: 2026-06-15
+# Status: DRAFT — new evidence supplement for existing KB nodes
+# All nodes already exist in 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml
+
+graph_id: 20260615_medial_temporal_lobe_amygdala_report_ingest_supplement
+graph_label: Medial Temporal Lobe and Amygdala — 20260615 Report Ingest Supplement
+graph_description: >
+  Supplement draft containing only fields where new quotes from the 20260615 ASTA report
+  ingest add new evidence to existing nodes. All seven canonical nodes already exist in
+  20260528_medial_temporal_lobe_amygdala_report_ingest.yaml. This file documents
+  additional property support from 12 new corpus IDs:
+  104297085 (McCullough 2016), 17223544 (Waclaw 2010), 17860491 (Flores 2017),
+  221366115 (Sarowar 2020), 232283078 (Vereczki 2021), 250411527 (Page 2022),
+  252477669 (Hu 2022), 264517392 (Hochgerner 2023), 280092907 (Paul 2025),
+  281382725 (Totty 2025), 3103554 (Chung 2016), 4940771 (Cardenas 2019).
+created_by: asta-report-ingest
+created_date: '2026-06-15'
+status: DRAFT
+target_atlas: CCN20230722
+
+nodes:
+
+# ============================================================
+# Node 1: basal_amygdala_fear_neuron
+# ============================================================
+- id: basal_amygdala_fear_neuron
+  name: Basal amygdala fear neuron
+  definition_basis: CLASSICAL
+  # NEW EVIDENCE: functional/connectivity properties from Cardenas et al. 2019.
+  # Anatomical location and mPFC projection pattern are newly supported by PMID:31193505.
+  anatomical_location:
+  - id: UBERON:0002887
+    name: basal amygdala
+    sources:
+    - ref: PMID:31193505
+      method: asta_report
+      scope: review of BLA fear/extinction neuron circuit
+      quote_key: 4940771_cb8fa215
+  # NOTE: electrophysiology here is functional (CS-triggered activation), not intrinsic.
+  # No intrinsic ephys data are in any target-corpus quotes for this node.
+  # Connectivity (projects to mPFC, does NOT receive reciprocal mPFC input) is
+  # the distinguishing property — recorded under notes, not a formal ephys field.
+
+# ============================================================
+# Node 2: basal_amygdala_extinction_neuron
+# ============================================================
+- id: basal_amygdala_extinction_neuron
+  name: Basal amygdala extinction neuron (Fear-Off neuron)
+  definition_basis: CLASSICAL
+  # NEW EVIDENCE: molecular markers and functional identity strongly supported.
+  # Cardenas 2019 establishes bilateral circuit context (mPFC reciprocal input).
+  # McCullough 2016 provides the primary molecular anchoring (Ntsr2/Dkk3/Rspo2/Wnt7a).
+  defining_markers:
+  - symbol: Ntsr2
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: RNA-seq of Thy1-labelled Fear-Off neurons in BLA
+      quote_key: 104297085_710ab8bc
+    - ref: PMID:27767183
+      method: asta_report
+      scope: validation of Ntsr2-expressing neurons as Fear-Off population
+      quote_key: 104297085_20a79f85
+  - symbol: Dkk3
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: RNA-seq of Thy1-labelled Fear-Off neurons in BLA
+      quote_key: 104297085_710ab8bc
+  - symbol: Rspo2
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: RNA-seq of Thy1-labelled Fear-Off neurons in BLA
+      quote_key: 104297085_710ab8bc
+  - symbol: Wnt7a
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: RNA-seq of Thy1-labelled Fear-Off neurons in BLA
+      quote_key: 104297085_710ab8bc
+  - symbol: Thy1
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:27767183
+      method: asta_report
+      scope: Thy1-Cre/eYFP/eNpHR labelling of Fear-Off population
+      quote_key: 104297085_cb656278
+  anatomical_location:
+  - id: UBERON:0002887
+    name: basal amygdala
+    sources:
+    - ref: PMID:31193505
+      method: asta_report
+      scope: review of BLA fear/extinction neuron circuit
+      quote_key: 4940771_cb8fa215
+    - ref: PMID:27767183
+      method: asta_report
+      scope: Thy1-labelled Fear-Off neurons localised to BLA
+      quote_key: 104297085_cb656278
+
+# ============================================================
+# Node 3: bla_npy_neurogliaform_cell
+# ============================================================
+- id: bla_npy_neurogliaform_cell
+  name: BLA NPY neurogliaform interneuron
+  definition_basis: CLASSICAL
+  # NEW EVIDENCE: Vereczki et al. 2021 is the primary quantitative source.
+  # This node already referenced Vereczki in the base ingest; new quotes
+  # (232283078_d4238834 and 232283078_00bb8003) add quantitative census data.
+  neuropeptides:
+  - symbol: Npy
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: unbiased stereology + immunocytochemistry of LA/BA GABAergic cell types
+      quote_key: 232283078_d4238834
+    - ref: PMID:33837051
+      method: asta_report
+      scope: full abstract — quantitative census of LA/BA GABAergic subtypes
+      quote_key: 232283078_00bb8003
+  morphology:
+    description: >
+      Neurogliaform-like morphology. Constitutes approximately 14-15% of
+      GABAergic cells in the lateral (LA) and basal (BA) amygdala.
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: unbiased stereology + immunocytochemistry of LA/BA GABAergic cell types
+      quote_key: 232283078_d4238834
+    - ref: PMID:33837051
+      method: asta_report
+      scope: full abstract — quantitative census of LA/BA GABAergic subtypes
+      quote_key: 232283078_00bb8003
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:33837051
+      method: asta_report
+      scope: unbiased stereology + immunocytochemistry of LA/BA GABAergic cell types
+      quote_key: 232283078_d4238834
+
+# ============================================================
+# Node 4: bla_calbindin_dendrite_targeting_interneuron
+# ============================================================
+- id: bla_calbindin_dendrite_targeting_interneuron
+  name: BLA calbindin-positive dendrite-targeting interneuron
+  definition_basis: CLASSICAL
+  # NEW EVIDENCE: Flores et al. 2017 (PMID:28453642) is new in this corpus.
+  # Bienvenu et al. 2012 (10647550) was already ingested.
+  # Flores provides: recruited during fear extinction, calbindin+, not PV+, in BLA.
+  defining_markers:
+  - symbol: Calb1
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:28453642
+      method: asta_report
+      scope: pharmacological activation of BLA interneuron subsets during fear extinction
+      quote_key: 17860491_f1ffddb9
+  negative_markers:
+  - symbol: Pvalb
+    ncbi_gene_id:
+    sources:
+    - ref: PMID:28453642
+      method: asta_report
+      scope: calbindin+ but not PV+ BLA interneurons activated by OX1R blockade
+      quote_key: 17860491_f1ffddb9
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:28453642
+      method: asta_report
+      scope: GABAergic interneurons expressing calbindin in BLA
+      quote_key: 17860491_f1ffddb9
+    - ref: PMID:33837051
+      method: asta_report
+      scope: full abstract — nt_type inferred from GABAergic census context
+      quote_key: 232283078_00bb8003
+
+# ============================================================
+# Node 5: cea_large_aspiny_neuron
+# ============================================================
+- id: cea_large_aspiny_neuron
+  name: Central amygdala large aspiny neuron
+  definition_basis: CLASSICAL
+  # NEW EVIDENCE: Multiple target-corpus quotes confirm GABAergic identity.
+  # Best morphology source (220976356) is NOT in target corpus — GAP flagged below.
+  # nt_type is MODERATE from convergent sources; morphology from prior ingestion only.
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:20484636
+      method: asta_report
+      scope: developmental origins of amygdala fear circuit neurons
+      quote_key: 17223544_4fda1404
+    - ref: PMID:27053114
+      method: asta_report
+      scope: role of IP3K-A in amygdala emotional behavior
+      quote_key: 3103554_aec310ea
+    - ref: PMID:40686779
+      method: asta_report
+      scope: neuronal physiology of amygdala in injury and pain context
+      quote_key: 280092907_110b0323
+    - ref: PMID:32858950
+      method: asta_report
+      scope: Rho GTPases in amygdala — BLA and CeA neuron composition
+      quote_key: 221366115_197a5821
+    - ref: PMID:37884748
+      method: asta_report
+      scope: molecular atlas of mouse amygdala — 130 neuronal types, CeA GABAergic
+      quote_key: 264517392_57886ed9
+  anatomical_location:
+  - id: UBERON:0002883
+    name: central nucleus of amygdala
+    sources:
+    - ref: PMID:20484636
+      method: asta_report
+      scope: developmental origins of amygdala fear circuit — CeA striatum-like
+      quote_key: 17223544_4fda1404
+
+# ============================================================
+# Node 6: cea_small_aspiny_neuron
+# ============================================================
+- id: cea_small_aspiny_neuron
+  name: Central amygdala small aspiny neuron
+  definition_basis: CLASSICAL
+  # NEW EVIDENCE: Same target-corpus quotes as cea_large_aspiny_neuron confirm
+  # GABAergic identity at CeA level. Size-based distinction from large aspiny
+  # is not directly addressed by any target-corpus quote (morphology GAP).
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:20484636
+      method: asta_report
+      scope: developmental origins of amygdala fear circuit neurons
+      quote_key: 17223544_4fda1404
+    - ref: PMID:27053114
+      method: asta_report
+      scope: role of IP3K-A in amygdala emotional behavior
+      quote_key: 3103554_aec310ea
+    - ref: PMID:40686779
+      method: asta_report
+      scope: neuronal physiology of amygdala in injury and pain context
+      quote_key: 280092907_110b0323
+    - ref: PMID:32858950
+      method: asta_report
+      scope: Rho GTPases in amygdala — BLA and CeA neuron composition
+      quote_key: 221366115_197a5821
+    - ref: PMID:37884748
+      method: asta_report
+      scope: molecular atlas of mouse amygdala — 130 neuronal types, CeA GABAergic
+      quote_key: 264517392_57886ed9
+  anatomical_location:
+  - id: UBERON:0002883
+    name: central nucleus of amygdala
+    sources:
+    - ref: PMID:20484636
+      method: asta_report
+      scope: developmental origins of amygdala fear circuit — CeA striatum-like
+      quote_key: 17223544_4fda1404
+
+# ============================================================
+# Node 7: paralaminar_immature_neuron
+# ============================================================
+- id: paralaminar_immature_neuron
+  name: Paralaminar nucleus immature excitatory neuron
+  definition_basis: CLASSICAL
+  # NEW EVIDENCE: Page et al. 2022 (PMID:35841648) is new in this corpus.
+  # Provides the most specific characterisation of the protracted developmental timeline.
+  morphology:
+    description: >
+      Immature excitatory neuron with protracted postnatal developmental timeline.
+      Present in large numbers at birth in the paralaminar nucleus (PL); some may
+      continue to be born from local progenitors postnatally. Progenitors disappear
+      rapidly in infancy while the immature neurons persist through childhood and
+      adolescence, indicating a protracted maturation schedule.
+    sources:
+    - ref: PMID:35841648
+      method: asta_report
+      scope: characterisation of PL immature excitatory neurons across postnatal development
+      quote_key: 250411527_03961399
+  anatomical_location:
+  - id: UBERON:0002887
+    name: paralaminar nucleus
+    sources:
+    - ref: PMID:35841648
+      method: asta_report
+      scope: immature neurons of the PL persist across postnatal development
+      quote_key: 250411527_03961399
+
+edges: []

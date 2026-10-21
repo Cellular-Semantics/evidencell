@@ -1,0 +1,878 @@
+# Draft KB — medial_temporal_lobe_amygdala (amygdala-specific ASTA report)
+# Source: ASTA deep research report — inputs/deepsearch/Amygdala Cell Types in Humans and Rodents Across Classical and Molecular Dimensions (1).pdf
+# Ingestion date: 2026-05-28
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/medial_temporal_lobe_amygdala/references.json
+# Classical nodes proposed by: asta-report-ingest (amygdala-specific)
+# NOTE: 4 node IDs overlap with kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml:
+#   bla_glutamatergic_principal_neuron, bla_pv_basket_cell, bla_npy_neurogliaform_cell, bla_gabaergic_projection_neuron
+#   These are renamed with "_v2" suffix in this draft pending merge review.
+
+graph_id: amygdala_report_ingest_20260528
+graph_label: Amygdala Cell Types — ASTA Amygdala-Specific Report Ingest Draft
+graph_description: Draft classical cell type nodes proposed from the amygdala-specific ASTA deep research PDF. Separate from
+  the broader medial temporal lobe + amygdala ingest. Pending primary verification and possible merge.
+created_by: asta-report-ingest
+created_date: '2026-05-28'
+status: DRAFT
+nodes:
+- id: bla_glutamatergic_principal_neuron_v2
+  name: Basolateral amygdala glutamatergic principal (pyramidal-like) neuron
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: Glutamatergic
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+    - ref: PMID:25309888
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 1229611_f7a0a034
+    - ref: PMID:25408902
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15449738_6f9bd4af
+  anatomical_location:
+  - name: basolateral amygdala
+    sources:
+    - ref: PMID:25408902
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15449738_6f9bd4af
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 271240390_159f2413
+    - ref: PMID:40352758
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 278109019_1f067e93
+  defining_markers:
+  - symbol: SLC17A7
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:34177472
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 235382885_2970aa11
+    - ref: PMID:26844236
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 31039293_664990c0
+  - symbol: CAMK2A
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:34177472
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 235382885_2970aa11
+    - ref: PMID:26844236
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 31039293_664990c0
+  morphology:
+    description: Spiny multipolar / pyramidal-like neuron with a dominant apical-like dendrite and spiny dendritic tree; long
+      axons with local collaterals projecting to other amygdala regions and remote cortical/subcortical targets. Constitutes
+      ~80-90% of BLA neurons. In the lateral amygdala, somata often lack a clearly pyramidal shape.
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+    - ref: PMID:25309888
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 1229611_f7a0a034
+    - ref: PMID:25408902
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15449738_6f9bd4af
+  electrophysiology:
+    description: Classical pyramidal cell firing pattern in slice recordings; identified as the predominant cell class in
+      BLA whole-cell studies. Biocytin fills show pyramidal to stellate cell bodies.
+    sources:
+    - ref: PMID:1403101
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 6078957_c6dfb56c
+    - ref: PMID:1403101
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 6078957_3d072d3b
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - 10.3390/metabo11120837
+  - PMID:1403101
+  - PMID:17234587
+  - PMID:20507551
+  - PMID:22806915
+  - PMID:22837739
+  - PMID:22960119
+  - PMID:25309888
+  - PMID:25408902
+  - PMID:26844236
+  - PMID:27013983
+  - PMID:32858950
+  - PMID:33691931
+  - PMID:33994955
+  - PMID:34177472
+  - PMID:34220399
+  - PMID:34955766
+  - PMID:36232376
+  - PMID:37798411
+  - PMID:38419794
+  - PMID:38491847
+  - PMID:39012795
+  - PMID:39463931
+  - PMID:40352758
+  - PMID:8627370
+  is_terminal: false
+  notes: Overlaps with existing node "bla_glutamatergic_principal_neuron" in 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml;
+    renamed to "bla_glutamatergic_principal_neuron_v2" pending merge review. Transcriptomic studies (Totty et al., 2024) show
+    glutamatergic pyramidal-like neurons are transcriptionally specialized within the basal, lateral, or accessory basal nuclei.
+    Human/NHP basal nucleus further parcellated into magnocellular (BLmc), intermediate (BLi), and parvicellular (BLpc) subdivisions;
+    rodent BL split into anterior/posterior (BLA/BLP).
+- id: bla_pv_basket_cell_v2
+  name: Basolateral amygdala parvalbumin-positive basket cell
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+  defining_markers:
+  - symbol: PVALB
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+  morphology:
+    description: Perisomatic-targeting inhibitory interneuron innervating principal-cell somata and proximal dendrites. Mutually
+      interconnected via synapses and gap junctions within the PV basket-cell network; avoids innervating CCK basket cells
+      but contacts axo-axonic cells.
+    sources:
+    - ref: PMID:28542195
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 13486665_3f24b68d
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+  electrophysiology:
+    description: Fast-spiking firing pattern characteristic of cortical PV basket cells; provides powerful perisomatic inhibition
+      controlling principal-neuron spiking.
+    sources:
+    - ref: PMID:1403101
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 6078957_d8ca2bac
+  cl_mapping: CL:0000118
+  proposed_cl_term: null
+  definition_references:
+  - PMID:1403101
+  - PMID:22726836
+  - PMID:22837739
+  - PMID:27013983
+  - PMID:28542195
+  - PMID:31636080
+  is_terminal: false
+  notes: Overlaps with existing node "bla_pv_basket_cell" in 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml; renamed
+    to "bla_pv_basket_cell_v2" pending merge review. Estimated 17-20% of GABAergic cells in LA/BA. Forms one of two parallel
+    basket-cell networks alongside CCK basket cells.
+- id: bla_pv_axo_axonic_cell
+  name: Basolateral amygdala parvalbumin-positive axo-axonic (chandelier) cell
+  definition_basis: CLASSICAL
+  species: null
+  defining_markers:
+  - symbol: PVALB
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+  morphology:
+    description: PV-expressing interneuron targeting the axon initial segment of principal neurons; receives synaptic contacts
+      from both PV and CCK basket cells.
+    sources:
+    - ref: PMID:28542195
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 13486665_3f24b68d
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+  cl_mapping: CL:4023036
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22726836
+  - PMID:27013983
+  - PMID:28542195
+  - PMID:31636080
+  is_terminal: false
+  notes: Estimated 5.5-6% of GABAergic cells in LA/BA.
+- id: bla_cck_cb1_basket_cell
+  name: Basolateral amygdala cholecystokinin/CB1+ basket cell
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+  defining_markers:
+  - symbol: CNR1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+  neuropeptides:
+  - symbol: CCK
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+  morphology:
+    description: Perisomatic-targeting basket cell expressing cholecystokinin and CB1 cannabinoid receptor; innervates principal-cell
+      somata and proximal dendrites alongside PV basket cells. Forms a parallel basket-cell network distinct from the PV network;
+      mutually interconnected within CCK group but does not innervate PV basket cells, while contacting axo-axonic cells.
+    sources:
+    - ref: PMID:28542195
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 13486665_3f24b68d
+    - ref: PMID:27013983
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 16327247_9b5e6962
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+  cl_mapping: CL:0000118
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22837739
+  - PMID:27013983
+  - PMID:28542195
+  - PMID:31636080
+  is_terminal: false
+  notes: Estimated 7-9% of GABAergic cells in LA/BA. Heterogeneous - several CCK interneuron subclasses identified in the
+    basal amygdala in fear-extinction work.
+- id: bla_som_dendrite_targeting_interneuron
+  name: Basolateral amygdala somatostatin-positive dendrite-targeting interneuron
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+  defining_markers:
+  - symbol: CALB1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+  neuropeptides:
+  - symbol: SST
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_bf931431
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22837739
+  - PMID:31636080
+  is_terminal: false
+  notes: Estimated 10-16% of GABAergic cells in LA/BA. Distinct from somatostatin/nNOS-expressing GABAergic projection neurons.
+- id: bla_calbindin_dendrite_targeting_interneuron
+  name: Basolateral amygdala calbindin-positive dendrite-targeting interneuron
+  definition_basis: CLASSICAL
+  species: null
+  defining_markers:
+  - symbol: CALB1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22726836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10647550_48ea3c0f
+  morphology:
+    description: Calbindin-positive interneurons targeting dendrites of BLA principal cells; characterized in vivo as a distinct
+      dendrite-targeting class separable by marker content from somatostatin dendrite-targeting cells.
+    sources:
+    - ref: PMID:22726836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10647550_48ea3c0f
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22726836
+  is_terminal: false
+  notes: Overlaps partially with SOM/CB+ interneurons in older marker schemes.
+- id: bla_npy_neurogliaform_cell_v2
+  name: Basolateral amygdala NPY-containing neurogliaform cell
+  definition_basis: CLASSICAL
+  species: null
+  neuropeptides:
+  - symbol: NPY
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_bf931431
+  morphology:
+    description: Neurogliaform interneuron expressing NPY, with the densely arborizing axonal field typical of cortical neurogliaform
+      cells.
+    sources:
+    - ref: PMID:31636080
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 204835327_91ea43a5
+  cl_mapping: CL:0000693
+  proposed_cl_term: null
+  definition_references:
+  - PMID:31636080
+  is_terminal: false
+  notes: Overlaps with existing node "bla_npy_neurogliaform_cell" in 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml;
+    renamed to "bla_npy_neurogliaform_cell_v2" pending merge review. Estimated 14-15% of GABAergic cells in LA/BA. Directly
+    identified among BLA interneurons in CCK-Cre targeting studies.
+- id: bla_vip_cr_interneuron_selective_interneuron
+  name: Basolateral amygdala VIP/calretinin-expressing interneuron-selective interneuron
+  definition_basis: CLASSICAL
+  species: null
+  defining_markers:
+  - symbol: CALB2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+  neuropeptides:
+  - symbol: VIP
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+  - symbol: CCK
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+  morphology:
+    description: Small bipolar or bitufted interneuron coexpressing calretinin, VIP, and often CCK; preferentially targets
+      other interneurons rather than principal cells.
+    sources:
+    - ref: PMID:22837739
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: '11544073_94689603'
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22837739
+  is_terminal: false
+  notes: Estimated 29-38% of GABAergic cells in LA/BA - the largest GABAergic class. Overlaps with the classical 'small bipolar/bitufted
+    CR/CCK/VIP' subgroup.
+- id: bla_gabaergic_projection_neuron_v2
+  name: Basolateral amygdala somatostatin/nNOS-expressing GABAergic projection neuron
+  definition_basis: CLASSICAL
+  species: null
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references: []
+  is_terminal: false
+  notes: Overlaps with existing node "bla_gabaergic_projection_neuron" in 20260528_medial_temporal_lobe_amygdala_report_ingest.yaml;
+    renamed to "bla_gabaergic_projection_neuron_v2" pending merge review. Estimated 5.5-8% of GABAergic cells in LA/BA. Some
+    project to basal forebrain.
+- id: cea_pkc_delta_neuron
+  name: Central amygdala protein kinase C-delta (PKC-delta) neuron
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+    - ref: PMID:25433901
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 442779_deea5502
+  anatomical_location:
+  - name: central amygdala
+    sources:
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_053c1083
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_daaf5612
+  defining_markers:
+  - symbol: PRKCD
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_053c1083
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_daaf5612
+  negative_markers:
+  - symbol: SST
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_053c1083
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+  electrophysiology:
+    description: Predominantly late-firing; corresponds to the physiologically defined CeL-OFF population that reduces firing
+      to fear-conditioned stimuli.
+    sources:
+    - ref: PMID:21068836
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 2270983_0fa016d1
+    - ref: PMID:40780965
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 280558687_8db1d30e
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:21068836
+  - PMID:25433901
+  - PMID:33188006
+  - PMID:38419794
+  - PMID:39463931
+  - PMID:40780965
+  is_terminal: false
+  notes: Largely non-overlapping with SOM+ CeL neurons; together with SOM cells these account for most CeL neurons.
+- id: cea_som_neuron
+  name: Central amygdala somatostatin-positive neuron
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:23354330
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10650261_f38d6b66
+    - ref: PMID:25433901
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 442779_deea5502
+  anatomical_location:
+  - name: central amygdala
+    sources:
+    - ref: PMID:23354330
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10650261_f38d6b66
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_053c1083
+    - ref: PMID:40780965
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 280558687_e43f631e
+  negative_markers:
+  - symbol: PRKCD
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_053c1083
+  neuropeptides:
+  - symbol: SST
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:23354330
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10650261_f38d6b66
+    - ref: PMID:33188006
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 209598438_053c1083
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_daaf5612
+  morphology:
+    description: GABAergic somatostatin-expressing neuron of CeL/CeC; receives potentiated excitatory input from lateral amygdala
+      during fear conditioning and inhibits CeL output to disinhibit CeM and drive fear expression (CeL-ON-like role).
+    sources:
+    - ref: PMID:23354330
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 10650261_f38d6b66
+  electrophysiology:
+    description: Late-firing or regular-spiking.
+    sources:
+    - ref: PMID:40780965
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 280558687_8db1d30e
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:23354330
+  - PMID:25433901
+  - PMID:33188006
+  - PMID:38419794
+  - PMID:40780965
+  is_terminal: false
+  notes: Largely non-overlapping with PKC-delta neurons; constitutes a large share of lateral CeA neurons.
+- id: cea_crf_neuron
+  name: Central amygdala corticotropin-releasing factor (CRF) neuron
+  definition_basis: CLASSICAL
+  species: null
+  neuropeptides:
+  - symbol: CRH
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_daaf5612
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:38419794
+  is_terminal: false
+  notes: Often partially overlaps with other neuropeptide-defined CeA populations; not exhaustively characterized here.
+- id: cea_medium_spiny_neuron
+  name: Central amygdala medium spiny neuron
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:25309888
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 1229611_f7a0a034
+    - ref: PMID:25433901
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 442779_deea5502
+  anatomical_location:
+  - name: central amygdala
+    sources:
+    - ref: PMID:32751957
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 220976356_f1fe3fe1
+  morphology:
+    description: Ovoid soma with several primary nonspiny dendrites that branch into spiny secondary and tertiary dendrites;
+      axons begin branching before leaving the nucleus. Predominant cell type in the lateral sector of CeA - the striatal-like
+      principal class.
+    sources:
+    - ref: PMID:32751957
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 220976356_f1fe3fe1
+    - ref: PMID:25408902
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15449738_6b25ac98
+    - ref: PMID:22806915
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 19021055_bfe69abc
+  cl_mapping: CL:1001474
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22806915
+  - PMID:25309888
+  - PMID:25408902
+  - PMID:25433901
+  - PMID:32751957
+  is_terminal: false
+  notes: Striatum-like morphology consistent with CeA's striatopallidal-like organization.
+- id: cea_large_aspiny_neuron
+  name: Central amygdala large aspiny neuron
+  definition_basis: CLASSICAL
+  species: null
+  anatomical_location:
+  - name: central amygdala
+    sources:
+    - ref: PMID:32751957
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 220976356_f1fe3fe1
+  morphology:
+    description: Big soma with thick aspiny primary dendrites branching to secondary processes that are only seldom spiny.
+    sources:
+    - ref: PMID:32751957
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 220976356_f1fe3fe1
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:32751957
+  is_terminal: false
+  notes: Classical morphological class described alongside medium spiny and small aspiny neurons.
+- id: cea_small_aspiny_neuron
+  name: Central amygdala small aspiny neuron
+  definition_basis: CLASSICAL
+  species: null
+  anatomical_location:
+  - name: central amygdala
+    sources:
+    - ref: PMID:32751957
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 220976356_f1fe3fe1
+  morphology:
+    description: Small soma with aspiny dendrites; third classical morphological cell type of CeA after medium spiny and large
+      aspiny neurons.
+    sources:
+    - ref: PMID:32751957
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 220976356_f1fe3fe1
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:32751957
+  is_terminal: false
+  notes: Likely overlaps with fast-spiking internuncial neurons of CeA, though direct mapping not given.
+- id: intercalated_cell_mass_neuron
+  name: Intercalated cell mass FOXP2+ GABAergic interneuron
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: GABAergic
+    sources:
+    - ref: PMID:25408902
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15449738_b01f91f5
+    - ref: PMID:33691931
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 230972365_dfd1f8d3
+  anatomical_location:
+  - name: intercalated cell masses
+    sources:
+    - ref: PMID:25408902
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15449738_b01f91f5
+    - ref: PMID:33691931
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 230972365_dfd1f8d3
+    - ref: 10.3390/metabo11120837
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 244936719_daa31622
+  defining_markers:
+  - symbol: FOXP2
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:32858950
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 221366115_e5c2cd9e
+    - ref: PMID:39463931
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 273531817_88e4457f
+  - symbol: DRD1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:32858950
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 221366115_e5c2cd9e
+    - ref: PMID:39463931
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 273531817_88e4457f
+  - symbol: OPRM1
+    ncbi_gene_id: null
+    sources:
+    - ref: PMID:32858950
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 221366115_e5c2cd9e
+    - ref: PMID:39463931
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 273531817_88e4457f
+  morphology:
+    description: Densely packed small GABAergic neuron forming discrete clusters at the borders between basolateral and central
+      amygdala. Often noted for dopamine D1 receptor and mu-opioid receptor expression; recent transcriptomics distinguishes
+      FOXP2+ subtypes specific to ITCs.
+    sources:
+    - ref: PMID:25408902
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15449738_b01f91f5
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - 10.3390/metabo11120837
+  - PMID:25408902
+  - PMID:32858950
+  - PMID:33691931
+  - PMID:39463931
+  is_terminal: false
+  notes: Recent human/NHP transcriptomic work identifies distinct FOXP2+ ITC subtypes; ITCs are treated as a specialized inhibitory
+    population rather than an extension of neighboring nuclei.
+- id: mea_glutamatergic_projection_neuron
+  name: Medial amygdala glutamatergic projection neuron
+  definition_basis: CLASSICAL
+  species: null
+  nt_type:
+    name_in_source: Glutamatergic
+    sources:
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 271240390_159f2413
+  anatomical_location:
+  - name: medial amygdala
+    sources:
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 271240390_159f2413
+    - ref: PMID:38419794
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 267685584_678b0ee4
+  morphology:
+    description: Pyramidal-like glutamatergic projection neuron of rodent medial amygdala; derived from third-ventricle neuroepithelium
+      and also populates the BST and hypothalamus.
+    sources:
+    - ref: PMID:39012795
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 271240390_159f2413
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_684e0476
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_fe94a85e
+  electrophysiology:
+    description: Heterogeneous slice ephys reported in MeA (pyramidal-like, late-firing, first-firing classes - Niimi et al.,
+      2012); explicit ephys for the glutamatergic subset not isolated.
+    sources:
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_4dcb9d77
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_bb7f3c79
+    - ref: PMID:22960119
+      method: asta_report
+      scope: amygdala literature synthesis
+      quote_key: 15738241_fe94a85e
+  cl_mapping: null
+  proposed_cl_term: null
+  definition_references:
+  - PMID:22960119
+  - PMID:38419794
+  - PMID:39012795
+  is_terminal: false
+  notes: Minority class - MeA is predominantly GABAergic but contains this distinct glutamatergic projection population.
+edges: []
