@@ -25,6 +25,7 @@ import yaml
 
 __all__ = [
     "render_top_n_hits_figure",
+    "render_anat_heatmap_figure",
 ]
 
 
@@ -143,6 +144,132 @@ def render_top_n_hits_figure(
         "framework_version": framework_version,
         "caption": caption or title,
         "renderer": "evidencell.figures.render_top_n_hits_figure",
+    }
+    meta_path.write_text(yaml.safe_dump(meta, sort_keys=False), encoding="utf-8")
+
+    return png_path, meta_path
+
+
+def render_anat_heatmap_figure(
+    rows: list[dict],
+    out_dir: Path,
+    node_id: str,
+    *,
+    taxonomy_id: str,
+    metric: str,
+    cutoff: float,
+    vmax: float,
+    caption: str | None = None,
+    framework_version: str = "",
+) -> tuple[Path, Path]:
+    """Render an anatomy-ontology heat-map as an indented coloured tree PNG.
+
+    `rows` is the DFS-flattened tree from
+    `evidencell.anat_heatmap.flatten_tree`: each row has ``depth``, ``anat_id``,
+    ``label``, ``value``. Each region is drawn as a coloured swatch (value →
+    `evidencell.anat_heatmap.RAMP` bucket) at an x-offset set by its depth, with
+    the percentage inside the swatch and the region label to its right.
+
+    Outputs (content-hashed for report-sync, like `render_top_n_hits_figure`):
+      out_dir/{node_id}_anat_{metric}_{sha8}.png
+      out_dir/{node_id}_anat_{metric}_{sha8}.meta.yaml
+
+    Returns (png_path, meta_path). No-op if a file with the matching content
+    hash already exists.
+    """
+    import matplotlib
+    matplotlib.use("Agg")  # no display backend; safe in CI / headless
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle
+
+    from evidencell.anat_heatmap import RAMP, bucket_index
+
+    if not rows:
+        raise ValueError("Cannot render anat heat-map for empty rows list")
+
+    payload = {
+        "node_id": node_id,
+        "taxonomy_id": taxonomy_id,
+        "metric": metric,
+        "cutoff": cutoff,
+        "vmax": vmax,
+        "rows": rows,
+    }
+    sha8 = _content_hash(payload)
+    safe_metric = metric.replace("/", "_")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    png_path = out_dir / f"{node_id}_anat_{safe_metric}_{sha8}.png"
+    meta_path = out_dir / f"{node_id}_anat_{safe_metric}_{sha8}.meta.yaml"
+
+    if png_path.exists() and meta_path.exists():
+        return png_path, meta_path
+
+    n = len(rows)
+    max_depth = max(r["depth"] for r in rows)
+    indent = 0.28            # x units per depth level
+    chip_w = 1.3             # swatch width in x units
+    label_gap = 0.12
+
+    # Width grows with deepest indent + longest label; height with row count.
+    longest_label = max(len(r["label"]) for r in rows)
+    fig_w = 3.0 + indent * max_depth + chip_w + 0.075 * longest_label
+    fig_h = 0.30 * n + 0.7
+    fig, ax = plt.subplots(figsize=(fig_w, fig_h))
+
+    for i, row in enumerate(rows):
+        y = n - 1 - i        # row 0 at the top
+        x0 = row["depth"] * indent
+        idx = bucket_index(row["value"], vmax, len(RAMP))
+        r, g, b = RAMP[idx]
+        face = (r / 255, g / 255, b / 255)
+        text_col = "black" if idx >= 5 else "white"
+        # Faint indentation guides connecting nesting levels.
+        for d in range(row["depth"]):
+            ax.plot(
+                [d * indent + chip_w * 0.04] * 2,
+                [y - 0.5, y + 0.5],
+                color="#cccccc", linewidth=0.5, zorder=0,
+            )
+        ax.add_patch(
+            Rectangle(
+                (x0, y - 0.36), chip_w, 0.72,
+                facecolor=face, edgecolor="#33333344", linewidth=0.4, zorder=2,
+            )
+        )
+        ax.text(
+            x0 + chip_w / 2, y, f"{row['value'] * 100:.1f}%",
+            ha="center", va="center", fontsize=7.5, color=text_col, zorder=3,
+        )
+        ax.text(
+            x0 + chip_w + label_gap, y, row["label"],
+            ha="left", va="center", fontsize=8, color="#222222", zorder=3,
+        )
+
+    ax.set_xlim(-0.1, indent * max_depth + chip_w + label_gap + 0.075 * longest_label + 0.5)
+    ax.set_ylim(-0.7, n)
+    ax.axis("off")
+    title = caption or (
+        f"{node_id} — soma distribution ({metric} ≥ {cutoff * 100:.0f}%)"
+    )
+    ax.set_title(title, fontsize=10, loc="left")
+    fig.tight_layout()
+    fig.savefig(png_path, dpi=180, bbox_inches="tight")
+    plt.close(fig)
+
+    from datetime import datetime, timezone
+    meta = {
+        "figure_kind": "anat_heatmap",
+        "node_id": node_id,
+        "taxonomy_id": taxonomy_id,
+        "metric": metric,
+        "cutoff": cutoff,
+        "vmax": vmax,
+        "inputs_sha": sha8,
+        "n_rows": n,
+        "rendered_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "framework_version": framework_version,
+        "caption": caption or title,
+        "renderer": "evidencell.figures.render_anat_heatmap_figure",
     }
     meta_path.write_text(yaml.safe_dump(meta, sort_keys=False), encoding="utf-8")
 

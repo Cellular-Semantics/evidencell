@@ -805,6 +805,86 @@ transfer" row. Any new EvidenceItem subclass added to the schema surfaces here
 without editing this workflow — the renderer extracts the necessary fields
 generically and the synthesis subagent populates one row per item.
 
+**4b-ii. Soma-distribution heat-map (optional per survivor — informativeness-gated)**
+
+A heat-map of the atlas target's soma distribution painted onto the brain
+anatomy ontology can support the Soma location row of Table 1 — but ONLY when
+the distribution is spatially specific enough to be identity-informative. A
+broadly-distributed cluster produces a huge, uninformative figure; do not
+render one blindly. For each survivor whose target accession is set
+(`edges[*].node_b_accession` + `edges[*].node_b_taxonomy_id`):
+
+1. **Read the distribution summary first (no render):**
+
+   ```bash
+   just anat-heatmap {node_b_accession} {node_b_taxonomy_id} --root MBA:567 --summary
+   ```
+
+   This is also the gate: if the command **errors** (no soma-distribution data
+   for this accession, or a stale/unbuilt taxonomy DB — the `anat` table has no
+   usable `cell_ratio`), the atlas target carries no MERFISH soma distribution;
+   **skip the heat-map** for this survivor and do not mention it. Do NOT gate on
+   `graph_meta.has_merfish_location` — that flag reports classical-side
+   (stub-level) location data, not whether the atlas target has soma
+   distribution in the taxonomy DB, which is what this figure draws on.
+
+   On success it emits JSON: `finest_dominant_region` (deepest region holding
+   ≥ 50% of cells), `max_region`, `region_counts` at rising cutoffs,
+   `figure_rows_by_cutoff`, and a `recommended_cutoff` that keeps the figure
+   within the row budget.
+
+2. **Decide whether a figure is informative.** Use the summary, not a render:
+   - **Focal / discriminating** — `finest_dominant_region` is a deep region
+     (depth ≳ 4) holding a clear majority (e.g. *Striatum ventral region*,
+     56%, depth 5). The soma location discriminates identity → render the
+     figure and cite it from the Soma location row.
+   - **Broadly distributed** — no deep region holds a majority (only shallow
+     regions like *Cerebrum*/*brain* are high), and `region_counts` stays high
+     at low cutoffs. Fine localisation does NOT discriminate identity →
+     **do not render**; instead note in prose that the type is broadly
+     distributed and soma location is not diagnostic for this mapping.
+
+3. **Render at the recommended (or a higher) cutoff**, capped so it can't
+   explode, into the report's figures dir:
+
+   ```bash
+   just anat-heatmap {node_b_accession} {node_b_taxonomy_id} \
+     --root MBA:567 --cutoff {recommended_cutoff} \
+     --figure-dir figures \
+     --caption "{classical_node_name} target ({node_b_accession}) — soma distribution"
+   ```
+
+   A row-budget guard (`--max-rows`, default 28) is **on by default**: the
+   command fails rather than emit a giant figure for a broadly-distributed
+   type. If it fails, raise the cutoff and retry, or fall back to the
+   broadly-distributed prose note. (`--max-rows 0` disables the guard — do not
+   use it in reports.) The PNG filename is content-hashed
+   (`{accession}_anat_{metric}_{sha8}.png`) with a `.meta.yaml` sidecar, like
+   the AT figure.
+
+4. **Embed** below Table 1, referenced from the Soma location row:
+
+   ```markdown
+   ![Soma distribution for {classical_node_name} target]({relative_path_to_png})
+
+   *Soma distribution of {node_b_accession} across the brain anatomy ontology
+   (regions ≥ {cutoff*100:.0f}% of cluster cells; colour = cell fraction). The
+   cells concentrate in {finest_dominant_region.label} ({ratio*100:.0f}%),
+   consistent with the classical type's reported soma location.*
+   ```
+
+5. **Relate it to the mapping verdict** (interpretation, not just description):
+   - For a classical type that is itself broadly distributed (a `broadMatch` /
+     1:n mapping), a minority of target cells in the classical type's region is
+     **acceptable / consistent** — say so.
+   - But when assessing an **exact match** (`skos:exactMatch`), a minority in
+     the expected region is **evidence against** the exact match (the bulk of
+     the cluster lies elsewhere). Surface this in the verdict rationale, not
+     buried in the caption.
+
+Soma location is MERFISH soma position only (see the Location note); it does
+not capture projection targets. Keep the interpretive line to ≤ 2 sentences.
+
 **Subcluster concordance note (mandatory for supertype candidates):**
 
 Immediately after the property alignment table, add one sentence summarising how many
