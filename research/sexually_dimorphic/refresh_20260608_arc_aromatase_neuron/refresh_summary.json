@@ -1,0 +1,127 @@
+{
+  "graph": "kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml",
+  "node_id": "arc_aromatase_neuron",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_5303",
+          "CS20230722_CLUS_1569",
+          "CS20230722_CLUS_1570",
+          "CS20230722_CLUS_1571",
+          "CS20230722_CLUS_1683"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml arc_aromatase_neuron CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/sexually_dimorphic/refresh_20260608_arc_aromatase_neuron/discovery_candidates_rank0.json",
+          "  emit-stage-b: wrote 5 edge(s) + 5 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 1,
+        "skipped_details": [
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_cs20230722_supt_0486",
+            "taxonomy_type": "CS20230722_SUPT_0486"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_5303",
+            "taxonomy_type": "CS20230722_CLUS_5303"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_1569",
+            "taxonomy_type": "CS20230722_CLUS_1569"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_1570",
+            "taxonomy_type": "CS20230722_CLUS_1570"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_1571",
+            "taxonomy_type": "CS20230722_CLUS_1571"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_1683",
+            "taxonomy_type": "CS20230722_CLUS_1683"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_SUPT_1190",
+          "CS20230722_SUPT_1173",
+          "CS20230722_SUPT_1174",
+          "CS20230722_SUPT_0427",
+          "CS20230722_SUPT_0495"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml arc_aromatase_neuron CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/sexually_dimorphic/refresh_20260608_arc_aromatase_neuron/discovery_candidates_rank1.json",
+          "  emit-stage-b: wrote 5 edge(s) + 5 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 5,
+        "edges_skipped_taxtype_not_in_topk": 6,
+        "skipped_details": [
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_cs20230722_supt_0486",
+            "taxonomy_type": "CS20230722_SUPT_0486"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_5303",
+            "taxonomy_type": "CS20230722_CLUS_5303"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_1569",
+            "taxonomy_type": "CS20230722_CLUS_1569"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_1570",
+            "taxonomy_type": "CS20230722_CLUS_1570"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_1571",
+            "taxonomy_type": "CS20230722_CLUS_1571"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_CLUS_1683",
+            "taxonomy_type": "CS20230722_CLUS_1683"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_SUPT_1190",
+            "taxonomy_type": "CS20230722_SUPT_1190"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_SUPT_1173",
+            "taxonomy_type": "CS20230722_SUPT_1173"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_SUPT_1174",
+            "taxonomy_type": "CS20230722_SUPT_1174"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_SUPT_0427",
+            "taxonomy_type": "CS20230722_SUPT_0427"
+          },
+          {
+            "edge_id": "edge_arc_aromatase_neuron_to_CS20230722_SUPT_0495",
+            "taxonomy_type": "CS20230722_SUPT_0495"
+          }
+        ]
+      }
+    }
+  }
+}

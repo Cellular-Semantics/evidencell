@@ -1,0 +1,135 @@
+{
+  "graph": "kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml",
+  "node_id": "sdn_poa_calbindin_neuron",
+  "taxonomy_id": "CCN20230722",
+  "ranks": {
+    "rank0": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_CLUS_1304",
+          "CS20230722_CLUS_1305",
+          "CS20230722_CLUS_1303",
+          "CS20230722_CLUS_1310",
+          "CS20230722_CLUS_1542"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml sdn_poa_calbindin_neuron CCN20230722 0 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/sexually_dimorphic/refresh_20260608_sdn_poa_calbindin_neuron/discovery_candidates_rank0.json",
+          "  emit-stage-b: wrote 5 edge(s) + 5 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 6,
+        "edges_skipped_taxtype_not_in_topk": 1,
+        "skipped_details": [
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_cs20230722_supt_0423",
+            "taxonomy_type": "CS20230722_SUPT_0423"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_cs20230722_clus_1550",
+            "taxonomy_type": "CS20230722_CLUS_1550"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1304",
+            "taxonomy_type": "CS20230722_CLUS_1304"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1305",
+            "taxonomy_type": "CS20230722_CLUS_1305"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1303",
+            "taxonomy_type": "CS20230722_CLUS_1303"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1310",
+            "taxonomy_type": "CS20230722_CLUS_1310"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1542",
+            "taxonomy_type": "CS20230722_CLUS_1542"
+          }
+        ]
+      }
+    },
+    "rank1": {
+      "stage_a": {
+        "n_candidates": 50,
+        "top5": [
+          "CS20230722_SUPT_0360",
+          "CS20230722_SUPT_0420",
+          "CS20230722_SUPT_0422",
+          "CS20230722_SUPT_0421",
+          "CS20230722_SUPT_0486"
+        ]
+      },
+      "emit_b": {
+        "last_lines": [
+          "uv run python -m evidencell.stage_b_emit /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml sdn_poa_calbindin_neuron CCN20230722 1 5 --discovery-json /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/research/sexually_dimorphic/refresh_20260608_sdn_poa_calbindin_neuron/discovery_candidates_rank1.json",
+          "  emit-stage-b: wrote 5 edge(s) + 4 stub node(s) to /Users/do12/Documents/GitHub/BICAN_agentic_framework_planning/evidencell/kb/graphs/sexually_dimorphic/20260425_sexually_dimorphic_report_ingest.yaml"
+        ]
+      },
+      "refresh_pc": {
+        "edges_refreshed": 6,
+        "edges_skipped_taxtype_not_in_topk": 6,
+        "skipped_details": [
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_cs20230722_clus_1550",
+            "taxonomy_type": "CS20230722_CLUS_1550"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1304",
+            "taxonomy_type": "CS20230722_CLUS_1304"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1305",
+            "taxonomy_type": "CS20230722_CLUS_1305"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1303",
+            "taxonomy_type": "CS20230722_CLUS_1303"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1310",
+            "taxonomy_type": "CS20230722_CLUS_1310"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_CLUS_1542",
+            "taxonomy_type": "CS20230722_CLUS_1542"
+          }
+        ],
+        "refreshed_details": [
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_cs20230722_supt_0423",
+            "taxonomy_type": "CS20230722_SUPT_0423"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_SUPT_0360",
+            "taxonomy_type": "CS20230722_SUPT_0360"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_SUPT_0420",
+            "taxonomy_type": "CS20230722_SUPT_0420"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_SUPT_0422",
+            "taxonomy_type": "CS20230722_SUPT_0422"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_SUPT_0421",
+            "taxonomy_type": "CS20230722_SUPT_0421"
+          },
+          {
+            "edge_id": "edge_sdn_poa_calbindin_neuron_to_CS20230722_SUPT_0486",
+            "taxonomy_type": "CS20230722_SUPT_0486"
+          }
+        ]
+      }
+    }
+  }
+}
