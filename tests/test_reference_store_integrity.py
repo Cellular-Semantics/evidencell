@@ -541,17 +541,6 @@ def test_retired_monolith_path_is_rejected_not_silently_honoured(tmp_path):
     assert not (d / "references.json").exists()
 
 
-def test_term_index_is_looked_up_inside_the_region(tmp_path):
-    """`refs_path.parent / term_index.json` resolved to references/ after the
-    cutover, so a per-region index would never have been found."""
-    from evidencell.validate import check_md_ids
-    d = _split_region(tmp_path)
-    (d / "term_index.json").write_text(json.dumps({"CL:0000540": "neuron"}))
-    errors = check_md_ids({"curie_ids": ["UBERON:0000955"]}, d)
-    assert any("UBERON:0000955" in e for e in errors), (
-        "a term_index.json beside papers/ must be consulted")
-
-
 def test_migration_refuses_a_partially_split_region(tmp_path):
     """Rollback used to rmtree papers/ and quotes/ wholesale, which would
     delete pre-existing content the migration never wrote."""

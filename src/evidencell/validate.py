@@ -855,6 +855,139 @@ def validate_terms(
         return result.returncode == 0, output
 
 
+# ── Ontology-term validation for reports ─────────────────────────────────────
+
+def _oak_adapters(oak_config_path: Path) -> dict[str, str] | None:
+    """prefix -> OAK adapter string, from conf/oak_config.yaml.
+
+    Only prefixes listed there are validated. An empty adapter means
+    "deliberately not validated"; an unlisted prefix is not an ontology at all
+    — report CURIE syntax matches PMID:12345678 just as well as CL:0000540.
+
+    Returns None when the config file is absent — distinct from a config that
+    lists no usable adapters, which is a deliberate state rather than a
+    missing one, and must not be reported as unavailable.
+    """
+    if not oak_config_path.exists():
+        return None
+    try:
+        cfg = yaml.safe_load(oak_config_path.read_text(encoding="utf-8")) or {}
+        adapters = cfg.get("ontology_adapters") or {}
+        # Empty values are kept: `GEO: ""` means "declared, deliberately not
+        # validated", which is different from the key being absent entirely.
+        return {k: (v or "") for k, v in adapters.items() if isinstance(v, str)}
+    except (yaml.YAMLError, OSError, AttributeError):
+        # Unreadable or wrong-shaped config. Treated as absent so the caller
+        # reports it as unchecked; raising here would put a traceback where
+        # the hook owes an allow/block verdict, and would abort a whole sweep
+        # on the first report carrying a CURIE.
+        return None
+
+
+def _adapter_available(adapter: str, project_root: Path) -> bool:
+    """Whether an adapter's backing data is on disk."""
+    for prefix in _FILE_ADAPTER_PREFIXES:
+        if adapter.startswith(prefix):
+            return (project_root / adapter.split(":", 1)[1]).exists()
+    if adapter.startswith(_SQLITE_OBO_PREFIX):
+        return _semsql_db_path(adapter[len(_SQLITE_OBO_PREFIX):]).exists()
+    # Unknown scheme (ols:, ubergraph:, bioportal:, an absolute sqlite path…).
+    # Assume reachable and let the lookup decide, matching oak_dbs_available()
+    # above — reporting "run `just fetch-oak-dbs`" for a remote adapter would
+    # be both wrong and unactionable.
+    return True
+
+
+def check_ontology_terms(
+    curies: list[str],
+    oak_config_path: Path,
+) -> tuple[list[str], dict[str, dict]]:
+    """Resolve ontology CURIEs against OAK. Returns (errors, unavailable).
+
+    Replaces the term_index.json lookup, which had no writer and so never ran.
+    Uses the same adapters that validate KB YAML, so a term is checked against
+    the live ontology rather than a snapshot that can go stale — and labels do
+    move (see `Update CL:4310096 label after upstream rename` on main).
+
+    `unavailable` maps prefix -> {"adapter", "terms", "reason"} for prefixes
+    whose backing data is absent, so the caller can report what it could not
+    check instead of passing vacuously. Structured rather than prose because a
+    sweep needs to aggregate it across files and say it once. Per prefix, not
+    all-or-nothing: a missing MBA file must not silently disable CL and UBERON
+    checking too.
+    """
+    if not curies:
+        return [], {}
+
+    adapters = _oak_adapters(oak_config_path)
+    if adapters is None:
+        return [], {"*": {"adapter": "", "terms": sorted(set(curies)),
+                          "reason": f"{oak_config_path} not found"}}
+    if not adapters:
+        # Parsed but lists no usable adapter — a renamed key or a truncated
+        # file looks exactly like this. Report it: silently checking nothing
+        # is the failure mode this check exists to remove.
+        return [], {"*": {"adapter": "", "terms": sorted(set(curies)),
+                          "reason": f"{oak_config_path} lists no usable "
+                                    f"ontology_adapters"}}
+
+    project_root = oak_config_path.parent.parent
+    by_prefix: dict[str, list[str]] = {}
+    for curie in curies:
+        by_prefix.setdefault(curie.split(":")[0], []).append(curie)
+
+    errors: list[str] = []
+    unavailable: dict[str, dict] = {}
+    cache: dict[str, object] = {}
+
+    for prefix, terms in sorted(by_prefix.items()):
+        adapter_str = adapters.get(prefix)
+        if not adapter_str:
+            # Absent from the config: not an ontology prefix at all (PMID …).
+            # Present but empty: declared and deliberately not validated.
+            continue
+        if not _adapter_available(adapter_str, project_root):
+            unavailable[prefix] = {
+                "adapter": adapter_str, "terms": sorted(set(terms)),
+                "reason": "backing data not on disk; run `just fetch-oak-dbs`",
+            }
+            continue
+        try:
+            if adapter_str not in cache:
+                from oaklib import get_adapter  # heavy import; only when needed
+                cache[adapter_str] = get_adapter(adapter_str)
+            adapter = cache[adapter_str]
+        except Exception as exc:  # noqa: BLE001 - adapter construction is third-party
+            unavailable[prefix] = {
+                "adapter": adapter_str, "terms": sorted(set(terms)),
+                "reason": f"adapter failed to load: {exc}",
+            }
+            continue
+
+        prefix_errors: list[str] = []
+        for curie in sorted(set(terms)):
+            try:
+                label = adapter.label(curie)
+            except Exception as exc:  # noqa: BLE001
+                # Discard this prefix's findings entirely. Keeping the ones
+                # gathered before the failure would present a partial scan as
+                # authoritative while the rest of the prefix went unexamined.
+                prefix_errors = []
+                unavailable[prefix] = {
+                    "adapter": adapter_str, "terms": sorted(set(terms)),
+                    "reason": f"lookup failed at {curie}: {exc}; "
+                              f"no term of this prefix was checked",
+                }
+                break
+            if not label:
+                prefix_errors.append(
+                    f"Ontology term '{curie}' does not resolve in {adapter_str}. "
+                    f"Verify it against the live ontology before citing it."
+                )
+        errors.extend(prefix_errors)
+    return errors, unavailable
+
+
 # ── Markdown annotation parsing ────────────────────────────────────────────────
 
 # Blockquote attribution line: starts with `> —` (em-dash)
@@ -982,7 +1115,7 @@ def check_md_ids(
       1. Unannotated blockquotes — always an error
       2. quote_keys — existence in references.json
       3. pmids — existence in references.json
-      4. curie_ids — if term_index.json exists beside refs_path
+      4. (curie_ids are handled by check_ontology_terms, not here)
       5. accessions — if kb_nodes dict provided
       6. gene_symbols — (reserved; not yet implemented)
 
@@ -1028,19 +1161,10 @@ def check_md_ids(
                     "Add the reference through the validated ingest path first."
                 )
 
-    # 4. curie_ids — checked against term_index.json if present
-    term_index_path = refs_path / "term_index.json"
-    if term_index_path.exists() and annotations.get("curie_ids"):
-        try:
-            term_index: dict = json.loads(term_index_path.read_text(encoding="utf-8"))
-            for curie in annotations["curie_ids"]:
-                if curie not in term_index:
-                    errors.append(
-                        f"Ontology term '{curie}' not found in term_index.json. "
-                        "Verify the term with runoak before using it."
-                    )
-        except (json.JSONDecodeError, OSError):
-            pass  # Corrupt index — skip silently; not a report author's fault
+    # 4. curie_ids are validated against OAK by check_ontology_terms(), which
+    #    callers invoke separately so they can also report which prefixes were
+    #    unavailable. The term_index.json this once used had no writer and so
+    #    never ran (issue #142).
 
     # 5. accessions — checked against kb_nodes if provided
     if kb_nodes is not None:
