@@ -1,0 +1,139 @@
+# Draft KB — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Sex_dimorphic_neurons_hypothalamus_ast_report.pdf
+# Ingestion date: 2026-04-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Qualifying filter: clear sex bias, supported by full paper (conference abstract-only nodes excluded)
+# Excluded: arc_kndy_neuron (not sexually dimorphic in cell number), mpoa_galanin_neuron (sex ratio unclear),
+#   poa_pacap_vip_neuron (fish-only evidence), bnst_kiss1_neuron (abstract-only),
+#   lateral_septum_kiss1_neuron (abstract-only)
+
+name: "Sexually dimorphic hypothalamic and limbic neurons — draft KB"
+description: >
+  Evidence graph capturing classically defined sexually dimorphic neuron types
+  in the hypothalamus and connected limbic regions (BNST, lateral septum).
+  Nodes proposed from a single ASTA deep-research report; properties are
+  literature-derived and have not yet been confirmed against primary papers
+  or mapped to a community atlas. No mapping edges populated in this draft.
+target_atlas: "WMBv1"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (predominantly mouse evidence; rat for some studies)"
+
+creation_date: "2026-04-25"
+nodes:
+  - id: arc_aromatase_neuron
+    name: "Arcuate aromatase neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:223
+        label: "Arcuate hypothalamic nucleus"
+        name_in_source: "arcuate nucleus (adjacent to kisspeptin neurons)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_5aec04ab"
+    defining_markers:
+      - symbol: Cyp19a1
+        ncbi_gene_id: "NCBIGene:13075"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:34561233"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237626479_5aec04ab"
+    morphology:
+      description: >
+        Male-biased sexually dimorphic cluster of aromatase neurons in the arcuate
+        nucleus, adjacent to kisspeptin neurons. Part of a broader network of
+        approximately 6,000 aromatase neurons across hypothalamus and amygdala.
+        Becomes sexually dimorphic by birth. Male arcuate aromatase neurons convert
+        testosterone to estrogen locally to regulate kisspeptin neuron activity.
+      sources:
+        - ref: "PMID:34561233"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "237626479_5aec04ab"
+    cl_mapping:
+    is_terminal: false
+    definition_references:
+      - "PMID:34561233"
+    notes: >
+      Male-biased dimorphism. Single primary source (Wartenberg 2021) for the
+      sexually dimorphic ARC aromatase cluster. Part of a broader aromatase network
+      spanning hypothalamus and amygdala. No CL term — candidate for new term.
+
+  - id: CS20230722_SUPT_0486
+    name: "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0486
+    taxonomy_level: SUPERTYPE
+
+edges:
+  - id: edge_arc_aromatase_neuron_to_cs20230722_supt_0486
+    lit_type: arc_aromatase_neuron
+    taxonomy_type: CS20230722_SUPT_0486
+    relationship: evidencell:UncertainRelationship
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          No WMBv1 supertype in the ARH (MBA:223) carries Cyp19a1 as a defining marker.
+          A full DB scan confirmed all Cyp19a1-expressing clusters are in POA and periventricular
+          zones. SUPT_0486 is proposed because child cluster CLUS_1907 carries Cyp19a1 as a
+          defining marker and supertype-level Cyp19a1=1.15. Critical anatomical discordance:
+          the classical type is in MBA:223 (ARH) but SUPT_0486 is in PVpo-VMPO-MPN. Both
+          relationship and confidence are UNCERTAIN.
+    property_comparisons:
+      - property: location_MBA223_ARH
+        node_a_value: "MBA:223 (Arcuate hypothalamic nucleus)"
+        node_b_value: "MBA:133 PVpo n=64; MBA:515 MPN n=37; MBA:272 AVPV n=16 — no MBA:223 cells"
+        alignment: DISCORDANT
+        notes: >
+          Critical anatomical discordance. Classical type in ARH; SUPT_0486 in periventricular
+          preoptic zone. Possible explanations: MERFISH registration artefact at ARH/
+          periventricular boundary; or aromatase neurons form a transcriptomically coherent
+          pan-hypothalamic network not segregated by anatomical zone in WMBv1.
+      - property: marker_Cyp19a1
+        node_a_value: "POSITIVE (transcript, primary defining marker)"
+        node_b_value: "precomputed mean_expression=1.15; child CLUS_1907 has Cyp19a1 as defining marker"
+        alignment: APPROXIMATE
+        notes: >
+          Best available atlas match for Cyp19a1 expression; no ARH supertype shows higher
+          Cyp19a1 expression in full DB scan.
+    caveats:
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          The classical type is defined in MBA:223 (ARH) but SUPT_0486 is in the periventricular
+          preoptic zone. The mapping is proposed in the absence of any ARH-specific Cyp19a1-
+          positive atlas cluster. MERFISH registration artefacts at the ARH/periventricular
+          boundary, or a pan-hypothalamic aromatase transcriptomic identity, may explain the
+          discordance.
+      - caveat_type: SINGLE_DATASET
+        description: >
+          arc_aromatase_neuron is based on a single primary source (Wartenberg 2021, PMID:34561233).
+          ARH location assignment depends on this paper alone. Alternative ARH candidates
+          SUPT_0427 and SUPT_0428 (ARH-PVi Six6 Dopa-Gaba supertypes) have not had Cyp19a1
+          expression confirmed and should be assessed.
+    unresolved_questions:
+      - >
+        Do SUPT_0427 or SUPT_0428 (ARH Dopa-Gaba supertypes) show Cyp19a1 expression
+        in the precomputed HDF5 stats?
+      - >
+        Is CLUS_1907 located exclusively in POA/periventricular zones in MERFISH data?
+    proposed_experiments:
+      - >
+        Query Cyp19a1 expression in ARH-region supertypes (SUPT_0427, SUPT_0428, and
+        neighbouring ARH supertypes) from the precomputed HDF5.
+
+    mapping_justification: semapv:UnspecifiedMatching

@@ -306,7 +306,9 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     print(f"{plan.source}: {len(plan.components)} component(s)")
-    if plan.is_noop:
+    if not plan.components:
+        print("  no components (no non-atlas nodes) -- nothing to split, file left as is")
+    elif plan.is_noop:
         print("  already a single whole component -- no split needed, file left as is")
     for component in plan.components:
         print(

@@ -1,0 +1,171 @@
+# Draft KB — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Sex_dimorphic_neurons_hypothalamus_ast_report.pdf
+# Ingestion date: 2026-04-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Qualifying filter: clear sex bias, supported by full paper (conference abstract-only nodes excluded)
+# Excluded: arc_kndy_neuron (not sexually dimorphic in cell number), mpoa_galanin_neuron (sex ratio unclear),
+#   poa_pacap_vip_neuron (fish-only evidence), bnst_kiss1_neuron (abstract-only),
+#   lateral_septum_kiss1_neuron (abstract-only)
+
+name: "Sexually dimorphic hypothalamic and limbic neurons — draft KB"
+description: >
+  Evidence graph capturing classically defined sexually dimorphic neuron types
+  in the hypothalamus and connected limbic regions (BNST, lateral septum).
+  Nodes proposed from a single ASTA deep-research report; properties are
+  literature-derived and have not yet been confirmed against primary papers
+  or mapped to a community atlas. No mapping edges populated in this draft.
+target_atlas: "WMBv1"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (predominantly mouse evidence; rat for some studies)"
+
+creation_date: "2026-04-25"
+nodes:
+  - id: pvn_crfr1_neuron
+    name: "PVN corticotropin-releasing factor receptor 1 (CRFR1) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:38
+        label: "Paraventricular hypothalamic nucleus"
+        name_in_source: "paraventricular hypothalamic nucleus (PVN)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+    defining_markers:
+      - symbol: Crhr1
+        ncbi_gene_id: "NCBIGene:12921"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+      - symbol: Ar
+        ncbi_gene_id: "NCBIGene:11835"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:31055007"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "143424909_2b990710"
+    morphology:
+      description: >
+        Male-biased sexual dimorphism in PVN (males > females). The sex difference is
+        not present at postnatal days 0, 4, or 21 — it emerges during puberty/early
+        adulthood and persists in old mice (20-24 months). Adult gonadectomy reduces
+        CRFR1-immunoreactive cells in males but not females. Restraint stress induces
+        sexually dimorphic neural activation (males > females) measured by phospho-
+        CREB co-localization.
+      sources:
+        - ref: "PMID:31055007"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "143424909_2b990710"
+    cl_mapping:
+      cl_term:
+        id: CL:4072021
+        label: "corticotropin-releasing neuron"
+        name_in_source: "corticotropin-releasing neuron"
+      mapping_type: RELATED
+      mapping_notes: >
+        CL:4072021 defines neurons by CRH *secretion*, whereas the proposed PVN CRFR1
+        node is defined by CRFR1 *receptor* expression. These are distinct
+        populations: CRFR1+ PVN neurons receive CRH input, they do not necessarily
+        secrete CRH. Mapping is RELATED only. No CL term for CRFR1-receptor-expressing
+        neurons exists — potential CL contribution.
+    is_terminal: false
+    definition_references:
+      - "PMID:31055007"
+    notes: >
+      Male-biased dimorphism (males > females). Sex difference emerges during
+      puberty/early adulthood. Co-express estrogen receptor alpha (moderate) and
+      androgen receptor (high), suggesting gonadal-hormone-dependent regulation.
+      Single source (Rosinger 2019) for full characterization. CL:4072021
+      (corticotropin-releasing neuron) is RELATED only — that term defines neurons
+      by CRH *secretion*, while this node is defined by CRFR1 receptor expression.
+      No exact CL term — candidate for new term.
+
+  - id: CS20230722_SUPT_0585
+    name: "0585 PVH-SO-PVa Otp Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0585
+    taxonomy_level: SUPERTYPE
+
+edges:
+  - id: edge_pvn_crfr1_neuron_to_cs20230722_supt_0585
+    lit_type: pvn_crfr1_neuron
+    taxonomy_type: CS20230722_SUPT_0585
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: >
+          SUPT_0585 (PVH-SO-PVa Otp Glut_1) has MBA:38 (PVN) as primary location (n=98) and
+          DB score=3 (highest rank-1 candidate). Esr1=3.65 (DEFINING_SCOPED atlas marker) and
+          Ar=4.95 support the steroid hormone biology of pvn_crfr1_neuron. Crh=2.5 confirms
+          PVN neuroendocrine identity. Primary caveat: Crhr1=0.84 is low, indicating CRFR1+
+          neurons are a subset of SUPT_0585. Rank-0 candidate CLUS_2382 (parent SUPT_0589)
+          has male_female_ratio=2.7, consistent with male-biased dimorphism.
+    property_comparisons:
+      - property: location_MBA38_PVN
+        node_a_value: "MBA:38 (Paraventricular hypothalamic nucleus)"
+        node_b_value: "MBA:38 (PVN) n=98 (primary location)"
+        alignment: CONSISTENT
+      - property: nt_type
+        node_a_value: "not stated; PVN principal neurons predominantly glutamatergic"
+        node_b_value: "Glutamatergic (PVH-SO-PVa Otp Glut)"
+        alignment: CONSISTENT
+      - property: marker_Crhr1
+        node_a_value: "POSITIVE (transcript, primary defining marker)"
+        node_b_value: "precomputed mean_expression=0.84"
+        alignment: APPROXIMATE
+        notes: Low Crhr1 expression (0.84) — CRFR1+ neurons represent a subset of SUPT_0585.
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=3.65 (DEFINING_SCOPED atlas marker)"
+        alignment: APPROXIMATE
+      - property: marker_Ar
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=4.95"
+        alignment: APPROXIMATE
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: >
+          pvn_crfr1_neuron characterisation rests on a single primary source (Rosinger 2019,
+          PMID:31055007). Confidence capped at MODERATE pending secondary literature validation.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          Crhr1=0.84 across SUPT_0585 indicates CRFR1+ neurons are a minority subset.
+          SUPT_0589 (parent of male-biased CLUS_2382, ratio 2.7) is an alternative or
+          co-equal mapping target worth curator assessment.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
+    unresolved_questions:
+      - >
+        Which cluster within the PVH-SO-PVa Otp Glut subclass shows highest Crhr1
+        expression combined with male-biased sex ratio?
+      - >
+        Is SUPT_0589 a better or co-equal mapping target compared to SUPT_0585?
+
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
