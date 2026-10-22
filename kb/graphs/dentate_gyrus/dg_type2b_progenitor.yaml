@@ -1,0 +1,198 @@
+name: Dentate Gyrus Adult Neurogenesis Lineage
+description: 'Evidence graph for the full adult neurogenesis lineage in the dentate gyrus, from type-2a neural progenitor through type-2b progenitor, neuroblast (type-3), immature granule neuron, to terminally differentiated mature granule neuron. Classical cell types defined by marker expression and maturational stage. CL terms: CL:9900003 (type-2a), CL:9900004 (type-2b), CL:9900001 (neuroblast), CL:9900002 (immature GN), CL:2000089 (mature GN).
+
+  '
+brain_region:
+  id: UBERON:0001885
+  label: dentate gyrus of hippocampal formation
+  name_in_source: dentate gyrus
+target_atlas: Allen Brain Cell Atlas CCN20230722
+species:
+creation_date: '2026-04-14'
+nodes:
+  - id: dg_type2b_progenitor
+    name: Dentate Gyrus Type-2b Neural Progenitor
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+    anatomical_location:
+      - id: UBERON:0009952
+        label: dentate gyrus subgranular zone
+        name_in_source: subgranular zone (SGZ)
+    nt_type:
+      name_in_source: glutamatergic (lineage committed, not yet functional)
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: Nestin
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:40519263
+            method: review (marker classification)
+            scope: adult dentate gyrus
+            quote_key: 279046466_998847af
+            marker_type: PROTEIN
+          - ref: PMID:18385329
+            method: Tbr2-GFP transgene + IHC
+            scope: adult mouse hippocampus
+            quote_key: 15727849_21c476fd
+            marker_type: PROTEIN
+      - symbol: DCX
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:40519263
+            method: review (marker classification)
+            scope: adult dentate gyrus
+            quote_key: 279046466_998847af
+            marker_type: PROTEIN
+          - ref: PMID:18385329
+            method: Tbr2-GFP transgene + IHC
+            scope: adult mouse hippocampus
+            quote_key: 15727849_237d8f24
+            marker_type: PROTEIN
+      - symbol: Eomes
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:18385329
+            method: Tbr2-GFP transgene + IHC
+            scope: adult mouse hippocampus
+            quote_key: 15727849_21c476fd
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: NeuN
+        ncbi_gene_id:
+      - symbol: Calbindin
+        ncbi_gene_id:
+    neuropeptides: []
+    cl_mapping:
+      cl_term:
+        id: CL:0011020
+        label: neural progenitor cell
+        name_in_source: type-2b progenitor
+      mapping_type: EXACT
+      mapping_notes: 'CL:9900004 (dentate gyrus type-2b neural progenitor, child of CL:0011020 neural progenitor cell) is an exact match — defined as the Nestin+/DCX+/ Eomes(Tbr2)+ transiently amplifying progenitor in the SGZ. Atlas cluster 0511 (DG-PIR Ex IMN_1, Eomes+/Sox6+) is the primary transcriptomic correlate; cluster 0512 (Eomes+/Prox1+) represents the type-2b/type-3 transition.
+
+        '
+    definition_references:
+      - PMID:18385329
+      - PMID:40519263
+      - PMID:37082558
+      - PMID:29335606
+      - GEO:GSE95315
+    is_terminal: false
+    notes: 'The Tbr2/Eomes TF is the canonical type-2b marker; Hodge et al. 2008 (PMID:18385329) established that 64% of Tbr2+ SGZ cells co-label with DCX. Sox6 co-expression (atlas cluster 0511) provides the transcriptomic anchor. Progression from type-2b to neuroblast (type-3) involves loss of Nestin and upregulation of DCX with concomitant loss of Eomes.
+
+      '
+  - id: CS20230722_CLUS_0511
+    name: 0511 DG-PIR Ex IMN_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0511
+edges:
+  - id: edge_dg_type2b_progenitor_to_CS20230722_CLUS_0511
+    lit_type: dg_type2b_progenitor
+    taxonomy_type: CS20230722_CLUS_0511
+    relationship: skos:closeMatch
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic (lineage committed, not yet functional)
+        node_b_value: Glut (Slc17a6 MERFISH score 6.02)
+        alignment: CONSISTENT
+        notes: Both glutamatergic; Slc17a6 (vGLUT2) present in cluster defining_markers confirms lineage commitment.
+      - property: location_soma
+        node_a_value: UBERON:0009952 dentate gyrus subgranular zone (SGZ)
+        node_b_value: DG STR (DG-STR boundary, MERFISH); CCF NA:0.75, CTXsp:0.12
+        alignment: CONSISTENT
+        notes: MERFISH validates Eomes and Igfbpl1 at DG-STR boundary (= SGZ). CCF NA:0.75 is a known registration artefact at the sparse SGZ margin; MERFISH label is the reliable anatomical assignment here.
+      - property: marker_Eomes
+        node_a_value: Eomes (=Tbr2); PROTEIN; positive (IHC, canonical type-2b TF; Hodge et al. 2008)
+        node_b_value: Eomes; present in defining_markers (atlas differential marker); precomputed stats Eomes mean = 6.90 (high — confirms type-2b identity)
+        alignment: CONSISTENT
+        notes: Eomes/Tbr2 is the canonical type-2b intermediate progenitor transcription factor. Its presence in both the classical protein IHC definition and the atlas cluster transcriptomic markers is the primary molecular anchor for this edge.
+      - property: marker_Nestin
+        node_a_value: Nestin; PROTEIN; positive (IHC, co-expressed with DCX at type-2b stage)
+        node_b_value: not present in defining_markers
+        alignment: NOT_ASSESSED
+        notes: Nes (Nestin mRNA) absent from WMBv1 precomputed stats gene panel; cannot resolve via quantitative cross-check
+      - property: marker_DCX
+        node_a_value: DCX; PROTEIN; positive at low levels (IHC; 64% of Tbr2+ cells co-label DCX at low expression; Hodge 2008)
+        node_b_value: not in atlas defining_markers; precomputed stats Dcx mean = 9.30 (high expression)
+        alignment: CONSISTENT
+        notes: Dcx mRNA highly expressed in precomputed stats despite absence from atlas metadata marker list; APPROXIMATE upgraded to CONSISTENT
+      - property: marker_NeuN
+        node_a_value: NeuN; NEGATIVE (progenitor stage; not yet postmitotic)
+        node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.48
+        alignment: CONSISTENT
+        notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
+      - property: marker_Calbindin
+        node_a_value: Calbindin; NEGATIVE (stage-6 mature marker; absent in progenitors)
+        node_b_value: absent from defining_markers
+        alignment: CONSISTENT
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'Atlas curator cl_mapping on CS20230722_CLUS_0511: BROAD CL:9900004 (dentate gyrus type-2b neural progenitor), annotated as "early neuroblast". Eomes (=Tbr2) is a defining_marker, directly matching the canonical type-2b molecular identity. Additional TF markers Sox6, Neurod1, Meis1/2, Igfbpl1 corroborate the early neurogenesis stage. MERFISH validates Eomes and Igfbpl1 at DG-STR (SGZ). NT: Slc17a6 (Glut).'
+        atlas: Allen Brain Cell Atlas CCN20230722
+        cell_set_accession: CS20230722_CLUS_0511
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:18385329
+        snippet: The majority of Tbr2+ cells colabeled with DCX (64.4 ± 4.7%). In general, these cells had low DCX expression, with either no processes or short, tangentially oriented processes, typical of type-2 cells.
+        explanation: Hodge et al. 2008 established Tbr2/Eomes as the canonical type-2b marker. The Eomes+ defining_marker in cluster 0511 is the direct transcriptomic correlate of the IHC-defined Tbr2+ type-2b population.
+        study_type: EXPERIMENTAL
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:40519263
+        snippet: 'Neural stem cells (NSCs) progressively develop into proliferating neural progenitor cells (NPCs), designated as type-2a (Nestin+/Sox2+), type-2b cells (expressing Nestin and doublecortin: Nestin+/DCX+) and neuroblasts (type-3, DCX+).'
+        explanation: Confirms the classical type-2b signature (Nestin+/DCX+/Eomes+) that cluster 0511 anchors transcriptomically via Eomes.
+        study_type: REVIEW
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: PARTIAL
+        explanation: 'MapMyCells transfer of Hochgerner 2018 nIPC cells (n=88; GSE95315) to WMBv1. Cluster 0511 receives no nIPC cells. Closest DG-PIR Ex IMN match: cluster 0513 (F1=0.225, 8 cells). Strongest supertype hit is 0166 OB-STR-CTX Inh IMN_1 (F1=0.508), reflecting heterogeneity in the Hochgerner nIPC label (likely mixed type-2a/2b progenitors). Transfer neither confirms nor strongly refutes the type2b → 0511 mapping.'
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: nIPC
+        n_cells_total: 88
+        target_atlas: WMBv1
+        method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 83
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 04 DG-IMN Glut
+            best_target_accession: CS20230722_CLAS_04
+            f1_score: 0.00906344410876133
+            n_cells_mapped: 3
+            median_bootstrap: 0.84
+            coverage: 0.5
+            purity: 0.004573170731707317
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 038 DG-PIR Ex IMN
+            best_target_accession: CS20230722_SUBC_038
+            f1_score: 0.05895691609977324
+            n_cells_mapped: 13
+            median_bootstrap: 1.0
+            coverage: 0.52
+            purity: 0.03125
+        best_mapping_rank: 0
+        f1_source_relpath: at_results.yaml
+    caveats:
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: 'Classical markers are defined by protein IHC (DCX, Ki67, PSA-NCAM, Nestin for neuroblast; DCX, NeuN, PSA-NCAM, Tis21 for immature GN; Calbindin, NeuN, Tbr1 for mature GN). Atlas defining_markers are derived from scRNA-seq: (1) protein abundance does not track mRNA linearly for structural proteins; (2) PSA-NCAM is a post-translational glycan epitope undetectable by transcriptomics; (3) broadly expressed stage markers are filtered out in cluster-level marker selection. APPROXIMATE alignments reflect this methodological gap, not biological discordance.'
+      - caveat_type: OTHER
+        description: Cluster 0511 spans the type-2b/type-3 boundary. The curator annotation "early neuroblast" and the presence of Neurod1 (expressed from the neuroblast stage onward) indicate that some cells in this cluster may have already progressed past the type-2b stage. PARTIAL_OVERLAP reflects that type-2b progenitors are the dominant population but the cluster is not exclusive to this stage.
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label 'DG STR' places cells at the DG-STR boundary (SGZ), but CCF soma location cannot be fully verified. The high NA fraction is a known artefact of sparse CCF coverage at the SGZ margin.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: F1=0.059 ≤ 0.75, existing caveats → closeMatch. Curator review recommended.'
+    unresolved_questions:
+      - Do clusters 0512 and 0513 (in dg_pir_ex_imn.yaml) together with 0511 represent a progressive type-2b to type-3 transition series, and if so should the type-2b node have secondary PARTIAL_OVERLAP edges to 0512/0513?
+      - Is the Gad2 signal (score 3.24) in cluster 0511 ambient RNA, a minor GABAergic contaminant, or evidence of transient GABAergic signalling in type-2b progenitors?
+    proposed_experiments:
+      - Triple-label smFISH combining Eomes, Sox6, and Nes transcripts with Tbr2 IHC to confirm co-localisation of cluster 0511 signature with classical Tbr2+/Nestin+ type-2b cells in adult mouse SGZ.
+      - Tbr2-CreERT2 fate-mapping with snRNA-seq from sorted Tbr2+ cells followed by MapMyCells projection onto CCN20230722 to assign IHC-defined type-2b cells to specific atlas clusters.
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"

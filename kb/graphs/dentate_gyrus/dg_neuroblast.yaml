@@ -1,0 +1,222 @@
+name: Dentate Gyrus Adult Neurogenesis Lineage
+description: 'Evidence graph for the full adult neurogenesis lineage in the dentate gyrus, from type-2a neural progenitor through type-2b progenitor, neuroblast (type-3), immature granule neuron, to terminally differentiated mature granule neuron. Classical cell types defined by marker expression and maturational stage. CL terms: CL:9900003 (type-2a), CL:9900004 (type-2b), CL:9900001 (neuroblast), CL:9900002 (immature GN), CL:2000089 (mature GN).
+
+  '
+brain_region:
+  id: UBERON:0001885
+  label: dentate gyrus of hippocampal formation
+  name_in_source: dentate gyrus
+target_atlas: Allen Brain Cell Atlas CCN20230722
+species:
+creation_date: '2026-04-14'
+nodes:
+  - id: dg_neuroblast
+    name: Dentate Gyrus Neuroblast (Type-3 Progenitor)
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+    anatomical_location:
+      - id: UBERON:0009952
+        label: dentate gyrus subgranular zone
+        name_in_source: subgranular zone (SGZ)
+    nt_type:
+      name_in_source: glutamatergic (committed but not yet functional)
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:40519263
+            method: review (marker classification)
+            scope: adult dentate gyrus
+            quote_key: 279046466_998847af
+            marker_type: PROTEIN
+          - ref: PMID:37082558
+            method: review (marker classification)
+            scope: adult hippocampal DG
+            quote_key: 245432259_44d5c91b
+            marker_type: PROTEIN
+      - symbol: Ki67
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:37082558
+            method: review (marker classification)
+            scope: adult hippocampal DG
+            quote_key: 245432259_44d5c91b
+            marker_type: PROTEIN
+      - symbol: PSA-NCAM
+        ncbi_gene_id:
+        sources: []
+      - symbol: Nestin
+        modifier: type-2b stage only
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:40519263
+            method: review (marker classification)
+            scope: adult dentate gyrus
+            quote_key: 279046466_998847af
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: NeuN
+        ncbi_gene_id:
+      - symbol: Calbindin
+        ncbi_gene_id:
+      - symbol: GFAP
+        ncbi_gene_id:
+    neuropeptides: []
+    cl_mapping:
+      cl_term:
+        id: CL:0011020
+        label: neural progenitor cell
+        name_in_source: neuroblast
+      mapping_type: EXACT
+      mapping_notes: 'CL:9900001 (dentate gyrus neuroblast, child of CL:0011020 neural progenitor cell) is an exact match — defined specifically as the DCX+ type-3 neuroblast stage in the dentate gyrus SGZ. This node encompasses the type-2b/type-3 transitional and type-3 stages; atlas clusters 0511–0512 provide the transcriptomic correlates.
+
+        '
+    definition_references:
+      - PMID:40519263
+      - PMID:37082558
+      - PMID:18385329
+      - PMID:19482889
+      - PMID:28168008
+      - PMID:16157276
+      - PMID:16341203
+      - PMID:29335606
+      - GEO:GSE95315
+    is_terminal: false
+    notes: 'The developmental sequence distinguishes type-2a (Nestin+/Sox2+), type-2b (Nestin+/DCX+), and type-3 (DCX+) stages. A transcription factor cascade (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1) marks stage transitions (Hodge et al. 2008). Potential HETEROGENEITY: the three transit-amplifying stages may warrant separate nodes. DUPLICATE RECORD, MERGE DEFERRED: ''dg_neuroblast_imn'' in kb/graphs/immature_neurons/20260422_immature_neurons_report_ingest.yaml carries the identical name and describes the same cell type, curated independently as part of a cross-region immature-neuron survey. That record contributes colocated_types this one lacks. Merging them is a curator decision that has not been made. Do not treat the two as independent types.'
+  - id: CS20230722_CLUS_0511
+    name: 0511 DG-PIR Ex IMN_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0511
+edges:
+  - id: edge_dg_neuroblast_to_CS20230722_CLUS_0511
+    lit_type: dg_neuroblast
+    taxonomy_type: CS20230722_CLUS_0511
+    relationship: skos:closeMatch
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic (committed but not yet functional)
+        node_b_value: Glut (Slc17a6 MERFISH score 6.02)
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: UBERON:0009952 dentate gyrus subgranular zone (SGZ)
+        node_b_value: DG STR (DG-STR boundary, MERFISH); CCF NA:0.75, CTXsp:0.12
+        alignment: APPROXIMATE
+        notes: MERFISH validates Eomes/Igfbpl1 at DG-STR (SGZ) boundary. CCF NA:0.75 is a known registration artefact at the sparse SGZ margin.
+      - property: marker_DCX
+        node_a_value: DCX; PROTEIN; positive (IHC, canonical neuroblast marker)
+        node_b_value: not in atlas defining_markers; precomputed stats Dcx mean = 9.30 (high expression)
+        alignment: CONSISTENT
+        notes: 'Dcx mRNA highly expressed in precomputed stats despite absence from atlas metadata marker list; APPROXIMATE upgraded to CONSISTENT'
+      - property: marker_Ki67
+        node_a_value: Ki67 (Mki67); PROTEIN; positive (IHC, proliferating cells)
+        node_b_value: not in atlas defining_markers; precomputed stats Mki67 mean = 0.09
+        alignment: APPROXIMATE
+        notes: Low but non-zero Mki67 mRNA; consistent with a small fraction of cycling progenitors in this cluster
+      - property: marker_PSA-NCAM
+        node_a_value: PSA-NCAM; PROTEIN; positive (post-translational polysialylation of NCAM1)
+        node_b_value: not present in defining_markers
+        alignment: NOT_ASSESSED
+        notes: PSA-NCAM is a post-translational glycan epitope; intrinsically undetectable by RNA-seq. No transcript-level correlate is available.
+      - property: marker_Nestin
+        node_a_value: Nestin; PROTEIN; positive at type-2b stage only (IHC)
+        node_b_value: not present in defining_markers
+        alignment: APPROXIMATE
+        notes: Nestin/Nes is downregulated at the type-3 stage; absence is partly consistent with type-2b enrichment in this cluster (Eomes/Tbr2+ TF present).
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'Atlas curator annotation: ''early neuroblast''. TF markers Eomes (=Tbr2, canonical type-2b progenitor TF; Hodge et al. 2008), Neurod1, Sox6, Meis1/2, Igfbpl1. CL:9900001 (BROAD) on parent supertype CS20230722_SUPT_0140. NT: Slc17a6 MERFISH score 6.02 (Glut). MERFISH validates Eomes and Igfbpl1 at DG-STR boundary (SGZ).'
+        atlas: Allen Brain Cell Atlas CCN20230722
+        cell_set_accession: CS20230722_CLUS_0511
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Cluster is the sole member of supertype CS20230722_SUPT_0140 (DG-PIR Ex IMN_1), which carries CL:9900001 (dentate gyrus neuroblast) BROAD mapping. The Eomes/Tbr2 TF signature is the canonical marker for the type-2b intermediate progenitor stage.
+        atlas: Allen Brain Cell Atlas CCN20230722
+        cell_set_accession: CS20230722_CLUS_0511
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: PARTIAL
+        explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_2 cells (n=777; GSE95315) to WMBv1. Subclass 038 DG-PIR Ex IMN (F1=0.798) and supertype 0141 DG-PIR Ex IMN_2 (F1=0.805) are strongly supported, confirming the DG-PIR Ex IMN lineage. At cluster level the best match is 0512 DG-PIR Ex IMN_2 (F1=0.609); cluster 0511 received no cells. Neuroblast_2 may represent a slightly later transitional stage (0512/0515) rather than the 0511 sub-stage. PARTIAL support for the lineage; cluster assignment uncertain.
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: Neuroblast 2
+        n_cells_total: 777
+        target_atlas: WMBv1
+        method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 717
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 04 DG-IMN Glut
+            best_target_accession: CS20230722_CLAS_04
+            f1_score: 0.4522968197879858
+            n_cells_mapped: 192
+            median_bootstrap: 0.93
+            coverage: 0.9948186528497409
+            purity: 0.2926829268292683
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 038 DG-PIR Ex IMN
+            best_target_accession: CS20230722_SUBC_038
+            f1_score: 0.8020698576972833
+            n_cells_mapped: 310
+            median_bootstrap: 1.0
+            coverage: 0.8683473389355743
+            purity: 0.7451923076923077
+        best_mapping_rank: 1
+        f1_source_relpath: at_results.yaml
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: PARTIAL
+        explanation: MapMyCells transfer of Hochgerner 2018 Neuroblast_1 cells (n=97; GSE95315) to WMBv1. Best cluster is 0513 DG-PIR Ex IMN_2 (F1=0.788, coverage=0.75, purity=0.83). Cluster 0511 received no cells. Combined with Neuroblast_2 mapping to 0512, the transfer resolves Hochgerner neuroblasts primarily to clusters 0512 and 0513. PARTIAL support at the DG-PIR Ex IMN lineage level.
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: Neuroblast 1
+        n_cells_total: 97
+        target_atlas: WMBv1
+        method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 93
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 04 DG-IMN Glut
+            best_target_accession: CS20230722_CLAS_04
+            f1_score: 0.050445103857566766
+            n_cells_mapped: 17
+            median_bootstrap: 0.88
+            coverage: 0.9444444444444444
+            purity: 0.025914634146341462
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 038 DG-PIR Ex IMN
+            best_target_accession: CS20230722_SUBC_038
+            f1_score: 0.15418502202643172
+            n_cells_mapped: 35
+            median_bootstrap: 1.0
+            coverage: 0.9210526315789473
+            purity: 0.08413461538461539
+        best_mapping_rank: 0
+        f1_source_relpath: at_results.yaml
+    caveats:
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: 'Classical markers are defined by protein IHC (DCX, Ki67, PSA-NCAM, Nestin for neuroblast; DCX, NeuN, PSA-NCAM, Tis21 for immature GN; Calbindin, NeuN, Tbr1 for mature GN). Atlas defining_markers are derived from scRNA-seq: (1) protein abundance does not track mRNA linearly for structural proteins; (2) PSA-NCAM is a post-translational glycan epitope undetectable by transcriptomics; (3) broadly expressed stage markers are filtered out in cluster-level marker selection. APPROXIMATE alignments reflect this methodological gap, not biological discordance.'
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: CCF broad annotation shows NA:0.75 and CTXsp:0.12. MERFISH label 'DG STR' places cells at the DG-STR boundary (SGZ), but CCF-level soma location cannot be fully verified. The high NA fraction is a known artefact of sparse CCF coverage at the SGZ margin.
+      - caveat_type: OTHER
+        description: The classical dg_neuroblast node spans type-2b (Nestin+/DCX+/Eomes+) and type-3 (DCX+/Eomes-low) sub-stages. Cluster 0511 is enriched for type-2b (Eomes+ dominant). Full correspondence with the type-3 sub-stage is unconfirmed; cluster 0512 is a secondary candidate for the type-3 transition.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.'
+    unresolved_questions:
+      - Does Dcx transcript appear in cluster 0511 cells at a level below the differential expression threshold for defining_marker selection? A targeted Dcx expression query on the full atlas feature matrix would resolve this.
+      - Is the Gad2 nt_marker signal (score 3.24) in cluster 0511 ambient RNA, a minor contaminating GABAergic population, or evidence of transient GABAergic signalling in type-2b progenitors?
+      - Should the dg_neuroblast classical node be split into separate type-2b and type-3 nodes to match atlas resolution (cluster 0511 for type-2b; cluster 0512 for type-3)?
+    proposed_experiments:
+      - Triple-label smFISH combining Dcx, Eomes, and Sox6 transcripts with Ki67 IHC in adult mouse DG to directly test co-localisation of atlas cluster 0511 signature with classical DCX+/Ki67+ neuroblasts in the SGZ.
+      - DCX-GFP sorted cells from adult DG followed by snRNA-seq and MapMyCells projection onto CCN20230722 to assign protein-defined neuroblasts to specific atlas clusters.
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"

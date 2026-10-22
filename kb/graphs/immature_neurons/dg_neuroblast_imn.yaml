@@ -1,0 +1,142 @@
+# Draft KB — immature_neurons (multi-region)
+# Source: ASTA deep research report — inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf
+# Ingestion date: 2026-04-22
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in kb/draft/immature_neurons/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Regions: Dentate Gyrus (3 nodes), Piriform Cortex, Olfactory Bulb, Striatum, Cerebral Cortex
+
+name: "Immature Neuron Cell Types Across Brain Regions"
+description: >
+  Evidence graph for classical immature neuron cell types across five brain
+  regions: dentate gyrus (three nodes — neuroblast/type-3 progenitor,
+  immature granule neuron, mature granule neuron), olfactory bulb
+  (SVZ-derived neuroblast / immature interneuron), piriform cortex
+  (layer II immature neuron), striatum (SVZ-derived immature neuron), and
+  cerebral cortex (layer II immature neuron). Classical cell types defined
+  by marker expression, maturational stage, and anatomical location.
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-04-22"
+nodes:
+  - id: dg_neuroblast_imn
+    name: "Dentate Gyrus Neuroblast (Type-3 Progenitor)"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:       # To be confirmed — studies cite mouse, rat, human
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "subgranular zone (SGZ) of dentate gyrus"
+    nt_type:
+      name_in_source: "glutamatergic (committed but not yet functional)"
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: "PMID:18385329"
+          method: "Tbr2-GFP transgene + IHC (TF cascade marks glutamatergic lineage)"
+          scope: "adult mouse hippocampus SGZ"
+          quote_key: "15994456_c3a87b12"
+        - ref: "PMID:23667508"
+          method: "review (adult neurogenesis)"
+          scope: "dentate gyrus lineage"
+          quote_key: "8479504_a44f9b22"
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.5114/ppn.2021.111950"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus neuroblasts"
+            quote_key: "252063749_e1c84f70"
+            marker_type: PROTEIN
+          - ref: "PMID:40519263"
+            method: "review (type-3 neuroblast marker)"
+            scope: "adult dentate gyrus — type-3 neuroblast"
+            quote_key: "279046466_b2e95c41"
+            marker_type: PROTEIN
+      - symbol: PSA-NCAM
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.5114/ppn.2021.111950"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus migrating neuroblasts"
+            quote_key: "252063749_e1c84f70"
+            marker_type: PROTEIN
+      - symbol: Ki67
+        modifier: "proliferative marker"
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.5114/ppn.2021.111950"
+            method: "review (marker classification)"
+            scope: "adult dentate gyrus neuroblasts"
+            quote_key: "252063749_e1c84f70"
+            marker_type: PROTEIN
+      - symbol: Nestin
+        modifier: "type-2b stage only (co-expressed with DCX)"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (type-2b neuroblast marker)"
+            scope: "adult dentate gyrus — type-2b stage"
+            quote_key: "279046466_b2e95c41"
+            marker_type: PROTEIN
+      - symbol: Tbr2
+        modifier: "intermediate progenitor (type-2) stage"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:18385329"
+            method: "Tbr2-GFP transgene + IHC"
+            scope: "adult mouse hippocampus intermediate progenitors"
+            quote_key: "15994456_c3a87b12"
+            marker_type: PROTEIN
+      - symbol: Tis21
+        modifier: "type-2/3 progenitors (transit-amplifying stages)"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:19482889"
+            method: "Tis21-GFP knock-in mouse + IHC"
+            scope: "adult mouse hippocampus transit-amplifying progenitors"
+            quote_key: "13799502_a8f3d219"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: NeuN
+        modifier: "NeuN negative at type-3 neuroblast stage"
+        ncbi_gene_id:
+      - symbol: Calbindin
+        modifier: "absent until stage 6 (mature granule cell)"
+        ncbi_gene_id:
+      - symbol: GFAP
+        modifier: "absent in type-2/3 neuroblasts (distinguishes from type-1 RGL)"
+        ncbi_gene_id:
+    neuropeptides: []
+    colocated_types:
+      - neighboring_type: "type-1 RGL stem cells"
+        spatial_relationship: "ADJACENT"
+        notes: "Immediate lineage precursors in SGZ niche (PMID:40519263, quote_key=279046466_b2e95c41)."
+    cl_mapping:
+      cl_term:
+        id: CL:0000031
+        label: "neuroblast (sensu Vertebrata)"
+        name_in_source: "neuroblast / type-3 progenitor"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:0000031 is the canonical vertebrate neuroblast class and encompasses
+        SGZ-born migrating DCX+ type-3 neuroblasts. CL:1000042 (forebrain
+        neuroblast) is a closer BROAD subclass. No dentate-gyrus-specific
+        neuroblast term exists in CL; CL:2000089 (dentate gyrus granule cell)
+        covers only the mature, terminally differentiated stage.
+    definition_references:
+      - "PMID:40519263"
+      - "PMID:18385329"
+      - "PMID:19482889"
+      - PMID:29335606
+      - GEO:GSE95315
+    is_terminal: false
+    notes: >-
+      HETEROGENEITY: The node captures type-3 neuroblasts primarily; type-2a (Nestin+/Sox2+) and type-2b (Nestin+/DCX+) earlier stages are related but distinct intermediate progenitors and may warrant separate sub-nodes. No dedicated UBERON term for subgranular zone; dentate gyrus (UBERON:0001885) used as container. DUPLICATE RECORD, MERGE DEFERRED: this node and 'dg_neuroblast' in kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml carry the identical name and describe the same cell type, curated independently in two contexts. This record was renamed from 'dg_neuroblast' so that each file defines a distinct node id; the dentate_gyrus record is the one carried by reports/dentate_gyrus/ and is the richer of the two on literature references. Whether to merge them, and which properties survive, is a curator decision that has not been made. Do not treat the two as independent types.
+
+  # ── Dentate Gyrus Immature Granule Neuron ───────────────────────
+
+edges: []

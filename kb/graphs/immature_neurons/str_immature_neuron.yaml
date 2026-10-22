@@ -1,0 +1,88 @@
+# Draft KB — immature_neurons (multi-region)
+# Source: ASTA deep research report — inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf
+# Ingestion date: 2026-04-22
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in kb/draft/immature_neurons/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Regions: Dentate Gyrus (3 nodes), Piriform Cortex, Olfactory Bulb, Striatum, Cerebral Cortex
+
+name: "Immature Neuron Cell Types Across Brain Regions"
+description: >
+  Evidence graph for classical immature neuron cell types across five brain
+  regions: dentate gyrus (three nodes — neuroblast/type-3 progenitor,
+  immature granule neuron, mature granule neuron), olfactory bulb
+  (SVZ-derived neuroblast / immature interneuron), piriform cortex
+  (layer II immature neuron), striatum (SVZ-derived immature neuron), and
+  cerebral cortex (layer II immature neuron). Classical cell types defined
+  by marker expression, maturational stage, and anatomical location.
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-04-22"
+nodes:
+  - id: str_immature_neuron
+    name: "Striatum Immature Neuron (SVZ-derived)"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:       # To be confirmed — studies cite mouse, rat
+    anatomical_location:
+      - id: UBERON:0002435
+        label: "striatum"
+        name_in_source: "striatum (SVZ-derived)"
+    nt_type:
+      name_in_source: "GABAergic (presumed, by analogy with OB SVZ lineage)"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: GABAergic
+      sources: []
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:15684031"
+            method: "IHC"
+            scope: "adult mouse striatum"
+            quote_key: "14221248_f77b1e11"
+            marker_type: PROTEIN
+      - symbol: BrdU
+        modifier: "birth-dating label (co-labeled with DCX)"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:15684031"
+            method: "BrdU pulse-chase"
+            scope: "adult mouse striatum"
+            quote_key: "14221248_f77b1e11"
+            marker_type: PROTEIN
+    negative_markers: []
+    neuropeptides: []
+    colocated_types: []
+    cl_mapping:
+      cl_term:
+        id: CL:0000031
+        label: "neuroblast (sensu Vertebrata)"
+        name_in_source: "immature neuron (SVZ-derived)"
+      mapping_type: BROAD
+      mapping_notes: >
+        No CL term for a striatum-specific immature/neuroblast cell exists.
+        CL:0000031 used as BROAD placeholder parent; striatal adult
+        neurogenesis is thin and controversial. Potential CL contribution if
+        confirmed. CL:0002613 (striatum neuron) applies only post-integration
+        and is not a match.
+    definition_references:
+      - "PMID:15684031"
+    is_terminal: false
+    notes: >
+      GAP: minimal characterisation — only one quote supports this node
+      (single study), and no subtypes, ephys, or morphological detail are
+      available. AMBIGUITY: adult striatal neurogenesis is quantitatively
+      limited and controversial. Cells are presumed to be inhibitory
+      interneurons by analogy with SVZ-derived OB interneurons, but final
+      interneuron subtypes and developmental progression require further
+      characterisation. NT type not directly supported by any quote for
+      striatal cells. BrdU is a thymidine analogue used as birth-dating
+      label (not a true protein/transcript marker); retained here with
+      marker_type=PROTEIN as an expedient for schema compliance — flag for
+      curator review.
+
+  # ── Cerebral Cortex Layer II Immature Neuron ────────────────────
+
+edges: []

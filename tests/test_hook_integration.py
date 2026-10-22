@@ -21,7 +21,7 @@ HOOK = (
 )
 SCHEMA = Path(__file__).parent.parent / "schema" / "celltype_mapping.yaml"
 VALID_KB_FIXTURE = (
-    Path(__file__).parent.parent / "kb" / "graphs" / "BG" / "GPi_shell_neuron.yaml"
+    Path(__file__).parent.parent / "kb" / "graphs" / "BG" / "classical_gpi_shell.yaml"
 )
 
 # A KB path the hook will intercept (must contain '/kb/' and end in '.yaml')

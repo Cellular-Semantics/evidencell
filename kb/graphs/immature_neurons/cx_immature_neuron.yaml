@@ -1,0 +1,85 @@
+# Draft KB — immature_neurons (multi-region)
+# Source: ASTA deep research report — inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf
+# Ingestion date: 2026-04-22
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in kb/draft/immature_neurons/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Regions: Dentate Gyrus (3 nodes), Piriform Cortex, Olfactory Bulb, Striatum, Cerebral Cortex
+
+name: "Immature Neuron Cell Types Across Brain Regions"
+description: >
+  Evidence graph for classical immature neuron cell types across five brain
+  regions: dentate gyrus (three nodes — neuroblast/type-3 progenitor,
+  immature granule neuron, mature granule neuron), olfactory bulb
+  (SVZ-derived neuroblast / immature interneuron), piriform cortex
+  (layer II immature neuron), striatum (SVZ-derived immature neuron), and
+  cerebral cortex (layer II immature neuron). Classical cell types defined
+  by marker expression, maturational stage, and anatomical location.
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-04-22"
+nodes:
+  - id: cx_immature_neuron
+    name: "Cerebral Cortex Layer II Immature Neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:       # To be confirmed — studies cite degu, guinea pig; contrasting with mouse/rat findings
+    anatomical_location:
+      - id: UBERON:0001950
+        label: "neocortex"
+        name_in_source: "layer II of neocortex (particularly limbic cortices)"
+    nt_type:
+      name_in_source: "unspecified"
+      cl_terms: []
+      sources: []
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:33994960"
+            method: "IHC"
+            scope: "adult degu neocortex layer II"
+            quote_key: "14598082_caa4f166"
+            marker_type: PROTEIN
+          - ref: "PMID:26321922"
+            method: "IHC + BrdU"
+            scope: "neonatal / young adult guinea pig neocortex layer II"
+            quote_key: "7393550_c82d5b11"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: NeuN
+        ncbi_gene_id:
+    neuropeptides: []
+    colocated_types: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042029
+        label: "cortical immature neuron"
+        name_in_source: "cortical immature neuron (layer II)"
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:4042029 (immature neuron of cerebral cortex developing prenatally
+        and remaining immature throughout life) is an EXACT match. The
+        proposed type (DCX+/NeuN-, layer II of neocortex, limbic cortex
+        predominance, species-dependent) is precisely the non-neurogenic
+        cortical immature neuron class that CL:4042029 was created to
+        represent. CL:4042028 (CNS immature neuron) is the broader parent.
+    definition_references:
+      - "PMID:33994960"
+      - "PMID:26321922"
+      - "PMID:15684031"
+    is_terminal: false
+    notes: >
+      CONTRADICTION: Dayer et al. (2005) reported no DCX+ cells in rodent
+      neocortex (contradicting degu and guinea pig findings). AMBIGUITY:
+      presence of cortical immature neurons is species-dependent; findings
+      in degu and guinea pig contrast with earlier mouse/rat reports. GAP:
+      no ephys, no neuropeptides, NT type unspecified, subtypes not
+      defined. No dedicated UBERON term for cortical layer II; neocortex
+      (UBERON:0001950) used as container.
+
+
+# ══════════════════════════════════════════════════════════════════
+# EDGES
+# ══════════════════════════════════════════════════════════════════
+
+edges: []

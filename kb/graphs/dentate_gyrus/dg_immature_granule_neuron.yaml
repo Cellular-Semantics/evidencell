@@ -1,0 +1,297 @@
+name: Dentate Gyrus Adult Neurogenesis Lineage
+description: 'Evidence graph for the full adult neurogenesis lineage in the dentate gyrus, from type-2a neural progenitor through type-2b progenitor, neuroblast (type-3), immature granule neuron, to terminally differentiated mature granule neuron. Classical cell types defined by marker expression and maturational stage. CL terms: CL:9900003 (type-2a), CL:9900004 (type-2b), CL:9900001 (neuroblast), CL:9900002 (immature GN), CL:2000089 (mature GN).
+
+  '
+brain_region:
+  id: UBERON:0001885
+  label: dentate gyrus of hippocampal formation
+  name_in_source: dentate gyrus
+target_atlas: Allen Brain Cell Atlas CCN20230722
+species:
+creation_date: '2026-04-14'
+nodes:
+  - id: dg_immature_granule_neuron
+    name: Dentate Gyrus Immature Granule Neuron
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+    anatomical_location:
+      - id: UBERON:0005381
+        label: dentate gyrus granule cell layer
+        name_in_source: inner granule cell layer (GCL)
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:26056581
+          method: review (adult neurogenesis)
+          scope: adult dentate gyrus
+          quote_key: 8479504_1542ed61
+        - ref: PMID:25954142
+          method: review (neurogenesis)
+          scope: adult dentate gyrus
+          quote_key: 625292_ff3f8b1d
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:40519263
+            method: review (marker classification)
+            scope: adult dentate gyrus
+            quote_key: 279046466_998847af
+            marker_type: PROTEIN
+          - ref: PMID:37082558
+            method: review (marker classification)
+            scope: adult hippocampal DG
+            quote_key: 245432259_44d5c91b
+            marker_type: PROTEIN
+      - symbol: NeuN
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:40519263
+            method: review (marker classification)
+            scope: adult dentate gyrus — stage 5
+            quote_key: 279046466_998847af
+            marker_type: PROTEIN
+          - ref: PMID:37082558
+            method: review (marker classification)
+            scope: adult hippocampal DG
+            quote_key: 245432259_44d5c91b
+            marker_type: PROTEIN
+      - symbol: PSA-NCAM
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:37082558
+            method: review (marker classification)
+            scope: adult hippocampal DG
+            quote_key: 245432259_44d5c91b
+            marker_type: PROTEIN
+      - symbol: Tis21
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:19482889
+            method: Tis21 knock-in GFP mouse + IHC
+            scope: adult mouse hippocampus
+            quote_key: 7393550_b2644450
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: Calbindin
+        ncbi_gene_id:
+    neuropeptides: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: immature neuron
+        name_in_source: immature granule neuron
+      mapping_type: EXACT
+      mapping_notes: 'CL:9900002 (immature dentate gyrus granule neuron, child of CL:4042028 immature neuron) is an exact match — defined as the postmitotic, synaptically integrating stage marked by DCX+/NeuN+/Tbr1+ prior to calbindin acquisition. Atlas clusters 0514 and 0515 (Tbr1+/Prox1+/ Igfbpl1+) provide the transcriptomic evidence for this term.
+
+        '
+    definition_references:
+      - PMID:40519263
+      - PMID:37082558
+      - PMID:16399667
+      - PMID:19482889
+      - PMID:26056581
+      - PMID:16267214
+      - PMID:16341203
+      - PMID:15107864
+      - PMID:11875571
+      - PMID:29335606
+      - GEO:GSE95315
+    is_terminal: false
+    notes: 'CL:9900002 was proposed based on this node — the Tbr1+/Prox1+/Igfbpl1+ marker profile from clusters 0514/0515 and the classical DCX+/NeuN+ description from PMID:40519263/37082558 together define the term. Tis21 expression reappears during this maturation phase (Attardo et al. 2009), potentially related to functional integration. DUPLICATE RECORD, MERGE DEFERRED: ''dg_immature_granule_neuron_imn'' in kb/graphs/immature_neurons/20260422_immature_neurons_report_ingest.yaml carries the identical name and describes the same cell type, curated independently as part of a cross-region immature-neuron survey. That record contributes colocated_types this one lacks. Merging them is a curator decision that has not been made. Do not treat the two as independent types.'
+  - id: CS20230722_CLUS_0514
+    name: 0514 DG-PIR Ex IMN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0514
+  - id: CS20230722_CLUS_0515
+    name: 0515 DG-PIR Ex IMN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0515
+edges:
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0514
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0514
+    relationship: skos:broadMatch
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: inner granule cell layer (GCL); UBERON:0005381
+        node_b_value: DGdo,me (dentate gyrus dorsal/medial blade); HIP:0.98
+        alignment: CONSISTENT
+        notes: DGdo,me is a sub-region of the classical GCL specification. MERFISH validates Tbr1, Prox1, Igfbpl1, Emx2 in this spatial context.
+      - property: marker_DCX
+        node_a_value: DCX; PROTEIN; positive (defining marker)
+        node_b_value: not in atlas defining_markers; precomputed stats Dcx mean = 8.79 (high expression)
+        alignment: CONSISTENT
+        notes: Dcx mRNA highly expressed in precomputed stats despite absence from atlas metadata marker list; APPROXIMATE upgraded to CONSISTENT
+      - property: marker_NeuN
+        node_a_value: NeuN (RBFOX3); PROTEIN; positive (postmitotic marker)
+        node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.35
+        alignment: APPROXIMATE
+        notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
+      - property: marker_PSA-NCAM
+        node_a_value: PSA-NCAM; PROTEIN; positive
+        node_b_value: not present in defining_markers
+        alignment: NOT_ASSESSED
+        notes: Post-translational glycan epitope; intrinsically undetectable by RNA-seq.
+      - property: marker_Tis21
+        node_a_value: Tis21 (Btg2); PROTEIN; positive (postmitotic re-expression in adult DG)
+        node_b_value: not in atlas defining_markers; precomputed stats Btg2 mean = 0.0193 (near-zero)
+        alignment: APPROXIMATE
+        notes: Btg2 (Tis21) mRNA near-zero in precomputed stats; IHC may detect transiently accumulated protein not captured by scRNAseq; APPROXIMATE retained pending further resolution
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'EXACT CL:9900002 (immature dentate gyrus granule neuron) in atlas; curator annotation ''late neuroblast/immature granule cell''. TF markers: Tbr1 (canonical postmitotic TF; Hodge et al. 2008), Prox1, Emx2 (MERFISH), Igfbpl1 (MERFISH), Ccbe1 (scoped). Anatomy: DGdo,me HIP:0.98. NT: Glut. No Calbindin (Calb1) — consistent with immature (not mature) stage. Discovery composite score 0.82.'
+        atlas: Allen Brain Cell Atlas CCN20230722
+        cell_set_accession: CS20230722_CLUS_0514
+      - &id001
+        evidence_type: LITERATURE
+        supports: SUPPORT
+        explanation: Establishes stage-5 definition (DCX+/NeuN+/Calbindin−). Absence of Calbindin from cluster defining_markers is consistent with pre-terminal immature identity.
+        reference: PMID:40519263
+        snippet: Neuroblasts progress toward immature postmitotic granule neurons co-expressing DCX and NeuN (stage 5), and eventually become terminally differentiated neurons (stage 6) expressing calbindin and NeuN.
+        study_type: REVIEW
+      - &id002
+        evidence_type: LITERATURE
+        supports: SUPPORT
+        explanation: Tbr1 onset marks postmitotic transition from neuroblast to immature granule neuron. Tbr1 present as TF marker; bridges atlas TF evidence to classical postmitotic immature granule neuron stage.
+        reference: PMID:18385329
+        snippet: Tbr1 expression was observed only in postmitotic granule cells and was not detected in progenitor cells, because Tbr1 never colocalized with nestin-GFP.
+        study_type: EXPERIMENTAL
+      - &id003
+        evidence_type: LITERATURE
+        supports: SUPPORT
+        explanation: Confirms Tis21 re-expression in postmitotic adult DG neurons. Consistent with postmitotic Tbr1+ identity of this cluster.
+        reference: PMID:19482889
+        snippet: Concomitant with this, an increasing proportion of the BrdU/Tis21-GFP-double-positive cells expressed markers of postmitotic neurons, that is, NeuN and CB
+        study_type: EXPERIMENTAL
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: PARTIAL
+        explanation: MapMyCells transfer of Hochgerner 2018 Granule-immature cells (n=1333; GSE95315) to WMBv1. The majority map to 037 DG Glut (F1=0.566 subclass) and best cluster 0507 DG Glut_2 (F1=0.510), consistent with an immature granule neuron identity. A minority (27 cells, 2%) map to cluster 0514 DG-PIR Ex IMN_2 (F1=0.211), suggesting overlap with a transitional neuroblast-like population. Weak PARTIAL support for 0514; the dominant atlas representation is the DG Glut lineage (0506/0507).
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: Granule-immature
+        n_cells_total: 1333
+        target_atlas: WMBv1
+        method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 1051
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 04 DG-IMN Glut
+            best_target_accession: CS20230722_CLAS_04
+            f1_score: 0.5683297180043384
+            n_cells_mapped: 262
+            median_bootstrap: 0.9
+            coverage: 0.9849624060150376
+            purity: 0.39939024390243905
+        best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
+    caveats:
+      - &id004
+        caveat_type: MARKER_NOT_SPECIFIC
+        description: 'Classical markers are defined by protein IHC (DCX, Ki67, PSA-NCAM, Nestin for neuroblast; DCX, NeuN, PSA-NCAM, Tis21 for immature GN; Calbindin, NeuN, Tbr1 for mature GN). Atlas defining_markers are derived from scRNA-seq: (1) protein abundance does not track mRNA linearly for structural proteins; (2) PSA-NCAM is a post-translational glycan epitope undetectable by transcriptomics; (3) broadly expressed stage markers are filtered out in cluster-level marker selection. APPROXIMATE alignments reflect this methodological gap, not biological discordance.'
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: 'TYPE_A_SPLITS: dg_immature_granule_neuron maps across two clusters: CS20230722_CLUS_0514 (this edge) and CS20230722_CLUS_0515. Both carry EXACT CL:9900002 and share the Tbr1+/Prox1+/Emx2+/Igfbpl1+ core TF profile. Neither cluster alone fully represents the classical type.'
+      - caveat_type: OTHER
+        description: 12 proposed literature evidence items (proposed_evidence_dg_immature_granule_neuron.yaml) are pending review and attachment to this edge and its companion to CS20230722_CLUS_0515. Items above are the most load-bearing.
+    unresolved_questions:
+      - 'What is the biological basis for the two-cluster split (0514 vs 0515) at the immature GN stage? Possibilities: maturational sub-stage, sex composition, or circadian/activity-dependent transcriptional state.'
+      - Does Dcx mRNA appear in clusters 0514/0515 below the atlas marker ranking threshold? A targeted query on the full atlas feature matrix would resolve the DCX alignment.
+      - Why does cluster 0514 show a Gad1 nt_marker signal (score 5.56)? Transient GABAergic signalling in immature granule neurons, doublet artefact, or contamination?
+    proposed_experiments:
+      - Anti-DCX and anti-Tbr1 co-stain on adult mouse DG to confirm Tbr1+ inner-GCL cells are also DCX+/NeuN+ at protein level, bridging atlas TF and classical profiles.
+      - Query full Allen Brain Cell Atlas CCN20230722 feature matrix for Dcx, Rbfox3, Btg2 in clusters 0514/0515 to check expression below the marker ranking threshold.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping
+  - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0515
+    lit_type: dg_immature_granule_neuron
+    taxonomy_type: CS20230722_CLUS_0515
+    relationship: skos:broadMatch
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+      - property: location_soma
+        node_a_value: inner granule cell layer (GCL); UBERON:0005381
+        node_b_value: DGdo,me (dentate gyrus dorsal/medial blade); HIP:1.0
+        alignment: CONSISTENT
+        notes: DGdo,me is a sub-region of the classical GCL specification. MERFISH validates Tbr1, Prox1, Igfbpl1, Emx2 in this spatial context.
+      - property: marker_DCX
+        node_a_value: DCX; PROTEIN; positive (defining marker)
+        node_b_value: not in atlas defining_markers; precomputed stats Dcx mean = 8.78 (high expression)
+        alignment: CONSISTENT
+        notes: Dcx mRNA highly expressed in precomputed stats despite absence from atlas metadata marker list; APPROXIMATE upgraded to CONSISTENT
+      - property: marker_NeuN
+        node_a_value: NeuN (RBFOX3); PROTEIN; positive (postmitotic marker)
+        node_b_value: not in atlas defining_markers; precomputed stats Rbfox3 mean = 0.30
+        alignment: APPROXIMATE
+        notes: Rbfox3 mRNA present but low (scRNAseq sensitivity < IHC nuclear protein); APPROXIMATE retained
+      - property: marker_PSA-NCAM
+        node_a_value: PSA-NCAM; PROTEIN; positive
+        node_b_value: not present in defining_markers
+        alignment: NOT_ASSESSED
+        notes: Post-translational glycan epitope; intrinsically undetectable by RNA-seq.
+      - property: marker_Tis21
+        node_a_value: Tis21 (Btg2); PROTEIN; positive (postmitotic re-expression in adult DG)
+        node_b_value: not in atlas defining_markers; precomputed stats Btg2 mean = 0.0000 (near-zero)
+        alignment: APPROXIMATE
+        notes: Btg2 (Tis21) mRNA near-zero in precomputed stats; IHC may detect transiently accumulated protein not captured by scRNAseq; APPROXIMATE retained pending further resolution
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'EXACT CL:9900002 in atlas; curator annotation ''late neuroblast''. Core TF profile identical to cluster 0514 (Tbr1+/Prox1+/Emx2+/Igfbpl1+). Scoped marker Rarb (distinctive within subclass). Additional MERFISH markers: Bcl11b, Cd24a, Fam163a. Anatomy: DGdo,me HIP:1.0 (perfect hippocampal allocation). NT: NA at cluster level, Glut by parent-class inheritance. Discovery composite score 0.82.'
+        atlas: Allen Brain Cell Atlas CCN20230722
+        cell_set_accession: CS20230722_CLUS_0515
+      - *id001
+      - *id002
+      - *id003
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: NO_EVIDENCE
+        explanation: MapMyCells transfer of Hochgerner 2018 Granule-immature cells (n=1333; GSE95315) to WMBv1. Cluster 0515 DG-PIR Ex IMN_2 receives no Granule-immature cells (F1=0.0). Instead, 0515 is preferentially occupied by Hochgerner Neuroblast_2 (F1=0.483, purity=1.0 — all 0515-mapped cells derive from Neuroblast_2), suggesting 0515 represents a later neuroblast stage rather than immature granule neurons. Transfer does not support Granule-immature as the source for this cluster.
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: Granule-immature
+        n_cells_total: 1333
+        target_atlas: WMBv1
+        method: MapMyCells hierarchical algorithm (cell_type_mapper v1.7.1, from_specified_markers)
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 1051
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 04 DG-IMN Glut
+            best_target_accession: CS20230722_CLAS_04
+            f1_score: 0.5683297180043384
+            n_cells_mapped: 262
+            median_bootstrap: 0.9
+            coverage: 0.9849624060150376
+            purity: 0.39939024390243905
+        best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
+    caveats:
+      - *id004
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: TYPE_A_SPLITS companion to edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0514. Both clusters carry EXACT CL:9900002 and share the same core TF profile. The biological basis for the intra-stage split is unresolved; Rarb and Bcl11b/Cd24a distinguish 0515 from 0514.
+      - caveat_type: NT_PREDICTION_UNCERTAIN
+        description: 'NT type not directly assigned at cluster level (nt_type_combo_label: null); glutamatergic by parent class inheritance. Direct cluster-level assignment would strengthen the NT evidence.'
+    unresolved_questions:
+      - What distinguishes cluster 0515 from 0514 biologically? Rarb (retinoic acid receptor beta, scoped in 0515) and Bcl11b/Cd24a/Fam163a MERFISH markers may mark a later maturational sub-stage or sex-biased transcriptional state.
+      - Is the Gad1 nt_marker signal (score 3.67) the same transient GABAergic signal as in 0514 (score 5.56), potentially indicating 0515 is at an earlier maturational state?
+    proposed_experiments:
+      - RNA velocity or pseudotime analysis on the DG-PIR Ex IMN_2 supertype (clusters 0512–0515) to determine cluster ordering along the neuroblast-to-immature-GN axis.
+      - Targeted smFISH for Tbr1, Rarb, Bcl11b, and Dcx in adult DG to characterise whether Rarb+/Bcl11b+ cells form a distinct subpopulation within the inner GCL.
+    mapping_cardinality: 1:n
+    mapping_justification: semapv:UnreviewedManualMapping

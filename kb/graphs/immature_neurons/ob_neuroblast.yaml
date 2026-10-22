@@ -1,0 +1,130 @@
+# Draft KB — immature_neurons (multi-region)
+# Source: ASTA deep research report — inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf
+# Ingestion date: 2026-04-22
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in kb/draft/immature_neurons/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Regions: Dentate Gyrus (3 nodes), Piriform Cortex, Olfactory Bulb, Striatum, Cerebral Cortex
+
+name: "Immature Neuron Cell Types Across Brain Regions"
+description: >
+  Evidence graph for classical immature neuron cell types across five brain
+  regions: dentate gyrus (three nodes — neuroblast/type-3 progenitor,
+  immature granule neuron, mature granule neuron), olfactory bulb
+  (SVZ-derived neuroblast / immature interneuron), piriform cortex
+  (layer II immature neuron), striatum (SVZ-derived immature neuron), and
+  cerebral cortex (layer II immature neuron). Classical cell types defined
+  by marker expression, maturational stage, and anatomical location.
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-04-22"
+nodes:
+  - id: ob_neuroblast
+    name: "Olfactory Bulb Neuroblast / Immature Interneuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:       # To be confirmed — studies cite mouse, rat
+    anatomical_location:
+      - id: UBERON:0004922
+        label: "postnatal subventricular zone"
+        name_in_source: "subventricular zone (SVZ) / rostral migratory stream (RMS) / olfactory bulb"
+    nt_type:
+      name_in_source: "GABAergic (terminal interneuron fate)"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: GABAergic
+      sources:
+        - ref: "PMID:37488837"
+          method: "review (terminal fates)"
+          scope: "adult olfactory bulb"
+          quote_key: "10712122_b12c9e55"
+        - ref: "https://doi.org/10.3389/fnins.2015.00110"
+          method: "commentary (adult neurogenesis)"
+          scope: "olfactory bulb"
+          quote_key: "13752593_c44e8b77"
+        - ref: "PMID:23667508"
+          method: "review (adult neurogenesis)"
+          scope: "olfactory bulb interneurons"
+          quote_key: "8479504_a44f9b22"
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id:
+        sources:
+          - ref: "https://doi.org/10.5114/ppn.2021.111950"
+            method: "review (marker classification)"
+            scope: "adult SVZ"
+            quote_key: "252063749_e1c84f70"
+            marker_type: PROTEIN
+      - symbol: PSA-NCAM
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:9185542"
+            method: "EM + IHC"
+            scope: "adult mouse SVZ type A cells"
+            quote_key: "625292_d93a2b77"
+            marker_type: PROTEIN
+      - symbol: TuJ1
+        modifier: "beta-tubulin"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:9185542"
+            method: "IHC"
+            scope: "adult mouse SVZ type A cells"
+            quote_key: "625292_d93a2b77"
+            marker_type: PROTEIN
+      - symbol: Nestin
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:9185542"
+            method: "IHC"
+            scope: "adult mouse SVZ type A cells"
+            quote_key: "625292_d93a2b77"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: GFAP
+        ncbi_gene_id:
+      - symbol: vimentin
+        ncbi_gene_id:
+    neuropeptides: []
+    colocated_types:
+      - neighboring_type: "Type B1/B2 astrocytes (SVZ)"
+        spatial_relationship: "ADJACENT"
+        notes: "Ensheathing niche cells around Type A neuroblast chains (PMID:9185542, quote_key=625292_d93a2b77)."
+      - neighboring_type: "Type C cells (transit-amplifying progenitors)"
+        spatial_relationship: "ADJACENT"
+        notes: "Lineage precursor clusters in SVZ, closely associated with Type A chains (PMID:9185542, quote_key=625292_d93a2b77)."
+      - neighboring_type: "mitral and tufted cells (OB)"
+        spatial_relationship: "DISTAL"
+        notes: "Inhibitory targets after maturation into granule/periglomerular interneurons (quote_key=2281064_e87c4b99)."
+    cl_mapping:
+      cl_term:
+        id: CL:0000031
+        label: "neuroblast (sensu Vertebrata)"
+        name_in_source: "type A neuroblast"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:0000031 covers SVZ-born type A migrating neuroblasts
+        (PSA-NCAM+/TuJ1+/DCX+, GFAP-) en route to the olfactory bulb via the
+        rostral migratory stream. CL:1000042 (forebrain neuroblast) is a
+        more specific BROAD subclass. Terminal fate terms CL:0000626
+        (olfactory granule cell) and CL:1001435 (periglomerular cell) do
+        not match the migrating/immature stage.
+    definition_references:
+      - "PMID:9185542"
+      - "PMID:26880934"
+      - "PMID:37488837"
+      - "PMID:23667508"
+    is_terminal: false
+    notes: >
+      HETEROGENEITY: The proposed type spans a maturation trajectory
+      (SVZ type A neuroblasts → RMS migrating cells → immature OB
+      interneurons) and splits into two terminal mature fates (granule
+      and periglomerular cells). These may warrant separate sub-nodes.
+      No dedicated UBERON term for rostral migratory stream or SVZ
+      lineage-specific structures; UBERON:0004922 (postnatal subventricular zone)
+      used as closest container for SVZ/RMS, with the olfactory bulb as
+      the terminal target.
+
+  # ── Striatum Immature Neuron (SVZ-derived) ──────────────────────
+
+edges: []
