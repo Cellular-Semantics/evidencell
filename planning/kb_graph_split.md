@@ -645,3 +645,144 @@ effect of a layout change:
   `AmbiguousNodeError` on a genuine duplicate, with a cached index invalidated
   on mtime change. It raises on the three `dg_*` duplicates today, which is the
   intended behaviour.
+
+---
+
+## 10. Decisions — T-types, mini-graphs, and automatic edge creation
+
+Settled after review of how non-reference-taxonomy T-types are represented.
+Section 9 and earlier sections stand; this section governs where they conflict.
+
+### 10.1 The inconsistency, stated
+
+A T-type from a dataset outside the target taxonomy is currently represented
+five different ways:
+
+| # | Representation | Instances |
+|---|---|---|
+| 1 | Full taxonomy ingest | Yao 2021 `CS202106160` — 2 code refs, no DB, no gene mapping; serves only the crosswalk |
+| 2 | `PRIOR_TRANSCRIPTOMIC` node | 5 real (Kozareva/Osorno, all `SCP:SCP795`) + `mea_esr1_neuron` with empty `prior_*` |
+| 3 | `CLASSICAL_MULTIMODAL` node that is really a T-type grouping | 4 × `*_subfamily_chamberland`, all `prior_*` empty |
+| 4 | Free-text AT label only | 36 study labels across 7 runs; 91 distinct `source_cluster_label` strings |
+| 5 | Not in the KB at all | Que's `hBC`/`vBC`/`hBIC`/`vBIC` — `research/` only |
+
+Tracked as [#146](https://github.com/Cellular-Semantics/evidencell/issues/146).
+**Not resolved as part of this refactor.**
+
+### 10.2 Why standardising T-types does not block the split
+
+Of the five, only #2 and #3 create nodes, and both already produce components
+the splitter handles:
+
+- the Kozareva/Osorno nodes give **2-node components** (piloted, 10–15 KB);
+- the four Chamberland nodes are **singletons** — no lit→lit edge touches
+  them — so they split cleanly today;
+- #1, #4 and #5 create no nodes and are invisible to the split.
+
+So the rollout can proceed across every region without answering the modelling
+question. What *would* change the layout is expressing the latent Chamberland
+bridges (`olm_cell_ca1 ← Chrna2 → chrna2_olm_subfamily_chamberland`), and that
+is a content decision that can land at any time afterwards, one paper at a time.
+
+### 10.3 Where a T-type belongs — the test to apply going forward
+
+Recorded now so new content stops adding representations. Applied
+incrementally, per paper, as regions are curated — **not** retrofitted here.
+
+| Thing | Home | Test |
+|---|---|---|
+| Target taxonomy | `kb/taxonomy/` + SQLite DB | We map **to** it: DB-backed, gene-mapped, MapMyCells-ready. Today: `CCN20230722` only |
+| Supporting reference data | reference files, no DB | A published classification or crosswalk we map *through*, not to — Harris's 50 classes, Chamberland's subfamily rules, WMB↔CTX |
+| Lit-type node | `kb/graphs/` | A paper asserts **this** T-type **is that** classical type — Winterer, Osorno, Kozareva |
+
+**Patch-seq sources need no T-type node.** Where morphology and transcriptome
+are measured on the same cell (Que 2021, 88 cells, 5 morphological types), the
+correspondence is constitutive rather than asserted: `BC` *is* basket cell. The
+AT evidence attaches directly to the classical node. This matters because it
+means the strongest evidence class produces no mini-graphs at all.
+
+Corollary, superseding §9's suggestion: **do not ingest Harris 2018 as a
+taxonomy.** A taxonomy ingest signals "target" and brings gene-mapping and
+pseudobulk obligations Harris does not need. `CS202106160` is the cautionary
+precedent — ingested, 2 references, one consumer.
+
+### 10.4 Multiple lit types per file
+
+Keep the component rule exactly as implemented: lit types co-locate **iff** a
+lit→lit edge joins them. Six such edges exist, all cerebellar.
+
+The principle behind the eventual refinement — recorded, not yet acted on:
+**file layout follows settled structure, not open questions.** A convergence
+candidate or a possible subdivision is a hypothesis under review; keying layout
+to a hypothesis makes it churn as hypotheses come and go. A paper-asserted
+bridge is settled, and co-locating on it is stable.
+
+Applying that strictly today would split `CB_MLI_types.yaml` into four files,
+since its edges are `CrossCuttingMatch` and `UncertainRelationship` — open by
+name. The whole cost of not doing so is one 19 KB file, so it waits.
+
+### 10.5 Cross-file lit→lit links use thin stubs
+
+When a lit→lit link must span files, the far endpoint is carried as a **thin
+stub**, exactly as atlas endpoints already are. This satisfies the in-document
+endpoint rule (`validate.py:65–72`) without co-locating the full nodes, and
+avoids relaxing the validator at all — a smaller change than the "Option 1"
+rule relaxation considered earlier.
+
+**One open design question before this can be used.** `paths.find_node_file`
+distinguishes stub from canonical by `definition_basis == ATLAS_TRANSCRIPTOMIC`.
+A lit-type stub carries a `CLASSICAL_*` basis, so it would read as a second
+canonical definition and raise `AmbiguousNodeError`. A stub needs an explicit
+marker — a `is_reference_stub` flag, or a separate `referenced_nodes` block —
+decided when the first cross-file lit→lit link is written, not before.
+
+### 10.6 Automatic lit→lit edge creation — gate it before Phase 3
+
+> Tracked as [#147](https://github.com/Cellular-Semantics/evidencell/issues/147).
+
+**There is no automatic node merging.** No code merges two `CellTypeNode`s, and
+`workflows/gen-report.md:1693` reserves destructive topology changes for
+curators.
+
+**But automatic *edge* creation is implemented and ungated.**
+`rationale_writeback.py:996–1033` appends a classical→classical
+`skos:closeMatch` edge whenever a verdict block carries `lit_to_lit_edges`.
+`dry_run` defaults to `False`, and `gen-report` invokes the write-back as a
+routine step. So no *types* merge automatically, but under the component rule
+*files* do.
+
+That is the coupling to break, and it is narrower than removing merging:
+
+1. **Gate the `lit_to_lit_edges` write** behind an explicit opt-in, so a
+   closeMatch between two classical types is a curator decision like the node
+   merge it anticipates. Near-term, **before Phase 3 touches hippocampus.**
+2. **Do not run `pool-candidates` or Case A on hippocampus** in the meantime.
+   18 candidates are outstanding there; acting on them fuses six lit types into
+   a single 248 KB component — measured, not projected.
+
+Note the Phase 0 change to `pool_candidates` (region scoping) is what keeps
+convergence detection working *after* the split; it does not itself write
+anything. The risk is the write-back, not the detection.
+
+### 10.7 Deferred, with triggers
+
+| Deferred | Trigger to revisit |
+|---|---|
+| T-type standardisation; re-typing the 4 Chamberland nodes and `mea_esr1_neuron` (#146) | Next region curation that introduces a T-type |
+| Which relationships force co-location; `is_reference_stub` marker | First cross-file lit→lit link, or Phase 3 |
+| Harris 2018 as supporting reference data | A second consumer appears — there is one today |
+| Controlled vocabulary for `source_cluster_label` (91 strings; `CA1-ProS` appears under two spellings) | Independent — identifier hygiene, not layout |
+
+### 10.8 Separate data-quality issue
+
+> Tracked as [#148](https://github.com/Cellular-Semantics/evidencell/issues/148).
+
+Independent of layout, and worth its own issue: **two AT runs record evidence
+their own run documents disclaim.**
+
+- Que 2021 `AAC` — manifest: *"n=6 is insufficient for reliable F1 scoring;
+  AAC results should be treated as uninformative"* — yet
+  `axo_axonic_cell_hippocampus` carries AT evidence from this run.
+- Chamberland `Ndnf` — README reports it as *"(unresolved)"*, an explicit
+  honest negative — yet `ndnf_nkx2_1_olm_subfamily_chamberland` carries an edge
+  with PARTIAL support at F1 0.039 (by-class n=1).
