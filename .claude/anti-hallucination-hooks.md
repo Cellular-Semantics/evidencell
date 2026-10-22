@@ -27,7 +27,7 @@ Agent attempts Edit/Write
               → unannotated blockquote detection
               → quote_key existence in references.json
               → PMID existence in references.json
-              → ontology CURIE existence in term_index.json (if present)
+              → ontology CURIEs resolve via OAK (prefixes without data are reported)
               → atlas accession existence in sibling KB nodes (if discoverable)
         │
         ▼
@@ -254,16 +254,24 @@ cite a publication via `run_ref → manifest → dataset.source_pmid`.
 - Atlas cluster: `0769 Sst Gaba_3 [CS20230722_CLUS_0769]`
 
 The hook extracts these with `parse_md_annotations()` and checks:
-- CURIEs against `term_index.json` (silently skipped if absent)
+- CURIEs resolve through the OAK adapter configured for their prefix in
+  `conf/oak_config.yaml` — the same adapters that validate KB YAML, so terms
+  are checked against the live ontology rather than a snapshot. Availability
+  is decided per prefix, and a prefix whose data is absent is **reported**,
+  not silently skipped. `EVIDENCELL_SKIP_TERM_CHECK=1` bypasses this, as it
+  does for KB YAML.
 - Accessions against sibling KB YAML nodes (silently skipped if not discoverable)
 
-**Known gap (not yet fixed):** `term_index.json` is not generated anywhere
-in the repo, so the report-side CURIE check is universally soft-skipped in
-practice. It needs a generator (likely fed by KB YAML aggregation + OAK
-canonical label lookup) before this check provides real coverage. The
-KB-YAML-side ontology check via schema bindings (above) catches CURIE
-hallucinations at the source; the report-side check would catch
-hallucinations introduced during synthesis. Tracked as a follow-up.
+Prefixes absent from `conf/oak_config.yaml` are not ontologies and are not
+checked here — the CURIE pattern `[A-Z]+:\d+` matches `PMID:12345678` as
+readily as `CL:0000540`.
+
+**Known gap:** the CURIE pattern requires square brackets and an uppercase
+prefix, so a CURIE written outside brackets, or a mixed-case prefix such as
+`NCBITaxon`, is still not extracted — and therefore not checked. Identifier
+extraction from reports is incomplete more broadly: most PMID mentions and
+all DOI mentions are missed. That bounds what "report CURIEs are validated"
+currently means.
 
 ---
 

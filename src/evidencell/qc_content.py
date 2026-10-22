@@ -50,6 +50,7 @@ from evidencell.validate import (
     _collect_refs,
     check_flat_ref_pmids,
     check_md_ids,
+    check_ontology_terms,
     check_quote_key_integrity,
     check_source_documents,
     check_source_methods,
@@ -82,6 +83,16 @@ GAP = "GAP"
 # content (taxonomy levels) is excluded outright: the files are enormous, are
 # machine-generated from taxonomy ingest, and carry no provenance fields.
 _NO_REGION_SUBTREES = ("datasets", "correlation_runs", "annotation_transfer_runs")
+
+# Ontology prefixes whose backing data was missing during the current sweep.
+# Module-level because the per-file checker discovers it but only the sweep
+# summary is the right place to say it, and saying it once beats saying it 53
+# times.
+_CURIE_COVERAGE: dict[str, dict] = {}
+
+# Atlas accessions per region, cached for the duration of one sweep. Cleared in
+# run_sweep() so a caller sweeping twice over changed content sees the change.
+_KB_NODES_CACHE: dict[tuple[str, str], dict] = {}
 _EXCLUDED_SUBTREES = ("taxonomy",)
 
 
@@ -160,7 +171,17 @@ def _kb_nodes_for_region(root: Path, region: str) -> dict:
     """Collect {cell_set_accession: node} across a region's graphs.
 
     Mirrors what the pre-edit hook builds for report accession checks.
+
+    Cached per (root, region) for the duration of a sweep. Without it this
+    re-parsed every graph YAML in the region once per report: 1.7 MB of YAML
+    read 37 times for hippocampus alone, 41 s of a 52 s sweep. The hook calls
+    the equivalent once per edit and does not need the cache; the sweep calls
+    it 64 times and does.
     """
+    key = (str(root.resolve()), region)
+    if key in _KB_NODES_CACHE:
+        return _KB_NODES_CACHE[key]
+
     nodes: dict = {}
     region_dir = root / "kb" / "graphs" / region
     if not region_dir.is_dir():
@@ -175,6 +196,7 @@ def _kb_nodes_for_region(root: Path, region: str) -> dict:
         for node in (doc or {}).get("nodes", []) or []:
             if isinstance(node, dict) and (acc := node.get("cell_set_accession")):
                 nodes[acc] = node
+    _KB_NODES_CACHE[key] = nodes
     return nodes
 
 
@@ -236,8 +258,25 @@ def sweep_kb_file(path: Path, root: Path) -> list[Finding]:
     return findings
 
 
+def reset_sweep_state() -> None:
+    """Clear state scoped to one sweep.
+
+    `_CURIE_COVERAGE` and `_KB_NODES_CACHE` exist to make a whole-corpus sweep
+    affordable, but they are module globals and the per-file functions are
+    callable directly. A caller driving `sweep_report_file()` itself would
+    otherwise accumulate coverage across unrelated runs and hold a node cache
+    that never notices edits under kb/graphs/.
+    """
+    _CURIE_COVERAGE.clear()
+    _KB_NODES_CACHE.clear()
+
+
 def sweep_report_file(path: Path, root: Path) -> list[Finding]:
-    """Run markdown annotation + provenance checks on one report."""
+    """Run markdown annotation + provenance checks on one report.
+
+    Uses sweep-scoped caches; call `reset_sweep_state()` when invoking this
+    outside `run_sweep()`.
+    """
     rel = str(path.relative_to(root))
     try:
         text = path.read_text(encoding="utf-8")
@@ -252,10 +291,22 @@ def sweep_report_file(path: Path, root: Path) -> list[Finding]:
     annotations = parse_md_annotations(text)
     kb_nodes = _kb_nodes_for_region(root, region)
 
-    return [
+    findings = [
         Finding(rel, ERROR, "markdown", msg)
         for msg in check_md_ids(annotations, refs_dir, kb_nodes)
     ]
+
+    # Ontology CURIEs, resolved against OAK. Unavailable prefixes are returned
+    # separately and surfaced as coverage, never as silence.
+    errors, unavailable = check_ontology_terms(
+        annotations.get("curie_ids") or [], root / "conf" / "oak_config.yaml"
+    )
+    findings += [Finding(rel, ERROR, "ontology_term", m) for m in errors]
+    for prefix, info in unavailable.items():
+        seen = _CURIE_COVERAGE.setdefault(
+            prefix, {"adapter": info["adapter"], "reason": info["reason"], "terms": set()})
+        seen["terms"].update(info["terms"])
+    return findings
 
 
 def _reference_stores(root: Path) -> list[Path]:
@@ -336,17 +387,6 @@ def _coverage_gaps(root: Path, kb_paths: list[Path], report_paths: list[Path]) -
         gaps.append(
             f"AT run_ref — no {at_run_index_path().name} under "
             f"kb/annotation_transfer_runs/; {len(kb_paths)} KB file(s) unchecked"
-        )
-
-    regions = {r for r in (_region_of(p, root) for p in report_paths) if r}
-    without_index = sorted(
-        r for r in regions if not (root / "references" / r / "term_index.json").exists()
-    )
-    if without_index:
-        n = sum(1 for p in report_paths if _region_of(p, root) in set(without_index))
-        gaps.append(
-            f"ontology CURIEs — no term_index.json for {', '.join(without_index)}; "
-            f"{n} report(s) unchecked"
         )
 
     return gaps
@@ -478,6 +518,7 @@ def run_sweep(
     """Sweep the corpus and return every finding."""
     root = root or repo_root()
     result = SweepResult()
+    reset_sweep_state()
 
     kb_paths = _kb_files(root) if kb else []
     report_paths = _report_files(root) if reports else []
@@ -502,6 +543,11 @@ def run_sweep(
             result.findings.extend(sweep_reference_store(p, root))
 
     result.unavailable = _coverage_gaps(root, kb_paths, report_paths)
+    for prefix, info in sorted(_CURIE_COVERAGE.items()):
+        result.unavailable.append(
+            f"ontology terms — {prefix} ({len(info['terms'])} distinct term(s) across "
+            f"the corpus) — {info['adapter']}: {info['reason']}"
+        )
     return result
 
 
@@ -526,12 +572,13 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "store_schema":        (r"(?:paper|quote) '([^']+)'",),
     "rationale_stale":     (r"Edge '([^']+)'",),
     "structural":          (r"'([^']+)'",),
+    "ontology_term":       (r"Ontology term '([^']+)'",),
     "duplicate_node_id":   (r"Node '([^']+)'",),
     "unknown_taxonomy_id": (r"taxonomy_id '([^']+)'",),
     "orphan_node":         (r"'([^']+)' is referenced by no edge",),
     "possible_duplicate_name": (r"Name '([^']+)'",),
     "markdown": (
-        r"(?:Atlas accession|PMID|quote_key|Ontology term) '([^']+)'",
+        r"(?:Atlas accession|PMID|quote_key) '([^']+)'",
         # Unannotated blockquote: the quoted line itself is the subject.
         r"annotation\): (.+)$",
     ),
