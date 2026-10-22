@@ -113,8 +113,12 @@ def _at_metrics_index(
 ) -> dict[tuple[str, str], dict[str, float]]:
     """Index an edge's ANNOTATION_TRANSFER evidence by
     ``(taxonomy_level, best_target_accession)`` → {f1, coverage,
-    purity}. Multiple metrics_by_level rows can share a key
+    purity, source}. Multiple metrics_by_level rows can share a key
     (one edge per AT evidence item); keep the highest-F1 row.
+
+    ``source`` is ``(run_ref, source_cluster_label)`` -- the identity of the
+    measurement, needed to tell independent agreement from one number copied
+    onto several edges.
     """
     out: dict[tuple[str, str], dict[str, float]] = {}
     for ev in edge.get("evidence") or []:
@@ -134,12 +138,52 @@ def _at_metrics_index(
                 "f1": float(f1),
                 "coverage": float(m.get("coverage") or 0.0),
                 "purity": float(m.get("purity") or 0.0),
+                # Provenance of the measurement, so two lit_types scored from
+                # the *same* source group can be told apart from two scored
+                # independently. See _independent_sources.
+                "source": (ev.get("run_ref"), ev.get("source_cluster_label")),
             }
             key = (level, acc)
             existing = out.get(key)
             if existing is None or row["f1"] > existing["f1"]:
                 out[key] = row
     return out
+
+
+def _independent_sources(row_a: dict, row_b: dict) -> bool:
+    """True if two metrics rows are separate measurements.
+
+    When two lit_types' AT evidence comes from the same
+    ``(run_ref, source_cluster_label)``, their metrics are *one* measurement
+    reported against both -- not two observations that happen to agree. Such a
+    row cannot be evidence that the two types are indistinguishable, because
+    the source group never distinguished them in the first place.
+
+    This is not hypothetical. Six Yao 2021 subclass labels are each cited by
+    several hippocampal lit_types, and the F1 values are identical to sixteen
+    decimal places: ``Sst`` appears on six morphologically distinct
+    interneuron types at CLASS 0.4133738601823709 / SUBCLASS
+    0.9833024118738404. ``Sst`` is a subclass sitting one level above all six,
+    so the transfer could not discriminate between them even in principle.
+    Counting that as convergence evidence manufactures pool candidates out of
+    label resolution.
+
+    Both halves of the identity must be known before anything is suppressed.
+    A run normally scores many source groups, so a shared ``run_ref`` alone
+    says nothing -- two lit_types in one run are usually scored from different
+    groups. And a missing ``run_ref`` or label is a provenance gap, reported by
+    the ``run_ref`` QC check; suppressing on it here would hide one problem
+    behind another.
+    """
+    src_a = row_a.get("source")
+    src_b = row_b.get("source")
+    if not (src_a and src_b):
+        return True
+    run_a, label_a = src_a
+    run_b, label_b = src_b
+    if not (run_a and run_b and label_a and label_b):
+        return True
+    return (run_a, label_a) != (run_b, label_b)
 
 
 def _all_within(values: list[tuple[float, float]], tol: float) -> bool:
@@ -179,6 +223,9 @@ def find_pool_candidates(
     lit_types = sorted(edges_by_lit)
     out: list[dict] = []
     seen_pairs: set[tuple[str, str]] = set()
+    # (lit_a, lit_b, n_dropped, n_remaining) for pairs whose shared targets were
+    # scored from the same source group. Reported, never dropped silently.
+    suppressed: list[tuple[str, str, int, int]] = []
 
     for i, lit_a in enumerate(lit_types):
         for lit_b in lit_types[i + 1:]:
@@ -204,7 +251,15 @@ def find_pool_candidates(
                     if cur is None or row["f1"] > cur["f1"]:
                         metrics_b[key] = row
 
-            shared = sorted(set(metrics_a) & set(metrics_b))
+            overlap = sorted(set(metrics_a) & set(metrics_b))
+            shared = [
+                k for k in overlap
+                if _independent_sources(metrics_a[k], metrics_b[k])
+            ]
+            if len(shared) < len(overlap):
+                suppressed.append(
+                    (lit_a, lit_b, len(overlap) - len(shared), len(shared))
+                )
             if not shared:
                 continue
 
@@ -272,6 +327,21 @@ def find_pool_candidates(
                 }
             )
 
+    if suppressed:
+        total = sum(n for _, _, n, _ in suppressed)
+        print(
+            f"  pool-candidates: ignored {total} shared target(s) across "
+            f"{len(suppressed)} pair(s) whose AT metrics come from the same "
+            "source group -- one measurement reported against both types, not "
+            "independent agreement (see _independent_sources):",
+            file=sys.stderr,
+        )
+        for lit_a, lit_b, dropped, kept in suppressed:
+            print(
+                f"    {lit_a} / {lit_b}: {dropped} ignored, {kept} independent "
+                "target(s) remain",
+                file=sys.stderr,
+            )
     return out
 
 
@@ -289,6 +359,43 @@ def find_pool_candidates_for_node(
         graph, f1_tolerance=f1_tolerance, pr_tolerance=pr_tolerance
     )
     return [c for c in all_candidates if node_id in c["source_groups"]]
+
+
+def load_region_graph(graph_file: Path) -> dict:
+    """Merge every KB graph YAML in ``graph_file``'s directory into one graph.
+
+    Pool detection compares lit_types pairwise, so it must see the whole
+    region. A per-file view was adequate while one file held many lit_types;
+    once each file holds a single component it yields one lit_type, zero
+    pairs, and would silently return no candidates.
+
+    Edges are de-duplicated by id. Falls back to the single file if it is not
+    inside a region directory.
+    """
+    graph_file = Path(graph_file)
+    region_dir = graph_file.parent
+    if not region_dir.is_dir():
+        return yaml.safe_load(graph_file.read_text(encoding="utf-8")) or {}
+
+    edges: list[dict] = []
+    seen: set[str] = set()
+    for path in sorted(region_dir.glob("*.yaml")):
+        try:
+            data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(data, dict):
+            continue
+        for edge in data.get("edges") or []:
+            if not isinstance(edge, dict):
+                continue
+            edge_id = edge.get("id")
+            if edge_id:
+                if edge_id in seen:
+                    continue
+                seen.add(edge_id)
+            edges.append(edge)
+    return {"edges": edges}
 
 
 # ─── CLI ─────────────────────────────────────────────────────────────────────
@@ -330,9 +437,20 @@ def main(argv: list[str] | None = None) -> int:
             f"Default {DEFAULT_PR_TOLERANCE}."
         ),
     )
+    parser.add_argument(
+        "--this-file-only",
+        action="store_true",
+        help=(
+            "Restrict to edges in GRAPH_FILE instead of the whole region. "
+            "Pool detection is cross-file by default."
+        ),
+    )
     args = parser.parse_args(argv)
 
-    graph = yaml.safe_load(args.graph_file.read_text(encoding="utf-8"))
+    if args.this_file_only:
+        graph = yaml.safe_load(args.graph_file.read_text(encoding="utf-8"))
+    else:
+        graph = load_region_graph(args.graph_file)
     if args.node:
         candidates = find_pool_candidates_for_node(
             graph,

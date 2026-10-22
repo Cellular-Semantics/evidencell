@@ -167,27 +167,15 @@ validate-at-results-all:
 
 # Validate all KB graph files (kb/graphs/)
 [group('validation')]
-validate-all:
+validate-all *ARGS:
     #!/usr/bin/env bash
     set -euo pipefail
     files=$(find {{kb_dir}} \( -name "*.yaml" -o -name "*.yaml.gz" \) 2>/dev/null)
     if [ -z "$files" ]; then echo "No files in {{kb_dir}} yet."; exit 0; fi
-    failed=0
-    tmpdir=$(mktemp -d)
-    trap "rm -rf $tmpdir" EXIT
-    for f in $files; do
-        echo "Validating $f..."
-        if [[ "$f" == *.yaml.gz ]]; then
-            # linkml-validate doesn't read gzip; gunzip to a tempfile
-            # preserving the .yaml suffix so its parser is happy.
-            tmp="$tmpdir/$(basename "$f" .gz)"
-            gunzip -c "$f" > "$tmp"
-            uv run linkml-validate -s {{schema}} "$tmp" || failed=1
-        else
-            uv run linkml-validate -s {{schema}} "$f" || failed=1
-        fi
-    done
-    [ $failed -eq 0 ] && echo "All KB files valid." || { echo "Validation failed."; exit 1; }
+    # One process, schema compiled once. Spawning linkml-validate per file cost
+    # ~1.2s each; at one file per component that dominates. Gzip is handled
+    # in-process (the linkml-validate CLI cannot read it).
+    uv run python -m evidencell.validate_batch -s {{schema}} {{ARGS}} $files
 
 # Validate ontology terms (CL, UBERON, NCBITaxon) in all KB graph files
 # Requires OAK SQLite DBs (run just fetch-oak-dbs first)
@@ -558,6 +546,9 @@ gen-at-figure RUN_ID *ARGS:
 
 # Surface candidate source-group pools from a KB graph (Phase 3 gen-report pre-pass).
 # Emits JSON on stdout. Use --node to restrict to candidates involving a given lit_type.
+# Scope is the whole region directory, not just GRAPH_FILE -- pool detection is
+# pairwise across lit_types, so a per-file view misses pairs that span files.
+# Pass --this-file-only to restrict to GRAPH_FILE.
 # Usage: just pool-candidates kb/graphs/hippocampus/hippocampus_GABAergic_interneurons.yaml
 #        just pool-candidates kb/graphs/hippocampus/hippocampus_OLM.yaml --node olm_hippocampus
 [group('reports')]

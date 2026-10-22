@@ -1,0 +1,240 @@
+##
+# Cerebellar Purkinje Layer Interneurons — WMBv1 mapping
+#
+# Brain region: Cerebellar cortex (Purkinje layer interneurons)
+# Target atlas: WMBv1 (Yao et al. 2023, Nature 624:317-332)
+# Curation date: 2026-02-25
+# Curator: dosumis
+# Source analysis: https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+#
+# Evidence graph (current):
+#
+#   classical_candelabrum ──[EQUIVALENT, Osorno 2022]──► pli1_osorno
+#   classical_globular    ──[EQUIVALENT, Osorno 2022]──► pli2_osorno
+#   classical_lugaro      ──[EQUIVALENT, Osorno 2022]──► pli3_osorno
+#                                                            │
+#   pli1_osorno ──[EQUIVALENT, F1≈0.94, MapMyCells]────► wmb_cluster_5178   (terminal)
+#   pli2_osorno ──[PARTIAL_OVERLAP, F1≈0.87, MapMyCells]► wmb_cluster_5177  (terminal)
+#   pli3_osorno ──[EQUIVALENT, F1≈0.96, MapMyCells]────► wmb_supertype_1145 (terminal)
+#
+# Cross-Allen-taxonomy transfer (future / illustrative):
+# If a BICAN or other Allen taxonomy with CCN accessions existed for cerebellum,
+# a direct cross-atlas edge could be added, e.g.:
+#
+#   wmb_supertype_1145 ──[EQUIVALENT, cross-atlas MapMyCells]──► bican_cb_cluster_X  (terminal)
+#   (source_cell_set_accession: CS20230722_SUPT_1145,
+#    target_cell_set_accession: CS20250101_CLUS_XXXX)
+##
+
+name: "Cerebellar Purkinje Layer Interneurons — WMBv1"
+description: >
+  Evidence graph mapping classically defined Purkinje layer interneuron (PLI) types
+  — Candelabrum, Globular, and Lugaro cells — to cell sets in the WMBv1 atlas.
+  Mapping was performed by annotation transfer of transcriptomic data from
+  Osorno et al. 2022 (SCP795) to WMBv1 using MapMyCells.
+brain_region:
+  id: MBA:1145
+  label: "Cerebellar cortex, Purkinje layer"
+  name_in_source: "Cerebellar cortex, Purkinje layer"
+
+target_atlas: WMBv1
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus"
+
+creation_date: "2026-02-25"
+nodes:
+  - id: classical_globular
+    name: "Globular cell"
+    definition_basis: CLASSICAL_MORPHOLOGICAL
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1145
+        label: "Cerebellar cortex, Purkinje layer"
+        name_in_source: "Cerebellar cortex, Purkinje layer"
+    cl_mapping:
+      cl_term: {id: CL:4072102, label: Purkinje layer interneuron, name_in_source: "Purkinje layer interneuron"}
+      mapping_type: BROAD
+      mapping_notes: >
+        No specific CL term yet for Globular cell. CL:4072102 (Purkinje layer interneuron)
+        is the appropriate broad ancestor — this is also the direct parent of CL:4042030
+        (candelabrum cell) and CL:0011006 (Lugaro cell). A new term for Globular cell
+        would be placed as a sibling of candelabrum cell within this parent.
+    nt_type:
+      name_in_source: "GABA-Glyc"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+        - id: CL:1001509
+          label: glycinergic neuron
+          name_in_source: "Glyc"
+    morphology:
+      description: >
+        Globular soma in Purkinje layer. Distinct morphology from Lugaro and Candelabrum.
+        Defined by Osorno et al. 2022.
+    is_terminal: false
+    proposed_cl_term:
+      definition: >
+        A GABAergic/glycinergic interneuron of the cerebellar cortex Purkinje layer
+        with a globular soma morphology, distinct from Lugaro and Candelabrum cells.
+        Reference transcriptomic data for this type can be found in WMBv1 in
+        cell set CS20230722_CLUS_5177 (best mapping) and neighbouring PLI clusters.
+      parent_cl_term: {id: CL:4072102, label: Purkinje layer interneuron, name_in_source: "Purkinje layer interneuron"}
+      status: DRAFT
+
+  - id: pli2_osorno
+    name: "PLI2 (Osorno 2022 / Globular)"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    prior_dataset_accession: "SCP:SCP795"
+    prior_cluster_label: "PLI2"
+    prior_reference: "PMID:35578131"
+    nt_type:
+      name_in_source: "GABA-Glyc"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+        - id: CL:1001509
+          label: glycinergic neuron
+          name_in_source: "Glyc"
+    is_terminal: false
+
+  - id: wmb_cluster_5177
+    name: "5177 CB PLI Gly-Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_5177
+    taxonomy_level: CLUSTER
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "CB PLI Gly-Gaba_1 (1144)", cell_set_accession: CS20230722_SUPT_1144}
+      - {level: SUBCLASS, name: "CB PLI Gly-Gaba (309)", cell_set_accession: CS20230722_SUBC_309}
+      - {level: CLASS, name: "CB GABA (28)", cell_set_accession: CS20230722_CLAS_28}
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1145
+        label: "Cerebellar cortex, Purkinje layer"
+        name_in_source: "CBX"
+    nt_type:
+      name_in_source: "GABA-Glyc"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+        - id: CL:1001509
+          label: glycinergic neuron
+          name_in_source: "Glyc"
+    n_cells: 535
+    defining_markers:
+      - {symbol: Aldh1a3}
+      - {symbol: Pvalb}
+      - {symbol: Pthlh}
+    merfish_markers:
+      - {symbol: Prom1}
+      - {symbol: Slc6a5, ncbi_gene_id: "NCBIGene:14187"}
+      - {symbol: Nts}
+      - {symbol: Whrn}
+    is_terminal: true
+
+edges:
+  - id: edge_globular_to_pli2
+    lit_type: classical_globular
+    taxonomy_type: pli2_osorno
+    relationship: skos:exactMatch
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:35578131"
+        snippet: >
+          "PLI2s also express Slc6a5, which suggests that they correspond to
+          globular cells that are glycinergic, are located near or below the
+          PCL and are inhibited by PCs."
+        explanation: >
+          Osorno 2022 defines PLI2 as globular cells based on soma morphology,
+          providing the primary classical-to-T-type correspondence.
+        study_type: MULTIMODAL
+    unresolved_questions:
+      - >
+        The Globular cell type has limited prior classical characterisation compared
+        to Lugaro and Candelabrum. The PLI2 definition is largely Osorno 2022's
+        own contribution — prior classical literature may not have this type
+        explicitly named.
+
+    mapping_justification: semapv:UnreviewedManualMapping
+  - id: edge_pli2_to_wmb5177
+    lit_type: pli2_osorno
+    taxonomy_type: wmb_cluster_5177
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: PARTIAL
+        explanation: >
+          MapMyCells transfer of PLI2 (Globular) cells to WMBv1 shows strongest mapping
+          to cluster 5177 with good precision (83%) but limited recall (93% at cluster
+          level, but only 30% at subclass and 38% at supertype), indicating PLI2 cells
+          distribute across multiple clusters. NT prediction (GABA-Glyc) is consistent
+          with co-transmitting Globular cells.
+        source_dataset_accession: "SCP:SCP795"
+        source_cluster_label: PLI2
+        n_cells_total: 733
+        target_atlas: WMBv1
+        method: "MapMyCells (default parameters)"
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 700
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            best_target_name: "28 CB GABA"
+            f1_score: 0.031
+            n_cells_mapped: 733
+            median_bootstrap: 1.0
+            coverage: 1.000
+            purity: 0.016
+          - taxonomy_level: SUBCLASS
+            best_target_name: "309 CB PLI Gly-Gaba"
+            best_target_accession: CS20230722_SUBC_309
+            f1_score: 0.458
+            n_cells_mapped: 720
+            median_bootstrap: 1.0
+            coverage: 0.992
+            purity: 0.298
+          - taxonomy_level: SUPERTYPE
+            best_target_name: "1144 CB PLI Gly-Gaba_1"
+            best_target_accession: CS20230722_SUPT_1144
+            f1_score: 0.546
+            n_cells_mapped: 700
+            median_bootstrap: 1.0
+            coverage: 0.975
+            purity: 0.380
+          - taxonomy_level: CLUSTER
+            best_target_name: "5177 CB PLI Gly-Gaba_1"
+            best_target_accession: CS20230722_CLUS_5177
+            f1_score: 0.877
+            n_cells_mapped: 521
+            median_bootstrap: 1.0
+            coverage: 0.830
+            purity: 0.930
+        code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: >
+          PLI2 (Globular) cells distribute across multiple WMBv1 clusters within
+          the CB PLI Gly-Gaba subclass (subclass-level purity only 30%),
+          suggesting either transcriptomic heterogeneity within the Globular type
+          or that the classical morphological Globular definition encompasses
+          multiple transcriptomic subtypes.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: existing caveats → closeMatch. Curator review recommended.'
+    unresolved_questions:
+      - >
+        Do the PLI2 cells mapping to clusters other than 5177 represent a distinct
+        Globular subtype, or is this noise in the annotation transfer?
+    proposed_experiments:
+      - >
+        Re-analyse PLI2 cells from SCP795 at higher resolution to determine
+        if the cluster-level heterogeneity reflects a biologically meaningful split.
+
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"

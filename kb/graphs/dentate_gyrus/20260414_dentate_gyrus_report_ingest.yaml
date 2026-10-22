@@ -6,7 +6,7 @@ brain_region:
   id: UBERON:0001885
   label: dentate gyrus of hippocampal formation
   name_in_source: dentate gyrus
-target_atlas: Allen Brain Cell Atlas CCN202307220
+target_atlas: Allen Brain Cell Atlas CCN20230722
 species:
 creation_date: '2026-04-14'
 nodes:
@@ -86,9 +86,7 @@ nodes:
       - PMID:29335606
       - GEO:GSE95315
     is_terminal: false
-    notes: 'The developmental sequence distinguishes type-2a (Nestin+/Sox2+), type-2b (Nestin+/DCX+), and type-3 (DCX+) stages. A transcription factor cascade (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1) marks stage transitions (Hodge et al. 2008). Potential HETEROGENEITY: the three transit-amplifying stages may warrant separate nodes.
-
-      '
+    notes: 'The developmental sequence distinguishes type-2a (Nestin+/Sox2+), type-2b (Nestin+/DCX+), and type-3 (DCX+) stages. A transcription factor cascade (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1) marks stage transitions (Hodge et al. 2008). Potential HETEROGENEITY: the three transit-amplifying stages may warrant separate nodes. DUPLICATE RECORD, MERGE DEFERRED: ''dg_neuroblast_imn'' in kb/graphs/immature_neurons/20260422_immature_neurons_report_ingest.yaml carries the identical name and describes the same cell type, curated independently as part of a cross-region immature-neuron survey. That record contributes colocated_types this one lacks. Merging them is a curator decision that has not been made. Do not treat the two as independent types.'
   - id: dg_immature_granule_neuron
     name: Dentate Gyrus Immature Granule Neuron
     definition_basis: CLASSICAL_NEUROCHEMICAL
@@ -181,9 +179,7 @@ nodes:
       - PMID:29335606
       - GEO:GSE95315
     is_terminal: false
-    notes: 'CL:9900002 was proposed based on this node — the Tbr1+/Prox1+/Igfbpl1+ marker profile from clusters 0514/0515 and the classical DCX+/NeuN+ description from PMID:40519263/37082558 together define the term. Tis21 expression reappears during this maturation phase (Attardo et al. 2009), potentially related to functional integration.
-
-      '
+    notes: 'CL:9900002 was proposed based on this node — the Tbr1+/Prox1+/Igfbpl1+ marker profile from clusters 0514/0515 and the classical DCX+/NeuN+ description from PMID:40519263/37082558 together define the term. Tis21 expression reappears during this maturation phase (Attardo et al. 2009), potentially related to functional integration. DUPLICATE RECORD, MERGE DEFERRED: ''dg_immature_granule_neuron_imn'' in kb/graphs/immature_neurons/20260422_immature_neurons_report_ingest.yaml carries the identical name and describes the same cell type, curated independently as part of a cross-region immature-neuron survey. That record contributes colocated_types this one lacks. Merging them is a curator decision that has not been made. Do not treat the two as independent types.'
   - id: dg_mature_granule_neuron
     name: Dentate Gyrus Mature Granule Neuron
     definition_basis: CLASSICAL_MULTIMODAL
@@ -260,9 +256,7 @@ nodes:
       - PMID:29335606
       - GEO:GSE95315
     is_terminal: false
-    notes: 'Terminal differentiation endpoint of the adult neurogenesis lineage in the dentate gyrus. Tis21 expression decreases in mature granule cells compared to the maturing stage (Attardo et al. 2009). No subtypes discussed in this report.
-
-      '
+    notes: 'Terminal differentiation endpoint of the adult neurogenesis lineage in the dentate gyrus. Tis21 expression decreases in mature granule cells compared to the maturing stage (Attardo et al. 2009). No subtypes discussed in this report. DUPLICATE RECORD, MERGE DEFERRED: ''dg_mature_granule_neuron_imn'' in kb/graphs/immature_neurons/20260422_immature_neurons_report_ingest.yaml carries the identical name and describes the same cell type, curated independently as part of a cross-region immature-neuron survey. That record contributes colocated_types this one lacks. Merging them is a curator decision that has not been made. Do not treat the two as independent types.'
   - id: dg_type2a_progenitor
     name: Dentate Gyrus Type-2a Neural Progenitor
     definition_basis: CLASSICAL_NEUROCHEMICAL
@@ -396,62 +390,62 @@ nodes:
   - id: CS20230722_CLUS_0511
     name: 0511 DG-PIR Ex IMN_1
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0511
   - id: CS20230722_CLUS_0514
     name: 0514 DG-PIR Ex IMN_2
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0514
   - id: CS20230722_CLUS_0515
     name: 0515 DG-PIR Ex IMN_2
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0515
   - id: CS20230722_CLUS_0502
     name: 0502 DG Glut_1
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0502
   - id: CS20230722_CLUS_0503
     name: 0503 DG Glut_1
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0503
   - id: CS20230722_CLUS_0504
     name: 0504 DG Glut_1
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0504
   - id: CS20230722_CLUS_0505
     name: 0505 DG Glut_2
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0505
   - id: CS20230722_CLUS_0506
     name: 0506 DG Glut_2
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0506
   - id: CS20230722_CLUS_0507
     name: 0507 DG Glut_2
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0507
   - id: CS20230722_CLUS_0508
     name: 0508 DG Glut_3
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0508
   - id: CS20230722_CLUS_0509
     name: 0509 DG Glut_3
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0509
   - id: CS20230722_CLUS_0510
     name: 0510 DG Glut_4
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    taxonomy_id: CCN202307220
+    taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_0510
 edges:
   - id: edge_dg_neuroblast_to_CS20230722_CLUS_0511
@@ -492,12 +486,12 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Atlas curator annotation: ''early neuroblast''. TF markers Eomes (=Tbr2, canonical type-2b progenitor TF; Hodge et al. 2008), Neurod1, Sox6, Meis1/2, Igfbpl1. CL:9900001 (BROAD) on parent supertype CS20230722_SUPT_0140. NT: Slc17a6 MERFISH score 6.02 (Glut). MERFISH validates Eomes and Igfbpl1 at DG-STR boundary (SGZ).'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0511
       - evidence_type: ATLAS_METADATA
         supports: PARTIAL
         explanation: Cluster is the sole member of supertype CS20230722_SUPT_0140 (DG-PIR Ex IMN_1), which carries CL:9900001 (dentate gyrus neuroblast) BROAD mapping. The Eomes/Tbr2 TF signature is the canonical marker for the type-2b intermediate progenitor stage.
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0511
       - evidence_type: ANNOTATION_TRANSFER
         run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
@@ -579,7 +573,7 @@ edges:
       - Should the dg_neuroblast classical node be split into separate type-2b and type-3 nodes to match atlas resolution (cluster 0511 for type-2b; cluster 0512 for type-3)?
     proposed_experiments:
       - Triple-label smFISH combining Dcx, Eomes, and Sox6 transcripts with Ki67 IHC in adult mouse DG to directly test co-localisation of atlas cluster 0511 signature with classical DCX+/Ki67+ neuroblasts in the SGZ.
-      - DCX-GFP sorted cells from adult DG followed by snRNA-seq and MapMyCells projection onto CCN202307220 to assign protein-defined neuroblasts to specific atlas clusters.
+      - DCX-GFP sorted cells from adult DG followed by snRNA-seq and MapMyCells projection onto CCN20230722 to assign protein-defined neuroblasts to specific atlas clusters.
     mapping_justification: semapv:UnreviewedManualMapping
     mapping_cardinality: "1:1"
   - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0514
@@ -620,7 +614,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'EXACT CL:9900002 (immature dentate gyrus granule neuron) in atlas; curator annotation ''late neuroblast/immature granule cell''. TF markers: Tbr1 (canonical postmitotic TF; Hodge et al. 2008), Prox1, Emx2 (MERFISH), Igfbpl1 (MERFISH), Ccbe1 (scoped). Anatomy: DGdo,me HIP:0.98. NT: Glut. No Calbindin (Calb1) — consistent with immature (not mature) stage. Discovery composite score 0.82.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0514
       - &id002
         evidence_type: LITERATURE
@@ -678,7 +672,7 @@ edges:
       - Why does cluster 0514 show a Gad1 nt_marker signal (score 5.56)? Transient GABAergic signalling in immature granule neurons, doublet artefact, or contamination?
     proposed_experiments:
       - Anti-DCX and anti-Tbr1 co-stain on adult mouse DG to confirm Tbr1+ inner-GCL cells are also DCX+/NeuN+ at protein level, bridging atlas TF and classical profiles.
-      - Query full Allen Brain Cell Atlas CCN202307220 feature matrix for Dcx, Rbfox3, Btg2 in clusters 0514/0515 to check expression below the marker ranking threshold.
+      - Query full Allen Brain Cell Atlas CCN20230722 feature matrix for Dcx, Rbfox3, Btg2 in clusters 0514/0515 to check expression below the marker ranking threshold.
     mapping_cardinality: 1:n
     mapping_justification: semapv:UnreviewedManualMapping
   - id: edge_dg_immature_granule_neuron_to_CS20230722_CLUS_0515
@@ -719,7 +713,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'EXACT CL:9900002 in atlas; curator annotation ''late neuroblast''. Core TF profile identical to cluster 0514 (Tbr1+/Prox1+/Emx2+/Igfbpl1+). Scoped marker Rarb (distinctive within subclass). Additional MERFISH markers: Bcl11b, Cd24a, Fam163a. Anatomy: DGdo,me HIP:1.0 (perfect hippocampal allocation). NT: NA at cluster level, Glut by parent-class inheritance. Discovery composite score 0.82.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0515
       - *id002
       - *id003
@@ -794,7 +788,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0506 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.69. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, St18. Neuropeptides: Cck. Soma: DG do (dorsal outer GCL) (HIP:0.99). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0506
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -903,7 +897,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0503 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.68. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, Hey2. Neuropeptides: Cck, Grp. Soma: DG ve (ventral GCL) (HIP:0.93). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0503
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -994,7 +988,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0507 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.67. Core TF/MERFISH markers: Glis3, Neurod2, St18. Neuropeptides: Cck, Pdyn. Soma: DG do (dorsal outer GCL) (HIP:0.98). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0507
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -1094,7 +1088,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0502 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.64. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, Rfx2, Lhx9. Neuropeptides: Grp, Cck. Soma: DG ve (ventral GCL) (HIP:0.74). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0502
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -1187,7 +1181,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0505 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.63. Core TF/MERFISH markers: Glis3, Neurod2, St18. Neuropeptides: none. Soma: DG do (dorsal outer GCL) (HIP:0.99). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0505
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -1287,7 +1281,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0508 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.63. Core TF/MERFISH markers: Glis3, Neurod2, Prox1, Egr2, Egr4. Neuropeptides: Cck, Pdyn. Soma: DG do (dorsal outer GCL) (HIP:0.96). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0508
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -1378,7 +1372,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0504 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.62. Core TF/MERFISH markers: Glis3, Prox1, Nr4a3, Egr3, Rorb. Neuropeptides: Grp, Penk, Cck, Cartpt. Soma: DG ve (ventral GCL) (HIP:0.69). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0504
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -1471,7 +1465,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0510 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.62. Core TF/MERFISH markers: Glis3, St18, Lhx9, Nr2f2. Neuropeptides: Cck, Grp, Pdyn. Soma: DG po (posterior GCL) (HIP:0.99). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0510
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -1562,7 +1556,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Cluster CS20230722_CLUS_0509 is within the DG Glut subclass (CL:2000089 EXACT mapping). Discovery composite score 0.59. Core TF/MERFISH markers: Glis3, Neurod2, Atf3, Bhlhe41, Cebpb. Neuropeptides: Cck, Pdyn, Npy. Soma: DG do (dorsal outer GCL) (HIP:0.96). All DG Glut clusters share Glis3/Neurod2/Slc17a7 mature granule core; classical protein markers Calbindin/NeuN/Tbr1 absent from atlas — protein-transcriptome gap.'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0509
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -1663,7 +1657,7 @@ edges:
       - evidence_type: ATLAS_METADATA
         supports: SUPPORT
         explanation: 'Atlas curator cl_mapping on CS20230722_CLUS_0511: BROAD CL:9900004 (dentate gyrus type-2b neural progenitor), annotated as "early neuroblast". Eomes (=Tbr2) is a defining_marker, directly matching the canonical type-2b molecular identity. Additional TF markers Sox6, Neurod1, Meis1/2, Igfbpl1 corroborate the early neurogenesis stage. MERFISH validates Eomes and Igfbpl1 at DG-STR (SGZ). NT: Slc17a6 (Glut).'
-        atlas: Allen Brain Cell Atlas CCN202307220
+        atlas: Allen Brain Cell Atlas CCN20230722
         cell_set_accession: CS20230722_CLUS_0511
       - evidence_type: LITERATURE
         supports: SUPPORT
@@ -1722,6 +1716,6 @@ edges:
       - Is the Gad2 signal (score 3.24) in cluster 0511 ambient RNA, a minor GABAergic contaminant, or evidence of transient GABAergic signalling in type-2b progenitors?
     proposed_experiments:
       - Triple-label smFISH combining Eomes, Sox6, and Nes transcripts with Tbr2 IHC to confirm co-localisation of cluster 0511 signature with classical Tbr2+/Nestin+ type-2b cells in adult mouse SGZ.
-      - Tbr2-CreERT2 fate-mapping with snRNA-seq from sorted Tbr2+ cells followed by MapMyCells projection onto CCN202307220 to assign IHC-defined type-2b cells to specific atlas clusters.
+      - Tbr2-CreERT2 fate-mapping with snRNA-seq from sorted Tbr2+ cells followed by MapMyCells projection onto CCN20230722 to assign IHC-defined type-2b cells to specific atlas clusters.
     mapping_justification: semapv:UnreviewedManualMapping
     mapping_cardinality: "1:1"

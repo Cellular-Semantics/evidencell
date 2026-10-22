@@ -78,12 +78,14 @@ def ancestor_accession_by_level(
     Used by lineage-aware `compute_edge_metrics` to fill `metrics_by_level`
     with F1 of (source, ancestor) at each rank.
     """
-    import sqlite3
+    from evidencell.kb_io import connect_readonly
 
-    db_path = _taxonomy_db_path(taxonomy_id)
-    if not db_path.is_file():
+    # connect_readonly, not sqlite3.connect: a plain connect() creates an empty
+    # DB on a miss, and the `is_file()` guard then passes forever after -- so a
+    # graceful skip turns into "no such table: nodes" on every later call.
+    conn = connect_readonly(_taxonomy_db_path(taxonomy_id))
+    if conn is None:
         return {}
-    conn = sqlite3.connect(str(db_path))
     try:
         out: dict[str, str] = {}
         # The taxonomy DB keys nodes by either `node_id` (CURIE-style)
