@@ -88,3 +88,16 @@ def test_index_invalidates_when_a_file_changes(tmp_path, monkeypatch):
     assert find_node_file("renamed") == path
     with pytest.raises(FileNotFoundError):
         find_node_file("a")
+
+
+def test_intra_file_duplicate_is_not_reported_as_two_files(tmp_path, monkeypatch):
+    """A node id repeated within one file belongs to structural_checks.
+
+    Without deduping, the error read "defined in 2 files: a.yaml, a.yaml".
+    """
+    kb = _repo(tmp_path, monkeypatch)
+    path = _write(kb / "r", "a.yaml", [
+        {"id": "dup", "definition_basis": "CLASSICAL_MULTIMODAL"},
+        {"id": "dup", "definition_basis": "CLASSICAL_MULTIMODAL"},
+    ])
+    assert find_node_file("dup") == path

@@ -97,11 +97,36 @@ def test_orphan_atlas_stub_is_reported_not_dropped_silently():
 
 
 def test_edgeless_classical_node_becomes_its_own_component():
-    """Unmapped literature types are valid content and must survive."""
+    """Unmapped literature types are valid content and must survive.
+
+    Every non-atlas node is placed in a component by construction, so an
+    edgeless one becomes a single-node component rather than being dropped.
+    """
     doc = _doc([_classical("a"), _classical("lonely")], [])
     plan = plan_split(doc, Path("t.yaml"))
     assert [c.representative for c in plan.components] == ["a", "lonely"]
-    assert plan.orphan_non_atlas == []
+    assert verify_conservation(doc, plan) == []
+
+
+def test_file_with_no_components_is_a_noop():
+    """A stub dump or an atlas-to-atlas crosswalk has nothing to split."""
+    doc = _doc([_atlas("x"), _atlas("y")], [])
+    plan = plan_split(doc, Path("t.yaml"))
+    assert plan.components == []
+    assert plan.is_noop
+    assert plan.orphan_atlas == ["x", "y"]
+
+
+def test_refuses_to_split_when_edges_would_be_lost():
+    """An atlas-to-atlas crosswalk belongs to no component, so its edges have
+    nowhere to go. Conservation must catch that before anything is written."""
+    doc = _doc(
+        [_atlas("x"), _atlas("y")],
+        [_edge("e1", "x", "y")],
+    )
+    plan = plan_split(doc, Path("t.yaml"))
+    problems = verify_conservation(doc, plan)
+    assert problems and "edges lost" in problems[0]
 
 
 def test_component_doc_carries_stubs_and_header_keys():

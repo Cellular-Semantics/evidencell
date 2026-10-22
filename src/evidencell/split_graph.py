@@ -72,15 +72,23 @@ class SplitPlan:
     source: Path
     components: list[Component] = field(default_factory=list)
     orphan_atlas: list[str] = field(default_factory=list)
-    orphan_non_atlas: list[str] = field(default_factory=list)
 
     @property
     def is_noop(self) -> bool:
-        """True when the file is already exactly one component.
+        """True when splitting this file would produce nothing useful.
 
-        Splitting it would only rename it, and renaming a curated file loses
-        its header provenance for no gain.
+        Either it is already exactly one whole component -- splitting would
+        only rename it, losing the header provenance for no gain -- or it has
+        no components at all (a stub dump or a crosswalk), in which case there
+        is nothing to split.
+
+        Note there is no `orphan_non_atlas`: every non-atlas node is placed in
+        a component by construction, including edgeless ones, which become
+        single-node components. Unmapped literature types therefore always
+        survive the split.
         """
+        if not self.components:
+            return True
         return len(self.components) == 1 and not self.orphan_atlas
 
 
@@ -133,15 +141,10 @@ def plan_split(doc: dict, source: Path) -> SplitPlan:
         )
 
     for node_id, node in nodes.items():
-        if node_id in referenced:
-            continue
-        if is_stub(node):
+        if node_id not in referenced and is_stub(node):
             plan.orphan_atlas.append(node_id)
-        elif not any(node_id in c.node_ids for c in plan.components):
-            plan.orphan_non_atlas.append(node_id)
 
     plan.orphan_atlas.sort()
-    plan.orphan_non_atlas.sort()
     return plan
 
 
@@ -294,7 +297,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    plan = split_file(args.graph_file, dry_run=not args.apply, out_dir=args.out_dir)
+    try:
+        plan = split_file(args.graph_file, dry_run=not args.apply, out_dir=args.out_dir)
+    except (ValueError, FileExistsError, OSError) as exc:
+        # A refused split is an expected outcome for a curator running this,
+        # not a crash. Print the reason, not a traceback.
+        print(f"split-graph: {exc}", file=sys.stderr)
+        return 1
 
     print(f"{plan.source}: {len(plan.components)} component(s)")
     if plan.is_noop:
@@ -305,9 +314,6 @@ def main(argv: list[str] | None = None) -> int:
             f"  nodes={component.node_ids}"
             f"  edges={len(component.edge_ids)}"
         )
-    if plan.orphan_non_atlas:
-        print(f"  !! {len(plan.orphan_non_atlas)} non-atlas node(s) referenced by no edge "
-              f"-- emitted as single-node components: {plan.orphan_non_atlas}")
     if plan.orphan_atlas:
         print(f"  !! {len(plan.orphan_atlas)} atlas stub(s) referenced by no edge "
               f"-- NOT emitted: {plan.orphan_atlas}")

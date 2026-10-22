@@ -93,7 +93,11 @@ def find_node_file(node_id: str) -> Path:
             "Check node_id spelling or run 'just qc' to validate the KB."
         )
     root = repo_root()
-    canonical = [path for path, is_stub in matches if not is_stub]
+    # dict.fromkeys dedupes while keeping order: a node id repeated *within*
+    # one file is an intra-file duplicate, which validate.structural_checks
+    # owns. Without this it would be reported here as "defined in 2 files:
+    # a.yaml, a.yaml".
+    canonical = list(dict.fromkeys(path for path, is_stub in matches if not is_stub))
     if len(canonical) > 1:
         listed = ", ".join(str(p.relative_to(root)) for p in canonical)
         raise AmbiguousNodeError(
