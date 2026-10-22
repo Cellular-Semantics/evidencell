@@ -418,7 +418,31 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
     # rule is relaxed to cross-file resolution (the stub-retirement follow-on);
     # adding it now would ship a check that silently never runs.
 
-    # 4. A node that no edge *in its own file* references. Scoped per file, not
+    # 4. Distinct node ids sharing an identical name. Renaming a duplicate so
+    #    each file defines a distinct id unblocks the layout but silences
+    #    `duplicate_node_id`, which would lose the signal entirely. The name is
+    #    the part that stays identical, so this keeps the pair visible until a
+    #    curator actually decides whether to merge them. WARN, not ERROR: two
+    #    records of one type is a backlog item, not a broken KB.
+    by_name: dict[str, list[tuple[str, str]]] = {}
+    for rel, _doc, nodes, _edges in per_file:
+        for node in nodes:
+            name = node.get("name")
+            if name and node.get("definition_basis") != ATLAS_BASIS:
+                by_name.setdefault(str(name), []).append((rel, node["id"]))
+    for name, entries in sorted(by_name.items()):
+        ids = sorted({node_id for _, node_id in entries})
+        if len(ids) < 2:
+            continue
+        findings.append(Finding(
+            sorted(rel for rel, _ in entries)[0], WARN, "possible_duplicate_name",
+            f"Name '{name}' is held by {len(ids)} distinct node ids: "
+            f"{', '.join(ids)}. Same name, different ids -- either one type "
+            "recorded twice (merge is a curator decision) or two types needing "
+            "distinguishable names.",
+        ))
+
+    # 5. A node that no edge *in its own file* references. Scoped per file, not
     #    corpus-wide, because that is what a component split acts on: a node
     #    unreferenced in its own document belongs to no component and is
     #    dropped, regardless of whether some other file's edge names it. Pooling
@@ -505,6 +529,7 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "duplicate_node_id":   (r"Node '([^']+)'",),
     "unknown_taxonomy_id": (r"taxonomy_id '([^']+)'",),
     "orphan_node":         (r"'([^']+)' is referenced by no edge",),
+    "possible_duplicate_name": (r"Name '([^']+)'",),
     "markdown": (
         r"(?:Atlas accession|PMID|quote_key|Ontology term) '([^']+)'",
         # Unannotated blockquote: the quoted line itself is the subject.
