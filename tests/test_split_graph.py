@@ -210,3 +210,64 @@ def test_real_cerebellum_split_conserves_content():
         plan = plan_split(doc, path)
         assert plan.is_noop, f"{name} should already be one whole component"
         assert verify_conservation(doc, plan) == []
+
+
+# ── Component naming ──────────────────────────────────────────────────────────
+
+def _lit(node_id):
+    return {"id": node_id, "name": node_id, "definition_basis": "CLASSICAL_MULTIMODAL"}
+
+
+def _rel_edge(edge_id, a, b, rel):
+    return {"id": edge_id, "lit_type": a, "taxonomy_type": b, "relationship": rel}
+
+
+def test_component_named_after_broadest_member():
+    """A general type plus its subtypes should take the general type's name.
+
+    Alphabetical naming would call the O-LM family file
+    `chrna2_olm_subfamily_chamberland.yaml`, which misrepresents it.
+    """
+    doc = _doc(
+        [_lit("olm_cell_ca1"), _lit("chrna2_sub"), _lit("ndnf_sub")],
+        [
+            _rel_edge("e1", "chrna2_sub", "olm_cell_ca1", "skos:broadMatch"),
+            _rel_edge("e2", "ndnf_sub", "olm_cell_ca1", "skos:broadMatch"),
+        ],
+    )
+    plan = plan_split(doc, Path("t.yaml"))
+    assert len(plan.components) == 1
+    assert plan.components[0].representative == "olm_cell_ca1"
+
+
+def test_narrow_match_orients_the_other_way():
+    """`A --narrowMatch--> B` makes A the broader of the two."""
+    doc = _doc(
+        [_lit("general"), _lit("aaa_specific")],
+        [_rel_edge("e1", "general", "aaa_specific", "skos:narrowMatch")],
+    )
+    plan = plan_split(doc, Path("t.yaml"))
+    assert plan.components[0].representative == "general"
+
+
+def test_ambiguous_breadth_falls_back_to_alphabetical():
+    """Two roots, or none, is arbitrary -- prefer stable over misleading."""
+    doc = _doc(
+        [_lit("bbb"), _lit("aaa")],
+        [_rel_edge("e1", "aaa", "bbb", "skos:closeMatch")],
+    )
+    plan = plan_split(doc, Path("t.yaml"))
+    assert plan.components[0].representative == "aaa"
+
+
+def test_breadth_edges_outside_the_component_are_ignored():
+    """Only in-component breadth orders the members."""
+    doc = _doc(
+        [_lit("aaa"), _lit("zzz"), _atlas("x")],
+        [
+            _rel_edge("e1", "aaa", "zzz", "skos:broadMatch"),
+            _rel_edge("e2", "aaa", "x", "skos:broadMatch"),
+        ],
+    )
+    plan = plan_split(doc, Path("t.yaml"))
+    assert plan.components[0].representative == "zzz"

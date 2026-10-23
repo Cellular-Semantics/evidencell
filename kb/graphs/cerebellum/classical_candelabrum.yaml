@@ -138,7 +138,7 @@ nodes:
       status: ACCEPTED
 
   - id: pli1_osorno
-    name: "PLI1 (Osorno 2022 / Candelabrum)"
+    name: "PLI1 (Candelabrum)"
     definition_basis: PRIOR_TRANSCRIPTOMIC
     species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
     prior_dataset_accession: "SCP:SCP795"
@@ -182,6 +182,9 @@ nodes:
             ref: "PMID:35578131"
     is_terminal: false
 
+    synonyms:
+      - term: "PLI1 (Osorno 2022 / Candelabrum)"
+        synonym_type: HISTORICAL
   - id: wmb_cluster_5178
     name: "5178 CB PLI Gly-Gaba_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC

@@ -85,7 +85,7 @@ nodes:
       status: DRAFT
 
   - id: pli2_osorno
-    name: "PLI2 (Osorno 2022 / Globular)"
+    name: "PLI2 (Globular)"
     definition_basis: PRIOR_TRANSCRIPTOMIC
     species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
     prior_dataset_accession: "SCP:SCP795"
@@ -102,6 +102,9 @@ nodes:
           name_in_source: "Glyc"
     is_terminal: false
 
+    synonyms:
+      - term: "PLI2 (Osorno 2022 / Globular)"
+        synonym_type: HISTORICAL
   - id: wmb_cluster_5177
     name: "5177 CB PLI Gly-Gaba_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
