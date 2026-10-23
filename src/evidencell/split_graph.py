@@ -37,6 +37,12 @@ from ruamel.yaml.comments import CommentedMap, CommentedSeq
 
 ATLAS_BASIS = "ATLAS_TRANSCRIPTOMIC"
 
+# Relations that order two lit types by breadth. `A --broadMatch--> B` means B is
+# the broader thing; `A --narrowMatch--> B` means A is. Used only to name a
+# multi-node component after its most general member.
+_BROADER_IS_TARGET = "skos:broadMatch"
+_BROADER_IS_SOURCE = "skos:narrowMatch"
+
 # Fields a thin atlas stub may carry (CLAUDE.md: taxonomy YAML is canonical for
 # atlas properties). The splitter copies stubs verbatim rather than trimming to
 # this set -- stripping anatomical_location is a report-content change and
@@ -128,13 +134,14 @@ def plan_split(doc: dict, source: Path) -> SplitPlan:
             e for e in edges
             if e.get("lit_type") in member_set or e.get("taxonomy_type") in member_set
         ]
+        representative = _representative(members, comp_edges)
         for edge in comp_edges:
             referenced.update(
                 x for x in (edge.get("lit_type"), edge.get("taxonomy_type")) if x
             )
         plan.components.append(
             Component(
-                representative=members[0],
+                representative=representative,
                 node_ids=members,
                 edge_ids=[e.get("id", "") for e in comp_edges],
             )
@@ -146,6 +153,34 @@ def plan_split(doc: dict, source: Path) -> SplitPlan:
 
     plan.orphan_atlas.sort()
     return plan
+
+
+def _representative(members: list[str], comp_edges: list[dict]) -> str:
+    """Name a component after its most general member.
+
+    A multi-node component is a general type plus its subtypes -- O-LM with the
+    two Chamberland transgene-defined subfamilies, say. Naming the file after
+    whichever member sorts first would call that file
+    `chrna2_olm_subfamily_chamberland.yaml`, which misrepresents what it holds.
+
+    Breadth comes from the component's own broad/narrow edges. If exactly one
+    member has nothing broader than it, that member names the file; otherwise
+    (no breadth edges, or several roots) fall back to alphabetical, which is
+    stable and arbitrary rather than misleading.
+    """
+    member_set = set(members)
+    has_broader: set[str] = set()
+    for edge in comp_edges:
+        a, b = edge.get("lit_type"), edge.get("taxonomy_type")
+        if a not in member_set or b not in member_set:
+            continue
+        rel = edge.get("relationship")
+        if rel == _BROADER_IS_TARGET:
+            has_broader.add(a)
+        elif rel == _BROADER_IS_SOURCE:
+            has_broader.add(b)
+    roots = [m for m in members if m not in has_broader]
+    return roots[0] if len(roots) == 1 else members[0]
 
 
 def build_component_doc(doc: dict, component: Component) -> CommentedMap:

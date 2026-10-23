@@ -140,7 +140,7 @@ nodes:
   # ── Prior transcriptomic types (Kozareva 2021 / SCP795) ────────
 
   - id: mli1_kozareva
-    name: "MLI1 (Kozareva 2021)"
+    name: "MLI1"
     definition_basis: PRIOR_TRANSCRIPTOMIC
     species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
     prior_dataset_accession: "SCP:SCP795"
@@ -168,8 +168,11 @@ nodes:
       The transcriptomic boundary (MLI1 vs MLI2) does not correspond to the
       spatial/morphological basket/stellate boundary.
 
+    synonyms:
+      - term: "MLI1 (Kozareva 2021)"
+        synonym_type: HISTORICAL
   - id: mli2_kozareva
-    name: "MLI2 (Kozareva 2021)"
+    name: "MLI2"
     definition_basis: PRIOR_TRANSCRIPTOMIC
     species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
     prior_dataset_accession: "SCP:SCP795"
@@ -198,6 +201,9 @@ nodes:
 
   # ── Terminal nodes: WMBv1 atlas cell sets ──────────────────────
 
+    synonyms:
+      - term: "MLI2 (Kozareva 2021)"
+        synonym_type: HISTORICAL
   - id: wmb_cluster_5188
     name: "5188 CBX MLI Megf11 Gaba_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
