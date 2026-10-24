@@ -1,0 +1,138 @@
+# Draft KB — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Sex_dimorphic_neurons_hypothalamus_ast_report.pdf
+# Ingestion date: 2026-04-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Qualifying filter: clear sex bias, supported by full paper (conference abstract-only nodes excluded)
+# Excluded: arc_kndy_neuron (not sexually dimorphic in cell number), mpoa_galanin_neuron (sex ratio unclear),
+#   poa_pacap_vip_neuron (fish-only evidence), bnst_kiss1_neuron (abstract-only),
+#   lateral_septum_kiss1_neuron (abstract-only)
+
+name: "Sexually dimorphic hypothalamic and limbic neurons — draft KB"
+description: >
+  Evidence graph capturing classically defined sexually dimorphic neuron types
+  in the hypothalamus and connected limbic regions (BNST, lateral septum).
+  Nodes proposed from a single ASTA deep-research report; properties are
+  literature-derived and have not yet been confirmed against primary papers
+  or mapped to a community atlas. No mapping edges populated in this draft.
+target_atlas: "WMBv1"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (predominantly mouse evidence; rat for some studies)"
+
+creation_date: "2026-04-25"
+nodes:
+  - id: mea_esr1_neuron
+    name: Medial amygdala estrogen-receptor alpha neuron
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    sex_bias: MALE_BIASED
+    notes: >
+      CANDIDATE classical type proposed from bulk-correlation evidence
+      (Knoedler 2022, PMID:35143761). The sexually dimorphic Esr1+ population
+      of the medial amygdalar nucleus is well-described in the classical
+      literature as part of the male-typical reproductive behaviour circuit
+      (mating, aggression). Not in the original asta-report-ingest yield —
+      added here as a stub so the bulk-correlation evidence can land as an
+      edge. Literature ingest needed before this can move past LOW confidence.
+    anatomical_location:
+      - id: "MBA:403"
+        label: Medial amygdalar nucleus
+        name_in_source: medial amygdala
+    defining_markers:
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+    definition_references:
+      - "PMID:35143761"
+
+  - id: CS20230722_SUPT_0055
+    name: "0055 MEA Slc17a7 Glut_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0055
+    taxonomy_level: SUPERTYPE
+    notes: >
+      MEA glutamatergic supertype. Knoedler 2022 MeA Esr1+ TRAP-seq identifies
+      this supertype via δ(MeA_FR − VMH_FR): CLUS_0197 (MFR=10.11, male-biased)
+      ranks #3 with the highest δ value (0.052) of any contrast in the run.
+      Anatomically clean signal. Candidate WMBv1 home for an MeA Esr1+
+      classical type not yet defined in the KB.
+
+edges:
+  - id: edge_mea_esr1_neuron_to_cs20230722_supt_0055
+    lit_type: mea_esr1_neuron
+    taxonomy_type: CS20230722_SUPT_0055
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: BULK_CORRELATION
+        supports: SUPPORT
+        explanation: >
+          Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled MeA female-receptive vs VMH
+          female-receptive identifies SUPT_0055 (MEA Slc17a7 Glut_1) as the dominant
+          MeA-specific signal. Child cluster CLUS_0197 ranks #3 of 5,322 by δ = ρ(MeA_FR)
+          − ρ(VMH_FR), with δ=0.0519 (the highest absolute δ value in the entire run) and
+          MFR=10.11 (strongly male-biased — consistent with the well-known sexually
+          dimorphic male-typical MeA Esr1+ population). Multiple sister clusters from
+          SUPT_0055 (CLUS_0194, CLUS_0198) and the related SUPT_0057 also rank in the
+          top 6. Anatomically clean signal. Confidence held at LOW because
+          mea_esr1_neuron is a candidate classical node — full literature ingest has not
+          yet been performed.
+        run_ref: corr_run_20260428_knoedler_esr1_wmbv1
+        contrast_ref: corr_MeA_FR_vs_VMH_FR
+        target_accession: CS20230722_SUPT_0055
+        statistics: >
+          best_child_cluster=CLUS_0197 (rank 3, δ=0.0519, MFR=10.11);
+          additional_top_hits: CLUS_0194 (rank 6, δ=0.0508, MFR=2.70), CLUS_0198 (rank 4, δ=0.0515);
+          highest_delta_value_in_entire_run=0.0519.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "Glutamatergic (MeA principal neurons predominantly glutamatergic)"
+        node_b_value: "Glutamatergic (Slc17a7 Glut_1)"
+        alignment: CONSISTENT
+      - property: location_MBA403_MeA
+        node_a_value: "MBA:403 (Medial amygdalar nucleus)"
+        node_b_value: "Medial amygdalar nucleus (primary soma across child clusters)"
+        alignment: CONSISTENT
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (primary defining marker)"
+        node_b_value: "Esr1+ by experimental design (TRAP-Cre line)"
+        alignment: CONSISTENT
+      - property: sex_ratio
+        node_a_value: "male-biased (MeA Esr1+ population larger in males)"
+        node_b_value: "CLUS_0197 MFR=10.11 (extreme male bias)"
+        alignment: CONSISTENT
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: >
+          mea_esr1_neuron classical node is a stub; supporting evidence is from Knoedler
+          2022 only. Literature ingest from broader MeA classical literature
+          (Choi 2005, Unger 2015, Yamaguchi 2020 etc.) needed to upgrade confidence
+          past LOW.
+      - caveat_type: PRIOR_MAPPING_ASSUMED
+        description: >
+          The MeA Esr1+ population is well-described in classical literature but was not
+          included in the original sexually-dimorphic asta-report-ingest cycle. This
+          edge is added based on bulk-correlation evidence alone; the classical node
+          itself awaits proper ingest.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
+    unresolved_questions:
+      - >
+        Does the existing classical literature support a single MeA Esr1+ classical
+        type, or multiple subpopulations (e.g. male-typical aggression vs neutral)?
+      - >
+        Are CLUS_0197 (MFR=10.11) and CLUS_0194 (MFR=2.70) functionally distinct
+        male-biased subpopulations?
+    proposed_experiments:
+      - >
+        Run asta-report-ingest or cite-traverse on MeA Esr1+ classical literature
+        (Choi 2005 PMID:16267094, Unger 2015 PMID:26119027, Yamaguchi 2020 PMID:31831664)
+        to upgrade mea_esr1_neuron from stub to fully ingested classical node.
+      - >
+        MapMyCells annotation transfer of published MeA Esr1+ scRNA-seq data to
+        WMBv1 to provide direct AT evidence alongside bulk correlation.
+
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"

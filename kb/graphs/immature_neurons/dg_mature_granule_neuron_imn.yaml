@@ -1,0 +1,119 @@
+# Draft KB — immature_neurons (multi-region)
+# Source: ASTA deep research report — inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf
+# Ingestion date: 2026-04-22
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in kb/draft/immature_neurons/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Regions: Dentate Gyrus (3 nodes), Piriform Cortex, Olfactory Bulb, Striatum, Cerebral Cortex
+
+name: "Immature Neuron Cell Types Across Brain Regions"
+description: >
+  Evidence graph for classical immature neuron cell types across five brain
+  regions: dentate gyrus (three nodes — neuroblast/type-3 progenitor,
+  immature granule neuron, mature granule neuron), olfactory bulb
+  (SVZ-derived neuroblast / immature interneuron), piriform cortex
+  (layer II immature neuron), striatum (SVZ-derived immature neuron), and
+  cerebral cortex (layer II immature neuron). Classical cell types defined
+  by marker expression, maturational stage, and anatomical location.
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-04-22"
+nodes:
+  - id: dg_mature_granule_neuron_imn
+    name: "Dentate Gyrus Mature Granule Neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:       # To be confirmed — studies cite mouse, rat, human
+    anatomical_location:
+      - id: UBERON:0001885
+        label: "dentate gyrus of hippocampal formation"
+        name_in_source: "granule cell layer (GCL) of dentate gyrus"
+    nt_type:
+      name_in_source: "glutamatergic"
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: "PMID:26056581"
+          method: "review (adult neurogenesis connectivity)"
+          scope: "adult dentate gyrus mature granule cells"
+          quote_key: "245432259_7c3e9a44"
+        - ref: "https://doi.org/10.3389/fnins.2015.00110"
+          method: "commentary (adult neurogenesis)"
+          scope: "dentate gyrus terminal fate"
+          quote_key: "13752593_c44e8b77"
+    defining_markers:
+      - symbol: Calbindin
+        modifier: "stage 6 — terminally differentiated"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (stage 6 marker profile)"
+            scope: "adult dentate gyrus — mature granule neuron"
+            quote_key: "279046466_b2e95c41"
+            marker_type: PROTEIN
+      - symbol: NeuN
+        modifier: "mature pan-neuronal marker"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:40519263"
+            method: "review (stage 6 marker profile)"
+            scope: "adult dentate gyrus — mature granule neuron"
+            quote_key: "279046466_b2e95c41"
+            marker_type: PROTEIN
+      - symbol: Tbr1
+        modifier: "terminal TF cascade marker (Pax6 > Ngn2 > Tbr2 > NeuroD > Tbr1)"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:18385329"
+            method: "TF cascade in adult SGZ"
+            scope: "adult mouse hippocampus lineage progression"
+            quote_key: "15994456_c3a87b12"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: DCX
+        modifier: "downregulated at stage 6"
+        ncbi_gene_id:
+      - symbol: Nestin
+        modifier: "absent at terminal differentiation"
+        ncbi_gene_id:
+      - symbol: PSA-NCAM
+        modifier: "downregulated at stage 6"
+        ncbi_gene_id:
+    neuropeptides: []
+    colocated_types:
+      - neighboring_type: "CA3 pyramidal cells"
+        spatial_relationship: "DISTAL"
+        notes: "Target of mossy fiber axonal projections (PMID:26056581, quote_key=245432259_7c3e9a44)."
+      - neighboring_type: "entorhinal cortex projection neurons"
+        spatial_relationship: "DISTAL"
+        notes: "Source of primary glutamatergic afferents (PMID:26056581, quote_key=245432259_7c3e9a44)."
+      - neighboring_type: "hippocampal inhibitory interneurons (CA3)"
+        spatial_relationship: "DISTAL"
+        notes: "Target of mossy fiber collaterals to inhibitory interneurons (PMID:26056581, quote_key=245432259_7c3e9a44)."
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: "dentate gyrus granule cell"
+        name_in_source: "dentate granule cell"
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:2000089 is an EXACT match for the terminally-differentiated
+        mature dentate gyrus granule neuron (stage 6: Calbindin+/NeuN+,
+        DCX-negative). Mapping confidence: HIGH. The term's definition
+        references PMID:17765709.
+    definition_references:
+      - "PMID:17765709"
+      - "PMID:40519263"
+      - "PMID:26056581"
+      - "PMID:19482889"
+      - "PMID:18385329"
+      - PMID:29335606
+      - GEO:GSE95315
+    is_terminal: false
+    notes: >-
+      Terminal differentiation endpoint of the adult DG neurogenesis lineage from a developmental perspective (stage 6). is_terminal=false in the evidence-graph sense because this is a classical cell type — not an atlas cell set with a CCN cell_set_accession. Serves as the mature counterpart to dg_immature_granule_neuron (stage 5) and dg_neuroblast (type-3). Included in this graph to provide lineage context and an anchor for maturation-edge assertions in future edge-population rounds. DUPLICATE RECORD, MERGE DEFERRED: this node and 'dg_mature_granule_neuron' in kb/graphs/dentate_gyrus/20260414_dentate_gyrus_report_ingest.yaml carry the identical name and describe the same cell type, curated independently in two contexts. This record was renamed from 'dg_mature_granule_neuron' so that each file defines a distinct node id; the dentate_gyrus record is the one carried by reports/dentate_gyrus/ and is the richer of the two on literature references. Whether to merge them, and which properties survive, is a curator decision that has not been made. Do not treat the two as independent types.
+
+  # ── Piriform Cortex Layer II Immature Neuron ────────────────────
+
+edges: []

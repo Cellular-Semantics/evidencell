@@ -1,0 +1,166 @@
+# Draft KB — immature_neurons (multi-region)
+# Source: ASTA deep research report — inputs/deepsearch/Immature Neuron Cell Types and Development Across Brain Regions.pdf
+# Ingestion date: 2026-04-22
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in kb/draft/immature_neurons/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Regions: Dentate Gyrus (3 nodes), Piriform Cortex, Olfactory Bulb, Striatum, Cerebral Cortex
+
+name: "Immature Neuron Cell Types Across Brain Regions"
+description: >
+  Evidence graph for classical immature neuron cell types across five brain
+  regions: dentate gyrus (three nodes — neuroblast/type-3 progenitor,
+  immature granule neuron, mature granule neuron), olfactory bulb
+  (SVZ-derived neuroblast / immature interneuron), piriform cortex
+  (layer II immature neuron), striatum (SVZ-derived immature neuron), and
+  cerebral cortex (layer II immature neuron). Classical cell types defined
+  by marker expression, maturational stage, and anatomical location.
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-04-22"
+nodes:
+  - id: pir_immature_neuron
+    name: "Piriform Cortex Layer II Immature Neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:       # To be confirmed — studies cite mouse, rat, guinea pig
+    anatomical_location:
+      - id: UBERON:0004725
+        label: "piriform cortex"
+        name_in_source: "layer II of piriform cortex"
+    nt_type:
+      name_in_source: "glutamatergic (upon maturation)"
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: "PMID:29688272"
+          method: "IHC (TBR1, CaMKII)"
+          scope: "adult murine piriform cortex"
+          quote_key: "235300723_e71a4b88"
+    defining_markers:
+      - symbol: DCX
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29688272"
+            method: "IHC"
+            scope: "adult murine piriform cortex layer II"
+            quote_key: "235300723_b4f82e17"
+            marker_type: PROTEIN
+          - ref: "PMID:36078144"
+            method: "review (DCX expression)"
+            scope: "adult mouse piriform cortex"
+            quote_key: "258927570_c1d73e22"
+            marker_type: PROTEIN
+          - ref: "PMID:23667508"
+            method: "review (DCX expression)"
+            scope: "piriform cortex"
+            quote_key: "8479504_b31e7c55"
+            marker_type: PROTEIN
+          - ref: "PMID:18245040"
+            method: "IHC"
+            scope: "adult rat paleocortex layer II"
+            quote_key: "18166210_f74d2a66"
+            marker_type: PROTEIN
+      - symbol: PSA-NCAM
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29688272"
+            method: "IHC"
+            scope: "adult murine piriform cortex layer II"
+            quote_key: "235300723_b4f82e17"
+            marker_type: PROTEIN
+          - ref: "PMID:18245040"
+            method: "IHC"
+            scope: "adult rat paleocortex layer II"
+            quote_key: "18166210_f74d2a66"
+            marker_type: PROTEIN
+      - symbol: TBR1
+        modifier: "upon resumption of maturation"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29688272"
+            method: "IHC"
+            scope: "adult murine piriform cortex"
+            quote_key: "235300723_e71a4b88"
+            marker_type: PROTEIN
+      - symbol: CaMKII
+        modifier: "upon resumption of maturation"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:29688272"
+            method: "IHC"
+            scope: "adult murine piriform cortex"
+            quote_key: "235300723_e71a4b88"
+            marker_type: PROTEIN
+      - symbol: CRMP-4
+        modifier: "TOAD/Ulip/CRMP-4"
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:18245040"
+            method: "IHC"
+            scope: "adult rat paleocortex layer II"
+            quote_key: "18166210_f74d2a66"
+            marker_type: PROTEIN
+      - symbol: phospho-CREB
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:18245040"
+            method: "IHC"
+            scope: "adult rat paleocortex layer II"
+            quote_key: "18166210_f74d2a66"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: NeuN
+        ncbi_gene_id:
+      - symbol: c-Fos
+        modifier: "no activity marker expression"
+        ncbi_gene_id:
+      - symbol: Arc
+        modifier: "no activity marker expression"
+        ncbi_gene_id:
+      - symbol: NMDA-receptor
+        modifier: "no NMDA receptors"
+        ncbi_gene_id:
+      - symbol: glucocorticoid-receptor
+        modifier: "no glucocorticoid receptors"
+        ncbi_gene_id:
+      - symbol: GFAP
+        modifier: "no glial markers"
+        ncbi_gene_id:
+    neuropeptides: []
+    colocated_types: []
+    cl_mapping:
+      cl_term:
+        id: CL:4042028
+        label: "immature neuron"
+        name_in_source: "immature neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        CL:4042028 (CNS immature neuron not newly derived from neurogenesis,
+        not committed to differentiated fate, does not integrate into circuits)
+        matches the biology (DCX+/PSA-NCAM+, no c-Fos/Arc, no NMDA receptors,
+        prolonged non-integrated state). BROAD because CL:4042028 is CNS-wide;
+        no piriform-cortex-specific immature neuron term exists in CL.
+        CL:4042029 (cortical immature neuron) is neocortex-scoped and does not
+        apply (piriform cortex is paleocortex/allocortex).
+    definition_references:
+      - "PMID:29688272"
+      - "PMID:18245040"
+      - "PMID:34072166"
+      - "PMID:36078144"
+      - "PMID:23667508"
+    is_terminal: false
+    notes: >
+      HETEROGENEITY: the proposed type spans two main morphological subtypes
+      (tangled cells and complex cells) plus additional transitional forms
+      (semilunar-pyramidal transitional neurons, etc.); may warrant sub-nodes.
+      DEVELOPMENTAL ORIGIN: prenatally generated, distinct from adult
+      neurogenesis seen in SGZ/SVZ. A cross-species AMBIGUITY exists: in degu
+      cerebral cortex DCX+ cells are sparse in piriform cortex compared with
+      limbic neocortex (Groen et al., 2021), contrasting with mouse/rat
+      reports.
+
+  # ── Olfactory Bulb Neuroblast / Immature Interneuron ────────────
+
+edges: []

@@ -1,0 +1,261 @@
+# Draft KB — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Sex_dimorphic_neurons_hypothalamus_ast_report.pdf
+# Ingestion date: 2026-04-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Qualifying filter: clear sex bias, supported by full paper (conference abstract-only nodes excluded)
+# Excluded: arc_kndy_neuron (not sexually dimorphic in cell number), mpoa_galanin_neuron (sex ratio unclear),
+#   poa_pacap_vip_neuron (fish-only evidence), bnst_kiss1_neuron (abstract-only),
+#   lateral_septum_kiss1_neuron (abstract-only)
+
+name: "Sexually dimorphic hypothalamic and limbic neurons — draft KB"
+description: >
+  Evidence graph capturing classically defined sexually dimorphic neuron types
+  in the hypothalamus and connected limbic regions (BNST, lateral septum).
+  Nodes proposed from a single ASTA deep-research report; properties are
+  literature-derived and have not yet been confirmed against primary papers
+  or mapped to a community atlas. No mapping edges populated in this draft.
+target_atlas: "WMBv1"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (predominantly mouse evidence; rat for some studies)"
+
+creation_date: "2026-04-25"
+nodes:
+  - id: mpoa_esr1_neuron
+    name: "MPOA estrogen receptor 1 (Esr1) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:523
+        label: "Medial preoptic area"
+        name_in_source: "medial preoptic area (MPOA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+    defining_markers:
+      - symbol: Esr1
+        ncbi_gene_id: "NCBIGene:13982"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_9f0f55ea"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_c17e0213"
+      - symbol: Ar
+        ncbi_gene_id: "NCBIGene:11835"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_5d0fb07e"
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_b8087ed0"
+      - symbol: Pgr
+        ncbi_gene_id: "NCBIGene:18667"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "https://doi.org/10.1101/2021.09.02.458782"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "237425192_b8087ed0"
+    morphology:
+      description: >
+        Highly sexually dimorphic in distribution and projection patterns. The MPOA is
+        larger and contains more neurons in males than females. Esr1+ neurons are
+        highly expressed in the MPOA and are involved in both parental behaviors and
+        male-type mating behaviors. The Esr1+ population overlaps with steroid hormone
+        receptor-expressing neurons (Ar, Pgr) enriched in the MPOA. Differential
+        effects of circulating steroids between sexes (estrogen in females,
+        testosterone in males) underlie sexually dimorphic features of the MPOA.
+      sources:
+        - ref: "PMID:33910083"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "233446934_5d0fb07e"
+    cl_mapping:
+    is_terminal: false
+    definition_references:
+      - "PMID:33910083"
+      - "https://doi.org/10.1101/2021.09.02.458782"
+    notes: >
+      Heterogeneous population — MPOA contains both GABAergic and glutamatergic
+      neurons and may be better represented as multiple terms. MPOA Esr1 neurons are
+      required (alongside galanin neurons) for pup-directed/parental behavior. Esr1
+      governs male-type mating behavior; overlapping Nts (neurotensin)+ neurons
+      govern female socio-sexual behaviors. No CL term — candidate for new term(s).
+
+  - id: CS20230722_SUPT_0486
+    name: "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0486
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_SUPT_0521
+    name: "0521 AVPV-MEPO-SFO Tbr1 Glut_3"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0521
+    taxonomy_level: SUPERTYPE
+    notes: >
+      Glutamatergic preoptic supertype. Top hit for Knoedler 2022 POA Esr1+
+      TRAP-seq via δ(POA_FR − VMH_FR) — ranks #1 of 5,322 atlas clusters with
+      child cluster CLUS_2085 (top_anat=Anteroventral periventricular nucleus).
+      Candidate co-primary mapping target for mpoa_esr1_neuron alongside the
+      existing GABAergic SUPT_0486; suggests classical node may need
+      glut/GABA split at curator review.
+
+edges:
+  - id: edge_mpoa_esr1_neuron_to_cs20230722_supt_0486
+    lit_type: mpoa_esr1_neuron
+    taxonomy_type: CS20230722_SUPT_0486
+    relationship: evidencell:CrossCuttingMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          SUPT_0486 (PVpo-VMPO-MPN Hmx2 Gaba_5) directly encodes MPN in its label and has
+          MBA:515 (MPN, n=37) cells. All three defining markers of mpoa_esr1_neuron show high
+          expression: Esr1=7.72 (DEFINING atlas marker), Ar=8.15, Pgr=6.80. CROSS_CUTTING
+          because MPOA Esr1 neurons are heterogeneous (GABAergic and glutamatergic subtypes)
+          and SUPT_0486 captures only the GABAergic fraction.
+    property_comparisons:
+      - property: location_MBA464_MPOA
+        node_a_value: "MBA:464 (Medial preoptic nucleus / MPOA)"
+        node_b_value: "MBA:515 (MPN) n=37; MBA:133 (PVpo) n=64; MBA:272 (AVPV) n=16"
+        alignment: CONSISTENT
+        notes: MBA:515 is the same structure as MBA:464 (MPN). Location concordant.
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=7.72 (DEFINING atlas marker)"
+        alignment: CONSISTENT
+      - property: marker_Ar
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=8.15"
+        alignment: CONSISTENT
+      - property: marker_Pgr
+        node_a_value: "POSITIVE (transcript, defining marker)"
+        node_b_value: "precomputed mean_expression=6.80"
+        alignment: CONSISTENT
+      - property: nt_type
+        node_a_value: "mixed (GABAergic and glutamatergic, both documented in MPOA)"
+        node_b_value: "GABAergic (PVpo-VMPO-MPN Hmx2 Gaba subclass)"
+        alignment: APPROXIMATE
+        notes: GABAergic component matches; glutamatergic MPOA Esr1 neurons map elsewhere.
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          MPOA Esr1 neurons are functionally heterogeneous (parental behavior, male mating,
+          female socio-sexual behavior via Nts+ subtype). The classical node spans multiple
+          transcriptomic supertypes. SUPT_0486 captures the GABAergic fraction only. The
+          glutamatergic fraction requires identification of a preoptic glutamatergic supertype.
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: >
+          The functional subtypes within MPOA Esr1 neurons (parental, mating, female
+          socio-sexual) likely distribute across multiple clusters within SUPT_0486.
+    unresolved_questions:
+      - >
+        Which clusters within SUPT_0486 have highest Esr1/Ar/Pgr and strongest MPN
+        anatomical signal?
+      - >
+        Does the Nts+ female socio-sexual subpopulation map to SUPT_0486 or to a
+        separate preoptic supertype?
+
+    mapping_justification: semapv:UnreviewedManualMapping
+  - id: edge_mpoa_esr1_neuron_to_cs20230722_supt_0521
+    lit_type: mpoa_esr1_neuron
+    taxonomy_type: CS20230722_SUPT_0521
+    relationship: evidencell:CrossCuttingMatch
+    evidence:
+      - evidence_type: BULK_CORRELATION
+        supports: SUPPORT
+        explanation: >
+          Knoedler 2022 (PMID:35143761) Esr1+ TRAP-seq pooled POA female-receptive vs VMH
+          female-receptive. SUPT_0521 (AVPV-MEPO-SFO Tbr1 Glut_3, glutamatergic) child cluster
+          CLUS_2085 ranks #1 of 5,322 atlas clusters by δ = ρ(POA_FR) − ρ(VMH_FR), with
+          δ=0.0151 and primary soma in the Anteroventral periventricular nucleus. Three
+          additional SUPT_0521 child clusters (2087, 2082, 2079) appear in the top 10.
+          This is the dominant POA-Esr1+ supertype by bulk correlation — but is glutamatergic,
+          not GABAergic like the existing SUPT_0486 mapping. Suggests the classical
+          mpoa_esr1_neuron node may be heterogeneous and need a glut/GABA split, or that
+          SUPT_0486 captures only a subset of the classical population.
+        run_ref: corr_run_20260428_knoedler_esr1_wmbv1
+        contrast_ref: corr_POA_FR_vs_VMH_FR
+        target_accession: CS20230722_SUPT_0521
+        statistics: >
+          best_child_cluster=CLUS_2085 (rank 1 of 5322, δ=0.0151);
+          additional_top_hits: CLUS_2087 (rank 3, δ=0.0141), CLUS_2082 (rank 4, δ=0.0140), CLUS_2079 (rank 10, δ=0.0131);
+          n_child_clusters_in_top_10=4.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "GABAergic and/or glutamatergic (classical population is heterogeneous)"
+        node_b_value: "Glutamatergic (Tbr1 Glut_3 label)"
+        alignment: APPROXIMATE
+        notes: >
+          Existing edge to SUPT_0486 (GABAergic) covers the GABAergic fraction;
+          SUPT_0521 covers a glutamatergic fraction not previously mapped.
+      - property: location_MBA_preoptic
+        node_a_value: "MBA:515 (MPN) and broader medial preoptic"
+        node_b_value: "Anteroventral periventricular nucleus, Median preoptic nucleus"
+        alignment: APPROXIMATE
+        notes: >
+          AVPV/MePO is part of the broader medial preoptic area but not the MPN proper.
+          The classical mpoa_esr1_neuron may include AVPV/MePO Esr1+ populations or
+          may need to be narrowed to MPN-specific Esr1+ neurons.
+      - property: marker_Esr1
+        node_a_value: "POSITIVE (transcript, primary defining marker)"
+        node_b_value: "Esr1+ by experimental design (TRAP-Cre line)"
+        alignment: CONSISTENT
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          Co-primary candidate alongside edge_mpoa_esr1_neuron_to_cs20230722_supt_0486.
+          The two supertypes capture different NT-typed Esr1+ preoptic populations; the
+          classical node may need to be split (mpoa_esr1_neuron_GABAergic vs
+          mpoa_esr1_neuron_glutamatergic) or narrowed to MPN proper.
+      - caveat_type: OTHER
+        description: >
+          ATLAS_DISSECTION_OVERLAP — Knoedler's "POA" dissection captures a broader preoptic
+          zone than MPN proper; AVPV and MePO Esr1+ neurons (anatomically anterior to MPN)
+          are likely included in the bulk pool and contribute to the SUPT_0521 signal.
+    unresolved_questions:
+      - >
+        Should mpoa_esr1_neuron be split into GABAergic (SUPT_0486) and glutamatergic
+        (SUPT_0521) subnodes, or narrowed to MPN-proper Esr1+ neurons?
+      - >
+        Is the AVPV/MePO Esr1+ population (SUPT_0521) functionally distinct from MPN
+        Esr1+ (SUPT_0486) in the parental/mating circuit literature?
+    proposed_experiments:
+      - >
+        ISH or MERFISH co-staining for Esr1, Slc17a6 (vGlut2), Slc32a1 (vGAT) in MPOA
+        to quantify the GABAergic vs glutamatergic fractions of Esr1+ cells.
+      - >
+        MapMyCells annotation transfer of published MPOA Esr1+ scRNA-seq data
+        (e.g. Moffitt 2018) to SUPT_0521 vs SUPT_0486; expect F1 split.
+
+    mapping_justification: semapv:UnreviewedManualMapping

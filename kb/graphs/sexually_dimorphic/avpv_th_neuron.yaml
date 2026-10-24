@@ -1,0 +1,284 @@
+# Draft KB — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Sex_dimorphic_neurons_hypothalamus_ast_report.pdf
+# Ingestion date: 2026-04-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Qualifying filter: clear sex bias, supported by full paper (conference abstract-only nodes excluded)
+# Excluded: arc_kndy_neuron (not sexually dimorphic in cell number), mpoa_galanin_neuron (sex ratio unclear),
+#   poa_pacap_vip_neuron (fish-only evidence), bnst_kiss1_neuron (abstract-only),
+#   lateral_septum_kiss1_neuron (abstract-only)
+
+name: "Sexually dimorphic hypothalamic and limbic neurons — draft KB"
+description: >
+  Evidence graph capturing classically defined sexually dimorphic neuron types
+  in the hypothalamus and connected limbic regions (BNST, lateral septum).
+  Nodes proposed from a single ASTA deep-research report; properties are
+  literature-derived and have not yet been confirmed against primary papers
+  or mapped to a community atlas. No mapping edges populated in this draft.
+target_atlas: "WMBv1"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (predominantly mouse evidence; rat for some studies)"
+
+creation_date: "2026-04-25"
+nodes:
+  - id: avpv_th_neuron
+    name: "AVPV tyrosine hydroxylase (TH) neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:272
+        label: "Anteroventral periventricular nucleus"
+        name_in_source: "anteroventral periventricular nucleus (AVPV)"
+        compartment: SOMA
+        sources:
+          - ref: "https://doi.org/10.1007/s12031-012-9923-1"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "214694216_9c6ba0ce"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1dd3b718"
+          - ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+    nt_type:
+      name_in_source: "dopaminergic"
+      cl_terms:
+        - id: CL:0000700
+          label: "dopaminergic neuron"
+          name_in_source: "dopaminergic"
+      sources:
+        - ref: "PMID:28660243"
+          method: "literature inference"
+          scope: "adult mouse"
+          quote_key: "4702847_ebd225e6"
+    defining_markers:
+      - symbol: Th
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "https://doi.org/10.1007/s12031-012-9923-1"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "214694216_9c6ba0ce"
+          - marker_type: PROTEIN
+            ref: "PMID:33910083"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "233446934_e19240c2"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1dd3b718"
+      - symbol: Kiss1
+        ncbi_gene_id: "NCBIGene:280287"
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: "PMID:28660243"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "4702847_ebd225e6"
+          - marker_type: TRANSCRIPT
+            ref: "PMID:17699664"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "17692566_78d7ff15"
+    morphology:
+      description: >
+        Female-biased sexually dimorphic TH-immunoreactive population: females have
+        2-4 times more TH-positive neurons than males in the AVPV, with size
+        differences in addition to number. The AVPV consists mainly of TH-positive
+        neurons. Ovariectomy does not affect TH expression; chronic estradiol
+        treatment reduces it. TH-ir lesioned females show lower maternal behavior,
+        suggesting a role in sexually dimorphic parental behavior.
+      sources:
+        - ref: "https://doi.org/10.1007/s12031-012-9923-1"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "214694216_9c6ba0ce"
+        - ref: "PMID:33910083"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "233446934_e19240c2"
+        - ref: "PMID:20609214"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "15152139_c025cc8f"
+    cl_mapping:
+    is_terminal: false
+    sex_bias: FEMALE_BIASED
+    definition_references:
+      - "https://doi.org/10.1007/s12031-012-9923-1"
+      - "PMID:33910083"
+      - "PMID:20609214"
+      - "PMID:21243444"
+      - "PMID:25206587"
+    notes: >
+      Female-biased dimorphism (2-4x more TH+ neurons in females). Substantial
+      overlap with AVPV/PeN Kiss1 neurons — most AVPV/PeN Kiss1 cells co-express TH.
+      Distinct from SDN-POA where TH-positive cell bodies are absent (only TH-ir
+      axons/synapses). No exact CL term — candidate for a new term (sibling of
+      CL:4072009 'A12 dopaminergic neuron' for AVPV/RP3V A14 dopaminergic neurons).
+
+  - id: CS20230722_SUPT_0486
+    name: "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0486
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_CLUS_1915
+    name: "1915 PVpo-VMPO-MPN Hmx2 Gaba_5"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1915
+    taxonomy_level: CLUSTER
+
+edges:
+  - id: edge_avpv_th_neuron_to_cs20230722_supt_0486
+    lit_type: avpv_th_neuron
+    taxonomy_type: CS20230722_SUPT_0486
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          SUPT_0486 is the top-ranked rank-1 candidate for avpv_th_neuron. Child cluster
+          CLUS_1915 (nt_type=Dopa, male_female_ratio=0.02) is the most extremely female-biased
+          cluster in the candidate set, directly concordant with the female-biased AVPV TH
+          population (2-4x more TH+ neurons in females). Th=2.72, Esr1=7.72, Kiss1=0.62
+          at supertype level. Three independent signals (Th expression, AVPV location,
+          female sex ratio in child cluster) converge on SUPT_0486/CLUS_1915.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "dopaminergic (A14 group)"
+        node_b_value: "GABAergic (Gaba_5 label); child CLUS_1915 nt_type=Dopa"
+        alignment: APPROXIMATE
+        notes: Dopaminergic identity resolved at cluster level; supertype label reflects majority.
+      - property: location_MBA272
+        node_a_value: "MBA:272 (AVPV)"
+        node_b_value: "MBA:272 (AVPV) n=16; MBA:133 PVpo n=64; MBA:515 MPN n=37"
+        alignment: APPROXIMATE
+        notes: Direct AVPV cells present (n=16); supertype also spans broader preoptic zone.
+      - property: marker_Th
+        node_a_value: "POSITIVE (protein, primary defining marker)"
+        node_b_value: "precomputed mean_expression=2.72"
+        alignment: APPROXIMATE
+      - property: marker_Kiss1
+        node_a_value: "POSITIVE (transcript, co-expressed with Th in AVPV)"
+        node_b_value: "precomputed mean_expression=0.62"
+        alignment: APPROXIMATE
+      - property: sex_ratio
+        node_a_value: "female-biased (2-4x more TH+ neurons in females)"
+        node_b_value: "child CLUS_1915 male_female_ratio=0.02 (extreme female bias)"
+        alignment: CONSISTENT
+        notes: >
+          Strong female-bias confirmation at child cluster level; supertype-level sex
+          ratio not separately available.
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: Annotation transfer not yet run for avpv_th_neuron. Priority experiment.
+    caveats:
+      - caveat_type: NT_PREDICTION_UNCERTAIN
+        description: >
+          SUPT_0486 carries a Gaba_5 label at supertype level while the classical AVPV
+          TH neuron is dopaminergic. Dopaminergic identity is resolved only at cluster
+          level (CLUS_1915, Dopa designation).
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          avpv_th_neuron and avpv_kiss1_neuron both map to SUPT_0486 — these two classical
+          types substantially overlap (most AVPV/PeN Kiss1 cells co-express Th). Cluster-level
+          resolution needed to determine whether they are separable within SUPT_0486.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
+    unresolved_questions:
+      - >
+        Does CLUS_1915 specifically correspond to AVPV A14 TH neurons? Confirm by
+        cluster-level Kiss1/Th/Esr1 co-expression profiling.
+    proposed_experiments:
+      - >
+        MapMyCells annotation transfer of AVPV TH-lineage (Th-Cre or Kiss1-Cre)
+        scRNA-seq data to WMBv1 for F1-based confirmation.
+
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
+  - id: edge_avpv_th_neuron_to_cs20230722_clus_1915
+    lit_type: avpv_th_neuron
+    taxonomy_type: CS20230722_CLUS_1915
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: >
+          CLUS_1915 is the top-ranked rank-0 candidate (DB score=6) for avpv_th_neuron.
+          Th=6.6 (highest in the SUPT_0486 lineage), Kiss1=2.51 (only cluster with Kiss1
+          substantially above background), MFR=0.02 (extreme female bias), nt_type=Dopa
+          confirmed, MBA:272 (AVPV) cells present. Slc18a2 (VMAT2, vesicular monoamine
+          transporter) is a DEFINING cluster marker, providing independent dopaminergic
+          identity support. Three convergent signals: Th expression, female sex ratio,
+          and dopaminergic NT type.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: "dopaminergic (A14 group)"
+        node_b_value: "Dopa (confirmed, cluster.yaml name_in_source='Dopa')"
+        alignment: CONSISTENT
+        notes: Full NT concordance at cluster level; supertype label (Gaba_5) resolved here.
+      - property: location_MBA272
+        node_a_value: "MBA:272 (AVPV)"
+        node_b_value: "MBA:272 (AVPV) n=1; MBA:133 PVpo n=1; MBA:1097 Hypothalamus n=3"
+        alignment: APPROXIMATE
+        notes: AVPV cells present; cluster too small to resolve sub-regional anatomy precisely.
+      - property: marker_Th
+        node_a_value: "POSITIVE (protein, primary defining marker)"
+        node_b_value: "precomputed mean_expression=6.6; VMAT2 (Slc18a2) is a DEFINING marker"
+        alignment: CONSISTENT
+      - property: marker_Kiss1
+        node_a_value: "POSITIVE (transcript, co-expressed with Th)"
+        node_b_value: "precomputed mean_expression=2.51; Kiss1 is a cluster-level DEFINING marker"
+        alignment: CONSISTENT
+      - property: sex_ratio
+        node_a_value: "female-biased (2-4x more TH+ neurons in females)"
+        node_b_value: "male_female_ratio=0.02 (extreme female bias, ~50:1 F:M)"
+        alignment: CONSISTENT
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: AT pipeline not run. Recommended experiment using Th-Cre AVPV scRNA-seq data.
+    caveats:
+      - caveat_type: LOW_CELL_COUNT
+        description: >
+          CLUS_1915 has only n=3–5 total cells. All metrics are directionally correct but
+          have limited statistical power. Confidence capped at MODERATE.
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: >
+          avpv_th_neuron and avpv_kiss1_neuron both map to CLUS_1915 — the two classical
+          types are substantially overlapping (most AVPV Kiss1 cells co-express Th). These
+          may be the same cell population described from different entry points in the
+          classical literature.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
+    unresolved_questions:
+      - >
+        Is CLUS_1915 specifically the A14 TH/Kiss1 cluster, or does it also include
+        TH+ AVPV neurons that are Kiss1-negative?
+    proposed_experiments:
+      - >
+        MapMyCells annotation transfer of Th-Cre AVPV scRNA-seq data for F1-based
+        confirmation at cluster level.
+
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"

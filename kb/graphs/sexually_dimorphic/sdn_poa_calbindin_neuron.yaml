@@ -1,0 +1,277 @@
+# Draft KB — sexually_dimorphic
+# Source: ASTA deep research report — inputs/deepsearch/Sex_dimorphic_neurons_hypothalamus_ast_report.pdf
+# Ingestion date: 2026-04-25
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/sexually_dimorphic/references.json
+# Classical nodes proposed by: asta-report-ingest
+# Qualifying filter: clear sex bias, supported by full paper (conference abstract-only nodes excluded)
+# Excluded: arc_kndy_neuron (not sexually dimorphic in cell number), mpoa_galanin_neuron (sex ratio unclear),
+#   poa_pacap_vip_neuron (fish-only evidence), bnst_kiss1_neuron (abstract-only),
+#   lateral_septum_kiss1_neuron (abstract-only)
+
+name: "Sexually dimorphic hypothalamic and limbic neurons — draft KB"
+description: >
+  Evidence graph capturing classically defined sexually dimorphic neuron types
+  in the hypothalamus and connected limbic regions (BNST, lateral septum).
+  Nodes proposed from a single ASTA deep-research report; properties are
+  literature-derived and have not yet been confirmed against primary papers
+  or mapped to a community atlas. No mapping edges populated in this draft.
+target_atlas: "WMBv1"
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus (predominantly mouse evidence; rat for some studies)"
+
+creation_date: "2026-04-25"
+nodes:
+  - id: sdn_poa_calbindin_neuron
+    name: "Sexually dimorphic nucleus of the preoptic area (SDN-POA) calbindin neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:
+      id: NCBITaxon:10090
+      label: "Mus musculus"
+      name_in_source: "Mus musculus"
+    anatomical_location:
+      - id: MBA:515
+        label: "Medial preoptic nucleus"
+        name_in_source: "sexually dimorphic nucleus of the preoptic area (SDN-POA)"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:26672480"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "14863067_fa51fcf7"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_d6c3a647"
+          - ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_1098a86b"
+    defining_markers:
+      - symbol: Calb1
+        ncbi_gene_id: "NCBIGene:12307"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_d6c3a647"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "literature description"
+            scope: "adult mouse"
+            quote_key: "3481177_17d4bd9d"
+    negative_markers:
+      - symbol: Th
+        modifier: ABSENT
+        ncbi_gene_id: "NCBIGene:21823"
+        sources:
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "immunohistochemistry"
+            scope: "adult mouse/rat"
+            quote_key: "3481177_562d502e"
+          - marker_type: PROTEIN
+            ref: "PMID:25206587"
+            method: "immunohistochemistry"
+            scope: "adult mouse/rat"
+            quote_key: "3481177_17d4bd9d"
+    morphology:
+      description: >
+        Male-biased dimorphism: SDN-POA is larger in males than females and controls
+        male sex behavior. Delineated histologically by Nissl staining or
+        immunohistochemically by calbindin-D28K immunoreactivity. No TH-positive cell
+        bodies are present, but fine TH-positive axon-like projections/synaptic
+        structures are observed.
+      sources:
+        - ref: "PMID:26672480"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "14863067_fa51fcf7"
+        - ref: "PMID:25206587"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "3481177_d6c3a647"
+        - ref: "PMID:25206587"
+          method: "literature description"
+          scope: "adult mouse"
+          quote_key: "3481177_1098a86b"
+    cl_mapping:
+    is_terminal: false
+    sex_bias: MALE_BIASED
+    definition_references:
+      - "PMID:26672480"
+      - "PMID:25206587"
+    notes: >
+      Male-biased dimorphism (larger in males). Considered the rodent homolog of the
+      third interstitial nucleus of the anterior hypothalamus (INAH3) in humans, and
+      homologous structures in other mammals (ovine SDN, rhesus medial preoptic
+      area) and non-mammalian species (quail). No CL term exists — candidate for a
+      new term.
+
+  - id: CS20230722_SUPT_0423
+    name: "0423 BST-MPN Six3 Nrgn Gaba_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0423
+    taxonomy_level: SUPERTYPE
+
+  - id: CS20230722_CLUS_1550
+    name: "1550 BST-MPN Six3 Nrgn Gaba_4"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_1550
+    taxonomy_level: CLUSTER
+
+edges:
+  - id: edge_sdn_poa_calbindin_neuron_to_cs20230722_supt_0423
+    lit_type: sdn_poa_calbindin_neuron
+    taxonomy_type: CS20230722_SUPT_0423
+    relationship: evidencell:UncertainRelationship
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          SUPT_0423 (BST-MPN Six3 Nrgn Gaba_4) is the only anatomically plausible rank-1
+          candidate (DB score=1). Calb1=6.42 (DEFINING_SCOPED atlas marker) matches the
+          primary classical defining marker. MBA:515 (MPN, n=47) matches the classical
+          MBA:464 location. However, Th mean_expression=0.99 conflicts with the Th NEGATIVE
+          marker assertion, and the SDN-POA cannot be resolved from the broader MPN in
+          WMBv1 MERFISH data.
+    property_comparisons:
+      - property: location_MBA515_MPN
+        node_a_value: "MBA:515 (Medial preoptic nucleus; SDN-POA is a histological subnucleus within MPN)"
+        node_b_value: "MBA:515 (MPN) n=47; also BNST n=18, AHN n=46, PVN n=31"
+        alignment: APPROXIMATE
+        notes: >
+          Classical node corrected from MBA:464 (PVN descending division) to MBA:515 (MPN).
+          SDN-POA is a histologically defined subnucleus within MPN, not separately resolved
+          in WMBv1 MERFISH data.
+      - property: marker_Calb1
+        node_a_value: "POSITIVE (protein, primary defining marker)"
+        node_b_value: "precomputed mean_expression=6.42 (DEFINING_SCOPED atlas marker)"
+        alignment: CONSISTENT
+      - property: negative_marker_Th
+        node_a_value: "ABSENT (negative marker; no TH cell bodies in SDN-POA)"
+        node_b_value: "precomputed mean_expression=0.99"
+        alignment: DISCORDANT
+        notes: >
+          Low but non-zero Th expression in SUPT_0423. May reflect Th-expressing cells
+          in the BST/AHN/PVN components rather than MPN-proper cells. Child cluster
+          CLUS_1550 (MPN primary soma) shows Th=2.75 — concern persists at cluster level.
+      - property: sex_ratio
+        node_a_value: "male-biased (SDN-POA has more cells in males; classical IHC)"
+        node_b_value: "child CLUS_1550 male_female_ratio=3.35 (male-biased)"
+        alignment: CONSISTENT
+        notes: >
+          CLUS_1550 (MPN primary soma, n=22) MFR=3.35 is male-biased, consistent with the
+          MALE_BIASED sex_bias of sdn_poa_calbindin_neuron. This is the only cluster in
+          SUPT_0423 with MPN as primary soma and an unambiguous male bias.
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: >
+          Annotation transfer pipeline has not been run for this classical node.
+          Recommended next step: MapMyCells annotation of MPN Calb1+ or SDN-POA scRNA-seq data.
+    caveats:
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          The SDN-POA is a histologically defined subnucleus within MPN, not resolvable
+          as a distinct spatial domain in WMBv1 MERFISH data. Matching is possible only at
+          MPN level (SUPT_0423 MBA:515, n=47); SDN-POA cells cannot be distinguished from
+          other MPN Calb1 neurons.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: >
+          Calb1 is expressed across many brain regions and is DEFINING_SCOPED (not DEFINING)
+          in SUPT_0423. Calb1 alone is insufficient to identify SDN-POA neurons specifically;
+          the supertype spans BST, MPN, AHN, and PVN.
+    unresolved_questions:
+      - >
+        Do any clusters within SUPT_0423 show peak Calb1 co-located with MBA:515 (MPN)
+        and male-biased sex ratio consistent with SDN-POA identity?
+    proposed_experiments:
+      - >
+        Spatial inspection of SUPT_0423 MERFISH cells in MBA:515 for sub-regional
+        clustering consistent with SDN-POA dorsomedial position.
+
+    mapping_justification: semapv:UnspecifiedMatching
+  - id: edge_sdn_poa_calbindin_neuron_to_cs20230722_clus_1550
+    lit_type: sdn_poa_calbindin_neuron
+    taxonomy_type: CS20230722_CLUS_1550
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: WEAK
+        explanation: >
+          CLUS_1550 (1550 BST-MPN Six3 Nrgn Gaba_4) is the only child cluster of SUPT_0423
+          with MBA:515 (MPN) as its primary soma (n=22 cells). Calb1=6.66 (high expression)
+          matches the primary classical defining marker. MFR=3.35 is male-biased, consistent
+          with MALE_BIASED sex_bias of sdn_poa_calbindin_neuron. Concerns: Th=2.75 (non-zero,
+          discordant with the Th NEGATIVE marker), and CLUS_1550 spans MPN, PVH, PVHap —
+          it is not MPN-restricted. SDN-POA cannot be resolved as a subnucleus within
+          MPN in WMBv1 MERFISH data.
+    property_comparisons:
+      - property: location_MBA515_MPN
+        node_a_value: "MBA:515 (Medial preoptic nucleus; SDN-POA is histological subnucleus)"
+        node_b_value: "MBA:515 (MPN) n=22 (primary soma); also PVH n=9, PVHap n=4, Hypothalamus n=9"
+        alignment: APPROXIMATE
+        notes: >
+          MPN primary soma confirmed (n=22). Cluster also spans PVN-adjacent regions;
+          SDN-POA dorsomedial position within MPN cannot be confirmed from MERFISH data alone.
+      - property: marker_Calb1
+        node_a_value: "POSITIVE (protein, primary defining marker)"
+        node_b_value: "precomputed mean_expression=6.66"
+        alignment: CONSISTENT
+      - property: negative_marker_Th
+        node_a_value: "ABSENT (negative marker; no TH cell bodies in SDN-POA)"
+        node_b_value: "precomputed mean_expression=2.75"
+        alignment: DISCORDANT
+        notes: >
+          Non-zero Th expression is a concern at cluster level. May originate from
+          non-MPN cells within CLUS_1550 (PVH, PVHap components). Cannot exclude Th
+          expression in MPN cells without single-cell spatial resolution.
+      - property: sex_ratio
+        node_a_value: "male-biased (SDN-POA has more cells in males)"
+        node_b_value: "male_female_ratio=3.35 (male-biased)"
+        alignment: CONSISTENT
+      - property: annotation_transfer_f1
+        node_a_value: "not applicable"
+        node_b_value: "NOT_ASSESSED"
+        alignment: NOT_ASSESSED
+        notes: AT pipeline not run for sdn_poa_calbindin_neuron. MapMyCells on MPN Calb1+ data recommended.
+    caveats:
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: >
+          SDN-POA is a histologically defined subnucleus within MPN; WMBv1 MERFISH cannot
+          resolve it as a distinct spatial domain. CLUS_1550 represents the best available
+          MPN-primary Calb1+ male-biased atlas cluster but cannot be confirmed to occupy the
+          SDN-POA cytoarchitectonic zone specifically.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: >
+          Th=2.75 in CLUS_1550 is discordant with the classical Th NEGATIVE assertion.
+          Spatial inspection of Th channel in MERFISH data for CLUS_1550 cells at MBA:515 is
+          needed to determine whether Th expression co-occurs with MPN cells, or whether it
+          originates from the PVH/PVHap components of this multi-region cluster.
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, DISCORDANT comparison(s), existing caveats → closeMatch. Curator review recommended.'
+    unresolved_questions:
+      - >
+        Do CLUS_1550 cells at MBA:515 express Th, or does Th signal originate from
+        PVH/PVHap components of this cluster?
+      - >
+        Can sub-regional MERFISH spatial data distinguish SDN-POA dorsomedial cells
+        from other MPN Calb1+ neurons within CLUS_1550?
+    proposed_experiments:
+      - >
+        MapMyCells annotation transfer of MPN Calb1+ scRNA-seq data (Calb1-Cre or
+        SDN-POA-focused dataset) to assess F1 score against CLUS_1550.
+      - >
+        MERFISH spatial channel inspection of Th in CLUS_1550 cells assigned to MBA:515.
+
+    mapping_justification: semapv:UnreviewedManualMapping
+    mapping_cardinality: "1:1"
