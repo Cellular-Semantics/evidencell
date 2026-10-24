@@ -1,0 +1,844 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - anatomical_location:
+      - compartment: SOMA
+        id: UBERON:0002191
+        label: subiculum
+        name_in_source: subiculum
+        sources:
+          - ref: PMID:41693678
+            method: whole-cell patch-clamp + morphological reconstruction
+            scope: rodent subiculum, pyramidal neurons (sub2)
+            quote_key: 285611647_ae8e7717
+          - ref: PMID:27150503
+            method: review (anatomical tracing)
+            scope: rodent subiculum, pyramidal cell projections to CA1
+            quote_key: 6552145_472efe77
+          - ref: PMID:41509312
+            method: knowledge base aggregation
+            scope: rodent subiculum
+            quote_key: 284374132_0534d2cf
+          - ref: PMID:24303119
+            method: in vivo electrophysiology
+            scope: anesthetized rat dorsal subiculum, pyramidal cells
+            quote_key: 2171766_537d45ba
+          - ref: PMID:24303119
+            method: review
+            scope: rodent hippocampus
+            quote_key: 2171766_2eaf3e02
+          - ref: PMID:24303119
+            method: review
+            scope: rodent hippocampus
+            quote_key: 2171766_ae8e7717
+          - ref: PMID:27150503
+            method: review
+            scope: rodent hippocampus
+            quote_key: 6552145_e1cd39ad
+    cl_mapping:
+      cl_term:
+        id: CL:0000598
+        label: pyramidal neuron
+        name_in_source: pyramidal neuron
+      mapping_notes: 'Subicular pyramidal cells are the primary glutamatergic output neurons of the subiculum. Three electrophysiologically distinct subtypes (RF, WB, SB) have been described (Guinet et al., 2026). No subiculum-specific CL term exists; CL:0000598 (pyramidal neuron) is used as BROAD mapping.
+
+        '
+      mapping_type: BROAD
+    defining_markers:
+      - ncbi_gene_id: NCBIGene:20320
+        symbol: Np65
+        sources:
+          - ref: PMID:30488668
+            method: IHC (anti-Np65 antibody, human hippocampus)
+            scope: adult human hippocampus (control and AD cases)
+            quote_key: 54102201_823cc8cc
+            marker_type: PROTEIN
+    definition_basis: CLASSICAL_MULTIMODAL
+    id: subicular_pyramidal_cell_hippocampus
+    name: subicular pyramidal cell
+    nt_type:
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      name_in_source: glutamatergic
+      sources:
+        - ref: PMID:26346726
+          method: narrative review
+          scope: rodent subiculum
+          quote_key: 2281033_8482ea88
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+    electrophysiology:
+      sources:
+        - ref: PMID:41693678
+          method: whole-cell patch-clamp (acute slice)
+          scope: mouse subiculum, adult
+          quote_key: 285611647_e5dc070d
+        - ref: PMID:41693678
+          method: whole-cell patch-clamp (acute slice)
+          scope: mouse subiculum, adult
+          quote_key: 285611647_6a173ab1
+      description: Regular-spiking firing pattern with spike-frequency adaptation; recorded by whole-cell patch-clamp in acute mouse brain slices (PMID:41693678).
+    morphology:
+      sources:
+        - ref: PMID:41693678
+          method: biocytin fill + confocal
+          scope: mouse subiculum, adult
+          quote_key: 285611647_7c1687fe
+      description: Pyramidal morphology with prominent apical and basal dendritic arbor; visualized by biocytin fill and confocal microscopy (PMID:41693678).
+  - id: CS20230722_SUPT_0096
+    name: 0096 SUB-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0096
+  - id: CS20230722_CLUS_0256
+    name: 0256 ENTmv-PA-COAp Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0256
+  - id: CS20230722_CLUS_0277
+    name: 0277 CA1-ProS Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0277
+  - id: CS20230722_CLUS_0282
+    name: 0282 CA1-ProS Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0282
+  - id: CS20230722_CLUS_0283
+    name: 0283 CA1-ProS Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0283
+  - id: CS20230722_CLUS_0294
+    name: 0294 CA1-ProS Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0294
+  - id: CS20230722_SUPT_0128
+    name: 0128 NP SUB Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0128
+  - id: CS20230722_SUPT_0121
+    name: 0121 CT SUB Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0121
+  - id: CS20230722_SUPT_1181
+    name: 1181 COP NN_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1181
+  - id: CS20230722_SUPT_0172
+    name: 0172 OB-STR-CTX Inh IMN_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0172
+edges:
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_supt_0096
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0096
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 SUB-ProS subclass cells (n=471) representing IT subicular pyramidal neurons map to three SUB-ProS supertypes: SUPT_0096 (66.5%, F1=0.798), SUPT_0097 (14.6%, F1=0.253), SUPT_0098 (18.0%, F1=0.305). Together these three supertypes account for 99.1% of SUB-ProS cells. SUPT_0096 has the highest group purity (0.665) and near-perfect target purity (1.000), indicating all cells assigned to SUPT_0096 originate from subicular neurons. The TYPE_A_SPLITS relationship reflects that the classical subicular pyramidal cell encompasses all three IT subicular supertypes; this edge targets SUPT_0096 as the primary and most abundant mapping.
+
+          '
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: SUB-ProS (Yao 2021 subclass)
+        n_cells_total: 471
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: SUPERTYPE
+            best_target_name: 0096 SUB-ProS Glut_1
+            f1_score: 0.798
+            n_cells_mapped: 313
+            taxonomy_rank: 1
+            best_target_accession: CS20230722_SUPT_0096
+            coverage: 0.665
+            purity: 1.0
+        best_mapping_rank: 1
+    property_comparisons: &id001
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=4094 [painted]; Subiculum [MBA:502] count_100um=3972 [painted]; Prosubiculum [MBA:484682470] count_100um=2725 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.966; strict region_fraction: 0.767; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 8.60; cohort_pct 0.243; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=8.60; cohort percentile 0.243; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Classical subicular pyramidal cells encompass three SUB-ProS supertypes (SUPT_0096/0097/0098 together absorb 99.1% of Yao 2021 SUB-ProS source cells) plus the projection-defined CT SUB (SUPT_0121) and NP SUB (SUPT_0128) supertypes. This edge targets SUPT_0096 as the IT-primary; full coverage requires edges to SUPT_0097 and SUPT_0098.\n"
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "The single defining marker Np65 (mean 8.60, cohort percentile 0.243) is expressed across the subiculum-glutamatergic cohort and does not uniquely identify SUPT_0096.\n"
+    unresolved_questions:
+      - 'Which of the three electrophysiological subtypes of subicular pyramidal cells (regular-firing RF, weak-burst WB, strong-burst SB) correspond to SUPT_0096, 0097, 0098? F1 scores for each subtype would require datasets with electrophysiologically characterised single-cell transcriptomics.
+
+        '
+      - Which firing-class subtypes (RF / WB / SB) correspond to which SUB-ProS / CT SUB / NP SUB supertypes (SUPT_0096, 0097, 0098, 0121, 0128)?
+      - Curator removal of duplicate edge edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0096 — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0096.
+    proposed_experiments:
+      - Annotation transfer of Yao 2021 SUB-ProS source cells onto CS20230722_SUPT_0097 and CS20230722_SUPT_0098 to complete the IT subicular mapping (F1 reported at supertype rank).
+      - Targeted transcriptomic profiling of RF / WB / SB firing-class subicular pyramidal cells mapped to WMBv1 by MapMyCells at F1 >= 0.80 at supertype rank to resolve the firing-class to supertype assignment.
+      - Targeted literature trawl for additional primary-citation transcript-level subicular pyramidal markers beyond Np65.
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:ManualMappingCuration
+    discovery_score: &id002
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 8.6
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.243
+          coverage: 1.0
+      region_fraction: 0.767
+      region_fraction_100um: 0.966
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.65
+    rationale: "[tier:STRONGEST] Annotation transfer from Yao 2021 SUB-ProS source cells onto WMBv1 (run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) places 66.5% of n=471 source cells on CS20230722_SUPT_0096 with F1=0.80 at supertype rank (target purity 1.00); atlas spatial registration places SUPT_0096 in MBA:502 with region_fraction_100um: 0.97. Np65 is expressed on the supertype (mean 8.60, cohort percentile 0.243; not specific within the subiculum-glutamatergic cohort). The classical subicular pyramidal type encompasses three IT SUB-ProS supertypes (SUPT_0096/0097/0098) plus projection-defined CT SUB and NP SUB populations — broadMatch + 1:n captures the IT-primary supertype.\n"
+    reconciliation_note: "Two edges in the graph target CS20230722_SUPT_0096 (edge_subicular_pyramidal_cell_hippocampus_to_supt_0096 carrying the AT evidence + AMBIGUOUS_MAPPING caveat; edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0096 a fresh-emit stub with only ATLAS_METADATA). This verdict is on the substantive edge; the duplicate fresh-emit edge should be removed.\n"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 62c26ee0
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0256
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0256
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0256 ENTmv-PA-COAp Glut_2; region_fraction_100um=0.760; strict region_fraction=0.490.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=95 [painted]; Subiculum [MBA:502] count_100um=73 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=50 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.760; strict region_fraction: 0.490; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 9.02; cohort_pct 0.417'
+        alignment: APPROXIMATE
+        notes: val=9.02; cohort percentile 0.417
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant painted region is entorhinal / piriform-amygdalar, not subiculum.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 9.02
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.417
+      region_fraction: 0.49
+      region_fraction_100um: 0.76
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0256 is an ENTmv-PA-COAp glutamatergic cluster whose dominant painted regions are entorhinal area, piriform- amygdalar, and cortical amygdalar — outside the subiculum. Region fraction is high only because the cluster spills into hippocampal formation parents; strict in-region fraction at MBA:502 is 0.49 and the dominant region is not subiculum. Not the classical subicular pyramidal cell.\n"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 1f4f1233
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0277
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0277
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0277 CA1-ProS Glut_2; region_fraction_100um=0.530; strict region_fraction=0.295.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=166 [painted]; Prosubiculum [MBA:484682470] count_100um=149 [painted]; Field CA1 [MBA:382] count_100um=131 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.530; strict region_fraction: 0.295; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 8.85; cohort_pct 0.300'
+        alignment: APPROXIMATE
+        notes: val=8.85; cohort percentile 0.300
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Cluster is CA1-ProS (CA1 pyramidal / prosubiculum), not subiculum proper.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 8.85
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.3
+      region_fraction: 0.295
+      region_fraction_100um: 0.53
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0277 is a CA1-prosubiculum glutamatergic cluster; dominant painted regions are Field CA1 [MBA:382] and Prosubiculum [MBA:484682470], not subiculum proper. CA1 pyramidal cells project to subiculum but are not subicular pyramidal cells.\n"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: d6e0828a
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0282
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0282
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0282 CA1-ProS Glut_3; region_fraction_100um=0.539; strict region_fraction=0.174.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=115 [painted]; Prosubiculum [MBA:484682470] count_100um=105 [painted]; Subiculum [MBA:502] count_100um=62 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.539; strict region_fraction: 0.174; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 8.82; cohort_pct 0.258'
+        alignment: APPROXIMATE
+        notes: val=8.82; cohort percentile 0.258
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Cluster is CA1-ProS, not subiculum proper.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 8.82
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.258
+      region_fraction: 0.174
+      region_fraction_100um: 0.539
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0282 is a CA1-prosubiculum glutamatergic cluster; dominant painted regions are Prosubiculum [MBA:484682470] and Field CA1 (parent: Hippocampal formation [MBA:1089]) — not subiculum proper. Strict in-region fraction at MBA:502 is 0.17.\n"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: a79bd307
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0283
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0283
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0283 CA1-ProS Glut_3; region_fraction_100um=0.727; strict region_fraction=0.167.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=66 [painted]; Prosubiculum [MBA:484682470] count_100um=64 [painted]; Subiculum [MBA:502] count_100um=48 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.727; strict region_fraction: 0.167; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 8.96; cohort_pct 0.375'
+        alignment: APPROXIMATE
+        notes: val=8.96; cohort percentile 0.375
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Cluster is CA1-ProS, not subiculum proper.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 8.96
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.375
+      region_fraction: 0.167
+      region_fraction_100um: 0.727
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0283 is a CA1-prosubiculum glutamatergic cluster; dominant painted regions are Prosubiculum [MBA:484682470] and subiculum boundary, with strict in-region fraction at MBA:502 only 0.17. CA1-ProS cluster, not subiculum proper.\n"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 91b51246
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0294
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0294
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0294 CA1-ProS Glut_6; region_fraction_100um=0.765; strict region_fraction=0.452.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=320 [painted]; Prosubiculum [MBA:484682470] count_100um=252 [painted]; Subiculum [MBA:502] count_100um=247 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.765; strict region_fraction: 0.452; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 8.30; cohort_pct 0.125'
+        alignment: APPROXIMATE
+        notes: val=8.30; cohort percentile 0.125
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Cluster is CA1-ProS, not subiculum proper.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 8.3
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.125
+      region_fraction: 0.452
+      region_fraction_100um: 0.765
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0294 is a CA1-prosubiculum glutamatergic cluster; dominant painted regions are Prosubiculum [MBA:484682470] and Field CA1 (parent: Hippocampal formation [MBA:1089]). CA1-ProS, not subiculum proper.\n"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 9ab37949
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0096
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0096
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0096 SUB-ProS Glut_1; region_fraction_100um=0.966; strict region_fraction=0.767.
+    property_comparisons: *id001
+    caveats:
+      - caveat_type: OTHER
+        description: "Duplicate edge targeting the same taxonomy_type (CS20230722_SUPT_0096) as a substantive AT-bearing edge; flagged for curator removal.\n"
+    discovery_score: *id002
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Duplicate edge id targeting CS20230722_SUPT_0096; the substantive edge with annotation-transfer evidence is edge_subicular_pyramidal_cell_hippocampus_to_supt_0096. This stub carries only ATLAS_METADATA and should be removed by curator (legacy/fresh-emit ID collision).\n"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: a9b7c1e4
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0128
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0128
+    relationship: skos:broadMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0128 NP SUB Glut_2; region_fraction_100um=0.900; strict region_fraction=0.674.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=3417 [painted]; Subiculum [MBA:502] count_100um=3118 [painted]; Prosubiculum [MBA:484682470] count_100um=1429 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.900; strict region_fraction: 0.674; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 9.63; cohort_pct 0.786; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.63; cohort percentile 0.786; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: "No annotation transfer evidence on this edge; mapping rests on atlas spatial registration and Np65 expression alone (no independent transcriptomic anchor from a source cohort).\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Relationship of NP SUB to the classical RF / WB / SB firing-class subtypes is unresolved.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 9.63
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.786
+          coverage: 1.0
+      region_fraction: 0.674
+      region_fraction_100um: 0.9
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.5
+    rationale: "[tier:NEXT] Atlas spatial registration places CS20230722_SUPT_0128 in MBA:502 with region_fraction_100um: 0.90; Np65 mean 9.63 (cohort percentile 0.786) is in the top quartile of the subiculum-glutamatergic cohort. NP SUB is a projection-defined subicular subpopulation that is a candidate for one of the classical firing-class subtypes (plausibly SB). No annotation transfer evidence on this edge yet — the call rests on spatial + marker convergence.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - Annotation transfer from Yao 2021 source labels carrying the "NP SUB" subclass onto CS20230722_SUPT_0128 (F1 >= 0.6 at supertype rank).
+      - Targeted transcriptomic profiling of near-projecting subicular cells (with axonal labelling) mapped to WMBv1 to confirm the NP SUB identity.
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Does CS20230722_SUPT_0128 correspond to one of the classical subicular pyramidal firing-class subtypes (RF / WB / SB)?
+    rationale_source_hash: 141d5f39
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0121
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0121
+    relationship: skos:broadMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0121 CT SUB Glut_2; region_fraction_100um=0.590; strict region_fraction=0.464.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1425 [painted]; Subiculum [MBA:502] count_100um=928 [painted]; Prosubiculum [MBA:484682470] count_100um=633 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.590; strict region_fraction: 0.464; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 9.57; cohort_pct 0.743; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.57; cohort percentile 0.743; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: SINGLE_DATASET
+        description: "No annotation transfer evidence on this edge; mapping rests on atlas spatial registration and Np65 expression alone.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Relationship of CT SUB to the classical RF / WB / SB firing-class subtypes is unresolved.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 9.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.743
+          coverage: 1.0
+      region_fraction: 0.464
+      region_fraction_100um: 0.59
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.45
+    rationale: "[tier:NEXT] Atlas spatial registration places CS20230722_SUPT_0121 in MBA:502 with region_fraction_100um: 0.59 (some boundary scatter into Prosubiculum); Np65 mean 9.57 (cohort percentile 0.743) is in the top quartile of the subiculum-glutamatergic cohort. CT SUB is a projection-defined cortico-thalamic subicular subpopulation that is a candidate for one of the classical firing-class subtypes. No annotation transfer evidence on this edge yet.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - Annotation transfer from Yao 2021 source labels carrying the "CT SUB" subclass onto CS20230722_SUPT_0121 (F1 >= 0.6 at supertype rank).
+      - Targeted transcriptomic profiling of electrophysiologically classified cortico-thalamic subicular cells mapped to WMBv1.
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Does CS20230722_SUPT_0121 correspond to one of the classical subicular pyramidal firing-class subtypes (RF / WB / SB)?
+    rationale_source_hash: '1957e318'
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_1181
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_1181
+    relationship: evidencell:NoCorrespondence
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1181 COP NN_1; region_fraction_100um=0.019; strict region_fraction=0.010.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: Isocortex [MBA:315] count_100um=20713 [painted]; lateral forebrain bundle system [MBA:983] count_100um=5786 [painted]; Hippocampal formation [MBA:1089] count_100um=4937 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.019; strict region_fraction: 0.010; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 10.37; cohort_pct 0.971; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.37; cohort percentile 0.971; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant painted regions are isocortex, lateral forebrain bundle system, and corpus callosum — not subiculum.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 10.37
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.971
+          coverage: 1.0
+      region_fraction: 0.01
+      region_fraction_100um: 0.019
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_1181 (COP NN_1) dominant painted regions are Isocortex [MBA:315], lateral forebrain bundle system, and corpus callosum — not subiculum (region_fraction_100um: 0.02; strict region_fraction: 0.01). High Np65 expression (mean 10.37) is not specific to subicular pyramidal identity; this supertype is in cortex / fibre tracts.\n"
+    mapping_cardinality: "1:1"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 9b279594
+  - id: edge_subicular_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0172
+    lit_type: subicular_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0172
+    relationship: evidencell:NoCorrespondence
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0172 OB-STR-CTX Inh IMN_7; region_fraction_100um=0.081; strict region_fraction=0.038.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: subiculum [UBERON:0002191]
+        node_b_value: lateral forebrain bundle system [MBA:983] count_100um=85 [painted]; corpus callosum [MBA:776] count_100um=84 [painted]; cerebrum related [MBA:768] count_100um=74 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.081; strict region_fraction: 0.038; region_evidence: SELF'
+      - property: marker_Np65
+        node_a_value: Np65 — defining marker
+        node_b_value: 'Np65: 10.99; cohort_pct 0.986; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.99; cohort percentile 0.986; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant painted regions are lateral forebrain bundle / corpus callosum / cerebrum-related — not subiculum; cells labelled inhibitory immature, inconsistent with classical glutamatergic identity.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:502
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Np65
+          val: 10.99
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.986
+          coverage: 1.0
+      region_fraction: 0.038
+      region_fraction_100um: 0.081
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0172 (OB-STR-CTX Inh IMN_7) is labelled as an inhibitory immature neuron supertype whose dominant painted regions are lateral forebrain bundle system, corpus callosum, and cerebrum-related — not subiculum (region_fraction_100um: 0.08). Wrong subclass (inhibitory) and wrong region.\n"
+    mapping_cardinality: "1:1"
+    rationale_generated_at: '2026-06-08T21:04:25+00:00'
+    report_path: reports/hippocampus/subicular_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: d7c7be69

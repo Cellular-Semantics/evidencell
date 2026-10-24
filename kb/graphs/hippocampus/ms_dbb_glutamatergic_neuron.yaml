@@ -1,0 +1,984 @@
+name: Hippocampal glutamatergic principal cells — draft classical types
+description: Draft evidence graph for classical hippocampal glutamatergic principal cell types extracted from ASTA deep research report on glutamatergic-positive cells of the hippocampus. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - id: ms_dbb_glutamatergic_neuron
+    name: medial septal / diagonal band of Broca glutamatergic neuron
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0002421
+        label: hippocampal formation
+        name_in_source: medial septum / diagonal band of Broca (extrahippocampal soma — UBERON term used as nearest available; soma is not in hippocampal formation)
+        compartment: SOMA
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent septohippocampal system
+            quote_key: 21358766_0c242fdc
+      - id: UBERON:0005371
+        label: hippocampus stratum oriens
+        name_in_source: hippocampal stratum oriens near alveus (synaptic target on interneurons)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:29250747
+            quote_key: 21358766_01840c4a
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:29250747
+          method: review
+          scope: rodent MS-DBB
+          quote_key: 21358766_0c242fdc
+    defining_markers:
+      - symbol: Slc17a7
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent MS-DBB
+            quote_key: 21358766_0c242fdc
+            marker_type: PROTEIN
+      - symbol: Slc17a6
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent MS-DBB
+            quote_key: 21358766_0c242fdc
+            marker_type: PROTEIN
+          - ref: PMID:32132227
+            method: review
+            scope: rodent fornix/septohippocampal
+            quote_key: 212418354_02349d4e
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: Chat
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent MS-DBB
+            quote_key: 21358766_0c242fdc
+            marker_type: PROTEIN
+      - symbol: Gad1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:29250747
+            method: review
+            scope: rodent MS-DBB
+            quote_key: 21358766_0c242fdc
+            marker_type: PROTEIN
+    neuropeptides: []
+    morphology:
+      description: Soma in medial septum/diagonal band of Broca; account for ~23% of MS projections to hippocampus; project preferentially to hippocampal interneurons with somata in stratum oriens near the alveus.
+      sources:
+        - ref: PMID:29250747
+          method: review
+          scope: rodent septohippocampal
+          quote_key: 21358766_0c242fdc
+        - ref: PMID:29250747
+          method: review
+          scope: rodent septohippocampal
+          quote_key: 21358766_01840c4a
+    electrophysiology:
+      description: 'Highly heterogeneous firing in four subtypes: (1) fast-spiking with little AP accommodation, occasional spontaneous firing, sometimes pronounced Ih sag; (2) cluster-firing (8-14 Hz) with subthreshold membrane oscillations and strong AP accommodation — UNIQUE to glutamatergic MS-DBB neurons; (3) burst-firing (distinct from GABAergic burst pattern) with little/no sag; (4) slow-firing with broad accommodating APs. Can spontaneously fire rhythmically at theta frequencies. Activity rises before locomotion onset and during running.'
+      sources:
+        - ref: PMID:29250747
+          quote_key: 21358766_0c242fdc
+        - ref: PMID:21106833
+          quote_key: 15897856_d5424e2a
+        - ref: PMID:21106833
+          quote_key: 15897856_5e7429ed
+    definition_references:
+      - PMID:29250747
+      - PMID:21106833
+      - PMID:32132227
+    is_terminal: false
+    notes: 'Four electrophysiologically distinct VGluT2+ subgroups (fast-spiking, cluster-firing, burst-firing, slow-firing). Cluster firing is a unique electrophysiological marker for glutamatergic (not GABAergic) MS-DBB neurons. Soma is extrahippocampal — node retained because the cell projects into hippocampal formation; UBERON soma assignment is approximate (hippocampal formation used as nearest umbrella term).
+
+
+      CL mapping note: No CL term for medial septal / diagonal band of Broca glutamatergic neuron. CL:0000679 (glutamatergic neuron) too broad. Potential CL contribution.'
+  - id: CS20230722_CLUS_0332
+    name: 0332 L2/3 IT PPP Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0332
+  - id: CS20230722_CLUS_2689
+    name: 2689 TH Prkcd Grin2c Glut_14
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_2689
+  - id: CS20230722_CLUS_0122
+    name: 0122 L2/3 IT ENT Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0122
+  - id: CS20230722_CLUS_0132
+    name: 0132 L2/3 IT ENT Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0132
+  - id: CS20230722_CLUS_0133
+    name: 0133 L2/3 IT ENT Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0133
+  - id: CS20230722_SUPT_0673
+    name: 0673 MG-POL-SGN Nts Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0673
+  - id: CS20230722_SUPT_1170
+    name: 1170 Astroependymal NN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1170
+  - id: CS20230722_SUPT_0012
+    name: 0012 L5/6 IT TPE-ENT Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0012
+  - id: CS20230722_SUPT_0010
+    name: 0010 L5/6 IT TPE-ENT Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0010
+  - id: CS20230722_SUPT_0068
+    name: 0068 ENTmv-PA-COAp Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0068
+edges:
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0332
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_0332
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0332 L2/3 IT PPP Glut_1; region_fraction_100um=1.000; strict region_fraction=1.000.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=223 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=217 [painted]; Entorhinal area, medial part, dorsal zone, layer 5 [MBA:727] count_100um=198 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 1.000; strict region_fraction: 1.000; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Atlas cluster soma is intrahippocampal (L2/3 IT PPP); classical type soma is in medial septum / diagonal band of Broca.
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: Defining markers Slc17a7 and Slc17a6 are not available in precomputed expression; Gad1 is the only marker checked and only weakly discriminates.
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 1.0
+      region_fraction_100um: 1.0
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CLUS_0332 (0332 L2/3 IT PPP Glut_1) is a hippocampal-formation L2/3 intratelencephalic pyramidal cluster with soma fully inside the hippocampal formation; the classical MS-DBB glutamatergic projection neuron has its soma in the medial septum / diagonal band of Broca, projecting *to* hippocampal interneurons in stratum oriens. The classical cell class is therefore wrong, despite Gad1 being correctly near-zero and region_fraction_100um = 1.0 (the latter is misleading because the discovery query anchors on the axonal target rather than the soma).\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: aafd3a18
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_2689
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_2689
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 2689 TH Prkcd Grin2c Glut_14; region_fraction_100um=0.011; strict region_fraction=0.008.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Thalamus [MBA:549] count_100um=262 [painted]; Submedial nucleus of the thalamus [MBA:366] count_100um=177 [painted]; Rhomboid nucleus [MBA:189] count_100um=109 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.011; strict region_fraction: 0.008; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.05; cohort_pct 0.016'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.016
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Cluster soma in thalamus (submedial / rhomboid nucleus); classical type soma in medial septum / diagonal band of Broca.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+        - gene: -Gad1
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.016
+      region_fraction: 0.008
+      region_fraction_100um: 0.011
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_2689 (2689 TH Prkcd Grin2c Glut_14) is a thalamic submedial / rhomboid nucleus cluster (region_fraction_100um = 0.011); essentially no cells sit in hippocampal formation and none in medial septum. Wrong region and wrong cell class for an MS-DBB projection neuron.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 252492d3
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0122
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_0122
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0122 L2/3 IT ENT Glut_1; region_fraction_100um=0.896; strict region_fraction=0.812.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=640 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=639 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=610 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.896; strict region_fraction: 0.812; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.59; cohort_pct 0.301'
+        alignment: DISCORDANT
+        notes: val=0.59; cohort percentile 0.301
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 detected at 0.59 contradicts the classical negative-marker assertion.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+        - gene: -Gad1
+          val: 0.59
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.301
+      region_fraction: 0.812
+      region_fraction_100um: 0.896
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0122 (0122 L2/3 IT ENT Glut_1) is an entorhinal lateral L2/3 IT pyramidal cluster. Gad1 = 0.59 (cohort 30th percentile) is inconsistent with the classical non-GABAergic negative marker. Soma is intrahippocampal/entorhinal, not in medial septum.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 4efdd76d
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0132
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_0132
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0132 L2/3 IT ENT Glut_4; region_fraction_100um=1.000; strict region_fraction=1.000.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=3965 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=3857 [painted]; Entorhinal area, medial part, dorsal zone, layer 5 [MBA:727] count_100um=3228 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 1.000; strict region_fraction: 1.000; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.77; cohort_pct 0.550'
+        alignment: DISCORDANT
+        notes: val=0.77; cohort percentile 0.550
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 detected at 0.77 contradicts the classical negative-marker assertion.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+        - gene: -Gad1
+          val: 0.77
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.55
+      region_fraction: 1.0
+      region_fraction_100um: 1.0
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0132 (0132 L2/3 IT ENT Glut_4) is an entorhinal medial-dorsal L2/3 IT pyramidal cluster. Gad1 = 0.77 (cohort 55th percentile) contradicts the classical Gad1-negative criterion. Soma is intrahippocampal/entorhinal.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: df797ec9
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_CLUS_0133
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_CLUS_0133
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0133 L2/3 IT ENT Glut_5; region_fraction_100um=1.000; strict region_fraction=0.995.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=375 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=294 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=255 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 1.000; strict region_fraction: 0.995; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.71; cohort_pct 0.476'
+        alignment: DISCORDANT
+        notes: val=0.71; cohort percentile 0.476
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Cluster soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 detected at 0.71 contradicts the classical negative-marker assertion.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Slc17a7
+          val:
+          reliable:
+          raw_tier: 1
+          applied_score: 1.0
+          source: METADATA
+          percentiles: []
+        - gene: -Gad1
+          val: 0.71
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.476
+      region_fraction: 0.995
+      region_fraction_100um: 1.0
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CLUS_0133 (0133 L2/3 IT ENT Glut_5) is an entorhinal lateral L2/3 IT pyramidal cluster. Gad1 = 0.71 (cohort 48th percentile) contradicts the Gad1-negative criterion. Soma is intrahippocampal/entorhinal, not septal.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: dc423d0b
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0673
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_0673
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0673 MG-POL-SGN Nts Glut_2; region_fraction_100um=0.120; strict region_fraction=0.006.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Thalamus [MBA:549] count_100um=182 [painted]; Midbrain [MBA:313] count_100um=140 [painted]; Suprageniculate nucleus [MBA:325] count_100um=103 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.120; strict region_fraction: 0.006; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.07; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Supertype soma in thalamus / midbrain; classical type soma in medial septum / diagonal band of Broca.
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.006
+      region_fraction_100um: 0.12
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] SUPT_0673 (0673 MG-POL-SGN Nts Glut_2) is a thalamic / midbrain (suprageniculate / posterior medial) supertype with very few cells in hippocampal formation (region_fraction_100um = 0.12). NT type was not asserted on the atlas side, so glutamatergic alignment could not be checked at supertype level. Wrong region for an MS-DBB neuron.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: f50b5a92
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_1170
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_1170
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1170 Astroependymal NN_2; region_fraction_100um=0.020; strict region_fraction=0.016.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Cerebellum [MBA:512] count_100um=212 [painted]; Medulla [MBA:354] count_100um=211 [painted]; Area postrema [MBA:207] count_100um=210 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.020; strict region_fraction: 0.016; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.09; cohort_pct 0.005'
+        alignment: CONSISTENT
+        notes: val=0.09; below MIN_DETECTABLE (0.1); cohort percentile 0.005
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Non-neuronal supertype localised to cerebellum/medulla/area postrema; classical type is a neuron in medial septum / diagonal band of Broca.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.09
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.005
+      region_fraction: 0.016
+      region_fraction_100um: 0.02
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.01
+    rationale: "[tier:CUT] SUPT_1170 (1170 Astroependymal NN_2) is a non-neuronal astroependymal supertype concentrated in cerebellum, medulla, and area postrema (region_fraction_100um = 0.02). Wrong cell class (non-neuronal) and wrong region; cannot represent an MS-DBB glutamatergic projection neuron under any reading.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 9962b20d
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0012
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_0012
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0012 L5/6 IT TPE-ENT Glut_6; region_fraction_100um=1.000; strict region_fraction=1.000.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=10 [painted]; Presubiculum [MBA:1084] count_100um=9 [painted]; Parasubiculum [MBA:843] count_100um=6 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 1.000; strict region_fraction: 1.000; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.23; cohort_pct 0.067'
+        alignment: DISCORDANT
+        notes: val=0.23; cohort percentile 0.067
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Supertype soma in presubiculum / parasubiculum; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 = 0.23 weakly contradicts the classical Gad1-negative criterion.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.23
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.067
+      region_fraction: 1.0
+      region_fraction_100um: 1.0
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] SUPT_0012 (0012 L5/6 IT TPE-ENT Glut_6) is a presubiculum / parasubiculum L5/6 IT pyramidal supertype. Gad1 = 0.23 is in the discordant tier on the Gad1-negative criterion. Soma is intrahippocampal (parahippocampal subdivisions), not septal.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 2d742d44
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0010
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_0010
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0010 L5/6 IT TPE-ENT Glut_4; region_fraction_100um=0.867; strict region_fraction=0.849.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1280 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=1035 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=877 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.867; strict region_fraction: 0.849; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.92; cohort_pct 0.714'
+        alignment: DISCORDANT
+        notes: val=0.92; cohort percentile 0.714
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Supertype soma in entorhinal cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 = 0.92 contradicts the classical Gad1-negative criterion.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.92
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.714
+      region_fraction: 0.849
+      region_fraction_100um: 0.867
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] SUPT_0010 (0010 L5/6 IT TPE-ENT Glut_4) is an entorhinal lateral L5/6 IT pyramidal supertype. Gad1 = 0.92 (cohort 71st percentile) strongly contradicts the Gad1-negative criterion. Soma is in entorhinal cortex, not medial septum.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: f0d0bbc7
+  - id: edge_ms_dbb_glutamatergic_neuron_to_CS20230722_SUPT_0068
+    lit_type: ms_dbb_glutamatergic_neuron
+    taxonomy_type: CS20230722_SUPT_0068
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0068 ENTmv-PA-COAp Glut_3; region_fraction_100um=0.713; strict region_fraction=0.691.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=259 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=252 [painted]; Entorhinal area, medial part, dorsal zone, layer 5 [MBA:727] count_100um=203 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.713; strict region_fraction: 0.691; region_evidence: SELF'
+      - property: marker_Slc17a7
+        node_a_value: Slc17a7 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: marker_Slc17a6
+        node_a_value: Slc17a6 — defining marker
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Chat
+        node_a_value: Chat — ABSENT (classical negative marker)
+        node_b_value: no atlas expression data
+        alignment: NOT_ASSESSED
+        notes: Gene absent from Stage A expression_detail and from precomputed_expression.
+      - property: negative_marker_Gad1
+        node_a_value: Gad1 — ABSENT (classical negative marker)
+        node_b_value: 'Gad1: 0.60; cohort_pct 0.243'
+        alignment: DISCORDANT
+        notes: val=0.60; cohort percentile 0.243
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: Supertype soma in entorhinal medial / piriform-amygdalar / cortical-amygdalar cortex; classical type soma in medial septum / diagonal band of Broca.
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: Gad1 = 0.60 contradicts the classical Gad1-negative criterion.
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 2
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: -Gad1
+          val: 0.6
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.243
+      region_fraction: 0.691
+      region_fraction_100um: 0.713
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.05
+    rationale: "[tier:CUT] SUPT_0068 (0068 ENTmv-PA-COAp Glut_3) is an entorhinal medial / piriform-amygdalar / cortical-amygdalar Glut supertype. Gad1 = 0.60 (cohort 24th percentile) contradicts the Gad1-negative criterion. Soma is in entorhinal / piriform-amygdalar cortex, not medial septum.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ms_dbb_glutamatergic_neuron_summary.md
+    rationale_source_hash: 05368f9b

@@ -1,0 +1,811 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - id: ca3_pc_hippocampus
+    name: CA3 pyramidal cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+    anatomical_location:
+      - id: UBERON:0014550
+        label: pyramidal layer of CA3
+        name_in_source: CA3 stratum pyramidale
+        compartment: SOMA
+        sources:
+          - ref: PMID:27113915
+            method: RNA-seq
+            scope: adult mouse CA3, dorsal and ventral
+            quote_key: 4875295_4a456257
+          - ref: PMID:26402459
+            method: literature mining + curation
+            scope: rodent hippocampal formation (CA3)
+            quote_key: 631148_edb9eac6
+          - ref: PMID:24319410
+            quote_key: 7458943_d6507595
+          - ref: PMID:24319410
+            quote_key: 7458943_efa15be5
+          - ref: PMID:32009891
+            quote_key: 210181642_7ac40176
+      - id: UBERON:0005372
+        label: hippocampus stratum radiatum
+        name_in_source: CA3 stratum radiatum / stratum oriens (apical and basal dendritic field)
+        compartment: DENDRITE
+        sources:
+          - ref: PMID:32009891
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 210181642_7ac40176
+      - id: UBERON:0014554
+        label: CA1 stratum radiatum
+        name_in_source: CA1 stratum radiatum (Schaffer collateral projection target)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:24319410
+            method: review
+            scope: rat hippocampus
+            quote_key: 7458943_efa15be5
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:26346726
+          method: review (anatomical classification of hippocampal principal cell types)
+          scope: mouse/rat hippocampus, adult
+          quote_key: 2281033_5b9805ff
+        - ref: https://doi.org/10.3389/fnana.2012.00013
+          quote_key: 1115431_893575fd
+        - ref: PMID:27113915
+          quote_key: 4875295_002a714a
+    defining_markers:
+      - symbol: Gria1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:32009891
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 210181642_7ac40176
+            marker_type: PROTEIN
+      - symbol: Gria2
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:32009891
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 210181642_88f001b0
+            marker_type: PROTEIN
+      - symbol: Grm1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:27375434
+            method: review
+            scope: rat hippocampus
+            quote_key: 14854554_b6a5ffa0
+            marker_type: PROTEIN
+      - symbol: Slc17a7
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:27375434
+            method: review
+            scope: rat hippocampus
+            quote_key: 14854554_ed1bdc00
+            marker_type: PROTEIN
+      - symbol: Nptn
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:28779130
+            method: immunohistochemistry
+            scope: human hippocampus
+            quote_key: 3288675_37ad1c13
+            marker_type: PROTEIN
+      - symbol: Gjd2
+        ncbi_gene_id:
+        sources:
+          - ref: https://doi.org/10.3389/fnana.2012.00013
+            method: freeze-fracture replica immunolabeling
+            scope: adult rat CA3
+            quote_key: 1115431_08a02feb
+            marker_type: PROTEIN
+    electrophysiology:
+      description: In adult CA3, single pyramidal neurons can act as hub neurons capable of triggering network bursts when fast GABAergic transmission is blocked, reflecting the high recurrent excitatory connectivity of the CA3 pyramidal cell network.
+      sources:
+        - ref: PMID:23271650
+          method: patch-clamp + multineuron Ca2+ imaging
+          scope: juvenile and adult mouse hippocampal CA3
+          quote_key: 3153294_53089f6d
+        - ref: PMID:7722624
+          quote_key: 5468451_656975dd
+        - ref: PMID:10864941
+          quote_key: 502543_02fe99f0
+        - ref: PMID:37011759
+          quote_key: 252086716_f9c70b51
+    morphology:
+      description: CA3 pyramidal cells bear thorny excrescences on their proximal apical dendrites that are postsynaptic targets of dentate granule cell mossy fiber terminals, forming primarily glutamatergic mixed electrical-chemical synapses (gap junctions plus glutamatergic chemical synapses, coupled by Connexin-36).
+      sources:
+        - ref: https://doi.org/10.3389/fnana.2012.00013
+          method: electron microscopy + immunohistochemistry
+          scope: adult rat hippocampus mossy fibers on CA3pyr
+          quote_key: 1115431_2cbd1dc8
+        - ref: PMID:24319410
+          method: review (anatomy + physiology)
+          scope: rodent hippocampal mossy fiber pathway to CA3
+          quote_key: 7458943_e2eed73d
+        - ref: PMID:23271650
+          quote_key: 3153294_c37d3561
+        - ref: https://doi.org/10.3389/fnana.2012.00013
+          quote_key: 1115431_893575fd
+        - ref: https://doi.org/10.3389/fnana.2012.00013
+          quote_key: 1115431_623fc68d
+    cl_mapping:
+      cl_term:
+        id: CL:1001571
+        label: hippocampal pyramidal neuron
+        name_in_source: CA3 pyramidal cell
+      mapping_notes: CA3 pyramidal cells are a subpopulation of hippocampal pyramidal neurons; CL:1001571 covers all hippocampal pyramidal neurons without anatomical resolution to individual subfields. No CA3-specific CL term currently exists.
+      mapping_type: BROAD
+    definition_references:
+      - PMID:27113915
+      - PMID:26402459
+      - PMID:26346726
+      - PMID:24319410
+      - PMID:23271650
+      - PMID:19342486
+      - DOI:10.3389/fnana.2012.00013
+      - PMID:32009891
+      - PMID:7722624
+    notes: 'CA3 pyramidal cells are the principal glutamatergic neurons of hippocampal area CA3, forming the main excitatory relay of the trisynaptic circuit: they receive mossy fiber input from dentate gyrus granule cells via thorny excrescences on proximal apical dendrites (a defining morphological hallmark unique to CA3 among Ammon''s horn pyramidal cells), and project via Schaffer collaterals to CA1. The dense recurrent collateral network underlies pattern completion memory models and enables single CA3 neurons to act as hub neurons capable of triggering network bursts (PMID:23271650). No molecular marker exclusively specific to CA3 has been identified in classical literature; the thorny excrescence morphology and mossy fiber innervation remain the primary defining criteria.
+
+
+      ---
+
+      [Migrated from asta-ingest stub `ca3_pyramidal_cell` on 2026-06-10]
+
+
+      AMBIGUITY: Pioneer early-generated CA3 glutamatergic neurons (Marissal et al., 2012) form a morpho-functionally distinct subpopulation with persistent features into adulthood — likely a separable subtype. GAP: no dedicated electrophysiology quotes specific to CA3 pyramidal cells (vs. shared CA1/CA3 receptor descriptions); primary verification needed.'
+    proposed_cl_term:
+      label: CA3 pyramidal cell
+      parent_cl_term:
+        id: CL:1001571
+        label: hippocampal pyramidal neuron
+        name_in_source: hippocampal pyramidal neuron
+      status: SUBMITTED
+      cl_id: https://github.com/obophenotype/cell-ontology/issues/3653
+    synonyms:
+      - term: ca3_pyramidal_cell
+        synonym_type: HISTORICAL
+  - id: CS20230722_SUPT_0078
+    name: 0078 CA3 Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0078
+  - id: CS20230722_CLUS_0297
+    name: 0297 CA3 Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0297
+  - id: CS20230722_CLUS_0300
+    name: 0300 CA3 Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0300
+  - id: CS20230722_CLUS_0309
+    name: 0309 CA3 Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0309
+  - id: CS20230722_CLUS_0301
+    name: 0301 CA3 Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0301
+  - id: CS20230722_CLUS_0303
+    name: 0303 CA3 Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0303
+  - id: CS20230722_SUPT_0079
+    name: 0079 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: CS20230722_SUPT_0077
+    name: 0077 CA3 Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0077
+  - id: CS20230722_SUPT_0076
+    name: 0076 CA3 Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0076
+  - id: CS20230722_SUPT_0075
+    name: 0075 CA3 Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0075
+edges:
+  - id: edge_ca3_pc_hippocampus_to_supt_0078
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0078
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'SUPT_0078 (0078 CA3 Glut_4) is the WMBv1 supertype with the strongest annotation transfer support for CA3 pyramidal cells (see ANNOTATION_TRANSFER evidence below). It belongs to subclass CS20230722_SUBC_017 (017 CA3 Glut), the dedicated CA3 glutamatergic subclass. SUPT_0078 MERFISH anatomy is entirely CA3: pyramidal layer (1467 cells), stratum oriens (1381), stratum radiatum (945), stratum lucidum (868), and stratum lacunosum-moleculare (437). Defining markers: Homer3, Cldn22. SUBC_017 contains five supertypes (SUPT_0075-0079); the classical CA3 pyramidal cell type spans this entire range. The previous primary candidate SUPT_0075 received only 16.8% of Yao 2021 CA3 cells (F1=0.288); SUPT_0078 received 63.0% (F1=0.773), indicating it is the dominant CA3 PC supertype in the atlas.
+
+          '
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 scRNA-seq CA3 subclass label onto WMBv1 (CCN20230722). Of 322 CA3 cells, 203 (63.0%) map to SUPT_0078 at the supertype level. F1 score = 0.773 (coverage=0.630, purity=1.0). Target_purity=1.0 confirms SUPT_0078 receives only CA3 cells in this dataset. The remaining cells distribute across SUPT_0075 (16.8%), SUPT_0077 (11.5%), SUPT_0076 (6.5%), and SUPT_0079 (1.6%), consistent with TYPE_A_SPLITS: the classical CA3 pyramidal cell spans all SUBC_017 supertypes, with SUPT_0078 as the dominant correspondence.
+
+          '
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: CA3
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
+            f1_score: 0.28109995635093843
+            n_cells_mapped: 322
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.16353478923311326
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 017 CA3 Glut
+            best_target_accession: CS20230722_SUBC_017
+            f1_score: 0.9937888198757764
+            n_cells_mapped: 320
+            median_bootstrap: 1.0
+            coverage: 0.9937888198757764
+            purity: 0.9937888198757764
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0078 CA3 Glut_4
+            best_target_accession: CS20230722_SUPT_0078
+            f1_score: 0.7749510763209393
+            n_cells_mapped: 198
+            median_bootstrap: 1.0
+            coverage: 0.6325878594249201
+            purity: 1.0
+        n_cells_total: 322
+        best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
+    property_comparisons: &id001
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=9204 [painted]; Field CA3 [MBA:463] count_100um=9164 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=8918 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.969; strict region_fraction: 0.539; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Yao 2021 source CA3 cells distribute across all five CS20230722_SUBC_017 supertypes (SUPT_0078 63.0%, SUPT_0075 16.8%, SUPT_0077 11.5%, SUPT_0076 6.5%, SUPT_0079 1.6%); CS20230722_SUPT_0078 is the dominant correspondence but not 1:1.\n"
+      - caveat_type: SINGLE_DATASET
+        description: "Annotation transfer evidence comes from a single source dataset (Yao 2021 GSE185862); independent replication on a second CA3-resolved dataset is not yet available.\n"
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: "Best supportable resolution is supertype CS20230722_SUPT_0078 (F1=0.77); cluster-level transfer best target is CS20230722_CLUS_0315 (F1=0.77), which is not currently represented as an edge in this graph.\n"
+    unresolved_questions:
+      - 'Do SUPT_0075, 0076, 0077 correspond to CA3a, CA3b, CA3c sublayers respectively, or to other organisational principles (e.g. proximal vs. distal mossy fiber input zone)?
+
+        '
+      - "Do CS20230722_SUPT_0075, CS20230722_SUPT_0076, CS20230722_SUPT_0077 correspond to CA3a, CA3b, CA3c sublayers respectively, or to another organisational axis (proximal vs distal mossy fiber input zone)?\n"
+      - "Curator removal of duplicate edge edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0078 — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0078.\n"
+      - "Should an edge be emitted to CS20230722_CLUS_0315 (cluster-level AT best target, F1=0.70) so the within-supertype best-cluster correspondence is recorded?\n"
+      - Do CS20230722_SUPT_0075, CS20230722_SUPT_0076, CS20230722_SUPT_0077 correspond to CA3a, CA3b, CA3c sublayers respectively, or to a proximodistal mossy-fiber input axis?
+      - Pioneer early-generated CA3 glutamatergic neurons (Marissal et al. 2012) form a morpho-functionally distinct subpopulation likely separable from the main CA3 supertypes; not yet resolved within SUBC_017.
+    proposed_experiments:
+      - "Annotation transfer from a CA3-sublayer-resolved dataset (CA3a / CA3b / CA3c, or proximodistal labels) onto WMBv1 CCN20230722; target F1 >= 0.80 at supertype for each sublayer source group; expected output AnnotationTransferEvidence on edges to CS20230722_SUPT_0075 / 0076 / 0077 / 0078 / 0079.\n"
+      - "Emit a fresh edge to CS20230722_CLUS_0315 (cluster-level annotation transfer best target, F1=0.77 in) so the within-supertype best-cluster correspondence is recorded.\n"
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:ManualMappingCuration
+    discovery_score: &id002
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.539
+      region_fraction_100um: 0.969
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.65
+    rationale: "[tier:STRONGEST] Annotation transfer of Yao 2021 GSE185862 CA3-labelled cells onto WMBv1  lands F1=0.99 at subclass CS20230722_SUBC_017 and F1=0.77 at supertype CS20230722_SUPT_0078 (Cov=0.63, Pur=1.00, n=198); MERFISH soma localisation places SUPT_0078 overwhelmingly in Field CA3, pyramidal layer (region_fraction_100um: 0.969). Source CA3 cells scatter across all five CS20230722_SUBC_017 supertypes (SUPT_0078 63%, SUPT_0075 17%, SUPT_0077 12%, SUPT_0076 7%, SUPT_0079 2%), so the supportable mapping is at supertype rather than 1:1. The cluster-level best target CS20230722_CLUS_0315 (F1=0.77) is not currently an edge in this graph.\n"
+    reconciliation_note: "Within-subclass scatter across SUPT_0075-0079 is unresolved; sublayer-resolved annotation transfer needed to test correspondence to CA3a/b/c or proximodistal mossy-fiber input axis.\n"
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: 7df41cf8
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_CLUS_0297
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0297
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0297 CA3 Glut_1; region_fraction_100um=0.735; strict region_fraction=0.340.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1215 [painted]; Field CA3 [MBA:463] count_100um=1207 [painted]; Field CA3, stratum oriens [MBA:486] count_100um=1127 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.735; strict region_fraction: 0.340; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Cluster sits within a parent supertype that captures a minor share of the Yao 2021 CA3 cohort; cluster-level AT evidence not recorded.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.34
+      region_fraction_100um: 0.735
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0297 sits within parent supertype CS20230722_SUPT_0075, which captures only 16.8% of Yao 2021 CA3 source cells in; cluster-level annotation transfer evidence is not recorded on this edge and the within-subclass scatter is unresolved.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: '001a20da'
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_CLUS_0300
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0300
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0300 CA3 Glut_1; region_fraction_100um=0.895; strict region_fraction=0.440.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=315 [painted]; Field CA3 [MBA:463] count_100um=299 [painted]; Field CA3, stratum oriens [MBA:486] count_100um=285 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.895; strict region_fraction: 0.440; region_evidence: SELF'
+    caveats:
+      - caveat_type: LOW_CELL_COUNT
+        description: "Cluster has 60 atlas cells, below the ~50-cell robustness threshold's margin; cluster-level AT not recorded on this edge.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.44
+      region_fraction_100um: 0.895
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0300 carries only 60 atlas cells (below the robustness margin); parent supertype CS20230722_SUPT_0075 captures only 16.8% of Yao 2021 CA3 cells in and cluster-level annotation transfer is not recorded.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: 1d0d73e3
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_CLUS_0309
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0309
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0309 CA3 Glut_3; region_fraction_100um=0.730; strict region_fraction=0.199.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2595 [painted]; Field CA3 [MBA:463] count_100um=2589 [painted]; Field CA3, stratum oriens [MBA:486] count_100um=2527 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.730; strict region_fraction: 0.199; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Cluster sits within a parent supertype that captures a minor share of the Yao 2021 CA3 cohort; cluster-level AT evidence not recorded.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.199
+      region_fraction_100um: 0.73
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0309 sits within parent supertype CS20230722_SUPT_0077, which captures only 11.5% of Yao 2021 CA3 source cells in; cluster-level annotation transfer evidence is not recorded on this edge.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: '04839903'
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_CLUS_0301
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0301
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0301 CA3 Glut_1; region_fraction_100um=0.628; strict region_fraction=0.259.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=282 [painted]; Field CA3 [MBA:463] count_100um=184 [painted]; Field CA1 [MBA:382] count_100um=178 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.628; strict region_fraction: 0.259; region_evidence: SELF'
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "MERFISH counts show comparable density in Field CA3 [MBA:463] and Field CA1 [MBA:382], suggesting a CA3/CA1 boundary population rather than a clean CA3 pyramidal cluster.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.259
+      region_fraction_100um: 0.628
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0301 MERFISH counts split between Field CA3 [MBA:463] and Field CA1 [MBA:382] (region_fraction_100um: 0.628, strict region_fraction: 0.259), suggesting a CA3/CA1 boundary population rather than a clean CA3 pyramidal cluster.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: bb2dbf92
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_CLUS_0303
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0303
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0303 CA3 Glut_2; region_fraction_100um=0.810; strict region_fraction=0.269.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=356 [painted]; Field CA3 [MBA:463] count_100um=320 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=295 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.810; strict region_fraction: 0.269; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Cluster sits within a parent supertype that captures a minor share of the Yao 2021 CA3 cohort; cluster-level AT evidence not recorded.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.269
+      region_fraction_100um: 0.81
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0303 sits within parent supertype CS20230722_SUPT_0076, which captures only 6.5% of Yao 2021 CA3 source cells in; cluster-level annotation transfer evidence is not recorded on this edge.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: 7364ac0f
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0079
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0079
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0079 CA3 Glut_5; region_fraction_100um=0.581; strict region_fraction=0.181.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1619 [painted]; Dentate gyrus [MBA:726] count_100um=1552 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1524 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.581; strict region_fraction: 0.181; region_evidence: SELF'
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "CS20230722_SUPT_0079 MERFISH somata localise to the dentate gyrus polymorph layer (MBA:10704), not to the CA3 pyramidal layer; consistent with hilar mossy-cell rather than CA3 pyramidal-cell identity.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.181
+      region_fraction_100um: 0.581
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0079 MERFISH somata localise predominantly to Dentate gyrus, polymorph layer [MBA:10704] (count_100um=1524 of 1619 hippocampal counts; region_fraction_100um: 0.581, strict region_fraction: 0.181), consistent with hilar mossy-cell rather than CA3 pyramidal-cell identity.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: 5feb37c5
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0078
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0078
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0078 CA3 Glut_4; region_fraction_100um=0.969; strict region_fraction=0.539.
+    property_comparisons: *id001
+    caveats:
+      - caveat_type: OTHER
+        description: "Duplicate edge — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0078; substantive record lives on edge_ca3_pc_hippocampus_to_supt_0078.\n"
+    discovery_score: *id002
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] Duplicate edge — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0078; the substantive verdict for CS20230722_SUPT_0078 lives on edge_ca3_pc_hippocampus_to_supt_0078.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    unresolved_questions:
+      - "Curator removal of duplicate edge edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0078.\n"
+      - Curator removal of duplicate edge edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0078.
+    rationale_source_hash: df9ffc42
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0077
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0077
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0077 CA3 Glut_3; region_fraction_100um=0.713; strict region_fraction=0.264.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=5546 [painted]; Field CA3 [MBA:463] count_100um=5472 [painted]; Field CA3, stratum oriens [MBA:486] count_100um=5206 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.713; strict region_fraction: 0.264; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Supertype captures a minor share of the Yao 2021 CA3 cohort; correspondence to a CA3 sublayer or proximodistal subdivision unresolved.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.264
+      region_fraction_100um: 0.713
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0077 captures only 11.5% of Yao 2021 CA3 source cells in; minor share of the CA3 cohort.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: '2071e533'
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0076
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0076
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0076 CA3 Glut_2; region_fraction_100um=0.842; strict region_fraction=0.352.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1712 [painted]; Field CA3 [MBA:463] count_100um=1583 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=1480 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.842; strict region_fraction: 0.352; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Supertype captures a minor share of the Yao 2021 CA3 cohort; correspondence to a CA3 sublayer or proximodistal subdivision unresolved.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.352
+      region_fraction_100um: 0.842
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0076 captures only 6.5% of Yao 2021 CA3 source cells in; minor share of the CA3 cohort.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: 0acde0b3
+  - id: edge_ca3_pc_hippocampus_to_CS20230722_SUPT_0075
+    lit_type: ca3_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0075
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0075 CA3 Glut_1; region_fraction_100um=0.708; strict region_fraction=0.303.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA3 [UBERON:0014550]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2157 [painted]; Field CA3 [MBA:463] count_100um=1953 [painted]; Field CA3, stratum oriens [MBA:486] count_100um=1864 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.708; strict region_fraction: 0.303; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Supertype captures a minor share of the Yao 2021 CA3 cohort; correspondence to a CA3 sublayer or proximodistal subdivision unresolved.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:495
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.303
+      region_fraction_100um: 0.708
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_SUPT_0075 captures only 16.8% of Yao 2021 CA3 source cells in; minor share of the CA3 cohort with no recorded basis for preferring it over the dominant SUPT_0078.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-10T13:17:49+00:00'
+    report_path: reports/hippocampus/ca3_pc_hippocampus_summary.md
+    rationale_source_hash: 4cd30e32

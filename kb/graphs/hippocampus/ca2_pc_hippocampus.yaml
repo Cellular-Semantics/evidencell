@@ -1,0 +1,1317 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - id: ca2_pc_hippocampus
+    name: CA2 pyramidal cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+    anatomical_location:
+      - id: UBERON:0014549
+        label: pyramidal layer of CA2
+        name_in_source: CA2 stratum pyramidale
+        compartment: SOMA
+        sources:
+          - ref: PMID:27113915
+            method: RNA-seq
+            scope: adult mouse CA2, dorsal and ventral
+            quote_key: 4875295_8cb069d9
+          - ref: PMID:33956790
+            method: synthesis (ASTA report)
+            scope: rat hippocampus
+            quote_key: 233984943_56acd5f8
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:26346726
+          method: review (anatomical classification of hippocampal principal cell types)
+          scope: mouse/rat hippocampus, adult
+          quote_key: 2281033_5b9805ff
+    defining_markers:
+      - symbol: Pcp4
+        ncbi_gene_id: NCBIGene:18546
+        sources:
+          - ref: PMID:24166578
+            method: IHC (anti-PCP4 antibody)
+            scope: adult mouse hippocampus, CA2/CA1 and CA3/CA2 borders
+            quote_key: 18746823_614030d2
+            marker_type: PROTEIN
+      - symbol: Rgs14
+        ncbi_gene_id: NCBIGene:51791
+        sources:
+          - ref: PMID:24166578
+            method: review of in situ hybridization and immunostaining data
+            scope: adult rodent hippocampus CA2
+            quote_key: 18746823_8ba0bf29
+            marker_type: TRANSCRIPT
+      - symbol: Amigo2
+        ncbi_gene_id: NCBIGene:105827
+        sources:
+          - ref: PMID:22904370
+            method: review (gene expression profiling, ISH/ABA data)
+            scope: adult rodent hippocampus CA2
+            quote_key: 20853920_44ab38bb
+            marker_type: TRANSCRIPT
+    electrophysiology:
+      description: CA2 pyramidal cells exhibit more efficient dendritic propagation than CA1, with entorhinal cortical inputs producing 5-6 fold larger somatic EPSPs sufficient to drive action potential output. Schaffer collateral inputs to CA2 are atypically resistant to canonical activity-dependent LTP. CA2 neurons are enriched for mitochondrial protein-encoding genes compared to CA1, consistent with higher metabolic demand.
+      sources:
+        - ref: PMID:28213444
+          method: patch-clamp (slice)
+          scope: mouse CA2 vs CA1 pyramidal neurons, entorhinal input
+          quote_key: 207513684_bb3793d4
+        - ref: PMID:22904370
+          method: electrophysiology (LTP induction at SC-CA2)
+          scope: mouse hippocampal CA2
+          quote_key: 20853920_19e668eb
+        - ref: PMID:41473278
+          method: transcriptomics + mitochondrial imaging
+          scope: mouse CA1 vs CA2 hippocampus
+          quote_key: 284018783_0507bb17
+    morphology:
+      description: CA2 pyramidal cells bear dense dendritic spines but lack the thorny excrescences of CA3; soma size is intermediate between CA1 and CA3; apical dendrites show distinct branching patterns.
+      sources:
+        - ref: PMID:24166578
+          method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
+          scope: adult mouse hippocampus, P15-P18
+          quote_key: 18746823_437ba8b3
+    proposed_cl_term:
+      label: CA2 pyramidal cell
+      parent_cl_term:
+        id: CL:1001571
+        label: hippocampal pyramidal neuron
+        name_in_source: hippocampal pyramidal neuron
+      definition: A hippocampal pyramidal neuron with soma located in the pyramidal layer of hippocampal area CA2 (Cembrowski et al., 2016; Sanchez-Aguilera et al., 2021). Distinguished from CA1 and CA3 pyramidal neurons by expression of Pcp4, Rgs14, and Amigo2 in rodents (San Antonio et al., 2014; Caruana et al., 2012), and by absence of the CA1 marker wolframin (Wfs1) (Evans et al., 2018). Receives strong LTP-competent input from entorhinal cortex at distal dendrites, while Schaffer collateral inputs to proximal dendrites are resistant to canonical LTP in wild-type animals (Chevaleyre & Siegelbaum, 2010). Required for social memory in mice (Hitti & Siegelbaum, 2014).
+      xrefs:
+        - PMID:27113915
+        - PMID:24166578
+        - PMID:22904370
+        - PMID:29911178
+        - PMID:24572357
+        - PMID:20510860
+        - CS20230722_SUPT_0100
+      status: SUBMITTED
+      cl_id: https://github.com/obophenotype/cell-ontology/issues/3651
+    negative_markers:
+      - symbol: Wfs1
+        ncbi_gene_id: NCBIGene:22393
+        sources:
+          - ref: PMID:29911178
+            method: immunolabeling (anti-WFS1 antibody)
+            scope: adult mouse hippocampus, CA2 versus CA1
+            quote_key: 49237374_714b76e3
+            marker_type: PROTEIN
+    definition_references:
+      - PMID:27113915
+      - PMID:33956790
+      - PMID:26346726
+      - PMID:24166578
+      - PMID:22904370
+      - PMID:29911178
+      - PMID:24572357
+      - PMID:20510860
+    notes: 'CA2 pyramidal cells express Pcp4, Rgs14, and Amigo2 as defining markers and do not express the CA1 marker Wfs1 (Evans et al. 2018, PMID:29911178). CA2 is essential for social memory: genetic inactivation of CA2 pyramidal neurons via Amigo2-Cre causes a pronounced deficit in social recognition with no change in general sociability (Hitti & Siegelbaum 2014, PMID:24572357). Entorhinal cortex inputs produce strong LTP at distal CA2 dendrites, forming a powerful disynaptic cortico-hippocampal loop, while SC (Schaffer collateral) inputs are resistant to canonical LTP (Chevaleyre & Siegelbaum 2010, PMID:20510860).'
+  - id: CS20230722_SUPT_0100
+    name: 0100 CA2-FC-IG Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0100
+  - id: CS20230722_CLUS_0399
+    name: 0399 CA2-FC-IG Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0399
+  - id: CS20230722_CLUS_0261
+    name: 0261 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0261
+  - id: CS20230722_CLUS_0270
+    name: 0270 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0270
+  - id: CS20230722_CLUS_0296
+    name: 0296 CA3 Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0296
+  - id: CS20230722_CLUS_0298
+    name: 0298 CA3 Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0298
+  - id: CS20230722_SUPT_0075
+    name: 0075 CA3 Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0075
+  - id: CS20230722_SUPT_0073
+    name: 0073 CA1-ProS Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0073
+  - id: CS20230722_SUPT_0101
+    name: 0101 CA2-FC-IG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0101
+  - id: CS20230722_SUPT_0078
+    name: 0078 CA3 Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0078
+edges:
+  - id: edge_ca2_pc_hippocampus_to_supt_0100
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0100
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'SUPT_0100 (0100 CA2-FC-IG Glut_1) is the highest-scoring WMBv1 supertype candidate for CA2 pyramidal cells (discovery score 4). It belongs to subclass CS20230722_SUBC_025 (025 CA2-FC-IG Glut), which groups CA2 together with fasciola cinerea (FC) and indusium griseum (IG) glutamatergic cells. SUPT_0100 has 446 cells in Field CA2, pyramidal layer (MBA:446) consistent with the CA2 PC soma location. However, SUPT_0100 also has substantial cells in CA1/CA3 strata, raising the possibility that this supertype spans CA2 and transitional CA1/CA3 pyramidal cells or contains MERFISH registration noise at subfield borders.
+
+          '
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: CA2-IG-FC
+        n_cells_total: 19
+        best_mapping_rank: 2
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
+            f1_score: 0.019114688128772636
+            n_cells_mapped: 19
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.009649568308786187
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 025 CA2-FC-IG Glut
+            best_target_accession: CS20230722_SUBC_025
+            f1_score: 0.972972972972973
+            n_cells_mapped: 18
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.9473684210526315
+        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 CA2-IG-FC subclass label (n=19) onto WMBv1 (CCN20230722). At SUBCLASS level: 18/19 cells (94.7%) map to SUBC_025 CA2-FC-IG Glut (F1=0.973, coverage=1.0, purity=0.947). At SUPERTYPE level: 18/19 cells (94.7%) map to SUPT_0101 (CA2-FC-IG Glut_2, F1=0.947) and only 1/19 (5.3%) to SUPT_0100 (CA2-FC-IG Glut_1, F1=0.1). This result is PARTIAL because the subclass-level assignment strongly supports SUBC_025 membership, but supertype-level mapping to SUPT_0101 rather than SUPT_0100 reflects FC/IG contamination in Yao''s mixed CA2-IG-FC label: SUPT_0101 is enriched for fasciola cinerea and induseum griseum cells (MERFISH data: 0 CA2 pyramidal layer cells in SUPT_0101 vs 446 in SUPT_0100). SUPT_0100 remains the correct supertype candidate for CA2 pyramidal cells based on MERFISH anatomy.'
+        f1_source_relpath: at_results.yaml
+    property_comparisons: &id001
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1809 [painted]; Field CA3 [MBA:463] count_100um=1354 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=1307 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.649; strict region_fraction: 0.111; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 11.26; cohort_pct 0.923; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.26; cohort percentile 0.923; child-cluster coverage 1.000
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 8.84; cohort_pct 0.923; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.84; cohort percentile 0.923; child-cluster coverage 1.000
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 7.39; cohort_pct 0.923; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=7.39; cohort percentile 0.923; child-cluster coverage 1.000
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 1.33; cohort_pct 0.308'
+        alignment: DISCORDANT
+        notes: val=1.33; cohort percentile 0.308
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Supertype name lumps CA2 with fasciola cinerea (FC) and indusium griseum (IG); classical CA2 pyramidal cells are distinct from FC/IG neurons. The skos:broadMatch + 1:n encoding reflects this conflation.\n"
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "Negative marker Wfs1 mean expression 1.33 on CS20230722_SUPT_0100 (cohort percentile 0.308) is above the strict-absent threshold; likely contributed by the non-CA2 (FC/IG) component of the supertype rather than by CA2 pyramidal cells.\n"
+      - caveat_type: OTHER
+        description: "Annotation transfer of Yao 2021 (GEO:GSE185862) CA2-IG-FC subclass label (n=19) via at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1 maps 18/19 cells to CS20230722_SUPT_0101 (subclass-level F1=0.97) and only 1/19 to CS20230722_SUPT_0100; SUPT_0101 has 0 CA2 pyramidal layer cells in MERFISH while SUPT_0100 has 446. AT result reflects FC/IG dominance in Yao's pooled source label, not the correct target for CA2 pyramidal cells.\n"
+    unresolved_questions:
+      - 'Do SUPT_0100 cells in CA1 and CA3 strata represent genuine pyramidal neurons (e.g. deep CA3c cells near CA2 border) or MERFISH registration errors? FISH validation of Rgs14 or Amigo2 in CA2 cells assigned to SUPT_0100 would clarify.
+
+        '
+      - "Curator removal of duplicate edge edge_ca2_pc_hippocampus_to_CS20230722_SUPT_0100 — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0100.\n"
+    proposed_experiments:
+      - "Annotation transfer from a CA2-specific transcriptomic source (no FC/IG contamination) onto WMBv1 at F1 >= 0.80 at supertype level on CS20230722_SUPT_0100, with F1 < 0.50 on CS20230722_SUPT_0101 to confirm the FC/IG-only interpretation of at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1.\n"
+      - "smFISH validation of Rgs14 or Amigo2 in MERFISH-assigned SUPT_0100 cells located in CA1 and CA3 strata to determine whether these are boundary CA2 pyramidal neurons or registration errors.\n"
+    mapping_justification: semapv:ManualMappingCuration
+    discovery_score: &id002
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 13
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 13
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 11.26
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.923
+          coverage: 1.0
+        - gene: Rgs14
+          val: 8.84
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.923
+          coverage: 1.0
+        - gene: Amigo2
+          val: 7.39
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.923
+          coverage: 1.0
+        - gene: -Wfs1
+          val: 1.33
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.308
+      region_fraction: 0.111
+      region_fraction_100um: 0.649
+      region_evidence: SELF
+    mapping_cardinality: "1:n"
+    confidence: MODERATE
+    confidence_score: 0.6
+    rationale: "[tier:STRONGEST] All three CA2 defining markers high on CS20230722_SUPT_0100 (Pcp4=11.26, Rgs14=8.84, Amigo2=7.39; cohort percentile 0.923; child-coverage 1.000) and MERFISH soma counts in CA2 pyramidal layer; 3 of 4 markers CONSISTENT. Annotation transfer in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1 routes Yao's mixed CA2-IG-FC label to the FC/IG-enriched sibling CS20230722_SUPT_0101 (subclass-level F1=0.97) which has no CA2 pyramidal layer soma; SUPT_0100 retains the CA2-PC mapping under the MERFISH-anatomy reading. Supertype lumps CA2 with fasciola cinerea and indusium griseum (broadMatch + 1:n).\n"
+    reconciliation_note: "Paired with child-cluster edge edge_ca2_pc_hippocampus_to_CS20230722_CLUS_0399 (best within-supertype child); also paired with the duplicate fresh-emit edge edge_ca2_pc_hippocampus_to_CS20230722_SUPT_0100 which targets the same accession without AT evidence — recommend curator removal of the duplicate.\n"
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: 929d8f3d
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_CLUS_0399
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0399
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0399 CA2-FC-IG Glut_1; region_fraction_100um=0.649; strict region_fraction=0.111.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1809 [painted]; Field CA3 [MBA:463] count_100um=1354 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=1307 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.649; strict region_fraction: 0.111; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 11.26; cohort_pct 0.969'
+        alignment: CONSISTENT
+        notes: val=11.26; cohort percentile 0.969
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 8.84; cohort_pct 0.969'
+        alignment: CONSISTENT
+        notes: val=8.84; cohort percentile 0.969
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 7.39; cohort_pct 0.969'
+        alignment: CONSISTENT
+        notes: val=7.39; cohort percentile 0.969
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 1.33; cohort_pct 0.188'
+        alignment: DISCORDANT
+        notes: val=1.33; cohort percentile 0.188
+    caveats:
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "Negative marker Wfs1 expression 1.33 on CS20230722_CLUS_0399 (cohort percentile 0.188) is non-zero; same FC/IG-component interpretation as the parent supertype applies.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "No direct cluster-level annotation transfer evidence; Yao 2021 AT routes the mixed CA2-IG-FC source label to a sibling cluster under CS20230722_SUPT_0101 via FC/IG dominance rather than to CS20230722_CLUS_0399.\n"
+    discovery_score:
+      score: 8
+      rank_in_cohort: 1
+      cohort_size: 32
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 32
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 11.26
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+        - gene: Rgs14
+          val: 8.84
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+        - gene: Amigo2
+          val: 7.39
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.969
+        - gene: -Wfs1
+          val: 1.33
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.188
+      region_fraction: 0.111
+      region_fraction_100um: 0.649
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:NEXT] Best within-supertype child of CS20230722_SUPT_0100. All three defining markers reach cohort percentile 0.969 on CS20230722_CLUS_0399 (Pcp4=11.26, Rgs14=8.84, Amigo2=7.39) within a 32-member rank-0 cohort, Stage A score 8 vs next-best 4; MERFISH soma anatomy matches the parent supertype (region_fraction_100um=0.649). 3 of 4 markers CONSISTENT; no direct cluster-level AT (Yao 2021 scRNA-seq CA2-IG-FC label routes to a sibling cluster under SUPT_0101 via FC/IG dominance).\n"
+    reconciliation_note: "Paired with supertype edge edge_ca2_pc_hippocampus_to_supt_0100; the supertype is the broadMatch encoding and this child is the best resolved cluster within it.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - "Cluster-level annotation transfer from a CA2-specific source at F1 >= 0.80 on CS20230722_CLUS_0399.\n"
+      - "Per-cell precomputed expression for Rgs14, Pcp4, Amigo2 within CS20230722_CLUS_0399 to confirm marker expression centred on CA2 pyramidal soma rather than on an FC/IG subset.\n"
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: b8aec4b2
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_CLUS_0261
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0261
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0261 CA1-ProS Glut_1; region_fraction_100um=0.389; strict region_fraction=0.066.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=528 [painted]; Field CA1 [MBA:382] count_100um=470 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=443 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.389; strict region_fraction: 0.066; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 1.68; cohort_pct 0.125'
+        alignment: APPROXIMATE
+        notes: val=1.68; cohort percentile 0.125
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 5.59; cohort_pct 0.844'
+        alignment: CONSISTENT
+        notes: val=5.59; cohort percentile 0.844
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 0.14; cohort_pct 0.250'
+        alignment: APPROXIMATE
+        notes: val=0.14; cohort percentile 0.250
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 4.29; cohort_pct 0.844'
+        alignment: DISCORDANT
+        notes: val=4.29; cohort percentile 0.844
+    caveats:
+      - caveat_type: OTHER
+        description: "CA1-ProS subclass; Pcp4 and Amigo2 weak; Wfs1 high (cohort percentile 0.844) — characteristic of CA1.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 32
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 32
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 1.68
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.125
+        - gene: Rgs14
+          val: 5.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.844
+        - gene: Amigo2
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.25
+        - gene: -Wfs1
+          val: 4.29
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.844
+      region_fraction: 0.066
+      region_fraction_100um: 0.389
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0261 sits in CA1-ProS subclass (supertype 0069 CA1-ProS Glut_1); Pcp4=1.68 (cohort percentile 0.125) is APPROXIMATE, Amigo2=0.14 is APPROXIMATE, and the negative marker Wfs1=4.29 (cohort percentile 0.844) is strongly DISCORDANT — characteristic of CA1 rather than CA2.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: 1123ce8b
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_CLUS_0270
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0270
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0270 CA1-ProS Glut_1; region_fraction_100um=0.426; strict region_fraction=0.024.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=588 [painted]; Field CA1 [MBA:382] count_100um=504 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=478 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.426; strict region_fraction: 0.024; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 4.58; cohort_pct 0.281'
+        alignment: APPROXIMATE
+        notes: val=4.58; cohort percentile 0.281
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 3.84; cohort_pct 0.469'
+        alignment: APPROXIMATE
+        notes: val=3.84; cohort percentile 0.469
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 0.29; cohort_pct 0.375'
+        alignment: APPROXIMATE
+        notes: val=0.29; cohort percentile 0.375
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 2.68; cohort_pct 0.656'
+        alignment: DISCORDANT
+        notes: val=2.68; cohort percentile 0.656
+    caveats:
+      - caveat_type: OTHER
+        description: "CA1-ProS subclass; markers APPROXIMATE; Wfs1 moderate-high (cohort percentile 0.656).\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 32
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 32
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 4.58
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.281
+        - gene: Rgs14
+          val: 3.84
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.469
+        - gene: Amigo2
+          val: 0.29
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.375
+        - gene: -Wfs1
+          val: 2.68
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.656
+      region_fraction: 0.024
+      region_fraction_100um: 0.426
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0270 sits in CA1-ProS subclass (supertype 0069 CA1-ProS Glut_1); all three defining markers APPROXIMATE only (Pcp4=4.58, Rgs14=3.84, Amigo2=0.29) and negative marker Wfs1=2.68 (cohort percentile 0.656) is DISCORDANT.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: 68eec283
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_CLUS_0296
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0296
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0296 CA3 Glut_1; region_fraction_100um=0.221; strict region_fraction=0.016.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=382 [painted]; Field CA1 [MBA:382] count_100um=303 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=301 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.221; strict region_fraction: 0.016; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 9.04; cohort_pct 0.719'
+        alignment: CONSISTENT
+        notes: val=9.04; cohort percentile 0.719
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 4.97; cohort_pct 0.594'
+        alignment: CONSISTENT
+        notes: val=4.97; cohort percentile 0.594
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 1.84; cohort_pct 0.656'
+        alignment: CONSISTENT
+        notes: val=1.84; cohort percentile 0.656
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 1.40; cohort_pct 0.250'
+        alignment: DISCORDANT
+        notes: val=1.40; cohort percentile 0.250
+    caveats:
+      - caveat_type: OTHER
+        description: "CA3 subclass; off-target soma distribution (region_fraction_100um=0.221, dominant anatomy Field CA1).\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 32
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 32
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 9.04
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.719
+        - gene: Rgs14
+          val: 4.97
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.594
+        - gene: Amigo2
+          val: 1.84
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.656
+        - gene: -Wfs1
+          val: 1.4
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.25
+      region_fraction: 0.016
+      region_fraction_100um: 0.221
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0296 sits in CA3 subclass (supertype 0075 CA3 Glut_1). CA2 markers Pcp4=9.04, Rgs14=4.97, Amigo2=1.84 are CONSISTENT but at moderate cohort percentile, and location alignment is APPROXIMATE (region_fraction_100um=0.221) with soma counts dominated by CA1 stratum oriens rather than CA2 pyramidal layer.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: c5b2e283
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_CLUS_0298
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0298
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0298 CA3 Glut_1; region_fraction_100um=0.410; strict region_fraction=0.042.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=137 [painted]; Field CA3, stratum oriens [MBA:486] count_100um=121 [painted]; Field CA3 [MBA:463] count_100um=121 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.410; strict region_fraction: 0.042; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 9.65; cohort_pct 0.781'
+        alignment: CONSISTENT
+        notes: val=9.65; cohort percentile 0.781
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 5.19; cohort_pct 0.688'
+        alignment: CONSISTENT
+        notes: val=5.19; cohort percentile 0.688
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 2.51; cohort_pct 0.750'
+        alignment: CONSISTENT
+        notes: val=2.51; cohort percentile 0.750
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 2.16; cohort_pct 0.375'
+        alignment: DISCORDANT
+        notes: val=2.16; cohort percentile 0.375
+    caveats:
+      - caveat_type: OTHER
+        description: "CA3 subclass; soma in CA3 stratum oriens; Wfs1 moderate (cohort percentile 0.375).\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 32
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 32
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 9.65
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.781
+        - gene: Rgs14
+          val: 5.19
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.688
+        - gene: Amigo2
+          val: 2.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.75
+        - gene: -Wfs1
+          val: 2.16
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.375
+      region_fraction: 0.042
+      region_fraction_100um: 0.41
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0298 sits in CA3 subclass (supertype 0075 CA3 Glut_1). Markers CONSISTENT (Pcp4=9.65, Rgs14=5.19, Amigo2=2.51) but region alignment APPROXIMATE (region_fraction_100um=0.410, soma in Field CA3 stratum oriens rather than CA2 pyramidal layer); negative marker Wfs1=2.16 DISCORDANT.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: 85c4f1cf
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_SUPT_0100
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0100
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0100 CA2-FC-IG Glut_1; region_fraction_100um=0.649; strict region_fraction=0.111.
+    property_comparisons: *id001
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Duplicate of substantive edge edge_ca2_pc_hippocampus_to_supt_0100 on taxonomy_type CS20230722_SUPT_0100; the substantive edge carries the annotation-transfer evidence and DISCORDANT_ANATOMY caveat.\n"
+    discovery_score: *id002
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Fresh-emit duplicate edge targeting the same accession CS20230722_SUPT_0100 as the substantive primary edge edge_ca2_pc_hippocampus_to_supt_0100; this duplicate carries no annotation-transfer evidence and only the auto-generated AMBIGUOUS_MAPPING caveat. Recommend curator removal.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    unresolved_questions:
+      - "Curator removal of duplicate edge edge_ca2_pc_hippocampus_to_CS20230722_SUPT_0100 — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0100.\n"
+    rationale_source_hash: 786f2895
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_SUPT_0075
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0075
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0075 CA3 Glut_1; region_fraction_100um=0.181; strict region_fraction=0.018.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2157 [painted]; Field CA3 [MBA:463] count_100um=1953 [painted]; Field CA3, stratum oriens [MBA:486] count_100um=1864 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.181; strict region_fraction: 0.018; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 8.95; cohort_pct 0.692; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.95; cohort percentile 0.692; child-cluster coverage 1.000
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 4.14; cohort_pct 0.615; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.14; cohort percentile 0.615; child-cluster coverage 1.000
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 2.03; cohort_pct 0.538; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=2.03; cohort percentile 0.538; child-cluster coverage 1.000
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 1.99; cohort_pct 0.462'
+        alignment: DISCORDANT
+        notes: val=1.99; cohort percentile 0.462
+    caveats:
+      - caveat_type: OTHER
+        description: "CA3 supertype; off-target region (region_fraction_100um=0.181).\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 13
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 13
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 8.95
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.692
+          coverage: 1.0
+        - gene: Rgs14
+          val: 4.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.615
+          coverage: 1.0
+        - gene: Amigo2
+          val: 2.03
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.538
+          coverage: 1.0
+        - gene: -Wfs1
+          val: 1.99
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.462
+      region_fraction: 0.018
+      region_fraction_100um: 0.181
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0075 is the CA3 supertype. Markers CONSISTENT (Pcp4=8.95, Rgs14=4.14, Amigo2=2.03) but location alignment APPROXIMATE (region_fraction_100um=0.181, dominant anatomy Field CA3 stratum oriens); Wfs1=1.99 DISCORDANT. CA3 rather than CA2.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: 248331da
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_SUPT_0073
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0073
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0073 CA1-ProS Glut_5; region_fraction_100um=0.141; strict region_fraction=0.003.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1509 [painted]; Field CA1 [MBA:382] count_100um=1484 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=1474 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.141; strict region_fraction: 0.003; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 7.91; cohort_pct 0.615; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=7.91; cohort percentile 0.615; child-cluster coverage 1.000
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 3.10; cohort_pct 0.538; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=3.10; cohort percentile 0.538; child-cluster coverage 1.000
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 0.18; cohort_pct 0.308; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.18; cohort percentile 0.308; child-cluster coverage 1.000
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 2.41; cohort_pct 0.615'
+        alignment: DISCORDANT
+        notes: val=2.41; cohort percentile 0.615
+    caveats:
+      - caveat_type: OTHER
+        description: "CA1-ProS supertype; Amigo2 weak, Wfs1 moderate-high.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 13
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 13
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 7.91
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.615
+          coverage: 1.0
+        - gene: Rgs14
+          val: 3.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.538
+          coverage: 1.0
+        - gene: Amigo2
+          val: 0.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.308
+          coverage: 1.0
+        - gene: -Wfs1
+          val: 2.41
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.615
+      region_fraction: 0.003
+      region_fraction_100um: 0.141
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_SUPT_0073 is a CA1-ProS supertype. Pcp4=7.91 and Rgs14=3.10 CONSISTENT but Amigo2=0.18 APPROXIMATE (cohort percentile 0.308) and negative marker Wfs1=2.41 DISCORDANT (cohort percentile 0.615) — characteristic of CA1, not CA2; location alignment APPROXIMATE (region_fraction_100um=0.141, dominant anatomy Field CA1 stratum oriens).\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: 629e96c1
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_SUPT_0101
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0101
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0101 CA2-FC-IG Glut_2; region_fraction_100um=0.136; strict region_fraction=0.005.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1570 [painted]; corpus callosum [MBA:776] count_100um=806 [painted]; lateral forebrain bundle system [MBA:983] count_100um=806 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.136; strict region_fraction: 0.005; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 9.99; cohort_pct 0.769; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.99; cohort percentile 0.769; child-cluster coverage 1.000
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 5.67; cohort_pct 0.846; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.67; cohort percentile 0.846; child-cluster coverage 1.000
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 4.12; cohort_pct 0.769; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.12; cohort percentile 0.769; child-cluster coverage 1.000
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 0.78; cohort_pct 0.154'
+        alignment: DISCORDANT
+        notes: val=0.78; cohort percentile 0.154
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "No CA2 pyramidal layer soma despite CA2-FC-IG subclass membership; anatomy dominated by fasciola cinerea / indusium griseum (region_fraction_100um=0.136).\n"
+      - caveat_type: OTHER
+        description: "Yao 2021 AT routes the mixed CA2-IG-FC label here via the FC/IG component of the source label, not via CA2 pyramidal cells; not evidence for a CA2-PC mapping.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 13
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 13
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 9.99
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.769
+          coverage: 1.0
+        - gene: Rgs14
+          val: 5.67
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.846
+          coverage: 1.0
+        - gene: Amigo2
+          val: 4.12
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.769
+          coverage: 1.0
+        - gene: -Wfs1
+          val: 0.78
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.154
+      region_fraction: 0.005
+      region_fraction_100um: 0.136
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_SUPT_0101 is the FC/IG-enriched sibling supertype in subclass 025 CA2-FC-IG Glut. Markers high (Pcp4=9.99, Rgs14=5.67, Amigo2=4.12). MERFISH soma anatomy shows 0 cells in CA2 pyramidal layer for this supertype (dominant anatomy Hippocampal formation outside CA2; region_fraction_100um=0.136). The Yao 2021 AT signal routing the mixed CA2-IG-FC source label to this branch is captured on the paired edge_ca2_pc_hippocampus_to_supt_0100 verdict and reflects FC/IG dominance in Yao's pooled source label, not CA2 pyramidal cells.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: 1816ac49
+  - id: edge_ca2_pc_hippocampus_to_CS20230722_SUPT_0078
+    lit_type: ca2_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0078
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0078 CA3 Glut_4; region_fraction_100um=0.025; strict region_fraction=0.003.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA2 [UBERON:0014549]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=9204 [painted]; Field CA3 [MBA:463] count_100um=9164 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=8918 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.025; strict region_fraction: 0.003; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 4.29; cohort_pct 0.308; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=4.29; cohort percentile 0.308; child-cluster coverage 1.000
+      - property: marker_Rgs14
+        node_a_value: Rgs14 — defining marker
+        node_b_value: 'Rgs14: 2.15; cohort_pct 0.385; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=2.15; cohort percentile 0.385; child-cluster coverage 1.000
+      - property: marker_Amigo2
+        node_a_value: Amigo2 — defining marker
+        node_b_value: 'Amigo2: 2.11; cohort_pct 0.615; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=2.11; cohort percentile 0.615; child-cluster coverage 1.000
+      - property: negative_marker_Wfs1
+        node_a_value: Wfs1 — ABSENT (classical negative marker)
+        node_b_value: 'Wfs1: 1.94; cohort_pct 0.385'
+        alignment: DISCORDANT
+        notes: val=1.94; cohort percentile 0.385
+    caveats:
+      - caveat_type: OTHER
+        description: "CA3 supertype; distant region (region_fraction_100um=0.025); markers APPROXIMATE.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 13
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 13
+          filters:
+            - region=MBA:446
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 4.29
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.308
+          coverage: 1.0
+        - gene: Rgs14
+          val: 2.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.385
+          coverage: 1.0
+        - gene: Amigo2
+          val: 2.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.615
+          coverage: 1.0
+        - gene: -Wfs1
+          val: 1.94
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.385
+      region_fraction: 0.003
+      region_fraction_100um: 0.025
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0078 is a CA3 supertype (0078 CA3 Glut_4). Location DISCORDANT (region_fraction_100um=0.025; soma dominated by Field CA3 pyramidal layer); markers APPROXIMATE only (Pcp4=4.29, Rgs14=2.15); Wfs1=1.94 DISCORDANT. CA3 rather than CA2.\n"
+    proposed_experiments: []
+    rationale_generated_at: '2026-06-08T21:04:16+00:00'
+    report_path: reports/hippocampus/ca2_pc_hippocampus_summary.md
+    rationale_source_hash: ff3e7651

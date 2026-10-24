@@ -1,0 +1,1006 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - id: ca1_pc_hippocampus
+    name: CA1 pyramidal cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+    anatomical_location:
+      - id: UBERON:0014548
+        label: pyramidal layer of CA1
+        name_in_source: CA1 stratum pyramidale
+        compartment: SOMA
+        sources:
+          - ref: PMID:27113915
+            method: RNA-seq
+            scope: adult mouse hippocampus, dorsal and ventral
+            quote_key: 4875295_4a456257
+          - ref: PMID:29250747
+            method: review (anatomy)
+            scope: rodent CA1 + subiculum
+            quote_key: 2171766_537d45ba
+          - ref: https://doi.org/10.1038/s41598-017-11268-z
+            method: viral retrograde tracing
+            scope: adult male C57Bl/6 mouse hippocampus
+            quote_key: 256894421_9195fa92
+          - ref: PMID:26346726
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 2281033_0422472c
+          - ref: PMID:37011759
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 252086716_9d46d627
+          - ref: PMID:24319410
+            quote_key: 7458943_d6507595
+          - ref: PMID:24319410
+            quote_key: 7458943_efa15be5
+          - ref: PMID:32009891
+            quote_key: 210181642_7ac40176
+      - id: UBERON:0005372
+        label: hippocampus stratum radiatum
+        name_in_source: CA1 stratum radiatum (apical dendritic field)
+        compartment: DENDRITE
+        sources:
+          - ref: PMID:32009891
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 210181642_7ac40176
+      - id: UBERON:0005371
+        label: hippocampus stratum oriens
+        name_in_source: CA1 stratum oriens (basal dendritic field)
+        compartment: DENDRITE
+        sources:
+          - ref: PMID:32009891
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 210181642_7ac40176
+      - id: UBERON:0002191
+        label: subiculum
+        name_in_source: subiculum (projection target)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:24319410
+            method: review
+            scope: rat hippocampus
+            quote_key: 7458943_efa15be5
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:26346726
+          method: review (anatomical classification of hippocampal principal cell types)
+          scope: mouse/rat hippocampus, adult
+          quote_key: 2281033_5b9805ff
+        - ref: PMID:27113915
+          quote_key: 4875295_002a714a
+        - ref: PMID:26402459
+          quote_key: 631148_96ad2908
+    defining_markers:
+      - symbol: Wfs1
+        ncbi_gene_id: NCBIGene:22393
+        sources:
+          - ref: PMID:7722624
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 5468451_9958f302
+            marker_type: TRANSCRIPT
+          - ref: PMID:32009891
+            method: synthesis (ASTA report)
+            scope: mouse hippocampus
+            quote_key: 210181642_fe20295e
+            marker_type: TRANSCRIPT
+          - ref: PMID:28779130
+            method: synthesis (ASTA report)
+            scope: rat hippocampus
+            quote_key: 3288675_d83802d0
+            marker_type: PROTEIN
+          - ref: PMID:8995369
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 20157937_a263df39
+            marker_type: TRANSCRIPT
+          - ref: PMID:24554721
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 34872919_d652553e
+            marker_type: PROTEIN
+      - symbol: Gria1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:32009891
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 210181642_7ac40176
+            marker_type: PROTEIN
+      - symbol: Gria2
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:32009891
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 210181642_88f001b0
+            marker_type: PROTEIN
+      - symbol: Nptn
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:28779130
+            method: immunohistochemistry
+            scope: human hippocampus
+            quote_key: 3288675_37ad1c13
+            marker_type: PROTEIN
+          - ref: PMID:28779130
+            method: immunohistochemistry
+            scope: human hippocampus
+            quote_key: 3288675_d39d0506
+            marker_type: PROTEIN
+      - symbol: Slc17a7
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:27375434
+            method: review
+            scope: rat hippocampus
+            quote_key: 14854554_ed1bdc00
+            marker_type: PROTEIN
+    electrophysiology:
+      description: CA1 pyramidal cells receive entorhinal cortical inputs producing somatic EPSPs that are 5-6 fold smaller than CA2 pyramidal neurons; perforant-path input alone is insufficient to drive action potential output. AMPA receptors mediate excitatory synaptic transmission at CA1 pyramidal cell synapses.
+      sources:
+        - ref: PMID:28213444
+          method: patch-clamp (slice)
+          scope: mouse CA1 vs CA2 pyramidal neurons, entorhinal input
+          quote_key: 207513684_5ee43212
+        - ref: PMID:33132900
+          method: immunolocalization (IHC)
+          scope: APP/PS1 mouse model, CA1 hippocampal region
+          quote_key: '222135486_47019332'
+        - ref: PMID:7722624
+          quote_key: 5468451_656975dd
+        - ref: PMID:24554721
+          quote_key: 34872919_c89ee15c
+        - ref: PMID:10864941
+          quote_key: 502543_02fe99f0
+    morphology:
+      description: CA1 pyramidal cells have the smallest soma size compared to CA2 and CA3 in mouse hippocampus; fewer primary apical branches and more distant branching points compared to CA3 cells.
+      sources:
+        - ref: PMID:24166578
+          method: biocytin fill + intracellular labeling; DIC microscopy in acute slice
+          scope: adult mouse hippocampus, P15-P18
+          quote_key: 18746823_fd8665d7
+        - ref: PMID:23180766
+          quote_key: 13358368_423cf3cc
+    cl_mapping:
+      cl_term:
+        id: CL:1001571
+        label: hippocampal pyramidal neuron
+        name_in_source: CA1 pyramidal cell
+      mapping_notes: CA1 pyramidal cells are a subpopulation of hippocampal pyramidal neurons; CL:1001571 covers all hippocampal pyramidal neurons and is therefore a BROAD match. No CA1-specific CL term currently exists.
+      mapping_type: BROAD
+    proposed_cl_term:
+      label: CA1 pyramidal cell
+      parent_cl_term:
+        id: CL:1001571
+        label: hippocampal pyramidal neuron
+        name_in_source: hippocampal pyramidal neuron
+      definition: A hippocampal pyramidal neuron with soma located in the pyramidal layer of hippocampal area CA1 (UBERON:0014548) (Cembrowski et al., 2016; Müller & Remy, 2017), forming the dominant excitatory projection population of the CA1 subfield. As the primary output cell of Ammon's horn, it projects via the subiculum to entorhinal cortex and is capable of glutamate secretion as a neurotransmitter (Dale et al., 2015). In mouse, it is distinguished from CA2 and CA3 pyramidal neurons by soma position within the CA1 stratum pyramidale and by expression of wolframin (Wfs1), an endoplasmic reticulum-resident membrane protein enriched in deep-sublayer CA1 cells (Cembrowski et al., 2016).
+      xrefs:
+        - PMID:27113915
+        - PMID:29250747
+        - PMID:26346726
+        - CS20230722_SUPT_0069
+      status: SUBMITTED
+    definition_references:
+      - PMID:27113915
+      - PMID:29250747
+      - PMID:26346726
+      - PMID:37011759
+      - PMID:19342486
+      - PMID:28779130
+      - PMID:32009891
+      - PMID:27678395
+      - PMID:24319410
+    negative_markers:
+      - symbol: Drd1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:27678395
+            method: transgenic Drd1-tdTomato reporter
+            scope: mouse dorsal CA1
+            quote_key: 1711204_08c527a1
+            marker_type: PROTEIN
+    notes: "[Migrated from asta-ingest stub `ca1_pyramidal_cell` on 2026-06-10]\n\nAMBIGUITY: Ventral CA1 pyramidal neurons express D1/D2 dopamine receptors (45.1% of D1/D2 cells in vHipp are glutamatergic) — likely projection-specific vCA1/vSubiculum subtypes; dorsal CA1 pyramidal cells are D1R-negative. Np65-positive glutamatergic neurons are not CA1-specific (also CA2-3 and subiculum)."
+    synonyms:
+      - term: ca1_pyramidal_cell
+        synonym_type: HISTORICAL
+  - id: CS20230722_SUPT_0069
+    name: 0069 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0069
+  - id: CS20230722_CLUS_0262
+    name: 0262 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0262
+  - id: CS20230722_CLUS_0263
+    name: 0263 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0263
+  - id: CS20230722_CLUS_0293
+    name: 0293 CA1-ProS Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0293
+  - id: CS20230722_CLUS_0261
+    name: 0261 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0261
+  - id: CS20230722_CLUS_0266
+    name: 0266 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0266
+  - id: CS20230722_SUPT_0074
+    name: 0074 CA1-ProS Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0074
+  - id: CS20230722_SUPT_0073
+    name: 0073 CA1-ProS Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0073
+  - id: CS20230722_SUPT_0072
+    name: 0072 CA1-ProS Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0072
+  - id: CS20230722_SUPT_0070
+    name: 0070 CA1-ProS Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0070
+edges:
+  - id: edge_ca1_pc_hippocampus_to_supt_0069
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0069
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'SUPT_0069 (0069 CA1-ProS Glut_1) is the highest-scoring WMBv1 supertype candidate for CA1 pyramidal cells (discovery score 5). It belongs to subclass CS20230722_SUBC_016 (016 CA1-ProS Glut), which is the dedicated CA1/ProS glutamatergic subclass in WMBv1. SUPT_0069 has 2553 cells in Field CA1, pyramidal layer (MBA:407). The TYPE_A_SPLITS relationship is used because WMBv1 resolves at least four CA1-ProS supertypes (SUPT_0069-0072) within SUBC_016; the classical CA1 pyramidal cell encompasses all of these.
+
+          '
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) mouse hippocampus SSv4 scRNA-seq CA1-ProS subclass label onto WMBv1 (CCN20230722). Of 1704 CA1-ProS cells, 1011 (59.3%) map to SUPT_0069 at the supertype level. F1 score = 0.745 (coverage=0.593, purity=1.0). Target_purity=1.0 confirms SUPT_0069 is exclusively populated by CA1-ProS cells in this dataset. The remaining CA1-ProS cells distribute across SUPT_0070 (20.1%), SUPT_0072 (13.3%), SUPT_0071 (3.5%), and SUPT_0073 (2.8%), consistent with the TYPE_A_SPLITS relationship: the classical CA1 pyramidal cell encompasses all CA1-ProS Glut supertypes, with SUPT_0069 as the primary correspondence.
+
+          '
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: CA1-ProS
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
+            f1_score: 0.8935094127563922
+            n_cells_mapped: 1590
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.8075165058405281
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 016 CA1-ProS Glut
+            best_target_accession: CS20230722_SUBC_016
+            f1_score: 0.9949431099873578
+            n_cells_mapped: 1574
+            median_bootstrap: 1.0
+            coverage: 0.9936868686868687
+            purity: 0.9962025316455696
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0069 CA1-ProS Glut_1
+            best_target_accession: CS20230722_SUPT_0069
+            f1_score: 0.7901533494753834
+            n_cells_mapped: 979
+            median_bootstrap: 1.0
+            coverage: 0.6535380507343124
+            purity: 0.9989795918367347
+        n_cells_total: 1590
+        best_mapping_rank: 2
+        f1_source_relpath: at_results.yaml
+    property_comparisons: &id001
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=28476 [painted]; Field CA1 [MBA:382] count_100um=28032 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=27305 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.959; strict region_fraction: 0.423; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 3.97; cohort_pct 0.828; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=3.97; cohort percentile 0.828; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Classical CA1 pyramidal cell spans at least four WMBv1 supertypes (CS20230722_SUPT_0069 through CS20230722_SUPT_0072) within subclass 016 CA1-ProS Glut; CS20230722_SUPT_0069 is the primary correspondence by transfer coverage and Wfs1 cohort percentile (0.83), but a complete mapping requires sibling broadMatch edges to CS20230722_SUPT_0070, and CS20230722_SUPT_0072.\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "CA1-ProS source coverage distributes across multiple CS20230722_SUPT_0069 child clusters (CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0266) and across sibling supertypes; cluster-level transfer evidence is not carried on this edge.\n"
+    unresolved_questions:
+      - 'Which CA1-ProS supertypes (0069-0072) correspond to deep vs. superficial CA1 pyramidal cell sublayers? Wfs1 marks deep-layer CA1 PCs in the literature; checking which supertype carries Wfs1 in the atlas would resolve the sublayer correspondence.
+
+        '
+      - Run MapMyCells annotation transfer of a sublayer-resolved CA1 PC source dataset (Cembrowski 2016 or Zeisel 2018) onto WMBv1 to resolve deep- vs. superficial-CA1 correspondence across CS20230722_SUPT_0069 through CS20230722_SUPT_0072.
+      - Which of CS20230722_SUPT_0069 through CS20230722_SUPT_0072 corresponds to deep vs. superficial CA1 pyramidal cell sublayers?
+      - Which of the SUPT_0069 child clusters (CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0266) captures the deep-CA1, superficial-CA1, and proximo-distal axes?
+      - "Which of CS20230722_SUPT_0069 through CS20230722_SUPT_0072 corresponds to deep vs. superficial CA1 pyramidal cell sublayers?\n"
+      - "Which of the CS20230722_SUPT_0069 child clusters (CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0266) captures the deep-CA1, superficial-CA1, and proximo-distal axes?\n"
+    proposed_experiments:
+      - "Sublayer-resolved cluster annotation transfer of a deep-vs-superficial CA1 pyramidal source dataset (Cembrowski 2016 or Zeisel 2018) onto WMBv1 CCN20230722, with per-supertype coverage breakdown across CS20230722_SUPT_0069 through CS20230722_SUPT_0072; target F1 >= 0.80 at the supertype level for the leading sublayer.\n"
+    mapping_cardinality: "1:n"
+    mapping_justification: semapv:ManualMappingCuration
+    confidence: MODERATE
+    confidence_score: 0.65
+    rationale: '[tier:STRONGEST] Cluster annotation transfer of the Yao 2021 CA1-ProS source label (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) lands cleanly at the subclass 016 CA1-ProS Glut (F1=0.99) and identifies CS20230722_SUPT_0069 as the leading supertype correspondence (F1=0.79; target purity=1.00); atlas Wfs1 expression at supertype cohort percentile 0.83 and dominant soma painting in Field CA1 pyramidal layer (region_fraction_100um=0.96) anchor the broad match; classical CA1 pyramidal cell spans CS20230722_SUPT_0069 through CS20230722_SUPT_0072 inside the subclass so the cardinality is 1:n.
+
+      '
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: d2778b05
+    discovery_score: &id002
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 29
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 3.97
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.828
+          coverage: 1.0
+      region_fraction: 0.423
+      region_fraction_100um: 0.959
+      region_evidence: SELF
+    reconciliation_note: "Paired with the best-child cluster edge to CS20230722_CLUS_0262 (skos:closeMatch + 1:1) — the supertype broadMatch is the authoritative resolution, the cluster edge is the leading within-supertype child by region painting and Wfs1 percentile; pending sublayer-resolved cluster annotation transfer.\n"
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0262
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0262
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0262 CA1-ProS Glut_1; region_fraction_100um=0.975; strict region_fraction=0.468.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=19886 [painted]; Field CA1 [MBA:382] count_100um=19668 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=19403 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.975; strict region_fraction: 0.468; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 7.68; cohort_pct 0.975'
+        alignment: CONSISTENT
+        notes: val=7.68; cohort percentile 0.975
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "CA1-ProS source cells distribute across CS20230722_CLUS_0262 and sibling clusters within CS20230722_SUPT_0069; CS20230722_CLUS_0263 carries marginally higher Wfs1 (mean 7.75, cohort percentile 0.99), and CS20230722_CLUS_0262 wins on region cell count rather than on an unambiguous marker signature. Cluster-level transfer evidence is not carried on this edge.\n"
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: "The cleanest mapping resolution for the classical CA1 pyramidal cell is the supertype (CS20230722_SUPT_0069), where cluster annotation transfer evidence is carried; the cluster-level call is held provisionally pending sublayer-resolved cluster annotation transfer.\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 7.68
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.975
+      region_fraction: 0.468
+      region_fraction_100um: 0.975
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:NEXT] CS20230722_CLUS_0262 is the leading child of CS20230722_SUPT_0069 by cells painted to Field CA1 pyramidal layer (region_fraction_100um=0.98) and by atlas Wfs1 expression at cohort percentile 0.98; cluster NT annotation is glutamatergic; cluster-level annotation transfer evidence is not carried on this edge so the call is provisional pending sublayer- resolved transfer.\n"
+    reconciliation_note: "Paired with CS20230722_SUPT_0069 supertype broadMatch (1:n) — the cleanest resolution for the classical CA1 pyramidal cell is the supertype, this cluster edge captures the leading within-supertype child by region painting; CS20230722_CLUS_0263 carries marginally higher Wfs1 but fewer pyramidal-layer cells.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - "Sublayer-resolved cluster annotation transfer (Cembrowski 2016 deep vs. superficial CA1 pyramidal cell labels) onto WMBv1 CCN20230722; target F1 >= 0.70 at cluster level for the leading sublayer within CS20230722_SUPT_0069.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    unresolved_questions:
+      - Does CS20230722_CLUS_0262 correspond to deep-layer CA1, superficial-layer CA1, or a proximo-distal subpopulation?
+      - "Does CS20230722_CLUS_0262 correspond to deep-layer CA1, superficial- layer CA1, or a proximo-distal subpopulation?\n"
+    rationale_source_hash: 266d4684
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0263
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0263
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0263 CA1-ProS Glut_1; region_fraction_100um=0.973; strict region_fraction=0.364.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=5547 [painted]; Field CA1 [MBA:382] count_100um=5495 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=5398 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.973; strict region_fraction: 0.364; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 7.75; cohort_pct 0.988'
+        alignment: CONSISTENT
+        notes: val=7.75; cohort percentile 0.988
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "Wfs1 expression on CS20230722_CLUS_0263 (mean 7.75) is marginally above CS20230722_CLUS_0262 (mean 7.68), but CS20230722_CLUS_0263 carries fewer cells in Field CA1 pyramidal layer (region_fraction_100um=0.97 on a smaller cell count); both clusters absorb CA1-ProS source coverage within CS20230722_SUPT_0069.\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 7.75
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.988
+      region_fraction: 0.364
+      region_fraction_100um: 0.973
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:WEAKEST] CS20230722_CLUS_0263 carries the highest within-supertype Wfs1 expression (mean 7.75, cohort percentile 0.99) inside CS20230722_SUPT_0069 but holds only a fraction of the pyramidal-layer cell count of CS20230722_CLUS_0262; cluster-level transfer evidence is not carried; supports the broader supertype mapping rather than a standalone close match.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: 2769d5c7
+    proposed_experiments: []
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0293
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0293
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0293 CA1-ProS Glut_6; region_fraction_100um=0.500; strict region_fraction=0.110.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=999 [painted]; Prosubiculum [MBA:484682470] count_100um=830 [painted]; Field CA1 [MBA:382] count_100um=791 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.500; strict region_fraction: 0.110; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 6.75; cohort_pct 0.951'
+        alignment: CONSISTENT
+        notes: val=6.75; cohort percentile 0.951
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Predominantly prosubicular cluster; only 110 of 1000 cells fall strictly within MBA:407 (Field CA1, pyramidal layer).\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 6.75
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.951
+      region_fraction: 0.11
+      region_fraction_100um: 0.5
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0293 is a predominantly prosubicular cluster (region_fraction=0.11 strict in Field CA1 pyramidal layer, dominant soma painting in Prosubiculum MBA:484682470); not a CA1 pyramidal cell match.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: 'f6c364fb'
+    proposed_experiments: []
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0261
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0261
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0261 CA1-ProS Glut_1; region_fraction_100um=0.707; strict region_fraction=0.178.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=528 [painted]; Field CA1 [MBA:382] count_100um=470 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=443 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.707; strict region_fraction: 0.178; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 4.29; cohort_pct 0.790'
+        alignment: CONSISTENT
+        notes: val=4.29; cohort percentile 0.790
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant soma painting in Field CA1 stratum oriens (MBA:399) rather than Field CA1 pyramidal layer (MBA:407).\n"
+      - caveat_type: LOW_CELL_COUNT
+        description: "Only 215 cells in this cluster — at the threshold for robust cluster-level analysis.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 4.29
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.79
+      region_fraction: 0.178
+      region_fraction_100um: 0.707
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0261 has dominant soma painting in Field CA1 stratum oriens (MBA:399) rather than the pyramidal layer (region_fraction=0.18 strict in MBA:407), only 215 cells, and modest Wfs1 (mean 4.29, cohort percentile 0.79); does not anchor a clean CA1 pyramidal cell call.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: 6674bc5f
+    proposed_experiments: []
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_CLUS_0266
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_CLUS_0266
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0266 CA1-ProS Glut_1; region_fraction_100um=0.584; strict region_fraction=0.032.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=499 [painted]; Field CA1 [MBA:382] count_100um=483 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=477 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.584; strict region_fraction: 0.032; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 2.69; cohort_pct 0.531'
+        alignment: CONSISTENT
+        notes: val=2.69; cohort percentile 0.531
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant soma painting in Field CA1 stratum oriens (MBA:399); only 32 of 1000 cells fall strictly within MBA:407.\n"
+      - caveat_type: LOW_CELL_COUNT
+        description: "Only 130 cells in this cluster.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 2.69
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.531
+      region_fraction: 0.032
+      region_fraction_100um: 0.584
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0266 has dominant soma painting in Field CA1 stratum oriens (MBA:399), only 32 of 1000 cells strictly in pyramidal layer (region_fraction=0.03), only 130 cells total, and Wfs1 at mid-cohort percentile 0.53; does not match the classical CA1 pyramidal cell.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: f3f395f1
+    proposed_experiments: []
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0069
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0069
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0069 CA1-ProS Glut_1; region_fraction_100um=0.959; strict region_fraction=0.423.
+    property_comparisons: *id001
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Duplicate edge on the same taxonomy_type accession (CS20230722_SUPT_0069) as edge_ca1_pc_hippocampus_to_supt_0069; the curator-built edge is the authoritative mapping.\n"
+    discovery_score: *id002
+    confidence: UNCERTAIN
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Duplicate edge on the same taxonomy_type accession (CS20230722_SUPT_0069) as the curator-authoritative edge edge_ca1_pc_hippocampus_to_supt_0069; this edge carries only a stub discovery score and no curator-authored evidence — flag for removal.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: c6e5dda2
+    proposed_experiments: []
+    unresolved_questions:
+      - "Curator removal of duplicate edge edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0069 — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0069.\n"
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0074
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0074
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0074 CA1-ProS Glut_6; region_fraction_100um=0.409; strict region_fraction=0.090.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1332 [painted]; Prosubiculum [MBA:484682470] count_100um=1062 [painted]; Field CA1 [MBA:382] count_100um=886 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.409; strict region_fraction: 0.090; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 6.79; cohort_pct 0.966; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.79; cohort percentile 0.966; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant soma location in Prosubiculum (MBA:484682470) rather than Field CA1 pyramidal layer (MBA:407).\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 29
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 6.79
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.966
+          coverage: 1.0
+      region_fraction: 0.09
+      region_fraction_100um: 0.409
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_SUPT_0074 has dominant soma in Prosubiculum (MBA:484682470) with only region_fraction_100um=0.41 proximity to Field CA1 pyramidal layer; Wfs1 (mean 6.79, cohort percentile 0.97) is high but the anatomy is discordant with the classical CA1 pyramidal cell.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: 60064f93
+    proposed_experiments: []
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0073
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0073
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0073 CA1-ProS Glut_5; region_fraction_100um=0.545; strict region_fraction=0.102.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1509 [painted]; Field CA1 [MBA:382] count_100um=1484 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=1474 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.545; strict region_fraction: 0.102; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 2.41; cohort_pct 0.517; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=2.41; cohort percentile 0.517; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant soma location in Field CA1 stratum oriens (MBA:399), not the pyramidal layer.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 29
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 2.41
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.517
+          coverage: 1.0
+      region_fraction: 0.102
+      region_fraction_100um: 0.545
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0073 has dominant soma in Field CA1 stratum oriens (MBA:399), modest Wfs1 (mean 2.41, cohort percentile 0.52), and only region_fraction=0.10 strict in pyramidal layer; supports the broader CA1-ProS Glut family but not the CA1 pyramidal cell call specifically.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: 9fc430de
+    proposed_experiments: []
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0072
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0072
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0072 CA1-ProS Glut_4; region_fraction_100um=0.877; strict region_fraction=0.299.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=3869 [painted]; Field CA1 [MBA:382] count_100um=3866 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=3413 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.877; strict region_fraction: 0.299; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 4.78; cohort_pct 0.897; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.78; cohort percentile 0.897; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "Sibling CA1-ProS Glut supertype that absorbs a fraction of the CA1-ProS annotation-transfer coverage not captured by CS20230722_SUPT_0069.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 29
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 4.78
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.897
+          coverage: 1.0
+      region_fraction: 0.299
+      region_fraction_100um: 0.877
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.35
+    rationale: "[tier:WEAKEST] CS20230722_SUPT_0072 is a sibling CA1-ProS Glut supertype within subclass 016 CA1-ProS Glut; region_fraction_100um=0.88 in Field CA1 pyramidal layer and Wfs1 at cohort percentile 0.90 — absorbs a fraction of the CA1-ProS coverage not captured by CS20230722_SUPT_0069; contributes to the 1:n mapping of the classical type onto multiple CA1-ProS Glut supertypes.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: c5f254b9
+    proposed_experiments: []
+  - id: edge_ca1_pc_hippocampus_to_CS20230722_SUPT_0070
+    lit_type: ca1_pc_hippocampus
+    taxonomy_type: CS20230722_SUPT_0070
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0070 CA1-ProS Glut_2; region_fraction_100um=0.684; strict region_fraction=0.186.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=4224 [painted]; Field CA1 [MBA:382] count_100um=4158 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=3118 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.684; strict region_fraction: 0.186; region_evidence: SELF'
+      - property: marker_Wfs1
+        node_a_value: Wfs1 — defining marker
+        node_b_value: 'Wfs1: 3.84; cohort_pct 0.793; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=3.84; cohort percentile 0.793; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Dominant soma location in Field CA1 stratum oriens (MBA:399) rather than the pyramidal layer; likely a stratum-oriens-leaning CA1-ProS Glut population.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 29
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Wfs1
+          val: 3.84
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.793
+          coverage: 1.0
+      region_fraction: 0.186
+      region_fraction_100um: 0.684
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_SUPT_0070 is a sibling CA1-ProS Glut supertype with dominant soma in Field CA1 stratum oriens (MBA:399); Wfs1 at cohort percentile 0.79; the stratum-oriens-leaning anatomy weakens the correspondence to a pyramidal-layer CA1 pyramidal cell.\n"
+    rationale_generated_at: '2026-06-10T13:17:48+00:00'
+    report_path: reports/hippocampus/ca1_pc_hippocampus_summary.md
+    rationale_source_hash: e4326dbe
+    proposed_experiments: []

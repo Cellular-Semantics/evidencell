@@ -1,0 +1,1835 @@
+name: Hippocampal GABAergic interneurons — draft classical types
+description: 'Draft evidence graph for classical hippocampal GABAergic interneuron types extracted from ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-09'
+nodes:
+  - id: ivy_cell_hippocampus
+    name: Ivy cell (IvC)
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0014548
+        label: pyramidal layer of CA1
+        name_in_source: CA1 stratum pyramidale
+        compartment: SOMA
+        sources:
+          - ref: PMID:39401246
+            method: transgenic mouse
+            scope: mouse CA1
+            quote_key: 262127573_d140faf4
+    nt_type:
+      name_in_source: GABAergic
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: GABAergic
+    defining_markers:
+      - symbol: Nos1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:20147544
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: mouse hippocampus
+            quote_key: 2405079_6850b924
+          - ref: PMID:39401246
+            marker_type: PROTEIN
+            method: transgenic mouse
+            scope: mouse CA1
+            quote_key: 262127573_d140faf4
+          - ref: PMID:37467748
+            snippet: Lamp5 interneurons include ivy and neurogliaform cells (NGFCs). The ivy cell is the most common interneuron type in CA1; it has a distinct morphology with a relatively extensive axonal cloud extending over several hippocampal layers and co-expresses neuronal nitric oxide synthase (nNOS)
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+          - ref: PMID:41473287
+            snippet: Amongst NGFCs Grin3a is expressed in both Lamp5+/Lhx6+ MGE-derived subsets, also known as Ivy cells (IvyCs), and Lamp5+/Lhx6- caudal ganglionic eminence (CGE)-derived subsets
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+          - ref: PMID:21209836
+            snippet: The labeled cell types correspond well to previously described NPY-positive multipolar cells, often referred to as Ivy cells and neurogliaform cells
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+          - ref: PMID:20147544
+            snippet: nNOS strongly colocalizes with neuropeptide Y in both Ivy cells (IvCs) and a subset of neurogliaform cells (NGCs)
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+      - symbol: Npy
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:20147544
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: mouse hippocampus
+            quote_key: 2405079_6850b924
+      - symbol: Lamp5
+        ncbi_gene_id:
+    negative_markers:
+      - symbol: Pvalb
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:20147544
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: mouse hippocampus
+            quote_key: 2405079_6850b924
+      - symbol: Sst
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:20147544
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: mouse hippocampus
+            quote_key: 2405079_6850b924
+      - symbol: Calb2
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:20147544
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: mouse hippocampus
+            quote_key: 2405079_6850b924
+    neuropeptides:
+      - symbol: Npy
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:20147544
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: mouse hippocampus
+            quote_key: 2405079_6850b924
+    cl_mapping:
+    definition_references:
+      - PMID:20147544
+      - PMID:39401246
+    is_terminal: false
+    notes: 'No dedicated CL term. Ivy cells and nNOS+ NGCs may constitute a single subtype despite laminar differences. One of most representative CA1 interneuron types. Both MGE and CGE developmental origins reported.
+
+      [cite_traverse_2026_04_10] PMID:20147544: IvCs and nNOS+ NGCs have completely overlapping developmental, electrophysiological, morphological, and neurochemical properties, suggesting that these cells constitute a single unique interneuron subtype despite differences in laminar organization
+
+      [cite_traverse_2026_04_10] PMID:20147544: our findings reveal that IvCs and nNOS ϩ NGCs have completely overlapping developmental, electrophysiological, morphological, and neurochemical properties, suggesting that these cells constitute a single unique interneuron subtype despite differences in laminar organization
+
+      '
+    morphology:
+      description: 'Dense local axonal arbor; soma typically in or near stratum pyramidale; NOS-expressing. Similar to NGC but different laminar position.
+
+        '
+      sources:
+        - ref: PMID:20147544
+          method: intracellular labeling
+          scope: mouse hippocampus
+          quote_key: 2405079_6850b924
+        - ref: PMID:20147544
+          method: intracellular labeling
+          scope: mouse hippocampus
+          quote_key: 2405079_a85327b9
+        - ref: PMID:28009257
+          snippet: As there were no data available for ivy and neurogliaform cells, we performed the necessary experiments in our lab by filling ivy and neurogliaform cells in hippocampal CA1 slices from Wistar rats and then measuring their somatic area and dendrites
+          support: SUPPORT
+          source: cite_traverse_2026_04_10
+    electrophysiology:
+      description: Late-spiking phenotype; slow pyramidal cell inhibition
+      sources:
+        - ref: PMID:20147544
+          method: patch clamp
+          scope: mouse hippocampus
+          quote_key: 2405079_6850b924
+        - ref: PMID:20147544
+          method: patch clamp
+          scope: mouse hippocampus
+          quote_key: 2405079_a85327b9
+  - id: CS20230722_SUPT_0203
+    name: 0203 Lamp5 Lhx6 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0203
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.37
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 6.59
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 1.52
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.46
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 3.71
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.89
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 10.34
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 9.35
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 4.4
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 7.79
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 4.62
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 6.37
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 0.43
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 6.89
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.06
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 1.52
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 2.64
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.67
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0724
+          n_cells: 1
+          expression: '{"Calb2": 0.28, "Cck": 6.85, "Chrna2": 0.88, "Cnr1": 3.74, "Gad1": 11.15, "Gad2": 11.37, "Id2": 9.87, "Lamp5": 4.13, "Chrm2": 0.47, "Nos1": 9.14, "Npy": 6.66, "Pnoc": 7.88, "Pvalb": 0.23, "Reln": 5.42, "Sst": 1.18, "Tac1": 0.38, "Slc17a8": 0.06, "Vip": 0.38}'
+        - cluster_accession: CS20230722_CLUS_0725
+          n_cells: 1
+          expression: '{"Calb2": 0.43, "Cck": 8.13, "Chrna2": 0.25, "Cnr1": 2.0, "Gad1": 10.75, "Gad2": 9.98, "Id2": 8.81, "Lamp5": 5.04, "Chrm2": 2.3, "Nos1": 8.18, "Npy": 7.24, "Pnoc": 6.69, "Pvalb": 0.27, "Reln": 8.07, "Sst": 1.05, "Tac1": 0.57, "Slc17a8": 0.13, "Vip": 0.5}'
+        - cluster_accession: CS20230722_CLUS_0726
+          n_cells: 1
+          expression: '{"Calb2": 0.25, "Cck": 5.37, "Chrna2": 0.1, "Cnr1": 2.02, "Gad1": 11.25, "Gad2": 10.68, "Id2": 10.62, "Lamp5": 2.03, "Chrm2": 0.15, "Nos1": 8.77, "Npy": 7.79, "Pnoc": 7.92, "Pvalb": 0.45, "Reln": 9.02, "Sst": 1.38, "Tac1": 0.46, "Slc17a8": 0.1, "Vip": 0.92}'
+        - cluster_accession: CS20230722_CLUS_0727
+          n_cells: 1
+          expression: '{"Calb2": 0.62, "Cck": 2.56, "Chrna2": 0.0, "Cnr1": 2.01, "Gad1": 10.64, "Gad2": 9.8, "Id2": 6.75, "Lamp5": 1.87, "Chrm2": 0.27, "Nos1": 6.01, "Npy": 1.97, "Pnoc": 6.42, "Pvalb": 0.55, "Reln": 7.03, "Sst": 3.03, "Tac1": 8.28, "Slc17a8": 0.0, "Vip": 0.31}'
+        - cluster_accession: CS20230722_CLUS_0728
+          n_cells: 1
+          expression: '{"Calb2": 0.8, "Cck": 9.48, "Chrna2": 0.43, "Cnr1": 4.26, "Gad1": 10.68, "Gad2": 8.9, "Id2": 9.45, "Lamp5": 5.84, "Chrm2": 4.65, "Nos1": 5.62, "Npy": 2.19, "Pnoc": 3.56, "Pvalb": 1.4, "Reln": 6.42, "Sst": 1.22, "Tac1": 7.48, "Slc17a8": 0.0, "Vip": 1.15}'
+        - cluster_accession: CS20230722_CLUS_0729
+          n_cells: 1
+          expression: '{"Calb2": 0.29, "Cck": 5.6, "Chrna2": 0.17, "Cnr1": 4.18, "Gad1": 10.82, "Gad2": 10.4, "Id2": 9.97, "Lamp5": 4.3, "Chrm2": 0.36, "Nos1": 7.57, "Npy": 2.64, "Pnoc": 6.6, "Pvalb": 0.07, "Reln": 8.8, "Sst": 1.67, "Tac1": 1.97, "Slc17a8": 0.16, "Vip": 1.05}'
+        - cluster_accession: CS20230722_CLUS_0730
+          n_cells: 1
+          expression: '{"Calb2": 0.0, "Cck": 6.89, "Chrna2": 0.0, "Cnr1": 4.56, "Gad1": 10.99, "Gad2": 10.56, "Id2": 10.44, "Lamp5": 7.19, "Chrm2": 3.24, "Nos1": 8.44, "Npy": 4.12, "Pnoc": 5.2, "Pvalb": 0.39, "Reln": 7.24, "Sst": 1.39, "Tac1": 1.53, "Slc17a8": 0.0, "Vip": 0.66}'
+        - cluster_accession: CS20230722_CLUS_0731
+          n_cells: 1
+          expression: '{"Calb2": 0.31, "Cck": 7.82, "Chrna2": 1.89, "Cnr1": 6.94, "Gad1": 10.83, "Gad2": 11.04, "Id2": 8.92, "Lamp5": 4.77, "Chrm2": 0.75, "Nos1": 8.55, "Npy": 4.35, "Pnoc": 6.71, "Pvalb": 0.07, "Reln": 3.14, "Sst": 1.24, "Tac1": 0.47, "Slc17a8": 0.03, "Vip": 0.41}'
+  - id: CS20230722_CLUS_0651
+    name: 0651 Vip Gaba_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0651
+  - id: CS20230722_CLUS_0731
+    name: 0731 Lamp5 Lhx6 Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0731
+  - id: CS20230722_CLUS_0655
+    name: 0655 Vip Gaba_9
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0655
+  - id: CS20230722_CLUS_0695
+    name: 0695 RHP-COA Ndnf Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0695
+  - id: CS20230722_CLUS_0705
+    name: 0705 RHP-COA Ndnf Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0705
+  - id: CS20230722_SUPT_0179
+    name: 0179 Vip Gaba_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0179
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 6.78
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.36
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 0.27
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 3.74
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 10.58
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 9.29
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 9.59
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 2.93
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 6.16
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 6.9
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 1.3
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 4.57
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 0.09
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 4.33
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.42
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 1.04
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.16
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 6.82
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0649
+          n_cells: 1
+          expression: '{"Calb2": 7.47, "Cck": 0.92, "Chrna2": 4.38, "Cnr1": 10.5, "Gad1": 9.43, "Gad2": 9.55, "Id2": 1.58, "Lamp5": 6.73, "Chrm2": 0.16, "Nos1": 8.32, "Npy": 1.35, "Pnoc": 4.3, "Pvalb": 0.12, "Reln": 4.93, "Sst": 1.16, "Tac1": 0.16, "Slc17a8": 0.05, "Vip": 9.17}'
+        - cluster_accession: CS20230722_CLUS_0650
+          n_cells: 1
+          expression: '{"Calb2": 5.96, "Cck": 1.57, "Chrna2": 4.33, "Cnr1": 10.11, "Gad1": 9.0, "Gad2": 9.3, "Id2": 3.5, "Lamp5": 3.89, "Chrm2": 0.14, "Nos1": 3.38, "Npy": 1.04, "Pnoc": 6.43, "Pvalb": 0.1, "Reln": 4.0, "Sst": 1.26, "Tac1": 0.16, "Slc17a8": 0.08, "Vip": 4.84}'
+        - cluster_accession: CS20230722_CLUS_0651
+          n_cells: 1
+          expression: '{"Calb2": 6.9, "Cck": 1.59, "Chrna2": 2.51, "Cnr1": 11.12, "Gad1": 9.44, "Gad2": 9.93, "Id2": 3.71, "Lamp5": 7.87, "Chrm2": 0.51, "Nos1": 9.01, "Npy": 1.52, "Pnoc": 2.98, "Pvalb": 0.05, "Reln": 4.07, "Sst": 0.7, "Tac1": 0.15, "Slc17a8": 1.13, "Vip": 6.45}'
+  - id: CS20230722_SUPT_1196
+    name: 1196 Monocytes NN_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1196
+  - id: CS20230722_SUPT_0181
+    name: 0181 Vip Gaba_9
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0181
+  - id: CS20230722_SUPT_0173
+    name: 0173 Vip Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0173
+edges:
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0203
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0203
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: 'Lamp5 Lhx6 Gaba_1 supertype is MGE-derived (Lhx6+) Lamp5+ GABA interneuron. Ivy cells are nNOS+ (Nos1+) Lamp5+ GABAergic interneurons, soma near stratum pyramidale, MGE-derived (Lhx6+ expected). The supertype markers include Lamp5 and Lhx6 as DEFINING_SCOPED, consistent with Ivy cell identity. Tricoire 2011 and Bhatt 2023 confirm Ivy cells are NGFC.M type (Lhx6+/Lamp5+/Id2+). However, anatomy shows CA3 SO (179), CA3 SR (235), DG mol (263) with no CA1 stratum pyramidale — Ivy cell preferred location in CA1 SP is absent.
+
+          '
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'Precomputed stats cross-check: all 3 defining markers confirmed (Nos1=7.79, Npy=4.62, Lamp5=4.40) and all 3 negative markers absent (Pvalb=0.43, Sst=1.52, Calb2=0.37). Strong marker support for Ivy cell identity in Lamp5 Lhx6 supertype.'
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: SUPPORT
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: Lamp5
+        n_cells_total: 868
+        best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            f1_score: 0.7405462184873949
+            n_cells_mapped: 705
+            median_bootstrap: 1.0
+            coverage: 0.818815331010453
+            purity: 0.675934803451582
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 050 Lamp5 Lhx6 Gaba
+            best_target_accession: CS20230722_SUBC_050
+            f1_score: 0.8975979772439949
+            n_cells_mapped: 710
+            median_bootstrap: 1.0
+            coverage: 0.8198614318706697
+            purity: 0.9916201117318436
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0203 Lamp5 Lhx6 Gaba_1
+            best_target_accession: CS20230722_SUPT_0203
+            f1_score: 0.8982943777637397
+            n_cells_mapped: 711
+            median_bootstrap: 1.0
+            coverage: 0.8229166666666666
+            purity: 0.9888734353268428
+        explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Lamp5 subclass (n=868 HIP cells) onto WMBv1. SUPT_0203 (Lamp5 Lhx6 Gaba_1) is overwhelmingly the top supertype target (F1=0.898, 711/868 cells, purity=0.989). At SUBCLASS level, 710/868 Lamp5 HIP cells map to SUBC_050 (Lamp5 Lhx6 Gaba, F1=0.898), confirming Lamp5 Lhx6 identity. Ivy cells are the predominant Lamp5+Lhx6+ hippocampal interneuron type; this strong and specific hit is consistent with the ivy cell → SUPT_0203 assignment. The high purity (0.989) confirms SUPT_0203 is almost exclusively populated by Lamp5 cells in this dataset.
+        f1_source_relpath: at_results.yaml
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_harris_class_mmc_wmbv1
+        supports: SUPPORT
+        target_atlas: WMBv1
+        method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization, bootstrap_iteration=100)
+        source_dataset_accession: GEO:GSE99888
+        source_cluster_label: Cacna2d1.Lhx6.Reln
+        n_cells_total: 3663
+        best_mapping_rank: 2
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            f1_score: 0.1957796014067995
+            n_cells_mapped: 167
+            median_bootstrap: 0.93
+            coverage: 0.9823529411764705
+            purity: 0.10872395833333333
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 050 Lamp5 Lhx6 Gaba
+            best_target_accession: CS20230722_SUBC_050
+            f1_score: 0.8249158249158248
+            n_cells_mapped: 245
+            median_bootstrap: 1.0
+            coverage: 0.9351145038167938
+            purity: 0.7379518072289156
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0203 Lamp5 Lhx6 Gaba_1
+            best_target_accession: CS20230722_SUPT_0203
+            f1_score: 0.8118811881188118
+            n_cells_mapped: 246
+            median_bootstrap: 1.0
+            coverage: 0.9144981412639405
+            purity: 0.7299703264094956
+        explanation: Harris 2018 (GSE99888) Class Cacna2d1.Lhx6.Reln (Lamp5+/Lhx6+/Reln+ CA1 inhibitory cluster) maps predominantly to Lamp5 Lhx6 Gaba subclass (F1=0.825) and SUPT_0203 Lamp5 Lhx6 Gaba_1 (supertype F1=0.812). Independent second-dataset corroboration of GSE185862 ivy cell evidence. Consistent with ivy cell as Lhx6+/Lamp5+ MGE-derived type.
+        f1_source_relpath: at_results_harris_class.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=3175 [painted]; Dentate gyrus [MBA:726] count_100um=1220 [painted]; Field CA3 [MBA:463] count_100um=1179 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.090; strict region_fraction: 0.014; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 7.78; cohort_pct 0.968; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=7.78; cohort percentile 0.968; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 4.62; cohort_pct 0.710; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.62; cohort percentile 0.710; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 6.73; cohort_pct 0.968; child-coverage 1.000; atlas category: DEFINING_SCOPED'
+        alignment: CONSISTENT
+        notes: val=6.73; cohort percentile 0.968; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.43; cohort_pct 0.516'
+        alignment: DISCORDANT
+        notes: val=0.43; cohort percentile 0.516
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.52; cohort_pct 0.677'
+        alignment: DISCORDANT
+        notes: val=1.52; cohort percentile 0.677
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.37; cohort_pct 0.419'
+        alignment: DISCORDANT
+        notes: val=0.37; cohort percentile 0.419
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 4.62; cohort_pct 0.710; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.62; cohort percentile 0.710; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: OTHER
+        description: "Ivy cells and nNOS+ neurogliaform cells (NGFC.M) share neurochemical and developmental properties (Tricoire 2010 PMID:20147544); they may constitute a single interneuron subtype distinguished only by laminar position. edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203 and this edge may overlap the same atlas population.\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "No CA1 stratum pyramidale–specific Lamp5 Lhx6 cluster in CS20230722_SUPT_0203 is currently a graph candidate at cluster level. The only in-graph child CS20230722_CLUS_0731 has region_fraction_100um=0.132 and carries marker concordance but not a cluster-level AT signal on that edge; AT convergence on SUPT_0203 (Yao Lamp5 F1=0.90; Harris Cacna2d1.Lhx6.Reln F1=0.81) is at supertype level only.\n"
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "Lamp5 is listed as a defining marker on the classical node but lacks a primary citation; the candidate supertype's name (\"Lamp5 Lhx6 Gaba_1\") contains the marker symbol, making the Lamp5 concordance partially nominal. Add a primary Cre-driver–labelled Lamp5+ ivy-cell citation to remove the circularity.\n"
+    unresolved_questions:
+      - Are the CA3-enriched Lamp5 Lhx6 cells in SUPT_0203 Ivy cells, NGCs, or a distinct type?
+      - Is there a CA1 SP Lamp5 Lhx6 cluster capturing hippocampal Ivy cells at the cluster level?
+      - Do ephys/morphology panels distinguish ivy_cell_hippocampus from neurogliaform_cell_hippocampus at CS20230722_SUPT_0203, or are they indistinguishable across all assessable panels (Tricoire 2010 prediction)?
+      - "Are the CA3-enriched Lamp5 Lhx6 cells in CS20230722_SUPT_0203 ivy cells, NGCs, or a distinct type?\n"
+      - "Is there a CA1 stratum pyramidale Lamp5 Lhx6 cluster capturing hippocampal ivy cells at the cluster level? CS20230722_CLUS_0731 is the in-graph child with marker concordance but does not carry cluster-level AT support on its edge.\n"
+      - "Do additional modality panels (beyond the atlas + AT evidence on this edge) distinguish ivy_cell_hippocampus from neurogliaform_cell_hippocampus at CS20230722_SUPT_0203 (Tricoire 2010 PMID:20147544 prediction of indistinguishability)?\n"
+    mapping_justification: semapv:ManualMappingCuration
+    confidence: MODERATE
+    confidence_score: 0.7
+    rationale: "[tier:STRONGEST] Two independent annotation-transfer runs converge here: the Yao 2021 hippocampal-formation SMART-Seq v4 Lamp5 source maps to CS20230722_SUPT_0203 with F1=0.90 (run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1; purity 0.989, 711/868 cells), and the Harris 2018 Cacna2d1.Lhx6.Reln class maps with F1=0.81 (run_ref at_run_20260512_harris_class_mmc_wmbv1; 246/3663 cells). Atlas precomputed expression confirms 3 of 3 defining markers (Nos1=7.78, Npy=4.62, Lamp5=6.73; Lamp5 atlas tag DEFINING_SCOPED) and 3 of 3 negative markers below their atlas-defining thresholds at the supertype mean. Location is DISCORDANT (region_fraction_100um: 0.090) — supertype somata skew to DG and Field CA3 (MBA:463) rather than CA1 stratum pyramidale; reading this as atlas-side undersampling of CA1 SP Lamp5 Lhx6 cells given the AT convergence, not as a true off-target call. The supertype-level call is broadMatch-like in shape (one classical type to a supertype whose in-graph child CS20230722_CLUS_0731 carries supporting marker evidence but no cluster-level AT signal) so committing closeMatch + 1:n rather than exactMatch.\n"
+    reconciliation_note: "Ivy and stratum-lacunosum-moleculare neurogliaform cells (Tricoire 2010, PMID:20147544) share neurochemical and developmental properties; the parallel edge_neurogliaform_cell_hippocampus_to_CS20230722_SUPT_0203 maps to the same supertype. Whether they are transcriptomically distinct within SUPT_0203 is an open question (see unresolved_questions).\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: a97c14a3
+    mapping_cardinality: "1:n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 7.78
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: Npy
+          val: 4.62
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.71
+          coverage: 1.0
+        - gene: Lamp5
+          val: 6.73
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.43
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.516
+        - gene: -Sst
+          val: 1.52
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.677
+        - gene: -Calb2
+          val: 0.37
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.419
+      region_fraction: 0.014
+      region_fraction_100um: 0.09
+      region_evidence: SELF
+    proposed_experiments:
+      - "Re-run Stage B at rank 0 (cluster) for ivy_cell_hippocampus with expanded cohort to surface any additional Lamp5 Lhx6 child clusters not currently in the candidate set, and re-evaluate cluster-level mapping.\n"
+      - "Cre-driver–targeted scRNA-seq of ivy cells with cluster-level annotation transfer to WMBv1; target F1 >= 0.80 at CLUSTER level. Resolves which Lamp5 Lhx6 child cluster is the ivy population.\n"
+      - "Targeted literature cite-traverse for Lamp5 as an ivy-cell marker in Cre-driver–labelled cells; add primary citation to ivy_cell_hippocampus.defining_markers[Lamp5].refs to remove the marker-circularity caveat.\n"
+      - "Compare ivy and neurogliaform-cell source-cell transcriptomic signatures within SUPT_0203 (e.g. via paired single-cell sequencing with laminar annotation) to test the Tricoire 2010 PMID:20147544 hypothesis that ivy and NGC are a single type.\n"
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0651
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0651
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0651 Vip Gaba_7; region_fraction_100um=0.391; strict region_fraction=0.087.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=63 [painted]; Field CA1 [MBA:382] count_100um=36 [painted]; Field CA3 [MBA:463] count_100um=30 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.391; strict region_fraction: 0.087; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 9.01; cohort_pct 0.971'
+        alignment: CONSISTENT
+        notes: val=9.01; cohort percentile 0.971
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 1.52; cohort_pct 0.338'
+        alignment: APPROXIMATE
+        notes: val=1.52; cohort percentile 0.338
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 1.55; cohort_pct 0.794'
+        alignment: CONSISTENT
+        notes: val=1.55; cohort percentile 0.794
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.05; cohort_pct 0.132'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.132
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.70; cohort_pct 0.074'
+        alignment: DISCORDANT
+        notes: val=0.70; cohort percentile 0.074
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.90; cohort_pct 0.882'
+        alignment: DISCORDANT
+        notes: val=6.90; cohort percentile 0.882
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 1.52; cohort_pct 0.338'
+        alignment: APPROXIMATE
+        notes: val=1.52; cohort percentile 0.338
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 9.01
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.971
+        - gene: Npy
+          val: 1.52
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.338
+        - gene: Lamp5
+          val: 1.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.794
+        - gene: -Pvalb
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.132
+        - gene: -Sst
+          val: 0.7
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.074
+        - gene: -Calb2
+          val: 6.9
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.882
+      region_fraction: 0.087
+      region_fraction_100um: 0.391
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Wrong subclass — CS20230722_CLUS_0651 is a Vip Gaba_7 cluster (0179 Vip Gaba_7 supertype), and Calb2 at the cluster mean is 6.90 (cohort pct 0.882), strongly DISCORDANT against the classical Calb2- exclusion. Although Nos1 (9.01) and Lamp5 (1.55) are present, the Vip subclass assignment is incompatible with the Lamp5+/Lhx6+ MGE-derived ivy identity.\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: b1639e3d
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0731
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0731
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0731 Lamp5 Lhx6 Gaba_1; region_fraction_100um=0.132; strict region_fraction=0.015.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=457 [painted]; Field CA3 [MBA:463] count_100um=287 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=207 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.132; strict region_fraction: 0.015; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 8.55; cohort_pct 0.941'
+        alignment: CONSISTENT
+        notes: val=8.55; cohort percentile 0.941
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 4.35; cohort_pct 0.662; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.35; cohort percentile 0.662
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 8.51; cohort_pct 0.985; atlas category: MERFISH'
+        alignment: CONSISTENT
+        notes: val=8.51; cohort percentile 0.985
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.07; cohort_pct 0.206'
+        alignment: CONSISTENT
+        notes: val=0.07; below MIN_DETECTABLE (0.1); cohort percentile 0.206
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.24; cohort_pct 0.397'
+        alignment: DISCORDANT
+        notes: val=1.24; cohort percentile 0.397
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.31; cohort_pct 0.368'
+        alignment: DISCORDANT
+        notes: val=0.31; cohort percentile 0.368
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 4.35; cohort_pct 0.662; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.35; cohort percentile 0.662
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Sst (1.24) and Calb2 (0.31) at cluster mean above MIN_DETECTABLE — DISCORDANT against the classical negative-marker exclusion. Likely supertype-mean / minority-population effect rather than a true contradiction of the protein-level exclusion in Tricoire 2010 PMID:20147544.\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "Cluster-level annotation transfer for ivy cells is not attached to this edge; the supporting AT evidence converges at supertype (CS20230722_SUPT_0203) and does not discriminate among its in-graph child clusters. Cluster-level identity is not yet settled.\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 8.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.941
+        - gene: Npy
+          val: 4.35
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.662
+        - gene: Lamp5
+          val: 8.51
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+        - gene: -Pvalb
+          val: 0.07
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.206
+        - gene: -Sst
+          val: 1.24
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.397
+        - gene: -Calb2
+          val: 0.31
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.368
+      region_fraction: 0.015
+      region_fraction_100um: 0.132
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.35
+    rationale: "[tier:NEXT] In-graph child cluster of CS20230722_SUPT_0203 with clean marker profile (Nos1=8.55, Npy=4.35, Lamp5=8.51; Pvalb=0.07 below MIN_DETECTABLE) and hippocampal proximity (region_fraction_100um=0.132; painted into Field CA3 MBA:463 and Field CA3, pyramidal layer MBA:495). NT GABA, concordant. No annotation-transfer evidence is attached to this edge — AT signal for ivy cells lands at the supertype level (CS20230722_SUPT_0203) rather than discriminating among its child clusters in the current graph. Negative markers Sst (1.24) and Calb2 (0.31) are above MIN_DETECTABLE — DISCORDANT in the property comparison table — likely a minority-population effect within the 934-cell cluster mean. Predicate left UncertainRelationship because cluster-level AT discrimination among SUPT_0203 children is not available on this edge.\n"
+    reconciliation_note: "Secondary in-graph child of CS20230722_SUPT_0203; supports the supertype call via marker concordance but carries no cluster-level AT evidence on this edge. Pair with the SUPT_0203 verdict; defer cluster-level commitment until cluster-level AT discrimination among SUPT_0203 children is available.\n"
+    proposed_experiments:
+      - "Run cluster-level annotation transfer with an ivy-cell-targeted source (patch-seq or Cre-driver-labelled) to discriminate among CS20230722_SUPT_0203 child clusters and decide whether CS20230722_CLUS_0731 carries the ivy population or is residual Lamp5 Lhx6 background.\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Does CS20230722_CLUS_0731 contain a distinct CA3 ivy-like population, or is it residual Lamp5 Lhx6 background relative to other (not-yet-in-graph) Lamp5 Lhx6 child clusters?\n"
+    rationale_source_hash: dee145c7
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0655
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0655
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0655 Vip Gaba_9; region_fraction_100um=0.176; strict region_fraction=0.028.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=111 [painted]; Field CA1 [MBA:382] count_100um=51 [painted]; Field CA3 [MBA:463] count_100um=46 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.176; strict region_fraction: 0.028; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 2.01; cohort_pct 0.412'
+        alignment: APPROXIMATE
+        notes: val=2.01; cohort percentile 0.412
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 1.14; cohort_pct 0.250'
+        alignment: APPROXIMATE
+        notes: val=1.14; cohort percentile 0.250
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.23; cohort_pct 0.235'
+        alignment: APPROXIMATE
+        notes: val=0.23; cohort percentile 0.235
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.05; cohort_pct 0.132'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.132
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.23; cohort_pct 0.382'
+        alignment: DISCORDANT
+        notes: val=1.23; cohort percentile 0.382
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.15; cohort_pct 0.838'
+        alignment: DISCORDANT
+        notes: val=6.15; cohort percentile 0.838
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 1.14; cohort_pct 0.250'
+        alignment: APPROXIMATE
+        notes: val=1.14; cohort percentile 0.250
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 2.01
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.412
+        - gene: Npy
+          val: 1.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.25
+        - gene: Lamp5
+          val: 0.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.235
+        - gene: -Pvalb
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.132
+        - gene: -Sst
+          val: 1.23
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.382
+        - gene: -Calb2
+          val: 6.15
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.838
+      region_fraction: 0.028
+      region_fraction_100um: 0.176
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Wrong subclass — CS20230722_CLUS_0655 is a Vip Gaba_9 cluster (0181 Vip Gaba_9 supertype). Calb2=6.15 and Lamp5=0.23 (cohort pct 0.235) — Lamp5 is essentially absent and Calb2 is strongly present, both incompatible with ivy identity.\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: 03c3baec
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0695
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0695
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0695 RHP-COA Ndnf Gaba_3; region_fraction_100um=0.120; strict region_fraction=0.021.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=170 [painted]; Field CA1 [MBA:382] count_100um=124 [painted]; Field CA1, stratum radiatum [MBA:415] count_100um=106 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.120; strict region_fraction: 0.021; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 0.35; cohort_pct 0.074'
+        alignment: CONSISTENT
+        notes: val=0.35; cohort percentile 0.074
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 4.59; cohort_pct 0.691; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.59; cohort percentile 0.691
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 1.94; cohort_pct 0.809'
+        alignment: CONSISTENT
+        notes: val=1.94; cohort percentile 0.809
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.45; cohort_pct 0.662'
+        alignment: DISCORDANT
+        notes: val=0.45; cohort percentile 0.662
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.92; cohort_pct 0.147'
+        alignment: DISCORDANT
+        notes: val=0.92; cohort percentile 0.147
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.05; cohort_pct 0.059'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.059
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 4.59; cohort_pct 0.691; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.59; cohort percentile 0.691
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Pvalb, negative_marker_Sst. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 0.35
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.074
+        - gene: Npy
+          val: 4.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.691
+        - gene: Lamp5
+          val: 1.94
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.809
+        - gene: -Pvalb
+          val: 0.45
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.662
+        - gene: -Sst
+          val: 0.92
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.147
+        - gene: -Calb2
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.059
+      region_fraction: 0.021
+      region_fraction_100um: 0.12
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Wrong subclass — CS20230722_CLUS_0695 is a RHP-COA Ndnf Gaba_3 cluster (0195 RHP-COA Ndnf Gaba_3 supertype); Nos1 cluster mean is 0.35 (cohort pct 0.074, near-absent) and Pvalb (0.45) is above MIN_DETECTABLE. Ndnf neurogliaform subclass localised to retrohippocampal / cortical amygdalar regions rather than CA1 SP.\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: 98a7f509
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_CLUS_0705
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0705
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0705 RHP-COA Ndnf Gaba_6; region_fraction_100um=0.255; strict region_fraction=0.059.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=36 [painted]; Field CA1 [MBA:382] count_100um=28 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=21 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.255; strict region_fraction: 0.059; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 2.50; cohort_pct 0.500'
+        alignment: CONSISTENT
+        notes: val=2.50; cohort percentile 0.500
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 4.19; cohort_pct 0.632; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.19; cohort percentile 0.632
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 4.63; cohort_pct 0.882'
+        alignment: CONSISTENT
+        notes: val=4.63; cohort percentile 0.882
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.96; cohort_pct 0.176'
+        alignment: DISCORDANT
+        notes: val=0.96; cohort percentile 0.176
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.29; cohort_pct 0.294'
+        alignment: DISCORDANT
+        notes: val=0.29; cohort percentile 0.294
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 4.19; cohort_pct 0.632; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=4.19; cohort percentile 0.632
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 2.5
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.5
+        - gene: Npy
+          val: 4.19
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.632
+        - gene: Lamp5
+          val: 4.63
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.882
+        - gene: -Pvalb
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Sst
+          val: 0.96
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.176
+        - gene: -Calb2
+          val: 0.29
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.294
+      region_fraction: 0.059
+      region_fraction_100um: 0.255
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Wrong subclass — CS20230722_CLUS_0705 is a RHP-COA Ndnf Gaba_6 cluster (0198 RHP-COA Ndnf Gaba_6 supertype). Markers nominally consistent (Nos1=2.50, Npy=4.19, Lamp5=4.63) but the Ndnf-subclass assignment is incompatible with the Lamp5+/Lhx6+ MGE ivy identity, and Sst (0.96) / Calb2 (0.29) are above MIN_DETECTABLE.\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: 75936db5
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0179
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0179
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0179 Vip Gaba_7; region_fraction_100um=0.235; strict region_fraction=0.069.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=206 [painted]; Field CA3 [MBA:463] count_100um=105 [painted]; Field CA1 [MBA:382] count_100um=99 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.235; strict region_fraction: 0.069; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 6.91; cohort_pct 0.903; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.91; cohort percentile 0.903; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 1.30; cohort_pct 0.355; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.30; cohort percentile 0.355; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.73; cohort_pct 0.710; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.73; cohort percentile 0.710; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.09; cohort_pct 0.129'
+        alignment: CONSISTENT
+        notes: val=0.09; below MIN_DETECTABLE (0.1); cohort percentile 0.129
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.04; cohort_pct 0.387'
+        alignment: DISCORDANT
+        notes: val=1.04; cohort percentile 0.387
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.78; cohort_pct 0.903'
+        alignment: DISCORDANT
+        notes: val=6.78; cohort percentile 0.903
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 1.30; cohort_pct 0.355; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.30; cohort percentile 0.355; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 6.91
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.903
+          coverage: 1.0
+        - gene: Npy
+          val: 1.3
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.355
+          coverage: 1.0
+        - gene: Lamp5
+          val: 0.73
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.71
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.09
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.129
+        - gene: -Sst
+          val: 1.04
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.387
+        - gene: -Calb2
+          val: 6.78
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.903
+      region_fraction: 0.069
+      region_fraction_100um: 0.235
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] Wrong subclass — CS20230722_SUPT_0179 is a Vip Gaba_7 supertype. Calb2 at the supertype mean is 6.78 (cohort pct 0.903), strongly DISCORDANT against the classical Calb2- exclusion; Lamp5 is low (0.73, cohort pct 0.710 but absolute val below ivy-cluster range).\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: 31d418ee
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_1196
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_1196
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1196 Monocytes NN_1; region_fraction_100um=0.017; strict region_fraction=0.018.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Isocortex [MBA:315] count_100um=15 [painted]; Cerebellum [MBA:512] count_100um=11 [painted]; Midbrain [MBA:313] count_100um=8 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.017; strict region_fraction: 0.018; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 0.27; cohort_pct 0.065; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.27; cohort percentile 0.065; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 0.56; cohort_pct 0.032; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.56; cohort percentile 0.032; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.31; cohort_pct 0.548; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.31; cohort percentile 0.548; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 1.05; cohort_pct 0.774'
+        alignment: DISCORDANT
+        notes: val=1.05; cohort percentile 0.774
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.30; cohort_pct 0.000'
+        alignment: DISCORDANT
+        notes: val=0.30; cohort percentile 0.000
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 0.56; cohort_pct 0.032; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.56; cohort percentile 0.032; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_Pvalb, negative_marker_Sst. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 0.27
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.065
+          coverage: 1.0
+        - gene: Npy
+          val: 0.56
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.032
+          coverage: 1.0
+        - gene: Lamp5
+          val: 0.31
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.548
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 1.05
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.774
+        - gene: -Sst
+          val: 0.3
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Calb2
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.018
+      region_fraction_100um: 0.017
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.02
+    rationale: "[tier:CUT] Non-neuronal — CS20230722_SUPT_1196 is a Monocytes NN_1 supertype, not a GABAergic neuron type. Anatomical labels are Isocortex (MBA:315), Cerebellum (MBA:512), and Midbrain (MBA:313), not hippocampus. All defining markers near-absent (Nos1=0.27, Npy=0.56, Lamp5=0.31). Mapping refuted.\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: 948fe5ee
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0181
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0181
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0181 Vip Gaba_9; region_fraction_100um=0.099; strict region_fraction=0.015.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=259 [painted]; Cortical subplate [MBA:703] count_100um=127 [painted]; Field CA3 [MBA:463] count_100um=124 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.099; strict region_fraction: 0.015; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 1.73; cohort_pct 0.355; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.73; cohort percentile 0.355; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 0.79; cohort_pct 0.161; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.79; cohort percentile 0.161; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.20; cohort_pct 0.194; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.20; cohort percentile 0.194; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.04; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.99; cohort_pct 0.323'
+        alignment: DISCORDANT
+        notes: val=0.99; cohort percentile 0.323
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.96; cohort_pct 0.935'
+        alignment: DISCORDANT
+        notes: val=6.96; cohort percentile 0.935
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 0.79; cohort_pct 0.161; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.79; cohort percentile 0.161; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 1.73
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.355
+          coverage: 1.0
+        - gene: Npy
+          val: 0.79
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.161
+          coverage: 1.0
+        - gene: Lamp5
+          val: 0.2
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.194
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Sst
+          val: 0.99
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.323
+        - gene: -Calb2
+          val: 6.96
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.935
+      region_fraction: 0.015
+      region_fraction_100um: 0.099
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Wrong subclass — CS20230722_SUPT_0181 is a Vip Gaba_9 supertype. Calb2=6.96 (cohort pct 0.935), strongly DISCORDANT; Lamp5=0.20 and Nos1=1.73, neither at ivy-supertype levels.\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: 3a2349f8
+  - id: edge_ivy_cell_hippocampus_to_CS20230722_SUPT_0173
+    lit_type: ivy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0173
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0173 Vip Gaba_1; region_fraction_100um=0.027; strict region_fraction=0.006.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Isocortex [MBA:315] count_100um=1706 [painted]; Hippocampal formation [MBA:1089] count_100um=324 [painted]; Secondary motor area [MBA:993] count_100um=248 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.027; strict region_fraction: 0.006; region_evidence: SELF'
+      - property: marker_Nos1
+        node_a_value: Nos1 — defining marker
+        node_b_value: 'Nos1: 1.11; cohort_pct 0.290; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.11; cohort percentile 0.290; child-cluster coverage 1.000
+      - property: marker_Npy
+        node_a_value: Npy — defining marker
+        node_b_value: 'Npy: 0.73; cohort_pct 0.097; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.73; cohort percentile 0.097; child-cluster coverage 1.000
+      - property: marker_Lamp5
+        node_a_value: Lamp5 — defining marker
+        node_b_value: 'Lamp5: 0.26; cohort_pct 0.290; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.26; cohort percentile 0.290; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.04; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.04; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.77; cohort_pct 0.097'
+        alignment: DISCORDANT
+        notes: val=0.77; cohort percentile 0.097
+      - property: negative_marker_Calb2
+        node_a_value: Calb2 — ABSENT (classical negative marker)
+        node_b_value: 'Calb2: 6.41; cohort_pct 0.839'
+        alignment: DISCORDANT
+        notes: val=6.41; cohort percentile 0.839
+      - property: neuropeptide_Npy
+        node_a_value: Npy — neuropeptide (classical)
+        node_b_value: 'Npy: 0.73; cohort_pct 0.097; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.73; cohort percentile 0.097; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location, negative_marker_Sst, negative_marker_Calb2. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 29
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 29
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Nos1
+          val: 1.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.29
+          coverage: 1.0
+        - gene: Npy
+          val: 0.73
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.097
+          coverage: 1.0
+        - gene: Lamp5
+          val: 0.26
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.29
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.04
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+        - gene: -Sst
+          val: 0.77
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.097
+        - gene: -Calb2
+          val: 6.41
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+      region_fraction: 0.006
+      region_fraction_100um: 0.027
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Wrong subclass and off-region — CS20230722_SUPT_0173 is a Vip Gaba_1 supertype dominated by Isocortex (MBA:315) anatomy (region_fraction_100um=0.027). Calb2=6.41 (cohort pct 0.839), strongly DISCORDANT; Lamp5=0.26 essentially absent.\n"
+    rationale_generated_at: '2026-06-08T21:03:48+00:00'
+    report_path: reports/hippocampus/ivy_cell_hippocampus_summary.md
+    rationale_source_hash: 9e23e3d6

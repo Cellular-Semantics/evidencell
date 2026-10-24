@@ -1,0 +1,1635 @@
+name: Hippocampal GABAergic interneurons — draft classical types
+description: 'Draft evidence graph for classical hippocampal GABAergic interneuron types extracted from ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-09'
+nodes:
+  - id: cck_basket_cell_hippocampus
+    name: Cholecystokinin-positive basket cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0014548
+        label: pyramidal layer of CA1
+        name_in_source: CA1 stratum pyramidale
+        compartment: SOMA
+        sources:
+          - ref: PMID:25018703
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 10540334_418c51dd
+          - ref: PMID:28559797
+            snippet: VGLUT3-immunogold puncta were present over synaptic vesicle clusters in axon terminals forming axo-somatic symmetrical synapses
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+          - ref: PMID:26441554
+            snippet: PV-GABA cells were more abundant overall, CCK-GABA cells outnumbered PV-GABA cells in several subregions of the hippocampus, medial prefrontal cortex and ventrolateral temporal cortex
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+          - ref: PMID:31297048
+            snippet: CCK positive basket cells target the soma and proximal dendrites of cortical and hippocampal pyramidal cells, and do not appear to innervate the AIS
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+    nt_type:
+      name_in_source: GABAergic
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: GABAergic
+      sources:
+        - ref: PMID:26441554
+          method: intersectional genetics
+          scope: mouse forebrain
+          quote_key: 16859318_009e9f36
+    defining_markers:
+      - symbol: Cck
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:10341254
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 480205_62cd73ae
+          - ref: PMID:28559797
+            snippet: VGLUT3 is expressed by CCK-positive and more rarely by calbindin-positive interneurons
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+          - ref: PMID:31297048
+            snippet: Proportions of CCK basket cells express the ionotropic serotonin receptor (5-HT3) and the metabotropic Cannabinoid receptor type 1 (CB1), which modulate GABA release from the presynaptic terminal
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+          - ref: PMID:24533597
+            snippet: all Eps8-expressing cells were positive for calbindin
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+          - ref: PMID:26689544
+            marker_type: TRANSCRIPT
+            method: patch-seq (single-cell RNA-seq + patch-clamp)
+            scope: mouse neocortex CCK+ interneurons
+            quote_key: 7738817_f3d2a066
+      - symbol: Cnr1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:10341254
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 480205_62cd73ae
+      - symbol: Vglut3
+        ncbi_gene_id:
+    negative_markers:
+      - symbol: Pvalb
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:25018703
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 10540334_418c51dd
+    neuropeptides:
+      - symbol: Cck
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:10341254
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 480205_62cd73ae
+    cl_mapping:
+      cl_term:
+        id: CL:0000118
+        label: basket cell
+        name_in_source: basket cell
+      mapping_type: BROAD
+      mapping_notes: 'CL:0000118 covers perisomatic morphology but does not capture CCK/CB1R marker identity or regular-spiking firing pattern. No CCK-specific basket cell term in CL.
+
+        '
+    definition_references:
+      - PMID:10341254
+      - PMID:16237182
+      - PMID:29383328
+      - PMID:33529646
+      - PMID:26441554
+    is_terminal: false
+    notes: 'CCK cells are remarkably diverse, extending beyond Sncg transcriptomic class. Activity inversely scales with PV cell activity.
+
+      [cite_traverse_2026_04_10] PMID:26689544: CCK+ interneurons are the plastic and dynamic gate-keepers of neuronal circuits
+
+      [cite_traverse_2026_04_10] PMID:28009257: CCK+ basket cells have never been observed to receive direct monosynaptic excitement from local CA1 pyramidal cells
+
+      '
+    morphology:
+      description: 'Perisomatic-targeting interneuron; CB1R+ axon terminals surround somata and proximal dendrites of pyramidal neurons; 96.9% of CCK+ INs express CB1. Dense plexus of inhibitory terminals on soma and proximal dendrites.
+
+        '
+      sources:
+        - ref: PMID:10341254
+          method: immunohistochemistry + EM
+          scope: rat hippocampus
+          quote_key: 480205_62cd73ae
+        - ref: PMID:25018703
+          method: immunohistochemistry
+          scope: rat hippocampus
+          quote_key: 10540334_418c51dd
+        - ref: PMID:28559797
+          method: review
+          scope: hippocampus
+          quote_key: 13529065_8d53bb0b
+        - ref: PMID:28009257
+          method: computational model (full-scale CA1 circuit)
+          scope: rodent CA1
+          quote_key: 4776309_141d53a2
+    electrophysiology:
+      description: 'Regular-spiking; low in vivo firing frequency (2-10 Hz); during theta oscillations fire at 8.8 +/- 3.3 Hz on ascending phase; 1.7 +/- 2.0 Hz during ripples; episode-dependent firing
+
+        '
+      sources:
+        - ref: PMID:16237182
+          method: in vivo recording + juxtacellular labeling
+          scope: rat hippocampus
+          quote_key: 857025_3ed72cbd
+        - ref: PMID:29383328
+          method: in vivo recording
+          scope: mouse CA1
+          quote_key: 19055431_b2536ef6
+        - ref: PMID:33529646
+          method: in vivo calcium imaging
+          scope: mouse CA1
+          quote_key: 231732903_b97d2b7d
+        - ref: PMID:32490811
+          snippet: Two firing phenotypes of CCK+INs in rat hippocampal CA3 area; either possessing a previously undetected membrane potential-dependent firing or regular firing phenotype, due to different low-voltage-activated potassium currents
+          support: SUPPORT
+          source: cite_traverse_2026_04_10
+        - ref: PMID:32490811
+          snippet: the firing phenotypes were correlated with the presence of distinct isoforms of Kv4 auxiliary subunits (KChIP1 vs. KChIP4e and DPP6S)
+          support: SUPPORT
+          source: cite_traverse_2026_04_10
+  - id: CS20230722_SUPT_0179
+    name: 0179 Vip Gaba_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0179
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 6.78
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.36
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 0.27
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 3.74
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 10.58
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 9.29
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 9.59
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 2.93
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 6.16
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 6.9
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 1.3
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 4.57
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 0.09
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 4.33
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.42
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 1.04
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.16
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 6.82
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0649
+          n_cells: 1
+          expression: '{"Calb2": 7.47, "Cck": 0.92, "Chrna2": 4.38, "Cnr1": 10.5, "Gad1": 9.43, "Gad2": 9.55, "Id2": 1.58, "Lamp5": 6.73, "Chrm2": 0.16, "Nos1": 8.32, "Npy": 1.35, "Pnoc": 4.3, "Pvalb": 0.12, "Reln": 4.93, "Sst": 1.16, "Tac1": 0.16, "Slc17a8": 0.05, "Vip": 9.17}'
+        - cluster_accession: CS20230722_CLUS_0650
+          n_cells: 1
+          expression: '{"Calb2": 5.96, "Cck": 1.57, "Chrna2": 4.33, "Cnr1": 10.11, "Gad1": 9.0, "Gad2": 9.3, "Id2": 3.5, "Lamp5": 3.89, "Chrm2": 0.14, "Nos1": 3.38, "Npy": 1.04, "Pnoc": 6.43, "Pvalb": 0.1, "Reln": 4.0, "Sst": 1.26, "Tac1": 0.16, "Slc17a8": 0.08, "Vip": 4.84}'
+        - cluster_accession: CS20230722_CLUS_0651
+          n_cells: 1
+          expression: '{"Calb2": 6.9, "Cck": 1.59, "Chrna2": 2.51, "Cnr1": 11.12, "Gad1": 9.44, "Gad2": 9.93, "Id2": 3.71, "Lamp5": 7.87, "Chrm2": 0.51, "Nos1": 9.01, "Npy": 1.52, "Pnoc": 2.98, "Pvalb": 0.05, "Reln": 4.07, "Sst": 0.7, "Tac1": 0.15, "Slc17a8": 1.13, "Vip": 6.45}'
+  - id: CS20230722_SUPT_0187
+    name: 0187 Sncg Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0187
+  - id: CS20230722_CLUS_0681
+    name: 0681 Sncg Gaba_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0681
+  - id: CS20230722_CLUS_0651
+    name: 0651 Vip Gaba_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0651
+  - id: CS20230722_CLUS_0655
+    name: 0655 Vip Gaba_9
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0655
+  - id: CS20230722_CLUS_0705
+    name: 0705 RHP-COA Ndnf Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0705
+  - id: CS20230722_CLUS_0637
+    name: 0637 Vip Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0637
+  - id: CS20230722_SUPT_0196
+    name: 0196 RHP-COA Ndnf Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0196
+  - id: CS20230722_SUPT_0219
+    name: 0219 Sst Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0219
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.23
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.48
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 3.08
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.52
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 3.04
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 9.73
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 9.96
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 3.92
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 2.04
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 1.81
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 7.18
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 4.18
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 1.68
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 6.46
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.78
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 10.17
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 2.43
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.44
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0785
+          n_cells: 1
+          expression: '{"Calb2": 0.13, "Cck": 1.54, "Chrna2": 0.17, "Cnr1": 0.84, "Gad1": 8.99, "Gad2": 10.25, "Id2": 3.5, "Lamp5": 1.34, "Chrm2": 0.0, "Nos1": 2.6, "Npy": 7.54, "Pnoc": 0.3, "Pvalb": 0.3, "Reln": 10.47, "Sst": 10.99, "Tac1": 0.0, "Slc17a8": 0.0, "Vip": 0.28}'
+        - cluster_accession: CS20230722_CLUS_0786
+          n_cells: 1
+          expression: '{"Calb2": 0.16, "Cck": 1.15, "Chrna2": 0.52, "Cnr1": 2.84, "Gad1": 9.3, "Gad2": 9.91, "Id2": 2.53, "Lamp5": 0.2, "Chrm2": 0.72, "Nos1": 1.29, "Npy": 8.02, "Pnoc": 2.19, "Pvalb": 0.19, "Reln": 7.85, "Sst": 11.23, "Tac1": 0.4, "Slc17a8": 0.08, "Vip": 0.44}'
+        - cluster_accession: CS20230722_CLUS_0787
+          n_cells: 1
+          expression: '{"Calb2": 0.0, "Cck": 1.83, "Chrna2": 0.11, "Cnr1": 4.68, "Gad1": 9.59, "Gad2": 9.81, "Id2": 5.87, "Lamp5": 5.21, "Chrm2": 4.21, "Nos1": 3.13, "Npy": 2.51, "Pnoc": 5.31, "Pvalb": 0.73, "Reln": 7.46, "Sst": 9.05, "Tac1": 0.14, "Slc17a8": 1.28, "Vip": 0.5}'
+        - cluster_accession: CS20230722_CLUS_0788
+          n_cells: 1
+          expression: '{"Calb2": 0.83, "Cck": 1.54, "Chrna2": 0.8, "Cnr1": 4.31, "Gad1": 9.72, "Gad2": 10.5, "Id2": 3.99, "Lamp5": 0.56, "Chrm2": 3.08, "Nos1": 1.1, "Npy": 7.66, "Pnoc": 6.16, "Pvalb": 1.38, "Reln": 8.94, "Sst": 10.5, "Tac1": 1.68, "Slc17a8": 0.44, "Vip": 0.47}'
+        - cluster_accession: CS20230722_CLUS_0789
+          n_cells: 1
+          expression: '{"Calb2": 0.28, "Cck": 0.97, "Chrna2": 0.25, "Cnr1": 2.01, "Gad1": 10.01, "Gad2": 9.76, "Id2": 3.02, "Lamp5": 0.89, "Chrm2": 3.55, "Nos1": 0.93, "Npy": 8.44, "Pnoc": 3.5, "Pvalb": 0.3, "Reln": 4.14, "Sst": 11.07, "Tac1": 2.08, "Slc17a8": 0.18, "Vip": 0.46}'
+        - cluster_accession: CS20230722_CLUS_0790
+          n_cells: 1
+          expression: '{"Calb2": 0.0, "Cck": 1.41, "Chrna2": 0.32, "Cnr1": 1.21, "Gad1": 10.55, "Gad2": 9.69, "Id2": 4.75, "Lamp5": 3.83, "Chrm2": 5.23, "Nos1": 2.56, "Npy": 7.52, "Pnoc": 6.03, "Pvalb": 3.38, "Reln": 1.44, "Sst": 10.7, "Tac1": 4.43, "Slc17a8": 1.43, "Vip": 0.36}'
+        - cluster_accession: CS20230722_CLUS_0791
+          n_cells: 1
+          expression: '{"Calb2": 0.18, "Cck": 1.89, "Chrna2": 1.49, "Cnr1": 5.36, "Gad1": 9.93, "Gad2": 9.77, "Id2": 3.75, "Lamp5": 2.24, "Chrm2": 4.79, "Nos1": 1.06, "Npy": 8.6, "Pnoc": 5.77, "Pvalb": 5.48, "Reln": 4.93, "Sst": 7.68, "Tac1": 8.27, "Slc17a8": 2.05, "Vip": 0.6}'
+  - id: CS20230722_SUPT_0189
+    name: 0189 Sncg Gaba_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0189
+  - id: CS20230722_SUPT_0198
+    name: 0198 RHP-COA Ndnf Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0198
+edges:
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0179
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0179
+    relationship: evidencell:UncertainRelationship
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: 'GABA neurotransmitter type is consistent. Hippocampal locations present: CA1 SO (24 cells), CA1 pyramidal layer (11 cells), CA1 SR (26 cells), CA3 SO (25 cells), CA3 pyramidal layer (23 cells), CA3 SR (17 cells). Perisomatic targeting location is consistent with basket cell morphology. However, the parent subclass is "Vip Gaba" — CCK basket cells are not primarily defined by Vip expression. CCK basket cells express Cnr1/CB1R as a defining marker; Vip subclass identity is unexpected. Defining markers (Vip, Qrfpr, Stk32a, Igfbp4) do not include Cck or Cnr1. This is a surprising candidate with low confidence pending transcriptomic validation of CCK+/CB1R+ basket cells against Vip subclass.
+
+          '
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=206 [painted]; Field CA3 [MBA:463] count_100um=105 [painted]; Field CA1 [MBA:382] count_100um=99 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.235; strict region_fraction: 0.069; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 1.36; cohort_pct 0.065; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.36; cohort percentile 0.065; child-cluster coverage 1.000
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 10.58; cohort_pct 0.677; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.58; cohort percentile 0.677; child-cluster coverage 1.000
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 0.42; cohort_pct 0.742; child-coverage 0.333'
+        alignment: CONSISTENT
+        notes: val=0.42; cohort percentile 0.742; child-cluster coverage 0.333; HIDDEN-1:1 signal — concentrated in a subset of children
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.09; cohort_pct 0.129'
+        alignment: CONSISTENT
+        notes: val=0.09; below MIN_DETECTABLE (0.1); cohort percentile 0.129
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 1.36; cohort_pct 0.065; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.36; cohort percentile 0.065; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Vip Gaba subclass identity is unexpected for CCK basket cells; the cluster annotation transfer does not support this supertype.\n"
+    mapping_justification: semapv:UnspecifiedMatching
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 1.36
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.065
+          coverage: 1.0
+        - gene: Cnr1
+          val: 10.58
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.677
+          coverage: 1.0
+        - gene: Vglut3
+          val: 0.42
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.577
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.742
+          coverage: 0.333
+        - gene: -Pvalb
+          val: 0.09
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.129
+      region_fraction: 0.069
+      region_fraction_100um: 0.235
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0179 (Vip Gaba_7) shows Cck mean (1.36) at cohort_pct 0.07 and Vglut3 child-coverage 0.33, well below cohort medians; superseded by the Harris-AT-supported CS20230722_SUPT_0187 placement.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: ae0fce7f
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0187
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_harris_class_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization, bootstrap_iteration=100)
+        source_dataset_accession: GEO:GSE99888
+        source_cluster_label: Cck.Cxcl14.Vip
+        n_cells_total: 3663
+        best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            f1_score: 0.07955801104972375
+            n_cells_mapped: 72
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.04142692750287687
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 047 Sncg Gaba
+            best_target_accession: CS20230722_SUBC_047
+            f1_score: 0.2064516129032258
+            n_cells_mapped: 64
+            median_bootstrap: 0.995
+            coverage: 0.9696969696969697
+            purity: 0.11552346570397112
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0187 Sncg Gaba_3
+            best_target_accession: CS20230722_SUPT_0187
+            f1_score: 0.7682119205298014
+            n_cells_mapped: 58
+            median_bootstrap: 1.0
+            coverage: 0.9508196721311475
+            purity: 0.6444444444444445
+        explanation: Harris 2018 Class Cck.Cxcl14.Vip (CCK+/Cxcl14+/Vip+ CA1 inhibitory cluster, n=72 cells) maps to SUPT_0187 Sncg Gaba_3 with F1=0.768 and coverage=0.951. CCK basket cells are CGE-derived; the Sncg subclass is CGE-derived and consistent with CCK interneuron identity. Harris AT provides stronger transcriptomic evidence for SUPT_0187 than the existing SUPT_0179 (Vip Gaba_7) edge, which has no AT support and was based on atlas metadata only.
+        f1_source_relpath: at_results_harris_class.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Isocortex [MBA:315] count_100um=1191 [painted]; Hippocampal formation [MBA:1089] count_100um=348 [painted]; Olfactory areas [MBA:698] count_100um=284 [painted]
+        alignment: NOT_ASSESSED
+        notes: 'region_evidence: DESCENDANT_ONLY'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 10.58; cohort_pct 0.903; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.58; cohort percentile 0.903; child-cluster coverage 1.000
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 11.67; cohort_pct 0.839; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.67; cohort percentile 0.839; child-cluster coverage 1.000
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 0.05; cohort_pct 0.419'
+        alignment: DISCORDANT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.419
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.37; cohort_pct 0.452'
+        alignment: DISCORDANT
+        notes: val=0.37; cohort percentile 0.452
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 10.58; cohort_pct 0.903; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.58; cohort percentile 0.903; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Pvalb mean (0.37, cohort_pct 0.45) above MIN_DETECTABLE at CS20230722_SUPT_0187 is in tension with the classical negative-marker assertion; Vglut3 supertype mean (0.05) is discordant with the classical defining-marker assertion. Child-cluster breakdown not assessed at this edge.\n"
+      - caveat_type: SINGLE_STUDY
+        description: "Cluster annotation transfer evidence rests on one source dataset (GEO:GSE99888, Harris 2018) targeting a transcriptomic Class label rather than curator-confirmed CCK basket cells.\n"
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "The Harris Cck.Cxcl14.Vip cohort fragments across multiple 0187 Sncg Gaba_3 children at cluster resolution; the supertype is the supportable rank for this mapping (F1=0.77 at supertype vs F1=0.21 at subclass).\n"
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:n"
+    discovery_score:
+      score: 0
+      rank_in_cohort: 29
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 10.58
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.903
+          coverage: 1.0
+        - gene: Cnr1
+          val: 11.67
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+          coverage: 1.0
+        - gene: Vglut3
+          val: 0.05
+          reliable: false
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.419
+        - gene: -Pvalb
+          val: 0.37
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.452
+      region_evidence: DESCENDANT_ONLY
+    confidence: MODERATE
+    confidence_score: 0.6
+    rationale: "[tier:STRONGEST] Cluster annotation transfer of the Harris 2018 CA1 Cck.Cxcl14.Vip class (run_ref at_run_20260512_harris_class_mmc_wmbv1) lands on CS20230722_SUPT_0187 at F1=0.77 (Coverage=0.95, Purity=0.64) with cluster-level scatter across five Sncg Gaba_3 children; supertype Cck (10.58) and Cnr1 (11.67) at cohort_pct 0.90 / 0.84 anchor the marker side. 4 of 6 property comparisons CONSISTENT; Vglut3 DISCORDANT at supertype mean (0.05) but child-cluster-localised on related Vip supertypes (HIDDEN-1:1 signal); Pvalb DISCORDANT at supertype mean (0.37).\n"
+    reconciliation_note: "Paired with the marker-dominant child-cluster candidate edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0681, which sits under a different supertype (0189 Sncg Gaba_5); the two survivors encode the AT-supported supertype reading and the expression-led cluster reading respectively, pending a curator-confirmed cluster annotation transfer source to discriminate.\n"
+    proposed_experiments:
+      - "Curator-confirmed CCK basket cell cluster annotation transfer onto WMBv1 with F1 >= 0.80 at SUPERTYPE level; expected output AnnotationTransferEvidence with source labels validated against classical CCK basket cell defining criteria.\n"
+      - "Child-cluster Pvalb and Vglut3 expression breakdown across the Sncg Gaba_3 children of CS20230722_SUPT_0187.\n"
+      - "Targeted literature trawl for primary Vglut3 expression in curator-confirmed CCK basket cells.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Does CS20230722_SUPT_0187 (Harris-supported) and CS20230722_CLUS_0681 (marker-dominant, under SUPT_0189) correspond to distinct CCK-expressing transcriptomic identities or to one continuum partitioned differently by the two evidence streams?\n"
+      - "Trawl literature for Pvalb heterogeneity within the CCK basket cell type; the atlas-side non-zero supertype mean may be a real subpopulation signal not yet captured in the synthesised evidence.\n"
+    rationale_source_hash: 065da577
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0681
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0681
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0681 Sncg Gaba_5; region_fraction_100um=0.310; strict region_fraction=0.064.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=158 [painted]; Field CA1 [MBA:382] count_100um=81 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=68 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.310; strict region_fraction: 0.064; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 11.12; cohort_pct 0.956; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.12; cohort percentile 0.956
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 12.71; cohort_pct 0.985'
+        alignment: CONSISTENT
+        notes: val=12.71; cohort percentile 0.985
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 3.29; cohort_pct 0.985'
+        alignment: CONSISTENT
+        notes: val=3.29; cohort percentile 0.985
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 1.05; cohort_pct 0.779'
+        alignment: DISCORDANT
+        notes: val=1.05; cohort percentile 0.779
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 11.12; cohort_pct 0.956; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.12; cohort percentile 0.956
+    caveats:
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "Pvalb mean (1.05, cohort_pct 0.78) at CS20230722_CLUS_0681 is a substantive contradiction of the classical Pvalb-absent negative marker; no documented Pvalb-positive CCK basket cell subpopulation has been gathered in the available references.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "The companion supertype-level edge to CS20230722_SUPT_0187 is the cluster annotation transfer survivor; CS20230722_CLUS_0681 sits under CS20230722_SUPT_0189, not CS20230722_SUPT_0187. The marker dominance of CS20230722_CLUS_0681 lacks direct cluster annotation transfer support on this edge.\n"
+    discovery_score:
+      score: 7
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 11.12
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.956
+        - gene: Cnr1
+          val: 12.71
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+        - gene: Vglut3
+          val: 3.29
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+        - gene: -Pvalb
+          val: 1.05
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.779
+      region_fraction: 0.064
+      region_fraction_100um: 0.31
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.5
+    rationale: "[tier:NEXT] CS20230722_CLUS_0681 carries the strongest combined Cck (11.12, cohort_pct 0.96), Cnr1 (12.71, cohort_pct 0.99) and Vglut3 (3.29, cohort_pct 0.99) profile in the hippocampal GABAergic cohort (50 members; Stage A score 7 vs next-best 6), with region_fraction_100um 0.31 placing it at the CA1 boundary band; Cck is recorded as a NEUROPEPTIDE atlas category marker. 5 of 6 property comparisons CONSISTENT; Pvalb (1.05, cohort_pct 0.78) DISCORDANT with the classical negative-marker assertion.\n"
+    reconciliation_note: "Sits under CS20230722_SUPT_0189 (Sncg Gaba_5), not under the Harris-AT-supported CS20230722_SUPT_0187 (Sncg Gaba_3); paired with edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0187 in this report, pending a curator-confirmed cluster annotation transfer source to discriminate the two supertype-level placements.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - "Curator-confirmed CA1 CCK basket cell cluster annotation transfer reporting F1 to both CS20230722_SUPT_0187 and CS20230722_SUPT_0189 to resolve whether the two supertype-level placements correspond to distinct transcriptomic identities.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Is the Pvalb signal at CS20230722_CLUS_0681 (1.05) a documented biological co-expression in a CCK basket cell subpopulation or a cluster-level artefact?\n"
+    rationale_source_hash: ade32246
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0651
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0651
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0651 Vip Gaba_7; region_fraction_100um=0.391; strict region_fraction=0.087.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=63 [painted]; Field CA1 [MBA:382] count_100um=36 [painted]; Field CA3 [MBA:463] count_100um=30 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.391; strict region_fraction: 0.087; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 1.59; cohort_pct 0.294'
+        alignment: APPROXIMATE
+        notes: val=1.59; cohort percentile 0.294
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 11.12; cohort_pct 0.794'
+        alignment: CONSISTENT
+        notes: val=11.12; cohort percentile 0.794
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 1.13; cohort_pct 0.838'
+        alignment: CONSISTENT
+        notes: val=1.13; cohort percentile 0.838
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.05; cohort_pct 0.132'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.132
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 1.59; cohort_pct 0.294'
+        alignment: APPROXIMATE
+        notes: val=1.59; cohort percentile 0.294
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 1.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.294
+        - gene: Cnr1
+          val: 11.12
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.794
+        - gene: Vglut3
+          val: 1.13
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.838
+        - gene: -Pvalb
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.132
+      region_fraction: 0.087
+      region_fraction_100um: 0.391
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0651 (Vip Gaba_7) Cck mean (1.59) at cohort_pct 0.29 is below the cohort median for the defining marker; Pvalb is appropriately absent but the Cck signal does not support a primary CCK basket cell mapping.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: 0819a295
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0655
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0655
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0655 Vip Gaba_9; region_fraction_100um=0.176; strict region_fraction=0.028.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=111 [painted]; Field CA1 [MBA:382] count_100um=51 [painted]; Field CA3 [MBA:463] count_100um=46 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.176; strict region_fraction: 0.028; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 1.34; cohort_pct 0.132'
+        alignment: APPROXIMATE
+        notes: val=1.34; cohort percentile 0.132
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 9.47; cohort_pct 0.515'
+        alignment: CONSISTENT
+        notes: val=9.47; cohort percentile 0.515
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 0.14; cohort_pct 0.632'
+        alignment: CONSISTENT
+        notes: val=0.14; cohort percentile 0.632
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.05; cohort_pct 0.132'
+        alignment: CONSISTENT
+        notes: val=0.05; below MIN_DETECTABLE (0.1); cohort percentile 0.132
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 1.34; cohort_pct 0.132'
+        alignment: APPROXIMATE
+        notes: val=1.34; cohort percentile 0.132
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 1.34
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.132
+        - gene: Cnr1
+          val: 9.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.515
+        - gene: Vglut3
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.632
+        - gene: -Pvalb
+          val: 0.05
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.132
+      region_fraction: 0.028
+      region_fraction_100um: 0.176
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0655 (Vip Gaba_9) Cck mean (1.34) at cohort_pct 0.13 and Cnr1 cohort_pct 0.52 are below cohort medians for the CCK basket cell defining markers.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: b7f793ad
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0705
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0705
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0705 RHP-COA Ndnf Gaba_6; region_fraction_100um=0.255; strict region_fraction=0.059.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=36 [painted]; Field CA1 [MBA:382] count_100um=28 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=21 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.255; strict region_fraction: 0.059; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 1.55; cohort_pct 0.250'
+        alignment: APPROXIMATE
+        notes: val=1.55; cohort percentile 0.250
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 8.28; cohort_pct 0.426'
+        alignment: APPROXIMATE
+        notes: val=8.28; cohort percentile 0.426
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 0.28; cohort_pct 0.735'
+        alignment: CONSISTENT
+        notes: val=0.28; cohort percentile 0.735
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 1.55; cohort_pct 0.250'
+        alignment: APPROXIMATE
+        notes: val=1.55; cohort percentile 0.250
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 1.55
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.25
+        - gene: Cnr1
+          val: 8.28
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.426
+        - gene: Vglut3
+          val: 0.28
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.735
+        - gene: -Pvalb
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.059
+      region_fraction_100um: 0.255
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0705 (RHP-COA Ndnf Gaba_6) Cck (1.55, cohort_pct 0.25) and Cnr1 (8.28, cohort_pct 0.43) are below cohort medians; RHP-COA subclass identity is off-target for hippocampal CCK basket cells.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: 81a1ba1e
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_CLUS_0637
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0637
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0637 Vip Gaba_4; region_fraction_100um=0.077; strict region_fraction=0.023.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=93 [painted]; Cortical subplate [MBA:703] count_100um=62 [painted]; Isocortex [MBA:315] count_100um=50 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.077; strict region_fraction: 0.023; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 5.25; cohort_pct 0.603; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=5.25; cohort percentile 0.603
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 10.84; cohort_pct 0.735'
+        alignment: CONSISTENT
+        notes: val=10.84; cohort percentile 0.735
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 0.10; cohort_pct 0.529'
+        alignment: CONSISTENT
+        notes: val=0.10; cohort percentile 0.529
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.00; cohort_pct 0.000'
+        alignment: CONSISTENT
+        notes: val=0.00; below MIN_DETECTABLE (0.1); cohort percentile 0.000
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 5.25; cohort_pct 0.603; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=5.25; cohort percentile 0.603
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "Isocortex (count_100um 1191) and Cortical subplate (count_100um 62) dominate the anatomical bins for CS20230722_CLUS_0637; only a small minority of cells fall in or near the CA1 pyramidal layer.\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 5.25
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.603
+        - gene: Cnr1
+          val: 10.84
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.735
+        - gene: Vglut3
+          val: 0.1
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.529
+        - gene: -Pvalb
+          val: 0.0
+          reliable: false
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.0
+      region_fraction: 0.023
+      region_fraction_100um: 0.077
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0637 (Vip Gaba_4) location DISCORDANT with Isocortex and Cortical subplate dominating its anatomical bins; region_fraction_100um 0.077 places it outside the CA1 pyramidal layer target.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: 8330bea1
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0196
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0196
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0196 RHP-COA Ndnf Gaba_4; region_fraction_100um=0.147; strict region_fraction=0.028.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=104 [painted]; Field CA3 [MBA:463] count_100um=88 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=69 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.147; strict region_fraction: 0.028; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 6.94; cohort_pct 0.710; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.94; cohort percentile 0.710; child-cluster coverage 1.000
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 11.11; cohort_pct 0.774; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.11; cohort percentile 0.774; child-cluster coverage 1.000
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 5.93; cohort_pct 0.968; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.93; cohort percentile 0.968; child-cluster coverage 1.000
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.48; cohort_pct 0.548'
+        alignment: DISCORDANT
+        notes: val=0.48; cohort percentile 0.548
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 6.94; cohort_pct 0.710; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.94; cohort percentile 0.710; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Pvalb. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 6.94
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.71
+          coverage: 1.0
+        - gene: Cnr1
+          val: 11.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.774
+          coverage: 1.0
+        - gene: Vglut3
+          val: 5.93
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: -Pvalb
+          val: 0.48
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.548
+      region_fraction: 0.028
+      region_fraction_100um: 0.147
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_SUPT_0196 (RHP-COA Ndnf Gaba_4) RHP-COA subclass identity is off-target for hippocampal CCK basket cells; Vglut3 high (cohort_pct 0.97) but Pvalb (0.48) above MIN_DETECTABLE.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: f4bcc246
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0219
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0219
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0219 Sst Gaba_6; region_fraction_100um=0.110; strict region_fraction=0.016.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1350 [painted]; Field CA3 [MBA:463] count_100um=1068 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=799 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.110; strict region_fraction: 0.016; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 1.48; cohort_pct 0.097; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.48; cohort percentile 0.097; child-cluster coverage 1.000
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 3.04; cohort_pct 0.129; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=3.04; cohort percentile 0.129; child-cluster coverage 1.000
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 0.78; cohort_pct 0.839; child-coverage 0.714'
+        alignment: CONSISTENT
+        notes: val=0.78; cohort percentile 0.839; child-cluster coverage 0.714
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 1.68; cohort_pct 0.839'
+        alignment: DISCORDANT
+        notes: val=1.68; cohort percentile 0.839
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 1.48; cohort_pct 0.097; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.48; cohort percentile 0.097; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Pvalb. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 1.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.097
+          coverage: 1.0
+        - gene: Cnr1
+          val: 3.04
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.129
+          coverage: 1.0
+        - gene: Vglut3
+          val: 0.78
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.845
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+          coverage: 0.714
+        - gene: -Pvalb
+          val: 1.68
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+      region_fraction: 0.016
+      region_fraction_100um: 0.11
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0219 (Sst Gaba_6) wrong subclass — Sst rather than CGE-derived Sncg/Vip; Cck (1.48, cohort_pct 0.10) and Cnr1 (3.04, cohort_pct 0.13) below cohort medians; Pvalb (1.68, cohort_pct 0.84) DISCORDANT with classical negative marker.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: ff7b21ea
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0189
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0189
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0189 Sncg Gaba_5; region_fraction_100um=0.128; strict region_fraction=0.024.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=311 [painted]; medial forebrain bundle system [MBA:991] count_100um=205 [painted]; cerebrum related [MBA:768] count_100um=205 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.128; strict region_fraction: 0.024; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 11.25; cohort_pct 0.935; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.25; cohort percentile 0.935; child-cluster coverage 1.000
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 12.48; cohort_pct 0.935; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=12.48; cohort percentile 0.935; child-cluster coverage 1.000
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 1.46; cohort_pct 0.903; child-coverage 0.667'
+        alignment: CONSISTENT
+        notes: val=1.46; cohort percentile 0.903; child-cluster coverage 0.667
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.61; cohort_pct 0.677'
+        alignment: DISCORDANT
+        notes: val=0.61; cohort percentile 0.677
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 11.25; cohort_pct 0.935; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.25; cohort percentile 0.935; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Pvalb. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 11.25
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.935
+          coverage: 1.0
+        - gene: Cnr1
+          val: 12.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.935
+          coverage: 1.0
+        - gene: Vglut3
+          val: 1.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.816
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.903
+          coverage: 0.667
+        - gene: -Pvalb
+          val: 0.61
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.677
+      region_fraction: 0.024
+      region_fraction_100um: 0.128
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_SUPT_0189 (Sncg Gaba_5) carries high Cck (11.25, cohort_pct 0.94) and Cnr1 (12.48, cohort_pct 0.94) at the supertype but Pvalb (0.61, cohort_pct 0.68) above MIN_DETECTABLE; superseded in this report by its child CS20230722_CLUS_0681 (the marker-dominant secondary survivor) and not supported by the Harris cluster annotation transfer.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: e6a82dc1
+  - id: edge_cck_basket_cell_hippocampus_to_CS20230722_SUPT_0198
+    lit_type: cck_basket_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0198
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0198 RHP-COA Ndnf Gaba_6; region_fraction_100um=0.173; strict region_fraction=0.032.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=449 [painted]; Field CA1 [MBA:382] count_100um=197 [painted]; medial forebrain bundle system [MBA:991] count_100um=190 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.173; strict region_fraction: 0.032; region_evidence: SELF'
+      - property: marker_Cck
+        node_a_value: Cck — defining marker
+        node_b_value: 'Cck: 1.88; cohort_pct 0.323; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.88; cohort percentile 0.323; child-cluster coverage 1.000
+      - property: marker_Cnr1
+        node_a_value: Cnr1 — defining marker
+        node_b_value: 'Cnr1: 9.11; cohort_pct 0.419; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=9.11; cohort percentile 0.419; child-cluster coverage 1.000
+      - property: marker_Vglut3
+        node_a_value: Vglut3 — defining marker
+        node_b_value: 'Vglut3: 0.14; cohort_pct 0.645; child-coverage 0.500'
+        alignment: CONSISTENT
+        notes: val=0.14; cohort percentile 0.645; child-cluster coverage 0.500
+      - property: negative_marker_Pvalb
+        node_a_value: Pvalb — ABSENT (classical negative marker)
+        node_b_value: 'Pvalb: 0.23; cohort_pct 0.323'
+        alignment: DISCORDANT
+        notes: val=0.23; cohort percentile 0.323
+      - property: neuropeptide_Cck
+        node_a_value: Cck — neuropeptide (classical)
+        node_b_value: 'Cck: 1.88; cohort_pct 0.323; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.88; cohort percentile 0.323; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): negative_marker_Pvalb. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Cck
+          val: 1.88
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.323
+          coverage: 1.0
+        - gene: Cnr1
+          val: 9.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.419
+          coverage: 1.0
+        - gene: Vglut3
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.707
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.645
+          coverage: 0.5
+        - gene: -Pvalb
+          val: 0.23
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.323
+      region_fraction: 0.032
+      region_fraction_100um: 0.173
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_SUPT_0198 (RHP-COA Ndnf Gaba_6) RHP-COA subclass identity is off-target for hippocampal CCK basket cells; Cck (1.88, cohort_pct 0.32) and Cnr1 (9.11, cohort_pct 0.42) below cohort medians; Pvalb (0.23) above MIN_DETECTABLE.\n"
+    rationale_generated_at: '2026-06-08T21:03:33+00:00'
+    report_path: reports/hippocampus/cck_basket_cell_hippocampus_summary.md
+    rationale_source_hash: 4b04cf09

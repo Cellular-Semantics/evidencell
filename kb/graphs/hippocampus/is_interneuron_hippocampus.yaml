@@ -1,0 +1,1262 @@
+name: Hippocampal GABAergic interneurons — draft classical types
+description: 'Draft evidence graph for classical hippocampal GABAergic interneuron types extracted from ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-09'
+nodes:
+  - id: is_interneuron_hippocampus
+    name: Interneuron-specific (IS) interneuron
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0014552
+        label: CA1 stratum oriens
+        name_in_source: CA1 stratum oriens
+        compartment: SOMA
+        sources:
+          - ref: PMID:24671999
+            method: electron microscopy
+            scope: rat CA1
+            quote_key: 23480858_1f4801fb
+          - ref: PMID:24671999
+            snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These cells innervated heavily the O/A border
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+          - ref: PMID:24671999
+            snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their axons to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic glutamate receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+      - id: UBERON:0014554
+        label: CA1 stratum radiatum
+        name_in_source: CA1 stratum radiatum
+        compartment: SOMA
+        sources:
+          - ref: PMID:24671999
+            method: electron microscopy
+            scope: rat CA1
+            quote_key: 23480858_1f4801fb
+          - ref: PMID:24671999
+            snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These cells innervated heavily the O/A border
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+          - ref: PMID:24671999
+            snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their axons to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic glutamate receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+      - id: UBERON:0014557
+        label: CA1 stratum lacunosum moleculare
+        name_in_source: CA1 stratum lacunosum-moleculare
+        compartment: SOMA
+        sources:
+          - ref: PMID:24671999
+            method: electron microscopy
+            scope: rat CA1
+            quote_key: 23480858_1f4801fb
+          - ref: PMID:24671999
+            snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These cells innervated heavily the O/A border
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+          - ref: PMID:24671999
+            snippet: The somas of these cells are located in the stratum pyramidale (PYR) or radiatum (RAD) and send their axons to the oriens-alveus (O/A) to contact other interneurons located in this area, preferentially metabotropic glutamate receptor 1a (mGluR1a)-positive oriens-lacunosum moleculare interneurons (OLMs)
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+    nt_type:
+      name_in_source: GABAergic
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: GABAergic
+    defining_markers:
+      - symbol: Calb2
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:37467748
+            marker_type: PROTEIN
+            method: review/primary
+            scope: hippocampus
+            quote_key: 259953057_10f139f9
+          - ref: PMID:24671999
+            snippet: although IS3 cells can be distinguished based on the coexpression of VIP and CR, VIP and CR alone are expressed by several distinct types of hippocampal interneurons
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: TRANSCRIPT
+          - ref: PMID:23162426
+            snippet: a combination of immunohistochemistry and anatomical analysis identified three distinct subtypes of IS interneurons in the rat hippocampus
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+          - ref: PMID:37467748
+            snippet: The majority of cells in the VIP subclass are interneuron-specific (IS), specifically targeting other interneurons rather than PCs. Three types of IS interneurons have been described, mostly in the hippocampus
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+          - ref: PMID:24671999
+            snippet: type 3 IS (IS3) cells that coexpress the vasoactive intestinal polypeptide (VIP) and calretinin contact several distinct types of interneurons within the hippocampal CA1 stratum oriens/alveus (O/A), with preferential innervation of oriens-lacunosum moleculare cells (OLMs) through dendritic synapses
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+      - symbol: Vip
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:37467748
+            marker_type: PROTEIN
+            method: review/primary
+            scope: hippocampus
+            quote_key: 259953057_10f139f9
+          - ref: PMID:39401246
+            marker_type: PROTEIN
+            method: transgenic mouse
+            scope: mouse CA1
+            quote_key: 262127573_d140faf4
+    negative_markers: []
+    neuropeptides:
+      - symbol: Vip
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:37467748
+            marker_type: PROTEIN
+            method: review
+            scope: hippocampus
+            quote_key: 259953057_10f139f9
+    cl_mapping:
+      cl_term:
+        id: CL:4023016
+        label: VIP GABAergic interneuron
+        name_in_source: VIP interneuron
+      mapping_type: BROAD
+      mapping_notes: 'CL:4023016 captures VIP+ subset (IS-2 and IS-3) but not IS-1 (CR+/VIP-). The defining functional feature — selective interneuron targeting for disinhibition — is not encoded in any CL term.
+
+        '
+    definition_references:
+      - PMID:24671999
+      - PMID:37467748
+      - PMID:39401246
+    is_terminal: false
+    notes: 'Three subtypes: IS-1 (CR+), IS-2 (VIP+), IS-3 (CR+/VIP+). Majority of VIP subclass are IS cells. Ephys not extensively characterized. CL mapping only covers VIP+ subtypes.
+
+      [cite_traverse_2026_04_10] PMID:23162426: a subgroup of interneurons, the so-called interneuron-specific (IS) interneurons, specializes in innervating exclusively other GABAergic cells
+
+      '
+    morphology:
+      description: 'Selectively contacts other interneurons rather than pyramidal cells; plays disinhibitory role in circuit. Identified by ultrastructural evidence of selective interneuron targeting.
+
+        '
+      sources:
+        - ref: PMID:24671999
+          method: electron microscopy
+          scope: rat CA1
+          quote_key: 23480858_1f4801fb
+        - ref: PMID:37467748
+          method: review
+          scope: hippocampus
+          quote_key: 259953057_09a50fe2
+        - ref: PMID:24671999
+          snippet: IS3 cells in the mouse hippocampus were similar to those described originally in the rat hippocampus. These cells innervated heavily the O/A border, although occasional axonal branches were found in the RAD and PYR. Their dendritic arbors were often unipolar (47% of cells), suggesting that these cells are preferentially recruited through the activation of the Schaffer collaterals
+          support: SUPPORT
+          source: cite_traverse_2026_04_10
+        - ref: PMID:24671999
+          snippet: In several cases (n ϭ 5 slices/2 animals), the dendrites of 2-3 CR-positive cells of this subtype were found to form dendro-dendritically connected clusters (Fig. 6C1, top inset), which is a hallmark of the type I interneuron-specific (IS1) interneuron described previously in the rat CA1 hippocampus
+          support: SUPPORT
+          source: cite_traverse_2026_04_10
+    electrophysiology:
+      description: Not extensively characterized in available reference set
+      sources:
+        - ref: PMID:24671999
+          snippet: This subtype of IS cells exhibited a remarkable anatomical diversity, with cell bodies that occupied different layers and an axon that projected mostly within the RAD and PYR. Similar to IS3 cells, IS1 cells exhibited a high input resistance but were more heterogeneous in terms of firing properties. Therefore, more than one subtype of putative IS1 cells is likely to be found within this group of CR-positive interneurons.
+          support: SUPPORT
+          source: cite_traverse_2026_04_10
+  - id: CS20230722_SUPT_0179
+    name: 0179 Vip Gaba_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0179
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 6.78
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.36
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 0.27
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 3.74
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 10.58
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 9.29
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 9.59
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 2.93
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 6.16
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 6.9
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 1.3
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 4.57
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 0.09
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 4.33
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.42
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 1.04
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.16
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 6.82
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0649
+          n_cells: 1
+          expression: '{"Calb2": 7.47, "Cck": 0.92, "Chrna2": 4.38, "Cnr1": 10.5, "Gad1": 9.43, "Gad2": 9.55, "Id2": 1.58, "Lamp5": 6.73, "Chrm2": 0.16, "Nos1": 8.32, "Npy": 1.35, "Pnoc": 4.3, "Pvalb": 0.12, "Reln": 4.93, "Sst": 1.16, "Tac1": 0.16, "Slc17a8": 0.05, "Vip": 9.17}'
+        - cluster_accession: CS20230722_CLUS_0650
+          n_cells: 1
+          expression: '{"Calb2": 5.96, "Cck": 1.57, "Chrna2": 4.33, "Cnr1": 10.11, "Gad1": 9.0, "Gad2": 9.3, "Id2": 3.5, "Lamp5": 3.89, "Chrm2": 0.14, "Nos1": 3.38, "Npy": 1.04, "Pnoc": 6.43, "Pvalb": 0.1, "Reln": 4.0, "Sst": 1.26, "Tac1": 0.16, "Slc17a8": 0.08, "Vip": 4.84}'
+        - cluster_accession: CS20230722_CLUS_0651
+          n_cells: 1
+          expression: '{"Calb2": 6.9, "Cck": 1.59, "Chrna2": 2.51, "Cnr1": 11.12, "Gad1": 9.44, "Gad2": 9.93, "Id2": 3.71, "Lamp5": 7.87, "Chrm2": 0.51, "Nos1": 9.01, "Npy": 1.52, "Pnoc": 2.98, "Pvalb": 0.05, "Reln": 4.07, "Sst": 0.7, "Tac1": 0.15, "Slc17a8": 1.13, "Vip": 6.45}'
+  - id: CS20230722_CLUS_0640
+    name: 0640 Vip Gaba_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0640
+  - id: CS20230722_CLUS_0630
+    name: 0630 Vip Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0630
+  - id: CS20230722_CLUS_0637
+    name: 0637 Vip Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0637
+  - id: CS20230722_CLUS_0644
+    name: 0644 Vip Gaba_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0644
+  - id: CS20230722_CLUS_0653
+    name: 0653 Vip Gaba_8
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0653
+  - id: CS20230722_SUPT_0177
+    name: 0177 Vip Gaba_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0177
+  - id: CS20230722_SUPT_0216
+    name: 0216 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 1.28
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.74
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 2.51
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 1.53
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 7.75
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 8.92
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 10.26
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 1.59
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 0.62
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 2.94
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 5.07
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 3.69
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 1.48
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 7.9
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.29
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 11.44
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.55
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.42
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0767
+          n_cells: 1
+          expression: '{"Calb2": 1.0, "Cck": 0.86, "Chrna2": 0.56, "Cnr1": 6.14, "Gad1": 8.95, "Gad2": 9.5, "Id2": 1.5, "Lamp5": 0.41, "Chrm2": 6.11, "Nos1": 0.87, "Npy": 4.2, "Pnoc": 3.49, "Pvalb": 4.38, "Reln": 9.17, "Sst": 10.78, "Tac1": 0.8, "Slc17a8": 1.94, "Vip": 0.67}'
+        - cluster_accession: CS20230722_CLUS_0768
+          n_cells: 1
+          expression: '{"Calb2": 2.3, "Cck": 1.42, "Chrna2": 3.11, "Cnr1": 6.91, "Gad1": 9.11, "Gad2": 10.74, "Id2": 2.88, "Lamp5": 0.41, "Chrm2": 0.67, "Nos1": 0.76, "Npy": 7.58, "Pnoc": 2.51, "Pvalb": 3.12, "Reln": 10.65, "Sst": 12.7, "Tac1": 0.15, "Slc17a8": 0.0, "Vip": 0.31}'
+        - cluster_accession: CS20230722_CLUS_0769
+          n_cells: 1
+          expression: '{"Calb2": 0.29, "Cck": 2.11, "Chrna2": 1.26, "Cnr1": 8.16, "Gad1": 9.32, "Gad2": 10.4, "Id2": 1.23, "Lamp5": 1.12, "Chrm2": 2.71, "Nos1": 4.07, "Npy": 7.91, "Pnoc": 3.23, "Pvalb": 0.17, "Reln": 4.99, "Sst": 10.97, "Tac1": 0.85, "Slc17a8": 0.08, "Vip": 0.25}'
+        - cluster_accession: CS20230722_CLUS_0770
+          n_cells: 1
+          expression: '{"Calb2": 0.84, "Cck": 1.48, "Chrna2": 3.62, "Cnr1": 9.22, "Gad1": 8.29, "Gad2": 10.42, "Id2": 0.68, "Lamp5": 0.46, "Chrm2": 4.39, "Nos1": 3.65, "Npy": 1.04, "Pnoc": 6.98, "Pvalb": 0.0, "Reln": 8.82, "Sst": 10.54, "Tac1": 0.05, "Slc17a8": 0.05, "Vip": 0.16}'
+        - cluster_accession: CS20230722_CLUS_0771
+          n_cells: 1
+          expression: '{"Calb2": 3.53, "Cck": 1.97, "Chrna2": 2.48, "Cnr1": 8.73, "Gad1": 8.69, "Gad2": 10.24, "Id2": 0.95, "Lamp5": 0.15, "Chrm2": 2.0, "Nos1": 1.67, "Npy": 2.02, "Pnoc": 3.72, "Pvalb": 1.16, "Reln": 9.59, "Sst": 11.62, "Tac1": 0.08, "Slc17a8": 0.08, "Vip": 0.87}'
+        - cluster_accession: CS20230722_CLUS_0772
+          n_cells: 1
+          expression: '{"Calb2": 0.81, "Cck": 1.96, "Chrna2": 0.53, "Cnr1": 7.21, "Gad1": 9.27, "Gad2": 10.26, "Id2": 0.91, "Lamp5": 0.81, "Chrm2": 1.34, "Nos1": 1.09, "Npy": 8.22, "Pnoc": 1.65, "Pvalb": 0.34, "Reln": 10.13, "Sst": 11.92, "Tac1": 0.14, "Slc17a8": 0.37, "Vip": 0.35}'
+        - cluster_accession: CS20230722_CLUS_0773
+          n_cells: 1
+          expression: '{"Calb2": 1.21, "Cck": 1.59, "Chrna2": 0.28, "Cnr1": 8.36, "Gad1": 8.56, "Gad2": 10.42, "Id2": 0.53, "Lamp5": 0.95, "Chrm2": 0.73, "Nos1": 3.61, "Npy": 1.61, "Pnoc": 4.4, "Pvalb": 0.36, "Reln": 9.24, "Sst": 11.43, "Tac1": 0.0, "Slc17a8": 0.0, "Vip": 0.27}'
+        - cluster_accession: CS20230722_CLUS_0774
+          n_cells: 1
+          expression: '{"Calb2": 0.88, "Cck": 2.57, "Chrna2": 1.01, "Cnr1": 6.94, "Gad1": 9.78, "Gad2": 10.38, "Id2": 2.1, "Lamp5": 0.86, "Chrm2": 2.45, "Nos1": 5.1, "Npy": 10.88, "Pnoc": 0.0, "Pvalb": 1.39, "Reln": 4.92, "Sst": 12.11, "Tac1": 2.65, "Slc17a8": 0.11, "Vip": 0.23}'
+        - cluster_accession: CS20230722_CLUS_0775
+          n_cells: 1
+          expression: '{"Calb2": 0.65, "Cck": 1.7, "Chrna2": 0.91, "Cnr1": 8.04, "Gad1": 8.34, "Gad2": 10.0, "Id2": 3.54, "Lamp5": 0.45, "Chrm2": 2.17, "Nos1": 5.65, "Npy": 2.18, "Pnoc": 7.2, "Pvalb": 2.39, "Reln": 3.6, "Sst": 10.86, "Tac1": 0.25, "Slc17a8": 0.0, "Vip": 0.67}'
+  - id: CS20230722_SUPT_0181
+    name: 0181 Vip Gaba_9
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0181
+  - id: CS20230722_SUPT_0180
+    name: 0180 Vip Gaba_8
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0180
+edges:
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0179
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0179
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: 'Vip Gaba_7 supertype has Vip as a DEFINING marker consistent with IS-2 and IS-3 subtypes (VIP+/CR+). Hippocampal anatomy present across multiple layers: CA1 SO (24), CA3 SO (25), CA1 SR (26), CA3 SR (17), CA1 SP (11), CA3 SP (23). The multi-laminar CA1 distribution matches IS cell soma locations spanning SO, SR, and SLM. However, the classical IS interneuron node covers three subtypes (IS-1: CR+/VIP-, IS-2: VIP+, IS-3: VIP+/CR+) — only IS-2 and IS-3 would map to a VIP supertype. Qrfpr, Stk32a, Igfbp4 are additional defining markers with no correspondence established in classical IS literature.
+
+          '
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'Precomputed stats cross-check: both defining markers strongly confirmed (Calb2=6.78, Vip=6.82). Vip neuropeptide also confirmed (6.82).'
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: Vip
+        n_cells_total: 476
+        best_mapping_rank: 2
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            f1_score: 0.6380120886501007
+            n_cells_mapped: 475
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.46844181459566075
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 046 Vip Gaba
+            best_target_accession: CS20230722_SUBC_046
+            f1_score: 0.9686192468619248
+            n_cells_mapped: 463
+            median_bootstrap: 1.0
+            coverage: 0.9851063829787234
+            purity: 0.9526748971193416
+        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Vip subclass (n=476 HIP cells) onto WMBv1. Vip cells map very strongly to SUBC_046 (Vip Gaba, F1=0.969) at SUBCLASS level, confirming VIP-family identity. At SUPERTYPE level, SUPT_0179 (Vip Gaba_7) receives 96/476 Vip cells (F1=0.379, purity=0.970), second to SUPT_0177 (Vip Gaba_5, F1=0.397, 101 cells). Vip cells are broadly distributed across 10+ Vip supertypes, reflecting the diversity of the Vip interneuron population. PARTIAL: the Vip SSv4 label cannot discriminate IS cells from VIP basket or other VIP subtypes. Yao 2021 SSv4 ''Vip'' subclass (n=476 HIP cells) encompasses VIP basket, IS cells, and other VIP interneuron subtypes; subtype resolution requires a dataset with morphologically identified VIP-IN labels.'
+        f1_source_relpath: at_results.yaml
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260512_harris_class_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization, bootstrap_iteration=100)
+        source_dataset_accession: GEO:GSE99888
+        source_cluster_label: Calb2.Vip.Igfbp4
+        n_cells_total: 3663
+        best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 06 CTX-CGE GABA
+            best_target_accession: CS20230722_CLAS_06
+            f1_score: 0.10675381263616557
+            n_cells_mapped: 98
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.05638665132336018
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 046 Vip Gaba
+            best_target_accession: CS20230722_SUBC_046
+            f1_score: 0.3444639718804921
+            n_cells_mapped: 98
+            median_bootstrap: 0.99
+            coverage: 1.0
+            purity: 0.208067940552017
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0179 Vip Gaba_7
+            best_target_accession: CS20230722_SUPT_0179
+            f1_score: 0.6117647058823529
+            n_cells_mapped: 26
+            median_bootstrap: 0.96
+            coverage: 0.5777777777777777
+            purity: 0.65
+        explanation: Harris 2018 Class Calb2.Vip.Igfbp4 (Calb2+/Vip+/Igfbp4+ CA1 interneurons, n=98 total) maps entirely to Vip Gaba subclass (100% recall) and 57.8% to SUPT_0179 Vip Gaba_7 (F1=0.612). PARTIAL AT corroboration for IS-IN → SUPT_0179 edge. Dispersal across Vip supertypes reflects IS subtype heterogeneity (IS-1 is VIP-, IS-2/IS-3 are VIP+). Calb2.Vip.Igfbp4 is a broad Harris Vip cluster, not specifically IS-IN labelled.
+        f1_source_relpath: at_results_harris_class.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=206 [painted]; Field CA3 [MBA:463] count_100um=105 [painted]; Field CA1 [MBA:382] count_100um=99 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.328; strict region_fraction: 0.126; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 6.78; cohort_pct 0.961; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.78; cohort percentile 0.961; child-cluster coverage 1.000
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 6.82; cohort_pct 0.895; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=6.82; cohort percentile 0.895; child-cluster coverage 1.000
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 6.82; cohort_pct 0.895; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=6.82; cohort percentile 0.895; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: OTHER
+        description: "Classical IS type is heterogeneous (IS-1 CR+/VIP-, IS-2 VIP+, IS-3 CR+/VIP+). IS-1 cells are VIP-negative and would NOT map to CS20230722_SUPT_0179. This edge represents only IS-2 and IS-3.\n"
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "CS20230722_SUPT_0179 (Vip Gaba_7) likely encompasses VIP basket cells in addition to IS cells; selective-interneuron-targeting is not resolvable from transcriptomic metadata. The Yao Vip subclass label and the Harris Calb2.Vip.Igfbp4 label both mix VIP basket and IS subtypes.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Location APPROXIMATE (region_fraction_100um: 0.328; strict region_fraction: 0.126) — boundary scatter consistent with CA1+CA3 soma distribution of Vip Gaba_7; weak counter-evidence.\n"
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 6.78
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.961
+          coverage: 1.0
+        - gene: Vip
+          val: 6.82
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.895
+          coverage: 1.0
+      region_fraction: 0.126
+      region_fraction_100um: 0.328
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:STRONGEST] Harris 2018 Calb2.Vip.Igfbp4 (F1=0.61 at CS20230722_SUPT_0179 in at_run_20260512_harris_class_mmc_wmbv1) and Yao 2021 Vip subclass (CS20230722_SUBC_046 F1=0.97; CS20230722_SUPT_0179 receives 96/476 cells in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) provide cross-source cluster annotation transfer support; both source labels are broader than IS cells (PARTIAL) so the predicate is broadMatch 1:n. 3 of 3 marker_-prefixed comparisons CONSISTENT (Calb2 val=6.78 cohort_pct 0.961; Vip val=6.82 cohort_pct 0.895). Location is APPROXIMATE (region_fraction_100um: 0.328) — Vip Gaba_7 is broader than CA1 and includes Field CA3 cells.\n"
+    reconciliation_note: "IS-1 (CR+/VIP-) subtype is not captured by this Vip-defining supertype; a separate Calb2+/Vip- candidate edge is needed for completeness. Pool candidate with vip_basket_cell_hippocampus shares this supertype on markers/NT panels at CS20230722_SUBC_046 (F1=0.97); the panels do NOT distinguish on anat alone (CASE B — AT-only indistinguishability).\n"
+    proposed_experiments:
+      - "Cre-driver targeted post-hoc-stained cluster annotation transfer on calretinin-confirmed CA1 IS cells (IS-2 + IS-3) at F1 >= 0.80 at SUPERTYPE level on CS20230722_SUPT_0179.\n"
+      - "Targeted scRNA-seq study discriminating perisomatic VIP basket cells from VIP+ IS cells in CA1; resolve MARKER_NOT_SPECIFIC by identifying transcript-level discriminators within CS20230722_SUBC_046.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    unresolved_questions:
+      - "Identify Calb2+/Vip- candidate for IS-1 subtype (CR+/VIP-); current top-K contains no such candidate.\n"
+      - "Curator review of AUTO_REPREDICATED_2026_05_26 closeMatch migration (rule 3b) on this edge.\n"
+    rationale_source_hash: 517a2db2
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_CLUS_0640
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0640
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0640 Vip Gaba_5; region_fraction_100um=0.004; strict region_fraction=0.003.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Isocortex [MBA:315] count_100um=433 [painted]; Hippocampal formation [MBA:1089] count_100um=142 [painted]; Olfactory areas [MBA:698] count_100um=124 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.004; strict region_fraction: 0.003; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 8.09; cohort_pct 0.961'
+        alignment: CONSISTENT
+        notes: val=8.09; cohort percentile 0.961
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 12.33; cohort_pct 0.994; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=12.33; cohort percentile 0.994
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 12.33; cohort_pct 0.994; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=12.33; cohort percentile 0.994
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 8.09
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.961
+        - gene: Vip
+          val: 12.33
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.994
+      region_fraction: 0.003
+      region_fraction_100um: 0.004
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] Cluster CS20230722_CLUS_0640 (Vip Gaba_5) markers Vip val=12.33 cohort_pct 0.994 and Calb2 val=8.09 cohort_pct 0.961 are CONSISTENT, but location is DISCORDANT (region_fraction_100um: 0.004; cluster is Isocortex-dominant) and no IS-specific cluster annotation transfer lands here. Cohort scatter of broad Vip-subclass labels.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 137682fd
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_CLUS_0630
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0630
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0630 Vip Gaba_2; region_fraction_100um=0.116; strict region_fraction=0.062.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=147 [painted]; Cortical subplate [MBA:703] count_100um=70 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=53 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.116; strict region_fraction: 0.062; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 8.64; cohort_pct 0.987'
+        alignment: CONSISTENT
+        notes: val=8.64; cohort percentile 0.987
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 10.99; cohort_pct 0.929; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=10.99; cohort percentile 0.929
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 10.99; cohort_pct 0.929; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=10.99; cohort percentile 0.929
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 8.64
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.987
+        - gene: Vip
+          val: 10.99
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.929
+      region_fraction: 0.062
+      region_fraction_100um: 0.116
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Cluster CS20230722_CLUS_0630 (Vip Gaba_2) markers CONSISTENT (Calb2 val=8.64 cohort_pct 0.987; Vip val=10.99 cohort_pct 0.929) but location only APPROXIMATE (region_fraction_100um: 0.116) with Cortical subplate and Entorhinal area, lateral part dominating; no IS-specific cluster annotation transfer support.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 921244ba
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_CLUS_0637
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0637
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0637 Vip Gaba_4; region_fraction_100um=0.173; strict region_fraction=0.078.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=93 [painted]; Cortical subplate [MBA:703] count_100um=62 [painted]; Isocortex [MBA:315] count_100um=50 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.173; strict region_fraction: 0.078; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 6.90; cohort_pct 0.910'
+        alignment: CONSISTENT
+        notes: val=6.90; cohort percentile 0.910
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 11.44; cohort_pct 0.955; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=11.44; cohort percentile 0.955
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 11.44; cohort_pct 0.955; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=11.44; cohort percentile 0.955
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 6.9
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.91
+        - gene: Vip
+          val: 11.44
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.955
+      region_fraction: 0.078
+      region_fraction_100um: 0.173
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Cluster CS20230722_CLUS_0637 (Vip Gaba_4) markers CONSISTENT (Calb2 val=6.90 cohort_pct 0.910; Vip val=11.44 cohort_pct 0.955) but location APPROXIMATE (region_fraction_100um: 0.173) with cortical subplate + isocortex dominating; no IS-specific cluster annotation transfer support.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 7aa59c70
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_CLUS_0644
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0644
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0644 Vip Gaba_5; region_fraction_100um=0.221; strict region_fraction=0.100.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=138 [painted]; Isocortex [MBA:315] count_100um=77 [painted]; Field CA1 [MBA:382] count_100um=61 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.221; strict region_fraction: 0.100; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 8.55; cohort_pct 0.981'
+        alignment: CONSISTENT
+        notes: val=8.55; cohort percentile 0.981
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 11.23; cohort_pct 0.948; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=11.23; cohort percentile 0.948
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 11.23; cohort_pct 0.948; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=11.23; cohort percentile 0.948
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 8.55
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.981
+        - gene: Vip
+          val: 11.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.948
+      region_fraction: 0.1
+      region_fraction_100um: 0.221
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Cluster CS20230722_CLUS_0644 (Vip Gaba_5) markers CONSISTENT (Calb2 val=8.55 cohort_pct 0.981; Vip val=11.23 cohort_pct 0.948), location APPROXIMATE (region_fraction_100um: 0.221) with isocortex + Field CA1 mixed; no IS-specific cluster annotation transfer support lands on this edge (no metrics_by_level entry).\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 0e4bd90a
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_CLUS_0653
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0653
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0653 Vip Gaba_8; region_fraction_100um=0.278; strict region_fraction=0.197.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=54 [painted]; Field CA1 [MBA:382] count_100um=28 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=20 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.278; strict region_fraction: 0.197; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 5.52; cohort_pct 0.839'
+        alignment: CONSISTENT
+        notes: val=5.52; cohort percentile 0.839
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 11.77; cohort_pct 0.968; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=11.77; cohort percentile 0.968
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 11.77; cohort_pct 0.968; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=11.77; cohort percentile 0.968
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 5.52
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+        - gene: Vip
+          val: 11.77
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+      region_fraction: 0.197
+      region_fraction_100um: 0.278
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Cluster CS20230722_CLUS_0653 (Vip Gaba_8) markers CONSISTENT (Calb2 val=5.52 cohort_pct 0.839; Vip val=11.77 cohort_pct 0.968) and CA1-proximate (region_fraction_100um: 0.278; Field CA1 stratum oriens among top anat counts), but no IS-specific cluster annotation transfer landing on CS20230722_CLUS_0653 and the supertype (CS20230722_SUPT_0180) is Isocortex-dominant.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 6f60bff1
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0177
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0177
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0177 Vip Gaba_5; region_fraction_100um=0.028; strict region_fraction=0.011.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Isocortex [MBA:315] count_100um=3698 [painted]; Hippocampal formation [MBA:1089] count_100um=620 [painted]; Secondary motor area [MBA:993] count_100um=561 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.028; strict region_fraction: 0.011; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 8.12; cohort_pct 0.987; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.12; cohort percentile 0.987; child-cluster coverage 1.000
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 11.94; cohort_pct 0.961; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=11.94; cohort percentile 0.961; child-cluster coverage 1.000
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 11.94; cohort_pct 0.961; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=11.94; cohort percentile 0.961; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 8.12
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.987
+          coverage: 1.0
+        - gene: Vip
+          val: 11.94
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.961
+          coverage: 1.0
+      region_fraction: 0.011
+      region_fraction_100um: 0.028
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Supertype CS20230722_SUPT_0177 (Vip Gaba_5) markers CONSISTENT (Calb2 val=8.12 cohort_pct 0.987; Vip val=11.94 cohort_pct 0.961) but location DISCORDANT (region_fraction_100um: 0.028) — Isocortex (3698) and Secondary motor area (561) dominate; only 620 cells in Hippocampal formation. Not a CA1 IS-IN candidate; no IS-specific annotation transfer metrics_by_level entry on this edge.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 08305eca
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0216
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0216
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0216 Sst Gaba_3; region_fraction_100um=0.539; strict region_fraction=0.305.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2145 [painted]; Field CA1 [MBA:382] count_100um=1559 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=1463 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.539; strict region_fraction: 0.305; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 1.28; cohort_pct 0.671; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.28; cohort percentile 0.671; child-cluster coverage 1.000
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 0.42; cohort_pct 0.553; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.42; cohort percentile 0.553; child-cluster coverage 1.000
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 0.42; cohort_pct 0.553; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.42; cohort percentile 0.553; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 1.28
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.671
+          coverage: 1.0
+        - gene: Vip
+          val: 0.42
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.553
+          coverage: 1.0
+      region_fraction: 0.305
+      region_fraction_100um: 0.539
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] Supertype CS20230722_SUPT_0216 is an Sst Gaba_3 supertype, not a Vip supertype. Vip val=0.42 (cohort_pct 0.553) is at background level; Calb2 val=1.28 also weak. Despite CA1 location concordance (region_fraction_100um: 0.539), the Sst+ identity excludes a Vip+/Calb2+ IS classical type.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 90a44d2f
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0181
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0181
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0181 Vip Gaba_9; region_fraction_100um=0.127; strict region_fraction=0.061.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=259 [painted]; Cortical subplate [MBA:703] count_100um=127 [painted]; Field CA3 [MBA:463] count_100um=124 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.127; strict region_fraction: 0.061; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 6.96; cohort_pct 0.974; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.96; cohort percentile 0.974; child-cluster coverage 1.000
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 3.03; cohort_pct 0.842; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=3.03; cohort percentile 0.842; child-cluster coverage 1.000
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 3.03; cohort_pct 0.842; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=3.03; cohort percentile 0.842; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 6.96
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.974
+          coverage: 1.0
+        - gene: Vip
+          val: 3.03
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.842
+          coverage: 1.0
+      region_fraction: 0.061
+      region_fraction_100um: 0.127
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Supertype CS20230722_SUPT_0181 (Vip Gaba_9) markers CONSISTENT (Calb2 val=6.96 cohort_pct 0.974; Vip val=3.03 cohort_pct 0.842) with low Vip expression, location APPROXIMATE (region_fraction_100um: 0.127); no IS-specific annotation transfer metrics_by_level entry on this edge.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 656a2cca
+  - id: edge_is_interneuron_hippocampus_to_CS20230722_SUPT_0180
+    lit_type: is_interneuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0180
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0180 Vip Gaba_8; region_fraction_100um=0.082; strict region_fraction=0.050.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]; CA1 stratum radiatum [UBERON:0014554]; CA1 stratum lacunosum moleculare [UBERON:0014557]
+        node_b_value: Isocortex [MBA:315] count_100um=225 [painted]; Hippocampal formation [MBA:1089] count_100um=72 [painted]; Secondary motor area [MBA:993] count_100um=39 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.082; strict region_fraction: 0.050; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 6.63; cohort_pct 0.947; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.63; cohort percentile 0.947; child-cluster coverage 1.000
+      - property: marker_Vip
+        node_a_value: Vip — defining marker
+        node_b_value: 'Vip: 12.00; cohort_pct 0.974; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=12.00; cohort percentile 0.974; child-cluster coverage 1.000
+      - property: neuropeptide_Vip
+        node_a_value: Vip — neuropeptide (classical)
+        node_b_value: 'Vip: 12.00; cohort_pct 0.974; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=12.00; cohort percentile 0.974; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399,MBA:415,MBA:391
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Calb2
+          val: 6.63
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.947
+          coverage: 1.0
+        - gene: Vip
+          val: 12.0
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.974
+          coverage: 1.0
+      region_fraction: 0.05
+      region_fraction_100um: 0.082
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] Supertype CS20230722_SUPT_0180 (Vip Gaba_8) markers CONSISTENT (Calb2 val=6.63 cohort_pct 0.947; Vip val=12.00 cohort_pct 0.974) but location DISCORDANT (region_fraction_100um: 0.082) with Isocortex dominant (225 cells) and Secondary motor area; only 72 cells in Hippocampal formation. Not a CA1 IS-IN candidate.\n"
+    rationale_generated_at: '2026-06-08T21:03:51+00:00'
+    report_path: reports/hippocampus/is_interneuron_hippocampus_summary.md
+    rationale_source_hash: 0730f35b

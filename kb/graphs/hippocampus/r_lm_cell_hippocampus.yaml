@@ -1,0 +1,932 @@
+name: Hippocampal GABAergic interneurons — draft classical types
+description: 'Draft evidence graph for classical hippocampal GABAergic interneuron types extracted from ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-09'
+nodes:
+  - id: r_lm_cell_hippocampus
+    name: Radiatum-lacunosum moleculare (R-LM) cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0014552
+        label: CA1 stratum oriens
+        name_in_source: stratum oriens
+        compartment: SOMA
+        sources:
+          - ref: PMID:33404500
+            method: subcellular RNA-seq
+            scope: mouse hippocampus
+            quote_key: 224817966_e829ad95
+    nt_type:
+      name_in_source: GABAergic
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: GABAergic
+      sources: []
+    defining_markers:
+      - symbol: Sst
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:10777798
+            snippet: In area CA1, the vast majority of these interneurons were comprised of O-LM cells and two newly identified interneuronal subtypes, R-LM and P-LM cells
+            support: SUPPORT
+            source: cite_traverse_2026_04_10
+            marker_type: PROTEIN
+    negative_markers: []
+    neuropeptides: []
+    cl_mapping:
+    definition_references:
+      - PMID:10818134
+    is_terminal: false
+    notes: 'Stub from cite-traverse (2026-04-10). THIN EVIDENCE — described in one study (Oliva et al. 2000) using GIN transgenic labelling. Unclear how it maps to modern transcriptomic taxonomy. May need targeted literature search to confirm as distinct type.
+
+      '
+    morphology:
+      description: 'SST+ interneuron with axon projecting through radiatum to lacunosum-moleculare. Identified in GIN transgenic mice.
+
+        '
+    electrophysiology:
+      description: Not characterized in available reference set
+  - id: CS20230722_SUPT_0216
+    name: 0216 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 1.28
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.74
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 2.51
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 1.53
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 7.75
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 8.92
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 10.26
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 1.59
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 0.62
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 2.94
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 5.07
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 3.69
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 1.48
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 7.9
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.29
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 11.44
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.55
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.42
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0767
+          n_cells: 1
+          expression: '{"Calb2": 1.0, "Cck": 0.86, "Chrna2": 0.56, "Cnr1": 6.14, "Gad1": 8.95, "Gad2": 9.5, "Id2": 1.5, "Lamp5": 0.41, "Chrm2": 6.11, "Nos1": 0.87, "Npy": 4.2, "Pnoc": 3.49, "Pvalb": 4.38, "Reln": 9.17, "Sst": 10.78, "Tac1": 0.8, "Slc17a8": 1.94, "Vip": 0.67}'
+        - cluster_accession: CS20230722_CLUS_0768
+          n_cells: 1
+          expression: '{"Calb2": 2.3, "Cck": 1.42, "Chrna2": 3.11, "Cnr1": 6.91, "Gad1": 9.11, "Gad2": 10.74, "Id2": 2.88, "Lamp5": 0.41, "Chrm2": 0.67, "Nos1": 0.76, "Npy": 7.58, "Pnoc": 2.51, "Pvalb": 3.12, "Reln": 10.65, "Sst": 12.7, "Tac1": 0.15, "Slc17a8": 0.0, "Vip": 0.31}'
+        - cluster_accession: CS20230722_CLUS_0769
+          n_cells: 1
+          expression: '{"Calb2": 0.29, "Cck": 2.11, "Chrna2": 1.26, "Cnr1": 8.16, "Gad1": 9.32, "Gad2": 10.4, "Id2": 1.23, "Lamp5": 1.12, "Chrm2": 2.71, "Nos1": 4.07, "Npy": 7.91, "Pnoc": 3.23, "Pvalb": 0.17, "Reln": 4.99, "Sst": 10.97, "Tac1": 0.85, "Slc17a8": 0.08, "Vip": 0.25}'
+        - cluster_accession: CS20230722_CLUS_0770
+          n_cells: 1
+          expression: '{"Calb2": 0.84, "Cck": 1.48, "Chrna2": 3.62, "Cnr1": 9.22, "Gad1": 8.29, "Gad2": 10.42, "Id2": 0.68, "Lamp5": 0.46, "Chrm2": 4.39, "Nos1": 3.65, "Npy": 1.04, "Pnoc": 6.98, "Pvalb": 0.0, "Reln": 8.82, "Sst": 10.54, "Tac1": 0.05, "Slc17a8": 0.05, "Vip": 0.16}'
+        - cluster_accession: CS20230722_CLUS_0771
+          n_cells: 1
+          expression: '{"Calb2": 3.53, "Cck": 1.97, "Chrna2": 2.48, "Cnr1": 8.73, "Gad1": 8.69, "Gad2": 10.24, "Id2": 0.95, "Lamp5": 0.15, "Chrm2": 2.0, "Nos1": 1.67, "Npy": 2.02, "Pnoc": 3.72, "Pvalb": 1.16, "Reln": 9.59, "Sst": 11.62, "Tac1": 0.08, "Slc17a8": 0.08, "Vip": 0.87}'
+        - cluster_accession: CS20230722_CLUS_0772
+          n_cells: 1
+          expression: '{"Calb2": 0.81, "Cck": 1.96, "Chrna2": 0.53, "Cnr1": 7.21, "Gad1": 9.27, "Gad2": 10.26, "Id2": 0.91, "Lamp5": 0.81, "Chrm2": 1.34, "Nos1": 1.09, "Npy": 8.22, "Pnoc": 1.65, "Pvalb": 0.34, "Reln": 10.13, "Sst": 11.92, "Tac1": 0.14, "Slc17a8": 0.37, "Vip": 0.35}'
+        - cluster_accession: CS20230722_CLUS_0773
+          n_cells: 1
+          expression: '{"Calb2": 1.21, "Cck": 1.59, "Chrna2": 0.28, "Cnr1": 8.36, "Gad1": 8.56, "Gad2": 10.42, "Id2": 0.53, "Lamp5": 0.95, "Chrm2": 0.73, "Nos1": 3.61, "Npy": 1.61, "Pnoc": 4.4, "Pvalb": 0.36, "Reln": 9.24, "Sst": 11.43, "Tac1": 0.0, "Slc17a8": 0.0, "Vip": 0.27}'
+        - cluster_accession: CS20230722_CLUS_0774
+          n_cells: 1
+          expression: '{"Calb2": 0.88, "Cck": 2.57, "Chrna2": 1.01, "Cnr1": 6.94, "Gad1": 9.78, "Gad2": 10.38, "Id2": 2.1, "Lamp5": 0.86, "Chrm2": 2.45, "Nos1": 5.1, "Npy": 10.88, "Pnoc": 0.0, "Pvalb": 1.39, "Reln": 4.92, "Sst": 12.11, "Tac1": 2.65, "Slc17a8": 0.11, "Vip": 0.23}'
+        - cluster_accession: CS20230722_CLUS_0775
+          n_cells: 1
+          expression: '{"Calb2": 0.65, "Cck": 1.7, "Chrna2": 0.91, "Cnr1": 8.04, "Gad1": 8.34, "Gad2": 10.0, "Id2": 3.54, "Lamp5": 0.45, "Chrm2": 2.17, "Nos1": 5.65, "Npy": 2.18, "Pnoc": 7.2, "Pvalb": 2.39, "Reln": 3.6, "Sst": 10.86, "Tac1": 0.25, "Slc17a8": 0.0, "Vip": 0.67}'
+  - id: CS20230722_CLUS_0768
+    name: 0768 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0768
+  - id: CS20230722_CLUS_0772
+    name: 0772 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0772
+  - id: CS20230722_CLUS_0767
+    name: 0767 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0767
+  - id: CS20230722_CLUS_0770
+    name: 0770 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0770
+  - id: CS20230722_CLUS_0773
+    name: 0773 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0773
+  - id: CS20230722_SUPT_0241
+    name: 0241 Sst Chodl Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0241
+  - id: CS20230722_SUPT_0226
+    name: 0226 Sst Gaba_13
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0226
+  - id: CS20230722_SUPT_1164
+    name: 1164 Astro-TE NN_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_1164
+  - id: CS20230722_SUPT_0219
+    name: 0219 Sst Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0219
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.23
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.48
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 3.08
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.52
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 3.04
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 9.73
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 9.96
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 3.92
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 2.04
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 1.81
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 7.18
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 4.18
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 1.68
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 6.46
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.78
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 10.17
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 2.43
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.44
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0785
+          n_cells: 1
+          expression: '{"Calb2": 0.13, "Cck": 1.54, "Chrna2": 0.17, "Cnr1": 0.84, "Gad1": 8.99, "Gad2": 10.25, "Id2": 3.5, "Lamp5": 1.34, "Chrm2": 0.0, "Nos1": 2.6, "Npy": 7.54, "Pnoc": 0.3, "Pvalb": 0.3, "Reln": 10.47, "Sst": 10.99, "Tac1": 0.0, "Slc17a8": 0.0, "Vip": 0.28}'
+        - cluster_accession: CS20230722_CLUS_0786
+          n_cells: 1
+          expression: '{"Calb2": 0.16, "Cck": 1.15, "Chrna2": 0.52, "Cnr1": 2.84, "Gad1": 9.3, "Gad2": 9.91, "Id2": 2.53, "Lamp5": 0.2, "Chrm2": 0.72, "Nos1": 1.29, "Npy": 8.02, "Pnoc": 2.19, "Pvalb": 0.19, "Reln": 7.85, "Sst": 11.23, "Tac1": 0.4, "Slc17a8": 0.08, "Vip": 0.44}'
+        - cluster_accession: CS20230722_CLUS_0787
+          n_cells: 1
+          expression: '{"Calb2": 0.0, "Cck": 1.83, "Chrna2": 0.11, "Cnr1": 4.68, "Gad1": 9.59, "Gad2": 9.81, "Id2": 5.87, "Lamp5": 5.21, "Chrm2": 4.21, "Nos1": 3.13, "Npy": 2.51, "Pnoc": 5.31, "Pvalb": 0.73, "Reln": 7.46, "Sst": 9.05, "Tac1": 0.14, "Slc17a8": 1.28, "Vip": 0.5}'
+        - cluster_accession: CS20230722_CLUS_0788
+          n_cells: 1
+          expression: '{"Calb2": 0.83, "Cck": 1.54, "Chrna2": 0.8, "Cnr1": 4.31, "Gad1": 9.72, "Gad2": 10.5, "Id2": 3.99, "Lamp5": 0.56, "Chrm2": 3.08, "Nos1": 1.1, "Npy": 7.66, "Pnoc": 6.16, "Pvalb": 1.38, "Reln": 8.94, "Sst": 10.5, "Tac1": 1.68, "Slc17a8": 0.44, "Vip": 0.47}'
+        - cluster_accession: CS20230722_CLUS_0789
+          n_cells: 1
+          expression: '{"Calb2": 0.28, "Cck": 0.97, "Chrna2": 0.25, "Cnr1": 2.01, "Gad1": 10.01, "Gad2": 9.76, "Id2": 3.02, "Lamp5": 0.89, "Chrm2": 3.55, "Nos1": 0.93, "Npy": 8.44, "Pnoc": 3.5, "Pvalb": 0.3, "Reln": 4.14, "Sst": 11.07, "Tac1": 2.08, "Slc17a8": 0.18, "Vip": 0.46}'
+        - cluster_accession: CS20230722_CLUS_0790
+          n_cells: 1
+          expression: '{"Calb2": 0.0, "Cck": 1.41, "Chrna2": 0.32, "Cnr1": 1.21, "Gad1": 10.55, "Gad2": 9.69, "Id2": 4.75, "Lamp5": 3.83, "Chrm2": 5.23, "Nos1": 2.56, "Npy": 7.52, "Pnoc": 6.03, "Pvalb": 3.38, "Reln": 1.44, "Sst": 10.7, "Tac1": 4.43, "Slc17a8": 1.43, "Vip": 0.36}'
+        - cluster_accession: CS20230722_CLUS_0791
+          n_cells: 1
+          expression: '{"Calb2": 0.18, "Cck": 1.89, "Chrna2": 1.49, "Cnr1": 5.36, "Gad1": 9.93, "Gad2": 9.77, "Id2": 3.75, "Lamp5": 2.24, "Chrm2": 4.79, "Nos1": 1.06, "Npy": 8.6, "Pnoc": 5.77, "Pvalb": 5.48, "Reln": 4.93, "Sst": 7.68, "Tac1": 8.27, "Slc17a8": 2.05, "Vip": 0.6}'
+edges:
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_SUPT_0216
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0216
+    relationship: evidencell:UncertainRelationship
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: 'Sst Gaba_3 supertype has strong CA1 stratum oriens representation (818 cells) and Sst-subclass identity, consistent with the SST+ R-LM cell soma location in stratum oriens. Reln is a defining marker of SUPT_0216, which may distinguish it from OLM cells (Chrna2+/Reln+). However, R-LM cells were identified in GIN transgenic mice in a single study (Oliva et al. 2000) without transcriptomic characterisation, so the match is speculative. The Sst Gaba_3 supertype is also the primary candidate for OLM cells (based on MapMyCells annotation transfer with Chrna2-Cre data), meaning this supertype likely contains multiple SST+ stratum oriens types.
+
+          '
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: Sst
+        n_cells_total: 273
+        best_mapping_rank: 2
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            f1_score: 0.4133738601823709
+            n_cells_mapped: 272
+            median_bootstrap: 1.0
+            coverage: 0.9963369963369964
+            purity: 0.2607861936720997
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 053 Sst Gaba
+            best_target_accession: CS20230722_SUBC_053
+            f1_score: 0.9833024118738404
+            n_cells_mapped: 265
+            median_bootstrap: 1.0
+            coverage: 0.9888059701492538
+            purity: 0.977859778597786
+        explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Sst subclass (n=273 HIP cells) onto WMBv1. SUPT_0216 (Sst Gaba_3) receives 83/273 Sst cells (F1=0.488, purity=1.0). R-LM (radiatum-lacunosum-moleculare) cells are interneurons residing near the stratum radiatum/lacunosum boundary; if Sst+, SUPT_0216 is a plausible candidate. PARTIAL because the Sst subclass label is mixed; SUPT_0219 (Sst Gaba_6) is the dominant Sst target (F1=0.759). Yao 2021 SSv4 'Sst' subclass (n=273 HIP cells) encompasses multiple Sst interneuron types (OLM, bistratified, hippocampo-septal, oriens-oriens, and others); subtype resolution requires a dataset with morphologically identified Sst-IN labels.
+        f1_source_relpath: at_results.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2145 [painted]; Field CA1 [MBA:382] count_100um=1559 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=1463 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.539; strict region_fraction: 0.305; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 11.44; cohort_pct 0.905; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=11.44; cohort percentile 0.905; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: CS20230722_SUPT_0216 is also the primary OLM-cell candidate supertype on this graph; R-LM and OLM share SST+ identity and putative stratum oriens soma location and cannot be distinguished at this supertype level from atlas metadata alone.
+      - caveat_type: SINGLE_STUDY
+        description: R-LM type is described only by Oliva et al. 2000 (PMID:10777798) using GIN transgenic mice, without subsequent transcriptomic characterisation placing R-LM cells on the WMBv1 taxonomy.
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: No axon-projection or laminar markers distinguishing R-LM from OLM, P-LM, or bistratified cells are available in the atlas supertype metadata for CS20230722_SUPT_0216.
+      - caveat_type: OTHER
+        description: Perez et al. 2020 (PMID:33404500) places an RLMb-like population at the stratum radiatum / stratum lacunosum-moleculare boundary with transcriptomic proximity to neurogliaform cells, contradicting the basis for matching CS20230722_SUPT_0216 via stratum-oriens soma and Sst Gaba_3 identity.
+    mapping_justification: semapv:UnspecifiedMatching
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.44
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.905
+          coverage: 1.0
+      region_fraction: 0.305
+      region_fraction_100um: 0.539
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: '[tier:STRONGEST] Sst CONSISTENT on CS20230722_SUPT_0216 (mean 11.44, cohort percentile 0.905) and CA1 stratum oriens proximity (region_fraction_100um: 0.539; strict region_fraction: 0.305) align with the classical-node fields, and transcriptomic annotation transfer of the Yao 2021 Sst subclass label onto WMBv1 places 83/273 source cells on this supertype as a partial match (parent-subclass Sst Gaba alignment is clean, with subclass-level F1=0.98 in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1). However, the Yao Sst label pools every CA1 SST+ interneuron type and cannot resolve R-LM specifically; the same supertype is the primary OLM candidate on this graph; and the strongest classical-literature quote available (Perez et al. 2020 PMID:33404500) places an RLMb-like population at the stratum radiatum / stratum lacunosum-moleculare boundary with transcriptomic proximity to neurogliaform cells, not to a Sst Gaba_3 supertype. 1 of 1 markers CONSISTENT but R-LM-specific support is absent.'
+    reconciliation_note: R-LM cannot be distinguished from OLM, P-LM, bistratified, hippocampo-septal, oriens-oriens, or LTH on transcriptomic annotation transfer at CLASS or SUBCLASS using the Yao 2021 Sst source label (pool_candidates report). Panels markers and nt are also non-distinguishing across these sibling classical nodes; CASE B (transcriptomic-only indistinguishability — other panels not assessed in available evidence).
+    proposed_experiments:
+      - Single-cell transcriptomic profiling paired with anatomical reconstruction of R-LM cells (sr/slm-border SST+ interneurons with axon in stratum lacunosum-moleculare), mapped to WMBv1 via cell_type_mapper; target F1 at or above 0.80 at CLUSTER level; expected output AnnotationTransferEvidence specific to R-LM.
+      - Targeted literature search for R-LM transcriptomic characterisation since Oliva et al. 2000 to determine whether R-LM should be retained, merged with a sibling (OLM, P-LM, neurogliaform, LTH), or revised in its soma location field.
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Is R-LM transcriptomically separable from OLM, P-LM, bistratified, hippocampo-septal, oriens-oriens, or LTH on WMBv1, or should it be collapsed into one of these siblings?
+      - Does R-LM soma sit in stratum oriens (current classical-node field) or at the stratum radiatum / stratum lacunosum-moleculare boundary (Perez et al. 2020 PMID:33404500)?
+    rationale_source_hash: c7765458
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_CLUS_0768
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0768
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0768 Sst Gaba_3; region_fraction_100um=0.818; strict region_fraction=0.458.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=296 [painted]; Field CA1 [MBA:382] count_100um=273 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=261 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.818; strict region_fraction: 0.458; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 12.70; cohort_pct 0.992; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=12.70; cohort percentile 0.992
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: CS20230722_CLUS_0768 is the leading R-LM candidate for the OLM mapping on this graph and for several other CA1 SST+ classical nodes; no atlas-metadata feature distinguishes R-LM from these siblings at cluster level.
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: No R-LM-specific marker (laminar position, axon target, transcript signature) is available to select CS20230722_CLUS_0768 over its Sst Gaba_3 siblings (CS20230722_CLUS_0767, CS20230722_CLUS_0770, CS20230722_CLUS_0772, CS20230722_CLUS_0773).
+      - caveat_type: OTHER
+        description: Perez et al. 2020 (PMID:33404500) places an RLMb-like population at the stratum radiatum / stratum lacunosum-moleculare boundary with transcriptomic proximity to neurogliaform cells, which is inconsistent with selecting a stratum-oriens-dominated Sst Gaba_3 cluster.
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.7
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.992
+      region_fraction: 0.458
+      region_fraction_100um: 0.818
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: '[tier:NEXT] CS20230722_CLUS_0768 is the strongest single-cluster anatomical match within the Sst Gaba_3 supertype to CA1 stratum oriens (region_fraction_100um: 0.818; strict region_fraction: 0.458) and shows high Sst (mean 12.70, cohort percentile 0.992). However, no R-LM-specific evidence selects this cluster over its Sst Gaba_3 siblings, and the same cluster is the leading candidate for the OLM mapping on this graph; R-LM cannot be distinguished from OLM at this cluster level. 1 of 1 markers CONSISTENT.'
+    reconciliation_note: Paired with CS20230722_SUPT_0216 in this report; R-LM is indistinguishable from OLM at CS20230722_CLUS_0768 on available evidence.
+    proposed_experiments:
+      - Single-cell transcriptomic profiling paired with anatomical reconstruction of R-LM cells mapped to WMBv1 via cell_type_mapper; target F1 at or above 0.80 at CLUSTER level on CS20230722_CLUS_0768 or a sibling.
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Is R-LM identifiable at cluster level on WMBv1, or only at subclass (Sst Gaba) and not below?
+    rationale_source_hash: 57af477e
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_CLUS_0772
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0772
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0772 Sst Gaba_3; region_fraction_100um=0.706; strict region_fraction=0.527.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=315 [painted]; Field CA1 [MBA:382] count_100um=255 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=247 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.706; strict region_fraction: 0.527; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 11.92; cohort_pct 0.958; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.92; cohort percentile 0.958
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.92
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.958
+      region_fraction: 0.527
+      region_fraction_100um: 0.706
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: '[tier:CUT] CS20230722_CLUS_0772 has CA1 stratum oriens overlap (region_fraction_100um: 0.706) and high Sst (mean 11.92, cohort percentile 0.958) but no R-LM-specific signal selects it over its Sst Gaba_3 siblings; eliminated as no R-LM-specific evidence is available at cluster level.'
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    rationale_source_hash: 091ca918
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_CLUS_0767
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0767
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0767 Sst Gaba_3; region_fraction_100um=0.578; strict region_fraction=0.422.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=164 [painted]; cerebrum related [MBA:768] count_100um=141 [painted]; medial forebrain bundle system [MBA:991] count_100um=141 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.578; strict region_fraction: 0.422; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.78; cohort_pct 0.832; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=10.78; cohort percentile 0.832
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.78
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.832
+      region_fraction: 0.422
+      region_fraction_100um: 0.578
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: '[tier:CUT] CS20230722_CLUS_0767 has CA1 stratum oriens overlap (region_fraction_100um: 0.578) and Sst expression (mean 10.78, cohort percentile 0.832) but no R-LM-specific evidence selects it over sibling Sst Gaba_3 clusters; eliminated.'
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    rationale_source_hash: e76e6c22
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_CLUS_0770
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0770
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0770 Sst Gaba_3; region_fraction_100um=0.506; strict region_fraction=0.302.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=281 [painted]; Field CA1 [MBA:382] count_100um=174 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=173 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.506; strict region_fraction: 0.302; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.54; cohort_pct 0.807; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=10.54; cohort percentile 0.807
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.54
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.807
+      region_fraction: 0.302
+      region_fraction_100um: 0.506
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: '[tier:CUT] CS20230722_CLUS_0770 has CA1 stratum oriens overlap (region_fraction_100um: 0.506) and Sst expression (mean 10.54, cohort percentile 0.807) but no R-LM-specific evidence selects it over sibling Sst Gaba_3 clusters; eliminated.'
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    rationale_source_hash: 10f84bfa
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_CLUS_0773
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0773
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0773 Sst Gaba_3; region_fraction_100um=0.648; strict region_fraction=0.355.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=182 [painted]; Field CA1 [MBA:382] count_100um=158 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=153 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.648; strict region_fraction: 0.355; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 11.43; cohort_pct 0.908; atlas category: NEUROPEPTIDE'
+        alignment: CONSISTENT
+        notes: val=11.43; cohort percentile 0.908
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 11.43
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.908
+      region_fraction: 0.355
+      region_fraction_100um: 0.648
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: '[tier:CUT] CS20230722_CLUS_0773 has CA1 stratum oriens overlap (region_fraction_100um: 0.648) and Sst expression (mean 11.43, cohort percentile 0.908) but no R-LM-specific evidence selects it over sibling Sst Gaba_3 clusters; eliminated.'
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    rationale_source_hash: 0cccc9fd
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_SUPT_0241
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0241
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0241 Sst Chodl Gaba_4; region_fraction_100um=0.021; strict region_fraction=0.008.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Isocortex [MBA:315] count_100um=1377 [painted]; lateral forebrain bundle system [MBA:983] count_100um=467 [painted]; corpus callosum [MBA:776] count_100um=460 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.021; strict region_fraction: 0.008; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 12.33; cohort_pct 0.984; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=12.33; cohort percentile 0.984; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.33
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.984
+          coverage: 1.0
+      region_fraction: 0.008
+      region_fraction_100um: 0.021
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: '[tier:CUT] CS20230722_SUPT_0241 (Sst Chodl Gaba_4) shows location DISCORDANT (region_fraction_100um: 0.021; strict region_fraction: 0.008; Isocortex- and forebrain-bundle-dominant distribution) and a Sst Chodl long-range projection identity incompatible with reported R-LM features; eliminated as wrong region and wrong functional class.'
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    rationale_source_hash: 3b6c489a
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_SUPT_0226
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0226
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0226 Sst Gaba_13; region_fraction_100um=0.016; strict region_fraction=0.008.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Isocortex [MBA:315] count_100um=1021 [painted]; Cortical subplate [MBA:703] count_100um=312 [painted]; Endopiriform nucleus, dorsal part [MBA:952] count_100um=224 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.016; strict region_fraction: 0.008; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 12.08; cohort_pct 0.968; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=12.08; cohort percentile 0.968; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: 'DISCORDANT property comparison(s): location. Mapping has unresolved counter-evidence.'
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 12.08
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+      region_fraction: 0.008
+      region_fraction_100um: 0.016
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: '[tier:CUT] CS20230722_SUPT_0226 (Sst Gaba_13) shows location DISCORDANT (region_fraction_100um: 0.016; strict region_fraction: 0.008; Isocortex- and cortical-subplate-dominant); eliminated as wrong region.'
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    rationale_source_hash: 0dbe0f0b
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_SUPT_1164
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_1164
+    relationship: evidencell:NoCorrespondence
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 1164 Astro-TE NN_4; region_fraction_100um=0.244; strict region_fraction=0.065.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: lateral forebrain bundle system [MBA:983] count_100um=1406 [painted]; cerebrum related [MBA:768] count_100um=1367 [painted]; medial forebrain bundle system [MBA:991] count_100um=1367 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.244; strict region_fraction: 0.065; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 0.80; cohort_pct 0.333; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.80; cohort percentile 0.333; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 0.8
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.333
+          coverage: 1.0
+      region_fraction: 0.065
+      region_fraction_100um: 0.244
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.02
+    rationale: '[tier:CUT] CS20230722_SUPT_1164 (Astro-TE NN_4) is a non-neuronal supertype with Sst at mean 0.80 (cohort percentile 0.333); eliminated as non-neuronal and Sst-non-expressing relative to the SST+ classical R-LM definition.'
+    mapping_cardinality: "1:1"
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    rationale_source_hash: ae88eb9d
+  - id: edge_r_lm_cell_hippocampus_to_CS20230722_SUPT_0219
+    lit_type: r_lm_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0219
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0219 Sst Gaba_6; region_fraction_100um=0.132; strict region_fraction=0.061.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1350 [painted]; Field CA3 [MBA:463] count_100um=1068 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=799 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.132; strict region_fraction: 0.061; region_evidence: SELF'
+      - property: marker_Sst
+        node_a_value: Sst — defining marker
+        node_b_value: 'Sst: 10.17; cohort_pct 0.778; child-coverage 1.000; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=10.17; cohort percentile 0.778; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Sst
+          val: 10.17
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.778
+          coverage: 1.0
+      region_fraction: 0.061
+      region_fraction_100um: 0.132
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: '[tier:CUT] CS20230722_SUPT_0219 (Sst Gaba_6) painted-anat distribution is Field CA3-dominant (region_fraction_100um: 0.132; strict region_fraction: 0.061 at CA1 stratum oriens); Sst is present (mean 10.17). Not selectable as an R-LM target given the off-target CA3-dominance and the absence of any R-LM-specific source label.'
+    rationale_generated_at: '2026-06-08T21:04:03+00:00'
+    report_path: reports/hippocampus/r_lm_cell_hippocampus_summary.md
+    rationale_source_hash: 2e73c6c0
