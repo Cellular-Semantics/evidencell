@@ -947,21 +947,41 @@ nodes:
       - "PMID:39097181"
       - "PMID:25324774"
     is_terminal: false
-    notes: 'No CL term exists for OLM cell. CL:4023017 ''sst GABAergic interneuron'' is nearest superclass but does not capture OLM-specific morphology. Molecularly heterogeneous: contains a PV+ subpopulation with distinct theta vs gamma coupling. Npy expression is consistent in mouse but absent in rat (species difference). Ndnf::Nkx2-1 intersection selectively targets OLM cells. At least 3 Chrna2+ subclusters identified.
-
+    notes: |-
+      No CL term exists for OLM cell. CL:4023017 'sst GABAergic interneuron' is nearest superclass but does not capture OLM-specific morphology. Molecularly heterogeneous: contains a PV+ subpopulation with distinct theta vs gamma coupling. Npy expression is consistent in mouse but absent in rat (species difference). Ndnf::Nkx2-1 intersection selectively targets OLM cells. At least 3 Chrna2+ subclusters identified.
       [cite_traverse_2026_04_10] PMID:19176803: horizontal interneurons in stratum oriens of the hippocampal CA1 area are often studied as a single group of interneurons, they include several cell types in addition to O-LM cells
-
       [cite_traverse_2026_04_10] PMID:20463218: dendrite-targeting inhibitory interneurons, such as oriens lacunosum-moleculare (O-LM) cells, regulate dendritic Na+ or Ca2+ spikes and synaptic plasticity by innervating dendritic domains of principal neurons
 
-
       ---
-
       [Migrated from asta-ingest stub `olm_hippocampus` on 2026-06-10]
-
 
       HETEROGENEITY: The OLM class contains molecularly heterogeneous subpopulations. Zhang et al. (2025) report a PV-positive OLM subset that fires in the gamma range (vs theta for SST-only OLM cells). Thulin et al. (2025) identify three Sst/Pnoc subclusters with differential dorsal-ventral connectivity. These may warrant separate nodes in future iterations. TRPV1 expression (Hurtado-Zavala et al., 2017) is reported in a subpopulation but not confirmed by other sources. Lacaille 1987 described O/A interneurons with axons branching in stratum oriens and pyramidale (not SLM) — these are likely a distinct population from canonical O-LM cells. Species: most morphology data from rat; marker/transgenic data from mouse. Cross-species validation pending.
 
-      '
+      Definition history. O-LM has been characterised through successive methods, each
+      potentially narrowing the last, and the subtypes recorded below are partly a record of
+      what each method could capture rather than established biological subdivisions.
+
+        morphology  (Cajal 1893 onwards) soma and horizontal dendrites in stratum oriens,
+                    axon arborising in stratum lacunosum-moleculare. The defining criterion.
+        markers     SST, with NPY, TRPV1, mGluR1, Reln reported variously.
+        transgene   Chrna2-Cre (Leao 2012) and intersectional lines (Chamberland 2024) made
+                    the type easy to target, and each line defines a population by what it
+                    labels rather than by morphology.
+
+      Reading the transgenic literature matters here. Claims that Chrna2 is 'a specific marker
+      for OLM' (PMID:29487503, PMID:31420995, PMID:23042082) are targeting claims -- the line
+      reliably labels OLM cells -- not completeness claims that every OLM cell is Chrna2+.
+      Chamberland 2024 (PMID:38640347) reports a second, Ndnf::Nkx2-1-defined OLM population,
+      which is compatible with the earlier work under that reading but not under the stronger
+      one. Treat this node as the morphologically-defined general type, of which the linked
+      subfamilies are candidate subsets.
+
+      At least three further partitions of O-LM are documented in the literature and are NOT
+      yet represented here: Winterer 2019 Sst-OLM vs Htr3a-OLM (Htr3a in ~10% of O-LM cells;
+      pooled in at_run_20260408_winterer_olm_mmc_wmbv1 rather than recorded as structure);
+      a PV-co-expressing subset contributing to gamma rather than theta (Fernandez 2024,
+      Que 2021); and dorsoventral differences in presynaptic input (Thulin 2025). Whether any
+      of these coincide with the Chamberland subfamilies is unresolved.
     morphology:
       description: 'Soma and horizontal dendrites confined to stratum oriens, often with spines; axon projects perpendicularly through SR to stratum lacunosum-moleculare where it forms dense varicose terminal arbor; collateral axons also in stratum oriens. Large elongated soma at oriens-alveus border. Stereotyped morphology first described by Cajal (1893).
 
@@ -3242,7 +3262,7 @@ nodes:
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0224
   - id: sst_tac1_subfamily_chamberland
-    name: "Sst::Tac1-IN (bistratified-like, Chamberland 2024)"
+    name: "Sst::Tac1-IN (bistratified-like)"
     definition_basis: CLASSICAL_MULTIMODAL
     species:
     anatomical_location:
@@ -3300,8 +3320,11 @@ nodes:
 
   # ── Taxonomy references (minimal stubs for WMBv1 mapping targets) ──
 
+    synonyms:
+      - term: "Sst::Tac1-IN (bistratified-like, Chamberland 2024)"
+        synonym_type: HISTORICAL
   - id: chrna2_olm_subfamily_chamberland
-    name: "Chrna2-IN (Chrna2-OLM, Chamberland 2024)"
+    name: "Chrna2-IN (Chrna2-OLM)"
     definition_basis: CLASSICAL_MULTIMODAL
     species:
     anatomical_location:
@@ -3352,20 +3375,28 @@ nodes:
     is_terminal: false
     definition_references:
       - "PMID:38640347"   # Chamberland 2024 — Chrna2-IN subfamily
-    notes: >
-      Chamberland 2024 Chrna2-IN subfamily. Defined by combinatorial
-      Sst-Flp;Chrna2-Cre genetics. The set of cells captured under this
-      label is a subset of the canonical OLM population
-      (olm_cell_ca1 in hippocampus_GABAergic_interneurons.yaml);
-      cross-mapping edge to olm_cell_ca1 should be added when both
-      graphs are co-loaded. Per Chamberland 2024, Chrna2-IN somata
-      sit deep in O/A and project to CA1 stratum lacunosum-moleculare
-      (canonical OLM projection).
+    notes: |-
+      Chamberland 2024 Chrna2-IN subfamily. Defined by combinatorial Sst-Flp;Chrna2-Cre genetics. The set of cells captured under this label is a subset of the canonical OLM population (olm_cell_ca1 in hippocampus_GABAergic_interneurons.yaml); cross-mapping edge to olm_cell_ca1 should be added when both graphs are co-loaded. Per Chamberland 2024, Chrna2-IN somata sit deep in O/A and project to CA1 stratum lacunosum-moleculare (canonical OLM projection).
+
+      Defined by transgene, not by morphology: Sst+/Chrna2+ cells captured by the Chrna2-Cre
+      line (Chamberland 2024, PMID:38640347). No morphological reconstruction is recorded on
+      this node, so its status as an O-LM subset rests on marker identity and laminar position
+      (deep in oriens/alveus) rather than on the oriens-soma / SLM-axon criterion that defines
+      olm_cell_ca1.
+
+      Note Chrna2-Cre is the line most of the older O-LM literature used, so this population
+      is close to what that literature called O-LM outright. Whether it is a proper subset of
+      olm_cell_ca1 or effectively coextensive with it is open -- the atlas evidence does not
+      settle it, since this node maps best to CS20230722_CLUS_0771 while olm_cell_ca1 maps
+      best to CS20230722_CLUS_0768, two different clusters under the same supertype.
 
   # ── Ndnf::Nkx2-1-IN (Ndnf-OLM) ──────────────────────────────────
 
+    synonyms:
+      - term: "Chrna2-IN (Chrna2-OLM, Chamberland 2024)"
+        synonym_type: HISTORICAL
   - id: ndnf_nkx2_1_olm_subfamily_chamberland
-    name: "Ndnf::Nkx2-1-IN (Ndnf-OLM, Chamberland 2024)"
+    name: "Ndnf::Nkx2-1-IN (Ndnf-OLM)"
     definition_basis: CLASSICAL_MULTIMODAL
     species:
     anatomical_location:
@@ -3418,19 +3449,28 @@ nodes:
     is_terminal: false
     definition_references:
       - "PMID:38640347"   # Chamberland 2024 — Ndnf::Nkx2-1-IN subfamily
-    notes: >
-      Chamberland 2024 Ndnf::Nkx2-1-IN subfamily. Per Chamberland 2024,
-      these cells are oriens-lacunosum-moleculare-like and selectively
-      target CA1 pyramidal cells (vs Sst::Tac1 cells which target
-      fast-spiking interneurons). At MapMyCells the population is
-      fragmented across multiple WMBv1 targets — no single supertype
-      or cluster captures it cleanly at the per-cluster Ndnf threshold
-      (only one Harris Class qualified). Mapping confidence is UNCERTAIN.
+    notes: |-
+      Chamberland 2024 Ndnf::Nkx2-1-IN subfamily. Per Chamberland 2024, these cells are oriens-lacunosum-moleculare-like and selectively target CA1 pyramidal cells (vs Sst::Tac1 cells which target fast-spiking interneurons). At MapMyCells the population is fragmented across multiple WMBv1 targets — no single supertype or cluster captures it cleanly at the per-cluster Ndnf threshold (only one Harris Class qualified). Mapping confidence is UNCERTAIN.
+
+      Defined by an intersectional transgene: Ndnf-Flp x Nkx2-1-Cre (Chamberland 2024,
+      PMID:38640347), which the authors report as an oriens lacunosum-moleculare population
+      selectively targeting CA1 pyramidal cells. No morphological reconstruction is recorded
+      on this node.
+
+      Its annotation transfer disagrees with the literature claim and should not be read as
+      contradicting it: this node maps to CS20230722_SUPT_0203 (Lamp5 Lhx6) at LOW, a branch
+      that olm_cell_ca1 carries a REFUTED edge to. The source run documents the Ndnf result as
+      unresolved (n=1 cell in the by-class labelling,
+      at_run_20260506_harris_chamberland_mmc_wmbv1/README.md), so the weight of that
+      disagreement is low. The literature grouping is the better-supported of the two.
 
   # ── Sst::Nos1-IN (long-range projecting) ────────────────────────
 
+    synonyms:
+      - term: "Ndnf::Nkx2-1-IN (Ndnf-OLM, Chamberland 2024)"
+        synonym_type: HISTORICAL
   - id: sst_nos1_subfamily_chamberland
-    name: "Sst::Nos1-IN (long-range projecting, Chamberland 2024)"
+    name: "Sst::Nos1-IN (long-range projecting)"
     definition_basis: CLASSICAL_MULTIMODAL
     species:
     anatomical_location:
@@ -3490,6 +3530,9 @@ nodes:
 
   # ── Sst::Tac1-IN (bistratified-like) ────────────────────────────
 
+    synonyms:
+      - term: "Sst::Nos1-IN (long-range projecting, Chamberland 2024)"
+        synonym_type: HISTORICAL
   - id: CS20230722_SUBC_052
     name: "052 Pvalb Gaba"
     definition_basis: ATLAS_TRANSCRIPTOMIC
@@ -23310,3 +23353,42 @@ edges:
     rationale_generated_at: '2026-06-10T13:59:26+00:00'
     report_path: reports/hippocampus/sst_tac1_subfamily_chamberland_summary.md
     rationale_source_hash: 06f4fbee
+  - id: edge_chrna2_olm_subfamily_to_olm_cell_ca1
+    lit_type: chrna2_olm_subfamily_chamberland
+    taxonomy_type: olm_cell_ca1
+    relationship: skos:broadMatch
+    mapping_justification: semapv:ManualMappingCuration
+    confidence: MODERATE
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:38640347
+        snippet: While Sst;;Tac1-INs were located closer to the CA1 pyramidal layer, Ndnf;;Nkx2-1-INs and Chrna2-INs were found progressively deeper in O/A
+        explanation: |-
+          Chrna2-INs sit deep in oriens/alveus, the laminar position of O-LM somata. Chrna2-Cre is
+          independently established as labelling O-LM interneurons (PMID:29487503, PMID:31420995,
+          PMID:23042082), and Chrna2 is already a defining marker on olm_cell_ca1. Recorded as
+          broadMatch -- Chrna2-IN is a transgene-defined subset of the morphologically-defined
+          type -- rather than exactMatch, because no morphology is recorded for this population
+          and the two nodes map best to different WMBv1 clusters (CLUS_0771 vs CLUS_0768) under a
+          shared supertype. Curator-authored; not generated by report write-back.
+  - id: edge_ndnf_nkx2_1_olm_subfamily_to_olm_cell_ca1
+    lit_type: ndnf_nkx2_1_olm_subfamily_chamberland
+    taxonomy_type: olm_cell_ca1
+    relationship: skos:broadMatch
+    mapping_justification: semapv:ManualMappingCuration
+    confidence: LOW
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: PMID:38640347
+        snippet: the Sst;;Tac1 intersection targeted a population of bistratified cells that overwhelmingly targeted fast-spiking interneurons. In contrast, the Ndnf;;Nkx2-1 intersection revealed a population of oriens lacunosum-moleculare interneurons that selectively targeted CA1 pyramidal cells
+        explanation: |-
+          Chamberland 2024 states directly that the Ndnf::Nkx2-1 intersection labels oriens
+          lacunosum-moleculare interneurons, and places them deep in O/A alongside Chrna2-INs.
+          Recorded as broadMatch at LOW confidence: the literature claim is explicit but no
+          morphological reconstruction is recorded on this node, and the annotation transfer places
+          it on a different atlas branch (SUPT_0203 Lamp5 Lhx6) from olm_cell_ca1 -- a branch
+          olm_cell_ca1 is REFUTED from. That AT result is documented as unresolved by its own run
+          (n=1 in the by-class labelling), so it is not treated as contradicting the literature.
+          Curator-authored; not generated by report write-back.

@@ -107,7 +107,7 @@ nodes:
   # ── Prior transcriptomic types (Osorno 2022 / SCP795) ──────────
 
   - id: pli3_osorno
-    name: "PLI3 (Osorno 2022 / Lugaro)"
+    name: "PLI3 (Lugaro)"
     definition_basis: PRIOR_TRANSCRIPTOMIC
     species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
     prior_dataset_accession: "SCP:SCP795"
@@ -126,6 +126,9 @@ nodes:
 
   # ── Terminal nodes: WMBv1 atlas cell sets ──────────────────────
 
+    synonyms:
+      - term: "PLI3 (Osorno 2022 / Lugaro)"
+        synonym_type: HISTORICAL
   - id: wmb_supertype_1145
     name: "CB PLI Gly-Gaba_2 (supertype 1145)"
     definition_basis: ATLAS_TRANSCRIPTOMIC
