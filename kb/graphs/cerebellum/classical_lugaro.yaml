@@ -132,39 +132,9 @@ nodes:
   - id: wmb_supertype_1145
     name: "CB PLI Gly-Gaba_2 (supertype 1145)"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_1145
-    taxonomy_level: SUPERTYPE
-    parent_hierarchy:
-      - {level: SUBCLASS, name: "CB PLI Gly-Gaba (309)", cell_set_accession: CS20230722_SUBC_309}
-      - {level: CLASS, name: "CB GABA (28)", cell_set_accession: CS20230722_CLAS_28}
-    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
-    anatomical_location:
-      - id: MBA:1145
-        label: "Cerebellar cortex, Purkinje layer"
-        name_in_source: "CBX"
-    nt_type:
-      name_in_source: "GABA-Glyc"
-      cl_terms:
-        - id: CL:0000617
-          label: GABAergic neuron
-          name_in_source: "GABA"
-        - id: CL:1001509
-          label: glycinergic neuron
-          name_in_source: "Glyc"
-    n_cells: 254   # sum of clusters 5180-5182
-    is_terminal: true
-    notes: >
-      PLI3/Lugaro maps best at supertype level (F1=0.96). Individual clusters
-      5180-5182 within this supertype may reflect further biological heterogeneity
-      not yet explained by classical taxonomy.
-
-
-# ══════════════════════════════════════════════════════════════════
-# EDGES
-# ══════════════════════════════════════════════════════════════════
-
+    n_cells: 254
 edges:
   - id: edge_lugaro_to_pli3
     lit_type: classical_lugaro
@@ -248,6 +218,9 @@ edges:
           WMBv1 clusters 5180-5182 within this supertype each receive only a fraction
           of PLI3 cells. The biological basis for this intra-supertype heterogeneity
           is not yet characterised.
+      - caveat_type: OTHER
+        description: |-
+          [Relocated from the wmb_supertype_1145 atlas stub] PLI3/Lugaro maps best at supertype level (F1=0.96). Individual clusters 5180-5182 within this supertype may reflect further biological heterogeneity not yet explained by classical taxonomy.
     proposed_experiments:
       - >
         Sub-cluster analysis of supertype 1145 with additional markers (particularly

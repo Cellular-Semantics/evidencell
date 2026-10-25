@@ -123,39 +123,37 @@ nodes:
   - id: hmba_gpi_shell_group
     name: "Group:GPi Shell (HMBA Basal Ganglia Consensus Taxonomy)"
     definition_basis: ATLAS_TRANSCRIPTOMIC
+    cell_set_accession: CS20250428_GROUP_0016
     atlas: HMBA_BG_Consensus
     taxonomy_level: GROUP
-    cell_set_accession: CS20250428_GROUP_0016
-    species: {id: NCBITaxon:9443, label: Primates, name_in_source: Primates}
+    species:
+      id: NCBITaxon:9443
+      label: Primates
+      name_in_source: Primates
     anatomical_location:
       - id: DHBA:10344
-        label: "internal segment of globus pallidus"
-        name_in_source: "Internal segment of globus pallidus"
+        label: internal segment of globus pallidus
+        name_in_source: Internal segment of globus pallidus
     nt_type:
-      name_in_source: "GABA-Glut (dual)"
+      name_in_source: GABA-Glut (dual)
       cl_terms:
         - id: CL:0000617
           label: GABAergic neuron
-          name_in_source: "GABA"
+          name_in_source: GABA
         - id: CL:0000679
           label: glutamatergic neuron
-          name_in_source: "Glut"
+          name_in_source: Glut
     defining_markers:
-      - {symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
-      - {symbol: TBR1, ncbi_gene_id: "NCBIGene:10716"}
-      - {symbol: SLC17A6, ncbi_gene_id: "NCBIGene:57084"}
+      - symbol: SST
+        ncbi_gene_id: NCBIGene:6750
+      - symbol: TBR1
+        ncbi_gene_id: NCBIGene:10716
+      - symbol: SLC17A6
+        ncbi_gene_id: NCBIGene:57084
     neuropeptides:
-      - {symbol: SST, ncbi_gene_id: "NCBIGene:6750"}
+      - symbol: SST
+        ncbi_gene_id: NCBIGene:6750
     is_terminal: true
-    notes: >
-      "Group" level is below Class in the HMBA BG taxonomy hierarchy (Class > Group).
-      CCN accession confirmed: CS20250428_GROUP_0016.
-
-
-# ══════════════════════════════════════════════════════════════════
-# EDGES
-# ══════════════════════════════════════════════════════════════════
-
 edges:
 
   - id: edge_gpi_shell_to_hmba
@@ -244,6 +242,9 @@ edges:
           mapping. The Group may encompass multiple more finely-resolved clusters
           that have not yet been individually characterised.
 
+      - caveat_type: OTHER
+        description: |-
+          [Relocated from the hmba_gpi_shell_group atlas stub] "Group" level is below Class in the HMBA BG taxonomy hierarchy (Class > Group). CCN accession confirmed: CS20250428_GROUP_0016.
     unresolved_questions:
       - >
         Are there finer-grained HMBA clusters within the GPi Shell group

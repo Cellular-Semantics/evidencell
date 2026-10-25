@@ -49,17 +49,8 @@ nodes:
   - id: CS20230722_SUPT_0055
     name: "0055 MEA Slc17a7 Glut_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0055
-    taxonomy_level: SUPERTYPE
-    notes: >
-      MEA glutamatergic supertype. Knoedler 2022 MeA Esr1+ TRAP-seq identifies
-      this supertype via δ(MeA_FR − VMH_FR): CLUS_0197 (MFR=10.11, male-biased)
-      ranks #3 with the highest δ value (0.052) of any contrast in the run.
-      Anatomically clean signal. Candidate WMBv1 home for an MeA Esr1+
-      classical type not yet defined in the KB.
-
 edges:
   - id: edge_mea_esr1_neuron_to_cs20230722_supt_0055
     lit_type: mea_esr1_neuron
@@ -118,6 +109,9 @@ edges:
           itself awaits proper ingest.
       - caveat_type: OTHER
         description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
+      - caveat_type: OTHER
+        description: |-
+          [Relocated from the CS20230722_SUPT_0055 atlas stub] MEA glutamatergic supertype. Knoedler 2022 MeA Esr1+ TRAP-seq identifies this supertype via δ(MeA_FR − VMH_FR): CLUS_0197 (MFR=10.11, male-biased) ranks #3 with the highest δ value (0.052) of any contrast in the run. Anatomically clean signal. Candidate WMBv1 home for an MeA Esr1+ classical type not yet defined in the KB.
     unresolved_questions:
       - >
         Does the existing classical literature support a single MeA Esr1+ classical

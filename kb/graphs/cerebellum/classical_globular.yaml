@@ -108,40 +108,8 @@ nodes:
   - id: wmb_cluster_5177
     name: "5177 CB PLI Gly-Gaba_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_5177
-    taxonomy_level: CLUSTER
-    parent_hierarchy:
-      - {level: SUPERTYPE, name: "CB PLI Gly-Gaba_1 (1144)", cell_set_accession: CS20230722_SUPT_1144}
-      - {level: SUBCLASS, name: "CB PLI Gly-Gaba (309)", cell_set_accession: CS20230722_SUBC_309}
-      - {level: CLASS, name: "CB GABA (28)", cell_set_accession: CS20230722_CLAS_28}
-    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
-    anatomical_location:
-      - id: MBA:1145
-        label: "Cerebellar cortex, Purkinje layer"
-        name_in_source: "CBX"
-    nt_type:
-      name_in_source: "GABA-Glyc"
-      cl_terms:
-        - id: CL:0000617
-          label: GABAergic neuron
-          name_in_source: "GABA"
-        - id: CL:1001509
-          label: glycinergic neuron
-          name_in_source: "Glyc"
-    n_cells: 535
-    defining_markers:
-      - {symbol: Aldh1a3}
-      - {symbol: Pvalb}
-      - {symbol: Pthlh}
-    merfish_markers:
-      - {symbol: Prom1}
-      - {symbol: Slc6a5, ncbi_gene_id: "NCBIGene:14187"}
-      - {symbol: Nts}
-      - {symbol: Whrn}
-    is_terminal: true
-
 edges:
   - id: edge_globular_to_pli2
     lit_type: classical_globular

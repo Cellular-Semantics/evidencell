@@ -348,26 +348,13 @@ nodes:
   - id: CS20230722_SUPT_0393
     name: "0393 CEA-BST Rai14 Pdyn Crh Gaba_2"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0393
-    taxonomy_level: SUPERTYPE
-
   - id: CS20230722_SUPT_0358
     name: "0358 MEA-BST Lhx6 Nfib Gaba_2"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0358
-    taxonomy_level: SUPERTYPE
-    notes: >
-      MEA/BST GABAergic supertype with multiple child clusters covering both
-      Medial amygdalar nucleus and Bed nuclei of stria terminalis. Knoedler
-      2022 BNST Esr1+ TRAP-seq identifies this supertype via δ(BNST_FR −
-      VMH_FR): CLUS_1295, 1291, 1290 (BST proper), 1293 (MFR=99 male-biased)
-      all rank in top 10. Esr1+ proxy for the bnst_crf_neuron CRF+
-      subpopulation.
-
 edges:
   - id: edge_bnst_crf_neuron_to_cs20230722_supt_0393
     lit_type: bnst_crf_neuron
@@ -500,6 +487,9 @@ edges:
           measurement at cluster level required for confidence upgrade.
       - caveat_type: OTHER
         description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to skos:closeMatch by `refresh_predicates.py`. Rule: rule-3b: no AT F1, existing caveats → closeMatch. Curator review recommended.'
+      - caveat_type: OTHER
+        description: |-
+          [Relocated from the CS20230722_SUPT_0358 atlas stub] MEA/BST GABAergic supertype with multiple child clusters covering both Medial amygdalar nucleus and Bed nuclei of stria terminalis. Knoedler 2022 BNST Esr1+ TRAP-seq identifies this supertype via δ(BNST_FR − VMH_FR): CLUS_1295, 1291, 1290 (BST proper), 1293 (MFR=99 male-biased) all rank in top 10. Esr1+ proxy for the bnst_crf_neuron CRF+ subpopulation.
     unresolved_questions:
       - >
         What fraction of SUPT_0358 cells co-express Esr1 and Crh? ISH or scRNA-seq for

@@ -110,26 +110,13 @@ nodes:
   - id: CS20230722_SUPT_0486
     name: "0486 PVpo-VMPO-MPN Hmx2 Gaba_5"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0486
-    taxonomy_level: SUPERTYPE
-
   - id: CS20230722_SUPT_0521
     name: "0521 AVPV-MEPO-SFO Tbr1 Glut_3"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0521
-    taxonomy_level: SUPERTYPE
-    notes: >
-      Glutamatergic preoptic supertype. Top hit for Knoedler 2022 POA Esr1+
-      TRAP-seq via δ(POA_FR − VMH_FR) — ranks #1 of 5,322 atlas clusters with
-      child cluster CLUS_2085 (top_anat=Anteroventral periventricular nucleus).
-      Candidate co-primary mapping target for mpoa_esr1_neuron alongside the
-      existing GABAergic SUPT_0486; suggests classical node may need
-      glut/GABA split at curator review.
-
 edges:
   - id: edge_mpoa_esr1_neuron_to_cs20230722_supt_0486
     lit_type: mpoa_esr1_neuron
@@ -243,6 +230,9 @@ edges:
           ATLAS_DISSECTION_OVERLAP — Knoedler's "POA" dissection captures a broader preoptic
           zone than MPN proper; AVPV and MePO Esr1+ neurons (anatomically anterior to MPN)
           are likely included in the bulk pool and contribute to the SUPT_0521 signal.
+      - caveat_type: OTHER
+        description: |-
+          [Relocated from the CS20230722_SUPT_0521 atlas stub] Glutamatergic preoptic supertype. Top hit for Knoedler 2022 POA Esr1+ TRAP-seq via δ(POA_FR − VMH_FR) — ranks #1 of 5,322 atlas clusters with child cluster CLUS_2085 (top_anat=Anteroventral periventricular nucleus). Candidate co-primary mapping target for mpoa_esr1_neuron alongside the existing GABAergic SUPT_0486; suggests classical node may need glut/GABA split at curator review.
     unresolved_questions:
       - >
         Should mpoa_esr1_neuron be split into GABAergic (SUPT_0486) and glutamatergic
