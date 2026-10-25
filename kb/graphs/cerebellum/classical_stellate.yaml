@@ -1,0 +1,153 @@
+##
+# Cerebellar Molecular Layer Interneurons — WMBv1 mapping
+#
+# Brain region: Cerebellar cortex (molecular layer interneurons)
+# Target atlas: WMBv1 (Yao et al. 2023, Nature 624:317-332)
+# Curation date: 2026-02-25
+# Curator: dosumis
+# Source analysis: https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+#
+# KEY BIOLOGICAL FINDING: MLI1 and MLI2 CROSS-CUT the classical basket/stellate boundary.
+# This graph makes the cross-cutting explicit as a first-class feature.
+#
+# Evidence graph:
+#
+#   classical_basket   ──[CROSS_CUTTING, Kozareva 2021]─────┐
+#   classical_stellate ──[PARTIAL_OVERLAP, Kozareva 2021]───┼──► mli1_kozareva
+#                       ──[PARTIAL_OVERLAP, Kozareva 2021]───┘
+#   classical_stellate ─(also)──[PARTIAL_OVERLAP, Kozareva 2021]──► mli2_kozareva
+#
+#   mli1_kozareva ──[EQUIVALENT, F1≈0.999, MapMyCells]──► wmb_cluster_5188  (terminal)
+#   mli2_kozareva ──[EQUIVALENT, F1≈0.996, MapMyCells]──► wmb_cluster_5192  (terminal)
+#
+# Note: The transcriptomic types MLI1 and MLI2 are MORE FUNDAMENTAL than the
+# classical basket/stellate distinction. The schema records this correctly —
+# the classical types are not "wrong", but the T-type boundary is differently placed.
+##
+
+name: "Cerebellar Molecular Layer Interneurons — WMBv1"
+description: >
+  Evidence graph mapping classically defined molecular layer interneuron types
+  (cerebellar basket cells and stellate cells) to cell sets in the WMBv1 atlas.
+  Mapping reveals that MLI1 and MLI2 transcriptomic types cross-cut the classical
+  basket/stellate boundary (Kozareva et al. 2021), and both map cleanly to WMBv1
+  clusters via MapMyCells annotation transfer.
+brain_region:
+  id: MBA:1144
+  label: "Cerebellar cortex, molecular layer"
+  name_in_source: "Cerebellar cortex, molecular layer"
+
+target_atlas: WMBv1
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus"
+
+creation_date: "2026-02-25"
+nodes:
+  - id: classical_stellate
+    name: "Cerebellar stellate cell"
+    definition_basis: CLASSICAL_MORPHOLOGICAL
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1144
+        label: "Cerebellar cortex, molecular layer"
+        name_in_source: "Cerebellar cortex, molecular layer (outer third)"
+    colocated_types:
+      - neighboring_type: Purkinje cell
+        spatial_relationship: DISTAL
+        notes: >
+          Stellate cells are located in the outer molecular layer, distal from
+          the Purkinje cell layer.
+    cl_mapping:
+      cl_term: {id: CL:0010010, label: cerebellar stellate cell, name_in_source: "cerebellar stellate cell"}
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:0010010 (cerebellar stellate cell) is the exact CL term for this type.
+        Kozareva 2021 shows that distal MLI1 and distal MLI2 both have stellate
+        morphology, so both transcriptomic types partially correspond to the
+        classical stellate definition. The CL term captures the morphological type
+        without implying transcriptomic uniformity.
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    morphology:
+      description: >
+        Located in the outer molecular layer, distal from Purkinje cell layer.
+        Star-shaped morphology with local axonal arborisations. Classical definition
+        contrasts with basket cells by location and axon morphology.
+    is_terminal: false
+    notes: >
+      Stellate cells map partially to BOTH MLI1 (distally-located MLI1 cells have
+      stellate morphology) AND MLI2 (which are predominantly stellate-like distally).
+      This multi-edge mapping reflects the cross-cutting nature of the T-type boundary.
+
+  # ── Prior transcriptomic types (Kozareva 2021 / SCP795) ────────
+
+  - id: mli1_kozareva
+    name: "MLI1"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    reference_stub: LIT_TYPE
+  - id: mli2_kozareva
+    name: "MLI2"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    reference_stub: LIT_TYPE
+edges:
+  - id: edge_stellate_to_mli1
+    lit_type: classical_stellate
+    taxonomy_type: mli1_kozareva
+    relationship: evidencell:UncertainRelationship
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:34616064"
+        snippet: >
+          "MLI1s had a stellate morphology in the distal third of the molecular
+          layer, whereas MLI1s located near the PC layer had a basket morphology,
+          with contacts near PC initial segments"
+        explanation: >
+          Distal MLI1 cells have stellate morphology, meaning classical stellate
+          cells (defined by outer ML location + star-shaped morphology) partially
+          overlap with MLI1. However, distal MLI2 cells also have stellate morphology,
+          so stellate → PARTIAL_OVERLAP with both MLI1 and MLI2.
+        study_type: MULTIMODAL
+    caveats:
+      - caveat_type: OTHER
+        description: >
+          The fraction of classical stellate cells in MLI1 vs MLI2 is not precisely
+          quantified by Kozareva 2021 — the split is described qualitatively as
+          location-dependent. Quantitative spatial analysis needed.
+
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to evidencell:UncertainRelationship by `refresh_predicates.py`. Rule: rule-4: no AT and no property_comparisons → UncertainRelationship. Curator review recommended.'
+    mapping_justification: semapv:UnreviewedManualMapping
+  - id: edge_stellate_to_mli2
+    lit_type: classical_stellate
+    taxonomy_type: mli2_kozareva
+    relationship: evidencell:UncertainRelationship
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:34616064"
+        snippet: >
+          "MLI2s in the distal third of the molecular layer also had stellate cell
+          morphology, whereas MLI2s near the PC layer had a distinct morphology and
+          appeared to form synapses preferentially near the PC layer"
+        explanation: >
+          Distal MLI2 cells have stellate morphology, confirming partial overlap
+          with the classical stellate type. MLI2 near the PC layer has a distinct
+          morphology (not basket). Together with edge_stellate_to_mli1, this means
+          the classical stellate type is distributed across both MLI1 and MLI2
+          transcriptomic types.
+        study_type: MULTIMODAL
+
+  # ── Step 2: MLI1/MLI2 → WMBv1 (MapMyCells annotation transfer) ─
+  # These edges are clean 1:1, showing T-type → atlas correspondence.
+
+    mapping_justification: semapv:UnreviewedManualMapping
+    caveats:
+      - caveat_type: OTHER
+        description: '[AUTO_REPREDICATED_2026_05_26] Predicate auto-migrated from deprecated evidencell:PartialOverlapMatch to evidencell:UncertainRelationship by `refresh_predicates.py`. Rule: rule-4: no AT and no property_comparisons → UncertainRelationship. Curator review recommended.'

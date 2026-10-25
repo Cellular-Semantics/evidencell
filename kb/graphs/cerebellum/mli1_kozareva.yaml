@@ -1,0 +1,150 @@
+##
+# Cerebellar Molecular Layer Interneurons — WMBv1 mapping
+#
+# Brain region: Cerebellar cortex (molecular layer interneurons)
+# Target atlas: WMBv1 (Yao et al. 2023, Nature 624:317-332)
+# Curation date: 2026-02-25
+# Curator: dosumis
+# Source analysis: https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+#
+# KEY BIOLOGICAL FINDING: MLI1 and MLI2 CROSS-CUT the classical basket/stellate boundary.
+# This graph makes the cross-cutting explicit as a first-class feature.
+#
+# Evidence graph:
+#
+#   classical_basket   ──[CROSS_CUTTING, Kozareva 2021]─────┐
+#   classical_stellate ──[PARTIAL_OVERLAP, Kozareva 2021]───┼──► mli1_kozareva
+#                       ──[PARTIAL_OVERLAP, Kozareva 2021]───┘
+#   classical_stellate ─(also)──[PARTIAL_OVERLAP, Kozareva 2021]──► mli2_kozareva
+#
+#   mli1_kozareva ──[EQUIVALENT, F1≈0.999, MapMyCells]──► wmb_cluster_5188  (terminal)
+#   mli2_kozareva ──[EQUIVALENT, F1≈0.996, MapMyCells]──► wmb_cluster_5192  (terminal)
+#
+# Note: The transcriptomic types MLI1 and MLI2 are MORE FUNDAMENTAL than the
+# classical basket/stellate distinction. The schema records this correctly —
+# the classical types are not "wrong", but the T-type boundary is differently placed.
+##
+
+name: "Cerebellar Molecular Layer Interneurons — WMBv1"
+description: >
+  Evidence graph mapping classically defined molecular layer interneuron types
+  (cerebellar basket cells and stellate cells) to cell sets in the WMBv1 atlas.
+  Mapping reveals that MLI1 and MLI2 transcriptomic types cross-cut the classical
+  basket/stellate boundary (Kozareva et al. 2021), and both map cleanly to WMBv1
+  clusters via MapMyCells annotation transfer.
+brain_region:
+  id: MBA:1144
+  label: "Cerebellar cortex, molecular layer"
+  name_in_source: "Cerebellar cortex, molecular layer"
+
+target_atlas: WMBv1
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus"
+
+creation_date: "2026-02-25"
+nodes:
+  - id: mli1_kozareva
+    name: "MLI1"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    prior_dataset_accession: "SCP:SCP795"
+    prior_cluster_label: "MLI1"
+    prior_reference: "PMID:34616064"
+    cl_mapping:
+      cl_term: {id: CL:4042035, label: molecular layer interneuron, name_in_source: "molecular layer interneuron"}
+      mapping_type: BROAD
+      mapping_notes: >
+        MLI1 is a transcriptomic type that cross-cuts the basket/stellate boundary.
+        The closest existing CL term is CL:4042035 (molecular layer interneuron).
+        A new CL child term for MLI1 (or for the basket-morphology fraction) would
+        be needed to capture the transcriptomic identity precisely.
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    is_terminal: false
+    notes: >
+      MLI1 cells close to the Purkinje layer have basket morphology; cells located
+      more distally have stellate morphology. MLI1 is thus NOT equivalent to either
+      classical basket or stellate cells, but contains cells with both morphologies.
+      The transcriptomic boundary (MLI1 vs MLI2) does not correspond to the
+      spatial/morphological basket/stellate boundary.
+
+    synonyms:
+      - term: "MLI1 (Kozareva 2021)"
+        synonym_type: HISTORICAL
+  - id: wmb_cluster_5188
+    name: "5188 CBX MLI Megf11 Gaba_1"
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    atlas: WMBv1
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_5188  # NOTE: verify this accession
+    taxonomy_level: CLUSTER
+    parent_hierarchy:
+      - {level: SUPERTYPE, name: "1149 CBX MLI Megf11 Gaba_1"}
+      - {level: SUBCLASS, name: "311 CBX MLI Megf11 Gaba"}
+      - {level: CLASS, name: "28 CB GABA"}
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    is_terminal: true
+
+edges:
+  - id: edge_mli1_to_wmb5188
+    lit_type: mli1_kozareva
+    taxonomy_type: wmb_cluster_5188
+    relationship: skos:exactMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        supports: SUPPORT
+        explanation: >
+          MapMyCells annotation transfer of MLI1 cells (Kozareva SCP795) to WMBv1.
+          Near-perfect correspondence with cluster 5188 at cluster, subclass,
+          and supertype levels. NT prediction (GABA) is consistent with MLI1.
+        source_dataset_accession: "SCP:SCP795"
+        source_cluster_label: MLI1
+        n_cells_total: 32638
+        target_atlas: WMBv1
+        method: "MapMyCells (default parameters)"
+        bootstrap_threshold: 0.8
+        n_cells_after_filter: 32653  # NOTE: slightly exceeds n_cells_total; verify source data
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            best_target_name: "28 CB GABA"
+            f1_score: 0.833
+            n_cells_mapped: 32638
+            median_bootstrap: 1.0
+            coverage: 1.000
+            purity: 0.715
+          - taxonomy_level: SUBCLASS
+            best_target_name: "311 CBX MLI Megf11 Gaba"
+            f1_score: 0.999
+            n_cells_mapped: 32659
+            median_bootstrap: 1.0
+            coverage: 0.9999
+            purity: 0.998
+          - taxonomy_level: SUPERTYPE
+            best_target_name: "1149 CBX MLI Megf11 Gaba_1"
+            f1_score: 0.998
+            n_cells_mapped: 32653
+            median_bootstrap: 1.0
+            coverage: 0.999
+            purity: 0.997
+          - taxonomy_level: CLUSTER
+            best_target_name: "5188 CBX MLI Megf11 Gaba_1"
+            f1_score: 0.999
+            n_cells_mapped: 32254
+            median_bootstrap: 1.0
+            coverage: 0.999
+            purity: 0.999
+        code_reference: "https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation"
+
+    mapping_justification: semapv:UnreviewedManualMapping

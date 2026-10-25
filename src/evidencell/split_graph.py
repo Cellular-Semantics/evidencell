@@ -43,6 +43,24 @@ ATLAS_BASIS = "ATLAS_TRANSCRIPTOMIC"
 _BROADER_IS_TARGET = "skos:broadMatch"
 _BROADER_IS_SOURCE = "skos:narrowMatch"
 
+# Lit-to-lit relations that keep two types in one file.
+#
+# File layout follows *settled structure*, not open questions. Two shapes are
+# settled: a general type with subtypes invented for it (broad/narrow), and one
+# type named twice by different literatures (exactMatch). Both describe a thing
+# that is finished being argued about, so co-locating is stable.
+#
+# Everything else -- closeMatch, CrossCuttingMatch, UncertainRelationship -- is
+# a hypothesis under review. Keying layout to a hypothesis makes files churn as
+# hypotheses are raised and dropped, and co-location visually asserts the very
+# thing in question. Those endpoints get a thin LIT_TYPE stub instead, so each
+# type keeps its own file and the curator decides any merge.
+CO_LOCATING_RELATIONS = frozenset({
+    "skos:broadMatch",
+    "skos:narrowMatch",
+    "skos:exactMatch",
+})
+
 # Fields a thin atlas stub may carry (CLAUDE.md: taxonomy YAML is canonical for
 # atlas properties). The splitter copies stubs verbatim rather than trimming to
 # this set -- stripping anatomical_location is a report-content change and
@@ -99,7 +117,15 @@ class SplitPlan:
 
 
 def is_stub(node: dict) -> bool:
-    return node.get("definition_basis") == ATLAS_BASIS
+    """True if this node is a placeholder, not a definition.
+
+    Both arms matter. `reference_stub` catches lit stubs, whose
+    definition_basis is their real basis and so says nothing about whether the
+    record is canonical. Without it, re-splitting a file that already contains
+    a lit stub would treat the stub as a member and rebuild a component that
+    was deliberately separated.
+    """
+    return bool(node.get("reference_stub")) or node.get("definition_basis") == ATLAS_BASIS
 
 
 def plan_split(doc: dict, source: Path) -> SplitPlan:
@@ -118,7 +144,11 @@ def plan_split(doc: dict, source: Path) -> SplitPlan:
 
     for edge in edges:
         a, b = edge.get("lit_type"), edge.get("taxonomy_type")
-        if a in non_atlas and b in non_atlas:
+        if (
+            a in non_atlas
+            and b in non_atlas
+            and edge.get("relationship") in CO_LOCATING_RELATIONS
+        ):
             parent[find(a)] = find(b)
 
     groups: dict[str, list[str]] = {}
@@ -132,7 +162,11 @@ def plan_split(doc: dict, source: Path) -> SplitPlan:
         member_set = set(members)
         comp_edges = [
             e for e in edges
-            if e.get("lit_type") in member_set or e.get("taxonomy_type") in member_set
+            if e.get("lit_type") in member_set
+            or (
+                e.get("taxonomy_type") in member_set
+                and e.get("lit_type") not in non_atlas
+            )
         ]
         representative = _representative(members, comp_edges)
         for edge in comp_edges:
@@ -183,6 +217,24 @@ def _representative(members: list[str], comp_edges: list[dict]) -> str:
     return roots[0] if len(roots) == 1 else members[0]
 
 
+def lit_stub(node: dict) -> CommentedMap:
+    """A thin placeholder for a literature type defined in another file.
+
+    Carries identity only. Copying the node verbatim, as we do for atlas stubs,
+    would put a second full copy of a curated record in a second file -- two
+    canonical definitions of one type, which `find_node_file` would then refuse
+    to resolve and `qc_content.duplicate_node_id` would flag. The marker is what
+    makes the difference legible: an atlas stub is recognisable from its
+    definition_basis, a lit stub is not.
+    """
+    stub = CommentedMap()
+    stub["id"] = node["id"]
+    stub["name"] = node.get("name") or node["id"]
+    stub["definition_basis"] = node.get("definition_basis")
+    stub["reference_stub"] = "LIT_TYPE"
+    return stub
+
+
 def build_component_doc(doc: dict, component: Component) -> CommentedMap:
     """Assemble one component's document, preserving node/edge comments."""
     nodes = {n["id"]: n for n in doc.get("nodes") or [] if n.get("id")}
@@ -212,7 +264,12 @@ def build_component_doc(doc: dict, component: Component) -> CommentedMap:
     for node_id in component.node_ids:
         out_nodes.append(nodes[node_id])
     for node_id in stub_ids:
-        out_nodes.append(nodes[node_id])
+        target = nodes[node_id]
+        # Atlas stubs are copied verbatim (trimming them is a separate change,
+        # see the STUB_FIELDS note above). A lit endpoint must be thinned.
+        out_nodes.append(
+            target if is_stub(target) else lit_stub(target)
+        )
     out["nodes"] = out_nodes
 
     out_edges = CommentedSeq()

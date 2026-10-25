@@ -422,7 +422,15 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
 
         for node in nodes:
             node_id = node["id"]
-            if node.get("definition_basis") != ATLAS_BASIS:
+            # A reference stub is a placeholder, never a definition. Bucketing
+            # by definition_basis alone counts a lit stub as canonical, which
+            # makes duplicate_node_id fire on every type that is referenced
+            # from another file and makes dangling_endpoint resolve a stub to
+            # itself.
+            if (
+                node.get("definition_basis") != ATLAS_BASIS
+                and not node.get("reference_stub")
+            ):
                 canonical.setdefault(node_id, []).append(rel)
             tax_id = node.get("taxonomy_id")
             if tax_id:
@@ -451,12 +459,33 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
                 f"(referenced in {len(files)} file(s): {', '.join(sorted(files))})",
             ))
 
-    # No `dangling_endpoint` check here, deliberately. While
-    # validate.structural_checks requires both endpoints to resolve *within the
-    # same document*, every endpoint is resolvable by construction and a
-    # cross-file version could never fire. It becomes meaningful only if that
-    # rule is relaxed to cross-file resolution (the stub-retirement follow-on);
-    # adding it now would ship a check that silently never runs.
+    # 3. A lit stub pointing at nothing. Lit stubs let a lit-to-lit edge span
+    #    two files -- each type keeps its own file and the stub satisfies the
+    #    in-document endpoint rule. Nothing in that rule checks the stub
+    #    resolves to a real definition, so a renamed or deleted node leaves the
+    #    stub silently pointing at a type that no longer exists. This is the
+    #    only check standing between a lit stub and a dangling reference.
+    #
+    #    Atlas stubs are out of scope: they resolve against kb/taxonomy/, not
+    #    against kb/graphs, and unknown_taxonomy_id covers the directory side.
+    for rel, _doc, nodes, _edges in per_file:
+        for node in nodes:
+            if node.get("reference_stub") != "LIT_TYPE":
+                continue
+            homes = canonical.get(node["id"]) or []
+            if not homes:
+                findings.append(Finding(
+                    rel, ERROR, "dangling_endpoint",
+                    f"Lit stub '{node['id']}' has no canonical definition in any "
+                    "KB file. Either the type was renamed or removed, or the "
+                    "stub was authored against an id that never existed.",
+                ))
+            elif len(homes) > 1:
+                findings.append(Finding(
+                    rel, ERROR, "dangling_endpoint",
+                    f"Lit stub '{node['id']}' resolves to {len(homes)} canonical "
+                    f"definitions: {', '.join(sorted(homes))}. Ambiguous reference.",
+                ))
 
     # 4. Distinct node ids sharing an identical name. Renaming a duplicate so
     #    each file defines a distinct id unblocks the layout but silences
@@ -498,6 +527,11 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
         }
         for node in nodes:
             if node["id"] in endpoints:
+                continue
+            if node.get("reference_stub"):
+                # A placeholder referenced by no edge in its own file has no
+                # reason to exist, but dangling_endpoint is the check that
+                # speaks about stubs; reporting it here too would double-count.
                 continue
             kind = "atlas stub" if node.get("definition_basis") == ATLAS_BASIS else "node"
             findings.append(Finding(
@@ -576,6 +610,7 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "duplicate_node_id":   (r"Node '([^']+)'",),
     "unknown_taxonomy_id": (r"taxonomy_id '([^']+)'",),
     "orphan_node":         (r"'([^']+)' is referenced by no edge",),
+    "dangling_endpoint":   (r"Lit stub '([^']+)'",),
     "possible_duplicate_name": (r"Name '([^']+)'",),
     "markdown": (
         r"(?:Atlas accession|PMID|quote_key) '([^']+)'",
