@@ -1,0 +1,718 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - anatomical_location:
+      - compartment: SOMA
+        id: UBERON:0005381
+        label: dentate gyrus granule cell layer
+        name_in_source: dentate gyrus stratum granulosum (inner/outer border)
+        sources:
+          - ref: PMID:18077687
+            method: two-photon imaging + patch clamp (acute slice)
+            scope: rat dentate gyrus inner molecular layer, semilunar granule cells
+            quote_key: 30068647_4c023496
+    cl_mapping:
+      cl_term:
+        id: CL:2000089
+        label: dentate gyrus granule cell
+        name_in_source: dentate gyrus granule cell
+      mapping_notes: 'Semilunar granule cells are a distinct morpho-physiological subpopulation of DG excitatory projection neurons. No SGC-specific CL term exists; CL:2000089 (dentate gyrus granule cell) is the closest parent.
+
+        '
+      mapping_type: BROAD
+    defining_markers: []
+    definition_basis: CLASSICAL_MULTIMODAL
+    id: dg_semilunar_granule_cell_hippocampus
+    name: dentate gyrus semilunar granule cell
+    nt_type:
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      name_in_source: glutamatergic
+      sources:
+        - ref: PMID:40161709
+          method: dual GC-SGC patch clamp recordings
+          scope: rodent dentate gyrus, semilunar granule cells
+          quote_key: 277071421_57aeddb7
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+    synonyms:
+      - term: SGCs
+        synonym_type: ABBREVIATION
+        sources:
+          - ref: PMID:18077687
+            method: defined in abstract as abbreviation for semilunar granule cells
+            scope: rat dentate gyrus
+            quote_key: 30068647_874c8023
+    morphology:
+      description: Semilunar soma in outer granule cell layer; apical dendrite extending into molecular layer; no basal dendrites
+      sources:
+        - ref: PMID:18077687
+          method: patch-clamp + biocytin fill (rat slice)
+          scope: adult rat dentate gyrus
+          quote_key: 30068647_f4e78cdf
+    electrophysiology:
+      description: Higher spontaneous excitability than granule cells; prolonged depolarization; distinct firing pattern
+      sources:
+        - ref: PMID:18077687
+          method: patch-clamp current-clamp (rat slice)
+          scope: adult rat dentate gyrus
+          quote_key: 30068647_7a7e683e
+  - id: CS20230722_SUPT_0137
+    name: 0137 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0137
+  - id: CS20230722_SUPT_0138
+    name: 0138 DG Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0138
+  - id: CS20230722_CLUS_0316
+    name: 0316 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0316
+  - id: CS20230722_CLUS_0317
+    name: 0317 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0317
+  - id: CS20230722_CLUS_0507
+    name: 0507 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0507
+  - id: CS20230722_CLUS_0508
+    name: 0508 DG Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0508
+  - id: CS20230722_CLUS_0509
+    name: 0509 DG Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0509
+  - id: CS20230722_SUPT_0079
+    name: 0079 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: CS20230722_SUPT_0139
+    name: 0139 DG Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0139
+  - id: CS20230722_SUPT_0136
+    name: 0136 DG Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0136
+edges:
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_supt_0137
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0137
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: PARTIAL
+        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 DG subclass cells (n=2473) map to SUPT_0137 with coverage=0.878 and F1=0.935, confirming SUPT_0137 as the dominant DG glutamatergic supertype. SUPT_0137 is shared between dg_granule_cell_hippocampus and this node (dg_semilunar_granule_cell_hippocampus); the semilunar granule cell is a morpho-physiologically distinct DG subpopulation for which no transcriptome-specific markers are available in this dataset. PARTIAL_SUPPORT reflects that this edge targets the same atlas node as the regular granule cell — a more specific sub-supertype mapping requires either molecular markers (see gaps in validation_notes.json) or the Bhatt 2025 (GSE280167) SGC snRNA-seq data.
+
+          '
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: DG (Yao 2021 subclass)
+        n_cells_total: 2473
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: SUPERTYPE
+            best_target_name: 0137 DG Glut_2
+            f1_score: 0.935
+            n_cells_mapped: 2172
+            taxonomy_rank: 1
+            best_target_accession: CS20230722_SUPT_0137
+            coverage: 0.878
+            purity: 1.0
+        best_mapping_rank: 1
+    property_comparisons: &id003
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=47494 [painted]; Dentate gyrus [MBA:726] count_100um=47391 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=47167 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.991; strict region_fraction: 0.817; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "CS20230722_SUPT_0137 is the dominant DG supertype shared with dg_granule_cell_hippocampus; SGCs cannot be separated from regular granule cells at this supertype using the Yao 2021 SSv4 cohort, so the mapping is broader than 1:1.\n"
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "No transcript-level SGC discriminator is present in the Yao 2021 SSv4 dataset; SGCs are inferred to contribute to CS20230722_SUPT_0137 only through the rarity argument and the Bhatt 2025 Sorcs3/Nptx2 enrichment in the sibling supertype CS20230722_SUPT_0138.\n"
+    unresolved_questions:
+      - 'Bhatt 2025 (GSE280167) identifies a SGC-enriched cluster (Cluster 18, Sorcs3+/Penk+/Nptx2+). Does this cluster map specifically to SUPT_0139 or to a SUPT_0137 sub-cluster? Running MapMyCells on GSE280167 will resolve.
+
+        '
+      - 'Are there transcriptomic markers that distinguish SGCs from regular DG granule cells in the Yao 2021 dataset? Differential expression between DG cells mapping to SUPT_0139 vs SUPT_0137 might reveal candidate markers.
+
+        '
+      - Are there transcript-level markers that distinguish SGCs from regular DG granule cells within the dominant CS20230722_SUPT_0137 supertype?
+    proposed_experiments:
+      - Re-map Bhatt 2025 SGC-annotated nuclei (when per-cell cluster labels become available) to WMBv1 and quantify how many fall on CS20230722_SUPT_0137 versus CS20230722_SUPT_0138.
+      - Differential expression between Yao 2021 DG cells mapping to CS20230722_SUPT_0137 versus CS20230722_SUPT_0138 to surface candidate SGC markers at SSv4 resolution.
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:n"
+    discovery_score: &id004
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.817
+      region_fraction_100um: 0.991
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:NEXT] Annotation transfer of the Yao 2021 DG subclass cells (run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) places the DG cohort dominantly on CS20230722_SUPT_0137 (F1=0.94, region_fraction_100um: 0.991); because no SGC-specific transcript discriminator is available in this dataset, SGCs necessarily contribute to the CS20230722_SUPT_0137 cell pool alongside regular granule cells, justifying a broadMatch from the SGC classical type to the dominant DG supertype.\n"
+    reconciliation_note: "Paired with edge_dg_semilunar_granule_cell_hippocampus_to_supt_0138 (primary, skos:closeMatch): CS20230722_SUPT_0138 carries the SGC-specific Sorcs3/Nptx2 enrichment but is small (0.6% of DG nuclei in Bhatt 2025), so residual SGCs are expected within the dominant CS20230722_SUPT_0137 supertype.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: aa7f128f
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_supt_0138
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0138
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_bhatt2025_dg_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'MapMyCells local annotation transfer of Bhatt 2025 (GSE280167) dentate gyrus snRNA-seq (wild-type VV samples, 4 animals, 11,601 DG Glut cells) onto WMBv1 (CCN20230722). Among the four DG Glut supertypes, SUPT_0138 (DG Glut_3, n=82 cells, 0.7% of DG cells) shows marked enrichment for the semilunar granule cell (SGC) marker Sorcs3: 53.7% of SUPT_0138 cells express Sorcs3 (mean=4.93 UMIs) vs 9.1% in SUPT_0137 (mean=0.20). Nptx2, a second SGC marker, is also elevated in SUPT_0138 (15.9% cells) vs near-absent in other DG supertypes (<1%). Penk, the third Bhatt 2025 SGC marker, is sparsely detected across all DG supertypes (<2%), likely due to nuclear RNA dropout in snRNA-seq. The minor cell count (0.7% of DG) is consistent with the known rarity of SGCs in the DG granule cell layer. SUPT_0138 markers Lct and Atf3 are not classical SGC markers but may reflect the transcriptomic state captured by WMBv1.
+
+          '
+        source_dataset_accession: GEO:GSE280167
+        source_cluster_label: DG Glut (Bhatt 2025 snRNA-seq, VV wild-type)
+        n_cells_total: 11327
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0137 DG Glut_2
+            best_target_accession: CS20230722_SUPT_0137
+            f1_score:
+            n_cells_mapped: 11083
+            coverage: 0.979
+            purity:
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0138 DG Glut_3
+            best_target_accession: CS20230722_SUPT_0138
+            f1_score:
+            n_cells_mapped: 67
+            coverage: 0.0059
+            purity:
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0139 DG Glut_4
+            best_target_accession: CS20230722_SUPT_0139
+            f1_score:
+            n_cells_mapped: 131
+            coverage: 0.0116
+            purity:
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0136 DG Glut_1
+            best_target_accession: CS20230722_SUPT_0136
+            f1_score:
+            n_cells_mapped: 46
+            coverage: 0.0041
+            purity:
+        best_mapping_rank: 1
+    property_comparisons: &id001
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1024 [painted]; Dentate gyrus [MBA:726] count_100um=1021 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=1012 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.986; strict region_fraction: 0.804; region_evidence: SELF'
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "SGC identification rests on Sorcs3 and Nptx2 enrichment in CS20230722_SUPT_0138 from a raw-counts re-analysis of GSE280167 nuclei, not on a published per-cell SGC cluster label; Bhatt 2025 used joint ATAC+RNA clustering and the RNA-only signal may be incomplete.\n"
+      - caveat_type: LOW_CELL_COUNT
+        description: "Only 67 of 11327 Bhatt 2025 DG Glut subclass nuclei map to CS20230722_SUPT_0138 in this annotation transfer (run_ref at_run_20260508_bhatt2025_dg_mmc_wmbv1); the supertype itself carries 964 cells in WMBv1.\n"
+      - caveat_type: SINGLE_DATASET
+        description: "The SGC-specific marker enrichment for Sorcs3 and Nptx2 is currently anchored on a single annotation transfer (run_ref at_run_20260508_bhatt2025_dg_mmc_wmbv1); independent replication on a second SGC-annotated dataset is not yet available.\n"
+    unresolved_questions:
+      - 'Does Sorcs3 appear in the SUPT_0138 defining markers in the WMBv1 precomputed stats? Running add-expression for Sorcs3 and Nptx2 in DG Glut supertypes (SUBC_037) would formalize this enrichment at the atlas level.
+
+        '
+      - 'Are SUPT_0138 cells specifically enriched at the inner/outer border of the DG granule cell layer (the anatomical location of SGCs) in the WMBv1 MERFISH data?
+
+        '
+      - Does Sorcs3 appear in the CS20230722_SUPT_0138 defining-marker panel in the WMBv1 precomputed stats?
+      - Are CS20230722_SUPT_0138 cells specifically enriched at the inner/outer border of the dentate gyrus granule cell layer (the classical SGC soma position) in WMBv1 MERFISH data?
+    proposed_experiments:
+      - Run just add-expression for Sorcs3 and Nptx2 across the DG Glut subclass supertypes and clusters in WMBv1 precomputed stats; target a per-supertype Sorcs3 mean with CS20230722_SUPT_0138 > CS20230722_SUPT_0137.
+      - Obtain Bhatt 2025 published per-cell cluster annotations (GSE280167 Cluster 18 = SGC) and re-run MapMyCells against WMBv1; target F1 >= 0.5 at SUPERTYPE level for Cluster 18 -> CS20230722_SUPT_0138.
+      - Differential expression between Sorcs3-high CS20230722_SUPT_0138 cells and CS20230722_SUPT_0137 cells in GSE280167 to discover additional SGC-specific markers.
+      - Inspect WMBv1 MERFISH soma positions for CS20230722_SUPT_0138 cells to confirm preferential inner/outer-border localisation within the dentate gyrus granule cell layer.
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:1"
+    discovery_score: &id002
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.804
+      region_fraction_100um: 0.986
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.6
+    rationale: "[tier:STRONGEST] Annotation transfer of Bhatt 2025 DG snRNA-seq (run_ref at_run_20260508_bhatt2025_dg_mmc_wmbv1) shows that CS20230722_SUPT_0138 selectively concentrates the SGC markers Sorcs3 (53.7% of supertype cells) and Nptx2 (15.9%) versus CS20230722_SUPT_0137 (9.1% / <1%); location is CONSISTENT (region_fraction_100um: 0.986) and consistent with the classical inner/outer-border soma position of SGCs.\n"
+    reconciliation_note: "Paired with edge_dg_semilunar_granule_cell_hippocampus_to_supt_0137 (retained as secondary): SGCs cannot be separated from regular granule cells in the dominant CS20230722_SUPT_0137 cohort using available transcript-level markers; CS20230722_SUPT_0138 is the SGC-enriched minor supertype but residual SGCs likely persist in CS20230722_SUPT_0137.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: eeacccae
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_CLUS_0316
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0316
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0316 CA3 Glut_5; region_fraction_100um=0.578; strict region_fraction=0.044.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=499 [painted]; Field CA3 [MBA:463] count_100um=461 [painted]; Field CA3, stratum radiatum [MBA:504] count_100um=389 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.578; strict region_fraction: 0.044; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.044
+      region_fraction_100um: 0.578
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_CLUS_0316 is a CA3 stratum radiatum cluster (region_fraction strict 0.044, region_fraction_100um 0.578); wrong region for SGCs, which are confined to the dentate gyrus granule cell layer.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 1388570f
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_CLUS_0317
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0317
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0317 CA3 Glut_5; region_fraction_100um=0.846; strict region_fraction=0.101.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1231 [painted]; Dentate gyrus [MBA:726] count_100um=1229 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1222 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.846; strict region_fraction: 0.101; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.101
+      region_fraction_100um: 0.846
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_CLUS_0317 is a CA3 Glut_5 cluster located dominantly in the DG polymorph layer (region_fraction strict 0.101, region_fraction_100um 0.846); polymorph-layer / CA3 identity, not the SGC granule cell layer position.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: d78faff2
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_CLUS_0507
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0507
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0507 DG Glut_2; region_fraction_100um=0.991; strict region_fraction=0.815.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=32942 [painted]; Dentate gyrus [MBA:726] count_100um=32869 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=32712 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.991; strict region_fraction: 0.815; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.815
+      region_fraction_100um: 0.991
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_CLUS_0507 is the largest child cluster of CS20230722_SUPT_0137 and carries the dominant DG granule cell pool; no per-cluster SGC discriminator is available, so a cluster-level mapping is not supportable above the supertype edges already retained.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 29e5bc79
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_CLUS_0508
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0508
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0508 DG Glut_3; region_fraction_100um=0.982; strict region_fraction=0.806.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=398 [painted]; Dentate gyrus [MBA:726] count_100um=392 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=391 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.982; strict region_fraction: 0.806; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.806
+      region_fraction_100um: 0.982
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_CLUS_0508 is a child of CS20230722_SUPT_0138 but per-cluster Sorcs3/Nptx2 expression has not been assessed in WMBv1 precomputed stats; cluster-level resolution depends on a future just add-expression follow-up.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: a100518a
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_CLUS_0509
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0509
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0509 DG Glut_3; region_fraction_100um=0.983; strict region_fraction=0.799.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=632 [painted]; Dentate gyrus [MBA:726] count_100um=629 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=621 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.983; strict region_fraction: 0.799; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.799
+      region_fraction_100um: 0.983
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_CLUS_0509 is a child of CS20230722_SUPT_0138 but per-cluster Sorcs3/Nptx2 expression has not been assessed in WMBv1 precomputed stats; cluster-level resolution depends on a future just add-expression follow-up.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 8ffa3129
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_SUPT_0079
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0079
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0079 CA3 Glut_5; region_fraction_100um=0.818; strict region_fraction=0.091.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1619 [painted]; Dentate gyrus [MBA:726] count_100um=1552 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1524 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.818; strict region_fraction: 0.091; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.091
+      region_fraction_100um: 0.818
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0079 (CA3 Glut_5 supertype) is a CA3 / DG polymorph-layer supertype (region_fraction strict 0.091, region_fraction_100um 0.818); wrong region for SGCs, which are dentate gyrus granule cell layer residents.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: dd512be9
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_SUPT_0139
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0139
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0139 DG Glut_4; region_fraction_100um=0.767; strict region_fraction=0.513.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=9122 [painted]; Dentate gyrus [MBA:726] count_100um=7783 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=6998 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.767; strict region_fraction: 0.513; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.513
+      region_fraction_100um: 0.767
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0139 (DG Glut_4) is a DG-resident glutamatergic supertype but no SGC marker signal (Sorcs3 / Nptx2) is reported on it in the Bhatt 2025 annotation transfer run; only 131 of 11327 DG nuclei map to it.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: c02e8961
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_SUPT_0138
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0138
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0138 DG Glut_3; region_fraction_100um=0.986; strict region_fraction=0.804.
+    property_comparisons: *id001
+    caveats: []
+    discovery_score: *id002
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:CUT] Duplicate atlas-metadata-only edge to CS20230722_SUPT_0138; the survivor supertype edge (edge_dg_semilunar_granule_cell_hippocampus_to_supt_0138) carries the Bhatt 2025 annotation-transfer evidence and is the edge that should be retained.\n"
+    reconciliation_note: "Legacy / fresh-emit duplicate on taxonomy_type CS20230722_SUPT_0138; curator removal of this atlas-metadata edge recommended.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: b0e0389d
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_SUPT_0137
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0137
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0137 DG Glut_2; region_fraction_100um=0.991; strict region_fraction=0.817.
+    property_comparisons: *id003
+    caveats: []
+    discovery_score: *id004
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:CUT] Duplicate atlas-metadata-only edge to CS20230722_SUPT_0137; the survivor supertype edge (edge_dg_semilunar_granule_cell_hippocampus_to_supt_0137) carries the Yao 2021 annotation-transfer evidence and is the edge that should be retained.\n"
+    reconciliation_note: "Legacy / fresh-emit duplicate on taxonomy_type CS20230722_SUPT_0137; curator removal of this atlas-metadata edge recommended.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: f70872ff
+  - id: edge_dg_semilunar_granule_cell_hippocampus_to_CS20230722_SUPT_0136
+    lit_type: dg_semilunar_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0136
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0136 DG Glut_1; region_fraction_100um=0.573; strict region_fraction=0.197.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2658 [painted]; Dentate gyrus [MBA:726] count_100um=1964 [painted]; Field CA3 [MBA:463] count_100um=1801 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.573; strict region_fraction: 0.197; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 34
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 34
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.197
+      region_fraction_100um: 0.573
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_SUPT_0136 (DG Glut_1) shows region_fraction_100um: 0.573 with substantial off-target spread into Field CA3; no SGC marker signal and only 46 of 11327 DG nuclei map to it in the Bhatt 2025 annotation transfer run.\n"
+    rationale_generated_at: '2026-06-08T21:04:23+00:00'
+    report_path: reports/hippocampus/dg_semilunar_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 6c77d6a0

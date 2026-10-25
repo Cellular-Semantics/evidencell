@@ -1,0 +1,1049 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - id: dg_granule_cell_hippocampus
+    name: Dentate gyrus granule cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+    anatomical_location:
+      - id: UBERON:0005381
+        label: dentate gyrus granule cell layer
+        name_in_source: dentate gyrus granule cell layer
+        compartment: SOMA
+        sources:
+          - ref: PMID:24319410
+            method: review
+            scope: rodent hippocampus, dentate gyrus granule cells
+            quote_key: 7458943_e2eed73d
+          - ref: PMID:21927594
+            method: IHC
+            scope: neonatal/adult mouse dentate gyrus granule cells
+            quote_key: 16383828_d2ad6dc6
+          - ref: PMID:26380120
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 1705399_6ee6563e
+          - ref: https://doi.org/10.1038/s41598-017-11268-z
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 256894421_70aaba92
+          - ref: PMID:24319410
+            quote_key: 7458943_efa15be5
+          - ref: PMID:23420672
+            quote_key: 11290620_48a528f1
+          - ref: PMID:24592213
+            quote_key: 11333153_7e2a7ff8
+      - id: UBERON:0014550
+        label: pyramidal layer of CA3
+        name_in_source: CA3 stratum lucidum (mossy fiber projection target)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:24319410
+            method: review
+            scope: rat hippocampus
+            quote_key: 7458943_efa15be5
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:27113915
+          method: RNA-seq
+          scope: mouse hippocampus, dentate gyrus granule cells
+          quote_key: 4875295_4a456257
+        - ref: PMID:20519538
+          method: postembedding immunogold double labeling
+          scope: rodent hippocampus, mossy fiber terminals (DG granule cell axons)
+          quote_key: 539922_281341b3
+        - ref: PMID:24592213
+          method: whole cell patch-clamp
+          scope: neonatal mouse dentate gyrus granule cells
+          quote_key: 11333153_3bc75fe5
+        - ref: PMID:24592213
+          quote_key: 11333153_7e2a7ff8
+        - ref: PMID:24319410
+          quote_key: 7458943_efa15be5
+        - ref: PMID:23420672
+          quote_key: 11290620_48a528f1
+    defining_markers:
+      - symbol: Prox1
+        ncbi_gene_id: NCBIGene:19130
+        sources:
+          - ref: PMID:27375434
+            method: synthesis (ASTA report)
+            scope: rat hippocampus
+            quote_key: 14854554_439a5d0b
+            marker_type: PROTEIN
+      - symbol: C1ql2
+        ncbi_gene_id: NCBIGene:226359
+        sources:
+          - ref: PMID:29674952
+            method: RNA-seq differential expression + in situ hybridization validation
+            scope: adult mouse hippocampus, dentate granule neurons
+            quote_key: 5895709_81a3d36b
+            marker_type: TRANSCRIPT
+      - symbol: Slc17a7
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:27375434
+            method: review
+            scope: rat hippocampus
+            quote_key: 14854554_ed1bdc00
+            marker_type: PROTEIN
+      - symbol: Gria1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:21927594
+            quote_key: 16383828_dc4eb8fc
+            marker_type: PROTEIN
+          - ref: PMID:32009891
+            quote_key: 210181642_7ac40176
+            marker_type: PROTEIN
+      - symbol: Gria2
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:32009891
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 210181642_88f001b0
+            marker_type: PROTEIN
+      - symbol: Grm1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:27375434
+            method: review
+            scope: rat hippocampus
+            quote_key: 14854554_b6a5ffa0
+            marker_type: PROTEIN
+      - symbol: Nptn
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:28779130
+            method: immunohistochemistry
+            scope: human hippocampus
+            quote_key: 3288675_37ad1c13
+            marker_type: PROTEIN
+    electrophysiology:
+      description: Lower firing threshold than typical cortical neurons; AMPA, kainate, and NMDA receptors broadly co-expressed. Mossy fiber stimulation elicits mixed GABAergic and glutamatergic monosynaptic currents in CA3 principal cells in juvenile animals.
+      sources:
+        - ref: PMID:24592213
+          quote_key: 11333153_abe1b682
+        - ref: PMID:37011759
+          quote_key: 252086716_f9c70b51
+        - ref: PMID:33132900
+          quote_key: 222135486_f65faa4b
+    morphology:
+      description: Compact granule cell soma in stratum granulosum; thin unmyelinated mossy fiber axons project into stratum lucidum of CA3. ~1 million GCs in adult rat dentate gyrus. 85% of GCs are generated postnatally; adult-born GCs receive their first glutamatergic input on dendritic spines at the end of the second week after birth.
+      sources:
+        - ref: PMID:24592213
+          quote_key: 11333153_d0620f0a
+        - ref: PMID:21927594
+          quote_key: 16383828_d014308a
+        - ref: PMID:24319410
+          quote_key: 7458943_efa15be5
+    definition_references:
+      - PMID:17765709
+      - PMID:24319410
+      - PMID:24592213
+      - PMID:21927594
+      - PMID:32009891
+    notes: "[Migrated from asta-ingest stub `dg_granule_cell` on 2026-06-10]\n\nAdult-born immature granule cells form a distinct functional subpopulation with delayed maturation; dorsal vs. ventral heterogeneity implied. Mossy fiber terminals co-express VGLUT1, VGLUT2, and VGAT (mixed transmission to CA3 in juvenile animals) — co-release is developmental and does not redefine the granule cell as a non-glutamatergic principal cell."
+    synonyms:
+      - term: dg_granule_cell
+        synonym_type: HISTORICAL
+  - id: CS20230722_SUPT_0137
+    name: 0137 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0137
+  - id: CS20230722_CLUS_0505
+    name: 0505 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0505
+  - id: CS20230722_CLUS_0510
+    name: 0510 DG Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0510
+  - id: CS20230722_CLUS_0514
+    name: 0514 DG-PIR Ex IMN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0514
+  - id: CS20230722_CLUS_0515
+    name: 0515 DG-PIR Ex IMN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0515
+  - id: CS20230722_CLUS_0316
+    name: 0316 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0316
+  - id: CS20230722_SUPT_0141
+    name: 0141 DG-PIR Ex IMN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0141
+  - id: CS20230722_SUPT_0079
+    name: 0079 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: CS20230722_SUPT_0139
+    name: 0139 DG Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0139
+  - id: CS20230722_SUPT_0138
+    name: 0138 DG Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0138
+edges:
+  - id: edge_dg_granule_cell_hippocampus_to_supt_0137
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0137
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) mouse hippocampus scRNA-seq Granule-mature and Granule-immature labels onto WMBv1 (CCN20230722). Both mature and immature granule cell populations map primarily to SUPT_0137 (0137 DG Glut_2) at the supertype level. F1 scores of 0.584 (Granule-mature, 433/609 cells) and 0.601 (Granule-immature, 437/581 cells) indicate robust but partial overlap; a minority of granule cells map to adjacent DG Glut supertypes (SUPT_0136, SUPT_0138) and to CA3/CA2 clusters, suggesting either genuine DG transcriptomic heterogeneity or minor contamination. At subclass level, coverage for DG Glut subclass (037) is 0.988 (Granule-mature) and 0.888 (Granule-immature), confirming DG Glut as the dominant classification.
+
+          '
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: Granule-mature / Granule-immature
+        n_cells_total: 870
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: SUBCLASS
+            best_target_name: 037 DG Glut
+            f1_score: 0.703
+            n_cells_mapped: 716
+            taxonomy_rank: 2
+            best_target_accession: CS20230722_SUBC_037
+            coverage: 0.988
+            purity: 0.546
+          - taxonomy_level: SUPERTYPE
+            best_target_name: 0137 DG Glut_2
+            f1_score: 0.584
+            n_cells_mapped: 433
+            taxonomy_rank: 1
+            best_target_accession: CS20230722_SUPT_0137
+            coverage: 0.711
+            purity: 0.495
+        best_mapping_rank: 2
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'SUPT_0137 has 7199 cells in Dentate gyrus, granule cell layer (MBA:632), 6636 in molecular layer, and 3067 in polymorph layer — consistent with DG granule cell soma location. Defining markers Dsp, Kcnh3, Syndig1 have not been compared against classical granule cell transcriptomics (require precomputed expression cross-check).
+
+          '
+    property_comparisons: &id001
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=47494 [painted]; Dentate gyrus [MBA:726] count_100um=47391 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=47167 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.991; strict region_fraction: 0.817; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 8.59; cohort_pct 0.853; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.59; cohort percentile 0.853; child-cluster coverage 1.000
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 5.77; cohort_pct 0.912; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.77; cohort percentile 0.912; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Granule-mature and Granule-immature scatter across DG Glut sibling\nsupertypes (0136 through 0139) and to the immature-neuron\nsupertype 0141; 0137 is dominant at F1=0.58 but not exclusive.\n"
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: "Cluster-level call within this supertype rests on atlas-side\nmarker concordance rather than direct annotation-transfer\nevidence; AT-preferred children at cluster level (Granule-mature\npeaking on 0506, Granule-immature on 0507) are not currently\ntop-K edges in this graph.\n"
+    unresolved_questions:
+      - 'Do SUPT_0136, SUPT_0137, SUPT_0138 correspond to functionally distinct granule cell populations (e.g. adult-born vs. developmentally-born, or dorsal vs. ventral DG)?
+
+        '
+      - 'Are Prox1 and C1ql2 expressed in SUPT_0137 cells? Requires add-expression from precomputed stats to resolve.
+
+        '
+      - Do CS20230722_SUPT_0136, CS20230722_SUPT_0137, and CS20230722_SUPT_0138 correspond to functionally distinct granule cell populations (e.g. dorsal vs ventral DG, or developmental cohorts)?
+      - How does the adult-born immature granule cell population (CS20230722_SUPT_0141) relate to the classical dentate gyrus granule cell definition?
+      - Do supertypes 0136, 0137, and 0138 correspond to functionally distinct granule cell populations (dorsal vs ventral, or developmental cohorts)?
+      - How does the adult-born immature granule cell population (supertype 0141) relate to the classical dentate gyrus granule cell definition?
+    proposed_experiments:
+      - Run annotation transfer from an independent adult mouse dentate gyrus granule cell scRNA-seq dataset onto WMBv1 (target F1 >= 0.75 at supertype) to cross-validate the supertype call.
+      - Add precomputed expression for Slc17a7, Gria1, Gria2, Grm1, and Nptn on the DG Glut supertypes 0136 through 0139 to discriminate them via the full classical defining-marker panel.
+    mapping_justification: semapv:ManualMappingCuration
+    discovery_score: &id002
+      score: 5
+      rank_in_cohort: 5
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 8.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.853
+          coverage: 1.0
+        - gene: C1ql2
+          val: 5.77
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.912
+          coverage: 1.0
+      region_fraction: 0.817
+      region_fraction_100um: 0.991
+      region_evidence: SELF
+    mapping_cardinality: "1:n"
+    confidence: MODERATE
+    confidence_score: 0.65
+    rationale: "[tier:STRONGEST] Direct annotation-transfer evidence from an independent\nmouse DG scRNA-seq dataset (Hochgerner 2018, GSE95315) places both\nGranule-mature and Granule-immature labels predominantly on this\nsupertype (supertype F1=0.58 / 0.601; subclass coverage onto\nthe DG Glut subclass = 0.988 / 0.888). Atlas-side spatial registration\nand precomputed expression confirm dentate gyrus granule cell layer\nsoma location and concordance with the classical defining markers\nProx1 (val=8.59, child-coverage 1.000) and C1ql2 (val=5.77,\nchild-coverage 1.000). Supertype mapping is the supportable level;\ncluster-level resolution requires re-emission with the AT-preferred\nsibling children.\n"
+    reconciliation_note: "Paired with cluster-level edge\nedge_dg_granule_cell_hippocampus_to_CS20230722_CLUS_0505 as the\nsupertype + best-in-graph-child-within-supertype mapping; the\nannotation-transfer-preferred children (cluster 0506 and cluster 0507)\nare not currently in top-K and should be added.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: cd165b8e
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_CLUS_0505
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0505
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0505 DG Glut_2; region_fraction_100um=0.991; strict region_fraction=0.823.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=12352 [painted]; Dentate gyrus [MBA:726] count_100um=12326 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=12273 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.991; strict region_fraction: 0.823; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 8.38; cohort_pct 0.818'
+        alignment: CONSISTENT
+        notes: val=8.38; cohort percentile 0.818
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 7.38; cohort_pct 0.982'
+        alignment: CONSISTENT
+        notes: val=7.38; cohort percentile 0.982
+    caveats:
+      - caveat_type: TAXONOMY_LEVEL_MISMATCH
+        description: "Cluster-level call rests on atlas-side marker concordance;\ndirect annotation-transfer evidence supports the supertype\n0137 at supertype level but peaks on sibling clusters at\ncluster level (Granule-mature on 0506, F1 (on the paired supertype edge);\nGranule-immature on 0507, F1 (on the paired supertype edge)) rather than on this\ncluster 0505.\n"
+      - caveat_type: SINGLE_DATASET
+        description: "Cluster-level marker comparison relies on a single atlas\nprecomputed-expression cohort (CCN20230722); independent\ntranscriptomic replication of the Prox1 / C1ql2 child-cluster\nranking is not yet available.\n"
+    discovery_score:
+      score: 6
+      rank_in_cohort: 1
+      cohort_size: 48
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 48
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 8.38
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.818
+        - gene: C1ql2
+          val: 7.38
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.982
+      region_fraction: 0.823
+      region_fraction_100um: 0.991
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:NEXT] Cluster lies within the supertype 0137 (the\nannotation-transfer-best supertype) and carries the classical\ndefining markers Prox1 (val=8.38, cohort_pct 0.818) and C1ql2\n(val=7.38, cohort_pct 0.982) — the latter at the high end of the\nDG-granule cohort distribution. Spatial registration places\n12273 painted cells in MBA:632 (region_fraction_100um=0.991,\nregion_evidence=SELF). This is the best in-graph cluster proxy\npending re-emission of the AT-preferred sibling children.\n"
+    reconciliation_note: "Paired with supertype edge\nedge_dg_granule_cell_hippocampus_to_supt_0137 as the\nbest-in-graph-child-within-supertype side of a supertype + cluster\nmapping.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - Re-emit top-K to include the AT-preferred sibling clusters 0506 and 0507 and run annotation transfer against the Hochgerner Granule-mature and Granule-immature labels (target F1 >= 0.7 at cluster level).
+      - Add precomputed expression for Slc17a7, Gria1, Gria2, Grm1, and Nptn on clusters 0505, 0506, and 0507 for direct marker comparison across the annotation-transfer-preferred children of supertype 0137.
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    unresolved_questions:
+      - Are the Hochgerner cluster-best children of CS20230722_SUPT_0137 and CS20230722_CLUS_0507 (the Hochgerner-best children of CS20230722_SUPT_0137) the appropriate cluster-level mapping rather than CS20230722_CLUS_0505?
+      - Are clusters 0506 and 0507 the appropriate cluster-level mapping for mature and immature granule cells rather than cluster 0505?
+    rationale_source_hash: a42f7c38
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_CLUS_0510
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0510
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0510 DG Glut_4; region_fraction_100um=0.767; strict region_fraction=0.513.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=9122 [painted]; Dentate gyrus [MBA:726] count_100um=7783 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=6998 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.767; strict region_fraction: 0.513; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 8.98; cohort_pct 0.873'
+        alignment: CONSISTENT
+        notes: val=8.98; cohort percentile 0.873
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 6.89; cohort_pct 0.964; atlas category: DEFINING'
+        alignment: CONSISTENT
+        notes: val=6.89; cohort percentile 0.964
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 2
+      cohort_size: 48
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 48
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 8.98
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.873
+        - gene: C1ql2
+          val: 6.89
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.964
+      region_fraction: 0.513
+      region_fraction_100um: 0.767
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] Wrong DG Glut supertype — annotation-transfer peaks on\nthe supertype 0137, not on the parent supertype 0139 of this\ncluster.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 7c0d760f
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_CLUS_0514
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0514
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0514 DG-PIR Ex IMN_2; region_fraction_100um=0.986; strict region_fraction=0.536.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=483 [painted]; Dentate gyrus [MBA:726] count_100um=480 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=479 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.986; strict region_fraction: 0.536; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 10.15; cohort_pct 0.982; atlas category: TF'
+        alignment: CONSISTENT
+        notes: val=10.15; cohort percentile 0.982
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 0.47; cohort_pct 0.636'
+        alignment: CONSISTENT
+        notes: val=0.47; cohort percentile 0.636
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 3
+      cohort_size: 48
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 48
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 10.15
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.982
+        - gene: C1ql2
+          val: 0.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.636
+      region_fraction: 0.536
+      region_fraction_100um: 0.986
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Parent supertype 0141 is the immature-neuron supertype\n(DG-PIR Ex IMN_2); C1ql2 expression (val=0.47) is well below the\nDG granule profile, so this cluster does not match mature granule\ncells.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 66674c6e
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_CLUS_0515
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0515
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0515 DG-PIR Ex IMN_2; region_fraction_100um=0.991; strict region_fraction=0.484.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1260 [painted]; Dentate gyrus [MBA:726] count_100um=1253 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=1251 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.991; strict region_fraction: 0.484; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 10.09; cohort_pct 0.964; atlas category: TF'
+        alignment: CONSISTENT
+        notes: val=10.09; cohort percentile 0.964
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 0.38; cohort_pct 0.564'
+        alignment: CONSISTENT
+        notes: val=0.38; cohort percentile 0.564
+    caveats: []
+    discovery_score:
+      score: 6
+      rank_in_cohort: 4
+      cohort_size: 48
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 48
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 10.09
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.964
+        - gene: C1ql2
+          val: 0.38
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.564
+      region_fraction: 0.484
+      region_fraction_100um: 0.991
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] Parent supertype 0141 is the immature-neuron supertype\n(DG-PIR Ex IMN_2); C1ql2 expression (val=0.38) is well below the\nDG granule profile.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 94392ead
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_CLUS_0316
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0316
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0316 CA3 Glut_5; region_fraction_100um=0.578; strict region_fraction=0.044.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=499 [painted]; Field CA3 [MBA:463] count_100um=461 [painted]; Field CA3, stratum radiatum [MBA:504] count_100um=389 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.578; strict region_fraction: 0.044; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 0.23; cohort_pct 0.436'
+        alignment: APPROXIMATE
+        notes: val=0.23; cohort percentile 0.436
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 0.29; cohort_pct 0.527'
+        alignment: CONSISTENT
+        notes: val=0.29; cohort percentile 0.527
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 5
+      cohort_size: 48
+      next_best_score: 6
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 48
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 0.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.436
+        - gene: C1ql2
+          val: 0.29
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.527
+      region_fraction: 0.044
+      region_fraction_100um: 0.578
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CA3 cluster (parent supertype 0079, CA3 Glut_5); soma\nin CA3 not dentate gyrus (strict region_fraction 0.044), and\nProx1 (val=0.23) and C1ql2 (val=0.29) are near zero.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 466ec4e4
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_SUPT_0141
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0141
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0141 DG-PIR Ex IMN_2; region_fraction_100um=0.981; strict region_fraction=0.491.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2097 [painted]; Dentate gyrus [MBA:726] count_100um=2074 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=2070 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.981; strict region_fraction: 0.491; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 9.52; cohort_pct 0.971; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.52; cohort percentile 0.971; child-cluster coverage 1.000
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 0.25; cohort_pct 0.529; child-coverage 0.500'
+        alignment: CONSISTENT
+        notes: val=0.25; cohort percentile 0.529; child-cluster coverage 0.500
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 9.52
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.971
+          coverage: 1.0
+        - gene: C1ql2
+          val: 0.25
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.707
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.529
+          coverage: 0.5
+      region_fraction: 0.491
+      region_fraction_100um: 0.981
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:CUT] Immature-neuron supertype (DG-PIR Ex IMN_2); C1ql2\nchild-coverage 0.500 and supertype-level C1ql2 (val=0.25) are\nbelow the DG granule profile. Possible match for the adult-born\nimmature granule cell subpopulation rather than the classical\nmature dentate gyrus granule cell defined here.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: '91269e47'
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_SUPT_0079
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0079
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0079 CA3 Glut_5; region_fraction_100um=0.818; strict region_fraction=0.091.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1619 [painted]; Dentate gyrus [MBA:726] count_100um=1552 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1524 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.818; strict region_fraction: 0.091; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 0.29; cohort_pct 0.441; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.29; cohort percentile 0.441; child-cluster coverage 1.000
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 0.29; cohort_pct 0.559; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.29; cohort percentile 0.559; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 0.29
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.441
+          coverage: 1.0
+        - gene: C1ql2
+          val: 0.29
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.559
+          coverage: 1.0
+      region_fraction: 0.091
+      region_fraction_100um: 0.818
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CA3 supertype (CA3 Glut_5); strict region_fraction in\nDG granule cell layer is 0.091 (most cells in CA3 polymorph\nlayer), Prox1 (val=0.29) and C1ql2 (val=0.29) are near zero.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: f4391536
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_SUPT_0139
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0139
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0139 DG Glut_4; region_fraction_100um=0.767; strict region_fraction=0.513.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=9122 [painted]; Dentate gyrus [MBA:726] count_100um=7783 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=6998 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.767; strict region_fraction: 0.513; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 8.98; cohort_pct 0.912; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.98; cohort percentile 0.912; child-cluster coverage 1.000
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 6.89; cohort_pct 0.941; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=6.89; cohort percentile 0.941; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 8.98
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.912
+          coverage: 1.0
+        - gene: C1ql2
+          val: 6.89
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.941
+          coverage: 1.0
+      region_fraction: 0.513
+      region_fraction_100um: 0.767
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:CUT] DG Glut sibling of the supertype 0137;\nannotation-transfer peaks on the supertype 0137, not here.\nMarkers Prox1 and C1ql2 are high (cohort_pct 0.912 and 0.941) but\ndo not discriminate the DG Glut supertypes — supertype\nassignment is driven by annotation-transfer.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: d11f8953
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_SUPT_0138
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0138
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0138 DG Glut_3; region_fraction_100um=0.986; strict region_fraction=0.804.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus granule cell layer [UBERON:0005381]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1024 [painted]; Dentate gyrus [MBA:726] count_100um=1021 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=1012 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.986; strict region_fraction: 0.804; region_evidence: SELF'
+      - property: marker_Prox1
+        node_a_value: Prox1 — defining marker
+        node_b_value: 'Prox1: 9.13; cohort_pct 0.941; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.13; cohort percentile 0.941; child-cluster coverage 1.000
+      - property: marker_C1ql2
+        node_a_value: C1ql2 — defining marker
+        node_b_value: 'C1ql2: 3.82; cohort_pct 0.853; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=3.82; cohort percentile 0.853; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 30
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 30
+          filters:
+            - region=MBA:632
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Prox1
+          val: 9.13
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.941
+          coverage: 1.0
+        - gene: C1ql2
+          val: 3.82
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.853
+          coverage: 1.0
+      region_fraction: 0.804
+      region_fraction_100um: 0.986
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:CUT] DG Glut sibling of the supertype 0137;\nannotation-transfer peaks on the supertype 0137, not here.\nMarkers Prox1 and C1ql2 are above cohort 50th percentile but do\nnot discriminate the DG Glut supertypes.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: fe8a98d5
+  - id: edge_dg_granule_cell_hippocampus_to_CS20230722_SUPT_0137
+    lit_type: dg_granule_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0137
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0137 DG Glut_2; region_fraction_100um=0.991; strict region_fraction=0.817.
+    property_comparisons: *id001
+    caveats: []
+    discovery_score: *id002
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] Duplicate edge targeting the same supertype accession\n(0137) as the substantive MODERATE edge\nedge_dg_granule_cell_hippocampus_to_supt_0137; this duplicate\ncarries only discovery_score / stub property_comparison evidence\nand should be removed by curator.\n"
+    rationale_generated_at: '2026-06-10T13:17:51+00:00'
+    report_path: reports/hippocampus/dg_granule_cell_hippocampus_summary.md
+    rationale_source_hash: 6bd21518
+    unresolved_questions:
+      - Curator removal of duplicate edge edge_dg_granule_cell_hippocampus_to_CS20230722_SUPT_0137 — legacy/fresh-emit ID collision on taxonomy_type 0137.

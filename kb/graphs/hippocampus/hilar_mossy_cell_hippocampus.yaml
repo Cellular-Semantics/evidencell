@@ -1,0 +1,1224 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - id: hilar_mossy_cell_hippocampus
+    name: Hilar mossy cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+    anatomical_location:
+      - id: UBERON:0002928
+        label: dentate gyrus polymorphic layer
+        name_in_source: dentate gyrus polymorph layer
+        compartment: SOMA
+        sources:
+          - ref: PMID:33600026
+            method: Cre-line genetic labeling (Drd2-Cre, Crlr-Cre)
+            scope: adult mouse dentate gyrus, hilar mossy cells
+            quote_key: 231953329_3a0a57e1
+          - ref: PMID:34214666
+            method: review
+            scope: rodent dentate gyrus, hilar mossy cells (dorsal and ventral)
+            quote_key: 235678538_22af50d5
+          - ref: PMID:23420672
+            method: review (defining criteria)
+            scope: rodent dentate gyrus, hilar mossy cells
+            quote_key: 11290620_128a9329
+      - id: UBERON:0001885
+        label: dentate gyrus of hippocampal formation
+        name_in_source: dentate hilus (polymorph layer of dentate gyrus)
+        compartment: SOMA
+        sources:
+          - ref: PMID:33600026
+            quote_key: 231953329_132cf2e1
+          - ref: PMID:34214666
+            quote_key: 235678538_35b7c784
+          - ref: PMID:28451637
+            quote_key: 3583187_ea3794f5
+      - id: UBERON:0022347
+        label: dentate gyrus molecular layer inner
+        name_in_source: dentate gyrus inner molecular layer (IML; ipsilateral and contralateral commissural projection)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:33600026
+            quote_key: 231953329_132cf2e1
+          - ref: PMID:33600026
+            quote_key: 231953329_6269a191
+          - ref: PMID:33600026
+            quote_key: 231953329_54cbe1b7
+      - id: UBERON:0022346
+        label: dentate gyrus molecular layer middle
+        name_in_source: dentate gyrus middle molecular layer (MML; dorsal mossy cells only)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:33600026
+            method: Cre-dependent viral tracing
+            scope: Drd2-Cre and Crlr-Cre mouse
+            quote_key: 231953329_ceaf8acb
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:28451637
+          method: viral genetic circuit mapping
+          scope: adult mouse dentate gyrus, hilar mossy cells
+          quote_key: 3583187_ea3794f5
+        - ref: PMID:23420672
+          method: review
+          scope: rodent dentate gyrus, hilar mossy cells
+          quote_key: 11290620_27f933af
+        - ref: PMID:26347618
+          method: review
+          scope: rodent dentate gyrus, hilar mossy cells
+          quote_key: 13657743_1eea4393
+        - ref: PMID:23420672
+          quote_key: 11290620_c6e60ece
+        - ref: PMID:23420672
+          quote_key: 11290620_a475a601
+        - ref: PMID:33600026
+          quote_key: 231953329_132cf2e1
+    defining_markers:
+      - symbol: Gria4
+        ncbi_gene_id: NCBIGene:14802
+      - symbol: Dkk3
+        ncbi_gene_id: NCBIGene:50781
+      - symbol: Slc17a7
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:27375434
+            method: review
+            scope: rat hippocampus
+            quote_key: 14854554_ed1bdc00
+            marker_type: PROTEIN
+      - symbol: Drd2
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:33600026
+            method: Cre-dependent viral labeling (Drd2-Cre)
+            scope: mouse
+            quote_key: 231953329_ceaf8acb
+            marker_type: PROTEIN
+          - ref: PMID:37546856
+            method: transcriptomics
+            scope: mouse ventral hippocampus
+            quote_key: 260336826_494cac70
+            marker_type: PROTEIN
+      - symbol: Calcrl
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:33600026
+            method: Cre-dependent viral labeling (Crlr-Cre)
+            scope: mouse
+            quote_key: 231953329_ceaf8acb
+            marker_type: PROTEIN
+      - symbol: Reln
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:25206826
+            method: immunohistochemistry
+            scope: mouse hippocampus
+            quote_key: 7981953_7f1ea74e
+            marker_type: PROTEIN
+    morphology:
+      description: Large multipolar neurons with hilar location; extensive thorny excrescences on proximal dendrites and commissural/associational projections
+      sources:
+        - ref: PMID:28451637
+          method: narrative review
+          scope: rodent hippocampus
+          quote_key: 3583187_35db154e
+        - ref: PMID:23420672
+          quote_key: 11290620_a475a601
+        - ref: PMID:33600026
+          quote_key: 231953329_132cf2e1
+        - ref: PMID:33600026
+          quote_key: 231953329_6269a191
+    electrophysiology:
+      description: Depolarized resting potential; prominent Ih; firing accommodation
+      sources:
+        - ref: PMID:23420672
+          method: sharp electrode recording (guinea pig)
+          scope: guinea pig hippocampus
+          quote_key: 11290620_0f99e676
+        - ref: PMID:23420672
+          method: patch-clamp recording in slice
+          scope: rat hippocampus
+          quote_key: 11290620_a475a601
+    cl_mapping:
+      cl_term:
+        id: CL:4023062
+        label: dentate gyrus neuron
+        name_in_source: hilar mossy cell
+      mapping_notes: Hilar mossy cells are glutamatergic neurons with soma restricted to the dentate gyrus polymorphic layer; CL:4023062 covers all dentate gyrus neurons and is therefore a BROAD match. No mossy cell-specific CL term currently exists.
+      mapping_type: BROAD
+    proposed_cl_term:
+      label: hilar mossy cell
+      parent_cl_term:
+        id: CL:4023062
+        label: dentate gyrus neuron
+        name_in_source: dentate gyrus neuron
+      definition: A dentate gyrus neuron with soma in the polymorphic layer (UBERON:0002928) (Scharfman & Myers, 2012), capable of glutamate secretion as a neurotransmitter (Scharfman & Bernstein, 2015). Distinguished by a large multipolar soma, thorny excrescences on proximal dendrites, and commissural/associational axon projections terminating in the inner molecular layer of the dentate gyrus (Scharfman & Myers, 2012). Electrophysiologically characterised by a depolarised resting membrane potential, prominent hyperpolarisation-activated cation current (Ih), and firing accommodation (Scharfman & Myers, 2012). In rodents, serves as a major excitatory neuron of the dentate hilus providing feedback excitation to granule cells (Sun et al., 2017).
+      xrefs:
+        - PMID:23420672
+        - PMID:26347618
+        - PMID:28451637
+        - PMID:34214666
+        - PMID:33600026
+        - CS20230722_SUPT_0078
+        - CS20230722_SUPT_0079
+      status: SUBMITTED
+    definition_references:
+      - PMID:23420672
+      - PMID:26347618
+      - PMID:28451637
+      - PMID:34214666
+      - PMID:33600026
+      - PMID:25206826
+    negative_markers:
+      - symbol: Gad1
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:23420672
+            method: review
+            scope: dentate hilus
+            quote_key: 11290620_c6e60ece
+            marker_type: PROTEIN
+    notes: "[Migrated from asta-ingest stub `dg_mossy_cell` on 2026-06-10]\n\nDorsal vs. ventral mossy cells differ in axonal projection (dorsal: IML+MML; ventral: IML only). Reelin-positive mossy cells in the dentate hilus are predominantly glutamatergic (in contrast to GABAergic reelin+ cells in the molecular layer). HETEROGENEITY: dorsal/ventral subtypes likely warrant separate atlas correspondence.\n\nCL mapping note: No CL term found for hilar mossy cell. Children of CL:4023062 (dentate gyrus neuron) include granule cell (CL:2000089), basket cell (CL:2000087), kisspeptin neuron (CL:4023124) and stellate cell (CL:2000090); none matches mossy cell. Potential CL contribution."
+    synonyms:
+      - term: dg_mossy_cell
+        synonym_type: HISTORICAL
+  - id: CS20230722_SUPT_0078
+    name: 0078 CA3 Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0078
+  - id: CS20230722_SUPT_0079
+    name: 0079 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: CS20230722_CLUS_0315
+    name: 0315 CA3 Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0315
+  - id: CS20230722_CLUS_0316
+    name: 0316 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0316
+  - id: CS20230722_CLUS_0317
+    name: 0317 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0317
+  - id: CS20230722_CLUS_0507
+    name: 0507 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0507
+  - id: CS20230722_CLUS_0508
+    name: 0508 DG Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0508
+  - id: CS20230722_SUPT_0139
+    name: 0139 DG Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0139
+  - id: CS20230722_SUPT_0138
+    name: 0138 DG Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0138
+  - id: CS20230722_SUPT_0141
+    name: 0141 DG-PIR Ex IMN_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0141
+  - id: CS20230722_SUPT_0137
+    name: 0137 DG Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0137
+edges:
+  - id: edge_hilar_mossy_cell_hippocampus_to_supt_0078
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0078
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Cyp26b1 label onto WMBv1 (CCN20230722). 33 of 34 Mossy-Cyp26b1 cells map to SUPT_0078 (0078 CA3 Glut_4) at the supertype level (F1=0.943; coverage=0.971, purity=0.917). At cluster level, the best cluster is 0315 CA3 Glut_4 (n=20, F1=0.833) followed by 0314 CA3 Glut_4 (n=7). The high F1 indicates that Mossy-Cyp26b1 cells are a near-complete subset of SUPT_0078. The PARTIAL_OVERLAP relationship is used because SUPT_0078 MERFISH cells are distributed across CA3 strata rather than the dentate hilus, suggesting this supertype captures mossy cells resident at the CA3c/hilus border or includes CA3 pyramidal cells sharing the Cyp26b1 transcriptomic profile.
+
+          '
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: Mossy-Cyp26b1
+        n_cells_total: 34
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
+            f1_score: 0.4782608695652174
+            n_cells_mapped: 33
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.3142857142857143
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 017 CA3 Glut
+            best_target_accession: CS20230722_SUBC_017
+            f1_score: 0.6862745098039216
+            n_cells_mapped: 35
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.5223880597014925
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0078 CA3 Glut_4
+            best_target_accession: CS20230722_SUPT_0078
+            f1_score: 0.9428571428571428
+            n_cells_mapped: 33
+            median_bootstrap: 1.0
+            coverage: 0.9705882352941176
+            purity: 0.9166666666666666
+        best_mapping_rank: 1
+        f1_source_relpath: at_results.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=9204 [painted]; Field CA3 [MBA:463] count_100um=9164 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=8918 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.195; strict region_fraction: 0.040; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 5.37; cohort_pct 0.267; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=5.37; cohort percentile 0.267; child-cluster coverage 1.000
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 8.71; cohort_pct 0.933; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.71; cohort percentile 0.933; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "CS20230722_SUPT_0078 MERFISH cells are distributed across CA3 strata rather than the dentate hilus, while classical hilar mossy cells have soma restricted to the dentate polymorph layer. The transcriptomic AT signal is strong (F1=0.94) but the anatomy is unresolved — Cyp26b1+ cells may be CA3c/hilus-border mossy cells registering as CA3, or SUPT_0078 may include CA3 pyramidal cells sharing the Cyp26b1 signature.\n"
+      - caveat_type: SINGLE_DATASET
+        description: "AT evidence comes from a single source dataset (GEO:GSE95315); independent replication of the Mossy-Cyp26b1 → SUPT_0078 assignment is not yet available.\n"
+      - caveat_type: NT_PREDICTION_UNCERTAIN
+        description: "Atlas-side NT_TYPE is NOT_ASSESSED at supertype level; cluster-level Glut annotation is consistent with the glutamatergic classical type.\n"
+    unresolved_questions:
+      - 'Are SUPT_0078 cells that map to CA3 pyramidal layer actually at the CA3c/hilar boundary? High-resolution FISH of Homer3 or Cldn22 (SUPT_0078 defining markers) in hilus/CA3c would resolve this.
+
+        '
+      - "Are CS20230722_SUPT_0078 cells that map to Field CA3 pyramidal layer in MERFISH actually at the CA3c/hilar boundary? High-resolution FISH of Homer3 or Cldn22 in hilus/CA3c would resolve this.\n"
+    proposed_experiments:
+      - "smFISH or MERFISH spot validation of CS20230722_SUPT_0078 defining markers (Homer3, Cldn22) in dentate hilus to test whether soma positions span the CA3c/hilus boundary.\n"
+      - "Independent mouse DG scRNA-seq annotation transfer to confirm species- and lab-generality of the Mossy-Cyp26b1 → SUPT_0078 assignment.\n"
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:1"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 6
+      cohort_size: 15
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 15
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 5.37
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.267
+          coverage: 1.0
+        - gene: Dkk3
+          val: 8.71
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.933
+          coverage: 1.0
+      region_fraction: 0.04
+      region_fraction_100um: 0.195
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.6
+    rationale: "[tier:NEXT] Hochgerner 2018 Mossy-Cyp26b1 transfers to CS20230722_SUPT_0078 with F1=0.94 (purity 0.92, coverage 0.97) in at_run_20260427_hochgerner2018_dg_mmc_wmbv1, with Dkk3 strongly CONSISTENT (cohort_pct 0.933) and Gria4 APPROXIMATE (1 of 2 markers CONSISTENT). Atlas MERFISH soma rollup is dominated by Field CA3 pyramidal layer rather than the hilus (region_fraction_100um: 0.195; boundary scatter — could reflect registration error or a real CA3c/hilus-border population). The transcriptomic signal is strong; the location signal is the open question.\n"
+    reconciliation_note: "Paired with sibling CS20230722_SUPT_0079 edge as the molecular subdivision of the classical hilar mossy cell into Cyp26b1+ and Adcyap1+ subtypes (Hochgerner 2018). Unlike SUPT_0079, MERFISH soma positions do not cleanly support the hilar anatomy — this is why confidence is MODERATE rather than HIGH.\n"
+    rationale_generated_at: '2026-06-08T21:04:21+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: 8d997497
+  - id: edge_hilar_mossy_cell_hippocampus_to_supt_0079
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0079
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'MapMyCells local annotation transfer of Hochgerner 2018 (GSE95315) Mossy-Adcyap1 label onto WMBv1 (CCN20230722). 20 of 27 Mossy-Adcyap1 cells map to SUPT_0079 (0079 CA3 Glut_5) at the supertype level (F1=0.833; coverage=0.741, purity=0.952). The high purity (0.952) indicates Mossy-Adcyap1 cells account for the majority of SUPT_0079 cells captured by AT — suggesting this supertype may be specific to the Adcyap1+ mossy cell subtype. SUPT_0079 uniquely has 181 cells in Dentate gyrus, polymorph layer (MBA:10704, the hilus), consistent with the hilar soma location of classical mossy cells. The PARTIAL_OVERLAP relationship is used because SUPT_0079 also has substantial cells in CA3 strata, indicating a broader supertype than the hilar-restricted classical mossy cell.
+
+          '
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: Mossy-Adcyap1
+        n_cells_total: 28
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 01 IT-ET Glut
+            best_target_accession: CS20230722_CLAS_01
+            f1_score: 0.4210526315789474
+            n_cells_mapped: 28
+            median_bootstrap: 0.99
+            coverage: 1.0
+            purity: 0.26666666666666666
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 017 CA3 Glut
+            best_target_accession: CS20230722_SUBC_017
+            f1_score: 0.5625
+            n_cells_mapped: 27
+            median_bootstrap: 1.0
+            coverage: 0.9310344827586207
+            purity: 0.40298507462686567
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0079 CA3 Glut_5
+            best_target_accession: CS20230722_SUPT_0079
+            f1_score: 0.8333333333333334
+            n_cells_mapped: 20
+            median_bootstrap: 1.0
+            coverage: 0.7407407407407407
+            purity: 0.9523809523809523
+        best_mapping_rank: 1
+        f1_source_relpath: at_results.yaml
+    property_comparisons: &id001
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1619 [painted]; Dentate gyrus [MBA:726] count_100um=1552 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1524 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.936; strict region_fraction: 0.668; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 8.05; cohort_pct 0.667; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.05; cohort percentile 0.667; child-cluster coverage 1.000
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 5.32; cohort_pct 0.733; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.32; cohort percentile 0.733; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: Hochgerner 2018 identifies three molecular mossy-cell subtypes (Cyp26b1, Adcyap1, Klk8); CS20230722_SUPT_0079 captures the Adcyap1+ subtype while CS20230722_SUPT_0078 captures the Cyp26b1+ subtype. Mossy-Klk8 (n=6) maps ambiguously across CA3 supertypes (best F1=0.56) — insufficient evidence for a separate edge.
+      - caveat_type: SINGLE_DATASET
+        description: Annotation transfer evidence comes from a single source dataset (GEO:GSE95315); independent replication of the Mossy-Adcyap1 to CS20230722_SUPT_0079 assignment is not yet available.
+      - caveat_type: NT_PREDICTION_UNCERTAIN
+        description: Atlas-side NT type is not asserted on the supertype; the cluster-level Glut annotation on CS20230722_CLUS_0317 is consistent with the glutamatergic classical type but supertype-level NT is NOT_ASSESSED.
+    unresolved_questions:
+      - 'What is the functional and anatomical distinction between the SUPT_0078 (Cyp26b1+) and SUPT_0079 (Adcyap1+) mossy cell subtypes? Do they correspond to dorsal vs. ventral mossy cells, or to distinct projection patterns (IML-only vs. IML+MML in dorsal mossy cells)?
+
+        '
+      - "What is the functional and anatomical distinction between the CS20230722_SUPT_0078 (Cyp26b1+) and CS20230722_SUPT_0079 (Adcyap1+) mossy-cell subtypes — dorsal vs. ventral, or distinct projection patterns?\n"
+      - What is the functional and anatomical distinction between the CS20230722_SUPT_0078 (Cyp26b1+) and CS20230722_SUPT_0079 (Adcyap1+) mossy-cell subtypes — dorsal vs. ventral, or distinct projection patterns?
+    proposed_experiments:
+      - Independent mouse dentate gyrus annotation transfer (Hochgerner-style replication) targeting F1 >= 0.80 at SUPERTYPE level for CS20230722_SUPT_0079.
+      - ISH co-labelling of Cyp26b1 and Adcyap1 in dentate hilus to confirm non-overlapping expression and validate the two-supertype mossy-cell split between CS20230722_SUPT_0078 and CS20230722_SUPT_0079.
+    mapping_justification: semapv:ManualMappingCuration
+    discovery_score: &id002
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 15
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 15
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 8.05
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.667
+          coverage: 1.0
+        - gene: Dkk3
+          val: 5.32
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.733
+          coverage: 1.0
+      region_fraction: 0.668
+      region_fraction_100um: 0.936
+      region_evidence: SELF
+    mapping_cardinality: "1:n"
+    confidence: HIGH
+    confidence_score: 0.85
+    rationale: "[tier:STRONGEST] Hochgerner 2018 Mossy-Adcyap1 annotation transfer (run at_run_20260427_hochgerner2018_dg_mmc_wmbv1) lands 20 of 27 cells on CS20230722_SUPT_0079 at on the paired edge), and the supertype's atlas anatomy is dentate polymorph layer (MBA:10704) dominant with region_fraction_100um: 0.94. Gria4 and Dkk3 are expressed at supertype rank with child-coverage 1.000 across CS20230722_CLUS_0316 and CS20230722_CLUS_0317; the best AT child is CS20230722_CLUS_0317 (paired skos:closeMatch edge).\n"
+    reconciliation_note: "Paired with cluster-level edge_hilar_mossy_cell_hippocampus_to_CS20230722_CLUS_0317 (best-child within SUPT_0079; skos:closeMatch + 1:1) and with the Cyp26b1+ mossy-cell supertype edge to CS20230722_SUPT_0078; the classical hilar mossy cell maps to a two-supertype pair rather than a single 1:1.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: 9bbacbef
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_CLUS_0315
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0315
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0315 CA3 Glut_4; region_fraction_100um=0.279; strict region_fraction=0.065.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=4966 [painted]; Field CA3 [MBA:463] count_100um=4930 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=4850 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.279; strict region_fraction: 0.065; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 5.12; cohort_pct 0.407'
+        alignment: APPROXIMATE
+        notes: val=5.12; cohort percentile 0.407
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 8.94; cohort_pct 0.963'
+        alignment: CONSISTENT
+        notes: val=8.94; cohort percentile 0.963
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 27
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 27
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 5.12
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.407
+        - gene: Dkk3
+          val: 8.94
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.963
+      region_fraction: 0.065
+      region_fraction_100um: 0.279
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.35
+    rationale: "[tier:CUT] AT-best child within CS20230722_SUPT_0078 for Mossy-Cyp26b1 but inherits the supertype's CA3 pyramidal layer anatomy (region_fraction_100um: 0.28, strict region_fraction: 0.07); not in the dentate hilus. Eliminated in favour of the parent supertype edge, which carries the annotation transfer signal and the same anatomy caveat.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: 4c1766d8
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_CLUS_0316
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0316
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0316 CA3 Glut_5; region_fraction_100um=0.604; strict region_fraction=0.114.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=499 [painted]; Field CA3 [MBA:463] count_100um=461 [painted]; Field CA3, stratum radiatum [MBA:504] count_100um=389 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.604; strict region_fraction: 0.114; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 8.08; cohort_pct 0.815'
+        alignment: CONSISTENT
+        notes: val=8.08; cohort percentile 0.815
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 3.30; cohort_pct 0.630'
+        alignment: CONSISTENT
+        notes: val=3.30; cohort percentile 0.630
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 27
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 27
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 8.08
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.815
+        - gene: Dkk3
+          val: 3.3
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.63
+      region_fraction: 0.114
+      region_fraction_100um: 0.604
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.3
+    rationale: "[tier:CUT] Sibling cluster of CS20230722_CLUS_0317 within CS20230722_SUPT_0079; atlas anatomy is Field CA3 stratum radiatum dominant (region_fraction_100um: 0.60, strict region_fraction: 0.11), not the dentate hilus. CS20230722_CLUS_0317 is the AT-best and hilus-dominant child of CS20230722_SUPT_0079.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: 400be08e
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_CLUS_0317
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0317
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0317 CA3 Glut_5; region_fraction_100um=0.991; strict region_fraction=0.835.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1231 [painted]; Dentate gyrus [MBA:726] count_100um=1229 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1222 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.991; strict region_fraction: 0.835; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 8.03; cohort_pct 0.778'
+        alignment: CONSISTENT
+        notes: val=8.03; cohort percentile 0.778
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 7.34; cohort_pct 0.852'
+        alignment: CONSISTENT
+        notes: val=7.34; cohort percentile 0.852
+    caveats:
+      - caveat_type: LOW_CELL_COUNT
+        description: Cluster-level annotation transfer n=15 cells from the Mossy-Adcyap1 source label; independent replication recommended to confirm cluster-level assignment.
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: Cluster-level annotation transfer support is inherited from the supertype-level edge edge_hilar_mossy_cell_hippocampus_to_supt_0079; the Mossy-Adcyap1 label is distributed across sibling clusters within CS20230722_SUPT_0079. Supertype-level mapping is the primary call.
+      - caveat_type: SINGLE_DATASET
+        description: Annotation transfer evidence comes from a single source dataset (GEO:GSE95315).
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 27
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 27
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 8.03
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.778
+        - gene: Dkk3
+          val: 7.34
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.852
+      region_fraction: 0.835
+      region_fraction_100um: 0.991
+      region_evidence: SELF
+    confidence: HIGH
+    confidence_score: 0.78
+    rationale: "[tier:NEXT] Best-child within CS20230722_SUPT_0079 for the Mossy-Adcyap1 source label (Hochgerner 2018,: CS20230722_CLUS_0317 has the tightest hilar localisation (region_fraction_100um: 0.99 in MBA:10704) and the highest cohort percentiles for Gria4 (0.778) and Dkk3 (0.852) among the supertype's two children. Annotation transfer support is inherited from the parent supertype edge (on the paired edge CS20230722_SUPT_0079); cluster-level AT n is small (15 cells).\n"
+    reconciliation_note: "Paired with the parent supertype edge edge_hilar_mossy_cell_hippocampus_to_supt_0079 (skos:broadMatch + 1:n); this 1:1 records the best-child refinement.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - Independent mouse dentate gyrus annotation transfer targeting the Adcyap1+ mossy-cell subtype, with F1 >= 0.80 at CLUSTER level on CS20230722_CLUS_0317.
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Does the 32% of Mossy-Adcyap1 cells scattering to sibling clusters within CS20230722_SUPT_0079 reflect a real molecular subdivision of the Adcyap1+ mossy cells, or AT noise at small n?\n"
+      - Does the ~32% of Mossy-Adcyap1 cells scattering to sibling clusters within CS20230722_SUPT_0079 reflect a real molecular subdivision of the Adcyap1+ mossy cells, or annotation transfer noise at small n?
+    rationale_source_hash: 3c00da4b
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_CLUS_0507
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0507
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0507 DG Glut_2; region_fraction_100um=0.812; strict region_fraction=0.103.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=32942 [painted]; Dentate gyrus [MBA:726] count_100um=32869 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=32712 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.812; strict region_fraction: 0.103; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 4.79; cohort_pct 0.370'
+        alignment: APPROXIMATE
+        notes: val=4.79; cohort percentile 0.370
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 0.83; cohort_pct 0.259'
+        alignment: APPROXIMATE
+        notes: val=0.83; cohort percentile 0.259
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 27
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 27
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 4.79
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.37
+        - gene: Dkk3
+          val: 0.83
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.259
+      region_fraction: 0.103
+      region_fraction_100um: 0.812
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0507 atlas anatomy is dentate granule cell layer (MBA:632) dominant (region_fraction_100um: 0.81), not the dentate polymorph layer; cohort percentiles for Gria4 (0.370) and Dkk3 (0.259) are well below the hilar candidates.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: a6e1a349
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_CLUS_0508
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0508
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0508 DG Glut_3; region_fraction_100um=0.837; strict region_fraction=0.134.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=398 [painted]; Dentate gyrus [MBA:726] count_100um=392 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=391 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.837; strict region_fraction: 0.134; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 3.99; cohort_pct 0.296'
+        alignment: APPROXIMATE
+        notes: val=3.99; cohort percentile 0.296
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 0.80; cohort_pct 0.222'
+        alignment: APPROXIMATE
+        notes: val=0.80; cohort percentile 0.222
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 5
+      cohort_size: 27
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 27
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 3.99
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.296
+        - gene: Dkk3
+          val: 0.8
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.222
+      region_fraction: 0.134
+      region_fraction_100um: 0.837
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0508 atlas anatomy is dentate granule cell layer (MBA:632) dominant (region_fraction_100um: 0.84), not the dentate polymorph layer; cohort percentiles for Gria4 (0.296) and Dkk3 (0.222) are well below the hilar candidates.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: d4a7f40e
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_SUPT_0079
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0079
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0079 CA3 Glut_5; region_fraction_100um=0.936; strict region_fraction=0.668.
+    property_comparisons: *id001
+    caveats: []
+    discovery_score: *id002
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] Duplicate edge targeting CS20230722_SUPT_0079 alongside the canonical annotation-transfer-supported edge edge_hilar_mossy_cell_hippocampus_to_supt_0079; this is a legacy/fresh-emit ID collision. The canonical edge carries the Mossy-Adcyap1 annotation transfer evidence (on the paired edge) and the substantive property comparisons.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Curator removal of duplicate edge edge_hilar_mossy_cell_hippocampus_to_CS20230722_SUPT_0079 — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0079; canonical AT-supported edge is edge_hilar_mossy_cell_hippocampus_to_supt_0079.\n"
+      - Curator removal of duplicate edge edge_hilar_mossy_cell_hippocampus_to_CS20230722_SUPT_0079 — legacy/fresh-emit ID collision on taxonomy_type CS20230722_SUPT_0079; canonical AT-supported edge is edge_hilar_mossy_cell_hippocampus_to_supt_0079.
+    rationale_source_hash: 31448c05
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_SUPT_0139
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0139
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0139 DG Glut_4; region_fraction_100um=0.694; strict region_fraction=0.262.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=9122 [painted]; Dentate gyrus [MBA:726] count_100um=7783 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=6998 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.694; strict region_fraction: 0.262; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 6.02; cohort_pct 0.333; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=6.02; cohort percentile 0.333; child-cluster coverage 1.000
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 1.00; cohort_pct 0.267; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.00; cohort percentile 0.267; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 15
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 15
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 6.02
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.333
+          coverage: 1.0
+        - gene: Dkk3
+          val: 1.0
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.267
+          coverage: 1.0
+      region_fraction: 0.262
+      region_fraction_100um: 0.694
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0139 atlas anatomy is dentate granule cell layer (MBA:632) dominant (region_fraction_100um: 0.69, strict region_fraction: 0.26), not the dentate polymorph layer. Cohort percentiles for Gria4 (0.333) and Dkk3 (0.267) are well below the two annotation-transfer-supported mossy-cell supertypes.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: 979dc85c
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_SUPT_0138
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0138
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0138 DG Glut_3; region_fraction_100um=0.767; strict region_fraction=0.091.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1024 [painted]; Dentate gyrus [MBA:726] count_100um=1021 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=1012 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.767; strict region_fraction: 0.091; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 3.42; cohort_pct 0.133; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=3.42; cohort percentile 0.133; child-cluster coverage 1.000
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 0.75; cohort_pct 0.200; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.75; cohort percentile 0.200; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 15
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 15
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 3.42
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.133
+          coverage: 1.0
+        - gene: Dkk3
+          val: 0.75
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.2
+          coverage: 1.0
+      region_fraction: 0.091
+      region_fraction_100um: 0.767
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.18
+    rationale: "[tier:CUT] CS20230722_SUPT_0138 atlas anatomy is dentate granule cell layer dominant (region_fraction_100um: 0.77), not the dentate polymorph layer. Cohort percentiles for Gria4 (0.133) and Dkk3 (0.200) are very low.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: ca6f9261
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_SUPT_0141
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0141
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0141 DG-PIR Ex IMN_2; region_fraction_100um=0.920; strict region_fraction=0.442.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2097 [painted]; Dentate gyrus [MBA:726] count_100um=2074 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=2070 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.920; strict region_fraction: 0.442; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 4.57; cohort_pct 0.200; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=4.57; cohort percentile 0.200; child-cluster coverage 1.000
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 1.97; cohort_pct 0.400; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.97; cohort percentile 0.400; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 4
+      cohort_size: 15
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 15
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 4.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.2
+          coverage: 1.0
+        - gene: Dkk3
+          val: 1.97
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.4
+          coverage: 1.0
+      region_fraction: 0.442
+      region_fraction_100um: 0.92
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0141 (DG-PIR Ex IMN_2) is an immature-neuron supertype with dentate granule cell layer anatomy (region_fraction_100um: 0.92, strict region_fraction: 0.44); soma not in the dentate polymorph layer and developmental profile inconsistent with mature hilar mossy cells. Cohort percentiles for Gria4 (0.200) and Dkk3 (0.400) are low.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: ff85faf5
+  - id: edge_hilar_mossy_cell_hippocampus_to_CS20230722_SUPT_0137
+    lit_type: hilar_mossy_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0137
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0137 DG Glut_2; region_fraction_100um=0.805; strict region_fraction=0.100.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: dentate gyrus polymorphic layer [UBERON:0002928]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=47494 [painted]; Dentate gyrus [MBA:726] count_100um=47391 [painted]; Dentate gyrus, granule cell layer [MBA:632] count_100um=47167 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.805; strict region_fraction: 0.100; region_evidence: SELF'
+      - property: marker_Gria4
+        node_a_value: Gria4 — defining marker
+        node_b_value: 'Gria4: 3.26; cohort_pct 0.067; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=3.26; cohort percentile 0.067; child-cluster coverage 1.000
+      - property: marker_Dkk3
+        node_a_value: Dkk3 — defining marker
+        node_b_value: 'Dkk3: 0.51; cohort_pct 0.067; child-coverage 0.667'
+        alignment: CONSISTENT
+        notes: val=0.51; cohort percentile 0.067; child-cluster coverage 0.667
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 15
+      next_best_score: 5
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 15
+          filters:
+            - region=MBA:10704
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Gria4
+          val: 3.26
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.067
+          coverage: 1.0
+        - gene: Dkk3
+          val: 0.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.816
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.067
+          coverage: 0.667
+      region_fraction: 0.1
+      region_fraction_100um: 0.805
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.18
+    rationale: "[tier:CUT] CS20230722_SUPT_0137 atlas anatomy is dentate granule cell layer dominant (region_fraction_100um: 0.81); cohort percentiles for Gria4 (0.067) and Dkk3 (0.067) place it in the bottom decile of the hilar-glutamatergic survival cohort.\n"
+    rationale_generated_at: '2026-06-10T13:17:52+00:00'
+    report_path: reports/hippocampus/hilar_mossy_cell_hippocampus_summary.md
+    rationale_source_hash: cbd72162

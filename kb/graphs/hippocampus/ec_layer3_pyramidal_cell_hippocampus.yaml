@@ -1,0 +1,910 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - anatomical_location:
+      - compartment: SOMA
+        id: UBERON:0002728
+        label: entorhinal cortex
+        name_in_source: entorhinal cortex layer III
+    cl_mapping:
+      cl_term:
+        id: CL:0000598
+        label: pyramidal neuron
+        name_in_source: pyramidal neuron
+      mapping_notes: 'EC layer III PCP4-positive pyramidal cells project to CA1 and the subiculum. PCP4 is shared with CA2 pyramidal cells but distinguishes EC layer III from layer II populations. CL:0000598 (pyramidal neuron) is the best available match; no EC layer III-specific CL term exists.
+
+        '
+      mapping_type: BROAD
+    defining_markers:
+      - ncbi_gene_id: NCBIGene:18546
+        symbol: Pcp4
+        sources:
+          - ref: PMID:24166578
+            method: IHC
+            scope: mouse hippocampus and entorhinal cortex; Pcp4 marker
+            quote_key: 18746823_614030d2
+            marker_type: PROTEIN
+          - ref: PMID:34949991
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 244909998_c43772d2
+            marker_type: PROTEIN
+    definition_basis: CLASSICAL_MULTIMODAL
+    id: ec_layer3_pyramidal_cell_hippocampus
+    name: entorhinal cortex layer III PCP4-positive pyramidal cell
+    nt_type:
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      name_in_source: glutamatergic
+      sources:
+        - ref: PMID:34949991
+          method: IHC + tract-tracing review
+          scope: rodent entorhinal cortex
+          quote_key: 244909998_bdbb7689
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+  - id: CS20230722_SUPT_0036
+    name: 0036 L2/3 IT ENT Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0036
+  - id: CS20230722_SUPT_0037
+    name: 0037 L2/3 IT ENT Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0037
+  - id: CS20230722_CLUS_0014
+    name: 0014 IT EP-CLA Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0014
+  - id: CS20230722_CLUS_0015
+    name: 0015 IT EP-CLA Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0015
+  - id: CS20230722_CLUS_0024
+    name: 0024 L5/6 IT TPE-ENT Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0024
+  - id: CS20230722_CLUS_0025
+    name: 0025 L5/6 IT TPE-ENT Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0025
+  - id: CS20230722_CLUS_0027
+    name: 0027 L5/6 IT TPE-ENT Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0027
+  - id: CS20230722_SUPT_0010
+    name: 0010 L5/6 IT TPE-ENT Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0010
+  - id: CS20230722_SUPT_0068
+    name: 0068 ENTmv-PA-COAp Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0068
+  - id: CS20230722_SUPT_0067
+    name: 0067 ENTmv-PA-COAp Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0067
+  - id: CS20230722_SUPT_0054
+    name: 0054 L2 IT ENT-po Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0054
+  - id: CS20230722_SUPT_0053
+    name: 0053 L2 IT ENT-po Glut_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0053
+edges:
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0036
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0036
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'Annotation transfer of Yao 2021 (GSE185862) SSv4 hippocampal cells onto WMBv1 (CCN20230722) via local MapMyCells. Yao 2021 ''L3 IT ENT'' subclass cells (n=588), representing entorhinal cortex layer III IT projection neurons (including PCP4+ pyramidal cells projecting to CA1 and subiculum via the temporoammonic pathway), map to SUPT_0036 (L2/3 IT ENT Glut_4) with coverage=0.888 and F1=0.937. This is a strong, high-purity mapping. SUPT_0037 (L2/3 IT ENT Glut_5) accounts for a further 10.2% of L3 IT ENT cells. Together SUPT_0036+0037 cover 99.0% of L3 IT ENT cells.
+
+          '
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: L3 IT ENT (Yao 2021 subclass)
+        n_cells_total: 588
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: SUPERTYPE
+            best_target_name: 0036 L2/3 IT ENT Glut_4
+            f1_score: 0.937
+            n_cells_mapped: 522
+            taxonomy_rank: 1
+            best_target_accession: CS20230722_SUPT_0036
+            coverage: 0.888
+            purity: 0.992
+        best_mapping_rank: 1
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=10099 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=9114 [painted]; Entorhinal area, medial part, dorsal zone, layer 5 [MBA:727] count_100um=6876 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.984; strict region_fraction: 0.937; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 10.57; cohort_pct 0.891; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=10.57; cohort percentile 0.891; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "CS20230722_SUPT_0036 and CS20230722_SUPT_0037 together capture 99.0% of Yao 2021 L3 IT ENT cells (TYPE_A_SPLITS). Secondary route to CS20230722_SUPT_0037 carries ).\n"
+      - caveat_type: OTHER
+        description: "NT type not asserted on CS20230722_SUPT_0036 — NT alignment NOT_ASSESSED. The mapping rests on annotation transfer (F1=0.94), region (region_fraction_100um=0.984), and Pcp4 transcript concordance; classical NT (glutamatergic) is inferred but not directly checkable on the atlas side.\n"
+    unresolved_questions:
+      - "Curator review of auto-repredication from deprecated evidencell:PartialOverlapMatch to skos:closeMatch (rule-3b, 2026-05-26) on edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0036.\n"
+      - "Whether the 10.2% L3 IT ENT split onto CS20230722_SUPT_0037 represents a lateral-vs-medial EC layer III subtype distinction or supertype-mean smoothing.\n"
+    proposed_experiments:
+      - "Cluster-level MapMyCells reanalysis targeting F1 >= 0.80 at CLUSTER level on rank-0 children of CS20230722_SUPT_0036 and CS20230722_SUPT_0037, to resolve whether a single child cluster carries the temporoammonic EC layer III population.\n"
+      - "Retrograde-labelled CA1 stratum lacunosum-moleculare projecting EC layer III neurons subjected to targeted transcriptomic profiling or scRNA-seq (>=50 cells) to add projection-defined source provenance to the L3 IT ENT subclass identity.\n"
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:1"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 10
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 10.57
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.891
+          coverage: 1.0
+      region_fraction: 0.937
+      region_fraction_100um: 0.984
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: HIGH
+    confidence_score: 0.85
+    rationale: "[tier:STRONGEST] Yao 2021 L3 IT ENT subclass annotation transfer onto CS20230722_SUPT_0036 in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1 gives F1=0.94 with coverage 0.888 and purity 0.992 (n=588 source cells); Pcp4 transcript on CS20230722_SUPT_0036 is in the top decile of the glutamatergic hippocampal cohort (mean 10.57, cohort_pct 0.891); MERFISH region_fraction_100um=0.984 places soma in entorhinal area medial part. 1 of 1 markers CONSISTENT.\n"
+    reconciliation_note: "Paired with edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037 (10.2% secondary AT route; together 99.0% of L3 IT ENT cells) — kept as separate closeMatch edges rather than collapsing because the secondary route's \n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: b1ad5d07
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0037
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: PARTIAL
+        explanation: 'Secondary target in Yao 2021 (GSE185862) SSv4 L3 IT ENT annotation transfer onto WMBv1 (CCN20230722) via local MapMyCells. SUPT_0037 (0037 L2/3 IT ENT Glut_5) captures 10.2% of L3 IT ENT cells (n≈60/588) with F1=0.177. Together with SUPT_0036 (F1=0.937, 88.8%), the two supertypes account for 99.0% of L3 IT ENT cells. Low F1 reflects lower coverage relative to SUPT_0036; purity is not separately reported for this secondary target in the available AT artifact.
+
+          '
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: L3 IT ENT (Yao 2021 subclass)
+        n_cells_total: 588
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: SUPERTYPE
+            best_target_name: 0037 L2/3 IT ENT Glut_5
+            f1_score: 0.177
+            n_cells_mapped: 60
+            taxonomy_rank: 1
+            best_target_accession: CS20230722_SUPT_0037
+        best_mapping_rank: 1
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2307 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=2077 [painted]; Entorhinal area, lateral part, layer 3 [MBA:52] count_100um=1749 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.943; strict region_fraction: 0.906; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 9.44; cohort_pct 0.707; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.44; cohort percentile 0.707; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: OTHER
+        description: "F1=0.18 is below the F1>=0.5 clean-mapping threshold; only 10.2% of L3 IT ENT cells route here and purity is not separately reported for this secondary target.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Secondary route alongside primary CS20230722_SUPT_0036 route; the L3 IT ENT subclass splits across the two supertypes (TYPE_A_SPLITS).\n"
+    unresolved_questions:
+      - "Curator review of auto-repredication from deprecated evidencell:PartialOverlapMatch to skos:closeMatch (rule-3b, 2026-05-26) on edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0037.\n"
+    proposed_experiments:
+      - "Cluster-level MapMyCells on rank-0 children of CS20230722_SUPT_0037 (target F1 >= 0.50) to test whether the 10.2% split is concentrated on a single child cluster aligned with lateral EC layer 3 MERFISH localisation.\n"
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:1"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 9
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 9.44
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.707
+          coverage: 1.0
+      region_fraction: 0.906
+      region_fraction_100um: 0.943
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.5
+    rationale: "[tier:NEXT] Secondary annotation transfer route in at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1: 10.2% of Yao 2021 L3 IT ENT cells route to CS20230722_SUPT_0037 with F1=0.18; together with the primary CS20230722_SUPT_0036 route the two supertypes account for 99.0% of L3 IT ENT cells. Pcp4 transcript mean 9.44 (cohort_pct 0.707); MERFISH region_fraction_100um=0.943 (entorhinal area, lateral part, layer 3). 1 of 1 markers CONSISTENT.\n"
+    reconciliation_note: "Paired with edge_ec_layer3_pyramidal_cell_hippocampus_to_supt_0036 as the primary route; predicate retained as closeMatch reflecting minority secondary mapping rather than collapsing to broadMatch because the two supertypes are siblings rather than supertype/parent.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 13096dac
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0014
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0014
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0014 IT EP-CLA Glut_2; region_fraction_100um=0.751; strict region_fraction=0.550; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=238 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=228 [painted]; Entorhinal area, lateral part, layer 6a [MBA:28] count_100um=225 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.751; strict region_fraction: 0.550; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 5.46; cohort_pct 0.404'
+        alignment: APPROXIMATE
+        notes: val=5.46; cohort percentile 0.404
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 5.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.404
+      region_fraction: 0.55
+      region_fraction_100um: 0.751
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0014 is an IT EP-CLA Glut_2 cluster (endopiriform / claustrum, not EC layer III); Pcp4=5.46 (cohort_pct 0.404) is APPROXIMATE rather than CONSISTENT and the annotation transfer from Yao 2021 L3 IT ENT does not land on this cluster. region_fraction_100um=0.751 is largely from a lateral EC layer 6a tail (MBA:28), not EC layer 3.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 50a965f1
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0015
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0015
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0015 IT EP-CLA Glut_2; region_fraction_100um=0.670; strict region_fraction=0.368; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=74 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=71 [painted]; Entorhinal area, lateral part, layer 6a [MBA:28] count_100um=70 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.670; strict region_fraction: 0.368; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 5.98; cohort_pct 0.427'
+        alignment: APPROXIMATE
+        notes: val=5.98; cohort percentile 0.427
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 5.98
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.427
+      region_fraction: 0.368
+      region_fraction_100um: 0.67
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0015 is an IT EP-CLA Glut_2 cluster (endopiriform / claustrum, not EC layer III); Pcp4=5.98 (cohort_pct 0.427) is APPROXIMATE and Yao 2021 L3 IT ENT annotation transfer does not land here. MERFISH localisation sits at EC layer 6a rather than layer 3.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 4c3d2f98
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0024
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0024
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0024 L5/6 IT TPE-ENT Glut_1; region_fraction_100um=0.753; strict region_fraction=0.626; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=311 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=287 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=251 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.753; strict region_fraction: 0.626; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 10.92; cohort_pct 0.895'
+        alignment: CONSISTENT
+        notes: val=10.92; cohort percentile 0.895
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 10.92
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.895
+      region_fraction: 0.626
+      region_fraction_100um: 0.753
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0024 is an L5/6 IT TPE-ENT Glut_1 cluster — wrong cortical layer for an EC layer III principal cell (MERFISH localises to lateral EC layer 5, MBA:139). Pcp4=10.92 is high but Pcp4 is not restricted to EC layer III; Yao 2021 L3 IT ENT annotation transfer does not select this cluster.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: efb92f77
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0025
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0025
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0025 L5/6 IT TPE-ENT Glut_1; region_fraction_100um=0.698; strict region_fraction=0.622; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=184 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=181 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=170 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.698; strict region_fraction: 0.622; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 9.46; cohort_pct 0.690'
+        alignment: CONSISTENT
+        notes: val=9.46; cohort percentile 0.690
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 9.46
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.69
+      region_fraction: 0.622
+      region_fraction_100um: 0.698
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0025 is an L5/6 IT TPE-ENT Glut_1 cluster — wrong cortical layer (lateral EC layer 5, MBA:139) for an EC layer III principal cell, and Yao 2021 L3 IT ENT annotation transfer does not target this cluster.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 1f64b428
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_CLUS_0027
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0027
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0027 L5/6 IT TPE-ENT Glut_2; region_fraction_100um=0.637; strict region_fraction=0.605; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=665 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=519 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=447 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.637; strict region_fraction: 0.605; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 8.15; cohort_pct 0.538'
+        alignment: CONSISTENT
+        notes: val=8.15; cohort percentile 0.538
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 8.15
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.538
+      region_fraction: 0.605
+      region_fraction_100um: 0.637
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0027 is an L5/6 IT TPE-ENT Glut_2 cluster — wrong cortical layer (lateral EC layer 5, MBA:139) for EC layer III; Yao 2021 L3 IT ENT annotation transfer does not select this cluster.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: d8b08e71
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0010
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0010
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0010 L5/6 IT TPE-ENT Glut_4; region_fraction_100um=0.864; strict region_fraction=0.830; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1280 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=1035 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=877 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.864; strict region_fraction: 0.830; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 8.44; cohort_pct 0.641; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.44; cohort percentile 0.641; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 8.44
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.641
+          coverage: 1.0
+      region_fraction: 0.83
+      region_fraction_100um: 0.864
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_SUPT_0010 is an L5/6 IT TPE-ENT Glut_4 supertype — wrong cortical layer (lateral EC layer 5, MBA:139) for an EC layer III pyramidal cell; Yao 2021 L3 IT ENT annotation transfer does not target this supertype.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 716d031f
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0068
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0068
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0068 ENTmv-PA-COAp Glut_3; region_fraction_100um=0.711; strict region_fraction=0.661; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=259 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=252 [painted]; Entorhinal area, medial part, dorsal zone, layer 5 [MBA:727] count_100um=203 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.711; strict region_fraction: 0.661; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 2.80; cohort_pct 0.326; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=2.80; cohort percentile 0.326; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 2.8
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.326
+          coverage: 1.0
+      region_fraction: 0.661
+      region_fraction_100um: 0.711
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0068 is an ENTmv-PA-COAp Glut_3 supertype (medioventral EC / piriform-amygdalar / cortical amygdala) — wrong sub-region for canonical EC layer III principal cells. Pcp4=2.80 (cohort_pct 0.326) is APPROXIMATE and Yao 2021 L3 IT ENT annotation transfer does not target this supertype.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 2f99121a
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0067
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0067
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0067 ENTmv-PA-COAp Glut_2; region_fraction_100um=0.631; strict region_fraction=0.493; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=586 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=346 [painted]; Entorhinal area, medial part, dorsal zone, layer 6 [MBA:743] count_100um=300 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.631; strict region_fraction: 0.493; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 1.66; cohort_pct 0.250; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.66; cohort percentile 0.250; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 1.66
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.25
+          coverage: 1.0
+      region_fraction: 0.493
+      region_fraction_100um: 0.631
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0067 is an ENTmv-PA-COAp Glut_2 supertype (medioventral EC / piriform-amygdalar / cortical amygdala) — wrong sub-region for canonical EC layer III. Pcp4=1.66 (cohort_pct 0.250) is APPROXIMATE and Yao 2021 L3 IT ENT annotation transfer does not target this supertype.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 4a90e4b5
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0054
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0054
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0054 L2 IT ENT-po Glut_4; region_fraction_100um=0.979; strict region_fraction=0.954; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2076 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=2024 [painted]; Entorhinal area, medial part, dorsal zone, layer 2 [MBA:543] count_100um=1868 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.979; strict region_fraction: 0.954; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 1.53; cohort_pct 0.196; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.53; cohort percentile 0.196; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 1.53
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.196
+          coverage: 1.0
+      region_fraction: 0.954
+      region_fraction_100um: 0.979
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0054 is an L2 IT ENT-po Glut_4 supertype (EC layer 2, MBA:543) — wrong cortical layer for an EC layer III population. Pcp4=1.53 (cohort_pct 0.196) is APPROXIMATE and Yao 2021 L3 IT ENT annotation transfer does not target this supertype.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: 9be65a5f
+  - id: edge_ec_layer3_pyramidal_cell_hippocampus_to_CS20230722_SUPT_0053
+    lit_type: ec_layer3_pyramidal_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0053
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0053 L2 IT ENT-po Glut_3; region_fraction_100um=0.989; strict region_fraction=0.989; completeness=exact.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: entorhinal cortex [UBERON:0002728]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=628 [painted]; Entorhinal area, medial part, dorsal zone [MBA:926] count_100um=433 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=397 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.989; strict region_fraction: 0.989; region_count_completeness: exact; region_evidence: SELF'
+      - property: marker_Pcp4
+        node_a_value: Pcp4 — defining marker
+        node_b_value: 'Pcp4: 1.42; cohort_pct 0.141; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=1.42; cohort percentile 0.141; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:909
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Pcp4
+          val: 1.42
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.141
+          coverage: 1.0
+      region_fraction: 0.989
+      region_fraction_100um: 0.989
+      region_count_completeness: exact
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0053 is an L2 IT ENT-po Glut_3 supertype — wrong EC layer (layer 2 rather than layer III). Pcp4=1.42 (cohort_pct 0.141) is APPROXIMATE and Yao 2021 L3 IT ENT annotation transfer does not target this supertype.\n"
+    rationale_generated_at: '2026-06-08T21:04:30+00:00'
+    report_path: reports/hippocampus/ec_layer3_pyramidal_cell_hippocampus_summary.md
+    rationale_source_hash: a048012b

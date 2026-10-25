@@ -1,0 +1,1787 @@
+name: Hippocampal GABAergic interneurons — draft classical types
+description: 'Draft evidence graph for classical hippocampal GABAergic interneuron types extracted from ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-09'
+nodes:
+  - id: trilaminar_cell_hippocampus
+    name: Trilaminar cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+
+    anatomical_location:
+      # Soma — oriens/alveus border. The previous single entry cited a quote that
+      # did NOT support it (a statement of ambiguity about unlabelled oriens cells).
+      - id: UBERON:0014552
+        label: CA1 stratum oriens
+        name_in_source: stratum oriens, at the oriens/alveus border
+        compartment: SOMA
+        sources:
+          - ref: PMID:7472426
+            method: in vivo intracellular labelling
+            scope: rat CA1
+            quote_key: 10664418_0ba8c6f5
+          - ref: PMID:16280590
+            method: in vivo recording and labelling + immunohistochemistry
+            scope: rat CA1 oriens/alveus
+            quote_key: 11109352_ce06dee5
+          - ref: PMID:30084021
+            method: review of morphological reconstructions
+            scope: hippocampal interneurons
+            quote_key: 51930579_fef66b77
+          - ref: PMID:33991454
+            method: whole-cell recording
+            scope: mouse CA1 stratum oriens
+            quote_key: 234597703_ce80332f
+      # Local axon — the three strata that give the type its name.
+      - id: UBERON:0014552
+        label: CA1 stratum oriens
+        name_in_source: stratum oriens (local axon collaterals, densest layer)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:7472426
+            method: in vivo intracellular labelling
+            scope: rat CA1
+            quote_key: 10664418_0ba8c6f5
+          - ref: PMID:30084021
+            method: review of quantitative axon reconstructions
+            scope: rat CA1
+            notes: 12.8% of axon length in stratum oriens.
+            quote_key: 51930579_fef66b77
+      - id: UBERON:0014548
+        label: pyramidal layer of CA1
+        name_in_source: stratum pyramidale (local axon collaterals)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:7472426
+            method: in vivo intracellular labelling
+            scope: rat CA1
+            quote_key: 10664418_0ba8c6f5
+          - ref: PMID:30084021
+            method: review of quantitative axon reconstructions
+            scope: rat CA1
+            notes: >
+              16.7% of axon length in stratum pyramidale; up to 19% of synapses
+              contact pyramidal cell somata.
+            quote_key: 51930579_fef66b77
+      - id: UBERON:0014554
+        label: CA1 stratum radiatum
+        name_in_source: stratum radiatum (local axon collaterals)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:7472426
+            method: in vivo intracellular labelling
+            scope: rat CA1
+            quote_key: 10664418_0ba8c6f5
+          - ref: PMID:30084021
+            method: review of quantitative axon reconstructions
+            scope: rat CA1
+            notes: 68.4% of axon length in stratum radiatum, biased toward proximal radiatum.
+            quote_key: 51930579_fef66b77
+      # Long-range output — the well-established one.
+      - id: UBERON:0002191
+        label: subiculum
+        name_in_source: subiculum (long-range projection via the alveus)
+        compartment: AXON_TARGET
+        sources:
+          - ref: PMID:16280590
+            method: in vivo axon reconstruction
+            scope: rat CA1 to subiculum
+            quote_key: 11109352_6e1a21e0
+          - ref: PMID:17699661
+            method: retrograde tracing + immunohistochemistry
+            scope: rat hippocampus to subiculum
+            quote_key: 12255434_a747f26d
+          - ref: PMID:32016558
+            method: review of own and prior anatomy
+            scope: rat and mouse CA1
+            quote_key: 211024938_f54179c3
+
+    nt_type:
+      name_in_source: GABAergic
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: GABAergic
+      sources:
+        - ref: PMID:7472426
+          method: electron microscopy (symmetric synapses onto targets)
+          scope: rat CA1
+          quote_key: 10664418_0ba8c6f5
+        - ref: PMID:42268975
+          method: immunohistochemistry (Chrm2 colocalisation with Gad2)
+          scope: mouse CA1-CA3
+          quote_key: 289175303_54ac3e9e
+
+    defining_markers:
+      - symbol: Chrm2
+        ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry (somato-dendritic M2 receptor)
+            scope: rat and mouse CA1/CA3
+            notes: Described as a high level of somato-dendritic M2 receptor.
+            quote_key: 211024938_f54179c3
+          - marker_type: PROTEIN
+            ref: PMID:16280590
+            method: immunohistochemistry (M2 receptor) + in vivo labelling
+            scope: rat CA1 oriens/alveus
+            notes: >
+              Strongly M2-positive; the horizontal M2-immunoreactive oriens/alveus
+              neurons are the most prominent targets of mGluR8-positive synapses.
+            quote_key: 11109352_8a025008
+          - marker_type: PROTEIN
+            ref: PMID:17699661
+            method: immunohistochemistry
+            scope: rat CA1
+            quote_key: 12255434_9720be63
+          - marker_type: PROTEIN
+            ref: PMID:30487571
+            method: immunohistochemistry
+            scope: rat CA1 (cited comparison)
+            quote_key: 53861524_9630c54c
+          - marker_type: TRANSCRIPT
+            ref: PMID:42268975
+            method: in situ colocalisation (Chrm2 with Gad2)
+            scope: mouse CA1-CA3 stratum oriens and pyramidale
+            notes: Sparse Chrm2+ interneurons, a subpopulation negative for Sst and Pvalb.
+            quote_key: 289175303_54ac3e9e
+      - symbol: Ntng1
+        ncbi_gene_id:
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: PMID:32016558
+            method: single-cell RNA-seq (cited from Harris et al. 2017)
+            scope: mouse CA1 stratum oriens
+            notes: >
+              TENTATIVE. Katona et al. describe a CGE-derived stratum oriens cluster
+              lacking Sst and Pvalb and expressing Chrm2 and Ntng1 as having a profile
+              "similar to that of trilaminar cells". This is an inference from shared
+              marker profile, not a measurement on morphologically identified cells —
+              no patch-seq or otherwise morphologically anchored transcriptome of this
+              type has been published. See node notes.
+            quote_key: 211024938_016867da
+
+    negative_markers:
+      # Sst-negativity is the decisive feature against Sst+ long-range oriens cells
+      # (including CL:4023121 sst chodl GABAergic interneuron).
+      - symbol: Sst
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry
+            scope: rat and mouse CA1/CA3
+            quote_key: 211024938_f54179c3
+          - marker_type: PROTEIN
+            ref: PMID:17699661
+            method: immunohistochemistry
+            scope: rat CA1
+            quote_key: 12255434_9720be63
+      # Pvalb was previously and incorrectly listed as a DEFINING marker — see node notes.
+      - symbol: Pvalb
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: TRANSCRIPT
+            ref: PMID:32016558
+            method: single-cell RNA-seq (cited from Harris et al. 2017)
+            scope: mouse CA1 stratum oriens
+            notes: >
+              The associated transcriptomic cluster lacks Sst and Pvalb. Parvalbumin
+              in this literature marks the cell's postsynaptic TARGETS, not the cell.
+            quote_key: 211024938_016867da
+      - symbol: Vip
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry
+            scope: rat CA1
+            notes: Differentia against M2+ VIP-LRP (Type I) cells.
+            quote_key: 211024938_9161cd35
+      - symbol: Npy
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry
+            scope: rat CA1
+            notes: Differentia against M2+ VIP-LRP (Type I) cells.
+            quote_key: 211024938_9161cd35
+      - symbol: Calb1
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - marker_type: PROTEIN
+            ref: PMID:32016558
+            method: immunohistochemistry
+            scope: rat CA1
+            notes: Calbindin absent from the soma; differentia against M2+ VIP-LRP cells.
+            quote_key: 211024938_9161cd35
+
+    neuropeptides: []
+
+    cl_mapping:
+
+    proposed_cl_term:
+      label: hippocampal trilaminar cell
+      parent_cl_term:
+        id: CL:1001569
+        label: hippocampal interneuron
+        name_in_source: hippocampal interneuron
+      definition: >
+        A GABAergic interneuron with soma at the stratum oriens/alveus border of
+        hippocampal CA1, whose dendrites remain largely confined to stratum oriens
+        while its local axon distributes across strata oriens, pyramidale and
+        radiatum — the arrangement for which the type is named — and which
+        additionally projects to the subiculum (Sik et al., 1995, PMID:7472426;
+        Ferraguti et al., 2005, PMID:16280590). It expresses a high level of
+        somato-dendritic muscarinic M2 acetylcholine receptor and lacks somatostatin,
+        parvalbumin, vasoactive intestinal peptide, neuropeptide Y and calbindin
+        (Katona et al., 2020, PMID:32016558). Its presynaptic inputs are unusually
+        densely decorated with mGluR8a-containing terminals (PMID:16280590;
+        PMID:32016558). Output synapses are strongly biased toward other interneurons,
+        including parvalbumin-expressing cells, while also contacting pyramidal cell
+        somata (PMID:32016558). Firing falls during movement and rises in prolonged
+        bursts above 200 Hz during slow-wave sleep (PMID:32016558).
+      comment: >
+        Second proposed parent CL:0011005 (GABAergic interneuron) is given in the term
+        request but cannot be expressed here — parent_cl_term is single-valued.
+      term_request_url: https://github.com/obophenotype/cell-ontology/issues/3744
+      status: SUBMITTED
+
+    definition_references:
+      - PMID:7472426
+      - PMID:16280590
+      - PMID:32016558
+      - PMID:17699661
+      - PMID:30084021
+
+    is_terminal: false
+
+    morphology:
+      description: >
+        Oblong to elongated soma lying deep in CA1, usually at the stratum
+        oriens/alveus border. The defining feature is a mismatch between a
+        restricted dendritic tree and a broad three-layer axonal arbor: dendrites
+        are largely confined to stratum oriens — horizontally oriented in the
+        classic description, with radial variants reported — while the axon gives
+        collaterals in strata oriens, pyramidale and radiatum. The dendritic field is
+        among the largest sampled in CA1 (~930 um mediolaterally x 1500 um
+        anteroposteriorly), irregularly and sparsely spiny with drumstick-shaped
+        spines. The axon spans >3.3 mm rostrocaudally, is densest at the level of the
+        dendritic field and most widespread in stratum oriens passing into stratum
+        pyramidale; quantitative reconstruction gives ~56,000 um of axon bearing
+        15,767 boutons distributed 12.8% oriens / 16.7% pyramidale / 68.4% radiatum,
+        with up to 19% of synapses contacting pyramidal cell somata. Three main axon
+        branches travel caudally in the alveus and branch extensively across all
+        layers of the subiculum, including its molecular layer. Two Chrm2-positive
+        morphologies have been reported in mouse: one in upper stratum oriens with
+        horizontal dendrites, and one in or near stratum pyramidale with perpendicular
+        dendrites spanning oriens and radiatum.
+      sources:
+        - ref: PMID:7472426
+          method: in vivo intracellular labelling + electron microscopy
+          scope: rat CA1
+          quote_key: 10664418_0ba8c6f5
+        - ref: PMID:16280590
+          method: in vivo labelling + light microscopic reconstruction
+          scope: rat CA1
+          quote_key: 11109352_2c1e25bf
+        - ref: PMID:16280590
+          method: in vivo axon reconstruction
+          scope: rat CA1 to subiculum
+          quote_key: 11109352_6e1a21e0
+        - ref: PMID:30084021
+          method: review of quantitative reconstructions
+          scope: rat CA1
+          quote_key: 51930579_fef66b77
+        - ref: PMID:33991454
+          method: whole-cell recording + morphology
+          scope: mouse CA1 stratum oriens
+          quote_key: 234597703_ce80332f
+        - ref: PMID:42268975
+          method: immunohistochemistry (GAD2+/CHRM2+ morphologies)
+          scope: mouse CA1
+          quote_key: 289175303_007974ab
+
+    electrophysiology:
+      description: >
+        Network-state-dependent firing rather than uniform activity across behaviour.
+        In vivo, identified cells fire complex spike bursts during theta oscillations
+        and discharge strongly during sharp wave/ripple events. Recordings in freely
+        moving rats show reduced firing during movement but a substantial increase in
+        activity during slow-wave sleep, including prolonged burst firing above 200 Hz.
+        Commissural stimulation evokes an early EPSP - IPSP - late depolarising
+        potential sequence, placing these cells at a convergence of excitatory and
+        inhibitory CA1 input. Unlike several other CA1 stratum oriens interneurons,
+        including OLM cells, they do not show a sag and rebound response to
+        hyperpolarisation, which serves as a practical discriminator in slice studies.
+      sources:
+        - ref: PMID:16280590
+          method: in vivo recording of an identified cell
+          scope: rat CA1
+          quote_key: 11109352_b3042925
+        - ref: PMID:32016558
+          method: recordings in freely moving rats
+          scope: rat CA1
+          quote_key: 211024938_ee0c9a57
+        - ref: PMID:7472426
+          method: in vivo intracellular recording (commissural stimulation)
+          scope: rat CA1
+          quote_key: 10664418_0ba8c6f5
+        - ref: PMID:33991454
+          method: whole-cell recording (sag/rebound absent)
+          scope: mouse CA1 stratum oriens
+          quote_key: 234597703_ce80332f
+
+    notes: >
+      Rewritten 2026-09-11 from the ASTA deep research report
+      (inputs/deepsearch/trilaminar_hippocampal_cells.pdf); run
+      asta_ingest_trilaminar_20260911. Previously a cite-traverse stub whose
+      assertions were almost entirely unsourced.
+
+
+      CORRECTION — Pvalb removed from defining_markers. The previous node listed
+      Pvalb as a defining marker with no sources. This is wrong: parvalbumin appears
+      in this literature as a marker of the cell's postsynaptic TARGETS ("a strong
+      bias towards interneurons as targets, including parvalbumin-expressing cells",
+      Katona et al. 2020), and the associated transcriptomic cluster is explicitly
+      Pvalb-negative. Pvalb now sits in negative_markers. The error had consequences:
+      it produced an incorrect CL parent-term proposal (CL:4023018 pvalb GABAergic
+      interneuron) during the 2026-09 CL survey before the report corrected it.
+
+
+      CORRECTION — PMID:28646648 removed from definition_references. It was this
+      node's only reference and is an orphan: absent from references.json and
+      matching none of the 18 corpus IDs linked from the ASTA report. It is not
+      Katona et al. 2017 (that is PMID:27997999).
+
+
+      NOMENCLATURE HAZARD. "Trilaminar cell" has been used for at least three
+      distinct things. (1) This type, as defined by Sik et al. 1995; Ferraguti et al.
+      2005, following Somogyi et al. 2005, stipulated that the name be reserved for
+      it "and not to other different cells that have axons in three layers".
+      (2) A deep CA1 PYRAMIDAL subpopulation expressing Ctip2, Sox5, muscarinic M1
+      receptor, somatostatin and neuropeptide Y, also termed "trilaminar cells"
+      (Slomianka et al. 2011, PMID:21597968) — glutamatergic, NOT this type.
+      (3) "Radial trilaminar cells", with perpendicular rather than horizontal
+      dendrites, possibly a variant of this type or a separate entity. Separately,
+      "trilaminar complex" denotes a BRAIN REGION in the avian literature
+      (PMID:27445724) and is unrelated — that paper is a retrieval false positive in
+      the source report, as are PMID:28066183 (SOD1 acetylation, incidental mention)
+      and, for identity purposes, PMID:42268975 (Rett syndrome; still useful for the
+      Chrm2/Gad2 colocalisation and the two-morphology observation).
+
+
+      CLOSEST CONFUSABLE TYPE. The M2+ VIP-LRP (Type I) cell of Francavilla et al.
+      2018 (PMID:30487571) shares soma position, horizontal dendrites,
+      Sst-negativity and mGluR8a+ inputs. Katona et al. 2020 separate the two by this
+      type's lack of VIP, NPY and calbindin, by a much higher density of mGluR8a+
+      input decoration, and by the three-layer axon (VIP-LRP local collaterals
+      concentrate in oriens/alveus with only a small proportion entering pyramidale
+      and radiatum).
+
+
+      mGluR8a IS AN INPUT PROPERTY, NOT EXPRESSION. The dense mGluR8a decoration
+      characterises the presynaptic terminals innervating these cells — including
+      GABAergic input from the medial septum — and must not be entered as a
+      defining_marker. No schema slot currently represents "presynaptic input
+      receptor decoration"; it is captured in the morphology/marker source notes and
+      in the CL term request only.
+
+
+      SEPTAL PROJECTION DIRECTION DISPUTED. Ferraguti et al. 2005 refer to "their
+      septal projection" and Slomianka et al. 2011 review reports of projections to
+      septum, olfactory bulb and hypothalamus; Katona et al. 2020 report that these
+      cells RECEIVE mGluR8a-enriched GABAergic input FROM the medial septum. Only the
+      CA1-to-subiculum projection is asserted in anatomical_location.
+
+
+      REGIONAL EXTENT. Defined in CA1, where all morphologically identified cells
+      were recovered. Katona et al. 2020 additionally report GABAergic neurons with
+      the molecular features of this type in both CA1 and CA3, in rat and mouse.
+
+
+      OUTPUT TARGET BIAS. Electron microscopy shows output synapses with specialised
+      postsynaptic densities and a strong bias toward interneurons, including
+      parvalbumin-expressing cells, while still contacting pyramidal cell somata and
+      dendrites — making this the fourth identified source of GABA onto pyramidal
+      somata. Ferraguti et al. proposed that strong ripple-associated firing combined
+      with interneuron targeting could silence interneuron classes themselves
+      suppressed during ripples, axo-axonic cells being the likeliest candidates. No
+      schema slot represents postsynaptic target cell class; recorded here only.
+
+
+      CANDIDATE TRANSCRIPTOMIC CORRESPONDENCE (not asserted as a mapping). The
+      Ntng1.Chrm2 class of Harris et al. 2017 (PMID:29912866, GEO:GSE99888) — already
+      ingested here as at_run_20260512_harris_class_mmc_wmbv1 — corresponds to WMBv1
+      supertype 0198 RHP-COA Ndnf Gaba_6 at F1=0.96 (n=66, group purity 0.96, target
+      purity 0.97) and cluster 0704 RHP-COA Ndnf Gaba_6 at F1=0.97, with class-level
+      assignment to 06 CTX-CGE GABA at 0.99 purity, consistent with the reported CGE
+      origin. Two caveats block authoring a mapping edge: the cluster-to-type
+      identification is Katona's inference from shared markers rather than a
+      measurement on identified cells, and the Allen subclass label is
+      retrohippocampal/cortical-amygdalar while the Harris cells are CA1 by
+      dissection. CL term request 3744 states both caveats and proposes no
+      cross-reference. Deciding whether to author an at_source_sets entry and run
+      map-cell-type is deliberately out of scope for this ingest.
+
+
+      CL TERM REQUEST. Filed as obophenotype/cell-ontology#3744 with two proposed
+      parents, CL:1001569 (hippocampal interneuron) and CL:0011005 (GABAergic
+      interneuron); only the first fits parent_cl_term. cl_mapping remains null — no
+      existing CL term is a suitable parent, and CL:4023121 (sst chodl GABAergic
+      interneuron) is excluded because these cells are Sst-negative. The request also
+      asks CL editors for the PRO identifier for CHRM2, which could not be resolved
+      locally.
+
+  - id: CS20230722_SUPT_0206
+    name: 0206 Pvalb Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0206
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.7
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 5.4
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 4.52
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.47
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 1.93
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.34
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 9.28
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 3.11
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 3.18
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 3.64
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 2.87
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 0.63
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 8.74
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 1.18
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.09
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 2.72
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 5.36
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.43
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0737
+          n_cells: 1
+          expression: '{"Calb2": 0.83, "Cck": 5.21, "Chrna2": 0.2, "Cnr1": 2.37, "Gad1": 10.32, "Gad2": 9.78, "Id2": 1.62, "Lamp5": 2.97, "Chrm2": 5.9, "Nos1": 2.08, "Npy": 5.53, "Pnoc": 0.95, "Pvalb": 8.27, "Reln": 2.3, "Sst": 4.39, "Tac1": 7.26, "Slc17a8": 0.27, "Vip": 0.52}'
+        - cluster_accession: CS20230722_CLUS_0738
+          n_cells: 1
+          expression: '{"Calb2": 0.89, "Cck": 3.44, "Chrna2": 0.79, "Cnr1": 1.75, "Gad1": 10.19, "Gad2": 9.62, "Id2": 4.28, "Lamp5": 0.27, "Chrm2": 0.7, "Nos1": 6.75, "Npy": 1.75, "Pnoc": 0.63, "Pvalb": 7.32, "Reln": 0.45, "Sst": 2.25, "Tac1": 5.12, "Slc17a8": 0.0, "Vip": 0.45}'
+        - cluster_accession: CS20230722_CLUS_0739
+          n_cells: 1
+          expression: '{"Calb2": 0.39, "Cck": 7.56, "Chrna2": 0.43, "Cnr1": 1.68, "Gad1": 10.52, "Gad2": 8.43, "Id2": 3.43, "Lamp5": 6.29, "Chrm2": 6.96, "Nos1": 2.08, "Npy": 1.33, "Pnoc": 0.32, "Pvalb": 10.63, "Reln": 0.8, "Sst": 1.51, "Tac1": 3.69, "Slc17a8": 0.0, "Vip": 0.33}'
+  - id: CS20230722_CLUS_0732
+    name: 0732 Pvalb chandelier Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0732
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: cluster
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.29
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 8.36
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 7.73
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.03
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 2.22
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.05
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 8.81
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 5.56
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 6.97
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 2.88
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 4.07
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 0.61
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 8.56
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 1.3
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.57
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 0.97
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 1.47
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.47
+  - id: CS20230722_CLUS_0704
+    name: 0704 RHP-COA Ndnf Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0704
+  - id: CS20230722_CLUS_0739
+    name: 0739 Pvalb Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0739
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: cluster
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.39
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 7.56
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 6.96
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.43
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 1.68
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.52
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 8.43
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 3.43
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 6.29
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 2.08
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 1.33
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 0.32
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 10.63
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 0.8
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.0
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 1.51
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 3.69
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.33
+  - id: CS20230722_CLUS_0737
+    name: 0737 Pvalb Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0737
+  - id: CS20230722_CLUS_0767
+    name: 0767 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0767
+  - id: CS20230722_SUPT_0216
+    name: 0216 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 1.28
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.74
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 2.51
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 1.53
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 7.75
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 8.92
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 10.26
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 1.59
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 0.62
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 2.94
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 5.07
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 3.69
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 1.48
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 7.9
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.29
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 11.44
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.55
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.42
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0767
+          n_cells: 1
+          expression: '{"Calb2": 1.0, "Cck": 0.86, "Chrna2": 0.56, "Cnr1": 6.14, "Gad1": 8.95, "Gad2": 9.5, "Id2": 1.5, "Lamp5": 0.41, "Chrm2": 6.11, "Nos1": 0.87, "Npy": 4.2, "Pnoc": 3.49, "Pvalb": 4.38, "Reln": 9.17, "Sst": 10.78, "Tac1": 0.8, "Slc17a8": 1.94, "Vip": 0.67}'
+        - cluster_accession: CS20230722_CLUS_0768
+          n_cells: 1
+          expression: '{"Calb2": 2.3, "Cck": 1.42, "Chrna2": 3.11, "Cnr1": 6.91, "Gad1": 9.11, "Gad2": 10.74, "Id2": 2.88, "Lamp5": 0.41, "Chrm2": 0.67, "Nos1": 0.76, "Npy": 7.58, "Pnoc": 2.51, "Pvalb": 3.12, "Reln": 10.65, "Sst": 12.7, "Tac1": 0.15, "Slc17a8": 0.0, "Vip": 0.31}'
+        - cluster_accession: CS20230722_CLUS_0769
+          n_cells: 1
+          expression: '{"Calb2": 0.29, "Cck": 2.11, "Chrna2": 1.26, "Cnr1": 8.16, "Gad1": 9.32, "Gad2": 10.4, "Id2": 1.23, "Lamp5": 1.12, "Chrm2": 2.71, "Nos1": 4.07, "Npy": 7.91, "Pnoc": 3.23, "Pvalb": 0.17, "Reln": 4.99, "Sst": 10.97, "Tac1": 0.85, "Slc17a8": 0.08, "Vip": 0.25}'
+        - cluster_accession: CS20230722_CLUS_0770
+          n_cells: 1
+          expression: '{"Calb2": 0.84, "Cck": 1.48, "Chrna2": 3.62, "Cnr1": 9.22, "Gad1": 8.29, "Gad2": 10.42, "Id2": 0.68, "Lamp5": 0.46, "Chrm2": 4.39, "Nos1": 3.65, "Npy": 1.04, "Pnoc": 6.98, "Pvalb": 0.0, "Reln": 8.82, "Sst": 10.54, "Tac1": 0.05, "Slc17a8": 0.05, "Vip": 0.16}'
+        - cluster_accession: CS20230722_CLUS_0771
+          n_cells: 1
+          expression: '{"Calb2": 3.53, "Cck": 1.97, "Chrna2": 2.48, "Cnr1": 8.73, "Gad1": 8.69, "Gad2": 10.24, "Id2": 0.95, "Lamp5": 0.15, "Chrm2": 2.0, "Nos1": 1.67, "Npy": 2.02, "Pnoc": 3.72, "Pvalb": 1.16, "Reln": 9.59, "Sst": 11.62, "Tac1": 0.08, "Slc17a8": 0.08, "Vip": 0.87}'
+        - cluster_accession: CS20230722_CLUS_0772
+          n_cells: 1
+          expression: '{"Calb2": 0.81, "Cck": 1.96, "Chrna2": 0.53, "Cnr1": 7.21, "Gad1": 9.27, "Gad2": 10.26, "Id2": 0.91, "Lamp5": 0.81, "Chrm2": 1.34, "Nos1": 1.09, "Npy": 8.22, "Pnoc": 1.65, "Pvalb": 0.34, "Reln": 10.13, "Sst": 11.92, "Tac1": 0.14, "Slc17a8": 0.37, "Vip": 0.35}'
+        - cluster_accession: CS20230722_CLUS_0773
+          n_cells: 1
+          expression: '{"Calb2": 1.21, "Cck": 1.59, "Chrna2": 0.28, "Cnr1": 8.36, "Gad1": 8.56, "Gad2": 10.42, "Id2": 0.53, "Lamp5": 0.95, "Chrm2": 0.73, "Nos1": 3.61, "Npy": 1.61, "Pnoc": 4.4, "Pvalb": 0.36, "Reln": 9.24, "Sst": 11.43, "Tac1": 0.0, "Slc17a8": 0.0, "Vip": 0.27}'
+        - cluster_accession: CS20230722_CLUS_0774
+          n_cells: 1
+          expression: '{"Calb2": 0.88, "Cck": 2.57, "Chrna2": 1.01, "Cnr1": 6.94, "Gad1": 9.78, "Gad2": 10.38, "Id2": 2.1, "Lamp5": 0.86, "Chrm2": 2.45, "Nos1": 5.1, "Npy": 10.88, "Pnoc": 0.0, "Pvalb": 1.39, "Reln": 4.92, "Sst": 12.11, "Tac1": 2.65, "Slc17a8": 0.11, "Vip": 0.23}'
+        - cluster_accession: CS20230722_CLUS_0775
+          n_cells: 1
+          expression: '{"Calb2": 0.65, "Cck": 1.7, "Chrna2": 0.91, "Cnr1": 8.04, "Gad1": 8.34, "Gad2": 10.0, "Id2": 3.54, "Lamp5": 0.45, "Chrm2": 2.17, "Nos1": 5.65, "Npy": 2.18, "Pnoc": 7.2, "Pvalb": 2.39, "Reln": 3.6, "Sst": 10.86, "Tac1": 0.25, "Slc17a8": 0.0, "Vip": 0.67}'
+  - id: CS20230722_SUPT_0198
+    name: 0198 RHP-COA Ndnf Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0198
+  - id: CS20230722_SUPT_0212
+    name: 0212 Pvalb Gaba_8
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0212
+  - id: CS20230722_SUPT_0204
+    name: 0204 Pvalb chandelier Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0204
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.3
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 8.02
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 4.76
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.11
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 1.35
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.11
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 8.75
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 4.92
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 4.42
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 1.91
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 2.71
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 0.53
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 7.47
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 0.82
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.28
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 0.95
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.98
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.37
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0732
+          n_cells: 1
+          expression: '{"Calb2": 0.29, "Cck": 8.36, "Chrna2": 0.03, "Cnr1": 2.22, "Gad1": 10.05, "Gad2": 8.81, "Id2": 5.56, "Lamp5": 6.97, "Chrm2": 7.73, "Nos1": 2.88, "Npy": 4.07, "Pnoc": 0.61, "Pvalb": 8.56, "Reln": 1.3, "Sst": 0.97, "Tac1": 1.47, "Slc17a8": 0.57, "Vip": 0.47}'
+        - cluster_accession: CS20230722_CLUS_0733
+          n_cells: 1
+          expression: '{"Calb2": 0.32, "Cck": 7.68, "Chrna2": 0.19, "Cnr1": 0.47, "Gad1": 10.16, "Gad2": 8.68, "Id2": 4.29, "Lamp5": 1.86, "Chrm2": 1.79, "Nos1": 0.93, "Npy": 1.35, "Pnoc": 0.45, "Pvalb": 6.38, "Reln": 0.34, "Sst": 0.94, "Tac1": 0.5, "Slc17a8": 0.0, "Vip": 0.27}'
+edges:
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0206
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0206
+    relationship: skos:broadMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: 'Pvalb Gaba_2 supertype is enriched in CA1 stratum oriens (493 cells) and CA3 stratum oriens (152 cells), consistent with the trilaminar cell soma location in stratum oriens. Pvalb subclass is consistent with the PV+/Sst- marker profile of the trilaminar cell. However, the trilaminar cell is defined by long-range projection to subiculum and medial septum and a unique burst-firing pattern — properties that cannot be assessed from atlas metadata alone. SUPT_0206 likely contains multiple PV+ interneuron types including PV basket cells, making overlap partial.
+
+          '
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: 'Precomputed stats cross-check: defining markers confirmed (Pvalb=8.74, Chrm2/M2R=4.52), but negative marker Sst expressed at 2.72. Low-level Sst in a Pvalb supertype is not unexpected (some Pvalb interneurons co-express Sst at low levels) but weakens the negative marker constraint.'
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: Pvalb
+        n_cells_total: 66
+        best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.06327900287631831
+        explanation: 'MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1. SUPT_0206 (Pvalb Gaba_2) receives 12/66 Pvalb cells (F1=0.324, purity=0.800). Trilaminar cells are reported to be PV+ in some studies; the Pvalb population partially supporting SUPT_0206 is consistent with this, though the chandelier/AAC supertypes receive stronger hits. PARTIAL: the SSv4 Pvalb label is a mixed population and trilaminar cell identity cannot be confirmed from this AT alone. Yao 2021 SSv4 ''Pvalb'' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.'
+        f1_source_relpath: at_results.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1558 [painted]; Field CA1 [MBA:382] count_100um=922 [painted]; Cortical subplate [MBA:703] count_100um=824 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.287; strict region_fraction: 0.174; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.74; cohort_pct 0.984; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.74; cohort percentile 0.984; child-cluster coverage 1.000
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 4.52; cohort_pct 0.810; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.52; cohort percentile 0.810; child-cluster coverage 1.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 2.72; cohort_pct 0.698'
+        alignment: DISCORDANT
+        notes: val=2.72; cohort percentile 0.698
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "CS20230722_SUPT_0206 is shared with PV basket cells and likely other PV+ interneuron types in this graph; the cluster annotation transfer source label (Yao 2021 SMART-Seq Pvalb subclass) pools PV basket, axo-axonic, bistratified, and trilaminar identities and cannot resolve trilaminar specifically.\n"
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "The long-range projection identity to subiculum and medial septum — the defining feature of the trilaminar cell — is not assessable from atlas metadata, precomputed expression, or the current cluster annotation transfer.\n"
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "Negative marker Sst is DISCORDANT (Sst=11.44 at the supertype), which weakens the Sst-absent constraint as a discriminator at this taxonomic level.\n"
+      - caveat_type: SINGLE_STUDY
+        description: "Pvalb and M2R on the classical node lack primary citations; only soma location is anchored (Katona et al. 2017, PMID:27997999).\n"
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.74
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.984
+          coverage: 1.0
+        - gene: M2R
+          val: 4.52
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.81
+          coverage: 1.0
+        - gene: -Sst
+          val: 2.72
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.698
+      region_fraction: 0.174
+      region_fraction_100um: 0.287
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.35
+    rationale: "[tier:STRONGEST] Pvalb and M2R both CONSISTENT on CS20230722_SUPT_0206 (Pvalb child-coverage 0.889; M2R child-coverage 1.000) and the supertype is enriched in CA1 stratum oriens; cluster annotation transfer of the Yao 2021 SMART-Seq Pvalb subclass (run_ref at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) places F1=0.12 on this supertype's class (CS20230722_CLAS_07), consistent with trilaminar identity being one of several PV+ types collapsed into the source label. 2 of 3 markers CONSISTENT; the negative marker Sst is DISCORDANT (Sst=11.44 at supertype). Best child within the supertype is CS20230722_CLUS_0737 (paired closeMatch verdict).\n"
+    reconciliation_note: "Paired with edge_trilaminar_cell_hippocampus_to_CS20230722_CLUS_0737 (best-child closeMatch). Pool candidate with axo_axonic_cell_hippocampus at the class level (CS20230722_CLAS_07): markers and nt panels do not distinguish the two source groups in the current evidence — AT-only indistinguishability (CASE B); cross-panel discrimination not assessed in the available data, so no lit_to_lit edge emitted.\n"
+    proposed_experiments:
+      - "Targeted cluster annotation transfer from a classical-type trilaminar dataset (retrograde labelling from subiculum or medial septum followed by targeted transcriptomic profiling, or a Chrm2-Cre x Pvalb-Flp intersection) onto WMBv1; target F1 >= 0.75 at cluster level to confirm or revise the SUPT_0206 placement.\n"
+      - "Curator literature trawl for primary citations anchoring Pvalb and M2R on classical-type trilaminar cells; expected output PropertySource entries on the classical node's marker objects.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Does the trilaminar cell map preferentially to CS20230722_SUPT_0206 or to a sibling Pvalb supertype when assayed against a classical-type / projection-confirmed source population?\n"
+      - "AT alone cannot distinguish the trilaminar source group from the axo_axonic source group at CS20230722_CLAS_07; what experimental panel would resolve them transcriptomically?\n"
+    rationale_source_hash: dfa8a327
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_CLUS_0732
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0732
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0732 Pvalb chandelier Gaba_1; region_fraction_100um=0.434; strict region_fraction=0.167.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=305 [painted]; Field CA1 [MBA:382] count_100um=159 [painted]; Field CA3 [MBA:463] count_100um=156 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.434; strict region_fraction: 0.167; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.56; cohort_pct 0.975'
+        alignment: CONSISTENT
+        notes: val=8.56; cohort percentile 0.975
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 7.73; cohort_pct 0.958'
+        alignment: CONSISTENT
+        notes: val=7.73; cohort percentile 0.958
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.97; cohort_pct 0.387'
+        alignment: DISCORDANT
+        notes: val=0.97; cohort percentile 0.387
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "CS20230722_CLUS_0732 belongs to the Pvalb chandelier supertype, which is not the trilaminar identity even though the basic PV/M2R markers overlap.\n"
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.56
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.975
+        - gene: M2R
+          val: 7.73
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.958
+        - gene: -Sst
+          val: 0.97
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.387
+      region_fraction: 0.167
+      region_fraction_100um: 0.434
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0732 sits under the Pvalb chandelier supertype (0204 Pvalb chandelier Gaba_1); although Pvalb and M2R are CONSISTENT, the atlas-assigned chandelier-supertype identity is a distinct PV+ interneuron subtype from the trilaminar cell and not the trilaminar target.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    rationale_source_hash: 53e6c387
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_CLUS_0704
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0704
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0704 RHP-COA Ndnf Gaba_6; region_fraction_100um=0.306; strict region_fraction=0.111.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=440 [painted]; Field CA1 [MBA:382] count_100um=189 [painted]; medial forebrain bundle system [MBA:991] count_100um=184 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.306; strict region_fraction: 0.111; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 0.47; cohort_pct 0.697'
+        alignment: CONSISTENT
+        notes: val=0.47; cohort percentile 0.697
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 10.26; cohort_pct 0.992'
+        alignment: CONSISTENT
+        notes: val=10.26; cohort percentile 0.992
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.92; cohort_pct 0.361'
+        alignment: DISCORDANT
+        notes: val=0.92; cohort percentile 0.361
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Pvalb at 0.47 on CS20230722_CLUS_0704 does not support defining-marker status; the cluster sits in an Ndnf subtype family rather than a Pvalb subtype family.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 0.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.697
+        - gene: M2R
+          val: 10.26
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.992
+        - gene: -Sst
+          val: 0.92
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.361
+      region_fraction: 0.111
+      region_fraction_100um: 0.306
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.15
+    rationale: "[tier:CUT] On CS20230722_CLUS_0704 Pvalb is only 0.47 (cohort_pct 0.70), well below transcript-level \"defining marker\" thresholds seen on the Pvalb Gaba_2 candidates; M2R is high (10.26) but the Pvalb sparsity disqualifies this as a trilaminar candidate.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    rationale_source_hash: c704144c
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_CLUS_0739
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0739
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0739 Pvalb Gaba_2; region_fraction_100um=0.392; strict region_fraction=0.254.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=461 [painted]; Field CA1 [MBA:382] count_100um=238 [painted]; Field CA3 [MBA:463] count_100um=229 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.392; strict region_fraction: 0.254; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 10.63; cohort_pct 0.992; atlas category: MERFISH'
+        alignment: CONSISTENT
+        notes: val=10.63; cohort percentile 0.992
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 6.96; cohort_pct 0.933'
+        alignment: CONSISTENT
+        notes: val=6.96; cohort percentile 0.933
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 1.51; cohort_pct 0.622'
+        alignment: DISCORDANT
+        notes: val=1.51; cohort percentile 0.622
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "CS20230722_CLUS_0739 is one of several Pvalb Gaba_2 children; CS20230722_CLUS_0737 dominates the stratum-oriens overlap and carries the best-child verdict for trilaminar.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 10.63
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.992
+        - gene: M2R
+          val: 6.96
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.933
+        - gene: -Sst
+          val: 1.51
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.622
+      region_fraction: 0.254
+      region_fraction_100um: 0.392
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_CLUS_0739 is a sibling of CS20230722_CLUS_0737 within CS20230722_SUPT_0206 but has lower stratum-oriens proximity (region_fraction_100um 0.39 vs 0.47) and smaller cell count (55 vs 170); CS20230722_CLUS_0737 leads the supertype as best child.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    rationale_source_hash: 9f9bd28e
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_CLUS_0737
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0737
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0737 Pvalb Gaba_2; region_fraction_100um=0.468; strict region_fraction=0.280.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=995 [painted]; Field CA1 [MBA:382] count_100um=668 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=614 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.468; strict region_fraction: 0.280; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.27; cohort_pct 0.966'
+        alignment: CONSISTENT
+        notes: val=8.27; cohort percentile 0.966
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 5.90; cohort_pct 0.882'
+        alignment: CONSISTENT
+        notes: val=5.90; cohort percentile 0.882
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 4.39; cohort_pct 0.689; atlas category: NEUROPEPTIDE'
+        alignment: DISCORDANT
+        notes: val=4.39; cohort percentile 0.689
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "CS20230722_CLUS_0737 is one of several Pvalb children within CS20230722_SUPT_0206; the cluster has not been independently resolved as trilaminar-specific in the current evidence.\n"
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "The trilaminar cell's defining long-range projection to subiculum / medial septum is not represented in atlas metadata or precomputed expression on this cluster.\n"
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "Sst=4.39 on this cluster contradicts the classical Sst-negative defining feature; the literature on the classical node does not record Sst heterogeneity within trilaminar cells, so the discordance is unresolved.\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.27
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.966
+        - gene: M2R
+          val: 5.9
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.882
+        - gene: -Sst
+          val: 4.39
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.689
+      region_fraction: 0.28
+      region_fraction_100um: 0.468
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.35
+    rationale: "[tier:NEXT] CS20230722_CLUS_0737 is the child of CS20230722_SUPT_0206 with the strongest stratum-oriens proximity (region_fraction_100um 0.47) and Pvalb / M2R both CONSISTENT on the cluster (Pvalb=8.27 cohort_pct 0.97; M2R=5.90 cohort_pct 0.88). 2 of 3 markers CONSISTENT; Sst=4.39 is DISCORDANT and atlas- annotated as NEUROPEPTIDE on this cluster, weakening the Sst-absent constraint.\n"
+    reconciliation_note: "Paired with edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0206 (parent supertype broadMatch). This is the best-child within SUPT_0206 by stratum-oriens overlap; CS20230722_CLUS_0739 is the sibling with the second-highest proximity but lower region_fraction_100um (0.39) and lower M2R (cohort_pct 0.93 vs 0.88 here).\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - "Per-cell re-analysis of Sst expression on CS20230722_CLUS_0737 to determine whether the cluster-mean value reflects a contaminating Sst-positive minority or genuine low-level co-expression; expected output a heterogeneity note plus potential revision of the Sst PropertyComparison.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Is the CS20230722_CLUS_0737 Sst signal (mean=4.39) driven by an Sst-positive contaminating subset or by uniform low-level co-expression across the cluster?\n"
+    rationale_source_hash: 9326a75d
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_CLUS_0767
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0767
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0767 Sst Gaba_3; region_fraction_100um=0.578; strict region_fraction=0.422.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=164 [painted]; cerebrum related [MBA:768] count_100um=141 [painted]; medial forebrain bundle system [MBA:991] count_100um=141 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.578; strict region_fraction: 0.422; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 4.38; cohort_pct 0.924; atlas category: MERFISH'
+        alignment: CONSISTENT
+        notes: val=4.38; cohort percentile 0.924
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 6.11; cohort_pct 0.891'
+        alignment: CONSISTENT
+        notes: val=6.11; cohort percentile 0.891
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 10.78; cohort_pct 0.832; atlas category: NEUROPEPTIDE'
+        alignment: DISCORDANT
+        notes: val=10.78; cohort percentile 0.832
+    caveats:
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "CS20230722_CLUS_0767 is Sst-positive at a level inconsistent with the trilaminar classical definition (Sst absent).\n"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 4.38
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.924
+        - gene: M2R
+          val: 6.11
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.891
+        - gene: -Sst
+          val: 10.78
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.832
+      region_fraction: 0.422
+      region_fraction_100um: 0.578
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_CLUS_0767 belongs to CS20230722_SUPT_0216 (Sst Gaba_3) and shows Sst=10.78 (atlas-annotated NEUROPEPTIDE); Sst-positive identity directly contradicts the trilaminar cell's defining Sst-negative marker.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    rationale_source_hash: 17b63eff
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0216
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0216
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0216 Sst Gaba_3; region_fraction_100um=0.539; strict region_fraction=0.305.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2145 [painted]; Field CA1 [MBA:382] count_100um=1559 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=1463 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.539; strict region_fraction: 0.305; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 1.48; cohort_pct 0.778; child-coverage 0.889'
+        alignment: CONSISTENT
+        notes: val=1.48; cohort percentile 0.778; child-cluster coverage 0.889
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 2.51; cohort_pct 0.683; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=2.51; cohort percentile 0.683; child-cluster coverage 1.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 11.44; cohort_pct 0.905'
+        alignment: DISCORDANT
+        notes: val=11.44; cohort percentile 0.905
+    caveats:
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "CS20230722_SUPT_0216 is a Sst-positive supertype, inconsistent with the trilaminar Sst-negative defining feature.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 1.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.943
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.778
+          coverage: 0.889
+        - gene: M2R
+          val: 2.51
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.683
+          coverage: 1.0
+        - gene: -Sst
+          val: 11.44
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.905
+      region_fraction: 0.305
+      region_fraction_100um: 0.539
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0216 (Sst Gaba_3) shows Sst=11.44 across the supertype, contradicting the trilaminar cell's defining Sst-negative status; this is the OLM / Sst-interneuron supertype rather than a PV-interneuron supertype.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    rationale_source_hash: 555bb55c
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0198
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0198
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0198 RHP-COA Ndnf Gaba_6; region_fraction_100um=0.315; strict region_fraction=0.130.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=449 [painted]; Field CA1 [MBA:382] count_100um=197 [painted]; medial forebrain bundle system [MBA:991] count_100um=190 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.315; strict region_fraction: 0.130; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 0.23; cohort_pct 0.381; child-coverage 0.500'
+        alignment: APPROXIMATE
+        notes: val=0.23; cohort percentile 0.381; child-cluster coverage 0.500
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 8.46; cohort_pct 0.952; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.46; cohort percentile 0.952; child-cluster coverage 1.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.94; cohort_pct 0.397'
+        alignment: DISCORDANT
+        notes: val=0.94; cohort percentile 0.397
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "Pvalb at 0.23 on CS20230722_SUPT_0198 with child-coverage 0.500 fails the trilaminar defining-marker test.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 0.23
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.707
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.381
+          coverage: 0.5
+        - gene: M2R
+          val: 8.46
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.952
+          coverage: 1.0
+        - gene: -Sst
+          val: 0.94
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.397
+      region_fraction: 0.13
+      region_fraction_100um: 0.315
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0198 (RHP-COA Ndnf Gaba_6) carries Pvalb=0.23 at supertype with child-coverage 0.500, indicating Pvalb is sparse and not a defining feature; M2R is high but Pvalb sparsity disqualifies the supertype as a trilaminar candidate.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    rationale_source_hash: be14ecbe
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0212
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0212
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0212 Pvalb Gaba_8; region_fraction_100um=0.053; strict region_fraction=0.028.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Isocortex [MBA:315] count_100um=6762 [painted]; Hippocampal formation [MBA:1089] count_100um=2349 [painted]; Secondary motor area [MBA:993] count_100um=914 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.053; strict region_fraction: 0.028; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.06; cohort_pct 0.968; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.06; cohort percentile 0.968; child-cluster coverage 1.000
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 5.18; cohort_pct 0.857; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=5.18; cohort percentile 0.857; child-cluster coverage 1.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 2.00; cohort_pct 0.651'
+        alignment: DISCORDANT
+        notes: val=2.00; cohort percentile 0.651
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "CS20230722_SUPT_0212 soma distribution is dominated by Isocortex; region_fraction_100um 0.053 is below boundary scatter and indicates a non-hippocampal cell population.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.06
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+        - gene: M2R
+          val: 5.18
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.857
+          coverage: 1.0
+        - gene: -Sst
+          val: 2.0
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.651
+      region_fraction: 0.028
+      region_fraction_100um: 0.053
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0212 (Pvalb Gaba_8) is cortical: Isocortex count_100um=6762 dominates with region_fraction_100um 0.05, well below boundary band; cortical PV interneurons are not the hippocampal trilaminar target even though Pvalb and M2R are positive.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    rationale_source_hash: 1809c01a
+  - id: edge_trilaminar_cell_hippocampus_to_CS20230722_SUPT_0204
+    lit_type: trilaminar_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0204
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0204 Pvalb chandelier Gaba_1; region_fraction_100um=0.065; strict region_fraction=0.024.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: CA1 stratum oriens [UBERON:0014552]
+        node_b_value: Isocortex [MBA:315] count_100um=1159 [painted]; Hippocampal formation [MBA:1089] count_100um=805 [painted]; Olfactory areas [MBA:698] count_100um=796 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.065; strict region_fraction: 0.024; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 7.47; cohort_pct 0.952; child-coverage 1.000; atlas category: DEFINING_SCOPED'
+        alignment: CONSISTENT
+        notes: val=7.47; cohort percentile 0.952; child-cluster coverage 1.000
+      - property: marker_M2R
+        node_a_value: M2R — defining marker
+        node_b_value: 'M2R: 4.76; cohort_pct 0.825; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.76; cohort percentile 0.825; child-cluster coverage 1.000
+      - property: negative_marker_Sst
+        node_a_value: Sst — ABSENT (classical negative marker)
+        node_b_value: 'Sst: 0.95; cohort_pct 0.413'
+        alignment: DISCORDANT
+        notes: val=0.95; cohort percentile 0.413
+    caveats:
+      - caveat_type: DISCORDANT_ANATOMY
+        description: "CS20230722_SUPT_0204 is dominated by Isocortex and olfactory areas, with region_fraction_100um 0.065 well below the hippocampal-region threshold.\n"
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "CS20230722_SUPT_0204 is the Pvalb chandelier supertype, a classical-type distinct from the trilaminar cell.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:399
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 7.47
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.952
+          coverage: 1.0
+        - gene: M2R
+          val: 4.76
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.825
+          coverage: 1.0
+        - gene: -Sst
+          val: 0.95
+          reliable: true
+          raw_tier: -1
+          applied_score: -1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.413
+      region_fraction: 0.024
+      region_fraction_100um: 0.065
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0204 (Pvalb chandelier Gaba_1) is cortical and olfactory-area dominated (region_fraction_100um 0.065); chandelier-cell identity and non-hippocampal anatomy both disqualify it as a trilaminar candidate.\n"
+    rationale_generated_at: '2026-06-08T21:03:57+00:00'
+    report_path: reports/hippocampus/trilaminar_cell_hippocampus_summary.md
+    rationale_source_hash: 072925d4

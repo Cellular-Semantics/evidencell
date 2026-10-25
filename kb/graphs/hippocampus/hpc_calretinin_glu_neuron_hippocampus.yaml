@@ -1,0 +1,835 @@
+name: Hippocampal glutamatergic principal cells — draft
+description: 'Draft evidence graph for classical hippocampal glutamatergic principal cell types.
+
+  Nodes are CLASSICAL_MULTIMODAL stubs. Defining markers are based on established
+
+  transcriptomic and anatomical literature; ncbi_gene_ids and per-marker sources
+
+  require primary literature verification. Edges at LOW/MODERATE confidence from
+
+  atlas metadata and annotation transfer (Hochgerner 2018 / CCN20230722).
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - anatomical_location:
+      - compartment: SOMA
+        id: UBERON:0002421
+        label: hippocampal formation
+        name_in_source: stratum lacunosum-moleculare / outer molecular layer
+        sources:
+          - ref: PMID:26402459
+            method: knowledge base aggregation
+            scope: rodent hippocampal formation
+            quote_key: 631148_edb9eac6
+          - ref: PMID:9204922
+            method: synthesis (ASTA report)
+            scope: rodent hippocampus
+            quote_key: 393787_0325d3d4
+    cl_mapping:
+      cl_term:
+        id: CL:0000679
+        label: glutamatergic neuron
+        name_in_source: glutamatergic neuron
+      mapping_notes: 'Calretinin-positive hippocampal glutamatergic neurons are distinct from calretinin-positive GABAergic interneurons. They span SLM, outer molecular layer, and subicular complex, with local-projecting and long-range subpopulations. CL:0000679 is the broadest accurate mapping; no calretinin-positive glutamatergic-specific CL term exists.
+
+        '
+      mapping_type: BROAD
+    defining_markers:
+      - ncbi_gene_id: NCBIGene:12308
+        symbol: Calb2
+    definition_basis: CLASSICAL_MULTIMODAL
+    id: hpc_calretinin_glu_neuron_hippocampus
+    name: hippocampal calretinin-positive glutamatergic neuron
+    nt_type:
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      name_in_source: glutamatergic
+    species:
+      id: NCBITaxon:10090
+      label: Mus musculus
+      name_in_source: Mus musculus
+    morphology:
+      sources:
+        - ref: PMID:26582498
+          method: synthesis (ASTA report)
+          scope: mouse hippocampus
+          quote_key: 2565845_2453978e
+      description: Hippocampal calretinin-positive glutamatergic neuron with local axonal projections within hippocampal formation.
+  - id: CS20230722_SUPT_0135
+    name: 0135 HPF CR Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0135
+  - id: CS20230722_CLUS_0316
+    name: 0316 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0316
+  - id: CS20230722_CLUS_0317
+    name: 0317 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0317
+  - id: CS20230722_CLUS_2659
+    name: 2659 TH Prkcd Grin2c Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_2659
+  - id: CS20230722_CLUS_0014
+    name: 0014 IT EP-CLA Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0014
+  - id: CS20230722_CLUS_0015
+    name: 0015 IT EP-CLA Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0015
+  - id: CS20230722_SUPT_0079
+    name: 0079 CA3 Glut_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0079
+  - id: CS20230722_SUPT_0010
+    name: 0010 L5/6 IT TPE-ENT Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0010
+  - id: CS20230722_SUPT_0066
+    name: 0066 ENTmv-PA-COAp Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0066
+  - id: CS20230722_SUPT_0099
+    name: 0099 L5 PPP Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0099
+  - id: CS20230722_SUPT_0085
+    name: 0085 L2/3 IT PPP Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0085
+edges:
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_supt_0135
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0135
+    relationship: skos:closeMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'SUPT_0135 (0135 HPF CR Glut_1) is the only WMBv1 glutamatergic supertype located in the stratum lacunosum-moleculare / outer molecular layer of the HPF, matching the anatomical location of hpc_calretinin_glu_neuron_hippocampus. Analysis of the WMBv1 precomputed stats (CCN20230722) reveals high Calb2 expression in SUPT_0135 reference cells (mean 4.5-8.2 UMIs/cell across 5 clusters; n=1 each) compared to near-absent Calb2 in DG Glut supertypes (0.08-0.16 UMIs). SUPT_0135 reference cells co-express high Reln (12-13 UMIs/cell) and Trp73 (8.8-9.7 UMIs/cell), consistent with Cajal-Retzius cell identity, placing these cells in the SLM/OML. SUPT_0135 is the only HPF Glut supertype not assigned to DG, CA1, CA2, CA3, or SUB subclasses. Confidence is LOW because: (1) Slc17a8 (VGluT3), the second defining marker of this classical node, is essentially absent from SUPT_0135 (0-0.3 UMIs in 2/5 clusters only); (2) the reference population is extremely small (n=5 cells total across 5 clusters), limiting statistical confidence; (3) the WMBv1 ''HPF CR'' designation may specifically capture developmentally transient Cajal-Retzius cells rather than the proposed VGluT3+/Calb2+ glutamatergic population described in the hippocampal literature.'
+        target_atlas: WMBv1 (CCN20230722)
+        method: Precomputed stats expression analysis (WMBv1 reference cells)
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260427_hochgerner2018_dg_mmc_wmbv1
+        supports: SUPPORT
+        explanation: 'MapMyCells annotation transfer of Hochgerner 2018 (GSE95315) mouse hippocampal formation scRNA-seq onto WMBv1 (CCN20230722). The "Cajal-Retzius" source cluster (n=33 cells) maps with high confidence exclusively to the HPF CR Glut lineage: F1=0.985 at subclass 036 HPF CR Glut and supertype SUPT_0135 (HPF CR Glut_1), with F1=1.0 at the cluster level (CLUS_0497). Group purity = 1.0 at all levels confirms all Cajal-Retzius cells map within the HPF CR Glut subtree. This provides independent transcriptomic evidence that SUPT_0135 corresponds to the classical Cajal-Retzius cell type (calretinin+, Reln+) in the hippocampal formation.'
+        source_dataset_accession: GEO:GSE95315
+        source_cluster_label: Cajal-Retzius
+        n_cells_total: 33
+        best_mapping_rank: 0
+        target_atlas: WMBv1 (CCN20230722)
+        method: MapMyCells local (cell_type_mapper, precomputed_stats CCN20230722)
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 03 OB-CR Glut
+            best_target_accession: CS20230722_CLAS_03
+            f1_score: 1.0
+            n_cells_mapped: 15
+            median_bootstrap: 0.89
+            coverage: 1.0
+            purity: 1.0
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 036 HPF CR Glut
+            best_target_accession: CS20230722_SUBC_036
+            f1_score: 0.9850746268656716
+            n_cells_mapped: 33
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.9705882352941176
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0135 HPF CR Glut_1
+            best_target_accession: CS20230722_SUPT_0135
+            f1_score: 0.9850746268656716
+            n_cells_mapped: 33
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.9705882352941176
+        f1_source_relpath: at_results.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2967 [painted]; Dentate gyrus [MBA:726] count_100um=2414 [painted]; Dentate gyrus, molecular layer [MBA:10703] count_100um=2410 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.823; strict region_fraction: 0.817; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 4.86; cohort_pct 0.848; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=4.86; cohort percentile 0.848; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: AMBIGUOUS_MAPPING
+        description: "CS20230722_SUPT_0135 reference cells strongly express Reln and Trp73 alongside Calb2, consistent with Cajal-Retzius identity. Classical Cajal-Retzius cells are developmentally transient and may not correspond to the adult SLM/OML calretinin-positive glutamatergic neurons of the classical literature; the WMBv1 \"HPF CR\" designation may specifically label Cajal-Retzius remnants captured during adult brain profiling.\n"
+      - caveat_type: OTHER
+        description: "CS20230722_SUPT_0135 has n=5 WMBv1 reference cells total (1 per child cluster) — the smallest representation of any HPF Glut supertype. Atlas-side expression means (Calb2 marker_Calb2 CONSISTENT, val 4.86, cohort percentile 0.848) and marker comparisons rest on a statistically thin reference set regardless of how cleanly the annotation transfer F1 lands.\n"
+      - caveat_type: OTHER
+        description: "Calb2 on the classical node has no primary citation (defining_markers entry carries an empty refs list). The marker concordance with WMBv1 atlas precomputed expression is therefore unanchored on the literature side; curator review recommended before treating Calb2 alignment as supporting evidence in further mappings.\n"
+    unresolved_questions:
+      - Is SUPT_0135 a Cajal-Retzius remnant population or does it represent the adult SLM/OML Calb2+/Slc17a8+ glutamatergic neurons described in the literature? ISH validation of Trp73 and Calb2 co-expression in adult SLM/OML would resolve this.
+      - Why is Slc17a8 (VGluT3) absent from SUPT_0135 given that SLM glutamatergic neurons are described as VGluT3+? Is VGluT3 expression limited to a subset of Calb2+ SLM cells, or is the classical node definition too broad?
+      - Is CS20230722_SUPT_0135 a Cajal-Retzius remnant population or does it represent the adult SLM/OML Calb2+/Slc17a8+ glutamatergic neurons described in the literature?
+      - Why is Slc17a8 (VGluT3) absent from CS20230722_SUPT_0135 given that SLM glutamatergic neurons are described as VGluT3+? Is VGluT3 expression limited to a subset of Calb2+ SLM cells, or is the classical node definition too broad?
+    proposed_experiments:
+      - Annotation transfer from a dataset of validated adult Calb2+ SLM/OML glutamatergic neurons (i.e. not Cajal-Retzius-labelled) against WMBv1 with MapMyCells; target F1 >= 0.80 at SUPERTYPE level. Output AnnotationTransferEvidence on this edge; resolves open question 1 by distinguishing the Cajal-Retzius and adult interpretations of CS20230722_SUPT_0135.
+      - Inspect MERFISH soma positions for CS20230722_SUPT_0135 cells in WMBv1 to confirm stratum lacunosum-moleculare / outer molecular layer placement at single-cell resolution beyond the painted-region rollup (region_fraction_100um 0.823 currently on the edge).
+      - Targeted literature search ("calretinin SLM glutamatergic mouse" and "VGluT3 SLM hippocampus") to anchor Calb2 (and clarify Slc17a8 status) to a primary study on laminar-position-confirmed adult cells.
+    mapping_justification: semapv:ManualMappingCuration
+    mapping_cardinality: "1:1"
+    discovery_score:
+      score: 4
+      rank_in_cohort: 13
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 4.86
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.848
+          coverage: 1.0
+      region_fraction: 0.817
+      region_fraction_100um: 0.823
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.45
+    rationale: "[tier:STRONGEST] MapMyCells annotation transfer of Hochgerner 2018 (run_ref at_run_20260427_hochgerner2018_dg_mmc_wmbv1) routes the Cajal-Retzius source cluster onto CS20230722_SUPT_0135 with F1=0.99 at supertype and F1=1.00 at the best-matching child cluster; CS20230722_SUPT_0135 is the only WMBv1 HPF Glut supertype localised to SLM/OML (region_fraction_100um 0.823) with Calb2 marker_Calb2 CONSISTENT (1 of 1 markers CONSISTENT). Confidence held at LOW because the supertype carries only 5 reference cells and the source label is a developmentally transient Cajal-Retzius population rather than the adult SLM/OML cells of the classical description.\n"
+    reconciliation_note: "Migration note: this edge previously carried the deprecated evidencell:PartialOverlapMatch predicate (auto-rewritten by refresh_predicates.py on 2026-05-26). Under the 2026-06 rubric the edge fits skos:closeMatch — 1:1 shape with strong AT support and documented Cajal-Retzius / adult-population ambiguity rather than a cardinality or cross-cutting issue.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: f6d23e09
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0316
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0316
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0316 CA3 Glut_5; region_fraction_100um=0.998; strict region_fraction=0.880.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=499 [painted]; Field CA3 [MBA:463] count_100um=461 [painted]; Field CA3, stratum radiatum [MBA:504] count_100um=389 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.998; strict region_fraction: 0.880; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 9.60; cohort_pct 0.978'
+        alignment: CONSISTENT
+        notes: val=9.60; cohort percentile 0.978
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 9.6
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.978
+      region_fraction: 0.88
+      region_fraction_100um: 0.998
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0316 is a CA3 Glut_5 cluster (supertype CS20230722_SUPT_0079) whose soma sits in field CA3 / CA3 stratum radiatum (region_fraction_100um 1.00 within HPF) but the laminar zone is wrong; high Calb2 (val 9.60, cohort percentile 0.978) reflects CA3 pyramidal expression and not the SLM/OML calretinin-positive glutamatergic population described by the classical node.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: 5d8dfb86
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0317
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0317
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0317 CA3 Glut_5; region_fraction_100um=0.998; strict region_fraction=0.998.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1231 [painted]; Dentate gyrus [MBA:726] count_100um=1229 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1222 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.998; strict region_fraction: 0.998; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 9.58; cohort_pct 0.976'
+        alignment: CONSISTENT
+        notes: val=9.58; cohort percentile 0.976
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 9.58
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.976
+      region_fraction: 0.998
+      region_fraction_100um: 0.998
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0317 (supertype CS20230722_SUPT_0079) localises to Dentate gyrus polymorph layer (hilus; region_fraction_100um 1.00) — the wrong laminar zone for the classical SLM/OML population — despite high Calb2 (val 9.58, cohort percentile 0.976). Likely a hilar mossy / CA3-related glutamatergic cell rather than the SLM calretinin type.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: e3214475
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_2659
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_2659
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 2659 TH Prkcd Grin2c Glut_6; region_fraction_100um=0.655; strict region_fraction=0.118.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Thalamus [MBA:549] count_100um=108 [painted]; Lateral posterior nucleus of the thalamus [MBA:218] count_100um=85 [painted]; Dentate gyrus [MBA:726] count_100um=72 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.655; strict region_fraction: 0.118; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 9.24; cohort_pct 0.968'
+        alignment: CONSISTENT
+        notes: val=9.24; cohort percentile 0.968
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 9.24
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+      region_fraction: 0.118
+      region_fraction_100um: 0.655
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_CLUS_2659 (TH Prkcd Grin2c Glut_6) is a thalamic cluster (Thalamus / Lateral posterior nucleus dominant; region_fraction_100um 0.655 but strict region_fraction only 0.118, region_evidence SELF) — high Calb2 (val 9.24, cohort percentile 0.968) reflects thalamic calretinin expression, not a hippocampal cell.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: 32adc4b2
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0014
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0014
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0014 IT EP-CLA Glut_2; region_fraction_100um=0.770; strict region_fraction=0.557.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=238 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=228 [painted]; Entorhinal area, lateral part, layer 6a [MBA:28] count_100um=225 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.770; strict region_fraction: 0.557; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 0.67; cohort_pct 0.673'
+        alignment: CONSISTENT
+        notes: val=0.67; cohort percentile 0.673
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 0.67
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.673
+      region_fraction: 0.557
+      region_fraction_100um: 0.77
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0014 (supertype CS20230722_SUPT_0004, IT EP-CLA Glut_2) localises to lateral entorhinal area, layer 6a (region_fraction_100um 0.770) with only modest Calb2 (val 0.67, cohort percentile 0.673) — an entorhinal projection cluster rather than an SLM/OML hippocampal cell.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: 92da1c0e
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_CLUS_0015
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_CLUS_0015
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0015 IT EP-CLA Glut_2; region_fraction_100um=0.698; strict region_fraction=0.387.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=74 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=71 [painted]; Entorhinal area, lateral part, layer 6a [MBA:28] count_100um=70 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.698; strict region_fraction: 0.387; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 1.61; cohort_pct 0.765'
+        alignment: CONSISTENT
+        notes: val=1.61; cohort percentile 0.765
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 5
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 1.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.765
+      region_fraction: 0.387
+      region_fraction_100um: 0.698
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0015 (supertype CS20230722_SUPT_0004, IT EP-CLA Glut_2) sits in lateral entorhinal area layer 6a (region_fraction_100um 0.698) with modest Calb2 (val 1.61, cohort percentile 0.765) — sibling of CS20230722_CLUS_0014 and similarly off-target for the SLM/OML hippocampal population.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: afac29e8
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0079
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0079
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0079 CA3 Glut_5; region_fraction_100um=0.994; strict region_fraction=0.973.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1619 [painted]; Dentate gyrus [MBA:726] count_100um=1552 [painted]; Dentate gyrus, polymorph layer [MBA:10704] count_100um=1524 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.994; strict region_fraction: 0.973; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 9.59; cohort_pct 0.986; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=9.59; cohort percentile 0.986; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 5
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 9.59
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.986
+          coverage: 1.0
+      region_fraction: 0.973
+      region_fraction_100um: 0.994
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0079 (0079 CA3 Glut_5) is the parent supertype of CS20230722_CLUS_0316 and CS20230722_CLUS_0317; soma in CA3 / DG polymorph layer (region_fraction_100um 0.994). High Calb2 (val 9.59, cohort percentile 0.986) reflects CA3-lineage expression rather than the classical SLM/OML calretinin glutamatergic type.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: a54ec814
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0010
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0010
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0010 L5/6 IT TPE-ENT Glut_4; region_fraction_100um=0.867; strict region_fraction=0.849.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1280 [painted]; Entorhinal area, lateral part [MBA:918] count_100um=1035 [painted]; Entorhinal area, lateral part, layer 5 [MBA:139] count_100um=877 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.867; strict region_fraction: 0.849; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 0.59; cohort_pct 0.629; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.59; cohort percentile 0.629; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 0.59
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.629
+          coverage: 1.0
+      region_fraction: 0.849
+      region_fraction_100um: 0.867
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0010 (0010 L5/6 IT TPE-ENT Glut_4) is a lateral entorhinal layer 5 IT supertype (region_fraction_100um 0.867) with low Calb2 (val 0.59, cohort percentile 0.629) — an entorhinal pyramidal population rather than an SLM/OML hippocampal cell.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: e0a3c407
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0066
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0066
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0066 ENTmv-PA-COAp Glut_1; region_fraction_100um=0.572; strict region_fraction=0.438.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Cortical subplate [MBA:703] count_100um=1021 [painted]; Posterior amygdalar nucleus [MBA:780] count_100um=1019 [painted]; Hippocampal formation [MBA:1089] count_100um=979 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.572; strict region_fraction: 0.438; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 0.36; cohort_pct 0.538; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.36; cohort percentile 0.538; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 0.36
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.538
+          coverage: 1.0
+      region_fraction: 0.438
+      region_fraction_100um: 0.572
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0066 (0066 ENTmv-PA-COAp Glut_1) sits in cortical subplate / posterior amygdalar nucleus (region_fraction_100um 0.572, strict region_fraction 0.438, region_evidence SELF) with very low Calb2 (val 0.36, cohort percentile 0.538) — off-target relative to the hippocampal formation.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: f4647f3e
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0099
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0099
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0099 L5 PPP Glut_1; region_fraction_100um=0.978; strict region_fraction=0.954.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=614 [painted]; Postsubiculum [MBA:1037] count_100um=340 [painted]; Presubiculum [MBA:1084] count_100um=228 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.978; strict region_fraction: 0.954; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 0.14; cohort_pct 0.281; child-coverage 1.000'
+        alignment: APPROXIMATE
+        notes: val=0.14; cohort percentile 0.281; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 0.14
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.281
+          coverage: 1.0
+      region_fraction: 0.954
+      region_fraction_100um: 0.978
+      region_evidence: SELF
+    confidence: REFUTED
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0099 (0099 L5 PPP Glut_1) is a postsubiculum / presubiculum L5 supertype (region_fraction_100um 0.978) with Calb2 essentially absent (val 0.14, cohort percentile 0.281; marker_Calb2 APPROXIMATE only by virtue of cohort ranking) — parahippocampal projection neuron, not the SLM/OML calretinin type.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: 7e49c4ae
+  - id: edge_hpc_calretinin_glu_neuron_hippocampus_to_CS20230722_SUPT_0085
+    lit_type: hpc_calretinin_glu_neuron_hippocampus
+    taxonomy_type: CS20230722_SUPT_0085
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0085 L2/3 IT PPP Glut_2; region_fraction_100um=0.991; strict region_fraction=0.975.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampal formation [UBERON:0002421]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=10902 [painted]; Presubiculum [MBA:1084] count_100um=6646 [painted]; Postsubiculum [MBA:1037] count_100um=4106 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.991; strict region_fraction: 0.975; region_evidence: SELF'
+      - property: marker_Calb2
+        node_a_value: Calb2 — defining marker
+        node_b_value: 'Calb2: 0.47; cohort_pct 0.581; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.47; cohort percentile 0.581; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 50
+          filters:
+            - region=MBA:1089
+            - nt_type=glutamatergic
+      expression_detail:
+        - gene: Calb2
+          val: 0.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.581
+          coverage: 1.0
+      region_fraction: 0.975
+      region_fraction_100um: 0.991
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.05
+    rationale: "[tier:CUT] CS20230722_SUPT_0085 (0085 L2/3 IT PPP Glut_2) is a large presubiculum/postsubiculum L2/3 IT supertype (region_fraction_100um 0.991; 20603 cells) with low Calb2 (val 0.47, cohort percentile 0.581) — a parahippocampal cortical population rather than the SLM/OML calretinin glutamatergic neuron.\n"
+    rationale_generated_at: '2026-06-08T21:04:32+00:00'
+    report_path: reports/hippocampus/hpc_calretinin_glu_neuron_hippocampus_summary.md
+    rationale_source_hash: 4f22fb35

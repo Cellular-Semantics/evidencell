@@ -1,0 +1,627 @@
+name: Hippocampal glutamatergic principal cells — draft classical types
+description: Draft evidence graph for classical hippocampal glutamatergic principal cell types extracted from ASTA deep research report on glutamatergic-positive cells of the hippocampus. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-27'
+nodes:
+  - id: ca1_radiatum_giant_cell
+    name: CA1 radiatum giant cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0005372
+        label: hippocampus stratum radiatum
+        name_in_source: CA1 stratum radiatum
+        compartment: SOMA
+        sources:
+          - ref: PMID:10864941
+            method: patch-clamp recording in slice
+            scope: rat CA1
+            quote_key: 502543_4f78ac74
+    nt_type:
+      name_in_source: glutamatergic
+      cl_terms:
+        - id: CL:0000679
+          label: glutamatergic neuron
+          name_in_source: glutamatergic
+      sources:
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: rat CA1
+          quote_key: 502543_4f78ac74
+    defining_markers: []
+    negative_markers: []
+    neuropeptides: []
+    morphology:
+      description: Large triangular soma in upper CA1 stratum radiatum; one to two prominent thick apical dendrites bifurcating close to the soma and ascending to stratum lacunosum-moleculare, arborizing extensively with spiny second-order dendrites; myelinated axon. Axon arises vertically, traverses stratum pyramidale and bifurcates in stratum oriens — one branch toward subiculum, one toward fimbria (projecting ultimately to olfactory cortex). Axon collaterals in stratum oriens form asymmetric (excitatory) synapses. Three morphological subtypes — symmetrical two-dendrite form; one main dendrite plus shorter parallel dendrite; pyramidal-like single bifurcating apical dendrite. Soma and dendrites readily identified by DIC optics in living tissue (Christie et al. 2000). Morphology confirmed in adult mouse with same inverted triangular soma and two thick apical dendrites (Nasrallah et al. 2019).
+      sources:
+        - ref: PMID:10864941
+          method: biocytin fill + confocal reconstruction, patch-clamp recording in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_01caddaa
+        - ref: PMID:10864941
+          method: biocytin fill + confocal reconstruction
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_651f2f6e
+        - ref: PMID:10864941
+          method: biocytin fill + confocal reconstruction
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_7b22eb75
+        - ref: PMID:11153713
+          method: DIC optics + biocytin fill
+          scope: adult rat CA1 acute slice
+          quote_key: 16689152_6f562856
+        - ref: PMID:30943417
+          method: whole-cell patch-clamp + biocytin fill
+          scope: adult mouse CA1 acute slice
+          quote_key: 92998057_50a6488b
+    electrophysiology:
+      description: NMDA receptor-dependent burst firing in response to glutamatergic synaptic activation even after non-NMDA receptor blockade (CNQX-insensitive, APV-sensitive burst). EPSCs at least threefold larger than in CA1 pyramidal cells. Prominent spike afterdepolarization (ADP) and spike frequency accommodation (common but not universal). Lacks the pronounced fast afterhyperpolarization (fAHP) that characterises stratum radiatum interneurons. NMDA receptors active at resting membrane potential — Mg2+ block Kd ~0.42 mM at -60 mV (vs ~0.15 mM in CA1 PCs), less voltage-dependent (delta 0.80 vs 0.95 in PCs). NMDA EPSC decay slower (Af/As ~2.25 vs ~6.2 in PCs); rise times faster (9.6 +/- 0.7 ms vs 11.7 +/- 0.6 ms). NMDA-dependent LTP induced by 100-Hz stimulation (magnitude ~51% +/- 18%; blocked by APV; requires postsynaptic Ca2+ influx); 200-Hz stimuli do not induce LTP. Reversed HCN channel expression gradient vs other CA1 PNs (Bullis et al. 2007, via Nasrallah et al. 2019). NR2D (GRIN2D) subunit proposed as contributor to biophysical signature (Discussion-level inference).
+      sources:
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: rat CA1
+          quote_key: 502543_4f78ac74
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: rat CA1
+          quote_key: 502543_10e7f921
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_3d8cdf8d
+        - ref: PMID:10864941
+          method: patch-clamp recording in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 502543_89f231a8
+        - ref: PMID:11153713
+          method: whole-cell patch-clamp in slice, biocytin fill
+          scope: adult rat CA1 acute slice
+          quote_key: 16689152_399c08ed
+        - ref: PMID:11153713
+          method: whole-cell patch-clamp in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 16689152_9c3d2f1e
+        - ref: PMID:11153713
+          method: whole-cell patch-clamp in slice
+          scope: adult rat CA1 acute slice
+          quote_key: 16689152_d0088250
+    definition_references:
+      - PMID:10864941
+      - PMID:11153713
+      - PMID:30943417
+    is_terminal: false
+    notes: 'Morphology and LTP properties independently replicated in Christie et al. (2000, PMID:11153713); RGC identity confirmed in mouse and CA2 pyramidal neurons identified as a strong presynaptic input by Nasrallah et al. (2019, PMID:30943417). GAP: defining molecular markers absent; reversed HCN channel expression gradient reported (Bullis et al. 2007) but not yet entered as a source. Modern transcriptomic characterisation needed.
+
+
+      CL mapping note: No CL term found for CA1 radiatum giant cell. Rare specialised excitatory projection neuron in CA1 stratum radiatum first described by Kirson et al. (2000); potential CL contribution.'
+  - id: CS20230722_CLUS_0261
+    name: 0261 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0261
+  - id: CS20230722_CLUS_0262
+    name: 0262 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0262
+  - id: CS20230722_CLUS_0263
+    name: 0263 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0263
+  - id: CS20230722_CLUS_0269
+    name: 0269 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0269
+  - id: CS20230722_CLUS_0271
+    name: 0271 CA1-ProS Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0271
+  - id: CS20230722_SUPT_0069
+    name: 0069 CA1-ProS Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0069
+  - id: CS20230722_SUPT_0074
+    name: 0074 CA1-ProS Glut_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0074
+  - id: CS20230722_SUPT_0072
+    name: 0072 CA1-ProS Glut_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0072
+  - id: CS20230722_SUPT_0070
+    name: 0070 CA1-ProS Glut_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0070
+  - id: CS20230722_SUPT_0100
+    name: 0100 CA2-FC-IG Glut_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0100
+edges:
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0261
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0261
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0261 CA1-ProS Glut_1; region_fraction_100um=0.558; strict region_fraction=0.072.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=528 [painted]; Field CA1 [MBA:382] count_100um=470 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=443 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.558; strict region_fraction: 0.072; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.072
+      region_fraction_100um: 0.558
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0261 is a small (n=215) CA1-ProS Glut_1 child of CS20230722_SUPT_0069 with region_fraction_100um=0.56 leaning to CA1 stratum oriens rather than the classical stratum radiatum location; weaker proximity than the best-child CS20230722_CLUS_0262.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: fcdfaa0b
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0262
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0262
+    relationship: skos:closeMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0262 CA1-ProS Glut_1; region_fraction_100um=0.969; strict region_fraction=0.266.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=19886 [painted]; Field CA1 [MBA:382] count_100um=19668 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=19403 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.969; strict region_fraction: 0.266; region_evidence: SELF'
+    caveats:
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "Selection of CS20230722_CLUS_0262 over the three sibling CA1-ProS Glut_1 children rests on location proximity only; no transcript or protein markers are available on the classical side to discriminate.\n"
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: "Atlas soma-position on CS20230722_CLUS_0262 is dominated by Field CA1, pyramidal layer; classical soma is in CA1 stratum radiatum (adjacent layer not separately registered).\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.266
+      region_fraction_100um: 0.969
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.45
+    rationale: "[tier:NEXT] CS20230722_CLUS_0262 has the highest CA1 proximity of any rank-0 candidate (region_fraction_100um=0.97; strict region_fraction=0.27) and is annotated Glut, consistent with the classical glutamatergic identity. Selected as the tentative best child within the primary supertype call (CS20230722_SUPT_0069) on location-proximity alone, given the absence of classical-side defining markers.\n"
+    reconciliation_note: "Paired with the supertype broadMatch on CS20230722_SUPT_0069 (edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0069, skos:broadMatch + 1:n) — this child-cluster closeMatch is provisional and should be re-assessed if any classical-side defining marker is established that distinguishes CS20230722_CLUS_0262 from siblings CS20230722_CLUS_0261, CS20230722_CLUS_0263, CS20230722_CLUS_0269.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - "A transcriptomic signature distinguishing CS20230722_CLUS_0262 from CS20230722_CLUS_0261, CS20230722_CLUS_0263, and CS20230722_CLUS_0269 that can be tested against CA1 radiatum giant cells (e.g. via sub-layer-resolved soma position or any targeting strategy that labels radiatum giant cells specifically).\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    unresolved_questions:
+      - "Selection of CS20230722_CLUS_0262 among CA1-ProS Glut_1 children is a tie-breaker on location proximity, not a biological identification.\n"
+    rationale_source_hash: 45764d9c
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0263
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0263
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0263 CA1-ProS Glut_1; region_fraction_100um=0.934; strict region_fraction=0.311.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=5547 [painted]; Field CA1 [MBA:382] count_100um=5495 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=5398 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.934; strict region_fraction: 0.311; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.311
+      region_fraction_100um: 0.934
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_CLUS_0263 is a sibling CA1-ProS Glut_1 child of CS20230722_SUPT_0069 with region_fraction_100um=0.93; covered by the supertype broadMatch and not preferred over CS20230722_CLUS_0262 in the absence of classical-side markers to discriminate.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: 9b081e1d
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0269
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0269
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0269 CA1-ProS Glut_1; region_fraction_100um=0.919; strict region_fraction=0.380.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1360 [painted]; Field CA1 [MBA:382] count_100um=1307 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=1253 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.919; strict region_fraction: 0.380; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.38
+      region_fraction_100um: 0.919
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.25
+    rationale: "[tier:CUT] CS20230722_CLUS_0269 is a sibling CA1-ProS Glut_1 child of CS20230722_SUPT_0069 with region_fraction_100um=0.92; covered by the supertype broadMatch and not preferred in the absence of discriminating markers.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: c39023df
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0271
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_CLUS_0271
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0271 CA1-ProS Glut_2; region_fraction_100um=0.567; strict region_fraction=0.281.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: Glut
+        alignment: CONSISTENT
+        notes: Stage A NT prefix-match passed.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=526 [painted]; Field CA1 [MBA:382] count_100um=524 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=422 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.567; strict region_fraction: 0.281; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 3
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.281
+      region_fraction_100um: 0.567
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_CLUS_0271 sits under CS20230722_SUPT_0070 (a different CA1-ProS Glut supertype from the primary supertype call), with region_fraction_100um=0.57 leaning to Field CA1 stratum oriens; outside the supertype that best covers the classical type.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: cf48e672
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0069
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0069
+    relationship: skos:broadMatch
+    mapping_justification: semapv:ManualMappingCuration
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0069 CA1-ProS Glut_1; region_fraction_100um=0.934; strict region_fraction=0.231.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=28476 [painted]; Field CA1 [MBA:382] count_100um=28032 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=27305 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.934; strict region_fraction: 0.231; region_evidence: SELF'
+    caveats:
+      - caveat_type: NO_DISCRIMINATING_MARKER
+        description: "No defining molecular markers, negative markers, or neuropeptides are currently entered for the CA1 radiatum giant cell; mapping rests on soma location and broad NT class only.\n"
+      - caveat_type: MERFISH_REGISTRATION_UNCERTAINTY
+        description: "Atlas soma-position records CA1 pyramidal layer dominance on CS20230722_SUPT_0069; classical soma is in stratum radiatum, an adjacent CA1 layer not separately registered at this resolution.\n"
+      - caveat_type: OTHER
+        description: "nt_type is not asserted on CS20230722_SUPT_0069 (rank 1); Glut identity is inherited from the child clusters CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0269.\n"
+    discovery_score:
+      score: 3
+      rank_in_cohort: 1
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.231
+      region_fraction_100um: 0.934
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.55
+    rationale: "[tier:STRONGEST] Soma-location concordance to Field CA1 places the CA1 radiatum giant cell within CS20230722_SUPT_0069 (region_fraction_100um=0.93; strict region_fraction=0.23); NT assertion is absent at rank 1 but Glut on all assessed children. Absent classical-side defining markers, the supportable call is at supertype level (1:n across the four CA1-ProS Glut_1 children CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0269).\n"
+    reconciliation_note: "Paired with the best-child call on CS20230722_CLUS_0262 (edge_ca1_radiatum_giant_cell_to_CS20230722_CLUS_0262, skos:closeMatch + 1:1) — the supertype broadMatch covers the distribution across CA1-ProS Glut_1 children, while the cluster closeMatch records the highest- proximity child as a tentative best alignment.\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Targeted literature trawl for transcriptomic, neuropeptide, or TF characterisation of the CA1 radiatum giant cell; expected output: LiteratureEvidence on the classical node with DEFINING_MARKER / NEUROPEPTIDE entries that can be tested against atlas children of CS20230722_SUPT_0069.\n"
+      - "Re-analysis of public hippocampal single-cell datasets retaining sub-layer soma position, to identify any transcript-level signature that distinguishes one CA1-ProS Glut_1 child cluster (CS20230722_CLUS_0261, CS20230722_CLUS_0262, CS20230722_CLUS_0263, CS20230722_CLUS_0269) as a stratum-radiatum-resident population.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    unresolved_questions:
+      - "No primary transcriptomic characterisation of the CA1 radiatum giant cell is in the KB; markers and neuropeptide profile are unknown.\n"
+      - "Among the four CA1-ProS Glut_1 children of CS20230722_SUPT_0069, no available evidence selects one over the others.\n"
+      - "Per GH #80, two prior mapping edges to CS20230722_CLUS_0261 and CS20230722_SUPT_0069 were proposed on after_merge_20260508 and deferred during the PR #79 hippocampus port. The Stage A/B emission on 2026-06-10 generated a fresh top-K candidate set under proximity-aware scoring; curator should review whether the deferred candidates remain relevant or are superseded.\n"
+    rationale_source_hash: 3d54e32c
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0074
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0074
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0074 CA1-ProS Glut_6; region_fraction_100um=0.651; strict region_fraction=0.235.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1332 [painted]; Prosubiculum [MBA:484682470] count_100um=1062 [painted]; Field CA1 [MBA:382] count_100um=886 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.651; strict region_fraction: 0.235; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.235
+      region_fraction_100um: 0.651
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.15
+    rationale: "[tier:CUT] CS20230722_SUPT_0074 (0074 CA1-ProS Glut_6) has region_fraction_100um=0.65 with Prosubiculum count_100um=1062 contributing substantially to the rollup; prosubiculum-leaning soma distribution is inconsistent with a CA1 stratum radiatum classical type.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: 8e466d19
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0072
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0072
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0072 CA1-ProS Glut_4; region_fraction_100um=0.873; strict region_fraction=0.437.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=3869 [painted]; Field CA1 [MBA:382] count_100um=3866 [painted]; Field CA1, pyramidal layer [MBA:407] count_100um=3413 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.873; strict region_fraction: 0.437; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.437
+      region_fraction_100um: 0.873
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0072 (0072 CA1-ProS Glut_4) has Field CA1 soma dominance (region_fraction_100um=0.87) but is not the supertype of the primary cluster cohort; no positive evidence selects it over CS20230722_SUPT_0069 and NT is not asserted at rank 1.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: 98f7e12e
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0070
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0070
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0070 CA1-ProS Glut_2; region_fraction_100um=0.682; strict region_fraction=0.329.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=4224 [painted]; Field CA1 [MBA:382] count_100um=4158 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=3118 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.682; strict region_fraction: 0.329; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.329
+      region_fraction_100um: 0.682
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.18
+    rationale: "[tier:CUT] CS20230722_SUPT_0070 (0070 CA1-ProS Glut_2) shows region_fraction_100um=0.68 with Field CA1 stratum oriens as the dominant sub-region; oriens-leaning soma distribution argues against a stratum-radiatum classical type.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: 72a6009c
+  - id: edge_ca1_radiatum_giant_cell_to_CS20230722_SUPT_0100
+    lit_type: ca1_radiatum_giant_cell
+    taxonomy_type: CS20230722_SUPT_0100
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0100 CA2-FC-IG Glut_1; region_fraction_100um=0.555; strict region_fraction=0.086.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: glutamatergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: hippocampus stratum radiatum [UBERON:0005372]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1809 [painted]; Field CA3 [MBA:463] count_100um=1354 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=1307 [painted]
+        alignment: CONSISTENT
+        notes: 'region_fraction_100um: 0.555; strict region_fraction: 0.086; region_evidence: SELF'
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 35
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 35
+          filters:
+            - region=MBA:415
+            - nt_type=glutamatergic
+      expression_detail: []
+      region_fraction: 0.086
+      region_fraction_100um: 0.555
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0100 (0100 CA2-FC-IG Glut_1) is dominated by Field CA3 cells (region_fraction_100um=0.56; strict region_fraction=0.09) and represents a CA2-FC-IG context rather than CA1; not a candidate for the CA1 radiatum giant cell.\n"
+    rationale_generated_at: '2026-06-10T13:24:53+00:00'
+    report_path: reports/hippocampus/ca1_radiatum_giant_cell_summary.md
+    rationale_source_hash: d26d52d2

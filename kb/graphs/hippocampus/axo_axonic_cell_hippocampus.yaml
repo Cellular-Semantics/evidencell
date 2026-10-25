@@ -1,0 +1,1385 @@
+name: Hippocampal GABAergic interneurons — draft classical types
+description: 'Draft evidence graph for classical hippocampal GABAergic interneuron types extracted from ASTA deep research report. Node properties are synthesis-derived and require primary literature verification. Edges empty pending mapping evidence.
+
+  '
+brain_region:
+  id: UBERON:0002421
+  label: hippocampal formation
+  name_in_source: hippocampus
+target_atlas: WMBv1 (CCN20230722)
+species:
+creation_date: '2026-04-09'
+nodes:
+  - id: axo_axonic_cell_hippocampus
+    name: Axo-axonic (chandelier) cell
+    definition_basis: CLASSICAL_MULTIMODAL
+    species:
+    anatomical_location:
+      - id: UBERON:0014548
+        label: pyramidal layer of CA1
+        name_in_source: CA1 stratum pyramidale
+        compartment: SOMA
+        sources:
+          - ref: PMID:25018703
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 10540334_bdfa426a
+    nt_type:
+      name_in_source: GABAergic
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: GABAergic
+      sources:
+        - ref: PMID:29321728
+          method: review
+          scope: hippocampus
+          quote_key: 38778375_462ec931
+    defining_markers:
+      - symbol: Pvalb
+        ncbi_gene_id:
+        sources:
+          - ref: PMID:25018703
+            marker_type: PROTEIN
+            method: immunohistochemistry
+            scope: rat hippocampus
+            quote_key: 10540334_bdfa426a
+          - ref: PMID:33398060
+            snippet: while PV-INs differ in anatomy and in vivo activity, their continuous transcriptomic and homogenous biophysical landscapes are not predictive of these distinct identities
+            support: PARTIAL
+            source: cite_traverse_2026_04_10
+            marker_type: TRANSCRIPT
+          - ref: PMID:33398060
+            snippet: we find high transcriptomic similarity among PV-INs, with few genes showing divergent expression between morphologically different types
+            support: PARTIAL
+            source: cite_traverse_2026_04_10
+            marker_type: TRANSCRIPT
+    negative_markers: []
+    neuropeptides: []
+    cl_mapping:
+      cl_term:
+        id: CL:4023036
+        label: pvalb chandelier GABAergic interneuron
+        name_in_source: axo-axonic cell
+      mapping_type: EXACT
+      mapping_notes: 'CL:4023036 definition matches precisely: cartridge boutons targeting exclusively AIS of pyramidal cells, fast-spiking PV+ interneuron.
+
+        '
+    definition_references:
+      - PMID:23162426
+      - PMID:33150866
+      - PMID:7472426
+    is_terminal: false
+    notes: 'One of three canonical PV+ interneuron subtypes alongside basket and bistratified cells. Limited hippocampus-specific ephys data in this reference set.
+
+      '
+    morphology:
+      description: 'PV+ interneuron specifically targeting axon initial segment of pyramidal cells; cartridge-like axonal bouton arrays. Controls spike initiation.
+
+        '
+      sources:
+        - ref: PMID:23162426
+          method: review
+          scope: hippocampus
+          quote_key: '8530661_92702482'
+        - ref: PMID:7472426
+          method: biocytin fill
+          scope: rat CA1
+          quote_key: 10664418_9acd7ec1
+    electrophysiology:
+      description: Fast-spiking; controls spike initiation of principal neurons
+      sources:
+        - ref: PMID:33150866
+          method: patch clamp
+          scope: mouse hippocampus
+          quote_key: 221276443_e917908b
+        - ref: PMID:29321728
+          method: review
+          scope: hippocampus/neocortex
+          quote_key: 38778375_462ec931
+        - ref: PMID:37467748
+          snippet: Both display FS responses to depolarizing input and fire at high rates in vivo. In contrast, SOM cells typically have lower firing rates despite their low firing threshold
+          support: SUPPORT
+          source: cite_traverse_2026_04_10
+  - id: CS20230722_SUPT_0204
+    name: 0204 Pvalb chandelier Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0204
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.3
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 8.02
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 4.76
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.11
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 1.35
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.11
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 8.75
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 4.92
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 4.42
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 1.91
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 2.71
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 0.53
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 7.47
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 0.82
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.28
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 0.95
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.98
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.37
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0732
+          n_cells: 1
+          expression: '{"Calb2": 0.29, "Cck": 8.36, "Chrna2": 0.03, "Cnr1": 2.22, "Gad1": 10.05, "Gad2": 8.81, "Id2": 5.56, "Lamp5": 6.97, "Chrm2": 7.73, "Nos1": 2.88, "Npy": 4.07, "Pnoc": 0.61, "Pvalb": 8.56, "Reln": 1.3, "Sst": 0.97, "Tac1": 1.47, "Slc17a8": 0.57, "Vip": 0.47}'
+        - cluster_accession: CS20230722_CLUS_0733
+          n_cells: 1
+          expression: '{"Calb2": 0.32, "Cck": 7.68, "Chrna2": 0.19, "Cnr1": 0.47, "Gad1": 10.16, "Gad2": 8.68, "Id2": 4.29, "Lamp5": 1.86, "Chrm2": 1.79, "Nos1": 0.93, "Npy": 1.35, "Pnoc": 0.45, "Pvalb": 6.38, "Reln": 0.34, "Sst": 0.94, "Tac1": 0.5, "Slc17a8": 0.0, "Vip": 0.27}'
+  - id: CS20230722_CLUS_0732
+    name: 0732 Pvalb chandelier Gaba_1
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0732
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: cluster
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.29
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 8.36
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 7.73
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.03
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 2.22
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.05
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 8.81
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 5.56
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 6.97
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 2.88
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 4.07
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 0.61
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 8.56
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 1.3
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.57
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 0.97
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 1.47
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.47
+  - id: CS20230722_CLUS_0739
+    name: 0739 Pvalb Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0739
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: cluster
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.39
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 7.56
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 6.96
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.43
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 1.68
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.52
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 8.43
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 3.43
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 6.29
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 2.08
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 1.33
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 0.32
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 10.63
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 0.8
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.0
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 1.51
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 3.69
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.33
+  - id: CS20230722_CLUS_0737
+    name: 0737 Pvalb Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0737
+  - id: CS20230722_CLUS_0644
+    name: 0644 Vip Gaba_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0644
+  - id: CS20230722_CLUS_0649
+    name: 0649 Vip Gaba_7
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_CLUS_0649
+  - id: CS20230722_SUPT_0206
+    name: 0206 Pvalb Gaba_2
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0206
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.7
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 5.4
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 4.52
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.47
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 1.93
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 10.34
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 9.28
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 3.11
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 3.18
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 3.64
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 2.87
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 0.63
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 8.74
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 1.18
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.09
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 2.72
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 5.36
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.43
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0737
+          n_cells: 1
+          expression: '{"Calb2": 0.83, "Cck": 5.21, "Chrna2": 0.2, "Cnr1": 2.37, "Gad1": 10.32, "Gad2": 9.78, "Id2": 1.62, "Lamp5": 2.97, "Chrm2": 5.9, "Nos1": 2.08, "Npy": 5.53, "Pnoc": 0.95, "Pvalb": 8.27, "Reln": 2.3, "Sst": 4.39, "Tac1": 7.26, "Slc17a8": 0.27, "Vip": 0.52}'
+        - cluster_accession: CS20230722_CLUS_0738
+          n_cells: 1
+          expression: '{"Calb2": 0.89, "Cck": 3.44, "Chrna2": 0.79, "Cnr1": 1.75, "Gad1": 10.19, "Gad2": 9.62, "Id2": 4.28, "Lamp5": 0.27, "Chrm2": 0.7, "Nos1": 6.75, "Npy": 1.75, "Pnoc": 0.63, "Pvalb": 7.32, "Reln": 0.45, "Sst": 2.25, "Tac1": 5.12, "Slc17a8": 0.0, "Vip": 0.45}'
+        - cluster_accession: CS20230722_CLUS_0739
+          n_cells: 1
+          expression: '{"Calb2": 0.39, "Cck": 7.56, "Chrna2": 0.43, "Cnr1": 1.68, "Gad1": 10.52, "Gad2": 8.43, "Id2": 3.43, "Lamp5": 6.29, "Chrm2": 6.96, "Nos1": 2.08, "Npy": 1.33, "Pnoc": 0.32, "Pvalb": 10.63, "Reln": 0.8, "Sst": 1.51, "Tac1": 3.69, "Slc17a8": 0.0, "Vip": 0.33}'
+  - id: CS20230722_SUPT_0219
+    name: 0219 Sst Gaba_6
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0219
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 0.23
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.48
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 3.08
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 0.52
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 3.04
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 9.73
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 9.96
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 3.92
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 2.04
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 1.81
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 7.18
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 4.18
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 1.68
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 6.46
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.78
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 10.17
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 2.43
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.44
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0785
+          n_cells: 1
+          expression: '{"Calb2": 0.13, "Cck": 1.54, "Chrna2": 0.17, "Cnr1": 0.84, "Gad1": 8.99, "Gad2": 10.25, "Id2": 3.5, "Lamp5": 1.34, "Chrm2": 0.0, "Nos1": 2.6, "Npy": 7.54, "Pnoc": 0.3, "Pvalb": 0.3, "Reln": 10.47, "Sst": 10.99, "Tac1": 0.0, "Slc17a8": 0.0, "Vip": 0.28}'
+        - cluster_accession: CS20230722_CLUS_0786
+          n_cells: 1
+          expression: '{"Calb2": 0.16, "Cck": 1.15, "Chrna2": 0.52, "Cnr1": 2.84, "Gad1": 9.3, "Gad2": 9.91, "Id2": 2.53, "Lamp5": 0.2, "Chrm2": 0.72, "Nos1": 1.29, "Npy": 8.02, "Pnoc": 2.19, "Pvalb": 0.19, "Reln": 7.85, "Sst": 11.23, "Tac1": 0.4, "Slc17a8": 0.08, "Vip": 0.44}'
+        - cluster_accession: CS20230722_CLUS_0787
+          n_cells: 1
+          expression: '{"Calb2": 0.0, "Cck": 1.83, "Chrna2": 0.11, "Cnr1": 4.68, "Gad1": 9.59, "Gad2": 9.81, "Id2": 5.87, "Lamp5": 5.21, "Chrm2": 4.21, "Nos1": 3.13, "Npy": 2.51, "Pnoc": 5.31, "Pvalb": 0.73, "Reln": 7.46, "Sst": 9.05, "Tac1": 0.14, "Slc17a8": 1.28, "Vip": 0.5}'
+        - cluster_accession: CS20230722_CLUS_0788
+          n_cells: 1
+          expression: '{"Calb2": 0.83, "Cck": 1.54, "Chrna2": 0.8, "Cnr1": 4.31, "Gad1": 9.72, "Gad2": 10.5, "Id2": 3.99, "Lamp5": 0.56, "Chrm2": 3.08, "Nos1": 1.1, "Npy": 7.66, "Pnoc": 6.16, "Pvalb": 1.38, "Reln": 8.94, "Sst": 10.5, "Tac1": 1.68, "Slc17a8": 0.44, "Vip": 0.47}'
+        - cluster_accession: CS20230722_CLUS_0789
+          n_cells: 1
+          expression: '{"Calb2": 0.28, "Cck": 0.97, "Chrna2": 0.25, "Cnr1": 2.01, "Gad1": 10.01, "Gad2": 9.76, "Id2": 3.02, "Lamp5": 0.89, "Chrm2": 3.55, "Nos1": 0.93, "Npy": 8.44, "Pnoc": 3.5, "Pvalb": 0.3, "Reln": 4.14, "Sst": 11.07, "Tac1": 2.08, "Slc17a8": 0.18, "Vip": 0.46}'
+        - cluster_accession: CS20230722_CLUS_0790
+          n_cells: 1
+          expression: '{"Calb2": 0.0, "Cck": 1.41, "Chrna2": 0.32, "Cnr1": 1.21, "Gad1": 10.55, "Gad2": 9.69, "Id2": 4.75, "Lamp5": 3.83, "Chrm2": 5.23, "Nos1": 2.56, "Npy": 7.52, "Pnoc": 6.03, "Pvalb": 3.38, "Reln": 1.44, "Sst": 10.7, "Tac1": 4.43, "Slc17a8": 1.43, "Vip": 0.36}'
+        - cluster_accession: CS20230722_CLUS_0791
+          n_cells: 1
+          expression: '{"Calb2": 0.18, "Cck": 1.89, "Chrna2": 1.49, "Cnr1": 5.36, "Gad1": 9.93, "Gad2": 9.77, "Id2": 3.75, "Lamp5": 2.24, "Chrm2": 4.79, "Nos1": 1.06, "Npy": 8.6, "Pnoc": 5.77, "Pvalb": 5.48, "Reln": 4.93, "Sst": 7.68, "Tac1": 8.27, "Slc17a8": 2.05, "Vip": 0.6}'
+  - id: CS20230722_SUPT_0189
+    name: 0189 Sncg Gaba_5
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0189
+  - id: CS20230722_SUPT_0196
+    name: 0196 RHP-COA Ndnf Gaba_4
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0196
+  - id: CS20230722_SUPT_0216
+    name: 0216 Sst Gaba_3
+    definition_basis: ATLAS_TRANSCRIPTOMIC
+    taxonomy_id: CCN20230722
+    cell_set_accession: CS20230722_SUPT_0216
+    precomputed_expression:
+      source: precomputed_stats_ABC_revision_230821.h5
+      level: supertype
+      genes:
+        - symbol: Calb2
+          ensembl_id: ENSMUSG00000003657
+          mean_expression: 1.28
+        - symbol: Cck
+          ensembl_id: ENSMUSG00000032532
+          mean_expression: 1.74
+        - symbol: Chrm2
+          ensembl_id: ENSMUSG00000045613
+          mean_expression: 2.51
+        - symbol: Chrna2
+          ensembl_id: ENSMUSG00000027577
+          mean_expression: 1.53
+        - symbol: Cnr1
+          ensembl_id: ENSMUSG00000044288
+          mean_expression: 7.75
+        - symbol: Gad1
+          ensembl_id: ENSMUSG00000070880
+          mean_expression: 8.92
+        - symbol: Gad2
+          ensembl_id: ENSMUSG00000026787
+          mean_expression: 10.26
+        - symbol: Id2
+          ensembl_id: ENSMUSG00000020644
+          mean_expression: 1.59
+        - symbol: Lamp5
+          ensembl_id: ENSMUSG00000025810
+          mean_expression: 0.62
+        - symbol: Nos1
+          ensembl_id: ENSMUSG00000029361
+          mean_expression: 2.94
+        - symbol: Npy
+          ensembl_id: ENSMUSG00000029819
+          mean_expression: 5.07
+        - symbol: Pnoc
+          ensembl_id: ENSMUSG00000045731
+          mean_expression: 3.69
+        - symbol: Pvalb
+          ensembl_id: ENSMUSG00000005716
+          mean_expression: 1.48
+        - symbol: Reln
+          ensembl_id: ENSMUSG00000042453
+          mean_expression: 7.9
+        - symbol: Slc17a8
+          ensembl_id: ENSMUSG00000019935
+          mean_expression: 0.29
+        - symbol: Sst
+          ensembl_id: ENSMUSG00000004366
+          mean_expression: 11.44
+        - symbol: Tac1
+          ensembl_id: ENSMUSG00000061762
+          mean_expression: 0.55
+        - symbol: Vip
+          ensembl_id: ENSMUSG00000019772
+          mean_expression: 0.42
+      child_cluster_expression:
+        - cluster_accession: CS20230722_CLUS_0767
+          n_cells: 1
+          expression: '{"Calb2": 1.0, "Cck": 0.86, "Chrna2": 0.56, "Cnr1": 6.14, "Gad1": 8.95, "Gad2": 9.5, "Id2": 1.5, "Lamp5": 0.41, "Chrm2": 6.11, "Nos1": 0.87, "Npy": 4.2, "Pnoc": 3.49, "Pvalb": 4.38, "Reln": 9.17, "Sst": 10.78, "Tac1": 0.8, "Slc17a8": 1.94, "Vip": 0.67}'
+        - cluster_accession: CS20230722_CLUS_0768
+          n_cells: 1
+          expression: '{"Calb2": 2.3, "Cck": 1.42, "Chrna2": 3.11, "Cnr1": 6.91, "Gad1": 9.11, "Gad2": 10.74, "Id2": 2.88, "Lamp5": 0.41, "Chrm2": 0.67, "Nos1": 0.76, "Npy": 7.58, "Pnoc": 2.51, "Pvalb": 3.12, "Reln": 10.65, "Sst": 12.7, "Tac1": 0.15, "Slc17a8": 0.0, "Vip": 0.31}'
+        - cluster_accession: CS20230722_CLUS_0769
+          n_cells: 1
+          expression: '{"Calb2": 0.29, "Cck": 2.11, "Chrna2": 1.26, "Cnr1": 8.16, "Gad1": 9.32, "Gad2": 10.4, "Id2": 1.23, "Lamp5": 1.12, "Chrm2": 2.71, "Nos1": 4.07, "Npy": 7.91, "Pnoc": 3.23, "Pvalb": 0.17, "Reln": 4.99, "Sst": 10.97, "Tac1": 0.85, "Slc17a8": 0.08, "Vip": 0.25}'
+        - cluster_accession: CS20230722_CLUS_0770
+          n_cells: 1
+          expression: '{"Calb2": 0.84, "Cck": 1.48, "Chrna2": 3.62, "Cnr1": 9.22, "Gad1": 8.29, "Gad2": 10.42, "Id2": 0.68, "Lamp5": 0.46, "Chrm2": 4.39, "Nos1": 3.65, "Npy": 1.04, "Pnoc": 6.98, "Pvalb": 0.0, "Reln": 8.82, "Sst": 10.54, "Tac1": 0.05, "Slc17a8": 0.05, "Vip": 0.16}'
+        - cluster_accession: CS20230722_CLUS_0771
+          n_cells: 1
+          expression: '{"Calb2": 3.53, "Cck": 1.97, "Chrna2": 2.48, "Cnr1": 8.73, "Gad1": 8.69, "Gad2": 10.24, "Id2": 0.95, "Lamp5": 0.15, "Chrm2": 2.0, "Nos1": 1.67, "Npy": 2.02, "Pnoc": 3.72, "Pvalb": 1.16, "Reln": 9.59, "Sst": 11.62, "Tac1": 0.08, "Slc17a8": 0.08, "Vip": 0.87}'
+        - cluster_accession: CS20230722_CLUS_0772
+          n_cells: 1
+          expression: '{"Calb2": 0.81, "Cck": 1.96, "Chrna2": 0.53, "Cnr1": 7.21, "Gad1": 9.27, "Gad2": 10.26, "Id2": 0.91, "Lamp5": 0.81, "Chrm2": 1.34, "Nos1": 1.09, "Npy": 8.22, "Pnoc": 1.65, "Pvalb": 0.34, "Reln": 10.13, "Sst": 11.92, "Tac1": 0.14, "Slc17a8": 0.37, "Vip": 0.35}'
+        - cluster_accession: CS20230722_CLUS_0773
+          n_cells: 1
+          expression: '{"Calb2": 1.21, "Cck": 1.59, "Chrna2": 0.28, "Cnr1": 8.36, "Gad1": 8.56, "Gad2": 10.42, "Id2": 0.53, "Lamp5": 0.95, "Chrm2": 0.73, "Nos1": 3.61, "Npy": 1.61, "Pnoc": 4.4, "Pvalb": 0.36, "Reln": 9.24, "Sst": 11.43, "Tac1": 0.0, "Slc17a8": 0.0, "Vip": 0.27}'
+        - cluster_accession: CS20230722_CLUS_0774
+          n_cells: 1
+          expression: '{"Calb2": 0.88, "Cck": 2.57, "Chrna2": 1.01, "Cnr1": 6.94, "Gad1": 9.78, "Gad2": 10.38, "Id2": 2.1, "Lamp5": 0.86, "Chrm2": 2.45, "Nos1": 5.1, "Npy": 10.88, "Pnoc": 0.0, "Pvalb": 1.39, "Reln": 4.92, "Sst": 12.11, "Tac1": 2.65, "Slc17a8": 0.11, "Vip": 0.23}'
+        - cluster_accession: CS20230722_CLUS_0775
+          n_cells: 1
+          expression: '{"Calb2": 0.65, "Cck": 1.7, "Chrna2": 0.91, "Cnr1": 8.04, "Gad1": 8.34, "Gad2": 10.0, "Id2": 3.54, "Lamp5": 0.45, "Chrm2": 2.17, "Nos1": 5.65, "Npy": 2.18, "Pnoc": 7.2, "Pvalb": 2.39, "Reln": 3.6, "Sst": 10.86, "Tac1": 0.25, "Slc17a8": 0.0, "Vip": 0.67}'
+edges:
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0204
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0204
+    relationship: skos:exactMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'Supertype name "Pvalb chandelier Gaba_1" directly names the chandelier (= axo-axonic) cell type. Pvalb subclass, GABA NT type are fully consistent. Pvalb present in DEFINING_SCOPED markers confirming PV+ identity. The CL mapping for the classical node (CL:4023036 pvalb chandelier GABAergic interneuron) is EXACT, and the atlas supertype name makes the identity explicit. EQUIVALENT declared because the atlas supertype is named for and defined by the chandelier/axo-axonic cell type. Confidence is LOW (not MODERATE) because: (a) the supertype has only piriform area in its top anatomical locations (194 cells) with no explicit hippocampal pyramidal layer entry at supertype level; (b) this is metadata-only with no primary literature on the edge; (c) axo-axonic and basket PV cells have been reported to have high transcriptomic overlap (PMID:33398060).
+
+          '
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: Pvalb
+        n_cells_total: 66
+        best_mapping_rank: 1
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.06327900287631831
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 051 Pvalb chandelier Gaba
+            best_target_accession: CS20230722_SUBC_051
+            f1_score: 0.5882352941176471
+            n_cells_mapped: 25
+            median_bootstrap: 1.0
+            coverage: 0.4166666666666667
+            purity: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0204 Pvalb chandelier Gaba_1
+            best_target_accession: CS20230722_SUPT_0204
+            f1_score: 0.611764705882353
+            n_cells_mapped: 26
+            median_bootstrap: 1.0
+            coverage: 0.4406779661016949
+            purity: 1.0
+        explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1. SUPT_0204 (Pvalb chandelier Gaba_1) is the top supertype hit for Pvalb cells (F1=0.612, 26/66 cells, purity=1.0). The 'chandelier' label in WMBv1 corresponds to axo-axonic cells. PARTIAL because the SSv4 Pvalb label is a mixed population; nevertheless, SUPT_0204/chandelier being the single strongest Pvalb target is consistent with the axo-axonic cell correspondence. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.
+        f1_source_relpath: at_results.yaml
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_que2021_pvin_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+        source_dataset_accession: GEO:GSE142546
+        source_cluster_label: AAC
+        n_cells_total: 88
+        best_mapping_rank: 0
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            f1_score: 0.14634146341463414
+            n_cells_mapped: 6
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.07894736842105263
+        explanation: 'MapMyCells local (Que 2021, GSE142546) axo-axonic cells, n=6. AT result is uninformative due to small n: only 1/6 AAC cells map to SUPT_0204 (Pvalb chandelier Gaba_1); 5/6 map to SUPT_0206/CLUS_0739 (basket-type). F1 at all levels is very low (best=0.238 at cluster, CLUS_0739 not CLUS_0732). Does not support or refute axo-axonic to SUPT_0204. May reflect genuine transcriptomic similarity between hippocampal AAC and basket cells (PMID:33398060), or noise from n=6. Confidence remains LOW pending a dedicated AAC dataset.'
+        f1_source_relpath: at_results.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Isocortex [MBA:315] count_100um=1159 [painted]; Hippocampal formation [MBA:1089] count_100um=805 [painted]; Olfactory areas [MBA:698] count_100um=796 [painted]
+        alignment: DISCORDANT
+        notes: 'region_fraction_100um: 0.067; strict region_fraction: 0.020; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 7.47; cohort_pct 0.903; child-coverage 1.000; atlas category: DEFINING_SCOPED'
+        alignment: CONSISTENT
+        notes: val=7.47; cohort percentile 0.903; child-cluster coverage 1.000
+    caveats:
+      - caveat_type: DISTRIBUTED_ACROSS_CLUSTERS
+        description: "Supertype anatomy is multi-regional (Isocortex 1159, Hippocampal formation 805, Olfactory areas 796 painted counts; region_fraction_100um=0.067 against MBA:407); hippocampal chandelier cells are resolvable at the child cluster CS20230722_CLUS_0732.\n"
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "High transcriptomic similarity between PV+ morphological subtypes (PMID:33398060) means chandelier-specific markers are not fully resolved at supertype level from basket and bistratified cells.\n"
+      - caveat_type: LOW_CELL_COUNT
+        description: "Morphology-confirmed AAC AT (Que 2021, at_run_20260508_que2021_pvin_mmc_wmbv1) is n=6 and lands only 1/6 cells on SUPT_0204; the source dataset is too small for an informative direct chandelier-cell F1 call.\n"
+    mapping_justification: semapv:ManualMappingCuration
+    discovery_score:
+      score: 2
+      rank_in_cohort: 11
+      cohort_size: 28
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 28
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 7.47
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.903
+          coverage: 1.0
+      region_fraction: 0.02
+      region_fraction_100um: 0.067
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.6
+    rationale: "[tier:STRONGEST] Atlas supertype named \"Pvalb chandelier Gaba_1\" directly identifies the chandelier (axo-axonic) population with DEFINING_SCOPED Pvalb (cohort percentile 0.903, child-coverage 1.000); cluster annotation transfer (Yao 2021 SSv4 Pvalb subclass label; at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) places SUPT_0204 as the single strongest Pvalb supertype hit (F1=0.61, n=26/66, Purity=1.0). Supertype-level soma scatter (Isocortex, Olfactory areas) is expected because chandelier cells occur in many regions; the hippocampal chandelier population is resolved at child cluster CS20230722_CLUS_0732 (paired survivor edge).\n"
+    reconciliation_note: "Paired with edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0732 (best-child cluster for the hippocampal axo-axonic population within this supertype).\n"
+    mapping_cardinality: "1:n"
+    proposed_experiments:
+      - "Morphology-confirmed axo-axonic patch-seq or Cre-driver scRNA-seq cohort (n>=30) mapped to WMBv1 via cluster annotation transfer; target F1>=0.75 at SUPT_0204 to confirm chandelier-specific correspondence at supertype level.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Trawl literature for hippocampal axo-axonic vs basket cell transcriptomic divergence beyond PMID:33398060 — atlas-side indistinguishability at supertype level may reflect genuine biology or current dataset limits.\n"
+    rationale_source_hash: d47609ea
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0732
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0732
+    relationship: skos:exactMatch
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: SUPPORT
+        explanation: 'Child of SUPT_0204 (Pvalb chandelier Gaba_1). Hippocampal locations: CA1 SO (38 cells), CA1 SR (23 cells), CA3 SO (33 cells), CA3 pyramidal layer (23 cells), CA3 SR (15 cells), dentate gyrus granule cell layer (15 cells). Pvalb in MERFISH markers confirms PV+ identity. Cluster name "0732 Pvalb chandelier Gaba_1" explicitly identifies it as a hippocampal chandelier cell cluster. GABA consistent. Neuropeptides Cck (8.4), Pthlh, Npy present; Cck at high score warrants noting but chandelier cells can have low-level peptide co-expression.
+
+          '
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells (default parameters)
+        source_dataset_accession: GEO:GSE185862
+        source_cluster_label: Pvalb
+        n_cells_total: 66
+        best_mapping_rank: 0
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            f1_score: 0.11902614968440035
+            n_cells_mapped: 66
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.06327900287631831
+          - taxonomy_level: SUBCLASS
+            taxonomy_rank: 2
+            best_target_name: 051 Pvalb chandelier Gaba
+            best_target_accession: CS20230722_SUBC_051
+            f1_score: 0.5882352941176471
+            n_cells_mapped: 25
+            median_bootstrap: 1.0
+            coverage: 0.4166666666666667
+            purity: 1.0
+          - taxonomy_level: SUPERTYPE
+            taxonomy_rank: 1
+            best_target_name: 0204 Pvalb chandelier Gaba_1
+            best_target_accession: CS20230722_SUPT_0204
+            f1_score: 0.611764705882353
+            n_cells_mapped: 26
+            median_bootstrap: 1.0
+            coverage: 0.4406779661016949
+            purity: 1.0
+          - taxonomy_level: CLUSTER
+            taxonomy_rank: 0
+            best_target_name: 0732 Pvalb chandelier Gaba_1
+            best_target_accession: CS20230722_CLUS_0732
+            f1_score: 0.6216216216216216
+            n_cells_mapped: 23
+            median_bootstrap: 1.0
+            coverage: 0.45098039215686275
+            purity: 1.0
+        explanation: MapMyCells local annotation transfer of Yao 2021 (GSE185862) SSv4 Pvalb subclass (n=66 HIP cells) onto WMBv1. CLUS_0732 (Pvalb chandelier Gaba_1) is the top cluster hit for Pvalb cells (F1=0.622, 23/66 cells, purity=1.0). This is the strongest cluster-level hit among all Pvalb targets, consistent with the axo-axonic → chandelier supertype correspondence. PARTIAL because the source label is a mixed Pvalb population. Yao 2021 SSv4 'Pvalb' subclass label (n=66 HIP cells) encompasses PV basket, axo-axonic, and bistratified cells; subtype resolution requires a morphologically identified PV-IN dataset.
+        f1_source_relpath: at_results.yaml
+      - evidence_type: ANNOTATION_TRANSFER
+        run_ref: at_run_20260508_que2021_pvin_mmc_wmbv1
+        supports: PARTIAL
+        target_atlas: WMBv1
+        method: MapMyCells local (cell_type_mapper v1.7.1, default parameters, raw normalization)
+        source_dataset_accession: GEO:GSE142546
+        source_cluster_label: AAC
+        n_cells_total: 88
+        best_mapping_rank: 0
+        metrics_by_level:
+          - taxonomy_level: CLASS
+            taxonomy_rank: 3
+            best_target_name: 07 CTX-MGE GABA
+            best_target_accession: CS20230722_CLAS_07
+            f1_score: 0.14634146341463414
+            n_cells_mapped: 6
+            median_bootstrap: 1.0
+            coverage: 1.0
+            purity: 0.07894736842105263
+        explanation: MapMyCells local (Que 2021, GSE142546) AAC cells, n=6. 0/6 cells map to CLUS_0732 (Pvalb chandelier Gaba_1) as top cluster; 5/6 map to CLUS_0739. F1 for CLUS_0732 absent from top results. Uninformative due to n=6. Confidence remains LOW.
+        f1_source_relpath: at_results.yaml
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=305 [painted]; Field CA1 [MBA:382] count_100um=159 [painted]; Field CA3 [MBA:463] count_100um=156 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.431; strict region_fraction: 0.142; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.56; cohort_pct 0.971'
+        alignment: CONSISTENT
+        notes: val=8.56; cohort percentile 0.971
+    caveats:
+      - caveat_type: MARKER_NOT_SPECIFIC
+        description: "Cck atlas-side neuropeptide score 8.4 unexpectedly high for a chandelier cell; potential discrepancy with classical chandelier marker profile requires primary-source validation.\n"
+      - caveat_type: LOW_CELL_COUNT
+        description: "Morphology-confirmed AAC AT (at_run_20260508_que2021_pvin_mmc_wmbv1) is n=6 and lands 0/6 cells on CS20230722_CLUS_0732 (5/6 to CS20230722_CLUS_0739 in the basket supertype); uninformative at this n.\n"
+    mapping_justification: semapv:ManualMappingCuration
+    discovery_score:
+      score: 4
+      rank_in_cohort: 2
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.56
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.971
+      region_fraction: 0.142
+      region_fraction_100um: 0.431
+      region_evidence: SELF
+    confidence: MODERATE
+    confidence_score: 0.6
+    rationale: "[tier:STRONGEST] Hippocampal child of CS20230722_SUPT_0204 within the \"Pvalb chandelier Gaba_1\" supertype. Atlas anatomy carries cells across CA1 SO, CA1 SR, CA3 SO, CA3 pyramidal layer, CA3 SR and DG granule layer (region_fraction_100um=0.431 against MBA:407, boundary scatter); Pvalb cluster mean 8.56 at cohort percentile 0.971 (CONSISTENT with defining-marker classical assertion). Yao 2021 SSv4 Pvalb subclass cluster annotation transfer (at_run_20260508_yao2021_hpf_ssv4_mmc_wmbv1) places CS20230722_CLUS_0732 as the single strongest cluster-level Pvalb hit (F1=0.62, n=23/66, Purity=1.0). 2 of 3 markers/properties CONSISTENT (NT, Pvalb), 1 APPROXIMATE (location, boundary scatter).\n"
+    reconciliation_note: "Paired with edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0204 (parent supertype survivor); CLUS_0732 is the hippocampus-specific child within that supertype.\n"
+    mapping_cardinality: "1:1"
+    proposed_experiments:
+      - "Higher-n morphology-confirmed axo-axonic cluster annotation transfer (patch-seq or Cre-driver scRNA-seq, n>=30) targeting F1>=0.75 at CS20230722_CLUS_0732 specifically.\n"
+      - "Targeted smFISH validation of Cck transcript on Pvalb+ AIS-targeting hippocampal cells to resolve the atlas-side Cck score 8.4 anomaly.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    unresolved_questions:
+      - "Is the elevated Cck atlas-side score on CS20230722_CLUS_0732 a real peptide co-expression signal in chandelier cells, minor contamination, or a cell-subset feature?\n"
+    rationale_source_hash: f33f3a05
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0739
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0739
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0739 Pvalb Gaba_2; region_fraction_100um=0.331; strict region_fraction=0.100.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=461 [painted]; Field CA1 [MBA:382] count_100um=238 [painted]; Field CA3 [MBA:463] count_100um=229 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.331; strict region_fraction: 0.100; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 10.63; cohort_pct 0.985; atlas category: MERFISH'
+        alignment: CONSISTENT
+        notes: val=10.63; cohort percentile 0.985
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 10.63
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.985
+      region_fraction: 0.1
+      region_fraction_100um: 0.331
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0739 sits in the Pvalb Gaba_2 (basket) supertype, not the chandelier supertype; morphologically identified PV basket cells map preferentially to this cluster in independent patch-seq evidence — wrong PV+ subtype for the axo-axonic classical type.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: 5d0672b5
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0737
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0737
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0737 Pvalb Gaba_2; region_fraction_100um=0.224; strict region_fraction=0.040.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=995 [painted]; Field CA1 [MBA:382] count_100um=668 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=614 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.224; strict region_fraction: 0.040; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.27; cohort_pct 0.956'
+        alignment: CONSISTENT
+        notes: val=8.27; cohort percentile 0.956
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 3
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.27
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.956
+      region_fraction: 0.04
+      region_fraction_100um: 0.224
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_CLUS_0737 sits in the Pvalb Gaba_2 supertype and is the preferred bistratified-cell target in independent morphology-labelled patch-seq evidence — wrong PV+ subtype for the axo-axonic classical type.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: fa9c2bec
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0644
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0644
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0644 Vip Gaba_5; region_fraction_100um=0.171; strict region_fraction=0.055.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=138 [painted]; Isocortex [MBA:315] count_100um=77 [painted]; Field CA1 [MBA:382] count_100um=61 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.171; strict region_fraction: 0.055; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 0.32; cohort_pct 0.500'
+        alignment: CONSISTENT
+        notes: val=0.32; cohort percentile 0.500
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 0.32
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.5
+      region_fraction: 0.055
+      region_fraction_100um: 0.171
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0644 is in the Vip Gaba_5 supertype with Pvalb mean 0.32 (cohort percentile 0.500) — wrong subclass for a Pvalb-defined axo-axonic cell.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: ecfa29c0
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_CLUS_0649
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_CLUS_0649
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0649 Vip Gaba_7; region_fraction_100um=0.206; strict region_fraction=0.079.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: GABA
+        alignment: CONSISTENT
+        notes: Both classical and atlas annotated GABAergic.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=51 [painted]; Field CA1 [MBA:382] count_100um=24 [painted]; Field CA3 [MBA:463] count_100um=20 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.206; strict region_fraction: 0.079; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 0.12; cohort_pct 0.265'
+        alignment: APPROXIMATE
+        notes: val=0.12; cohort percentile 0.265
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 5
+      cohort_size: 50
+      next_best_score: 4
+      rank: 0
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 0
+          n_members: 50
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 0.12
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.265
+      region_fraction: 0.079
+      region_fraction_100um: 0.206
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_CLUS_0649 is in the Vip Gaba_7 supertype with Pvalb mean 0.12 (cohort percentile 0.265, APPROXIMATE) — wrong subclass for a Pvalb-defined axo-axonic cell.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: a6694572
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0206
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0206
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0206 Pvalb Gaba_2; region_fraction_100um=0.160; strict region_fraction=0.032.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1558 [painted]; Field CA1 [MBA:382] count_100um=922 [painted]; Cortical subplate [MBA:703] count_100um=824 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.160; strict region_fraction: 0.032; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 8.74; cohort_pct 0.968; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=8.74; cohort percentile 0.968; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 4
+      rank_in_cohort: 1
+      cohort_size: 28
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 28
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 8.74
+          reliable: true
+          raw_tier: 2
+          applied_score: 2.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.968
+          coverage: 1.0
+      region_fraction: 0.032
+      region_fraction_100um: 0.16
+      region_evidence: SELF
+    confidence: LOW
+    confidence_score: 0.2
+    rationale: "[tier:CUT] CS20230722_SUPT_0206 (Pvalb Gaba_2) is the basket-cell supertype within the Pvalb subclass — morphologically confirmed basket cells map here in independent patch-seq evidence. Wrong PV+ subtype for the axo-axonic classical type.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: 043a771b
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0219
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0219
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0219 Sst Gaba_6; region_fraction_100um=0.110; strict region_fraction=0.016.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=1350 [painted]; Field CA3 [MBA:463] count_100um=1068 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=799 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.110; strict region_fraction: 0.016; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 1.68; cohort_pct 0.839; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=1.68; cohort percentile 0.839; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 2
+      cohort_size: 28
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 28
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 1.68
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.839
+          coverage: 1.0
+      region_fraction: 0.016
+      region_fraction_100um: 0.11
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0219 is in the Sst subclass with Pvalb 1.68 (cohort percentile 0.839) — wrong subclass for a Pvalb-defined axo-axonic cell.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: '14352057'
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0189
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0189
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0189 Sncg Gaba_5; region_fraction_100um=0.128; strict region_fraction=0.024.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=311 [painted]; medial forebrain bundle system [MBA:991] count_100um=205 [painted]; cerebrum related [MBA:768] count_100um=205 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.128; strict region_fraction: 0.024; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 0.61; cohort_pct 0.677; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.61; cohort percentile 0.677; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 3
+      cohort_size: 28
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 28
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 0.61
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.677
+          coverage: 1.0
+      region_fraction: 0.024
+      region_fraction_100um: 0.128
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0189 is in the Sncg subclass with Pvalb 0.61 (cohort percentile 0.677) — wrong subclass for a Pvalb-defined axo-axonic cell.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: 584ee9af
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0196
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0196
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0196 RHP-COA Ndnf Gaba_4; region_fraction_100um=0.147; strict region_fraction=0.028.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=104 [painted]; Field CA3 [MBA:463] count_100um=88 [painted]; Field CA3, pyramidal layer [MBA:495] count_100um=69 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.147; strict region_fraction: 0.028; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 0.48; cohort_pct 0.548; child-coverage 1.000'
+        alignment: CONSISTENT
+        notes: val=0.48; cohort percentile 0.548; child-cluster coverage 1.000
+    caveats: []
+    discovery_score:
+      score: 3
+      rank_in_cohort: 4
+      cohort_size: 28
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 28
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 0.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 1.0
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.548
+          coverage: 1.0
+      region_fraction: 0.028
+      region_fraction_100um: 0.147
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0196 is the RHP-COA Ndnf Gaba_4 supertype with Pvalb 0.48 (cohort percentile 0.548) — wrong subclass and region (retrohippocampal / cortical amygdala) for a CA1-pyramidal layer Pvalb-defined axo-axonic cell.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: 1a170d97
+  - id: edge_axo_axonic_cell_hippocampus_to_CS20230722_SUPT_0216
+    lit_type: axo_axonic_cell_hippocampus
+    taxonomy_type: CS20230722_SUPT_0216
+    relationship: evidencell:UncertainRelationship
+    mapping_justification: semapv:UnreviewedManualMapping
+    evidence:
+      - evidence_type: ATLAS_METADATA
+        supports: PARTIAL
+        explanation: Atlas node 0216 Sst Gaba_3; region_fraction_100um=0.153; strict region_fraction=0.030.
+    property_comparisons:
+      - property: nt_type
+        node_a_value: GABAergic
+        node_b_value: not asserted
+        alignment: NOT_ASSESSED
+        notes: NT data missing on one side.
+      - property: location
+        node_a_value: pyramidal layer of CA1 [UBERON:0014548]
+        node_b_value: Hippocampal formation [MBA:1089] count_100um=2145 [painted]; Field CA1 [MBA:382] count_100um=1559 [painted]; Field CA1, stratum oriens [MBA:399] count_100um=1463 [painted]
+        alignment: APPROXIMATE
+        notes: 'region_fraction_100um: 0.153; strict region_fraction: 0.030; region_evidence: SELF'
+      - property: marker_Pvalb
+        node_a_value: Pvalb — defining marker
+        node_b_value: 'Pvalb: 1.48; cohort_pct 0.806; child-coverage 0.889'
+        alignment: CONSISTENT
+        notes: val=1.48; cohort percentile 0.806; child-cluster coverage 0.889
+    caveats: []
+    discovery_score:
+      score: 2
+      rank_in_cohort: 5
+      cohort_size: 28
+      next_best_score: 3
+      rank: 1
+      contexts:
+        - id: cohort
+          kind: SURVIVAL_COHORT
+          rank: 1
+          n_members: 28
+          filters:
+            - region=MBA:407
+            - nt_type=GABAergic
+      expression_detail:
+        - gene: Pvalb
+          val: 1.48
+          reliable: true
+          raw_tier: 1
+          applied_score: 0.943
+          source: EXPRESSION
+          percentiles:
+            - context_id: cohort
+              pct: 0.806
+          coverage: 0.889
+      region_fraction: 0.03
+      region_fraction_100um: 0.153
+      region_evidence: SELF
+    confidence: UNCERTAIN
+    confidence_score: 0.1
+    rationale: "[tier:CUT] CS20230722_SUPT_0216 is the Sst Gaba_3 supertype (the OLM-type Sst supertype) with Pvalb 1.48 (cohort percentile 0.806) — wrong subclass for a Pvalb-defined axo-axonic cell.\n"
+    rationale_generated_at: '2026-06-08T21:03:36+00:00'
+    report_path: reports/hippocampus/axo_axonic_cell_hippocampus_summary.md
+    rationale_source_hash: d7a8604b
