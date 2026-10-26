@@ -34,10 +34,12 @@ class AmbiguousNodeError(RuntimeError):
 def _node_index() -> dict[str, list[tuple[Path, bool]]]:
     """Map node_id -> [(file, is_stub), ...], canonical definitions first.
 
-    A node carrying definition_basis ATLAS_TRANSCRIPTOMIC is a *stub* — a local
-    placeholder that exists only so edge endpoints resolve in-document (see
-    validate.structural_checks). Canonical atlas data lives in kb/taxonomy/.
-    Any other definition_basis is a canonical definition.
+    A *stub* is a local placeholder that exists only so edge endpoints resolve
+    in-document (see validate.structural_checks); the real record is elsewhere.
+    Two kinds: an atlas stub, recognisable from
+    definition_basis ATLAS_TRANSCRIPTOMIC because canonical atlas data lives in
+    kb/taxonomy/, and a lit stub, which carries its type's real
+    definition_basis and so must declare itself with `reference_stub`.
     """
     global _NODE_INDEX
     kb_dir = repo_root() / "kb" / "graphs"
@@ -61,7 +63,11 @@ def _node_index() -> dict[str, list[tuple[Path, bool]]]:
             node_id = node.get("id")
             if not node_id:
                 continue
-            bucket = stubs if node.get("definition_basis") == ATLAS_BASIS else canonical
+            is_ref = (
+                bool(node.get("reference_stub"))
+                or node.get("definition_basis") == ATLAS_BASIS
+            )
+            bucket = stubs if is_ref else canonical
             bucket.setdefault(node_id, []).append(yaml_file)
 
     index: dict[str, list[tuple[Path, bool]]] = {

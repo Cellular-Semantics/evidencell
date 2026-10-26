@@ -29,7 +29,7 @@ from pydantic import (
 )
 
 
-metamodel_version = "1.7.0"
+metamodel_version = "1.12.0"
 version = "None"
 
 
@@ -198,6 +198,25 @@ class SexBias(str, Enum):
     NOT_DIMORPHIC = "NOT_DIMORPHIC"
     """
     No documented sex difference in cell number or defining markers
+    """
+
+
+class ReferenceStubKind(str, Enum):
+    """
+    Marks a node as a *reference stub* rather than a canonical definition, and says how the real definition is found.
+A stub exists only so an edge endpoint resolves within its own document (see the in-document endpoint rule in validate.structural_checks). It carries identity, not content: the canonical record lives elsewhere.
+Absent means the node IS the canonical definition. Atlas stubs predate this field and are still recognised by definition_basis: ATLAS_TRANSCRIPTOMIC, which is unambiguous because no canonical atlas node lives in kb/graphs; the field is required only where that inference is impossible, which is every non-atlas stub.
+
+    """
+    LIT_TYPE = "LIT_TYPE"
+    """
+    References a literature type canonically defined in another kb/graphs file. Resolve with paths.find_node_file().
+
+    """
+    REFERENCE_TAXONOMY_TYPE = "REFERENCE_TAXONOMY_TYPE"
+    """
+    References a cell set in an ingested reference taxonomy. Resolve by cell_set_accession against the taxonomy store under kb/taxonomy/.
+
     """
 
 
@@ -747,10 +766,10 @@ class OntologyTerm(ConfiguredBaseModel):
         pattern=re.compile(r"^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|HOMBA|ABAO):[0-9]+$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid id format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid id format: {v}"
             raise ValueError(err_msg)
         return v
@@ -821,10 +840,10 @@ Stage B mapping subagents + report-time agents should caveat `lower_bound` rollu
         pattern=re.compile(r"^(CL|UBERON|NCBITaxon|MBA|DHBA|HBA|HOMBA|ABAO):[0-9]+$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid id format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid id format: {v}"
             raise ValueError(err_msg)
         return v
@@ -878,10 +897,10 @@ class GeneDescriptor(ConfiguredBaseModel):
         pattern=re.compile(r"^NCBIGene:[0-9]+$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid ncbi_gene_id format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid ncbi_gene_id format: {v}"
             raise ValueError(err_msg)
         return v
@@ -891,10 +910,10 @@ class GeneDescriptor(ConfiguredBaseModel):
         pattern=re.compile(r"^HGNC:[0-9]+$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid hgnc_id format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid hgnc_id format: {v}"
             raise ValueError(err_msg)
         return v
@@ -994,10 +1013,10 @@ class PropertySource(ConfiguredBaseModel):
         pattern=re.compile(r"^(PMID:[0-9]+|https://doi\.org/.+)$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid ref format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid ref format: {v}"
             raise ValueError(err_msg)
         return v
@@ -1084,10 +1103,10 @@ class MarkerSource(PropertySource, HasMarkerType):
         pattern=re.compile(r"^(PMID:[0-9]+|https://doi\.org/.+)$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid ref format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid ref format: {v}"
             raise ValueError(err_msg)
         return v
@@ -1263,6 +1282,8 @@ class CellTypeNode(ConfiguredBaseModel):
                        'AnnotationTransferRunSummary',
                        'AnnotationTransferRun']} })
     name: str = Field(default=..., description="""Human-readable name, e.g. \"Lugaro cell\", \"CB PLI Gly-Gaba_2 (supertype 1145)\"""", json_schema_extra = { "linkml_meta": {'domain_of': ['HierarchyNode', 'CellTypeNode', 'CellTypeMappingGraph']} })
+    reference_stub: Optional[ReferenceStubKind] = Field(default=None, description="""Present when this node is a placeholder for a type defined elsewhere, not a definition in its own right. Carry only id, name, definition_basis and (for taxonomy references) taxonomy_id and cell_set_accession; everything else belongs on the canonical record. Absent means this node is canonical.
+""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTypeNode']} })
     synonyms: Optional[list[TypeSynonym]] = Field(default=None, description="""Alternative names and abbreviations for this cell type, with evidence provenance. Populated during literature mining — synonym extraction is the first processing step for each paper (both survey and targeted paths). Used to expand queries in subsequent searches.
 Include all forms that appear in the literature or atlases: abbreviations (OLM), long forms if non-obvious, historical names, atlas labels used as cell type names. Do NOT include the canonical name field value itself.
 For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only if that label is used as a cell type name in at least one non-atlas paper.
@@ -1362,10 +1383,10 @@ For ATLAS_TRANSCRIPTOMIC nodes: include the atlas cluster label in synonyms only
         pattern=re.compile(r"^(PMID:[0-9]+|https://doi\.org/.+)$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid prior_reference format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid prior_reference format: {v}"
             raise ValueError(err_msg)
         return v
@@ -1426,10 +1447,10 @@ Prefer stable, persistent URLs (DOI-resolved figures, database entry pages). All
         pattern=re.compile(r"^(PMID:[0-9]+|https://doi\.org/.+)$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid reference format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid reference format: {v}"
             raise ValueError(err_msg)
         return v
@@ -2253,10 +2274,10 @@ class AnnotationTransferDataset(ConfiguredBaseModel):
         pattern=re.compile(r"^(PMID:[0-9]+|https://doi\.org/.+)$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid publication format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid publication format: {v}"
             raise ValueError(err_msg)
         return v
@@ -2427,10 +2448,10 @@ class BulkDataset(ConfiguredBaseModel):
         pattern=re.compile(r"^PMID:[0-9]+$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid source_pmid format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid source_pmid format: {v}"
             raise ValueError(err_msg)
         return v
@@ -2595,10 +2616,10 @@ class ScriptReference(ConfiguredBaseModel):
         pattern=re.compile(r"^https://(github|gitlab)\.com/.+$")
         if isinstance(v, list):
             for element in v:
-                if isinstance(element, str) and not pattern.match(element):
+                if isinstance(element, str) and not pattern.search(element):
                     err_msg = f"Invalid git_repo_url format: {element}"
                     raise ValueError(err_msg)
-        elif isinstance(v, str) and not pattern.match(v):
+        elif isinstance(v, str) and not pattern.search(v):
             err_msg = f"Invalid git_repo_url format: {v}"
             raise ValueError(err_msg)
         return v

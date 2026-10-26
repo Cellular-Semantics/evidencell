@@ -1,0 +1,127 @@
+##
+# Cerebellar Molecular Layer Interneurons — WMBv1 mapping
+#
+# Brain region: Cerebellar cortex (molecular layer interneurons)
+# Target atlas: WMBv1 (Yao et al. 2023, Nature 624:317-332)
+# Curation date: 2026-02-25
+# Curator: dosumis
+# Source analysis: https://github.com/Cellular-Semantics/cellular_semantics_notebooks/tree/main/MLI-PLI%20annotation
+#
+# KEY BIOLOGICAL FINDING: MLI1 and MLI2 CROSS-CUT the classical basket/stellate boundary.
+# This graph makes the cross-cutting explicit as a first-class feature.
+#
+# Evidence graph:
+#
+#   classical_basket   ──[CROSS_CUTTING, Kozareva 2021]─────┐
+#   classical_stellate ──[PARTIAL_OVERLAP, Kozareva 2021]───┼──► mli1_kozareva
+#                       ──[PARTIAL_OVERLAP, Kozareva 2021]───┘
+#   classical_stellate ─(also)──[PARTIAL_OVERLAP, Kozareva 2021]──► mli2_kozareva
+#
+#   mli1_kozareva ──[EQUIVALENT, F1≈0.999, MapMyCells]──► wmb_cluster_5188  (terminal)
+#   mli2_kozareva ──[EQUIVALENT, F1≈0.996, MapMyCells]──► wmb_cluster_5192  (terminal)
+#
+# Note: The transcriptomic types MLI1 and MLI2 are MORE FUNDAMENTAL than the
+# classical basket/stellate distinction. The schema records this correctly —
+# the classical types are not "wrong", but the T-type boundary is differently placed.
+##
+
+name: "Cerebellar Molecular Layer Interneurons — WMBv1"
+description: >
+  Evidence graph mapping classically defined molecular layer interneuron types
+  (cerebellar basket cells and stellate cells) to cell sets in the WMBv1 atlas.
+  Mapping reveals that MLI1 and MLI2 transcriptomic types cross-cut the classical
+  basket/stellate boundary (Kozareva et al. 2021), and both map cleanly to WMBv1
+  clusters via MapMyCells annotation transfer.
+brain_region:
+  id: MBA:1144
+  label: "Cerebellar cortex, molecular layer"
+  name_in_source: "Cerebellar cortex, molecular layer"
+
+target_atlas: WMBv1
+species:
+  id: NCBITaxon:10090
+  label: Mus musculus
+  name_in_source: "Mus musculus"
+
+creation_date: "2026-02-25"
+nodes:
+  - id: classical_basket
+    name: "Cerebellar basket cell"
+    definition_basis: CLASSICAL_MORPHOLOGICAL
+    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
+    anatomical_location:
+      - id: MBA:1144
+        label: "Cerebellar cortex, molecular layer"
+        name_in_source: "Cerebellar cortex, molecular layer (inner third)"
+    colocated_types:
+      - neighboring_type: Purkinje cell
+        spatial_relationship: PROXIMAL
+        notes: >
+          Basket cells are located in the inner molecular layer proximal to the
+          Purkinje cell layer; their axonal arbours form basket-like structures
+          around Purkinje cell soma (Kozareva et al. 2021, PMID:34616064).
+    cl_mapping:
+      cl_term: {id: CL:2000027, label: cerebellar basket cell, name_in_source: "cerebellar basket cell"}
+      mapping_type: EXACT
+      mapping_notes: >
+        CL:2000027 (cerebellar basket cell) is the exact CL term for this type.
+        The cross-cutting relationship with MLI1 means the classical definition
+        (morphology + location) and the transcriptomic definition (MLI1) do not
+        align — the CL term captures the classical morphological type.
+    nt_type:
+      name_in_source: "GABA"
+      cl_terms:
+        - id: CL:0000617
+          label: GABAergic neuron
+          name_in_source: "GABA"
+    morphology:
+      description: >
+        Located in the inner molecular layer close to the Purkinje cell layer.
+        Characterised by basket-like axonal arborisations enveloping Purkinje
+        cell soma. Classical definition based on morphology and location.
+    is_terminal: false
+    notes: >
+      MLI1 (Kozareva) CROSS-CUTS the basket/stellate boundary: basket morphology
+      is correlated with proximity to Purkinje layer in MLI1 cells, but MLI1
+      also includes distally-located cells with stellate morphology.
+      The CL term for basket cell will need updating to reflect this.
+
+  - id: mli1_kozareva
+    name: "MLI1"
+    definition_basis: PRIOR_TRANSCRIPTOMIC
+    reference_stub: LIT_TYPE
+edges:
+  - id: edge_basket_to_mli1
+    lit_type: classical_basket
+    taxonomy_type: mli1_kozareva
+    relationship: evidencell:CrossCuttingMatch
+    evidence:
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:34616064"
+        snippet: >
+          "MLI1s and MLI2s were present throughout the entire molecular layer,
+          which indicates that the distinction between MLI1 and MLI2 does not
+          correspond to the canonical basket and stellate distinction"
+        explanation: >
+          Kozareva 2021 explicitly states that MLI1/MLI2 do not map to the
+          classical basket/stellate boundary. MLI1 cells near the PC layer have
+          basket morphology but MLI1 is not equivalent to basket cells — it
+          also contains distally-located cells with stellate morphology. CROSS_CUTTING
+          is the correct relationship: MLI1 draws from both classical types.
+        study_type: MULTIMODAL
+      - evidence_type: LITERATURE
+        supports: SUPPORT
+        reference: "PMID:34616064"
+        snippet: >
+          "MLI1s had a stellate morphology in the distal third of the molecular
+          layer, whereas MLI1s located near the PC layer had a basket morphology,
+          with contacts near PC initial segments"
+        explanation: >
+          Direct morphological characterisation of MLI1: proximal (inner ML) MLI1
+          cells have basket morphology, distal MLI1 cells have stellate morphology.
+          This confirms CROSS_CUTTING — the classical basket type is a positional
+          subset of MLI1, not a distinct transcriptomic entity.
+        study_type: MULTIMODAL
+
+    mapping_justification: semapv:UnreviewedManualMapping
