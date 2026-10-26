@@ -178,3 +178,57 @@ def test_lit_nodes_are_not_subject_to_stub_shape(tmp_path):
         "edges": [],
     })
     assert _checks(sweep_cross_file(tmp_path, [path]), "stub_shape") == []
+# ── Lit reference stubs ───────────────────────────────────────────────────────
+
+def _lit_stub(node_id):
+    return {"id": node_id, "name": node_id,
+            "definition_basis": "CLASSICAL_MULTIMODAL", "reference_stub": "LIT_TYPE"}
+
+
+def test_dangling_lit_stub_detected(tmp_path):
+    """Nothing in the in-document endpoint rule checks a stub resolves."""
+    path = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [_classical("a"), _lit_stub("ghost")],
+        "edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "ghost",
+                   "relationship": "skos:closeMatch"}],
+    })
+    hits = _checks(sweep_cross_file(tmp_path, [path]), "dangling_endpoint")
+    assert len(hits) == 1
+    assert hits[0].severity == ERROR
+    assert "ghost" in hits[0].message
+
+
+def test_resolved_lit_stub_is_clean(tmp_path):
+    a = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [_classical("a"), _lit_stub("b")],
+        "edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "b",
+                   "relationship": "skos:closeMatch"}],
+    })
+    b = _write(tmp_path, "kb/graphs/r/b.yaml", {
+        "nodes": [_classical("b")],
+        "edges": [{"id": "e2", "lit_type": "b", "taxonomy_type": "b",
+                   "relationship": "skos:closeMatch"}],
+    })
+    out = sweep_cross_file(tmp_path, [a, b])
+    assert _checks(out, "dangling_endpoint") == []
+
+
+def test_lit_stub_is_not_a_duplicate_definition(tmp_path):
+    """Bucketing by definition_basis alone counts a lit stub as canonical, so
+    every cross-file reference would report as a duplicate."""
+    a = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [_classical("a"), _lit_stub("b")],
+        "edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "b",
+                   "relationship": "skos:closeMatch"}],
+    })
+    b = _write(tmp_path, "kb/graphs/r/b.yaml", {"nodes": [_classical("b")], "edges": []})
+    assert _checks(sweep_cross_file(tmp_path, [a, b]), "duplicate_node_id") == []
+
+
+def test_lit_stub_is_not_reported_as_an_orphan(tmp_path):
+    """dangling_endpoint owns stubs; reporting them here too double-counts."""
+    a = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [_classical("a"), _lit_stub("b")], "edges": [],
+    })
+    hits = _checks(sweep_cross_file(tmp_path, [a]), "orphan_node")
+    assert [h for h in hits if "'b'" in h.message] == []

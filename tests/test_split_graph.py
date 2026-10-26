@@ -67,7 +67,9 @@ def test_lit_to_lit_edge_keeps_component_whole():
             _atlas("wmb_cluster_5178"),
         ],
         [
-            _edge("e1", "classical_candelabrum", "pli1_osorno"),
+            # exactMatch: Osorno asserts PLI1 *is* the candelabrum cell. Settled
+            # structure, so the two stay in one file.
+            _rel_edge("e1", "classical_candelabrum", "pli1_osorno", "skos:exactMatch"),
             _edge("e2", "pli1_osorno", "wmb_cluster_5178"),
         ],
     )
@@ -78,9 +80,14 @@ def test_lit_to_lit_edge_keeps_component_whole():
 
 
 def test_chain_of_three_non_atlas_nodes_stays_one_component():
+    """A subdivision chain is one unit -- union-find is transitive."""
     doc = _doc(
         [_classical("a"), _classical("b"), _classical("c"), _atlas("x")],
-        [_edge("e1", "a", "b"), _edge("e2", "b", "c"), _edge("e3", "c", "x")],
+        [
+            _rel_edge("e1", "a", "b", "skos:narrowMatch"),
+            _rel_edge("e2", "b", "c", "skos:narrowMatch"),
+            _edge("e3", "c", "x"),
+        ],
     )
     plan = plan_split(doc, Path("t.yaml"))
     assert len(plan.components) == 1
@@ -271,3 +278,85 @@ def test_breadth_edges_outside_the_component_are_ignored():
     )
     plan = plan_split(doc, Path("t.yaml"))
     assert plan.components[0].representative == "zzz"
+
+
+# ── Co-location policy ────────────────────────────────────────────────────────
+
+def _two_lit(rel):
+    return _doc(
+        [_lit("general"), _lit("other"), _atlas("x")],
+        [
+            _rel_edge("e1", "other", "general", rel),
+            _edge("e2", "general", "x"),
+        ],
+    )
+
+
+@pytest.mark.parametrize("rel", ["skos:broadMatch", "skos:narrowMatch", "skos:exactMatch"])
+def test_settled_relations_co_locate(rel):
+    """Subdivision and asserted identity are settled structure."""
+    plan = plan_split(_two_lit(rel), Path("t.yaml"))
+    assert len(plan.components) == 1
+    assert sorted(plan.components[0].node_ids) == ["general", "other"]
+
+
+@pytest.mark.parametrize("rel", [
+    "skos:closeMatch",
+    "evidencell:CrossCuttingMatch",
+    "evidencell:UncertainRelationship",
+])
+def test_open_questions_do_not_co_locate(rel):
+    """A hypothesis under review must not dictate file layout.
+
+    Keying layout to a candidate makes files churn as candidates are raised and
+    dropped, and co-location visually asserts the thing being questioned. This
+    is also what stops an automatic Case A closeMatch from fusing two files.
+    """
+    plan = plan_split(_two_lit(rel), Path("t.yaml"))
+    assert len(plan.components) == 2
+    assert [sorted(c.node_ids) for c in plan.components] == [["general"], ["other"]]
+
+
+def test_non_co_locating_edge_gets_a_thin_lit_stub():
+    """The far endpoint is a placeholder, not a second copy of the record."""
+    doc = _doc(
+        [
+            {"id": "a", "name": "A", "definition_basis": "CLASSICAL_MULTIMODAL",
+             "defining_markers": [{"symbol": "Sst"}], "notes": "lots of curated content"},
+            {"id": "b", "name": "B", "definition_basis": "CLASSICAL_MULTIMODAL",
+             "defining_markers": [{"symbol": "Pvalb"}], "notes": "also lots"},
+        ],
+        [_rel_edge("e1", "a", "b", "skos:closeMatch")],
+    )
+    plan = plan_split(doc, Path("t.yaml"))
+    by_rep = {c.representative: build_component_doc(doc, c) for c in plan.components}
+
+    # the edge travels with its source
+    assert [e["id"] for e in by_rep["a"]["edges"]] == ["e1"]
+    assert by_rep["b"]["edges"] == []
+
+    stub = [n for n in by_rep["a"]["nodes"] if n["id"] == "b"][0]
+    assert stub["reference_stub"] == "LIT_TYPE"
+    assert "defining_markers" not in stub, "a lit stub must not carry content"
+    assert "notes" not in stub
+    # and the canonical record is untouched in its own file
+    canon = [n for n in by_rep["b"]["nodes"] if n["id"] == "b"][0]
+    assert canon["defining_markers"] == [{"symbol": "Pvalb"}]
+    assert "reference_stub" not in canon
+
+
+def test_splitting_is_idempotent_over_lit_stubs():
+    """Re-splitting an already-split file must not rebuild the component.
+
+    A lit stub carries its type's real definition_basis, so without
+    `reference_stub` is_stub() would read it as a member and re-absorb it.
+    """
+    doc = _doc(
+        [_lit("a"), _lit("b")],
+        [_rel_edge("e1", "a", "b", "skos:closeMatch")],
+    )
+    first = plan_split(doc, Path("t.yaml"))
+    a_doc = build_component_doc(doc, [c for c in first.components if c.representative == "a"][0])
+    again = plan_split(dict(a_doc), Path("a.yaml"))
+    assert len(again.components) == 1
+    assert again.components[0].node_ids == ["a"], "the lit stub was treated as a member"

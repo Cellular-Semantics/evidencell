@@ -274,6 +274,30 @@ enums:
         description: No documented sex difference in cell number or defining markers
 
   # ── Synonym type ────────────────────────────────────────────────
+  ReferenceStubKind:
+    description: >
+      Marks a node as a *reference stub* rather than a canonical definition, and
+      says how the real definition is found.
+
+      A stub exists only so an edge endpoint resolves within its own document
+      (see the in-document endpoint rule in validate.structural_checks). It
+      carries identity, not content: the canonical record lives elsewhere.
+
+      Absent means the node IS the canonical definition. Atlas stubs predate
+      this field and are still recognised by
+      definition_basis: ATLAS_TRANSCRIPTOMIC, which is unambiguous because no
+      canonical atlas node lives in kb/graphs; the field is required only where
+      that inference is impossible, which is every non-atlas stub.
+    permissible_values:
+      LIT_TYPE:
+        description: >
+          References a literature type canonically defined in another
+          kb/graphs file. Resolve with paths.find_node_file().
+      REFERENCE_TAXONOMY_TYPE:
+        description: >
+          References a cell set in an ingested reference taxonomy. Resolve by
+          cell_set_accession against the taxonomy store under kb/taxonomy/.
+
   SynonymType:
     description: Category of alternative name for a cell type.
     permissible_values:
@@ -1418,6 +1442,14 @@ classes:
       name:
         required: true
         description: Human-readable name, e.g. "Lugaro cell", "CB PLI Gly-Gaba_2 (supertype 1145)"
+      reference_stub:
+        range: ReferenceStubKind
+        description: >
+          Present when this node is a placeholder for a type defined elsewhere,
+          not a definition in its own right. Carry only id, name,
+          definition_basis and (for taxonomy references) taxonomy_id and
+          cell_set_accession; everything else belongs on the canonical record.
+          Absent means this node is canonical.
       synonyms:
         range: TypeSynonym
         multivalued: true

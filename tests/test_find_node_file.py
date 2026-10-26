@@ -101,3 +101,28 @@ def test_intra_file_duplicate_is_not_reported_as_two_files(tmp_path, monkeypatch
         {"id": "dup", "definition_basis": "CLASSICAL_MULTIMODAL"},
     ])
     assert find_node_file("dup") == path
+
+
+def test_lit_stub_does_not_shadow_its_canonical_definition(tmp_path, monkeypatch):
+    """A lit stub carries the type's real definition_basis, so stub-ness can
+    only come from the marker. Without it this raises AmbiguousNodeError."""
+    kb = _repo(tmp_path, monkeypatch)
+    _write(kb / "r", "aaa_holds_a_stub.yaml", [
+        {"id": "shared", "name": "shared", "definition_basis": "CLASSICAL_MULTIMODAL",
+         "reference_stub": "LIT_TYPE"},
+    ])
+    canonical = _write(kb / "r", "zzz_canonical.yaml", [
+        {"id": "shared", "name": "shared", "definition_basis": "CLASSICAL_MULTIMODAL"},
+    ])
+    assert find_node_file("shared") == canonical
+
+
+def test_a_type_present_only_as_a_lit_stub_still_resolves(tmp_path, monkeypatch):
+    """Resolving to the stub is wrong but better than crashing; the dangling
+    reference is qc_content.dangling_endpoint's business, not this function's."""
+    kb = _repo(tmp_path, monkeypatch)
+    p = _write(kb / "r", "a.yaml", [
+        {"id": "orphaned", "name": "orphaned", "definition_basis": "CLASSICAL_MULTIMODAL",
+         "reference_stub": "LIT_TYPE"},
+    ])
+    assert find_node_file("orphaned") == p
