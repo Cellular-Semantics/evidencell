@@ -87,13 +87,23 @@ _BUILTIN_TAXONOMIES: dict[str, TaxonomySpec] = {
     ),
     "CCN20250428": TaxonomySpec(
         id="CCN20250428",
-        name="Consensus Basal Ganglia",
-        species="mouse",
+        # HMBA Basal Ganglia Consensus. Primate, not mouse -- the taxonomy is
+        # built from human, macaque and marmoset. kb/graphs/BG/ already cites it
+        # as "the primate HMBA BG GPi Shell group (CS20250428_GROUP_0016)".
+        name="Consensus Basal Ganglia (HMBA)",
+        species="primate",
         web_ref_id="HMBA-BG-taxonomy-CCN20250428",
         web_display_name="Consensus Basal Ganglia Taxonomy (CCN20250428)",
         algorithms=["HierarchicalAlgorithmRun", "CorrelationAlgorithmRun"],
-        stats_s3_url=None,
-        markers_s3_url=None,
+        # The 20250630 release is the combined consensus build across all three
+        # species, which is what a consensus taxonomy should map against. The
+        # earlier 20250531 release ships per-species files instead
+        # (Human/Macaque/Marmoset .precomputed_stats.20250507.h5) -- use those
+        # directly if you need a single-species reference.
+        stats_s3_url=f"{_S3_BASE}/mapmycells/HMBA-BG-taxonomy-CCN20250428"
+                     f"/20250630/precomputed_stats.HMBA.BG.2025-08-04.h5",
+        markers_s3_url=f"{_S3_BASE}/mapmycells/HMBA-BG-taxonomy-CCN20250428"
+                       f"/20250630/query_markers.HMBA.BG.2025-08-04.json",
     ),
 }
 
