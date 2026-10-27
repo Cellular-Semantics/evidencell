@@ -394,6 +394,14 @@ def _coverage_gaps(root: Path, kb_paths: list[Path], report_paths: list[Path]) -
 
 ATLAS_BASIS = "ATLAS_TRANSCRIPTOMIC"
 
+# What an atlas stub may carry (CLAUDE.md: taxonomy YAML is canonical for atlas
+# properties). `reference_stub` is included because the marker is identity, not
+# content -- see the ReferenceStubKind enum.
+THIN_STUB_FIELDS = frozenset({
+    "id", "name", "definition_basis", "taxonomy_id", "cell_set_accession",
+    "reference_stub",
+})
+
 
 def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
     """Checks that no single-file pass can make.
@@ -487,7 +495,32 @@ def sweep_cross_file(root: Path, kb_paths: list[Path]) -> list[Finding]:
                     f"definitions: {', '.join(sorted(homes))}. Ambiguous reference.",
                 ))
 
-    # 4. Distinct node ids sharing an identical name. Renaming a duplicate so
+    # 4. An atlas stub carrying more than identity.
+    #
+    #    kb/taxonomy is canonical for atlas properties (CLAUDE.md); a stub is a
+    #    pointer, and anything else on it is a second copy that drifts. It did:
+    #    before the strip, 162 of 499 fat-stub fields disagreed with the
+    #    taxonomy and 203 were absent from it. Without this check the next
+    #    ingest re-fattens them.
+    #
+    #    WARN, not ERROR: two stubs legitimately keep fields because no
+    #    taxonomy can supply them -- one references a taxonomy with no store at
+    #    all, one a supertype for which the taxonomy has no n_cells. Both are
+    #    baselined. Promote to ERROR once those two are resolved.
+    for rel, _doc, nodes, _edges in per_file:
+        for node in nodes:
+            if node.get("definition_basis") != ATLAS_BASIS:
+                continue
+            extra = sorted(set(node) - THIN_STUB_FIELDS)
+            if extra:
+                findings.append(Finding(
+                    rel, WARN, "stub_shape",
+                    f"Atlas stub '{node['id']}' carries {len(extra)} field(s) "
+                    f"beyond the thin stub: {', '.join(extra)}. Atlas properties "
+                    "belong in kb/taxonomy/; a copy here drifts.",
+                ))
+
+    # 5. Distinct node ids sharing an identical name. Renaming a duplicate so
     #    each file defines a distinct id unblocks the layout but silences
     #    `duplicate_node_id`, which would lose the signal entirely. The name is
     #    the part that stays identical, so this keeps the pair visible until a
@@ -612,6 +645,7 @@ _SUBJECT_PATTERNS: dict[str, tuple[str, ...]] = {
     "orphan_node":         (r"'([^']+)' is referenced by no edge",),
     "dangling_endpoint":   (r"Lit stub '([^']+)'",),
     "possible_duplicate_name": (r"Name '([^']+)'",),
+    "stub_shape":          (r"Atlas stub '([^']+)'",),
     "markdown": (
         r"(?:Atlas accession|PMID|quote_key) '([^']+)'",
         # Unannotated blockquote: the quoted line itself is the subject.

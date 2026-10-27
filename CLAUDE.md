@@ -197,6 +197,48 @@ cross-references to other nodes — belongs in a `notes` field on the
 relevant object, not in a YAML comment. Reserve comments for transient
 developer-facing hints that are acceptable to lose.
 
+### MapMyCells reference files — where they come from
+
+`annotation_transfer/src/annotation_transfer/taxonomies.py` is the **single
+authority** for where a taxonomy's MapMyCells files live. It holds a
+`TaxonomySpec` per taxonomy id with `stats_s3_url` and `markers_s3_url`
+pointing at the public Allen Brain Cell Atlas S3 bucket. Do not hardcode these
+URLs anywhere else, and do not go looking for a local copy before checking the
+registry — the files are re-downloadable on demand and are gitignored.
+
+```
+just fetch-mapmycells CCN20230722          # → conf/mapmycells/{taxonomy_id}/
+just fetch-mapmycells CCN20250428 --force  # re-download
+```
+
+Registered taxonomies:
+
+| id | taxonomy | species |
+|---|---|---|
+| `CCN20230722` | Whole Mouse Brain (Yao 2023) — WMBv1 | mouse |
+| `CCN20250428` | Consensus Basal Ganglia (HMBA) | primate |
+| `CCN202210140` | Whole Human Brain (Siletti) | human |
+| `CCN20230505` | Human MTG SEA-AD | human |
+
+**This is what `precomputed_expression.source` resolves to.** Every such block
+in `kb/taxonomy/**` records the filename it was derived from — e.g.
+`precomputed_stats_ABC_revision_230821.h5` — and that string is the basename of
+the registry's `stats_s3_url` for that taxonomy. So a block's provenance is
+fully traceable without keeping the 1.4 GB artefact in the repo.
+
+Two things to know before using them:
+
+- **They are large.** WMBv1 stats 1.4 GB, HMBA BG 1.1 GB. `fetch-mapmycells`
+  prints the size before downloading and skips files already present.
+- **HMBA BG ships two releases.** The registry points at the `20250630`
+  combined consensus build, which is the right default for a consensus
+  taxonomy. The earlier `20250531` release ships per-species files
+  (`Human.` / `Macaque.` / `Marmoset.precomputed_stats.20250507.h5`) — use
+  those directly if you need a single-species reference.
+
+Downstream, pass the `.h5` to `just add-expression` / `just add-expression-all`
+along with `conf/gene_mapping_{taxonomy_id}.tsv`.
+
 ---
 
 ## Overview
@@ -276,7 +318,7 @@ the full specification and correction loop protocol.
 | Taxonomy SQLite index | `kb/taxonomy/{taxonomy_id}/{taxonomy_id}.db` | `map-cell-type.md` (candidate queries) |
 | Taxonomy field mapping | `kb/taxonomy/{taxonomy_id}/field_mapping.json` | `ingest-taxonomy.md` (fast-path detection) |
 | MBA ontology JSON | `conf/mba/mbao-full.json` (gitignored; fetch with `just fetch-mba-ontology`) | `ingest-taxonomy.md` Step 4 (anat closure build); shared across all taxonomies |
-| Precomputed stats HDF5 | taxonomy local paths (see ROADMAP.md § Taxonomy Reference DB) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
+| Precomputed stats HDF5 | `conf/mapmycells/{taxonomy_id}/` (gitignored; fetch with `just fetch-mapmycells {taxonomy_id}` — URLs come from `annotation_transfer/.../taxonomies.py`, see "MapMyCells reference files" above) | `map-cell-type.md` (target-side marker cross-check), `annotation-transfer.md` (local MapMyCells) |
 
 Place input files in the appropriate subdirectory before running the relevant orchestrator.
 

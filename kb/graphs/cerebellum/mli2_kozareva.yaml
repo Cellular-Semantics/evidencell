@@ -81,28 +81,8 @@ nodes:
   - id: wmb_cluster_5192
     name: "5192 CBX MLI Cdh22 Gaba_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_CLUS_5192  # NOTE: verify this accession
-    taxonomy_level: CLUSTER
-    parent_hierarchy:
-      - {level: SUPERTYPE, name: "1151 CBX MLI Cdh22 Gaba_1"}
-      - {level: SUBCLASS, name: "312 CBX MLI Cdh22 Gaba"}
-      - {level: CLASS, name: "28 CB GABA"}
-    species: {id: NCBITaxon:10090, label: "Mus musculus", name_in_source: "Mus musculus"}
-    nt_type:
-      name_in_source: "GABA"
-      cl_terms:
-        - id: CL:0000617
-          label: GABAergic neuron
-          name_in_source: "GABA"
-    is_terminal: true
-
-
-# ══════════════════════════════════════════════════════════════════
-# EDGES
-# ══════════════════════════════════════════════════════════════════
-
 edges:
   - id: edge_mli2_to_wmb5192
     lit_type: mli2_kozareva

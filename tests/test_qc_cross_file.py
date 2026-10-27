@@ -139,6 +139,45 @@ def test_fingerprint_rules_actually_match_emitted_messages(tmp_path):
         )
 
 
+# ── Stub shape ────────────────────────────────────────────────────────────────
+
+def test_fat_atlas_stub_is_flagged(tmp_path):
+    """kb/taxonomy is canonical for atlas properties; a copy on a stub drifts."""
+    path = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [_classical("a"), dict(_atlas("x"), n_cells=42, taxonomy_level="CLUSTER")],
+        "edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "x"}],
+    })
+    hits = _checks(sweep_cross_file(tmp_path, [path]), "stub_shape")
+    assert len(hits) == 1
+    assert hits[0].severity == WARN
+    assert "n_cells" in hits[0].message and "taxonomy_level" in hits[0].message
+
+
+def test_thin_atlas_stub_is_clean(tmp_path):
+    path = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [_classical("a"), _atlas("x")],
+        "edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "x"}],
+    })
+    assert _checks(sweep_cross_file(tmp_path, [path]), "stub_shape") == []
+
+
+def test_reference_stub_marker_is_not_a_fat_field(tmp_path):
+    """The marker is identity, not content -- it must not trip the check."""
+    path = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [_classical("a"),
+                  dict(_atlas("x"), reference_stub="REFERENCE_TAXONOMY_TYPE")],
+        "edges": [{"id": "e1", "lit_type": "a", "taxonomy_type": "x"}],
+    })
+    assert _checks(sweep_cross_file(tmp_path, [path]), "stub_shape") == []
+
+
+def test_lit_nodes_are_not_subject_to_stub_shape(tmp_path):
+    """Only atlas stubs are pointers; a literature node carries its content."""
+    path = _write(tmp_path, "kb/graphs/r/a.yaml", {
+        "nodes": [dict(_classical("a"), n_cells=42, notes="lots of curation")],
+        "edges": [],
+    })
+    assert _checks(sweep_cross_file(tmp_path, [path]), "stub_shape") == []
 # ── Lit reference stubs ───────────────────────────────────────────────────────
 
 def _lit_stub(node_id):

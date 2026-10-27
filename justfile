@@ -359,6 +359,56 @@ ingest-taxonomy-db taxonomy_file taxonomy_id:
     just ingest-taxonomy-yaml {{taxonomy_file}} {{taxonomy_id}}
     just build-taxonomy-db {{taxonomy_id}}
 
+# Download the MapMyCells precomputed-stats HDF5 (and query markers) for a
+# taxonomy, to the canonical repo-root path conf/mapmycells/{taxonomy_id}/.
+#
+# URLs are NOT hardcoded here -- annotation_transfer/src/annotation_transfer/
+# taxonomies.py is the single authority, keyed by taxonomy id. The filename it
+# names is the same string recorded as `source` on every precomputed_expression
+# block in kb/taxonomy/, so a block's provenance resolves to a public URL.
+#
+# These files are large (WMBv1 1.4GB, HMBA BG 1.1GB) and are gitignored.
+# Existing files are left alone; pass --force to re-download.
+# Usage: just fetch-mapmycells CCN20230722
+#        just fetch-mapmycells CCN20250428 --force
+[group('setup')]
+fetch-mapmycells taxonomy_id *FLAGS:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    force=""
+    for f in {{FLAGS}}; do [ "$f" = "--force" ] && force=1; done
+    urls=$(PYTHONPATH=annotation_transfer/src uv run python -c "
+    from annotation_transfer.taxonomies import _BUILTIN_TAXONOMIES as T
+    import sys
+    spec = T.get('{{taxonomy_id}}')
+    if spec is None:
+        sys.exit(f\"unknown taxonomy '{{taxonomy_id}}'; known: {', '.join(sorted(T))}\")
+    if not spec.stats_s3_url:
+        sys.exit(f\"'{{taxonomy_id}}' ({spec.name}) has no stats_s3_url in the registry — \"
+                 f\"web-only, or the URL has not been recorded yet.\")
+    print(spec.stats_s3_url)
+    print(spec.markers_s3_url or '')
+    ")
+    stats=$(echo "$urls" | sed -n 1p)
+    markers=$(echo "$urls" | sed -n 2p)
+    dest="conf/mapmycells/{{taxonomy_id}}"
+    mkdir -p "$dest"
+    for url in $stats $markers; do
+        [ -z "$url" ] && continue
+        out="$dest/$(basename "$url")"
+        if [ -f "$out" ] && [ -z "$force" ]; then
+            echo "  exists, skipping: $out  ($(du -h "$out" | cut -f1))"
+            continue
+        fi
+        # tolower(), not IGNORECASE -- the latter is a gawk extension and this
+        # runs under BSD awk on macOS, where it silently matches nothing.
+        size=$(curl -sIL --max-time 30 "$url" | tr -d '\r' \
+               | awk 'tolower($1)=="content-length:"{n=$2} END{if(n>0) printf "%.1f GB", n/1073741824; else printf "unknown size"}')
+        echo "  downloading $size -> $out"
+        curl -fL --progress-bar "$url" -o "$out"
+    done
+    echo "Done. Pass the .h5 to just add-expression / add-expression-all."
+
 # Download the latest BICAN Mouse Brain Atlas Ontology (OBO JSON) to conf/mba/mbao-full.json
 # Run once; file is not committed to git (.gitignore)
 [group('workflows')]

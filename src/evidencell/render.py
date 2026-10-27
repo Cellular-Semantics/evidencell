@@ -1229,7 +1229,8 @@ def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) ->
     """Extract display info for the atlas (taxonomy_type) node of an edge.
 
     `db_cache` is a per-render mutable dict keyed by taxonomy_id; if provided,
-    looks up atlas-only properties (n_cells, parent supertype) from the
+    looks up atlas-only properties (n_cells, taxonomy_level, parent supertype)
+    from the
     TaxonomyDB by accession. Stubs in mapping-graph YAML carry minimal data
     per the KB convention (taxonomy YAML is canonical for atlas properties),
     so this lookup is what surfaces the per-node 10x cell count and the
@@ -1239,6 +1240,7 @@ def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) ->
     b_node = nodes_by_id.get(b_id, {})
     accession = b_node.get("cell_set_accession", "")
     n_cells = b_node.get("n_cells")
+    taxonomy_level = b_node.get("taxonomy_level", "")
     supertype = ""
 
     if db_cache is not None and accession:
@@ -1252,6 +1254,12 @@ def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) ->
                 if tax_node:
                     if n_cells is None:
                         n_cells = tax_node.get("n_cells")
+                    if not taxonomy_level:
+                        # The DB stores it lowercase ("supertype"); reports and
+                        # the thin-stub convention both use upper case.
+                        taxonomy_level = (
+                            tax_node.get("taxonomy_level") or ""
+                        ).upper()
                     parents = db.get_parent_hierarchy(accession)
                     supt_entry = next(
                         (p for p in parents
@@ -1270,7 +1278,7 @@ def _node_b_info(edge: dict, nodes_by_id: dict, db_cache: dict | None = None) ->
         "accession": accession,
         "supertype": supertype,
         "n_cells": n_cells,
-        "taxonomy_level": b_node.get("taxonomy_level", ""),
+        "taxonomy_level": taxonomy_level,
     }
 
 

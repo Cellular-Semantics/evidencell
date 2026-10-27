@@ -115,25 +115,13 @@ nodes:
   - id: CS20230722_SUPT_0564
     name: "0564 VMH Fezf1 Glut_2"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0564
-    taxonomy_level: SUPERTYPE
-
   - id: CS20230722_SUPT_0563
     name: "0563 VMH Fezf1 Glut_1"
     definition_basis: ATLAS_TRANSCRIPTOMIC
-    atlas: WMBv1
     taxonomy_id: CCN20230722
     cell_set_accession: CS20230722_SUPT_0563
-    taxonomy_level: SUPERTYPE
-    notes: >
-      Parent of the two most female-biased rank-0 clusters in the VMH region:
-      CLUS_2290 (MFR=0.08) and CLUS_2292 (MFR=0.12). Identified via Knoedler 2022
-      bulk correlation (corr_run_20260428_knoedler_esr1_wmbv1) as the dominant
-      VMH-specific Esr1+ supertype, with three of its child clusters (2293, 2290, 2292)
-      taking the top-4 positions by δ(VMH_FR − BNST_FR).
-
 edges:
   - id: edge_vmhvl_esr1_pr_neuron_to_cs20230722_supt_0564
     lit_type: vmhvl_esr1_pr_neuron
@@ -261,6 +249,9 @@ edges:
           female-biased lordosis subpopulation, SUPT_0564 captures the broader
           Pgr+/Nkx2-1+/Tac1+ subpopulation. Both edges should be retained until the
           classical node is split or a finer-grained analysis is performed.
+      - caveat_type: OTHER
+        description: |-
+          [Relocated from the CS20230722_SUPT_0563 atlas stub] Parent of the two most female-biased rank-0 clusters in the VMH region: CLUS_2290 (MFR=0.08) and CLUS_2292 (MFR=0.12). Identified via Knoedler 2022 bulk correlation (corr_run_20260428_knoedler_esr1_wmbv1) as the dominant VMH-specific Esr1+ supertype, with three of its child clusters (2293, 2290, 2292) taking the top-4 positions by δ(VMH_FR − BNST_FR).
     unresolved_questions:
       - >
         Is SUPT_0563 vs SUPT_0564 a clean female-vs-broader split, or do both supertypes
