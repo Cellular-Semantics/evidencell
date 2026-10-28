@@ -1,0 +1,187 @@
+# Peri-locus coeruleus GABAergic neuron — locus_coeruleus
+# Source: ASTA deep research report — inputs/deepsearch/LCN_neuron.pdf
+# Ingestion date: 2026-10-28
+# Status: DRAFT — node metadata from ASTA report, pending primary verification
+# Property assertions reference quotes in references/locus_coeruleus/
+# Proposed by: asta-report-ingest
+
+name: "Peri-Locus Coeruleus GABAergic Neuron"
+description: >
+  Evidence graph component for the non-noradrenergic (TH-negative) GABAergic
+  neurons of the pericoerulear zone surrounding the locus coeruleus core.
+  Proposed from the ASTA deep research report on locus coeruleus neurons as a
+  contrast/boundary population rather than as a subject of the report.
+brain_region:
+  id: UBERON:0002148
+  label: "locus ceruleus"
+  name_in_source: "peri-locus coeruleus (pericoerulear zone)"
+target_atlas: "NOT_APPLICABLE_CLASSICAL_ONLY"
+species:
+creation_date: "2026-10-28"
+nodes:
+  - id: peri_lc_gabaergic_neuron
+    name: "Peri-locus coeruleus GABAergic neuron"
+    definition_basis: CLASSICAL_NEUROCHEMICAL
+    species:       # To be confirmed from primary literature — mouse sources
+    anatomical_location:
+      - id: UBERON:0003023
+        label: "pontine tegmentum"
+        name_in_source: "peri-LC (pericoerulear) zone — heterogeneous surround of the LC core"
+        compartment: SOMA
+        sources:
+          - ref: "PMID:38872397"
+            method: "juxtacellular recording + TH immunolabelling"
+            scope: "adult mouse LC core and surround"
+            quote_key: "270489273_f3c96847"
+          - ref: "PMID:40335695"
+            method: "viral tracing + single-cell RNA-seq + spatial transcriptomics"
+            scope: "adult mouse peri-LC"
+            quote_key: "278392014_25d93ab8"
+          - ref: "PMID:39427811"
+            method: "review (LC/peri-LC organisation)"
+            scope: "LC vs peri-LC partition"
+            quote_key: "273433369_45bcf7fc"
+    nt_type:
+      name_in_source: "GABAergic"
+      cl_terms:
+        - id: CL:0000617
+          label: "GABAergic neuron"
+          name_in_source: "GABAergic"
+      sources:
+        - ref: "PMID:39427811"
+          method: "review (LC/peri-LC neurochemistry)"
+          scope: "peri-LC GABAergic neurons"
+          quote_key: "273433369_45bcf7fc"
+        - ref: "PMID:39427811"
+          method: "review (LC/peri-LC neurochemistry)"
+          scope: "mouse — NPY secreted exclusively by peri-LC GABAergic cells"
+          quote_key: "273433369_78752938"
+    defining_markers:
+      - symbol: Npy
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:39427811"
+            method: "review (LC/peri-LC neurochemistry)"
+            scope: "mouse — NPY exclusively secreted by peri-LC GABAergic cells"
+            quote_key: "273433369_78752938"
+            marker_type: PROTEIN
+    negative_markers:
+      - symbol: Th
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:38872397"
+            method: "juxtacellular recording + TH immunolabelling"
+            scope: "adult mouse LC surround — TH-negative cell class"
+            quote_key: "270489273_65a42189"
+            marker_type: PROTEIN
+          - ref: "PMID:39427811"
+            method: "review (LC/peri-LC neurochemistry)"
+            scope: "peri-LC GABAergic cells vs noradrenergic LC core"
+            quote_key: "273433369_45bcf7fc"
+            marker_type: PROTEIN
+      - symbol: Dbh
+        modifier: ABSENT
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:38872397"
+            method: "juxtacellular recording + TH immunolabelling"
+            scope: >
+              adult mouse — inferred from the non-noradrenergic identity of the
+              LC surround; DBH itself was not assayed in the cited quote
+            quote_key: "270489273_f3c96847"
+            marker_type: PROTEIN
+    neuropeptides:
+      - symbol: Npy
+        ncbi_gene_id:
+        sources:
+          - ref: "PMID:39427811"
+            method: "review (LC/peri-LC neurochemistry)"
+            scope: "mouse peri-LC GABAergic cells"
+            quote_key: "273433369_78752938"
+            marker_type: PROTEIN
+    morphology:
+      description: >
+        Non-noradrenergic (TH-negative) cells intermingled within the
+        heterogeneous surround of the densely packed LC core. Juxtacellular
+        recording with post-hoc TH immunolabelling found their morphologies to
+        be broadly similar to those of TH-positive LC neurons; no distinguishing
+        morphological feature has been described.
+      sources:
+        - ref: "PMID:38872397"
+          method: "juxtacellular recording + post-hoc TH immunolabelling"
+          scope: "adult mouse LC and surround, in vivo"
+          quote_key: "270489273_65a42189"
+        - ref: "PMID:38872397"
+          method: "review of LC architecture within the same study"
+          scope: "compact noradrenergic core within a non-noradrenergic surround"
+          quote_key: "270489273_f3c96847"
+    electrophysiology:
+      description: >
+        TH-negative peri-LC cells are excited by foot-shock stimuli, but show
+        less prominent foot-shock responses and weaker post-activation firing
+        suppression than neighbouring TH-positive noradrenergic neurons. The two
+        classes also differ in spontaneous firing rate, spike waveform and
+        temporal spiking properties. No e-type label has been assigned.
+      sources:
+        - ref: "PMID:38872397"
+          method: "in vivo juxtacellular recording with foot-shock stimulation"
+          scope: "adult mouse LC and surround"
+          quote_key: "270489273_65a42189"
+    colocated_types:
+      - neighboring_type: "lc_noradrenergic_neuron"
+        spatial_relationship: INTERSPERSED
+        notes: >
+          Defined by position relative to the LC noradrenergic core: these cells
+          occupy the heterogeneous non-noradrenergic surround and are also found
+          intermingled with core TH-positive neurons. Supporting quotes:
+          270489273_f3c96847 and 270489273_65a42189 (Zouridis et al., 2024;
+          PMID:38872397).
+    cl_mapping:
+      cl_term:
+        id: CL:0000617
+        label: "GABAergic neuron"
+        name_in_source: "GABAergic neuron"
+      mapping_type: BROAD
+      mapping_notes: >
+        Only the generic GABAergic neuron parent class matches; CL holds no
+        peri-LC-specific term. Mapping confidence LOW — the GABAergic identity
+        of this population rests on a single review statement, and the
+        transcriptomic work (Luskin et al., 2025) resolves the peri-LC into
+        several neuronal cell types rather than one GABAergic type. A CL
+        contribution should wait until the peri-LC types are better resolved.
+    definition_references:
+      - "PMID:38872397"
+      - "PMID:39427811"
+      - "PMID:40335695"
+      - "PMID:40749333"
+    is_terminal: false
+    notes: >
+      THIN EVIDENCE: this node is supported by only six quotes across four
+      sources and was proposed as a contrast/boundary population for the LC
+      noradrenergic type, not as a subject of the report. Treat every property
+      here as provisional and expect LOW-confidence mappings.
+
+      SUSPECTED HETEROGENEITY (likely to warrant splitting): Luskin et al., 2025
+      (PMID:40335695) combine single-cell RNA-seq with spatial transcriptomics
+      and identify several distinct peri-LC neuronal cell types underlying
+      peri-LC functional diversity. "Peri-LC GABAergic neuron" is therefore
+      almost certainly a lumped node; the NPY-expressing GABAergic population
+      may be only one of its constituents.
+
+      MARKER CAVEATS: the Npy assertion and the GABAergic identity both come
+      from the same review sentence (Slavova et al., 2024, PMID:39427811) and
+      are species-scoped to mouse. The Dbh negative marker is an inference from
+      the "non-noradrenergic" description of the surround (Zouridis et al.,
+      2024) rather than a direct DBH assay — the cited quote does not assay DBH.
+      The electrophysiological and morphological descriptions come from
+      TH-negative cells recorded in and around the LC core, which is a broader
+      class than "peri-LC GABAergic": those recordings did not establish that
+      the cells were GABAergic.
+
+      ANATOMY TERM: no UBERON or Allen term exists for the pericoerulear zone.
+      UBERON:0003023 (pontine tegmentum) is used as a provisional containing
+      term with the verbatim zone name in name_in_source; replace it if a
+      peri-LC term becomes available.
+
+edges: []
