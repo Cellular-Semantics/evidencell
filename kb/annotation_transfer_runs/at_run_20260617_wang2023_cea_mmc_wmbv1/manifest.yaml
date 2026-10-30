@@ -1,0 +1,48 @@
+id: at_run_20260617_wang2023_cea_mmc_wmbv1
+record_type: AnnotationTransferRun
+
+source_dataset_accession: "GEO:GSE213828"
+source_cluster_label: >
+  Wang 2023 (GSE213828) mouse CeA scRNA-seq MC cluster labels (22 molecularly
+  defined types; rule-based assignment from marker gene co-expression):
+  MC-01_Nefm_Tac2, MC-02_Sst_Pdyn_Crh, MC-03_Sst_Pdyn, MC-05_MSN_Drd2Scn4b,
+  MC-06_PKCd_Cartpt, MC-07_AST_Drd1, MC-09_Gpx3_Gal, MC-11_Sst_Sema3c,
+  MC-12_Sst_other, MC-16_Nefm_Htr1b, MC-21_ITC_Drd1Penk, MC-22_unclassified,
+  MC-Isl1.
+  Cluster labels derived by hierarchical marker gene rule-based assignment
+  (gene expression > 0 thresholds); original GEO deposit did not include
+  cluster labels. Neuronal cells only (MC-08/04/10/13-15/17-20 absent or
+  not assigned; non-neuronal excluded during QC).
+source_species: "NCBITaxon:10090"
+
+target_atlas: WMBv1
+target_taxonomy_id: CCN20230722
+target_species: "NCBITaxon:10090"
+
+method: >
+  MapMyCells local (cell_type_mapper v1.7.2, default parameters,
+  raw normalization, 100 bootstrap iterations). Query genes remapped
+  from gene symbols to Ensembl IDs via conf/gene_mapping_CCN20230722.tsv
+  (31,667 symbols mapped; 26,222 of 52,739 genes matched). 1,700 neuronal
+  cells from 1,824-cell full dataset after QC filtering.
+tool_version: "cell_type_mapper v1.7.2"
+code_reference: https://github.com/AllenInstitute/cell_type_mapper
+bootstrap_threshold: 0.0
+n_cells_total: 1700
+n_cells_after_filter: 1700
+
+atlas:
+  taxonomy_id: CCN20230722
+  pseudobulk_source: conf/mapmycells/CCN20230722/precomputed_stats.h5
+  sha256: "b21ca985652fb25f9608f99005139a40757133a76fbe845ae5b175c5c26a447b"
+
+script:
+  relpath: README.md
+  python_version: ">=3.12"
+  packages: [cell_type_mapper, anndata, pandas, scipy, numpy]
+  git_repo_url: https://github.com/Cellular-Semantics/evidencell
+  git_commit: "(see git log at run time)"
+
+output:
+  relpath: f1_matrix.csv
+  format: csv

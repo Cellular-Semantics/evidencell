@@ -1,0 +1,123 @@
+{
+  "depth": 0,
+  "all_candidate_ids": [
+    "10856039",
+    "212579559",
+    "15449738",
+    "11544073",
+    "220930580",
+    "1229611",
+    "14068807",
+    "195246702",
+    "161407",
+    "264517392",
+    "233450033",
+    "232283078",
+    "248700803",
+    "231758452",
+    "271240390"
+  ],
+  "selected_corpus_ids": [
+    "232283078",
+    "264517392",
+    "11544073",
+    "195246702",
+    "14068807",
+    "271240390",
+    "10856039"
+  ],
+  "selection_rationale": [
+    {
+      "corpus_id": "232283078",
+      "title": "Total Number and Ratio of GABAergic Neuron Types in the Mouse Lateral and Basal Amygdala",
+      "selected": true,
+      "reason": "HIGH node_relevance throughout depth-0 summaries. Provides quantitative census of all seven BLA GABAergic subtypes including the under-covered CCK basket cell (7-9%) and CCK+/CB1+ vs VIP+ distinction. Traversing its citations is likely to find foundational primary literature on each BLA interneuron subtype (CCK basket cells, NPY neurogliaform cells, axo-axonic cells, SST/nNOS projection neurons)."
+    },
+    {
+      "corpus_id": "264517392",
+      "title": "Neuronal types in the mouse amygdala and their transcriptional response to fear conditioning",
+      "selected": true,
+      "reason": "HIGH node_relevance. scRNA-seq taxonomy of whole mouse amygdala covers BLA, CEA, MEA, and ITC molecular types — addresses gaps in CEA molecular markers (Six3, Ano3, Epha4, DARPP-32/Ppp1r1b, Tacr3, Tshz2, Nts) and ITC-related types. Citation traversal likely yields primary papers on Grp/Grpr fear circuits, Lhx6+ MEA neurons, and fear/extinction neuron molecular identity."
+    },
+    {
+      "corpus_id": "11544073",
+      "title": "Subpopulations of somatostatin-immunoreactive non-pyramidal neurons in the amygdala and adjacent external capsule project to the basal forebrain",
+      "selected": true,
+      "reason": "HIGH node_relevance. Foundational paper for bla_gabaergic_projection_neuron (SST/nNOS LRNP neurons). Its citations should yield primary anatomical literature on SST+/NPY+/CB+ projection neuron subpopulations, calretinin/CCK/VIP bipolar interneurons (relevant to bla_vip_calretinin_interneuron), and the four cardinal BLA interneuron classes."
+    },
+    {
+      "corpus_id": "195246702",
+      "title": "Immature excitatory neurons develop during adolescence in the human amygdala",
+      "selected": true,
+      "reason": "HIGH node_relevance and uniquely covers paralaminar_immature_neuron — a node poorly represented elsewhere in depth-0. Provides DCX, PSA-NCAM, Bcl-2, SP8, PROX1, COUP-TFII (NR2F2) marker context. Citation traversal should yield primary literature on paralaminar nucleus maturation, primate-specific neurogenesis, and BCL2/SP8 markers."
+    },
+    {
+      "corpus_id": "14068807",
+      "title": "The distribution of GABAergic cells, fibers, and terminals in the monkey amygdaloid complex",
+      "selected": true,
+      "reason": "HIGH node_relevance. Primate (macaque) anatomical mapping covers intercalated nuclei (virtually all GABAergic), central nucleus, and medial nucleus — addressing gap nodes amygdala_intercalated_cell, central_amygdala_gabaergic_projection_neuron, medial_amygdala_gabaergic_neuron. Citations should yield primary primate ITC and CEA/MEA anatomy and neurochemistry papers."
+    },
+    {
+      "corpus_id": "271240390",
+      "title": "Specific and comprehensive genetic targeting reveals brain-wide distribution and synaptic input patterns of GABAergic axo-axonic interneurons",
+      "selected": true,
+      "reason": "HIGH node_relevance for bla_axo_axonic_cell. Confirms AAC distribution across all PN-containing amygdala nuclei (LA, BA, BMA, CoA, MeA) but not CeA. Citations should yield primary literature on chandelier cell/AIS-targeting interneuron markers (Unc5b, PthlH, Vipr2) and developmental origin — addressing the axo-axonic cell molecular identity gap."
+    },
+    {
+      "corpus_id": "10856039",
+      "title": "Genetic identification of the central nucleus and other components of the central extended amygdala in chicken during development",
+      "selected": true,
+      "reason": "MODERATE node_relevance but uniquely covers CEA mosaic composition (LGEd-Pax6+/enkephalin, LGEv-Islet1+/dynorphin/CRF/CB, MGE-Nkx2.1+/SST cells) — directly addresses CEA marker gap. Also covers intercalated cells and fear extinction circuits. Citations should yield primary developmental and molecular markers for central_amygdala_gabaergic_projection_neuron and amygdala_intercalated_cell."
+    },
+    {
+      "corpus_id": "212579559",
+      "title": "Low-threshold spiking interneurons perform feedback inhibition in the lateral amygdala",
+      "selected": false,
+      "reason": "HIGH node_relevance but largely overlaps with already well-covered bla_sst_interneuron and bla_pv_basket_cell content. Functional electrophysiology focus rather than novel cell type identification or markers. Deprioritised in favour of broader-coverage references."
+    },
+    {
+      "corpus_id": "220930580",
+      "title": "Diversity of interneurons in the lateral and basal amygdala",
+      "selected": false,
+      "reason": "HIGH node_relevance but electrophysiology/optogenetics study of auditory innervation — overlaps with already-covered PV/SST functional roles. Lower yield expected for filling marker/molecular identity gaps in less-covered nodes."
+    },
+    {
+      "corpus_id": "161407",
+      "title": "Networks of Parvalbumin-Positive Interneurons in the Basolateral Amygdala",
+      "selected": false,
+      "reason": "HIGH node_relevance but focused narrowly on PV+ network (already well-covered by 232283078 and 233450033). Lower priority for filling under-covered gaps (CCK basket, paralaminar, CeA/MeA markers, fear/extinction)."
+    },
+    {
+      "corpus_id": "233450033",
+      "title": "Inhibitory Circuits in the Basolateral Amygdala in Aversive Learning and Memory",
+      "selected": false,
+      "reason": "HIGH node_relevance review of BLA inhibitory circuits, but a review with broad coverage already represented in summaries. Citation traversal would likely return many secondary citations rather than targeted primary papers on under-covered nodes."
+    },
+    {
+      "corpus_id": "15449738",
+      "title": "The amygdala between sensation and affect: a role in pain",
+      "selected": false,
+      "reason": "MODERATE/LOW node_relevance. Pain-focused review with anatomical overview already partially covered by 14068807. Lower expected yield of primary cell-type literature."
+    },
+    {
+      "corpus_id": "248700803",
+      "title": "Distinct Subdivisions in the Transition Between Telencephalon and Hypothalamus Produce Otp and Sim1 Cells for the Extended Amygdala in Sauropsids",
+      "selected": false,
+      "reason": "MODERATE node_relevance but sauropsid comparative developmental focus partly overlaps with selected 10856039 (chicken CeA development), which covers the more critical CeA marker mosaic. Lower marginal value."
+    },
+    {
+      "corpus_id": "231758452",
+      "title": "Neural pathways of olfactory kin imprinting and kin recognition in zebrafish",
+      "selected": false,
+      "reason": "MODERATE node_relevance — covers medial amygdala MeA mosaic and Otp/Lhx9 cells. Zebrafish comparative focus; MeA developmental coverage already present in 10856039. Deprioritised in favour of higher-yield mammalian/primate references."
+    },
+    {
+      "corpus_id": "1229611",
+      "title": "Effects of Acute Prenatal Exposure to Ethanol on microRNA Expression are Ameliorated by Social Enrichment",
+      "selected": false,
+      "reason": "LOW node_relevance. Prenatal ethanol/microRNA study with only background amygdala anatomy mentions. Off-topic for cell-type characterisation."
+    }
+  ],
+  "total_candidates": 15,
+  "total_selected": 7
+}

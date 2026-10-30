@@ -1,0 +1,319 @@
+# Proposed mapping edges — amygdala_report_ingest — batch 1
+# Status: PENDING GATE REVIEW — not yet written to KB
+# Generated: 2026-06-03
+
+- id: edge_bla_pv_axo_axonic_cell_to_cs20230722_clus_0733
+  lit_type: bla_pv_axo_axonic_cell
+  taxonomy_type: CS20230722_CLUS_0733
+  relationship: skos:closeMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: "1:1"
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_soma
+    node_a_value: UBERON:0002887 basolateral amygdala
+    node_b_value: >-
+      MBA:295 Basolateral amygdalar nucleus present (cell_ratio ~0.047–0.051 MERFISH);
+      cluster distributed across piriform, entorhinal, cortical subplate and cortical
+      amygdalar areas — not BLA-restricted.
+    alignment: APPROXIMATE
+    notes: >-
+      CLUS_0733 has confirmed BLA soma presence (~4–5% of cluster by MERFISH), consistent
+      with the classical BLA locus. The chandelier cell type is present across cortical and
+      amygdalar regions; atlas distribution reflects the broader cortical pattern, not a
+      BLA-exclusive type.
+  - property: marker_Pvalb
+    node_a_value: Pvalb — defining marker (protein, PMID:22726836; PMID:27013983)
+    node_b_value: >-
+      Pvalb mean_expression 6.38 (precomputed; discovery cohort 97.8th pct;
+      raw_tier 2; applied_score 2.0).
+    alignment: CONSISTENT
+  - property: atlas_label_chandelier
+    node_a_value: axo-axonic (chandelier) morphology — AIS-targeting, confirmed by AnkG
+      co-staining (PMID:39012795) and juxtacellular labelling (PMID:22726836)
+    node_b_value: >-
+      Cluster label "0733 Pvalb chandelier Gaba_1"; parent supertype CS20230722_SUPT_0204
+      "0204 Pvalb chandelier Gaba_1" — "chandelier" explicit in both cluster and supertype names.
+    alignment: CONSISTENT
+  - property: neuropeptide_Cck
+    node_a_value: not reported as a marker of bla_pv_axo_axonic_cell
+    node_b_value: Cck mean_expression 7.68; NEUROPEPTIDE category (expression_score 7.7)
+    alignment: DISCORDANT
+    notes: >-
+      Cck co-expression in CLUS_0733 is unexpected for a canonical PVALB chandelier cell.
+      May reflect a subpopulation or methodological difference; does not override chandelier
+      label match.
+  evidence:
+  - evidence_type: ATLAS_METADATA
+    supports: SUPPORT
+    reference: PMID:37915112
+    explanation: >-
+      Cluster CS20230722_CLUS_0733 is labeled "Pvalb chandelier Gaba_1" — direct label
+      correspondence to axo-axonic (chandelier) cell identity. Parent supertype SUPT_0204
+      carries the same "chandelier" designation. Pvalb mean_expression 6.38 (97.8th pct
+      in GABAergic BLA cohort). MERFISH confirms BLA soma presence (MBA:295 cell_ratio
+      ~0.047–0.051). Selected over CLUS_0738 (generic "Pvalb Gaba_2") based on explicit
+      chandelier label despite equal discovery score (score=3, rank_in_cohort=2).
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:22726836
+    explanation: >-
+      Bienvenu et al. 2012 characterised PV+ BLA interneurons in rat by in vivo recording
+      with juxtacellular labelling, confirming the axo-axonic cell as a distinct PVALB+
+      GABAergic type targeting the axon initial segment.
+    quote_key: 10647550_e0390ac0
+  caveats:
+  - caveat_type: AT_ABSENT
+    description: No MapMyCells AT evidence available. Caps confidence at closeMatch per rubric step iv.
+  - caveat_type: BROAD_DISTRIBUTION
+    description: >-
+      CLUS_0733 is not BLA-restricted; dominant distribution in cortical subplate and
+      piriform/entorhinal areas. The chandelier cell type is pan-cortical; BLA is a
+      secondary site (~4–5% of cells).
+  - caveat_type: UNEXPECTED_CCK
+    description: >-
+      Moderate Cck co-expression (mean 7.68) is not expected for a classical PV axo-axonic
+      cell. Warrants investigation but does not override the chandelier label evidence.
+  unresolved_questions:
+  - Does CLUS_0733 contain both axo-axonic and basket cells or is it axo-axonic-specific?
+    Co-staining of AnkG + chandelier-defining probes (Pthlh, Krt12) in BLA needed.
+  - Why does Cck appear at moderate levels in this Pvalb chandelier cluster?
+  proposed_experiments:
+  - Co-stain CLUS_0733 MERFISH probes (Pthlh, Krt12, Sfta3) with AnkG IHC in mouse BLA.
+  - Run MapMyCells AT on morphologically confirmed BLA axo-axonic cell transcriptomes.
+  discovery_score:
+    score: 3
+    rank_in_cohort: 2
+    cohort_size: 5
+    next_best_score: 3
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Pvalb
+      val: 6.38
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.978
+    region_fraction: 0.042
+    region_evidence: SELF
+
+- id: edge_bla_cck_cb1_basket_cell_to_cs20230722_clus_0664
+  lit_type: bla_cck_cb1_basket_cell
+  taxonomy_type: CS20230722_CLUS_0664
+  relationship: skos:closeMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: "1:N"
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_basolateral_amygdala
+    node_a_value: UBERON:0002887 basolateral amygdala
+    node_b_value: >-
+      MBA:295 Basolateral amygdalar nucleus SOMA, cell_count=2, cell_ratio=0.063
+      (Zhuang 2023 MERFISH). Discovery region_fraction=0.031, region_evidence=SELF.
+    alignment: CONSISTENT
+    notes: >-
+      BLA soma presence confirmed by MERFISH. Modest cell count (n=2 in MBA:295)
+      reflects the cluster's broad cortical/hippocampal distribution; CCK expression
+      is the primary driver of the match rather than regional restriction.
+  - property: marker_Cnr1
+    node_a_value: Cnr1 — defining marker (CB1 cannabinoid receptor)
+    node_b_value: >-
+      Cnr1 not in formal DEFINING marker list. Precomputed mean_expression 12.36
+      (discovery cohort 98.5th pct; tier 2; applied_score 2.0). Highest in cohort.
+    alignment: CONSISTENT
+    notes: >-
+      Cnr1 not in curated atlas marker list for CLUS_0664 but precomputed expression
+      12.36 is tier-2 and highest in cohort — strong expression evidence.
+  - property: neuropeptide_Cck
+    node_a_value: Cck — neuropeptide
+    node_b_value: >-
+      Cck NEUROPEPTIDE annotation (expression_score 11.1); precomputed mean 11.15
+      (cohort 98.3rd pct; tier 2). Sncg supertype is the canonical CCK co-expression
+      group in mouse.
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:33837051
+    explanation: >-
+      Vereczki et al. 2021: 71.1% of CCK+ interneurons in mouse LA/BA confirmed
+      as CCK+/CB1+ basket cells by GFP-targeted patch recording. Primary in vivo
+      quantitative evidence characterising this type in rodent BLA.
+    quote_key: 232283078_6d9c6756
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:39463931
+    explanation: >-
+      Yu et al. 2024 primate snRNA-seq identifies CCK+/CNR1+ cluster homologous to
+      mouse CCK basket cell, noting Sncg co-expression — directly connecting the Sncg
+      supertype label of CLUS_0664 to CCK basket cell identity cross-species.
+    quote_key: 273531817_f8731728
+  caveats:
+  - caveat_type: AT_ABSENT
+    description: No AT evidence; caps at closeMatch.
+  - caveat_type: CARDINALITY_1_N
+    description: >-
+      Five Sncg Gaba_1 clusters (CLUS_0664/0665/0666/0672/0677) all score 5/5
+      with equally high Cnr1 and Cck. Classical type likely spans multiple Sncg
+      clusters; 1:N cardinality reflects this.
+  - caveat_type: LOW_BLA_CELL_COUNT
+    description: >-
+      Only 2 BLA cells detected for CLUS_0664 in Zhuang 2023 MERFISH.
+      The match rests on Cnr1+Cck expression rather than regional restriction.
+  unresolved_questions:
+  - What distinguishes CLUS_0664 from sibling CLUS_0665/0666 — all score equally?
+  - Is Cnr1 confirmed at single-cell level in CLUS_0664 against full expression matrix?
+  proposed_experiments:
+  - MapMyCells AT on BLA CCK/CB1 basket cell dataset to resolve 1:1 vs 1:N cardinality.
+  - Multiplexed smFISH with Sncg + Cnr1 + Cck probes in mouse BLA.
+  discovery_score:
+    score: 5
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Cnr1
+      val: 12.36
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.985
+    - gene: Cck
+      val: 11.15
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.983
+    region_fraction: 0.031
+    region_evidence: SELF
+
+- id: edge_bla_som_dendrite_targeting_interneuron_to_cs20230722_clus_0765
+  lit_type: bla_som_dendrite_targeting_interneuron
+  taxonomy_type: CS20230722_CLUS_0765
+  relationship: skos:broadMatch
+  mapping_justification: semapv:UnreviewedManualMapping
+  mapping_cardinality: "1:n"
+  property_comparisons:
+  - property: nt_type
+    node_a_value: GABAergic
+    node_b_value: GABA
+    alignment: CONSISTENT
+  - property: location_basolateral_amygdala
+    node_a_value: UBERON:0002887 basolateral amygdala
+    node_b_value: >-
+      MBA:295 BLA: 43 cells, cell_ratio 0.289 (Yao 2024); 65 cells, cell_ratio 0.214
+      (Zhuang 2023). Also BMA/BLA-ant/BLA-post. Cortical subplate (MBA:703) carries
+      majority of cluster cells (~685 cells).
+    alignment: CONSISTENT
+  - property: marker_Calb1
+    node_a_value: Calb1 — defining marker
+    node_b_value: Calb1 precomputed mean_expression 9.57 (cohort 96.5th pct; tier 2)
+    alignment: CONSISTENT
+  - property: neuropeptide_Sst
+    node_a_value: Sst — neuropeptide
+    node_b_value: >-
+      Sst NEUROPEPTIDE annotation (expression_score 11.9); precomputed mean 11.92
+      (cohort 96.7th pct; tier 2). Cluster named "0765 Sst Gaba_2".
+    alignment: CONSISTENT
+  evidence:
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:33837051
+    explanation: >-
+      Vereczki et al. 2021 EM confirms SST+ axon terminals preferentially contact
+      dendritic shafts in mouse LA/BA — primary evidence for dendrite-targeting
+      morphology of this classical type.
+    quote_key: 232283078_bd1f3975
+  - evidence_type: LITERATURE
+    supports: SUPPORT
+    reference: PMID:22837739
+    explanation: >-
+      Spampanato et al.: SST+/Calb1+ BLA interneurons estimated at 10–16% of
+      GABAergic cells; dendrite-targeting class distinct from PV and CCK basket cells.
+    quote_key: '11544073_94689603'
+  caveats:
+  - caveat_type: TIED_CANDIDATES
+    description: >-
+      CLUS_0765 and CLUS_0774 (Sst Gaba_3, parent SUPT_0216) both score 5/5.
+      A parallel edge to CLUS_0774 is needed to complete the 1:n representation.
+  - caveat_type: MORPHOLOGY_NOT_RESOLVABLE
+    description: >-
+      Selective dendritic-shaft targeting cannot be resolved from transcriptomics
+      alone. Morphological confirmation requires patch-seq or correlated EM in BLA.
+  - caveat_type: AT_ABSENT
+    description: No AT evidence available.
+  unresolved_questions:
+  - Do CLUS_0765 and CLUS_0774 represent genuinely distinct SST subtypes in BLA?
+  - Does the SST dendrite-targeting class co-express NPY, PNOC, or Cort (all high
+    in CLUS_0765)?
+  proposed_experiments:
+  - smFISH with Sst + Calb1 + Cort + Ano2 probes in mouse BLA with dendritic
+    synapse localisation to confirm dendritic-shaft targeting identity.
+  - Patch-seq in BLA SST+ interneurons to resolve CLUS_0765 vs CLUS_0774.
+  discovery_score:
+    score: 5
+    rank_in_cohort: 1
+    cohort_size: 5
+    next_best_score: 5
+    rank: 0
+    contexts:
+    - id: cohort
+      kind: SURVIVAL_COHORT
+      rank: 0
+      n_members: 5
+      filters:
+      - region=MBA:295
+      - nt_type=GABAergic
+    expression_detail:
+    - gene: Calb1
+      val: 9.57
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.965
+    - gene: Sst
+      val: 11.92
+      reliable: true
+      raw_tier: 2
+      applied_score: 2.0
+      source: EXPRESSION
+      percentiles:
+      - context_id: cohort
+        pct: 0.967
+    region_fraction: 0.289
+    region_evidence: SELF

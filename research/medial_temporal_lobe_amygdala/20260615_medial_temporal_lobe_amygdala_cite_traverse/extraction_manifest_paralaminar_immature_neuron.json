@@ -1,0 +1,88 @@
+{
+  "node_id": "paralaminar_immature_neuron",
+  "added_by": "evidence_extraction_paralaminar_immature_neuron_20260615",
+  "summaries_file": "research/medial_temporal_lobe_amygdala/20260615_medial_temporal_lobe_amygdala_cite_traverse/depth_0_summaries.json",
+  "kb_file": "kb/graphs/medial_temporal_lobe_amygdala/20260528_medial_temporal_lobe_amygdala_report_ingest.yaml",
+  "refs_file": "references/medial_temporal_lobe_amygdala/references.json",
+  "excluded_corpus_ids": ["221366115", "252477669", "17223544", "232283078"],
+  "existing_refs": [
+    "PMID:31227709",
+    "PMID:34206571",
+    "PMID:35841648",
+    "PMID:36788214",
+    "PMID:37337377",
+    "PMID:9502809"
+  ],
+  "entries_processed": [
+    {
+      "source_corpus_id": "280092907",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for BLA GABAergic interneuron subtypes (NPY, PV, CB, SST); no content on paralaminar nucleus, PL immature neurons, or DCX/BCL2 markers"
+    },
+    {
+      "source_corpus_id": "281382725",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for primate amygdala inhibitory neuron taxonomy (SST, PVALB, CCK, VIP, LAMP5, LGE-derived types); no content on paralaminar nucleus or immature excitatory neurons"
+    },
+    {
+      "source_corpus_id": "4940771",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for BLA interneuron immunostaining (PV, CB, SST, NPY) and fear/extinction neurons; no content on paralaminar nucleus or PL immature neurons"
+    },
+    {
+      "source_corpus_id": "17860491",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for BLA calbindin interneurons and fear/extinction circuit; no content on paralaminar nucleus or PL immature neurons"
+    },
+    {
+      "source_corpus_id": "250411527",
+      "decision": "SKIP",
+      "reason": "Ref PMID:35841648 (CorpusId:250411527 = Page et al. 2022) already in existing refs for this node"
+    },
+    {
+      "source_corpus_id": "104297085",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for BLA fear-inhibiting Thy1+/Ntsr2+ neurons; no content on paralaminar nucleus or PL immature neurons"
+    },
+    {
+      "source_corpus_id": "264517392",
+      "decision": "SKIP",
+      "reason": "HIGH relevance for mouse amygdala scRNA-seq neuronal taxonomy; no content on paralaminar nucleus or immature excitatory neurons"
+    },
+    {
+      "source_corpus_id": "3103554",
+      "decision": "SKIP",
+      "reason": "MODERATE relevance for CeA GABAergic neurons and IP3K-A; no content on paralaminar nucleus or PL immature neurons"
+    },
+    {
+      "source_corpus_id": "221366115",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "252477669",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "17223544",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    },
+    {
+      "source_corpus_id": "232283078",
+      "decision": "SKIP",
+      "reason": "In excluded corpus IDs list"
+    }
+  ],
+  "propertysource_entries_written": 0,
+  "fields_updated": [],
+  "gaps": [
+    "nt_type.sources — no eligible summary contains NT type evidence for PL immature neurons (nt_type is unknown)",
+    "electrophysiology.sources — no eligible summary contains electrophysiology data for PL immature neurons",
+    "morphology.sources — no eligible summary (beyond already-in-refs PMID:35841648) contains morphology data for PL immature neurons",
+    "defining_markers[].sources — no new non-excluded source documents DCX/PSA-NCAM/TBR1 markers in PL immature neurons",
+    "anatomical_location[].sources — no new non-excluded source confirms PL location beyond existing refs"
+  ],
+  "notes": "The only directly relevant paper in this cite-traverse batch (CorpusId:250411527, Page et al. 2022, PMID:35841648) is already in the existing refs list and already has quotes written to references.json. All other summaries in this batch pertain to BLA interneuron subtypes, fear/extinction neurons, or non-paralaminar amygdala populations and contain no usable evidence for paralaminar_immature_neuron."
+}

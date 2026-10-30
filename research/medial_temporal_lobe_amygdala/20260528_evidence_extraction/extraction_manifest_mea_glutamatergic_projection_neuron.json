@@ -1,0 +1,30 @@
+{
+  "node_id": "mea_glutamatergic_projection_neuron",
+  "run_date": "2026-06-03",
+  "summaries_read": 80,
+  "skipped_excluded": 0,
+  "skipped_duplicate_ref": 3,
+  "skipped_low_relevance": 4,
+  "entries_written": 3,
+  "fields_populated": [
+    "anatomical_location.sources",
+    "morphology.sources"
+  ],
+  "fields_with_no_evidence": [
+    "electrophysiology.sources (existing)",
+    "nt_type.sources (existing)"
+  ],
+  "sources_added": [
+    {
+      "corpus_id": "264517392",
+      "pmid": "PMID:37884748",
+      "ref": "Hochgerner et al. 2023, Neuronal types in the mouse amygdala",
+      "quote_key": "264517392_28378bc6",
+      "field": "anatomical_location.sources",
+      "added_by": "evidence_extraction_mea_glutamatergic_projection_neuron_2026-06-03"
+    }
+  ],
+  "synonyms_found": [],
+  "refs_file": "/Users/ar38/Documents/GitHub/evidencell/references/medial_temporal_lobe_amygdala/references.json",
+  "notes": "Third pass (2026-06-03): Added Hochgerner et al. 2023 (PMID:37884748) to anatomical_location, corroborating VGLUT2 glutamatergic neurons intermixed with GABA classes in the MEA. Prior run (entries_written=2) added morphology and anatomical_location sources from other papers."
+}
